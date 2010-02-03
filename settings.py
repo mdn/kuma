@@ -92,3 +92,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
 )
+
+#
+# Connection information for Sphinx search
+SPHINX_HOST = '127.0.0.1'
+SPHINX_PORT = 3312
