@@ -1,0 +1,9 @@
+-e svn+http://code.djangoproject.com/svn/django/trunk@12335#egg=Django
+Jinja2==2.2.1
+MySQL-python==1.2.3c1
+python-memcached==1.45
+Werkzeug==0.5.1
+Babel==0.9.4
+phpserialize
+south
+

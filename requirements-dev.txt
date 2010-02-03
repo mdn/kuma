@@ -1,0 +1,21 @@
+#
+# This pulls in requirements specific for development.
+
+-r requirements.txt
+
+-e git://github.com/jbalogh/django-extensions.git#egg=django_extensions
+-e git://github.com/jbalogh/check.git#egg=check
+-e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar
+-e git://github.com/jbalogh/django-debug-cache-panel#egg=cache_panel
+ipython==0.10
+sqlparse==0.1.1
+Fabric==0.9.0
+
+-e git://github.com/jbalogh/django-nose.git@1482c243ba698a28e0d14e59185ae63bcf4ea36b#egg=django_nose
+nose==0.11.1
+coverage==3.2b4
+selenium==1.0.1
+mock==0.6.0
+
+pylint
+
