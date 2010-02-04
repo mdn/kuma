@@ -18,7 +18,7 @@ def search(request):
 
     client = Client()
 
-    where = request.GET.get('w', WHERE_ALL)
+    where = int(request.GET.get('w', WHERE_ALL))
 
     results = []
 
@@ -28,5 +28,5 @@ def search(request):
     if (where & WHERE_FORUM):
         results += client.search_forum(q)
 
-    return render_to_response('search/results.html',{'results':results,'q':q})
+    return render_to_response('search/results.html',{'results':results,'q':q,})
 

@@ -16,6 +16,7 @@ class Client(object):
     """
     def search_forum(self, query):
         sc = self.sphinx
+        sc.ResetFilters()
 
         sc.SetFieldWeights({'title':4,'content':3})
         sc.SetFilter('forumId',(1,))
@@ -31,6 +32,7 @@ class Client(object):
     """
     def search_wiki(self,query,locale='en'):
         sc = self.sphinx
+        sc.ResetFilters()
 
         sc.SetFieldWeights({'title':4,'keywords':3})
         sc.SetFilter('category',(1,17,18,));
