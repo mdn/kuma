@@ -11,15 +11,18 @@ class Client(object):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST,settings.SPHINX_PORT)
 
-    """
-    Search the forum data
-    """
-    def search_forum(self, query):
+    def search_forum(self, query, filters={'forumId':(1,),}):
+        """
+        Search through forum threads
+        """
+
         sc = self.sphinx
         sc.ResetFilters()
 
         sc.SetFieldWeights({'title':4,'content':3})
-        sc.SetFilter('forumId',(1,))
+
+        for k in filters:
+            sc.SetFilter(k,filters[k])
 
         result = sc.Query(query,'forum_threads')
         if result:
@@ -27,16 +30,24 @@ class Client(object):
         else:
             return []
 
-    """
-    Search the wiki (knowledge base)
-    """
-    def search_wiki(self,query,locale='en'):
+    def search_wiki(self,query,locale='en',filters={}):
+        """
+        Search through the wiki (ie KB)
+        """
+
         sc = self.sphinx
         sc.ResetFilters()
 
         sc.SetFieldWeights({'title':4,'keywords':3})
-        sc.SetFilter('category',(1,17,18,));
-        sc.SetFilter('locale',(crc32(locale),))
+
+        if not filters.get('category',0):
+            filters['category'] = (1,17,18,)
+        if not filters.get('locale',0):
+            filters['locale'] = (crc32(locale),)
+
+        for k in filters:
+            if filters[k]:
+                sc.SetFilter(k,filters[k])
 
         result = sc.Query(query,'wiki_pages')
         if result:
