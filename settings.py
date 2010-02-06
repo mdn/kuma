@@ -99,3 +99,8 @@ INSTALLED_APPS = (
 # Connection information for Sphinx search
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3312
+
+#
+# Sphinx results tweaking
+SPHINX_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
+SPHINX_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
