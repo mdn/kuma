@@ -1,6 +1,6 @@
 # Create your views here.
 
-from .client import Client
+from .clients import *
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponseRedirect
 from django.template import RequestContext
@@ -17,24 +17,24 @@ def search(request):
 
     locale = request.GET.get('locale',request.LANGUAGE_CODE)
 
-    client = Client()
-
     where = int(request.GET.get('w', WHERE_ALL))
 
     results = []
 
     if (where & WHERE_WIKI):
-        category = [ int(i) for i in request.GET.get('category','1,17,18').split(',') ]
+        wc = WikiClient()
+        category = map(int,request.GET.get('category','1,17,18').split(','))
         if request.GET.get('tag'):
-            tag = [ crc32(t) for t in request.GET.get('tag').split(',') ]
+            tag = map(crc32,request.GET.get('tag').split(','))
         else:
             tag = []
-        results += client.search_wiki(q,locale,{'category':category,'tag':tag})
+        results += wc.query(q,locale,{'category':category,'tag':tag})
     
     if (where & WHERE_FORUM):
-        forums = [ int(i) for i in request.GET.get('forums','1').split(',') ]
+        fc = ForumClient()
+        forums = map(int,request.GET.get('forums','1').split(','))
         
-        results += client.search_forum(q, {'forumId':forums})
+        results += fc.query(q, forumId = forums)
 
     return render_to_response('search/results.html',{'results':results,'q':q,})
 

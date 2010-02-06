@@ -2,16 +2,21 @@ from .sphinxapi import SphinxClient
 from django.conf import settings
 from .utils import crc32
 
-class Client(object):
+class SearchClient(object):
     """
-    Executes searches against the Sphinx client
+    Base-class for search clients
     """
 
     def __init__(self):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST,settings.SPHINX_PORT)
 
-    def search_forum(self, query, filters={'forumId':(1,),}):
+class ForumClient(SearchClient):
+    """
+    Search the forum
+    """
+
+    def query(self, query, **kwargs):
         """
         Search through forum threads
         """
@@ -21,8 +26,7 @@ class Client(object):
 
         sc.SetFieldWeights({'title':4,'content':3})
 
-        for k in filters:
-            sc.SetFilter(k,filters[k])
+        
 
         result = sc.Query(query,'forum_threads')
         if result:
@@ -30,7 +34,13 @@ class Client(object):
         else:
             return []
 
-    def search_wiki(self,query,locale='en',filters={}):
+
+class WikiClient(SearchClient):
+    """
+    Search the knowledge base
+    """
+
+    def query(self,query,locale='en',filters={}):
         """
         Search through the wiki (ie KB)
         """
