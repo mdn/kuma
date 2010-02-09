@@ -28,13 +28,13 @@ def search(request):
             tag = map(crc32,request.GET.get('tag').split(','))
         else:
             tag = []
-        results += wc.query(q,locale,{'category':category,'tag':tag})
+        results += wc.query(q,{'locale':locale,'category':category,'tag':tag})
     
     if (where & WHERE_FORUM):
         fc = ForumClient()
         forums = map(int,request.GET.get('forums','1').split(','))
         
-        results += fc.query(q, forumId = forums)
+        results += fc.query(q, {'forumId':forums})
 
     return render_to_response('search/results.html',{'results':results,'q':q,})
 

@@ -11,12 +11,17 @@ class SearchClient(object):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST,settings.SPHINX_PORT)
 
+    """
+    All subclasses must implement this query method
+    """
+    def query(self,query,filters): abstract
+
 class ForumClient(SearchClient):
     """
     Search the forum
     """
 
-    def query(self, query, **kwargs):
+    def query(self, query, filters={}):
         """
         Search through forum threads
         """
@@ -40,7 +45,7 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
 
-    def query(self,query,locale='en',filters={}):
+    def query(self,query,filters={}):
         """
         Search through the wiki (ie KB)
         """
@@ -52,7 +57,10 @@ class WikiClient(SearchClient):
 
         if not filters.get('category',0):
             filters['category'] = (1,17,18,)
-        if not filters.get('locale',0):
+
+        if filters.get('locale',0):
+            filters['locale'] = (crc32(filters['locale']),)
+        else:
             filters['locale'] = (crc32(locale),)
 
         for k in filters:
