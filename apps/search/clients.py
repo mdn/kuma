@@ -31,7 +31,9 @@ class ForumClient(SearchClient):
 
         sc.SetFieldWeights({'title':4,'content':3})
 
-        
+        for k in filters:
+            if filters[k]:
+                sc.SetFilter(k,filters[k])       
 
         result = sc.Query(query,'forum_threads')
         if result:
@@ -54,14 +56,6 @@ class WikiClient(SearchClient):
         sc.ResetFilters()
 
         sc.SetFieldWeights({'title':4,'keywords':3})
-
-        if not filters.get('category',0):
-            filters['category'] = (1,17,18,)
-
-        if filters.get('locale',0):
-            filters['locale'] = (crc32(filters['locale']),)
-        else:
-            filters['locale'] = (crc32(locale),)
 
         for k in filters:
             if filters[k]:

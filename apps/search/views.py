@@ -15,7 +15,7 @@ WHERE_ALL = WHERE_WIKI | WHERE_FORUM
 def search(request):
     q = request.GET.get('q','search')
 
-    locale = request.GET.get('locale',request.LANGUAGE_CODE)
+    locale = (crc32(request.GET.get('locale',request.LANGUAGE_CODE)),)
 
     where = int(request.GET.get('w', WHERE_ALL))
 
