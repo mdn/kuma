@@ -112,6 +112,11 @@ SPHINX_PORT = 3312
 
 #
 # Sphinx results tweaking
-SPHINX_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
-SPHINX_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
-SPHINX_RESULTS_PER_PAGE = 10
+SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
+SEARCH_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
+SEARCH_RESULTS_PER_PAGE = 10
+
+# 
+# Search default settings
+SEARCH_DEFAULT_CATEGORIES = '1,17,18' # comma-separated string of category IDs
+SEARCH_DEFAULT_FORUM = '1' # default forum ID (eg: 1 on sumo, 5 on mosumo)
