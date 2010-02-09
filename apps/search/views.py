@@ -11,6 +11,7 @@ import jingo
 from sumo.models import ForumThread, WikiPage
 
 from .clients import ForumClient, WikiClient
+
 from .utils import crc32
 from sumo.models import *
 
@@ -29,29 +30,66 @@ def search(request):
 
     offset = int(request.GET.get('offset',0))
 
-    results = []
+    documents = []
 
     if (where & WHERE_WIKI):
-        wc = WikiClient()
-        category = map(int,request.GET.get('category','1,17,18').split(','))
+        wc = WikiClient() # Wiki SearchClient instance
+        filters_w = [] # filters for the wiki search
+
+        # Category filter
+        filters_w.append({
+            'filter' : 'category',
+            'value' : map(int,request.GET.get('category',settings.SEARCH_DEFAULT_CATEGORIES).split(',')),
+        })
+
+        # Tag filter
         if request.GET.get('tag'):
-            tag = map(crc32,request.GET.get('tag').split(','))
-        else:
-            tag = []
-        results += wc.query(q,{'locale':locale,'category':category,'tag':tag})
+            filters_w.append({
+                'filter' : 'tag',
+                'value' : map(crc32,request.GET.get('tag').split(',')),
+            })
+
+        # execute the query and append to documents
+        documents += wc.query(q,filters_w)
     
     if (where & WHERE_FORUM):
-        fc = ForumClient()
-        forums = map(int,request.GET.get('forums','1').split(','))
+        fc = ForumClient() # Forum SearchClient instance
+        filters_f = [] # filters for the forum search
+
+        # Forum filter
+        filters_f.append({
+            'filter' : 'forumId',
+            'value' : map(int,request.GET.get('forums',settings.SEARCH_DEFAULT_FORUM).split(',')),
+        })
+
+        # Status filter
+        if request.GET.get('status'):
+            filters_f.append({
+                'filter' : 'status',
+                'value' : (crc32(request.GET.get('status')),),
+            })
+
+        # Author filter
+        if request.GET.get('author'):
+            filters_f.append({
+                'filter' : 'author',
+                'value' : (crc32(request.GET.get('author')),crc32(request.GET.get('author')+' (anon)'),),
+            })
+
+        # Created filter
+        if request.GET.get('created'):
+            pass
         
-        results += fc.query(q, {'forumId':forums})
+        documents += fc.query(q, filters_f)
 
-    this_page = []
+    results = []
     for i in range(offset,offset+10):
-        if results[i]['attrs'].get('category',False):
-            this_page.append(WikiPage.objects.get(page_id=results[i]['id']))
+        if documents[i]['attrs'].get('category',False):
+            results.append(WikiPage.objects.get(page_id=documents[i]['id']))
         else:
-            this_page.append(ForumThread.objects.get(threadId=results[i]['id']))
+            results.append(ForumThread.objects.get(threadId=documents[i]['id']))
 
-    return render_to_response('search/results.html',{'results':len(results),'this_page':this_page,'q':q,})
+    return render_to_response('search/results.html',
+        {'num_results':len(documents),'results':results,'q':q,
+          'locale':request.LANGUAGE_CODE})
 

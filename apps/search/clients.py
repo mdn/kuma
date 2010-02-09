@@ -21,7 +21,7 @@ class ForumClient(SearchClient):
     Search the forum
     """
 
-    def query(self, query, filters={}):
+    def query(self, query, filters=[]):
         """
         Search through forum threads
         """
@@ -31,9 +31,14 @@ class ForumClient(SearchClient):
 
         sc.SetFieldWeights({'title':4,'content':3})
 
-        for k in filters:
-            if filters[k]:
-                sc.SetFilter(k,filters[k])       
+        for f in filters:
+            if f.get('range',False):
+                sc.SetFilterRange(f['filter'],f['min'],
+                  f['max'],f.get('exclude',False))
+            else:
+                sc.SetFilter(f['filter'],f['value'],
+                  f.get('exclude',False))
+
 
         result = sc.Query(query,'forum_threads')
         if result:
@@ -47,7 +52,7 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
 
-    def query(self,query,filters={}):
+    def query(self,query,filters=[]):
         """
         Search through the wiki (ie KB)
         """
@@ -57,9 +62,13 @@ class WikiClient(SearchClient):
 
         sc.SetFieldWeights({'title':4,'keywords':3})
 
-        for k in filters:
-            if filters[k]:
-                sc.SetFilter(k,filters[k])
+        for f in filters:
+            if f.get('range',False):
+                sc.SetFilterRange(f['filter'],f['min'],
+                  f['max'],f.get('exclude',False))
+            else:
+                sc.SetFilter(f['filter'],f['value'],
+                  f.get('exclude',False))
 
         result = sc.Query(query,'wiki_pages')
         if result:
