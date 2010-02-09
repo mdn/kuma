@@ -81,6 +81,13 @@ class WikiPage(ModelBase):
     def __unicode__(self):
         return self.pageName
 
-    def get_link(self):
-        return u'<a href="/%s/kb/%s">%s</a>' % self.lang, self.pageName, self.pageName
+    @property
+    def name(self):
+        return self.pageName
+
+    def get_url(self):
+        """
+        TODO: XXX
+        """
+        return u'/%s/kb/%s' % (self.lang, self.pageName,)
 
