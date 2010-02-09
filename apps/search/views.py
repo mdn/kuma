@@ -12,6 +12,7 @@ from sumo.models import ForumThread, WikiPage
 
 from .clients import ForumClient, WikiClient
 from .utils import crc32
+from sumo.models import *
 
 
 
@@ -25,6 +26,8 @@ def search(request):
     locale = (crc32(request.GET.get('locale',request.LANGUAGE_CODE)),)
 
     where = int(request.GET.get('w', WHERE_ALL))
+
+    offset = int(request.GET.get('offset',0))
 
     results = []
 
@@ -43,6 +46,12 @@ def search(request):
         
         results += fc.query(q, {'forumId':forums})
 
-    return jingo.render(request,'search/results.html',
-                        {'results':results,'q':q,})
+    this_page = []
+    for i in range(offset,offset+10):
+        if results[i]['attrs'].get('category',False):
+            this_page.append(WikiPage.objects.get(page_id=results[i]['id']))
+        else:
+            this_page.append(ForumThread.objects.get(threadId=results[i]['id']))
+
+    return render_to_response('search/results.html',{'results':len(results),'this_page':this_page,'q':q,})
 
