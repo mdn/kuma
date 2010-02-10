@@ -90,9 +90,9 @@ def search(request):
     results = []
     for i in range(offset, offset + 10):
         if documents[i]['attrs'].get('category', False):
-            results.append(WikiPage.objects.get(page_id=documents[i]['id']))
+            results.append(WikiPage.objects.get(pk=documents[i]['id']))
         else:
-            results.append(ForumThread.objects.get(threadId=documents[i]['id']))
+            results.append(ForumThread.objects.get(pk=documents[i]['id']))
 
     return jingo.render(request, 'search/results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
