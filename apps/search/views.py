@@ -1,12 +1,19 @@
 # Create your views here.
 
-from .clients import *
-from django.shortcuts import render_to_response
+import datetime
+
 from django.http import Http404, HttpResponseRedirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-import datetime
+
+import jingo
+
+from sumo.models import ForumThread, WikiPage
+
+from .clients import ForumClient, WikiClient
 from .utils import crc32
+
+
 
 WHERE_WIKI = 1
 WHERE_FORUM = 2
@@ -36,5 +43,6 @@ def search(request):
         
         results += fc.query(q, {'forumId':forums})
 
-    return render_to_response('search/results.html',{'results':results,'q':q,})
+    return jingo.render(request,'search/results.html',
+                        {'results':results,'q':q,})
 
