@@ -1,6 +1,25 @@
 from django.db import models
 
-class ForumThread(models.Model):
+import caching.base
+
+# Our apps should subclass BaseManager instead of models.Manager or
+# caching.base.CachingManager directly.
+ManagerBase = caching.base.CachingManager
+
+class ModelBase(caching.base.CachingMixin, models.Model):
+    """
+    Base class for SUMO models to abstract some common features.
+
+    * Caching.
+    """
+
+    objects = ManagerBase()
+
+    class Meta:
+        abstract = True
+
+
+class ForumThread(ModelBase):
     threadId = models.AutoField(primary_key=True)
     object = models.CharField(max_length=255)
     objectType = models.CharField(max_length=32)
@@ -29,7 +48,7 @@ class ForumThread(models.Model):
     def __unicode__(self):
         return self.title
 
-class WikiPage(models.Model):
+class WikiPage(ModelBase):
     page_id = models.AutoField(primary_key=True)
     pageName = models.CharField(max_length=160,unique=True)
     hits = models.IntegerField()
