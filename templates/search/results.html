@@ -4,6 +4,6 @@
 
 <ul>
     {% for doc in results %}
-    <li><a href="{{ doc.get_url }}">{{ doc.name }}</a></li>
+    <li><a href="{{ doc.get_url() }}">{{ doc.name }}</a></li>
     {% endfor %}
 </ul>

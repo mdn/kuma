@@ -48,6 +48,17 @@ class ForumThread(ModelBase):
     def __unicode__(self):
         return self.title
 
+    @property
+    def name(self):
+        return self.title
+
+    def get_url(self):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return u'/en/forum/%s/%s' % (self.object, self.threadId,)
+
+
 class WikiPage(ModelBase):
     page_id = models.AutoField(primary_key=True)
     pageName = models.CharField(max_length=160,unique=True)
@@ -87,7 +98,7 @@ class WikiPage(ModelBase):
 
     def get_url(self):
         """
-        TODO: XXX
+        TODO: Once we can use reverse(), use reverse()
         """
         return u'/%s/kb/%s' % (self.lang, self.pageName,)
 
