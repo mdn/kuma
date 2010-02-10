@@ -41,7 +41,7 @@ def search(request):
         # Locale filter
         filters_w.append({
             'filter': 'lang',
-            'value': (locale,),
+            'value': locale,
         })
 
         # Tag filter
@@ -88,7 +88,7 @@ def search(request):
         documents += fc.query(q, filters_f)
 
     results = []
-    for i in range(offset, offset+10):
+    for i in range(offset, offset + 10):
         if documents[i]['attrs'].get('category', False):
             results.append(WikiPage.objects.get(page_id=documents[i]['id']))
         else:
