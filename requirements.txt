@@ -3,6 +3,7 @@
 -e git://github.com/jbalogh/django-multidb-router.git#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
 Jinja2==2.2.1
+-e git://github.com/jbalogh/jingo.git#egg=jingo
 MySQL-python==1.2.3c1
 python-memcached==1.45
 Werkzeug==0.5.1
