@@ -32,6 +32,11 @@ DATABASE_ROUTERS = ('multidb.MasterSlaveRouter',)
 # Put the aliases for your slave databases in this list
 SLAVE_DATABASES = []
 
+# Cache Settings
+#CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
+#CACHE_PREFIX = 'sumo:'
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
