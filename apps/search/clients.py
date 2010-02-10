@@ -1,6 +1,7 @@
-from .sphinxapi import SphinxClient
 from django.conf import settings
-from .utils import crc32
+
+from .sphinxapi import SphinxClient
+
 
 class SearchClient(object):
     """
@@ -9,19 +10,17 @@ class SearchClient(object):
 
     def __init__(self):
         self.sphinx = SphinxClient()
-        self.sphinx.SetServer(settings.SPHINX_HOST,settings.SPHINX_PORT)
+        self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
 
-    """
-    All subclasses must implement this query method
-    """
-    def query(self,query,filters): abstract
+    def query(self, query, filters): abstract
+
 
 class ForumClient(SearchClient):
     """
     Search the forum
     """
 
-    def query(self, query, filters = None):
+    def query(self, query, filters=None):
         """
         Search through forum threads
         """
@@ -32,7 +31,7 @@ class ForumClient(SearchClient):
         sc = self.sphinx
         sc.ResetFilters()
 
-        sc.SetFieldWeights({'title':4, 'content':3})
+        sc.SetFieldWeights({'title': 4, 'content': 3})
 
         for f in filters:
             if f.get('range', False):
@@ -56,7 +55,7 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
 
-    def query(self, query, filters = None):
+    def query(self, query, filters=None):
         """
         Search through the wiki (ie KB)
         """
@@ -67,7 +66,7 @@ class WikiClient(SearchClient):
         sc = self.sphinx
         sc.ResetFilters()
 
-        sc.SetFieldWeights({'title':4, 'keywords':3})
+        sc.SetFieldWeights({'title': 4, 'keywords': 3})
 
         for f in filters:
             if f.get('range', False):
@@ -83,4 +82,3 @@ class WikiClient(SearchClient):
             return result['matches']
         else:
             return []
-

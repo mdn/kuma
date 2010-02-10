@@ -6,6 +6,7 @@ import caching.base
 # caching.base.CachingManager directly.
 ManagerBase = caching.base.CachingManager
 
+
 class ModelBase(caching.base.CachingMixin, models.Model):
     """
     Base class for SUMO models to abstract some common features.
@@ -28,9 +29,9 @@ class ForumThread(ModelBase):
     commentDate = models.IntegerField()
     hits = models.IntegerField()
     type = models.CharField(max_length=1)
-    points = models.DecimalField(max_digits=8,decimal_places=2)
+    points = models.DecimalField(max_digits=8, decimal_places=2)
     votes = models.IntegerField()
-    average = models.DecimalField(max_digits=8,decimal_places=4)
+    average = models.DecimalField(max_digits=8, decimal_places=4)
     title = models.CharField(max_length=255)
     data = models.TextField()
     description = models.CharField(max_length=200)
@@ -61,7 +62,7 @@ class ForumThread(ModelBase):
 
 class WikiPage(ModelBase):
     page_id = models.AutoField(primary_key=True)
-    pageName = models.CharField(max_length=160,unique=True)
+    pageName = models.CharField(max_length=160, unique=True)
     hits = models.IntegerField()
     data = models.TextField()
     description = models.CharField(max_length=200)
@@ -77,7 +78,7 @@ class WikiPage(ModelBase):
     cache = models.TextField()
     wiki_cache = models.IntegerField()
     cache_timestamp = models.IntegerField()
-    pageRank = models.DecimalField(max_digits=4,decimal_places=3)
+    pageRank = models.DecimalField(max_digits=4, decimal_places=3)
     creator = models.CharField(max_length=200)
     page_size = models.PositiveIntegerField()
     lang = models.CharField(max_length=16)
@@ -101,4 +102,3 @@ class WikiPage(ModelBase):
         TODO: Once we can use reverse(), use reverse()
         """
         return u'/%s/kb/%s' % (self.lang, self.pageName,)
-

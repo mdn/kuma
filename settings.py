@@ -23,7 +23,7 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        'OPTIONS' : {'init_command': 'SET storage_engine=InnoDB'},
+        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     }
 }
 
@@ -116,7 +116,7 @@ SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
 SEARCH_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
 SEARCH_RESULTS_PER_PAGE = 10
 
-# 
+#
 # Search default settings
 SEARCH_DEFAULT_CATEGORIES = '1,17,18' # comma-separated string of category IDs
 SEARCH_DEFAULT_FORUM = '1' # default forum ID (eg: 1 on sumo, 5 on mosumo)
