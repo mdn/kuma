@@ -105,6 +105,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
 )
 
+TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
+
 #
 # Connection information for Sphinx search
 SPHINX_HOST = '127.0.0.1'
