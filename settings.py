@@ -103,6 +103,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'sumo',
+    'search',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
