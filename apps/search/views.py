@@ -40,7 +40,7 @@ def search(request):
 
         # Locale filter
         filters_w.append({
-            'filter': 'lang',
+            'filter': 'locale',
             'value': locale,
         })
 
