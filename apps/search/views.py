@@ -89,12 +89,15 @@ def search(request):
 
     results = []
     for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
-        if i >= len(documents):
+        try:
+            if documents[i]['attrs'].get('category', False):
+                results.append(WikiPage.objects.get(pk=documents[i]['id']))
+            else:
+                results.append(ForumThread.objects.get(pk=documents[i]['id']))
+        except IndexError:
             break
-        if documents[i]['attrs'].get('category', False):
-            results.append(WikiPage.objects.get(pk=documents[i]['id']))
-        else:
-            results.append(ForumThread.objects.get(pk=documents[i]['id']))
+        except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
+            continue
 
     return jingo.render(request, 'search/results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
