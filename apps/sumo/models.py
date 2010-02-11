@@ -69,7 +69,7 @@ class WikiPage(ModelBase):
     desc_auto = models.CharField(max_length=1)
     lastModif = models.IntegerField(null=True)
     comment = models.CharField(max_length=200, null=True)
-    version = models.IntegerField(null=True,default=0)
+    version = models.IntegerField(null=True, default=0)
     user = models.CharField(max_length=200, null=True)
     ip = models.CharField(max_length=15, null=True)
     flag = models.CharField(max_length=1, null=True)
@@ -101,4 +101,5 @@ class WikiPage(ModelBase):
         """
         TODO: Once we can use reverse(), use reverse()
         """
-        return u'/%s/kb/%s' % (self.lang, self.pageName,)
+        name = self.pageName.replace(' ', '+')
+        return u'/%s/kb/%s' % (self.lang, name,)
