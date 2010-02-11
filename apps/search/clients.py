@@ -11,7 +11,7 @@ class SearchClient(object):
     def __init__(self):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
-        self.sphinx.SetLimits(0, 1000)
+        self.sphinx.SetLimits(0, settings.SEARCH_MAX_RESULTS)
 
     def query(self, query, filters): abstract
 

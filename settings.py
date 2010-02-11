@@ -90,7 +90,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'kitsune.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     path('templates'),
@@ -118,6 +118,7 @@ SPHINX_PORT = 3312
 # Sphinx results tweaking
 SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
 SEARCH_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
+SEARCH_MAX_RESULTS = 1000
 SEARCH_RESULTS_PER_PAGE = 10
 
 #
