@@ -23,7 +23,7 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        'OPTIONS' : {'init_command': 'SET storage_engine=InnoDB'},
+        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     }
 }
 
@@ -90,7 +90,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'kitsune.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates"
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     path('templates'),
@@ -103,7 +103,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'sumo',
+    'search',
 )
+
+TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
 #
 # Connection information for Sphinx search
@@ -112,5 +116,12 @@ SPHINX_PORT = 3312
 
 #
 # Sphinx results tweaking
-SPHINX_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
-SPHINX_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
+SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
+SEARCH_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
+SEARCH_MAX_RESULTS = 1000
+SEARCH_RESULTS_PER_PAGE = 10
+
+#
+# Search default settings
+SEARCH_DEFAULT_CATEGORIES = '1,17,18' # comma-separated string of category IDs
+SEARCH_DEFAULT_FORUM = '1' # default forum ID (eg: 1 on sumo, 5 on mosumo)

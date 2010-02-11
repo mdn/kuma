@@ -1,6 +1,7 @@
-from .sphinxapi import SphinxClient
 from django.conf import settings
-from .utils import crc32
+
+from .sphinxapi import SphinxClient
+
 
 class SearchClient(object):
     """
@@ -9,33 +10,41 @@ class SearchClient(object):
 
     def __init__(self):
         self.sphinx = SphinxClient()
-        self.sphinx.SetServer(settings.SPHINX_HOST,settings.SPHINX_PORT)
+        self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
+        self.sphinx.SetLimits(0, settings.SEARCH_MAX_RESULTS)
 
-    """
-    All subclasses must implement this query method
-    """
-    def query(self,query,filters): abstract
+    def query(self, query, filters): abstract
+
 
 class ForumClient(SearchClient):
     """
     Search the forum
     """
 
-    def query(self, query, filters={}):
+    def query(self, query, filters=None):
         """
         Search through forum threads
         """
 
+        if filters is None:
+            filters = []
+
         sc = self.sphinx
         sc.ResetFilters()
 
-        sc.SetFieldWeights({'title':4,'content':3})
+        sc.SetFieldWeights({'title': 4, 'content': 3})
 
-        for k in filters:
-            if filters[k]:
-                sc.SetFilter(k,filters[k])       
+        for f in filters:
+            if f.get('range', False):
+                sc.SetFilterRange(f['filter'], f['min'],
+                                  f['max'], f.get('exclude', False))
+            else:
+                sc.SetFilter(f['filter'], f['value'],
+                             f.get('exclude', False))
 
-        result = sc.Query(query,'forum_threads')
+
+        result = sc.Query(query, 'forum_threads')
+
         if result:
             return result['matches']
         else:
@@ -47,23 +56,30 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
 
-    def query(self,query,filters={}):
+    def query(self, query, filters=None):
         """
         Search through the wiki (ie KB)
         """
 
+        if filters is None:
+            filters = []
+
         sc = self.sphinx
         sc.ResetFilters()
 
-        sc.SetFieldWeights({'title':4,'keywords':3})
+        sc.SetFieldWeights({'title': 4, 'keywords': 3})
 
-        for k in filters:
-            if filters[k]:
-                sc.SetFilter(k,filters[k])
+        for f in filters:
+            if f.get('range', False):
+                sc.SetFilterRange(f['filter'], f['min'],
+                                  f['max'], f.get('exclude', False))
+            else:
+                sc.SetFilter(f['filter'], f['value'],
+                             f.get('exclude', False))
 
-        result = sc.Query(query,'wiki_pages')
+        result = sc.Query(query, 'wiki_pages')
+
         if result:
             return result['matches']
         else:
             return []
-

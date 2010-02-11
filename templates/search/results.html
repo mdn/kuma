@@ -1,9 +1,9 @@
 <h1>Search Results</h1>
 
-<p>Results for {{ q }}</p>
+<p>About {{ num_results }} results for <strong>{{ q }}</strong></p>
 
 <ul>
     {% for doc in results %}
-    <li>{{doc}}</li>
+    <li><a href="{{ doc.get_url() }}">{{ doc.name }}</a></li>
     {% endfor %}
 </ul>

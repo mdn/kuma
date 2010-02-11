@@ -11,7 +11,8 @@ ipython==0.10
 sqlparse==0.1.1
 Fabric==0.9.0
 
--e git://github.com/jbalogh/django-nose.git@1482c243ba698a28e0d14e59185ae63bcf4ea36b#egg=django_nose
+-e git://github.com/jbalogh/django-nose.git@6f060d49ee193a05734704820f3fea92ee1759d2#egg=django_nose
+-e git://github.com/jbalogh/test-utils.git#egg=test-utils
 nose==0.11.1
 coverage==3.2b4
 selenium==1.0.1
