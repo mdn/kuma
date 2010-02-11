@@ -88,7 +88,9 @@ def search(request):
         documents += fc.query(q, filters_f)
 
     results = []
-    for i in range(offset, offset + 10):
+    for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
+        if i >= len(documents):
+            break
         if documents[i]['attrs'].get('category', False):
             results.append(WikiPage.objects.get(pk=documents[i]['id']))
         else:
