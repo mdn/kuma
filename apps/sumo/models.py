@@ -53,6 +53,10 @@ class ForumThread(ModelBase):
     def name(self):
         return self.title
 
+    @property
+    def search_summary(self):
+        return self.summary
+
     def get_url(self):
         """
         TODO: Once we can use reverse(), use reverse()
@@ -96,6 +100,10 @@ class WikiPage(ModelBase):
     @property
     def name(self):
         return self.pageName
+
+    @property
+    def search_summary(self):
+        return self.description
 
     def get_url(self):
         """

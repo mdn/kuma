@@ -101,4 +101,4 @@ def search(request):
 
     return jingo.render(request, 'search/results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
-          'locale': request.LANGUAGE_CODE, })
+          'locale': request.LANGUAGE_CODE, 'w': where})
