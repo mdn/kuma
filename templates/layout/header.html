@@ -5,9 +5,13 @@
 
 <title>{% block title %}{% endblock %} | Firefox Support</title>
 
-<link rel="icon" href="{{ favicon }}" />
+<link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL}}img/favicon.ico">
 
 <link rel="stylesheet" type="text/css" href="http://support.mozilla.com/minify.php/css_styles_mozcommon;css_styles_mozkb" />
+</head>
+<body class="mini">
+<div id="wrap" class="mini"{% if rtl %} dir="rtl"{% endif %}>
+<div id="doc">
 
 {# start #nav-access #}
 <ul id="nav-access">
