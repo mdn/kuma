@@ -1,11 +1,11 @@
 {% include 'layout/header.html' %}
 
-    <div class="feature-contents">
-
-    <div id="breadcrumbs"><ul>
-        <li><a href="{{ locale }}/kb/">Firefox Support</a></li>
-        <li class="divider">/</li><li>{{ self.title() }}</li>
-    </ul></div>
+{% block breadcrumbs %}
+<div id="breadcrumbs"><ul>
+    <li><a href="{{ locale }}/kb/">Firefox Support</a></li>
+    <li class="divider">/</li><li>{{ self.title() }}</li>
+</ul></div>
+{% endblock %}
 
 
     </div>{# end .feature-contents #}
