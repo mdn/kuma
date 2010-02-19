@@ -1,79 +1,51 @@
 <!DOCTYPE html>
-<html lang="{{ locale }}">
+<html lang="{{ locale }}" dir="ltr">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<title>{% block title %}{% endblock %} | Firefox Support</title>
+<title>{% block title %}{% endblock %}{% print _("| Firefox Support") %}</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL}}img/favicon.ico">
+<meta charset="utf-8">
 
-<link rel="stylesheet" type="text/css" href="http://support.mozilla.com/minify.php/css_styles_mozcommon;css_styles_mozkb" />
+<link rel="stylesheet" href="{{ MEDIA_URL}}css/main.css">
+
 </head>
-<body class="mini">
-<div id="wrap" class="mini"{% if rtl %} dir="rtl"{% endif %}>
-<div id="doc">
+<body>
 
-{# start #nav-access #}
 <ul id="nav-access">
     <li><a href="#nav-main">skip to navigation</a></li>
     <li><a href="#switch">switch language</a></li>
 </ul>
-{# end #nav-access #}
 
-{# start #header #}
 <div id="header" role="banner">
-
-<h1><a href="http://www.mozilla.com/" title="{tr}Back to Mozilla.com{/tr}"><img src="http://support.mozilla.com/styles/mozcommon/mozilla-logo.png" height="56" width="145" alt="Mozilla" /></a></h1>
-<div id="nav-main" class="yuimenubar yuimenubarnav" role="navigation">
-  <div class="bd">
-
-    <ul class="first-of-type">
-<li id="menu_products" class="yuimenubaritem"><a href="http://www.mozilla.com/en-US/products/">Products</a>
-      <div class="yuimenu">
-        <div class="bd">
-          <ul>
-<li id="submenu_firefox" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/products/firefox/">Firefox</a></li><li id="submenu_thunderbird" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/products/thunderbird/">Thunderbird</a></li></ul>
+    <h1><a href="http://www.mozilla.com/" title="{% print _("Back to Mozilla.com") %}"><img src="http://support.mozilla.com/styles/mozcommon/mozilla-logo.png" height="56" width="145" alt="Mozilla" /></a></h1>
+    <div id="nav-main" class="yuimenubar yuimenubarnav" role="navigation">
+        <div class="bd"><ul class="first-of-type">
+            <li id="menu_products" class="yuimenubaritem"><a href="http://www.mozilla.com/products/">Products</a>
+                <div class="yuimenu"><div class="bd">
+                    <ul><li id="submenu_firefox" class="yuimenuitem"><a href="http://www.mozilla.com/products/firefox/">Firefox</a></li><li id="submenu_thunderbird" class="yuimenuitem"><a href="http://www.mozilla.com/products/thunderbird/">Thunderbird</a></li></ul>
+                </div></div>
+            </li>
+            <li id="menu_addons" class="yuimenubaritem"><a href="https://addons.mozilla.org/">Add-ons</a>
+                <div class="yuimenu"><div class="bd">
+                    <ul><li id="submenu_addons_all" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/">All Add-ons</a></li><li id="submenu_addons_recommended" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/recommended">Recommended</a></li><li id="submenu_addons_popular" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:1/cat:all?sort=popular">Popular</a></li><li id="submenu_addons_themes" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:2">Themes</a></li><li id="submenu_addons_search" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:4">Search Engines</a></li><li id="submenu_addons_plugins" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:7">Plugins</a></li></ul>
+                </div></div>
+            </li>
+            <li id="menu_support" class="yuimenubaritem"><span class="current">Support</span>
+                <div class="yuimenu"><div class="bd">
+                    <ul><li id="submenu_support_kb" class="yuimenuitem"><a href="http://support.mozilla.com/{if isset($currentLocale)}{$currentLocale}/{/if}kb/">Firefox Support</a></li><li id="submenu_support_mobile" class="yuimenuitem"><a href="http://mobile.support.mozilla.com/{if isset($currentLocale)}{$currentLocale}/{/if}kb/">Mobile Support</a></li><li id="submenu_support_thunderbird" class="yuimenuitem"><a href="http://www.mozilla.org/support/thunderbird/">Thunderbird Support</a></li></ul>
+                </div></div>
+            </li><li id="menu_community" class="yuimenubaritem"><a href="http://www.mozilla.com/manyfaces/">Community</a>
+                <div class="yuimenu"><div class="bd">
+                    <ul><li id="submenu_community_addons" class="yuimenuitem"><a href="https://addons.mozilla.org/">Add-ons</a></li><li id="submenu_community_bugzilla" class="yuimenuitem"><a href="https://bugzilla.mozilla.org/">Bugzilla</a></li><li id="submenu_community_devmo" class="yuimenuitem"><a href="http://developer.mozilla.org/">Mozilla Developer Center</a></li><li id="submenu_community_labs" class="yuimenuitem"><a href="http://labs.mozilla.com/">Mozilla Labs</a></li><li id="submenu_community_mozillaorg" class="yuimenuitem"><a href="http://www.mozilla.org/">Mozilla.org</a></li><li id="submenu_community_mozillazine" class="yuimenuitem"><a href="http://www.mozillazine.org/">MozillaZine</a></li><li id="submenu_community_planet" class="yuimenuitem"><a href="http://planet.mozilla.org/">Planet Mozilla</a></li><li id="submenu_community_qmo" class="yuimenuitem"><a href="http://quality.mozilla.org/">QMO</a></li><li id="submenu_community_spreadfirefox" class="yuimenuitem"><a href="http://www.spreadfirefox.com/">SpreadFirefox</a></li><li id="submenu_community_support" class="yuimenuitem"><span class="current">Support</span></li></ul>
+                </div></div>
+            </li><li id="menu_aboutus" class="yuimenubaritem"><a href="http://www.mozilla.com/about/">About</a>
+                <div class="yuimenu"><div class="bd">
+                    <ul><li id="submenu_about" class="yuimenuitem"><a href="http://www.mozilla.com/about/whatismozilla.html">What is Mozilla?</a></li><li id="submenu_getinvolved" class="yuimenuitem"><a href="http://www.mozilla.com/about/get-involved.html">Get Involved</a></li><li id="submenu_press" class="yuimenuitem"><a href="http://www.mozilla.com/press/">Press Center</a></li><li id="submenu_careers" class="yuimenuitem"><a href="http://www.mozilla.com/about/careers.html">Careers</a></li><li id="submenu_partnerships" class="yuimenuitem"><a href="http://www.mozilla.com/about/partnerships.html">Partnerships</a></li><li id="submenu_licensing" class="yuimenuitem"><a href="http://www.mozilla.com/about/licensing.html">Licensing</a></li><li id="submenu_blog" class="yuimenuitem"><a href="http://blog.mozilla.com/">Blog</a></li><li id="submenu_store" class="yuimenuitem"><a href="http://store.mozilla.org/">Store</a></li><li id="submenu_contact" class="yuimenuitem"><a href="http://www.mozilla.com/about/contact.html">Contact Us</a></li></ul>
+                </div></div>
+            </li></ul>
         </div>
-      </div>
-
-      </li><li id="menu_addons" class="yuimenubaritem"><a href="https://addons.mozilla.org/">Add-ons</a>
-      <div class="yuimenu">
-        <div class="bd">
-          <ul>
-<li id="submenu_addons_all" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/">All Add-ons</a></li><li id="submenu_addons_recommended" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/recommended">Recommended</a></li><li id="submenu_addons_popular" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:1/cat:all?sort=popular">Popular</a></li><li id="submenu_addons_themes" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:2">Themes</a></li><li id="submenu_addons_search" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:4">Search Engines</a></li><li id="submenu_addons_plugins" class="yuimenuitem"><a href="https://addons.mozilla.org/firefox/browse/type:7">Plugins</a></li></ul>
-        </div>
-
-      </div>
-      </li><li id="menu_support" class="yuimenubaritem"><span class="current">Support</span>
-      <div class="yuimenu">
-        <div class="bd">
-          <ul>
-<li id="submenu_support_kb" class="yuimenuitem"><a href="http://support.mozilla.com/{if isset($currentLocale)}{$currentLocale}/{/if}kb/">Firefox Support</a></li><li id="submenu_support_mobile" class="yuimenuitem"><a href="http://mobile.support.mozilla.com/{if isset($currentLocale)}{$currentLocale}/{/if}kb/">Mobile Support</a></li><li id="submenu_support_thunderbird" class="yuimenuitem"><a href="http://www.mozilla.org/support/thunderbird/">Thunderbird Support</a></li></ul>
-        </div>
-
-      </div>
-      </li><li id="menu_community" class="yuimenubaritem"><a href="http://www.mozilla.com/en-US/manyfaces/">Community</a>
-      <div class="yuimenu">
-        <div class="bd">
-          <ul>
-<li id="submenu_community_addons" class="yuimenuitem"><a href="https://addons.mozilla.org/">Add-ons</a></li><li id="submenu_community_bugzilla" class="yuimenuitem"><a href="https://bugzilla.mozilla.org/">Bugzilla</a></li><li id="submenu_community_devmo" class="yuimenuitem"><a href="http://developer.mozilla.org/">Mozilla Developer Center</a></li><li id="submenu_community_labs" class="yuimenuitem"><a href="http://labs.mozilla.com/">Mozilla Labs</a></li><li id="submenu_community_mozillaorg" class="yuimenuitem"><a href="http://www.mozilla.org/">Mozilla.org</a></li><li id="submenu_community_mozillazine" class="yuimenuitem"><a href="http://www.mozillazine.org/">MozillaZine</a></li><li id="submenu_community_planet" class="yuimenuitem"><a href="http://planet.mozilla.org/">Planet Mozilla</a></li><li id="submenu_community_qmo" class="yuimenuitem"><a href="http://quality.mozilla.org/">QMO</a></li><li id="submenu_community_spreadfirefox" class="yuimenuitem"><a href="http://www.spreadfirefox.com/">SpreadFirefox</a></li><li id="submenu_community_support" class="yuimenuitem"><span class="current">Support</span></li></ul>
-
-        </div>
-      </div>
-      </li><li id="menu_aboutus" class="yuimenubaritem"><a href="http://www.mozilla.com/en-US/about/">About</a>
-      <div class="yuimenu">
-        <div class="bd">
-          <ul>
-<li id="submenu_about" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/about/whatismozilla.html">What is Mozilla?</a></li><li id="submenu_getinvolved" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/about/get-involved.html">Get Involved</a></li><li id="submenu_press" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/press/">Press Center</a></li><li id="submenu_careers" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/about/careers.html">Careers</a></li><li id="submenu_partnerships" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/about/partnerships.html">Partnerships</a></li><li id="submenu_licensing" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/about/licensing.html">Licensing</a></li><li id="submenu_blog" class="yuimenuitem"><a href="http://blog.mozilla.com/">Blog</a></li><li id="submenu_store" class="yuimenuitem"><a href="http://store.mozilla.org/">Store</a></li><li id="submenu_contact" class="yuimenuitem"><a href="http://www.mozilla.com/en-US/about/contact.html">Contact Us</a></li></ul>
-
-        </div>
-      </div>
-      </li></ul>
-  </div>
+    </div>
 </div>
+<br class="clear"/>
 
-    <hr class="hide" />
-</div>
-{# end #header #}
-
-<hr class="hide" />
+<div id="content">
