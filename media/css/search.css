@@ -1,0 +1,69 @@
+.search-query {
+    border: 1px solid #E16601;
+    width: 270px;
+    margin-right: 5px;
+}
+.btn-large {
+    text-transform: none;
+}
+
+.pager {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.pager li {
+    float: left;
+}
+
+.pager a, .pager span {
+    padding: 0 4px;
+}
+
+div.search-count {
+    font-size: 14px;
+    padding: 0.2em 0 0.3em;
+}
+
+/* Bug 525944 - Using pspell for spelling suggestions */
+div.search-suggestion {
+    color: #cc4047;
+    font-size: 120%;
+    padding: .3em 0;
+}
+
+span.corrected {
+    font-weight: bold;
+}
+/* END Bug 525944 */
+
+/* Bug 527859 - Add search form to top and bottom of results */
+div.search-refine {
+    margin: .5em 0;
+}
+
+input.search-refine-query {
+    padding: 4px 2px 2px;
+}
+
+input.search-refine-submit {
+    text-transform: none;
+    padding: 2px 4px;
+}
+input.search-refine-submit:hover {
+    background-color: #f90;
+}
+/* END Bug 527859 */
+/* Bug 501880 -- advanced search */
+.show-search-tabs {
+    padding: 0.5em;
+    display: inline-block;
+}
+input.search-empty-query {
+    padding: 5px;
+}
+input.search-empty-submit {
+    -moz-border-radius: 8px;
+    padding: 5px 10px;
+}
+/* END Bug 501880 */

@@ -1,29 +1,40 @@
 {% extends "layout/base.html" %}
-
-{% block title %}
-Search Firefox Support
-{% endblock %}
+{% set title = _("Search") %}
+{% set scripts = ('css/search.css',) %}
 
 {% block content %}
-<div class="searchpage">
+<div class="topbar"></div>
+
+<div id="content-inner">
     <div id="basic-search" class="search-refine">
         <form role="search" method="get" action="search">
             <input type="hidden" value="{% if w %}{{ w }}{% else %}3{% endif %}" name="w">
-            <input type="hidden" value="en" name="locale">
-            <input type="text" class="search-refine-query" value="{{ q }}" id="q_1" name="q">
-            <input type="submit" class="search-refine-submit btn-large" value="Search">
+            <input type="hidden" value="{{ locale }}" name="locale">
+            <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
+            <input type="submit" class="search-refine-submit btn-large" value="{% print _("Search") %}">
         </form>
     </div>
 
-    <div class="searchtitle">
-        About {{ num_results }} search results
-            for <strong>{{ q }}</strong>
-            in <strong>English</strong>
+    <div class="search-count">
+        {% print _("About {num_results} search results for {q} in {lang_name}")|f(num_results=num_results, q=q, lang_name='English') %}
     </div>
 
-    <div class="searchresults">
-        <div class="resultspagelinks resultspagelinkstop">
-             <span class="current_page">1</span>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">2</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=20" class="neatlink">3</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=30" class="neatlink">4</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=40" class="neatlink">5</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=50" class="neatlink">6</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=60" class="neatlink">7</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=70" class="neatlink">8</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=80" class="neatlink">9</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=90" class="neatlink">10</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=100" class="neatlink">11</a>  <span class="pages-hidden">...</span>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">Next ›</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=1080" class="neatlink">Last »</a> 
+    <div class="search-results">
+        <div class="pager">
+            <span class="current_page">1</span>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">2</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=20" class="neatlink">3</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=30" class="neatlink">4</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=40" class="neatlink">5</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=50" class="neatlink">6</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=60" class="neatlink">7</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=70" class="neatlink">8</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=80" class="neatlink">9</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=90" class="neatlink">10</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=100" class="neatlink">11</a>
+            <span class="pages-hidden">...</span>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">Next &rsaquo;</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=1080" class="neatlink">Last &raquo;</a>
         </div>
 
 
@@ -40,10 +51,27 @@ Search Firefox Support
         <div class="oneresulthr"></div>
         {% endfor %}
 
-        <div class="resultspagelinks">
-            <span class="current_page">1</span>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">2</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=20" class="neatlink">3</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=30" class="neatlink">4</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=40" class="neatlink">5</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=50" class="neatlink">6</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=60" class="neatlink">7</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=70" class="neatlink">8</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=80" class="neatlink">9</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=90" class="neatlink">10</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=100" class="neatlink">11</a>  <span class="pages-hidden">...</span>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">Next ›</a>  <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=1080" class="neatlink">Last »</a> 
+
+        <div class="pager">
+            <span class="current_page">1</span>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">2</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=20" class="neatlink">3</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=30" class="neatlink">4</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=40" class="neatlink">5</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=50" class="neatlink">6</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=60" class="neatlink">7</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=70" class="neatlink">8</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=80" class="neatlink">9</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=90" class="neatlink">10</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=100" class="neatlink">11</a>
+            <span class="pages-hidden">...</span>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">Next &rsaquo;</a>
+            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=1080" class="neatlink">Last &raquo;</a>
         </div>
+
     </div>
         <p>Can't find what you're looking for? <a href="/kb/Ask+a+question">Ask a support question instead!</a></p>
-</div>
+</div><!-- /#content-inner -->
+<br class="clear" />
+<div class="botbar"></div>
 {% endblock %}

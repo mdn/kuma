@@ -686,6 +686,11 @@ body.html-rtl {
     clear: both;
 }
 
+a {
+    color: #0489B7;
+    text-decoration: none;
+}
+
 /*----------------------------------
     Header
 ----------------------------------*/
@@ -970,5 +975,48 @@ body.html-rtl {
     width: 920px;
     margin: auto;
     text-align: left;
+    font-size: 12px;
 }
 
+#content-inner {
+    width: 680px;
+    padding: 0 20px;
+}
+
+.topbar {
+    background: url(../img/topbar.png) no-repeat top left;
+    height: 20px;
+    width: 723px; 
+    margin-top: 30px;
+}
+
+.botbar {
+    background: url(../img/botbar.png) no-repeat top left;
+    height: 20px;
+    width: 723px; 
+}
+
+/* orange buttons */
+.btn-small, .btn-large {
+    border: 0;
+    cursor: pointer;
+    background: #e26000;
+    text-transform: uppercase;
+    text-shadow: #b85f06 -1px 1px 1px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    color: #fff;
+}
+.btn-small {
+    font: bold 11px Verdana, sans-serif;
+    padding: 2px 5px;
+}
+.btn-large {
+    font: bold 12px Verdana, sans-serif;
+    padding: 5px;
+}
+.btn-small:hover, .btn-large:hover {
+    background: #ff9900;
+    text-decoration: none;
+}
+/* end orange buttons */
