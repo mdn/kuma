@@ -1,15 +1,7 @@
 {% include 'layout/header.html' %}
 
-{% block breadcrumbs %}
-<div id="breadcrumbs"><ul>
-    <li><a href="{{ locale }}/kb/">Firefox Support</a></li>
-    <li class="divider">/</li><li>{{ self.title() }}</li>
-</ul></div>
-{% endblock %}
-
-
-    </div>{# end .feature-contents #}
-
+{% block sidebar %}
+<div id="sidebar">
     <ul id="side-menu">
         <li class="first"><h3><a href="/kb/">Firefox Support</a></h3></li>
         <li><a href="/kb/">Knowledge Base</a></li>
@@ -18,30 +10,30 @@
         <li><a href="/kb/Other+Firefox+support">Other Firefox Support</a></li>
         <li><a href="/kb/How+to+contribute">How to Contribute</a></li>
     {% if session %}
-        <li><a href="tiki-user_preferences.php">My Account</a></li>
-        <li><a href="tiki-logout.php">Log Out</a></li>
+        <li><a href="/tiki-user_preferences.php">My Account</a></li>
+        <li><a href="/tiki-logout.php">Log Out</a></li>
     {% else %}
         <li><a href="/tiki-login.php">Log In</a></li>
     {% endif %}
     </ul>
+</div>
+{% endblock %}
 
-    <div id="c1c2">
-        <div id="wrapper">
-            <div id="col1" class="marginright">
-                <div class="marginleft content">
-                    <div class="clearfix cbb contentwrapper" role="main">
-                        <div class="topbar"></div>
-                        {% block content %}content{% endblock %}
-                        <br class="clear" />
-                        <div class="botbar"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>{# end #c1c2 #}
+
+{% block breadcrumbs %}
+<div id="breadcrumbs"><ul>
+    <li><a href="{{ locale }}/kb/">Firefox Support</a></li>
+    <li class="divider">/</li><li>{{ self.title() }}</li>
+</ul></div>
+{% endblock %}
+
+<div id="main" role="main">
+{% block content %}
+<div class="topbar"></div>
+<br class="clear" />
+<div class="botbar"></div>
+{% endblock %}
+</div>
 
 <br class="clear" />
-</div>{# end #doc #}
-</div>{# end #wrap #}
-
 {% include 'layout/footer.html' %}
