@@ -8,7 +8,7 @@
     margin: -3px 0 0 15px;
     list-style-type: none;
     font-family: verdana;
-    font-size: 0.8em;
+    font-size: 80%;
 }
 
 #side-menu li {
@@ -20,7 +20,7 @@
 
 #side-menu li.first { 
     font-family: georgia, freeserif, serif;
-    font-size: 20px;
+    font-size: 205%;
     padding: 4px 5px 2px;
     background: none;
 }

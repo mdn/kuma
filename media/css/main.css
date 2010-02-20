@@ -942,13 +942,13 @@ a {
     display: inline;
     margin: 0;
     color: #4b4742;
-    font-size: 10px;
+    font-size: 83%;
 }
 
 #breadcrumbs ul li.divider {
     padding: 0 3px 0 0;
     color: #807970;
-    font-size: 11px;
+    font-size: 92%;
 }
 
 #breadcrumbs span,
@@ -975,7 +975,7 @@ a {
     width: 920px;
     margin: auto;
     text-align: left;
-    font-size: 12px;
+    font-size: 92.31%;
 }
 
 #content-inner {
