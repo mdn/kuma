@@ -1,0 +1,16 @@
+{% block sidebar %}
+<ul id="side-menu">
+    <li class="first"><h3><a href="/kb/">Firefox Support</a></h3></li>
+    <li><a href="/kb/">Knowledge Base</a></li>
+    <li><a href="/forum">Support Forum</a></li>
+    <li><a href="/kb/Ask+a+question">Ask a Question</a></li>
+    <li><a href="/kb/Other+Firefox+support">Other Firefox Support</a></li>
+    <li><a href="/kb/How+to+contribute">How to Contribute</a></li>
+{% if session %}
+    <li><a href="/tiki-user_preferences.php">My Account</a></li>
+    <li><a href="/tiki-logout.php">Log Out</a></li>
+{% else %}
+    <li><a href="/tiki-login.php">Log In</a></li>
+{% endif %}
+</ul>
+{% endblock %}
