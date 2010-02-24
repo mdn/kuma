@@ -20,7 +20,9 @@
     <li><a href="#switch">{{ _('switch language') }}</a></li>
 </ul>
 
+<div id="header" role="banner">
 {% include 'layout/header.html' %}
+</div>
 
 <div id="content">
 
@@ -38,10 +40,7 @@
 {% endblock %}
 
 <div id="main" role="main">
-{% block content %}
-<div class="topbar"></div>
-<br class="clear" />
-<div class="botbar"></div>
+{% block content_area %}
 {% endblock %}
 </div>
 

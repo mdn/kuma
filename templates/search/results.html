@@ -1,11 +1,8 @@
-{% extends "layout/base.html" %}
+{% extends "common/base.html" %}
 {% set title = _("Search") %}
 {% set styles = ('css/search.css',) %}
 
 {% block content %}
-<div class="topbar"></div>
-
-<div id="content-inner">
     <div id="basic-search" class="search-refine">
         <form role="search" method="get" action="search">
             <input type="hidden" value="{% if w %}{{ w }}{% else %}3{% endif %}" name="w">
@@ -71,7 +68,4 @@
 
     </div>
         <p>Can't find what you're looking for? <a href="/kb/Ask+a+question">Ask a support question instead!</a></p>
-</div><!-- /#content-inner -->
-<br class="clear" />
-<div class="botbar"></div>
 {% endblock %}
