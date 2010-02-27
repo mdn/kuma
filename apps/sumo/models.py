@@ -101,10 +101,6 @@ class WikiPage(ModelBase):
     def name(self):
         return self.pageName
 
-    @property
-    def search_summary(self):
-        return self.description
-
     def get_url(self):
         """
         TODO: Once we can use reverse(), use reverse()

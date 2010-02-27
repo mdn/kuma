@@ -37,10 +37,10 @@
 
         {% for doc in results %}
         <div class="oneresult">
-            <a class="searchresultlink" href="{{ doc.get_url() }}">{{ doc.name }}</a> 
+            <a class="searchresultlink" href="{{ doc.url }}">{{ doc.title }}</a> 
             <p>
-                <a class="blacklink" href="{{ doc.get_url() }}">
-                    {{ doc.search_summary }}
+                <a class="blacklink" href="{{ doc.url }}">
+                    {{ doc.search_summary|safe }}
                     ...
                 </a>
             </p>

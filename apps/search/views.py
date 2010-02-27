@@ -91,7 +91,12 @@ def search(request):
     for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
         try:
             if documents[i]['attrs'].get('category', False):
-                results.append(WikiPage.objects.get(pk=documents[i]['id']))
+                wiki_document = WikiPage.objects.get(pk=documents[i]['id'])
+                wd = {'search_summary': wc.excerpt((wiki_document,), q)[0],
+                    'url': wiki_document.get_url(),
+                    'title': wiki_document.name,
+                    }
+                results.append(wd)
             else:
                 results.append(ForumThread.objects.get(pk=documents[i]['id']))
         except IndexError:
