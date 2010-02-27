@@ -99,6 +99,6 @@ def search(request):
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
             continue
 
-    return jingo.render(request, 'search/results.html',
+    return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
           'locale': request.LANGUAGE_CODE, 'w': where})
