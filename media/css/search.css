@@ -1,3 +1,7 @@
+.search-results {
+    font-size: 110%;
+}
+
 .search-query {
     border: 1px solid #E16601;
     width: 270px;
@@ -7,17 +11,23 @@
     text-transform: none;
 }
 
-.pager {
-    padding: 10px 20px;
+/* Paginators */
+ol.pagination {
+    margin: .5em auto 1em;
     text-align: center;
 }
 
-.pager li {
-    float: left;
+ol.pagination > li {
+    display: inline;
+    padding: 0 4px;
 }
 
-.pager a, .pager span {
-    padding: 0 4px;
+ol.pagination > li.selected a {
+    color: #000;
+}
+
+div.num-results {
+    clear: left;
 }
 
 div.search-count {

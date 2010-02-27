@@ -17,14 +17,13 @@
     </div>
 
     <div class="search-results">
-        <div class="pager">
-            {{ pages|paginator }}
-        </div>
+
+        {{ pages|paginator }}
 
 
         {% for doc in results %}
         <div class="oneresult">
-            <a class="searchresultlink" href="{{ doc.get_url() }}">{{ doc.name }}</a> 
+            <a class="searchresultlink" href="{{ doc.get_url() }}">{{ doc.name }}</a>
             <p>
                 <a class="blacklink" href="{{ doc.get_url() }}">
                     {{ doc.search_summary }}
@@ -36,10 +35,9 @@
         {% endfor %}
 
 
-        <div class="pager">
-            {{ pages|paginator }}
-        </div>
+        {{ pages|paginator }}
 
     </div>
+
         <p>Can't find what you're looking for? <a href="/kb/Ask+a+question">Ask a support question instead!</a></p>
 {% endblock %}
