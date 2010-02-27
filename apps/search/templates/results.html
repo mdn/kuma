@@ -18,20 +18,7 @@
 
     <div class="search-results">
         <div class="pager">
-            <span class="current_page">1</span>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">2</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=20" class="neatlink">3</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=30" class="neatlink">4</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=40" class="neatlink">5</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=50" class="neatlink">6</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=60" class="neatlink">7</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=70" class="neatlink">8</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=80" class="neatlink">9</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=90" class="neatlink">10</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=100" class="neatlink">11</a>
-            <span class="pages-hidden">...</span>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">Next &rsaquo;</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=1080" class="neatlink">Last &raquo;</a>
+            {{ pages|paginator }}
         </div>
 
 
@@ -50,20 +37,7 @@
 
 
         <div class="pager">
-            <span class="current_page">1</span>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">2</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=20" class="neatlink">3</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=30" class="neatlink">4</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=40" class="neatlink">5</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=50" class="neatlink">6</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=60" class="neatlink">7</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=70" class="neatlink">8</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=80" class="neatlink">9</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=90" class="neatlink">10</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=100" class="neatlink">11</a>
-            <span class="pages-hidden">...</span>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=10" class="neatlink">Next &rsaquo;</a>
-            <a href="/search?&q={{ q }}&lang=en&w={{ w }}&offset=1080" class="neatlink">Last &raquo;</a>
+            {{ pages|paginator }}
         </div>
 
     </div>
