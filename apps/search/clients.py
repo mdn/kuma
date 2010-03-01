@@ -81,23 +81,31 @@ class WikiClient(SearchClient):
         (r'__',),
         (r'\'\'',),
         (r'%{2,}',),
-        (r'\*|\^|; \}|/\}',),
+        (r'\*|\^|;|/\}',),
         (r'~/?np~',),
         (r'~/?(h|t)c~',),
         (r'\(spans.*?\)',),
         (r'\}',),
-"""
-        $text = preg_replace('/\(\((.*)(?:\|(.*))?\)\)/Ue','("$2")?"$2":"$1"', $text);
-        $text = preg_replace('#\[.+\|(.+)\]#U','$1',$text);
-        ('#\'\'#',),
-"""
+        (r'\(\(.*?\|(?P<name>.*?)\)\)', '\g<name>'),
+        (r'\(\((?P<name>.*?)\)\)', '\g<name>'),
+        (r'\(\(',),
+        (r'\)\)',),
+        (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
+        (r'/wiki_up.*? ',),
+        (r'&quot;',),
     )
     compiled_patterns = []
 
     def __init__(self):
         SearchClient.__init__(self)
         for pattern in self.patterns:
-            self.compiled_patterns.append(re.compile(pattern[0], re.MULTILINE))
+            p = [re.compile(pattern[0], re.MULTILINE)]
+            if len(pattern) > 1:
+                p.append(pattern[1])
+            else:
+                p.append(' ')
+
+            self.compiled_patterns.append(p)
 
     def query(self, query, filters=None):
         """
@@ -142,7 +150,7 @@ class WikiClient(SearchClient):
         for raw_excerpt in raw_excerpts:
             excerpt = raw_excerpt
             for p in self.compiled_patterns:
-                excerpt = p.sub(' ', excerpt)
+                excerpt = p[0].sub(p[1], excerpt)
 
             excerpts.append(excerpt)
 
