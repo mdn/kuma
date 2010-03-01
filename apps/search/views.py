@@ -4,6 +4,7 @@ from django.conf import settings
 
 import jingo
 
+from sumo.utils import paginate
 from sumo.models import ForumThread, WikiPage
 
 from .clients import ForumClient, WikiClient
@@ -22,7 +23,9 @@ def search(request):
 
     where = int(request.GET.get('w', WHERE_ALL))
 
-    offset = int(request.GET.get('offset', 0))
+    page = int(request.GET.get('page', 1))
+    page = max(page, 1)
+    offset = (page-1)*settings.SEARCH_RESULTS_PER_PAGE
 
     documents = []
 
@@ -87,6 +90,8 @@ def search(request):
 
         documents += fc.query(q, filters_f)
 
+    pages = paginate(request, documents, settings.SEARCH_RESULTS_PER_PAGE)
+
     results = []
     for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
         try:
@@ -99,6 +104,6 @@ def search(request):
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
             continue
 
-    return jingo.render(request, 'search/results.html',
+    return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
-          'locale': request.LANGUAGE_CODE, 'w': where})
+          'locale': request.LANGUAGE_CODE, 'pages': pages})
