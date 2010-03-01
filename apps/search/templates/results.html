@@ -1,0 +1,42 @@
+{% extends "common/base.html" %}
+{% set title = _("Search") %}
+{% set styles = ('css/search.css',) %}
+
+{% block content %}
+    <div id="basic-search" class="search-refine">
+        <form role="search" method="get" action="search">
+            <input type="hidden" value="{% if w %}{{ w }}{% else %}3{% endif %}" name="w">
+            <input type="hidden" value="{{ locale }}" name="locale">
+            <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
+            <input type="submit" class="search-refine-submit btn-large" value="{% print _("Search") %}">
+        </form>
+    </div>
+
+    <div class="search-count">
+        {% print _("About {num_results} search results for {q} in {lang_name}")|f(num_results=num_results, q=q, lang_name='English') %}
+    </div>
+
+    <div class="search-results">
+
+        {{ pages|paginator }}
+
+
+        {% for doc in results %}
+        <div class="oneresult">
+            <a class="searchresultlink" href="{{ doc.url }}">{{ doc.title }}</a>
+            <p>
+                <a class="blacklink" href="{{ doc.url }}">
+                    {{ doc.search_summary|safe }}
+                </a>
+            </p>
+        </div>
+        <div class="oneresulthr"></div>
+        {% endfor %}
+
+
+        {{ pages|paginator }}
+
+    </div>
+
+        <p>Can't find what you're looking for? <a href="/kb/Ask+a+question">Ask a support question instead!</a></p>
+{% endblock %}
