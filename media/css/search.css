@@ -8,6 +8,7 @@
 
 .search-results p a {
     color: #000;
+    line-height: 140%;
 }
 
 .search-results .result {

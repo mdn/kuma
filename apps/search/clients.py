@@ -16,23 +16,71 @@ class SearchClient(object):
 
     def query(self, query, filters): abstract
 
-    def excerpt(self, results, query):
+    def excerpt(self, result, query):
         """
-        Returns a list of Sphinx excerpts for the passed-in list of results.
+        Returns an excerpt for the passed-in string
 
-        Takes in a list of strings
+        Takes in a string
         """
-        documents = []
-        for result in results:
-            documents.append(results.data)
+        documents = [result]
 
-        return self.sphinx.BuildExcerpts(documents, self.index, query)
+        # build excerpts that are 1.3 times as long and truncate
+        raw_excerpt = self.sphinx.BuildExcerpts(documents, self.index, query,
+            {'limit': settings.SEARCH_SUMMARY_LENGTH * 1.3})[0]
+
+        excerpt = raw_excerpt
+        for p in self.compiled_patterns:
+            excerpt = p[0].sub(p[1], excerpt)
+
+        # truncate long excerpts
+        if len(excerpt) > settings.SEARCH_SUMMARY_LENGTH:
+            excerpt = excerpt[:settings.SEARCH_SUMMARY_LENGTH] \
+                + self.truncate_pattern.sub('', excerpt[settings.SEARCH_SUMMARY_LENGTH:])
+            if excerpt[len(excerpt)-1] != '.':
+                excerpt += '...'
+
+        return excerpt
 
 
 class ForumClient(SearchClient):
     """
     Search the forum
     """
+    index = 'forum_threads'
+    patterns = (
+        (r'^!+',),
+        (r'^;:',),
+        (r'^#',),
+        (r'\n|\r',),
+        (r'__',),
+        (r'\'\'',),
+        (r'%{2,}',),
+        (r'\*|\^|;|/\}',),
+        (r'\}',),
+        (r'\(\(.*?\|(?P<name>.*?)\)\)', '\g<name>'),
+        (r'\(\((?P<name>.*?)\)\)', '\g<name>'),
+        (r'\(\(',),
+        (r'\)\)',),
+        (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
+        (r'\[(?P<name>.+?)\]', '\g<name>'),
+        (r'&quot;',),
+        (r'\*+',),
+        (r'^!! Issue.+!! Description',),
+        (r'\s+',),
+    )
+    compiled_patterns = []
+    truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
+
+    def __init__(self):
+        SearchClient.__init__(self)
+        for pattern in self.patterns:
+            p = [re.compile(pattern[0], re.MULTILINE)]
+            if len(pattern) > 1:
+                p.append(pattern[1])
+            else:
+                p.append(' ')
+
+            self.compiled_patterns.append(p)
 
     def query(self, query, filters=None):
         """
@@ -91,10 +139,13 @@ class WikiClient(SearchClient):
         (r'\(\(',),
         (r'\)\)',),
         (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
+        (r'\[(?P<name>.+?)\]', '\g<name>'),
         (r'/wiki_up.*? ',),
         (r'&quot;',),
+        (r'\s+',),
     )
     compiled_patterns = []
+    truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
 
     def __init__(self):
         SearchClient.__init__(self)
@@ -134,24 +185,3 @@ class WikiClient(SearchClient):
             return result['matches']
         else:
             return []
-
-    def excerpt(self, results, query):
-        """
-        Returns a list of wiki page excerpts for the passed-in list of results.
-
-        Takes in a list of strings
-        """
-        documents = []
-        for result in results:
-            documents.append(result.data)
-        raw_excerpts = self.sphinx.BuildExcerpts(documents, self.index, query,
-            {'limit': settings.SEARCH_SUMMARY_LENGTH})
-        excerpts = []
-        for raw_excerpt in raw_excerpts:
-            excerpt = raw_excerpt
-            for p in self.compiled_patterns:
-                excerpt = p[0].sub(p[1], excerpt)
-
-            excerpts.append(excerpt)
-
-        return excerpts
