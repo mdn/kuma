@@ -72,19 +72,24 @@ class WikiClient(SearchClient):
     patterns = (
         (r'^!+',),
         (r'^;:',),
+        (r'^#',),
         (r'\n|\r',),
         (r'\{maketoc\}',),
-        ('#\{ANAME.*?ANAME\}#',),
-"""
-        ('/__/'),
-        ('/\^(.*?)\^/',),
-        (r'{[a-zA-Z]+.*?}',),
-        ('#~/?np~#',),
-        ('/~(h|t)c~.*\~\/\1c~/U',),
-        ('/\(\((.*)(?:\|(.*))?\)\)/Ue',),
-        ('#\[.+\|(.+)\]#U','$1',),
-        ('#\'\'#',),
+        (r'\{ANAME.*?ANAME\}',),
+        (r'\{[a-zA-Z]+.*?\}',),
+        (r'\{.*?$',),
+        (r'__',),
+        (r'\'\'',),
         (r'%{2,}',),
+        (r'\*|\^|; \}|/\}',),
+        (r'~/?np~',),
+        (r'~/?(h|t)c~',),
+        (r'\(spans.*?\)',),
+        (r'\}',),
+"""
+        $text = preg_replace('/\(\((.*)(?:\|(.*))?\)\)/Ue','("$2")?"$2":"$1"', $text);
+        $text = preg_replace('#\[.+\|(.+)\]#U','$1',$text);
+        ('#\'\'#',),
 """
     )
     compiled_patterns = []
@@ -131,8 +136,8 @@ class WikiClient(SearchClient):
         documents = []
         for result in results:
             documents.append(result.data)
-
-        raw_excerpts = self.sphinx.BuildExcerpts(documents, self.index, query)
+        raw_excerpts = self.sphinx.BuildExcerpts(documents, self.index, query,
+            {'limit': settings.SEARCH_SUMMARY_LENGTH})
         excerpts = []
         for raw_excerpt in raw_excerpts:
             excerpt = raw_excerpt
