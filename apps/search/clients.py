@@ -4,6 +4,36 @@ from .sphinxapi import SphinxClient
 
 import re
 
+MARKUP_PATTERNS = (
+    (r'^!+',),
+    (r'^;:',),
+    (r'^#',),
+    (r'\n|\r',),
+    (r'\{maketoc\}',),
+    (r'\{ANAME.*?ANAME\}',),
+    (r'\{[a-zA-Z]+.*?\}',),
+    (r'\{.*?$',),
+    (r'__',),
+    (r'\'\'',),
+    (r'%{2,}',),
+    (r'\*|\^|;|/\}',),
+    (r'~/?np~',),
+    (r'~/?(h|t)c~',),
+    (r'\(spans.*?\)',),
+    (r'\}',),
+    (r'\(\(.*?\|(?P<name>.*?)\)\)', '\g<name>'),
+    (r'\(\((?P<name>.*?)\)\)', '\g<name>'),
+    (r'\(\(',),
+    (r'\)\)',),
+    (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
+    (r'\[(?P<name>.+?)\]', '\g<name>'),
+    (r'/wiki_up.*? ',),
+    (r'&quot;',),
+    (r'^!! Issue.+!! Description',),
+    (r'\s+',),
+)
+
+
 class SearchClient(object):
     """
     Base-class for search clients
@@ -13,6 +43,20 @@ class SearchClient(object):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
         self.sphinx.SetLimits(0, settings.SEARCH_MAX_RESULTS)
+
+        # initialize regexes for markup cleaning
+        self.truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
+        self.compiled_patterns = []
+
+        if MARKUP_PATTERNS:
+            for pattern in MARKUP_PATTERNS:
+                p = [re.compile(pattern[0], re.MULTILINE)]
+                if len(pattern) > 1:
+                    p.append(pattern[1])
+                else:
+                    p.append(' ')
+
+                self.compiled_patterns.append(p)
 
     def query(self, query, filters): abstract
 
@@ -24,9 +68,11 @@ class SearchClient(object):
         """
         documents = [result]
 
-        # build excerpts that are 1.3 times as long and truncate
+        # build excerpts that are longer and truncate
+        # see multiplier constant definition for details
         raw_excerpt = self.sphinx.BuildExcerpts(documents, self.index, query,
-            {'limit': settings.SEARCH_SUMMARY_LENGTH * 1.3})[0]
+            {'limit': settings.SEARCH_SUMMARY_LENGTH
+                * settings.SEARCH_SUMMARY_LENGTH_MULTIPLIER})[0]
 
         excerpt = raw_excerpt
         for p in self.compiled_patterns:
@@ -47,40 +93,6 @@ class ForumClient(SearchClient):
     Search the forum
     """
     index = 'forum_threads'
-    patterns = (
-        (r'^!+',),
-        (r'^;:',),
-        (r'^#',),
-        (r'\n|\r',),
-        (r'__',),
-        (r'\'\'',),
-        (r'%{2,}',),
-        (r'\*|\^|;|/\}',),
-        (r'\}',),
-        (r'\(\(.*?\|(?P<name>.*?)\)\)', '\g<name>'),
-        (r'\(\((?P<name>.*?)\)\)', '\g<name>'),
-        (r'\(\(',),
-        (r'\)\)',),
-        (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
-        (r'\[(?P<name>.+?)\]', '\g<name>'),
-        (r'&quot;',),
-        (r'\*+',),
-        (r'^!! Issue.+!! Description',),
-        (r'\s+',),
-    )
-    compiled_patterns = []
-    truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
-
-    def __init__(self):
-        SearchClient.__init__(self)
-        for pattern in self.patterns:
-            p = [re.compile(pattern[0], re.MULTILINE)]
-            if len(pattern) > 1:
-                p.append(pattern[1])
-            else:
-                p.append(' ')
-
-            self.compiled_patterns.append(p)
 
     def query(self, query, filters=None):
         """
@@ -117,46 +129,6 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-    patterns = (
-        (r'^!+',),
-        (r'^;:',),
-        (r'^#',),
-        (r'\n|\r',),
-        (r'\{maketoc\}',),
-        (r'\{ANAME.*?ANAME\}',),
-        (r'\{[a-zA-Z]+.*?\}',),
-        (r'\{.*?$',),
-        (r'__',),
-        (r'\'\'',),
-        (r'%{2,}',),
-        (r'\*|\^|;|/\}',),
-        (r'~/?np~',),
-        (r'~/?(h|t)c~',),
-        (r'\(spans.*?\)',),
-        (r'\}',),
-        (r'\(\(.*?\|(?P<name>.*?)\)\)', '\g<name>'),
-        (r'\(\((?P<name>.*?)\)\)', '\g<name>'),
-        (r'\(\(',),
-        (r'\)\)',),
-        (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
-        (r'\[(?P<name>.+?)\]', '\g<name>'),
-        (r'/wiki_up.*? ',),
-        (r'&quot;',),
-        (r'\s+',),
-    )
-    compiled_patterns = []
-    truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
-
-    def __init__(self):
-        SearchClient.__init__(self)
-        for pattern in self.patterns:
-            p = [re.compile(pattern[0], re.MULTILINE)]
-            if len(pattern) > 1:
-                p.append(pattern[1])
-            else:
-                p.append(' ')
-
-            self.compiled_patterns.append(p)
 
     def query(self, query, filters=None):
         """
