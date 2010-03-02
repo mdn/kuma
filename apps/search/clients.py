@@ -82,7 +82,7 @@ class SearchClient(object):
         if len(excerpt) > settings.SEARCH_SUMMARY_LENGTH:
             excerpt = excerpt[:settings.SEARCH_SUMMARY_LENGTH] \
                 + self.truncate_pattern.sub('', excerpt[settings.SEARCH_SUMMARY_LENGTH:])
-            if excerpt[len(excerpt)-1] != '.':
+            if excerpt[-1] != '.':
                 excerpt += '...'
 
         return excerpt
