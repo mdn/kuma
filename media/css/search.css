@@ -2,6 +2,19 @@
     font-size: 110%;
 }
 
+.search-results .title {
+    font-size: 130%;
+}
+
+.search-results p a {
+    color: #000;
+    line-height: 140%;
+}
+
+.search-results .result {
+    margin-bottom: 15px;
+}
+
 .search-query {
     border: 1px solid #E16601;
     width: 270px;

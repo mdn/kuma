@@ -96,9 +96,19 @@ def search(request):
     for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
         try:
             if documents[i]['attrs'].get('category', False):
-                results.append(WikiPage.objects.get(pk=documents[i]['id']))
+                wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
+                result = {'search_summary': wc.excerpt(wiki_page.data, q),
+                    'url': wiki_page.get_url(),
+                    'title': wiki_page.name,
+                    }
+                results.append(result)
             else:
-                results.append(ForumThread.objects.get(pk=documents[i]['id']))
+                forum_thread = ForumThread.objects.get(pk=documents[i]['id'])
+                result = {'search_summary': fc.excerpt(forum_thread.data, q),
+                    'url': forum_thread.get_url(),
+                    'title': forum_thread.name,
+                    }
+                results.append(result)
         except IndexError:
             break
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):

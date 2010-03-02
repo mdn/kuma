@@ -22,16 +22,14 @@
 
 
         {% for doc in results %}
-        <div class="oneresult">
-            <a class="searchresultlink" href="{{ doc.get_url() }}">{{ doc.name }}</a>
+        <div class="result">
+            <a class="title" href="{{ doc.url }}">{{ doc.title }}</a>
             <p>
-                <a class="blacklink" href="{{ doc.get_url() }}">
-                    {{ doc.search_summary }}
-                    ...
+                <a href="{{ doc.url }}">
+                    {{ doc.search_summary|safe }}
                 </a>
             </p>
         </div>
-        <div class="oneresulthr"></div>
         {% endfor %}
 
 
@@ -39,5 +37,5 @@
 
     </div>
 
-        <p>Can't find what you're looking for? <a href="/kb/Ask+a+question">Ask a support question instead!</a></p>
+        <p>Can't find what you're looking for? <a href="/{{ locale }}/kb/Ask+a+question">Ask a support question instead!</a></p>
 {% endblock %}
