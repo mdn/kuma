@@ -11,3 +11,6 @@ Babel==0.9.4
 phpserialize
 south
 
+# for spell checking
+-e svn+http://pyhunspell.googlecode.com/svn/trunk@6#egg=hunspell-0.1-py2.6-dev_r6
+-e git://github.com/jsocol/didyoumean.git#egg=didyoumean
