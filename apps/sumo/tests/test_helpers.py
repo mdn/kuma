@@ -6,7 +6,9 @@ import test_utils
 
 import jingo
 
-jingo.load_helpers()
+
+def setup():
+    jingo.load_helpers()
 
 
 def render(s, context={}):
