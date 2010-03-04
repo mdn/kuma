@@ -1,6 +1,6 @@
 {% extends "common/base.html" %}
 {% set title = _("Search") %}
-{% set styles = ('css/search.css',) %}
+{% set styles = (MEDIA_URL + 'css/search.css',) %}
 
 {% block content %}
     <div id="basic-search" class="search-refine">
@@ -10,6 +10,7 @@
             <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
             <input type="submit" class="search-refine-submit btn-large" value="{% print _("Search") %}">
         </form>
+        <a class="show-search-tabs" href="/{{ locale }}/search{{ refine_query }}">{{ _("Refine your search") }}</a>
     </div>
 
     {% if spellcheck(q, locale) %}

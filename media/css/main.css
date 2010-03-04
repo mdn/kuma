@@ -28,20 +28,9 @@ fieldset,img
   border:0;
 }
 
-address,caption,cite,code,dfn,em,strong,th,var
-{
-  font-style:normal;
-  font-weight:normal;
-}
-
 li
 {
   list-style:none;
-}
-
-caption,th
-{
-  text-align:left;
 }
 
 h1,h2,h3,h4,h5,h6
