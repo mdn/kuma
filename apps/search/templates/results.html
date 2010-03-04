@@ -12,8 +12,8 @@
         </form>
     </div>
 
-    {% if spellcheck(q, 'en-US') %}
-    <div class="search-suggestion">{{ _('Did you mean:') }} {{ q|suggestions('en-US') }}</div>
+    {% if spellcheck(q, locale) %}
+    <div class="search-suggestion">{{ _('Did you mean:') }} {{ q|suggestions(locale) }}</div>
     {% endif %}
 
     <div class="search-count">
