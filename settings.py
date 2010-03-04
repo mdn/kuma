@@ -110,6 +110,10 @@ INSTALLED_APPS = (
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
 #
+# Directory storying myspell dictionaries (with trailing slash)
+DICT_DIR = '/usr/share/myspell/'
+
+#
 # Connection information for Sphinx search
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3312

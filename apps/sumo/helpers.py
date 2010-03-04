@@ -2,9 +2,12 @@ import cgi
 import urllib
 import urlparse
 
+from django.conf import settings
+
 import jinja2
 
 from jingo import register, env
+from didyoumean import DidYouMean
 
 
 @register.filter
@@ -67,3 +70,23 @@ class Paginator(object):
         t = env.get_template('layout/paginator.html').render(**c)
         return jinja2.Markup(t)
 
+
+@register.function
+def spellcheck(string, locale='en-US'):
+    d = DidYouMean(locale, dict_dir=settings.DICT_DIR)
+    return not d.check(string)
+
+
+@register.filter
+def suggestions(string, locale='en-US'):
+    d = DidYouMean(locale, dict_dir=settings.DICT_DIR)
+    words = d.suggest(string)
+    newwords = []
+    newquery = []
+    for w in words:
+        newquery.append(jinja2.escape(w.new))
+        if w.corrected:
+            newwords.append(u'<strong>%s</strong>' % jinja2.escape(w.new))
+        else:
+            newwords.append(jinja2.escape(w.new))
+    return jinja2.Markup(u' '.join(newwords))
