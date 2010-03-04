@@ -13,7 +13,7 @@
     </div>
 
     {% if spellcheck(q, locale) %}
-    <div class="search-suggestion">{{ _('Did you mean:') }} {{ q|suggestions(locale) }}</div>
+    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(locale))|safe }}</div>
     {% endif %}
 
     <div class="search-count">
