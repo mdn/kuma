@@ -1,5 +1,7 @@
 from nose.tools import eq_
 
+from django.core.urlresolvers import reverse
+
 import test_utils
 
 import jingo
@@ -11,7 +13,7 @@ def render(s, context={}):
     return t.render(**context)
 
 
-def test_spellcheck():
+def test_spellcheck_filter():
     r = 'right'
     w = 'worng'
     t = "{% if spellcheck(q, 'en-US') %}Yes{% else %}No{% endif %}"
@@ -21,7 +23,8 @@ def test_spellcheck():
 
 def test_suggestions():
     """Suggestions should generate the right HTML."""
-    request = test_utils.RequestFactory().get('/en/search?q=worng')
+    url = '%s?%s' % (reverse('search'), 'q=worng')
+    request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
     exp = '<a href="/en/search?q=wrong"><strong>wrong</strong></a>'
@@ -30,7 +33,8 @@ def test_suggestions():
 
 def test_suggestions_page2():
     """Suggestions should reset page numbers to 1."""
-    request = test_utils.RequestFactory().get('/en/search?q=worng&page=2')
+    url = '%s?%s' % (reverse('search'), 'q=worng&page=2')
+    request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
     exp = '<a href="/en/search?q=wrong&amp;page=1"><strong>wrong</strong></a>'
@@ -39,8 +43,8 @@ def test_suggestions_page2():
 
 def test_suggestions_categories():
     """Suggestions should respect MultiValueDict bits."""
-    req = '/en/search?q=worng&category=1&category=2'
-    request = test_utils.RequestFactory().get(req)
+    url = '%s?%s' % (reverse('search'), 'q=worng&category=1&category=2')
+    request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
     exp = '<a href="/en/search?q=wrong&amp;category=1&amp;category=2"><strong>wrong</strong></a>'
@@ -49,8 +53,8 @@ def test_suggestions_categories():
 
 def test_suggestions_highlight():
     """Suggestions should not highlight correct words."""
-    req = '/en/search?q=right worng'
-    request = test_utils.RequestFactory().get(req)
+    url = '%s?%s' % (reverse('search'), 'q=right worng')
+    request = test_utils.RequestFactory().get(url)
     q = 'right worng'
     t = "{{ q|suggestions('en-US') }}"
     exp = '<a href="/en/search?q=right+wrong">right <strong>wrong</strong></a>'
