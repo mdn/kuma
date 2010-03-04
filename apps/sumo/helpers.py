@@ -95,7 +95,7 @@ def suggestions(context, string, locale='en-US'):
 
     markup = '<a href="{url}">{text}</a>'
 
-    q=u' '.join(newquery)
+    q = u' '.join(newquery)
     text = u' '.join(newwords)
     query_dict = context['request'].GET.copy()
     query_dict['q'] = q
@@ -104,6 +104,6 @@ def suggestions(context, string, locale='en-US'):
 
     query_string = urllib.urlencode(query_dict.items())
 
-    url = u'?'.join([reverse('search'), query_string])
+    url = u'%s?%s' % (reverse('search'), query_string)
 
     return jinja2.Markup(markup.format(url=jinja2.escape(url), text=text))

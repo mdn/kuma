@@ -1,4 +1,3 @@
-import functools
 import urllib
 
 from django.core import paginator

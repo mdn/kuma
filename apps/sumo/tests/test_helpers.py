@@ -8,6 +8,7 @@ import jingo
 
 jingo.load_helpers()
 
+
 def render(s, context={}):
     t = jingo.env.from_string(s)
     return t.render(**context)
