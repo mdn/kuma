@@ -20,7 +20,7 @@ def test_spellcheck():
 
 
 def test_suggestions():
-    """suggestions should generate the right HTML"""
+    """Suggestions should generate the right HTML."""
     request = test_utils.RequestFactory().get('/en/search?q=worng')
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
@@ -29,7 +29,7 @@ def test_suggestions():
 
 
 def test_suggestions_page2():
-    """suggestions should reset page numbers to 1"""
+    """Suggestions should reset page numbers to 1."""
     request = test_utils.RequestFactory().get('/en/search?q=worng&page=2')
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
@@ -38,7 +38,7 @@ def test_suggestions_page2():
 
 
 def test_suggestions_categories():
-    """suggestions should respect MultiValueDict bits"""
+    """Suggestions should respect MultiValueDict bits."""
     req = '/en/search?q=worng&category=1&category=2'
     request = test_utils.RequestFactory().get(req)
     w = 'worng'
@@ -48,7 +48,7 @@ def test_suggestions_categories():
 
 
 def test_suggestions_highlight():
-    """suggestions should not highlight correct words"""
+    """Suggestions should not highlight correct words."""
     req = '/en/search?q=right worng'
     request = test_utils.RequestFactory().get(req)
     q = 'right worng'
