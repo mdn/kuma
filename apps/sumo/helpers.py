@@ -3,6 +3,7 @@ import urllib
 import urlparse
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 import jinja2
 
@@ -78,9 +79,11 @@ def spellcheck(string, locale='en-US'):
 
 
 @register.filter
-def suggestions(string, locale='en-US'):
+@jinja2.contextfilter
+def suggestions(context, string, locale='en-US'):
     d = DidYouMean(locale, dict_dir=settings.DICT_DIR)
     words = d.suggest(string)
+
     newwords = []
     newquery = []
     for w in words:
@@ -89,4 +92,18 @@ def suggestions(string, locale='en-US'):
             newwords.append(u'<strong>%s</strong>' % jinja2.escape(w.new))
         else:
             newwords.append(jinja2.escape(w.new))
-    return jinja2.Markup(u' '.join(newwords))
+
+    markup = '<a href="{url}">{text}</a>'
+
+    q=u' '.join(newquery)
+    text = u' '.join(newwords)
+    query_dict = context['request'].GET.copy()
+    query_dict['q'] = q
+    if 'page' in query_dict:
+        query_dict['page'] = 1
+
+    query_string = urllib.urlencode(query_dict.items())
+
+    url = u'?'.join([reverse('search'), query_string])
+
+    return jinja2.Markup(markup.format(url=jinja2.escape(url), text=text))
