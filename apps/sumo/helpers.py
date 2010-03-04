@@ -82,16 +82,16 @@ def spellcheck(string, locale='en-US'):
 @jinja2.contextfilter
 def suggestions(context, string, locale='en-US'):
     d = DidYouMean(locale, dict_dir=settings.DICT_DIR)
-    words = d.suggest(string)
+    words = [(jinja2.escape(w.new), w.corrected) for w in d.suggest(string)]
 
     newwords = []
     newquery = []
     for w in words:
-        newquery.append(jinja2.escape(w.new))
-        if w.corrected:
-            newwords.append(u'<strong>%s</strong>' % jinja2.escape(w.new))
+        newquery.append(w[0])
+        if w[1]:
+            newwords.append(u'<strong>%s</strong>' % w[0])
         else:
-            newwords.append(jinja2.escape(w.new))
+            newwords.append(w[0])
 
     markup = '<a href="{url}">{text}</a>'
 
