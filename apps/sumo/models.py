@@ -20,6 +20,77 @@ class ModelBase(caching.base.CachingMixin, models.Model):
         abstract = True
 
 
+class Forum(ModelBase):
+    forumId = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+    created = models.IntegerField(null=True)
+    lastPost = models.IntegerField(null=True)
+    threads = models.IntegerField(null=True)
+    comments = models.IntegerField(null=True)
+    controlFlood = models.CharField(max_length=1, null=True)
+    floodInterval = models.IntegerField(null=True)
+    moderator = models.CharField(max_length=200, null=True)
+    hits = models.IntegerField(null=True)
+    mail = models.CharField(max_length=200, null=True)
+    useMail = models.CharField(max_length=1, null=True)
+    section = models.CharField(max_length=200, null=True)
+    usePruneUnreplied = models.CharField(max_length=1, null=True)
+    pruneUnrepliedAge = models.IntegerField(null=True)
+    usePruneOld = models.CharField(max_length=1, null=True)
+    pruneMaxAge = models.IntegerField(null=True)
+    topicsPerPage = models.IntegerField(null=True)
+    topicOrdering = models.CharField(max_length=100, null=True)
+    threadOrdering = models.CharField(max_length=100, null=True)
+    att = models.CharField(max_length=80, null=True)
+    att_store = models.CharField(max_length=4, null=True)
+    att_store_dir = models.CharField(max_length=250, null=True)
+    att_max_size = models.IntegerField(null=True)
+    ui_level = models.CharField(max_length=1, null=True)
+    forum_password = models.CharField(max_length=32, null=True)
+    forum_use_password = models.CharField(max_length=1, null=True)
+    moderator_group = models.CharField(max_length=200, null=True)
+    approval_type = models.CharField(max_length=20, null=True)
+    outbound_address = models.CharField(max_length=250, null=True)
+    outbound_mails_for_inbound_mails = models.CharField(max_length=1, null=True)
+    outbound_mails_reply_link = models.CharField(max_length=1, null=True)
+    outbound_from = models.CharField(max_length=250, null=True)
+    inbound_pop_server = models.CharField(max_length=250, null=True)
+    inbound_pop_port = models.IntegerField(null=True)
+    inbound_pop_user = models.CharField(max_length=200, null=True)
+    inbound_pop_password = models.CharField(max_length=80, null=True)
+    topic_smileys = models.CharField(max_length=1, null=True)
+    ui_avatar = models.CharField(max_length=1, null=True)
+    ui_flag = models.CharField(max_length=1, null=True)
+    ui_posts = models.CharField(max_length=1, null=True)
+    ui_email = models.CharField(max_length=1, null=True)
+    ui_online = models.CharField(max_length=1, null=True)
+    topic_summary = models.CharField(max_length=1, null=True)
+    show_description = models.CharField(max_length=1, null=True)
+    topics_list_replies = models.CharField(max_length=1, null=True)
+    topics_list_reads = models.CharField(max_length=1, null=True)
+    topics_list_pts = models.CharField(max_length=1, null=True)
+    topics_list_lastpost = models.CharField(max_length=1, null=True)
+    topics_list_author = models.CharField(max_length=1, null=True)
+    vote_threads = models.CharField(max_length=1, null=True)
+    forum_last_n = models.IntegerField(null=True)
+    threadStyle = models.CharField(max_length=100, null=True)
+    commentsPerPage = models.CharField(max_length=100, null=True)
+    is_flat = models.CharField(max_length=1, null=True)
+
+    class Meta:
+        db_table = "tiki_forums"
+
+    def __unicode__(self):
+        return self.name
+
+    def get_url(self):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return u'/en/forum/%s' % (self.forumId,)
+
+
 class ForumThread(ModelBase):
     threadId = models.AutoField(primary_key=True)
     object = models.CharField(max_length=255)
@@ -107,3 +178,18 @@ class WikiPage(ModelBase):
         """
         name = self.pageName.replace(' ', '+')
         return u'/%s/kb/%s' % (self.lang, name,)
+
+
+class Category(ModelBase):
+    categId = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=250, null=True)
+    parentId = models.IntegerField(null=True)
+    hits = models.IntegerField(null=True)
+
+    class Meta:
+        db_table = "tiki_categories"
+
+    def __unicode__(self):
+        return self.name
+
