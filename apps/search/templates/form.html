@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% set title = _("Search") %}
+{% set search_form = SearchForm(request) %}
 {% if advanced == '1' %}
 {% set classes = 'advanced_search' %}
 {% endif %}
@@ -21,87 +22,38 @@
         </ul>
         <div id="tab-wrapper">
         <form id="kb" method="get">
-            <label>
-                <span>{{ _("Article contains") }}</span>
-                <input name="q" value="{{ q|e }}" type="text" />
-            </label>
+            <div class="container">
+                <label for="kb_q">{{ _("Article contains") }}</label>
+                <input name="q" id="kb_q" value="{{ search_form.q.data or '' }}" type="text" />
+            </div>
 
-            <label>
-                <span>{{ _("Language") }}</span>
-                <select name="lang" id="documents_lang">
-                {% for v in languages %}
-                    <option value="{{ v[0] }}">{{ _(v[1]) }}</option>
+            <div class="container">
+                {{ search_form.language.label_tag()|safe }}
+                {{ search_form.language|safe }}
+            </div>
+
+            <div class="container">
+                {{ search_form.category.label_tag()|safe }}
+                {% if search_form.category %}
+                <div class="category">
+                {% for value, name in search_form.fields['category'].choices %}
+                    <label>
+                        <input type="checkbox" name="category" value="{{ value }}"/> {{ _(name) }}
+                    </label>
                 {% endfor %}
-                </select>
-            </label>
+                </div>
+                {% endif %}
+            </div>
 
-            <label>
-                <span class="description">{{ _("Category") }}</span>
-            </label>
-<table class="right_container"><tr>                <td><label class="checkbox">
-                    <input type="checkbox" checked="checked" value="1" name="category[]"> Knowledge Base
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="3" name="category[]"> Staging Area
-                </label></td>
-                                </tr><tr>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="7" name="category[]"> Sandbox/Internal Testing Area
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="8" name="category[]"> Administration
-                </label></td>
-                                </tr><tr>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="11" name="category[]"> Waiting for review
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="13" name="category[]"> Firefox 2
-                </label></td>
-                                </tr><tr>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="14" name="category[]"> Firefox 3.0
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="15" name="category[]"> Additional Categories
-                </label></td>
-                                </tr><tr>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="17" name="category[]"> Linked from in-product
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="18" name="category[]"> - This is a help article -
-                </label></td>
-                                </tr><tr>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="19" name="category[]"> - This is a support/troubleshooting article -
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="20" name="category[]"> Live Chat documentation
-                </label></td>
-                                </tr><tr>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="23" name="category[]"> How to Contribute
-                </label></td>
-                                                <td><label class="checkbox">
-                    <input type="checkbox" value="24" name="category[]"> Archive
-                </label></td>
-                                </tr><tr>
-                                                <td colspan="2"><label class="checkbox">
-                    <input type="checkbox" value="25" name="category[]"> Firefox 3.5/3.6
-                </label></td>
-                                </tr></table>
-            <label>
-                <span>{{ _("Tags") }}</span>
-                <input name="tag" value="{{ tag|e }}" type="text" /><br/>
-                <span class="search-tips-small">
-                    {{ _("Note: Searching for tag1 tag2 returns articles tagged with both tag1 and tag2") }}
-                </span>
-            </label>
+            <div class="container">
+                {{ search_form.tag.label_tag()|safe }}
+                {{ search_form.tag|safe }}
+                <div class="search-tips-small">
+                    {{ _("Note: Searching for \"tag1, tag2\" returns articles tagged with both tag1 and tag2") }}
+                </div>
+            </div>
 
             <input type="hidden" value="1" name="w" />
-            <input type="hidden" value="1" name="a" />
-
             <div class="submit-search">
                 <input type="submit" value="{{ _("Search") }} »" />
             </div>

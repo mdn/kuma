@@ -96,11 +96,10 @@ def search(request):
             {'locale': request.LANGUAGE_CODE,
             'advanced': request.GET.get('a', '0'),
             'status_list': STATUS_LIST,
-            'languages': settings.LANGUAGES,
             'lastmodif_list': LASTMODIF_LIST,
             'sortby_list': SORTBY_LIST,
-            'tag': request.GET.get('tag', ''),
             'status': request.GET.get('status'),
+            'request': request
             })
 
     locale = request.GET.get('locale', request.LANGUAGE_CODE)

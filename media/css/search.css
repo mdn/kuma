@@ -118,8 +118,8 @@ a.tablink {
 }
 
 #tab-wrapper {
-    margin: 0;
-    -moz-box-shadow: 0 4px 9px #888; padding: 5px 5px 5px 15px;
+    margin: 0; padding: 0;
+    -moz-box-shadow: 0 4px 9px #888;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     background: #fff;
@@ -130,42 +130,44 @@ a.tablink {
 #search-tabs {
     margin-top: 1em;
 }
+#search-tabs .container {
+    clear: left;
+}
 #search-tabs label {
-    display: block;
-    padding: 0.5em;
-}
-select {
-    cursor: pointer;
-}
-label.checkbox {
-    display: inline;
-    padding: 0 0.2em;
-    float: none;
-    width: auto;
-}
-label span {
     cursor: pointer;
     display: block;
     float: left;
     width: 8em;
-    padding: 0.2em 0;
+    padding: 0.5em;
+    margin: 0.3em 0;
 }
-label span.search-tips-small {
+#search-tabs select {
+    cursor: pointer;
+    margin: 0.8em 0;
+}
+#search-tabs input[type="text"] {
+    margin: 0.8em 0;
+}
+#search-tabs .container .category {
+    padding: 0.8em;
+    overflow: auto;
+}
+#search-tabs .container .category label {
     display: block;
+    padding: 0;
+    margin: 0.4em 0.3em;
+    width: 48%;
+}
+#search-tabs .search-tips-small {
     font-size: 80%;
-    padding: 1em 0.5em 0 10.2em;
+    margin: 0 0.5em 0 11.2em;
     color: #999;
     font-family: Helvetica, Arial, sans-serif;
     width: auto;
     float: none;
 }
-.right_container {
-    display: block;
-    margin-left: 8em;
-}
 #search-tabs input[type="text"] {
     border: #9b9b9b 1px solid;
-    margin: 0;
     padding: 0.2em;
     width: 30em;
 }
@@ -173,6 +175,7 @@ label span.search-tips-small {
     background: #e7f7f8;
 }
 .submit-search {
+    clear: left;
     border-top: 1px solid #e0e0e0;
     text-align: right;
     margin-top: 1em;

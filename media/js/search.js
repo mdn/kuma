@@ -25,7 +25,7 @@ $(document).ready(function() {
     }
     autoFillHelpText($('input[name="author"]'), DEFAULT_AUTHOR);
     autoFillHelpText($('input[name="q"]'), DEFAULT_QUERY);
-    autoFillHelpText($('input[name="tags"]'), DEFAULT_TAGS);
+    autoFillHelpText($('input[name="tag"]'), DEFAULT_TAGS);
 
     $("#tab-wrapper form").submit(function() {
       if ($('input[name="author"]').val() == DEFAULT_AUTHOR) {
