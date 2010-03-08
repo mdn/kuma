@@ -2,10 +2,10 @@ from django import test
 
 from nose.tools import eq_
 
-from sumo.models import ForumThread, WikiPage
+from sumo.models import ForumThread, WikiPage, Forum
 
 
-class TestForumModel(test.TestCase):
+class TestForumThreadModel(test.TestCase):
     fixtures = ['threads.json']
 
     def test_get_url(self):
@@ -19,3 +19,12 @@ class TestWikiPage(test.TestCase):
     def test_get_url(self):
         w = WikiPage.objects.create(pk=1, lang='en', pageName='My Test Page')
         eq_(w.get_url(), '/en/kb/My+Test+Page')
+
+
+class TestForumModel(test.TestCase):
+    fixtures = ['forums.json']
+
+    def test_sanity(self):
+        f = Forum.objects.create(pk=12, name='My Test Forum')
+        eq_(f.get_url(), '/en/forum/12')
+
