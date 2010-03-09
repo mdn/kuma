@@ -11,81 +11,8 @@ from .clients import ForumClient, WikiClient
 from .utils import crc32
 
 import urllib
+import search as CONSTANTS
 
-
-WHERE_WIKI = 1
-WHERE_FORUM = 2
-WHERE_ALL = WHERE_WIKI | WHERE_FORUM
-
-# Forum status constants
-STATUS_STICKY = crc32('s')
-STATUS_PROPOSED = crc32('p')
-STATUS_REQUEST = crc32('r')
-STATUS_NORMAL = crc32('n')
-STATUS_ORIGINALREPLY = crc32('g')
-STATUS_HOT = crc32('h')
-STATUS_ANNOUNCE = crc32('a')
-STATUS_INVALID = crc32('i')
-STATUS_LOCKED = crc32('l')
-STATUS_ARCHIVE = crc32('v')
-STATUS_SOLVED = crc32('o')
-
-STATUS_ALIAS_NO = 0
-STATUS_ALIAS_NR = 91
-STATUS_ALIAS_NH = 92
-STATUS_ALIAS_HA = 93
-STATUS_ALIAS_SO = 94
-STATUS_ALIAS_AR = 95
-STATUS_ALIAS_OT = 96
-
-STATUS_LIST = {
-    STATUS_ALIAS_NO: {
-            'name': "Don't filter",
-            },
-    STATUS_ALIAS_NR: {
-            'name': 'Has no replies',
-            },
-    STATUS_ALIAS_NH: {
-            'name': 'Needs help',
-            'value': (STATUS_NORMAL, STATUS_ORIGINALREPLY)
-            },
-    STATUS_ALIAS_HA: {
-            'name': 'Has an answer',
-            'value': (STATUS_PROPOSED, STATUS_REQUEST)
-            },
-    STATUS_ALIAS_SO: {
-            'name': 'Solved',
-            'value': (STATUS_SOLVED,)
-            },
-    STATUS_ALIAS_AR: {
-            'name': 'Archived',
-            'value': (STATUS_ARCHIVE,)
-            },
-    STATUS_ALIAS_OT: {
-            'name': 'Other',
-            'value': (STATUS_LOCKED, STATUS_STICKY, STATUS_ANNOUNCE, STATUS_INVALID, STATUS_HOT)
-            },
-}
-
-SORTBY_RELEVANCE = 1
-SORTBY_LASTMODIF = 2
-SORTBY_CREATED = 3
-SORTBY_REPLYCOUNT = 4
-
-SORTBY_LIST = {
-    SORTBY_RELEVANCE: "Relevance",
-    SORTBY_LASTMODIF: "Last post date",
-    SORTBY_CREATED: "Original post date",
-    SORTBY_REPLYCOUNT: "Number of replies",
-}
-
-LASTMODIF_LIST = {
-    0: "Don't filter",
-    1: "Last 24 hours",
-    7: "Last week",
-    30: "Last month",
-    180: "Last 6 months",
-}
 
 def search(request):
     q = request.GET.get('q', '')
@@ -95,10 +22,6 @@ def search(request):
         return jingo.render(request, 'form.html',
             {'locale': request.LANGUAGE_CODE,
             'advanced': request.GET.get('a', '0'),
-            'status_list': STATUS_LIST,
-            'lastmodif_list': LASTMODIF_LIST,
-            'sortby_list': SORTBY_LIST,
-            'status': request.GET.get('status'),
             'request': request
             })
 
@@ -106,7 +29,7 @@ def search(request):
     sphinx_locale = (crc32(locale),)
     refine_query['locale'] = locale
 
-    where = int(request.GET.get('w', WHERE_ALL))
+    where = int(request.GET.get('w', CONSTANTS.WHERE_ALL))
     refine_query['w'] = where
 
     page = int(request.GET.get('page', 1))
@@ -115,7 +38,7 @@ def search(request):
 
     documents = []
 
-    if (where & WHERE_WIKI):
+    if (where & CONSTANTS.WHERE_WIKI):
         wc = WikiClient() # Wiki SearchClient instance
         filters_w = [] # filters for the wiki search
 
@@ -152,7 +75,7 @@ def search(request):
         # execute the query and append to documents
         documents += wc.query(q, filters_w)
 
-    if (where & WHERE_FORUM):
+    if (where & CONSTANTS.WHERE_FORUM):
         fc = ForumClient() # Forum SearchClient instance
         filters_f = [] # filters for the forum search
 
@@ -166,10 +89,10 @@ def search(request):
 
         # Status filter
         if request.GET.get('status') is not None:
-            filters_f.append({
+            """filters_f.append({
                 'filter': 'status',
                 'value': STATUS_LIST[request.GET.get('status')],
-            })
+            })"""
 
         refine_query['status'] = request.GET.get('status', '0')
 

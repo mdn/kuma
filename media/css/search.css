@@ -146,17 +146,28 @@ a.tablink {
     margin: 0.8em 0;
 }
 #search-tabs input[type="text"] {
-    margin: 0.8em 0;
+    margin: 0.6em 0;
 }
 #search-tabs .container .category {
     padding: 0.8em;
     overflow: auto;
 }
-#search-tabs .container .category label {
-    display: block;
+#search-tabs .container .category ul {
+    padding: 0; margin: 0;
+    overflow: auto;
+}
+#search-tabs .container .category li {
     padding: 0;
     margin: 0.4em 0.3em;
+    float: left;
+    display: block;
     width: 48%;
+}
+#search-tabs .container .category li label {
+    padding: 0;
+    margin: 0;
+    float: none;
+    width: 100%
 }
 #search-tabs .search-tips-small {
     font-size: 80%;

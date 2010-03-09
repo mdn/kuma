@@ -34,15 +34,9 @@
 
             <div class="container">
                 {{ search_form.category.label_tag()|safe }}
-                {% if search_form.category %}
                 <div class="category">
-                {% for value, name in search_form.fields['category'].choices %}
-                    <label>
-                        <input type="checkbox" name="category" value="{{ value }}"/> {{ _(name) }}
-                    </label>
-                {% endfor %}
+                {{ search_form.category|safe }}
                 </div>
-                {% endif %}
             </div>
 
             <div class="container">
@@ -59,64 +53,43 @@
             </div>
         </form><!-- kb -->
         <form method="get" id="forum">
-            <label>
-                <span>{{ _("Post contains") }}</span>
-                <input name="q" value="{{ q|e }}" type="text" />
-            </label>
+            <div class="container">
+                <label for="forum_q">{{ _("Post contains") }}</label>
+                <input name="q" id="forum_q" value="{{ search_form.q.data or '' }}" type="text" />
+            </div>
 
-            <label>
-                <span>{{ _("Post status") }}</span>
-                <select name="status">
-                {% for k, v in status_list|dictsort %}
-                    <option value="{{ k }}">{{ _(v.name) }}</option>
-                {% endfor %}
-                </select>
-            </label>
+            <div class="container">
+                {{ search_form.status.label_tag()|safe }}
+                {{ search_form.status|safe }}
+            </div>
 
-            <label>
-                <span>{{ _("Post author") }}</span>
-                <input name="author" value="{{ author|e }}" type="text" /><br/>
-            </label>
+            <div class="container">
+                {{ search_form.author.label_tag()|safe }}
+                {{ search_form.author|safe }}
+            </div>
 
-            <label>
-                <span>{{ _("Created") }}</span>
-                <select name="created">
-                    <option value="0" selected="selected">{{ _("Don't filter") }}</option>
-                    <option value="1">{{ _("Before") }}</option>
-                    <option value="2">{{ _("After") }}</option>
-                </select>
-                <input name="created_date" type="text" value="{{ created_date|e }}" class="datepicker" title="Created date. Format: mm/dd/yy" />
-            </label>
+            <div class="container">
+                {{ search_form.created.label_tag()|safe }}
+                {{ search_form.created|safe }}
+                <input name="created_date" type="text" value="{{ search_form.created_date.data }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
+            </div>
 
-            <label>
-                <span>{{ _("Last updated") }}</span>
-                <select name="lastmodif">
-                {% for k, v in lastmodif_list|dictsort %}
-                    <option value="{{ k }}">{{ _(v) }}</option>
-                {% endfor %}
-                </select>
-            </label>
+            <div class="container">
+                {{ search_form.lastmodif.label_tag()|safe }}
+                {{ search_form.lastmodif|safe }}
+            </div>
 
-            <label>
-                <span>{{ _("Sort results by") }}</span>
-                <select name="sortby">
-                {% for k, v in sortby_list|dictsort %}
-                    <option value="{{ k }}">{{ _(v) }}</option>
-                {% endfor %}
-                </select>
-            </label>
+            <div class="container">
+                {{ search_form.sortby.label_tag()|safe }}
+                {{ search_form.sortby|safe }}
+            </div>
 
-            <label>
-                <span>{{ _("Search in forum") }}</span>
-                <select name="forumid[]" multiple="multiple" size="3">
-                    <option value="1" selected="selected">{{ _("Firefox") }}</option>
-                    <option value="2">{{ _("Contributors") }}</option>
-                    <option value="3">{{ _("Off Topic") }}</option>
-                </select>
-            </label>
+            <div class="container">
+                {{ search_form.fid.label_tag()|safe }}
+                {{ search_form.fid|safe }}
+            </div>
 
             <input type="hidden" value="2" name="w" />
-            <input type="hidden" value="1" name="a" />
             <div class="submit-search">
                 <input type="submit" value="{{ _("Search") }} »" />
             </div>
@@ -130,8 +103,8 @@
     {{ _("Enter your terms in the form below and click <strong>Search</strong>")|safe }}
         <form role="search" method="get" action="search">
             <input type="hidden" value="{{ locale }}" name="locale">
-            <input type="text" class="search-query search-empty-query" value="{{ q }}" name="q">
-            <input type="submit" class="search-empty-submit btn-large" value="{% print _("Search") %}">
+            <input type="text" class="search-query search-empty-query" value="{{ search_form.q.data }}" name="q">
+            <input type="submit" class="search-empty-submit btn-large" value="{{ _("Search") }}">
         </form>
     </div>
     <a href="/{{ locale }}/search?a=1">{{ _("Use advanced search")|safe }}</a>

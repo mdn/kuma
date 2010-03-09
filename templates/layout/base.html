@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css"/>
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/sidebar.css"/>
 {% for style in styles %}
-<link rel="stylesheet" href="{{ style }}"/>
+<link rel="stylesheet" href="{{ MEDIA_URL }}{{ style }}"/>
 {% endfor %}
 
 </head>
