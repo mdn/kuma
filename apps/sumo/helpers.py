@@ -66,4 +66,3 @@ class Paginator(object):
              'count': self.count}
         t = env.get_template('layout/paginator.html').render(**c)
         return jinja2.Markup(t)
-

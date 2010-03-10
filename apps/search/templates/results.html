@@ -12,6 +12,10 @@
         </form>
     </div>
 
+    {% if spellcheck(q, locale) %}
+    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(locale))|safe }}</div>
+    {% endif %}
+
     <div class="search-count">
         {% print _("About {num_results} search results for {q} in {lang_name}")|f(num_results=num_results, q=q, lang_name='English') %}
     </div>

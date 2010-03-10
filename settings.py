@@ -78,6 +78,14 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages'
+)
+
 MIDDLEWARE_CLASSES = (
     'localeurl.middleware.LocaleURLMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -108,6 +116,10 @@ INSTALLED_APPS = (
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
+
+#
+# Directory storying myspell dictionaries (with trailing slash)
+DICT_DIR = '/usr/share/myspell/'
 
 #
 # Connection information for Sphinx search
