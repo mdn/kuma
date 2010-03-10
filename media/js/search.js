@@ -1,9 +1,12 @@
 $(document).ready(function() {
     // initiate tabs
-    var tabs = $('#search-tabs').tabs();
-    var DEFAULT_AUTHOR = $('#default_author').val();
-    var DEFAULT_QUERY = $('#default_query').val();
-    var DEFAULT_TAGS = $('#default_tags').val();
+    var tabs = $('#search-tabs').tabs()
+    // TODO: use l10n
+    // @see http://jbalogh.github.com/zamboni/#gettext-in-javascript
+      , DEFAULT_AUTHOR = 'username'
+      , DEFAULT_QUERY = 'crashes on youtube'
+      , DEFAULT_TAGS = 'tag1, tag2'
+    ;
 
     /**
      * Handles autofill of text with default value. When an input field

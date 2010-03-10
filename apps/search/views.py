@@ -18,13 +18,6 @@ def search(request):
     q = request.GET.get('q', '')
     refine_query = {'q': q}
 
-    if (len(q) <= 0 or (request.GET.get('a', '0') == '1')):
-        return jingo.render(request, 'form.html',
-            {'locale': request.LANGUAGE_CODE,
-            'advanced': request.GET.get('a', '0'),
-            'request': request
-            })
-
     locale = request.GET.get('locale', request.LANGUAGE_CODE)
     sphinx_locale = (crc32(locale),)
     refine_query['locale'] = locale
@@ -35,6 +28,14 @@ def search(request):
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
     offset = (page-1)*settings.SEARCH_RESULTS_PER_PAGE
+
+    if (len(q) <= 0 or (request.GET.get('a', '0') == '1')):
+        return jingo.render(request, 'form.html',
+            {'locale': request.LANGUAGE_CODE,
+            'advanced': request.GET.get('a', '0'),
+            'request': request,
+            'w': where,
+            })
 
     documents = []
 
