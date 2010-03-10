@@ -1,6 +1,7 @@
 # Create your views here.
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 import jingo
 
@@ -9,8 +10,8 @@ from sumo.models import ForumThread, WikiPage
 
 from .clients import ForumClient, WikiClient
 from .utils import crc32
+from . import forms
 
-import urllib
 import search as CONSTANTS
 
 
@@ -139,8 +140,20 @@ def search(request):
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
             continue
 
-    refine_query = '?a=1&' + '&'.join([k+'='+urllib.quote(str(v)) for (k,v) in refine_query.items()])
+    form = forms.SearchForm(request)
+    refine_query = []
+    for name,field in form.fields.items():
+        if field.__class__.__name__.find('Multiple') >= 0:
+            field_values = request.GET.getlist(name)
+            for val in field_values:
+                refine_query.append(name + '=' + val)
+        else:
+            refine_query.append(name + '=' + request.GET.get(name, ''))
+
+    refine_query = 'a=1&' + '&'.join(refine_query)
+    refine_url = '%s?%s' % (reverse('search'), refine_query)
+
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
           'locale': request.LANGUAGE_CODE, 'pages': pages,
-          'w': where, 'refine_query': refine_query})
+          'w': where, 'refine_url': refine_url})
