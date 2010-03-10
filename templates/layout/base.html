@@ -54,7 +54,7 @@
 
 <script type="text/javascript" src="{{ MEDIA_URL }}js/mozilla-menu.js"></script>
 {% for script in scripts %}
-<script type="text/javascript" src="{{ script }}"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}{{ script }}"></script>
 {% endfor %}
 </body>
 </html>
