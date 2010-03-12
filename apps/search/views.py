@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 import jingo
+import time
 
 from sumo.utils import paginate
 from sumo.models import ForumThread, WikiPage, Forum, Category
@@ -24,26 +25,30 @@ from django.utils.translation import ugettext
 
 
 def search(request):
+    """Performs search or displays the search form"""
+
+    # set up form
     search_form = SearchForm(request.GET.copy())
 
+    # set up query variables
     q = request.GET.get('q', '')
-    refine_query = {'q': q}
 
     locale = request.GET.get('locale', request.LANGUAGE_CODE)
-    sphinx_locale = (crc32(locale),)
-    refine_query['locale'] = locale
+    language = request.GET.get('language', locale)
+    sphinx_locale = (crc32(language),)
 
     where = int(request.GET.get('w', CONSTANTS.WHERE_ALL))
-    refine_query['w'] = where
 
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
     offset = (page-1) * settings.SEARCH_RESULTS_PER_PAGE
 
-    if (len(q) <= 0 or (request.GET.get('a', '0') == '1')):
+    # no query or advanced search?
+    # => return empty form
+    if (not q or (request.GET.get('a', '0') == '1')):
         return jingo.render(request, 'form.html',
             {'locale': request.LANGUAGE_CODE,
-            'advanced': request.GET.get('a', '0'),
+            'advanced': request.GET.get('a'),
             'request': request,
             'w': where, 'search_form': search_form,
             })
@@ -54,18 +59,14 @@ def search(request):
         wc = WikiClient() # Wiki SearchClient instance
         filters_w = [] # filters for the wiki search
 
-        # Category filter
 
-        categories = request.GET.get('category[]',
-                        settings.SEARCH_DEFAULT_CATEGORIES)
+        # Category filter
+        categories = request.GET.getlist('category') or \
+            settings.SEARCH_DEFAULT_CATEGORIES
         filters_w.append({
             'filter': 'category',
-            'value': map(int,
-                         categories.split(',')),
+            'value': map(int, categories),
         })
-        refine_query['category[]'] = categories
-        #for category in categories:
-         #   refine_query['category[]'].append(category)
 
 
         # Locale filter
@@ -74,15 +75,15 @@ def search(request):
             'value': sphinx_locale,
         })
 
+
         # Tag filter
-        tag = request.GET.get('tag', '')
-        if (tag is not None) and len(tag) > 0:
+        tag = request.GET.get('tag', None)
+        if tag:
             filters_w.append({
                 'filter': 'tag',
                 'value': map(crc32, request.GET.get('tag').split(',')),
             })
 
-        refine_query['tag'] = tag
 
         # execute the query and append to documents
         documents += wc.query(q, filters_w)
@@ -95,34 +96,90 @@ def search(request):
         filters_f.append({
             'filter': 'forumId',
             'value': map(int,
-                          request.GET.get('forums',
-                              settings.SEARCH_DEFAULT_FORUM).split(',')),
+                request.GET.getlist('fid') or \
+                    settings.SEARCH_DEFAULT_FORUMS),
         })
 
         # Status filter
-        if request.GET.get('status') is not None:
-            """filters_f.append({
-                'filter': 'status',
-                'value': STATUS_LIST[request.GET.get('status')],
-            })"""
+        status = int(request.GET.get('status'))
+        # no replies case is not stored in status
+        if status == CONSTANTS.STATUS_ALIAS_NR:
+            filters_f.append({
+                'filter': 'replies',
+                'value': (0,),
+            })
 
-        refine_query['status'] = request.GET.get('status', '0')
+            # avoid filtering by status
+            status = None
+
+        if status:
+            filters_f.append({
+                'filter': 'status',
+                'value': CONSTANTS.STATUS_ALIAS_REVERSE[int(
+                    request.GET.get('status'))],
+            })
 
         # Author filter
-        if request.GET.get('author') is not None:
+        if request.GET.get('author'):
             filters_f.append({
-                'filter': 'author',
+                'filter': 'author_ord',
                 'value': (crc32(request.GET.get('author')),
                            crc32(request.GET.get('author') + ' (anon)'),),
             })
 
-        refine_query['author'] = request.GET.get('author', '')
-
+        unix_now = int(time.time())
         # Created filter
-        if request.GET.get('created') is not None:
+        created = int(request.GET.get('created'))
+        created_date = request.GET.get('created_date')
+
+        if not created_date:
+            # no date => no filtering
+            created = None
+        else:
+            try:
+                created_date = int(time.mktime(
+                    time.strptime(created_date, '%m/%d/%Y'),
+                    ))
+            except ValueError:
+                created = None
+
+
+        if not created:
             pass
 
-        refine_query['created'] = request.GET.get('created', '')
+        elif created == CONSTANTS.CREATED_BEFORE:
+            filters_f.append({
+                'range': True,
+                'filter': 'created',
+                'min': 0,
+                'max': created_date,
+            })
+
+        elif created == CONSTANTS.CREATED_AFTER:
+            filters_f.append({
+                'range': True,
+                'filter': 'created',
+                'min': created_date,
+                'max': int(unix_now),
+            })
+
+
+        # Last modified filter
+        lastmodif = int(request.GET.get('lastmodif'))
+
+        if not lastmodif:
+            pass
+
+        else:
+            filters_f.append({
+                'range': True,
+                'filter': 'created',
+                'min': unix_now - CONSTANTS.LUP_MULTIPLIER * lastmodif,
+                'max': unix_now,
+            })
+
+        # Sort results by
+
 
         documents += fc.query(q, filters_f)
 

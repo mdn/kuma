@@ -1,7 +1,6 @@
 from .utils import crc32
 
 # TODO: use lazy gettext, as in zamboni
-import gettext
 from django.utils.translation import ugettext
 
 WHERE_WIKI = 1
@@ -42,20 +41,27 @@ STATUS_LIST = (
 )
 # reverse lookup
 STATUS_ALIAS_REVERSE = {
+    STATUS_ALIAS_NO: (),
     STATUS_ALIAS_NH: (STATUS_NORMAL, STATUS_ORIGINALREPLY),
     STATUS_ALIAS_HA: (STATUS_PROPOSED, STATUS_REQUEST),
     STATUS_ALIAS_SO: (STATUS_SOLVED,),
     STATUS_ALIAS_AR: (STATUS_ARCHIVE,),
-    STATUS_ALIAS_OT: (STATUS_LOCKED, STATUS_STICKY, STATUS_ANNOUNCE, STATUS_INVALID, STATUS_HOT),
+    STATUS_ALIAS_OT: (STATUS_LOCKED, STATUS_STICKY, STATUS_ANNOUNCE,
+        STATUS_INVALID, STATUS_HOT,),
 }
 
+CREATED_NONE = 0
+CREATED_BEFORE = 1
+CREATED_AFTER = 2
 
 CREATED_LIST = (
-    (0, ugettext('Don\'t filter')),
-    (1, ugettext('Before')),
-    (2, ugettext('After')),
+    (CREATED_NONE, ugettext('Don\'t filter')),
+    (CREATED_BEFORE, ugettext('Before')),
+    (CREATED_AFTER, ugettext('After')),
 )
 
+# multiplier
+LUP_MULTIPLIER = 86400 # one day
 LUP_LIST = (
     (0, "Don't filter"),
     (1, "Last 24 hours"),

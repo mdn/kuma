@@ -69,7 +69,7 @@
             <div class="container">
                 {{ search_form.created.label_tag()|safe }}
                 {{ search_form.created|safe }}
-                <input name="created_date" type="text" value="{{ search_form.created_date.data }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
+                <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
             </div>
 
             <div class="container">

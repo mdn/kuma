@@ -7,7 +7,7 @@ TEMPLATE_DEBUG = DEBUG
 LOG_LEVEL = logging.DEBUG
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-path = lambda *a: os.path.join(ROOT, *a)
+path = lambda * a: os.path.join(ROOT, * a)
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -17,12 +17,18 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kitsune',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',
+    # Or path to database file if using sqlite3.
+        'NAME': 'kitsune',
+    # Not used with sqlite3.
+        'USER': '',
+    # Not used with sqlite3.
+        'PASSWORD': '',
+    # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+    # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     }
 }
@@ -83,7 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,8 +141,9 @@ SEARCH_RESULTS_PER_PAGE = 10
 
 #
 # Search default settings
-SEARCH_DEFAULT_CATEGORIES = '1,17,18' # comma-separated string of category IDs
-SEARCH_DEFAULT_FORUM = '1' # default forum ID (eg: 1 on sumo, 5 on mosumo)
+# comma-separated tuple of category IDs
+SEARCH_DEFAULT_CATEGORIES = (1, 17, 18)
+SEARCH_DEFAULT_FORUMS = (1,) # default forum ID (eg: 1 on sumo, 5 on mosumo)
 SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
 # so we extract longer excerpts and perform truncation to the length above
