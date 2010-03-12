@@ -5,15 +5,8 @@ from django.core.urlresolvers import reverse
 
 import jinja2
 
-from jingo import register, env
+from jingo import register
 from didyoumean import DidYouMean
-
-from . import forms
-
-
-@register.function
-def SearchForm(request):
-    return forms.SearchForm(request)
 
 
 @register.function

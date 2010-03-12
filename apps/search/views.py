@@ -1,21 +1,31 @@
 # Create your views here.
 
+# required for building the query
+# see refine_query variable
+from flatqs import flatten
+from django.utils.datastructures import MultiValueDict
+
+from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
 import jingo
 
 from sumo.utils import paginate
-from sumo.models import ForumThread, WikiPage
+from sumo.models import ForumThread, WikiPage, Forum, Category
 
 from .clients import ForumClient, WikiClient
 from .utils import crc32
-from . import forms
 
 import search as CONSTANTS
 
+# TODO: use lazy gettext, as in zamboni
+from django.utils.translation import ugettext
+
 
 def search(request):
+    search_form = SearchForm(request.GET.copy())
+
     q = request.GET.get('q', '')
     refine_query = {'q': q}
 
@@ -28,14 +38,14 @@ def search(request):
 
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
-    offset = (page-1)*settings.SEARCH_RESULTS_PER_PAGE
+    offset = (page-1) * settings.SEARCH_RESULTS_PER_PAGE
 
     if (len(q) <= 0 or (request.GET.get('a', '0') == '1')):
         return jingo.render(request, 'form.html',
             {'locale': request.LANGUAGE_CODE,
             'advanced': request.GET.get('a', '0'),
             'request': request,
-            'w': where,
+            'w': where, 'search_form': search_form,
             })
 
     documents = []
@@ -140,20 +150,52 @@ def search(request):
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
             continue
 
-    form = forms.SearchForm(request)
-    refine_query = []
-    for name,field in form.fields.items():
-        if field.__class__.__name__.find('Multiple') >= 0:
-            field_values = request.GET.getlist(name)
-            for val in field_values:
-                refine_query.append(name + '=' + val)
-        else:
-            refine_query.append(name + '=' + request.GET.get(name, ''))
+    refine_query = MultiValueDict()
+    for name, field in search_form.fields.items():
+        refine_query[name] = request.GET.getlist(name)
 
-    refine_query = 'a=1&' + '&'.join(refine_query)
+    refine_query = 'a=1&' + flatten(refine_query, encode=False)
     refine_url = '%s?%s' % (reverse('search'), refine_query)
 
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
           'locale': request.LANGUAGE_CODE, 'pages': pages,
-          'w': where, 'refine_url': refine_url})
+          'w': where, 'refine_url': refine_url,
+          'search_form': search_form})
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField()
+
+    # kb form data
+    tag = forms.CharField(label=ugettext('Tags'))
+
+    language = forms.ChoiceField(label=ugettext('Language'),
+        choices=settings.LANGUAGES)
+
+    categories = []
+    for cat in Category.objects.all():
+        categories.append((cat.categId, cat.name))
+    category = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        label=ugettext('Category'), choices=categories)
+
+    # forum form data
+    status = forms.ChoiceField(label=ugettext('Post status'),
+        choices=CONSTANTS.STATUS_LIST)
+    author = forms.CharField()
+
+    created = forms.ChoiceField(label=ugettext('Created'),
+        choices=CONSTANTS.CREATED_LIST)
+    created_date = forms.CharField()
+
+    lastmodif = forms.ChoiceField(label=ugettext('Last updated'),
+        choices=CONSTANTS.LUP_LIST)
+    sortby = forms.ChoiceField(label=ugettext('Sort results by'),
+        choices=CONSTANTS.SORTBY_LIST)
+
+    forums = []
+    for f in Forum.objects.all():
+        forums.append((f.forumId, f.name))
+    fid = forms.MultipleChoiceField(label=ugettext('Search in forum'),
+        choices=forums)
