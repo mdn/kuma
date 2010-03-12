@@ -26,19 +26,19 @@ $(document).ready(function() {
                 $(this).val(text).css('color', '#9b9b9b');
         });
     }
-    autoFillHelpText($('input[name="author"]'), DEFAULT_AUTHOR);
-    autoFillHelpText($('input[name="q"]'), DEFAULT_QUERY);
-    autoFillHelpText($('input[name="tag"]'), DEFAULT_TAGS);
+    autoFillHelpText($('#search-tabs input[name="author"]'), DEFAULT_AUTHOR);
+    autoFillHelpText($('#search-tabs input[name="q"]'), DEFAULT_QUERY);
+    autoFillHelpText($('#search-tabs input[name="tag"]'), DEFAULT_TAGS);
 
     $("#tab-wrapper form").submit(function() {
-      if ($('input[name="author"]').val() == DEFAULT_AUTHOR) {
+      if ($('#search-tabs input[name="author"]').val() == DEFAULT_AUTHOR) {
         $('input[name="author"]').val('');
       }
-      if ($('input[name="q"]').val() == DEFAULT_QUERY) {
-        $('input[name="q"]').val('');
+      if ($('#search-tabs input[name="q"]').val() == DEFAULT_QUERY) {
+        $('#search-tabs input[name="q"]').val('');
       }
-      if ($('input[name="tags"]').val() == DEFAULT_TAGS) {
-        $('input[name="tags"]').val('');
+      if ($('#search-tabs input[name="tag"]').val() == DEFAULT_TAGS) {
+        $('#search-tabs input[name="tag"]').val('');
       }
     });
 
