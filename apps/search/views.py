@@ -28,6 +28,7 @@ def search(request):
     """Performs search or displays the search form"""
 
     # set up form
+    search_url = reverse('search')
     search_form = SearchForm(request.GET.copy())
 
     # set up query variables
@@ -35,6 +36,7 @@ def search(request):
 
     locale = request.GET.get('locale', request.LANGUAGE_CODE)
     language = request.GET.get('language', locale)
+
     sphinx_locale = (crc32(language),)
 
     where = int(request.GET.get('w', CONSTANTS.WHERE_ALL))
@@ -51,7 +53,13 @@ def search(request):
             'advanced': request.GET.get('a'),
             'request': request,
             'w': where, 'search_form': search_form,
+            'search_url': search_url,
             })
+
+    # get language name for display in template
+    for (l, l_name) in settings.LANGUAGES:
+        if l == language:
+            lang_name = l_name
 
     documents = []
 
@@ -101,7 +109,7 @@ def search(request):
         })
 
         # Status filter
-        status = int(request.GET.get('status'))
+        status = int(request.GET.get('status', 0))
         # no replies case is not stored in status
         if status == CONSTANTS.STATUS_ALIAS_NR:
             filters_f.append({
@@ -115,8 +123,7 @@ def search(request):
         if status:
             filters_f.append({
                 'filter': 'status',
-                'value': CONSTANTS.STATUS_ALIAS_REVERSE[int(
-                    request.GET.get('status'))],
+                'value': CONSTANTS.STATUS_ALIAS_REVERSE[status],
             })
 
         # Author filter
@@ -129,8 +136,8 @@ def search(request):
 
         unix_now = int(time.time())
         # Created filter
-        created = int(request.GET.get('created'))
-        created_date = request.GET.get('created_date')
+        created = int(request.GET.get('created', 0))
+        created_date = request.GET.get('created_date', '')
 
         if not created_date:
             # no date => no filtering
@@ -162,7 +169,7 @@ def search(request):
 
 
         # Last modified filter
-        lastmodif = int(request.GET.get('lastmodif'))
+        lastmodif = int(request.GET.get('lastmodif', 0))
 
         if lastmodif:
             filters_f.append({
@@ -173,7 +180,7 @@ def search(request):
             })
 
         # Sort results by
-        sortby = int(request.GET.get('sortby'))
+        sortby = int(request.GET.get('sortby', 0))
         if sortby == CONSTANTS.SORTBY_CREATED:
             fc.sort(CONSTANTS.SORTBY_MODE, 'created')
         elif sortby == CONSTANTS.SORTBY_LASTMODIF:
@@ -213,13 +220,14 @@ def search(request):
 
     refine_query = 'a=1&w=' + str(where) + '&' \
         + flatten(refine_query, encode=False)
-    refine_url = '%s?%s' % (reverse('search'), refine_query)
+    refine_url = '%s?%s' % (search_url, refine_query)
 
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
           'locale': request.LANGUAGE_CODE, 'pages': pages,
           'w': where, 'refine_url': refine_url,
-          'search_form': search_form})
+          'search_form': search_form, 'search_url': search_url,
+          'lang_name': lang_name, })
 
 
 class SearchForm(forms.Form):

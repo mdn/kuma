@@ -5,20 +5,25 @@
 {% block content %}
     <div id="basic-search" class="search-refine">
         <form role="search" method="get" action="search">
-            <input type="hidden" value="{% if w %}{{ w }}{% else %}3{% endif %}" name="w">
-            <input type="hidden" value="{{ locale }}" name="locale">
+        {% for name, field in search_form.fields.items() if not name in ('q',) %}
+            {% set list = request.GET.getlist(name) %}
+            {% for value in list %}
+                <input type="hidden" name="{{ name }}" value="{{ value }}" />
+            {% endfor %}
+        {% endfor %}
+            <input type="hidden" value="{{ w }}" name="w">
             <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
-            <input type="submit" class="search-refine-submit btn-large" value="{% print _("Search") %}">
+            <input type="submit" class="search-refine-submit btn-large" value="{{ _("Search »") }}">
         </form>
         <a class="show-search-tabs" href="{{ refine_url }}">{{ _("Refine your search") }}</a>
     </div>
 
-    {% if spellcheck(q, locale) %}
-    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(locale))|safe }}</div>
+    {% if spellcheck(q, search_form.language.data or locale) %}
+    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(search_form.language.data or locale))|safe }}</div>
     {% endif %}
 
     <div class="search-count">
-        {% print _("About {num_results} search results for {q} in {lang_name}")|f(num_results=num_results, q=q, lang_name='English') %}
+        {{ _("About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>")|f(n=num_results, q=q, l=lang_name)|safe }}
     </div>
 
     <div class="search-results">
@@ -42,5 +47,5 @@
 
     </div>
 
-        <p>Can't find what you're looking for? <a href="/{{ locale }}/kb/Ask+a+question">Ask a support question instead!</a></p>
+        <p>{{ _('Can\'t find what you\'re looking for? <a href="/{locale}/kb/Ask+a+question">Ask a support question instead!</a>')|f(locale=locale)|safe }}</p>
 {% endblock %}
