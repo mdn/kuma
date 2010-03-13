@@ -34,8 +34,11 @@ $(document).ready(function() {
       if ($('#search-tabs input[name="author"]').val() == DEFAULT_AUTHOR) {
         $('input[name="author"]').val('');
       }
-      if ($('#search-tabs input[name="q"]').val() == DEFAULT_QUERY) {
-        $('#search-tabs input[name="q"]').val('');
+      if ($('#kb input[name="q"]').val() == DEFAULT_QUERY) {
+        $('#kb input[name="q"]').val('');
+      }
+      if ($('#forum input[name="q"]').val() == DEFAULT_QUERY) {
+        $('#forum input[name="q"]').val('');
       }
       if ($('#search-tabs input[name="tag"]').val() == DEFAULT_TAGS) {
         $('#search-tabs input[name="tag"]').val('');

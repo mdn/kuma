@@ -211,7 +211,8 @@ def search(request):
     for name, field in search_form.fields.items():
         refine_query[name] = request.GET.getlist(name)
 
-    refine_query = 'a=1&' + flatten(refine_query, encode=False)
+    refine_query = 'a=1&w=' + str(where) + '&' \
+        + flatten(refine_query, encode=False)
     refine_url = '%s?%s' % (reverse('search'), refine_query)
 
     return jingo.render(request, 'results.html',
