@@ -85,8 +85,9 @@ def search(request):
 
 
         # Tag filter
-        tag = request.GET.get('tag', None)
+        tag = request.GET.get('tag', '').strip()
         if tag:
+            return
             filters_w.append({
                 'filter': 'tag',
                 'value': map(crc32, request.GET.get('tag').split(',')),
