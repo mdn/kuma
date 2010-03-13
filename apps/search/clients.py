@@ -81,11 +81,15 @@ class SearchClient(object):
         # truncate long excerpts
         if len(excerpt) > settings.SEARCH_SUMMARY_LENGTH:
             excerpt = excerpt[:settings.SEARCH_SUMMARY_LENGTH] \
-                + self.truncate_pattern.sub('', excerpt[settings.SEARCH_SUMMARY_LENGTH:])
+                + self.truncate_pattern.sub('',
+                    excerpt[settings.SEARCH_SUMMARY_LENGTH:])
             if excerpt[-1] != '.':
                 excerpt += '...'
 
         return excerpt
+
+    def sort(self, mode, clause=''):
+        self.sphinx.SetSortMode(mode, clause)
 
 
 class ForumClient(SearchClient):

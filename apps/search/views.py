@@ -144,10 +144,7 @@ def search(request):
                 created = None
 
 
-        if not created:
-            pass
-
-        elif created == CONSTANTS.CREATED_BEFORE:
+        if created == CONSTANTS.CREATED_BEFORE:
             filters_f.append({
                 'range': True,
                 'filter': 'created',
@@ -167,19 +164,22 @@ def search(request):
         # Last modified filter
         lastmodif = int(request.GET.get('lastmodif'))
 
-        if not lastmodif:
-            pass
-
-        else:
+        if lastmodif:
             filters_f.append({
                 'range': True,
-                'filter': 'created',
+                'filter': 'last_updated',
                 'min': unix_now - CONSTANTS.LUP_MULTIPLIER * lastmodif,
                 'max': unix_now,
             })
 
         # Sort results by
-
+        sortby = int(request.GET.get('sortby'))
+        if sortby == CONSTANTS.SORTBY_CREATED:
+            fc.sort(CONSTANTS.SORTBY_MODE, 'created')
+        elif sortby == CONSTANTS.SORTBY_LASTMODIF:
+            fc.sort(CONSTANTS.SORTBY_MODE, 'last_updated')
+        elif sortby == CONSTANTS.SORTBY_REPLYCOUNT:
+            fc.sort(CONSTANTS.SORTBY_MODE, 'replies')
 
         documents += fc.query(q, filters_f)
 
