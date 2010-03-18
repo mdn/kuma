@@ -1,5 +1,7 @@
 # Create your views here.
 
+import time
+
 # required for building the query
 # see refine_query variable
 from flatqs import flatten
@@ -10,7 +12,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 import jingo
-import time
+from l10n import ugettext
 
 from sumo.utils import paginate
 from sumo.models import ForumThread, WikiPage, Forum, Category
@@ -19,9 +21,6 @@ from .clients import ForumClient, WikiClient
 from .utils import crc32
 
 import search as CONSTANTS
-
-# TODO: use lazy gettext, as in zamboni
-from django.utils.translation import ugettext
 
 
 def search(request):

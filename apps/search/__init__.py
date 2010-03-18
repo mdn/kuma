@@ -1,7 +1,6 @@
+from l10n import ugettext_lazy
 from .utils import crc32
 
-# TODO: use lazy gettext, as in zamboni
-from django.utils.translation import ugettext
 
 WHERE_WIKI = 1
 WHERE_FORUM = 2
@@ -31,13 +30,13 @@ STATUS_ALIAS_OT = 96
 
 # list passed to django forms
 STATUS_LIST = (
-    (STATUS_ALIAS_NO, ugettext('Don\'t filter')),
-    (STATUS_ALIAS_NR, ugettext('Has no replies')),
-    (STATUS_ALIAS_NH, ugettext('Needs help')),
-    (STATUS_ALIAS_HA, ugettext('Has an answer')),
-    (STATUS_ALIAS_SO, ugettext('Solved')),
-    (STATUS_ALIAS_AR, ugettext('Archived')),
-    (STATUS_ALIAS_OT, ugettext('Other')),
+    (STATUS_ALIAS_NO, ugettext_lazy('Don\'t filter')),
+    (STATUS_ALIAS_NR, ugettext_lazy('Has no replies')),
+    (STATUS_ALIAS_NH, ugettext_lazy('Needs help')),
+    (STATUS_ALIAS_HA, ugettext_lazy('Has an answer')),
+    (STATUS_ALIAS_SO, ugettext_lazy('Solved')),
+    (STATUS_ALIAS_AR, ugettext_lazy('Archived')),
+    (STATUS_ALIAS_OT, ugettext_lazy('Other')),
 )
 # reverse lookup
 STATUS_ALIAS_REVERSE = {
@@ -55,9 +54,9 @@ CREATED_BEFORE = 1
 CREATED_AFTER = 2
 
 CREATED_LIST = (
-    (CREATED_NONE, ugettext("Don't filter")),
-    (CREATED_BEFORE, ugettext('Before')),
-    (CREATED_AFTER, ugettext('After')),
+    (CREATED_NONE, ugettext_lazy("Don't filter")),
+    (CREATED_BEFORE, ugettext_lazy('Before')),
+    (CREATED_AFTER, ugettext_lazy('After')),
 )
 
 # multiplier
@@ -77,10 +76,10 @@ SORTBY_CREATED = 3
 SORTBY_REPLYCOUNT = 4
 
 SORTBY_LIST = (
-    (SORTBY_RELEVANCE, ugettext('Relevance')),
-    (SORTBY_LASTMODIF, ugettext('Last post date')),
-    (SORTBY_CREATED, ugettext('Original post date')),
-    (SORTBY_REPLYCOUNT, ugettext('Number of replies')),
+    (SORTBY_RELEVANCE, ugettext_lazy('Relevance')),
+    (SORTBY_LASTMODIF, ugettext_lazy('Last post date')),
+    (SORTBY_CREATED, ugettext_lazy('Original post date')),
+    (SORTBY_REPLYCOUNT, ugettext_lazy('Number of replies')),
 )
 
 # set this to the value of SPH_SORT_*
