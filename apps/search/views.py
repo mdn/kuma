@@ -81,13 +81,14 @@ def search(request):
 
 
         # Tag filter
-        tag = request.GET.get('tag', '').strip()
+        tag = [t.strip() for t in request.GET.get('tag', '').split(',')]
         if tag:
-            return
-            filters_w.append({
-                'filter': 'tag',
-                'value': map(crc32, request.GET.get('tag').split(',')),
-            })
+            tag = map(crc32, tag)
+            for t in tag:
+                filters_w.append({
+                    'filter': 'tag',
+                    'value': (t,),
+                })
 
 
         # execute the query and append to documents
