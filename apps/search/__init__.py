@@ -30,13 +30,13 @@ STATUS_ALIAS_OT = 96
 
 # list passed to django forms
 STATUS_LIST = (
-    (STATUS_ALIAS_NO, ugettext_lazy('Don\'t filter')),
-    (STATUS_ALIAS_NR, ugettext_lazy('Has no replies')),
-    (STATUS_ALIAS_NH, ugettext_lazy('Needs help')),
-    (STATUS_ALIAS_HA, ugettext_lazy('Has an answer')),
-    (STATUS_ALIAS_SO, ugettext_lazy('Solved')),
-    (STATUS_ALIAS_AR, ugettext_lazy('Archived')),
-    (STATUS_ALIAS_OT, ugettext_lazy('Other')),
+    (STATUS_ALIAS_NO, ugettext_lazy(u"Don't filter")),
+    (STATUS_ALIAS_NR, ugettext_lazy(u'Has no replies')),
+    (STATUS_ALIAS_NH, ugettext_lazy(u'Needs help')),
+    (STATUS_ALIAS_HA, ugettext_lazy(u'Has an answer')),
+    (STATUS_ALIAS_SO, ugettext_lazy(u'Solved')),
+    (STATUS_ALIAS_AR, ugettext_lazy(u'Archived')),
+    (STATUS_ALIAS_OT, ugettext_lazy(u'Other')),
 )
 # reverse lookup
 STATUS_ALIAS_REVERSE = {
@@ -54,19 +54,19 @@ CREATED_BEFORE = 1
 CREATED_AFTER = 2
 
 CREATED_LIST = (
-    (CREATED_NONE, ugettext_lazy("Don't filter")),
-    (CREATED_BEFORE, ugettext_lazy('Before')),
-    (CREATED_AFTER, ugettext_lazy('After')),
+    (CREATED_NONE, ugettext_lazy(u"Don't filter")),
+    (CREATED_BEFORE, ugettext_lazy(u'Before')),
+    (CREATED_AFTER, ugettext_lazy(u'After')),
 )
 
 # multiplier
 LUP_MULTIPLIER = 86400 # one day
 LUP_LIST = (
-    (0, "Don't filter"),
-    (1, 'Last 24 hours'),
-    (7, 'Last week'),
-    (30, 'Last month'),
-    (180, 'Last 6 months'),
+    (0, ugettext_lazy(u"Don't filter")),
+    (1, ugettext_lazy(u'Last 24 hours')),
+    (7, ugettext_lazy(u'Last week')),
+    (30, ugettext_lazy(u'Last month')),
+    (180, ugettext_lazy(u'Last 6 months')),
 )
 
 # sort by constants
@@ -76,10 +76,10 @@ SORTBY_CREATED = 3
 SORTBY_REPLYCOUNT = 4
 
 SORTBY_LIST = (
-    (SORTBY_RELEVANCE, ugettext_lazy('Relevance')),
-    (SORTBY_LASTMODIF, ugettext_lazy('Last post date')),
-    (SORTBY_CREATED, ugettext_lazy('Original post date')),
-    (SORTBY_REPLYCOUNT, ugettext_lazy('Number of replies')),
+    (SORTBY_RELEVANCE, ugettext_lazy(u'Relevance')),
+    (SORTBY_LASTMODIF, ugettext_lazy(u'Last post date')),
+    (SORTBY_CREATED, ugettext_lazy(u'Original post date')),
+    (SORTBY_REPLYCOUNT, ugettext_lazy(u'Number of replies')),
 )
 
 # set this to the value of SPH_SORT_*
