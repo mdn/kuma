@@ -2,25 +2,22 @@
 
 import time
 
-# required for building the query
-# see refine_query variable
-from flatqs import flatten
 from django.utils.datastructures import MultiValueDict
-
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
 import jingo
 from l10n import ugettext
+# required for building the query
+# see refine_query variable
+from flatqs import flatten
 
 from sumo.utils import paginate
 from sumo.models import ForumThread, WikiPage, Forum, Category
-
 from .clients import ForumClient, WikiClient
 from .utils import crc32
-
-import search as CONSTANTS
+import search as constants
 
 
 def search(request):
@@ -38,7 +35,7 @@ def search(request):
 
     sphinx_locale = (crc32(language),)
 
-    where = int(request.GET.get('w', CONSTANTS.WHERE_ALL))
+    where = int(request.GET.get('w', constants.WHERE_ALL))
 
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
@@ -62,7 +59,7 @@ def search(request):
 
     documents = []
 
-    if (where & CONSTANTS.WHERE_WIKI):
+    if (where & constants.WHERE_WIKI):
         wc = WikiClient() # Wiki SearchClient instance
         filters_w = [] # filters for the wiki search
 
@@ -96,7 +93,7 @@ def search(request):
         # execute the query and append to documents
         documents += wc.query(q, filters_w)
 
-    if (where & CONSTANTS.WHERE_FORUM):
+    if (where & constants.WHERE_FORUM):
         fc = ForumClient() # Forum SearchClient instance
         filters_f = [] # filters for the forum search
 
@@ -111,7 +108,7 @@ def search(request):
         # Status filter
         status = int(request.GET.get('status', 0))
         # no replies case is not stored in status
-        if status == CONSTANTS.STATUS_ALIAS_NR:
+        if status == constants.STATUS_ALIAS_NR:
             filters_f.append({
                 'filter': 'replies',
                 'value': (0,),
@@ -123,7 +120,7 @@ def search(request):
         if status:
             filters_f.append({
                 'filter': 'status',
-                'value': CONSTANTS.STATUS_ALIAS_REVERSE[status],
+                'value': constants.STATUS_ALIAS_REVERSE[status],
             })
 
         # Author filter
@@ -151,7 +148,7 @@ def search(request):
                 created = None
 
 
-        if created == CONSTANTS.CREATED_BEFORE:
+        if created == constants.CREATED_BEFORE:
             filters_f.append({
                 'range': True,
                 'filter': 'created',
@@ -159,7 +156,7 @@ def search(request):
                 'max': created_date,
             })
 
-        elif created == CONSTANTS.CREATED_AFTER:
+        elif created == constants.CREATED_AFTER:
             filters_f.append({
                 'range': True,
                 'filter': 'created',
@@ -175,18 +172,18 @@ def search(request):
             filters_f.append({
                 'range': True,
                 'filter': 'last_updated',
-                'min': unix_now - CONSTANTS.LUP_MULTIPLIER * lastmodif,
+                'min': unix_now - constants.LUP_MULTIPLIER * lastmodif,
                 'max': unix_now,
             })
 
         # Sort results by
         sortby = int(request.GET.get('sortby', 0))
-        if sortby == CONSTANTS.SORTBY_CREATED:
-            fc.sort(CONSTANTS.SORTBY_MODE, 'created')
-        elif sortby == CONSTANTS.SORTBY_LASTMODIF:
-            fc.sort(CONSTANTS.SORTBY_MODE, 'last_updated')
-        elif sortby == CONSTANTS.SORTBY_REPLYCOUNT:
-            fc.sort(CONSTANTS.SORTBY_MODE, 'replies')
+        if sortby == constants.SORTBY_CREATED:
+            fc.sort(constants.SORTBY_MODE, 'created')
+        elif sortby == constants.SORTBY_LASTMODIF:
+            fc.sort(constants.SORTBY_MODE, 'last_updated')
+        elif sortby == constants.SORTBY_REPLYCOUNT:
+            fc.sort(constants.SORTBY_MODE, 'replies')
 
         documents += fc.query(q, filters_f)
 
@@ -248,17 +245,17 @@ class SearchForm(forms.Form):
 
     # forum form data
     status = forms.ChoiceField(label=ugettext('Post status'),
-        choices=CONSTANTS.STATUS_LIST)
+        choices=constants.STATUS_LIST)
     author = forms.CharField()
 
     created = forms.ChoiceField(label=ugettext('Created'),
-        choices=CONSTANTS.CREATED_LIST)
+        choices=constants.CREATED_LIST)
     created_date = forms.CharField()
 
     lastmodif = forms.ChoiceField(label=ugettext('Last updated'),
-        choices=CONSTANTS.LUP_LIST)
+        choices=constants.LUP_LIST)
     sortby = forms.ChoiceField(label=ugettext('Sort results by'),
-        choices=CONSTANTS.SORTBY_LIST)
+        choices=constants.SORTBY_LIST)
 
     forums = []
     for f in Forum.objects.all():
