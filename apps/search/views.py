@@ -81,7 +81,7 @@ def search(request):
 
 
         # Tag filter
-        tag = [t.strip() for t in request.GET.get('tag', '').split(',')]
+        tag = [t.strip() for t in request.GET.get('tag', '').split()]
         if tag:
             tag = map(crc32, tag)
             for t in tag:
