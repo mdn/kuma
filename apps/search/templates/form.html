@@ -95,7 +95,7 @@
         </div><!-- tab-wrapper-->
     </div><!-- search-tabs -->
 
-    <a href="{{ search_url }}?w={{ w }}&q={{ search_form.q.data or '' }}">{{ _('Use basic search')|safe }}</a>
+    <a href="{{ search_url }}?q={{ search_form.q.data or '' }}">{{ _('Use basic search')|safe }}</a>
     {% else %}
     <div id="basic-search" class="search-empty">
     {{ _('Enter your terms in the form below and click <strong>Search</strong>')|safe }}
