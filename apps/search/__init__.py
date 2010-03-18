@@ -55,7 +55,7 @@ CREATED_BEFORE = 1
 CREATED_AFTER = 2
 
 CREATED_LIST = (
-    (CREATED_NONE, ugettext('Don\'t filter')),
+    (CREATED_NONE, ugettext("Don't filter")),
     (CREATED_BEFORE, ugettext('Before')),
     (CREATED_AFTER, ugettext('After')),
 )
@@ -64,10 +64,10 @@ CREATED_LIST = (
 LUP_MULTIPLIER = 86400 # one day
 LUP_LIST = (
     (0, "Don't filter"),
-    (1, "Last 24 hours"),
-    (7, "Last week"),
-    (30, "Last month"),
-    (180, "Last 6 months"),
+    (1, 'Last 24 hours'),
+    (7, 'Last week'),
+    (30, 'Last month'),
+    (180, 'Last 6 months'),
 )
 
 # sort by constants
@@ -77,10 +77,10 @@ SORTBY_CREATED = 3
 SORTBY_REPLYCOUNT = 4
 
 SORTBY_LIST = (
-    (SORTBY_RELEVANCE, ugettext("Relevance")),
-    (SORTBY_LASTMODIF, ugettext("Last post date")),
-    (SORTBY_CREATED, ugettext("Original post date")),
-    (SORTBY_REPLYCOUNT, ugettext("Number of replies")),
+    (SORTBY_RELEVANCE, ugettext('Relevance')),
+    (SORTBY_LASTMODIF, ugettext('Last post date')),
+    (SORTBY_CREATED, ugettext('Original post date')),
+    (SORTBY_REPLYCOUNT, ugettext('Number of replies')),
 )
 
 # set this to the value of SPH_SORT_*

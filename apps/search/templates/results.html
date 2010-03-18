@@ -1,5 +1,5 @@
 {% extends "common/base.html" %}
-{% set title = _("Search") %}
+{% set title = _('Search') %}
 {% set styles = ('css/search.css',) %}
 
 {% block content %}
@@ -13,7 +13,7 @@
         {% endfor %}
             <input type="hidden" value="{{ w }}" name="w">
             <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
-            <input type="submit" class="search-refine-submit btn-large" value="{{ _("Search »") }}">
+            <input type="submit" class="search-refine-submit btn-large" value="{{ _('Search') }}">
         </form>
         <a class="show-search-tabs" href="{{ refine_url }}">{{ _("Refine your search") }}</a>
     </div>
@@ -23,7 +23,7 @@
     {% endif %}
 
     <div class="search-count">
-        {{ _("About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>")|f(n=num_results, q=q, l=lang_name)|safe }}
+        {{ _('About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>')|f(n=num_results, q=q, l=lang_name)|safe }}
     </div>
 
     <div class="search-results">
@@ -47,5 +47,5 @@
 
     </div>
 
-        <p>{{ _('Can\'t find what you\'re looking for? <a href="/{locale}/kb/Ask+a+question">Ask a support question instead!</a>')|f(locale=locale)|safe }}</p>
+        <p>{{ _("Can't find what you're looking for?") }} <a href="/{{ locale }}/kb/Ask+a+question">{{ _('Ask a support question instead!') }}</a></p>
 {% endblock %}
