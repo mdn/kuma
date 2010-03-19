@@ -45,7 +45,7 @@ class Paginator(object):
         self.count = pager.paginator.count
 
         pager.page_range = self.range()
-        pager.dotted_upper = self.count not in pager.page_range
+        pager.dotted_upper = self.num_pages not in pager.page_range
         pager.dotted_lower = 1 not in pager.page_range
 
     def range(self):
