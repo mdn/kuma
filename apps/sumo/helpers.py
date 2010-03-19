@@ -2,6 +2,8 @@ import cgi
 import urllib
 import urlparse
 
+from django.core.urlresolvers import reverse
+
 import jinja2
 
 from jingo import register, env
@@ -10,6 +12,12 @@ from jingo import register, env
 @register.filter
 def paginator(pager):
     return Paginator(pager).render()
+
+
+@register.function
+def url(viewname, *args, **kwargs):
+    """Helper for Django's ``reverse`` in templates."""
+    return reverse(viewname, args=args, kwargs=kwargs)
 
 
 @register.filter

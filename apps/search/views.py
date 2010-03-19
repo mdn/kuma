@@ -24,7 +24,6 @@ def search(request):
     """Performs search or displays the search form"""
 
     # set up form
-    search_url = reverse('search')
     search_form = SearchForm(request.GET.copy())
 
     # set up query variables
@@ -49,7 +48,6 @@ def search(request):
             'advanced': request.GET.get('a'),
             'request': request,
             'w': where, 'search_form': search_form,
-            'search_url': search_url,
             })
 
     # get language name for display in template
@@ -216,15 +214,14 @@ def search(request):
     for name, field in search_form.fields.items():
         refine_query[name] = request.GET.getlist(name)
 
-    refine_query = 'a=1&w=' + str(where) + '&' \
+    refine_query = '?a=1&w=' + str(where) + '&' \
         + flatten(refine_query, encode=False)
-    refine_url = '%s?%s' % (search_url, refine_query)
 
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
           'locale': request.LANGUAGE_CODE, 'pages': pages,
-          'w': where, 'refine_url': refine_url,
-          'search_form': search_form, 'search_url': search_url,
+          'w': where, 'refine_query': refine_query,
+          'search_form': search_form,
           'lang_name': lang_name, })
 
 
