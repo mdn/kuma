@@ -9,7 +9,9 @@
     {% endif %}
     {% if pager.dotted_lower %}
       <li><a href="{{ pager.url|urlparams(page=1) }}">{{ 1 }}</a></li>
-      <li class="skip">&hellip;</li>
+      {% if pager.page_range[0] != 2 %}
+        <li class="skip">&hellip;</li>
+      {% endif %}
     {% endif %}
     {% for x in pager.page_range %}
     <li {{ x|class_selected(pager.number) }}>
@@ -17,7 +19,9 @@
     </li>
     {% endfor %}
     {% if pager.dotted_upper %}
-      <li class="skip">&hellip;</li>
+      {% if pager.page_range[-1] != num_pages-1 %}
+        <li class="skip">&hellip;</li>
+      {% endif %}
       <li><a href="{{ pager.url|urlparams(page=num_pages) }}">{{ num_pages }}</a></li>
     {% endif %}
     {% if pager.has_next() %}
