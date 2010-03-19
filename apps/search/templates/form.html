@@ -104,6 +104,6 @@
             <input type="submit" class="search-empty-submit btn-large" value="{{ _('Search') }}">
         </form>
     </div>
-    <a href="{{ url('search')|urlparams(a=1,w=w,q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
+    <a href="{{ url('search')|urlparams(a=1,q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
     {% endif %}
 {% endblock %}

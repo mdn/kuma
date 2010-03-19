@@ -23,9 +23,6 @@ import search as constants
 def search(request):
     """Performs search or displays the search form"""
 
-    # set up form
-    search_form = SearchForm(request.GET.copy())
-
     # set up query variables
     q = request.GET.get('q', '')
 
@@ -39,6 +36,16 @@ def search(request):
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
     offset = (page-1) * settings.SEARCH_RESULTS_PER_PAGE
+
+    # set up form with default values
+    search_params = request.GET.copy()
+    if not search_params.getlist('category'):
+        search_params.setlist('category', settings.SEARCH_DEFAULT_CATEGORIES)
+    if not search_params.getlist('fid'):
+        search_params.setlist('fid', settings.SEARCH_DEFAULT_FORUMS)
+    if not search_params.getlist('language'):
+        search_params.setlist('language', [language])
+    search_form = SearchForm(search_params)
 
     # no query or advanced search?
     # => return empty form
@@ -63,8 +70,7 @@ def search(request):
 
 
         # Category filter
-        categories = request.GET.getlist('category') or \
-            settings.SEARCH_DEFAULT_CATEGORIES
+        categories = search_params.getlist('category')
         filters_w.append({
             'filter': 'category',
             'value': map(int, categories),
@@ -99,9 +105,7 @@ def search(request):
         # Forum filter
         filters_f.append({
             'filter': 'forumId',
-            'value': map(int,
-                request.GET.getlist('fid') or \
-                    settings.SEARCH_DEFAULT_FORUMS),
+            'value': map(int, search_params.getlist('fid')),
         })
 
         # Status filter
