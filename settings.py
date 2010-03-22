@@ -2,6 +2,8 @@
 import os
 import logging
 
+from l10n import ugettext_lazy as _lazy
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOG_LEVEL = logging.DEBUG
@@ -49,6 +51,8 @@ TIME_ZONE = 'America/Los_Angeles'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
+SITE_TITLE = _lazy(u'Firefox Support', 'site_title')
+
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -83,7 +87,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
+    'sumo.context_processors.title',
 )
 
 MIDDLEWARE_CLASSES = (
