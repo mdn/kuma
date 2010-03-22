@@ -88,7 +88,7 @@ class SearchClient(object):
 
         return excerpt
 
-    def sort(self, mode, clause=''):
+    def set_sort_mode(self, mode, clause=''):
         self.sphinx.SetSortMode(mode, clause)
 
 

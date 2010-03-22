@@ -28,12 +28,6 @@
       </li>
     {% endif %}
   </ol>
-  <div class="num-results">
-    {% trans begin=pager.start_index(), end=pager.end_index() %}
-      Results <strong>{{ begin }}</strong>&ndash;<strong>{{ end }}</strong>
-      of {{ count }}
-    {% endtrans %}
-  </div>
 {% endif %}
 
 

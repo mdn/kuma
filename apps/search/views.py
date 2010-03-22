@@ -8,9 +8,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 import jingo
-from l10n import ugettext
-# required for building the query
-# see refine_query variable
+from l10n import ugettext as _
 from flatqs import flatten
 
 from sumo.utils import paginate
@@ -29,20 +27,20 @@ def search(request):
     locale = request.GET.get('locale', request.LANGUAGE_CODE)
     language = request.GET.get('language', locale)
 
-    sphinx_locale = (crc32(language),)
+    search_locale = (crc32(language),)
 
     where = int(request.GET.get('w', constants.WHERE_ALL))
 
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
-    offset = (page-1) * settings.SEARCH_RESULTS_PER_PAGE
+    offset = (page-1)*settings.SEARCH_RESULTS_PER_PAGE
 
     # set up form with default values
     search_params = request.GET.copy()
     if not search_params.getlist('category'):
         search_params.setlist('category', settings.SEARCH_DEFAULT_CATEGORIES)
-    if not search_params.getlist('fid'):
-        search_params.setlist('fid', settings.SEARCH_DEFAULT_FORUMS)
+    if not search_params.getlist('forum'):
+        search_params.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)
     if not search_params.getlist('language'):
         search_params.setlist('language', [language])
     search_form = SearchForm(search_params)
@@ -80,7 +78,7 @@ def search(request):
         # Locale filter
         filters_w.append({
             'filter': 'locale',
-            'value': sphinx_locale,
+            'value': search_locale,
         })
 
 
@@ -105,7 +103,7 @@ def search(request):
         # Forum filter
         filters_f.append({
             'filter': 'forumId',
-            'value': map(int, search_params.getlist('fid')),
+            'value': map(int, search_params.getlist('forum')),
         })
 
         # Status filter
@@ -182,11 +180,11 @@ def search(request):
         # Sort results by
         sortby = int(request.GET.get('sortby', 0))
         if sortby == constants.SORTBY_CREATED:
-            fc.sort(constants.SORTBY_MODE, 'created')
+            fc.set_sort_mode(constants.SORTBY_MODE, 'created')
         elif sortby == constants.SORTBY_LASTMODIF:
-            fc.sort(constants.SORTBY_MODE, 'last_updated')
+            fc.set_sort_mode(constants.SORTBY_MODE, 'last_updated')
         elif sortby == constants.SORTBY_REPLYCOUNT:
-            fc.sort(constants.SORTBY_MODE, 'replies')
+            fc.set_sort_mode(constants.SORTBY_MODE, 'replies')
 
         documents += fc.query(q, filters_f)
 
@@ -233,9 +231,9 @@ class SearchForm(forms.Form):
     q = forms.CharField()
 
     # kb form data
-    tag = forms.CharField(label=ugettext('Tags'))
+    tag = forms.CharField(label=_('Tags'))
 
-    language = forms.ChoiceField(label=ugettext('Language'),
+    language = forms.ChoiceField(label=_('Language'),
         choices=settings.LANGUAGES)
 
     categories = []
@@ -243,24 +241,24 @@ class SearchForm(forms.Form):
         categories.append((cat.categId, cat.name))
     category = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        label=ugettext('Category'), choices=categories)
+        label=_('Category'), choices=categories)
 
     # forum form data
-    status = forms.ChoiceField(label=ugettext('Post status'),
+    status = forms.ChoiceField(label=_('Post status'),
         choices=constants.STATUS_LIST)
     author = forms.CharField()
 
-    created = forms.ChoiceField(label=ugettext('Created'),
+    created = forms.ChoiceField(label=_('Created'),
         choices=constants.CREATED_LIST)
     created_date = forms.CharField()
 
-    lastmodif = forms.ChoiceField(label=ugettext('Last updated'),
+    lastmodif = forms.ChoiceField(label=_('Last updated'),
         choices=constants.LUP_LIST)
-    sortby = forms.ChoiceField(label=ugettext('Sort results by'),
+    sortby = forms.ChoiceField(label=_('Sort results by'),
         choices=constants.SORTBY_LIST)
 
     forums = []
     for f in Forum.objects.all():
         forums.append((f.forumId, f.name))
-    fid = forms.MultipleChoiceField(label=ugettext('Search in forum'),
+    forum = forms.MultipleChoiceField(label=_('Search in forum'),
         choices=forums)
