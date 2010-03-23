@@ -13,7 +13,7 @@
 {% endfor %}
 
 </head>
-<body>
+<body{% if classes %} class="{{ classes }}"{% endif %}>
 
 <ul id="nav-access">
     <li><a href="#navigation">{{ _('skip to navigation') }}</a></li>
@@ -53,5 +53,8 @@
 </div><!-- /#footer -->
 
 <script type="text/javascript" src="{{ MEDIA_URL }}js/mozilla-menu.js"></script>
+{% for script in scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}{{ script }}"></script>
+{% endfor %}
 </body>
 </html>

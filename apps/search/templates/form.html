@@ -1,0 +1,109 @@
+{% extends "common/base.html" %}
+{% set title = _('Search') %}
+{% if advanced == '1' %}
+{% set classes = 'advanced_search' %}
+{% endif %}
+{% set styles = ('css/search.css',) %}
+{% set scripts = (
+    'js/jquery.min.js',
+    'js/jqueryui.min.js',
+    'js/search.js'
+) %}
+
+{% block content %}
+    {% if advanced == '1' %}
+    <div id="search-tabs">
+        <input type="hidden" id="where" value="{{ w }}" />
+        <ul>
+            <li><a title="{{ _('Search the Knowledge Base') }}" class="tablink" href="#kb">{{ _('Knowledge Base') }}</a></li>
+            <li><a title="{{ _('Search the Forum') }}" class="tablink" href="#forum">{{ _('Forum') }}</a></li>
+        </ul>
+        <div id="tab-wrapper">
+        <form id="kb" method="get">
+            <div class="container">
+                <label for="kb_q">{{ _('Article contains') }}</label>
+                <input name="q" id="kb_q" value="{{ search_form.q.data or '' }}" type="text" />
+            </div>
+
+            <div class="container">
+                {{ search_form.language.label_tag()|safe }}
+                {{ search_form.language|safe }}
+            </div>
+
+            <div class="container">
+                {{ search_form.category.label_tag()|safe }}
+                <div class="category">
+                {{ search_form.category|safe }}
+                </div>
+            </div>
+
+            <div class="container">
+                {{ search_form.tag.label_tag()|safe }}
+                {{ search_form.tag|safe }}
+                <div class="search-tips-small">
+                    {{ _('Note: Searching for "tag1, tag2" returns articles tagged with both tag1 and tag2') }}
+                </div>
+            </div>
+
+            <input type="hidden" value="1" name="w" />
+            <div class="submit-search">
+                <input type="submit" value="{{ _('Search') }}" />
+            </div>
+        </form><!-- kb -->
+        <form method="get" id="forum">
+            <div class="container">
+                <label for="forum_q">{{ _('Post contains') }}</label>
+                <input name="q" id="forum_q" value="{{ search_form.q.data or '' }}" type="text" />
+            </div>
+
+            <div class="container">
+                {{ search_form.status.label_tag()|safe }}
+                {{ search_form.status|safe }}
+            </div>
+
+            <div class="container">
+                {{ search_form.author.label_tag()|safe }}
+                {{ search_form.author|safe }}
+            </div>
+
+            <div class="container">
+                {{ search_form.created.label_tag()|safe }}
+                {{ search_form.created|safe }}
+                <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
+            </div>
+
+            <div class="container">
+                {{ search_form.lastmodif.label_tag()|safe }}
+                {{ search_form.lastmodif|safe }}
+            </div>
+
+            <div class="container">
+                {{ search_form.sortby.label_tag()|safe }}
+                {{ search_form.sortby|safe }}
+            </div>
+
+            <div class="container">
+                {{ search_form.forum.label_tag()|safe }}
+                {{ search_form.forum|safe }}
+            </div>
+
+            <input type="hidden" value="2" name="w" />
+            <div class="submit-search">
+                <input type="submit" value="{{ _('Search') }}" />
+            </div>
+        </form><!-- forum -->
+        </div><!-- tab-wrapper-->
+    </div><!-- search-tabs -->
+
+    <a href="{{ url('search')|urlparams(q=search_form.q.data) }}">{{ _('Use basic search') }}</a>
+    {% else %}
+    <div id="basic-search" class="search-empty">
+    {{ _('Enter your terms in the form below and click <strong>Search</strong>')|safe }}
+        <form role="search" method="get" action="search">
+            <input type="text" class="search-query search-empty-query" value="{{ search_form.q.data or '' }}" name="q">
+            <input type="submit" class="search-empty-submit btn-large" value="{{ _('Search') }}">
+        </form>
+    </div>
+    <a href="{{ url('search')|urlparams(a=1,q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
+    {% endif %}
+{% endblock %}

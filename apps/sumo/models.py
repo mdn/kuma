@@ -52,7 +52,8 @@ class Forum(ModelBase):
     moderator_group = models.CharField(max_length=200, null=True)
     approval_type = models.CharField(max_length=20, null=True)
     outbound_address = models.CharField(max_length=250, null=True)
-    outbound_mails_for_inbound_mails = models.CharField(max_length=1, null=True)
+    outbound_mails_for_inbound_mails = models.CharField(max_length=1,
+        null=True)
     outbound_mails_reply_link = models.CharField(max_length=1, null=True)
     outbound_from = models.CharField(max_length=250, null=True)
     inbound_pop_server = models.CharField(max_length=250, null=True)
@@ -124,10 +125,6 @@ class ForumThread(ModelBase):
     def name(self):
         return self.title
 
-    @property
-    def search_summary(self):
-        return self.summary
-
     def get_url(self):
         """
         TODO: Once we can use reverse(), use reverse()
@@ -192,4 +189,3 @@ class Category(ModelBase):
 
     def __unicode__(self):
         return self.name
-

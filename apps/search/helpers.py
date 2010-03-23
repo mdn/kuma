@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 import jinja2
 
-from jingo import register, env
+from jingo import register
 from didyoumean import DidYouMean
 
 
