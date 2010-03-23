@@ -5,7 +5,6 @@ import time
 from django.utils.datastructures import MultiValueDict
 from django import forms
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 import jingo
 from l10n import ugettext as _
@@ -33,7 +32,7 @@ def search(request):
 
     page = int(request.GET.get('page', 1))
     page = max(page, 1)
-    offset = (page-1)*settings.SEARCH_RESULTS_PER_PAGE
+    offset = (page - 1) * settings.SEARCH_RESULTS_PER_PAGE
 
     # set up form with default values
     search_params = request.GET.copy()
