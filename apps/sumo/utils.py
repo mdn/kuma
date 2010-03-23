@@ -1,6 +1,6 @@
-import urllib
-
 from django.core import paginator
+
+from flatqs import flatten
 
 
 def paginate(request, queryset, per_page=20):
@@ -20,5 +20,5 @@ def paginate(request, queryset, per_page=20):
         paginated = p.page(1)
 
     base = request.build_absolute_uri(request.path)
-    paginated.url = u'%s?%s' % (base, urllib.urlencode(request.GET.items()))
+    paginated.url = u'%s?%s' % (base, flatten(request.GET, encode=False))
     return paginated
