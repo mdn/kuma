@@ -1,12 +1,13 @@
 import cgi
-import urllib
 import urlparse
 
 from django.core.urlresolvers import reverse
+from django.utils.datastructures import MultiValueDict
 
 import jinja2
 
 from jingo import register, env
+from flatqs import flatten
 
 
 @register.filter
@@ -31,10 +32,14 @@ def urlparams(url_, hash=None, **query):
     url = urlparse.urlparse(url_)
     fragment = hash if hash is not None else url.fragment
 
-    query_dict = dict(cgi.parse_qsl(url.query)) if url.query else {}
-    query_dict.update((k, v) for k, v in query.items() if v is not None)
+    query_dict = MultiValueDict()
+    if url.query:
+        for k, v in cgi.parse_qsl(url.query):
+            query_dict.update({k: v})
+    for k, v in query.items():
+        query_dict.update({k: v})
 
-    query_string = urllib.urlencode(query_dict.items())
+    query_string = flatten(query_dict, encode=False)
     new = urlparse.ParseResult(url.scheme, url.netloc, url.path, url.params,
                                query_string, fragment)
     return jinja2.Markup(new.geturl())
