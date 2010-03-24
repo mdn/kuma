@@ -73,11 +73,19 @@ def search(request):
         filters_w = []  # Filters for the wiki search
 
         # Category filter
-        categories = search_params.getlist('category')
+        categories = map(int, search_params.getlist('category'))
         filters_w.append({
             'filter': 'category',
-            'value': map(int, categories),
+            'value': [x for x in categories if x > 0],
         })
+
+        exclude_categories = [abs(x) for x in categories if x < 0]
+        if exclude_categories:
+            filters_w.append({
+                'filter': 'category',
+                'value': exclude_categories,
+                'exclude': True
+            })
 
         # Locale filter
         filters_w.append({
@@ -220,7 +228,7 @@ def search(request):
 
     if request.GET.get('format') == 'json':
         callback = request.GET.get('callback', '').strip()
-        # check callback is valid
+        # Check callback is valid
         if callback and not jsonp_is_valid(callback):
                 return HttpResponse('', mimetype='application/x-javascript',
                     status=400)

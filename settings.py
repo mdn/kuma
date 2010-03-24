@@ -166,7 +166,7 @@ SEARCH_RESULTS_PER_PAGE = 10
 #
 # Search default settings
 # comma-separated tuple of category IDs
-SEARCH_DEFAULT_CATEGORIES = (1, 17, 18)
+SEARCH_DEFAULT_CATEGORIES = (1, 17, 18, -3,)
 SEARCH_DEFAULT_FORUMS = (1,) # default forum ID (eg: 1 on sumo, 5 on mosumo)
 SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
