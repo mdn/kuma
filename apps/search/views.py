@@ -1,10 +1,12 @@
 # Create your views here.
 
 import time
+import re
 
 from django.utils.datastructures import MultiValueDict
 from django import forms
 from django.conf import settings
+from django.http import HttpResponse
 
 import jingo
 from l10n import ugettext as _
@@ -15,6 +17,12 @@ from sumo.models import ForumThread, WikiPage, Forum, Category
 from .clients import ForumClient, WikiClient
 from .utils import crc32
 import search as constants
+
+
+def jsonp_is_valid(func):
+    func_regex = re.compile(r'^[a-zA-Z_\$][a-zA-Z0-9_\$]*'
+        + r'(\[[a-zA-Z0-9_\$]*\])*(\.[a-zA-Z0-9_\$]+(\[[a-zA-Z0-9_\$]*\])*)*$')
+    return func_regex.match(func)
 
 
 def search(request):
@@ -217,6 +225,32 @@ def search(request):
 
     refine_query = '?a=1&w=' + str(where) + '&' \
         + flatten(refine_query, encode=False)
+
+    if request.GET.get('format') == 'json':
+        callback = request.GET.get('callback', '').strip()
+        # check callback is valid
+        if callback and not jsonp_is_valid(callback):
+                return HttpResponse('', mimetype='application/x-javascript',
+                    status=400)
+
+        data = {}
+        data['results'] = results
+        data['total'] = len(documents)
+        data['query'] = q
+        if not results:
+            data['message'] = _('No pages matched the search criteria')
+        import json
+        json_data = json.dumps(data)
+        if callback:
+            json_data = callback + '(' + json_data + ');'
+            response = HttpResponse(json_data,
+                mimetype='application/x-javascript')
+        else:
+            response = HttpResponse(json_data,
+                mimetype='application/json')
+
+        return response
+
 
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
