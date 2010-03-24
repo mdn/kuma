@@ -4,9 +4,9 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 import jinja2
-
 from jingo import register
 from didyoumean import DidYouMean
+from flatqs import flatten
 
 
 @register.function
@@ -39,7 +39,7 @@ def suggestions(context, string, locale='en-US'):
     if 'page' in query_dict:
         query_dict['page'] = 1
 
-    query_string = urllib.urlencode(query_dict.items())
+    query_string = flatten(query_dict)
 
     url = u'%s?%s' % (reverse('search'), query_string)
 
