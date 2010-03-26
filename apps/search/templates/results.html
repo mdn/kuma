@@ -23,7 +23,7 @@
     {% endif %}
 
     <div class="search-count">
-        {{ _('About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>')|f(n=num_results, q=q, l=lang_name)|safe }}
+        {{ _('About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>')|fe(n=num_results, q=q, l=lang_name) }}
     </div>
 
     <div class="search-results">
