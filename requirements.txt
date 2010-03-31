@@ -2,6 +2,7 @@
 -e svn+http://django-localeurl.googlecode.com/svn/trunk@90#egg=django_localeurl-trunk-py2.6-dev_r90
 -e git://github.com/jbalogh/django-multidb-router.git#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
+-e git://github.com/jsocol/flatqs.git#egg=flatqs
 Jinja2==2.2.1
 -e git://github.com/jbalogh/jingo.git#egg=jingo
 MySQL-python==1.2.3c1
