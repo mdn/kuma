@@ -16,7 +16,9 @@
       <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
       <input type="submit" class="search-refine-submit btn-large" value="{{ _('Search') }}">
     </form>
-    <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _("Refine your search") }}</a>
+    {% if user.is_authenticated() %}
+      <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _("Refine your search") }}</a>
+    {% endif %}
   </div>
 
   {% if not spellcheck(q, search_form.language.data or request.locale) %}
