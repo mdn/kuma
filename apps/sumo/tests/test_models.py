@@ -4,7 +4,8 @@ from django import test
 
 import jingo
 
-from sumo.models import ForumThread, WikiPage, Forum
+from sumo.models import ForumThread, WikiPage, Forum, TikiUser
+from sumo import backends
 
 
 def setup():
@@ -35,3 +36,12 @@ class TestForumModel(test.TestCase):
         f = Forum.objects.create(pk=12, name='My Test Forum')
         eq_(f.get_url(), '/en-US/forum/12')
 
+
+class TestTikiUserModel(test.TestCase):
+
+    def test_django_user(self):
+        tiki_user = TikiUser.objects.create(pk=1234, login='djangotestuser',
+                                            email='user1234@nowhere',
+                                            registrationDate=1207303253)
+        user = backends.create_django_user(tiki_user)
+        eq_(tiki_user.userId, user.id)
