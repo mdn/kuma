@@ -20,5 +20,10 @@ def paginate(request, queryset, per_page=20):
         paginated = p.page(1)
 
     base = request.build_absolute_uri(request.path)
-    paginated.url = u'%s?%s' % (base, flatten(request.GET, encode=False))
+    request_copy = request.GET.copy()
+    try:
+        del request_copy['page']
+    except KeyError:
+        pass
+    paginated.url = u'%s?%s' % (base, flatten(request_copy, encode=False))
     return paginated
