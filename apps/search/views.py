@@ -31,7 +31,7 @@ def search(request):
     # set up query variables
     q = request.GET.get('q', '')
 
-    locale = request.GET.get('locale', request.LANGUAGE_CODE)
+    locale = request.GET.get('locale', request.locale)
     language = request.GET.get('language', locale)
 
     search_locale = (crc32(language),)
@@ -56,16 +56,17 @@ def search(request):
     # => return empty form
     if (not q or (request.GET.get('a', '0') == '1')):
         return jingo.render(request, 'form.html',
-            {'locale': request.LANGUAGE_CODE,
+            {'locale': request.locale,
             'advanced': request.GET.get('a'),
             'request': request,
             'w': where, 'search_form': search_form,
             })
 
     # get language name for display in template
-    for (l, l_name) in settings.LANGUAGES:
-        if l == language:
-            lang_name = l_name
+    if settings.LANGUAGES.get(language):
+        lang_name = settings.LANGUAGES[language]
+    else:
+        lang_name = ''
 
     documents = []
 
@@ -254,7 +255,7 @@ def search(request):
 
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
-          'locale': request.LANGUAGE_CODE, 'pages': pages,
+          'locale': request.locale, 'pages': pages,
           'w': where, 'refine_query': refine_query,
           'search_form': search_form,
           'lang_name': lang_name, })
@@ -267,7 +268,7 @@ class SearchForm(forms.Form):
     tag = forms.CharField(label=_('Tags'))
 
     language = forms.ChoiceField(label=_('Language'),
-        choices=settings.LANGUAGES)
+        choices=[(i, settings.LANGUAGES[i]) for i in settings.LANGUAGES])
 
     categories = []
     for cat in Category.objects.all():

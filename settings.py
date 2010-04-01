@@ -4,6 +4,8 @@ import logging
 
 from l10n import ugettext_lazy as _lazy
 
+import sumo_locales
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOG_LEVEL = logging.DEBUG
@@ -48,7 +50,25 @@ TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-US'
+
+# Supported languages
+SUMO_LANGUAGES = (
+    'ar', 'as', 'bg', 'bn-BD', 'bn-IN', 'ca', 'cs', 'da', 'de', 'el', 'en-US',
+    'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'fur', 'fy-NL', 'ga-IE', 'gl',
+    'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'id', 'is', 'it', 'ja', 'kk', 'kn',
+    'ko', 'lt', 'mk', 'mn', 'mr', 'ms', 'nb-NO', 'nl', 'no', 'oc', 'pa-IN',
+    'pl', 'pt-BR', 'pt-PT', 'rm', 'ro', 'ru', 'rw', 'si', 'sk', 'sl',
+    'sq', 'sr-CYRL', 'sr-LATN', 'sv-SE', 'ta-LK', 'te', 'th', 'tr',
+    'uk', 'vi', 'zh-CN', 'zh-TW',
+)
+
+LANGUAGES = dict([(i.lower(), sumo_locales.languages[i].native)
+                 for i in SUMO_LANGUAGES])
+
+LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
+
+TEXT_DOMAIN = 'k-messages'
 
 SITE_ID = 1
 SITE_TITLE = _lazy(u'Firefox Support', 'site_title')
@@ -57,6 +77,7 @@ SITE_TITLE = _lazy(u'Firefox Support', 'site_title')
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -71,6 +92,9 @@ MEDIA_URL = '/media/'
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/admin-media/'
+
+# Paths that don't require a locale prefix.
+SUPPORTED_NONLOCALES = ('media',)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -92,7 +116,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'localeurl.middleware.LocaleURLMiddleware',
+    'sumo.middleware.LocaleURLMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -110,7 +134,6 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'localeurl',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
