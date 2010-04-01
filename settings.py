@@ -156,6 +156,10 @@ WORD_LIST = path('configs/words.txt')
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3312
 
+SPHINX_INDEXER = '/usr/local/bin/indexer'
+SPHINX_SEARCHD = '/usr/local/bin/searchd'
+SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
+
 #
 # Sphinx results tweaking
 SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
