@@ -28,7 +28,7 @@ $(document).ready(function() {
     }
     autoFillHelpText($('#search-tabs input[name="author"]'), DEFAULT_AUTHOR);
     autoFillHelpText($('#search-tabs input[name="q"]'), DEFAULT_QUERY);
-    autoFillHelpText($('#search-tabs input[name="tag"]'), DEFAULT_TAGS);
+    autoFillHelpText($('#search-tabs input[name="tags"]'), DEFAULT_TAGS);
 
     $("#tab-wrapper form").submit(function() {
       if ($('#search-tabs input[name="author"]').val() == DEFAULT_AUTHOR) {
@@ -40,8 +40,8 @@ $(document).ready(function() {
       if ($('#forum input[name="q"]').val() == DEFAULT_QUERY) {
         $('#forum input[name="q"]').val('');
       }
-      if ($('#search-tabs input[name="tag"]').val() == DEFAULT_TAGS) {
-        $('#search-tabs input[name="tag"]').val('');
+      if ($('#search-tabs input[name="tags"]').val() == DEFAULT_TAGS) {
+        $('#search-tabs input[name="tags"]').val('');
       }
     });
 

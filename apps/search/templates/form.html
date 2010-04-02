@@ -1,14 +1,14 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
 {% set title = _('Search') %}
-{% if advanced == '1' %}
+{% if advanced != '0' %}
 {% set classes = 'advanced_search' %}
 {% endif %}
 {% set styles = ('search',) %}
 {% set scripts = ('search',) %}
 
 {% block content %}
-  {% if advanced == '1' %}
+  {% if advanced != '0' %}
   <div id="search-tabs">
     <input type="hidden" id="where" value="{{ w }}" />
     <ul>
@@ -35,14 +35,18 @@
       </div>
 
       <div class="container">
-        {{ search_form.tag.label_tag()|safe }}
-        {{ search_form.tag|safe }}
+        {{ search_form.tags.label_tag()|safe }}
+        {{ search_form.tags|safe }}
         <div class="search-tips-small">
           {{ _('Note: Searching for "tag1, tag2" returns articles tagged with both tag1 and tag2') }}
         </div>
       </div>
 
+      {% for hidden in search_form.hidden_fields() if not hidden.name == 'w' %}
+        {{ hidden|safe }}
+      {% endfor %}
       <input type="hidden" value="1" name="w" />
+
       <div class="submit-search">
         <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
@@ -84,7 +88,11 @@
         {{ search_form.forum|safe }}
       </div>
 
+      {% for hidden in search_form.hidden_fields() if not hidden.name == 'w' %}
+        {{ hidden|safe }}
+      {% endfor %}
       <input type="hidden" value="2" name="w" />
+
       <div class="submit-search">
         <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
@@ -102,7 +110,7 @@
       </form>
     </div>
     {% if user.is_authenticated() %}
-      <a href="{{ url('search')|urlparams(a=1,q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
+      <a href="{{ url('search')|urlparams(a=2, q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
     {% endif %}
   {% endif %}
 {% endblock %}

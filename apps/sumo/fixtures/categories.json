@@ -1,71 +1,91 @@
 [
     {
-        "pk": 25, 
-        "model": "sumo.category", 
+        "pk": 25,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 15, 
-            "name": "Firefox 3.5/3.6", 
+            "hits": 0,
+            "parentId": 15,
+            "name": "Firefox 3.5/3.6",
             "description": ""
         }
-    }, 
+    },
     {
-        "pk": 23, 
-        "model": "sumo.category", 
+        "pk": 23,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 0, 
-            "name": "How to Contribute", 
+            "hits": 0,
+            "parentId": 0,
+            "name": "How to Contribute",
             "description": ""
         }
-    }, 
+    },
     {
-        "pk": 19, 
-        "model": "sumo.category", 
+        "pk": 19,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 15, 
-            "name": "- This is a support/troubleshooting article -", 
+            "hits": 0,
+            "parentId": 15,
+            "name": "- This is a support/troubleshooting article -",
             "description": "http://wiki.mozilla.org/Support:PRD#Content_Types"
         }
-    }, 
+    },
     {
-        "pk": 14, 
-        "model": "sumo.category", 
+        "pk": 18,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 15, 
-            "name": "Firefox 3.0", 
+            "hits": 0,
+            "parentId": 15,
+            "name": "- This is a help article -",
+            "description": "Refer to http://wiki.mozilla.org/Support:PRD#Content_Types"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "sumo.category",
+        "fields": {
+            "hits": 0,
+            "parentId": 15,
+            "name": "Linked from in-product",
+            "description": "Special category for articles linked from in-product"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "sumo.category",
+        "fields": {
+            "hits": 0,
+            "parentId": 15,
+            "name": "Firefox 3.0",
             "description": ""
         }
-    }, 
+    },
     {
-        "pk": 13, 
-        "model": "sumo.category", 
+        "pk": 13,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 15, 
-            "name": "Firefox 2", 
+            "hits": 0,
+            "parentId": 15,
+            "name": "Firefox 2",
             "description": ""
         }
-    }, 
+    },
     {
-        "pk": 8, 
-        "model": "sumo.category", 
+        "pk": 8,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 0, 
-            "name": "Administration", 
+            "hits": 0,
+            "parentId": 0,
+            "name": "Administration",
             "description": ""
         }
-    }, 
+    },
     {
-        "pk": 1, 
-        "model": "sumo.category", 
+        "pk": 1,
+        "model": "sumo.category",
         "fields": {
-            "hits": 0, 
-            "parentId": 0, 
-            "name": "Knowledge Base", 
+            "hits": 0,
+            "parentId": 0,
+            "name": "Knowledge Base",
             "description": ""
         }
     }
