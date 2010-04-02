@@ -38,10 +38,11 @@ class LocaleURLMiddleware(object):
 
         if full_path != request.path:
             query_string = request.META.get('QUERY_STRING', '')
+            full_path = urllib.quote(full_path.encode('utf-8'))
+
             if query_string:
                 full_path = '%s?%s' % (full_path, query_string)
 
-            full_path = urllib.quote(full_path.encode('utf-8'))
             response = HttpResponsePermanentRedirect(full_path)
 
             # Vary on Accept-Language if we changed the locale

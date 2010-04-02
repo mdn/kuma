@@ -18,9 +18,11 @@ except ImportError:
         import settings # Assumed to be in the same directory.
     except ImportError:
         import sys
-        sys.stderr.write("Error: Can't find the file 'settings.py' in the directory containing %r. It appears you've customized things.\nYou'll have to run django-admin.py, passing it your settings module.\n(If the file settings.py does indeed exist, it's causing an ImportError somehow.)\n" % __file__)
-        sys.exit(1)
-
+        sys.stderr.write(
+            "Error: Tried importing 'settings_local.py' and 'settings.py' "
+            "but neither could be found (or they're throwing an ImportError)."
+            " Please come back and try again later.")
+        raise
 
 # The first thing execute_manager does is call `setup_environ`.  Logging config
 # needs to access settings, so we'll setup the environ early.

@@ -31,6 +31,11 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None):
         return url
 
 
+def find_supported(test):
+    return [x for x in settings.LANGUAGE_URL_MAP if
+            x.split('-', 1)[0] == test.lower().split('-', 1)[0]]
+
+
 class Prefixer(object):
 
     def __init__(self, request):
@@ -52,9 +57,7 @@ class Prefixer(object):
         if first.lower() in settings.LANGUAGES:
             return first, rest
         else:
-            supported = [x for x in settings.LANGUAGE_URL_MAP if
-                         x.split('-')[0] ==
-                         first.lower().split('-')[0]]
+            supported = find_supported(first)
             if len(supported):
                 return supported[0], rest
             else:
@@ -82,9 +85,7 @@ class Prefixer(object):
             # Do we support a less specific locale? (xx-YY -> xx)
             if not len(supported):
                 for lang in ranked_languages:
-                    supported = [x for x in settings.LANGUAGE_URL_MAP if
-                                    lang[0].split('-', 1)[0] ==
-                                    x.split('-', 1)[0]]
+                    supported = find_supported(lang[0])
                     if supported:
                         break
 
