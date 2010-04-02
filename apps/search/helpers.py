@@ -1,13 +1,13 @@
 import urllib
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 import jinja2
 from jingo import register
 from didyoumean import DidYouMean
 from flatqs import flatten
 
+from sumo.urlresolvers import reverse
 
 @register.function
 def spellcheck(string, locale='en-US'):

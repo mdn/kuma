@@ -1,5 +1,4 @@
 -e svn+http://code.djangoproject.com/svn/django/trunk@12335#egg=Django
--e svn+http://django-localeurl.googlecode.com/svn/trunk@90#egg=django_localeurl-trunk-py2.6-dev_r90
 -e git://github.com/jbalogh/django-multidb-router.git#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
 -e git://github.com/jsocol/flatqs.git#egg=flatqs

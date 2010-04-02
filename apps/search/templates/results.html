@@ -18,8 +18,8 @@
         <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _("Refine your search") }}</a>
     </div>
 
-    {% if spellcheck(q, search_form.language.data or locale) %}
-    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(search_form.language.data or locale))|safe }}</div>
+    {% if spellcheck(q, search_form.language.data or request.locale) %}
+    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(search_form.language.data or request.locale))|safe }}</div>
     {% endif %}
 
     <div class="search-count">
@@ -47,5 +47,5 @@
 
     </div>
 
-        <p>{{ _("Can't find what you're looking for?") }} <a href="/{{ locale }}/kb/Ask+a+question">{{ _('Ask a support question instead!') }}</a></p>
+        <p>{{ _("Can't find what you're looking for?") }} <a href="/{# TODO: Use url() #}{{ request.locale }}/kb/Ask+a+question">{{ _('Ask a support question instead!') }}</a></p>
 {% endblock %}

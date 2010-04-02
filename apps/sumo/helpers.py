@@ -1,13 +1,14 @@
 import cgi
 import urlparse
 
-from django.core.urlresolvers import reverse
 from django.utils.datastructures import MultiValueDict
 
 import jinja2
 
 from jingo import register, env
 from flatqs import flatten
+
+from sumo.urlresolvers import reverse
 
 
 @register.filter
