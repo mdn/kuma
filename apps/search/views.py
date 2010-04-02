@@ -2,6 +2,7 @@
 
 import time
 import re
+import json
 
 from django.utils.datastructures import MultiValueDict
 from django import forms
@@ -230,7 +231,6 @@ def search(request):
         data['query'] = q
         if not results:
             data['message'] = _('No pages matched the search criteria')
-        import json
         json_data = json.dumps(data)
         if callback:
             json_data = callback + '(' + json_data + ');'
