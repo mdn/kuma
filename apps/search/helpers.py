@@ -1,5 +1,3 @@
-import urllib
-
 from django.conf import settings
 
 import jinja2
@@ -9,16 +7,19 @@ from flatqs import flatten
 
 from sumo.urlresolvers import reverse
 
+
 @register.function
 def spellcheck(string, locale='en-US'):
-    d = DidYouMean(locale, dict_dir=settings.DICT_DIR)
-    return not d.check(string)
+    d = DidYouMean(locale, dict_dir=settings.DICT_DIR,
+                   words=settings.WORD_LIST)
+    return d.check(string)
 
 
 @register.filter
 @jinja2.contextfilter
 def suggestions(context, string, locale='en-US'):
-    d = DidYouMean(locale, dict_dir=settings.DICT_DIR)
+    d = DidYouMean(locale, dict_dir=settings.DICT_DIR,
+                   words=settings.WORD_LIST)
     words = [(jinja2.escape(w.new), w.corrected) for w in d.suggest(string)]
 
     newwords = []

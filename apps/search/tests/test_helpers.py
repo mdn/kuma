@@ -22,8 +22,15 @@ def test_spellcheck_filter():
     r = 'right'
     w = 'worng'
     t = "{% if spellcheck(q, 'en-US') %}Yes{% else %}No{% endif %}"
-    eq_('No', render(t, {'q': r}))
-    eq_('Yes', render(t, {'q': w}))
+    eq_('Yes', render(t, {'q': r}))
+    eq_('No', render(t, {'q': w}))
+
+
+def test_spellcheck_custom():
+    """Words in the custom dictionary should be accepted."""
+    t = "{% if spellcheck(q, 'en-US') %}Yes{% else %}No{% endif %}"
+    eq_('Yes', render(t, {'q': 'facebook'}))
+    eq_('No', render(t, {'q': 'sumodev'}))
 
 
 def test_suggestions():
