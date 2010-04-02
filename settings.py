@@ -149,7 +149,7 @@ TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 # Directory storying myspell dictionaries (with trailing slash)
 DICT_DIR = '/usr/share/myspell/'
 # List of custom words
-WORD_LIST = None
+WORD_LIST = path('configs/words.txt')
 
 #
 # Connection information for Sphinx search
