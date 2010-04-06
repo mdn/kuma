@@ -139,16 +139,56 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'tower',
     'sumo',
     'search',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
-#
+def JINJA_CONFIG():
+    import jinja2
+    from django.conf import settings
+    from caching.base import cache
+    config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',],
+              'finalize': lambda x: x if x is not None else ''}
+    if 'memcached' in cache.scheme and not settings.DEBUG:
+        # We're passing the _cache object directly to jinja because
+        # Django can't store binary directly; it enforces unicode on it.
+        # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
+        # and in the errors you get when you try it the other way.
+        bc = jinja2.MemcachedBytecodeCache(cache._cache,
+                                           "%sj2:" % settings.CACHE_PREFIX)
+        config['cache_size'] = -1  # Never clear the cache
+        config['bytecode_cache'] = bc
+    return config
+
+# Tells the extract script what files to look for l10n in and what function
+# handles the extraction.  The Tower library expects this.
+DOMAIN_METHODS = {
+    'messages': [
+        ('apps/**.py',
+            'tower.management.commands.extract.extract_tower_python'),
+        ('**/templates/**.html',
+            'tower.management.commands.extract.extract_tower_template'),
+    ],
+    'lhtml': [
+        ('**/templates/**.lhtml',
+            'tower.management.commands.extract.extract_tower_template'),
+    ],
+    'javascript': [
+        # We can't say **.js because that would dive into any libraries.
+        ('media/js/*.js', 'javascript'),
+    ],
+}
+
+# If you have trouble extracting strings with Tower, try setting this
+# to True
+TOWER_ADD_HEADERS=True
+
 # Directory storying myspell dictionaries (with trailing slash)
 DICT_DIR = '/usr/share/myspell/'
-# List of custom words
+# Path to a file with a list of custom words.
 WORD_LIST = path('configs/words.txt')
 
 #
