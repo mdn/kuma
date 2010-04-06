@@ -19,6 +19,8 @@ import socket
 import re
 from struct import *
 
+# Kitsune customizations
+K_TIMEOUT = 1  # Socket timeout in seconds
 
 # known searchd commands
 SEARCHD_COMMAND_SEARCH  = 0
@@ -195,12 +197,13 @@ class SphinxClient:
                 addr = ( self._host, self._port )
                 desc = '%s;%s' % addr
             sock = socket.socket ( af, socket.SOCK_STREAM )
+            sock.settimeout(K_TIMEOUT)
             sock.connect ( addr )
         except socket.error, msg:
             if sock:
                 sock.close()
             self._error = 'connection to %s failed (%s)' % ( desc, msg )
-            return
+            raise socket.error
 
         v = unpack('>L', sock.recv(4))
         if v<1:

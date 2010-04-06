@@ -6,7 +6,7 @@ from django.conf import settings
 
 # Loggers created under the "z" namespace, e.g. "z.caching", will inherit the
 # configuration from the base z logger.
-log = logging.getLogger('dj')
+log = logging.getLogger('k')
 
 fmt = '%(asctime)s %(name)s:%(levelname)s %(message)s :%(pathname)s:%(lineno)s'
 fmt = getattr(settings, 'LOG_FORMAT', fmt)

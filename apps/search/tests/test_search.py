@@ -9,13 +9,14 @@ from django.test import client
 from django.db import connection
 
 from nose import SkipTest
+from nose.tools import assert_raises
 import test_utils
 import json
 
 from manage import settings
 from sumo.urlresolvers import reverse
 from search.utils import start_sphinx, stop_sphinx, reindex
-from search.clients import WikiClient
+from search.clients import WikiClient, SearchError
 
 
 def create_extra_tables():
@@ -174,3 +175,11 @@ class SearchTest(SphinxTestCase):
                          {'q': 'audio', 'category': -13,
                           'format': 'json', 'w': 1})
         self.assertEquals(0, json.loads(response.content)['total'])
+
+
+def test_sphinx_down():
+    """
+    Tests that the client times out when Sphinx is down.
+    """
+    wc = WikiClient()
+    assert_raises(SearchError, wc.query, 'test')

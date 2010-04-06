@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils.encoding import force_unicode
 
 import jinja2
 from jingo import register
@@ -44,4 +45,5 @@ def suggestions(context, string, locale='en-US'):
 
     url = u'%s?%s' % (reverse('search'), query_string)
 
-    return jinja2.Markup(markup.format(url=jinja2.escape(url), text=text))
+    return jinja2.Markup(markup.format(url=jinja2.escape(url),
+                                       text=text))
