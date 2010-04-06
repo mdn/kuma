@@ -9,7 +9,7 @@ import urllib
 from django.http import HttpResponsePermanentRedirect
 from django.utils.encoding import smart_str
 
-import l10n
+import tower
 
 from . import urlresolvers
 from sumo.helpers import urlparams
@@ -55,4 +55,4 @@ class LocaleURLMiddleware(object):
 
         request.path_info = '/' + prefixer.shortened_path
         request.locale = prefixer.locale
-        l10n.activate(prefixer.locale)
+        tower.activate(prefixer.locale)

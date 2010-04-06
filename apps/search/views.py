@@ -10,7 +10,7 @@ from django.conf import settings
 from django.http import HttpResponse
 
 import jingo
-from l10n import ugettext as _
+from tower import ugettext as _
 from flatqs import flatten
 
 from sumo.utils import paginate
@@ -84,7 +84,7 @@ def search(request):
             filters_w.append({
                 'filter': 'category',
                 'value': exclude_categories,
-                'exclude': True
+                'exclude': True,
             })
 
         # Locale filter

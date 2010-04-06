@@ -2,7 +2,7 @@
 import os
 import logging
 
-from l10n import ugettext_lazy as _lazy
+from tower import ugettext_lazy as _lazy
 
 import sumo_locales
 

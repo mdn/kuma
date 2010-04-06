@@ -5,19 +5,16 @@ import os
 import shutil
 import time
 
-from django.test import TestCase, client
-from django.core.management import call_command
-from django.utils import translation
+from django.test import client
 
 from nose import SkipTest
-from nose.tools import eq_
 import test_utils
 import json
 
 from manage import settings
 from sumo.urlresolvers import reverse
 from search.utils import start_sphinx, stop_sphinx, reindex
-from search.clients import WikiClient, ForumClient
+from search.clients import WikiClient
 
 
 class SphinxTestCase(test_utils.TransactionTestCase):
@@ -66,17 +63,15 @@ class SearchTest(SphinxTestCase):
         results = wc.query('practice')
         self.assertNotEquals(0, len(results))
 
-
     def test_category_filter(self):
         wc = WikiClient()
         results = wc.query('', ({'filter': 'category', 'value': [13]},))
         self.assertNotEquals(0, len(results))
 
-
     def test_category_exclude(self):
         c = client.Client()
         response = c.get(reverse('search'),
-                         {'q': 'audio', 'format': 'json', 'w': 1})
+                         {'q': 'audio', 'format': 'json', 'w': 3})
         self.assertNotEquals(0, json.loads(response.content)['total'])
 
         response = c.get(reverse('search'),
