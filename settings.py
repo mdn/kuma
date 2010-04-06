@@ -2,7 +2,7 @@
 import os
 import logging
 
-from l10n import ugettext_lazy as _lazy
+from tower import ugettext_lazy as _lazy
 
 import sumo_locales
 
@@ -156,6 +156,10 @@ WORD_LIST = path('configs/words.txt')
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3312
 
+SPHINX_INDEXER = '/usr/local/bin/indexer'
+SPHINX_SEARCHD = '/usr/local/bin/searchd'
+SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
+
 #
 # Sphinx results tweaking
 SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
@@ -166,7 +170,7 @@ SEARCH_RESULTS_PER_PAGE = 10
 #
 # Search default settings
 # comma-separated tuple of category IDs
-SEARCH_DEFAULT_CATEGORIES = (1, 17, 18)
+SEARCH_DEFAULT_CATEGORIES = (1, 17, 18, -3,)
 SEARCH_DEFAULT_FORUMS = (1,) # default forum ID (eg: 1 on sumo, 5 on mosumo)
 SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
