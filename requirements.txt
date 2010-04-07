@@ -1,19 +1,19 @@
 -e svn+http://code.djangoproject.com/svn/django/trunk@12335#egg=Django
--e git://github.com/jbalogh/django-multidb-router.git#egg=django-multidb-router
--e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
--e git://github.com/jsocol/flatqs.git#egg=flatqs
+-e git://github.com/jbalogh/django-multidb-router.git@8eeef712a2f594d9fe6ba1e2ffc9240814d6a185#egg=django-multidb-router
+-e git://github.com/jbalogh/django-cache-machine.git@bdee25ba4eeb20758da86f4013edbc48a77bcc6e#egg=django-cache-machine
+-e git://github.com/jsocol/flatqs.git@fc0b5d89cc78b894eaf73c48dde81d0f197c7a15#egg=flatqs
 Jinja2==2.2.1
--e git://github.com/jbalogh/jingo.git#egg=jingo
+-e git://github.com/jbalogh/jingo.git@c73d2c55182301e6f3ce507fc9a17ea843fed24f#egg=jingo
 MySQL-python==1.2.3c1
 python-memcached==1.45
 Werkzeug==0.5.1
 Babel>=0.9.4
-phpserialize
-south
+phpserialize==1.2
+South==0.7
 
 # for spell checking
 -e svn+http://pyhunspell.googlecode.com/svn/trunk@6#egg=hunspell-0.1-py2.6-dev_r6
--e git://github.com/jsocol/didyoumean.git#egg=didyoumean
+-e git://github.com/jsocol/didyoumean.git@cc11aeae400346fd4fc9e6334bd5ff80484839b5#egg=didyoumean
 
 # for l10n
--e git://github.com/clouserw/tower.git#egg=tower
+-e git://github.com/clouserw/tower.git@1217a7184ef40520e059fadf359618972662c47e#egg=tower

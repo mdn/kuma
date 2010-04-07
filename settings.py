@@ -144,6 +144,14 @@ INSTALLED_APPS = (
     'search',
 )
 
+# Extra apps for testing
+if DEBUG:
+    INSTALLED_APPS += (
+        'django_extensions',
+        'django_nose',
+        'test_utils',
+    )   
+
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
 def JINJA_CONFIG():
@@ -196,8 +204,8 @@ WORD_LIST = path('configs/words.txt')
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3312
 
-SPHINX_INDEXER = '/usr/local/bin/indexer'
-SPHINX_SEARCHD = '/usr/local/bin/searchd'
+SPHINX_INDEXER = '/usr/bin/indexer'
+SPHINX_SEARCHD = '/usr/bin/searchd'
 SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
 
 #

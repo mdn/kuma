@@ -21,7 +21,7 @@ if MYSQL_HOST.endswith('.sock'):
 if os.environ.get('DJANGO_ENVIRONMENT') == 'test':
     MYSQL_NAME = 'test_' + MYSQL_NAME
 
-ROOT_PATH       = '/tmp'
+ROOT_PATH       = '/tmp/k'
 CATALOG_PATH    = '/data'
 LOG_PATH        = '/log'
 ETC_PATH        = '/etc'
