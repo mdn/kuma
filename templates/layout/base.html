@@ -7,10 +7,9 @@
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/main.css"/>
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/sidebar.css"/>
+{{ css('common') }}
 {% for style in styles %}
-<link rel="stylesheet" href="{{ MEDIA_URL }}{{ style }}"/>
+{{ css(style) }}
 {% endfor %}
 
 </head>
@@ -54,9 +53,9 @@
   </div>{# /#footer-contents #}
 </div>{# /#footer #}
 
-<script type="text/javascript" src="{{ MEDIA_URL }}js/mozilla-menu.js"></script>
+{{ js('common') }}
 {% for script in scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}{{ script }}"></script>
+{{ js(script) }}
 {% endfor %}
 
 </body>

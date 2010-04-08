@@ -4,3 +4,4 @@ settings_local.py
 pip-log.txt
 .coverage
 coverage.xml
+build.py
