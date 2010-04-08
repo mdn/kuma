@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ locale }}" dir="{{ dir }}">
+<html lang="{{ request.locale }}" dir="{{ dir }}">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>{{ title }} | {{ SITE_TITLE }}</title>
@@ -33,7 +33,7 @@
 {% block breadcrumbs %}
 <div id="breadcrumbs">
     <ul>
-        <li><a href="{{ locale }}/kb/">{{ _('Firefox Support') }}</a></li>
+        <li><a href="{{ request.locale }}/kb/">{{ _('Firefox Support') }}</a></li>
         <li class="divider">/</li><li>{{ title }}</li>
     </ul>
 </div>

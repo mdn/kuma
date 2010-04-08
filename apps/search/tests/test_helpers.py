@@ -1,14 +1,16 @@
 from nose.tools import eq_
 
-from django.core.urlresolvers import reverse
-
 import test_utils
-
 import jingo
+
+from django import test
+
+from sumo.urlresolvers import reverse
 
 
 def setup():
     jingo.load_helpers()
+    test.Client().get('/')
 
 
 def render(s, context={}):
@@ -20,8 +22,15 @@ def test_spellcheck_filter():
     r = 'right'
     w = 'worng'
     t = "{% if spellcheck(q, 'en-US') %}Yes{% else %}No{% endif %}"
-    eq_('No', render(t, {'q': r}))
-    eq_('Yes', render(t, {'q': w}))
+    eq_('Yes', render(t, {'q': r}))
+    eq_('No', render(t, {'q': w}))
+
+
+def test_spellcheck_custom():
+    """Words in the custom dictionary should be accepted."""
+    t = "{% if spellcheck(q, 'en-US') %}Yes{% else %}No{% endif %}"
+    eq_('Yes', render(t, {'q': 'facebook'}))
+    eq_('No', render(t, {'q': 'sumodev'}))
 
 
 def test_suggestions():
@@ -30,7 +39,7 @@ def test_suggestions():
     request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en/search?q=wrong"><strong>wrong</strong></a>'
+    exp = '<a href="/en-US/search?q=wrong"><strong>wrong</strong></a>'
     eq_(exp, render(t, {'q': w, 'request': request}))
 
 
@@ -40,7 +49,7 @@ def test_suggestions_page2():
     request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en/search?q=wrong&amp;page=1"><strong>wrong</strong></a>'
+    exp = '<a href="/en-US/search?q=wrong&amp;page=1"><strong>wrong</strong></a>'
     eq_(exp, render(t, {'q': w, 'request': request}))
 
 
@@ -50,7 +59,7 @@ def test_suggestions_categories():
     request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en/search?q=wrong&amp;category=1&amp;category=2"><strong>wrong</strong></a>'
+    exp = '<a href="/en-US/search?q=wrong&amp;category=1&amp;category=2"><strong>wrong</strong></a>'
     eq_(exp, render(t, {'q': w, 'request': request}))
 
 
@@ -60,5 +69,5 @@ def test_suggestions_highlight():
     request = test_utils.RequestFactory().get(url)
     q = 'right worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en/search?q=right+wrong">right <strong>wrong</strong></a>'
+    exp = '<a href="/en-US/search?q=right+wrong">right <strong>wrong</strong></a>'
     eq_(exp, render(t, {'q': q, 'request': request}))

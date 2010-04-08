@@ -1,4 +1,4 @@
-from l10n import ugettext_lazy as _lazy
+from tower import ugettext_lazy as _lazy
 from .utils import crc32
 
 

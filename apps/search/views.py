@@ -2,6 +2,7 @@
 
 import time
 import re
+import json
 
 from django.utils.datastructures import MultiValueDict
 from django import forms
@@ -9,7 +10,7 @@ from django.conf import settings
 from django.http import HttpResponse
 
 import jingo
-from l10n import ugettext as _
+from tower import ugettext as _
 from flatqs import flatten
 
 from sumo.utils import paginate
@@ -31,7 +32,7 @@ def search(request):
     # set up query variables
     q = request.GET.get('q', '')
 
-    locale = request.GET.get('locale', request.LANGUAGE_CODE)
+    locale = request.GET.get('locale', request.locale)
     language = request.GET.get('language', locale)
 
     search_locale = (crc32(language),)
@@ -56,38 +57,41 @@ def search(request):
     # => return empty form
     if (not q or (request.GET.get('a', '0') == '1')):
         return jingo.render(request, 'form.html',
-            {'locale': request.LANGUAGE_CODE,
-            'advanced': request.GET.get('a'),
-            'request': request,
-            'w': where, 'search_form': search_form,
-            })
+            {'advanced': request.GET.get('a'), 'request': request,
+            'w': where, 'search_form': search_form})
 
     # get language name for display in template
-    for (l, l_name) in settings.LANGUAGES:
-        if l == language:
-            lang_name = l_name
+    if settings.LANGUAGES.get(language):
+        lang_name = settings.LANGUAGES[language]
+    else:
+        lang_name = ''
 
     documents = []
 
     if (where & constants.WHERE_WIKI):
-        wc = WikiClient() # Wiki SearchClient instance
-        filters_w = [] # filters for the wiki search
-
+        wc = WikiClient()  # Wiki SearchClient instance
+        filters_w = []  # Filters for the wiki search
 
         # Category filter
-        categories = search_params.getlist('category')
+        categories = map(int, search_params.getlist('category'))
         filters_w.append({
             'filter': 'category',
-            'value': map(int, categories),
+            'value': [x for x in categories if x > 0],
         })
 
+        exclude_categories = [abs(x) for x in categories if x < 0]
+        if exclude_categories:
+            filters_w.append({
+                'filter': 'category',
+                'value': exclude_categories,
+                'exclude': True,
+            })
 
         # Locale filter
         filters_w.append({
             'filter': 'locale',
             'value': search_locale,
         })
-
 
         # Tag filter
         tag = [t.strip() for t in request.GET.get('tag', '').split()]
@@ -99,13 +103,12 @@ def search(request):
                     'value': (t,),
                 })
 
-
-        # execute the query and append to documents
+        # Execute the query and append to documents
         documents += wc.query(q, filters_w)
 
     if (where & constants.WHERE_FORUM):
-        fc = ForumClient() # Forum SearchClient instance
-        filters_f = [] # filters for the forum search
+        fc = ForumClient()  # Forum SearchClient instance
+        filters_f = []  # Filters for the forum search
 
         # Forum filter
         filters_f.append({
@@ -115,14 +118,14 @@ def search(request):
 
         # Status filter
         status = int(request.GET.get('status', 0))
-        # no replies case is not stored in status
+        # No replies case is not stored in status
         if status == constants.STATUS_ALIAS_NR:
             filters_f.append({
                 'filter': 'replies',
                 'value': (0,),
             })
 
-            # avoid filtering by status
+            # Avoid filtering by status
             status = None
 
         if status:
@@ -145,7 +148,7 @@ def search(request):
         created_date = request.GET.get('created_date', '')
 
         if not created_date:
-            # no date => no filtering
+            # No date => no filtering
             created = None
         else:
             try:
@@ -155,7 +158,6 @@ def search(request):
             except ValueError:
                 created = None
 
-
         if created == constants.CREATED_BEFORE:
             filters_f.append({
                 'range': True,
@@ -163,7 +165,6 @@ def search(request):
                 'min': 0,
                 'max': created_date,
             })
-
         elif created == constants.CREATED_AFTER:
             filters_f.append({
                 'range': True,
@@ -171,7 +172,6 @@ def search(request):
                 'min': created_date,
                 'max': int(unix_now),
             })
-
 
         # Last modified filter
         lastmodif = int(request.GET.get('lastmodif', 0))
@@ -228,7 +228,7 @@ def search(request):
 
     if request.GET.get('format') == 'json':
         callback = request.GET.get('callback', '').strip()
-        # check callback is valid
+        # Check callback is valid
         if callback and not jsonp_is_valid(callback):
                 return HttpResponse('', mimetype='application/x-javascript',
                     status=400)
@@ -239,7 +239,6 @@ def search(request):
         data['query'] = q
         if not results:
             data['message'] = _('No pages matched the search criteria')
-        import json
         json_data = json.dumps(data)
         if callback:
             json_data = callback + '(' + json_data + ');'
@@ -251,23 +250,20 @@ def search(request):
 
         return response
 
-
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': q,
-          'locale': request.LANGUAGE_CODE, 'pages': pages,
-          'w': where, 'refine_query': refine_query,
-          'search_form': search_form,
-          'lang_name': lang_name, })
+          'pages': pages, 'w': where, 'refine_query': refine_query,
+          'search_form': search_form, 'lang_name': lang_name, })
 
 
 class SearchForm(forms.Form):
     q = forms.CharField()
 
-    # kb form data
+    # KB form data
     tag = forms.CharField(label=_('Tags'))
 
     language = forms.ChoiceField(label=_('Language'),
-        choices=settings.LANGUAGES)
+        choices=[(i, settings.LANGUAGES[i]) for i in settings.LANGUAGES])
 
     categories = []
     for cat in Category.objects.all():
@@ -276,7 +272,7 @@ class SearchForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         label=_('Category'), choices=categories)
 
-    # forum form data
+    # Forum form data
     status = forms.ChoiceField(label=_('Post status'),
         choices=constants.STATUS_LIST)
     author = forms.CharField()
