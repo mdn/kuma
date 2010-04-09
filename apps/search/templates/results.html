@@ -1,51 +1,52 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
 {% set title = _('Search') %}
 {% set styles = ('css/search.css',) %}
 
 {% block content %}
-    <div id="basic-search" class="search-refine">
-        <form role="search" method="get" action="search">
-        {% for name, field in search_form.fields.items() if not name in ('q',) %}
-            {% set list = request.GET.getlist(name) %}
-            {% for value in list %}
-                <input type="hidden" name="{{ name }}" value="{{ value }}" />
-            {% endfor %}
-        {% endfor %}
-            <input type="hidden" value="{{ w }}" name="w">
-            <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
-            <input type="submit" class="search-refine-submit btn-large" value="{{ _('Search') }}">
-        </form>
-        <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _("Refine your search") }}</a>
+  <div id="basic-search" class="search-refine">
+    <form role="search" method="get" action="search">
+    {% for name, field in search_form.fields.items() if not name in ('q',) %}
+      {% set list = request.GET.getlist(name) %}
+      {% for value in list %}
+        <input type="hidden" name="{{ name }}" value="{{ value }}" />
+      {% endfor %}
+    {% endfor %}
+      <input type="hidden" value="{{ w }}" name="w">
+      <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
+      <input type="submit" class="search-refine-submit btn-large" value="{{ _('Search') }}">
+    </form>
+    <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _("Refine your search") }}</a>
+  </div>
+
+  {% if not spellcheck(q, search_form.language.data or request.locale) %}
+  <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(search_form.language.data or request.locale))|safe }}</div>
+  {% endif %}
+
+  <div class="search-count">
+    {{ _('About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>')|fe(n=num_results, q=q, l=lang_name) }}
+  </div>
+
+  <div class="search-results">
+
+    {{ pages|paginator }}
+
+
+    {% for doc in results %}
+    <div class="result">
+      <a class="title" href="{{ doc.url }}">{{ doc.title }}</a>
+      <p>
+        <a href="{{ doc.url }}">
+          {{ doc.search_summary|safe }}
+        </a>
+      </p>
     </div>
-
-    {% if not spellcheck(q, search_form.language.data or request.locale) %}
-    <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(search_form.language.data or request.locale))|safe }}</div>
-    {% endif %}
-
-    <div class="search-count">
-        {{ _('About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>')|fe(n=num_results, q=q, l=lang_name) }}
-    </div>
-
-    <div class="search-results">
-
-        {{ pages|paginator }}
+    {% endfor %}
 
 
-        {% for doc in results %}
-        <div class="result">
-            <a class="title" href="{{ doc.url }}">{{ doc.title }}</a>
-            <p>
-                <a href="{{ doc.url }}">
-                    {{ doc.search_summary|safe }}
-                </a>
-            </p>
-        </div>
-        {% endfor %}
+    {{ pages|paginator }}
 
+  </div>
 
-        {{ pages|paginator }}
-
-    </div>
-
-        <p>{{ _("Can't find what you're looking for?") }} <a href="/{# TODO: Use url() #}{{ request.locale }}/kb/Ask+a+question">{{ _('Ask a support question instead!') }}</a></p>
+  <p>{{ _("Can't find what you're looking for?") }} <a href="/{# TODO: Use url() #}{{ request.locale }}/kb/Ask+a+question">{{ _('Ask a support question instead!') }}</a></p>
 {% endblock %}

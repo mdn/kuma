@@ -1,3 +1,4 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
 <!DOCTYPE html>
 <html lang="{{ request.locale }}" dir="{{ dir }}">
 <head>
@@ -16,8 +17,8 @@
 <body{% if classes %} class="{{ classes }}"{% endif %}>
 
 <ul id="nav-access">
-    <li><a href="#navigation">{{ _('skip to navigation') }}</a></li>
-    <li><a href="#switch">{{ _('switch language') }}</a></li>
+  <li><a href="#navigation">{{ _('skip to navigation') }}</a></li>
+  <li><a href="#switch">{{ _('switch language') }}</a></li>
 </ul>
 
 <div id="header" role="banner">
@@ -32,10 +33,10 @@
 
 {% block breadcrumbs %}
 <div id="breadcrumbs">
-    <ul>
-        <li><a href="{{ request.locale }}/kb/">{{ _('Firefox Support') }}</a></li>
-        <li class="divider">/</li><li>{{ title }}</li>
-    </ul>
+  <ul>
+    <li><a href="{{ request.locale }}/kb/">{{ _('Firefox Support') }}</a></li>
+    <li class="divider">/</li><li>{{ title }}</li>
+  </ul>
 </div>
 {% endblock %}
 
@@ -45,16 +46,18 @@
 </div>
 
 <br class="clear" />
-</div><!-- /#content -->
+</div>{# /#content #}
+
 <div id="footer">
-<div id="footer-contents" role="contentinfo">
-{% include 'layout/footer.html' %}
-</div><!-- /#footer-contents -->
-</div><!-- /#footer -->
+  <div id="footer-contents" role="contentinfo">
+  {% include 'layout/footer.html' %}
+  </div>{# /#footer-contents #}
+</div>{# /#footer #}
 
 <script type="text/javascript" src="{{ MEDIA_URL }}js/mozilla-menu.js"></script>
 {% for script in scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}{{ script }}"></script>
 {% endfor %}
+
 </body>
 </html>
