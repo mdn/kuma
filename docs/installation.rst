@@ -8,6 +8,11 @@ Requirements
 
 * Python 2.6
 * `setuptools <http://pypi.python.org/pypi/setuptools#downloads>`_
+* `Hunspell <http://hunspell.sourceforge.net/>`_ (Specifically, headers for
+  `PyHunspell <http://code.google.com/p/pyhunspell/>`_.)
+  * With Hunspell, you will also need dictionaries, either from Hunspell or
+    MySpell, to provide spelling suggestions on search queries.
+  * Note that Hunspell is required even if no dictionaries are installed.
 
 
 Additional Requirements
