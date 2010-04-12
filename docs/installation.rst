@@ -7,11 +7,15 @@ Requirements
 ------------
 
 * Python 2.6
+
 * `setuptools <http://pypi.python.org/pypi/setuptools#downloads>`_
+
 * `Hunspell <http://hunspell.sourceforge.net/>`_ (Specifically, headers for
   `PyHunspell <http://code.google.com/p/pyhunspell/>`_.)
+
   * With Hunspell, you will also need dictionaries, either from Hunspell or
     MySpell, to provide spelling suggestions on search queries.
+
   * Note that Hunspell is required even if no dictionaries are installed.
 
 
@@ -40,7 +44,7 @@ virtualenv
 `virtualenv <http://pypi.python.org/pypi/virtualenv>`_ is a tool to create
 isolated Python environments.  We're going to be installing a bunch of packages,
 but we don't want your system littered with all these things you only need for
-zamboni.  Some other piece of software might want an older version than zamboni
+kitsune.  Some other piece of software might want an older version than kitsune
 wants, which can create quite a mess.  ::
 
     easy_install virtualenv
