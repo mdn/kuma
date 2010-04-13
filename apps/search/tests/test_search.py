@@ -176,6 +176,23 @@ class SearchTest(SphinxTestCase):
                           'format': 'json', 'w': 1})
         self.assertEquals(0, json.loads(response.content)['total'])
 
+    def test_no_filter(self):
+        """Test searching with no filters."""
+        wc = WikiClient()
+
+        results = wc.query('')
+        self.assertNotEquals(0, len(results))
+
+    def test_range_filter(self):
+        """Test filtering on a range."""
+        wc = WikiClient()
+        filter = ({'filter': 'lastmodif',
+                   'max': 1244355125,
+                   'min': 1244355115,
+                   'range': True},)
+        results = wc.query('', filter)
+        self.assertEquals(1, len(results))
+
 
 def test_sphinx_down():
     """
