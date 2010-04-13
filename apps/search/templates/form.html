@@ -4,12 +4,8 @@
 {% if advanced == '1' %}
 {% set classes = 'advanced_search' %}
 {% endif %}
-{% set styles = ('css/search.css',) %}
-{% set scripts = (
-  'js/jquery.min.js',
-  'js/jqueryui.min.js',
-  'js/search.js'
-) %}
+{% set styles = ('search',) %}
+{% set scripts = ('search',) %}
 
 {% block content %}
   {% if advanced == '1' %}

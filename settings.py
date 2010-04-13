@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'tower',
+    'jingo_minify',
     'sumo',
     'search',
 )
@@ -194,6 +195,32 @@ DOMAIN_METHODS = {
 # to True
 TOWER_ADD_HEADERS=True
 
+# Bundles for JS/CSS Minification
+MINIFY_BUNDLES = {
+    'css': {
+        'common': (
+            'css/main.css',
+            'css/sidebar.css',
+        ),
+        'search': (
+            'css/search.css',
+        ),
+    },
+    'js': {
+        'common': (
+            'js/mozilla-menu.js',
+            'js/jquery.min.js',
+        ),
+        'search': (
+            'js/jqueryui.min.js',
+            'js/search.js',
+        ),
+    },
+}
+
+JAVA_BIN = '/usr/bin/java'
+
+#
 # Directory storying myspell dictionaries (with trailing slash)
 DICT_DIR = '/usr/share/myspell/'
 # Path to a file with a list of custom words.
