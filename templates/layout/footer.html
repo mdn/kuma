@@ -33,13 +33,13 @@
   </li>
   <li><a href="http://www.mozilla.com/manyfaces/">{{ _('Community') }}</a>
     <ul>
-      <li><a href="https://addons.mozilla.org/" class="external">Add-ons</a></li>
+      <li><a href="https://addons.mozilla.org/" class="external">{{ _('Add-ons') }}</a></li>
       <li><a href="https://bugzilla.mozilla.org/" class="external">{{ _('Bugzilla') }}</a></li>
       <li><a href="http://developer.mozilla.org/" class="external">{{ _('Mozilla Developer Center') }}</a></li>
 
       <li><a href="http://labs.mozilla.com/" class="external">{{ _('Mozilla Labs') }}</a></li>
       <li><a href="http://www.mozillamessaging.com/" class="external">{{ _('Mozilla Messaging') }}</a></li>
-      <li><a href="http://www.mozilla.org/" class="external">Mozilla.org</a></li>
+      <li><a href="http://www.mozilla.org/" class="external">{{ _('Mozilla.org') }}</a></li>
       <li><a href="http://www.mozillazine.org/" class="external">{{ _('MozillaZine') }}</a></li>
       <li><a href="http://planet.mozilla.org/" class="external">{{ _('Planet Mozilla') }}</a></li>
       <li><a href="http://quality.mozilla.org/" class="external">{{ _('QMO') }}</a></li>
@@ -49,7 +49,7 @@
   </li>
   <li><a href="http://www.mozilla.com/about/">{{ _('About') }}</a>
     <ul>
-      <li><a href="http://www.mozilla.com/about/whatismozilla.html">What is Mozilla?</a></li>
+      <li><a href="http://www.mozilla.com/about/whatismozilla.html">{{ _('What is Mozilla?') }}</a></li>
       <li><a href="http://www.mozilla.com/about/get-involved.html">{{ _('Get Involved') }}</a></li>
       <li><a href="http://www.mozilla.com/press/">{{ _('Press Center') }}</a></li>
       <li><a href="http://www.mozilla.com/about/careers.html">{{ _('Careers') }}</a></li>
@@ -64,15 +64,12 @@
 </ul>{# /#footer-menu #}
 
 <div id="cc-license">
-  <p>{{ _('Except where otherwise ') }}<a href="http://www.mozilla.com/en-US/about/legal.html#site">{{ _('noted') }}</a>, content on this site is licensed under the<br><strong><a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution Share-Alike License v3.0</a></strong> or any later version.</p>
+  <p>{{ _('Except where otherwise <a href="http://www.mozilla.com/about/legal.html#site">noted</a>, content on this site is licensed under the<br/><strong><a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution Share-Alike License v3.0</a></strong> or any later version.')|safe }}</p>
   <ul>
     <li><a href="http://www.mozilla.com/privacy-policy.html">{{ _('Privacy Policy') }}</a></li>
     <li><a href="http://www.mozilla.com/about/legal.html">{{ _('Legal Notices') }}</a></li>
     <li><a href="/kb/About+Firefox+Support">{{ _('About') }}</a></li>
     <li><a href="http://blog.mozilla.com/sumo">{{ _('Blog') }}</a></li>
   </ul>
-
-  <p class="disclaimer">Mozilla is providing links to any applications as a courtesy, and makes no representations regarding the applications or any information related there to. Any questions, complaints or claims regarding the applications must be directed to the appropriate software vendor.</p>
-
-  <p>{{ _('Powered by ') }}<a href="http://www.djangoproject.com/">{{ _('The Django Framework') }}</a></p>
+  <p class="disclaimer">{{ _('Mozilla is providing links to any applications as a courtesy, and makes no representations regarding the applications or any information related there to. Any questions, complaints or claims regarding the applications must be directed to the appropriate software vendor.') }}</p>
 </div>

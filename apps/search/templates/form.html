@@ -44,7 +44,7 @@
 
       <input type="hidden" value="1" name="w" />
       <div class="submit-search">
-        <input type="submit" value="{{ _('Search') }}" />
+        <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
     </form>{# kb #}
     <form method="get" id="forum">
@@ -86,7 +86,7 @@
 
       <input type="hidden" value="2" name="w" />
       <div class="submit-search">
-        <input type="submit" value="{{ _('Search') }}" />
+        <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
     </form>{# forum #}
     </div>{# tab-wrapper #}
@@ -98,7 +98,7 @@
   {{ _('Enter your terms in the form below and click <strong>Search</strong>')|safe }}
     <form role="search" method="get" action="search">
       <input type="text" class="search-query search-empty-query" value="{{ search_form.q.data or '' }}" name="q">
-      <input type="submit" class="search-empty-submit btn-large" value="{{ _('Search') }}">
+      <input type="submit" class="search-empty-submit btn-large" value="{{ _('Search', 'button') }}">
     </form>
   </div>
   <a href="{{ url('search')|urlparams(a=1,q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>

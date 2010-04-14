@@ -24,13 +24,15 @@
   {% endif %}
 
   <div class="search-count">
-    {{ _('About <strong>{n}</strong> search results for <strong>{q}</strong> in <strong>{l}</strong>')|fe(n=num_results, q=q, l=lang_name) }}
+    {# L10n: {n} is the number of search results, {q} is the search query, {l} is the language searched. #}
+    {{ ngettext('Found <strong>{n}</strong> result for <strong>{q}</strong> in <strongL>{l}</strong>',
+                'Found <strong>{n}</strong> results for <strong>{q}</strong> in <strong>{l}</strong>',
+                num_results)|fe(n=num_results, q=q, l=lang_name) }}
   </div>
 
   <div class="search-results">
 
     {{ pages|paginator }}
-
 
     {% for doc in results %}
     <div class="result">
@@ -43,10 +45,9 @@
     </div>
     {% endfor %}
 
-
     {{ pages|paginator }}
 
   </div>
 
-  <p>{{ _("Can't find what you're looking for?") }} <a href="/{# TODO: Use url() #}{{ request.locale }}/kb/Ask+a+question">{{ _('Ask a support question instead!') }}</a></p>
+  <p>{{ _("Can't find what you're looking for? <a href='{0}'>Ask a support question instead!</a>")|fe('/kb/Ask+a+question') }}</p>
 {% endblock %}
