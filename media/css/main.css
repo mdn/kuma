@@ -33,12 +33,6 @@ li
   list-style:none;
 }
 
-h1,h2,h3,h4,h5,h6
-{
-  font-size:100%;
-  font-weight:normal;
-}
-
 q:before,q:after
 {
   content:'';
@@ -972,17 +966,21 @@ a {
     padding: 0 20px;
 }
 
+#content-inner h2 {
+    margin: 0 0 1em;
+}
+
 .topbar {
     background: url(../img/topbar.png) no-repeat top left;
     height: 20px;
-    width: 723px; 
+    width: 723px;
     margin-top: 30px;
 }
 
 .botbar {
     background: url(../img/botbar.png) no-repeat top left;
     height: 20px;
-    width: 723px; 
+    width: 723px;
 }
 
 /* orange buttons */

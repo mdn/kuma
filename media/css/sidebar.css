@@ -18,7 +18,7 @@
     background: url(../img/side-menu-divider.png) top left no-repeat;
 }
 
-#side-menu li.first { 
+#side-menu li.first {
     font-family: georgia, freeserif, serif;
     font-size: 205%;
     padding: 4px 5px 2px;
@@ -36,6 +36,7 @@
 
 #side-menu h3 {
     margin: 0;
+    font-size: 100%;
     font-weight: normal;
 }
 

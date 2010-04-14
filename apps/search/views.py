@@ -15,7 +15,7 @@ from flatqs import flatten
 
 from sumo.utils import paginate
 from sumo.models import ForumThread, WikiPage, Forum, Category
-from .clients import ForumClient, WikiClient
+from .clients import ForumClient, WikiClient, SearchError
 from .utils import crc32
 import search as constants
 
@@ -68,132 +68,135 @@ def search(request):
 
     documents = []
 
-    if (where & constants.WHERE_WIKI):
-        wc = WikiClient()  # Wiki SearchClient instance
-        filters_w = []  # Filters for the wiki search
+    try:
+        if (where & constants.WHERE_WIKI):
+            wc = WikiClient()  # Wiki SearchClient instance
+            filters_w = []  # Filters for the wiki search
 
-        # Category filter
-        categories = map(int, search_params.getlist('category'))
-        filters_w.append({
-            'filter': 'category',
-            'value': [x for x in categories if x > 0],
-        })
-
-        exclude_categories = [abs(x) for x in categories if x < 0]
-        if exclude_categories:
+            # Category filter
+            categories = map(int, search_params.getlist('category'))
             filters_w.append({
                 'filter': 'category',
-                'value': exclude_categories,
-                'exclude': True,
+                'value': [x for x in categories if x > 0],
             })
 
-        # Locale filter
-        filters_w.append({
-            'filter': 'locale',
-            'value': search_locale,
-        })
-
-        # Tag filter
-        tag = [t.strip() for t in request.GET.get('tag', '').split()]
-        if tag:
-            tag = map(crc32, tag)
-            for t in tag:
+            exclude_categories = [abs(x) for x in categories if x < 0]
+            if exclude_categories:
                 filters_w.append({
-                    'filter': 'tag',
-                    'value': (t,),
+                    'filter': 'category',
+                    'value': exclude_categories,
+                    'exclude': True,
                 })
 
-        # Execute the query and append to documents
-        documents += wc.query(q, filters_w)
-
-    if (where & constants.WHERE_FORUM):
-        fc = ForumClient()  # Forum SearchClient instance
-        filters_f = []  # Filters for the forum search
-
-        # Forum filter
-        filters_f.append({
-            'filter': 'forumId',
-            'value': map(int, search_params.getlist('forum')),
-        })
-
-        # Status filter
-        status = int(request.GET.get('status', 0))
-        # No replies case is not stored in status
-        if status == constants.STATUS_ALIAS_NR:
-            filters_f.append({
-                'filter': 'replies',
-                'value': (0,),
+            # Locale filter
+            filters_w.append({
+                'filter': 'locale',
+                'value': search_locale,
             })
 
-            # Avoid filtering by status
-            status = None
+            # Tag filter
+            tag = [t.strip() for t in request.GET.get('tag', '').split()]
+            if tag:
+                tag = map(crc32, tag)
+                for t in tag:
+                    filters_w.append({
+                        'filter': 'tag',
+                        'value': (t,),
+                    })
 
-        if status:
+            # Execute the query and append to documents
+            documents += wc.query(q, filters_w)
+
+        if (where & constants.WHERE_FORUM):
+            fc = ForumClient()  # Forum SearchClient instance
+            filters_f = []  # Filters for the forum search
+
+            # Forum filter
             filters_f.append({
-                'filter': 'status',
-                'value': constants.STATUS_ALIAS_REVERSE[status],
+                'filter': 'forumId',
+                'value': map(int, search_params.getlist('forum')),
             })
 
-        # Author filter
-        if request.GET.get('author'):
-            filters_f.append({
-                'filter': 'author_ord',
-                'value': (crc32(request.GET.get('author')),
-                           crc32(request.GET.get('author') + ' (anon)'),),
-            })
+            # Status filter
+            status = int(request.GET.get('status', 0))
+            # No replies case is not stored in status
+            if status == constants.STATUS_ALIAS_NR:
+                filters_f.append({
+                    'filter': 'replies',
+                    'value': (0,),
+                })
 
-        unix_now = int(time.time())
-        # Created filter
-        created = int(request.GET.get('created', 0))
-        created_date = request.GET.get('created_date', '')
+                # Avoid filtering by status
+                status = None
 
-        if not created_date:
-            # No date => no filtering
-            created = None
-        else:
-            try:
-                created_date = int(time.mktime(
-                    time.strptime(created_date, '%m/%d/%Y'),
-                    ))
-            except ValueError:
+            if status:
+                filters_f.append({
+                    'filter': 'status',
+                    'value': constants.STATUS_ALIAS_REVERSE[status],
+                })
+
+            # Author filter
+            if request.GET.get('author'):
+                filters_f.append({
+                    'filter': 'author_ord',
+                    'value': (crc32(request.GET.get('author')),
+                               crc32(request.GET.get('author') + ' (anon)'),),
+                })
+
+            unix_now = int(time.time())
+            # Created filter
+            created = int(request.GET.get('created', 0))
+            created_date = request.GET.get('created_date', '')
+
+            if not created_date:
+                # No date => no filtering
                 created = None
+            else:
+                try:
+                    created_date = int(time.mktime(
+                        time.strptime(created_date, '%m/%d/%Y'),
+                        ))
+                except ValueError:
+                    created = None
 
-        if created == constants.CREATED_BEFORE:
-            filters_f.append({
-                'range': True,
-                'filter': 'created',
-                'min': 0,
-                'max': created_date,
-            })
-        elif created == constants.CREATED_AFTER:
-            filters_f.append({
-                'range': True,
-                'filter': 'created',
-                'min': created_date,
-                'max': int(unix_now),
-            })
+            if created == constants.CREATED_BEFORE:
+                filters_f.append({
+                    'range': True,
+                    'filter': 'created',
+                    'min': 0,
+                    'max': created_date,
+                })
+            elif created == constants.CREATED_AFTER:
+                filters_f.append({
+                    'range': True,
+                    'filter': 'created',
+                    'min': created_date,
+                    'max': int(unix_now),
+                })
 
-        # Last modified filter
-        lastmodif = int(request.GET.get('lastmodif', 0))
+            # Last modified filter
+            lastmodif = int(request.GET.get('lastmodif', 0))
 
-        if lastmodif:
-            filters_f.append({
-                'range': True,
-                'filter': 'last_updated',
-                'min': unix_now - constants.LUP_MULTIPLIER * lastmodif,
-                'max': unix_now,
-            })
+            if lastmodif:
+                filters_f.append({
+                    'range': True,
+                    'filter': 'last_updated',
+                    'min': unix_now - constants.LUP_MULTIPLIER * lastmodif,
+                    'max': unix_now,
+                })
 
-        # Sort results by
-        sortby = int(request.GET.get('sortby', 0))
-        if sortby == constants.SORTBY_CREATED:
-            fc.set_sort_mode(constants.SORTBY_MODE, 'created')
-        elif sortby == constants.SORTBY_LASTMODIF:
-            fc.set_sort_mode(constants.SORTBY_MODE, 'last_updated')
-        elif sortby == constants.SORTBY_REPLYCOUNT:
-            fc.set_sort_mode(constants.SORTBY_MODE, 'replies')
+            # Sort results by
+            sortby = int(request.GET.get('sortby', 0))
+            if sortby == constants.SORTBY_CREATED:
+                fc.set_sort_mode(constants.SORTBY_MODE, 'created')
+            elif sortby == constants.SORTBY_LASTMODIF:
+                fc.set_sort_mode(constants.SORTBY_MODE, 'last_updated')
+            elif sortby == constants.SORTBY_REPLYCOUNT:
+                fc.set_sort_mode(constants.SORTBY_MODE, 'replies')
 
-        documents += fc.query(q, filters_f)
+            documents += fc.query(q, filters_f)
+    except SearchError:
+        return jingo.render(request, 'down.html', {}, status=503)
 
     pages = paginate(request, documents, settings.SEARCH_RESULTS_PER_PAGE)
 

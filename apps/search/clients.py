@@ -1,3 +1,6 @@
+import logging
+import socket
+
 from django.conf import settings
 
 from .sphinxapi import SphinxClient
@@ -33,6 +36,12 @@ MARKUP_PATTERNS = (
     (r'\s+',),
 )
 
+log = logging.getLogger('k.search')
+
+
+class SearchError(Exception):
+    pass
+
 
 class SearchClient(object):
     """
@@ -58,7 +67,44 @@ class SearchClient(object):
 
                 self.compiled_patterns.append(p)
 
-    def query(self, query, filters): abstract
+    def query(self, query, filters=None):
+        """
+        Query the search index.
+        """
+
+        if filters is None:
+            filters = []
+
+        sc = self.sphinx
+        sc.ResetFilters()
+
+        sc.SetFieldWeights(self.weights)
+
+        for f in filters:
+            if f.get('range', False):
+                sc.SetFilterRange(f['filter'], f['min'],
+                                  f['max'], f.get('exclude', False))
+            else:
+                sc.SetFilter(f['filter'], f['value'],
+                             f.get('exclude', False))
+
+
+        try:
+            result = sc.Query(query, self.index)
+        except socket.timeout:
+            log.error("Query has timed out!")
+            raise SearchError("Query has timed out!")
+        except socket.error, msg:
+            log.error("Query socket error: %s" % msg)
+            raise SearchError("Could not execute your search!")
+        except Exception, e:
+            log.error("Sphinx threw an unknown exception: %s" % e)
+            raise SearchError("Sphinx threw an unknown exception!")
+
+        if result:
+            return result['matches']
+        else:
+            return []
 
     def excerpt(self, result, query):
         """
@@ -97,35 +143,7 @@ class ForumClient(SearchClient):
     Search the forum
     """
     index = 'forum_threads'
-
-    def query(self, query, filters=None):
-        """
-        Search through forum threads
-        """
-
-        if filters is None:
-            filters = []
-
-        sc = self.sphinx
-        sc.ResetFilters()
-
-        sc.SetFieldWeights({'title': 4, 'content': 3})
-
-        for f in filters:
-            if f.get('range', False):
-                sc.SetFilterRange(f['filter'], f['min'],
-                                  f['max'], f.get('exclude', False))
-            else:
-                sc.SetFilter(f['filter'], f['value'],
-                             f.get('exclude', False))
-
-
-        result = sc.Query(query, 'forum_threads')
-
-        if result:
-            return result['matches']
-        else:
-            return []
+    weights = {'title': 4, 'content': 3}
 
 
 class WikiClient(SearchClient):
@@ -133,31 +151,4 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-
-    def query(self, query, filters=None):
-        """
-        Search through the wiki (ie KB)
-        """
-
-        if filters is None:
-            filters = []
-
-        sc = self.sphinx
-        sc.ResetFilters()
-
-        sc.SetFieldWeights({'title': 4, 'keywords': 3})
-
-        for f in filters:
-            if f.get('range', False):
-                sc.SetFilterRange(f['filter'], f['min'],
-                                  f['max'], f.get('exclude', False))
-            else:
-                sc.SetFilter(f['filter'], f['value'],
-                             f.get('exclude', False))
-
-        result = sc.Query(query, self.index)
-
-        if result:
-            return result['matches']
-        else:
-            return []
+    weights = {'title': 4, 'content': 3}
