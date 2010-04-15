@@ -15,8 +15,9 @@ import json
 
 from manage import settings
 from sumo.urlresolvers import reverse
+import search as constants
 from search.utils import start_sphinx, stop_sphinx, reindex
-from search.clients import WikiClient, SearchError
+from search.clients import WikiClient, ForumClient, SearchError
 
 
 def create_extra_tables():
@@ -200,6 +201,22 @@ class SearchTest(SphinxTestCase):
         response = c.get(reverse('search'), qs)
         self.assertNotEquals(0, json.loads(response.content)['total'])
 
+    def test_sort_mode(self):
+        """Test set_sort_mode()."""
+        # Initialize client and attrs.
+        fc = ForumClient()
+        test_for = ('last_updated', 'created', 'replies')
+
+        i = 0
+        for sort_mode in constants.SORT[1:]:  # Skip default sorting.
+            fc.set_sort_mode(sort_mode[0], sort_mode[1])
+            results = fc.query('')
+            self.assertNotEquals(0, len(results))
+
+            # Compare first and last.
+            self.assertTrue(results[0]['attrs'][test_for[i]] >
+                            results[-1]['attrs'][test_for[i]])
+            i += 1
 
 def test_sphinx_down():
     """

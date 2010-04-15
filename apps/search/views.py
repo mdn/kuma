@@ -192,12 +192,11 @@ def search(request):
 
             # Sort results by
             sortby = int(request.GET.get('sortby', 0))
-            if sortby == constants.SORTBY_CREATED:
-                fc.set_sort_mode(constants.SORTBY_MODE, 'created')
-            elif sortby == constants.SORTBY_LASTMODIF:
-                fc.set_sort_mode(constants.SORTBY_MODE, 'last_updated')
-            elif sortby == constants.SORTBY_REPLYCOUNT:
-                fc.set_sort_mode(constants.SORTBY_MODE, 'replies')
+            try:
+                fc.set_sort_mode(constants.SORT[sortby][0],
+                                 constants.SORT[sortby][1])
+            except IndexError:
+                pass
 
             documents += fc.query(q, filters_f)
     except SearchError:

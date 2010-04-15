@@ -60,7 +60,7 @@ CREATED_LIST = (
 )
 
 # multiplier
-LUP_MULTIPLIER = 86400 # one day
+LUP_MULTIPLIER = 86400  # one day
 LUP_LIST = (
     (0, _lazy(u"Don't filter")),
     (1, _lazy(u'Last 24 hours')),
@@ -69,18 +69,21 @@ LUP_LIST = (
     (180, _lazy(u'Last 6 months')),
 )
 
-# sort by constants
-SORTBY_RELEVANCE = 0
-SORTBY_LASTMODIF = 2
-SORTBY_CREATED = 3
-SORTBY_REPLYCOUNT = 4
-
-SORTBY_LIST = (
-    (SORTBY_RELEVANCE, _lazy(u'Relevance')),
-    (SORTBY_LASTMODIF, _lazy(u'Last post date')),
-    (SORTBY_CREATED, _lazy(u'Original post date')),
-    (SORTBY_REPLYCOUNT, _lazy(u'Number of replies')),
+# sort by constants, defined in sphinxapi.py but unavailable here
+# SPH_SORT_ATTR_DESC = 1
+# SPH_SORT_EXTENDED = 4
+SORT = (
+    #: (mode, clause)
+    (4, '@relevance DESC, age ASC'),  # default
+    (1, 'last_updated'),
+    (1, 'created'),
+    (1, 'replies'),
 )
 
-# set this to the value of SPH_SORT_*
-SORTBY_MODE = 1 # SPH_SORT_ATTR_DESC
+# Integer values here map to tuples from SORT defined above
+SORTBY_LIST = (
+    (0, _lazy(u'Relevance')),
+    (1, _lazy(u'Last post date')),
+    (2, _lazy(u'Original post date')),
+    (3, _lazy(u'Number of replies')),
+)
