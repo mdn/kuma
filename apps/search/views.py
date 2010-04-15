@@ -1,17 +1,15 @@
-# Create your views here.
-
+import urllib
 import time
 import re
 import json
 
-from django.utils.datastructures import MultiValueDict
 from django import forms
 from django.conf import settings
 from django.http import HttpResponse
 
 import jingo
+import jinja2
 from tower import ugettext as _
-from flatqs import flatten
 
 from sumo.utils import paginate
 from sumo.models import ForumThread, WikiPage, Forum, Category
@@ -209,14 +207,22 @@ def search(request):
         try:
             if documents[i]['attrs'].get('category', False):
                 wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
-                result = {'search_summary': wc.excerpt(wiki_page.data, q),
+
+                excerpt = wc.excerpt(wiki_page.data, q)
+                summary = jinja2.Markup(excerpt)
+
+                result = {'search_summary': summary,
                     'url': wiki_page.get_url(),
                     'title': wiki_page.name,
                     }
                 results.append(result)
             else:
                 forum_thread = ForumThread.objects.get(pk=documents[i]['id'])
-                result = {'search_summary': fc.excerpt(forum_thread.data, q),
+
+                excerpt = fc.excerpt(forum_thread.data, q)
+                summary = jinja2.Markup(excerpt)
+
+                result = {'search_summary': summary,
                     'url': forum_thread.get_url(),
                     'title': forum_thread.name,
                     }
@@ -226,12 +232,16 @@ def search(request):
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
             continue
 
-    refine_query = MultiValueDict()
-    for name, field in search_form.fields.items():
-        refine_query[name] = request.GET.getlist(name)
+    items = [(k, v) for k in search_form.fields
+             for v in request.GET.getlist(k) if v]
 
-    refine_query = '?a=1&w=' + str(where) + '&' \
-        + flatten(refine_query, encode=False)
+    try:
+        qsa = urllib.urlencode(items)
+    except UnicodeEncodeError:
+        qsa = urllib.urlencode([(k, v.encode('utf8')) for k, v
+                                in items])
+
+    refine_query = u'?a=1&w=%s&%s' % (where, qsa)
 
     if request.GET.get('format') == 'json':
         callback = request.GET.get('callback', '').strip()

@@ -4,6 +4,7 @@ Tests for the search (sphinx) app.
 import os
 import shutil
 import time
+import json
 
 from django.test import client
 from django.db import connection
@@ -11,13 +12,19 @@ from django.db import connection
 from nose import SkipTest
 from nose.tools import assert_raises
 import test_utils
-import json
+import jingo
 
 from manage import settings
 from sumo.urlresolvers import reverse
 import search as constants
 from search.utils import start_sphinx, stop_sphinx, reindex
 from search.clients import WikiClient, ForumClient, SearchError
+from sumo.models import WikiPage
+
+
+def render(s, context={}):
+    t = jingo.env.from_string(s)
+    return t.render(**context)
 
 
 def create_extra_tables():
@@ -217,6 +224,20 @@ class SearchTest(SphinxTestCase):
             self.assertTrue(results[0]['attrs'][test_for[i]] >
                             results[-1]['attrs'][test_for[i]])
             i += 1
+
+    def test_unicode_excerpt(self):
+        """Unicode characters in the excerpt should not be a problem."""
+        wc = WikiClient()
+        q = 'contribute'
+        results = wc.query(q)
+        self.assertNotEquals(0, len(results))
+        page = WikiPage.objects.get(pk=results[0]['id'])
+        try:
+            excerpt = wc.excerpt(page.data, q)
+            render('{{ c }}', {'c': excerpt})
+        except UnicodeDecodeError:
+            self.fail('Raised UnicodeDecodeError.')
+
 
 def test_sphinx_down():
     """

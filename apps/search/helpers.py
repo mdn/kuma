@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.encoding import force_unicode
+from django.utils.encoding import smart_unicode
 
 import jinja2
 from jingo import register
@@ -21,7 +21,8 @@ def spellcheck(string, locale='en-US'):
 def suggestions(context, string, locale='en-US'):
     d = DidYouMean(locale, dict_dir=settings.DICT_DIR,
                    words=settings.WORD_LIST)
-    words = [(jinja2.escape(w.new), w.corrected) for w in d.suggest(string)]
+    words = [(jinja2.escape(smart_unicode(w.new)), w.corrected)
+             for w in d.suggest(string)]
 
     newwords = []
     newquery = []
@@ -32,7 +33,7 @@ def suggestions(context, string, locale='en-US'):
         else:
             newwords.append(w[0])
 
-    markup = '<a href="{url}">{text}</a>'
+    markup = u'<a href="{url}">{text}</a>'
 
     q = u' '.join(newquery)
     text = u' '.join(newwords)
