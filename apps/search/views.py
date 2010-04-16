@@ -61,8 +61,9 @@ def search(request):
             'w': where, 'search_form': search_form})
 
     # get language name for display in template
-    if settings.LANGUAGES.get(language):
-        lang_name = settings.LANGUAGES[language]
+    lang = language.lower()
+    if settings.LANGUAGES.get(lang):
+        lang_name = settings.LANGUAGES[lang]
     else:
         lang_name = ''
 
