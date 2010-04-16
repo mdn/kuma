@@ -1,4 +1,3 @@
-import urllib
 import time
 import re
 import json
@@ -12,7 +11,7 @@ import jingo
 import jinja2
 from tower import ugettext as _
 
-from sumo.utils import paginate
+from sumo.utils import paginate, urlencode
 from sumo.models import ForumThread, WikiPage, Forum, Category
 from .clients import ForumClient, WikiClient, SearchError
 from .utils import crc32
@@ -53,11 +52,17 @@ def search(request):
             # Set defaults for MultipleChoiceFields and convert to ints.
             # Ticket #12398 adds TypedMultipleChoiceField which would replace
             # MultipleChoiceField + map(int, ...) and use coerce instead.
-            if not cleaned_data.get('category'):
-                cleaned_data['category'] = settings.SEARCH_DEFAULT_CATEGORIES
-            cleaned_data['category'] = map(int, cleaned_data['category'])
-            cleaned_data['forum'] = map(int, cleaned_data.get('forum',
-                                        settings.SEARCH_DEFAULT_FORUMS))
+            if cleaned_data.get('category'):
+                try:
+                    cleaned_data['category'] = map(int,
+                                                   cleaned_data['category'])
+                except ValueError:
+                    cleaned_data['category'] = None
+            try:
+                cleaned_data['forum'] = map(int, cleaned_data.get('forum',
+                                            settings.SEARCH_DEFAULT_FORUMS))
+            except ValueError:
+                cleaned_data['forum'] = None
 
             return cleaned_data
 
@@ -105,7 +110,6 @@ def search(request):
         forum = forms.MultipleChoiceField(label=_('Search in forum'),
             choices=forums, required=False)
 
-
     language = request.GET.get('language', request.locale)
     if not language in LOCALES:
         language = settings.LANGUAGE_CODE
@@ -113,18 +117,23 @@ def search(request):
     a = request.GET.get('a', '0')
 
     # Search default values
-    exclude_category = None
-    if a == '0' or a == '2':
-        r['language'] = language
+    try:
+        category = map(int, r.getlist('category')) or \
+                  settings.SEARCH_DEFAULT_CATEGORIES
+    except ValueError:
+        category = settings.SEARCH_DEFAULT_CATEGORIES
+    r.setlist('category', [x for x in category if x > 0])
+    exclude_category = [abs(x) for x in category if x < 0]
+    # Basic form
+    if a == '0':
         r['w'] = r.get('w', constants.WHERE_ALL)
-        r.setlist('category', [x for
-                               x in settings.SEARCH_DEFAULT_CATEGORIES if
-                               x > 0])
-        exclude_category = r.getlist('category') or \
-                               settings.SEARCH_DEFAULT_CATEGORIES
-        exclude_category = [abs(x) for x in exclude_category if x < 0]
         r.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)
+    # Advanced form
+    if a == '2':
+        r.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)
+        r['language'] = language
         r['a'] = '1'
+
     search_form = SearchForm(r)
 
     if not search_form.is_valid() or a == '2':
@@ -151,10 +160,11 @@ def search(request):
 
     # wiki filters
     # Category filter
-    filters_w.append({
-        'filter': 'category',
-        'value': cleaned['category'],
-    })
+    if cleaned['category']:
+        filters_w.append({
+            'filter': 'category',
+            'value': cleaned['category'],
+        })
 
     if exclude_category:
         filters_w.append({
@@ -179,10 +189,11 @@ def search(request):
                 })
 
     # Forum filter
-    filters_f.append({
-        'filter': 'forumId',
-        'value': cleaned['forum'],
-    })
+    if cleaned['forum']:
+        filters_f.append({
+            'filter': 'forumId',
+            'value': cleaned['forum'],
+        })
 
     # Status filter
     status = cleaned['status']
@@ -293,13 +304,8 @@ def search(request):
              for v in r.getlist(k)
                 if v and k != 'a']
     items.append(('a', '2'))
-    try:
-        qsa = urllib.urlencode(items)
-    except UnicodeEncodeError:
-        qsa = urllib.urlencode([(k, v.encode('utf8')) for k, v
-                                in items])
 
-    refine_query = u'?%s' % qsa
+    refine_query = u'?%s' % urlencode(items)
 
     if request.GET.get('format') == 'json':
         callback = request.GET.get('callback', '').strip()

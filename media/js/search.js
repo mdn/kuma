@@ -56,7 +56,7 @@ $(document).ready(function() {
     $('select[name="created"]').change();
     $('.datepicker').attr('readonly', 'readonly').css('background', '#ddd');
 
-    if ($('#where').val() == '2') {
+    if ($('#where').text() == '2') {
         tabs.tabs('select', 1);
     }
 });

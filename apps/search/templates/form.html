@@ -10,7 +10,7 @@
 {% block content %}
   {% if advanced != '0' %}
   <div id="search-tabs">
-    <input type="hidden" id="where" value="{{ w }}" />
+    <span id="where" style="display: none">{{ search_form.w.data or '' }}</span>
     <ul>
       <li><a title="{{ _('Search the Knowledge Base') }}" class="tablink" href="#kb">{{ _('Knowledge Base') }}</a></li>
       <li><a title="{{ _('Search the Forum') }}" class="tablink" href="#forum">{{ _('Forum') }}</a></li>
