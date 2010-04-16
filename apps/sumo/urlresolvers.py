@@ -32,7 +32,8 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None):
 
 
 def find_supported(test):
-    return [x for x in settings.LANGUAGE_URL_MAP if
+    return [settings.LANGUAGE_URL_MAP[x] for
+            x in settings.LANGUAGE_URL_MAP if
             x.split('-', 1)[0] == test.lower().split('-', 1)[0]]
 
 
