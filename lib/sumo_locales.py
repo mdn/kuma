@@ -3,7 +3,7 @@ from collections import namedtuple
 
 Language = namedtuple(u'Language', u'external internal english native dictionary')
 
-languages = {
+LOCALES = {
     u'af': Language(u'af', u'af', u'Afrikaans', u'Afrikaans', u'af-NA'),
     u'ak': Language(u'ak', u'ak', u'Akan', u'Akan', u'ak-GH'),
     u'ast-ES': Language(u'ast-ES', u'ast-ES', u'Asturian', u'Asturianu', u'ast-ES'),
@@ -104,3 +104,5 @@ languages = {
     u'zh-TW': Language(u'zh-TW', u'zh-TW', u'Chinese (Traditional)', u'正體中文 (繁體)', u'zh-TW'),
     u'zu': Language(u'zu', u'zu', u'Zulu', u'isiZulu', u'zu'),
 }
+
+INTERNAL_MAP = dict([(LOCALES[k].internal, k) for k in LOCALES])

@@ -193,6 +193,13 @@ class SearchTest(SphinxTestCase):
         results = wc.query('', filter)
         self.assertEquals(1, len(results))
 
+    def test_search_en_locale(self):
+        """Searches from the en-US locale should return documents from en."""
+        c = client.Client()
+        qs = {'q': 'contribute', 'w': 1, 'format': 'json', 'category': 23}
+        response = c.get(reverse('search'), qs)
+        self.assertNotEquals(0, json.loads(response.content)['total'])
+
 
 def test_sphinx_down():
     """

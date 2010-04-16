@@ -1,8 +1,15 @@
-from django import test
-
 from nose.tools import eq_
 
+from django import test
+
+import jingo
+
 from sumo.models import ForumThread, WikiPage, Forum
+
+
+def setup():
+    jingo.load_helpers()
+    test.Client().get('/')
 
 
 class TestForumThreadModel(test.TestCase):
@@ -10,7 +17,7 @@ class TestForumThreadModel(test.TestCase):
 
     def test_get_url(self):
         f = ForumThread.objects.create(pk=12345, object=1)
-        eq_(f.get_url(), '/en/forum/1/12345')
+        eq_(f.get_url(), '/en-US/forum/1/12345')
 
 
 class TestWikiPage(test.TestCase):
@@ -18,7 +25,7 @@ class TestWikiPage(test.TestCase):
 
     def test_get_url(self):
         w = WikiPage.objects.create(pk=1, lang='en', pageName='My Test Page')
-        eq_(w.get_url(), '/en/kb/My+Test+Page')
+        eq_(w.get_url(), '/en-US/kb/My+Test+Page')
 
 
 class TestForumModel(test.TestCase):
@@ -26,5 +33,5 @@ class TestForumModel(test.TestCase):
 
     def test_sanity(self):
         f = Forum.objects.create(pk=12, name='My Test Forum')
-        eq_(f.get_url(), '/en/forum/12')
+        eq_(f.get_url(), '/en-US/forum/12')
 

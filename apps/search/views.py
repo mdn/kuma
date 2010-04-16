@@ -18,6 +18,7 @@ from sumo.models import ForumThread, WikiPage, Forum, Category
 from .clients import ForumClient, WikiClient, SearchError
 from .utils import crc32
 import search as constants
+from sumo_locales import LOCALES
 
 
 def jsonp_is_valid(func):
@@ -32,8 +33,11 @@ def search(request):
     # set up query variables
     q = request.GET.get('q', '')
 
-    locale = request.GET.get('locale', request.locale)
-    language = request.GET.get('language', locale)
+    language = request.GET.get('language', request.locale)
+    if language in LOCALES:
+        language = LOCALES[language].internal
+    else:
+        language = LOCALES[settings.LANGUAGE_CODE].internal
 
     search_locale = (crc32(language),)
 

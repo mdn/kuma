@@ -2,9 +2,15 @@ from django.db import models
 
 import caching.base
 
+from sumo.urlresolvers import get_url_prefix
+from sumo_locales import INTERNAL_MAP
+
 # Our apps should subclass BaseManager instead of models.Manager or
 # caching.base.CachingManager directly.
 ManagerBase = caching.base.CachingManager
+
+
+reverse = lambda x: get_url_prefix().fix(x)
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
@@ -89,7 +95,8 @@ class Forum(ModelBase):
         """
         TODO: Once we can use reverse(), use reverse()
         """
-        return u'/en/forum/%s' % (self.forumId,)
+
+        return reverse(u'/forum/%s' % (self.forumId,))
 
 
 class ForumThread(ModelBase):
@@ -129,7 +136,8 @@ class ForumThread(ModelBase):
         """
         TODO: Once we can use reverse(), use reverse()
         """
-        return u'/en/forum/%s/%s' % (self.object, self.threadId,)
+
+        return reverse(u'/forum/%s/%s' % (self.object, self.threadId,))
 
 
 class WikiPage(ModelBase):
@@ -174,7 +182,13 @@ class WikiPage(ModelBase):
         TODO: Once we can use reverse(), use reverse()
         """
         name = self.pageName.replace(' ', '+')
-        return u'/%s/kb/%s' % (self.lang, name,)
+
+        if self.lang in INTERNAL_MAP:
+            lang = INTERNAL_MAP[self.lang]
+        else:
+            lang = self.lang
+
+        return u'/%s/kb/%s' % (lang, name,)
 
 
 class Category(ModelBase):
