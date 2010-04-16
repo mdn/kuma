@@ -4,7 +4,7 @@ import logging
 
 from tower import ugettext_lazy as _lazy
 
-import sumo_locales
+from sumo_locales import LOCALES
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -63,7 +63,7 @@ SUMO_LANGUAGES = (
     'uk', 'vi', 'zh-CN', 'zh-TW',
 )
 
-LANGUAGES = dict([(i.lower(), sumo_locales.languages[i].native)
+LANGUAGES = dict([(i.lower(), LOCALES[i].native)
                  for i in SUMO_LANGUAGES])
 
 LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
