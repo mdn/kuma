@@ -29,3 +29,8 @@ class TestLocaleMiddleware(TestCase):
         """Requests for /fr-FR/search should end up on /fr/search"""
         reponse = self.client.get('/fr-FR/search', follow=True)
         self.assertRedirects(reponse, '/fr/search', status_code=301)
+
+    def test_lower_to_upper(self):
+        """/en-us should redirect to /en-US."""
+        response = self.client.get('/en-us/search', follow=True)
+        self.assertRedirects(response, '/en-US/search', status_code=301)
