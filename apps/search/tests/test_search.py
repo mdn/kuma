@@ -102,6 +102,21 @@ def create_extra_tables():
             (62, 14), (62, 19), (62, 25);
         """)
 
+    cursor.execute("""
+        INSERT IGNORE INTO tiki_freetags (tagId, tag, raw_tag, lang) VALUES
+            (1, 'installation', 'installation', 'en'),
+            (26, 'video', 'video', 'en'),
+            (28, 'realplayer', 'realplayer', 'en');
+        """)
+
+    cursor.execute("""
+        INSERT IGNORE INTO tiki_freetagged_objects (tagId, objectId, user,
+            created) VALUES
+            (1, 5, 'admin', 1185895872),
+            (26, 62, 'np', 188586976),
+            (28, 62, 'Vectorspace', 186155207);
+        """)
+
     cursor.execute('SET SQL_NOTES=@OLD_SQL_NOTES;')
 
 
@@ -163,10 +178,21 @@ class SphinxTestCase(test_utils.TransactionTestCase):
 
 class SearchTest(SphinxTestCase):
 
+    def setUp(self):
+        SphinxTestCase.setUp(self)
+        self.client = client.Client()
+
     def test_indexer(self):
         wc = WikiClient()
         results = wc.query('practice')
         self.assertNotEquals(0, len(results))
+
+    def test_content(self):
+        """Ensure template is rendered with no errors for a common search"""
+        response = self.client.get(reverse('search'), {'q': 'audio', 'w': 3})
+        self.assertEquals(response['Content-Type'],
+                          'text/html; charset=utf-8')
+        self.assertEquals(response.status_code, 200)
 
     def test_category_filter(self):
         wc = WikiClient()
@@ -174,16 +200,19 @@ class SearchTest(SphinxTestCase):
         self.assertNotEquals(0, len(results))
 
     def test_category_exclude(self):
-        c = client.Client()
-        response = c.get(reverse('search'),
-                         {'q': 'audio', 'format': 'json', 'w': 3})
+        response = self.client.get(reverse('search'),
+                                   {'q': 'audio', 'format': 'json', 'w': 3})
         self.assertNotEquals(0, json.loads(response.content)['total'])
 
-        response = c.get(reverse('search'),
-                         {'q': 'audio', 'category': [-13] +
-                                list(settings.SEARCH_DEFAULT_CATEGORIES),
-                          'format': 'json', 'w': 1})
-        self.assertEquals(0, json.loads(response.content)['total'])
+        response = self.client.get(reverse('search'),
+                                   {'q': 'audio', 'category': -13,
+                                    'format': 'json', 'w': 1})
+        self.assertEquals(1, json.loads(response.content)['total'])
+
+    def test_category_invalid(self):
+        qs = {'a': 1, 'w': 3, 'format': 'json', 'category': 'invalid'}
+        response = self.client.get(reverse('search'), qs)
+        self.assertNotEquals(0, json.loads(response.content)['total'])
 
     def test_no_filter(self):
         """Test searching with no filters."""
@@ -204,9 +233,8 @@ class SearchTest(SphinxTestCase):
 
     def test_search_en_locale(self):
         """Searches from the en-US locale should return documents from en."""
-        c = client.Client()
         qs = {'q': 'contribute', 'w': 1, 'format': 'json', 'category': 23}
-        response = c.get(reverse('search'), qs)
+        response = self.client.get(reverse('search'), qs)
         self.assertNotEquals(0, json.loads(response.content)['total'])
 
     def test_sort_mode(self):
@@ -225,6 +253,77 @@ class SearchTest(SphinxTestCase):
             self.assertTrue(results[0]['attrs'][test_for[i]] >
                             results[-1]['attrs'][test_for[i]])
             i += 1
+
+    def test_lastmodif(self):
+        qs = {'a': 1, 'w': 3, 'format': 'json', 'lastmodif': 1}
+        response = self.client.get(reverse('search'), qs)
+        self.assertNotEquals(0, json.loads(response.content)['total'])
+
+    def test_created(self):
+        qs = {'a': 1, 'w': 2, 'format': 'json',
+              'sortby': 2, 'created_date': '10/13/2008'}
+        created_vals = (
+            (1, '/8288'),
+            (2, '/185508'),
+        )
+
+        for created, url_id in created_vals:
+            qs.update({'created': created})
+            response = self.client.get(reverse('search'), qs)
+            self.assertEquals(url_id, json.loads(response.content)['results']
+                                          [-1]['url'][-len(url_id):])
+
+    def test_created_invalid(self):
+        """Invalid created_date is ignored."""
+        qs = {'a': 1, 'w': 2, 'format': 'json',
+              'created': 1, 'created_date': 'invalid'}
+        response = self.client.get(reverse('search'), qs)
+        self.assertEquals(9, json.loads(response.content)['total'])
+
+    def test_author(self):
+        """Check several author values, including test for (anon)"""
+        qs = {'a': 1, 'w': 2, 'format': 'json'}
+        author_vals = (
+            ('DoesNotExist', 0),
+            ('Andreas Gustafsson', 1),
+            ('Bob', 2),
+        )
+
+        for author, total in author_vals:
+            qs.update({'author': author})
+            response = self.client.get(reverse('search'), qs)
+            self.assertEquals(total, json.loads(response.content)['total'])
+
+    def test_status(self):
+        qs = {'a': 1, 'w': 2, 'format': 'json'}
+        status_vals = (
+            (91, 8),
+            (92, 2),
+            (93, 1),
+            (94, 2),
+            (95, 1),
+            (96, 3),
+        )
+
+        for status, total in status_vals:
+            qs.update({'status': status})
+            response = self.client.get(reverse('search'), qs)
+            self.assertEquals(total, json.loads(response.content)['total'])
+
+    def test_tags(self):
+        """Search for tags, includes multiple"""
+        qs = {'a': 1, 'w': 1, 'format': 'json'}
+        tags_vals = (
+            ('doesnotexist', 0),
+            ('video', 1),
+            ('realplayer video', 1),
+            ('realplayer installation', 0),
+        )
+
+        for tag_string, total in tags_vals:
+            qs.update({'tags': tag_string})
+            response = self.client.get(reverse('search'), qs)
+            self.assertEquals(total, json.loads(response.content)['total'])
 
     def test_unicode_excerpt(self):
         """Unicode characters in the excerpt should not be a problem."""

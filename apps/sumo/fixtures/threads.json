@@ -20,7 +20,7 @@
             "points": "0.00",
             "parentId": 0,
             "in_reply_to": "",
-            "type": "n",
+            "type": "o",
             "message_id": "Bob (not registered)-0-ffcc8752a1@support.mozilla.com",
             "objectType": "forum"
         }
@@ -46,7 +46,7 @@
             "points": "0.00",
             "parentId": 0,
             "in_reply_to": "",
-            "type": "n",
+            "type": "o",
             "message_id": "\u00c3\u0081lber (not registered)-0-c809d9164b@support.mozilla.com",
             "objectType": "forum"
         }
@@ -72,7 +72,7 @@
             "points": "0.00",
             "parentId": 0,
             "in_reply_to": "",
-            "type": "n",
+            "type": "v",
             "message_id": "Bill (not registered)-0-6e47675689@support.mozilla.com",
             "objectType": "forum"
         }
@@ -150,7 +150,7 @@
             "points": "0.00",
             "parentId": 0,
             "in_reply_to": "",
-            "type": "n",
+            "type": "s",
             "message_id": "Frank (not registered)-0-cec6593987@support.mozilla.com",
             "objectType": "forum"
         }
@@ -176,7 +176,7 @@
             "points": "0.00",
             "parentId": 0,
             "in_reply_to": "",
-            "type": "n",
+            "type": "a",
             "message_id": "Emma (not registered)-0-61b5168ece@support.mozilla.com",
             "objectType": "forum"
         }
@@ -211,7 +211,7 @@
         "pk": 8288,
         "model": "sumo.forumthread",
         "fields": {
-            "userName": "Steve LaCAze (anon)",
+            "userName": "Bob",
             "hits": 292,
             "smiley": "",
             "hash": "a7f7fc894be3f7864e40fd77eb0a0597",
@@ -228,8 +228,8 @@
             "points": "0.00",
             "parentId": 0,
             "in_reply_to": "",
-            "type": "n",
-            "message_id": "Steve LaCAze (not registered)-0-a7f7fc894b@support.mozilla.com",
+            "type": "r",
+            "message_id": "Bob (not registered)-0-a7f7fc894b@support.mozilla.com",
             "objectType": "forum"
         }
     },
@@ -254,7 +254,7 @@
             "points": "0.00",
             "parentId": 8288,
             "in_reply_to": "",
-            "type": "n",
+            "type": "r",
             "message_id": "Earl (not registered)-0-41ad82ddcf@support.mozilla.com",
             "objectType": "forum"
         }
