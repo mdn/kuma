@@ -118,10 +118,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MIDDLEWARE_CLASSES = (
     'sumo.middleware.LocaleURLMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    # TODO: Replace with Kitsune auth.
+    'sumo.middleware.TikiCookieMiddleware',
+)
+
+# Auth
+AUTHENTICATION_BACKENDS = (
+    'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
 )
 
 ROOT_URLCONF = 'kitsune.urls'
@@ -151,7 +159,7 @@ if DEBUG:
         'django_extensions',
         'django_nose',
         'test_utils',
-    )   
+    )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 

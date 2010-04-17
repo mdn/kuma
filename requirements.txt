@@ -21,3 +21,7 @@ South==0.7
 
 # for l10n
 -e git://github.com/clouserw/tower.git@1217a7184ef40520e059fadf359618972662c47e#egg=tower
+
+# commonware, stuff we share
+-e git://github.com/jsocol/commonware.git#egg=commonware
+
