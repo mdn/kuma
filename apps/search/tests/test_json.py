@@ -17,7 +17,6 @@ class JSONTest(SphinxTestCase):
         })
         eq_(response['Content-Type'], 'application/json')
 
-
     def test_json_callback_validation(self):
         """Various json callbacks -- validation"""
         c = Client()

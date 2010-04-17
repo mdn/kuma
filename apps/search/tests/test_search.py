@@ -180,7 +180,8 @@ class SearchTest(SphinxTestCase):
         self.assertNotEquals(0, json.loads(response.content)['total'])
 
         response = c.get(reverse('search'),
-                         {'q': 'audio', 'category': -13,
+                         {'q': 'audio', 'category': [-13] +
+                                list(settings.SEARCH_DEFAULT_CATEGORIES),
                           'format': 'json', 'w': 1})
         self.assertEquals(0, json.loads(response.content)['total'])
 

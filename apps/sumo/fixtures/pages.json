@@ -210,7 +210,7 @@
         }
     }, 
     {
-        "pk": 61, 
+        "pk": 62, 
         "model": "sumo.wikipage", 
         "fields": {
             "comment": "applies to 3.5 [approved by Chris_Ilias]", 
