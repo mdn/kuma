@@ -1,14 +1,13 @@
 import cgi
 import urlparse
-import urllib
 
 from django.utils.encoding import smart_unicode
 
 import jinja2
-
 from jingo import register, env
 
 from sumo.urlresolvers import reverse
+from sumo.utils import urlencode
 
 
 @register.filter
@@ -42,15 +41,7 @@ def urlparams(url_, hash=None, **query):
 
     items = [(k, v) for k, v in items if v is not None]
 
-    def encoder(v):
-        if hasattr(v, 'encode'):
-            return v.encode('raw_unicode_escape')
-        return v
-
-    try:
-        query_string = urllib.urlencode(items)
-    except UnicodeEncodeError:
-        query_string = urllib.urlencode([(k, encoder(v)) for k, v in items])
+    query_string = urlencode(items)
 
     new = urlparse.ParseResult(url.scheme, url.netloc, url.path, url.params,
                                query_string, fragment)

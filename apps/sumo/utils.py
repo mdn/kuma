@@ -24,11 +24,21 @@ def paginate(request, queryset, per_page=20):
     items = [(k, v) for k in request.GET if k != 'page'
              for v in request.GET.getlist(k) if v]
 
-    try:
-        qsa = urllib.urlencode(items)
-    except UnicodeEncodeError:
-        qsa = urllib.urlencode([(k, v.encode('utf8')) for k, v
-                                in items])
+    qsa = urlencode(items)
 
     paginated.url = u'%s?%s' % (base, qsa)
     return paginated
+
+
+def urlencode(items):
+    """A Unicode-safe URLencoder."""
+
+    def encoder(v):
+        if hasattr(v, 'encode'):
+            return v.encode('raw_unicode_escape')
+        return v
+
+    try:
+        return urllib.urlencode(items)
+    except UnicodeEncodeError:
+        return urllib.urlencode([(k, encoder(v)) for k, v in items])
