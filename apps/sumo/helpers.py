@@ -1,14 +1,13 @@
 import cgi
 import urlparse
 
-from django.utils.datastructures import MultiValueDict
+from django.utils.encoding import smart_unicode
 
 import jinja2
-
 from jingo import register, env
-from flatqs import flatten
 
 from sumo.urlresolvers import reverse
+from sumo.utils import urlencode
 
 
 @register.filter
@@ -33,14 +32,17 @@ def urlparams(url_, hash=None, **query):
     url = urlparse.urlparse(url_)
     fragment = hash if hash is not None else url.fragment
 
-    query_dict = MultiValueDict()
+    items = []
     if url.query:
         for k, v in cgi.parse_qsl(url.query):
-            query_dict.update({k: v})
+            items.append((k, v))
     for k, v in query.items():
-        query_dict.update({k: v})
+        items.append((k, v))
 
-    query_string = flatten(query_dict, encode=False)
+    items = [(k, v) for k, v in items if v is not None]
+
+    query_string = urlencode(items)
+
     new = urlparse.ParseResult(url.scheme, url.netloc, url.path, url.params,
                                query_string, fragment)
     return jinja2.Markup(new.geturl())
@@ -87,7 +89,11 @@ def fe(str, *args, **kwargs):
     """Format a safe string with potentially unsafe arguments, then return a
     safe string."""
 
-    for i in kwargs:
-        kwargs[i] = jinja2.escape(kwargs[i])
+    str = unicode(str)
 
-    return jinja2.Markup(str.format(**kwargs))
+    args = [jinja2.escape(smart_unicode(v)) for v in args]
+
+    for k in kwargs:
+        kwargs[k] = jinja2.escape(smart_unicode(kwargs[k]))
+
+    return jinja2.Markup(str.format(*args, **kwargs))

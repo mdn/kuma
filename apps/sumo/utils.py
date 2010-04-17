@@ -1,6 +1,6 @@
-from django.core import paginator
+import urllib
 
-from flatqs import flatten
+from django.core import paginator
 
 
 def paginate(request, queryset, per_page=20):
@@ -20,10 +20,25 @@ def paginate(request, queryset, per_page=20):
         paginated = p.page(1)
 
     base = request.build_absolute_uri(request.path)
-    request_copy = request.GET.copy()
-    try:
-        del request_copy['page']
-    except KeyError:
-        pass
-    paginated.url = u'%s?%s' % (base, flatten(request_copy, encode=False))
+
+    items = [(k, v) for k in request.GET if k != 'page'
+             for v in request.GET.getlist(k) if v]
+
+    qsa = urlencode(items)
+
+    paginated.url = u'%s?%s' % (base, qsa)
     return paginated
+
+
+def urlencode(items):
+    """A Unicode-safe URLencoder."""
+
+    def encoder(v):
+        if hasattr(v, 'encode'):
+            return v.encode('raw_unicode_escape')
+        return v
+
+    try:
+        return urllib.urlencode(items)
+    except UnicodeEncodeError:
+        return urllib.urlencode([(k, encoder(v)) for k, v in items])

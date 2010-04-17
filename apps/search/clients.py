@@ -2,6 +2,7 @@ import logging
 import socket
 
 from django.conf import settings
+from django.utils.encoding import smart_unicode
 
 from .sphinxapi import SphinxClient
 
@@ -88,7 +89,6 @@ class SearchClient(object):
                 sc.SetFilter(f['filter'], f['value'],
                              f.get('exclude', False))
 
-
         try:
             result = sc.Query(query, self.index)
         except socket.timeout:
@@ -120,7 +120,7 @@ class SearchClient(object):
             {'limit': settings.SEARCH_SUMMARY_LENGTH
                 * settings.SEARCH_SUMMARY_LENGTH_MULTIPLIER})[0]
 
-        excerpt = raw_excerpt
+        excerpt = smart_unicode(raw_excerpt)
         for p in self.compiled_patterns:
             excerpt = p[0].sub(p[1], excerpt)
 
@@ -130,7 +130,7 @@ class SearchClient(object):
                 + self.truncate_pattern.sub('',
                     excerpt[settings.SEARCH_SUMMARY_LENGTH:])
             if excerpt[-1] != '.':
-                excerpt += '...'
+                excerpt += u'...'
 
         return excerpt
 
