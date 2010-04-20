@@ -43,11 +43,12 @@ def search(request):
             # Validate created date
             if cleaned_data['created_date'] != '':
                 try:
-                    cleaned_data['created_date'] = int(time.mktime(
+                    created_timestamp = time.mktime(
                         time.strptime(cleaned_data['created_date'],
-                            '%m/%d/%Y'), ))
+                                      '%m/%d/%Y'))
+                    cleaned_data['created_date'] = int(created_timestamp)
                 except ValueError:
-                    raise ValidationError('Invalid created date.')
+                    cleaned_data['created'] = None
 
             # Set defaults for MultipleChoiceFields and convert to ints.
             # Ticket #12398 adds TypedMultipleChoiceField which would replace
@@ -66,49 +67,68 @@ def search(request):
 
             return cleaned_data
 
+        class NoValidateMultipleChoiceField(forms.MultipleChoiceField):
+            def valid_value(self, value):
+                return True
+
         # Common fields
         q = forms.CharField(required=False)
 
         w = forms.TypedChoiceField(widget=forms.HiddenInput,
-                              required=False,
-                              coerce=int,
-                              empty_value=constants.WHERE_ALL,
-                              choices=((constants.WHERE_FORUM, None),
-                                       (constants.WHERE_WIKI, None),
-                                       (constants.WHERE_ALL, None)))
+                                   required=False, coerce=int,
+                                   empty_value=constants.WHERE_ALL,
+                                   choices=((constants.WHERE_FORUM, None),
+                                            (constants.WHERE_WIKI, None),
+                                            (constants.WHERE_ALL, None)))
 
         a = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
         # KB fields
         tags = forms.CharField(label=_('Tags'), required=False)
 
-        language = forms.ChoiceField(label=_('Language'), required=False,
+        language = forms.ChoiceField(
+            label=_('Language'), required=False,
             choices=[(LOCALES[k].external, LOCALES[k].native) for
                      k in settings.SUMO_LANGUAGES])
 
         categories = [(cat.categId, cat.name) for
                       cat in Category.objects.all()]
-        category = forms.MultipleChoiceField(
+        category = NoValidateMultipleChoiceField(
             widget=forms.CheckboxSelectMultiple,
             label=_('Category'), choices=categories, required=False)
 
         # Forum fields
-        status = forms.TypedChoiceField(label=_('Post status'), coerce=int,
-            choices=constants.STATUS_LIST, empty_value=0, required=False)
+        status = forms.TypedChoiceField(
+            label=_('Post status'), coerce=int, empty_value=0,
+            choices=constants.STATUS_LIST, required=False)
         author = forms.CharField(required=False)
 
-        created = forms.TypedChoiceField(label=_('Created'), coerce=int,
-            choices=constants.CREATED_LIST, empty_value=0, required=False)
+        created = forms.TypedChoiceField(
+            label=_('Created'), coerce=int, empty_value=0,
+            choices=constants.CREATED_LIST, required=False)
         created_date = forms.CharField(required=False)
 
-        lastmodif = forms.TypedChoiceField(label=_('Last updated'), coerce=int,
-            choices=constants.LUP_LIST, empty_value=0, required=False)
-        sortby = forms.TypedChoiceField(label=_('Sort results by'), coerce=int,
-            choices=constants.SORTBY_LIST, empty_value=0, required=False)
+        lastmodif = forms.TypedChoiceField(
+            label=_('Last updated'), coerce=int, empty_value=0,
+            choices=constants.LUP_LIST, required=False)
+        sortby = forms.TypedChoiceField(
+            label=_('Sort results by'), coerce=int, empty_value=0,
+            choices=constants.SORTBY_LIST, required=False)
 
         forums = [(f.forumId, f.name) for f in Forum.objects.all()]
-        forum = forms.MultipleChoiceField(label=_('Search in forum'),
-            choices=forums, required=False)
+        forum = NoValidateMultipleChoiceField(label=_('Search in forum'),
+                                              choices=forums, required=False)
+
+    # JSON-specific variables
+    is_json = (request.GET.get('format') == 'json')
+    callback = request.GET.get('callback', '').strip()
+    mimetype = 'application/x-javascript' if callback else 'application/json'
+
+    # Check callback is valid
+    if is_json and callback and not jsonp_is_valid(callback):
+        return HttpResponse(
+            json.dumps({'error': _('Invalid callback function.')}),
+            mimetype=mimetype, status=400)
 
     language = request.GET.get('language', request.locale)
     if not language in LOCALES:
@@ -119,7 +139,7 @@ def search(request):
     # Search default values
     try:
         category = map(int, r.getlist('category')) or \
-                  settings.SEARCH_DEFAULT_CATEGORIES
+                   settings.SEARCH_DEFAULT_CATEGORIES
     except ValueError:
         category = settings.SEARCH_DEFAULT_CATEGORIES
     r.setlist('category', [x for x in category if x > 0])
@@ -137,9 +157,15 @@ def search(request):
     search_form = SearchForm(r)
 
     if not search_form.is_valid() or a == '2':
-        return jingo.render(request, 'form.html',
-                            {'advanced': a, 'request': request,
-                             'search_form': search_form})
+        if is_json:
+            return HttpResponse(
+                json.dumps({'error': _('Invalid search data.')}),
+                mimetype=mimetype,
+                status=400)
+        else:
+            return jingo.render(request, 'form.html',
+                                {'advanced': a, 'request': request,
+                                 'search_form': search_form})
 
     cleaned = search_form.cleaned_data
     search_locale = (crc32(LOCALES[language].internal),)
@@ -268,14 +294,19 @@ def search(request):
 
             documents += fc.query(cleaned['q'], filters_f)
     except SearchError:
-        return jingo.render(request, 'down.html', {}, status=503)
+        if is_json:
+            return HttpResponse(json.dumps({'error':
+                                             _('Search Unavailable')}),
+                                mimetype=mimetype, status=503)
+        else:
+            return jingo.render(request, 'down.html', {}, status=503)
 
     pages = paginate(request, documents, settings.SEARCH_RESULTS_PER_PAGE)
 
     results = []
     for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
         try:
-            if documents[i]['attrs'].get('category', False):
+            if documents[i]['attrs'].get('category', False) != False:
                 wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
 
                 excerpt = wc.excerpt(wiki_page.data, cleaned['q'])
@@ -307,29 +338,18 @@ def search(request):
 
     refine_query = u'?%s' % urlencode(items)
 
-    if request.GET.get('format') == 'json':
-        callback = request.GET.get('callback', '').strip()
-        # Check callback is valid
-        if callback and not jsonp_is_valid(callback):
-                return HttpResponse('', mimetype='application/x-javascript',
-                    status=400)
-
+    if is_json:
         data = {}
         data['results'] = results
-        data['total'] = len(documents)
+        data['total'] = len(results)
         data['query'] = cleaned['q']
         if not results:
             data['message'] = _('No pages matched the search criteria')
         json_data = json.dumps(data)
         if callback:
             json_data = callback + '(' + json_data + ');'
-            response = HttpResponse(json_data,
-                mimetype='application/x-javascript')
-        else:
-            response = HttpResponse(json_data,
-                mimetype='application/json')
 
-        return response
+        return HttpResponse(json_data, mimetype=mimetype)
 
     return jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': cleaned['q'],
