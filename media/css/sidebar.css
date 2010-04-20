@@ -1,7 +1,7 @@
 /* default sidebar, used on most SUMO pages */
 #sidebar {
     float: right;
-    width: 200px;
+    width: 190px;
 }
 
 #side-menu {
@@ -14,7 +14,7 @@
 #side-menu li {
     list-style-type: none;
     margin: 0;
-    padding: 5px;
+    padding: 5px 5px 5px 0;
     background: url(../img/side-menu-divider.png) top left no-repeat;
 }
 
