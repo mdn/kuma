@@ -40,6 +40,9 @@ SLAVE_DATABASES = []
 #CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 #CACHE_PREFIX = 'sumo:'
 
+# Addresses email comes from
+DEFAULT_FROM_EMAIL = 'notifications@support.mozilla.com'
+SERVER_EMAIL = 'server-error@support.mozilla.com'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
