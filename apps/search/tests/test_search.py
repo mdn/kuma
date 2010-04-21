@@ -5,10 +5,12 @@ import os
 import shutil
 import time
 import json
+import socket
 
 from django.test import client
 from django.db import connection
 
+import mock
 from nose import SkipTest
 from nose.tools import assert_raises
 import test_utils
@@ -345,3 +347,17 @@ def test_sphinx_down():
     """
     wc = WikiClient()
     assert_raises(SearchError, wc.query, 'test')
+
+
+query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)
+
+@mock.patch('search.clients.WikiClient')
+def test_excerpt_timeout(sphinx_mock):
+    def sphinx_error(cls):
+        raise cls
+
+    sphinx_mock.query.side_effect = lambda *a: sphinx_error(socket.timeout)
+    assert_raises(SearchError, query, 'xxx')
+
+    sphinx_mock.query.side_effect = lambda *a: sphinx_error(Exception)
+    assert_raises(SearchError, query, 'xxx')
