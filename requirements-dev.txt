@@ -9,7 +9,7 @@
 ipython==0.10
 sqlparse==0.1.1
 
--e git://github.com/jbalogh/django-nose.git@6f060d49ee193a05734704820f3fea92ee1759d2#egg=django_nose
+-e git://github.com/jbalogh/django-nose.git@70de9dd19e40bd292cdac06c51b6bfe703731504#egg=django_nose
 -e git://github.com/jbalogh/test-utils.git@c4c31905a95e59dcc8919c1030b23848ad7fbca6#egg=test-utils
 nose==0.11.1
 coverage==3.2b4
