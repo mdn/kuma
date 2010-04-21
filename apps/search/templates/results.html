@@ -26,7 +26,7 @@
 
   <div class="search-count">
     {# L10n: {n} is the number of search results, {q} is the search query, {l} is the language searched. #}
-    {{ ngettext('Found <strong>{n}</strong> result for <strong>{q}</strong> in <strongL>{l}</strong>',
+    {{ ngettext('Found <strong>{n}</strong> result for <strong>{q}</strong> in <strong>{l}</strong>',
                 'Found <strong>{n}</strong> results for <strong>{q}</strong> in <strong>{l}</strong>',
                 num_results)|fe(n=num_results, q=q, l=lang_name) }}
   </div>
