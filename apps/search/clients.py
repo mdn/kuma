@@ -92,14 +92,14 @@ class SearchClient(object):
         try:
             result = sc.Query(query, self.index)
         except socket.timeout:
-            log.error("Query has timed out!")
-            raise SearchError("Query has timed out!")
+            log.error('Query has timed out!')
+            raise SearchError('Query has timed out!')
         except socket.error, msg:
-            log.error("Query socket error: %s" % msg)
-            raise SearchError("Could not execute your search!")
+            log.error('Query socket error: %s' % msg)
+            raise SearchError('Could not execute your search!')
         except Exception, e:
-            log.error("Sphinx threw an unknown exception: %s" % e)
-            raise SearchError("Sphinx threw an unknown exception!")
+            log.error('Sphinx threw an unknown exception: %s' % e)
+            raise SearchError('Sphinx threw an unknown exception!')
 
         if result:
             return result['matches']
@@ -108,17 +108,25 @@ class SearchClient(object):
 
     def excerpt(self, result, query):
         """
-        Returns an excerpt for the passed-in string
+        Given document content and a search query (both strings), uses
+        Sphinx to build an excerpt, highlighting the keywords from the
+        query.
 
-        Takes in a string
+        Length of the final excerpt is roughly determined by
+        SEARCH_SUMMARY_LENGTH in settings.py.
         """
         documents = [result]
 
-        # build excerpts that are longer and truncate
-        # see multiplier constant definition for details
-        raw_excerpt = self.sphinx.BuildExcerpts(documents, self.index, query,
-            {'limit': settings.SEARCH_SUMMARY_LENGTH
-                * settings.SEARCH_SUMMARY_LENGTH_MULTIPLIER})[0]
+        try:
+            # build excerpts that are longer and truncate
+            # see multiplier constant definition for details
+            raw_excerpt = self.sphinx.BuildExcerpts(
+                documents, self.index, query,
+                {'limit': settings.SEARCH_SUMMARY_LENGTH
+                 * settings.SEARCH_SUMMARY_LENGTH_MULTIPLIER})[0]
+        except socket.timeout:
+            log.error('Building excerpt timed out!')
+            raw_excerpt = ''
 
         excerpt = smart_unicode(raw_excerpt)
         for p in self.compiled_patterns:
