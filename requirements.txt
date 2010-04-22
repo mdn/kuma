@@ -1,4 +1,4 @@
--e svn+http://code.djangoproject.com/svn/django/trunk@12335#egg=Django
+-e svn+http://code.djangoproject.com/svn/django/trunk@12578#egg=Django
 -e git://github.com/jbalogh/django-multidb-router.git@8eeef712a2f594d9fe6ba1e2ffc9240814d6a185#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git@bdee25ba4eeb20758da86f4013edbc48a77bcc6e#egg=django-cache-machine
 -e git://github.com/django-extensions/django-extensions.git#egg=django_extensions

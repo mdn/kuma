@@ -331,9 +331,8 @@ def search(request):
         except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
             continue
 
-    items = [(k, v) for k in search_form.fields
-             for v in r.getlist(k)
-                if v and k != 'a']
+    items = [(k, v) for k in search_form.fields for
+             v in r.getlist(k) if v and k != 'a']
     items.append(('a', '2'))
 
     refine_query = u'?%s' % urlencode(items)

@@ -1,6 +1,7 @@
 import urllib
 
 from django.core import paginator
+from django.utils.encoding import smart_str
 
 
 def paginate(request, queryset, per_page=20):
@@ -33,12 +34,7 @@ def paginate(request, queryset, per_page=20):
 def urlencode(items):
     """A Unicode-safe URLencoder."""
 
-    def encoder(v):
-        if hasattr(v, 'encode'):
-            return v.encode('raw_unicode_escape')
-        return v
-
     try:
         return urllib.urlencode(items)
     except UnicodeEncodeError:
-        return urllib.urlencode([(k, encoder(v)) for k, v in items])
+        return urllib.urlencode([(k, smart_str(v)) for k, v in items])

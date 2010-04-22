@@ -39,7 +39,8 @@ def urlparams(url_, hash=None, **query):
     for k, v in query.items():
         items.append((k, v))
 
-    items = [(k, v) for k, v in items if v is not None]
+    items = [(k, unicode(v).encode('raw_unicode_escape')) for
+             k, v in items if v is not None]
 
     query_string = urlencode(items)
 
