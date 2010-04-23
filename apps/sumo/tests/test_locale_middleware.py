@@ -25,6 +25,12 @@ class TestLocaleMiddleware(TestCase):
                                    HTTP_ACCEPT_LANGUAGE='')
         self.assertRedirects(response, '/en-US/search', status_code=301)
 
+    def test_mixed_case_header(self):
+        """Accept-Language is case insensitive."""
+        response = self.client.get('/search', follow=True,
+                                   HTTP_ACCEPT_LANGUAGE='en-US')
+        self.assertRedirects(response, '/en-US/search', status_code=301)
+
     def test_specificity(self):
         """Requests for /fr-FR/search should end up on /fr/search"""
         reponse = self.client.get('/fr-FR/search', follow=True)

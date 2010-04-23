@@ -92,7 +92,7 @@ class Prefixer(object):
                         break
 
             if len(supported):
-                return settings.LANGUAGE_URL_MAP[supported[0]]
+                return settings.LANGUAGE_URL_MAP[supported[0].lower()]
 
         return settings.LANGUAGE_CODE
 
