@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     ROOT_PACKAGE,
     'sumo',
     'search',
+    'forums',
 )
 
 # Extra apps for testing

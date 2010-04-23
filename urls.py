@@ -6,8 +6,8 @@ from django.conf import settings
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^search',include('search.urls')),
-
+    (r'^search', include('search.urls')),
+    (r'^forums', include('forums.urls')),
 )
 
 if settings.DEBUG:
