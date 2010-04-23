@@ -30,7 +30,7 @@ ol.pagination {
     text-align: center;
 }
 
-ol.pagination > li {
+ol.pagination li {
     display: inline;
     padding: 0 4px;
 }
