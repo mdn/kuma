@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post
+from .models import Post, Thread
 
 class ReplyForm(forms.ModelForm):
     """Reply form for forum threads."""
@@ -11,3 +11,14 @@ class ReplyForm(forms.ModelForm):
             'thread': forms.HiddenInput,
             'author': forms.HiddenInput,
         }
+
+
+class NewThreadForm(forms.ModelForm):
+    """Form to start a new thread."""
+
+    class Meta:
+        model = Thread
+        widgets = {
+            'forum': forms.HiddenInput,
+        }
+        exclude = ('created', 'last_post',)

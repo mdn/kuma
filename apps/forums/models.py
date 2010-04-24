@@ -30,6 +30,10 @@ class Thread(ModelBase):
     def __unicode__(self):
         return self.title
 
+    @property
+    def replies(self):
+        return len(self.post_set.all()) - 1
+
 
 class Post(ModelBase):
     id = models.AutoField(primary_key=True)

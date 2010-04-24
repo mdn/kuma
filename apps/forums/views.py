@@ -5,7 +5,7 @@ import jingo
 
 from sumo.urlresolvers import reverse
 from .models import Forum, Thread, Post
-from .forms import ReplyForm
+from .forms import ReplyForm, NewThreadForm
 
 
 def forums(request):
@@ -63,7 +63,7 @@ def reply(request):
     form = ReplyForm(request.POST)
 
     if form.is_valid():
-        form.save()
+        post = form.save()
         thread = Thread.objects.get(pk=request.POST.get('thread'))
         return HttpResponseRedirect(
             reverse('forums.posts',
@@ -74,4 +74,25 @@ def reply(request):
 
 
 def new_thread(request, forum_slug):
-    pass
+    """Start a new thread."""
+
+    try:
+        forum = Forum.objects.get(slug=forum_slug)
+    except Forum.DoesNotExist:
+        raise Http404
+
+    if request.method == 'GET':
+        form = NewThreadForm({'forum': forum.id})
+        return jingo.render(request, 'new_thread.html',
+                            {'form': form, 'forum': forum})
+
+    form = NewThreadForm(request.POST)
+
+    if form.is_valid():
+        thread = form.save()
+        return HttpResponseRedirect(
+            reverse('forums.posts',
+                    kwargs={'forum_slug': thread.forum.slug,
+                            'thread_id': thread.id}))
+
+    return jingo.render(request, 'bad_reply.html')
