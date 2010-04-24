@@ -1,9 +1,3 @@
-"""
-Models for Kitsune discussion forum. If you're looking for the support
-forum, then these are not the models you're looking for. You can go about
-your business. Move along.
-"""
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -25,8 +19,13 @@ class Thread(ModelBase):
     title = models.CharField(max_length=255)
     forum = models.ForeignKey('Forum')
     created = models.DateTimeField(auto_now_add=True, db_index=True)
-    creator = models.ForeignKey(User, related_name='threads')
+    creator = models.ForeignKey(User)
+    last_post = models.ForeignKey('Post', related_name='last_post_in',
+                                  null=True)
     is_locked = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-last_post__created']
 
     def __unicode__(self):
         return self.title
@@ -40,5 +39,8 @@ class Post(ModelBase):
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     updated = models.DateTimeField(auto_now=True, db_index=True)
     
+    class Meta:
+        ordering = ['created']
+
     def __unicode__(self):
         return self.content[:50]
