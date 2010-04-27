@@ -1,12 +1,13 @@
 import logging
 import socket
+import re
 
 from django.conf import settings
 from django.utils.encoding import smart_unicode
 
-from .sphinxapi import SphinxClient
+from bleach import Bleach
 
-import re
+from .sphinxapi import SphinxClient
 
 MARKUP_PATTERNS = (
     (r'^!+',),
@@ -48,6 +49,8 @@ class SearchClient(object):
     """
     Base-class for search clients
     """
+
+    bleach = Bleach()
 
     def __init__(self):
         self.sphinx = SphinxClient()
@@ -137,10 +140,10 @@ class SearchClient(object):
             excerpt = excerpt[:settings.SEARCH_SUMMARY_LENGTH] \
                 + self.truncate_pattern.sub('',
                     excerpt[settings.SEARCH_SUMMARY_LENGTH:])
-            if excerpt[-1] != '.':
+            if not excerpt.endswith('.'):
                 excerpt += u'...'
 
-        return excerpt
+        return self.bleach.clean(excerpt)
 
     def set_sort_mode(self, mode, clause=''):
         self.sphinx.SetSortMode(mode, clause)

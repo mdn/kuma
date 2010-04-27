@@ -340,6 +340,12 @@ class SearchTest(SphinxTestCase):
         except UnicodeDecodeError:
             self.fail('Raised UnicodeDecodeError.')
 
+    def test_clean_excerpt(self):
+        """SearchClient.excerpt() should not allow disallowed HTML through."""
+        wc = WikiClient()
+        self.assertEquals('<b>test</b>&lt;/style&gt;',
+                          wc.excerpt('test</style>', 'test'))
+
 
 def test_sphinx_down():
     """
@@ -350,6 +356,7 @@ def test_sphinx_down():
 
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)
+
 
 @mock.patch('search.clients.WikiClient')
 def test_excerpt_timeout(sphinx_mock):
