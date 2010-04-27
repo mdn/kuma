@@ -1,4 +1,3 @@
-
 def test_new_post_updates_thread():
     """Saving a new post in a thread should update the last_post key in
     that thread to point to the new post."""

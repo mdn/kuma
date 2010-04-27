@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Post, Thread
 
+
 class ReplyForm(forms.ModelForm):
     """Reply form for forum threads."""
 
