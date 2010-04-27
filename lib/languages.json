@@ -698,5 +698,12 @@
         "external":"sl",
         "dictionary":"sl",
         "native":"slovensko"
+    },
+    "bs":{
+        "English":"Bosnian",
+        "internal":"bs",
+        "external":"bs",
+        "dictionary":"bs_BA",
+        "native":"Bosanski"
     }
 }
