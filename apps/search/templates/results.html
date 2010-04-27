@@ -20,10 +20,6 @@
     {% endif %}
   </div>
 
-  {% if not spellcheck(q, search_form.language.data or request.locale) %}
-  <div class="search-suggestion">{{ _('Did you mean: {0}')|f(q|suggestions(search_form.language.data or request.locale))|safe }}</div>
-  {% endif %}
-
   <div class="search-count">
     {# L10n: {n} is the number of search results, {q} is the search query, {l} is the language searched. #}
     {{ ngettext('Found <strong>{n}</strong> result for <strong>{q}</strong> in <strong>{l}</strong>',
