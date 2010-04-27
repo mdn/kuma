@@ -13,6 +13,8 @@ LOG_LEVEL = logging.DEBUG
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
+ROOT_PACKAGE = os.path.basename(ROOT)
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -71,7 +73,7 @@ LANGUAGES = dict([(i.lower(), LOCALES[i].native)
 
 LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
 
-TEXT_DOMAIN = 'k-messages'
+TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 SITE_TITLE = _lazy(u'Firefox Support', 'site_title')
@@ -135,7 +137,7 @@ AUTHENTICATION_BACKENDS = (
     'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
 )
 
-ROOT_URLCONF = 'kitsune.urls'
+ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates"
@@ -152,6 +154,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'tower',
     'jingo_minify',
+    ROOT_PACKAGE,
     'sumo',
     'search',
 )
