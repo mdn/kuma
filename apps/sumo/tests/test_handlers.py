@@ -28,4 +28,4 @@ class TestHandlers(TestCase):
     def test_real_404_status(self):
         """Requesting a real undefined URL should still be a 404."""
         response = self.client.get('/en-US/no-view')
-        self.failUnlessEqual(404, response.status_code)
+        self.assertEquals(404, response.status_code)

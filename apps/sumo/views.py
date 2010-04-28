@@ -18,3 +18,9 @@ def handle404(request):
         return HttpResponsePermanentRedirect(path)
 
     return jingo.render(request, 'handlers/404.html', status=404)
+
+
+def handle500(request):
+    """A 500 message that looks nicer than the normal Apache error page."""
+
+    return jingo.render(request, 'handlers/500.html', status=500)
