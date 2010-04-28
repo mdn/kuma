@@ -17,7 +17,7 @@
     <p>Oh, no! Looks like there are no posts!</p>
   {% endif %}
 
-  <form action="{{ url('forums.reply') }}" method="post">
+  <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
     {{ csrf() }}
     {% for field in form %}
         <div class="fieldWrapper">

@@ -22,6 +22,7 @@ class Thread(ModelBase):
     creator = models.ForeignKey(User)
     last_post = models.ForeignKey('Post', related_name='last_post_in',
                                   null=True)
+    replies = models.IntegerField(default=0)
     is_locked = models.BooleanField(default=False)
 
     class Meta:
@@ -29,10 +30,6 @@ class Thread(ModelBase):
 
     def __unicode__(self):
         return self.title
-
-    @property
-    def replies(self):
-        return len(self.post_set.all()) - 1
 
 
 class Post(ModelBase):

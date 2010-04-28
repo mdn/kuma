@@ -9,7 +9,7 @@
     <ul>
       {% for thread in threads %}
         <li><a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ thread.title }}</a><br/>
-          Last post by {{ thread.last_post.author.username }}</li>
+          Replies: {{ thread.replies }} | Last post by {{ thread.last_post.author.username }}</li>
       {% endfor %}
     </ul>
   {% else %}

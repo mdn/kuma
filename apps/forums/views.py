@@ -58,13 +58,17 @@ def posts(request, forum_slug, thread_id):
                          'posts': posts, 'form': form})
 
 
-def reply(request):
+def reply(request, forum_slug, thread_id):
 
     form = ReplyForm(request.POST)
 
     if form.is_valid():
         post = form.save()
         thread = Thread.objects.get(pk=request.POST.get('thread'))
+
+        # TODO: This should not need to be in the view.
+        thread.replies += 1
+        thread.save()
         return HttpResponseRedirect(
             reverse('forums.posts',
                     kwargs={'forum_slug': thread.forum.slug,
