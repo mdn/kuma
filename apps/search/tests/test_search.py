@@ -196,6 +196,13 @@ class SearchTest(SphinxTestCase):
                           'text/html; charset=utf-8')
         self.assertEquals(response.status_code, 200)
 
+    def test_page_invalid(self):
+        """Ensure non-integer param doesn't throw exception."""
+        qs = {'a': 1, 'format': 'json', 'page': 'invalid'}
+        response = self.client.get(reverse('search'), qs)
+        self.assertEquals(response.status_code, 200)
+        self.assertNotEquals(0, json.loads(response.content)['total'])
+
     def test_category_filter(self):
         wc = WikiClient()
         results = wc.query('', ({'filter': 'category', 'value': [13]},))

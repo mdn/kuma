@@ -169,7 +169,11 @@ def search(request):
 
     cleaned = search_form.cleaned_data
     search_locale = (crc32(LOCALES[language].internal),)
-    page = int(request.GET.get('page', 1))
+
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        page = 1
     page = max(page, 1)
     offset = (page - 1) * settings.SEARCH_RESULTS_PER_PAGE
 
