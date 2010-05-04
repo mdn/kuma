@@ -7,5 +7,6 @@ urlpatterns = patterns('forums.views',
         name='forums.new_thread'),
     url(r'^/(?P<forum_slug>[\w\-]+)/(?P<thread_id>\d+)$',
         'posts', name='forums.posts'),
-    url(r'^/(?P<forum_slug>[\w\-]+)/(?P<thread_id>\d+)/reply$', 'reply', name='forums.reply'),
+    url(r'^/(?P<forum_slug>[\w\-]+)/(?P<thread_id>\d+)/reply$',
+        'reply', name='forums.reply'),
 )

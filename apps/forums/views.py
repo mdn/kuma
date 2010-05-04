@@ -1,10 +1,9 @@
 from django.http import Http404, HttpResponseRedirect
-from django.contrib import auth
 
 import jingo
 
 from sumo.urlresolvers import reverse
-from .models import Forum, Thread, Post
+from .models import Forum, Thread
 from .forms import ReplyForm, NewThreadForm
 
 

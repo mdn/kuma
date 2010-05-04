@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
 
 
@@ -24,9 +23,10 @@ class Thread(ModelBase):
                                   null=True)
     replies = models.IntegerField(default=0)
     is_locked = models.BooleanField(default=False)
+    is_sticky = models.BooleanField(default=False, db_index=True)
 
     class Meta:
-        ordering = ['-last_post__created']
+        ordering = ['-is_sticky', '-last_post__created']
 
     def __unicode__(self):
         return self.title

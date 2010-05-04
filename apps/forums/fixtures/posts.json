@@ -1,0 +1,125 @@
+[
+    {
+        "pk": 118533,
+        "model": "auth.user",
+        "fields": {
+            "username": "jsocol",
+            "first_name": "",
+            "last_name": "",
+            "is_active": 1,
+            "is_superuser": 0,
+            "is_staff": 0,
+            "last_login": "2010-04-26 19:01:45",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "user118533@nowhere",
+            "date_joined": "2009-08-10 16:09:45"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "forums.forum",
+        "fields": {
+            "name": "Test forum",
+            "slug": "test-forum"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "forums.thread",
+        "fields": {
+            "is_sticky": false,
+            "forum": 1,
+            "created": "2010-05-04 14:05:50",
+            "is_locked": false,
+            "creator": 118533,
+            "replies": 0,
+            "title": "Not a sticky thread",
+            "last_post": null
+        }
+    },
+    {
+        "pk": 2,
+        "model": "forums.thread",
+        "fields": {
+            "is_sticky": true,
+            "forum": 1,
+            "created": "2010-05-04 14:02:16",
+            "is_locked": false,
+            "creator": 118533,
+            "replies": 0,
+            "title": "Sticky Thread",
+            "last_post": null
+        }
+    },
+    {
+        "pk": 1,
+        "model": "forums.thread",
+        "fields": {
+            "is_sticky": false,
+            "forum": 1,
+            "created": "2010-04-28 16:04:42",
+            "is_locked": false,
+            "creator": 118533,
+            "replies": 1,
+            "title": "Test Thread",
+            "last_post": null
+        }
+    },
+    {
+        "pk": 5,
+        "model": "forums.post",
+        "fields": {
+            "content": "A post in a non-sticky thread",
+            "updated": "2010-05-04 14:07:10",
+            "created": "2010-05-04 14:06:56",
+            "thread": 3,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 4,
+        "model": "forums.post",
+        "fields": {
+            "content": "yet another post",
+            "updated": "2010-05-04 14:04:31",
+            "created": "2010-05-04 14:04:22",
+            "thread": 2,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 3,
+        "model": "forums.post",
+        "fields": {
+            "content": "This is a sticky thread",
+            "updated": "2010-05-04 14:02:45",
+            "created": "2010-05-04 14:02:27",
+            "thread": 2,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 2,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 1,
+        "model": "forums.post",
+        "fields": {
+            "content": "This is a test post!",
+            "updated": "2010-04-28 16:06:03",
+            "created": "2010-04-28 16:05:13",
+            "thread": 1,
+            "author": 118533
+        }
+    }
+]
