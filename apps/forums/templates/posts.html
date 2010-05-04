@@ -1,6 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
-{% set title = _('Viewing Thread') %}
+{% set title = _('Thread {t}')|f(t=thread.title) %}
+{% set crumbs = [(url('forums.forums'), _('Forums')),
+                 (url('forums.threads', forum.slug), forum.name),
+                 (None, thread.title)] %}
 
 {% block content %}
   <h2>{{ thread.title }}</h2>

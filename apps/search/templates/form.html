@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
 {% set title = _('Search') %}
+{% set crumbs = [(None, title)] %}
 {% if advanced != '0' %}
 {% set classes = 'advanced_search' %}
 {% endif %}

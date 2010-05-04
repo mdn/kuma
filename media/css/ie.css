@@ -1,0 +1,12 @@
+/* IE stylesheet */
+.breadcrumbs li {
+    background-image: url(../img/crumb.gif);
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    padding: 0 0px 0 10px;
+}
+
+.breadcrumbs li {
+    background-image: expression(this.previousSibling==null?'none':'default');
+}
+
