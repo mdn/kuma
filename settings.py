@@ -223,8 +223,8 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'common': (
-            'js/mozilla-menu.js',
             'js/jquery.min.js',
+            'js/menu.js',
         ),
         'search': (
             'js/jqueryui.min.js',
