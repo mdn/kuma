@@ -1,0 +1,32 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('Viewing Thread') %}
+
+{% block content %}
+  <h2>{{ thread.title }}</h2>
+
+  {% if posts %}
+    <ul>
+      {% for post in posts %}
+        <li><a href="#{{ post.id }}">{{ post.id }}</a><br />
+          {{ post.content }}<br />
+          by {{ post.author }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Oh, no! Looks like there are no posts!</p>
+  {% endif %}
+
+  <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+    {{ csrf() }}
+    {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag()|safe }}: {{ field|safe }}
+        </div>
+    {% endfor %}
+
+    <input type="submit" value="Reply" />
+  </form>
+
+{% endblock %}

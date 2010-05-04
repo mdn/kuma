@@ -1,0 +1,15 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('Forums') %}
+
+{% block content %}
+  {% if forums %}
+    <ul>
+      {% for forum in forums %}
+        <li><a href="{{ url('forums.threads', forum_slug=forum.slug) }}">{{ forum.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}{# if forums #}
+    <p>There are no forums. You should create some!</p>
+  {% endif %}
+{% endblock %}

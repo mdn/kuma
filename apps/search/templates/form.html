@@ -102,13 +102,8 @@
 
   <a href="{{ url('search')|urlparams(q=search_form.q.data) }}">{{ _('Use basic search') }}</a>
   {% else %}
-    <div id="basic-search" class="search-empty">
-    {{ _('Enter your terms in the form below and click <strong>Search</strong>')|safe }}
-      <form role="search" method="get" action="search">
-        <input type="text" class="search-query search-empty-query" value="{{ search_form.q.data or '' }}" name="q">
-        <input type="submit" class="search-empty-submit btn-large" value="{{ _('Search', 'button') }}">
-      </form>
-    </div>
+    {% import "search/basic-form.html" as basic %}
+    {{ basic.form(q=search_form.q.data) }}
     {% if user.is_authenticated() %}
       <a href="{{ url('search')|urlparams(a=2, q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
     {% endif %}

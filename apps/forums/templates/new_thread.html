@@ -1,0 +1,18 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('Start a New Thread') %}
+
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  <form action="{{ url('forums.new_thread', forum_slug=forum.slug) }}" method="post">
+    {{ csrf() }}
+    {% for field in form %}
+      <div>
+        {{ field.label_tag()|safe }}: {{ field|safe }}
+      </div>
+    {% endfor %}
+
+  <input type="submit" value="Post"/>
+  </form>
+{% endblock %}

@@ -2,11 +2,11 @@
 -e git://github.com/jbalogh/django-multidb-router.git@8eeef712a2f594d9fe6ba1e2ffc9240814d6a185#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git@bdee25ba4eeb20758da86f4013edbc48a77bcc6e#egg=django-cache-machine
 -e git://github.com/django-extensions/django-extensions.git#egg=django_extensions
--e git://github.com/jsocol/flatqs.git@fc0b5d89cc78b894eaf73c48dde81d0f197c7a15#egg=flatqs
 Jinja2==2.2.1
 -e git://github.com/jbalogh/jingo.git@c73d2c55182301e6f3ce507fc9a17ea843fed24f#egg=jingo
 -e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
 -e git://github.com/jsocol/bleach.git#egg=bleach
+-e git://github.com/jbalogh/schematic.git#egg=schematic
 
 GitPython==0.1.7
 MySQL-python==1.2.3c1
