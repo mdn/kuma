@@ -12,6 +12,9 @@
 {% for style in styles %}
 {{ css(style) }}
 {% endfor %}
+<!--[if lte IE 7]>
+{{ css('ie') }}
+<![endif]-->
 
 </head>
 <body{% if classes %} class="{{ classes }}"{% endif %}>
@@ -31,14 +34,7 @@
 {% include 'layout/sidebar.html' %}
 </div>
 
-{% block breadcrumbs %}
-<div id="breadcrumbs">
-  <ul>
-    <li><a href="/{{ request.locale }}/kb/">{{ _('Firefox Support') }}</a></li>
-    <li class="divider">/</li><li>{{ title }}</li>
-  </ul>
-</div>
-{% endblock %}
+{{ breadcrumbs(crumbs) }}
 
 <div id="main" role="main">
 {% block content_area %}

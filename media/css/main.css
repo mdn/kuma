@@ -315,36 +315,38 @@ a {
     Breadcrumbs
 ----------------------------------*/
 
-#breadcrumbs {
-    margin: 14px 0 0 25px;
+.breadcrumbs {
+    margin: 14px 0 0 20px;
     font-family: Verdana;
 }
 
-#breadcrumbs ul li {
+.breadcrumbs li {
     display: inline;
     margin: 0;
     color: #4b4742;
     font-size: 83%;
 }
 
-#breadcrumbs ul li.divider {
-    padding: 0 3px 0 0;
+.breadcrumbs li:before {
+    content: '/';
+    padding: 0 4px;
     color: #807970;
-    font-size: 92%;
+    font-size: 110%;
 }
 
-#breadcrumbs span,
-#breadcrumbs a {
+.breadcrumbs li:first-child:before {
+    content: '';
+    padding: 0;
+}
+
+.breadcrumbs a {
     color: #0489b7;
     font-weight: bold;
     text-decoration: none;
-    margin: 0;
-    padding: 0;
-    display: inline;
 }
 
-#breadcrumbs a:hover,
-#breadcrumbs a:active {
+.breadcrumbs a:hover,
+.breadcrumbs a:active {
     text-decoration: underline;
 }
 

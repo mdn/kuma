@@ -5,6 +5,7 @@ from django.utils.encoding import smart_unicode
 
 import jinja2
 from jingo import register, env
+from tower import ugettext_lazy as _lazy
 
 from sumo.urlresolvers import reverse
 from sumo.utils import urlencode
@@ -98,3 +99,28 @@ def fe(str, *args, **kwargs):
         kwargs[k] = jinja2.escape(smart_unicode(kwargs[k]))
 
     return jinja2.Markup(str.format(*args, **kwargs))
+
+
+@register.function
+@jinja2.contextfunction
+def breadcrumbs(context, items=list(), add_default=True):
+    """
+    show a list of breadcrumbs. If url is None, it won't be a link.
+    Accepts: [(url, label)]
+    """
+    if add_default:
+        crumbs = [('/' + context['request'].locale + '/kb',
+                   _lazy('Firefox Support'))]
+    else:
+        crumbs = []
+
+    # add user-defined breadcrumbs
+    if items:
+        try:
+            crumbs += items
+        except TypeError:
+            crumbs.append(items)
+
+    c = {'breadcrumbs': crumbs}
+    t = env.get_template('layout/breadcrumbs.html').render(**c)
+    return jinja2.Markup(t)

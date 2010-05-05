@@ -1,10 +1,11 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
-{% set title = _('Viewing Forum') %}
+{% set title = _('Viewing Forum {f}')|f(f=forum.name) %}
+{% set crumbs = [(url('forums.forums'), _('Forums')), (None, forum.name)] %}
 
 {% block content %}
   <h2>{{ forum.name }}</h2>
-  
+ 
   {% if threads %}
     <ul>
       {% for thread in threads %}

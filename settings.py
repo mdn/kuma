@@ -220,6 +220,9 @@ MINIFY_BUNDLES = {
         'search': (
             'css/search.css',
         ),
+        'ie': (
+            'css/ie.css',
+        ),
     },
     'js': {
         'common': (
