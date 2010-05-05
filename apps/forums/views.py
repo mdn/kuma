@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponseRedirect
 import jingo
 
 from sumo.urlresolvers import reverse
+from sumo.utils import paginate
 from .models import Forum, Thread
 from .forms import ReplyForm, NewThreadForm
 
@@ -48,13 +49,13 @@ def posts(request, forum_slug, thread_id):
     except Thread.DoesNotExist:
         raise Http404
 
-    posts = thread.post_set.all()
+    posts_ = paginate(request, thread.post_set.all())
 
     form = ReplyForm({'thread': thread.id, 'author': request.user.id})
 
     return jingo.render(request, 'posts.html',
                         {'forum': forum, 'thread': thread,
-                         'posts': posts, 'form': form})
+                         'posts': posts_, 'form': form})
 
 
 def reply(request, forum_slug, thread_id):

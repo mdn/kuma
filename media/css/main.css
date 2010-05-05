@@ -7,31 +7,31 @@ version: 2.5.1 (concatenated manually)
 /*** RESET-FONTS-GRIDS ***/
 html
 {
-  color:#000;
-  background:#FFF;
+    color: #4b4742;
+    background:#FFF;
 }
 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
 {
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
 }
 
 fieldset,img
 {
-  border:0;
+    border:0;
 }
 
 input,textarea,select
 {
-  font-family:inherit;
-  font-size:inherit;
-  font-weight:inherit;
+    font-family:inherit;
+    font-size:inherit;
+    font-weight:inherit;
 }
 
 input,textarea,select
 {
-  font-size:100%;
+    font-size:100%;
 }
 
 /*----------------------------------
@@ -57,6 +57,18 @@ body.html-rtl {
 a {
     color: #0489B7;
     text-decoration: none;
+}
+
+h1, h2, h3 {
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 3.5em;
+}
+
+h2 {
+    font-size: 2em;
 }
 
 /*----------------------------------
@@ -409,3 +421,135 @@ a {
 }
 /* end orange buttons */
 
+/* Paginators */
+ol.pagination {
+      margin: 0 auto 1em;
+      text-align: center;
+}
+
+ol.pagination li {
+      display: inline;
+      padding: 0 4px;
+}
+
+ol.pagination li.selected a {
+      color: #000;
+}
+
+/* Discussion forums, viewing posts in a thread. */
+ol.posts-columns,
+ol.posts {
+    list-style-type: none;
+    clear: left;
+}
+
+ol.posts-columns li {
+    float: left;
+    background: #f0f0f0;
+    color: #afaba3;
+    border-bottom: 2px solid #e4e4e4;
+    padding: 2.5em 0 1% 2%;
+    font-family: Verdana, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+ol.posts-columns li.author {
+    width: 20%;
+    margin-right: 1%;
+}
+
+ol.posts-columns li.message {
+    width: 75%;
+}
+
+ol.posts li {
+    border-color: #e4e4e4;
+    border-style: solid;
+    border-width: 0 0 1px;
+    padding-top: 1em;
+}
+
+ol.posts li:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+ol.posts li div.author {
+    float: left;
+    width: 21%;
+    padding: 0 0 1em 2%;
+}
+
+ol.posts li div.author a {
+    font-weight: bold;
+    color: green;
+    display: block;
+}
+
+ol.posts li div.author a:hover {
+    text-decoration: underline;
+}
+
+ol.posts li div.author span.posts {
+    font-style: italic;
+}
+
+ol.posts li div.content {
+    float: left;
+    padding: 0 2% 1em 2%;
+    width: 72.9%;
+}
+
+ol.posts li div.info {
+    clear: left;
+    border-top: 1px solid #e4e4e4;
+    padding: 1em;
+}
+
+ol.posts li div.info a {
+    display: none;
+}
+
+ol.posts li:hover div.info a {
+    display: inline;
+}
+
+ol.posts li div.info span.post-action {
+    float: right;
+}
+
+div#thread-reply {
+    background-color: #edf7fA;
+}
+
+div#thread-reply h3 {
+    padding: .5em 0 0 .5em;
+    font-weight: normal;
+    font-size: 180%;
+}
+
+div.forum-editor {
+    float: left;
+    width: 65%;
+    padding: 1em 0 1em 1em;
+}
+
+div.forum-editor textarea {
+    width: 100%;
+}
+
+div.forum-editor-notes {
+    float: left;
+    padding: 1em 0 0 1em;
+}
+
+div.forum-editor-notes p {
+    margin-top: .8em;
+}
+
+div.forum-editor-actions {
+    clear: both;
+    border-top: 2px solid #fff;
+    padding: 1em 2em;
+    text-align: right;
+}

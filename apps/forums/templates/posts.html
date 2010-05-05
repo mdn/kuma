@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
-{% set title = _('Thread {t}')|f(t=thread.title) %}
+{# L10n: {t} is the title of the thread. {f} is the name of the forum. #}
+{% set title = _('{t} | {f} | Forums')|f(t=thread.title, f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')),
                  (url('forums.threads', forum.slug), forum.name),
                  (None, thread.title)] %}
@@ -8,28 +9,71 @@
 {% block content %}
   <h2>{{ thread.title }}</h2>
 
+  <ol class="posts-columns">
+    <li class="author">{{ _('Author') }}</li>
+    <li class="message">{{ _('Message') }}</li>
+  </ol>
+
   {% if posts %}
-    <ul>
-      {% for post in posts %}
-        <li><a href="#{{ post.id }}">{{ post.id }}</a><br />
-          {{ post.content }}<br />
-          by {{ post.author }}</li>
+    <ol class="posts">
+      {% for post in posts.object_list %}
+        <li id="post-{{ post.id }}">
+          <div class="author">
+            <a href="/tiki-user_information.php?userId={{ post.author.id }}">
+              <img src="/tiki-show_user_avatar.php?user={{ post.author.username }}" height="45" width="45" alt=""/>
+            </a>
+            <a href="/tiki-user_information.php?userId={{ post.author.id }}">{{ post.author }}</a>
+            <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
+          </div>
+          <div class="content">
+            {{ post.content }}
+          </div>
+          <div class="info">
+            {{ post.created.strftime(_('%a %d of %b, %Y %H:%M %Z', 'forum_post_date')) }}
+            <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
+            <span class="post-action">
+              <a href="#thread-reply">{{ _('Reply') }}</a>
+            </span>
+          </div>
+        </li>
       {% endfor %}
-    </ul>
+    </ol>
+
+    {{ posts|paginator }}
+
   {% else %}
+    {# Not localized because it's not worth localizers time. #}
     <p>Oh, no! Looks like there are no posts!</p>
   {% endif %}
 
-  <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
-    {{ csrf() }}
-    {% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.errors }}
-            {{ field.label_tag()|safe }}: {{ field|safe }}
-        </div>
-    {% endfor %}
+  {% if user.is_authenticated() %}
+    <div id="thread-reply">
+      <h3>{{ _('Post a reply') }}</h3>
 
-    <input type="submit" value="Reply" />
-  </form>
+      <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+        {{ csrf() }}
+        <input type="hidden" name="thread" value="{{ thread.id }}" />
+        <input type="hidden" name="author" value="{{ user.id }}" />
+
+        <div class="forum-editor">
+          <div class="forum-editor-tools"></div>
+          <textarea name="content" id="reply-content" rows="10" cols="80"></textarea>
+        </div>
+
+        <div class="forum-editor-notes">
+          <h4>{{ _('Adding links:') }}</h4>
+          <p>{% trans %}Link to an external web site:<br />
+            [http://example.com Description]{% endtrans %}</p>
+          <p>{% trans %}Link to a Knowledge Base article:<br />
+            [[Name of article]]{% endtrans %}</p>
+          <p>{% trans %}HTML is not allowed.{% endtrans %}</p>
+        </div>
+
+        <div class="forum-editor-actions">
+          <input type="submit" value="Reply" />
+        </div>
+      </form>
+    </div>
+  {% endif %}
 
 {% endblock %}
