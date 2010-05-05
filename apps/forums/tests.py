@@ -1,3 +1,5 @@
+from nose.tools import eq_
+
 from django.test import TestCase
 
 from forums.models import Thread, Post
@@ -25,20 +27,44 @@ class ForumsTestCase(TestCase):
     def test_new_post_updates_thread(self):
         """Saving a new post in a thread should update the last_post key in
         that thread to point to the new post."""
-        pass
+        t = Thread.objects.get(pk=1)
+        post = t.post_set.create(author=t.creator,
+                                 content='an update')
+        post.save()
+        eq_(post.id, t.last_post_id)
 
     def test_update_post_does_not_update_thread(self):
         """Updating/saving an old post in a thread should _not_ update the
         last_post key in that thread."""
-        pass
+        p = Post.objects.get(pk=1)
+        old = p.thread.last_post_id
+        p.content = 'updated content'
+        p.save()
+        eq_(old, p.thread.last_post_id)
 
     def test_replies_count(self):
-        """The Thread.replies value should be one less than the number of
+        """The Thread.replies value should remain one less than the number of
         posts in the thread."""
-        pass
+        t = Thread.objects.get(pk=1)
+        old = t.replies
+        t.post_set.create(author=t.creator, content='test').save()
+        eq_(old + 1, t.replies)
 
     def test_sticky_threads_first(self):
         """Sticky threads should come before non-sticky threads."""
         thread = Thread.objects.all()[0]
         # Thread 2 is the only sticky thread.
-        self.assertEquals(2, thread.id)
+        eq_(2, thread.id)
+
+    def test_thread_sorting(self):
+        """After the sticky threads, threads should be sorted by the created
+        date of the last post."""
+        threads = Thread.objects.filter(is_sticky=False)
+        self.assert_(threads[0].last_post.created >
+                     threads[1].last_post.created)
+
+    def test_post_sorting(self):
+        """Posts should be sorted chronologically."""
+        posts = Thread.objects.get(pk=1).post_set.all()
+        for i in range(len(posts) - 1):
+            self.assert_(posts[i].created <= posts[i + 1].created)

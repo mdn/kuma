@@ -45,3 +45,15 @@ class Post(ModelBase):
 
     def __unicode__(self):
         return self.content[:50]
+
+    def save(self, *args, **kwargs):
+        """Override save method to update parent thread info."""
+
+        new = self.id is None
+
+        super(Post, self).save(*args, **kwargs)
+
+        if new:
+            self.thread.replies = self.thread.post_set.count() - 1
+            self.thread.last_post = self
+            self.thread.save()
