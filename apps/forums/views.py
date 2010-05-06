@@ -6,7 +6,6 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread
 from .forms import ReplyForm, NewThreadForm
-import forums as constants
 
 
 def forums(request):
@@ -14,17 +13,9 @@ def forums(request):
     View all the forums.
     """
 
-    try:
-        page = int(request.GET.get('page', 1))
-        page = max(page, 1)
-    except ValueError:
-        page = 1
-
     forums = Forum.objects.all()
-    pager = paginate(request, forums, constants.PER_PAGE)
 
-    return jingo.render(request, 'forums.html',
-                        {'forums': forums, 'pager': pager})
+    return jingo.render(request, 'forums.html', {'forums': forums})
 
 
 def sort_threads(threads, sort=0, desc=0):
@@ -71,11 +62,11 @@ def threads(request, forum_slug):
         desc = 0
     desc_toggle = 0 if desc else 1
 
-    threads = sort_threads(forum.thread_set, sort, desc)
-    pager = paginate(request, threads, constants.PER_PAGE)
+    threads_ = sort_threads(forum.thread_set, sort, desc)
+    threads_ = paginate(request, threads_)
 
     return jingo.render(request, 'threads.html',
-                        {'forum': forum, 'threads': threads, 'pager': pager,
+                        {'forum': forum, 'threads': threads_,
                          'sort': sort, 'desc_toggle': desc_toggle})
 
 

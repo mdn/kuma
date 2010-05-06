@@ -1,11 +1,15 @@
 import cgi
 import urlparse
+import time
 
 from django.utils.encoding import smart_unicode
+from django.conf import settings
 
 import jinja2
 from jingo import register, env
 from tower import ugettext_lazy as _lazy
+from babel import localedata
+from babel.dates import format_date, format_time
 
 from sumo.urlresolvers import reverse
 from sumo.utils import urlencode
@@ -105,7 +109,7 @@ def fe(str, *args, **kwargs):
 @jinja2.contextfunction
 def breadcrumbs(context, items=list(), add_default=True):
     """
-    show a list of breadcrumbs. If url is None, it won't be a link.
+    Show a list of breadcrumbs. If url is None, it won't be a link.
     Accepts: [(url, label)]
     """
     if add_default:
@@ -124,3 +128,33 @@ def breadcrumbs(context, items=list(), add_default=True):
     c = {'breadcrumbs': crumbs}
     t = env.get_template('layout/breadcrumbs.html').render(**c)
     return jinja2.Markup(t)
+
+
+@register.function
+def profile_url(user):
+    """Return a URL to the user's profile."""
+    # TODO: revisit this when we have a users app
+    return '/tiki-user_information.php?locale=en-US&userId=%s' % user.id
+
+
+@register.function
+@jinja2.contextfunction
+def datetimeformat(context, value, format_delimiter=86400):
+    """
+    Returns date/time formatted using babel's locale settings. If the date is
+    within `format_delimiter` seconds from the present, the time is shown,
+    otherwise the date is shown.
+
+    Set `format_delimiter=0` to always show the date.
+    """
+    # Babel uses underscore as separator.
+    locale = context['request'].locale
+    if not localedata.exists(locale):
+        locale = settings.LANGUAGE_CODE
+    locale = locale.replace('-', '_')
+
+    # If within a day, 24 * 60 * 60 = 86400s
+    if abs(time.time() - time.mktime(value.timetuple())) < format_delimiter:
+        return format_time(value, locale=locale)
+    else:
+        return format_date(value, locale=locale)

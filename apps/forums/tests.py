@@ -86,3 +86,16 @@ class ForumsTestCase(TestCase):
         threads = sort_threads(Thread.objects, 5, 1)
         self.assert_(threads[0].last_post.created >=
                      threads[1].last_post.created)
+
+    def test_thread_last_page(self):
+        """Thread's last_page property is accurate."""
+        thread = Thread.objects.all()[0]
+        # Format: (# replies, # of pages to expect)
+        test_data = ((thread.replies, 1),  # Test default
+                     (50, 3),  # Test a large number
+                     (19, 1),  # Test off-by-one error, low
+                     (20, 2),  # Test off-by-one error, high
+                    )
+        for replies, pages in test_data:
+            thread.replies = replies
+            eq_(thread.last_page, pages)
