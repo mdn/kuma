@@ -6,6 +6,7 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread
 from .forms import ReplyForm, NewThreadForm
+import forums as constants
 
 
 def forums(request):
@@ -13,9 +14,34 @@ def forums(request):
     View all the forums.
     """
 
-    forums = Forum.objects.all()
+    try:
+        page = int(request.GET.get('page', 1))
+        page = max(page, 1)
+    except ValueError:
+        page = 1
 
-    return jingo.render(request, 'forums.html', {'forums': forums})
+    forums = Forum.objects.all()
+    pager = paginate(request, forums, constants.PER_PAGE)
+
+    return jingo.render(request, 'forums.html',
+                        {'forums': forums, 'pager': pager})
+
+
+def sort_threads(threads, sort=0, desc=0):
+    if desc:
+        prefix = '-'
+    else:
+        prefix = ''
+
+    if sort == 3:
+        return threads.order_by(prefix + 'creator__username').all()
+    elif sort == 4:
+        return threads.order_by(prefix + 'replies').all()
+    elif sort == 5:
+        return threads.order_by(prefix + 'last_post__created').all()
+
+    # If nothing matches, use default sorting
+    return threads.all()
 
 
 def threads(request, forum_slug):
@@ -28,10 +54,29 @@ def threads(request, forum_slug):
     except Forum.DoesNotExist:
         raise Http404
 
-    threads = forum.thread_set.all()
+    try:
+        page = int(request.GET.get('page', 1))
+        page = max(page, 1)
+    except ValueError:
+        page = 1
+
+    try:
+        sort = int(request.GET.get('sort', 0))
+    except ValueError:
+        sort = 0
+
+    try:
+        desc = int(request.GET.get('desc', 0))
+    except ValueError:
+        desc = 0
+    desc_toggle = 0 if desc else 1
+
+    threads = sort_threads(forum.thread_set, sort, desc)
+    pager = paginate(request, threads, constants.PER_PAGE)
 
     return jingo.render(request, 'threads.html',
-                        {'forum': forum, 'threads': threads})
+                        {'forum': forum, 'threads': threads, 'pager': pager,
+                         'sort': sort, 'desc_toggle': desc_toggle})
 
 
 def posts(request, forum_slug, thread_id):
@@ -63,7 +108,7 @@ def reply(request, forum_slug, thread_id):
     form = ReplyForm(request.POST)
 
     if form.is_valid():
-        post = form.save()
+        form.save()
         thread = Thread.objects.get(pk=request.POST.get('thread'))
 
         # TODO: This should not need to be in the view.

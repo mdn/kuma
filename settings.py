@@ -216,9 +216,13 @@ MINIFY_BUNDLES = {
         'common': (
             'css/main.css',
             'css/sidebar.css',
+            'css/paginator.css',
         ),
         'search': (
             'css/search.css',
+        ),
+        'forums': (
+            'css/forums.css',
         ),
         'ie': (
             'css/ie.css',

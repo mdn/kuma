@@ -3,6 +3,7 @@ from nose.tools import eq_
 from django.test import TestCase
 
 from forums.models import Thread, Post
+from forums.views import sort_threads
 
 
 class ForumsTestCase(TestCase):
@@ -68,3 +69,20 @@ class ForumsTestCase(TestCase):
         posts = Thread.objects.get(pk=1).post_set.all()
         for i in range(len(posts) - 1):
             self.assert_(posts[i].created <= posts[i + 1].created)
+
+    def test_sorting_creator(self):
+        """Sorting threads by creator."""
+        threads = sort_threads(Thread.objects, 3, 1)
+        self.assert_(threads[0].creator.username >=
+                     threads[1].creator.username)
+
+    def test_sorting_replies(self):
+        """Sorting threads by replies."""
+        threads = sort_threads(Thread.objects, 4)
+        self.assert_(threads[0].replies <= threads[1].replies)
+
+    def test_sorting_last_post_desc(self):
+        """Sorting threads by last_post descendingly."""
+        threads = sort_threads(Thread.objects, 5, 1)
+        self.assert_(threads[0].last_post.created >=
+                     threads[1].last_post.created)

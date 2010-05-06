@@ -1,0 +1,88 @@
+#main h2 {
+    font-size: 250%;
+    font-weight: normal;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    background-color: #f5f4f3;
+    border-bottom: 2px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    color: #afaba3;
+    font-size: 120%;
+    font-weight: bold;
+    height: 2em;
+    padding: 8px 10px 12px 10px;
+    text-align: center;
+}
+
+th.last-post {
+    border-right: none;
+}
+
+th a {
+    color: #afaba3;
+}
+
+/* Sorting by this column */
+.sort {
+    background: #f5f4f3 url(../img/forums/up.gif) no-repeat center 92%;
+}
+
+.desc .sort {
+    background: #f5f4f3 url(../img/forums/down.gif) no-repeat center 92%;
+}
+
+.type {
+    width: 3em;
+}
+
+.author {
+    width: 7em;
+}
+
+.replies {
+    width: 3em;
+}
+
+.last-post {
+    width: 8em;
+}
+
+tr.odd {
+    background: #f0f0f0;
+}
+
+td {
+    padding: 0 5px;    
+}
+
+.replies-data {
+    text-align: center;
+}
+
+a.username {
+    color: green;
+    font-weight: bold;
+}
+
+/* Thread types */
+.type-sticky {
+    background: url(../img/forums/type/sticky.png) no-repeat center;
+}
+
+.type-locked {
+    background: url(../img/forums/type/locked.png) no-repeat center;
+}
+
+.type-normal {
+    background: url(../img/forums/type/normal.png) no-repeat center;
+}
+
+/* Pagination tweaks */
+ol.pagination {
+    margin: 1.5em auto 0;
+}

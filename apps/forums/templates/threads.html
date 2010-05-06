@@ -1,19 +1,39 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
-{% set title = _('Viewing Forum {f}')|f(f=forum.name) %}
+{% set title = _('{f} Forum')|f(f=forum.name) %}
+{% set styles = ('forums',) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')), (None, forum.name)] %}
 
 {% block content %}
   <h2>{{ forum.name }}</h2>
- 
-  {% if threads %}
-    <ul>
-      {% for thread in threads %}
-        <li><a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ thread.title }}</a><br/>
-          Replies: {{ thread.replies }} | Last post by {{ thread.last_post.author.username }}</li>
+
+  {% if pager.object_list %}
+    <table cellspacing="0">
+      <tr{% if not desc_toggle %} class="desc"{% endif %}>
+        <th class="type">{{ _('Type') }}</th>
+        <th class="title">{{ _('Title') }}</a></th>
+        <th class="author{% if sort == 3 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=3, desc=desc_toggle) }}">{{ _('Author') }}</a></th>
+        <th class="replies{% if sort == 4 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=4, desc=desc_toggle) }}">{{ _('Replies') }}</a></th>
+        <th class="last-post{% if sort == 5 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=5, desc=desc_toggle) }}">{{ _('Last Post') }}</a></th>
+      </tr>
+      {% for thread in pager.object_list %}
+      <tr{% if not loop.index % 2 %} class="odd"{% endif %}>
+        <td {% if thread.is_locked %}
+              class="type-locked" title="{{ _('Locked') }}"
+            {% elif thread.is_sticky %}
+              class="type-sticky" title="{{ _('Sticky') }}"
+            {% endif %}></td>
+        <td><a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ thread.title }}</a></td>
+        <td><a class="username" href="/tiki-user_information.php?locale=en-US&userId={{ thread.creator.id }}">{{ thread.creator.username }}</a></td>
+        <td class="replies-data">{{ thread.replies }}</td>
+        <td>{{ datetimeformat(thread.last_post.created) }}<br/>
+            by <a class="username" href="/tiki-user_information.php?locale=en-US&userId={{ thread.last_post.author.id }}">{{ thread.last_post.author.username }}</a></td>
+      </tr>
       {% endfor %}
-    </ul>
+    </table>
+
+    {{ pager|paginator }}
   {% else %}
-    <p>There are no threads. Maybe you should create some!</p>
+    <p>{{ _('There are no threads. Maybe you should create some!') }}</p>
   {% endif %}
 {% endblock %}

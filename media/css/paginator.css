@@ -1,0 +1,15 @@
+/* Pagination */
+ol.pagination {
+    margin: 0 auto 1em;
+    text-align: center;
+}
+
+ol.pagination li {
+    display: inline;
+    padding: 0 4px;
+}
+
+ol.pagination li.selected a {
+    color: #000;
+}
+
