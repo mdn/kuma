@@ -12,6 +12,28 @@ get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
 post = lambda c, v, data={}, **kw: c.post(reverse(v, **kw), data, follow=True)
 
 
+def fixtures_setup():
+    f1 = Forum.objects.filter()[0]
+    f1.last_post = Post.objects.get(pk=25)
+    f1.save()
+
+    t1 = Thread.objects.get(pk=1)
+    t1.last_post = Post.objects.get(pk=24)
+    t1.save()
+
+    t2 = Thread.objects.get(pk=2)
+    t2.last_post = Post.objects.get(pk=3)
+    t2.save()
+
+    t3 = Thread.objects.get(pk=3)
+    t3.last_post = Post.objects.get(pk=5)
+    t3.save()
+
+    t4 = Thread.objects.get(pk=4)
+    t4.last_post = Post.objects.get(pk=25)
+    t4.save()
+
+
 class ForumTestCase(TestCase):
     fixtures = ['users.json', 'posts.json']
 
@@ -19,25 +41,7 @@ class ForumTestCase(TestCase):
         """Our fixtures have nulled foreign keys to allow them to be
         installed. This will set them to the correct values."""
 
-        f1 = Forum.objects.filter()[0]
-        f1.last_post = Post.objects.get(pk=25)
-        f1.save()
-
-        t1 = Thread.objects.get(pk=1)
-        t1.last_post = Post.objects.get(pk=24)
-        t1.save()
-
-        t2 = Thread.objects.get(pk=2)
-        t2.last_post = Post.objects.get(pk=3)
-        t2.save()
-
-        t3 = Thread.objects.get(pk=3)
-        t3.last_post = Post.objects.get(pk=5)
-        t3.save()
-
-        t4 = Thread.objects.get(pk=4)
-        t4.last_post = Post.objects.get(pk=25)
-        t4.save()
+        fixtures_setup()
 
         self.client = client.Client()
         self.client.get('/')
@@ -48,7 +52,7 @@ class PostTestCase(ForumTestCase):
     def test_new_post_updates_thread(self):
         """Saving a new post in a thread should update the last_post key in
         that thread to point to the new post."""
-        t = Thread.objects.get(pk=1)
+        t = Thread.objects.get(pk=2)
         post = t.new_post(author=t.creator, content='an update')
         post.save()
         eq_(post.id, t.last_post_id)
@@ -56,7 +60,7 @@ class PostTestCase(ForumTestCase):
     def test_new_post_updates_forum(self):
         """Saving a new post should update the last_post key in the forum to
         point to the new post."""
-        t = Thread.objects.get(pk=1)
+        t = Thread.objects.get(pk=2)
         f = t.forum
         post = t.new_post(author=t.creator, content='another update')
         post.save()
@@ -65,7 +69,7 @@ class PostTestCase(ForumTestCase):
     def test_update_post_does_not_update_thread(self):
         """Updating/saving an old post in a thread should _not_ update the
         last_post key in that thread."""
-        p = Post.objects.get(pk=1)
+        p = Post.objects.get(pk=2)
         old = p.thread.last_post_id
         p.content = 'updated content'
         p.save()
@@ -83,7 +87,7 @@ class PostTestCase(ForumTestCase):
     def test_replies_count(self):
         """The Thread.replies value should remain one less than the number of
         posts in the thread."""
-        t = Thread.objects.get(pk=1)
+        t = Thread.objects.get(pk=2)
         old = t.replies
         t.new_post(author=t.creator, content='test').save()
         eq_(old + 1, t.replies)

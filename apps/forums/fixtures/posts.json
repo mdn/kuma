@@ -24,9 +24,8 @@
             "created": "2010-05-04 14:09:33",
             "is_locked": true,
             "creator": 118533,
-            "replies": 0,
-            "title": "A thread with a very very long title that should get truncated in the breadcrumbs.",
-            "last_post": null
+            "replies": 1,
+            "title": "A thread with a very very long title that should get truncated in the breadcrumbs."
         }
     },
     {
@@ -39,8 +38,7 @@
             "is_locked": true,
             "creator": 1,
             "replies": 0,
-            "title": "Not a sticky thread",
-            "last_post": null
+            "title": "Locked Thread"
         }
     },
     {
@@ -52,23 +50,21 @@
             "created": "2010-05-04 14:02:16",
             "is_locked": false,
             "creator": 118533,
-            "replies": 0,
-            "title": "Sticky Thread",
-            "last_post": null
+            "replies": 1,
+            "title": "Sticky Thread"
         }
     },
     {
         "pk": 1,
         "model": "forums.thread",
         "fields": {
-            "is_sticky": false,
-            "forum": 1,
+            "is_sticky": true,
+            "forum": 2,
             "created": "2010-04-28 16:04:42",
-            "is_locked": false,
+            "is_locked": true,
             "creator": 118533,
             "replies": 20,
-            "title": "Test Thread",
-            "last_post": null
+            "title": "Locked Sticky Thread"
         }
     },
     {
@@ -90,7 +86,7 @@
             "updated": "2010-05-04 14:04:31",
             "created": "2010-05-04 14:04:22",
             "thread": 2,
-            "author": 118533
+            "author": 1
         }
     },
     {
@@ -108,7 +104,7 @@
         "pk": 2,
         "model": "forums.post",
         "fields": {
-            "content": "test",
+            "content": "test post with the word admin in it",
             "updated": "2010-04-28 16:08:28",
             "created": "2010-04-28 16:08:28",
             "thread": 1,
@@ -321,6 +317,17 @@
             "updated": "2010-05-01 16:08:28",
             "created": "2010-05-01 16:08:28",
             "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 26,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-05-02 16:08:28",
+            "created": "2010-05-02 16:08:28",
+            "thread": 4,
             "author": 118533
         }
     },

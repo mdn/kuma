@@ -12,9 +12,10 @@ import jingo
 import jinja2
 from tower import ugettext as _
 
+from forums.models import Forum as DiscussionForum, Thread, Post
+from sumo.models import ForumThread, WikiPage, Category
 from sumo.utils import paginate, urlencode
-from sumo.models import ForumThread, WikiPage, Forum, Category
-from .clients import ForumClient, WikiClient, SearchError
+from .clients import SupportClient, WikiClient, DiscussionClient, SearchError
 from .utils import crc32
 import search as constants
 from sumo_locales import LOCALES
@@ -42,17 +43,22 @@ def search(request):
                 not cleaned_data['a']) and cleaned_data['q'] == '':
                 raise ValidationError('Basic search requires a query string.')
 
-            # Validate created date
-            if cleaned_data['created_date'] != '':
-                try:
-                    created_timestamp = time.mktime(
-                        time.strptime(cleaned_data['created_date'],
-                                      '%m/%d/%Y'))
-                    cleaned_data['created_date'] = int(created_timestamp)
-                except (ValueError, OverflowError):
-                    cleaned_data['created'] = None
-            else:
-                cleaned_data['created'] = None
+            # Validate created and updated dates
+            date_fields = (('created', 'created_date'),
+                           ('updated', 'updated_date'))
+            for field_option, field_date in date_fields:
+                if cleaned_data[field_date] != '':
+                    try:
+                        created_timestamp = time.mktime(
+                            time.strptime(cleaned_data[field_date],
+                                          '%m/%d/%Y'))
+                        cleaned_data[field_date] = int(created_timestamp)
+                    except (ValueError, OverflowError):
+                        cleaned_data[field_option] = None
+                else:
+                    cleaned_data[field_option] = None
+
+            # Validate all integer fields
 
             # Set defaults for MultipleChoiceFields and convert to ints.
             # Ticket #12398 adds TypedMultipleChoiceField which would replace
@@ -64,10 +70,15 @@ def search(request):
                 except ValueError:
                     cleaned_data['category'] = None
             try:
-                cleaned_data['forum'] = map(int, cleaned_data.get('forum',
-                                            settings.SEARCH_DEFAULT_FORUMS))
+                cleaned_data['forum'] = map(int, cleaned_data.get('forum'))
             except ValueError:
                 cleaned_data['forum'] = None
+
+            try:
+                cleaned_data['thread_type'] = map(
+                    int, cleaned_data.get('thread_type'))
+            except ValueError:
+                cleaned_data['thread_type'] = None
 
             return cleaned_data
 
@@ -78,12 +89,13 @@ def search(request):
         # Common fields
         q = forms.CharField(required=False)
 
-        w = forms.TypedChoiceField(widget=forms.HiddenInput,
-                                   required=False, coerce=int,
-                                   empty_value=constants.WHERE_ALL,
-                                   choices=((constants.WHERE_FORUM, None),
-                                            (constants.WHERE_WIKI, None),
-                                            (constants.WHERE_ALL, None)))
+        w = forms.TypedChoiceField(
+            widget=forms.HiddenInput, required=False, coerce=int,
+            empty_value=constants.WHERE_BASIC,
+            choices=((constants.WHERE_SUPPORT, None),
+                     (constants.WHERE_WIKI, None),
+                     (constants.WHERE_BASIC, None),
+                     (constants.WHERE_DISCUSSION, None)))
 
         a = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
@@ -101,7 +113,7 @@ def search(request):
             widget=forms.CheckboxSelectMultiple,
             label=_('Category'), choices=categories, required=False)
 
-        # Forum fields
+        # Support and discussion forums fields
         status = forms.TypedChoiceField(
             label=_('Post status'), coerce=int, empty_value=0,
             choices=constants.STATUS_LIST, required=False)
@@ -109,17 +121,23 @@ def search(request):
 
         created = forms.TypedChoiceField(
             label=_('Created'), coerce=int, empty_value=0,
-            choices=constants.CREATED_LIST, required=False)
+            choices=constants.DATE_LIST, required=False)
         created_date = forms.CharField(required=False)
 
-        lastmodif = forms.TypedChoiceField(
+        updated = forms.TypedChoiceField(
             label=_('Last updated'), coerce=int, empty_value=0,
-            choices=constants.LUP_LIST, required=False)
+            choices=constants.DATE_LIST, required=False)
+        updated_date = forms.CharField(required=False)
+
         sortby = forms.TypedChoiceField(
             label=_('Sort results by'), coerce=int, empty_value=0,
             choices=constants.SORTBY_LIST, required=False)
 
-        forums = [(f.forumId, f.name) for f in Forum.objects.all()]
+        thread_type = NoValidateMultipleChoiceField(
+            label=_('Thread type'), choices=constants.DISCUSSION_STATUS_LIST,
+            required=False)
+
+        forums = [(f.id, f.name) for f in DiscussionForum.objects.all()]
         forum = NoValidateMultipleChoiceField(label=_('Search in forum'),
                                               choices=forums, required=False)
 
@@ -153,12 +171,9 @@ def search(request):
     exclude_category = [abs(x) for x in category if x < 0]
     # Basic form
     if a == '0':
-        r['w'] = r.get('w', constants.WHERE_ALL)
-        r.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)
-
+        r['w'] = r.get('w', constants.WHERE_BASIC)
     # Advanced form
     if a == '2':
-        r.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)
         r['language'] = language
         r['a'] = '1'
 
@@ -232,86 +247,113 @@ def search(request):
                 'filter': 'tag',
                 'value': (t,),
                 })
+    # End of wiki filters
 
-    # Forum filter
-    if cleaned['forum']:
-        filters_f.append({
-            'filter': 'forumId',
-            'value': cleaned['forum'],
-        })
+    # Support forum specific filters
+    if cleaned['w'] & constants.WHERE_SUPPORT:
+        status = cleaned['status']
+        # No replies case is not stored in status
+        if status == constants.STATUS_ALIAS_NR:
+            filters_f.append({
+                'filter': 'replies',
+                'value': (0,),
+            })
 
-    # Status filter
-    status = cleaned['status']
-    # No replies case is not stored in status
-    if status == constants.STATUS_ALIAS_NR:
-        filters_f.append({
-            'filter': 'replies',
-            'value': (0,),
-        })
+            # Avoid filtering by status
+            status = None
 
-        # Avoid filtering by status
-        status = None
+        if status:
+            filters_f.append({
+                'filter': 'status',
+                'value': constants.STATUS_ALIAS_REVERSE[status],
+            })
 
-    if status:
-        filters_f.append({
-            'filter': 'status',
-            'value': constants.STATUS_ALIAS_REVERSE[status],
-        })
+        if cleaned['author']:
+            filters_f.append({
+                'filter': 'author_ord',
+                'value': (crc32(cleaned['author']),
+                          crc32(cleaned['author'] +
+                              ' (anon)'),),
+            })
 
-    # Author filter
-    if cleaned['author']:
-        filters_f.append({
-            'filter': 'author_ord',
-            'value': (crc32(cleaned['author']),
-                      crc32(cleaned['author'] +
-                          ' (anon)'),),
-        })
+    # Discussion forum specific filters
+    if cleaned['w'] & constants.WHERE_DISCUSSION:
+        if cleaned['author']:
+            filters_f.append({
+                'filter': 'author_ord',
+                'value': (crc32(cleaned['author']),),
+            })
 
+        if cleaned['thread_type']:
+            if constants.DISCUSSION_STICKY in cleaned['thread_type']:
+                filters_f.append({
+                    'filter': 'is_sticky',
+                    'value': (1,),
+                })
+
+            if constants.DISCUSSION_LOCKED in cleaned['thread_type']:
+                filters_f.append({
+                    'filter': 'is_locked',
+                    'value': (1,),
+                })
+
+        if cleaned['forum']:
+            filters_f.append({
+                'filter': 'forum_id',
+                'value': cleaned['forum'],
+            })
+
+    # Filters common to support and discussion forums
     # Created filter
     unix_now = int(time.time())
-    if cleaned['created'] == constants.CREATED_BEFORE:
-        filters_f.append({
-            'range': True,
-            'filter': 'created',
-            'min': 0,
-            'max': max(cleaned['created_date'], 0),
-        })
-    elif cleaned['created'] == constants.CREATED_AFTER:
-        filters_f.append({
-            'range': True,
-            'filter': 'created',
-            'min': min(cleaned['created_date'], unix_now),
-            'max': unix_now,
-        })
+    date_filters = (('created', cleaned['created'], cleaned['created_date']),
+                    ('updated', cleaned['updated'], cleaned['updated_date']))
+    for filter_name, filter_option, filter_date in date_filters:
+        if filter_option == constants.DATE_BEFORE:
+            filters_f.append({
+                'range': True,
+                'filter': filter_name,
+                'min': 0,
+                'max': max(filter_date, 0),
+            })
+        elif filter_option == constants.DATE_AFTER:
+            filters_f.append({
+                'range': True,
+                'filter': filter_name,
+                'min': min(filter_date, unix_now),
+                'max': unix_now,
+            })
 
-    # Last modified filter
-    if cleaned['lastmodif']:
-        filters_f.append({
-            'range': True,
-            'filter': 'last_updated',
-            'min': unix_now - constants.LUP_MULTIPLIER *
-                cleaned['lastmodif'],
-            'max': unix_now,
-        })
-
+    sortby = int(request.GET.get('sortby', 0))
     try:
-        if (cleaned['w'] & constants.WHERE_WIKI):
+        if cleaned['w'] & constants.WHERE_WIKI:
             wc = WikiClient()  # Wiki SearchClient instance
             # Execute the query and append to documents
             documents += wc.query(cleaned['q'], filters_w)
 
-        if (cleaned['w'] & constants.WHERE_FORUM):
-            fc = ForumClient()  # Forum SearchClient instance
+        if cleaned['w'] & constants.WHERE_SUPPORT:
+            sc = SupportClient()  # Support forum SearchClient instance
 
             # Sort results by
-            sortby = int(request.GET.get('sortby', 0))
             try:
-                fc.set_sort_mode(constants.SORT[sortby][0],
+                sc.set_sort_mode(constants.SORT[sortby][0],
                                  constants.SORT[sortby][1])
             except IndexError:
                 pass
 
-            documents += fc.query(cleaned['q'], filters_f)
+            documents += sc.query(cleaned['q'], filters_f)
+
+        if cleaned['w'] & constants.WHERE_DISCUSSION:
+            dc = DiscussionClient()  # Discussion forums SearchClient instance
+
+            # Sort results by
+            try:
+                dc.set_groupsort(constants.GROUPSORT[sortby])
+            except IndexError:
+                pass
+
+            documents += dc.query(cleaned['q'], filters_f)
+
     except SearchError:
         if is_json:
             return HttpResponse(json.dumps({'error':
@@ -335,19 +377,32 @@ def search(request):
                           'url': wiki_page.get_url(),
                           'title': wiki_page.name, }
                 results.append(result)
-            else:
-                forum_thread = ForumThread.objects.get(pk=documents[i]['id'])
+            elif documents[i]['attrs'].get('forumid', False) != False:
+                support_thread = ForumThread.objects.get(pk=documents[i]['id'])
 
-                excerpt = fc.excerpt(forum_thread.data, cleaned['q'])
+                excerpt = sc.excerpt(support_thread.data, cleaned['q'])
                 summary = jinja2.Markup(excerpt)
 
                 result = {'search_summary': summary,
-                          'url': forum_thread.get_url(),
-                          'title': forum_thread.name, }
+                          'url': support_thread.get_url(),
+                          'title': support_thread.name, }
+                results.append(result)
+            else:
+                thread = Thread.objects.get(
+                    pk=documents[i]['attrs']['thread_id'])
+                post = Post.objects.get(pk=documents[i]['id'])
+
+                excerpt = dc.excerpt(post.content, cleaned['q'])
+                summary = jinja2.Markup(excerpt)
+
+                result = {'search_summary': summary,
+                          'url': thread.get_absolute_url(),
+                          'title': thread.title, }
                 results.append(result)
         except IndexError:
             break
-        except (WikiPage.DoesNotExist, ForumThread.DoesNotExist):
+        except (WikiPage.DoesNotExist, ForumThread.DoesNotExist,
+                Thread.DoesNotExist):
             continue
 
     items = [(k, v) for k in search_form.fields for

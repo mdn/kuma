@@ -189,7 +189,7 @@ a.tablink {
     color: #ffffff;
     font-weight: bold;
 }
-form input[name="created_date"] {
+form .search-date input {
     width: 7em !important;
 }
 

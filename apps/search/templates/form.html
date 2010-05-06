@@ -14,7 +14,8 @@
     <span id="where" style="display: none">{{ search_form.w.data or '' }}</span>
     <ul>
       <li><a title="{{ _('Search the Knowledge Base') }}" class="tablink" href="#kb">{{ _('Knowledge Base') }}</a></li>
-      <li><a title="{{ _('Search the Forum') }}" class="tablink" href="#forum">{{ _('Forum') }}</a></li>
+      <li><a title="{{ _('Search the Support Forum') }}" class="tablink" href="#support">{{ _('Support Forum') }}</a></li>
+      <li><a title="{{ _('Search the Discussion Forums') }}" class="tablink" href="#discussion">{{ _('Discussion Forums') }}</a></li>
     </ul>
     <div id="tab-wrapper">
     <form id="kb" method="get">
@@ -52,10 +53,10 @@
         <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
     </form>{# kb #}
-    <form method="get" id="forum">
+    <form method="get" id="support">
       <div class="container">
-        <label for="forum_q">{{ _('Post contains') }}</label>
-        <input name="q" id="forum_q" value="{{ search_form.q.data or '' }}" type="text" />
+        <label for="support_q">{{ _('Post contains') }}</label>
+        <input name="q" id="support_q" value="{{ search_form.q.data or '' }}" type="text" />
       </div>
 
       <div class="container">
@@ -68,15 +69,58 @@
         {{ search_form.author|safe }}
       </div>
 
-      <div class="container">
+      <div class="container search-date">
         {{ search_form.created.label_tag()|safe }}
         {{ search_form.created|safe }}
         <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
       </div>
 
+      <div class="container search-date">
+        {{ search_form.updated.label_tag()|safe }}
+        {{ search_form.updated|safe }}
+        <input name="updated_date" type="text" value="{{ search_form.updated_date.data or '' }}" class="datepicker" title="{{ _('Updated date. Format: mm/dd/yy') }}" />
+      </div>
+
       <div class="container">
-        {{ search_form.lastmodif.label_tag()|safe }}
-        {{ search_form.lastmodif|safe }}
+        {{ search_form.sortby.label_tag()|safe }}
+        {{ search_form.sortby|safe }}
+      </div>
+
+      {% for hidden in search_form.hidden_fields() if not hidden.name == 'w' %}
+        {{ hidden|safe }}
+      {% endfor %}
+      <input type="hidden" value="2" name="w" />
+
+      <div class="submit-search">
+        <input type="submit" value="{{ _('Search', 'button') }}" />
+      </div>
+    </form>{# support #}
+    <form method="get" id="discussion">
+      <div class="container">
+        <label for="discussion_q">{{ _('Thread contains') }}</label>
+        <input name="q" id="discussion_q" value="{{ search_form.q.data or '' }}" type="text" />
+      </div>
+
+      <div class="container">
+        {{ search_form.thread_type.label_tag()|safe }}
+        {{ search_form.thread_type|safe }}
+      </div>
+
+      <div class="container">
+        {{ search_form.author.label_tag()|safe }}
+        {{ search_form.author|safe }}
+      </div>
+
+      <div class="container search-date">
+        {{ search_form.created.label_tag()|safe }}
+        {{ search_form.created|safe }}
+        <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
+      </div>
+
+      <div class="container search-date">
+        {{ search_form.updated.label_tag()|safe }}
+        {{ search_form.updated|safe }}
+        <input name="updated_date" type="text" value="{{ search_form.updated_date.data or '' }}" class="datepicker" title="{{ _('Updated date. Format: mm/dd/yy') }}" />
       </div>
 
       <div class="container">
@@ -92,12 +136,12 @@
       {% for hidden in search_form.hidden_fields() if not hidden.name == 'w' %}
         {{ hidden|safe }}
       {% endfor %}
-      <input type="hidden" value="2" name="w" />
+      <input type="hidden" value="4" name="w" />
 
       <div class="submit-search">
         <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
-    </form>{# forum #}
+    </form>{# discussion #}
     </div>{# tab-wrapper #}
   </div>{# search-tabs #}
 

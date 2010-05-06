@@ -163,9 +163,9 @@ class SearchClient(object):
         self.sphinx.SetSortMode(mode, clause)
 
 
-class ForumClient(SearchClient):
+class SupportClient(SearchClient):
     """
-    Search the forum
+    Search the support forum
     """
     index = 'forum_threads'
     weights = {'title': 2, 'content': 1}
@@ -186,6 +186,10 @@ class DiscussionClient(SearchClient):
     index = 'discussion_forums'
     weights = {'title': 2, 'content': 1}
 
+    def __init__(self):
+        super(DiscussionClient, self).__init__()
+        self.groupsort = '@group desc'
+
     def query(self, query, filters=None):
         """
         Query the search index.
@@ -197,7 +201,10 @@ class DiscussionClient(SearchClient):
 
         sc = self.sphinx
         sc.SetFieldWeights(self.weights)
-        sc.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR)
+        sc.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR, self.groupsort)
         sc.SetSortMode(constants.SPH_SORT_ATTR_ASC, 'created')
 
         return self._query_sphinx(query)
+
+    def set_groupsort(self, groupsort=''):
+        self.groupsort = groupsort
