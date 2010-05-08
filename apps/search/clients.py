@@ -127,6 +127,9 @@ class SearchClient(object):
                 documents, self.index, query,
                 {'limit': settings.SEARCH_SUMMARY_LENGTH
                  * settings.SEARCH_SUMMARY_LENGTH_MULTIPLIER})[0]
+        except socket.error:
+            log.error('Socket error building excerpt!')
+            raw_excerpt = ''
         except socket.timeout:
             log.error('Building excerpt timed out!')
             raw_excerpt = ''
