@@ -116,6 +116,15 @@ ol.posts li div.author a {
     color: green;
     font-weight: bold;
 }
+
+#new-question {
+    background: url(../img/forums/arrow.png) no-repeat scroll left center transparent;
+    float: left;
+    font-size: 115%;
+    margin: 0 0 1em 10px;
+    padding-left: 10px;
+}
+
 ol.posts li div.author a {
     display: block;
 }

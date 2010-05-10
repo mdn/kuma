@@ -7,8 +7,10 @@
 {% block content %}
   <h2>{{ forum.name }}</h2>
 
+  <a id="new-question" href="{{ url('forums.new_thread', forum_slug=forum.slug) }}">{{ _('Post a new thread') }}</a>
+
   <ol class="threads-columns {% if not desc_toggle %}desc{% endif %}">
-    <li class="type">{{ _('Type') }}</li>
+    <li class="type"><a href="{{ url('forums.threads', forum_slug=forum.slug) }}">{{ _('Type') }}</a></li>
     <li class="title">{{ _('Title') }}</a></li>
     <li class="author{% if sort == 3 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=3, desc=desc_toggle) }}">{{ _('Author') }}</a></li>
     <li class="replies{% if sort == 4 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=4, desc=desc_toggle) }}">{{ _('Replies') }}</a></li>

@@ -1,6 +1,6 @@
 import cgi
 import urlparse
-import time
+import datetime
 
 from django.utils.encoding import smart_unicode
 from django.conf import settings
@@ -9,10 +9,15 @@ import jinja2
 from jingo import register, env
 from tower import ugettext_lazy as _lazy
 from babel import localedata
-from babel.dates import format_date, format_time
+from babel.dates import format_date, format_time, format_datetime
+from pytz import timezone
 
 from sumo.urlresolvers import reverse
 from sumo.utils import urlencode
+
+
+class DateTimeFormatError(Exception):
+    pass
 
 
 @register.filter
@@ -139,14 +144,17 @@ def profile_url(user):
 
 @register.function
 @jinja2.contextfunction
-def datetimeformat(context, value, format_delimiter=86400):
+def datetimeformat(context, value, format='shortdatetime'):
     """
-    Returns date/time formatted using babel's locale settings. If the date is
-    within `format_delimiter` seconds from the present, the time is shown,
-    otherwise the date is shown.
+    Returns date/time formatted using babel's locale settings. Uses the
+    timezone from settings.py
+    """
+    if not isinstance(value, datetime.datetime):
+        # Expecting date value
+        raise ValueError
 
-    Set `format_delimiter=0` to always show the date.
-    """
+    tzinfo = timezone(settings.TIME_ZONE)
+    tzvalue = tzinfo.localize(value)
     # Babel uses underscore as separator.
     locale = context['request'].locale
     if not localedata.exists(locale):
@@ -154,7 +162,21 @@ def datetimeformat(context, value, format_delimiter=86400):
     locale = locale.replace('-', '_')
 
     # If within a day, 24 * 60 * 60 = 86400s
-    if abs(time.time() - time.mktime(value.timetuple())) < format_delimiter:
-        return format_time(value, locale=locale)
+    if format == 'shortdatetime':
+        # Check if the date is today
+        if value.toordinal() == datetime.date.today().toordinal():
+            return _lazy('Today at %s') % format_time(
+                tzvalue, format='short', locale=locale)
+        else:
+            return format_datetime(tzvalue, format='short', locale=locale)
+    elif format == 'longdatetime':
+        return format_datetime(tzvalue, format='long', locale=locale)
+    elif format == 'date':
+        return format_date(tzvalue, locale=locale)
+    elif format == 'time':
+        return format_time(tzvalue, locale=locale)
+    elif format == 'datetime':
+        return format_datetime(tzvalue, locale=locale)
     else:
-        return format_date(value, locale=locale)
+        # Unknown format
+        raise DateTimeFormatError
