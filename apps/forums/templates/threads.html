@@ -1,5 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
+{# L10n: {f} is the name of the forum. #}
 {% set title = _('{f} | Forums')|f(f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')), (None, forum.name)] %}
 

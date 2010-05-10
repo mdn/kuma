@@ -1,12 +1,18 @@
-ol.threads-columns, ol.threads {
+/* Discussion forums CSS */
+ol.posts-columns,
+ol.posts,
+ol.threads-columns,
+ol.threads {
     clear: left;
     list-style-type: none;
 }
 
 /* Header */
-ol.threads-columns li {
-    background-color: #f5f4f3;
+ol.threads-columns li,
+ol.posts-columns li {
+    background-color: #f0f0f0;
     border-bottom: 2px solid #e4e4e4;
+    color: #afaba3;
     float: left;
     font-family: Verdana, "Verdana Ref", sans-serif;
     font-size: 115%;
@@ -14,6 +20,11 @@ ol.threads-columns li {
     margin-right: 0.5%;
     padding: 1%;
     text-align: center;
+}
+ol.posts-columns li {
+    padding: 2.5em 0 1% 2%;
+    font-size: 10px;
+    margin-right: 0;
 }
 
 ol.threads-columns a {
@@ -91,7 +102,8 @@ ol.threads li div.type {
 }
 /* End column widths */
 
-ol.threads li:nth-child(even) {
+ol.threads li:nth-child(even),
+ol.posts li:nth-child(even) {
     background: #f0f0f0;
 }
 
@@ -99,11 +111,37 @@ ol.threads div.replies {
     text-align: center;
 }
 
-ol.threads a.username {
+ol.threads a.username,
+ol.posts li div.author a {
     color: green;
     font-weight: bold;
 }
-/* End list of threads */
+ol.posts li div.author a {
+    display: block;
+}
+
+
+ol.posts-columns li.author {
+    width: 20%;
+    margin-right: 1%;
+}
+
+ol.posts-columns li.message {
+    width: 75%;
+}
+
+ol.posts li {
+    border-color: #e4e4e4;
+    border-style: solid;
+    border-width: 0 0 1px;
+    padding-top: 1em;
+}
+
+ol.posts li div.author {
+    float: left;
+    width: 21%;
+    padding: 0 0 1em 2%;
+}
 
 /* Pagination tweaks */
 ol.pagination {
