@@ -14,12 +14,7 @@ class ReplyForm(forms.ModelForm):
         }
 
 
-class NewThreadForm(forms.ModelForm):
+class NewThreadForm(forms.Form):
     """Form to start a new thread."""
-
-    class Meta:
-        model = Thread
-        widgets = {
-            'forum': forms.HiddenInput,
-        }
-        exclude = ('created', 'last_post',)
+    title = forms.CharField(min_length=5, max_length=255)
+    content = forms.CharField(widget=forms.Textarea)

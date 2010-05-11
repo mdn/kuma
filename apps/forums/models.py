@@ -4,6 +4,11 @@ from django.contrib.auth.models import User
 from sumo.models import ModelBase
 
 
+class ThreadLockedError(Exception):
+    """Trying to create a post in a locked thread."""
+    pass
+
+
 class Forum(ModelBase):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
@@ -35,6 +40,13 @@ class Thread(ModelBase):
 
     def __unicode__(self):
         return self.title
+
+    def new_post(self, author, content):
+        """Create a new post, if the thread is unlocked."""
+        if self.is_locked:
+            raise ThreadLockedError
+
+        return self.post_set.create(author=author, content=content)
 
 
 class Post(ModelBase):

@@ -1,9 +1,15 @@
 from nose.tools import eq_
 
-from django.test import TestCase
+from django.test import TestCase, client
+from django.contrib.auth.models import User
 
+<<<<<<< HEAD
 from forums.models import Thread, Post
 from forums.views import sort_threads
+=======
+from sumo.urlresolvers import reverse
+from forums.models import Thread, Post, ThreadLockedError
+>>>>>>> [bug 563586] Model/view changes for creating new threads.
 
 
 class ForumsTestCase(TestCase):
@@ -29,8 +35,7 @@ class ForumsTestCase(TestCase):
         """Saving a new post in a thread should update the last_post key in
         that thread to point to the new post."""
         t = Thread.objects.get(pk=1)
-        post = t.post_set.create(author=t.creator,
-                                 content='an update')
+        post = t.new_post(author=t.creator, content='an update')
         post.save()
         eq_(post.id, t.last_post_id)
 
@@ -48,7 +53,7 @@ class ForumsTestCase(TestCase):
         posts in the thread."""
         t = Thread.objects.get(pk=1)
         old = t.replies
-        t.post_set.create(author=t.creator, content='test').save()
+        t.new_post(author=t.creator, content='test').save()
         eq_(old + 1, t.replies)
 
     def test_sticky_threads_first(self):
@@ -99,3 +104,23 @@ class ForumsTestCase(TestCase):
         for replies, pages in test_data:
             thread.replies = replies
             eq_(thread.last_page, pages)
+
+    def test_locked_thread(self):
+        """Trying to reply to a locked thread should raise an exception."""
+        locked = Thread.objects.get(pk=3)
+        open = Thread.objects.get(pk=2)
+        user = User.objects.get(pk=118533)
+        fn = lambda: locked.new_post(author=user, content='empty')
+        self.assertRaises(ThreadLockedError, fn)
+
+        # This should not raise an exception.
+        open.new_post(author=user, content='empty')
+
+    def test_post_no_session(self):
+        c = client.Client()
+        response = c.get(reverse('forums.new_thread',
+                                 kwargs={'forum_slug': 'testslug'}),
+                         follow=True)
+        self.assertEquals('http://testserver/tiki-login.php',
+                          response.redirect_chain[1][0])
+        self.assertEquals(302, response.redirect_chain[1][1])

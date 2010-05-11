@@ -1,4 +1,5 @@
 from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 import jingo
 
@@ -116,20 +117,27 @@ def reply(request, forum_slug, thread_id):
 def new_thread(request, forum_slug):
     """Start a new thread."""
 
-    try:
-        forum = Forum.objects.get(slug=forum_slug)
-    except Forum.DoesNotExist:
-        raise Http404
+    # TODO: Once we can log in through Kitsune, use reverse here.
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/tiki-login.php')
+
+    forum = get_object_or_404(Forum, slug=forum_slug)
 
     if request.method == 'GET':
-        form = NewThreadForm({'forum': forum.id})
+        form = NewThreadForm()
         return jingo.render(request, 'new_thread.html',
                             {'form': form, 'forum': forum})
 
     form = NewThreadForm(request.POST)
 
     if form.is_valid():
-        thread = form.save()
+        thread = forum.thread_set.create(creator=request.user,
+                                         title=form.cleaned_data['title'])
+        thread.save()
+        post = thread.new_post(author=request.user,
+                               content=form.cleaned_data['content'])
+        post.save()
+
         return HttpResponseRedirect(
             reverse('forums.posts',
                     kwargs={'forum_slug': thread.forum.slug,

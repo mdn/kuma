@@ -32,7 +32,7 @@
             "is_sticky": false,
             "forum": 1,
             "created": "2010-05-04 14:05:50",
-            "is_locked": false,
+            "is_locked": true,
             "creator": 118533,
             "replies": 0,
             "title": "Not a sticky thread",
