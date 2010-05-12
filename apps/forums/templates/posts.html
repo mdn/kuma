@@ -29,7 +29,7 @@
             {{ post.content }}
           </div>
           <div class="info">
-            {{ post.created.strftime(_('%a %d of %b, %Y %H:%M %Z', 'forum_post_date')) }}
+            {{ datetimeformat(post.created, format='longdatetime') }}
             <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
             <span class="post-action">
               <a href="#thread-reply">{{ _('Reply') }}</a>

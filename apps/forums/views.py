@@ -18,6 +18,23 @@ def forums(request):
     return jingo.render(request, 'forums.html', {'forums': forums})
 
 
+def sort_threads(threads, sort=0, desc=0):
+    if desc:
+        prefix = '-'
+    else:
+        prefix = ''
+
+    if sort == 3:
+        return threads.order_by(prefix + 'creator__username').all()
+    elif sort == 4:
+        return threads.order_by(prefix + 'replies').all()
+    elif sort == 5:
+        return threads.order_by(prefix + 'last_post__created').all()
+
+    # If nothing matches, use default sorting
+    return threads.all()
+
+
 def threads(request, forum_slug):
     """
     View all the threads in a forum.
@@ -28,10 +45,29 @@ def threads(request, forum_slug):
     except Forum.DoesNotExist:
         raise Http404
 
-    threads = forum.thread_set.all()
+    try:
+        page = int(request.GET.get('page', 1))
+        page = max(page, 1)
+    except ValueError:
+        page = 1
+
+    try:
+        sort = int(request.GET.get('sort', 0))
+    except ValueError:
+        sort = 0
+
+    try:
+        desc = int(request.GET.get('desc', 0))
+    except ValueError:
+        desc = 0
+    desc_toggle = 0 if desc else 1
+
+    threads_ = sort_threads(forum.thread_set, sort, desc)
+    threads_ = paginate(request, threads_)
 
     return jingo.render(request, 'threads.html',
-                        {'forum': forum, 'threads': threads})
+                        {'forum': forum, 'threads': threads_,
+                         'sort': sort, 'desc_toggle': desc_toggle})
 
 
 def posts(request, forum_slug, thread_id):
@@ -63,7 +99,7 @@ def reply(request, forum_slug, thread_id):
     form = ReplyForm(request.POST)
 
     if form.is_valid():
-        post = form.save()
+        form.save()
         thread = Thread.objects.get(pk=request.POST.get('thread'))
 
         # TODO: This should not need to be in the view.

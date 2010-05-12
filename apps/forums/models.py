@@ -28,6 +28,11 @@ class Thread(ModelBase):
     class Meta:
         ordering = ['-is_sticky', '-last_post__created']
 
+    @property
+    def last_page(self):
+        """Returns the page number for the last post."""
+        return self.replies / 20 + 1
+
     def __unicode__(self):
         return self.title
 

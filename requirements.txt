@@ -26,3 +26,6 @@ South==0.7
 # commonware, stuff we share
 -e git://github.com/jsocol/commonware.git#egg=commonware
 
+# timezone package used with babel
+pytz
+
