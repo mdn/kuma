@@ -3,13 +3,9 @@ from nose.tools import eq_
 from django.test import TestCase, client
 from django.contrib.auth.models import User
 
-<<<<<<< HEAD
-from forums.models import Thread, Post
-from forums.views import sort_threads
-=======
-from sumo.urlresolvers import reverse
 from forums.models import Thread, Post, ThreadLockedError
->>>>>>> [bug 563586] Model/view changes for creating new threads.
+from forums.views import sort_threads
+from sumo.urlresolvers import reverse
 
 
 class ForumsTestCase(TestCase):

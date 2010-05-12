@@ -37,7 +37,7 @@ output_format=parseable
 #     class where it's defined.
 # :W0201: Attribute %r defined outside __init__
 
-disable-msg=C0111,C0103,W0403,W0142,W0232,E1101,R0201,W0402,W0141,W0212,W0201
+disable-msg=C0111,C0103,W0403,W0142,W0232,E1101,R0201,W0402,W0141,W0212,W0201,E1102
 
 [DESIGN]
 max-args=6

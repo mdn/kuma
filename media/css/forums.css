@@ -157,3 +157,15 @@ ol.pagination {
     clear: left;
     margin: 1.5em auto 0;
 }
+
+form.new-thread div.form-widget {
+    border-top: 1px dotted #c0c0c0;
+    clear: left;
+    padding: 10px;
+}
+
+form.new-thread div.form-widget label {
+    display: block;
+    width: 10em;
+    float: left;
+}

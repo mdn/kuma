@@ -1,18 +1,26 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
-{% set title = _('Start a New Thread') %}
+{# L10n: {f} if the name of the forum. #}
+{% set title = _('Create a new thread | {f} | Forums')|f(f=forum.name) %}
+{% set crumbs = [(url('forums.forums'), _('Forums')),
+                 (url('forums.threads', forum.slug), forum.name),
+                 (None, _('Create a new thread'))] %}
 
 {% block content %}
-  <h2>{{ title }}</h2>
+  <h2>{{ _('Create a new thread') }}</h2>
 
-  <form action="{{ url('forums.new_thread', forum_slug=forum.slug) }}" method="post">
+  <form action="{{ url('forums.new_thread', forum_slug=forum.slug) }}" method="post" class="new-thread">
     {{ csrf() }}
     {% for field in form %}
-      <div>
-        {{ field.label_tag()|safe }}: {{ field|safe }}
+      <div class="form-widget">
+        {{ field.label_tag()|safe }}
+        {{ field|safe }}
       </div>
     {% endfor %}
 
-  <input type="submit" value="Post"/>
+    <div class="form-widget">
+      <label for="submit">Post</label>
+      <input type="submit" value="Post" />
+    </div>
   </form>
 {% endblock %}
