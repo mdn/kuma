@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('questions.views',
     url(r'^$', 'question_forums', name='questions.question_forums'),

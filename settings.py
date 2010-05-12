@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     'celery',
     'notifications',
     'identicons',
+    'questions',
 )
 
 # Extra apps for testing

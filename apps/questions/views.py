@@ -37,3 +37,13 @@ def answers(request, forum_slug, question_id):
     return jingo.render(request, 'questions/answers.html',
                         {'forum': forum, 'question': question,
                          'answers': answers_})
+
+
+def new_question(request, forum_slug):
+    """Ask a new question."""
+    pass
+
+
+def reply(request, forum_slug, question_id):
+    """Post a new answer to a question."""
+    pass
