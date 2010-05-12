@@ -1,0 +1,23 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{# L10n: {q} is the title of the question. {f} is the name of the question forum. #}
+{% set title = _('{q} | {f} | Questions')|f(q=question.title, f=forum.name) %}
+{% set crumbs = [(url('questions.question_forums'), _('Questions')),
+                 (url('questions.questions', forum_slug=forum.slug), forum.name),
+                 (None, question.title)] %}
+
+{% block content %}
+  <h2>{{ question.title }}</h2>
+
+  {% if answers %}
+    <ol class="answers">
+      {% for answer in answers.object_list %}
+        <li id="answer-{{ answer.id }}">
+          {{ answer.content }}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>There are no answers. You should answer this question!</p>
+  {% endif %}
+{% endblock %}

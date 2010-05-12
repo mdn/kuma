@@ -1,0 +1,22 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('{f} | Questions')|f(f=forum.name) %}
+{% set crumbs = [(url('questions.question_forums'), _('Questions')),
+                 (None, forum.name)] %}
+
+{% block content %}
+  <h2>{{ forum.name }}</h2>
+ 
+  {% if threads %}
+    <ul>
+      {% for question in questions %}
+        <li><a href="{{ url('questions.answers', forum_slug=forum.slug, question_id=question.id) }}">{{ question.title }}</a><br/>
+          Answers: {{ question.answers }} | Last answer by {{ question.last_answer.creator.username }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {# Not localized because it's not worth localizers time. #}
+    <p>There are no questions. Maybe you should ask some!</p>
+  {% endif %}
+{% endblock %}
+

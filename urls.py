@@ -11,6 +11,7 @@ authority.autodiscover()
 urlpatterns = patterns('',
     (r'^search', include('search.urls')),
     (r'^forums', include('forums.urls')),
+    (r'^questions', include('questions.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
 
