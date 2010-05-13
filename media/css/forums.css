@@ -1,15 +1,16 @@
 /* Discussion forums CSS */
-ol.posts-columns,
-ol.posts,
 ol.threads-columns,
-ol.threads {
+ol.threads,
+ol.forums-columns,
+ol.forums,
+ol.posts-columns,
+ol.posts {
     clear: left;
     list-style-type: none;
 }
 
-/* Header */
-ol.threads-columns li,
-ol.posts-columns li {
+ol.forums-columns li,
+ol.threads-columns li {
     background-color: #f0f0f0;
     border-bottom: 2px solid #e4e4e4;
     color: #afaba3;
@@ -17,14 +18,23 @@ ol.posts-columns li {
     font-family: Verdana, "Verdana Ref", sans-serif;
     font-size: 115%;
     font-weight: bold;
-    margin-right: 0.5%;
     padding: 1%;
     text-align: center;
 }
-ol.posts-columns li {
-    padding: 2.5em 0 1% 2%;
+
+ol.forums-columns li {
     font-size: 10px;
-    margin-right: 0;
+    padding: 2.5em 1% 1%;
+}
+
+ol.threads-columns li,
+ol.forums-columns li {
+    margin-right: 0.5%;
+}
+
+ol.posts-columns li {
+    font-size: 10px;
+    padding: 2.5em 0 1% 2%;
 }
 
 ol.threads-columns a {
@@ -42,6 +52,17 @@ ol.threads-columns.desc li.sort {
 /* End sorting */
 
 /* Column widths */
+ol.forums-columns li.name,
+ol.forums div.name {
+    width: 64.5%;
+}
+
+ol.forums-columns li.threads,
+ol.forums-columns li.posts,
+ol.forums div.threads {
+    width: 8%;
+}
+
 ol.threads-columns li.type {
     width: 8%;
 }
@@ -61,26 +82,34 @@ ol.threads li div.author {
     width: 18%;
 }
 
+ol.forums-columns li.last-post,
+ol.forums div.last-post,
 ol.threads-columns li.last-post,
 ol.threads li div.last-post {
-    border-right: none;
     margin-right: 0;
     width: 20%;
 }
+ol.threads li div.type {
+    height: auto;
+    min-height: 1em;
+    text-align: center;
+    width: 8%;
+}
 /* End column widths */
-/* End header */
 
-/* List of threads */
+ol.forums li,
 ol.threads li {
     clear: left;
 }
 
+ol.forums li div,
 ol.threads li div {
     float: left;
     margin: 1% 0.5% 1% 0;
     padding: 0 1%;
 }
 
+ol.forums li hr,
 ol.threads li hr {
     background: none;
     border: 0;
@@ -93,18 +122,15 @@ ol.threads li hr {
     width: 0;
 }
 
-/* Column widths */
-ol.threads li div.type {
-    height: auto;
-    min-height: 1em;
-    text-align: center;
-    width: 8%;
-}
-/* End column widths */
 
+ol.forums li:nth-child(even),
 ol.threads li:nth-child(even),
 ol.posts li:nth-child(even) {
     background: #f0f0f0;
+}
+
+ol.forums div.threads {
+    text-align: right;
 }
 
 ol.threads div.replies {
@@ -117,7 +143,7 @@ ol.posts li div.author a {
     font-weight: bold;
 }
 
-#new-question {
+a#new-thread {
     background: url(../img/forums/arrow.png) no-repeat scroll left center transparent;
     float: left;
     font-size: 115%;

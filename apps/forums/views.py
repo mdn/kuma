@@ -15,7 +15,7 @@ def forums(request):
     View all the forums.
     """
 
-    forums = Forum.objects.all()
+    forums = paginate(request, Forum.objects.all())
 
     return jingo.render(request, 'forums.html', {'forums': forums})
 
@@ -46,12 +46,6 @@ def threads(request, forum_slug):
         forum = Forum.objects.get(slug=forum_slug)
     except Forum.DoesNotExist:
         raise Http404
-
-    try:
-        page = int(request.GET.get('page', 1))
-        page = max(page, 1)
-    except ValueError:
-        page = 1
 
     try:
         sort = int(request.GET.get('sort', 0))
