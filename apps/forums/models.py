@@ -1,9 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import jinja2
+
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
+from sumo.utils import WikiParser
 import forums
 
 
@@ -110,3 +113,8 @@ class Post(ModelBase):
                        kwargs={'forum_slug': self.thread.forum.slug,
                                'thread_id': self.thread.id})
         return urlparams(url_, hash='post-%s' % self.id, **query)
+
+    @property
+    def content_parsed(self):
+        parser = WikiParser()
+        return jinja2.Markup(parser.parse(self.content, False))

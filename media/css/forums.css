@@ -178,6 +178,10 @@ ol.posts li div.author {
     padding: 0 0 1em 2%;
 }
 
+ol.posts li div.content p {
+    margin-bottom: 1em;
+}
+
 /* Pagination tweaks */
 ol.pagination {
     clear: left;
