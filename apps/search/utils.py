@@ -4,7 +4,7 @@ import zlib
 from django.conf import settings
 
 
-crc32 = lambda x: zlib.crc32(x) & 0xffffffff
+crc32 = lambda x: zlib.crc32(x.encode('utf-8')) & 0xffffffff
 
 
 call = lambda x: subprocess.Popen(x, stdout=subprocess.PIPE).communicate()
