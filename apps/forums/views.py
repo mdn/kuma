@@ -7,6 +7,7 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread
 from .forms import ReplyForm, NewThreadForm
+import forums as constants
 
 
 def forums(request):
@@ -64,7 +65,8 @@ def threads(request, forum_slug):
     desc_toggle = 0 if desc else 1
 
     threads_ = sort_threads(forum.thread_set, sort, desc)
-    threads_ = paginate(request, threads_)
+    threads_ = paginate(request, threads_,
+                        per_page=constants.THREADS_PER_PAGE)
 
     return jingo.render(request, 'threads.html',
                         {'forum': forum, 'threads': threads_,
@@ -86,7 +88,8 @@ def posts(request, forum_slug, thread_id):
     except Thread.DoesNotExist:
         raise Http404
 
-    posts_ = paginate(request, thread.post_set.all())
+    posts_ = paginate(request, thread.post_set.all(),
+                      constants.POSTS_PER_PAGE)
 
     form = ReplyForm({'thread': thread.id, 'author': request.user.id})
 

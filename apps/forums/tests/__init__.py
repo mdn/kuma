@@ -8,7 +8,7 @@ from forums.views import sort_threads
 from sumo.urlresolvers import reverse
 
 
-class ForumsTestCase(TestCase):
+class ForumTestCase(TestCase):
     fixtures = ['posts.json']
 
     def setUp(self):
@@ -16,7 +16,7 @@ class ForumsTestCase(TestCase):
         installed. This will set them to the correct values."""
 
         t1 = Thread.objects.get(pk=1)
-        t1.last_post = Post.objects.get(pk=1)
+        t1.last_post = Post.objects.get(pk=24)
         t1.save()
 
         t2 = Thread.objects.get(pk=2)
@@ -26,6 +26,9 @@ class ForumsTestCase(TestCase):
         t3 = Thread.objects.get(pk=3)
         t3.last_post = Post.objects.get(pk=5)
         t3.save()
+
+
+class PostTestCase(ForumTestCase):
 
     def test_new_post_updates_thread(self):
         """Saving a new post in a thread should update the last_post key in

@@ -62,7 +62,7 @@
             "created": "2010-04-28 16:04:42",
             "is_locked": false,
             "creator": 118533,
-            "replies": 1,
+            "replies": 20,
             "title": "Test Thread",
             "last_post": null
         }
@@ -107,6 +107,215 @@
             "content": "test",
             "updated": "2010-04-28 16:08:28",
             "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 6,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 7,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 8,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 9,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 10,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 11,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 12,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 13,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 14,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 15,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 16,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 17,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 18,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 19,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 20,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 21,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 22,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-28 16:08:28",
+            "created": "2010-04-28 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 23,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-04-29 16:08:28",
+            "created": "2010-04-29 16:08:28",
+            "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 24,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-05-01 16:08:28",
+            "created": "2010-05-01 16:08:28",
             "thread": 1,
             "author": 118533
         }

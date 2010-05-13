@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from sumo.helpers import urlparams
+from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
+import forums
 
 
 class ThreadLockedError(Exception):
@@ -16,6 +19,9 @@ class Forum(ModelBase):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('forums.threads', kwargs={'forum_slug': self.slug})
 
 
 class Thread(ModelBase):
@@ -36,7 +42,7 @@ class Thread(ModelBase):
     @property
     def last_page(self):
         """Returns the page number for the last post."""
-        return self.replies / 20 + 1
+        return self.replies / forums.POSTS_PER_PAGE + 1
 
     def __unicode__(self):
         return self.title
@@ -47,6 +53,11 @@ class Thread(ModelBase):
             raise ThreadLockedError
 
         return self.post_set.create(author=author, content=content)
+
+    def get_absolute_url(self):
+        return reverse('forums.posts',
+                       kwargs={'forum_slug': self.forum.slug,
+                               'thread_id': self.id})
 
 
 class Post(ModelBase):
@@ -74,3 +85,22 @@ class Post(ModelBase):
             self.thread.replies = self.thread.post_set.count() - 1
             self.thread.last_post = self
             self.thread.save()
+
+    @property
+    def page(self):
+        """Get the page of the thread on which this post is found."""
+        t = self.thread
+        earlier = t.post_set.filter(created__lte=self.created).count() - 1
+        if earlier < 1:
+            return 1
+        return earlier / forums.POSTS_PER_PAGE + 1
+
+    def get_absolute_url(self):
+        query = {}
+        if self.page > 1:
+            query = {'page': self.page}
+
+        url_ = reverse('forums.posts',
+                       kwargs={'forum_slug': self.thread.forum.slug,
+                               'thread_id': self.thread.id})
+        return urlparams(url_, hash='post-%s' % self.id, **query)
