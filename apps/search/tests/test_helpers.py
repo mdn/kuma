@@ -39,8 +39,8 @@ def test_suggestions():
     request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en-US/search?q=wrong"><strong>wrong</strong></a>'
-    eq_(exp, render(t, {'q': w, 'request': request}))
+    exp_ = '<a href="/en-US/search?q=wrong"><strong>wrong</strong></a>'
+    eq_(exp_, render(t, {'q': w, 'request': request}))
 
 
 def test_suggestions_page2():
@@ -49,8 +49,8 @@ def test_suggestions_page2():
     request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en-US/search?q=wrong&amp;page=1"><strong>wrong</strong></a>'
-    eq_(exp, render(t, {'q': w, 'request': request}))
+    exp_ = '<a href="/en-US/search?q=wrong&amp;page=1"><strong>wrong</strong></a>'
+    eq_(exp_, render(t, {'q': w, 'request': request}))
 
 
 def test_suggestions_categories():
@@ -59,8 +59,8 @@ def test_suggestions_categories():
     request = test_utils.RequestFactory().get(url)
     w = 'worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en-US/search?q=wrong&amp;category=1&amp;category=2"><strong>wrong</strong></a>'
-    eq_(exp, render(t, {'q': w, 'request': request}))
+    exp_ = '<a href="/en-US/search?q=wrong&amp;category=1&amp;category=2"><strong>wrong</strong></a>'
+    eq_(exp_, render(t, {'q': w, 'request': request}))
 
 
 def test_suggestions_highlight():
@@ -69,5 +69,5 @@ def test_suggestions_highlight():
     request = test_utils.RequestFactory().get(url)
     q = 'right worng'
     t = "{{ q|suggestions('en-US') }}"
-    exp = '<a href="/en-US/search?q=right+wrong">right <strong>wrong</strong></a>'
-    eq_(exp, render(t, {'q': q, 'request': request}))
+    exp_ = '<a href="/en-US/search?q=right+wrong">right <strong>wrong</strong></a>'
+    eq_(exp_, render(t, {'q': q, 'request': request}))

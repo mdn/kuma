@@ -208,7 +208,7 @@ DOMAIN_METHODS = {
 
 # If you have trouble extracting strings with Tower, try setting this
 # to True
-TOWER_ADD_HEADERS=True
+TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
 MINIFY_BUNDLES = {

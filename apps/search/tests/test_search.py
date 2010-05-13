@@ -233,11 +233,11 @@ class SearchTest(SphinxTestCase):
     def test_range_filter(self):
         """Test filtering on a range."""
         wc = WikiClient()
-        filter = ({'filter': 'lastmodif',
-                   'max': 1244355125,
-                   'min': 1244355115,
-                   'range': True},)
-        results = wc.query('', filter)
+        filter_ = ({'filter': 'lastmodif',
+                    'max': 1244355125,
+                    'min': 1244355115,
+                    'range': True},)
+        results = wc.query('', filter_)
         self.assertEquals(1, len(results))
 
     def test_search_en_locale(self):

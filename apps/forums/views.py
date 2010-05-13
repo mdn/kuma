@@ -15,26 +15,26 @@ def forums(request):
     View all the forums.
     """
 
-    forums = paginate(request, Forum.objects.all())
+    forums_ = paginate(request, Forum.objects.all())
 
-    return jingo.render(request, 'forums.html', {'forums': forums})
+    return jingo.render(request, 'forums.html', {'forums': forums_})
 
 
-def sort_threads(threads, sort=0, desc=0):
+def sort_threads(threads_, sort=0, desc=0):
     if desc:
         prefix = '-'
     else:
         prefix = ''
 
     if sort == 3:
-        return threads.order_by(prefix + 'creator__username').all()
+        return threads_.order_by(prefix + 'creator__username').all()
     elif sort == 4:
-        return threads.order_by(prefix + 'replies').all()
+        return threads_.order_by(prefix + 'replies').all()
     elif sort == 5:
-        return threads.order_by(prefix + 'last_post__created').all()
+        return threads_.order_by(prefix + 'last_post__created').all()
 
     # If nothing matches, use default sorting
-    return threads.all()
+    return threads_.all()
 
 
 def threads(request, forum_slug):
