@@ -178,6 +178,85 @@ ol.posts li div.author {
     padding: 0 0 1em 2%;
 }
 
+/* Wiki markup for posts */
+ol.posts li div.content h1,
+#content-inner ol.posts li div.content h2,
+ol.posts li div.content h3,
+ol.posts li div.content h4,
+ol.posts li div.content h5,
+ol.posts li div.content h6 {
+    margin: 0.5em 0;
+    padding: 0;
+}
+
+ol.posts li div.content h1 {
+    font-size: 210%;
+}
+
+ol.posts li div.content h2 {
+    font-size: 180%;
+}
+
+ol.posts li div.content h3 {
+    font-size: 145%;
+}
+
+ol.posts li div.content h4 {
+    font-size: 115%;
+}
+
+ol.posts li div.content h5 {
+    font-size: 95%;
+}
+
+ol.posts li div.content h6 {
+    font-size: 85%;
+}
+
+ol.posts li div.content p {
+    margin-bottom: 1em;
+}
+
+ol.posts li div.content ol,
+ol.posts li div.content ul {
+    margin-left: 1.5em;
+}
+
+ol.posts li div.content li {
+    border: none;
+    margin: 1em 0;
+    padding: 0;
+}
+
+ol.posts li div.content li:nth-child(even) {
+    background: none;
+}
+
+ol.posts li div.content dd {
+    margin-left: 3em;
+}
+
+ol.posts li div.content blockquote {
+    background-color: #e6eaec;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+    margin: 1.5em;
+    padding: 1em;
+}
+
+ol.posts li div.content pre {
+    background-color: #e6eaec;
+    margin: 1em 0;
+    padding: 0.5em;
+}
+
+ol.posts li div.content a:hover {
+    text-decoration: underline;
+}
+
+/* End of wiki markup */
+
 /* Pagination tweaks */
 ol.pagination {
     clear: left;

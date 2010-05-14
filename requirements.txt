@@ -29,3 +29,6 @@ South==0.7
 # timezone package used with babel
 pytz
 
+# wiki markup parser
+-e git://github.com/pcraciunoiu/py-wikimarkup.git#egg=py-wikimarkup
+
