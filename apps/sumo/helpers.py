@@ -17,11 +17,13 @@ from sumo.utils import urlencode
 
 
 class DateTimeFormatError(Exception):
+    """Called by the datetimeformat function when receiving invalid format."""
     pass
 
 
 @register.filter
 def paginator(pager):
+    """Render list of pages."""
     return Paginator(pager).render()
 
 
@@ -39,12 +41,12 @@ def urlparams(url_, hash=None, **query):
     New query params will be appended to exising parameters, except duplicate
     names, which will be replaced.
     """
-    url = urlparse.urlparse(url_)
-    fragment = hash if hash is not None else url.fragment
+    url_ = urlparse.urlparse(url_)
+    fragment = hash if hash is not None else url_.fragment
 
     items = []
-    if url.query:
-        for k, v in cgi.parse_qsl(url.query):
+    if url_.query:
+        for k, v in cgi.parse_qsl(url_.query):
             items.append((k, v))
     for k, v in query.items():
         items.append((k, v))
@@ -54,8 +56,8 @@ def urlparams(url_, hash=None, **query):
 
     query_string = urlencode(items)
 
-    new = urlparse.ParseResult(url.scheme, url.netloc, url.path, url.params,
-                               query_string, fragment)
+    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
+                               url_.params, query_string, fragment)
     return jinja2.Markup(new.geturl())
 
 
@@ -96,18 +98,18 @@ class Paginator(object):
 
 
 @register.filter
-def fe(str, *args, **kwargs):
+def fe(str_, *args, **kwargs):
     """Format a safe string with potentially unsafe arguments, then return a
     safe string."""
 
-    str = unicode(str)
+    str_ = unicode(str_)
 
     args = [jinja2.escape(smart_unicode(v)) for v in args]
 
     for k in kwargs:
         kwargs[k] = jinja2.escape(smart_unicode(kwargs[k]))
 
-    return jinja2.Markup(str.format(*args, **kwargs))
+    return jinja2.Markup(str_.format(*args, **kwargs))
 
 
 @register.function

@@ -38,6 +38,15 @@ class PostTestCase(ForumTestCase):
         post.save()
         eq_(post.id, t.last_post_id)
 
+    def test_new_post_updates_forum(self):
+        """Saving a new post should update the last_post key in the forum to
+        point to the new post."""
+        t = Thread.objects.get(pk=1)
+        f = t.forum
+        post = t.new_post(author=t.creator, content='another update')
+        post.save()
+        eq_(post.id, f.last_post_id)
+
     def test_update_post_does_not_update_thread(self):
         """Updating/saving an old post in a thread should _not_ update the
         last_post key in that thread."""
@@ -46,6 +55,15 @@ class PostTestCase(ForumTestCase):
         p.content = 'updated content'
         p.save()
         eq_(old, p.thread.last_post_id)
+
+    def test_update_forum_does_not_update_thread(self):
+        """Updating/saving an old post in a forum should _not_ update the
+        last_post key in that forum."""
+        p = Post.objects.get(pk=2)
+        old = p.thread.forum.last_post_id
+        p.content = 'updated content'
+        p.save()
+        eq_(old, p.thread.forum.last_post_id)
 
     def test_replies_count(self):
         """The Thread.replies value should remain one less than the number of

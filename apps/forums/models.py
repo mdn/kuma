@@ -16,6 +16,9 @@ class Forum(ModelBase):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
+    description = models.TextField(null=True)
+    last_post = models.ForeignKey('Post', related_name='last_post_in_forum',
+                                  null=True)
 
     def __unicode__(self):
         return self.name
@@ -85,6 +88,9 @@ class Post(ModelBase):
             self.thread.replies = self.thread.post_set.count() - 1
             self.thread.last_post = self
             self.thread.save()
+
+            self.thread.forum.last_post = self
+            self.thread.forum.save()
 
     @property
     def page(self):
