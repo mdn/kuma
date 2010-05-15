@@ -8,6 +8,20 @@
 
 {% block content %}
   <h2>{{ thread.title }}</h2>
+  <div class="thread-actions">
+    {% if has_perm('forums_forum.thread_edit_forum', forum) %}
+      <a href="{{ url('forums.edit_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_delete_forum', forum) %}
+      <a href="{{ url('forums.delete_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}"/></a>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_locked_forum', forum) %}
+      <a href="{{ url('forums.lock_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/type/locked.png" alt="{{ _('Change locked status') }}" title="{{ _('Change locked status') }}"/></a>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_sticky_forum', forum) %}
+      <a href="{{ url('forums.sticky_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Change sticky status') }}" title="{{ _('Change sticky status') }}"/></a>
+    {% endif %}
+  </div>
 
   <ol class="posts-columns">
     <li class="author">{{ _('Author') }}</li>
@@ -24,6 +38,14 @@
             </a>
             <a href="/tiki-user_information.php?userId={{ post.author.id }}">{{ post.author }}</a>
             <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
+            <div class="post-actions">
+            {% if has_perm('forums_forum.post_edit_forum', forum) %}
+              <a href="{{ url('forums.edit_post', forum_slug=forum.slug, thread_id=thread.id, post_id=post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
+            {% endif %}
+            {% if has_perm('forums_forum.post_delete_forum', forum) %}
+              <a href="{{ url('forums.delete_post', forum_slug=forum.slug, thread_id=thread.id, post_id=post.id) }}"><img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}"/></a>
+            {% endif %}
+            </div>
           </div>
           <div class="content">
             {{ post.content_parsed }}

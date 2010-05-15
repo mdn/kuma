@@ -1,28 +1,18 @@
 [
     {
-        "pk": 118533,
-        "model": "auth.user",
-        "fields": {
-            "username": "jsocol",
-            "first_name": "",
-            "last_name": "",
-            "is_active": 1,
-            "is_superuser": 0,
-            "is_staff": 0,
-            "last_login": "2010-04-26 19:01:45",
-            "groups": [],
-            "user_permissions": [],
-            "password": "",
-            "email": "user118533@nowhere",
-            "date_joined": "2009-08-10 16:09:45"
-        }
-    },
-    {
         "pk": 1,
         "model": "forums.forum",
         "fields": {
             "name": "Test forum",
             "slug": "test-forum"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "forums.forum",
+        "fields": {
+            "name": "Another Forum",
+            "slug": "another-forum"
         }
     },
     {

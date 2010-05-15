@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 import jingo
+from authority.decorators import permission_required_or_403
 
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
@@ -109,12 +111,9 @@ def reply(request, forum_slug, thread_id):
     return jingo.render(request, 'bad_reply.html')
 
 
+@login_required
 def new_thread(request, forum_slug):
     """Start a new thread."""
-
-    # TODO: Once we can log in through Kitsune, use reverse here.
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/tiki-login.php')
 
     forum = get_object_or_404(Forum, slug=forum_slug)
 
@@ -137,5 +136,59 @@ def new_thread(request, forum_slug):
             reverse('forums.posts',
                     kwargs={'forum_slug': thread.forum.slug,
                             'thread_id': thread.id}))
+
+    return jingo.render(request, 'bad_reply.html')
+
+
+@login_required
+@permission_required_or_403('forums_forum.thread_locked_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def lock_thread(request, forum_slug, thread_id):
+    """Lock/Unlock a thread."""
+
+    return jingo.render(request, 'bad_reply.html')
+
+
+@login_required
+@permission_required_or_403('forums_forum.thread_sticky_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def sticky_thread(request, forum_slug, thread_id):
+    """Mark/unmark a thread sticky."""
+
+    return jingo.render(request, 'bad_reply.html')
+
+
+@login_required
+@permission_required_or_403('forums_forum.thread_edit_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def edit_thread(request, forum_slug, thread_id):
+    """Edit a thread."""
+
+    return jingo.render(request, 'bad_reply.html')
+
+
+@login_required
+@permission_required_or_403('forums_forum.thread_delete_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def delete_thread(request, forum_slug, thread_id):
+    """Delete a thread."""
+
+    return jingo.render(request, 'bad_reply.html')
+
+
+@login_required
+@permission_required_or_403('forums_forum.post_edit_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def edit_post(request, forum_slug, thread_id, post_id):
+    """Edit a post."""
+
+    return jingo.render(request, 'bad_reply.html')
+
+
+@login_required
+@permission_required_or_403('forums_forum.post_delete_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def delete_post(request, forum_slug, thread_id, post_id):
+    """Delete a post."""
 
     return jingo.render(request, 'bad_reply.html')

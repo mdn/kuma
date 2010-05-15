@@ -30,7 +30,6 @@ class SessionTestCase(TestCase):
         self.assertEqual(user.id, tiki_user.userId)
         self.assertEqual(user.username, tiki_user.login)
         self.assertEqual(user.email, tiki_user.email)
-        self.assertEqual(user.password, tiki_user.password)
         self.assertEquals(user.date_joined,
             datetime.fromtimestamp(tiki_user.registrationDate))
 

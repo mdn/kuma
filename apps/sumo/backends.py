@@ -10,7 +10,6 @@ def create_django_user(tiki_user):
     user = User(id=tiki_user.userId)
     user.username = tiki_user.login
     user.email = tiki_user.email
-    user.password = tiki_user.password
     user.date_joined = \
         datetime.fromtimestamp(tiki_user.registrationDate).isoformat(' ')
 

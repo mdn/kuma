@@ -2,17 +2,17 @@ from django.conf.urls.defaults import include, patterns
 from django.conf import settings
 from django.contrib import admin
 
+import authority
+
 
 admin.autodiscover()
-
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+authority.autodiscover()
 
 urlpatterns = patterns('',
     (r'^search', include('search.urls')),
     (r'^forums', include('forums.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^authority/', include('authority.urls')),
 )
 
 # Handle 404 and 500 errors

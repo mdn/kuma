@@ -1,20 +1,64 @@
 [
     {
-        "pk": 47963, 
-        "model": "auth.user", 
+        "pk": 1,
+        "model": "auth.group",
         "fields": {
-            "username": "pcraciunoiu", 
-            "first_name": "", 
-            "last_name": "", 
-            "is_active": 1, 
-            "is_superuser": 0, 
-            "is_staff": 0, 
-            "last_login": "2010-04-13 10:20:21", 
-            "groups": [], 
-            "user_permissions": [], 
-            "password": "password$md5", 
-            "email": "pcraciunoiu@example.com", 
+            "name": "ForumsModerator",
+            "permissions": []
+        }
+    },
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "is_active": 1,
+            "is_superuser": 1,
+            "is_staff": 1,
+            "last_login": "2010-01-01 00:00:00",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "user1@nowhere",
+            "date_joined": "2010-01-01 00:00:00"
+        }
+    },
+    {
+        "pk": 47963,
+        "model": "auth.user",
+        "fields": {
+            "username": "pcraciunoiu",
+            "first_name": "",
+            "last_name": "",
+            "is_active": 1,
+            "is_superuser": 0,
+            "is_staff": 0,
+            "last_login": "2010-04-13 10:20:21",
+            "groups": [1],
+            "user_permissions": [],
+            "password": "",
+            "email": "user47963@nowhere",
             "date_joined": "2008-10-06 10:34:21"
+        }
+    },
+    {
+        "pk": 118533,
+        "model": "auth.user",
+        "fields": {
+            "username": "jsocol",
+            "first_name": "",
+            "last_name": "",
+            "is_active": 1,
+            "is_superuser": 0,
+            "is_staff": 0,
+            "last_login": "2010-04-26 19:01:45",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "user118533@nowhere",
+            "date_joined": "2009-08-10 16:09:45"
         }
     }
 ]
