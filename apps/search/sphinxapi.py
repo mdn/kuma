@@ -20,7 +20,7 @@ import re
 from struct import *
 
 # Kitsune customizations
-K_TIMEOUT = 2  # Socket timeout in seconds
+K_TIMEOUT = 1  # Socket timeout in seconds
 
 # known searchd commands
 SEARCHD_COMMAND_SEARCH  = 0
