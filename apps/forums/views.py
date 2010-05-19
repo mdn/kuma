@@ -62,9 +62,13 @@ def threads(request, forum_slug):
     threads_ = paginate(request, threads_,
                         per_page=constants.THREADS_PER_PAGE)
 
+    feed_url = reverse('forums.threads.feed',
+                       kwargs={'forum_slug': forum_slug})
+
     return jingo.render(request, 'threads.html',
                         {'forum': forum, 'threads': threads_,
-                         'sort': sort, 'desc_toggle': desc_toggle})
+                         'sort': sort, 'desc_toggle': desc_toggle,
+                         'feed_url': feed_url})
 
 
 def posts(request, forum_slug, thread_id):
@@ -87,9 +91,14 @@ def posts(request, forum_slug, thread_id):
 
     form = ReplyForm({'thread': thread.id, 'author': request.user.id})
 
+    feed_url = reverse('forums.posts.feed',
+                       kwargs={'forum_slug': forum_slug,
+                       'thread_id': thread_id})
+
     return jingo.render(request, 'posts.html',
                         {'forum': forum, 'thread': thread,
-                         'posts': posts_, 'form': form})
+                         'posts': posts_, 'form': form,
+                         'feed_url': feed_url})
 
 
 def reply(request, forum_slug, thread_id):

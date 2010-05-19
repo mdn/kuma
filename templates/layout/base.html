@@ -7,6 +7,9 @@
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 <link rel="search" type="application/opensearchdescription+xml" title="Firefox Support" href="/search.xml"/>
+{% if feed_url %}
+<link rel="alternate" type="application/atom+xml" href="{{ feed_url }}"/>
+{% endif %}
 
 {{ css('common') }}
 {% for style in styles %}
