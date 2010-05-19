@@ -31,8 +31,12 @@
         <div class="title"><a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ thread.title }}</a></div>
         <div class="author"><a class="username" href="{{ profile_url(thread.creator) }}">{{ thread.creator.username }}</a></div>
         <div class="replies">{{ thread.replies }}</div>
-        <div class="last-post"><a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id)|urlparams(page=thread.last_page) }}">{{ datetimeformat(thread.last_post.created) }}</a><br/>
-          {{ _('by <a class="username" href="{profile_url}">{username}</a>')|fe(profile_url=profile_url(thread.last_post.author), username=thread.last_post.author.username) }}</div>
+        <div class="last-post">
+          <a href="{{ thread.last_post.get_absolute_url() }}">
+            {{ datetimeformat(thread.last_post.created) }}
+          </a><br/>
+          {{ _('by <a class="username" href="{profile_url}">{username}</a>')|fe(profile_url=profile_url(thread.last_post.author), username=thread.last_post.author.username) }}
+        </div>
       <hr/>
       </li>
     {% endfor %}
