@@ -31,9 +31,11 @@
           <div class="info">
             {{ datetimeformat(post.created, format='longdatetime') }}
             <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
-            <span class="post-action">
-              <a href="#thread-reply">{{ _('Reply') }}</a>
-            </span>
+            {% if user.is_authenticated() %}
+              <span class="post-action">
+                <a href="#thread-reply">{{ _('Reply') }}</a>
+              </span>
+            {% endif %}
           </div>
         </li>
       {% endfor %}
