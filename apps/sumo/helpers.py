@@ -146,6 +146,13 @@ def profile_url(user):
 
 
 @register.function
+def profile_avatar(user):
+    """Return a URL to the user's avatar."""
+    # TODO: revisit this when we have a users app
+    return '/tiki-show_user_avatar.php?user=%s' % user.username
+
+
+@register.function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime'):
     """

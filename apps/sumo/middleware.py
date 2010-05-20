@@ -79,4 +79,3 @@ class TikiCookieMiddleware(object):
             user = auth.authenticate(session=session)
             if user is not None:
                 auth.login(request, user)
-

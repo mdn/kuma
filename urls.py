@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     (r'^search', include('search.urls')),
     (r'^forums', include('forums.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^authority/', include('authority.urls')),
 )
 
 # Handle 404 and 500 errors

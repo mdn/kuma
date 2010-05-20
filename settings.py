@@ -134,6 +134,7 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
 )
 

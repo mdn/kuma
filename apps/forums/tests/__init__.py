@@ -34,6 +34,9 @@ class ForumTestCase(TestCase):
         self.client = client.Client()
         self.client.get('/')
 
+        self.get = lambda v, **kw: self.client.get(reverse(v, **kw),
+                                                   follow=True)
+
 
 class PostTestCase(ForumTestCase):
 
@@ -141,23 +144,17 @@ class PostTestCase(ForumTestCase):
         open.new_post(author=user, content='empty')
 
     def test_post_no_session(self):
-        response = self.client.get(
-            reverse('forums.new_thread',
-                    kwargs={'forum_slug': 'test-forum'}),
-            follow=True)
-        self.failUnless('http://testserver/tiki-login.php' in
-                        response.redirect_chain[0][0])
-        self.assertEquals(302, response.redirect_chain[0][1])
+        r = self.get('forums.new_thread', kwargs={'forum_slug': 'test-forum'})
+        assert('http://testserver/tiki-login.php' in
+                r.redirect_chain[0][0])
+        eq_(302, r.redirect_chain[0][1])
 
 
 class ThreadTestCase(ForumTestCase):
 
     def test_delete_no_session(self):
         """Delete a thread while logged out redirects."""
-        response = self.client.get(
-            reverse('forums.delete_thread',
-                    kwargs={'forum_slug': 'test-forum', 'thread_id': 1}),
-            follow=True)
-        self.failUnless('http://testserver/tiki-login.php' in
-                        response.redirect_chain[0][0])
-        self.assertEquals(302, response.redirect_chain[0][1])
+        r = self.get('forums.delete_thread',
+                     kwargs={'forum_slug': 'test-forum', 'thread_id': 1})
+        assert('http://testserver/tiki-login.php' in r.redirect_chain[0][0])
+        eq_(302, r.redirect_chain[0][1])

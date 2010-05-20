@@ -6,6 +6,7 @@ from test_utils import TestCase
 
 from sumo import backends
 from sumo.models import Session, TikiUser
+from sumo.urlresolvers import reverse
 
 
 class SessionTestCase(TestCase):
@@ -20,7 +21,7 @@ class SessionTestCase(TestCase):
         # Log in using cookie
         client = self.client
         client.cookies['SUMOv1'] = '57ad07b35736fc2b64ed62336fb3c2d2'
-        response = client.get('/en-US/search')
+        response = client.get(reverse('search'), follow=True)
         self.assertContains(response, 'tiki-logout.php')
 
         # Test that the data copied over correctly.
