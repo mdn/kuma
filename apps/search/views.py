@@ -37,7 +37,8 @@ def search(request):
 
             cleaned_data = self.cleaned_data
 
-            if not cleaned_data['a'] and cleaned_data['q'] == '':
+            if ('a' not in cleaned_data or
+                not cleaned_data['a']) and cleaned_data['q'] == '':
                 raise ValidationError('Basic search requires a query string.')
 
             # Validate created date
@@ -148,6 +149,7 @@ def search(request):
     if a == '0':
         r['w'] = r.get('w', constants.WHERE_ALL)
         r.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)
+
     # Advanced form
     if a == '2':
         r.setlist('forum', settings.SEARCH_DEFAULT_FORUMS)

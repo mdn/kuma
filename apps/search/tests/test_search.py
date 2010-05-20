@@ -196,6 +196,14 @@ class SearchTest(SphinxTestCase):
                           'text/html; charset=utf-8')
         self.assertEquals(response.status_code, 200)
 
+    def test_search_type_param(self):
+        """Ensure that invalid values for search type (a=)
+        does not cause errors"""
+        response = self.client.get(reverse('search'), {'a': 'dontdie'})
+        self.assertEquals(response['Content-Type'],
+                          'text/html; charset=utf-8')
+        self.assertEquals(response.status_code, 200)
+
     def test_page_invalid(self):
         """Ensure non-integer param doesn't throw exception."""
         qs = {'a': 1, 'format': 'json', 'page': 'invalid'}
