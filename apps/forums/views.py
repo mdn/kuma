@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 import jingo
@@ -42,10 +42,7 @@ def threads(request, forum_slug):
     View all the threads in a forum.
     """
 
-    try:
-        forum = Forum.objects.get(slug=forum_slug)
-    except Forum.DoesNotExist:
-        raise Http404
+    forum = get_object_or_404(Forum, slug=forum_slug)
 
     try:
         sort = int(request.GET.get('sort', 0))
@@ -76,15 +73,8 @@ def posts(request, forum_slug, thread_id):
     View all the posts in a thread.
     """
 
-    try:
-        forum = Forum.objects.get(slug=forum_slug)
-    except Forum.DoesNotExist:
-        raise Http404
-
-    try:
-        thread = Thread.objects.get(pk=thread_id)
-    except Thread.DoesNotExist:
-        raise Http404
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id)
 
     posts_ = paginate(request, thread.post_set.all(),
                       constants.POSTS_PER_PAGE)
