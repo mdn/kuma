@@ -92,12 +92,17 @@ def posts(request, forum_slug, thread_id):
 
 
 def reply(request, forum_slug, thread_id):
-
+    """
+    Reply to a thread.
+    """
     form = ReplyForm(request.POST)
 
     if form.is_valid():
-        form.save()
-        thread = Thread.objects.get(pk=request.POST.get('thread'))
+        thread = Thread.objects.get(pk=thread_id)
+        reply = form.save(commit=False)
+        reply.thread = thread
+        reply.author = request.user
+        reply.save()
 
         return HttpResponseRedirect(
             reverse('forums.posts',
