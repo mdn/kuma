@@ -39,7 +39,7 @@ DATABASE_ROUTERS = ('multidb.MasterSlaveRouter',)
 SLAVE_DATABASES = []
 
 # Cache Settings
-#CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
+#CACHE_BACKEND = 'django_pylibmc.memcached://localhost:11211'
 #CACHE_PREFIX = 'sumo:'
 
 # Addresses email comes from
