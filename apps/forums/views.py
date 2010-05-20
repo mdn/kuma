@@ -104,10 +104,7 @@ def reply(request, forum_slug, thread_id):
         reply.author = request.user
         reply.save()
 
-        return HttpResponseRedirect(
-            reverse('forums.posts',
-                    kwargs={'forum_slug': thread.forum.slug,
-                            'thread_id': thread.id}))
+        return HttpResponseRedirect(reply.get_absolute_url())
 
     return jingo.render(request, 'bad_reply.html')
 
