@@ -3,7 +3,7 @@ from nose.tools import eq_
 from django.test import TestCase, client
 from django.contrib.auth.models import User
 
-from forums.models import Thread, Post, ThreadLockedError
+from forums.models import Forum, Thread, Post, ThreadLockedError
 from forums.views import sort_threads
 from sumo.urlresolvers import reverse
 
@@ -14,6 +14,10 @@ class ForumTestCase(TestCase):
     def setUp(self):
         """Our fixtures have nulled foreign keys to allow them to be
         installed. This will set them to the correct values."""
+
+        f1 = Forum.objects.filter()[0]
+        f1.last_post = Post.objects.get(pk=24)
+        f1.save()
 
         t1 = Thread.objects.get(pk=1)
         t1.last_post = Post.objects.get(pk=24)

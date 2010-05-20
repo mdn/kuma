@@ -6,7 +6,7 @@ from sumo.urlresolvers import reverse
 from forums.tests import ForumTestCase
 
 
-class ForumTemplateTestCase(ForumTestCase):
+class ThreadsTemplateTestCase(ForumTestCase):
 
     def test_last_thread_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
@@ -17,3 +17,14 @@ class ForumTemplateTestCase(ForumTestCase):
         last_post_link = doc('ol.threads div.last-post a:not(.username)')[0]
         href = last_post_link.attrib['href']
         eq_(href.split('#')[1], 'post-3')
+
+
+class ForumsTemplateTestCase(ForumTestCase):
+
+    def test_last_post_link_has_post_id(self):
+        """Make sure the last post url links to the last post (#post-<id>)."""
+        response = self.client.get(reverse('forums.forums'), follow=True)
+        doc = pq(response.content)
+        last_post_link = doc('ol.forums div.last-post a:not(.username)')[0]
+        href = last_post_link.attrib['href']
+        eq_(href.split('#')[1], 'post-24')
