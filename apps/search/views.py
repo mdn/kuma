@@ -1,6 +1,7 @@
 import time
 import re
 import json
+from datetime import datetime, timedelta
 
 from django import forms
 from django.forms.util import ValidationError
@@ -125,6 +126,9 @@ def search(request):
     callback = request.GET.get('callback', '').strip()
     mimetype = 'application/x-javascript' if callback else 'application/json'
 
+    # Search "Expires" header format
+    expires_fmt = '%A, %d %B %Y %H:%M:%S GMT'
+
     # Check callback is valid
     if is_json and callback and not jsonp_is_valid(callback):
         return HttpResponse(
@@ -165,9 +169,16 @@ def search(request):
                 mimetype=mimetype,
                 status=400)
         else:
-            return jingo.render(request, 'form.html',
+            search_ = jingo.render(request, 'form.html',
                                 {'advanced': a, 'request': request,
                                  'search_form': search_form})
+            search_['Cache-Control'] = 'max-age=%s' % \
+                                       (settings.SEARCH_CACHE_PERIOD * 60)
+            search_['Expires'] = (datetime.utcnow() +
+                                  timedelta(
+                                    minutes=settings.SEARCH_CACHE_PERIOD)) \
+                                  .strftime(expires_fmt)
+            return search_
 
     cleaned = search_form.cleaned_data
     search_locale = (crc32(LOCALES[language].internal),)
@@ -356,7 +367,13 @@ def search(request):
 
         return HttpResponse(json_data, mimetype=mimetype)
 
-    return jingo.render(request, 'results.html',
+    results_ = jingo.render(request, 'results.html',
         {'num_results': len(documents), 'results': results, 'q': cleaned['q'],
          'pages': pages, 'w': cleaned['w'], 'refine_query': refine_query,
          'search_form': search_form, 'lang_name': lang_name, })
+    results_['Cache-Control'] = 'max-age=%s' % \
+                                (settings.SEARCH_CACHE_PERIOD * 60)
+    results_['Expires'] = (datetime.utcnow() +
+                           timedelta(minutes=settings.SEARCH_CACHE_PERIOD)) \
+                           .strftime(expires_fmt)
+    return results_

@@ -271,3 +271,8 @@ SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
 # so we extract longer excerpts and perform truncation to the length above
 SEARCH_SUMMARY_LENGTH_MULTIPLIER = 1.3
+
+#
+# The length for which we would like the user to cache search forms and
+# results, in minutes.
+SEARCH_CACHE_PERIOD = 15

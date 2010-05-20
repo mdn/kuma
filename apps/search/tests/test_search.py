@@ -204,6 +204,17 @@ class SearchTest(SphinxTestCase):
                           'text/html; charset=utf-8')
         self.assertEquals(response.status_code, 200)
 
+    def test_headers(self):
+        """Verify caching headers of search forms and search results"""
+        response = self.client.get(reverse('search'), {'q': 'audio', 'w': 3})
+        self.assertEquals(response['Cache-Control'], 'max-age=%s' %
+                          (settings.SEARCH_CACHE_PERIOD * 60))
+        self.assertTrue('Expires' in response)
+        response = self.client.get(reverse('search'))
+        self.assertEquals(response['Cache-Control'], 'max-age=%s' %
+                          (settings.SEARCH_CACHE_PERIOD * 60))
+        self.assertTrue('Expires' in response)
+
     def test_page_invalid(self):
         """Ensure non-integer param doesn't throw exception."""
         qs = {'a': 1, 'format': 'json', 'page': 'invalid'}
