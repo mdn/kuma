@@ -54,8 +54,6 @@
 
       <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
         {{ csrf() }}
-        <input type="hidden" name="thread" value="{{ thread.id }}" />
-        <input type="hidden" name="author" value="{{ user.id }}" />
 
         <div class="forum-editor">
           <div class="forum-editor-tools"></div>

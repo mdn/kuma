@@ -8,10 +8,7 @@ class ReplyForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        widgets = {
-            'thread': forms.HiddenInput,
-            'author': forms.HiddenInput,
-        }
+        exclude = ('thread', 'author')
 
 
 class NewThreadForm(forms.Form):
