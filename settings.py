@@ -247,6 +247,11 @@ DICT_DIR = '/usr/share/myspell/'
 WORD_LIST = path('configs/words.txt')
 
 #
+# Session cookies
+SESSION_COOKIE_SECURE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#
 # Connection information for Sphinx search
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3381
