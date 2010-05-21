@@ -33,3 +33,5 @@ pytz
 # wiki markup parser
 -e git://github.com/pcraciunoiu/py-wikimarkup.git#egg=py-wikimarkup
 
+-e hg+http://bitbucket.org/danfairs/django-authority#egg=django_authority
+
