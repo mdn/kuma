@@ -308,6 +308,12 @@ class SearchTest(SphinxTestCase):
         response = self.client.get(reverse('search'), qs)
         self.assertEquals(9, json.loads(response.content)['total'])
 
+    def test_created_nonexistent(self):
+        """created is set while created_date is left out of the query."""
+        qs = {'a': 1, 'w': 2, 'format': 'json', 'created': 1}
+        response = self.client.get(reverse('search'), qs)
+        self.assertEquals(response.status_code, 200)
+
     def test_author(self):
         """Check several author values, including test for (anon)"""
         qs = {'a': 1, 'w': 2, 'format': 'json'}

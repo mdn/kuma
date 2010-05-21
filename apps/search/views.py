@@ -51,6 +51,8 @@ def search(request):
                     cleaned_data['created_date'] = int(created_timestamp)
                 except ValueError:
                     cleaned_data['created'] = None
+            else:
+                cleaned_data['created'] = None
 
             # Set defaults for MultipleChoiceFields and convert to ints.
             # Ticket #12398 adds TypedMultipleChoiceField which would replace
