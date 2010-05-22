@@ -9,7 +9,7 @@ from sumo.urlresolvers import reverse
 
 
 class ForumTestCase(TestCase):
-    fixtures = ['posts.json']
+    fixtures = ['users.json', 'posts.json']
 
     def setUp(self):
         """Our fixtures have nulled foreign keys to allow them to be
@@ -30,6 +30,12 @@ class ForumTestCase(TestCase):
         t3 = Thread.objects.get(pk=3)
         t3.last_post = Post.objects.get(pk=5)
         t3.save()
+
+        self.client = client.Client()
+        self.client.get('/')
+
+        self.get = lambda v, **kw: self.client.get(reverse(v, **kw),
+                                                   follow=True)
 
 
 class PostTestCase(ForumTestCase):
@@ -138,10 +144,17 @@ class PostTestCase(ForumTestCase):
         open.new_post(author=user, content='empty')
 
     def test_post_no_session(self):
-        c = client.Client()
-        response = c.get(reverse('forums.new_thread',
-                                 kwargs={'forum_slug': 'testslug'}),
-                         follow=True)
-        self.assertEquals('http://testserver/tiki-login.php',
-                          response.redirect_chain[1][0])
-        self.assertEquals(302, response.redirect_chain[1][1])
+        r = self.get('forums.new_thread', kwargs={'forum_slug': 'test-forum'})
+        assert('http://testserver/tiki-login.php' in
+                r.redirect_chain[0][0])
+        eq_(302, r.redirect_chain[0][1])
+
+
+class ThreadTestCase(ForumTestCase):
+
+    def test_delete_no_session(self):
+        """Delete a thread while logged out redirects."""
+        r = self.get('forums.delete_thread',
+                     kwargs={'forum_slug': 'test-forum', 'thread_id': 1})
+        assert('http://testserver/tiki-login.php' in r.redirect_chain[0][0])
+        eq_(302, r.redirect_chain[0][1])

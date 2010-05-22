@@ -13,7 +13,8 @@ import jingo
 from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 
-from sumo.helpers import profile_url, datetimeformat, DateTimeFormatError
+from sumo.helpers import (profile_url, profile_avatar,
+                          datetimeformat, DateTimeFormatError)
 from sumo.urlresolvers import reverse
 
 
@@ -49,8 +50,13 @@ class TestHelpers(TestCase):
 
     def test_profile_url(self):
         user = User.objects.create(pk=500000, username=u'testuser')
-        eq_(profile_url(user),
-            u'/tiki-user_information.php?locale=en-US&userId=500000')
+        eq_(u'/tiki-user_information.php?locale=en-US&userId=500000',
+            profile_url(user))
+
+    def test_profile_avatar(self):
+        user = User.objects.create(pk=500001, username=u'testuser2')
+        eq_(u'/tiki-show_user_avatar.php?user=testuser2',
+            profile_avatar(user))
 
 
 class TestDateTimeFormat(TestCase):

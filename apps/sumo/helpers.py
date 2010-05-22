@@ -11,6 +11,7 @@ from tower import ugettext_lazy as _lazy
 from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
+import authority
 
 from sumo.urlresolvers import reverse
 from sumo.utils import urlencode
@@ -145,6 +146,13 @@ def profile_url(user):
 
 
 @register.function
+def profile_avatar(user):
+    """Return a URL to the user's avatar."""
+    # TODO: revisit this when we have a users app
+    return '/tiki-show_user_avatar.php?user=%s' % user.username
+
+
+@register.function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime'):
     """
@@ -182,3 +190,15 @@ def datetimeformat(context, value, format='shortdatetime'):
     else:
         # Unknown format
         raise DateTimeFormatError
+
+
+@register.function
+@jinja2.contextfunction
+def has_perm(context, perm, obj):
+    """
+    Check if the user has a permission on a specific object.
+
+    Returns boolean.
+    """
+    check = authority.get_check(context['request'].user, perm)
+    return check(obj)

@@ -134,6 +134,7 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
 )
 
@@ -156,6 +157,7 @@ INSTALLED_APPS = (
     'tower',
     'jingo_minify',
     ROOT_PACKAGE,
+    'authority',
     'sumo',
     'search',
     'forums',
@@ -281,3 +283,7 @@ SEARCH_SUMMARY_LENGTH_MULTIPLIER = 1.3
 # The length for which we would like the user to cache search forms and
 # results, in minutes.
 SEARCH_CACHE_PERIOD = 15
+
+# Auth and permissions related constants
+# TODO: Once we can log in through Kitsune, change this.
+LOGIN_URL = '/tiki-login.php'

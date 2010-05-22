@@ -155,6 +155,17 @@ ol.posts li div.author a {
     display: block;
 }
 
+div.thread-actions {
+    margin: 1em 0;
+}
+
+ol.posts li div.post-actions {
+   margin: 1em 0; 
+}
+
+ol.posts li div.post-actions a {
+    display: inline;
+}
 
 ol.posts-columns li.author {
     width: 20%;

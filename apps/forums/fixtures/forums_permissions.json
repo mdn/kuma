@@ -1,0 +1,72 @@
+[
+    {
+        "pk": 1,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 1,
+            "content_type": 16,
+            "codename": "forums_forum.thread_edit_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:39:57"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 1,
+            "content_type": 16,
+            "codename": "forums_forum.post_edit_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:37:22"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 1,
+            "content_type": 16,
+            "codename": "forums_forum.post_delete_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:37:22"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 1,
+            "content_type": 16,
+            "codename": "forums_forum.thread_delete_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:37:22"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 1,
+            "content_type": 16,
+            "codename": "forums_forum.thread_sticky_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:37:22"
+        }
+    }
+]
