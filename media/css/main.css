@@ -443,6 +443,27 @@ h2 {
 }
 /* End login form */
 
+/* Error styling */
+div.invalid input,
+div.invalid textarea {
+    border-color: red;
+    border-style: solid;
+}
+
+ul.errorlist {
+    margin: 1em 3em;
+    color: red;
+}
+
+ul.errorlist li {
+    margin: 1em 0;
+}
+
+ul.errorlist li a {
+    color: red;
+}
+/* End error styling */
+
 /* Paginators */
 ol.pagination {
     margin: 0 auto 1em;

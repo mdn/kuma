@@ -1,5 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
 {# L10n: {t} is the title of the thread. {f} is the name of the forum. #}
 {% set title = _('{t} | {f} | Forums')|f(t=thread.title, f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')),
@@ -81,12 +82,13 @@
     <div id="thread-reply">
       <h3>{{ _('Post a reply') }}</h3>
 
-      <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+      <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id)|urlparams(hash='thread-reply') }}" method="post">
         {{ csrf() }}
+        {{ errorlist(form) }}
 
-        <div class="forum-editor">
+        <div class="forum-editor{% if form.content.errors %} invalid{% endif %}">
           <div class="forum-editor-tools"></div>
-          <textarea name="content" id="reply-content" rows="10" cols="80"></textarea>
+          <textarea name="content" id="id_content" rows="10" cols="80">{{ form.content.data or '' }}</textarea>
         </div>
 
         <div class="forum-editor-notes">

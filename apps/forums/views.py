@@ -71,7 +71,7 @@ def threads(request, forum_slug):
                          'feed_url': feed_url})
 
 
-def posts(request, forum_slug, thread_id):
+def posts(request, forum_slug, thread_id, form=None):
     """
     View all the posts in a thread.
     """
@@ -82,7 +82,8 @@ def posts(request, forum_slug, thread_id):
     posts_ = paginate(request, thread.post_set.all(),
                       constants.POSTS_PER_PAGE)
 
-    form = ReplyForm({'thread': thread.id, 'author': request.user.id})
+    if not form:
+        form = ReplyForm()
 
     feed_url = reverse('forums.posts.feed',
                        kwargs={'forum_slug': forum_slug,
@@ -104,14 +105,14 @@ def reply(request, forum_slug, thread_id):
     if form.is_valid():
         thread = Thread.objects.get(pk=thread_id)
         if not thread.is_locked:
-            reply = form.save(commit=False)
-            reply.thread = thread
-            reply.author = request.user
-            reply.save()
+            reply_ = form.save(commit=False)
+            reply_.thread = thread
+            reply_.author = request.user
+            reply_.save()
 
-            return HttpResponseRedirect(reply.get_absolute_url())
+            return HttpResponseRedirect(reply_.get_absolute_url())
 
-    return jingo.render(request, 'bad_reply.html')
+    return posts(request, forum_slug, thread_id, form)
 
 
 @login_required
@@ -140,7 +141,8 @@ def new_thread(request, forum_slug):
                     kwargs={'forum_slug': thread.forum.slug,
                             'thread_id': thread.id}))
 
-    return jingo.render(request, 'bad_reply.html')
+    return jingo.render(request, 'new_thread.html',
+                        {'form': form, 'forum': forum})
 
 
 @require_POST

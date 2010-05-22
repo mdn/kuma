@@ -234,6 +234,7 @@ MINIFY_BUNDLES = {
         'common': (
             'js/jquery.min.js',
             'js/menu.js',
+            'js/main.js',
         ),
         'search': (
             'js/jqueryui.min.js',

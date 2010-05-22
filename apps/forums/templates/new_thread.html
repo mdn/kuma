@@ -1,5 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "common/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
 {# L10n: {f} if the name of the forum. #}
 {% set title = _('Create a new thread | {f} | Forums')|f(f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')),
@@ -12,8 +13,10 @@
 
   <form action="{{ url('forums.new_thread', forum_slug=forum.slug) }}" method="post" class="new-thread">
     {{ csrf() }}
+    {{ errorlist(form) }}
+
     {% for field in form %}
-      <div class="form-widget">
+      <div class="form-widget{% if field.errors %} invalid{% endif %}">
         {% if field.name == 'content' %}
             <div class="forum-editor-tools"></div>
         {% endif %}
