@@ -1,0 +1,15 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('Access denied') %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<p>{{ _('You do not have permission to access this page.') }}</p>
+
+{% if not user.is_authenticated() %}
+  <p><a href="{{ LOGIN_URL }}">{{ _('Click here to log in') }}</a></p>
+{% endif %}
+
+{% endblock %}

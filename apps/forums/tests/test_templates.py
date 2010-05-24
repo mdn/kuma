@@ -11,8 +11,7 @@ class ThreadsTemplateTestCase(ForumTestCase):
     def test_last_thread_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
         forum = Forum.objects.filter()[0]
-        response = self.client.get(reverse('forums.threads',
-                                           args=[forum.slug]), follow=True)
+        response = self.get('forums.threads', args=[forum.slug])
         doc = pq(response.content)
         last_post_link = doc('ol.threads div.last-post a:not(.username)')[0]
         href = last_post_link.attrib['href']
@@ -20,7 +19,6 @@ class ThreadsTemplateTestCase(ForumTestCase):
 
 
 class ForumsTemplateTestCase(ForumTestCase):
-    fixtures = ['users.json', 'posts.json']
 
     def setUp(self):
         super(ForumsTemplateTestCase, self).setUp()
@@ -36,7 +34,7 @@ class ForumsTemplateTestCase(ForumTestCase):
 
     def test_last_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
-        response = self.client.get(reverse('forums.forums'), follow=True)
+        response = self.get('forums.forums')
         doc = pq(response.content)
         last_post_link = doc('ol.forums div.last-post a:not(.username)')[0]
         href = last_post_link.attrib['href']
@@ -44,18 +42,14 @@ class ForumsTemplateTestCase(ForumTestCase):
 
     def test_edit_thread_403(self):
         """Editing a thread without permissions returns 403."""
-        response = self.client.get(
-            reverse('forums.edit_thread',
-                    args=[self.forum.slug, self.thread.id]),
-            follow=True)
+        response = self.get('forums.edit_thread',
+                            args=[self.forum.slug, self.thread.id])
         eq_(403, response.status_code)
 
     def test_delete_thread_403(self):
         """Deleting a thread without permissions returns 403."""
-        response = self.client.get(
-            reverse('forums.delete_thread',
-                    args=[self.forum.slug, self.thread.id]),
-            follow=True)
+        response = self.get('forums.delete_thread',
+                            args=[self.forum.slug, self.thread.id])
         eq_(403, response.status_code)
 
     def test_sticky_thread_405(self):
@@ -92,19 +86,20 @@ class ForumsTemplateTestCase(ForumTestCase):
 
     def test_post_edit_403(self):
         """Editing a post without permissions returns 403."""
-        response = self.client.get(
-            reverse('forums.edit_post',
-                    args=[self.forum.slug, self.thread.id, self.post.id]),
-            follow=True)
+        response = self.get(
+            'forums.edit_post',
+            args=[self.forum.slug, self.thread.id, self.post.id])
         eq_(403, response.status_code)
 
     def test_post_delete_403(self):
         """Deleting a post without permissions returns 403."""
-        response = self.client.get(
-            reverse('forums.delete_post',
-                    args=[self.forum.slug, self.thread.id, self.post.id]),
-            follow=True)
+        response = self.get(
+            'forums.delete_post',
+            args=[self.forum.slug, self.thread.id, self.post.id])
         eq_(403, response.status_code)
+
+        doc = pq(response.content)
+        eq_('Access denied', doc('#content-inner h2').text())
 
 
 class PostsTemplateTestCase(ForumTestCase):

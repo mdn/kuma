@@ -118,10 +118,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'sumo.context_processors.title',
+    'sumo.context_processors.auth',
 )
 
 MIDDLEWARE_CLASSES = (
     'sumo.middleware.LocaleURLMiddleware',
+    'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -290,3 +292,4 @@ SEARCH_CACHE_PERIOD = 15
 # Auth and permissions related constants
 # TODO: Once we can log in through Kitsune, change this.
 LOGIN_URL = '/tiki-login.php'
+LOGOUT_URL = '/tiki-logout.php'
