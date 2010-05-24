@@ -237,6 +237,9 @@ MINIFY_BUNDLES = {
             'js/jqueryui.min.js',
             'js/search.js',
         ),
+        'forums': (
+            'js/markup.js',
+        )
     },
 }
 

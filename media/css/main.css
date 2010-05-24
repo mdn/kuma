@@ -553,3 +553,11 @@ div.forum-editor-actions {
     padding: 1em 2em;
     text-align: right;
 }
+
+div.forum-editor-tools img {
+    margin: 0 0.3em 0 0;
+}
+
+img.markup-toolbar-button {
+    cursor: pointer;
+}

@@ -5,6 +5,7 @@
 {% set crumbs = [(url('forums.forums'), _('Forums')),
                  (url('forums.threads', forum.slug), forum.name),
                  (None, _('Create a new thread'))] %}
+{% set scripts = ('forums',) %}
 
 {% block content %}
   <h2>{{ _('Create a new thread') }}</h2>
@@ -13,6 +14,9 @@
     {{ csrf() }}
     {% for field in form %}
       <div class="form-widget">
+        {% if field.name == 'content' %}
+            <div class="forum-editor-tools"></div>        
+        {% endif %}
         {{ field.label_tag()|safe }}
         {{ field|safe }}
       </div>

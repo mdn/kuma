@@ -279,3 +279,7 @@ form.new-thread div.form-widget label {
     width: 10em;
     float: left;
 }
+
+form.new-thread div.form-widget div.forum-editor-tools {
+    margin: 0 0 0 10em;
+}
