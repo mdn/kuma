@@ -2,9 +2,9 @@
 <ol class="breadcrumbs">
   {% for target, label in breadcrumbs %}
     {% if target %}
-      <li><a href="{{ target }}">{{ label }}</a></li>
+      <li><a href="{{ target }}">{{ label|truncate(length=30) }}</a></li>
     {% else %}
-      <li>{{ label }}</li>
+      <li>{{ label|truncate(length=30) }}</li>
     {% endif %}
   {% endfor %}
 </ol>

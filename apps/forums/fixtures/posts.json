@@ -16,6 +16,20 @@
         }
     },
     {
+        "pk": 4,
+        "model": "forums.thread",
+        "fields": {
+            "is_sticky": false,
+            "forum": 1,
+            "created": "2010-05-04 14:09:33",
+            "is_locked": false,
+            "creator": 118533,
+            "replies": 0,
+            "title": "A thread with a very very long title that should get truncated in the breadcrumbs.",
+            "last_post": null
+        }
+    },
+    {
         "pk": 3,
         "model": "forums.thread",
         "fields": {
@@ -307,6 +321,17 @@
             "updated": "2010-05-01 16:08:28",
             "created": "2010-05-01 16:08:28",
             "thread": 1,
+            "author": 118533
+        }
+    },
+    {
+        "pk": 25,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-05-21 16:08:28",
+            "created": "2010-05-21 16:08:28",
+            "thread": 4,
             "author": 118533
         }
     },

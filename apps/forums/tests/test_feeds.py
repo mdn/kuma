@@ -18,7 +18,7 @@ class ForumTestFeedSorting(ForumTestCase):
     def test_threads_sort(self):
         f = Forum.objects.get(pk=1)
         given_ = ThreadsFeed().items(f)[0].id
-        exp_ = 3L
+        exp_ = 4L
         eq_(exp_, given_)
 
     def test_posts_sort(self):

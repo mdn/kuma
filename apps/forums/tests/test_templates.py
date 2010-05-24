@@ -89,3 +89,15 @@ class ForumsTemplateTestCase(ForumTestCase):
                     args=[self.forum.slug, self.thread.id, self.post.id]),
             follow=True)
         eq_(403, response.status_code)
+
+
+class PostsTemplateTestCase(ForumTestCase):
+
+    def test_long_title_truncated_in_crumbs(self):
+        """A very long thread title gets truncated in the breadcrumbs"""
+        forum = Forum.objects.filter()[0]
+        response = self.client.get(reverse('forums.posts',
+                                           args=[forum.slug, 4]), follow=True)
+        doc = pq(response.content)
+        crumb = doc('ol.breadcrumbs li:last-child')
+        eq_(crumb.text(), 'A thread with a very very ...')

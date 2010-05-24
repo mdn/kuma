@@ -31,6 +31,10 @@ class ForumTestCase(TestCase):
         t3.last_post = Post.objects.get(pk=5)
         t3.save()
 
+        t4 = Thread.objects.get(pk=4)
+        t4.last_post = Post.objects.get(pk=25)
+        t4.save()
+
         self.client = client.Client()
         self.client.get('/')
 
