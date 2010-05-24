@@ -49,7 +49,7 @@ def search(request):
                         time.strptime(cleaned_data['created_date'],
                                       '%m/%d/%Y'))
                     cleaned_data['created_date'] = int(created_timestamp)
-                except ValueError:
+                except (ValueError, OverflowError):
                     cleaned_data['created'] = None
             else:
                 cleaned_data['created'] = None
@@ -274,13 +274,13 @@ def search(request):
             'range': True,
             'filter': 'created',
             'min': 0,
-            'max': cleaned['created_date'],
+            'max': max(cleaned['created_date'], 0),
         })
     elif cleaned['created'] == constants.CREATED_AFTER:
         filters_f.append({
             'range': True,
             'filter': 'created',
-            'min': cleaned['created_date'],
+            'min': min(cleaned['created_date'], unix_now),
             'max': unix_now,
         })
 

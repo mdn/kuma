@@ -314,6 +314,21 @@ class SearchTest(SphinxTestCase):
         response = self.client.get(reverse('search'), qs)
         self.assertEquals(response.status_code, 200)
 
+    def test_created_range_sanity(self):
+        """Ensure that the created_date range is sane."""
+        qs = {'a': 1, 'w': '2', 'q': 'contribute', 'created': '2',
+              'created_date': '05/28/2099', 'format': 'json'}
+        response = self.client.get(reverse('search'), qs)
+        self.assertEquals(0, json.loads(response.content)['total'])
+        qs = {'a': 1, 'w': '2', 'q': 'contribute', 'created': '1',
+              'created_date': '05/28/1900', 'format': 'json'}
+        response = self.client.get(reverse('search'), qs)
+        self.assertEquals(0, json.loads(response.content)['total'])
+        qs = {'a': 1, 'w': '2', 'q': 'contribute', 'created': '1',
+              'created_date': '05/28/1920', 'format': 'json'}
+        response = self.client.get(reverse('search'), qs)
+        self.assertEquals(0, json.loads(response.content)['total'])
+
     def test_author(self):
         """Check several author values, including test for (anon)"""
         qs = {'a': 1, 'w': 2, 'format': 'json'}
