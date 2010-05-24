@@ -368,6 +368,7 @@ h2 {
 ----------------------------------*/
 
 #content {
+    clear:both;
     width: 920px;
     margin: auto;
     text-align: left;

@@ -23,12 +23,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kitsune', # Or path to database file if using sqlite3.
-        'USER': '', # Not used with sqlite3.
-        'PASSWORD': '', # Not used with sqlite3.
-        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '', # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'kitsune',  # Or path to database file if using sqlite3.
+        'USER': '',  # Not used with sqlite3.
+        'PASSWORD': '',  # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     }
 }
@@ -137,7 +137,7 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
+    'sumo.backends.SessionBackend',  # TODO: Replace with Kitsune auth.
 )
 
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
@@ -180,11 +180,12 @@ if DEBUG:
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
+
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
     from caching.base import cache
-    config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',],
+    config = {'extensions': ['tower.template.i18n', 'caching.ext.cache', ],
               'finalize': lambda x: x if x is not None else ''}
     if 'memcached' in cache.scheme and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
@@ -230,6 +231,9 @@ MINIFY_BUNDLES = {
         'forums': (
             'css/forums.css',
         ),
+        'questions': (
+            'css/questions.css',
+        ),
         'search': (
             'css/search.css',
         ),
@@ -239,12 +243,16 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'common': (
-            'js/jquery.min.js',
+            'js/libs/jquery.min.js',
+            'js/libs/modernizr-1.1.min.js',
             'js/menu.js',
             'js/main.js',
         ),
+        'questions': (
+            'js/questions.js',
+        ),
         'search': (
-            'js/jqueryui.min.js',
+            'js/libs/jqueryui.min.js',
             'js/search.js',
         ),
         'forums': (
@@ -277,8 +285,8 @@ SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
 
 #
 # Sphinx results tweaking
-SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
-SEARCH_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
+SEARCH_FORUM_MIN_AGE = 7  # age before which decay doesn't apply, in days
+SEARCH_FORUM_HALF_LIFE = 14  # controls the decay rate, in days
 SEARCH_MAX_RESULTS = 1000
 SEARCH_RESULTS_PER_PAGE = 10
 

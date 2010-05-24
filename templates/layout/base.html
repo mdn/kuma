@@ -39,11 +39,15 @@
 
 <div id="content">
 
+{% block sidebar %}
 <div id="sidebar">
 {% include 'layout/sidebar.html' %}
 </div>
+{% endblock %}
 
+{% block breadcrumbs %}
 {{ breadcrumbs(crumbs) }}
+{% endblock %}
 
 <div id="main" role="main">
 {% block content_area %}

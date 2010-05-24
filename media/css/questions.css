@@ -1,0 +1,348 @@
+/*
+ * Questions forums CSS
+ */
+
+/* base style overrides */
+body {
+    background: #fff url(../img/background-feature.jpg) repeat-x center -65px;
+}
+
+/* main header */
+#main-hdr {
+    height: 200px;
+}
+
+#main-hdr hgroup {
+    float: left;
+    padding: 45px 0 0 25px;
+    width: 600px;
+}
+
+#main-hdr h1 {
+    color: #fff;
+    font-size: 46px;
+    line-height: 46px;
+}
+
+#main-hdr h1 a {
+    color: #fff;
+}
+
+#main-hdr h2 {
+    color: #4B4741;
+    font-size: 18px;
+    margin: .5em 0 0;
+}
+
+#support-search, #greeting {
+    float: right;
+    padding: 0 20px 0 0;
+    width: 260px;
+}
+
+#support-search {
+    padding-top: 50px;
+}
+
+#support-search div.wrap {
+    background: #fff url(../img/questions/icon.search.gif) no-repeat 6px 3px;
+    border: solid 1px #87c4dc;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    float:left;
+    padding:0 10px 0 30px;
+}
+
+#support-search input.text {
+    border: none;
+    font-size: 14px;
+    padding: 4px 0;
+    width: 225px;
+}
+
+#greeting {
+    color: #807970;
+    font-family: Verdana;
+    font-size: 12px;
+    margin: 20px 0 0;
+    text-align: right;
+}
+
+#greeting span.user {
+    color: #4B4740;
+}
+
+#greeting nav a:first-child {
+    padding: 0 0 0 5px;
+}
+
+/* Questions filter */
+#filter {
+    font-size: 14px;
+    height: 30px;
+    margin: 0 0 10px;
+    padding: 0 0 0 25px;
+}
+
+#filter label {
+    color: #898378;
+    float: left;
+    padding: 4px 0;
+}
+
+#filter ul {
+    float: left;
+    list-style: none;
+    padding: 0 0 0 5px;
+}
+
+#filter li {
+    float: left;
+    list-style: none;
+}
+
+#filter li a {
+    float:left;
+    padding: 4px 10px;
+}
+
+#filter li a:hover {
+    text-decoration: underline;
+}
+
+
+#filter li.active a {
+    background: #009ac3;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #fff;
+}
+
+/* main content layout */
+#main-content {
+    float: left;
+    width: 640px;
+}
+
+#main-sd {
+    float: right;
+    width: 235px;
+}
+
+/* questions list */
+ol.questions {
+    border-top: solid 2px #edece9;
+    color: #898378;
+    list-style: none;
+    margin: 0 0 0 10px;
+}
+
+ol.questions li {
+    border-bottom: solid 2px #edece9;
+    list-style: none;
+    padding: 15px 15px 18px;
+}
+
+ol.questions div.people {
+    float: right;
+    text-align: right;
+    width: 150px;
+}
+
+ol.questions div.people strong {
+    display: block;
+    float: right;
+    padding: 5px 0 5px 50px;
+}
+
+div.people.just-one strong {
+    background: transparent url(../img/questions/icon.one.gif) no-repeat 27px 6px;
+}
+
+div.people.less-ten strong {
+    background: transparent url(../img/questions/icon.lessten.gif) no-repeat 25px 6px;
+}
+
+div.people.more-ten strong {
+    background: transparent url(../img/questions/icon.tenmore.gif) no-repeat 0 6px;
+}
+
+ol.questions div.people span {
+    clear: right;
+    display: block;
+}
+
+ol.questions div.title h2 {
+    font-size: 17px;
+    display: inline;
+    line-height: 25px;
+}
+
+ol.questions span.badge {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    display: inline-block;
+    font-family: Verdana;
+    font-size: 12px;
+    margin: 0 0 0 10px;
+    padding: 3px 7px 3px 25px;
+}
+
+ol.questions span.badge.replies {
+    background: #eaf4f8 url(../img/questions/icon.replies.gif) no-repeat 5px center;
+    color: #0489B6;
+}
+
+ol.questions span.badge.solutions {
+    background: #fff0cb url(../img/questions/icon.solutions.gif) no-repeat 5px center;
+    color: #926E2D;
+    text-transform: uppercase;
+}
+
+ol.questions span.badge.solved {
+    background: #d3e8ca url(../img/questions/icon.solved.gif) no-repeat 5px center;
+    color: #377300;
+    text-transform: uppercase;
+}
+
+ol.questions span.badge.contributed {
+    background: #eaf4f8 url(../img/questions/icon.contributed.gif) no-repeat 5px center;
+    color: #0489B6;
+}
+
+ol.questions div.asked-by {
+    font-size: 14px;
+    margin: 7px 0;
+}
+
+ol.questions div.asked-by span.user {
+    color: #4B4740;
+}
+
+ol.questions p {
+    margin: 3px 0 0;
+}
+
+ol.questions div.meta {
+    margin: 10px 0 0;
+}
+
+/* questions pagination */
+ol.pagination {
+    font-family: Verdana;
+    margin: 1.5em auto 0;
+    padding: 0 0 0 25px;
+}
+
+ol.pagination li {
+    float: left;
+    padding: 0 2px;
+}
+
+ol.pagination li[rel="prev"] {
+    padding-left: 0;
+}
+
+ol.pagination li a {
+    float: left;
+    padding: 4px 8px;
+}
+
+ol.pagination li a:hover {
+    text-decoration: underline;
+}
+
+ol.pagination li[rel="prev"] a {
+    padding-left: 0;
+}
+
+ol.pagination li.selected a {
+    background: #0489B6;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #fff;
+    cursor: default;
+}
+
+ol.pagination li.selected a:hover {
+    text-decoration:none;
+}
+
+/* side modules */
+div.sd-module {
+    background:transparent url(../img/questions/bkg.askquestion.gif) no-repeat;
+    padding: 15px;
+}
+
+div.sd-module h3 {
+    color: #4B4740;
+    font-size: 20px;
+}
+
+div.sd-module h4 {
+    color: #4B4740;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 5px 0 0;
+}
+
+div.sd-module p {
+    color: #898378;
+    font-size: 14px;
+    margin: 20px 0 0;
+}
+
+/* ask a question */
+#ask-question div.ask-question {
+    margin: 15px 0 0;
+}
+
+#ask-question div.ask-question a {
+    background: #F6D600;
+    background: -moz-linear-gradient(top, #FDF9D8, #F6D600);
+    background: -webkit-gradient(linear, left top, left bottom, from(#FDF9D8), to(#F6D600));
+    border: solid 1px #DA7C2F;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    box-shadow: 2px 4px 5px #aaa;
+    -moz-box-shadow: 2px 4px 5px #aaa;
+    -webkit-box-shadow: 2px 4px 5px #aaa;
+    color: #D13E05;
+    display: block;
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px;
+    text-shadow: #fff 0 1px 0;
+    width: 180px;
+}
+
+#ask-question div.ask-question a span.q{
+    background: #fff;
+    border: solid 1px #DA7C2F;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    margin: 0 5px 0 0;
+    padding: 3px 7px 3px 8px;
+}
+
+/* top contributors */
+#top-contributors {
+    margin: 30px 0 0;
+}
+
+#top-contributors ol {
+    color: #898378;
+    font-size: 14px;
+    margin: 10px 0 0 22px;
+}
+
+#top-contributors li {
+    margin: 0 0 5px;
+}

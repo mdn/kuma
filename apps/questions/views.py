@@ -4,6 +4,7 @@ import jingo
 
 from sumo.utils import paginate
 from .models import QuestionForum, Question
+import questions as constants
 
 
 def question_forums(request):
@@ -20,7 +21,8 @@ def questions(request, forum_slug):
 
     forum = get_object_or_404(QuestionForum, slug=forum_slug)
 
-    questions_ = paginate(forum.question_set.all())
+    questions_ = paginate(request, forum.questions.all(),
+                          per_page=constants.QUESTIONS_PER_PAGE)
 
     return jingo.render(request, 'questions/questions.html',
                         {'forum': forum, 'questions': questions_})
@@ -32,7 +34,8 @@ def answers(request, forum_slug, question_id):
     forum = get_object_or_404(QuestionForum, slug=forum_slug)
     question = get_object_or_404(Question, pk=question_id)
 
-    answers_ = paginate(question.answer_set.all())
+    answers_ = paginate(request, question.answers.all(),
+                        per_page=constants.ANSWERS_PER_PAGE)
 
     return jingo.render(request, 'questions/answers.html',
                         {'forum': forum, 'question': question,
