@@ -117,8 +117,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
-    'sumo.context_processors.title',
-    'sumo.context_processors.auth',
+
+    'sumo.context_processors.global_settings',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -293,3 +293,4 @@ SEARCH_CACHE_PERIOD = 15
 # TODO: Once we can log in through Kitsune, change this.
 LOGIN_URL = '/tiki-login.php'
 LOGOUT_URL = '/tiki-logout.php'
+REGISTER_URL = '/tiki-register.php'

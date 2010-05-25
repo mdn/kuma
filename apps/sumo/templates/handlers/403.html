@@ -9,7 +9,7 @@
 <p>{{ _('You do not have permission to access this page.') }}</p>
 
 {% if not user.is_authenticated() %}
-  <p><a href="{{ LOGIN_URL }}">{{ _('Click here to log in') }}</a></p>
+  {% include "layout/login.html" %}
 {% endif %}
 
 {% endblock %}
