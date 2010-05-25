@@ -157,7 +157,7 @@ class ForumClient(SearchClient):
     Search the forum
     """
     index = 'forum_threads'
-    weights = {'title': 4, 'content': 3}
+    weights = {'title': 2, 'content': 1}
 
 
 class WikiClient(SearchClient):
@@ -165,4 +165,4 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-    weights = {'title': 4, 'content': 3}
+    weights = {'pageName': 4, 'content': 1, 'keywords': 4, 'tag': 2}
