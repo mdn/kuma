@@ -16,15 +16,9 @@ ol.threads-columns li {
     color: #afaba3;
     float: left;
     font-family: Verdana, "Verdana Ref", sans-serif;
-    font-size: 115%;
-    font-weight: bold;
-    padding: 1%;
-    text-align: center;
-}
-
-ol.forums-columns li {
     font-size: 10px;
-    padding: 2.5em 1% 1%;
+    font-weight: bold;
+    padding: 1.1em 1% 1% 1%;
 }
 
 ol.threads-columns li,
@@ -34,7 +28,7 @@ ol.forums-columns li {
 
 ol.posts-columns li {
     font-size: 10px;
-    padding: 2.5em 0 1% 2%;
+    padding: 1.1em 1% 1% 1%;
 }
 
 ol.threads-columns a {
@@ -186,7 +180,7 @@ ol.posts li {
 ol.posts li div.author {
     float: left;
     width: 21%;
-    padding: 0 0 1em 2%;
+    padding: 0 1% 1em 1%;
 }
 
 /* Wiki markup for posts */
