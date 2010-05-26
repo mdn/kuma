@@ -15,6 +15,7 @@ from nose import SkipTest
 from nose.tools import assert_raises
 import test_utils
 import jingo
+from pyquery import PyQuery as pq
 
 from manage import settings
 from sumo.urlresolvers import reverse
@@ -224,6 +225,12 @@ class SearchTest(SphinxTestCase):
         response = self.client.get(reverse('search'), qs)
         self.assertEquals(response.status_code, 200)
         self.assertNotEquals(0, json.loads(response.content)['total'])
+
+    def test_search_metrics(self):
+        """Ensure that query strings are added to search results"""
+        response = self.client.get(reverse('search'), {'q': 'audio', 'w': 3})
+        doc = pq(response.content)
+        assert doc('a.title:first').attr('href').endswith('?s=audio&as=s')
 
     def test_category_filter(self):
         wc = WikiClient()
