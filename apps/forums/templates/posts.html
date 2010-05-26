@@ -105,7 +105,7 @@
         </div>
       </form>
     </div>
-  {% else %}
+  {% elif user.is_authenticated() and thread.is_locked %}
     <div id="thread-reply">
       <h3>{{ _('Post a reply') }}</h3>
 
