@@ -528,6 +528,10 @@ div#thread-reply h3 {
     font-size: 180%;
 }
 
+p#thread-locked {
+    padding: .5em 0 1.2em 1em;
+}
+
 div.forum-editor {
     float: left;
     width: 65%;

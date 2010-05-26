@@ -57,7 +57,7 @@
           <div class="info">
             {{ datetimeformat(post.created, format='longdatetime') }}
             <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
-            {% if user.is_authenticated() %}
+            {% if user.is_authenticated() and not thread.is_locked %}
               <span class="post-action">
                 <a href="#thread-reply">{{ _('Reply') }}</a>
               </span>
@@ -74,7 +74,7 @@
     <p>Oh, no! Looks like there are no posts!</p>
   {% endif %}
 
-  {% if user.is_authenticated() %}
+  {% if user.is_authenticated() and not thread.is_locked %}
     <div id="thread-reply">
       <h3>{{ _('Post a reply') }}</h3>
 
@@ -99,6 +99,12 @@
           <input type="submit" value="Reply" />
         </div>
       </form>
+    </div>
+  {% else %}
+    <div id="thread-reply">
+      <h3>{{ _('Post a reply') }}</h3>
+      
+      <p id="thread-locked">{{ _('This thread has been locked. It is no longer possible to post new replies.') }}</p>
     </div>
   {% endif %}
 

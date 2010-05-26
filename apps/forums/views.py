@@ -102,12 +102,13 @@ def reply(request, forum_slug, thread_id):
 
     if form.is_valid():
         thread = Thread.objects.get(pk=thread_id)
-        reply = form.save(commit=False)
-        reply.thread = thread
-        reply.author = request.user
-        reply.save()
+        if not thread.is_locked:
+            reply = form.save(commit=False)
+            reply.thread = thread
+            reply.author = request.user
+            reply.save()
 
-        return HttpResponseRedirect(reply.get_absolute_url())
+            return HttpResponseRedirect(reply.get_absolute_url())
 
     return jingo.render(request, 'bad_reply.html')
 
