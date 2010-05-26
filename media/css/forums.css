@@ -10,7 +10,8 @@ ol.posts {
 }
 
 ol.forums-columns li,
-ol.threads-columns li {
+ol.threads-columns li,
+ol.posts-columns li {
     background-color: #f0f0f0;
     border-bottom: 2px solid #e4e4e4;
     color: #afaba3;
@@ -28,7 +29,7 @@ ol.forums-columns li {
 
 ol.posts-columns li {
     font-size: 10px;
-    padding: 1.1em 1% 1% 1%;
+    font-weight: bold;
 }
 
 ol.threads-columns a {
@@ -137,16 +138,62 @@ ol.posts li div.author a {
     font-weight: bold;
 }
 
+ol.posts li div.author a {
+    display: block;
+}
+
+ol.posts li div.author a:hover {
+    text-decoration: underline;
+}
+
+ol.posts li div.author span.posts {
+    font-style: italic;
+}
+
+ol.posts li div.content {
+    float: left;
+    padding: 0 1% 1em 1%;
+    width: 72.9%;
+}
+
+ol.posts li div.info {
+    clear: left;
+    border-top: 1px solid #e4e4e4;
+    padding: 1em 1em 1em 1%;
+}
+
+ol.posts li div.info a {
+    display: none;
+}
+
+ol.posts li:hover div.info a {
+    display: inline;
+}
+
+ol.posts li div.info span.post-action {
+    float: right;
+}
+
+div#thread-reply {
+    background-color: #edf7fA;
+}
+
+div#thread-reply h3 {
+    padding: .5em 0 0 .5em;
+    font-weight: normal;
+    font-size: 180%;
+}
+
+p#thread-locked {
+    padding: .5em 0 1.2em 1em;
+}
+
 a#new-thread {
     background: url(../img/forums/arrow.png) no-repeat scroll left center transparent;
     float: left;
     font-size: 115%;
     margin: 0 0 1em 10px;
     padding-left: 10px;
-}
-
-ol.posts li div.author a {
-    display: block;
 }
 
 div.thread-actions {
@@ -285,10 +332,6 @@ form.new-thread div.form-widget label {
     float: left;
 }
 
-form.new-thread div.form-widget div.forum-editor-tools {
-    margin: 0 0 0 10em;
-}
-
 /* Delete Thread/Post Confirmation */
 div.thread-to-delete label,
 div.post-to-delete label {
@@ -337,3 +380,43 @@ span.locked {
     background: #fff0cb url(../img/forums/type/locked.png) no-repeat 8px center;
     color: #a4813b;
 }
+
+/* Forums markup editor */
+form.new-thread div.form-widget div.forum-editor-tools {
+    margin: 0 0 0 10em;
+}
+
+div.forum-editor {
+    float: left;
+    width: 65%;
+    padding: 1em 0 1em 1em;
+}
+
+div.forum-editor textarea {
+    width: 100%;
+}
+
+div.forum-editor-notes {
+    float: left;
+    padding: 1em 0 0 1em;
+}
+
+div.forum-editor-notes p {
+    margin-top: .8em;
+}
+
+div.forum-editor-actions {
+    clear: both;
+    border-top: 2px solid #fff;
+    padding: 1em 2em;
+    text-align: right;
+}
+
+div.forum-editor-tools img {
+    margin: 0 0.3em 0 0;
+}
+
+img.markup-toolbar-button {
+    cursor: pointer;
+}
+/* End markup editor */
