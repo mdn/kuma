@@ -20,8 +20,10 @@ from manage import settings
 from sumo.urlresolvers import reverse
 import search as constants
 from search.utils import start_sphinx, stop_sphinx, reindex
-from search.clients import WikiClient, ForumClient, SearchError
+from search.clients import (WikiClient, ForumClient, DiscussionClient,
+                            SearchError)
 from sumo.models import WikiPage
+from forums.models import Post
 
 
 def render(s, context={}):
@@ -143,7 +145,8 @@ class SphinxTestCase(test_utils.TransactionTestCase):
     when testing any feature that requires sphinx.
     """
 
-    fixtures = ['forums.json', 'threads.json', 'pages.json', 'categories.json']
+    fixtures = ['forums.json', 'threads.json', 'pages.json', 'categories.json',
+                'users.json', 'posts.json']
     sphinx = True
     sphinx_is_running = False
 
@@ -392,6 +395,14 @@ class SearchTest(SphinxTestCase):
         wc = WikiClient()
         self.assertEquals('<b>test</b>&lt;/style&gt;',
                           wc.excerpt('test</style>', 'test'))
+
+    def test_discussion_sanity(self):
+        """Sanity check for discussion forums search client."""
+        dc = DiscussionClient()
+        results = dc.query(u'test')
+        self.assertNotEquals(0, len(results))
+        post = Post.objects.get(pk=results[0]['id'])
+        self.assertEquals(u'<b>test</b>', dc.excerpt(post.content, u'test'))
 
 
 def test_sphinx_down():

@@ -1,5 +1,7 @@
 from tower import ugettext_lazy as _lazy
 from .utils import crc32
+from .sphinxapi import (SPH_SORT_ATTR_DESC, SPH_SORT_ATTR_ASC,
+                        SPH_SORT_EXTENDED, SPH_GROUPBY_ATTR)
 
 
 WHERE_WIKI = 1
@@ -69,15 +71,12 @@ LUP_LIST = (
     (180, _lazy(u'Last 6 months')),
 )
 
-# sort by constants, defined in sphinxapi.py but unavailable here
-# SPH_SORT_ATTR_DESC = 1
-# SPH_SORT_EXTENDED = 4
 SORT = (
     #: (mode, clause)
-    (4, '@relevance DESC, age ASC'),  # default
-    (1, 'last_updated'),
-    (1, 'created'),
-    (1, 'replies'),
+    (SPH_SORT_EXTENDED, '@relevance DESC, age ASC'),  # default
+    (SPH_SORT_ATTR_DESC, 'last_updated'),
+    (SPH_SORT_ATTR_DESC, 'created'),
+    (SPH_SORT_ATTR_DESC, 'replies'),
 )
 
 # Integer values here map to tuples from SORT defined above
