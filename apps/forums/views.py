@@ -142,6 +142,7 @@ def new_thread(request, forum_slug):
 
     return jingo.render(request, 'bad_reply.html')
 
+
 @require_POST
 @login_required
 @permission_required_or_403('forums_forum.thread_locked_forum',
