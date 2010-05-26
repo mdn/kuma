@@ -66,7 +66,7 @@ class ForumsTemplateTestCase(ForumTestCase):
         doc = pq(response.content)
         last_post_link = doc('ol.forums div.last-post a:not(.username)')[0]
         href = last_post_link.attrib['href']
-        eq_(href.split('#')[1], 'post-24')
+        eq_(href.split('#')[1], 'post-25')
 
     def test_edit_thread_403(self):
         """Editing a thread without permissions returns 403."""

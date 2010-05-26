@@ -95,6 +95,31 @@ class Post(ModelBase):
             self.thread.forum.last_post = self
             self.thread.forum.save()
 
+    def delete(self, *args, **kwargs):
+        """Override delete method to update parent thread info."""
+
+        thread = self.thread
+        if thread.last_post and thread.last_post.id == self.id:
+            try:
+                thread.last_post = thread.post_set.all() \
+                                                  .order_by('-created')[1]
+            except IndexError:
+                # The thread has only one Post so let the delete cascade.
+                pass
+        thread.replies = thread.post_set.count() - 2
+        thread.save()
+
+        forum = thread.forum
+        if forum.last_post and forum.last_post.id == self.id:
+            try:
+                forum.last_post = Post.objects.filter(thread__forum=forum) \
+                                              .order_by('-created')[1]
+            except IndexError:
+                forum.last_post = None
+            forum.save()
+
+        super(Post, self).delete(*args, **kwargs)
+
     @property
     def page(self):
         """Get the page of the thread on which this post is found."""

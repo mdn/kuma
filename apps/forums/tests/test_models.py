@@ -49,3 +49,37 @@ class ForumModelTestCase(ForumTestCase):
         eq_(1, p.page)
         p = Post.objects.get(pk=24)
         eq_(2, p.page)
+
+    def test_last_post_updated(self):
+        """Adding/Deleting the last post in a thread and forum should
+        update the last_post field
+        """
+        forum = Forum.objects.get(pk=1)
+        last_post = forum.last_post
+        thread = last_post.thread
+
+        # add a new post, then check that last_post is updated
+        new_post = Post(thread=thread, content="test", author=last_post.author)
+        new_post.save()
+        forum = Forum.objects.get(pk=1)
+        thread = Thread.objects.get(pk=thread.id)
+        eq_(forum.last_post.id, new_post.id)
+        eq_(thread.last_post.id, new_post.id)
+
+        # delete the new post, then check that last_post is updated
+        new_post.delete()
+        forum = Forum.objects.get(pk=1)
+        thread = Thread.objects.get(pk=thread.id)
+        eq_(forum.last_post.id, last_post.id)
+        eq_(thread.last_post.id, last_post.id)
+
+    def test_delete_last_and_only_post_in_thread(self):
+        """Deleting the only post in a thread should delete the thread"""
+        forum = Forum.objects.get(pk=1)
+        thread = Thread(title="test", forum=forum, creator_id=118533)
+        thread.save()
+        post = Post(thread=thread, content="test", author=thread.creator)
+        post.save()
+        eq_(1, thread.post_set.count())
+        post.delete()
+        eq_(0, Thread.objects.filter(pk=thread.id).count())

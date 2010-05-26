@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -8,9 +10,11 @@ from authority.decorators import permission_required_or_403
 
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
-from .models import Forum, Thread
+from .models import Forum, Thread, Post
 from .forms import ReplyForm, NewThreadForm
 import forums as constants
+
+log = logging.getLogger('k.forums')
 
 
 def forums(request):
@@ -145,6 +149,7 @@ def new_thread(request, forum_slug):
                         {'form': form, 'forum': forum})
 
 
+
 @require_POST
 @login_required
 @permission_required_or_403('forums_forum.thread_locked_forum',
@@ -169,7 +174,7 @@ def lock_thread(request, forum_slug, thread_id):
 def sticky_thread(request, forum_slug, thread_id):
     """Mark/unmark a thread sticky."""
 
-    thread = Thread.objects.get(pk=thread_id)
+    thread = get_object_or_404(Thread, pk=thread_id)
     thread.is_sticky = not thread.is_sticky
     thread.save()
 
@@ -211,4 +216,26 @@ def edit_post(request, forum_slug, thread_id, post_id):
 def delete_post(request, forum_slug, thread_id, post_id):
     """Delete a post."""
 
-    return jingo.render(request, 'bad_reply.html')
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id)
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'confirm_post_delete.html',
+                            {'forum': forum, 'thread': thread,
+                             'post': post})
+
+    # Handle confirm delete form POST
+    log.info("User %s is deleting post with id=%s" % (request.user, post.id))
+    post.delete()
+    try:
+        Thread.objects.get(pk=thread_id)
+        goto = reverse('forums.posts',
+                       kwargs={'forum_slug': forum_slug,
+                               'thread_id': thread_id})
+    except Thread.DoesNotExist:
+        # The thread was deleted, go to the threads list page
+        goto = reverse('forums.threads', kwargs={'forum_slug': forum_slug})
+
+    return HttpResponseRedirect(goto)

@@ -1,0 +1,26 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{# L10n: {t} is the title of the thread. {f} if the name of the forum. #}
+{% set title = _('Delete Post | {t} | {f} | Forums')|f(t=thread.title, f=forum.name) %}
+{% set crumbs = [(url('forums.forums'), _('Forums')),
+                (url('forums.threads', forum.slug), forum.name),
+                (url('forums.posts', forum.slug, thread.id), thread.title),
+                (None, _('Delete Post'))] %}
+
+{% block content %}
+  <h2>{{ _('Are you sure you want to delete this post?') }}</h2>
+  <div class="post-to-delete">
+    <label>{{ _('Author') }}</label>
+    <div>{{ post.author }}</div>
+    <label>{{ _('Date') }}</label>
+    <div>{{ datetimeformat(post.created, format='longdatetime') }}</div>
+    <label>{{ _('Content') }}</label>
+    <div class="content">{{ post.content_parsed }}</div>
+    
+    <form action="{{ url('forums.delete_post', forum_slug=forum.slug, thread_id=thread.id, post_id=post.id) }}" method="post">
+      {{ csrf() }}
+      <a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ _('Cancel') }}</a>
+      <input type="submit" value="{{ _('Delete') }}" />
+    </form>
+  </div>
+{% endblock %}

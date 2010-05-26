@@ -161,7 +161,8 @@ ol.posts li div.post-actions {
    margin: 1em 0;
 }
 
-ol.posts li div.post-actions a {
+ol.posts li div.post-actions a,
+ol.posts li div.post-actions form {
     display: inline;
 }
 
@@ -286,4 +287,19 @@ form.new-thread div.form-widget label {
 
 form.new-thread div.form-widget div.forum-editor-tools {
     margin: 0 0 0 10em;
+}
+
+/* Delete Post Confirmation */
+div.post-to-delete label {
+    display:block;
+    font-weight:bold;
+    margin: 0.5em 0 0 0;
+}
+
+div.post-to-delete input {
+    margin: 0 0 0 1em;
+}
+
+div.post-to-delete form {
+    margin: 2em 0 0 0;
 }

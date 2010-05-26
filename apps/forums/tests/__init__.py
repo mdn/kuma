@@ -20,7 +20,7 @@ class ForumTestCase(TestCase):
         installed. This will set them to the correct values."""
 
         f1 = Forum.objects.filter()[0]
-        f1.last_post = Post.objects.get(pk=24)
+        f1.last_post = Post.objects.get(pk=25)
         f1.save()
 
         t1 = Thread.objects.get(pk=1)
