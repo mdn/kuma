@@ -8,6 +8,10 @@ from forums.views import sort_threads
 from sumo.urlresolvers import reverse
 
 
+get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
+post = lambda c, v, **kw: c.post(reverse(v, **kw), follow=True)
+
+
 class ForumTestCase(TestCase):
     fixtures = ['users.json', 'posts.json']
 
@@ -37,9 +41,6 @@ class ForumTestCase(TestCase):
 
         self.client = client.Client()
         self.client.get('/')
-
-        self.get = lambda v, **kw: self.client.get(reverse(v, **kw),
-                                                   follow=True)
 
 
 class PostTestCase(ForumTestCase):
@@ -148,7 +149,8 @@ class PostTestCase(ForumTestCase):
         open.new_post(author=user, content='empty')
 
     def test_post_no_session(self):
-        r = self.get('forums.new_thread', kwargs={'forum_slug': 'test-forum'})
+        r = get(self.client, 'forums.new_thread',
+                kwargs={'forum_slug': 'test-forum'})
         assert('http://testserver/tiki-login.php' in
                 r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])
@@ -158,7 +160,7 @@ class ThreadTestCase(ForumTestCase):
 
     def test_delete_no_session(self):
         """Delete a thread while logged out redirects."""
-        r = self.get('forums.delete_thread',
-                     kwargs={'forum_slug': 'test-forum', 'thread_id': 1})
+        r = get(self.client, 'forums.delete_thread',
+                kwargs={'forum_slug': 'test-forum', 'thread_id': 1})
         assert('http://testserver/tiki-login.php' in r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])

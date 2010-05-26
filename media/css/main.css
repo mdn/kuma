@@ -421,6 +421,28 @@ h2 {
 }
 /* end orange buttons */
 
+/* Login form */
+#login-form {
+    margin: 1em 0;
+}
+
+#login-form h3 {
+    color: #afaba3;
+    font-size: 150%;
+    margin-bottom: .5em;
+}
+
+#login-form label {
+    color: #807970;
+    display: block;
+    margin: .3em 0;
+}
+
+#login-form input {
+    margin: .3em 0;
+}
+/* End login form */
+
 /* Paginators */
 ol.pagination {
     margin: 0 auto 1em;

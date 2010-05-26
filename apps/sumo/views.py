@@ -3,6 +3,12 @@ from django.http import HttpResponsePermanentRedirect
 import jingo
 
 
+def handle403(request):
+    """A 403 message that looks nicer than the normal Apache forbidden page."""
+
+    return jingo.render(request, 'handlers/403.html', status=403)
+
+
 def handle404(request):
     """A handler for 404s that tries to strip trailing slashes before
     giving up and showing a 404 page."""
