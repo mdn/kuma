@@ -53,6 +53,21 @@ class Thread(ModelBase):
     def __unicode__(self):
         return self.title
 
+    def delete(self, *args, **kwargs):
+        """Override delete method to update parent forum info."""
+
+        forum = self.forum
+        if forum.last_post and forum.last_post.thread.id == self.id:
+            try:
+                forum.last_post = Post.objects.filter(thread__forum=forum) \
+                                              .exclude(thread=self) \
+                                              .order_by('-created')[0]
+            except IndexError:
+                forum.last_post = None
+            forum.save()
+
+        super(Thread, self).delete(*args, **kwargs)
+
     def new_post(self, author, content):
         """Create a new post, if the thread is unlocked."""
         if self.is_locked:

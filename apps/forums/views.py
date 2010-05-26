@@ -149,7 +149,6 @@ def new_thread(request, forum_slug):
                         {'form': form, 'forum': forum})
 
 
-
 @require_POST
 @login_required
 @permission_required_or_403('forums_forum.thread_locked_forum',
@@ -198,7 +197,21 @@ def edit_thread(request, forum_slug, thread_id):
 def delete_thread(request, forum_slug, thread_id):
     """Delete a thread."""
 
-    return jingo.render(request, 'bad_reply.html')
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id)
+
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'confirm_thread_delete.html',
+                            {'forum': forum, 'thread': thread})
+
+    # Handle confirm delete form POST
+    log.warning("User %s is deleting thread with id=%s" %
+                (request.user, thread.id))
+    thread.delete()
+
+    return HttpResponseRedirect(reverse('forums.threads',
+                                kwargs={'forum_slug': forum_slug}))
 
 
 @login_required
@@ -227,7 +240,8 @@ def delete_post(request, forum_slug, thread_id, post_id):
                              'post': post})
 
     # Handle confirm delete form POST
-    log.info("User %s is deleting post with id=%s" % (request.user, post.id))
+    log.warning("User %s is deleting post with id=%s" %
+                (request.user, post.id))
     post.delete()
     try:
         Thread.objects.get(pk=thread_id)

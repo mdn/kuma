@@ -15,7 +15,9 @@
       <a href="{{ url('forums.edit_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
     {% endif %}
     {% if has_perm('forums_forum.thread_delete_forum', forum) %}
-      <a href="{{ url('forums.delete_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}"/></a>
+      <a href="{{ url('forums.delete_thread', forum_slug=forum.slug, thread_id=thread.id) }}">
+        <img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}">
+      </a>
     {% endif %}
     {% if has_perm('forums_forum.thread_locked_forum', forum) %}
       <form action="{{ url('forums.lock_thread', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">

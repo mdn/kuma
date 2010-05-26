@@ -83,3 +83,33 @@ class ForumModelTestCase(ForumTestCase):
         eq_(1, thread.post_set.count())
         post.delete()
         eq_(0, Thread.objects.filter(pk=thread.id).count())
+
+
+class ThreadModelTestCase(ForumTestCase):
+
+    def setUp(self):
+        super(ThreadModelTestCase, self).setUp()
+
+        # Warm up the prefixer for reverse()
+        client.Client().get('/')
+
+    def test_delete_thread_with_last_forum_post(self):
+        """Deleting the thread with a forum's last post should
+        update the last_post field on the forum
+        """
+        forum = Forum.objects.get(pk=1)
+        last_post = forum.last_post
+
+        # add a new thread and post, verify last_post updated
+        thread = Thread(title="test", forum=forum, creator_id=118533)
+        thread.save()
+        post = Post(thread=thread, content="test", author=thread.creator)
+        post.save()
+        forum = Forum.objects.get(pk=1)
+        eq_(forum.last_post.id, post.id)
+
+        # delete the post, very last_post updated
+        thread.delete()
+        forum = Forum.objects.get(pk=1)
+        eq_(forum.last_post.id, last_post.id)
+        eq_(Thread.objects.filter(pk=thread.id).count(), 0)
