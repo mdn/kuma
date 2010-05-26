@@ -63,7 +63,7 @@ var Marky = {
             if(!selText.length)
                 selText = button[4];
 
-            range.text = button[1] + selText + button[2];
+            range.text = button[2] + selText + button[3];
 
             if(range.moveStart) {
                 range.moveStart('character', (-1 * button[2].length) - selText.length);
