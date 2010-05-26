@@ -150,9 +150,7 @@ def new_thread(request, forum_slug):
 def lock_thread(request, forum_slug, thread_id):
     """Lock/Unlock a thread."""
 
-    forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id)
-
     thread.is_locked = not thread.is_locked
     thread.save()
 
