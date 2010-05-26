@@ -164,6 +164,8 @@ INSTALLED_APPS = (
     'sumo',
     'search',
     'forums',
+    'celery',
+    'notifications',
 )
 
 # Extra apps for testing
@@ -295,3 +297,15 @@ SEARCH_CACHE_PERIOD = 15
 LOGIN_URL = '/tiki-login.php'
 LOGOUT_URL = '/tiki-logout.php'
 REGISTER_URL = '/tiki-register.php'
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Celery
+BROKER_HOST = 'localhost'
+BROKER_PORT = 5672
+BROKER_USER = 'kitsune'
+BROKER_PASSWORD = 'kitsune'
+BROKER_VHOST = 'kitsune'
+CELERY_RESULT_BACKEND = 'amqp'
+CELERY_IGNORE_RESULT = True
