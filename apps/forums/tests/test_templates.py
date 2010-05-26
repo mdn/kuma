@@ -68,11 +68,19 @@ class ForumsTemplateTestCase(ForumTestCase):
 
     def test_locked_thread_403(self):
         """Marking a thread locked without permissions returns 403."""
-        response = self.client.get(
+        response = self.client.post(
             reverse('forums.lock_thread',
                     args=[self.forum.slug, self.thread.id]),
             follow=True)
         eq_(403, response.status_code)
+
+    def test_locked_thread_405(self):
+        """Marking a thread locked via a GET instead of a POST request."""
+        response = self.client.get(
+            reverse('forums.lock_thread',
+                    args=[self.forum.slug, self.thread.id]),
+            follow=True)
+        eq_(405, response.status_code)        
 
     def test_post_edit_403(self):
         """Editing a post without permissions returns 403."""

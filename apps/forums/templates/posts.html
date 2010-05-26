@@ -17,7 +17,10 @@
       <a href="{{ url('forums.delete_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}"/></a>
     {% endif %}
     {% if has_perm('forums_forum.thread_locked_forum', forum) %}
-      <a href="{{ url('forums.lock_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/type/locked.png" alt="{{ _('Change locked status') }}" title="{{ _('Change locked status') }}"/></a>
+      <form action="{{ url('forums.lock_thread', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+        {{ csrf() }}
+        <input type="image" src="{{ MEDIA_URL }}img/forums/type/locked.png" alt="{{ _('Change locked status') }}" title="{{ _('Change locked status') }}"/>
+      </form>
     {% endif %}
     {% if has_perm('forums_forum.thread_sticky_forum', forum) %}
       <a href="{{ url('forums.sticky_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Change sticky status') }}" title="{{ _('Change sticky status') }}"/></a>

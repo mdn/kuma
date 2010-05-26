@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
 
 import jingo
 from authority.decorators import permission_required_or_403
@@ -139,14 +140,23 @@ def new_thread(request, forum_slug):
 
     return jingo.render(request, 'bad_reply.html')
 
-
+@require_POST
 @login_required
 @permission_required_or_403('forums_forum.thread_locked_forum',
                             (Forum, 'slug__iexact', 'forum_slug'))
 def lock_thread(request, forum_slug, thread_id):
     """Lock/Unlock a thread."""
 
-    return jingo.render(request, 'bad_reply.html')
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id)
+
+    thread.is_locked = not thread.is_locked
+    thread.save()
+
+    return HttpResponseRedirect(
+            reverse('forums.posts',
+                    kwargs={'forum_slug': thread.forum.slug,
+                            'thread_id': thread.id}))
 
 
 @login_required
