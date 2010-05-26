@@ -7,6 +7,7 @@ from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
 from sumo.utils import WikiParser
+from forums.tasks import build_notification
 import forums
 
 
@@ -109,6 +110,9 @@ class Post(ModelBase):
 
             self.thread.forum.last_post = self
             self.thread.forum.save()
+
+            # Send notifications to thread watchers.
+            build_notification.delay(self)
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent thread info."""
