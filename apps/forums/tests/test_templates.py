@@ -58,9 +58,17 @@ class ForumsTemplateTestCase(ForumTestCase):
             follow=True)
         eq_(403, response.status_code)
 
+    def test_sticky_thread_405(self):
+        """Marking a thread sticky with a HTTP GET returns 405."""
+        response = self.client.get(
+            reverse('forums.sticky_thread',
+                    args=[self.forum.slug, self.thread.id]),
+            follow=True)
+        eq_(405, response.status_code)
+
     def test_sticky_thread_403(self):
         """Marking a thread sticky without permissions returns 403."""
-        response = self.client.get(
+        response = self.client.post(
             reverse('forums.sticky_thread',
                     args=[self.forum.slug, self.thread.id]),
             follow=True)

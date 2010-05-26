@@ -94,6 +94,7 @@ def posts(request, forum_slug, thread_id):
                          'feed_url': feed_url})
 
 
+@login_required
 def reply(request, forum_slug, thread_id):
     """
     Reply to a thread.
@@ -160,13 +161,20 @@ def lock_thread(request, forum_slug, thread_id):
                             'thread_id': thread.id}))
 
 
+@require_POST
 @login_required
 @permission_required_or_403('forums_forum.thread_sticky_forum',
                             (Forum, 'slug__iexact', 'forum_slug'))
 def sticky_thread(request, forum_slug, thread_id):
     """Mark/unmark a thread sticky."""
 
-    return jingo.render(request, 'bad_reply.html')
+    thread = Thread.objects.get(pk=thread_id)
+    thread.is_sticky = not thread.is_sticky
+    thread.save()
+
+    return HttpResponseRedirect(reverse('forums.posts',
+                                        kwargs={'forum_slug': forum_slug,
+                                                'thread_id': thread_id}))
 
 
 @login_required

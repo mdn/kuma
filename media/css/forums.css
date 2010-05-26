@@ -153,8 +153,12 @@ div.thread-actions {
     margin: 1em 0;
 }
 
+div.thread-actions form {
+    display: inline;
+}
+
 ol.posts li div.post-actions {
-   margin: 1em 0; 
+   margin: 1em 0;
 }
 
 ol.posts li div.post-actions a {
