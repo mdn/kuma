@@ -29,21 +29,21 @@
     {% endif %}
     {% if not thread.is_locked and
            has_perm_or_owns('forums_forum.thread_edit_forum', thread, forum) %}
-      <a href="{{ url('forums.edit_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
+      <a href="{{ url('forums.edit_thread', forum.slug, thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
     {% endif %}
     {% if has_perm('forums_forum.thread_delete_forum', forum) %}
-      <a href="{{ url('forums.delete_thread', forum_slug=forum.slug, thread_id=thread.id) }}">
+      <a href="{{ url('forums.delete_thread', forum.slug, thread.id) }}">
         <img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}">
       </a>
     {% endif %}
     {% if has_perm('forums_forum.thread_locked_forum', forum) %}
-      <form action="{{ url('forums.lock_thread', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+      <form action="{{ url('forums.lock_thread', forum.slug, thread.id) }}" method="post">
         {{ csrf() }}
         <input type="image" src="{{ MEDIA_URL }}img/forums/type/locked.png" alt="{{ _('Change locked status') }}" title="{{ _('Change locked status') }}"/>
       </form>
     {% endif %}
     {% if has_perm('forums_forum.thread_sticky_forum', forum) %}
-      <form action="{{ url('forums.sticky_thread', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+      <form action="{{ url('forums.sticky_thread', forum.slug, thread.id) }}" method="post">
         {{ csrf() }}
         <input type="image" src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Change sticky status') }}" title="{{ _('Change sticky status') }}" />
       </form>
@@ -71,11 +71,12 @@
             <a href="{{ profile_url(post.author) }}">{{ post.author }}</a>
             <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
             <div class="post-actions">
-            {% if has_perm('forums_forum.post_edit_forum', forum) %}
-              <a href="{{ url('forums.edit_post', forum_slug=forum.slug, thread_id=thread.id, post_id=post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
+            {% if not thread.is_locked and
+                   has_perm_or_owns('forums_forum.post_edit_forum', post, thread, 'author') %}
+              <a href="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
             {% endif %}
             {% if has_perm('forums_forum.post_delete_forum', forum) %}
-              <a href="{{ url('forums.delete_post', forum_slug=forum.slug, thread_id=thread.id, post_id=post.id) }}">
+              <a href="{{ url('forums.delete_post', forum.slug, thread.id, post.id) }}">
                 <img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}">
               </a>
             {% endif %}
@@ -85,11 +86,16 @@
             {{ post.content_parsed }}
           </div>
           <div class="info">
-            {{ datetimeformat(post.created, format='longdatetime') }}
+            <time>{{ datetimeformat(post.created, format='longdatetime') }}</time>
             <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
             {% if user.is_authenticated() and not thread.is_locked %}
               <span class="post-action">
                 <a href="#thread-reply">{{ _('Reply') }}</a>
+              </span>
+            {% endif %}
+            {% if post.created != post.updated %}
+              <span class="post-modified">
+                {{ _('Modified by {name} on <time>{datetime}</time>')|fe(name=post.updated_by.username, datetime=datetimeformat(post.updated, format='longdatetime')) }}
               </span>
             {% endif %}
           </div>
@@ -108,7 +114,7 @@
     <div id="thread-reply">
       <h3>{{ _('Post a reply') }}</h3>
 
-      <form action="{{ url('forums.reply', forum_slug=forum.slug, thread_id=thread.id)|urlparams(hash='thread-reply') }}" method="post">
+      <form action="{{ url('forums.reply', forum.slug, thread.id)|urlparams(hash='thread-reply') }}" method="post">
         {{ csrf() }}
         {{ errorlist(form) }}
 

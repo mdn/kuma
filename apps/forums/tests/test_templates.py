@@ -22,6 +22,43 @@ class PostsTemplateTestCase(ForumTestCase):
         error_msg = doc('ul.errorlist li a')[0]
         eq_(error_msg.text, 'Content must be longer than 5 characters.')
 
+    def test_edit_post_errors(self):
+        """Changing post content works."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        t = f.thread_set.all()[0]
+        p_author = User.objects.get(username='jsocol')
+        p = t.post_set.filter(author=p_author)[0]
+        response = post(self.client, 'forums.edit_post',
+                        {'content': ''}, args=[f.slug, t.id, p.id])
+
+        doc = pq(response.content)
+        errors = doc('ul.errorlist li a')
+        eq_(errors[0].text, 'Content must be longer than 5 characters.')
+
+    def test_edit_post(self):
+        """Changing post content works."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        t = f.thread_set.all()[0]
+        p_author = User.objects.get(username='jsocol')
+        p = t.post_set.filter(author=p_author)[0]
+        post(self.client, 'forums.edit_post', {'content': 'Some new content'},
+             args=[f.slug, t.id, p.id])
+        edited_p = t.post_set.get(pk=p.id)
+
+        eq_('Some new content', edited_p.content)
+
+    def test_long_title_truncated_in_crumbs(self):
+        """A very long thread title gets truncated in the breadcrumbs"""
+        forum = Forum.objects.filter()[0]
+        response = get(self.client, 'forums.posts', args=[forum.slug, 4])
+        doc = pq(response.content)
+        crumb = doc('ol.breadcrumbs li:last-child')
+        eq_(crumb.text(), 'A thread with a very very ...')
+
 
 class ThreadsTemplateTestCase(ForumTestCase):
 
@@ -157,14 +194,3 @@ class ForumsTemplateTestCase(ForumTestCase):
 
         doc = pq(response.content)
         eq_('Access denied', doc('#content-inner h2').text())
-
-
-class PostsTemplateTestCase(ForumTestCase):
-
-    def test_long_title_truncated_in_crumbs(self):
-        """A very long thread title gets truncated in the breadcrumbs"""
-        forum = Forum.objects.filter()[0]
-        response = get(self.client, 'forums.posts', args=[forum.slug, 4])
-        doc = pq(response.content)
-        crumb = doc('ol.breadcrumbs li:last-child')
-        eq_(crumb.text(), 'A thread with a very very ...')

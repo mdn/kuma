@@ -89,6 +89,9 @@ class Post(ModelBase):
     author = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     updated = models.DateTimeField(auto_now=True, db_index=True)
+    updated_by = models.ForeignKey(User,
+                                   related_name='post_last_updated_by',
+                                   null=True)
 
     class Meta:
         ordering = ['created']

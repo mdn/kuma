@@ -13,7 +13,7 @@ from access.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
-from .forms import ReplyForm, NewThreadForm, EditThreadForm
+from .forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
 from notifications import create_watch, check_watch, destroy_watch
 import forums as constants
 
@@ -245,12 +245,39 @@ def delete_thread(request, forum_slug, thread_id):
 
 
 @login_required
-@permission_required_or_403('forums_forum.post_edit_forum',
-                            (Forum, 'slug__iexact', 'forum_slug'))
+@has_perm_or_owns_or_403('forums_forum.post_edit_forum', 'author',
+                         (Post, 'id__iexact', 'post_id'),
+                         (Thread, 'id__iexact', 'thread_id'))
 def edit_post(request, forum_slug, thread_id, post_id):
     """Edit a post."""
 
-    return jingo.render(request, 'forums/bad_reply.html')
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
+    post = get_object_or_404(Post, pk=post_id, thread=thread)
+
+    if thread.is_locked:
+        raise PermissionDenied
+
+    if request.method == 'GET':
+        form = EditPostForm({'content': post.content})
+        return jingo.render(request, 'forums/edit_post.html',
+                            {'form': form, 'forum': forum,
+                             'thread': thread, 'post': post})
+
+    form = EditPostForm(request.POST)
+
+    if form.is_valid():
+        log.warning('User %s is editing post with id=%s' %
+                    (request.user, post.id))
+        post.content = form.cleaned_data['content']
+        post.updated_by = request.user
+        post.save()
+
+        return HttpResponseRedirect(post.get_absolute_url())
+
+    return jingo.render(request, 'forums/edit_post.html',
+                        {'form': form, 'forum': forum,
+                         'thread': thread, 'post': post})
 
 
 @login_required

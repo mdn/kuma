@@ -30,7 +30,7 @@ class ReplyForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ('thread', 'author')
+        exclude = ('thread', 'author', 'updated_by')
 
 
 class NewThreadForm(forms.Form):
@@ -56,3 +56,17 @@ class EditThreadForm(forms.ModelForm):
     class Meta:
         model = Thread
         fields = ('title',)
+
+
+class EditPostForm(forms.Form):
+    """Form to edit an existing post."""
+    content = StrippedCharField(
+            min_length=5,
+            max_length=10000,
+            widget=forms.Textarea(attrs={'rows': 30, 'cols': 76}),
+            error_messages={'required': MSG_CONTENT,
+                            'min_length': MSG_CONTENT})
+
+    class Meta:
+        model = Post
+        exclude = ('thread', 'author', 'updated_by')
