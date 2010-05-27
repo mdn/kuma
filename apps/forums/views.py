@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 import jingo
 from authority.decorators import permission_required_or_403
 
+from sumo.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
@@ -187,10 +188,13 @@ def sticky_thread(request, forum_slug, thread_id):
 
 
 @login_required
-@permission_required_or_403('forums_forum.thread_edit_forum',
-                            (Forum, 'slug__iexact', 'forum_slug'))
+@has_perm_or_owns_or_403('forums_forum.thread_edit_forum', 'creator',
+                         (Thread, 'id__iexact', 'thread_id'),
+                         (Forum, 'slug__iexact', 'forum_slug'))
 def edit_thread(request, forum_slug, thread_id):
     """Edit a thread."""
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     return jingo.render(request, 'bad_reply.html')
 

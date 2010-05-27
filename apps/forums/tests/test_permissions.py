@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 
 from sumo.helpers import has_perm
 from sumo.urlresolvers import reverse
-from forums.models import Forum
+from sumo.utils import has_perm_or_owns
+from forums.models import Forum, Thread
 
 
 class ForumTestPermissions(TestCase):
@@ -120,3 +121,15 @@ class ForumTestPermissions(TestCase):
                 allowed = has_perm(self.context, 'forums_forum.' + perm,
                                    forum)
                 eq_(allowed, True)
+
+    def test_has_perm_or_owns_sanity(self):
+        """Sanity check for has_perm_or_owns."""
+        me = User.objects.get(pk=118533)
+        my_thread = Thread.objects.filter(creator=me)[0]
+        other_thread = Thread.objects.exclude(creator=me)[0]
+        allowed = has_perm_or_owns(me, 'forums_forum.thread_edit_forum',
+                                   my_thread, self.forum_1)
+        eq_(allowed, True)
+        allowed = has_perm_or_owns(me, 'forums_forum.thread_edit_forum',
+                                   other_thread, self.forum_1)
+        eq_(allowed, False)

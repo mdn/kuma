@@ -1,6 +1,8 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from django.contrib.auth.models import User
+
 from forums.models import Forum
 from forums.tests import ForumTestCase, get, post
 
@@ -51,7 +53,8 @@ class ForumsTemplateTestCase(ForumTestCase):
     def setUp(self):
         super(ForumsTemplateTestCase, self).setUp()
         self.forum = Forum.objects.all()[0]
-        self.thread = self.forum.thread_set.all()[0]
+        admin = User.objects.get(pk=1)
+        self.thread = self.forum.thread_set.filter(creator=admin)[0]
         self.post = self.thread.post_set.all()[0]
         # Login for testing 403s
         self.client.login(username='jsocol', password='testpass')
