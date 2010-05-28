@@ -158,6 +158,8 @@ def lock_thread(request, forum_slug, thread_id):
 
     thread = get_object_or_404(Thread, pk=thread_id)
     thread.is_locked = not thread.is_locked
+    log.info("User %s set is_locked=%s on thread with id=%s " %
+             (request.user, thread.is_locked, thread.id))
     thread.save()
 
     return HttpResponseRedirect(
@@ -175,6 +177,8 @@ def sticky_thread(request, forum_slug, thread_id):
 
     thread = get_object_or_404(Thread, pk=thread_id)
     thread.is_sticky = not thread.is_sticky
+    log.info("User %s set is_sticky=%s on thread with id=%s " %
+             (request.user, thread.is_sticky, thread.id))
     thread.save()
 
     return HttpResponseRedirect(reverse('forums.posts',
