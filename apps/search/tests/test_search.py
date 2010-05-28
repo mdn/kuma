@@ -182,6 +182,14 @@ class SphinxTestCase(test_utils.TransactionTestCase):
             SphinxTestCase.sphinx_is_running = False
 
 
+def test_sphinx_down():
+    """
+    Tests that the client times out when Sphinx is down.
+    """
+    wc = WikiClient()
+    assert_raises(SearchError, wc.query, 'test')
+
+
 class SearchTest(SphinxTestCase):
 
     def setUp(self):
@@ -418,14 +426,6 @@ class SearchTest(SphinxTestCase):
         doc = pq(response.content)
         metas = doc('meta')
         eq_(3, len(metas))
-
-
-def test_sphinx_down():
-    """
-    Tests that the client times out when Sphinx is down.
-    """
-    wc = WikiClient()
-    assert_raises(SearchError, wc.query, 'test')
 
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)
