@@ -95,15 +95,6 @@
           <textarea name="content" id="id_content" rows="10" cols="80">{{ form.content.data or '' }}</textarea>
         </div>
 
-        <div class="forum-editor-notes">
-          <h4>{{ _('Adding links:') }}</h4>
-          <p>{% trans %}Link to an external web site:<br />
-            [http://example.com Description]{% endtrans %}</p>
-          <p>{% trans %}Link to a Knowledge Base article:<br />
-            [[Name of article]]{% endtrans %}</p>
-          <p>{% trans %}HTML is not allowed.{% endtrans %}</p>
-        </div>
-
         <div class="forum-editor-actions">
           <input type="submit" value="Reply" />
         </div>

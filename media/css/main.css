@@ -576,28 +576,17 @@ p#thread-locked {
 }
 
 div.forum-editor {
-    float: left;
-    width: 65%;
     padding: 1em 0 1em 1em;
 }
 
 div.forum-editor textarea {
-    width: 100%;
-}
-
-div.forum-editor-notes {
-    float: left;
-    padding: 1em 0 0 1em;
-}
-
-div.forum-editor-notes p {
-    margin-top: .8em;
+    width: 654px;
 }
 
 div.forum-editor-actions {
     clear: both;
     border-top: 2px solid #fff;
-    padding: 1em 2em;
+    padding: 1em;
     text-align: right;
 }
 
