@@ -14,6 +14,7 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
 from .forms import ReplyForm, NewThreadForm, EditThreadForm
+from notifications import create_watch, check_watch, destroy_watch
 import forums as constants
 
 log = logging.getLogger('k.forums')
@@ -282,3 +283,20 @@ def delete_post(request, forum_slug, thread_id, post_id):
         goto = reverse('forums.threads', kwargs={'forum_slug': forum_slug})
 
     return HttpResponseRedirect(goto)
+
+
+@login_required
+@require_POST
+def watch_thread(request, forum_slug, thread_id):
+    """Start watching a thread."""
+
+    thread_ = get_object_or_404(Thread, pk=thread_id)
+    if check_watch(Thread, thread_.id, request.user.email):
+        destroy_watch(Thread, thread_.id, request.user.email)
+    else:
+        create_watch(Thread, thread_.id, request.user.email)
+
+    return HttpResponseRedirect(reverse('forums.posts',
+                                kwargs={'forum_slug': forum_slug,
+                                        'thread_id': thread_id}))
+
