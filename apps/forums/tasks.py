@@ -14,7 +14,7 @@ def build_notification(post):
     ct = ContentType.objects.get_for_model(post.thread)
 
     subject = _('Reply to: %s') % post.thread.title
-    t = loader.get_template('email/new_post.ltxt')
+    t = loader.get_template('forums/email/new_post.ltxt')
     c = {'post': post.content, 'author': post.author.username,
          'thread_title': post.thread.title,
          'post_url': post.get_absolute_url()}

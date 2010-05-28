@@ -26,7 +26,7 @@ def forums(request):
 
     forums_ = paginate(request, Forum.objects.all())
 
-    return jingo.render(request, 'forums.html', {'forums': forums_})
+    return jingo.render(request, 'forums/forums.html', {'forums': forums_})
 
 
 def sort_threads(threads_, sort=0, desc=0):
@@ -71,7 +71,7 @@ def threads(request, forum_slug):
     feed_url = reverse('forums.threads.feed',
                        kwargs={'forum_slug': forum_slug})
 
-    return jingo.render(request, 'threads.html',
+    return jingo.render(request, 'forums/threads.html',
                         {'forum': forum, 'threads': threads_,
                          'sort': sort, 'desc_toggle': desc_toggle,
                          'feed_url': feed_url})
@@ -95,7 +95,7 @@ def posts(request, forum_slug, thread_id, form=None):
                        kwargs={'forum_slug': forum_slug,
                        'thread_id': thread_id})
 
-    return jingo.render(request, 'posts.html',
+    return jingo.render(request, 'forums/posts.html',
                         {'forum': forum, 'thread': thread,
                          'posts': posts_, 'form': form,
                          'feed_url': feed_url})
@@ -129,7 +129,7 @@ def new_thread(request, forum_slug):
 
     if request.method == 'GET':
         form = NewThreadForm()
-        return jingo.render(request, 'new_thread.html',
+        return jingo.render(request, 'forums/new_thread.html',
                             {'form': form, 'forum': forum})
 
     form = NewThreadForm(request.POST)
@@ -147,7 +147,7 @@ def new_thread(request, forum_slug):
                     kwargs={'forum_slug': thread.forum.slug,
                             'thread_id': thread.id}))
 
-    return jingo.render(request, 'new_thread.html',
+    return jingo.render(request, 'forums/new_thread.html',
                         {'form': form, 'forum': forum})
 
 
@@ -216,7 +216,7 @@ def edit_thread(request, forum_slug, thread_id):
         url = reverse('forums.posts', args=[forum_slug, thread_id])
         return HttpResponseRedirect(url)
 
-    return jingo.render(request, 'edit_thread.html',
+    return jingo.render(request, 'forums/edit_thread.html',
                         {'form': form, 'forum': forum, 'thread': thread})
 
 
@@ -249,7 +249,7 @@ def delete_thread(request, forum_slug, thread_id):
 def edit_post(request, forum_slug, thread_id, post_id):
     """Edit a post."""
 
-    return jingo.render(request, 'bad_reply.html')
+    return jingo.render(request, 'forums/bad_reply.html')
 
 
 @login_required
@@ -264,7 +264,7 @@ def delete_post(request, forum_slug, thread_id, post_id):
 
     if request.method == 'GET':
         # Render the confirmation page
-        return jingo.render(request, 'confirm_post_delete.html',
+        return jingo.render(request, 'forums/confirm_post_delete.html',
                             {'forum': forum, 'thread': thread,
                              'post': post})
 
