@@ -1,10 +1,11 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
 
 from sumo.models import ModelBase
 
 
 class EventWatch(ModelBase):
-    content_type = models.CharField(max_length=100, db_index=True)
+    content_type = models.ForeignKey(ContentType)
     watch_id = models.IntegerField(db_index=True)
     email = models.EmailField(db_index=True)
 
