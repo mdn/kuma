@@ -10,3 +10,6 @@
     background-image: expression(this.previousSibling==null?'none':'default');
 }
 
+#content-inner {
+    width:679px;
+}
