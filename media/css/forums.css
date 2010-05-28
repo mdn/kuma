@@ -306,3 +306,8 @@ div.thread-to-delete form,
 div.post-to-delete form {
     margin: 2em 0 0 0;
 }
+
+div.thread-to-delete p,
+div.post-to-delete p {
+    margin: 0 0 1em;
+}

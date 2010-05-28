@@ -16,9 +16,12 @@
     <div>{{ datetimeformat(post.created, format='longdatetime') }}</div>
     <label>{{ _('Content') }}</label>
     <div class="content">{{ post.content_parsed }}</div>
-    
+
     <form action="{{ url('forums.delete_post', forum_slug=forum.slug, thread_id=thread.id, post_id=post.id) }}" method="post">
       {{ csrf() }}
+      <p>
+        {{ _('You are about to permanently delete this post. <strong>This cannot be undone!</strong> Are you sure you want to continue?')|safe }}
+      </p>
       <a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ _('Cancel') }}</a>
       <input type="submit" value="{{ _('Delete') }}" />
     </form>
