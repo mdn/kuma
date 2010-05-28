@@ -3,6 +3,8 @@
 {% set title = _('Search') %}
 {% set crumbs = [(None, title)] %}
 {% set styles = ('search',) %}
+{% set meta = (('WT.oss', q),
+               ('WT.oss_r', num_results)) %}
 
 {% block content %}
   <div id="basic-search" class="search-refine">

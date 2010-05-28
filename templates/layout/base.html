@@ -19,6 +19,12 @@
 {{ css('ie') }}
 <![endif]-->
 
+{% if meta %}
+  {% for tag in meta %}
+    <meta name="{{ tag[0] }}" content="{{ tag[1] }}">
+  {% endfor %}
+{% endif %}
+
 </head>
 <body{% if classes %} class="{{ classes }}"{% endif %}>
 
