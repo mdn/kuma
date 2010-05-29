@@ -47,6 +47,34 @@ class ThreadsTemplateTestCase(ForumTestCase):
         eq_(errors[0].text, 'Title must be longer than 5 characters.')
         eq_(errors[1].text, 'Content must be longer than 5 characters.')
 
+    def test_edit_thread_errors(self):
+        """Editing thread with too short of a title shows errors."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        t_creator = User.objects.get(username='jsocol')
+        t = f.thread_set.filter(creator=t_creator)[0]
+        response = post(self.client, 'forums.edit_thread',
+                        {'title': ''}, args=[f.slug, t.id])
+
+        doc = pq(response.content)
+        errors = doc('ul.errorlist li a')
+        eq_(errors[0].text, 'Title must be longer than 5 characters.')
+
+    def test_edit_thread(self):
+        """Changing thread title works."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        t_creator = User.objects.get(username='jsocol')
+        t = f.thread_set.filter(creator=t_creator)[0]
+        post(self.client, 'forums.edit_thread', {'title': 'A new title'},
+             args=[f.slug, t.id])
+        edited_t = f.thread_set.get(pk=t.id)
+
+        eq_('Sticky Thread', t.title)
+        eq_('A new title', edited_t.title)
+
 
 class ForumsTemplateTestCase(ForumTestCase):
 

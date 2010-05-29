@@ -320,13 +320,15 @@ ol.pagination {
     margin: 1.5em auto 0;
 }
 
-form.new-thread div.form-widget {
+form.new-thread div.form-widget,
+form.edit-thread div.form-widget {
     border-top: 1px dotted #c0c0c0;
     clear: left;
     padding: 10px;
 }
 
-form.new-thread div.form-widget label {
+form.new-thread div.form-widget label,
+form.edit-thread div.form-widget label {
     display: block;
     width: 10em;
     float: left;
@@ -341,7 +343,8 @@ div.post-to-delete label {
 }
 
 div.thread-to-delete input,
-div.post-to-delete input {
+div.post-to-delete input,
+div.form-widget input[type="submit"] {
     margin: 0 0 0 1em;
 }
 

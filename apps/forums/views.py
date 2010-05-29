@@ -12,7 +12,7 @@ from sumo.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
-from .forms import ReplyForm, NewThreadForm
+from .forms import ReplyForm, NewThreadForm, EditThreadForm
 import forums as constants
 
 log = logging.getLogger('k.forums')
@@ -196,7 +196,22 @@ def edit_thread(request, forum_slug, thread_id):
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
-    return jingo.render(request, 'bad_reply.html')
+    if request.method == 'GET':
+        form = EditThreadForm(instance=thread)
+        return jingo.render(request, 'edit_thread.html',
+                            {'form': form, 'forum': forum, 'thread': thread})
+
+    form = EditThreadForm(request.POST)
+
+    if form.is_valid():
+        thread.title = form.cleaned_data['title']
+        thread.save()
+
+        url = reverse('forums.posts', args=[forum_slug, thread_id])
+        return HttpResponseRedirect(url)
+
+    return jingo.render(request, 'edit_thread.html',
+                        {'form': form, 'forum': forum, 'thread': thread})
 
 
 @login_required
