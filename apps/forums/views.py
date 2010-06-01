@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
@@ -290,13 +290,16 @@ def delete_post(request, forum_slug, thread_id, post_id):
 def watch_thread(request, forum_slug, thread_id):
     """Start watching a thread."""
 
-    thread_ = get_object_or_404(Thread, pk=thread_id)
-    if check_watch(Thread, thread_.id, request.user.email):
-        destroy_watch(Thread, thread_.id, request.user.email)
-    else:
-        create_watch(Thread, thread_.id, request.user.email)
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
+
+    try:
+#        if check_watch(Thread, thread.id, request.user.email):
+#            destroy_watch(Thread, thread.id, request.user.email)
+#        else:
+        create_watch(Thread, thread.id, request.user.email)
+    except Thread.DoesNotExist:
+        raise Http404
 
     return HttpResponseRedirect(reverse('forums.posts',
-                                kwargs={'forum_slug': forum_slug,
-                                        'thread_id': thread_id}))
-
+                                        args=[forum_slug, thread_id]))

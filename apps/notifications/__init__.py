@@ -1,19 +1,24 @@
 from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError
 
 from .models import EventWatch
 
 
 def create_watch(kls, id, email):
     """
-    Start watching an object.
+    Start watching an object. If already watching, returns False.
     """
 
     # Check that this object exists, or raise DNE.
     kls.objects.get(pk=id)
 
     ct = ContentType.objects.get_for_model(kls)
-    e = EventWatch(content_type=ct, watch_id=id, email=email)
-    e.save()
+    try:
+        e = EventWatch(content_type=ct, watch_id=id, email=email)
+        e.save()
+        return True
+    except IntegrityError:
+        return False
 
 
 def check_watch(kls, id, email):
@@ -32,10 +37,14 @@ def check_watch(kls, id, email):
 
 def destroy_watch(kls, id, email):
     """
-    Destroy a watch on an object.
+    Destroy a watch on an object. If watch does not exist, return False.
     """
 
     ct = ContentType.objects.get_for_model(kls)
 
-    w = EventWatch.objects.get(content_type=ct, watch_id=id, email=email)
-    w.delete()
+    try:
+        w = EventWatch.objects.get(content_type=ct, watch_id=id, email=email)
+        w.delete()
+        return True
+    except EventWatch.DoesNotExist:
+        return False
