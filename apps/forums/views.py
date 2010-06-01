@@ -84,7 +84,7 @@ def posts(request, forum_slug, thread_id, form=None):
     """
 
     forum = get_object_or_404(Forum, slug=forum_slug)
-    thread = get_object_or_404(Thread, pk=thread_id)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     posts_ = paginate(request, thread.post_set.all(),
                       constants.POSTS_PER_PAGE)
@@ -110,7 +110,8 @@ def reply(request, forum_slug, thread_id):
     form = ReplyForm(request.POST)
 
     if form.is_valid():
-        thread = Thread.objects.get(pk=thread_id)
+        forum = get_object_or_404(Forum, slug=forum_slug)
+        thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
         if not thread.is_locked:
             reply_ = form.save(commit=False)
             reply_.thread = thread
@@ -144,9 +145,7 @@ def new_thread(request, forum_slug):
         post.save()
 
         return HttpResponseRedirect(
-            reverse('forums.posts',
-                    kwargs={'forum_slug': thread.forum.slug,
-                            'thread_id': thread.id}))
+            reverse('forums.posts', args=[forum_slug, thread.id]))
 
     return jingo.render(request, 'forums/new_thread.html',
                         {'form': form, 'forum': forum})
@@ -159,16 +158,15 @@ def new_thread(request, forum_slug):
 def lock_thread(request, forum_slug, thread_id):
     """Lock/Unlock a thread."""
 
-    thread = get_object_or_404(Thread, pk=thread_id)
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
     thread.is_locked = not thread.is_locked
     log.info("User %s set is_locked=%s on thread with id=%s " %
              (request.user, thread.is_locked, thread.id))
     thread.save()
 
     return HttpResponseRedirect(
-            reverse('forums.posts',
-                    kwargs={'forum_slug': thread.forum.slug,
-                            'thread_id': thread.id}))
+        reverse('forums.posts', args=[forum_slug, thread_id]))
 
 
 @require_POST
@@ -178,15 +176,15 @@ def lock_thread(request, forum_slug, thread_id):
 def sticky_thread(request, forum_slug, thread_id):
     """Mark/unmark a thread sticky."""
 
-    thread = get_object_or_404(Thread, pk=thread_id)
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
     thread.is_sticky = not thread.is_sticky
     log.info("User %s set is_sticky=%s on thread with id=%s " %
              (request.user, thread.is_sticky, thread.id))
     thread.save()
 
-    return HttpResponseRedirect(reverse('forums.posts',
-                                        kwargs={'forum_slug': forum_slug,
-                                                'thread_id': thread_id}))
+    return HttpResponseRedirect(
+        reverse('forums.posts', args=[forum_slug, thread_id]))
 
 
 @login_required
@@ -228,7 +226,7 @@ def delete_thread(request, forum_slug, thread_id):
     """Delete a thread."""
 
     forum = get_object_or_404(Forum, slug=forum_slug)
-    thread = get_object_or_404(Thread, pk=thread_id)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     if request.method == 'GET':
         # Render the confirmation page
@@ -240,8 +238,7 @@ def delete_thread(request, forum_slug, thread_id):
                 (request.user, thread.id))
     thread.delete()
 
-    return HttpResponseRedirect(reverse('forums.threads',
-                                kwargs={'forum_slug': forum_slug}))
+    return HttpResponseRedirect(reverse('forums.threads', args=[forum_slug]))
 
 
 @login_required
@@ -287,8 +284,8 @@ def delete_post(request, forum_slug, thread_id, post_id):
     """Delete a post."""
 
     forum = get_object_or_404(Forum, slug=forum_slug)
-    thread = get_object_or_404(Thread, pk=thread_id)
-    post = get_object_or_404(Post, pk=post_id)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
+    post = get_object_or_404(Post, pk=post_id, thread=thread)
 
     if request.method == 'GET':
         # Render the confirmation page
@@ -302,12 +299,10 @@ def delete_post(request, forum_slug, thread_id, post_id):
     post.delete()
     try:
         Thread.objects.get(pk=thread_id)
-        goto = reverse('forums.posts',
-                       kwargs={'forum_slug': forum_slug,
-                               'thread_id': thread_id})
+        goto = reverse('forums.posts', args=[forum_slug, thread_id])
     except Thread.DoesNotExist:
         # The thread was deleted, go to the threads list page
-        goto = reverse('forums.threads', kwargs={'forum_slug': forum_slug})
+        goto = reverse('forums.threads', args=[forum_slug])
 
     return HttpResponseRedirect(goto)
 

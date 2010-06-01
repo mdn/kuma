@@ -16,6 +16,19 @@
         }
     },
     {
+        "pk": 5,
+        "model": "forums.thread",
+        "fields": {
+            "is_sticky": true,
+            "forum": 2,
+            "created": "2010-05-03 14:09:33",
+            "is_locked": true,
+            "creator": 47963,
+            "replies": 0,
+            "title": "Locked Sticky Thread"
+        }
+    },
+    {
         "pk": 4,
         "model": "forums.thread",
         "fields": {
@@ -59,12 +72,12 @@
         "model": "forums.thread",
         "fields": {
             "is_sticky": true,
-            "forum": 2,
+            "forum": 1,
             "created": "2010-04-28 16:04:42",
-            "is_locked": true,
+            "is_locked": false,
             "creator": 118533,
             "replies": 20,
-            "title": "Locked Sticky Thread"
+            "title": "My first thread"
         }
     },
     {
@@ -318,6 +331,17 @@
             "created": "2010-05-01 16:08:28",
             "thread": 1,
             "author": 118533
+        }
+    },
+    {
+        "pk": 27,
+        "model": "forums.post",
+        "fields": {
+            "content": "test",
+            "updated": "2010-05-04 13:08:28",
+            "created": "2010-05-04 13:08:28",
+            "thread": 5,
+            "author": 47963
         }
     },
     {

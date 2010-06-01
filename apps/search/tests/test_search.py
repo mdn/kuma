@@ -479,7 +479,7 @@ class SearchTest(SphinxTestCase):
         qs = {'a': 1, 'w': 4, 'format': 'json'}
         forum_vals = (
             # (forum_id, num_results)
-            (1, 3),
+            (1, 4),
             (2, 1),
             (3, 0),  # this forum does not exist
         )
@@ -491,7 +491,7 @@ class SearchTest(SphinxTestCase):
 
     def test_discussion_filter_sticky(self):
         """Filter for sticky threads."""
-        qs = {'a': 1, 'w': 4, 'format': 'json', 'thread_type': 1}
+        qs = {'a': 1, 'w': 4, 'format': 'json', 'thread_type': 1, 'forum': 1}
         response = self.client.get(reverse('search'), qs)
         result = json.loads(response.content)['results'][0]
         eq_(u'Sticky Thread', result['title'])
@@ -499,7 +499,7 @@ class SearchTest(SphinxTestCase):
     def test_discussion_filter_locked(self):
         """Filter for locked threads."""
         qs = {'a': 1, 'w': 4, 'format': 'json', 'thread_type': 2,
-              'q': 'locked'}
+              'forum': 1, 'q': 'locked'}
         response = self.client.get(reverse('search'), qs)
         result = json.loads(response.content)['results'][0]
         eq_(u'Locked Thread', result['title'])
@@ -517,7 +517,7 @@ class SearchTest(SphinxTestCase):
               'sortby': 2, 'created_date': '05/03/2010'}
         created_vals = (
             (1, '/1'),
-            (2, '/2'),
+            (2, '/5'),
         )
 
         for created, url_id in created_vals:
@@ -555,7 +555,7 @@ class SearchTest(SphinxTestCase):
         for groupsort in constants.GROUPSORT[1:]:  # Skip default sorting.
             dc.set_groupsort(groupsort)
             results = dc.query('')
-            eq_(4, len(results))
+            eq_(5, len(results))
 
             # Compare first and last.
             assert (results[0]['attrs'][test_for[i]] >
