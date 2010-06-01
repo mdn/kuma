@@ -21,6 +21,7 @@ class ModelBase(caching.base.CachingMixin, models.Model):
     """
 
     objects = ManagerBase()
+    uncached = models.Manager()
 
     class Meta:
         abstract = True

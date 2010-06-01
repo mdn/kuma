@@ -57,7 +57,8 @@ class Thread(ModelBase):
         """Override delete method to update parent forum info."""
 
         forum = self.forum
-        if forum.last_post and forum.last_post.thread.id == self.id:
+        forum = Forum.uncached.get(pk=forum.id)
+        if forum.last_post and forum.last_post.thread_id == self.id:
             try:
                 forum.last_post = Post.objects.filter(thread__forum=forum) \
                                               .exclude(thread=self) \
@@ -114,7 +115,8 @@ class Post(ModelBase):
         """Override delete method to update parent thread info."""
 
         thread = self.thread
-        if thread.last_post and thread.last_post.id == self.id:
+        thread = Thread.uncached.get(pk=thread.id)
+        if thread.last_post_id and thread.last_post_id == self.id:
             try:
                 thread.last_post = thread.post_set.all() \
                                                   .order_by('-created')[1]
@@ -125,7 +127,8 @@ class Post(ModelBase):
         thread.save()
 
         forum = thread.forum
-        if forum.last_post and forum.last_post.id == self.id:
+        forum = Forum.uncached.get(pk=forum.id)
+        if forum.last_post_id and forum.last_post_id == self.id:
             try:
                 forum.last_post = Post.objects.filter(thread__forum=forum) \
                                               .order_by('-created')[1]
