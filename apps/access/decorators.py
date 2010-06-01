@@ -5,7 +5,7 @@ from django.db.models import Model, get_model
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 
-from sumo import utils
+import access
 
 
 def has_perm_or_owns_or_403(perm, field_name, lookup_obj, lookup_perm_obj,
@@ -37,9 +37,9 @@ def has_perm_or_owns_or_403(perm, field_name, lookup_obj, lookup_perm_obj,
                             'The argument %s needs to be a model.' % model)
                     obj = get_object_or_404(model_class, **{lookup: value})
                     params.append(obj)
-                granted = utils.has_perm_or_owns(request.user, perm,
-                                                 params[0], params[1],
-                                                 field_name)
+                granted = access.has_perm_or_owns(request.user, perm,
+                                                  params[0], params[1],
+                                                  field_name)
                 if granted or request.user.has_perm(perm):
                     return view_func(request, *args, **kwargs)
 

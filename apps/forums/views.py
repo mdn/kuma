@@ -9,7 +9,7 @@ from django.views.decorators.http import require_POST
 import jingo
 from authority.decorators import permission_required_or_403
 
-from sumo.decorators import has_perm_or_owns_or_403
+from access.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post

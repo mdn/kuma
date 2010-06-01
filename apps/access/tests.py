@@ -1,12 +1,12 @@
-from nose.tools import eq_
-import test_utils
-
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from sumo.helpers import has_perm, has_perm_or_owns
+from nose.tools import eq_
+import test_utils
+
+import access
+from .helpers import has_perm, has_perm_or_owns
 from sumo.urlresolvers import reverse
-from sumo import utils
 from forums.models import Forum, Thread
 
 
@@ -143,7 +143,7 @@ class ForumTestPermissions(TestCase):
         my_t = Thread.objects.filter(creator=me)[0]
         other_t = Thread.objects.exclude(creator=me)[0]
         perm = 'forums_forum.thread_edit_forum'
-        allowed = utils.has_perm_or_owns(me, perm, my_t, self.forum_1)
+        allowed = access.has_perm_or_owns(me, perm, my_t, self.forum_1)
         eq_(allowed, True)
-        allowed = utils.has_perm_or_owns(me, perm, other_t, self.forum_1)
+        allowed = access.has_perm_or_owns(me, perm, other_t, self.forum_1)
         eq_(allowed, False)
