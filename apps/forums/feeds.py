@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.utils.html import strip_tags, escape
 
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
@@ -28,6 +29,12 @@ class ThreadsFeed(Feed):
         return forum.thread_set.order_by(
                 '-last_post__created')[:constants.THREADS_PER_PAGE]
 
+    def item_author_name(self, item):
+        return item.creator
+
+    def item_pubdate(self, item):
+        return item.created
+
 
 class PostsFeed(Feed):
     feed_type = Atom1Feed
@@ -46,3 +53,15 @@ class PostsFeed(Feed):
 
     def items(self, thread):
         return thread.post_set.order_by('-created')
+
+    def item_title(self, item):
+        return strip_tags(item.content_parsed)[:100]
+
+    def item_description(self, item):
+        return escape(item.content_parsed)
+
+    def item_author_name(self, item):
+        return item.author
+
+    def item_pubdate(self, item):
+        return item.created
