@@ -324,7 +324,7 @@ form.new-thread div.form-widget,
 form.edit-thread div.form-widget {
     border-top: 1px dotted #c0c0c0;
     clear: left;
-    padding: 10px;
+    padding: 1em;
 }
 
 form.new-thread div.form-widget label,
@@ -332,6 +332,14 @@ form.edit-thread div.form-widget label {
     display: block;
     width: 10em;
     float: left;
+}
+
+form div.form-widget.submit {
+    padding-left: 11em;
+}
+
+form.new-thread div.form-widget div.forum-editor-tools {
+    margin: 0 0 0 10em;
 }
 
 /* Delete Thread/Post Confirmation */

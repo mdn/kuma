@@ -11,7 +11,7 @@
 {% block content %}
   <h2>{{ _('Create a new thread') }}</h2>
 
-  <form action="{{ url('forums.new_thread', forum_slug=forum.slug) }}" method="post" class="new-thread">
+  <form action="{{ url('forums.new_thread', forum.slug) }}" method="post" class="new-thread">
     {{ csrf() }}
     {{ errorlist(form) }}
 
@@ -25,9 +25,9 @@
       </div>
     {% endfor %}
 
-    <div class="form-widget">
-      <label for="submit">Post</label>
-      <input type="submit" value="Post" />
+    <div class="form-widget submit">
+      <a href="{{ url('forums.threads', forum.slug) }}">{{ _('Cancel') }}</a>
+      <input type="submit" value="{{ _('Post') }}" />
     </div>
   </form>
 {% endblock %}

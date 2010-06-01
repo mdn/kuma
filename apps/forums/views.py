@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
@@ -196,6 +197,9 @@ def edit_thread(request, forum_slug, thread_id):
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
+    if thread.is_locked:
+        raise PermissionDenied
+
     if request.method == 'GET':
         form = EditThreadForm(instance=thread)
         return jingo.render(request, 'edit_thread.html',
@@ -204,6 +208,8 @@ def edit_thread(request, forum_slug, thread_id):
     form = EditThreadForm(request.POST)
 
     if form.is_valid():
+        log.warning('User %s is editing thread with id=%s' %
+                    (request.user, thread.id))
         thread.title = form.cleaned_data['title']
         thread.save()
 
@@ -229,7 +235,7 @@ def delete_thread(request, forum_slug, thread_id):
                             {'forum': forum, 'thread': thread})
 
     # Handle confirm delete form POST
-    log.warning("User %s is deleting thread with id=%s" %
+    log.warning('User %s is deleting thread with id=%s' %
                 (request.user, thread.id))
     thread.delete()
 

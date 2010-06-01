@@ -105,6 +105,14 @@ class ForumsTemplateTestCase(ForumTestCase):
                        args=[self.forum.slug, self.thread.id])
         eq_(403, response.status_code)
 
+    def test_edit_locked_thread_403(self):
+        """Editing a locked thread returns 403."""
+        jsocol = User.objects.get(username='jsocol')
+        t = self.forum.thread_set.filter(creator=jsocol, is_locked=True)[0]
+        response = get(self.client, 'forums.edit_thread',
+                       args=[self.forum.slug, t.id])
+        eq_(403, response.status_code)
+
     def test_delete_thread_403(self):
         """Deleting a thread without permissions returns 403."""
         response = get(self.client, 'forums.delete_thread',

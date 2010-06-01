@@ -17,7 +17,8 @@
     </div>
   {% endif %}
   <div class="thread-actions">
-    {% if has_perm('forums_forum.thread_edit_forum', forum) %}
+    {% if not thread.is_locked and
+           has_perm_or_owns('forums_forum.thread_edit_forum', thread, forum) %}
       <a href="{{ url('forums.edit_thread', forum_slug=forum.slug, thread_id=thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
     {% endif %}
     {% if has_perm('forums_forum.thread_delete_forum', forum) %}

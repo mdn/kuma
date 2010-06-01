@@ -21,8 +21,7 @@
       {{ form.title|safe }}
     </div>
 
-    <div class="form-widget">
-      <label for="submit">{{ _('Edit') }}</label>
+    <div class="form-widget submit">
       <a href="{{ url('forums.posts', forum.slug, thread.id) }}">{{ _('Cancel') }}</a>
       <input type="submit" value="{{ _('Update thread') }}" />
     </div>
