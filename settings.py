@@ -309,3 +309,4 @@ BROKER_PASSWORD = 'kitsune'
 BROKER_VHOST = 'kitsune'
 CELERY_RESULT_BACKEND = 'amqp'
 CELERY_IGNORE_RESULT = True
+CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
