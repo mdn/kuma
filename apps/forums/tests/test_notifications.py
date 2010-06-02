@@ -13,21 +13,21 @@ from forums.models import Post, Thread
 EMAIL_CONTENT = (
     u"""
 
-Reply to thread: Not a sticky thread
+Reply to thread: Sticky Thread
 
-User jsocol has replied to a thread you're watching. Here
+User admin has replied to a thread you're watching. Here
 is their reply:
 
 ========
 
-A post in a non-sticky thread
+yet another post
 
 ========
 
 To view this post on the site, click the following link, or
 paste it into your browser's location bar:
 
-https://testserver/en-US/forums/test-forum/3#post-5
+https://testserver/en-US/forums/test-forum/2#post-4
 
 """,
     u"""
@@ -64,14 +64,14 @@ class NotificationTestCase(ForumTestCase):
     def test_notification(self, get_current, delay):
         get_current.return_value.domain = 'testserver'
 
-        post = Post.objects.get(pk=5)
+        post = Post.objects.get(pk=4)
         build_notification(post)
 
         delay.assert_called_with(
             self.ct, post.thread.id,
-            u'Reply to: Not a sticky thread',
+            u'Reply to: Sticky Thread',
             EMAIL_CONTENT[0],
-            (u'user118533@nowhere',))
+            (u'user1@nowhere',))
 
     @mock.patch_object(notifications.tasks.send_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
