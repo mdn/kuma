@@ -197,6 +197,8 @@ a#new-thread {
 }
 
 div.thread-actions {
+    clear: left;
+    padding-top: 1em;
     margin: 1em 0;
 }
 
@@ -368,7 +370,6 @@ div.post-to-delete p {
 
 /* Thread title badges */
 div.badges {
-    height:25px;
     margin:-1em 0 0;
 }
 
@@ -390,6 +391,11 @@ span.sticky {
 span.locked {
     background: #fff0cb url(../img/forums/type/locked.png) no-repeat 8px center;
     color: #a4813b;
+}
+
+span.watching {
+    background: #d7f8e0 url(../img/forums/watch.png) no-repeat 8px center;
+    color: #10c493;
 }
 
 /* Forums markup editor */

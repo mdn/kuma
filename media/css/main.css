@@ -377,6 +377,7 @@ h2 {
 #content-inner {
     width: 680px;
     padding: 0 20px;
+    position: relative;
 }
 
 #content-inner h2 {

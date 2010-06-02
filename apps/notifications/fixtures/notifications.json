@@ -1,0 +1,20 @@
+[
+    {
+        "pk": 1,
+        "model": "notifications.eventwatch",
+        "fields": {
+            "watch_id": 1,
+            "email": "user118533@nowhere",
+            "content_type": ["forums", "thread"]
+        }
+    },
+    {
+        "pk": 2,
+        "model": "notifications.eventwatch",
+        "fields": {
+            "watch_id": 1,
+            "email": "noone2@example.com",
+            "content_type": ["forums", "thread"]
+        }
+    }
+]
