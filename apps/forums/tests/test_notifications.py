@@ -2,7 +2,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 
-from nose.tools import eq_
 import mock
 
 from forums.tasks import build_notification

@@ -55,7 +55,6 @@ class WatchTestCase(test.TestCase):
 
     def test_destroy_watch_exists(self):
         """Destroying a watch should return True, and work."""
-        thread = Thread.objects.get(pk=1)
         assert destroy_watch(Thread, 1, 'noone2@example.com')
 
         w = EventWatch.objects.filter(email='noone2@example.com')

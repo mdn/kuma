@@ -1,7 +1,6 @@
 from django import test
 from django.contrib.auth.models import User, AnonymousUser
 
-from nose.tools import eq_
 import test_utils
 
 from notifications.helpers import is_watching
