@@ -1,7 +1,7 @@
-from nose.tools import eq_
-
 from django.test import TestCase, client
 from django.contrib.auth.models import User
+
+from nose.tools import eq_
 
 from forums.models import Forum, Thread, Post, ThreadLockedError
 from forums.views import sort_threads
@@ -172,78 +172,3 @@ class ThreadTestCase(ForumTestCase):
                 kwargs={'forum_slug': 'test-forum', 'thread_id': 1})
         assert('http://testserver/tiki-login.php' in r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])
-
-
-class BelongsTestCase(ForumTestCase):
-
-    def setUp(self):
-        super(BelongsTestCase, self).setUp()
-        self.forum = Forum.objects.all()[0]
-        self.forum_2 = Forum.objects.all()[1]
-        self.thread = self.forum.thread_set.filter(is_locked=False)[0]
-        self.thread_2 = self.forum.thread_set.filter(is_locked=False)[1]
-        self.post = self.thread.post_set.all()[0]
-        # Login for testing 403s
-        self.client.login(username='admin', password='testpass')
-
-    def test_posts_thread_belongs_to_forum(self):
-        """Posts view - thread belongs to forum."""
-        r = get(self.client, 'forums.posts',
-                args=[self.forum_2.slug, self.thread.id])
-        eq_(404, r.status_code)
-
-    def test_reply_thread_belongs_to_forum(self):
-        """Reply action - thread belongs to forum."""
-        r = post(self.client, 'forums.reply', {},
-                 args=[self.forum_2.slug, self.thread.id])
-        eq_(404, r.status_code)
-
-    def test_locked_thread_belongs_to_forum(self):
-        """Lock action - thread belongs to forum."""
-        r = post(self.client, 'forums.lock_thread', {},
-                 args=[self.forum_2.slug, self.thread.id])
-        eq_(404, r.status_code)
-
-    def test_sticky_thread_belongs_to_forum(self):
-        """Sticky action - thread belongs to forum."""
-        r = post(self.client, 'forums.sticky_thread', {},
-                 args=[self.forum_2.slug, self.thread.id])
-        eq_(404, r.status_code)
-
-    def test_edit_thread_belongs_to_forum(self):
-        """Edit thread action - thread belongs to forum."""
-        r = get(self.client, 'forums.edit_thread',
-                args=[self.forum_2.slug, self.thread.id])
-        eq_(404, r.status_code)
-
-    def test_delete_thread_belongs_to_forum(self):
-        """Delete thread action - thread belongs to forum."""
-        r = get(self.client, 'forums.delete_thread',
-                args=[self.forum_2.slug, self.thread.id])
-        eq_(404, r.status_code)
-
-    def test_edit_post_belongs_to_thread_and_forum(self):
-        """
-        Edit post action - post belongs to thread and thread belongs to
-        forum.
-        """
-        r = get(self.client, 'forums.edit_post',
-                args=[self.forum_2.slug, self.thread.id, self.post.id])
-        eq_(404, r.status_code)
-
-        r = get(self.client, 'forums.edit_post',
-                args=[self.forum.slug, self.thread_2.id, self.post.id])
-        eq_(404, r.status_code)
-
-    def test_delete_post_belongs_to_thread_and_forum(self):
-        """
-        Delete post action - post belongs to thread and thread belongs to
-        forum.
-        """
-        r = get(self.client, 'forums.delete_post',
-                args=[self.forum_2.slug, self.thread.id, self.post.id])
-        eq_(404, r.status_code)
-
-        r = get(self.client, 'forums.delete_post',
-                args=[self.forum.slug, self.thread_2.id, self.post.id])
-        eq_(404, r.status_code)
