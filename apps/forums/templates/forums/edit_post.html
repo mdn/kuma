@@ -12,7 +12,7 @@
 {% block content %}
   <h2>{{ _('Edit a post') }}</h2>
 
-  <form action="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}" method="post" class="new-thread">
+  <form action="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}" method="post" class="edit-post">
     {{ csrf() }}
     {{ errorlist(form) }}
 

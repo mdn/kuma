@@ -3,7 +3,7 @@ from pyquery import PyQuery as pq
 
 from django.contrib.auth.models import User
 
-from forums.models import Forum
+from forums.models import Forum, Thread, Post
 from forums.tests import ForumTestCase, get, post
 
 
@@ -37,6 +37,18 @@ class PostsTemplateTestCase(ForumTestCase):
         errors = doc('ul.errorlist li a')
         eq_(errors[0].text, 'Content must be longer than 5 characters.')
 
+    def test_edit_thread_template(self):
+        """The edit-post template should render."""
+        self.client.login(username='jsocol', password='testpass')
+
+        u = User.objects.get(username='jsocol')
+        p = Post.objects.filter(author=u, thread__is_locked=False)[0]
+        res = get(self.client, 'forums.edit_post',
+                 args=[p.thread.forum.slug, p.thread.id, p.id])
+
+        doc = pq(res.content)
+        eq_(len(doc('form.edit-post')), 1)
+
     def test_edit_post(self):
         """Changing post content works."""
         self.client.login(username='jsocol', password='testpass')
@@ -58,6 +70,21 @@ class PostsTemplateTestCase(ForumTestCase):
         doc = pq(response.content)
         crumb = doc('ol.breadcrumbs li:last-child')
         eq_(crumb.text(), 'A thread with a very very ...')
+
+    def test_edit_post_moderator(self):
+        """Editing post as a moderator works."""
+        self.client.login(username='pcraciunoiu', password='testpass')
+
+        p = Post.objects.get(pk=4)
+        t = p.thread
+        f = t.forum
+
+        r = post(self.client, 'forums.edit_post',
+                 {'content': 'More new content'}, args=[f.slug, t.id, p.id])
+        eq_(200, r.status_code)
+
+        edited_p = Post.uncached.get(pk=p.pk)
+        eq_('More new content', edited_p.content)
 
 
 class ThreadsTemplateTestCase(ForumTestCase):
@@ -98,6 +125,18 @@ class ThreadsTemplateTestCase(ForumTestCase):
         errors = doc('ul.errorlist li a')
         eq_(errors[0].text, 'Title must be longer than 5 characters.')
 
+    def test_edit_thread_template(self):
+        """The edit-thread template should render."""
+        self.client.login(username='jsocol', password='testpass')
+
+        u = User.objects.get(username='jsocol')
+        t = Thread.objects.filter(creator=u, is_locked=False)[0]
+        res = get(self.client, 'forums.edit_thread',
+                 args=[t.forum.slug, t.id])
+
+        doc = pq(res.content)
+        eq_(len(doc('form.edit-thread')), 1)
+
     def test_edit_thread(self):
         """Changing thread title works."""
         self.client.login(username='jsocol', password='testpass')
@@ -111,6 +150,22 @@ class ThreadsTemplateTestCase(ForumTestCase):
 
         eq_('Sticky Thread', t.title)
         eq_('A new title', edited_t.title)
+
+    def test_edit_thread_moderator(self):
+        """Editing post as a moderator works."""
+        self.client.login(username='pcraciunoiu', password='testpass')
+
+        t = Thread.objects.get(pk=2)
+        f = t.forum
+
+        eq_('Sticky Thread', t.title)
+
+        r = post(self.client, 'forums.edit_thread',
+                 {'title': 'new title'}, args=[f.slug, t.id])
+        eq_(200, r.status_code)
+
+        edited_t = Thread.uncached.get(pk=2)
+        eq_('new title', edited_t.title)
 
 
 class ForumsTemplateTestCase(ForumTestCase):

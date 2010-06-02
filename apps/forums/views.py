@@ -201,7 +201,7 @@ def edit_thread(request, forum_slug, thread_id):
 
     if request.method == 'GET':
         form = EditThreadForm(instance=thread)
-        return jingo.render(request, 'edit_thread.html',
+        return jingo.render(request, 'forums/edit_thread.html',
                             {'form': form, 'forum': forum, 'thread': thread})
 
     form = EditThreadForm(request.POST)
@@ -230,7 +230,7 @@ def delete_thread(request, forum_slug, thread_id):
 
     if request.method == 'GET':
         # Render the confirmation page
-        return jingo.render(request, 'confirm_thread_delete.html',
+        return jingo.render(request, 'forums/confirm_thread_delete.html',
                             {'forum': forum, 'thread': thread})
 
     # Handle confirm delete form POST
@@ -244,7 +244,7 @@ def delete_thread(request, forum_slug, thread_id):
 @login_required
 @has_perm_or_owns_or_403('forums_forum.post_edit_forum', 'author',
                          (Post, 'id__iexact', 'post_id'),
-                         (Thread, 'id__iexact', 'thread_id'))
+                         (Forum, 'slug__iexact', 'forum_slug'))
 def edit_post(request, forum_slug, thread_id, post_id):
     """Edit a post."""
 

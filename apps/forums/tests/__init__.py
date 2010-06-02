@@ -39,7 +39,7 @@ def fixtures_setup():
 
 
 class ForumTestCase(TestCase):
-    fixtures = ['users.json', 'posts.json']
+    fixtures = ['users.json', 'posts.json', 'forums_permissions.json']
 
     def setUp(self):
         """Our fixtures have nulled foreign keys to allow them to be
