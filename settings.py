@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'forums',
     'celery',
     'notifications',
+    'identicons',
 )
 
 # Extra apps for testing
