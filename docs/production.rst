@@ -33,6 +33,8 @@ The full list of requirements is:
 
 * Apache HTTPD Server
 
+* RabbitMQ
+
 * The Python packages in the ``requirements.txt`` file.
 
 
@@ -82,6 +84,10 @@ The following settings may need to be set:
   If the system java binary is not at ``/usr/bin/java``, you should set
   this. (It's only used for running the ``compress_assets`` command. See
   below.)
+``CELERY_ALWAYS_EAGER``
+  This should be set to ``False`` to actually use Rabbit/Celery.
+``BROKER_*``
+  These should be set to allow Kitsune to talk to your RabbitMQ server.
 
 
 Concat and Minify
