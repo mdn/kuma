@@ -2,7 +2,7 @@ from django import forms
 
 from tower import ugettext_lazy as _lazy
 
-from .models import Post
+from .models import Thread, Post
 
 
 MSG_CONTENT = _lazy('Content must be longer than 5 characters.')
@@ -45,3 +45,14 @@ class NewThreadForm(forms.Form):
                 widget=forms.Textarea(attrs={'rows': 30, 'cols': 76}),
                 error_messages={'required': MSG_CONTENT,
                                 'min_length': MSG_CONTENT})
+
+
+class EditThreadForm(forms.ModelForm):
+    """Form to start a new thread."""
+    title = StrippedCharField(min_length=5, max_length=255,
+                              widget=forms.TextInput(attrs={'size': 80}),
+                              error_messages={'required': MSG_TITLE})
+
+    class Meta:
+        model = Thread
+        fields = ('title',)

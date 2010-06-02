@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'jingo_minify',
     ROOT_PACKAGE,
     'authority',
+    'access',
     'sumo',
     'search',
     'forums',

@@ -1,12 +1,13 @@
-from nose.tools import eq_
-import test_utils
-
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from sumo.helpers import has_perm
+from nose.tools import eq_
+import test_utils
+
+import access
+from .helpers import has_perm, has_perm_or_owns
 from sumo.urlresolvers import reverse
-from forums.models import Forum
+from forums.models import Forum, Thread
 
 
 class ForumTestPermissions(TestCase):
@@ -29,6 +30,21 @@ class ForumTestPermissions(TestCase):
         eq_(allowed, True)
         allowed = has_perm(self.context, 'forums_forum.thread_edit_forum',
                            self.forum_2)
+        eq_(allowed, False)
+
+    def test_has_perm_or_owns_thread_edit(self):
+        """
+        User in ForumsModerator group can edit thread in forum_1, but not in
+        forum_2.
+        """
+        me = User.objects.get(pk=118533)
+        my_t = Thread.objects.filter(creator=me)[0]
+        other_t = Thread.objects.exclude(creator=me)[0]
+        self.context['request'].user = me
+        perm = 'forums_forum.thread_edit_forum'
+        allowed = has_perm_or_owns(self.context, perm, my_t, self.forum_1)
+        eq_(allowed, True)
+        allowed = has_perm_or_owns(self.context, perm, other_t, self.forum_1)
         eq_(allowed, False)
 
     def test_has_perm_thread_delete(self):
@@ -120,3 +136,14 @@ class ForumTestPermissions(TestCase):
                 allowed = has_perm(self.context, 'forums_forum.' + perm,
                                    forum)
                 eq_(allowed, True)
+
+    def test_util_has_perm_or_owns_sanity(self):
+        """Sanity check for has_perm_or_owns."""
+        me = User.objects.get(pk=118533)
+        my_t = Thread.objects.filter(creator=me)[0]
+        other_t = Thread.objects.exclude(creator=me)[0]
+        perm = 'forums_forum.thread_edit_forum'
+        allowed = access.has_perm_or_owns(me, perm, my_t, self.forum_1)
+        eq_(allowed, True)
+        allowed = access.has_perm_or_owns(me, perm, other_t, self.forum_1)
+        eq_(allowed, False)

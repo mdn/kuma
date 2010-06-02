@@ -1,6 +1,8 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from django.contrib.auth.models import User
+
 from forums.models import Forum
 from forums.tests import ForumTestCase, get, post
 
@@ -45,13 +47,42 @@ class ThreadsTemplateTestCase(ForumTestCase):
         eq_(errors[0].text, 'Title must be longer than 5 characters.')
         eq_(errors[1].text, 'Content must be longer than 5 characters.')
 
+    def test_edit_thread_errors(self):
+        """Editing thread with too short of a title shows errors."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        t_creator = User.objects.get(username='jsocol')
+        t = f.thread_set.filter(creator=t_creator)[0]
+        response = post(self.client, 'forums.edit_thread',
+                        {'title': ''}, args=[f.slug, t.id])
+
+        doc = pq(response.content)
+        errors = doc('ul.errorlist li a')
+        eq_(errors[0].text, 'Title must be longer than 5 characters.')
+
+    def test_edit_thread(self):
+        """Changing thread title works."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        t_creator = User.objects.get(username='jsocol')
+        t = f.thread_set.filter(creator=t_creator)[0]
+        post(self.client, 'forums.edit_thread', {'title': 'A new title'},
+             args=[f.slug, t.id])
+        edited_t = f.thread_set.get(pk=t.id)
+
+        eq_('Sticky Thread', t.title)
+        eq_('A new title', edited_t.title)
+
 
 class ForumsTemplateTestCase(ForumTestCase):
 
     def setUp(self):
         super(ForumsTemplateTestCase, self).setUp()
         self.forum = Forum.objects.all()[0]
-        self.thread = self.forum.thread_set.all()[0]
+        admin = User.objects.get(pk=1)
+        self.thread = self.forum.thread_set.filter(creator=admin)[0]
         self.post = self.thread.post_set.all()[0]
         # Login for testing 403s
         self.client.login(username='jsocol', password='testpass')
@@ -72,6 +103,14 @@ class ForumsTemplateTestCase(ForumTestCase):
         """Editing a thread without permissions returns 403."""
         response = get(self.client, 'forums.edit_thread',
                        args=[self.forum.slug, self.thread.id])
+        eq_(403, response.status_code)
+
+    def test_edit_locked_thread_403(self):
+        """Editing a locked thread returns 403."""
+        jsocol = User.objects.get(username='jsocol')
+        t = self.forum.thread_set.filter(creator=jsocol, is_locked=True)[0]
+        response = get(self.client, 'forums.edit_thread',
+                       args=[self.forum.slug, t.id])
         eq_(403, response.status_code)
 
     def test_delete_thread_403(self):

@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
@@ -8,10 +9,11 @@ from django.views.decorators.http import require_POST
 import jingo
 from authority.decorators import permission_required_or_403
 
+from access.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
-from .forms import ReplyForm, NewThreadForm
+from .forms import ReplyForm, NewThreadForm, EditThreadForm
 import forums as constants
 
 log = logging.getLogger('k.forums')
@@ -187,12 +189,35 @@ def sticky_thread(request, forum_slug, thread_id):
 
 
 @login_required
-@permission_required_or_403('forums_forum.thread_edit_forum',
-                            (Forum, 'slug__iexact', 'forum_slug'))
+@has_perm_or_owns_or_403('forums_forum.thread_edit_forum', 'creator',
+                         (Thread, 'id__iexact', 'thread_id'),
+                         (Forum, 'slug__iexact', 'forum_slug'))
 def edit_thread(request, forum_slug, thread_id):
     """Edit a thread."""
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
-    return jingo.render(request, 'bad_reply.html')
+    if thread.is_locked:
+        raise PermissionDenied
+
+    if request.method == 'GET':
+        form = EditThreadForm(instance=thread)
+        return jingo.render(request, 'edit_thread.html',
+                            {'form': form, 'forum': forum, 'thread': thread})
+
+    form = EditThreadForm(request.POST)
+
+    if form.is_valid():
+        log.warning('User %s is editing thread with id=%s' %
+                    (request.user, thread.id))
+        thread.title = form.cleaned_data['title']
+        thread.save()
+
+        url = reverse('forums.posts', args=[forum_slug, thread_id])
+        return HttpResponseRedirect(url)
+
+    return jingo.render(request, 'edit_thread.html',
+                        {'form': form, 'forum': forum, 'thread': thread})
 
 
 @login_required
@@ -210,7 +235,7 @@ def delete_thread(request, forum_slug, thread_id):
                             {'forum': forum, 'thread': thread})
 
     # Handle confirm delete form POST
-    log.warning("User %s is deleting thread with id=%s" %
+    log.warning('User %s is deleting thread with id=%s' %
                 (request.user, thread.id))
     thread.delete()
 
