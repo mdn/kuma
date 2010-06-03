@@ -15,7 +15,7 @@ $(document).ready(function() {
     $("#tab-wrapper form").submit(function() {
         var tabs = [$('#kb'), $('#support'), $('#discussion')], num_tabs = 3,
             fields = ['input[name="q"]', 'input[name="author"]',
-                      'input[name="tags'],
+                      'input[name="tags"]'],
             num_fields = fields.length, fi = 0, ti = 0, the_input;
 
         for (ti = 0; ti < num_tabs; ti++) {
