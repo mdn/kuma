@@ -16,8 +16,8 @@ def send_notification(content_type, pk, subject, content, exclude=None):
 
     log.info("Got notification for %s: %s" % (content_type, pk))
 
-    watchers = EventWatch.objects.filter(content_type=content_type,
-                                         watch_id=pk)
+    watchers = EventWatch.uncached.filter(content_type=content_type,
+                                          watch_id=pk)
     if exclude:
         watchers = watchers.exclude(email__in=exclude)
 
