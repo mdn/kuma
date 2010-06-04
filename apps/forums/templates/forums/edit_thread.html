@@ -1,5 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "forums/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {# L10n: {f} is the name of the forum, {t} is the name of the thread. #}
 {% set title = _('Edit thread "{t}" | {f} | Forums')|f(t=thread.title, f=forum.name) %}
@@ -7,7 +7,6 @@
                  (url('forums.threads', forum.slug), forum.name),
                  (url('forums.posts', forum.slug, thread.id), thread.title),
                  (None, _('Edit thread'))] %}
-{% set scripts = ('forums',) %}
 
 {% block content %}
   <h2>{{ _('Edit thread "{t}"')|f(t=thread.title) }}</h2>

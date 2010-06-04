@@ -226,6 +226,8 @@ MINIFY_BUNDLES = {
         'common': (
             'css/main.css',
             'css/sidebar.css',
+        ),
+        'forums': (
             'css/forums.css',
         ),
         'search': (
