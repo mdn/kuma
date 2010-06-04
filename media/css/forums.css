@@ -308,6 +308,7 @@ ol.posts li div.content pre {
     background-color: #e6eaec;
     margin: 1em 0;
     padding: 0.5em;
+    white-space: pre-wrap;
 }
 
 ol.posts li div.content a:hover {

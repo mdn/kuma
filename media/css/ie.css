@@ -13,3 +13,8 @@
 #content-inner {
     width:679px;
 }
+
+ol.posts li div.content pre {
+    white-space: pre;
+    word-wrap: break-word;
+}
