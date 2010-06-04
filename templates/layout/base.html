@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 <!DOCTYPE html>
-<html lang="{{ request.locale }}" dir="{{ dir }}">
+<html lang="{{ request.locale }}" {% if dir %}dir="{{ dir }}"{% endif %}>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>{{ title }} | {{ settings.SITE_TITLE }}</title>
