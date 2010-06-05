@@ -52,6 +52,11 @@ class TestWikiInternalLinks(TestCase):
         eq_('<p><a href="/kb/Internal+link">this name</a>\n</p>',
             self.parser.parse(text))
 
+    def test_link_with_extra_pipe(self):
+        text = '[[Link|with|pipe]]'
+        eq_('<p><a href="/kb/Link">with|pipe</a>\n</p>',
+            self.parser.parse(text))
+
     def test_hash_name(self):
         """Internal hash with name."""
         text = '[[#section 3|this name]]'

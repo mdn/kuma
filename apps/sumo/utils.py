@@ -63,7 +63,7 @@ class WikiParser(object):
         # Split on pipe -- [[href|name]]
         separator = name.find('|')
         if separator != -1:
-            link, text = link.split('|')
+            link, text = link.split('|', 1)
 
         # Sections use _, page names use +
         hash_pos = link.find('#')
