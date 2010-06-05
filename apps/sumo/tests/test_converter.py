@@ -1,6 +1,6 @@
-from nose.tools import eq_
-
 from django.test import TestCase
+
+from nose.tools import eq_
 
 from sumo.converter import TikiMarkupConverter
 
@@ -30,15 +30,25 @@ class TestConverter(TestCase):
         content = '((Internal link|link name))'
         eq_('[[Internal link|link name]]', converter.convert(content))
 
-        content = '((Internal link)) and ((Internal again|blah))'
-        eq_('[[Internal link]] and [[Internal again|blah]]',
+    def test_internal_link_multiple(self):
+        content = '((Internal link)) and ((Internal again|named))'
+        eq_('[[Internal link]] and [[Internal again|named]]',
+            converter.convert(content))
+        content = '((Internal link|named)) and ((Internal again))'
+        eq_('[[Internal link|named]] and [[Internal again]]',
             converter.convert(content))
 
+    def test_external_link(self):
+        content = '[http://external.link]'
+        eq_('[http://external.link]', converter.convert(content))
+        content = '[http://external.link|named]'
+        eq_('[http://external.link named]', converter.convert(content))
+
     def test_heading(self):
-        content = """! heading 1
+        content = """!heading 1
                      \n!! heading 2
                      \n!!! heading 3
-                     \n!!!! heading 4
+                     \n!!!!heading 4
                      \n!!!!! heading 5
                      \n!!!!!! heading 6"""
         expected = """= heading 1 =
@@ -67,9 +77,12 @@ class TestConverter(TestCase):
 
     def test_remove_not_allowed_plugins(self):
         content = 'lala\n{maketoc} \nblarg\n{ANAME()}This is an ANAME{ANAME}'
-        eq_('lala\n  \nblarg\n ', converter.convert(content))
+        eq_('lala\n  \nblarg\n This is an ANAME ',
+            converter.convert(content))
         content = '{SPAN()}something{SPAN}{DIV()} blah{DIV}'
         eq_(' something   blah ', converter.convert(content))
+        content = '{DIV(class=nomac)}something{DIV}'
+        eq_(' something ', converter.convert(content))
 
     def test_remove_percents(self):
         content = '# lala  %%% line break'
@@ -87,9 +100,18 @@ class TestConverter(TestCase):
         eq_('<blockquote> a multiline\n blockquote </blockquote>',
             converter.convert(content))
 
+    def test_unicode(self):
+        # French
+        content = u'((Vous parl\u00e9 Fran\u00e7ais)). \n* Tr\u00e9s bien.'
+        eq_(u'[[Vous parl\u00e9 Fran\u00e7ais]]. \n* Tr\u00e9s bien.',
+            converter.convert(content))
+        # Japanese
+        content = u'!! \u6709\u52b9'
+        eq_(u'== \u6709\u52b9 ==', converter.convert(content))
+
     def test_basic(self):
         """Basic functionality works."""
-        content = """In [An article|this article] below, he mentioned that
+        content = """In [http://article.com|this article] he mentioned that
                      he found that certain proxy settings can cause a
                      ((Firefox never finishes loading certain websites))
                      condition.
@@ -98,7 +120,7 @@ class TestConverter(TestCase):
                     * ((Server not found)): %%% Just links to ((Firefox))
                     * ((Cannot connect after upgrading)) %%% Blah"""
 
-        expected = """In [An article|this article] below, he mentioned that
+        expected = """In [http://article.com this article] he mentioned that
                      he found that certain proxy settings can cause a
                      [[Firefox never finishes loading certain websites]]
                      condition.

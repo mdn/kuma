@@ -1,0 +1,323 @@
+[
+    {
+        "pk": 3,
+        "model": "sumo.forum",
+        "fields": {
+            "created": 1190080603,
+            "name": "Contributors",
+            "description": "This forum is for discussion between contributors to the support.mozilla.com site.  If you're looking for help with Firefox features, please use the <a href=\"http://support.mozilla.com/forum\">Support forum</a>."
+        }
+    },
+    {
+        "pk": 4,
+        "model": "sumo.forum",
+        "fields": {
+            "created": 1224068576,
+            "name": "Off Topic",
+            "description": "Anything goes! A forum for the things in life that aren't about Firefox support. Absolutely no advertising!"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "sumo.forum",
+        "fields": {
+            "created": 1267044270,
+            "name": "Knowledge base articles",
+            "description": "Individual article requests and discussion"
+        }
+    },
+    {
+        "pk": 305015,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "Chris_Ilias",
+            "title": "Lozalizers: list or diff ?",
+            "commentDate": 1237480707,
+            "data": "As part of the knowledge base update for Firefox 3.5, I'd like to lay out all the article changes for localizers. On ((Updating articles for Firefox 31)), we're tracking changes to be made. What I want to know is: Do you prefer to be given a list of changes to make, or a diff of each article?\r\n\r\nA diff may include more than just 3.5 updates, but may be easier to understand what to do.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 307195,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Connection interrupted while submitting post",
+            "commentDate": 1237713236,
+            "data": "This is a thread with 10 replies.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 307862,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "pcraciunoiu",
+            "title": "Software Update Failed - One or more files could not be updated",
+            "commentDate": 1237769092,
+            "data": "((Software Update Failed))\r\n  \r\n__1) Is the  \"Software Update Failed. One or more files could not be updated\" error  only seen in Firefox 2?  If so, should this article be marked as a Firefox 2 article and eventually archived? __\r\n\r\nI searched different roots at [http://mxr.mozilla.org/|Mozilla Cross-Reference] and could only find it for Firefox 2:\r\n*[http://mxr.mozilla.org/mozilla1.8/source/toolkit/locales/en-US/chrome/mozapps/update/updates.properties#90]\r\n*[http://mxr.mozilla.org/firefox2/source/toolkit/locales/en-US/chrome/mozapps/update/updates.properties#90] \r\n''Software Update Failed. One or more files could not be updated. Please make sure all other applications are closed and that you have permission to modify files, and then restart %S to try again.''\r\n\r\nRelated bug reports (from the MozillaZine KB [http://kb.mozillazine.org/Software_Update|Software Update] article)\r\n* [https://bugzilla.mozilla.org/show_bug.cgi?id=374900  |Bug 374900 -  Update without permissions fails- then gets confused after administrator update] \r\n* [https://bugzilla.mozilla.org/show_bug.cgi?id=383518 |Bug 383518 \u2013 Non-Vista Windows users are prompted for updates they cannot apply]- Fixed in Firefox 2.0.0.7 (1.8.1.7) \r\n*[https://bugzilla.mozilla.org/show_bug.cgi?id=466778 | Bug 466778 -  Unable to update when files to be patched are in use on Windows]\r\n\r\n__2) There's another  \"Software Update Failed\" error being reported by  Firefox 3 users,  \"The update could not be installed.\"  Do we need a new article for this error  or just rename the current article \"Software Update Failed\" and have separate sections for  each error?__\r\nThe Firefox 3 error is listed here:\r\n*[http://mxr.mozilla.org/firefox/source/toolkit/locales/en-US/chrome/mozapps/update/updates.properties#78] (Firefox 3.0)\r\n*[http://mxr.mozilla.org/mozilla1.9.1/source/toolkit/locales/en-US/chrome/mozapps/update/updates.properties#30] (Firefox 3.1/3.5) \r\n''Software Update Failed. The update could not be installed. Please make sure there are no other copies of %S running on your computer, and then restart %S to try again.''\r\n\r\nThere's a screenshot of the Firefox 3  \"Software Update Failed. The update could not be installed. \"error here, with a solution for Vista users: \r\n[http://www.mikekeran.com/other/mozilla-mishaps] \r\n... which is referenced here:\r\n[http://kb.mozillazine.org/Software_Update#Software_Update_Failed._The_update_could_not_be_installed] \r\n\r\nForum topics: \r\n[http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=171013&forumId=1] \r\n[http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=234250&forumId=1]\r\n[http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=171383&forumId=1]\r\n[http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=170413&forumId=1]\r\n[http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=108483&forumId=1]\r\n[http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=207864&forumId=1]",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "s"
+        }
+    },
+    {
+        "pk": 308011,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Please lock duplicate posts.",
+            "commentDate": 1237798242,
+            "data": "We've had a bunch of duplicate posts recently (the forum performance may be related).  If you see them and you're a moderator, please edit them and change the thread type to locked.  This helps us with metrics and helps prevent the users from getting excess spam.\r\n\r\nThanks.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "l"
+        }
+    },
+    {
+        "pk": 310169,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "zzxc",
+            "title": "Redirecting a renamed article",
+            "commentDate": 1238001756,
+            "data": "Continuing from the [http://support.mozilla.com/tiki-view_forum_thread.php?comments_parentId=307862&forumId=3|Software Update Failed - One or more files could not be updated] topic:  \r\n\r\nI've renamed the article  ((Software Update Failed)) which updates links in the KB and forums but doesn't seem to redirect the Web link to the old article,\r\n\r\n[http://support.mozilla.com/en-US/kb/Software+Update+Failed+-+One+or+more+files+could+not+be+updated]\r\n\r\nI  found [https://bugzilla.mozilla.org/show_bug.cgi?id=400356|Bug 400356 -  Install the Redirect module] and it looks like you have to manually create a redirect but doesn't give specifics.\r\n\r\nI went to the old page,\r\n[http://support.mozilla.com/en-US/kb/Software+Update+Failed+-+One+or+more+files+could+not+be+updated] and tried clicking on the \"Create this page\" link at the bottom of the __Page cannot be found (404)__  list of articles.  That opened up an Edit page with example text. \r\n\r\nNow what?  Or am I on the wrong track?",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "a"
+        }
+    },
+    {
+        "pk": 331343,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "pcraciunoiu",
+            "title": "Help with Research Project",
+            "commentDate": 1244683185,
+            "data": "Hi; my name is Per Peterson, and I am a researcher at East Carolina University in Greenville, North Carolina.  I am performing research which attempts to cluster crash data from popular software products using data mining techniques.  As of yet, however, I have not obtained any data about software crashes.  My primary question is, \"who do I contact about getting access to the Soccoro crash data for Firefox 3.0.0 in a way that I could data-mine it?\"\r\n\r\nSecondly, I would like to know if anybody here at Mozilla knows anything about similar past, present, or future projects, especially those that deal with the data-mining that Mozilla performs on their own data.  It would be much appreciated if you could point me to a location where I could find this information.\r\n\r\nAlso, any suggestions as to the scope or direction of my research are welcome.  It is not yet as focused as it could be.  I hope that some preliminary data can help me gain focus.  And if further information about the research is required, I will happily provide details to the extent that I can afford.\r\n\r\nThank you.",
+            "object": "4",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 369036,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Testing Firefox on different hardware configs",
+            "commentDate": 1245098768,
+            "data": "Hello there,\r\n\r\nI'm attempting to test Firefox 3.0.0 on different VMs varying in terms of their cpu speed, memory and hard disk space. So, basically I'm looking for FF bugs that were seemingly dependent on the aforementioned hardware components. This is part of a study I'm doing. Any helpful pointers in this regard would be greatly appreciated.\r\n\r\nI've searched the bugzilla forums using keywords like crash, topcrash, mlk, footprint etc. but haven't been able to reproduce them on my XP 667Mhz 128MB RAM system. What would be the best way to find such bugs?\r\n\r\nThanks!",
+            "object": "4",
+            "objectType": "forum",
+            "parentId": 0,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 331404,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "pcraciunoiu",
+            "title": "Comment on thread 331343",
+            "commentDate": 1240089194,
+            "data": "You can have Firefox and IE8 open at the same time. I use IE8 all the time, it is an improvement over earlier versions. I think it is safer than previous versions of IE.",
+            "object": "4",
+            "objectType": "forum",
+            "parentId": 331343,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 331344,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Comment on thread 331343",
+            "commentDate": 1240082479,
+            "data": "\r\n\r\nHi Everyone,\r\n\r\nI use MMF as my main browsers. On occasion I do use Internet explore.\r\n\r\nI would like to know if the new version of Internet Explore 8 is safe to install?\r\n\r\nI did not install the new version of MMF or IE. I would like to know if the both of them are compatible.",
+            "object": "4",
+            "objectType": "forum",
+            "parentId": 331343,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 334903,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "pcraciunoiu",
+            "title": "Comment on thread 305015",
+            "commentDate": 1240502522,
+            "data": "Just my opinion after I've tried to use diff.\r\nIt is terrible. You cannot see what was deleted, it only highlights what was added. And you must guess what happened in there.\r\nIn one case I simply deleted an article and translated it again - it was easier.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 305015,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 334996,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "zzxc",
+            "title": "Comment on thread 305015",
+            "commentDate": 1240510162,
+            "data": "Thanks.  I tend to agree. Diffs are good small changes and adding/removing sections, but for large changes or rewording paragraphs, you end up having to read through all of the highlighted text.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 305015,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 307198,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237713373,
+            "data": "Oh ((the irony|what?)),\n# it did\n# it again \n^ while [submitting|this] ^\nnew topic - but had ended up posting anyway.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 307255,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "Cww",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237722018,
+            "data": "I get that error quite often, the vast majority of the time the post has been added.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 307974,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237785369,
+            "data": "Ah at least it's not just me...",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 308010,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "zzxc",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237798036,
+            "data": "I'm not getting the error but posts are taking a long time, a LOOOONG time.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 308282,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237822196,
+            "data": "I get the error a lot now, when trying to display a post and replying to one.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 308302,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237823312,
+            "data": "I've filed [https://bugzilla.mozilla.org/show_bug.cgi?id=484753|a bug] and I think IT is on it.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 308310,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "pcraciunoiu",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237823707,
+            "data": "I've noticed it since yesterday (Sunday).\r\nBefore that it hardly happened, but now I frequently have ''Waiting for'' for quite a long time or posting times out and I need to resend (that luckily usually doesn't cause a dupe).\r\n\r\nHas there been a check of the server logs to see if there is any unusual activity?",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 308843,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "jsocol",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237890034,
+            "data": "Thanks Cww, like cor-el for me it's very slow to post, and usually ends up in a resend after a minute or so of waiting (haven't seen any dupes yet).  Fingers crossed we can track down the cause as it makes replying a slow and painful process, so far tonight - every reply I post has done this. :(",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 309005,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "zzxc",
+            "title": "Comment on thread 307195",
+            "commentDate": 1237901189,
+            "data": "What I have noticed is that the forum operates normally for a brief period of time before going back to the page load errors. What I do is if a post opens up straight away I will quickly open up many other posts into tabs so that I can work on them (typically this can be 10-20 posts). At least this gives you the opportunity to answer some questions even if the replies go to page load errors. I have found the replies go through even if you page load errors after replying.",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    },
+    {
+        "pk": 315425,
+        "model": "sumo.forumthread",
+        "fields": {
+            "userName": "pcraciunoiu",
+            "title": "Comment on thread 307195",
+            "commentDate": 1238503195,
+            "data": "Is there any update on when this will be resolved?",
+            "object": "3",
+            "objectType": "forum",
+            "parentId": 307195,
+            "type": "n"
+        }
+    }
+]
