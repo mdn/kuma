@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -35,7 +37,8 @@ class Thread(ModelBase):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     forum = models.ForeignKey('Forum')
-    created = models.DateTimeField(auto_now_add=True, db_index=True)
+    created = models.DateTimeField(default=datetime.datetime.now,
+                                   db_index=True)
     creator = models.ForeignKey(User)
     last_post = models.ForeignKey('Post', related_name='last_post_in',
                                   null=True)
@@ -87,8 +90,10 @@ class Post(ModelBase):
     thread = models.ForeignKey('Thread')
     content = models.TextField()
     author = models.ForeignKey(User)
-    created = models.DateTimeField(auto_now_add=True, db_index=True)
-    updated = models.DateTimeField(auto_now=True, db_index=True)
+    created = models.DateTimeField(default=datetime.datetime.now,
+                                   db_index=True)
+    updated = models.DateTimeField(default=datetime.datetime.now,
+                                   db_index=True)
     updated_by = models.ForeignKey(User,
                                    related_name='post_last_updated_by',
                                    null=True)
@@ -100,9 +105,15 @@ class Post(ModelBase):
         return self.content[:50]
 
     def save(self, *args, **kwargs):
-        """Override save method to update parent thread info."""
+        """
+        Override save method to update parent thread info and take care of
+        created and updated.
+        """
 
         new = self.id is None
+
+        if not new:
+            self.updated = datetime.datetime.now()
 
         super(Post, self).save(*args, **kwargs)
 

@@ -30,7 +30,7 @@ class ReplyForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ('thread', 'author', 'updated_by')
+        exclude = ('thread', 'author', 'created', 'updated', 'updated_by')
 
 
 class NewThreadForm(forms.Form):
@@ -69,4 +69,4 @@ class EditPostForm(forms.Form):
 
     class Meta:
         model = Post
-        exclude = ('thread', 'author', 'updated_by')
+        exclude = ('thread', 'author', 'updated', 'created', 'updated_by')

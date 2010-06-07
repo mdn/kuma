@@ -1,6 +1,9 @@
-from nose.tools import eq_
+import datetime
 
 from django.test import client
+from django.contrib.auth.models import User
+
+from nose.tools import eq_
 
 from forums.models import Forum, Thread, Post
 from forums.tests import ForumTestCase
@@ -113,3 +116,94 @@ class ThreadModelTestCase(ForumTestCase):
         forum = Forum.objects.get(pk=1)
         eq_(forum.last_post.id, last_post.id)
         eq_(Thread.objects.filter(pk=thread.id).count(), 0)
+
+
+class SaveDateTestCase(ForumTestCase):
+    """
+    Test that Thread and Post save methods correctly handle created
+    and updated dates.
+    """
+
+    delta = datetime.timedelta(milliseconds=50)
+
+    def setUp(self):
+        super(SaveDateTestCase, self).setUp()
+
+        self.user = User.objects.get(pk=118533)
+        self.forum = Forum.objects.get(pk=1)
+        self.thread = Thread.objects.get(pk=2)
+
+    def assertDateTimeAlmostEqual(self, a, b, delta, msg=None):
+        """
+        Assert that two datetime objects are within `range` (a timedelta).
+        """
+        diff = abs(a - b)
+        assert diff < abs(delta), msg or '%s ~= %s' % (a, b)
+
+    def test_save_thread_no_created(self):
+        """Saving a new thread should behave as if auto_add_now was set."""
+        t = self.forum.thread_set.create(title='foo', creator=self.user)
+        t.save()
+        now = datetime.datetime.now()
+        self.assertDateTimeAlmostEqual(now, t.created, self.delta)
+
+    def test_save_thread_created(self):
+        """
+        Saving a new thread that already has a created date should respect
+        that created date.
+        """
+
+        created = datetime.datetime(1992, 1, 12, 9, 48, 23)
+        t = self.forum.thread_set.create(title='foo', creator=self.user,
+                                         created=created)
+        t.save()
+        eq_(created, t.created)
+
+    def test_save_old_thread_created(self):
+        """Saving an old thread should not change its created date."""
+        t = Thread.objects.get(pk=3)
+        created = t.created
+        t.save()
+        eq_(created, t.created)
+
+    def test_save_new_post_no_timestamps(self):
+        """
+        Saving a new post should behave as if auto_add_now was set on
+        created and auto_now set on updated.
+        """
+        p = Post(thread=self.thread, content='bar', author=self.user)
+        p.save()
+        now = datetime.datetime.now()
+        self.assertDateTimeAlmostEqual(now, p.created, self.delta)
+        self.assertDateTimeAlmostEqual(now, p.updated, self.delta)
+
+    def test_save_old_post_no_timestamps(self):
+        """
+        Saving an existing post should update the updated date.
+        """
+        p = Post.objects.get(pk=4)
+
+        updated = datetime.datetime(2010, 5, 4, 14, 4, 31)
+        eq_(updated, p.updated)
+
+        p.content = 'baz'
+        p.updated_by = self.user
+        p.save()
+        now = datetime.datetime.now()
+        created = datetime.datetime(2010, 5, 4, 14, 4, 22)
+
+        self.assertDateTimeAlmostEqual(now, p.updated, self.delta)
+        eq_(created, p.created)
+
+    def test_save_new_post_timestamps(self):
+        """
+        Saving a new post should allow you to override auto_add_now- and
+        auto_now-like functionality.
+        """
+        created_ = datetime.datetime(1992, 1, 12, 10, 12, 32)
+        p = Post(thread=self.thread, content='bar', author=self.user,
+                 created=created_, updated=created_)
+        p.save()
+        eq_(created_, p.created)
+        eq_(created_, p.updated)
+
