@@ -206,4 +206,3 @@ class SaveDateTestCase(ForumTestCase):
         p.save()
         eq_(created_, p.created)
         eq_(created_, p.updated)
-

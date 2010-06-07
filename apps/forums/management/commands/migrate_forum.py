@@ -188,6 +188,10 @@ class Command(BaseCommand):
                     create_post(thread, tiki_post)
                     post_i = post_i + 1
 
+                last_post = thread.post_set.order_by('-created')[0]
+                thread.last_post = last_post
+                thread.save()
+
                 thread_i = thread_i + 1
 
             if options['verbosity'] > 0:
