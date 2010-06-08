@@ -224,7 +224,7 @@ class TikiUser(ModelBase):
     class Meta:
         db_table = 'users_users'
 
-    userId = models.IntegerField(primary_key=True)
+    userId = models.AutoField(primary_key=True)
     email = models.CharField(max_length=200, null=True)
     login = models.CharField(max_length=200, unique=True)
     password = models.CharField(max_length=30)
