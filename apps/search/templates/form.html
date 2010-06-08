@@ -31,8 +31,8 @@
 
       <div class="container">
         {{ search_form.category.label_tag()|safe }}
-        <div class="category">
-        {{ search_form.category|safe }}
+        <div class="category checkboxes">
+          {{ search_form.category|safe }}
         </div>
       </div>
 
@@ -103,7 +103,9 @@
 
       <div class="container">
         {{ search_form.thread_type.label_tag()|safe }}
-        {{ search_form.thread_type|safe }}
+        <div class="thread-type checkboxes">
+          {{ search_form.thread_type|safe }}
+        </div>
       </div>
 
       <div class="container">

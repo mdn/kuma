@@ -135,7 +135,8 @@ def search(request):
 
         thread_type = NoValidateMultipleChoiceField(
             label=_('Thread type'), choices=constants.DISCUSSION_STATUS_LIST,
-            required=False)
+            required=False,
+            widget=forms.CheckboxSelectMultiple)
 
         forums = [(f.id, f.name) for f in DiscussionForum.objects.all()]
         forum = NoValidateMultipleChoiceField(label=_('Search in forum'),
