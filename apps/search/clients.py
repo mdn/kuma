@@ -7,6 +7,7 @@ from django.utils.encoding import smart_unicode
 
 from bleach import Bleach
 
+import search as constants
 from .sphinxapi import SphinxClient
 
 MARKUP_PATTERNS = (
@@ -71,18 +72,12 @@ class SearchClient(object):
 
                 self.compiled_patterns.append(p)
 
-    def query(self, query, filters=None):
-        """
-        Query the search index.
-        """
-
-        if filters is None:
-            filters = []
-
+    def _process_filters(self, filters=None):
+        """Process filters and filter ranges."""
         sc = self.sphinx
         sc.ResetFilters()
-
-        sc.SetFieldWeights(self.weights)
+        if filters is None:
+            filters = []
 
         for f in filters:
             if f.get('range', False):
@@ -92,8 +87,14 @@ class SearchClient(object):
                 sc.SetFilter(f['filter'], f['value'],
                              f.get('exclude', False))
 
+    def _query_sphinx(self, query=''):
+        """
+        Pass the query to the SphinxClient() and return the results.
+
+        Catches common exceptions raised by Sphinx.
+        """
         try:
-            result = sc.Query(query, self.index)
+            result = self.sphinx.Query(query, self.index)
         except socket.timeout:
             log.error('Query has timed out!')
             raise SearchError('Query has timed out!')
@@ -108,6 +109,16 @@ class SearchClient(object):
             return result['matches']
         else:
             return []
+
+    def query(self, query, filters=None):
+        """
+        Query the search index.
+        """
+        self._process_filters(filters)
+
+        self.sphinx.SetFieldWeights(self.weights)
+
+        return self._query_sphinx(query)
 
     def excerpt(self, result, query):
         """
@@ -152,12 +163,12 @@ class SearchClient(object):
         self.sphinx.SetSortMode(mode, clause)
 
 
-class ForumClient(SearchClient):
+class SupportClient(SearchClient):
     """
-    Search the forum
+    Search the support forum
     """
     index = 'forum_threads'
-    weights = {'title': 4, 'content': 3}
+    weights = {'title': 2, 'content': 1}
 
 
 class WikiClient(SearchClient):
@@ -165,4 +176,35 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-    weights = {'title': 4, 'content': 3}
+    weights = {'pageName': 4, 'content': 1, 'keywords': 4, 'tag': 2}
+
+
+class DiscussionClient(SearchClient):
+    """
+    Search the discussion forums.
+    """
+    index = 'discussion_forums'
+    weights = {'title': 2, 'content': 1}
+
+    def __init__(self):
+        super(DiscussionClient, self).__init__()
+        self.groupsort = '@group desc'
+
+    def query(self, query, filters=None):
+        """
+        Query the search index.
+
+        Returns a list of matching threads by grouping posts together.
+        Ensures thread['attrs']['updated'] is the last post's updated date.
+        """
+        self._process_filters(filters)
+
+        sc = self.sphinx
+        sc.SetFieldWeights(self.weights)
+        sc.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR, self.groupsort)
+        sc.SetSortMode(constants.SPH_SORT_ATTR_ASC, 'created')
+
+        return self._query_sphinx(query)
+
+    def set_groupsort(self, groupsort=''):
+        self.groupsort = groupsort

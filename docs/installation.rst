@@ -36,6 +36,7 @@ Getting the Source
 Grab the source from Github using::
 
     git clone git://github.com/jsocol/kitsune.git
+    git submodule update --init
 
 
 virtualenv

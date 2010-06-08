@@ -1,17 +1,29 @@
 import cgi
 import urlparse
+import datetime
 
 from django.utils.encoding import smart_unicode
+from django.conf import settings
 
 import jinja2
 from jingo import register, env
+from tower import ugettext_lazy as _lazy
+from babel import localedata
+from babel.dates import format_date, format_time, format_datetime
+from pytz import timezone
 
-from sumo.urlresolvers import reverse
-from sumo.utils import urlencode
+from .urlresolvers import reverse
+from .utils import urlencode
+
+
+class DateTimeFormatError(Exception):
+    """Called by the datetimeformat function when receiving invalid format."""
+    pass
 
 
 @register.filter
 def paginator(pager):
+    """Render list of pages."""
     return Paginator(pager).render()
 
 
@@ -29,12 +41,12 @@ def urlparams(url_, hash=None, **query):
     New query params will be appended to exising parameters, except duplicate
     names, which will be replaced.
     """
-    url = urlparse.urlparse(url_)
-    fragment = hash if hash is not None else url.fragment
+    url_ = urlparse.urlparse(url_)
+    fragment = hash if hash is not None else url_.fragment
 
     items = []
-    if url.query:
-        for k, v in cgi.parse_qsl(url.query):
+    if url_.query:
+        for k, v in cgi.parse_qsl(url_.query):
             items.append((k, v))
     for k, v in query.items():
         items.append((k, v))
@@ -44,8 +56,8 @@ def urlparams(url_, hash=None, **query):
 
     query_string = urlencode(items)
 
-    new = urlparse.ParseResult(url.scheme, url.netloc, url.path, url.params,
-                               query_string, fragment)
+    new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
+                               url_.params, query_string, fragment)
     return jinja2.Markup(new.geturl())
 
 
@@ -86,15 +98,94 @@ class Paginator(object):
 
 
 @register.filter
-def fe(str, *args, **kwargs):
+def fe(str_, *args, **kwargs):
     """Format a safe string with potentially unsafe arguments, then return a
     safe string."""
 
-    str = unicode(str)
+    str_ = unicode(str_)
 
     args = [jinja2.escape(smart_unicode(v)) for v in args]
 
     for k in kwargs:
         kwargs[k] = jinja2.escape(smart_unicode(kwargs[k]))
 
-    return jinja2.Markup(str.format(*args, **kwargs))
+    return jinja2.Markup(str_.format(*args, **kwargs))
+
+
+@register.function
+@jinja2.contextfunction
+def breadcrumbs(context, items=list(), add_default=True):
+    """
+    Show a list of breadcrumbs. If url is None, it won't be a link.
+    Accepts: [(url, label)]
+    """
+    if add_default:
+        crumbs = [('/' + context['request'].locale + '/kb',
+                   _lazy(u'Firefox Support'))]
+    else:
+        crumbs = []
+
+    # add user-defined breadcrumbs
+    if items:
+        try:
+            crumbs += items
+        except TypeError:
+            crumbs.append(items)
+
+    c = {'breadcrumbs': crumbs}
+    t = env.get_template('layout/breadcrumbs.html').render(**c)
+    return jinja2.Markup(t)
+
+
+@register.function
+def profile_url(user):
+    """Return a URL to the user's profile."""
+    # TODO: revisit this when we have a users app
+    return '/tiki-user_information.php?locale=en-US&userId=%s' % user.id
+
+
+@register.function
+def profile_avatar(user):
+    """Return a URL to the user's avatar."""
+    # TODO: revisit this when we have a users app
+    return '/tiki-show_user_avatar.php?user=%s' % user.username
+
+
+@register.function
+@jinja2.contextfunction
+def datetimeformat(context, value, format='shortdatetime'):
+    """
+    Returns date/time formatted using babel's locale settings. Uses the
+    timezone from settings.py
+    """
+    if not isinstance(value, datetime.datetime):
+        # Expecting date value
+        raise ValueError
+
+    tzinfo = timezone(settings.TIME_ZONE)
+    tzvalue = tzinfo.localize(value)
+    # Babel uses underscore as separator.
+    locale = context['request'].locale
+    if not localedata.exists(locale):
+        locale = settings.LANGUAGE_CODE
+    locale = locale.replace('-', '_')
+
+    # If within a day, 24 * 60 * 60 = 86400s
+    if format == 'shortdatetime':
+        # Check if the date is today
+        if value.toordinal() == datetime.date.today().toordinal():
+            return _lazy('Today at %s') % format_time(
+                tzvalue, format='short', locale=locale)
+        else:
+            return format_datetime(tzvalue, format='short', locale=locale)
+    elif format == 'longdatetime':
+        return format_datetime(tzvalue, format='long', locale=locale)
+    elif format == 'date':
+        return format_date(tzvalue, locale=locale)
+    elif format == 'time':
+        return format_time(tzvalue, locale=locale)
+    elif format == 'datetime':
+        return format_datetime(tzvalue, locale=locale)
+    else:
+        # Unknown format
+        raise DateTimeFormatError

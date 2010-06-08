@@ -1,9 +1,6 @@
 from django.conf import settings
 
 
-def title(request):
-    """
-    Adds site title to the context.
-
-    """
-    return {'SITE_TITLE': settings.SITE_TITLE}
+def global_settings(request):
+    """Adds settings to the context."""
+    return {'settings': settings}

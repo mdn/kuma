@@ -1,0 +1,10 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% macro form(q='') -%}
+  <div id="basic-search" class="search-empty">
+  {{ _('Enter your terms in the form below and click <strong>Search</strong>')|safe }}
+    <form role="search" method="get" action="{{ url('search') }}">
+      <input type="text" class="search-query search-empty-query" value="{{ q }}" name="q">
+      <input type="submit" class="search-empty-submit btn-large" value="{{ _('Search', 'button') }}">
+    </form>
+  </div>
+{%- endmacro %}

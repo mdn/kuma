@@ -12,19 +12,23 @@ from django.db import connection
 
 import mock
 from nose import SkipTest
-from nose.tools import assert_raises
+from nose.tools import assert_raises, eq_
 import test_utils
 import jingo
+from pyquery import PyQuery as pq
 
 from manage import settings
 from sumo.urlresolvers import reverse
 import search as constants
-from search.utils import start_sphinx, stop_sphinx, reindex
-from search.clients import WikiClient, ForumClient, SearchError
+from search.utils import start_sphinx, stop_sphinx, reindex, crc32
+from search.clients import (WikiClient, SupportClient, DiscussionClient,
+                            SearchError)
 from sumo.models import WikiPage
+from forums.models import Post
+import forums.tests as forum_tests
 
 
-def render(s, context={}):
+def render(s, context):
     t = jingo.env.from_string(s)
     return t.render(**context)
 
@@ -143,7 +147,8 @@ class SphinxTestCase(test_utils.TransactionTestCase):
     when testing any feature that requires sphinx.
     """
 
-    fixtures = ['forums.json', 'threads.json', 'pages.json', 'categories.json']
+    fixtures = ['forums.json', 'threads.json', 'pages.json', 'categories.json',
+                'users.json', 'posts.json']
     sphinx = True
     sphinx_is_running = False
 
@@ -178,97 +183,125 @@ class SphinxTestCase(test_utils.TransactionTestCase):
             SphinxTestCase.sphinx_is_running = False
 
 
+def test_sphinx_down():
+    """
+    Tests that the client times out when Sphinx is down.
+    """
+    wc = WikiClient()
+    assert_raises(SearchError, wc.query, 'test')
+
+
 class SearchTest(SphinxTestCase):
 
     def setUp(self):
+        forum_tests.fixtures_setup()
         SphinxTestCase.setUp(self)
         self.client = client.Client()
 
     def test_indexer(self):
         wc = WikiClient()
         results = wc.query('practice')
-        self.assertNotEquals(0, len(results))
+        eq_(2, len(results))
 
     def test_content(self):
         """Ensure template is rendered with no errors for a common search"""
         response = self.client.get(reverse('search'), {'q': 'audio', 'w': 3})
-        self.assertEquals(response['Content-Type'],
-                          'text/html; charset=utf-8')
-        self.assertEquals(response.status_code, 200)
+        eq_('text/html; charset=utf-8', response['Content-Type'])
+        eq_(200, response.status_code)
+
+    def test_search_type_param(self):
+        """Ensure that invalid values for search type (a=)
+        does not cause errors"""
+        response = self.client.get(reverse('search'), {'a': 'dontdie'})
+        eq_('text/html; charset=utf-8', response['Content-Type'])
+        eq_(200, response.status_code)
+
+    def test_headers(self):
+        """Verify caching headers of search forms and search results"""
+        response = self.client.get(reverse('search'), {'q': 'audio', 'w': 3})
+        eq_('max-age=%s' % (settings.SEARCH_CACHE_PERIOD * 60),
+            response['Cache-Control'])
+        assert 'Expires' in response
+        response = self.client.get(reverse('search'))
+        eq_('max-age=%s' % (settings.SEARCH_CACHE_PERIOD * 60),
+            response['Cache-Control'])
+        assert 'Expires' in response
 
     def test_page_invalid(self):
         """Ensure non-integer param doesn't throw exception."""
         qs = {'a': 1, 'format': 'json', 'page': 'invalid'}
         response = self.client.get(reverse('search'), qs)
-        self.assertEquals(response.status_code, 200)
-        self.assertNotEquals(0, json.loads(response.content)['total'])
+        eq_(200, response.status_code)
+        eq_(10, json.loads(response.content)['total'])
 
-    def test_category_filter(self):
+    def test_search_metrics(self):
+        """Ensure that query strings are added to search results"""
+        response = self.client.get(reverse('search'), {'q': 'audio', 'w': 3})
+        doc = pq(response.content)
+        assert doc('a.title:first').attr('href').endswith('?s=audio&as=s')
+
+    def test_category(self):
         wc = WikiClient()
         results = wc.query('', ({'filter': 'category', 'value': [13]},))
-        self.assertNotEquals(0, len(results))
+        eq_(1, len(results))
 
     def test_category_exclude(self):
         response = self.client.get(reverse('search'),
                                    {'q': 'audio', 'format': 'json', 'w': 3})
-        self.assertNotEquals(0, json.loads(response.content)['total'])
+        eq_(2, json.loads(response.content)['total'])
 
         response = self.client.get(reverse('search'),
                                    {'q': 'audio', 'category': -13,
                                     'format': 'json', 'w': 1})
-        self.assertEquals(1, json.loads(response.content)['total'])
+        eq_(1, json.loads(response.content)['total'])
 
     def test_category_invalid(self):
         qs = {'a': 1, 'w': 3, 'format': 'json', 'category': 'invalid'}
         response = self.client.get(reverse('search'), qs)
-        self.assertNotEquals(0, json.loads(response.content)['total'])
+        eq_(10, json.loads(response.content)['total'])
 
     def test_no_filter(self):
         """Test searching with no filters."""
         wc = WikiClient()
 
         results = wc.query('')
-        self.assertNotEquals(0, len(results))
+        eq_(10, len(results))
 
     def test_range_filter(self):
         """Test filtering on a range."""
         wc = WikiClient()
-        filter = ({'filter': 'lastmodif',
-                   'max': 1244355125,
-                   'min': 1244355115,
-                   'range': True},)
-        results = wc.query('', filter)
-        self.assertEquals(1, len(results))
+        filter_ = ({'filter': 'updated',
+                    'max': 1244355125,
+                    'min': 1244355115,
+                    'range': True},)
+        results = wc.query('', filter_)
+        eq_(1, len(results))
 
     def test_search_en_locale(self):
         """Searches from the en-US locale should return documents from en."""
         qs = {'q': 'contribute', 'w': 1, 'format': 'json', 'category': 23}
         response = self.client.get(reverse('search'), qs)
-        self.assertNotEquals(0, json.loads(response.content)['total'])
+        eq_(1, json.loads(response.content)['total'])
 
     def test_sort_mode(self):
         """Test set_sort_mode()."""
         # Initialize client and attrs.
-        fc = ForumClient()
-        test_for = ('last_updated', 'created', 'replies')
+        fc = SupportClient()
+        test_for = ('updated', 'created', 'replies')
 
         i = 0
         for sort_mode in constants.SORT[1:]:  # Skip default sorting.
             fc.set_sort_mode(sort_mode[0], sort_mode[1])
             results = fc.query('')
-            self.assertNotEquals(0, len(results))
+            eq_(9, len(results))
 
             # Compare first and last.
-            self.assertTrue(results[0]['attrs'][test_for[i]] >
-                            results[-1]['attrs'][test_for[i]])
+            assert (results[0]['attrs'][test_for[i]] >
+                    results[-1]['attrs'][test_for[i]])
             i += 1
 
-    def test_lastmodif(self):
-        qs = {'a': 1, 'w': 3, 'format': 'json', 'lastmodif': 1}
-        response = self.client.get(reverse('search'), qs)
-        self.assertNotEquals(0, json.loads(response.content)['total'])
-
     def test_created(self):
+        """Basic functionality of created filter."""
         qs = {'a': 1, 'w': 2, 'format': 'json',
               'sortby': 2, 'created_date': '10/13/2008'}
         created_vals = (
@@ -279,15 +312,73 @@ class SearchTest(SphinxTestCase):
         for created, url_id in created_vals:
             qs.update({'created': created})
             response = self.client.get(reverse('search'), qs)
-            self.assertEquals(url_id, json.loads(response.content)['results']
-                                          [-1]['url'][-len(url_id):])
+            result = json.loads(response.content)['results'][-1]
+            url_end = result['url'].endswith(url_id)
+            assert url_end, ('Url was "%s", expected to end with "%s"' %
+                             (result['url'], url_id))
 
     def test_created_invalid(self):
         """Invalid created_date is ignored."""
         qs = {'a': 1, 'w': 2, 'format': 'json',
               'created': 1, 'created_date': 'invalid'}
         response = self.client.get(reverse('search'), qs)
-        self.assertEquals(9, json.loads(response.content)['total'])
+        eq_(9, json.loads(response.content)['total'])
+
+    def test_created_nonexistent(self):
+        """created is set while created_date is left out of the query."""
+        qs = {'a': 1, 'w': 2, 'format': 'json', 'created': 1}
+        response = self.client.get(reverse('search'), qs)
+        eq_(200, response.status_code)
+
+    def test_created_range_sanity(self):
+        """Ensure that the created_date range is sane."""
+        qs = {'a': 1, 'w': '2', 'q': 'contribute', 'created': '2',
+              'format': 'json'}
+        date_vals = ('05/28/2099', '05/28/1900', '05/28/1920')
+        for date_ in date_vals:
+            qs.update({'created_date': date_})
+            response = self.client.get(reverse('search'), qs)
+            eq_(0, json.loads(response.content)['total'])
+
+    def test_updated(self):
+        """Basic functionality of updated filter."""
+        qs = {'a': 1, 'w': 2, 'format': 'json',
+              'sortby': 1, 'updated_date': '10/13/2008'}
+        updated_vals = (
+            (1, '/126164'),
+            (2, '/185510'),
+        )
+
+        for updated, url_id in updated_vals:
+            qs.update({'updated': updated})
+            response = self.client.get(reverse('search'), qs)
+            result = json.loads(response.content)['results'][0]
+            url_end = result['url'].endswith(url_id)
+            assert url_end, ('Url was "%s", expected to end with "%s"' %
+                             (result['url'], url_id))
+
+    def test_updated_invalid(self):
+        """Invalid updated_date is ignored."""
+        qs = {'a': 1, 'w': 2, 'format': 'json',
+              'updated': 1, 'updated_date': 'invalid'}
+        response = self.client.get(reverse('search'), qs)
+        eq_(9, json.loads(response.content)['total'])
+
+    def test_updated_nonexistent(self):
+        """updated is set while updated_date is left out of the query."""
+        qs = {'a': 1, 'w': 2, 'format': 'json', 'updated': 1}
+        response = self.client.get(reverse('search'), qs)
+        eq_(response.status_code, 200)
+
+    def test_updated_range_sanity(self):
+        """Ensure that the updated_date range is sane."""
+        qs = {'a': 1, 'w': '2', 'q': 'contribute', 'updated': '2',
+              'format': 'json'}
+        date_vals = ('05/28/2099', '05/28/1900', '05/28/1920')
+        for date_ in date_vals:
+            qs.update({'updated_date': date_})
+            response = self.client.get(reverse('search'), qs)
+            eq_(0, json.loads(response.content)['total'])
 
     def test_author(self):
         """Check several author values, including test for (anon)"""
@@ -301,7 +392,7 @@ class SearchTest(SphinxTestCase):
         for author, total in author_vals:
             qs.update({'author': author})
             response = self.client.get(reverse('search'), qs)
-            self.assertEquals(total, json.loads(response.content)['total'])
+            eq_(total, json.loads(response.content)['total'])
 
     def test_status(self):
         qs = {'a': 1, 'w': 2, 'format': 'json'}
@@ -317,7 +408,7 @@ class SearchTest(SphinxTestCase):
         for status, total in status_vals:
             qs.update({'status': status})
             response = self.client.get(reverse('search'), qs)
-            self.assertEquals(total, json.loads(response.content)['total'])
+            eq_(total, json.loads(response.content)['total'])
 
     def test_tags(self):
         """Search for tags, includes multiple"""
@@ -332,14 +423,14 @@ class SearchTest(SphinxTestCase):
         for tag_string, total in tags_vals:
             qs.update({'tags': tag_string})
             response = self.client.get(reverse('search'), qs)
-            self.assertEquals(total, json.loads(response.content)['total'])
+            eq_(total, json.loads(response.content)['total'])
 
     def test_unicode_excerpt(self):
         """Unicode characters in the excerpt should not be a problem."""
         wc = WikiClient()
         q = 'contribute'
         results = wc.query(q)
-        self.assertNotEquals(0, len(results))
+        eq_(1, len(results))
         page = WikiPage.objects.get(pk=results[0]['id'])
         try:
             excerpt = wc.excerpt(page.data, q)
@@ -350,16 +441,126 @@ class SearchTest(SphinxTestCase):
     def test_clean_excerpt(self):
         """SearchClient.excerpt() should not allow disallowed HTML through."""
         wc = WikiClient()
-        self.assertEquals('<b>test</b>&lt;/style&gt;',
-                          wc.excerpt('test</style>', 'test'))
+        eq_('<b>test</b>&lt;/style&gt;', wc.excerpt('test</style>', 'test'))
 
+    def test_meta_tags(self):
+        url_ = reverse('search')
+        response = self.client.get(url_, {'q': 'contribute'})
 
-def test_sphinx_down():
-    """
-    Tests that the client times out when Sphinx is down.
-    """
-    wc = WikiClient()
-    assert_raises(SearchError, wc.query, 'test')
+        doc = pq(response.content)
+        metas = doc('meta')
+        eq_(3, len(metas))
+
+    def test_discussion_sanity(self):
+        """Sanity check for discussion forums search client."""
+        dc = DiscussionClient()
+        filters_f = [{'filter': 'author_ord', 'value': (crc32('admin'),)}]
+        results = dc.query(u'', filters_f)
+        eq_(1, len(results))
+        post = Post.objects.get(pk=results[0]['id'])
+        eq_(u'yet another <b>post</b>', dc.excerpt(post.content, u'post'))
+
+    def test_discussion_filter_author(self):
+        """Filter by author in discussion forums."""
+        qs = {'a': 1, 'w': 4, 'format': 'json'}
+        author_vals = (
+            ('DoesNotExist', 0),
+            ('admin', 1),
+            ('jsocol', 4),
+        )
+
+        for author, total in author_vals:
+            qs.update({'author': author})
+            response = self.client.get(reverse('search'), qs)
+            eq_(total, json.loads(response.content)['total'])
+
+    def test_discussion_filter_forum(self):
+        """Filter by forum in discussion forums."""
+        qs = {'a': 1, 'w': 4, 'format': 'json'}
+        forum_vals = (
+            # (forum_id, num_results)
+            (1, 4),
+            (2, 1),
+            (3, 0),  # this forum does not exist
+        )
+
+        for forum_id, total in forum_vals:
+            qs.update({'forum': forum_id})
+            response = self.client.get(reverse('search'), qs)
+            eq_(total, json.loads(response.content)['total'])
+
+    def test_discussion_filter_sticky(self):
+        """Filter for sticky threads."""
+        qs = {'a': 1, 'w': 4, 'format': 'json', 'thread_type': 1, 'forum': 1}
+        response = self.client.get(reverse('search'), qs)
+        result = json.loads(response.content)['results'][0]
+        eq_(u'Sticky Thread', result['title'])
+
+    def test_discussion_filter_locked(self):
+        """Filter for locked threads."""
+        qs = {'a': 1, 'w': 4, 'format': 'json', 'thread_type': 2,
+              'forum': 1, 'q': 'locked'}
+        response = self.client.get(reverse('search'), qs)
+        result = json.loads(response.content)['results'][0]
+        eq_(u'Locked Thread', result['title'])
+
+    def test_discussion_filter_sticky_locked(self):
+        """Filter for locked and sticky threads."""
+        qs = {'a': 1, 'w': 4, 'format': 'json', 'thread_type': (1, 2)}
+        response = self.client.get(reverse('search'), qs)
+        result = json.loads(response.content)['results'][0]
+        eq_(u'Locked Sticky Thread', result['title'])
+
+    def test_discussion_filter_created(self):
+        """Filter for created date."""
+        qs = {'a': 1, 'w': 4, 'format': 'json',
+              'sortby': 2, 'created_date': '05/03/2010'}
+        created_vals = (
+            (1, '/1'),
+            (2, '/5'),
+        )
+
+        for created, url_id in created_vals:
+            qs.update({'created': created})
+            response = self.client.get(reverse('search'), qs)
+            result = json.loads(response.content)['results'][-1]
+            url_end = result['url'].endswith(url_id)
+            assert url_end, ('Url was "%s", expected to end with "%s"' %
+                             (result['url'], url_id))
+
+    def test_discussion_filter_updated(self):
+        """Filter for updated date."""
+        qs = {'a': 1, 'w': 4, 'format': 'json',
+              'sortby': 1, 'updated_date': '05/03/2010'}
+        updated_vals = (
+            (1, '/1'),
+            (2, '/4'),
+        )
+
+        for updated, url_id in updated_vals:
+            qs.update({'updated': updated})
+            response = self.client.get(reverse('search'), qs)
+            result = json.loads(response.content)['results'][0]
+            url_end = result['url'].endswith(url_id)
+            assert url_end, ('Url was "%s", expected to end with "%s"' %
+                             (result['url'], url_id))
+
+    def test_discussion_sort_mode(self):
+        """Test set_groupsort()."""
+        # Initialize client and attrs.
+        dc = DiscussionClient()
+        test_for = ('updated', 'created', 'replies')
+
+        i = 0
+        for groupsort in constants.GROUPSORT[1:]:  # Skip default sorting.
+            dc.set_groupsort(groupsort)
+            results = dc.query('')
+            eq_(5, len(results))
+
+            # Compare first and last.
+            assert (results[0]['attrs'][test_for[i]] >
+                    results[-1]['attrs'][test_for[i]])
+            i += 1
 
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)

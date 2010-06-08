@@ -1,10 +1,13 @@
 from tower import ugettext_lazy as _lazy
 from .utils import crc32
+from .sphinxapi import (SPH_SORT_ATTR_DESC, SPH_SORT_ATTR_ASC,
+                        SPH_SORT_EXTENDED, SPH_GROUPBY_ATTR)
 
 
 WHERE_WIKI = 1
-WHERE_FORUM = 2
-WHERE_ALL = WHERE_WIKI | WHERE_FORUM
+WHERE_SUPPORT = 2
+WHERE_BASIC = WHERE_WIKI | WHERE_SUPPORT
+WHERE_DISCUSSION = 4
 
 # Forum status constants
 STATUS_STICKY = crc32('s')
@@ -49,35 +52,29 @@ STATUS_ALIAS_REVERSE = {
         STATUS_INVALID, STATUS_HOT,),
 }
 
-CREATED_NONE = 0
-CREATED_BEFORE = 1
-CREATED_AFTER = 2
+DATE_NONE = 0
+DATE_BEFORE = 1
+DATE_AFTER = 2
 
-CREATED_LIST = (
-    (CREATED_NONE, _lazy(u"Don't filter")),
-    (CREATED_BEFORE, _lazy(u'Before')),
-    (CREATED_AFTER, _lazy(u'After')),
+DATE_LIST = (
+    (DATE_NONE, _lazy(u"Don't filter")),
+    (DATE_BEFORE, _lazy(u'Before')),
+    (DATE_AFTER, _lazy(u'After')),
 )
 
-# multiplier
-LUP_MULTIPLIER = 86400  # one day
-LUP_LIST = (
-    (0, _lazy(u"Don't filter")),
-    (1, _lazy(u'Last 24 hours')),
-    (7, _lazy(u'Last week')),
-    (30, _lazy(u'Last month')),
-    (180, _lazy(u'Last 6 months')),
-)
-
-# sort by constants, defined in sphinxapi.py but unavailable here
-# SPH_SORT_ATTR_DESC = 1
-# SPH_SORT_EXTENDED = 4
 SORT = (
     #: (mode, clause)
-    (4, '@relevance DESC, age ASC'),  # default
-    (1, 'last_updated'),
-    (1, 'created'),
-    (1, 'replies'),
+    (SPH_SORT_EXTENDED, '@relevance DESC, age ASC'),  # default
+    (SPH_SORT_ATTR_DESC, 'updated'),
+    (SPH_SORT_ATTR_DESC, 'created'),
+    (SPH_SORT_ATTR_DESC, 'replies'),
+)
+
+GROUPSORT = (
+    '@relevance DESC, age ASC',  # default
+    'updated DESC',
+    'created DESC',
+    'replies DESC',
 )
 
 # Integer values here map to tuples from SORT defined above
@@ -86,4 +83,13 @@ SORTBY_LIST = (
     (1, _lazy(u'Last post date')),
     (2, _lazy(u'Original post date')),
     (3, _lazy(u'Number of replies')),
+)
+
+# For discussion forums
+DISCUSSION_STICKY = 1
+DISCUSSION_LOCKED = 2
+
+DISCUSSION_STATUS_LIST = (
+    (DISCUSSION_STICKY, _lazy(u'Sticky')),
+    (DISCUSSION_LOCKED, _lazy(u'Locked')),
 )

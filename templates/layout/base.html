@@ -3,15 +3,27 @@
 <html lang="{{ request.locale }}" dir="{{ dir }}">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>{{ title }} | {{ SITE_TITLE }}</title>
+<title>{{ title }} | {{ settings.SITE_TITLE }}</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 <link rel="search" type="application/opensearchdescription+xml" title="Firefox Support" href="/search.xml"/>
+{% if feed_url %}
+<link rel="alternate" type="application/atom+xml" href="{{ feed_url }}"/>
+{% endif %}
 
 {{ css('common') }}
 {% for style in styles %}
 {{ css(style) }}
 {% endfor %}
+<!--[if lte IE 7]>
+{{ css('ie') }}
+<![endif]-->
+
+{% if meta %}
+  {% for tag in meta %}
+    <meta name="{{ tag[0] }}" content="{{ tag[1] }}">
+  {% endfor %}
+{% endif %}
 
 </head>
 <body{% if classes %} class="{{ classes }}"{% endif %}>
@@ -31,14 +43,7 @@
 {% include 'layout/sidebar.html' %}
 </div>
 
-{% block breadcrumbs %}
-<div id="breadcrumbs">
-  <ul>
-    <li><a href="/{{ request.locale }}/kb/">{{ _('Firefox Support') }}</a></li>
-    <li class="divider">/</li><li>{{ title }}</li>
-  </ul>
-</div>
-{% endblock %}
+{{ breadcrumbs(crumbs) }}
 
 <div id="main" role="main">
 {% block content_area %}

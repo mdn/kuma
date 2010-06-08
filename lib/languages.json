@@ -699,6 +699,13 @@
         "dictionary":"sl",
         "native":"slovensko"
     },
+    "ilo":{
+        "English":"Iloko",
+        "internal":"ilo",
+        "external":"ilo",
+        "dictionary":"ilo",
+        "native":"Iloko"
+    },
     "bs":{
         "English":"Bosnian",
         "internal":"bs",

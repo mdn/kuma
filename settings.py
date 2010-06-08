@@ -51,7 +51,7 @@ SERVER_EMAIL = 'server-error@support.mozilla.com'
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'US/Pacific'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -61,11 +61,11 @@ LANGUAGE_CODE = 'en-US'
 SUMO_LANGUAGES = (
     'ar', 'as', 'ast', 'bg', 'bn-BD', 'bn-IN', 'bs', 'ca', 'cs', 'da', 'de',
     'el', 'en-US', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'fur', 'fy-NL',
-    'ga-IE', 'gd', 'gl', 'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'id', 'is', 'it',
-    'ja', 'kk', 'kn', 'ko', 'lt', 'mk', 'mn', 'mr', 'ms', 'nb-NO', 'nl', 'no',
-    'oc', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'rm', 'ro', 'ru', 'rw', 'si', 'sk',
-    'sl', 'sq', 'sr-CYRL', 'sr-LATN', 'sv-SE', 'ta-LK', 'te', 'th', 'tr',
-    'uk', 'vi', 'zh-CN', 'zh-TW',
+    'ga-IE', 'gd', 'gl', 'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'id', 'ilo',
+    'is', 'it', 'ja', 'kk', 'kn', 'ko', 'lt', 'mk', 'mn', 'mr', 'ms', 'nb-NO',
+    'nl', 'no', 'oc', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'rm', 'ro', 'ru', 'rw',
+    'si', 'sk', 'sl', 'sq', 'sr-CYRL', 'sr-LATN', 'sv-SE', 'ta-LK', 'te',
+    'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW',
 )
 
 LANGUAGES = dict([(i.lower(), LOCALES[i].native)
@@ -99,7 +99,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media',)
+SUPPORTED_NONLOCALES = ('media', 'admin')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -117,11 +117,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
-    'sumo.context_processors.title',
+
+    'sumo.context_processors.global_settings',
 )
 
 MIDDLEWARE_CLASSES = (
     'sumo.middleware.LocaleURLMiddleware',
+    'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -134,6 +136,7 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
 )
 
@@ -152,11 +155,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.admin',
     'tower',
     'jingo_minify',
     ROOT_PACKAGE,
+    'authority',
+    'access',
     'sumo',
     'search',
+    'forums',
+    'celery',
+    'notifications',
+    'identicons',
 )
 
 # Extra apps for testing
@@ -207,7 +217,7 @@ DOMAIN_METHODS = {
 
 # If you have trouble extracting strings with Tower, try setting this
 # to True
-TOWER_ADD_HEADERS=True
+TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
 MINIFY_BUNDLES = {
@@ -215,20 +225,28 @@ MINIFY_BUNDLES = {
         'common': (
             'css/main.css',
             'css/sidebar.css',
+            'css/forums.css',
         ),
         'search': (
             'css/search.css',
         ),
+        'ie': (
+            'css/ie.css',
+        ),
     },
     'js': {
         'common': (
-            'js/mozilla-menu.js',
             'js/jquery.min.js',
+            'js/menu.js',
+            'js/main.js',
         ),
         'search': (
             'js/jqueryui.min.js',
             'js/search.js',
         ),
+        'forums': (
+            'js/markup.js',
+        )
     },
 }
 
@@ -241,9 +259,14 @@ DICT_DIR = '/usr/share/myspell/'
 WORD_LIST = path('configs/words.txt')
 
 #
+# Session cookies
+SESSION_COOKIE_SECURE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#
 # Connection information for Sphinx search
 SPHINX_HOST = '127.0.0.1'
-SPHINX_PORT = 3312
+SPHINX_PORT = 3381
 
 SPHINX_INDEXER = '/usr/bin/indexer'
 SPHINX_SEARCHD = '/usr/bin/searchd'
@@ -260,8 +283,31 @@ SEARCH_RESULTS_PER_PAGE = 10
 # Search default settings
 # comma-separated tuple of category IDs
 SEARCH_DEFAULT_CATEGORIES = (1, 17, 18, -3,)
-SEARCH_DEFAULT_FORUMS = (1,) # default forum ID (eg: 1 on sumo, 5 on mosumo)
 SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
 # so we extract longer excerpts and perform truncation to the length above
 SEARCH_SUMMARY_LENGTH_MULTIPLIER = 1.3
+
+#
+# The length for which we would like the user to cache search forms and
+# results, in minutes.
+SEARCH_CACHE_PERIOD = 15
+
+# Auth and permissions related constants
+# TODO: Once we can log in through Kitsune, change this.
+LOGIN_URL = '/tiki-login.php'
+LOGOUT_URL = '/tiki-logout.php'
+REGISTER_URL = '/tiki-register.php'
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Celery
+BROKER_HOST = 'localhost'
+BROKER_PORT = 5672
+BROKER_USER = 'kitsune'
+BROKER_PASSWORD = 'kitsune'
+BROKER_VHOST = 'kitsune'
+CELERY_RESULT_BACKEND = 'amqp'
+CELERY_IGNORE_RESULT = True
+CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.

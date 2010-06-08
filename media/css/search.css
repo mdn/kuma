@@ -24,21 +24,6 @@
     text-transform: none;
 }
 
-/* Paginators */
-ol.pagination {
-    margin: 0 auto 1em;
-    text-align: center;
-}
-
-ol.pagination li {
-    display: inline;
-    padding: 0 4px;
-}
-
-ol.pagination > li.selected a {
-    color: #000;
-}
-
 div.num-results {
     clear: left;
 }
@@ -204,7 +189,7 @@ a.tablink {
     color: #ffffff;
     font-weight: bold;
 }
-form input[name="created_date"] {
+form .search-date input {
     width: 7em !important;
 }
 

@@ -1,62 +1,54 @@
 $(document).ready(function() {
     // initiate tabs
-    var tabs = $('#search-tabs').tabs()
+    var tabs = $('#search-tabs').tabs(),
     // TODO: use l10n
     // @see http://jbalogh.github.com/zamboni/#gettext-in-javascript
-      , DEFAULT_AUTHOR = 'username'
-      , DEFAULT_QUERY = 'crashes on youtube'
-      , DEFAULT_TAGS = 'tag1, tag2'
-    ;
+        DEFAULT_VALS = ['crashes on youtube',  // name
+                        'username',            // author
+                        'tag1, tag2'],         // tags
+        cache_search_date = $('.search-date');
 
-    /**
-     * Handles autofill of text with default value. When an input field
-     * is empty, the default value will be set on blur. Then, when focused,
-     * the value will be set to empty.
-     */
-    function autoFillHelpText(field, text) {
-        if (field.val() == '' || $(field).val() == text) {
-            field.val(text).css('color', '#9b9b9b');
-        }
-        field.focus(function() {
-            if ($(this).val() == text)
-                $(this).val('').css('color', '#333');
-        })
-        .blur(function() {
-            if ($(this).val() == '')
-                $(this).val(text).css('color', '#9b9b9b');
-        });
-    }
-    autoFillHelpText($('#search-tabs input[name="author"]'), DEFAULT_AUTHOR);
-    autoFillHelpText($('#search-tabs input[name="q"]'), DEFAULT_QUERY);
-    autoFillHelpText($('#search-tabs input[name="tags"]'), DEFAULT_TAGS);
+    $('#search-tabs input[name="q"]').autoFillHelpText(DEFAULT_VALS[0]);
+    $('#search-tabs input[name="author"]').autoFillHelpText(DEFAULT_VALS[1]);
+    $('#search-tabs input[name="tags"]').autoFillHelpText(DEFAULT_VALS[2]);
 
     $("#tab-wrapper form").submit(function() {
-      if ($('#search-tabs input[name="author"]').val() == DEFAULT_AUTHOR) {
-        $('input[name="author"]').val('');
-      }
-      if ($('#kb input[name="q"]').val() == DEFAULT_QUERY) {
-        $('#kb input[name="q"]').val('');
-      }
-      if ($('#forum input[name="q"]').val() == DEFAULT_QUERY) {
-        $('#forum input[name="q"]').val('');
-      }
-      if ($('#search-tabs input[name="tags"]').val() == DEFAULT_TAGS) {
-        $('#search-tabs input[name="tags"]').val('');
-      }
+        var tabs = [$('#kb'), $('#support'), $('#discussion')], num_tabs = 3,
+            fields = ['input[name="q"]', 'input[name="author"]',
+                      'input[name="tags"]'],
+            num_fields = fields.length, fi = 0, ti = 0, the_input;
+
+        for (ti = 0; ti < num_tabs; ti++) {
+            for (fi = 0; fi < num_fields; fi++) {
+                the_input = $(fields[fi], tabs[ti]);
+                if (the_input.length > 0 &&
+                    the_input.val() == DEFAULT_VALS[fi]) {
+                    the_input.val('');
+                }
+            }
+        }
     });
 
     $('.datepicker').datepicker();
-
-    $('select[name="created"]').change(function () {
-        if ($(this).val() == 0)
-            $('input[name="created_date"]').hide();
-        else
-            $('input[name="created_date"]').show();
-    });
-    $('select[name="created"]').change();
     $('.datepicker').attr('readonly', 'readonly').css('background', '#ddd');
 
-    if ($('#where').text() == '2') {
-        tabs.tabs('select', 1);
+    $('select', cache_search_date).change(function () {
+        if ($(this).val() == 0) {
+            $('input', $(this).parent()).hide();
+        } else {
+            $('input', $(this).parent()).show();
+        }
+    }).change();
+
+    switch(parseInt($('#where').text(), 10)) {
+        case 4:
+            tabs.tabs('select', 2);
+            break;
+        case 2:
+            tabs.tabs('select', 1);
+            break;
+        case 1:
+        default:
+            tabs.tabs('select', 0);
     }
 });

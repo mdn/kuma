@@ -19,5 +19,5 @@ def test_breadcrumb():
     response = c.get(reverse('search'))
 
     doc = pyquery.PyQuery(response.content)
-    href = doc('#breadcrumbs a')[0]
+    href = doc('.breadcrumbs a')[0]
     eq_('/', href.attrib['href'][0])

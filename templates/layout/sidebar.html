@@ -9,9 +9,9 @@
   <li><a href="/kb/How+to+contribute">{{ _('How to Contribute') }}</a></li>
   {% if user.is_authenticated() %}
     <li><a href="/tiki-user_preferences.php">{{ _('My Account') }}</a></li>
-    <li><a href="/tiki-logout.php">{{ _('Log Out') }}</a></li>
+    <li><a href="{{ settings.LOGOUT_URL }}">{{ _('Log Out') }}</a></li>
   {% else %}
-    <li><a href="/tiki-login.php">{{ _('Log In') }}</a></li>
+    <li><a href="{{ settings.LOGIN_URL }}">{{ _('Log In') }}</a></li>
   {% endif %}
 </ul>
 {% endblock %}

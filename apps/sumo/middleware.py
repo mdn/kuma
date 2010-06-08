@@ -6,7 +6,7 @@ Tried to use localeurl but it choked on 'en-US' with capital letters.
 
 import urllib
 
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
 from django.utils.encoding import smart_str
 from django.contrib import auth
 
@@ -15,6 +15,7 @@ import tower
 from . import urlresolvers
 from .models import Session
 from sumo.helpers import urlparams
+from sumo.views import handle403
 
 
 class LocaleURLMiddleware(object):
@@ -80,3 +81,13 @@ class TikiCookieMiddleware(object):
             if user is not None:
                 auth.login(request, user)
 
+
+class Forbidden403Middleware(object):
+    """
+    Renders a 403.html page if response.status_code == 403.
+    """
+    def process_response(self, request, response):
+        if isinstance(response, HttpResponseForbidden):
+            return handle403(request)
+        # If not 403, return response unmodified
+        return response

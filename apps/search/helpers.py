@@ -4,9 +4,9 @@ from django.utils.encoding import smart_unicode
 import jinja2
 from jingo import register
 from didyoumean import DidYouMean
-from flatqs import flatten
 
 from sumo.urlresolvers import reverse
+from sumo.utils import urlencode
 
 
 @register.function
@@ -42,7 +42,8 @@ def suggestions(context, string, locale='en-US'):
     if 'page' in query_dict:
         query_dict['page'] = 1
 
-    query_string = flatten(query_dict)
+    items = [(k, v) for k in query_dict for v in query_dict.getlist(k) if v]
+    query_string = urlencode(items)
 
     url = u'%s?%s' % (reverse('search'), query_string)
 

@@ -1,0 +1,12 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% macro errorlist(form) -%}
+  {% if form.errors %}
+    <ul class="errorlist">
+    {% for field in form.visible_fields() %}
+      {% for error in field.errors %}
+        <li><a href="#id_{{ field.name }}">{{ error|safe }}</a></li>
+      {% endfor %}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{%- endmacro %}

@@ -1,0 +1,17 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('Page Not Found') %}
+{% set styles = ('search',) %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<p>{% trans %}Sorry, we couldn't find the page you were looking for. Please,
+try searching our site using the form below.{% endtrans %}</p>
+
+{% import "search/basic-form.html" as form %}
+
+{{ form.form() }}
+
+{% endblock %}

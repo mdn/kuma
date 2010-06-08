@@ -1,0 +1,139 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{# L10n: {t} is the title of the thread. {f} is the name of the forum. #}
+{% set title = _('{t} | {f} | Forums')|f(t=thread.title, f=forum.name) %}
+{% set crumbs = [(url('forums.forums'), _('Forums')),
+                 (url('forums.threads', forum.slug), forum.name),
+                 (None, thread.title)] %}
+{% set scripts = ('forums',) %}
+
+{% block content %}
+  <h2>{{ thread.title }}</h2>
+  <div class="badges">
+    {% if thread.is_sticky %}<span class="sticky">{{ _('Sticky') }}</span>{% endif %}
+    {% if thread.is_locked %}<span class="locked">{{ _('Locked') }}</span>{% endif %}
+    {% if is_watching(thread) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
+  </div>
+  <div class="thread-actions">
+    {% if user.is_authenticated() %}
+      <form action="{{ url('forums.watch', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+        {{ csrf() }}
+        {% if is_watching(thread) %}
+          {% set watch = _('Stop watching') %}
+        {% else %}
+          {% set watch = _('Watch this thread') %}
+        {% endif %}
+        <input type="image" alt="{{ watch }}" title="{{ watch }}" src="{{ MEDIA_URL }}img/forums/watch.png"/>
+      </form>
+    {% endif %}
+    {% if not thread.is_locked and
+           has_perm_or_owns('forums_forum.thread_edit_forum', thread, forum) %}
+      <a href="{{ url('forums.edit_thread', forum.slug, thread.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_delete_forum', forum) %}
+      <a href="{{ url('forums.delete_thread', forum.slug, thread.id) }}">
+        <img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}">
+      </a>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_locked_forum', forum) %}
+      <form action="{{ url('forums.lock_thread', forum.slug, thread.id) }}" method="post">
+        {{ csrf() }}
+        <input type="image" src="{{ MEDIA_URL }}img/forums/type/locked.png" alt="{{ _('Change locked status') }}" title="{{ _('Change locked status') }}"/>
+      </form>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_sticky_forum', forum) %}
+      <form action="{{ url('forums.sticky_thread', forum.slug, thread.id) }}" method="post">
+        {{ csrf() }}
+        <input type="image" src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Change sticky status') }}" title="{{ _('Change sticky status') }}" />
+      </form>
+    {% endif %}
+  </div>
+
+  <div class="thread-watch">
+    {% if user.is_authenticated() %}
+    {% endif %}
+  </div>
+
+  <ol class="posts-columns">
+    <li class="author">{{ _('Author') }}</li>
+    <li class="message">{{ _('Message') }}</li>
+  </ol>
+
+  {% if posts %}
+    <ol class="posts">
+      {% for post in posts.object_list %}
+        <li id="post-{{ post.id }}">
+          <div class="author">
+            <a href="{{ profile_url(post.author) }}">
+              <img src="{{ profile_avatar(post.author) }}" height="45" width="45" alt=""/>
+            </a>
+            <a href="{{ profile_url(post.author) }}">{{ post.author }}</a>
+            <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
+            <div class="post-actions">
+            {% if not thread.is_locked and
+                   has_perm_or_owns('forums_forum.post_edit_forum', post, thread, 'author') %}
+              <a href="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
+            {% endif %}
+            {% if has_perm('forums_forum.post_delete_forum', forum) %}
+              <a href="{{ url('forums.delete_post', forum.slug, thread.id, post.id) }}">
+                <img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}">
+              </a>
+            {% endif %}
+            </div>
+          </div>
+          <div class="content">
+            {{ post.content_parsed }}
+          </div>
+          <div class="info">
+            <time>{{ datetimeformat(post.created, format='longdatetime') }}</time>
+            <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
+            {% if user.is_authenticated() and not thread.is_locked %}
+              <span class="post-action">
+                <a href="#thread-reply">{{ _('Reply') }}</a>
+              </span>
+            {% endif %}
+            {% if post.created != post.updated %}
+              <span class="post-modified">
+                {{ _('Modified by {name} on <time>{datetime}</time>')|fe(name=post.updated_by.username, datetime=datetimeformat(post.updated, format='longdatetime')) }}
+              </span>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+
+    {{ posts|paginator }}
+
+  {% else %}
+    {# Not localized because it's not worth localizers time. #}
+    <p>Oh, no! Looks like there are no posts!</p>
+  {% endif %}
+
+  {% if user.is_authenticated() and not thread.is_locked %}
+    <div id="thread-reply">
+      <h3>{{ _('Post a reply') }}</h3>
+
+      <form action="{{ url('forums.reply', forum.slug, thread.id)|urlparams(hash='thread-reply') }}" method="post">
+        {{ csrf() }}
+        {{ errorlist(form) }}
+
+        <div class="forum-editor{% if form.content.errors %} invalid{% endif %}">
+          <div class="forum-editor-tools"></div>
+          <textarea name="content" id="id_content" rows="10" cols="80">{{ form.content.data or '' }}</textarea>
+        </div>
+
+        <div class="forum-editor-actions">
+          <input type="submit" value="Reply" />
+        </div>
+      </form>
+    </div>
+  {% elif user.is_authenticated() and thread.is_locked %}
+    <div id="thread-reply">
+      <h3>{{ _('Post a reply') }}</h3>
+
+      <p id="thread-locked">{{ _('This thread has been locked. It is no longer possible to post new replies.') }}</p>
+    </div>
+  {% endif %}
+
+{% endblock %}
