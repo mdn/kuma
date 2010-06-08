@@ -35,9 +35,11 @@ def get_fake_user():
         return User.objects.get(username='FakeUser')
     except User.DoesNotExist:
         tiki_user = TikiUser.objects.create(
-            login='FakeUser', password='md5$pass', hash='md5$hash')
+            login='FakeUser', password='md5$pass', hash='md5$hash',
+            email='nobody@support.mozilla.com')
         return User.objects.create(
-            id=tiki_user.userId, username='FakeUser')
+            id=tiki_user.userId, username='FakeUser',
+            email='nobody@support.mozilla.com')
 
 
 def get_django_user(tiki_thread):

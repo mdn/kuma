@@ -44,7 +44,10 @@ class Command(BaseCommand):  #pragma: no cover
         for u in users:
             print 'Hashing %s' % u.login
             # Ugh, this part gets ugly.
-            h = hashlib.md5(u.email.encode('utf-8')).hexdigest()
+            try:
+                h = hashlib.md5(u.email.encode('utf-8')).hexdigest()
+            except AttributeError:
+                continue
             i = int(h, 16)
             iname = '/tmp/%s.png' % h
 
