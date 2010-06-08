@@ -16,9 +16,11 @@
     {{ errorlist(form) }}
 
     <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
-      <div class="forum-editor-tools"></div>
       {{ form.content.label_tag()|safe }}
-      {{ form.content|safe }}
+      <div class="forum-editor">
+        <div class="forum-editor-tools"></div>
+        {{ form.content|safe }}
+      </div>
     </div>
 
     <div class="form-widget submit">

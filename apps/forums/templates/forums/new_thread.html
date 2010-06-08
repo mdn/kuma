@@ -16,11 +16,15 @@
 
     {% for field in form %}
       <div class="form-widget{% if field.errors %} invalid{% endif %}">
-        {% if field.name == 'content' %}
-            <div class="forum-editor-tools"></div>
-        {% endif %}
         {{ field.label_tag()|safe }}
-        {{ field|safe }}
+        {% if field.name == 'content' %}
+          <div class="forum-editor">
+            <div class="forum-editor-tools"></div>
+            {{ field|safe }}
+          </div>
+        {% else %}
+          {{ field|safe }}
+        {% endif %}
       </div>
     {% endfor %}
 

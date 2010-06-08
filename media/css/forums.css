@@ -398,14 +398,8 @@ span.watching {
 }
 
 /* Forums markup editor */
-div.forum-editor-tools {
-    margin: 0 0 0 10em;
-}
-
 div.forum-editor {
-    float: left;
-    width: 65%;
-    padding: 1em 0 1em 1em;
+    padding: 1em;
 }
 
 div.forum-editor textarea {
@@ -434,6 +428,13 @@ div.forum-editor-tools img {
 
 img.markup-toolbar-button {
     cursor: pointer;
+}
+
+form.new-thread div.forum-editor,
+form.edit-post div.forum-editor {
+    float: left;
+    padding-left: 0;
+    width: 500px;
 }
 /* End markup editor */
 
