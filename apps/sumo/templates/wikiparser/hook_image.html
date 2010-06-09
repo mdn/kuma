@@ -1,0 +1,15 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% if params['link'] %}
+  <a class="img" href="{{ params['link'] }}">
+{% else %}
+  <div class="img">
+{% endif %}
+
+<img src="{{ img_path }}" alt="{{ caption }}" title="{{ caption }}"/>
+{{ caption }}
+
+{% if params['link'] %}
+  </a>
+{% else %}
+  </div>
+{% endif %}

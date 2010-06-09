@@ -8,7 +8,7 @@ import jinja2
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
-from sumo.utils import WikiParser
+from sumo.parser import WikiParser
 from forums.tasks import build_notification
 from notifications.tasks import delete_watches
 import forums

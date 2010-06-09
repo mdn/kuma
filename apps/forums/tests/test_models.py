@@ -217,3 +217,8 @@ class SaveDateTestCase(ForumTestCase):
         p.save()
         eq_(created_, p.created)
         eq_(created_, p.updated)
+
+    def test_content_parsed_sanity(self):
+        """The content_parsed field is populated."""
+        p = Post.objects.get(pk=4)
+        eq_('<p>yet another post\n</p>', p.content_parsed)

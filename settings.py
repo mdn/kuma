@@ -333,6 +333,7 @@ LOGOUT_URL = '/tiki-logout.php'
 REGISTER_URL = '/tiki-register.php'
 WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
 WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
+WIKI_UPLOAD_URL = '/img/wiki_up/'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
