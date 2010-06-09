@@ -21,7 +21,7 @@ def send_notification(content_type, pk, subject, content, exclude=None):
     if exclude:
         watchers = watchers.exclude(email__in=exclude)
 
-    emails = [(subject, content, 'nobody@example.com', [w.email]) for
-              w in watchers]
+    from_address = 'notifications@support.mozilla.com'
+    emails = [(subject, content, from_address, [w.email]) for w in watchers]
 
     send_mass_mail(emails)

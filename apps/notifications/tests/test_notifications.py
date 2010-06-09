@@ -29,3 +29,10 @@ class SendNotificationTestCase(test.TestCase):
                           (e.email,))
 
         eq_(1, len(mail.outbox))
+
+    def test_from_address(self):
+        """Check that mails come from the right address."""
+        e = EventWatch.objects.all()[0]
+        send_notification(e.content_type, e.watch_id,
+                          'My Subject', 'My Content')
+        eq_(mail.outbox[0].from_email, 'notifications@support.mozilla.com')
