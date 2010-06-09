@@ -443,6 +443,16 @@ class SearchTest(SphinxTestCase):
         wc = WikiClient()
         eq_('<b>test</b>&lt;/style&gt;', wc.excerpt('test</style>', 'test'))
 
+    def test_empty_content_excerpt(self):
+        """SearchClient.excerpt() returns empty string for empty content."""
+        wc = WikiClient()
+        eq_('', wc.excerpt('', 'test'))
+
+    def test_none_content_excerpt(self):
+        """SearchClient.excerpt() returns empty string for None type."""
+        wc = WikiClient()
+        eq_('', wc.excerpt(None, 'test'))
+
     def test_meta_tags(self):
         url_ = reverse('search')
         response = self.client.get(url_, {'q': 'contribute'})
