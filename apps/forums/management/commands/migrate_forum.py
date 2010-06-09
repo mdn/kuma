@@ -82,7 +82,7 @@ def create_thread(forum, tiki_thread):
         created=created)
 
     # now create the thread's first post
-    create_post(thread, tiki_thread)
+    thread.last_post = create_post(thread, tiki_thread)
 
     return thread
 
@@ -170,6 +170,9 @@ class Command(BaseCommand):
                     print 'Processing thread %s...' % tiki_thread.threadId
                 thread = create_thread(forum, tiki_thread)
 
+                # keep track of the last_post
+                last_post = thread.last_post
+
                 # ... then create its posts
                 post_offset = 0
                 posts = fetch_posts(tiki_thread, self.max_posts, post_offset)
@@ -187,10 +190,13 @@ class Command(BaseCommand):
                     if options['verbosity'] > 2:
                         print ('Processing post %s for thread %s...' %
                            (tiki_post.threadId, tiki_post.parentId))
-                    create_post(thread, tiki_post)
+                    post = create_post(thread, tiki_post)
                     post_i = post_i + 1
 
-                last_post = thread.post_set.order_by('-created')[0]
+                    # if this post is newer than the last_post, update it
+                    if post.created > last_post.created:
+                        last_post = post
+
                 thread.last_post = last_post
                 thread.save()
 
