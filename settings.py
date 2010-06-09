@@ -309,6 +309,7 @@ SEARCH_CACHE_PERIOD = 15
 LOGIN_URL = '/tiki-login.php'
 LOGOUT_URL = '/tiki-logout.php'
 REGISTER_URL = '/tiki-register.php'
+EDIT_URL = '/tiki-editpage.php?page=%s'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

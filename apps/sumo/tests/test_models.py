@@ -28,6 +28,11 @@ class TestWikiPage(test.TestCase):
         w = WikiPage.objects.create(pk=1, lang='en', pageName='My Test Page')
         eq_(w.get_url(), '/en-US/kb/My+Test+Page')
 
+    def test_get_create_url(self):
+        """Create url for a page that does not exist."""
+        eq_('/tiki-editpage.php?page=Article+List',
+            WikiPage.get_create_url('Article List'))
+
 
 class TestForumModel(test.TestCase):
     fixtures = ['forums.json']

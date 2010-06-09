@@ -2,6 +2,7 @@ from django.db import models
 
 import caching.base
 
+import settings
 from sumo.urlresolvers import get_url_prefix
 from sumo_locales import INTERNAL_MAP
 
@@ -190,6 +191,13 @@ class WikiPage(ModelBase):
             lang = self.lang
 
         return u'/%s/kb/%s' % (lang, name,)
+
+    @classmethod
+    def get_create_url(cls, name):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return settings.EDIT_URL % name.replace(' ', '+')
 
 
 class Category(ModelBase):
