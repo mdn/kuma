@@ -5,17 +5,304 @@
 {% set classes = 'answers' %}
 
 {% block content %}
-  <h2>{{ question.title }}</h2>
+  <div id="question">
+    <div class="user-section">
+      <div class="avatar">
+        <a href="{{ profile_url(question.creator) }}">
+          <img src="{{ profile_avatar(question.creator) }}" height="48" width="48" alt="{{ question.creator }}"/>
+        </a>
+      </div>
+      <div class="asked-by">
+        {% trans creator=question.creator%}Asked by <span class="user">{{ creator }}</span>{% endtrans %}
+        <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
+      </div>
+    </div>
+    <div class="main-section">
+      <h1>{{ question.title }}</h1>
+      <div class="content">
+        {{ question.content|safe }}
+      </div>
+      <div class="problem">
+        <div class="have-problem ten-more{# TODO #}">
+          {% trans %}{# TODO #}<mark>14 people</mark> <span>have this problem</span>{% endtrans %}
+        </div>
+        <div class="me-too">
+          <form action="#{# TODO #}" method="post">
+            {{ csrf() }}
+            <input class="btn y-btn" type="submit" value="{{ _('I have this problem, too.') }}">
+          </form>
+        </div>
+      </div>
+      <div class="solution">
+        <h3>{% trans creator=question.creator %}Solution Chosen by {{ creator }}{% endtrans %}</h3>
+        <div class="ans-wrap">
+          <div class="avatar">
+              avatar here
+          </div>
+          <div class="answer">
+            <span class="user">Steven Ritz</span>
+            <span class="votes">99</span>
+            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot;</p>
+            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot;</p>
+          </div>
+        </div>
+      </div>
+      <div class="other-helpful">
+        <h3>{{ _('Other Helpful Replies') }}</h3>
+        <div class="ans-wrap">
+          <div class="avatar">
+              avatar here
+          </div>
+          <div class="answer">
+            <span class="user">Steven Ritz</span>
+            <span class="votes">99</span>
+            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot; <a href="#">{{ _('More...') }}</a></p>
+          </div>
+        </div>
+        <div class="ans-wrap">
+          <div class="avatar">
+              avatar here
+          </div>
+          <div class="answer">
+            <span class="user">Angelo Bandalamenti</span>
+            <span class="votes">66</span>
+            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot; <a href="#">{{ _('More...') }}</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="report-reply">
+        <form class="report" action="#{# TODO #}" method="post">
+          {{ csrf() }}
+          <input type="submit" value="{{ _('Report this post') }}" />
+        </form>
+        <a class="btn g-btn reply" href="#{# TODO #}">{{ _('Post a New Reply') }}</a>
+      </div>
+    </div>
+    <div class="side-section">
+      <ul class="subscribe">
+        <li class="email">
+          <a href="#{# TODO #}">{{ _('Receive updates via email') }}</a>
+        </li>
+        <li class="rss">
+          <a href="#{# TODO #}">{{ _("Subscribe to this page's feed") }}</a>
+        </li>
+      </ul>
+
+      <h4>{{ _('System Details') }}</h4>
+      <ul class="system">
+        <li class="mac">Mac OS X 10.6.2</li>
+        <li class="ff">Firefox 3.6.2</li>
+      </ul>
+      <p><a href="#">{{ _('More system details...') }}</a></p>
+
+      <h4>{{ _('Tags') }}</h4>
+      <div class="tags">
+        <a href="#">mac</a>, <a href="#">flash</a>, <a href="#">crash</a>
+      </div>
+
+      <h4>{{ _('Related Questions') }}</h4>
+      <ul class="related">
+        <li>
+          <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
+        </li>
+        <li>
+          <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
+        </li>
+        <li>
+          <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
+        </li>
+      </ul>
+      <p><a href="#">{{ _('Browse more Support Articles...') }}</a></p>
+    </div>
+  </div>
 
   {% if answers.object_list %}
     <ol class="answers">
       {% for answer in answers.object_list %}
         <li id="answer-{{ answer.id }}">
-          {{ answer.content }}
+          <div class="user-section">
+            <div class="avatar">
+              avatar here
+            </div>
+            <div class="answered-by">
+              <span class="user">Mr. Helpful</span>
+              <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
+              <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
+            </div>
+          </div>
+          <div class="main-section">
+            <p class="posted">
+              {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+            </p>
+            <div class="content">
+              {{ answer.content }}
+            </div>
+            <div class="reply">
+              <a href="#question-reply">{{ _('Reply to this post') }}</a>
+            </div>
+          </div>
+          <div class="side-section">
+            <h4>{{ _('Was this reply helpful?') }}</h4>
+            <form class="helpful" action="#{# TODO #}" method="post">
+              {{ csrf() }}
+              <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+              <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+            </form>
+            <div class="helpful">
+              {% trans %}{# TODO #}<mark>14 out of 16 people</mark> <span>found this reply helpful</span>{% endtrans %}
+            </div>
+            <form class="report" action="#{# TODO #}" method="post">
+              {{ csrf() }}
+              <input type="submit" value="{{ _('Report this post') }}" />
+            </form>
+          </div>
         </li>
       {% endfor %}
+
+      {# Some static answers demonstrating variations #}
+      <li id="answer-123">
+        <div class="user-section">
+          <div class="avatar">
+            avatar here
+          </div>
+          <div class="answered-by">
+            <span class="user">Mr. Helpful</span>
+            <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
+            <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
+          </div>
+        </div>
+        <div class="main-section">
+          <p class="posted">
+            {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+          </p>
+          <div class="content">
+            {{ lipsum(2) }}
+          </div>
+          <div class="reply">
+            <a href="#question-reply">{{ _('Reply to this post') }}</a>
+          </div>
+        </div>
+        <div class="side-section">
+          <h4>{{ _('Was this reply helpful?') }}</h4>
+          <form class="helpful" action="#{# TODO #}" method="post">
+            {{ csrf() }}
+            <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+            <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+          </form>
+          <div class="helpful zero">
+            {% trans %}{# TODO #}<mark>0 out of 8 people</mark> <span>found this reply helpful</span>{% endtrans %}
+          </div>
+          <form class="report" action="#{# TODO #}" method="post">
+            {{ csrf() }}
+            <input type="submit" value="{{ _('Report this post') }}" />
+          </form>
+        </div>
+      </li>
+      <li id="answer-124" class="author{# This reply was made by the question's author #}">
+        <div class="user-section">
+          <div class="avatar">
+            avatar here
+          </div>
+          <div class="answered-by">
+            <span class="user">QuesAuthor</span>
+            <span class="author">{{ _('Author') }}</span>
+          </div>
+        </div>
+        <div class="main-section">
+          <p class="posted">
+            {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+          </p>
+          <div class="content">
+            {{ lipsum(2) }}
+          </div>
+          <div class="reply">
+            <a href="#question-reply">{{ _('Reply to this post') }}</a>
+          </div>
+        </div>
+        <div class="side-section">
+          <form class="report" action="#{# TODO #}" method="post">
+            {{ csrf() }}
+            <input type="submit" value="{{ _('Report this post') }}" />
+          </form>
+        </div>
+      </li>
+      <li id="answer-125" class="solution{# This reply is the solution chosen #}">
+        <div class="user-section">
+          <div class="avatar">
+            avatar here
+          </div>
+          <div class="answered-by">
+            <span class="user">Mr. Helpful</span>
+            <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
+            <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
+          </div>
+        </div>
+        <div class="main-section">
+          <p class="posted">
+            {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+          </p>
+          <div class="content">
+            {{ lipsum(2) }}
+          </div>
+          <div class="reply">
+            <a href="#question-reply">{{ _('Reply to this post') }}</a>
+          </div>
+        </div>
+        <div class="side-section">
+          <h4>{{ _('Was this reply helpful?') }}</h4>
+          <form class="helpful" action="#{# TODO #}" method="post">
+            {{ csrf() }}
+            <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+            <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+          </form>
+          <div class="solved">
+            Solution chosen by author
+          </div>
+          <div class="helpful">
+            {% trans %}{# TODO #}<mark>14 out of 16 people</mark> <span>found this reply helpful</span>{% endtrans %}
+          </div>
+          <form class="report" action="#{# TODO #}" method="post">
+            {{ csrf() }}
+            <input type="submit" value="{{ _('Report this post') }}" />
+          </form>
+        </div>
+      </li>
+
     </ol>
+    {{ answers|paginator }}
   {% else %}
     <p>There are no answers. You should answer this question!</p>
   {% endif %}
+
+  <div id="question-reply">
+    <h3>{{ _('Post a reply') }}</h3>
+
+    {% if user.is_authenticated() %}
+      <form action="#{# TODO #}" method="post">
+        {{ csrf() }}
+        {# TODO
+          {{ errorlist(form) }}
+        #}
+
+        <div class="forum-editor{# TODO % if form.content.errors %} invalid{% endif % #}">
+          <div class="forum-editor-tools"></div>
+          <textarea name="content" id="id_content" rows="10" cols="80">{# TODO { form.content.data or '' } #}</textarea>
+        </div>
+
+        <div class="forum-editor-actions">
+          <input type="submit" value="Reply" />
+        </div>
+      </form>
+    {% else %}
+      <p>
+        {% trans login_url=settings.LOGIN_URL %}You must <a href="{{ login_url }}">log in to your account</a> to reply to posts.{% endtrans %}
+      </p>
+      <p>
+        {% trans register_url=settings.REGISTER_URL %}Don't have an account? You can <a href="{{ register_url }}">create a free account</a> now.{% endtrans %}
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block side %}
 {% endblock %}

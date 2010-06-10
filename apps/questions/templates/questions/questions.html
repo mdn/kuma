@@ -37,7 +37,7 @@
       {% for question in questions.object_list %}
         <li>
           <div class="people just-one {# possible classes are: just-one (==1), less-ten (<10), more-ten (>=10) #}">
-            {% trans %}{# TODO #}<strong>1 person</strong> <span>has this problem</span>{% endtrans %}
+            {% trans %}{# TODO #}<mark>1 person</mark> <span>has this problem</span>{% endtrans %}
           </div>
           <div class="title">
             <h2><a href="{{ url('questions.answers', forum_slug=forum.slug, question_id=question.id) }}">{{ question.title }}</a></h2>
@@ -61,7 +61,7 @@
       {# Some extra static questions with different variations #}
       <li>
         <div class="people less-ten">
-          {% trans %}{# TODO #}<strong>9 people</strong> <span>have this problem</span>{% endtrans %}
+          {% trans %}{# TODO #}<mark>9 people</mark> <span>have this problem</span>{% endtrans %}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
@@ -82,7 +82,7 @@
       </li>
       <li>
         <div class="people more-ten">
-          {% trans %}{# TODO #}<strong>25 people</strong> <span>have this problem</span>{% endtrans %}
+          {% trans %}{# TODO #}<mark>25 people</mark> <span>have this problem</span>{% endtrans %}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
@@ -103,7 +103,7 @@
       </li>
       <li>
         <div class="people more-ten">
-          {% trans %}{# TODO #}<strong>35 people</strong> <span>have this problem</span>{% endtrans %}
+          {% trans %}{# TODO #}<mark>35 people</mark> <span>have this problem</span>{% endtrans %}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
@@ -124,7 +124,7 @@
       </li>
       <li>
         <div class="people more-ten">
-          {% trans %}{# TODO #}<strong>35 people</strong> <span>have this problem</span>{% endtrans %}
+          {% trans %}{# TODO #}<mark>35 people</mark> <span>have this problem</span>{% endtrans %}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
