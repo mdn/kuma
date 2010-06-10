@@ -33,6 +33,11 @@ class TestWikiPage(test.TestCase):
         eq_('/tiki-editpage.php?page=Article+List',
             WikiPage.get_create_url('Article List'))
 
+    def test_get_edit_url(self):
+        """Edit url for a page exists."""
+        w = WikiPage.objects.get(pageName='Installing Firefox')
+        eq_('/tiki-editpage.php?page=Installing+Firefox', w.get_edit_url())
+
 
 class TestForumModel(test.TestCase):
     fixtures = ['forums.json']

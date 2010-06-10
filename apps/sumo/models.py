@@ -192,12 +192,18 @@ class WikiPage(ModelBase):
 
         return u'/%s/kb/%s' % (lang, name,)
 
+    def get_edit_url(self):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return settings.WIKI_EDIT_URL % self.pageName.replace(' ', '+')
+
     @classmethod
     def get_create_url(cls, name):
         """
         TODO: Once we can use reverse(), use reverse()
         """
-        return settings.EDIT_URL % name.replace(' ', '+')
+        return settings.WIKI_CREATE_URL % name.replace(' ', '+')
 
 
 class Category(ModelBase):
