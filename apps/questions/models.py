@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 import jinja2
 
 from sumo.models import ModelBase, TaggableMixin
-from sumo.utils import WikiParser
+from sumo.parser import WikiParser
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 import questions as constants

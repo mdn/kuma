@@ -1,46 +1,46 @@
 [
     {
-        "pk": "e8e7f7b698aa2d98f356fabee21bca81", 
-        "model": "sumo.session", 
+        "pk": "e8e7f7b698aa2d98f356fabee21bca81",
+        "model": "sumo.session",
         "fields": {
-            "timestamp": 1270144676, 
-            "tikihost": "sumo", 
+            "timestamp": 1270144676,
+            "tikihost": "sumo",
             "user": "pcraciunoiu"
         }
-    }, 
+    },
     {
-        "pk": "6df455eeb95c1c3e0ac8f310026c05b7", 
-        "model": "sumo.session", 
+        "pk": "6df455eeb95c1c3e0ac8f310026c05b7",
+        "model": "sumo.session",
         "fields": {
-            "timestamp": 1271184852, 
-            "tikihost": "sumo", 
+            "timestamp": 1271184852,
+            "tikihost": "sumo",
             "user": "fligtar"
         }
-    }, 
+    },
     {
-        "pk": "57ad07b35736fc2b64ed62336fb3c2d2", 
-        "model": "sumo.session", 
+        "pk": "57ad07b35736fc2b64ed62336fb3c2d2",
+        "model": "sumo.session",
         "fields": {
-            "timestamp": 1271185052, 
-            "tikihost": "sumo", 
+            "timestamp": 1271185052,
+            "tikihost": "sumo",
             "user": "jsocol"
         }
-    }, 
+    },
     {
-        "pk": "befc4415d69c8486e2f02a14291adf01", 
-        "model": "sumo.session", 
+        "pk": "befc4415d69c8486e2f02a14291adf01",
+        "model": "sumo.session",
         "fields": {
-            "timestamp": 1269986723, 
-            "tikihost": "sumo", 
+            "timestamp": 1269986723,
+            "tikihost": "sumo",
             "user": "zzxc"
         }
-    }, 
+    },
     {
-        "pk": "ghiz4415d69ctlro2f02a14291m82l91", 
-        "model": "sumo.session", 
+        "pk": "ghiz4415d69ctlro2f02a14291m82l91",
+        "model": "sumo.session",
         "fields": {
-            "timestamp": 1269987858, 
-            "tikihost": "sumo", 
+            "timestamp": 1269987858,
+            "tikihost": "sumo",
             "user": "notexist"
         }
     }

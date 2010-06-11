@@ -1,6 +1,5 @@
 from django.test.client import Client
 from django.test import TestCase
-from django.http import HttpRequest
 
 from nose.tools import eq_, raises
 from pyquery import PyQuery as pq

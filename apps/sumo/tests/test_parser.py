@@ -46,6 +46,116 @@ class TestWikiParser(TestCase):
         params = parser._buildImageParams(items)
         eq_('/en-US/kb/Installing+Firefox', params['link'])
 
+    def test_image_params_align(self):
+        """Align valid options."""
+        align_vals = ('none', 'left', 'center', 'right')
+        for align in align_vals:
+            items = ['align=' + align]
+            params = parser._buildImageParams(items)
+            eq_(align, params['align'])
+
+    def test_image_params_align_invalid(self):
+        """Align invalid options."""
+        items = ['align=zzz']
+        params = parser._buildImageParams(items)
+        assert not 'align' in params, 'Align is present in params'
+
+    def test_image_params_valign(self):
+        """Vertical align valid options."""
+        valign_vals = ('baseline', 'sub', 'super', 'top', 'text-top',
+                       'middle', 'bottom', 'text-bottom')
+        for valign in valign_vals:
+            items = ['valign=' + valign]
+            params = parser._buildImageParams(items)
+            eq_(valign, params['valign'])
+
+    def test_image_params_valign_invalid(self):
+        """Vertical align invalid options."""
+        items = ['valign=zzz']
+        params = parser._buildImageParams(items)
+        assert not 'valign' in params, 'Vertical align is present in params'
+
+    def test_image_params_alt(self):
+        """Image alt override."""
+        items = ['alt=some alternative text']
+        params = parser._buildImageParams(items)
+        eq_('some alternative text', params['alt'])
+
+    def test_image_params_frameless(self):
+        """Frameless image."""
+        items = ['frameless']
+        params = parser._buildImageParams(items)
+        eq_(True, params['frameless'])
+
+    def test_image_params_width_height(self):
+        """Image width."""
+        items = ['width=10', 'height=20']
+        params = parser._buildImageParams(items)
+        eq_('10', params['width'])
+        eq_('20', params['height'])
+
+    def test_get_wiki_link(self):
+        """Wiki links are properly built for existing pages."""
+        eq_('/en-US/kb/Installing+Firefox',
+            parser._getWikiLink('Installing Firefox'))
+
+    def test_get_wiki_link_create(self):
+        """Wiki links are properly built for inexisting pages."""
+        eq_(settings.WIKI_CREATE_URL % 'Inexistent+Page',
+            parser._getWikiLink('Inexistent Page'))
+
+
+class TestWikiInternalLinks(TestCase):
+    fixtures = ['pages.json']
+
+    def test_simple(self):
+        """Simple internal link markup."""
+        link = pq_link('[[Installing Firefox]]')
+        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
+        eq_('Installing Firefox', link.text())
+
+    def test_simple_markup(self):
+        text = '[[Installing Firefox]]'
+        eq_('<p><a href="/en-US/kb/Installing+Firefox">' +
+            'Installing Firefox</a>\n</p>',
+            parser.parse(text))
+
+    def test_link_hash(self):
+        """Internal link with hash."""
+        link = pq_link('[[Installing Firefox#section name]]')
+        eq_('/en-US/kb/Installing+Firefox#section_name', link.attr('href'))
+        eq_('Installing Firefox#section name', link.text())
+
+    def test_link_hash_markup(self):
+        """Internal link with hash."""
+        text = '[[Installing Firefox#section name]]'
+        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_name">' +
+                'Installing Firefox#section name</a>\n</p>',
+            parser.parse(text))
+
+    def test_hash_only(self):
+        """Internal hash only."""
+        link = pq_link('[[#section 3]]')
+        eq_('#section_3', link.attr('href'))
+        eq_('#section 3', link.text())
+
+    def test_link_name(self):
+        """Internal link with name."""
+        link = pq_link('[[Installing Firefox|this name]]')
+        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
+        eq_('this name', link.text())
+
+    def test_link_with_extra_pipe(self):
+        link = pq_link('[[Installing Firefox|with|pipe]]')
+        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
+        eq_('with|pipe', link.text())
+
+    def test_hash_name(self):
+        """Internal hash with name."""
+        link = pq_link('[[#section 3|this name]]')
+        eq_('#section_3', link.attr('href'))
+        eq_('this name', link.text())
+
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
         eq_('/en-US/kb/Installing+Firefox',
@@ -219,3 +329,87 @@ class TestWikiImageTags(TestCase):
         eq_('my caption', caption)
         eq_('/img/wiki_up/file.png', img.attr('src'))
         eq_('http://example.com', img_a.attr('href'))
+
+    def test_link_align(self):
+        """Link with align."""
+        img_a = pq_img(
+            '[[Image:file.png|link=http://example.com|align=left]]', 'a.img')
+        eq_('img left', img_a.attr('class'))
+
+    def test_link_align_invalid(self):
+        """Link with invalid align."""
+        img_a = pq_img(
+            '[[Image:file.png|link=http://example.com|align=off]]', 'a.img')
+        eq_('img', img_a.attr('class'))
+
+    def test_link_valign(self):
+        """Link with valign."""
+        img_a = pq_img(
+            '[[Image:file.png|link=http://example.com|valign=top]]', 'a.img')
+        eq_('img top', img_a.attr('class'))
+
+    def test_link_valign_invalid(self):
+        """Link with invalid valign."""
+        img_a = pq_img(
+            '[[Image:file.png|link=http://example.com|valign=off]]', 'a.img')
+        eq_('img', img_a.attr('class'))
+
+    def test_alt(self):
+        """Image alt attribute is overriden but caption is not."""
+        img_div = pq_img('[[Image:img.png|alt=my alt|my caption]]')
+        img = img_div('img')
+        caption = img_div.text()
+
+        eq_('my alt', img.attr('alt'))
+        eq_('my caption', caption)
+
+    def test_alt_unsafe(self):
+        """Potentially unsafe alt content is escaped."""
+        unsafe_vals = (
+            ('an"<script>alert()</script>',
+             'an&quot;&amp;lt;script&amp;gt;alert()&amp;lt;/script&amp;gt;'),
+            ("an'<script>alert()</script>",
+             "an'&amp;lt;script&amp;gt;alert()&amp;lt;/script&amp;gt;"),
+            ('single\'"double',
+             "single'&quot;double"),
+        )
+        for alt_sent, alt_expected in unsafe_vals:
+            img_div = pq_img('[[Image:img.png|alt=' + alt_sent + ']]')
+            img = img_div('img')
+
+            is_true = str(img).startswith('<img alt="' + alt_expected + '"')
+            assert is_true, ('Expected "%s", sent "%s"' %
+                             (alt_expected, alt_sent))
+
+    def test_width(self):
+        """Image width attribute set."""
+        img_div = pq_img('[[Image:img.png|width=10]]')
+        img = img_div('img')
+
+        eq_('10', img.attr('width'))
+
+    def test_width_invalid(self):
+        """Invalid image width attribute set to auto."""
+        img_div = pq_img('[[Image:img.png|width=invalid]]')
+        img = img_div('img')
+
+        eq_('', img.attr('width'))
+
+    def test_height(self):
+        """Image height attribute set."""
+        img_div = pq_img('[[Image:img.png|height=10]]')
+        img = img_div('img')
+
+        eq_('10', img.attr('height'))
+
+    def test_height_invalid(self):
+        """Invalid image height attribute set to auto."""
+        img_div = pq_img('[[Image:img.png|height=invalid]]')
+        img = img_div('img')
+
+        eq_('', img.attr('height'))
+
+    def test_frameless(self):
+        """Image container has frameless class if specified."""
+        img = pq_img('[[Image:img.png|frameless|caption]]', 'img')
+        eq_('frameless', img.attr('class'))

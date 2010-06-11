@@ -13,7 +13,8 @@ from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 
 from .urlresolvers import reverse
-from .utils import urlencode, WikiParser
+from .utils import urlencode
+from .parser import WikiParser
 
 
 class DateTimeFormatError(Exception):
@@ -66,6 +67,7 @@ def wiki_to_html(wiki_markup):
     """Wiki Markup -> HTML"""
     parser = WikiParser()
     return jinja2.Markup(parser.parse(wiki_markup, False))
+
 
 class Paginator(object):
 

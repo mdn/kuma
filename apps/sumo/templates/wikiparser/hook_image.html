@@ -1,15 +1,37 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% if params['link'] %}
-  <a class="img" href="{{ params['link'] }}">
-{% else %}
-  <div class="img">
+{% set classes = 'img' %}
+{% if params['align'] %}
+  {% set classes = classes + ' ' + params['align'] %}
+{% endif %}
+{% if params['valign'] %}
+  {% set classes = classes + ' ' + params['valign'] %}
 {% endif %}
 
-<img src="{{ img_path }}" alt="{{ caption }}" title="{{ caption }}"/>
+{% if not params['frameless'] %}
+  {% if params['link'] %}
+    <a class="{{ classes }}" href="{{ params['link'] }}">
+  {% else %}
+    <div class="{{ classes }}">
+  {% endif %}
+{% endif %}
+
+<img {% if params['frameless'] %}class="frameless"{% endif %}
+  src="{{ img_path }}"
+  alt="{% if params['alt'] %}{{ params['alt'] }}{% else %}{{ caption }}{% endif %}"
+  title="{{ caption }}"
+  {% if params['width'] %}
+    width="{{ params['width']|int('') }}"
+  {% endif %}
+  {% if params['height'] %}
+    height="{{ params['height']|int('') }}"
+  {% endif %}
+  />
 {{ caption }}
 
-{% if params['link'] %}
-  </a>
-{% else %}
-  </div>
+{% if not params['frameless'] %}
+  {% if params['link'] %}
+    </a>
+  {% else %}
+    </div>
+  {% endif %}
 {% endif %}

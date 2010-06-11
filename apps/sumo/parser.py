@@ -18,7 +18,14 @@ ALLOWED_ATTRIBUTES = {
     'h6': ['id'],
     'li': ['class'],
     'span': ['class'],
-    'img': ['src', 'alt', 'title', 'height', 'width'],
+    'img': ['class', 'src', 'alt', 'title', 'height', 'width'],
+}
+
+
+IMAGE_PARAMS = {
+    'align': ('none', 'left', 'center', 'right'),
+    'valign': ('baseline', 'sub', 'super', 'top', 'text-top', 'middle',
+              'bottom', 'text-bottom'),
 }
 
 
@@ -90,10 +97,16 @@ class WikiParser(object):
                 param, value = item.split('=', 1)
                 params[param] = value
             else:
-                params[item] = False
+                params[item] = True
 
-        if 'page' in params and params['page']:
+        if 'page' in params and params['page'] is not True:
             params['link'] = self._getWikiLink(params['page'])
+
+        # Validate params with limited # of values
+        for param_allowed in IMAGE_PARAMS:
+            if (param_allowed in params and
+                not (params[param_allowed] in IMAGE_PARAMS[param_allowed])):
+                del params[param_allowed]
 
         return params
 
