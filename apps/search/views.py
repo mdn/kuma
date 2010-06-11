@@ -100,7 +100,9 @@ def search(request):
         a = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
         # KB fields
-        tags = forms.CharField(label=_('Tags'), required=False)
+        tag_widget = forms.TextInput(attrs={'placeholder':_('tag1, tag2')})
+        tags = forms.CharField(label=_('Tags'), required=False,
+                               widget=tag_widget)
 
         language = forms.ChoiceField(
             label=_('Language'), required=False,
@@ -117,7 +119,9 @@ def search(request):
         status = forms.TypedChoiceField(
             label=_('Post status'), coerce=int, empty_value=0,
             choices=constants.STATUS_LIST, required=False)
-        author = forms.CharField(required=False)
+
+        author_widget = forms.TextInput(attrs={'placeholder':_('username')})
+        author = forms.CharField(required=False, widget=author_widget)
 
         created = forms.TypedChoiceField(
             label=_('Created'), coerce=int, empty_value=0,

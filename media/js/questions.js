@@ -13,14 +13,10 @@
      * Initialize the search widget
      */
     function initSearch() {
-        var $input = $('#support-search input[name="q"]');
+        // Setup the placeholder text
+        $('#support-search input[name="q"]').autoPlaceholderText();
 
-        // check for html5 placeholder support and fallback to js solution
-        if (!Modernizr.input.placeholder) {
-            $input.autoFillHelpText($input.attr('placeholder'));
-        }
-
-        // submit the form on Enter
+        // Submit the form on Enter
         $input.keyup(function(ev) {
             if(ev.keyCode === 13 && $input.val()) {
                 $('#support-search form').submit();

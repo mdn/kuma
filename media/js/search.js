@@ -1,16 +1,11 @@
 $(document).ready(function() {
     // initiate tabs
     var tabs = $('#search-tabs').tabs(),
-    // TODO: use l10n
-    // @see http://jbalogh.github.com/zamboni/#gettext-in-javascript
-        DEFAULT_VALS = ['crashes on youtube',  // name
-                        'username',            // author
-                        'tag1, tag2'],         // tags
         cache_search_date = $('.search-date');
 
-    $('#search-tabs input[name="q"]').autoFillHelpText(DEFAULT_VALS[0]);
-    $('#search-tabs input[name="author"]').autoFillHelpText(DEFAULT_VALS[1]);
-    $('#search-tabs input[name="tags"]').autoFillHelpText(DEFAULT_VALS[2]);
+    $('#search-tabs input[name="q"]').autoPlaceholderText();
+    $('#search-tabs input[name="author"]').autoPlaceholderText();
+    $('#search-tabs input[name="tags"]').autoPlaceholderText();
 
     $("#tab-wrapper form").submit(function() {
         var tabs = [$('#kb'), $('#support'), $('#discussion')], num_tabs = 3,
@@ -22,7 +17,7 @@ $(document).ready(function() {
             for (fi = 0; fi < num_fields; fi++) {
                 the_input = $(fields[fi], tabs[ti]);
                 if (the_input.length > 0 &&
-                    the_input.val() == DEFAULT_VALS[fi]) {
+                    the_input.val() == the_input.attr('placeholder')) {
                     the_input.val('');
                 }
             }
