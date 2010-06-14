@@ -47,7 +47,7 @@
             {% trans creator=question.creator%}Asked by <span class="user">{{ creator }}</span>{% endtrans %}
             <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
           </div>
-          <p>{{ question.content|striptags()|truncate(170) }}</p>
+          <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
           <div class="meta">
             <span>{# TODO #}Firefox Mobile 1.0</span>
             &bull;

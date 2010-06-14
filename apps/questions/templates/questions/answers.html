@@ -20,7 +20,7 @@
     <div class="main-section">
       <h1>{{ question.title }}</h1>
       <div class="content">
-        {{ question.content|safe }}
+        {{ question.content_parsed|safe }}
       </div>
       <div class="problem">
         <div class="have-problem ten-more{# TODO #}">
@@ -90,8 +90,12 @@
 
       <h4>{{ _('System Details') }}</h4>
       <ul class="system">
-        <li class="mac">Mac OS X 10.6.2</li>
-        <li class="ff">Firefox 3.6.2</li>
+        {% if question.metadata.os %}
+          <li class="mac">{{ question.metadata.os }}</li>
+        {% endif %}
+        {% if question.metadata.ff_version %}
+          <li class="ff">Firefox {{ question.metadata.ff_version }}</li>
+        {% endif %}
       </ul>
       <p><a href="#">{{ _('More system details...') }}</a></p>
 

@@ -251,6 +251,7 @@ MINIFY_BUNDLES = {
         ),
         'questions': (
             'js/questions.js',
+            'js/markup.js',
         ),
         'search': (
             'js/libs/jqueryui.min.js',

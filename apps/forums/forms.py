@@ -3,6 +3,7 @@ from django import forms
 from tower import ugettext_lazy as _lazy
 
 from .models import Thread, Post
+from sumo.form_fields import StrippedCharField
 
 
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -11,16 +12,6 @@ MSG_TITLE_LONG = _lazy(u'Please keep the length of your title to %(show_value)s 
 MSG_CONTENT_REQUIRED = _lazy(u'Please provide a message.')
 MSG_CONTENT_SHORT = _lazy(u'Your message is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
 MSG_CONTENT_LONG = _lazy(u'Please keep the length of your message to %(show_value)s characters or less. It is currently %(limit_value)s characters.')
-
-
-# TODO: remove this and use strip kwarg once ticket #6362 is done
-# @see http://code.djangoproject.com/ticket/6362
-class StrippedCharField(forms.CharField):
-    """CharField that strips trailing and leading spaces."""
-    def clean(self, value):
-        if value is not None:
-            value = value.strip()
-        return super(StrippedCharField, self).clean(value)
 
 
 class ReplyForm(forms.ModelForm):
