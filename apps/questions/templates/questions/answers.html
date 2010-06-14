@@ -1,7 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "questions/base.html" %}
-{# L10n: {q} is the title of the question. {f} is the name of the question forum. #}
-{% set title = _('{q} | {f} | Questions')|f(q=question.title, f=forum.name) %}
+{# L10n: {q} is the title of the question. #}
+{% set title = _('{q} | Firefox Support Forum')|f(q=question.title) %}
 {% set classes = 'answers' %}
 
 {% block content %}

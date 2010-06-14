@@ -7,7 +7,7 @@
 
 <div id="main-hdr">
   <hgroup>
-    <h1><a href="{{ url('questions.questions', forum_slug=forum.slug) }}">{{ _('Firefox Support Forum') }}</a></h1>
+    <h1><a href="{{ url('questions.questions') }}">{{ _('Firefox Support Forum') }}</a></h1>
     <h2>{{ _('The Official Community-Driven Support Web Site for Firefox') }}</h2>
   </hgroup>
 
@@ -53,7 +53,7 @@
       <h3>{{ _("Can't Find an Answer?") }}</h3>
       <p>{{ _('Post your question to the support forum. The Firefox community is here to help!') }}</p>
       <div class="ask-question">
-        <a href="{{ url('questions.new_question', forum_slug=forum.slug) }}">
+        <a href="{{ url('questions.new_question') }}">
           <span class="q">?</span>
           {{ _('Ask a Question') }}
         </a>

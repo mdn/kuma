@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "questions/base.html" %}
-{% set title = _('{f} | Questions')|f(f=forum.name) %}
+{# TODO: Make the title and other references to FF configurable. #}
+{% set title = _('Firefox Support Forum') %}
 {% set classes = 'questions' %}
 
 {% block filter %}
@@ -40,7 +41,7 @@
             {% trans %}{# TODO #}<mark>1 person</mark> <span>has this problem</span>{% endtrans %}
           </div>
           <div class="title">
-            <h2><a href="{{ url('questions.answers', forum_slug=forum.slug, question_id=question.id) }}">{{ question.title }}</a></h2>
+            <h2><a href="{{ url('questions.answers', question_id=question.id) }}">{{ question.title }}</a></h2>
           </div>
           <div class="asked-by">
             {% trans creator=question.creator%}Asked by <span class="user">{{ creator }}</span>{% endtrans %}

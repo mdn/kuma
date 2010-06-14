@@ -4,19 +4,9 @@ from django.contrib.auth.models import User
 from sumo.models import ModelBase
 
 
-class QuestionForum(ModelBase):
-    """A collection of questions."""
-    name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField(unique=True)
-
-    def __unicode__(self):
-        return self.name
-
-
 class Question(ModelBase):
     """A support question."""
     title = models.CharField(max_length=255)
-    forum = models.ForeignKey('QuestionForum', related_name='questions')
     creator = models.ForeignKey(User, related_name='questions')
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True, db_index=True)
