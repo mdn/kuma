@@ -104,6 +104,11 @@ def reply(request, forum_slug, thread_id):
     if form.is_valid():
         forum = get_object_or_404(Forum, slug=forum_slug)
         thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
+
+        # A reply or two might sneak in after the thread is locked due to
+        # replication lag, but that should be very rare and won't result in a
+        # user-visible error. Not worth pinning to master as long as we're not
+        # even using one transaction per request.
         if not thread.is_locked:
             reply_ = form.save(commit=False)
             reply_.thread = thread
@@ -167,6 +172,9 @@ def lock_thread(request, forum_slug, thread_id):
                             (Forum, 'slug__iexact', 'forum_slug'))
 def sticky_thread(request, forum_slug, thread_id):
     """Mark/unmark a thread sticky."""
+    # TODO: Have a separate sticky_thread() and unsticky_thread() to avoid a
+    # race condition where a double-bounce on the "sticky" button sets it
+    # sticky and then unsticky. [572836]
 
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
@@ -302,7 +310,10 @@ def delete_post(request, forum_slug, thread_id, post_id):
 @login_required
 @require_POST
 def watch_thread(request, forum_slug, thread_id):
-    """Start watching a thread."""
+    """Toggle whether a thread is being watched."""
+    # TODO: Have a separate watch_thread() and unwatch_thread() to avoid a
+    # race condition where a double-bounce on the "watch" button watches and
+    # then unwatches a thread. [572836]
 
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)

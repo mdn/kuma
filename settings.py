@@ -33,7 +33,7 @@ DATABASES = {
     }
 }
 
-DATABASE_ROUTERS = ('multidb.MasterSlaveRouter',)
+DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
 
 # Put the aliases for your slave databases in this list
 SLAVE_DATABASES = []
@@ -122,6 +122,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'multidb.middleware.PinningRouterMiddleware',
     'sumo.middleware.LocaleURLMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
