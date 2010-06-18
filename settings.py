@@ -168,6 +168,7 @@ INSTALLED_APPS = (
     'notifications',
     'identicons',
     'questions',
+    'kadmin',
 )
 
 # Extra apps for testing
