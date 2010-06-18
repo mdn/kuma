@@ -6,7 +6,7 @@ from sumo.form_fields import StrippedCharField
 from .models import Answer
 
 # labels and help text
-SITES_AFFECTED_LABEL = _lazy(u'URL of affected sites')
+SITE_AFFECTED_LABEL = _lazy(u'URL of affected site')
 CRASH_ID_LABEL = _lazy(u'Crash ID(s)')
 CRASH_ID_HELP = _lazy(u"If you submit information to Mozilla when you crash, you'll be given a crash ID which uniquely identifies your crash and lets us look at details that may help identify the cause. To find your recently submitted crash IDs, go to <strong>about:crashes</strong> in your location bar. <a href='http://support.mozilla.com/en-US/kb/Firefox+crashes#Getting_the_most_accurate_help_with_your_Firefox_crash' target='_blank'>Click for detailed instructions</a>.")
 TROUBLESHOOTING_LABEL = _lazy(u'Troubleshooting Information')
@@ -36,30 +36,28 @@ MSG_CONTENT_SHORT = _lazy(u'Your content is too short (%(show_value)s characters
 MSG_CONTENT_LONG = _lazy(u'Please keep the length of your content to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
 
 
-class NewQuestionForm(forms.Form):
-    """Form to start a new question."""
-    def __init__(self, *args, **kwargs):
+class EditQuestionForm(forms.Form):
+    """Form to edit an existing question"""
+
+    def __init__(self, user=None, product=None, category=None, *args,
+                 **kwargs):
         """Init the form.
-        We are adding fields here and not declaratively because of the
-        form fields to include depend on the selected product/category."""
 
-        user = kwargs.pop('user', None)
-        product = kwargs.pop('product', None)
-        category = kwargs.pop('category', None)
+        We are adding fields here and not declaratively because the
+        form fields to include depend on the selected product/category.
 
-        super(NewQuestionForm, self).__init__(*args, **kwargs)
+        """
+        super(EditQuestionForm, self).__init__(*args, **kwargs)
 
         #  Extra fields required by product/category selected
         extra_fields = []
-        if product and isinstance(product.get('extra_fields', None), list):
-            extra_fields += product['extra_fields']
-        if category and isinstance(category.get('extra_fields', None), list):
-            extra_fields += category['extra_fields']
+
+        if product:
+            extra_fields += product.get('extra_fields', [])
+        if category:
+            extra_fields += category.get('extra_fields', [])
 
         #  Add the fields to the form
-        self.fields['useragent'] = forms.CharField(widget=forms.HiddenInput(),
-                                                   required=False)
-
         error_messages = {'required': MSG_TITLE_REQUIRED,
                           'min_length': MSG_TITLE_SHORT,
                           'max_length': MSG_TITLE_LONG}
@@ -77,15 +75,15 @@ class NewQuestionForm(forms.Form):
                                   error_messages=error_messages)
         self.fields['content'] = field
 
-        if ('sites_affected' in extra_fields):
-            field = StrippedCharField(label=SITES_AFFECTED_LABEL,
+        if 'sites_affected' in extra_fields:
+            field = StrippedCharField(label=SITE_AFFECTED_LABEL,
                                       initial='http://',
                                       required=False,
                                       max_length=255,
                                       widget=forms.TextInput())
             self.fields['sites_affected'] = field
 
-        if ('crash_id' in extra_fields):
+        if 'crash_id' in extra_fields:
             field = StrippedCharField(label=CRASH_ID_LABEL,
                                       help_text=CRASH_ID_HELP,
                                       required=False,
@@ -93,20 +91,20 @@ class NewQuestionForm(forms.Form):
                                       widget=forms.TextInput())
             self.fields['crash_id'] = field
 
-        if ('frequency' in extra_fields):
+        if 'frequency' in extra_fields:
             field = forms.ChoiceField(label=FREQUENCY_LABEL,
                                       choices=FREQUENCY_CHOICES,
                                       required=False)
             self.fields['frequency'] = field
 
-        if ('started' in extra_fields):
+        if 'started' in extra_fields:
             field = StrippedCharField(label=STARTED_LABEL,
                                       required=False,
                                       max_length=255,
                                       widget=forms.TextInput())
             self.fields['started'] = field
 
-        if ('troubleshooting' in extra_fields):
+        if 'troubleshooting' in extra_fields:
             widget = forms.Textarea(attrs={'class': 'troubleshooting'})
             field = StrippedCharField(label=TROUBLESHOOTING_LABEL,
                                       help_text=TROUBLESHOOTING_HELP,
@@ -119,15 +117,15 @@ class NewQuestionForm(forms.Form):
             self.fields['email'] = forms.EmailField(label=EMAIL_LABEL,
                                                     help_text=EMAIL_HELP)
 
-        if ('ff_version' in extra_fields):
+        if 'ff_version' in extra_fields:
             field = StrippedCharField(label=FF_VERSION_LABEL, required=False)
             self.fields['ff_version'] = field
 
-        if ('os' in extra_fields):
+        if 'os' in extra_fields:
             self.fields['os'] = StrippedCharField(label=OS_LABEL,
                                                   required=False)
 
-        if ('plugins' in extra_fields):
+        if 'plugins' in extra_fields:
             widget = forms.Textarea(attrs={'class': 'plugins'})
             self.fields['plugins'] = StrippedCharField(label=PLUGINS_LABEL,
                                                        required=False,
@@ -152,6 +150,21 @@ class NewQuestionForm(forms.Form):
         return clean
 
 
+class NewQuestionForm(EditQuestionForm):
+    """Form to start a new question"""
+
+    def __init__(self, user=None, product=None, category=None, *args,
+                 **kwargs):
+        """Add fields particular to new questions."""
+        super(NewQuestionForm, self).__init__(user, product, category, *args,
+                                              **kwargs)
+
+        # Collect user agent only when making a question for the first time.
+        # Otherwise, we could grab moderators' user agents.
+        self.fields['useragent'] = forms.CharField(widget=forms.HiddenInput(),
+                                                   required=False)
+
+
 class AnswerForm(forms.Form):
     """Form for replying to a question."""
     content = StrippedCharField(
@@ -164,4 +177,4 @@ class AnswerForm(forms.Form):
 
     class Meta:
         model = Answer
-        fields = ('content', )
+        fields = ('content',)

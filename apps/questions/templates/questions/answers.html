@@ -30,6 +30,11 @@
       <div class="content">
         {{ question.content_parsed|safe }}
       </div>
+      {% if question.updated_by %}
+        <p class="edited">
+          {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=question.updated_by.username, datetime=datetimeformat(question.updated, format='longdatetime')) }}
+        </p>
+      {% endif %}
       <div class="problem">
         {% include 'questions/includes/have_problem.html' %}
         {% if not question.is_locked and not question.has_voted(request) %}
@@ -81,6 +86,11 @@
         {% endif %}
       {% endfor %}
       <div class="report-reply">
+        {% if user.has_perm('questions.change_question') or (not question.is_locked and question.creator == user) %}
+          <span class="edit">
+            <a href="{{ url('questions.edit_question', question.id) }}">{{ _('Edit this post') }}</a>
+          </span>
+        {% endif %}
         {% if user.has_perm('questions.lock_question') %}
           <form class="lock" action="{{ url('questions.lock', question.id) }}" method="post">
             {{ csrf() }}

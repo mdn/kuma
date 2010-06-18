@@ -87,7 +87,7 @@
         "fields": {
             "question": 1,
             "name": "product",
-            "value": "<django.utils.functional.__proxy__ object at 0x10474edd0>"
+            "value": "desktop"
         }
     },
     {
@@ -96,7 +96,7 @@
         "fields": {
             "question": 1,
             "name": "category",
-            "value": "<django.utils.functional.__proxy__ object at 0x10474ee10>"
+            "value": "d1"
         }
     },
     {

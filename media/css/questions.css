@@ -897,14 +897,16 @@ ol.answers span.author {
 }
 
 ol.answers p.edited,
-ol.answers p.posted {
+ol.answers p.posted,
+div#question p.edited {
     color: #898378;
     font-size: 12px;
     font-style: italic;
     margin: 0 0 5px 15px;
 }
 
-ol.answers p.edited {
+ol.answers p.edited,
+div#question p.edited {
     font-size: 11px;
 }
 
@@ -916,7 +918,8 @@ ol.answers div.reply {
     margin: 15px 0 0 15px;
 }
 
-ol.answers div.reply a {
+ol.answers div.reply a,
+span.edit a {
     background: transparent url(../img/questions/icon.contributed.gif) no-repeat left center;
     font-size: 14px;
     padding: 0 0 0 25px;
@@ -1247,6 +1250,11 @@ input.g-btn:disabled {
 
 #question-form li.submit {
     padding-left: 115px;
+}
+
+#question-form li.submit a.cancel {
+    float: right;
+    padding: 4px 0;  /* to approximate the submit button height */
 }
 
 #question-form li label {

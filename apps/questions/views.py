@@ -2,10 +2,11 @@ import json
 import logging
 
 from django.contrib.auth.decorators import permission_required
+from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponseRedirect, HttpResponse,
                          HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.cache import cache
@@ -16,17 +17,17 @@ import jingo
 from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
 
-from sumo.utils import paginate
+from access.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from access.decorators import has_perm_or_owns_or_403
+from sumo.utils import paginate
 from .models import Question, Answer, QuestionVote, AnswerVote
-from .forms import NewQuestionForm, AnswerForm
+from .forms import NewQuestionForm, EditQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
 from .tags import add_existing_tag
 from .tasks import cache_top_contributors
 import questions as constants
-import question_config as config
+from .question_config import products
 
 
 log = logging.getLogger('k.questions')
@@ -97,25 +98,27 @@ def answers(request, question_id, form=None):
 def new_question(request):
     """Ask a new question."""
 
-    product = _get_current_product(request)
-    category = _get_current_category(request)
-    articles = _get_articles(category)
+    product = products.get(request.GET.get('product'))
+    category_key = request.GET.get('category')
+    if product and category_key:
+        category = product['categories'].get(category_key)
+    else:
+        category = None
+    articles = category['articles'] if category else None
 
     if request.method == 'GET':
         search = request.GET.get('search', None)
-        search_results = None
-        if search:
-            search_results = True  # TODO - get the search results
-
-        form = None
+        search_results = True if search else None  # TODO - get search results
         if request.GET.get('showform', False):
             form = NewQuestionForm(user=request.user, product=product,
                                    category=category,
                                    initial={'title': search})
+        else:
+            form = None
 
         return jingo.render(request, 'questions/new_question.html',
                             {'form': form, 'search_results': search_results,
-                             'products': config.products,
+                             'products': products,
                              'current_product': product,
                              'current_category': category,
                              'current_articles': articles})
@@ -131,18 +134,64 @@ def new_question(request):
         question.save()
         question.add_metadata(**form.cleaned_metadata)
         if product:
-            question.add_metadata(product=product['name'])
-        if category:
-            question.add_metadata(category=category['name'])
+            question.add_metadata(product=product['key'])
+            if category:
+                question.add_metadata(category=category['key'])
 
         # Submitting the question counts as a vote
         return question_vote(request, question.id)
 
     return jingo.render(request, 'questions/new_question.html',
-                        {'form': form, 'products': config.products,
+                        {'form': form, 'products': products,
                          'current_product': product,
                          'current_category': category,
                          'current_articles': articles})
+
+
+@require_http_methods(['GET', 'POST'])
+@login_required
+@has_perm_or_owns_or_403('questions.change_question', 'creator',
+                         (Question, 'id__exact', 'question_id'),
+                         (Question, 'id__exact', 'question_id'))
+def edit_question(request, question_id):
+    """Edit a question."""
+    question = get_object_or_404(Question, pk=question_id)
+    user = request.user
+
+    if not user.has_perm('questions.change_question') and question.is_locked:
+        raise PermissionDenied
+
+    if request.method == 'GET':
+        initial = question.metadata.copy()
+        initial.update(title=question.title, content=question.content)
+        form = EditQuestionForm(user=user,
+                                product=question.product,
+                                category=question.category,
+                                initial=initial)
+    else:
+        form = EditQuestionForm(data=request.POST,
+                                user=user,
+                                product=question.product,
+                                category=question.category)
+        if form.is_valid():
+            question.title = form.cleaned_data['title']
+            question.content = form.cleaned_data['content']
+            question.updated_by = user
+            question.save()
+
+            # TODO: Factor all this stuff up from here and new_question into
+            # the form, which should probably become a ModelForm.
+            question.clear_mutable_metadata()
+            question.add_metadata(**form.cleaned_metadata)
+
+            return HttpResponseRedirect(reverse('questions.answers',
+                                        kwargs={'question_id': question.id}))
+
+    return jingo.render(request, 'questions/edit_question.html',
+                        {'question': question,
+                         'form': form,
+                         'current_product': question.product,
+                         'current_category': question.category})
 
 
 @require_POST
@@ -459,33 +508,3 @@ def _get_top_contributors():
     if not users:
         cache_top_contributors.delay()
     return users
-
-
-#  Helper functions to deal with products dict
-def _get_current_product(request):
-    """Get the selected product."""
-    product_key = request.GET.get('product', None)
-    if product_key:
-        filtered = filter(lambda x: x['key'] == product_key, config.products)
-        if len(filtered) > 0:
-            return filtered[0]
-    return None
-
-
-def _get_current_category(request):
-    """Get the selected category."""
-    product = _get_current_product(request)
-    category_key = request.GET.get('category', None)
-    if category_key and product:
-        categories = product['categories']
-        filtered = filter(lambda x: x['key'] == category_key, categories)
-        if len(filtered) > 0:
-            return filtered[0]
-    return None
-
-
-def _get_articles(category):
-    """Get the articles for the specified category."""
-    if category:
-        return category['articles']
-    return None

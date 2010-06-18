@@ -778,3 +778,64 @@ class QuestionsTemplateTestCase(TestCaseBase):
         response = self.client.get(tagged)
         doc = pq(response.content)
         eq_(1, len(doc('ol.questions > li')))
+
+
+class QuestionEditingTests(TestCaseBase):
+    """Tests for the question-editing view and templates"""
+
+    def setUp(self):
+        super(QuestionEditingTests, self).setUp()
+        self.client.login(username='admin', password='testpass')
+
+    def tearDown(self):
+        self.client.logout()
+        super(QuestionEditingTests, self).tearDown()
+
+    def test_extra_fields(self):
+        """The edit-question form should show appropriate metadata fields."""
+        question_id = 1
+        response = get(self.client, 'questions.edit_question',
+                       kwargs={'question_id': question_id})
+        eq_(response.status_code, 200)
+
+        # Make sure each extra metadata field is in the form:
+        doc = pq(response.content)
+        q = Question.objects.get(pk=question_id)
+        extra_fields = q.product.get('extra_fields', []) + \
+                       q.category.get('extra_fields', [])
+        for field in extra_fields:
+            assert doc('input[name=%s]' % field) or \
+                   doc('textarea[name=%s]' % field), \
+                   "The %s field is missing from the edit page.""" % field
+
+    def test_no_extra_fields(self):
+        """The edit-question form shouldn't show inappropriate metadata."""
+        response = get(self.client, 'questions.edit_question',
+                       kwargs={'question_id': 2})
+        eq_(response.status_code, 200)
+
+        # Take the "os" field as representative. Make sure it doesn't show up:
+        doc = pq(response.content)
+        assert not doc('input[name=os]')
+
+    def test_post(self):
+        """Posting a valid edit form should save the question."""
+        question_id = 1
+        response = post(self.client, 'questions.edit_question',
+                       {'title': 'New title',
+                        'content': 'New content',
+                        'ff_version': 'New version'},
+                       kwargs={'question_id': question_id})
+
+        # Make sure the form redirects and thus appears to succeed:
+        url = 'http://testserver%s' % reverse('questions.answers',
+                                           kwargs={'question_id': question_id})
+        self.assertRedirects(response, url)
+
+        # Make sure the static fields, the metadata, and the updated_by field
+        # changed:
+        q = Question.objects.get(pk=question_id)
+        eq_(q.title, 'New title')
+        eq_(q.content, 'New content')
+        eq_(q.metadata['ff_version'], 'New version')
+        eq_(q.updated_by, User.objects.get(username='admin'))

@@ -1,50 +1,57 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "questions/base.html" %}
-{% from "layout/errorlist.html" import errorlist %}
+{% extends "questions/includes/question_editing_frame.html" %}
 {% set title = _('Ask a Question') %}
-{% set classes = 'new-question' %}
 
-{% block content %}
-<div id="ask-question">
-<h1>{{ _('Ask a New Question') }}</h1>
-<div class="inner-wrap">
+{% block headline %}{{ _('Ask a New Question') }}{% endblock %}
 
-  {% if current_product %}
-    <div class="selected">
-      <label>{{ _('Firefox Product') }}:</label>
-      <span>{{ current_product.name }}</span>
-      <a href="{{ url('questions.new_question') }}">{{ _('change') }}</a>
-    </div>
-  {% else %}
+{% block product %}
+  {% if not current_product %}
     <h2>{{ _('Which Firefox product would you like to post a question about?') }}</h2>
     <ul class="select-one">
-      {% for product in products %}
+      {% for key, product in products.iteritems() %}
         <li>
-          <a href="{{ url('questions.new_question')|urlparams(product=product.key) }}">{{ product.name }}</a>
+          <a href="{{ url('questions.new_question')|urlparams(product=key) }}">{{ product.name }}</a>
         </li>
       {% endfor %}
     </ul>
+  {% else %}
+    {{ super() }}
   {% endif %}
+{% endblock %}
 
-  {% if current_product and current_category %}
-    <div class="selected">
-      <label>Category:</label>
-      <span>{{ current_category.name }}</span>
-      <a href="{{ url('questions.new_question')|urlparams(product=current_product.key) }}">{{ _('change') }}</a>
-    </div>
-  {% elif current_product %}
+{% block product_changer %}
+  {% if current_product %}
+    <a href="{{ url('questions.new_question') }}">{{ _('change') }}</a>
+  {% endif %}
+{% endblock %}
+
+
+{% block category %}
+  {% if current_product and not current_category %}
     <h2>{{ _('Which of these categories best describes your problem?') }}</h2>
     <ul class="select-one">
-      {% for category in current_product.categories %}
+      {% for key, category in current_product.categories.iteritems() %}
         <li>
-          <a href="{{ url('questions.new_question')|urlparams(product=current_product.key, category=category.key) }}">{{ category.name }}</a>
+          <a href="{{ url('questions.new_question')|urlparams(product=current_product.key, category=key) }}">{{ category.name }}</a>
         </li>
       {% endfor %}
     </ul>
+  {% else %}
+    {{ super() }}
   {% endif %}
+{% endblock %}
+
+{% block category_changer %}
+  {% if not (current_product and not current_category) %}
+    <a href="{{ url('questions.new_question')|urlparams(product=current_product.key) }}">{{ _('change') }}</a>
+  {% endif %}
+{% endblock %}
+
+
+{% block articles_and_search_results %}
 
   {% if current_articles and not search_results and not form %}
-    <h2>{{ _('We have lots of helpful articles on <mark>{category}</mark> and hundreds of questions in our database, try one of the following:')|fe(category=current_category.name) }}</h2>
+    <h2>{{ _('We have lots of helpful articles on <mark>{category}</mark> and hundreds of questions in our database. Try one of the following:')|fe(category=current_category.name) }}</h2>
     <ul class="articles">
       {% for article in current_articles %}
         <li>
@@ -98,63 +105,11 @@
     </form>
   {% endif %}
 
-  {% if form %}
-    <form id="question-form" action="" method="post">
-      {{ csrf() }}
-      <h2>Fill in the details of your question.</h2>
-      <h3>The more information you can provide the better chance your question will be answered.</h3>
-      {{ errorlist(form) }}
-      {% for field in form.hidden_fields() %}
-        {{ field|safe }}
-      {% endfor %}
-      <ol>
-        {% set li_class='' %}
-        {% for field in form.visible_fields() %}
-
-          {% if field.name == 'ff_version' %}
-            <li class="system-details-info show">
-              <p>
-                {{ _("We've made some educated guesses about your current browser and operating system.") }}
-                <a href="#show-details" class="show">{{ _('Show details &raquo;')|safe }}</a>
-                <a href="#hide-details" class="hide">{{ _('Hide details &raquo;')|safe }}</a>
-              </p>
-            </li>
-            {% set li_class='details' %}
-          {% endif %}
-
-          <li class="{{ li_class }} {% if field.errors %}invalid{% endif %}">
-            {{ field.label_tag()|safe }}
-
-            {% if field.name == 'title' and not request.GET.edit_title %}
-              <div id="title-val">
-                <span title="{{ _('Click to change your question') }}">{{ form.initial.title }}</span>
-                <a href="{{ url('questions.new_question')|urlparams(product=current_product.key, category=current_category.key, showform=1, search=request.GET.search, edit_title=1) }}#question-form">edit</a>
-                {{ field.as_hidden()|safe }}
-              </div>
-            {% elif field.name == 'content' %}
-              <div class="forum-editor">
-                <div class="forum-editor-tools"></div>
-                {{ field|safe }}
-              </div>
-            {% else %}
-              {{ field|safe }}
-            {% endif %}
-
-            {% if field.help_text %}
-              <p class="help-text">{{ field.help_text|safe }}</p>
-            {% endif %}
-          </li>
-        {% endfor %}
-          <li class="submit">
-            <input type="submit" class="btn g-btn" value="{{ _('Post Question') }}" />
-          </li>
-      </ol>
-    </form>
-  {% endif %}
-
-</div>
-</div>
 {% endblock %}
 
-{% block side %}
+
+{% block major_detail_instructions %}
+  <h2>{{ _('Fill in the details of your question.') }}</h2>
 {% endblock %}
+
+{% block submit_button_value %}{{ _('Post Question') }}{% endblock %}

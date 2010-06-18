@@ -24,8 +24,8 @@ class TestNewQuestionForm(TestCaseBase):
                    'extra_fields': ['troubleshooting', 'ff_version',
                                     'os', 'plugins'], }
         form = NewQuestionForm(product=product)
-        expected = ['useragent', 'troubleshooting', 'ff_version', 'os',
-                    'plugins']
+        expected = ['troubleshooting', 'ff_version', 'os',
+                    'plugins', 'useragent']
         actual = form.metadata_field_keys
         eq_(expected, actual)
 
@@ -34,8 +34,8 @@ class TestNewQuestionForm(TestCaseBase):
                    'name': 'I have another kind of problem with Firefox',
                    'extra_fields': ['frequency', 'started'], }
         form = NewQuestionForm(product=product, category=category)
-        expected = ['useragent', 'frequency', 'started', 'troubleshooting',
-                    'ff_version', 'os', 'plugins']
+        expected = ['frequency', 'started', 'troubleshooting',
+                    'ff_version', 'os', 'plugins', 'useragent']
         actual = form.metadata_field_keys
         eq_(expected, actual)
 

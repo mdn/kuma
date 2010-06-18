@@ -6,6 +6,7 @@ from taggit.models import Tag
 from questions.models import Question, QuestionMetaData, Answer
 from questions.tags import add_existing_tag
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
+from questions.question_config import products
 
 
 class TestAnswer(TestCaseBase):
@@ -86,6 +87,35 @@ class TestQuestionMetadata(TestCaseBase):
         """Test the metadata property on Question model."""
         self.question.add_metadata(crash_id='1234567890')
         eq_('1234567890', self.question.metadata['crash_id'])
+
+    def test_product_property(self):
+        """Test question.product property."""
+        self.question.add_metadata(product='desktop')
+        eq_(products['desktop'], self.question.product)
+
+    def test_category_property(self):
+        """Test question.category property."""
+        self.question.add_metadata(product='desktop')
+        self.question.add_metadata(category='d1')
+        eq_(products['desktop']['categories']['d1'], self.question.category)
+
+    def test_clear_mutable_metadata(self):
+        """Make sure it works and clears the internal cache."""
+        # Immutable stuff that shouldn't get cleared:
+        q = self.question
+        q.add_metadata(product='desktop')
+        q.add_metadata(category='d1')
+        q.add_metadata(useragent='Fyerfocks')
+
+        # Mutable thing that should get cleared:
+        q.add_metadata(crash_id='7')
+
+        q.metadata
+        q.clear_mutable_metadata()
+        md = q.metadata
+        assert 'crash_id' not in md, \
+            "clear_mutable_metadata() didn't clear the cached metadata."
+        eq_(dict(product='desktop', category='d1', useragent='Fyerfocks'), md)
 
 
 class QuestionTests(TestCaseBase):

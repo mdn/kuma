@@ -6,13 +6,14 @@ from django.contrib.auth.models import User
 
 import jinja2
 
+from notifications.tasks import delete_watches
 from sumo.models import ModelBase, TaggableMixin
 from sumo.parser import WikiParser
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 import questions as constants
+from .question_config import products
 from .tasks import update_question_votes, build_answer_notification
-from notifications.tasks import delete_watches
 
 
 class Question(ModelBase, TaggableMixin):
@@ -20,6 +21,7 @@ class Question(ModelBase, TaggableMixin):
     title = models.CharField(max_length=255)
     creator = models.ForeignKey(User, related_name='questions')
     content = models.TextField()
+
     created = models.DateTimeField(default=datetime.now, db_index=True)
     updated = models.DateTimeField(default=datetime.now, db_index=True)
     updated_by = models.ForeignKey(User, null=True,
@@ -71,16 +73,41 @@ class Question(ModelBase, TaggableMixin):
                                             value=value)
         self._metadata = None
 
+    def clear_mutable_metadata(self):
+        """Clear the mutable metadata.
+
+        This excludes immutable fields: user agent, product, and category.
+
+        """
+        self.metadata_set.exclude(name__in=['useragent', 'product',
+                                            'category']).delete()
+        self._metadata = None
+
     @property
     def metadata(self):
-        """Dictionary access to metadata.
-        Caches the full metadata dict after first call."""
-        if not hasattr(self, '_metadata') or self._metadata == None:
-            self._metadata = {}
-            for metadata in self.metadata_set.all():
-                self._metadata[metadata.name] = metadata.value
+        """Dictionary access to metadata
 
+        Caches the full metadata dict after first call.
+
+        """
+        if not hasattr(self, '_metadata') or self._metadata is None:
+            self._metadata = dict((m.name, m.value) for
+                                  m in self.metadata_set.all())
         return self._metadata
+
+    @property
+    def product(self):
+        """Return the product this question is about or None if unknown."""
+        md = self.metadata
+        if 'product' in md:
+            return products.get(md['product'])
+
+    @property
+    def category(self):
+        """Return the category this question refers to or None if unknown."""
+        md = self.metadata
+        if self.product and 'category' in md:
+            return self.product['categories'].get(md['category'])
 
     def get_absolute_url(self):
         return reverse('questions.answers',
@@ -142,6 +169,9 @@ class QuestionMetaData(ModelBase):
     question = models.ForeignKey('Question', related_name='metadata_set')
     name = models.SlugField(db_index=True)
     value = models.TextField()
+
+    class Meta:
+        unique_together = ('question', 'name')
 
     def __unicode__(self):
         return u'%s: %s' % (self.name, self.value[:50])
