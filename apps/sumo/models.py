@@ -6,7 +6,7 @@ import settings
 from sumo.urlresolvers import get_url_prefix
 from sumo_locales import INTERNAL_MAP
 
-# Our apps should subclass BaseManager instead of models.Manager or
+# Our apps should subclass ManagerBase instead of models.Manager or
 # caching.base.CachingManager directly.
 ManagerBase = caching.base.CachingManager
 
