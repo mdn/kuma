@@ -513,3 +513,12 @@ div.forum-editor-tools img {
 img.markup-toolbar-button {
     cursor: pointer;
 }
+
+/* Submit or cancel switches */
+div.submit-or-cancel {
+    padding: 1em 0;
+}
+
+div.submit-or-cancel input[type="submit"] {
+    margin: 0 0 0 1em;
+}

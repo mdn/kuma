@@ -1,0 +1,10 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set title = _('Unsubscribed') %}
+{% set crumbs = [(None, title)] %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+
+<p>{{ _('You have been unsubscribed from this notification.') }}</p>
+{% endblock %}

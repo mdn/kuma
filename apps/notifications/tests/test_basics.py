@@ -1,3 +1,5 @@
+import hashlib
+
 from django import test
 from django.contrib.contenttypes.models import ContentType
 
@@ -6,6 +8,8 @@ from nose.tools import eq_
 from notifications import create_watch, check_watch, destroy_watch
 from notifications.models import EventWatch
 from forums.models import Post, Thread
+from sumo.urlresolvers import reverse
+from sumo.helpers import urlparams
 
 
 class WatchTestCase(test.TestCase):
@@ -63,3 +67,27 @@ class WatchTestCase(test.TestCase):
     def test_destroy_watch_not_exist(self):
         """Destroying a non-existent watch should return False."""
         assert not destroy_watch(Thread, 1, 'bad@example.com')
+
+    def test_key(self):
+        """The EventWatch.key property is calculated correctly."""
+        email = 'new@example.com'
+        ct = ContentType.objects.get_for_model(Thread)
+        w = EventWatch(content_type=ct, watch_id=1, email=email)
+        sha = hashlib.sha1()
+        key = '%s-%s-%s' % (ct.id, 1, email)
+        sha.update(key)
+        eq_(sha.hexdigest(), w.key)
+
+    def test_hash_set(self):
+        """The EventWatch.hash property is set on save."""
+        email = 'new@example.com'
+        ct = ContentType.objects.get_for_model(Thread)
+        w = EventWatch(content_type=ct, watch_id=1, email=email)
+        w.save()
+        assert w.hash
+        eq_(w.key, w.hash)
+
+    def test_remove_url(self):
+        w = EventWatch.objects.all()[0]
+        url_ = reverse('notifications.remove', args=[w.key])
+        eq_(w.get_remove_url(), urlparams(url_, email=w.email))
