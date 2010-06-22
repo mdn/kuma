@@ -1,7 +1,32 @@
 from nose.tools import eq_
 
-from questions.models import Question, QuestionMetaData
+from questions.models import Question, QuestionMetaData, Answer
 from questions.tests import TestCaseBase
+
+
+class TestAnswer(TestCaseBase):
+    """Test the Answer model"""
+
+    def test_new_answer_updates_question(self):
+        """Test saving a new answer updates the corresponding question.
+        Specifically, last_post and num_replies should update."""
+        question = Question(title='Test Question',
+                            content='Lorem Ipsum Dolor',
+                            creator_id=118533)
+        question.save()
+        
+        eq_(0, question.num_answers)
+        eq_(None, question.last_answer)
+        
+        answer = Answer(question=question, creator_id=47963,
+                        content="Test Answer")
+        answer.save()
+        
+        question = Question.objects.get(pk=question.id)
+        eq_(1, question.num_answers)
+        eq_(answer, question.last_answer)
+        
+        question.delete()
 
 
 class TestQuestionMetadata(TestCaseBase):

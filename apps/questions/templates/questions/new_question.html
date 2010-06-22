@@ -44,7 +44,7 @@
   {% endif %}
 
   {% if current_articles and not search_results and not form %}
-    <h2>{% trans category=current_category.name %}We have lots of helpful articles on <mark>{{ category }}</mark> and hundreds of questions in our database, try one of the following:{% endtrans %}</h2>
+    <h2>{{ _('We have lots of helpful articles on <mark>{category}</mark> and hundreds of questions in our database, try one of the following:')|fe(category=current_category.name) }}</h2>
     <ul class="articles">
       {% for article in current_articles %}
         <li>

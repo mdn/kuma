@@ -372,6 +372,7 @@ body.answers #main-content {
 
 div.user-section {
     float: left;
+    min-height: 1px;
     padding: 0 0 0 30px;
     width: 90px;
 }
@@ -412,6 +413,16 @@ div.main-section div.content {
 
 div.main-section div.content p {
     margin: 0 0 1em;
+}
+
+div.main-section div.content ul,
+div.main-section div.content ol {
+    margin: 0 0 1em 2em;
+}
+
+div.main-section div.content li {
+    margin: 0;
+    padding: 0;
 }
 
 div.problem {
@@ -613,6 +624,7 @@ ol.answers {
 
 ol.answers li {
     border-bottom: solid 1px #f5f4f3;
+    margin: 2px 0 0;
     padding: 25px 0;
     zoom: 1;
 }
@@ -716,25 +728,40 @@ ol.answers form.report {
 
 /* reply to question */
 #question-reply {
-    padding: 30px 0 20px 135px;
+    font-size: 14px;
+    padding: 30px 0 20px 0;
 }
 
 #question-reply h3 {
     font-size: 18px;
-    margin: 0 0 20px;
+    margin: 0 0 20px 135px;
 }
 
 #question-reply p {
     color: #898378;
-    margin: 0 0 20px;
+    margin: 0 0 20px 15px;
+}
+
+#question-reply form {
+    padding: 0 15px;
 }
 
 #question-reply div.forum-editor {
     padding: 0;
 }
 
-#question-reply div.forum-editor-actions {
-    width: 490px;
+#question-reply textarea {
+    border: solid 1px #87C4DC;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    height: 150px;
+    padding: 5px;
+    width: 500px;
+}
+
+#question-reply div.submit {
+    margin: 15px 0 0;
 }
 
 /*

@@ -1,12 +1,14 @@
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 import jingo
 
 from sumo.utils import paginate
 from sumo.urlresolvers import reverse
-from .models import Question
-from .forms import NewQuestionForm
+from .models import Question, Answer
+from .forms import NewQuestionForm, AnswerForm
 import questions as constants
 import question_config as config
 
@@ -21,16 +23,19 @@ def questions(request):
                         {'questions': questions_})
 
 
-def answers(request, question_id):
+def answers(request, question_id, form=None):
     """View the answers to a question."""
 
     question = get_object_or_404(Question, pk=question_id)
-
     answers_ = paginate(request, question.answers.all(),
                         per_page=constants.ANSWERS_PER_PAGE)
 
+    if not form:
+        form = AnswerForm()
+
     return jingo.render(request, 'questions/answers.html',
-                        {'question': question, 'answers': answers_})
+                        {'question': question, 'answers': answers_,
+                         'form': form})
 
 
 def new_question(request):
@@ -84,9 +89,20 @@ def new_question(request):
                          'current_articles': articles})
 
 
+@require_POST
+@login_required
 def reply(request, question_id):
     """Post a new answer to a question."""
-    pass
+    form = AnswerForm(request.POST)
+    if form.is_valid():
+        question = get_object_or_404(Question, pk=question_id)
+        answer = Answer(question=question, creator=request.user,
+                        content=form.cleaned_data['content'])
+        answer.save()
+
+        return HttpResponseRedirect(answer.get_absolute_url())
+
+    return answers(request, question_id, form)
 
 
 #  Helper functions to deal with products dict

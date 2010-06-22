@@ -3,6 +3,7 @@ from django import forms
 from tower import ugettext_lazy as _lazy
 
 from sumo.form_fields import StrippedCharField
+from .models import Answer
 
 # labels and help text
 SITES_AFFECTED_LABEL = _lazy(u'URL of affected sites')
@@ -26,9 +27,13 @@ FF_VERSION_LABEL = _lazy(u'Firefox version')
 OS_LABEL = _lazy(u'Operating system')
 PLUGINS_LABEL = _lazy(u'Installed plugins')
 
-# TODO: improve validation messages like forums app
-MSG_CONTENT = _lazy(u'Content must be longer than 5 characters.')
-MSG_TITLE = _lazy(u'Title must be longer than 5 characters.')
+# Validation error messages
+MSG_TITLE_REQUIRED = _lazy(u'Please provide a question.')
+MSG_TITLE_SHORT = _lazy(u'Your question is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
+MSG_TITLE_LONG = _lazy(u'Please keep the length of your question to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
+MSG_CONTENT_REQUIRED = _lazy(u'Please provide content.')
+MSG_CONTENT_SHORT = _lazy(u'Your content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
+MSG_CONTENT_LONG = _lazy(u'Please keep the length of your content to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
 
 
 class NewQuestionForm(forms.Form):
@@ -55,17 +60,21 @@ class NewQuestionForm(forms.Form):
         self.fields['useragent'] = forms.CharField(widget=forms.HiddenInput(),
                                                    required=False)
 
+        error_messages = {'required': MSG_TITLE_REQUIRED,
+                          'min_length': MSG_TITLE_SHORT,
+                          'max_length': MSG_TITLE_LONG}
         field = StrippedCharField(label=TITLE_LABEL, min_length=5,
                                   max_length=255, widget=forms.TextInput(),
-                                  error_messages={'required': MSG_TITLE,
-                                                  'min_length': MSG_CONTENT})
+                                  error_messages=error_messages)
         self.fields['title'] = field
 
+        error_messages = {'required': MSG_CONTENT_REQUIRED,
+                          'min_length': MSG_CONTENT_SHORT,
+                          'max_length': MSG_CONTENT_LONG}
         field = StrippedCharField(label=CONTENT_LABEL, help_text=CONTENT_HELP,
                                   min_length=5, max_length=10000,
                                   widget=forms.Textarea(),
-                                  error_messages={'required': MSG_CONTENT,
-                                                  'min_length': MSG_CONTENT})
+                                  error_messages=error_messages)
         self.fields['content'] = field
 
         if ('sites_affected' in extra_fields):
@@ -141,3 +150,18 @@ class NewQuestionForm(forms.Form):
             if key in self.data and self.data[key] != u'':
                 clean[key] = self.cleaned_data[key]
         return clean
+
+
+class AnswerForm(forms.Form):
+    """Form for replying to a question."""
+    content = StrippedCharField(
+                min_length=5,
+                max_length=10000,
+                widget=forms.Textarea(),
+                error_messages={'required': MSG_CONTENT_REQUIRED,
+                                'min_length': MSG_CONTENT_SHORT,
+                                'max_length': MSG_CONTENT_LONG})
+
+    class Meta:
+        model = Answer
+        fields = ('content', )

@@ -1,5 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "questions/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
 {# L10n: {q} is the title of the question. #}
 {% set title = _('{q} | Firefox Support Forum')|f(q=question.title) %}
 {% set classes = 'answers' %}
@@ -13,7 +14,7 @@
         </a>
       </div>
       <div class="asked-by">
-        {% trans creator=question.creator%}Asked by <span class="user">{{ creator }}</span>{% endtrans %}
+        {{ _('Asked by <span class="user">{user}</span>')|fe(user=question.creator) }}
         <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
       </div>
     </div>
@@ -24,7 +25,9 @@
       </div>
       <div class="problem">
         <div class="have-problem ten-more{# TODO #}">
-          {% trans %}{# TODO #}<mark>14 people</mark> <span>have this problem</span>{% endtrans %}
+          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+                      '<mark>{count} people</mark> <span>have this problem</span>',
+                      14)|fe(count=14) }} {# TODO: set the count #}
         </div>
         <div class="me-too">
           <form action="#{# TODO #}" method="post">
@@ -34,7 +37,7 @@
         </div>
       </div>
       <div class="solution">
-        <h3>{% trans creator=question.creator %}Solution Chosen by {{ creator }}{% endtrans %}</h3>
+        <h3>{{ _('Solution Chosen by {user}')|fe(user=question.creator) }}</h3>
         <div class="ans-wrap">
           <div class="avatar">
               avatar here
@@ -75,7 +78,7 @@
           {{ csrf() }}
           <input type="submit" value="{{ _('Report this post') }}" />
         </form>
-        <a class="btn g-btn reply" href="#{# TODO #}">{{ _('Post a New Reply') }}</a>
+        <a class="btn g-btn reply" href="#question-reply">{{ _('Post a New Reply') }}</a>
       </div>
     </div>
     <div class="side-section">
@@ -123,38 +126,48 @@
   {% if answers.object_list %}
     <ol class="answers">
       {% for answer in answers.object_list %}
-        <li id="answer-{{ answer.id }}">
+        <li id="answer-{{ answer.id }}" {% if answer.creator==question.creator %}class="author"{% endif %}>
           <div class="user-section">
             <div class="avatar">
-              avatar here
+              <a href="{{ profile_url(answer.creator) }}">
+                <img src="{{ profile_avatar(answer.creator) }}" height="48" width="48" alt="{{ answer.creator }}"/>
+              </a>
             </div>
             <div class="answered-by">
-              <span class="user">Mr. Helpful</span>
-              <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
-              <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
+              <span class="user">{{ answer.creator }}</span>
+              {% if answer.creator==question.creator %}
+                <span class="author">{{ _('Author') }}</span>
+              {% else %}
+                <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
+                <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
+              {% endif %}
             </div>
           </div>
           <div class="main-section">
             <p class="posted">
-              {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+              {{ _('Posted <time>{datetime}</time>:')|fe(datetime=datetimeformat(answer.created, format='longdatetime')) }}
             </p>
             <div class="content">
-              {{ answer.content }}
+              {{ answer.content_parsed|safe }}
             </div>
             <div class="reply">
               <a href="#question-reply">{{ _('Reply to this post') }}</a>
             </div>
           </div>
           <div class="side-section">
-            <h4>{{ _('Was this reply helpful?') }}</h4>
-            <form class="helpful" action="#{# TODO #}" method="post">
-              {{ csrf() }}
-              <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
-              <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
-            </form>
-            <div class="helpful">
-              {% trans %}{# TODO #}<mark>14 out of 16 people</mark> <span>found this reply helpful</span>{% endtrans %}
-            </div>
+            {% if answer.creator!=question.creator %}
+              <h4>{{ _('Was this reply helpful?') }}</h4>
+              <form class="helpful" action="#{# TODO #}" method="post">
+                {{ csrf() }}
+                <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+                <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+              </form>
+              <div class="helpful">
+                {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
+                            '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
+                            16)|fe(count=14, total=16) }}
+              </div>
+            {% endif %}
             <form class="report" action="#{# TODO #}" method="post">
               {{ csrf() }}
               <input type="submit" value="{{ _('Report this post') }}" />
@@ -177,7 +190,7 @@
         </div>
         <div class="main-section">
           <p class="posted">
-            {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+            Posted <time>today at 1:11 am</time>:
           </p>
           <div class="content">
             {{ lipsum(2) }}
@@ -194,36 +207,8 @@
             <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
           </form>
           <div class="helpful zero">
-            {% trans %}{# TODO #}<mark>0 out of 8 people</mark> <span>found this reply helpful</span>{% endtrans %}
+            <mark>0 out of 8 people</mark> <span>found this reply helpful</span>
           </div>
-          <form class="report" action="#{# TODO #}" method="post">
-            {{ csrf() }}
-            <input type="submit" value="{{ _('Report this post') }}" />
-          </form>
-        </div>
-      </li>
-      <li id="answer-124" class="author{# This reply was made by the question's author #}">
-        <div class="user-section">
-          <div class="avatar">
-            avatar here
-          </div>
-          <div class="answered-by">
-            <span class="user">QuesAuthor</span>
-            <span class="author">{{ _('Author') }}</span>
-          </div>
-        </div>
-        <div class="main-section">
-          <p class="posted">
-            {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
-          </p>
-          <div class="content">
-            {{ lipsum(2) }}
-          </div>
-          <div class="reply">
-            <a href="#question-reply">{{ _('Reply to this post') }}</a>
-          </div>
-        </div>
-        <div class="side-section">
           <form class="report" action="#{# TODO #}" method="post">
             {{ csrf() }}
             <input type="submit" value="{{ _('Report this post') }}" />
@@ -243,7 +228,7 @@
         </div>
         <div class="main-section">
           <p class="posted">
-            {% trans %}Posted <time>today at 1:11 am</time>:{% endtrans %}
+            Posted <time>today at 1:11 am</time>:
           </p>
           <div class="content">
             {{ lipsum(2) }}
@@ -263,7 +248,7 @@
             Solution chosen by author
           </div>
           <div class="helpful">
-            {% trans %}{# TODO #}<mark>14 out of 16 people</mark> <span>found this reply helpful</span>{% endtrans %}
+            <mark>14 out of 16 people</mark> <span>found this reply helpful</span>
           </div>
           <form class="report" action="#{# TODO #}" method="post">
             {{ csrf() }}
@@ -274,36 +259,49 @@
 
     </ol>
     {{ answers|paginator }}
-  {% else %}
-    <p>There are no answers. You should answer this question!</p>
   {% endif %}
 
   <div id="question-reply">
-    <h3>{{ _('Post a reply') }}</h3>
+    <h3>{{ _('Post a Reply') }}</h3>
 
     {% if user.is_authenticated() %}
-      <form action="#{# TODO #}" method="post">
-        {{ csrf() }}
-        {# TODO
+      <div class="user-section">
+        <div class="avatar">
+          <a href="{{ profile_url(user) }}">
+            <img src="{{ profile_avatar(user) }}" height="48" width="48" alt="{{ user }}"/>
+          </a>
+        </div>
+        <div class="asked-by">
+          {{ _('<span class="user">{user}</span>')|fe(user=user) }}
+        </div>
+      </div>
+      <div class="main-section">
+        <form action="{{ url('questions.reply', question_id=question.id) }}" method="post">
+          {{ csrf() }}
           {{ errorlist(form) }}
-        #}
 
-        <div class="forum-editor{# TODO % if form.content.errors %} invalid{% endif % #}">
-          <div class="forum-editor-tools"></div>
-          <textarea name="content" id="id_content" rows="10" cols="80">{# TODO { form.content.data or '' } #}</textarea>
-        </div>
+          <div class="forum-editor{% if form.content.errors %} invalid{% endif %}">
+            <div class="forum-editor-tools"></div>
+            <textarea name="content" id="id_content">{{ form.content.data or '' }}</textarea>
+          </div>
 
-        <div class="forum-editor-actions">
-          <input type="submit" value="Reply" />
-        </div>
-      </form>
+          <div class="submit">
+            <input type="submit" class="btn g-btn" value="{{ _('Post Reply') }}" />
+          </div>
+        </form>
+      </div>
+      <div class="side-section"></div>
     {% else %}
-      <p>
-        {% trans login_url=settings.LOGIN_URL %}You must <a href="{{ login_url }}">log in to your account</a> to reply to posts.{% endtrans %}
-      </p>
-      <p>
-        {% trans register_url=settings.REGISTER_URL %}Don't have an account? You can <a href="{{ register_url }}">create a free account</a> now.{% endtrans %}
-      </p>
+      <div class="user-section"></div>
+      <div class="main-section">
+        <p>
+          {{ _('You must <a href="{url}">log in to your account</a> to reply to posts.')|fe(url=settings.LOGIN_URL) }}
+        </p>
+        <p>
+          {{ _("Don't have an account? You can <a href='{url}'>create a free account</a> now.")|fe(url=settings.REGISTER_URL) }}
+        </p>
+      </div>
+      <div class="side-section"></div>
     {% endif %}
   </div>
 {% endblock %}

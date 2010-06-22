@@ -38,21 +38,31 @@
       {% for question in questions.object_list %}
         <li>
           <div class="people just-one {# possible classes are: just-one (==1), less-ten (<10), more-ten (>=10) #}">
-            {% trans %}{# TODO #}<mark>1 person</mark> <span>has this problem</span>{% endtrans %}
+            {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+                        '<mark>{count} people</mark> <span>have this problem</span>',
+                        1)|fe(count=1) }} {# TODO: set the count #}
           </div>
           <div class="title">
             <h2><a href="{{ url('questions.answers', question_id=question.id) }}">{{ question.title }}</a></h2>
+            {% if question.num_answers > 0 %}
+              {# L10n: {n} is the number of replies. #}
+              <span class="badge replies">{{ ngettext('{n} reply', '{n} replies', question.num_answers)|fe(n=question.num_answers) }}</span>
+            {% endif %}
           </div>
           <div class="asked-by">
-            {% trans creator=question.creator%}Asked by <span class="user">{{ creator }}</span>{% endtrans %}
+            {{ _('Asked by <span class="user">{user}</span>')|fe(user=question.creator) }}
             <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
           </div>
           <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
           <div class="meta">
-            <span>{# TODO #}Firefox Mobile 1.0</span>
-            &bull;
-            <span>{# TODO #}Mac OS X 10.6</span>
-            &bull;
+            {% if question.metadata.ff_version %}
+              <span>Firefox {{ question.metadata.ff_version }}</span>
+              &bull;
+            {% endif %}
+            {% if question.metadata.os %}
+              <span>{{ question.metadata.os }}</span>
+              &bull;
+            {% endif %}
             <span>{{ _('Tagged') }} {# TODO #}lorem, ipsum, dolor, sit amet</span>
           </div>
         </li>
@@ -62,7 +72,9 @@
       {# Some extra static questions with different variations #}
       <li>
         <div class="people less-ten">
-          {% trans %}{# TODO #}<mark>9 people</mark> <span>have this problem</span>{% endtrans %}
+          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+                      '<mark>{count} people</mark> <span>have this problem</span>',
+                      9)|fe(count=9) }} {# TODO: set the count #}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
@@ -83,7 +95,9 @@
       </li>
       <li>
         <div class="people more-ten">
-          {% trans %}{# TODO #}<mark>25 people</mark> <span>have this problem</span>{% endtrans %}
+          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+                      '<mark>{count} people</mark> <span>have this problem</span>',
+                      25)|fe(count=25) }} {# TODO: set the count #}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
@@ -104,7 +118,9 @@
       </li>
       <li>
         <div class="people more-ten">
-          {% trans %}{# TODO #}<mark>35 people</mark> <span>have this problem</span>{% endtrans %}
+          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+                      '<mark>{count} people</mark> <span>have this problem</span>',
+                      35)|fe(count=35) }} {# TODO: set the count #}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
@@ -125,7 +141,9 @@
       </li>
       <li>
         <div class="people more-ten">
-          {% trans %}{# TODO #}<mark>35 people</mark> <span>have this problem</span>{% endtrans %}
+          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+                      '<mark>{count} people</mark> <span>have this problem</span>',
+                      35)|fe(count=35) }} {# TODO: set the count #}
         </div>
         <div class="title">
           <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
