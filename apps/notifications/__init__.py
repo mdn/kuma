@@ -5,9 +5,7 @@ from .models import EventWatch
 
 
 def create_watch(kls, id, email):
-    """
-    Start watching an object. If already watching, returns False.
-    """
+    """Start watching an object. If already watching, returns False."""
 
     # Check that this object exists, or raise DNE.
     kls.objects.get(pk=id)
@@ -22,9 +20,7 @@ def create_watch(kls, id, email):
 
 
 def check_watch(kls, id, email):
-    """
-    Check whether an email address is watching an object.
-    """
+    """Check whether an email address is watching an object."""
 
     ct = ContentType.objects.get_for_model(kls)
 
@@ -36,9 +32,7 @@ def check_watch(kls, id, email):
 
 
 def destroy_watch(kls, id, email):
-    """
-    Destroy a watch on an object. If watch does not exist, return False.
-    """
+    """Destroy a watch on an object. If watch does not exist, return False."""
 
     ct = ContentType.objects.get_for_model(kls)
 
