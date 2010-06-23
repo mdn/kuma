@@ -39,7 +39,7 @@
   {% if questions.object_list %}
     <ol class="questions">
       {% for question in questions.object_list %}
-        <li id="question-{{ question.id }}">
+        <li id="question-{{ question.id }}" class="question">
           {% include 'questions/includes/have_problem.html' %}
           <div class="title">
             <h2><a href="{{ question.get_absolute_url() }}">{{ question.title }}</a></h2>
@@ -59,15 +59,25 @@
           </div>
           <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
           <div class="meta">
+            {% set bullet = joiner("&bull;") %}
             {% if question.metadata.ff_version %}
+              {{ bullet()|safe }}
               <span>Firefox {{ question.metadata.ff_version }}</span>
-              &bull;
             {% endif %}
             {% if question.metadata.os %}
+              {{ bullet()|safe }}
               <span>{{ question.metadata.os }}</span>
-              &bull;
             {% endif %}
-            <span>{{ _('Tagged') }} {# TODO #}lorem, ipsum, dolor, sit amet</span>
+            {% set tags = question.tags.all() %}
+            {% if tags %}
+              {{ bullet()|safe }}
+              {{ _('Tagged') }}
+              <ul class="tag-list immutable">
+                {% for tag in tags %}
+                    <li><a class="tag-name" href="#">{{ tag }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
           </div>
         </li>
       {% endfor %}

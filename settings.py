@@ -151,6 +151,8 @@ TEMPLATE_DIRS = (
     path('templates'),
 )
 
+# TODO: Figure out why changing the order of apps (for example, moving taggit
+# higher in the list) breaks tests.
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -172,6 +174,7 @@ INSTALLED_APPS = (
     'identicons',
     'questions',
     'kadmin',
+    'taggit',
 )
 
 # Extra apps for testing
@@ -245,6 +248,10 @@ MINIFY_BUNDLES = {
         ),
         'questions': (
             'css/questions.css',
+            'css/tags.css',
+            'css/jqueryui/jquery.ui.core.css',
+            'css/jqueryui/jquery.ui.autocomplete.css',
+            'css/jqueryui/jquery.ui.theme.css',
         ),
         'search': (
             'css/search.css',
@@ -263,6 +270,8 @@ MINIFY_BUNDLES = {
         'questions': (
             'js/questions.js',
             'js/markup.js',
+            'js/libs/jqueryui.min.js',
+            'js/tags.js',
         ),
         'search': (
             'js/libs/jqueryui.min.js',
@@ -277,7 +286,7 @@ MINIFY_BUNDLES = {
 JAVA_BIN = '/usr/bin/java'
 
 #
-# Directory storying myspell dictionaries (with trailing slash)
+# Directory storing myspell dictionaries (with trailing slash)
 DICT_DIR = '/usr/share/myspell/'
 # Path to a file with a list of custom words.
 WORD_LIST = path('configs/words.txt')

@@ -138,7 +138,8 @@ ol.questions {
     margin: 0 0 0 10px;
 }
 
-ol.questions li {
+ol.questions li.question {
+    /* Turn into ol.questions > li when IE6 is dead. */
     border-bottom: solid 2px #edece9;
     list-style: none;
     padding: 15px 15px 18px;
@@ -227,6 +228,10 @@ ol.questions p {
 
 ol.questions div.meta {
     margin: 10px 0 0;
+}
+
+ol.questions ul.tag-list {
+    display: inline;
 }
 
 /* questions pagination */
@@ -803,6 +808,21 @@ input.g-btn {
     background: -moz-linear-gradient(top, #EDFFCD, #B6F23D);
     background: -webkit-gradient(linear, left top, left bottom, from(#EDFFCD), to(#B6F23D));
     color: #09700B;
+}
+
+/* disabled buttons */
+a.g-btn:disabled,
+a.y-btn:disabled,
+input.g-btn:disabled,
+input.g-btn:disabled {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border: solid 1px rgb(177, 177, 177);
+    background: rgb(239, 239, 239);
+    background: -moz-linear-gradient(top, rgb(249, 249, 249), rgb(247, 247, 247));
+    background: -webkit-gradient(linear, left top, left bottom, rgb(249, 249, 249), rgb(247, 247, 247));
+    color: #999;
 }
 
 /*

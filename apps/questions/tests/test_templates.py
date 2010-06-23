@@ -4,7 +4,8 @@ from pyquery import PyQuery as pq
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from questions.models import Question, Answer, QuestionVote
-from questions.tests import TestCaseBase, post, get
+from questions.tests import TestCaseBase, TaggingTestCaseBase, post, get
+from questions.views import UNAPPROVED_TAG, NO_TAG
 
 
 class AnswersTemplateTestCase(TestCaseBase):
@@ -221,6 +222,145 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id])
         doc = pq(response.content)
         eq_('0', doc('div.other-helpful span.votes')[0].text)
+
+
+class TaggingViewTests(TaggingTestCaseBase):
+    """Tests for views that add and remove tags
+
+    Also hits the tag-related parts of the answer template.
+
+    """
+    def setUp(self):
+        super(TaggingViewTests, self).setUp()
+        self.client.login(username='admin', password='testpass')
+
+    def tearDown(self):
+        self.client.logout()
+        super(TaggingViewTests, self).tearDown()
+
+    # add_tag view:
+
+    def test_add_tag_get_method(self):
+        """Assert GETting the add_tag view redirects to the answers page."""
+        response = self.client.get(_add_tag_url())
+        url = 'http://testserver%s' % reverse('questions.answers',
+                                              kwargs={'question_id': 1})
+        self.assertRedirects(response, url)
+
+    def test_add_nonexistent_tag(self):
+        """Assert adding a nonexistent tag sychronously shows an error."""
+        response = self.client.post(_add_tag_url(),
+                                    data={'tag-name': 'nonexistent tag'})
+        self.assertContains(response, UNAPPROVED_TAG)
+
+    def test_add_existent_tag(self):
+        """Test adding a tag, case insensitivity, and space stripping."""
+        response = self.client.post(_add_tag_url(),
+                                    data={'tag-name': ' PURplepurplepurple '},
+                                    follow=True)
+        self.assertContains(response, 'purplepurplepurple')
+
+    def test_add_no_tag(self):
+        """Make sure adding a blank tag shows an error message."""
+        response = self.client.post(_add_tag_url(),
+                                    data={'tag-name': ''})
+        self.assertContains(response, NO_TAG)
+
+    # add_tag_async view:
+
+    def test_add_async_nonexistent_tag(self):
+        """Assert adding an nonexistent tag yields an AJAX error."""
+        response = self.client.post(_add_async_tag_url(),
+                                    data={'tag-name': 'nonexistent tag'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertContains(response, UNAPPROVED_TAG, status_code=400)
+
+    def test_add_async_existent_tag(self):
+        """Assert adding an unapplied tag yields an AJAX error."""
+        response = self.client.post(_add_async_tag_url(),
+                                    data={'tag-name': ' PURplepurplepurple '},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertContains(response, 'canonicalName')
+        eq_([t.name for t in Question.objects.get(pk=1).tags.all()],
+            ['purplepurplepurple'])  # Test the backend since we don't have a
+                                     # newly rendered page to rely on.
+
+    def test_add_async_no_tag(self):
+        """Assert adding an empty tag asynchronously yields an AJAX error."""
+        response = self.client.post(_add_async_tag_url(),
+                                    data={'tag-name': ''},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertContains(response, NO_TAG, status_code=400)
+
+    # remove_tag view:
+
+    def test_remove_applied_tag(self):
+        """Assert removing an applied tag succeeds."""
+        response = self.client.post(_remove_tag_url(),
+                                    data={'remove-tag-colorless': 'dummy'})
+        self._assertRedirectsToQuestion2(response)
+        eq_([t.name for t in Question.objects.get(pk=2).tags.all()], ['green'])
+
+    def test_remove_unapplied_tag(self):
+        """Test removing an unapplied tag fails silently."""
+        response = self.client.post(_remove_tag_url(),
+                                    data={'remove-tag-lemon': 'dummy'})
+        self._assertRedirectsToQuestion2(response)
+
+    def test_remove_no_tag(self):
+        """Make sure removing with no params provided redirects harmlessly."""
+        response = self.client.post(_remove_tag_url(),
+                                    data={})
+        self._assertRedirectsToQuestion2(response)
+
+    def _assertRedirectsToQuestion2(self, response):
+        url = 'http://testserver%s' % reverse('questions.answers',
+                                              kwargs={'question_id': 2})
+        self.assertRedirects(response, url)
+
+    # remove_tag_async view:
+
+    def test_remove_async_applied_tag(self):
+        """Assert taking a tag off a question works."""
+        response = self.client.post(_remove_async_tag_url(),
+                                    data={'name': 'colorless'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+        eq_([t.name for t in Question.objects.get(pk=2).tags.all()], ['green'])
+
+    def test_remove_async_unapplied_tag(self):
+        """Assert trying to remove a tag that isn't there succeeds."""
+        response = self.client.post(_remove_async_tag_url(),
+                                    data={'name': 'lemon'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+
+    def test_remove_async_no_tag(self):
+        """Assert calling the remove handler with no param fails."""
+        response = self.client.post(_remove_async_tag_url(),
+                                    data={},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertContains(response, NO_TAG, status_code=400)
+
+
+def _add_tag_url():
+    """Return the URL to add_tag for question 1, an untagged question."""
+    return reverse('questions.add_tag', kwargs={'question_id': 1})
+
+
+def _add_async_tag_url():
+    """Return the URL to add_tag_async for question 1, an untagged question."""
+    return reverse('questions.add_tag_async', kwargs={'question_id': 1})
+
+
+def _remove_tag_url():
+    """Return  URL to remove_tag for question 2, tagged {colorless, green}."""
+    return reverse('questions.remove_tag', kwargs={'question_id': 2})
+
+
+def _remove_async_tag_url():
+    """Return URL to remove_tag_async on q. 2, tagged {colorless, green}."""
+    return reverse('questions.remove_tag_async', kwargs={'question_id': 2})
 
 
 class QuestionsTemplateTestCase(TestCaseBase):

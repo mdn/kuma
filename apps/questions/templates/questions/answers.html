@@ -103,10 +103,51 @@
       </ul>
       <p><a href="#">{{ _('More system details...') }}</a></p>
 
-      <h4>{{ _('Tags') }}</h4>
-      <div class="tags">
-        <a href="#">mac</a>, <a href="#">flash</a>, <a href="#">crash</a>
-      </div>
+      {% set tags = question.tags.all() %}
+      {% if tags or can_tag %}
+        <h4>{{ _('Tags') }}</h4>
+        <div class="tags"{% if can_tag %} data-tag-vocab-json="{{ tag_vocab }}"{% endif %}>
+          {% if can_tag %}
+            <form action="{{ url('questions.remove_tag', question.id) }}"
+                  data-action-async="{{ url('questions.remove_tag_async', question.id) }}"
+                  method="POST"
+                  class="remove-tag-form">
+              {{ csrf() }}
+          {% endif %}
+          <ul class="tag-list{% if not can_tag %} immutable{% endif %}">
+            {% for tag in tags %}
+              <li class="tag">{# -#}
+                <a class="tag-name" href="#">{{ tag }}</a>
+                {%- if can_tag -%}
+                  <input type="submit"
+                         name="remove-tag-{{ tag }}"
+                         value="&#x2716;"
+                         class="remover" />
+                {%- endif -%}
+              </li>
+            {% endfor %}
+          </ul>
+          {% if can_tag %}
+            </form>
+          {% endif %}
+
+          {% if can_tag %}
+            {% if tag_adding_error %}
+              <p class="tag-error-message">{{ tag_adding_error }}</p>
+            {% endif %}
+            <form action="{{ url('questions.add_tag', question.id) }}"
+                  data-action-async="{{ url('questions.add_tag_async', question.id) }}"
+                  method="POST"
+                  class="add-tag-form">
+              {{ csrf() }}
+              <input type="text" name="tag-name" size="12"
+                     class="autocomplete-tags {% if tag_adding_error %} invalid{% endif %}"
+                     value="{{ tag_adding_value }}" />
+              <input class="adder btn g-btn" type="submit" value="{{ _('Add') }}" />
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
 
       <h4>{{ _('Related Questions') }}</h4>
       <ul class="related">

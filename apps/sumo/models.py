@@ -1,6 +1,7 @@
 from django.db import models
 
 import caching.base
+from taggit.managers import TaggableManager
 
 import settings
 from sumo.urlresolvers import get_url_prefix
@@ -23,6 +24,19 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
     objects = ManagerBase()
     uncached = models.Manager()
+
+    class Meta:
+        abstract = True
+
+
+class TaggableMixin(models.Model):
+    """Mixin for taggable models that still allows caching manager to be the
+    default manager
+
+    Mix this in after ModelBase.
+
+    """
+    tags = TaggableManager()
 
     class Meta:
         abstract = True

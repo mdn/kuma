@@ -1,7 +1,11 @@
-from nose.tools import eq_
+from nose.tools import eq_, raises
+
+import sumo.models
+from taggit.models import Tag
 
 from questions.models import Question, QuestionMetaData, Answer
-from questions.tests import TestCaseBase
+from questions.tags import add_existing_tag
+from questions.tests import TestCaseBase, TaggingTestCaseBase
 
 
 class TestAnswer(TestCaseBase):
@@ -65,17 +69,59 @@ class TestQuestionMetadata(TestCaseBase):
         eq_('1234567890', self.question.metadata['crash_id'])
 
 
-class TestQuestionSave(TestCaseBase):
-    """Tests the Question.save() method."""
+class QuestionTests(TestCaseBase):
+    """Tests for Question model"""
 
-    def test_updated(self):
+    def test_save_updated(self):
+        """Make sure saving updates the `updated` field."""
         q = Question.objects.all()[0]
         updated = q.updated
         q.save()
         self.assertNotEqual(updated, q.updated)
 
-    def test_no_update(self):
+    def test_save_no_update(self):
+        """Saving with the `no_update` option shouldn't update `updated`."""
         q = Question.objects.all()[0]
         updated = q.updated
         q.save(no_update=True)
         eq_(updated, q.updated)
+
+    def test_default_manager(self):
+        """Assert Question's default manager is SUMO's ManagerBase.
+
+        This is easy to get wrong with taggability.
+
+        """
+        eq_(Question._default_manager.__class__, sumo.models.ManagerBase)
+
+
+class AddExistingTagTests(TaggingTestCaseBase):
+    """Tests for the add_existing_tag helper function."""
+
+    def setUp(self):
+        super(AddExistingTagTests, self).setUp()
+        self.untagged_question = Question.objects.get(pk=1)
+
+    def test_tags_manager(self):
+        """Make sure the TaggableManager exists.
+
+        Full testing of functionality is a matter for taggit's tests.
+
+        """
+        _tags_eq_(self.untagged_question, [])
+
+    def test_add_existing_case_insensitive(self):
+        """Assert add_existing_tag works case-insensitively."""
+        add_existing_tag('LEMON', self.untagged_question.tags)
+        _tags_eq_(self.untagged_question, [u'lemon'])
+
+    @raises(Tag.DoesNotExist)
+    def test_add_existing_no_such_tag(self):
+        """Assert add_existing_tag doesn't work when the tag doesn't exist."""
+        add_existing_tag('nonexistent tag', self.untagged_question.tags)
+
+
+def _tags_eq_(tagged_object, tag_names):
+    """Assert that the names of the tags on tagged_object are tag_names."""
+    eq_(sorted([t.name for t in tagged_object.tags.all()]),
+        sorted(tag_names))

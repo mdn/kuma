@@ -17,7 +17,7 @@ class TestNewQuestionForm(TestCaseBase):
         expected = ['useragent']
         actual = form.metadata_field_keys
         eq_(expected, actual)
-        
+
         # Test the form with a product
         product = {'key': 'desktop',
                    'name': 'Firefox on desktop',
@@ -52,7 +52,7 @@ class TestNewQuestionForm(TestCaseBase):
         expected = {}
         actual = form.cleaned_metadata
         eq_(expected, actual)
-        
+
         # Test with metadata
         data['os'] = u'Linux'
         form = NewQuestionForm(product=product, data=data)
@@ -60,7 +60,7 @@ class TestNewQuestionForm(TestCaseBase):
         expected = {'os': u'Linux'}
         actual = form.cleaned_metadata
         eq_(expected, actual)
-        
+
         # Add an empty metadata value
         data['ff_version'] = u''
         form = NewQuestionForm(product=product, data=data)

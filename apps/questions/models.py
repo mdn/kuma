@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 import jinja2
 
-from sumo.models import ModelBase
+from sumo.models import ModelBase, TaggableMixin
 from sumo.utils import WikiParser
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -14,7 +14,7 @@ import questions as constants
 from .tasks import update_question_votes
 
 
-class Question(ModelBase):
+class Question(ModelBase, TaggableMixin):
     """A support question."""
     title = models.CharField(max_length=255)
     creator = models.ForeignKey(User, related_name='questions')
@@ -34,6 +34,9 @@ class Question(ModelBase):
 
     class Meta:
         ordering = ['-updated']
+        permissions = (
+                ('can_tag', 'Can add tags to and remove tags from questions'),
+            )
 
     def __unicode__(self):
         return self.title

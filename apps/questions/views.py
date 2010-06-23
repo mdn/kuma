@@ -1,18 +1,29 @@
+import json
+
+from django.contrib.auth.decorators import permission_required
+from django.http import (HttpResponseRedirect, HttpResponse,
+                         HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 import jingo
+from taggit.models import Tag
+from tower import ugettext_lazy as _lazy
 
 from sumo.utils import paginate
 from sumo.urlresolvers import reverse
 from .models import Question, Answer, QuestionVote, AnswerVote
 from .forms import NewQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
+from .tags import add_existing_tag
 import questions as constants
 import question_config as config
+
+
+UNAPPROVED_TAG = _lazy(u'That tag does not exist.')
+NO_TAG = _lazy(u'Please provide a tag.')
 
 
 def questions(request):
@@ -57,21 +68,8 @@ def questions(request):
 
 def answers(request, question_id, form=None):
     """View the answers to a question."""
-
-    question = get_object_or_404(Question, pk=question_id)
-    answers_ = paginate(request, question.answers.all(),
-                        per_page=constants.ANSWERS_PER_PAGE)
-
-    if not form:
-        form = AnswerForm()
-
-    feed_urls = ((reverse('questions.answers.feed',
-                          kwargs={'question_id': question_id}),
-                  AnswersFeed().title(question)),)
-
     return jingo.render(request, 'questions/answers.html',
-                        {'question': question, 'answers': answers_,
-                         'form': form, 'feeds': feed_urls})
+                        _answers_data(request, question_id, form))
 
 
 def new_question(request):
@@ -194,6 +192,139 @@ def answer_vote(request, question_id, answer_id):
         vote.save()
 
     return HttpResponseRedirect(answer.get_absolute_url())
+
+
+@permission_required('questions.can_tag')
+def add_tag(request, question_id):
+    """Add a (case-insensitive) tag to question.
+
+    If the question already has the tag, do nothing.
+
+    """
+    # If somebody hits Return in the address bar after provoking an error from
+    # the add form, nicely send them back to the question:
+    if request.method == 'GET':
+        return HttpResponseRedirect(
+            reverse('questions.answers', args=[question_id]))
+
+    try:
+        canonical_name = _add_tag(request, question_id)
+    except Tag.DoesNotExist:
+        template_data = _answers_data(request, question_id)
+        template_data['tag_adding_error'] = UNAPPROVED_TAG
+        template_data['tag_adding_value'] = request.POST.get('tag-name', '')
+        return jingo.render(request, 'questions/answers.html', template_data)
+
+    if canonical_name:  # success
+        return HttpResponseRedirect(
+            reverse('questions.answers', args=[question_id]))
+
+    # No tag provided
+    template_data = _answers_data(request, question_id)
+    template_data['tag_adding_error'] = NO_TAG
+    return jingo.render(request, 'questions/answers.html', template_data)
+
+
+@permission_required('questions.can_tag')
+@require_POST
+def add_tag_async(request, question_id):
+    """Add a (case-insensitive) tag to question asyncronously. Return empty.
+
+    If the question already has the tag, do nothing.
+
+    """
+    try:
+        canonical_name = _add_tag(request, question_id)
+    except Tag.DoesNotExist:
+        return HttpResponse(json.dumps({'error': unicode(UNAPPROVED_TAG)}),
+                            mimetype='application/x-json',
+                            status=400)
+
+    if canonical_name:
+        return HttpResponse(json.dumps({'canonicalName': canonical_name}),
+                            mimetype='application/x-json')
+
+    return HttpResponse(json.dumps({'error': unicode(NO_TAG)}),
+                        mimetype='application/x-json',
+                        status=400)
+
+
+@permission_required('questions.can_tag')
+@require_POST
+def remove_tag(request, question_id):
+    """Remove a (case-insensitive) tag from question.
+
+    Expects a POST with the tag name embedded in a field name, like
+    remove-tag-tagNameHere. If question doesn't have that tag, do nothing.
+
+    """
+    prefix = 'remove-tag-'
+    names = [k for k in request.POST if k.startswith(prefix)]
+    if names:
+        name = names[0][len(prefix):]
+        question = get_object_or_404(Question, pk=question_id)
+        question.tags.remove(name)
+
+    return HttpResponseRedirect(
+        reverse('questions.answers', args=[question_id]))
+
+
+@permission_required('questions.can_tag')
+@require_POST
+def remove_tag_async(request, question_id):
+    """Remove a (case-insensitive) tag from question.
+
+    If question doesn't have that tag, do nothing. Return value is JSON.
+
+    """
+    name = request.POST.get('name')
+    if name:
+        question = get_object_or_404(Question, pk=question_id)
+        question.tags.remove(name)
+        return HttpResponse('{}', mimetype='application/x-json')
+
+    return HttpResponseBadRequest(json.dumps({'error': unicode(NO_TAG)}),
+                                  mimetype='application/x-json')
+
+
+def _answers_data(request, question_id, form=None):
+    """Return a map of the minimal info necessary to draw an answers page."""
+    question = get_object_or_404(Question, pk=question_id)
+    answers_ = paginate(request, question.answers.all(),
+                        per_page=constants.ANSWERS_PER_PAGE)
+    vocab = [t.name for t in Tag.objects.all()]  # TODO: Fetch only name.
+    can_tag = request.user.has_perm('questions.can_tag')
+    if not form:
+        form = AnswerForm()
+    feed_urls = ((reverse('questions.answers.feed',
+                          kwargs={'question_id': question_id}),
+                  AnswersFeed().title(question)),)
+
+    return {'question': question,
+            'answers': answers_,
+            'form': form,
+            'feeds': feed_urls,
+            'tag_vocab': json.dumps(vocab),
+            'can_tag': can_tag}
+
+
+def _add_tag(request, question_id):
+    """Add a named tag to a question.
+
+    Tag name (case-insensitive) must be in request.POST['tag-name'].
+
+    If there is no such tag, raise Tag.DoesNotExist. If no tag name is
+    provided, return None. Otherwise, return the canonicalized tag name.
+
+    """
+    tag_name = request.POST.get('tag-name', '').strip()
+    if tag_name:
+        question = get_object_or_404(Question, pk=question_id)
+
+        # Can raise Tag.DoesNotExist:
+        canonical_name = add_existing_tag(tag_name, question.tags)
+
+        return canonical_name
 
 
 #  Helper functions to deal with products dict
