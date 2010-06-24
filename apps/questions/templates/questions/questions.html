@@ -1,0 +1,153 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "questions/base.html" %}
+{# TODO: Make the title and other references to FF configurable. #}
+{% set title = _('Firefox Support Forum') %}
+{% set classes = 'questions' %}
+
+{% block filter %}
+<div id="filter">
+  <label>{{ _('Posts:') }}</label>
+  <ul>
+    {% if user.is_authenticated() %}
+      <li>
+        <a href="#{# TODO #}">{{ _('My Contributions') }}</a>
+      </li>
+    {% endif %}
+    <li>
+      <a href="#{# TODO #}">{{ _('Most Recent') }}</a>
+    </li>
+    <li class="active {# TODO: conditional logic #}">
+      <a href="#{# TODO #}">{{ _('Most Requested') }}</a>
+    </li>
+    <li>
+      <a href="#{# TODO #}">{{ _('Unsolved') }}</a>
+    </li>
+    <li>
+      <a href="#{# TODO #}">{{ _('Solved') }}</a>
+    </li>
+    <li>
+      <a href="#{# TODO #}">{{ _('No Replies') }}</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+  {% if questions.object_list %}
+    <ol class="questions">
+      {% for question in questions.object_list %}
+        <li>
+          <div class="people just-one {# possible classes are: just-one (==1), less-ten (<10), more-ten (>=10) #}">
+            {% trans %}{# TODO #}<mark>1 person</mark> <span>has this problem</span>{% endtrans %}
+          </div>
+          <div class="title">
+            <h2><a href="{{ url('questions.answers', question_id=question.id) }}">{{ question.title }}</a></h2>
+          </div>
+          <div class="asked-by">
+            {% trans creator=question.creator%}Asked by <span class="user">{{ creator }}</span>{% endtrans %}
+            <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
+          </div>
+          <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
+          <div class="meta">
+            <span>{# TODO #}Firefox Mobile 1.0</span>
+            &bull;
+            <span>{# TODO #}Mac OS X 10.6</span>
+            &bull;
+            <span>{{ _('Tagged') }} {# TODO #}lorem, ipsum, dolor, sit amet</span>
+          </div>
+        </li>
+      {% endfor %}
+
+
+      {# Some extra static questions with different variations #}
+      <li>
+        <div class="people less-ten">
+          {% trans %}{# TODO #}<mark>9 people</mark> <span>have this problem</span>{% endtrans %}
+        </div>
+        <div class="title">
+          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
+          <span class="badge replies">12 replies</span>
+        </div>
+        <div class="asked-by">
+          Asked by <span class="user">Noob</span>
+          <time>today at 10:41am</time>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
+        <div class="meta">
+          <span>Firefox Mobile 1.0</span>
+          &bull;
+          <span>Mac OS X 10.6</span>
+          &bull;
+          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
+        </div>
+      </li>
+      <li>
+        <div class="people more-ten">
+          {% trans %}{# TODO #}<mark>25 people</mark> <span>have this problem</span>{% endtrans %}
+        </div>
+        <div class="title">
+          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
+          <span class="badge solutions">3 solutions</span>
+        </div>
+        <div class="asked-by">
+          Asked by <span class="user">Noob</span>
+          <time>today at 10:41am</time>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
+        <div class="meta">
+          <span>Firefox Mobile 1.0</span>
+          &bull;
+          <span>Mac OS X 10.6</span>
+          &bull;
+          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
+        </div>
+      </li>
+      <li>
+        <div class="people more-ten">
+          {% trans %}{# TODO #}<mark>35 people</mark> <span>have this problem</span>{% endtrans %}
+        </div>
+        <div class="title">
+          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
+          <span class="badge solved">solved</span>
+        </div>
+        <div class="asked-by">
+          Asked by <span class="user">Noob</span>
+          <time>today at 10:41am</time>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
+        <div class="meta">
+          <span>Firefox Mobile 1.0</span>
+          &bull;
+          <span>Mac OS X 10.6</span>
+          &bull;
+          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
+        </div>
+      </li>
+      <li>
+        <div class="people more-ten">
+          {% trans %}{# TODO #}<mark>35 people</mark> <span>have this problem</span>{% endtrans %}
+        </div>
+        <div class="title">
+          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
+          <span class="badge contributed">contributed</span>
+        </div>
+        <div class="asked-by">
+          Asked by <span class="user">Noob</span>
+          <time>today at 10:41am</time>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
+        <div class="meta">
+          <span>Firefox Mobile 1.0</span>
+          &bull;
+          <span>Mac OS X 10.6</span>
+          &bull;
+          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
+        </div>
+      </li>
+    </ol>
+    {{ questions|paginator }}
+  {% else %}
+    {# Not localized because it's not worth localizers time. #}
+    <p>There are no questions. Maybe you should ask some!</p>
+  {% endif %}
+{% endblock %}

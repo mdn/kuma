@@ -11,7 +11,10 @@ authority.autodiscover()
 urlpatterns = patterns('',
     (r'^search', include('search.urls')),
     (r'^forums', include('forums.urls')),
-    (r'^admin/', include(admin.site.urls)),
+    (r'^questions', include('questions.urls')),
+
+    # Kitsune admin (not Django admin).
+    (r'^admin/', include('kadmin.urls')),
 )
 
 # Handle 404 and 500 errors

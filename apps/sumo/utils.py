@@ -5,6 +5,8 @@ from django.utils.encoding import smart_str
 
 import wikimarkup
 
+from .models import WikiPage
+
 
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
@@ -71,7 +73,6 @@ class WikiParser(object):
         if hash_pos != -1:
             link, hash = link.split('#', 1)
 
-        link = link.replace(' ', '+')
         if hash != '':
             hash = '#' + hash.replace(' ', '_')
 
@@ -79,4 +80,9 @@ class WikiParser(object):
         if link == '' and hash != '':
             return u'<a href="%s">%s</a>' % (hash, text)
 
-        return u'<a href="/kb/%s%s">%s</a>' % (link, hash, text)
+        try:
+            link = WikiPage.objects.get(pageName=link).get_url()
+        except WikiPage.DoesNotExist:
+            link = WikiPage.get_create_url(link)
+
+        return u'<a href="%s%s">%s</a>' % (link, hash, text)

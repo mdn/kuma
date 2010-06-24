@@ -308,6 +308,7 @@ ol.posts li div.content pre {
     background-color: #e6eaec;
     margin: 1em 0;
     padding: 0.5em;
+    white-space: pre-wrap;
 }
 
 ol.posts li div.content a:hover {
@@ -397,42 +398,11 @@ span.watching {
 }
 
 /* Forums markup editor */
-div.forum-editor-tools {
-    margin: 0 0 0 10em;
-}
-
-div.forum-editor {
+form.new-thread div.forum-editor,
+form.edit-post div.forum-editor {
     float: left;
-    width: 65%;
-    padding: 1em 0 1em 1em;
-}
-
-div.forum-editor textarea {
-    width: 100%;
-}
-
-div.forum-editor-notes {
-    float: left;
-    padding: 1em 0 0 1em;
-}
-
-div.forum-editor-notes p {
-    margin-top: .8em;
-}
-
-div.forum-editor-actions {
-    clear: both;
-    border-top: 2px solid #fff;
-    padding: 1em 2em;
-    text-align: right;
-}
-
-div.forum-editor-tools img {
-    margin: 0 0.3em 0 0;
-}
-
-img.markup-toolbar-button {
-    cursor: pointer;
+    padding-left: 0;
+    width: 500px;
 }
 /* End markup editor */
 

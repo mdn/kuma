@@ -20,7 +20,7 @@ class PostsTemplateTestCase(ForumTestCase):
 
         doc = pq(response.content)
         error_msg = doc('ul.errorlist li a')[0]
-        eq_(error_msg.text, 'Content must be longer than 5 characters.')
+        eq_(error_msg.text, 'Please provide a message.')
 
     def test_edit_post_errors(self):
         """Changing post content works."""
@@ -31,11 +31,13 @@ class PostsTemplateTestCase(ForumTestCase):
         p_author = User.objects.get(username='jsocol')
         p = t.post_set.filter(author=p_author)[0]
         response = post(self.client, 'forums.edit_post',
-                        {'content': ''}, args=[f.slug, t.id, p.id])
+                        {'content': 'wha?'}, args=[f.slug, t.id, p.id])
 
         doc = pq(response.content)
         errors = doc('ul.errorlist li a')
-        eq_(errors[0].text, 'Content must be longer than 5 characters.')
+        eq_(errors[0].text,
+            'Your message is too short (4 characters). ' +
+            'It must be at least 5 characters.')
 
     def test_edit_thread_template(self):
         """The edit-post template should render."""
@@ -108,8 +110,25 @@ class ThreadsTemplateTestCase(ForumTestCase):
 
         doc = pq(response.content)
         errors = doc('ul.errorlist li a')
-        eq_(errors[0].text, 'Title must be longer than 5 characters.')
-        eq_(errors[1].text, 'Content must be longer than 5 characters.')
+        eq_(errors[0].text, 'Please provide a title.')
+        eq_(errors[1].text, 'Please provide a message.')
+
+    def test_new_short_thread_errors(self):
+        """Posting a short new thread shows errors."""
+        self.client.login(username='jsocol', password='testpass')
+
+        f = Forum.objects.filter()[0]
+        response = post(self.client, 'forums.new_thread',
+                        {'title': 'wha?', 'content': 'wha?'}, args=[f.slug])
+
+        doc = pq(response.content)
+        errors = doc('ul.errorlist li a')
+        eq_(errors[0].text,
+            'Your title is too short (4 characters). ' +
+            'It must be at least 5 characters.')
+        eq_(errors[1].text,
+            'Your message is too short (4 characters). ' +
+            'It must be at least 5 characters.')
 
     def test_edit_thread_errors(self):
         """Editing thread with too short of a title shows errors."""
@@ -119,11 +138,13 @@ class ThreadsTemplateTestCase(ForumTestCase):
         t_creator = User.objects.get(username='jsocol')
         t = f.thread_set.filter(creator=t_creator)[0]
         response = post(self.client, 'forums.edit_thread',
-                        {'title': ''}, args=[f.slug, t.id])
+                        {'title': 'wha?'}, args=[f.slug, t.id])
 
         doc = pq(response.content)
         errors = doc('ul.errorlist li a')
-        eq_(errors[0].text, 'Title must be longer than 5 characters.')
+        eq_(errors[0].text,
+            'Your title is too short (4 characters). ' +
+            'It must be at least 5 characters.')
 
     def test_edit_thread_template(self):
         """The edit-thread template should render."""

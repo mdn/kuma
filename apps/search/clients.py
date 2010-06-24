@@ -129,6 +129,8 @@ class SearchClient(object):
         Length of the final excerpt is roughly determined by
         SEARCH_SUMMARY_LENGTH in settings.py.
         """
+        if not isinstance(result, basestring):
+            return ''
         documents = [result]
 
         try:

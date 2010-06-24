@@ -10,7 +10,22 @@ import access
 
 def has_perm_or_owns_or_403(perm, field_name, lookup_obj, lookup_perm_obj,
                             **kwargs):
+    """Behave like has_perm_or_403 but also grant permission to owners.
 
+    Arguments:
+        field_name: Attr of model object that references the owner
+
+        lookup_obj: Triple that specifies a lookup to the object on which
+            ownership should be compared. Items in the tuple are...
+            (model class or import path thereof,
+             kwarg name specifying field and comparator (e.g. 'id__exact'),
+             name of kwarg containing the value to which to compare)
+
+        lookup_perm_obj: Triple that specifies a lookup to the object on which
+            to check for permission. Elements of the tuple are as in
+            lookup_obj.
+
+    """
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             # from authority/decorators.py
@@ -21,7 +36,7 @@ def has_perm_or_owns_or_403(perm, field_name, lookup_obj, lookup_perm_obj,
                     model, lookup, varname = lookup_variable
                     value = kwargs.get(varname, None)
                     if value is None:
-                        raise ValueError("Expected kwarg for '%s' not found." %
+                        raise ValueError("Expected kwarg '%s' not found." %
                                          varname)
                     if isinstance(model, basestring):
                         model_class = get_model(*model.split("."))

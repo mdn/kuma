@@ -368,6 +368,7 @@ h2 {
 ----------------------------------*/
 
 #content {
+    clear:both;
     width: 920px;
     margin: auto;
     text-align: left;
@@ -478,4 +479,37 @@ ol.pagination li {
 
 ol.pagination li.selected a {
     color: #000;
+}
+
+/* Markup editor */
+div.forum-editor {
+    padding: 1em;
+}
+
+div.forum-editor textarea {
+    width: 100%;
+}
+
+div.forum-editor-notes {
+    float: left;
+    padding: 1em 0 0 1em;
+}
+
+div.forum-editor-notes p {
+    margin-top: .8em;
+}
+
+div.forum-editor-actions {
+    clear: both;
+    border-top: 2px solid #fff;
+    padding: 1em 2em;
+    text-align: right;
+}
+
+div.forum-editor-tools img {
+    margin: 0 0.3em 0 0;
+}
+
+img.markup-toolbar-button {
+    cursor: pointer;
 }

@@ -2,10 +2,11 @@ from django.db import models
 
 import caching.base
 
+import settings
 from sumo.urlresolvers import get_url_prefix
 from sumo_locales import INTERNAL_MAP
 
-# Our apps should subclass BaseManager instead of models.Manager or
+# Our apps should subclass ManagerBase instead of models.Manager or
 # caching.base.CachingManager directly.
 ManagerBase = caching.base.CachingManager
 
@@ -190,6 +191,19 @@ class WikiPage(ModelBase):
             lang = self.lang
 
         return u'/%s/kb/%s' % (lang, name,)
+
+    def get_edit_url(self):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return settings.WIKI_EDIT_URL % self.pageName.replace(' ', '+')
+
+    @classmethod
+    def get_create_url(cls, name):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return settings.WIKI_CREATE_URL % name.replace(' ', '+')
 
 
 class Category(ModelBase):
