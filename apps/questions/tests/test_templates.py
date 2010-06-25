@@ -2,7 +2,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from questions.models import Question
-from questions.tests import TestCaseBase, post
+from questions.tests import TestCaseBase, post, get
 
 
 class AnswersTemplateTestCase(TestCaseBase):
@@ -69,3 +69,39 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(error_msg.text, 'Please keep the length of your content to ' +
                             '10000 characters or less. It is currently ' +
                             '10001 characters.')
+
+    def test_solution(self):
+        """Test accepting a solution."""
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_(0, len(doc('div.solution')))
+
+        answer = self.question.answers.all()[0]
+        response = post(self.client, 'questions.solution',
+                        args=[self.question.id, answer.id])
+        doc = pq(response.content)
+        eq_(1, len(doc('div.solution')))
+        eq_('answer-%s' % answer.id, doc('li.solution')[0].attrib['id'])
+
+        self.question.solution = None
+        self.question.save()
+
+    def test_only_owner_can_accept_solution(self):
+        """Make sure non-owner can't mark solution."""
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_(1, len(doc('input[name="solution"]')))
+
+        self.client.logout()
+        self.client.login(username='pcraciunoiu', password='testpass')
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_(0, len(doc('input[name="solution"]')))
+
+        answer = self.question.answers.all()[0]
+        response = post(self.client, 'questions.solution',
+                        args=[self.question.id, answer.id])
+        eq_(403, response.status_code)
