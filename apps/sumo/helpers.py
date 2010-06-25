@@ -58,7 +58,7 @@ def urlparams(url_, hash=None, **query):
 
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)
-    return jinja2.Markup(new.geturl())
+    return new.geturl()
 
 
 class Paginator(object):

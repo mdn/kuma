@@ -48,6 +48,11 @@ class TestHelpers(TestCase):
         template = '{{ url("search")|urlparams(q=var) }}'
         eq_(u'/en-US/search?q=Fran%C3%A7ais', render(template, context))
 
+    def test_urlparams_valid(self):
+        context = {'a': 'foo', 'b': 'bar'}
+        template = '{{ "/search"|urlparams(a=a, b=b) }}'
+        eq_(u'/search?a=foo&amp;b=bar', render(template, context))
+
     def test_profile_url(self):
         user = User.objects.create(pk=500000, username=u'testuser')
         eq_(u'/tiki-user_information.php?locale=en-US&userId=500000',
