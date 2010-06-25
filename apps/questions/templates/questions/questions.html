@@ -43,7 +43,7 @@
                         1)|fe(count=1) }} {# TODO: set the count #}
           </div>
           <div class="title">
-            <h2><a href="{{ url('questions.answers', question_id=question.id) }}">{{ question.title }}</a></h2>
+            <h2><a href="{{ question.get_absolute_url() }}">{{ question.title }}</a></h2>
             {% if question.num_answers > 0 %}
               {# L10n: {n} is the number of replies. #}
               <span class="badge replies">{{ ngettext('{n} reply', '{n} replies', question.num_answers)|fe(n=question.num_answers) }}</span>

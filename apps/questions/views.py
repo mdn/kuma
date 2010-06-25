@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
@@ -103,6 +103,22 @@ def reply(request, question_id):
         return HttpResponseRedirect(answer.get_absolute_url())
 
     return answers(request, question_id, form)
+
+
+@require_POST
+@login_required
+def solution(request, question_id, answer_id):
+    """Accept an answer as the solution to the question."""
+    question = get_object_or_404(Question, pk=question_id)
+    answer = get_object_or_404(Answer, pk=answer_id)
+    
+    if question.creator != request.user:
+        return HttpResponseForbidden()
+    
+    question.solution = answer
+    question.save()
+
+    return HttpResponseRedirect(answer.get_absolute_url())
 
 
 #  Helper functions to deal with products dict

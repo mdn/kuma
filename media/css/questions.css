@@ -491,13 +491,13 @@ div.ans-wrap {
 }
 div.ans-wrap div.avatar {
     float: left;
-    width: 45px;
+    width: 58px;
 }
 
 div.answer {
     float: left;
     font-size: 14px;
-    width: 464px;
+    width: 450px;
 }
 
 div.solution div.answer {

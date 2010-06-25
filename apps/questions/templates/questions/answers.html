@@ -36,20 +36,25 @@
           </form>
         </div>
       </div>
-      <div class="solution">
-        <h3>{{ _('Solution Chosen by {user}')|fe(user=question.creator) }}</h3>
-        <div class="ans-wrap">
-          <div class="avatar">
-              avatar here
-          </div>
-          <div class="answer">
-            <span class="user">Steven Ritz</span>
-            <span class="votes">99</span>
-            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot;</p>
-            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot;</p>
+      {% if question.solution %}
+        <div class="solution">
+          <h3>{{ _('Solution Chosen by {user}')|f(user=question.creator) }}</h3>
+          <div class="ans-wrap">
+            <div class="avatar">
+              <a href="{{ profile_url(question.solution.creator) }}">
+                <img src="{{ profile_avatar(question.solution.creator) }}" height="48" width="48" alt="{{ question.solution.creator }}"/>
+              </a>
+            </div>
+            <div class="answer">
+              <span class="user">{{ question.solution.creator }}</span>
+              <span class="votes">99 {# TODO #}</span>
+              {{ question.solution.content_parsed }}
+            </div>
           </div>
         </div>
-      </div>
+      {% endif %}
+      
+      {# TODO: helpful answers #}
       <div class="other-helpful">
         <h3>{{ _('Other Helpful Replies') }}</h3>
         <div class="ans-wrap">
@@ -126,7 +131,7 @@
   {% if answers.object_list %}
     <ol class="answers">
       {% for answer in answers.object_list %}
-        <li id="answer-{{ answer.id }}" {% if answer.creator==question.creator %}class="author"{% endif %}>
+        <li id="answer-{{ answer.id }}" class="{% if answer.creator == question.creator %}author{% endif %}{% if question.solution == answer %} solution{% endif %}">
           <div class="user-section">
             <div class="avatar">
               <a href="{{ profile_url(answer.creator) }}">
@@ -155,108 +160,42 @@
             </div>
           </div>
           <div class="side-section">
-            {% if answer.creator!=question.creator %}
-              <h4>{{ _('Was this reply helpful?') }}</h4>
-              <form class="helpful" action="#{# TODO #}" method="post">
-                {{ csrf() }}
-                <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
-                <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
-              </form>
-              <div class="helpful">
+            {% if answer.creator != question.creator %}
+              {% if not question.solution and user == question.creator %}
+                <h4>{{ _('Did this solve your problem?') }}</h4>
+                <form class="helpful" action="{{ url('questions.solution', question_id=question.id, answer_id=answer.id) }}" method="post">
+                  {{ csrf() }}
+                  <input type="submit" class="btn g-btn" name="solution" value="{{ _('Solved It') }}" />
+                </form>
+              {% elif user != question.creator %}
+                <h4>{{ _('Was this reply helpful?') }}</h4>
+                <form class="helpful" action="#{# TODO #}" method="post">
+                  {{ csrf() }}
+                  <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+                  <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+                </form>
+              {% endif %}
+
+              {% if question.solution == answer %}
+                <div class="solved">{{ _('Solution chosen by author') }}</div>
+              {% endif %}
+
+              <div class="helpful {# TODO: if zero people: add css class 'zero' #}">
                 {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
                             '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
                             16)|fe(count=14, total=16) }}
               </div>
             {% endif %}
-            <form class="report" action="#{# TODO #}" method="post">
-              {{ csrf() }}
-              <input type="submit" value="{{ _('Report this post') }}" />
-            </form>
+
+            {% if user != answer.creator %}
+              <form class="report" action="#{# TODO #}" method="post">
+                {{ csrf() }}
+                <input type="submit" value="{{ _('Report this post') }}" />
+              </form>
+            {% endif %}
           </div>
         </li>
       {% endfor %}
-
-      {# Some static answers demonstrating variations #}
-      <li id="answer-123">
-        <div class="user-section">
-          <div class="avatar">
-            avatar here
-          </div>
-          <div class="answered-by">
-            <span class="user">Mr. Helpful</span>
-            <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
-            <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
-          </div>
-        </div>
-        <div class="main-section">
-          <p class="posted">
-            Posted <time>today at 1:11 am</time>:
-          </p>
-          <div class="content">
-            {{ lipsum(2) }}
-          </div>
-          <div class="reply">
-            <a href="#question-reply">{{ _('Reply to this post') }}</a>
-          </div>
-        </div>
-        <div class="side-section">
-          <h4>{{ _('Was this reply helpful?') }}</h4>
-          <form class="helpful" action="#{# TODO #}" method="post">
-            {{ csrf() }}
-            <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
-            <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
-          </form>
-          <div class="helpful zero">
-            <mark>0 out of 8 people</mark> <span>found this reply helpful</span>
-          </div>
-          <form class="report" action="#{# TODO #}" method="post">
-            {{ csrf() }}
-            <input type="submit" value="{{ _('Report this post') }}" />
-          </form>
-        </div>
-      </li>
-      <li id="answer-125" class="solution{# This reply is the solution chosen #}">
-        <div class="user-section">
-          <div class="avatar">
-            avatar here
-          </div>
-          <div class="answered-by">
-            <span class="user">Mr. Helpful</span>
-            <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
-            <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
-          </div>
-        </div>
-        <div class="main-section">
-          <p class="posted">
-            Posted <time>today at 1:11 am</time>:
-          </p>
-          <div class="content">
-            {{ lipsum(2) }}
-          </div>
-          <div class="reply">
-            <a href="#question-reply">{{ _('Reply to this post') }}</a>
-          </div>
-        </div>
-        <div class="side-section">
-          <h4>{{ _('Was this reply helpful?') }}</h4>
-          <form class="helpful" action="#{# TODO #}" method="post">
-            {{ csrf() }}
-            <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
-            <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
-          </form>
-          <div class="solved">
-            Solution chosen by author
-          </div>
-          <div class="helpful">
-            <mark>14 out of 16 people</mark> <span>found this reply helpful</span>
-          </div>
-          <form class="report" action="#{# TODO #}" method="post">
-            {{ csrf() }}
-            <input type="submit" value="{{ _('Report this post') }}" />
-          </form>
-        </div>
-      </li>
-
     </ol>
     {{ answers|paginator }}
   {% endif %}

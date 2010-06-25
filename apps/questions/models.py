@@ -24,6 +24,8 @@ class Question(ModelBase):
     last_answer = models.ForeignKey('Answer', related_name='last_reply_in',
                                     null=True)
     num_answers = models.IntegerField(default=0, db_index=True)
+    solution = models.ForeignKey('Answer', related_name='solution_for',
+                                 null=True)
     status = models.IntegerField(default=0, db_index=True)
     is_locked = models.BooleanField(default=False)
 
