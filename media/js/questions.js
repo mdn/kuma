@@ -56,8 +56,9 @@
                 ev.preventDefault();
                 var $this = $(this);
                 var $hid = $this.find('input[type="hidden"]');
-                var $textbox = $('<input type="text" value="' + $hid.val() +
-                           '" name="' + $hid.attr('name') + '" />');
+                var $textbox = $('<input type="text" name="' +
+                               $hid.attr('name') + '" />');
+                $textbox.val($hid.val());
                 $this.unbind('click').replaceWith($textbox);
                 $textbox.focus();
             }
