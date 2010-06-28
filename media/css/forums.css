@@ -367,6 +367,11 @@ div.post-to-delete p {
     margin: 0 0 1em;
 }
 
+div.post-to-delete div.content ul,
+div.post-to-delete div.content ol {
+    margin: 0 0 0 1.5em;
+}
+
 /* Thread title badges */
 div.badges {
     margin:-1em 0 0;
