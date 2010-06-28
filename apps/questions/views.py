@@ -19,8 +19,11 @@ def questions(request):
     questions_ = paginate(request, Question.objects.all(),
                           per_page=constants.QUESTIONS_PER_PAGE)
 
+    feed_url = reverse('questions.feed')
+
     return jingo.render(request, 'questions/questions.html',
-                        {'questions': questions_})
+                        {'questions': questions_,
+                         'feed_url': feed_url})
 
 
 def answers(request, question_id, form=None):
@@ -33,9 +36,12 @@ def answers(request, question_id, form=None):
     if not form:
         form = AnswerForm()
 
+    feed_url = reverse('questions.answers.feed',
+                       kwargs={'question_id': question_id})
+
     return jingo.render(request, 'questions/answers.html',
                         {'question': question, 'answers': answers_,
-                         'form': form})
+                         'form': form, 'feed_url': feed_url})
 
 
 def new_question(request):
@@ -111,10 +117,10 @@ def solution(request, question_id, answer_id):
     """Accept an answer as the solution to the question."""
     question = get_object_or_404(Question, pk=question_id)
     answer = get_object_or_404(Answer, pk=answer_id)
-    
+
     if question.creator != request.user:
         return HttpResponseForbidden()
-    
+
     question.solution = answer
     question.save()
 

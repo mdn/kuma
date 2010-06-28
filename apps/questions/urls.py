@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, url
+from .feeds import QuestionsFeed, AnswersFeed
 
 urlpatterns = patterns('questions.views',
     url(r'^$', 'questions', name='questions.questions'),
@@ -7,4 +8,8 @@ urlpatterns = patterns('questions.views',
     url(r'^/(?P<question_id>\d+)/reply$', 'reply', name='questions.reply'),
     url(r'^/(?P<question_id>\d+)/solution/(?P<answer_id>\d+)$', 'solution',
         name='questions.solution'),
+    url(r'^/feed$', QuestionsFeed(), name='questions.feed'),
+    url(r'^/(?P<question_id>\d+)/feed$',
+        AnswersFeed(),
+        name='questions.answers.feed'),
 )
