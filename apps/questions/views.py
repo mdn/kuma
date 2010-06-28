@@ -9,6 +9,7 @@ from sumo.utils import paginate
 from sumo.urlresolvers import reverse
 from .models import Question, Answer
 from .forms import NewQuestionForm, AnswerForm
+from .feeds import QuestionsFeed, AnswersFeed
 import questions as constants
 import question_config as config
 
@@ -19,11 +20,12 @@ def questions(request):
     questions_ = paginate(request, Question.objects.all(),
                           per_page=constants.QUESTIONS_PER_PAGE)
 
-    feed_url = reverse('questions.feed')
+    feed_urls = ((reverse('questions.feed'),
+                  QuestionsFeed().title()),)
 
     return jingo.render(request, 'questions/questions.html',
                         {'questions': questions_,
-                         'feed_url': feed_url})
+                         'feeds': feed_urls})
 
 
 def answers(request, question_id, form=None):
@@ -36,12 +38,13 @@ def answers(request, question_id, form=None):
     if not form:
         form = AnswerForm()
 
-    feed_url = reverse('questions.answers.feed',
-                       kwargs={'question_id': question_id})
+    feed_urls = ((reverse('questions.answers.feed',
+                          kwargs={'question_id': question_id}),
+                  AnswersFeed().title(question)),)
 
     return jingo.render(request, 'questions/answers.html',
                         {'question': question, 'answers': answers_,
-                         'form': form, 'feed_url': feed_url})
+                         'form': form, 'feeds': feed_urls})
 
 
 def new_question(request):

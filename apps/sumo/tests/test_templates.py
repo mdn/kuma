@@ -50,3 +50,16 @@ class TestBaseTemplate(TestCase):
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
         eq_('rtl', dir_attr)
+
+    def test_multi_feeds(self):
+        """Ensure that multiple feeds are put into the page when set."""
+
+        feed_urls = (('/feed_one', 'First Feed'),
+                     ('/feed_two', 'Second Feed'),)
+
+        doc = pq(jingo.render_to_string(self.request, self.template,
+                                        {'feeds': feed_urls}))
+        feeds = doc('link[type="application/atom+xml"]')
+        eq_(2, len(feeds))
+        eq_('First Feed', feeds[0].attrib['title'])
+        eq_('Second Feed', feeds[1].attrib['title'])
