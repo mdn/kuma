@@ -145,31 +145,31 @@ ol.questions li {
     padding: 15px 15px 18px;
 }
 
-ol.questions div.people {
+ol.questions div.have-problem {
     float: right;
     text-align: right;
     width: 150px;
 }
 
-ol.questions div.people mark {
+ol.questions div.have-problem mark {
     display: block;
     float: right;
     padding: 5px 0 5px 50px;
 }
 
-div.people.just-one mark {
+ol.questions div.have-problem.just-one mark {
     background: transparent url(../img/questions/icon.one.gif) no-repeat 27px 6px;
 }
 
-div.people.less-ten mark {
+ol.questions div.have-problem.less-ten mark {
     background: transparent url(../img/questions/icon.lessten.gif) no-repeat 25px 6px;
 }
 
-div.people.more-ten mark {
+ol.questions div.have-problem.more-ten mark {
     background: transparent url(../img/questions/icon.tenmore.gif) no-repeat 0 6px;
 }
 
-ol.questions div.people span {
+ol.questions div.have-problem span {
     clear: right;
     display: block;
 }
@@ -436,27 +436,27 @@ div.problem {
     padding: 0 15px;
 }
 
-div.have-problem {
+div.problem div.have-problem {
     float: left;
     padding: 17px 0 5px;
 }
 
-div.have-problem mark {
+div.problem div.have-problem mark {
     color: #D13E05;
     font-weight: normal;
 }
 
-div.have-problem.just-one {
+div.problem div.have-problem.just-one {
     background: transparent url(../img/questions/icon.one.gif) no-repeat 0 19px;
     padding-left: 22px;
 }
 
-div.have-problem.less-ten {
+div.problem div.have-problem.less-ten {
     background: transparent url(../img/questions/icon.lessten.gif) no-repeat 0 17px;
     padding-left: 25px;
 }
 
-div.have-problem.ten-more {
+div.problem div.have-problem.ten-more {
     background: transparent url(../img/questions/icon.tenmore.gif) no-repeat 0 19px;
     padding-left: 50px;
 }

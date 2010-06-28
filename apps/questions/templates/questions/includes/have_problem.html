@@ -1,0 +1,15 @@
+{% set num_votes = question.num_votes %}
+{% if num_votes == 0 %}
+  {% set classname="nobody" %}
+{% elif num_votes == 1 %}
+  {% set classname="just-one" %}
+{% elif num_votes < 10 %}
+  {% set classname="less-ten" %}
+{% elif num_votes >= 10 %}
+  {% set classname="more-ten" %}
+{% endif %}
+<div class="have-problem {{ classname }}">
+  {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
+              '<mark>{count} people</mark> <span>have this problem</span>',
+              num_votes)|fe(count=num_votes) }}
+</div>

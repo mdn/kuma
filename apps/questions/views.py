@@ -7,7 +7,7 @@ import jingo
 
 from sumo.utils import paginate
 from sumo.urlresolvers import reverse
-from .models import Question, Answer
+from .models import Question, Answer, QuestionVote
 from .forms import NewQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
 import questions as constants
@@ -88,8 +88,8 @@ def new_question(request):
         if category:
             question.add_metadata(category=category['name'])
 
-        return HttpResponseRedirect(
-            reverse('questions.answers', args=[question.id]))
+        # Submitting the question counts as a vote
+        return question_vote(request, question.id)
 
     return jingo.render(request, 'questions/new_question.html',
                         {'form': form, 'products': config.products,
@@ -128,6 +128,24 @@ def solution(request, question_id, answer_id):
     question.save()
 
     return HttpResponseRedirect(answer.get_absolute_url())
+
+
+@require_POST
+def question_vote(request, question_id):
+    """I have this problem too."""
+    question = get_object_or_404(Question, pk=question_id)
+
+    if not question.has_voted(request):
+        vote = QuestionVote(question=question)
+
+        if request.user.is_authenticated():
+            vote.creator = request.user
+        else:
+            vote.anonymous_id = request.anonymous.anonymous_id
+
+        vote.save()
+
+    return HttpResponseRedirect(question.get_absolute_url())
 
 
 #  Helper functions to deal with products dict

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -30,7 +30,7 @@ class Question(ModelBase):
     is_locked = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-last_answer__created', '-created']
+        ordering = ['-updated']
 
     def __unicode__(self):
         return self.title
@@ -39,6 +39,12 @@ class Question(ModelBase):
     def content_parsed(self):
         parser = WikiParser()
         return jinja2.Markup(parser.parse(self.content, False))
+
+    def save(self, *args, **kwargs):
+        """Override save method to take care of updated."""
+        if self.id:
+            self.updated = datetime.now()
+        super(Question, self).save(*args, **kwargs)
 
     def add_metadata(self, **kwargs):
         """Add (save to db) the passed in metadata.
@@ -65,6 +71,32 @@ class Question(ModelBase):
     def get_absolute_url(self):
         return reverse('questions.answers',
                        kwargs={'question_id': self.id})
+
+    @property
+    def num_votes(self):
+        """Get the number of votes for this question."""
+        return QuestionVote.objects.filter(question=self).count()
+
+    @property
+    def num_votes_past_week(self):
+        """Get the number of votes for this question in the past week."""
+        last_week = datetime.now().date() - timedelta(days=7)
+        return QuestionVote.objects.filter(question=self,
+                                           created__gte=last_week).count()
+
+    def has_voted(self, request):
+        """Did the user already vote?"""
+        if request.user.is_authenticated():
+            qs = QuestionVote.objects.filter(question=self,
+                                             creator=request.user)
+        elif request.anonymous.has_id:
+            anon_id = request.anonymous.anonymous_id
+            qs = QuestionVote.objects.filter(question=self,
+                                             anonymous_id=anon_id)
+        else:
+            return False
+
+        return qs.count() > 0
 
 
 class QuestionMetaData(ModelBase):
@@ -135,3 +167,13 @@ class Answer(ModelBase):
 
         url = self.question.get_absolute_url()
         return urlparams(url, hash='answer-%s' % self.id, **query)
+
+
+class QuestionVote(ModelBase):
+    """I have this problem too.
+    Keeps track of users that have problem over time."""
+    question = models.ForeignKey('Question', related_name='votes')
+    created = models.DateTimeField(default=datetime.now, db_index=True)
+    creator = models.ForeignKey(User, related_name='question_votes',
+                                null=True)
+    anonymous_id = models.CharField(max_length=40, db_index=True)

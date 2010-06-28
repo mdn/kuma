@@ -24,17 +24,15 @@
         {{ question.content_parsed|safe }}
       </div>
       <div class="problem">
-        <div class="have-problem ten-more{# TODO #}">
-          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
-                      '<mark>{count} people</mark> <span>have this problem</span>',
-                      14)|fe(count=14) }} {# TODO: set the count #}
-        </div>
-        <div class="me-too">
-          <form action="#{# TODO #}" method="post">
-            {{ csrf() }}
-            <input class="btn y-btn" type="submit" value="{{ _('I have this problem, too.') }}">
-          </form>
-        </div>
+        {% include 'questions/includes/have_problem.html' %}
+        {% if not question.has_voted(request) %}
+          <div class="me-too">
+            <form action="{{ url('questions.vote', question_id=question.id) }}" method="post">
+              {{ csrf() }}
+              <input class="btn y-btn" type="submit" value="{{ _('I have this problem too.') }}">
+            </form>
+          </div>
+        {% endif %}
       </div>
       {% if question.solution %}
         <div class="solution">
@@ -53,7 +51,7 @@
           </div>
         </div>
       {% endif %}
-      
+
       {# TODO: helpful answers #}
       <div class="other-helpful">
         <h3>{{ _('Other Helpful Replies') }}</h3>

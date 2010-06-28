@@ -12,4 +12,6 @@ urlpatterns = patterns('questions.views',
     url(r'^/(?P<question_id>\d+)/feed$',
         AnswersFeed(),
         name='questions.answers.feed'),
+    url(r'^/(?P<question_id>\d+)/vote$', 'question_vote',
+        name='questions.vote'),
 )

@@ -130,6 +130,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'sumo.anonymous.AnonymousIdentityMiddleware',
 
     # TODO: Replace with Kitsune auth.
     'sumo.middleware.TikiCookieMiddleware',
@@ -327,3 +328,7 @@ BROKER_VHOST = 'kitsune'
 CELERY_RESULT_BACKEND = 'amqp'
 CELERY_IGNORE_RESULT = True
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
+
+# Anonymous user cookie
+ANONYMOUS_COOKIE_NAME = 'SUMO_ANONID'
+ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds

@@ -37,14 +37,12 @@
     <ol class="questions">
       {% for question in questions.object_list %}
         <li>
-          <div class="people just-one {# possible classes are: just-one (==1), less-ten (<10), more-ten (>=10) #}">
-            {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
-                        '<mark>{count} people</mark> <span>have this problem</span>',
-                        1)|fe(count=1) }} {# TODO: set the count #}
-          </div>
+          {% include 'questions/includes/have_problem.html' %}
           <div class="title">
             <h2><a href="{{ question.get_absolute_url() }}">{{ question.title }}</a></h2>
-            {% if question.num_answers > 0 %}
+            {% if question.solution %}
+              <span class="badge solved">{{ _('Solved') }}</span>
+            {% elif question.num_answers > 0 %}
               {# L10n: {n} is the number of replies. #}
               <span class="badge replies">{{ ngettext('{n} reply', '{n} replies', question.num_answers)|fe(n=question.num_answers) }}</span>
             {% endif %}
@@ -68,100 +66,10 @@
         </li>
       {% endfor %}
 
+      {# TODO: Implement remaining badges 
+        <span class="badge contributed">contributed</span>
+      #}
 
-      {# Some extra static questions with different variations #}
-      <li>
-        <div class="people less-ten">
-          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
-                      '<mark>{count} people</mark> <span>have this problem</span>',
-                      9)|fe(count=9) }} {# TODO: set the count #}
-        </div>
-        <div class="title">
-          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
-          <span class="badge replies">12 replies</span>
-        </div>
-        <div class="asked-by">
-          Asked by <span class="user">Noob</span>
-          <time>today at 10:41am</time>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
-        <div class="meta">
-          <span>Firefox Mobile 1.0</span>
-          &bull;
-          <span>Mac OS X 10.6</span>
-          &bull;
-          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
-        </div>
-      </li>
-      <li>
-        <div class="people more-ten">
-          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
-                      '<mark>{count} people</mark> <span>have this problem</span>',
-                      25)|fe(count=25) }} {# TODO: set the count #}
-        </div>
-        <div class="title">
-          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
-          <span class="badge solutions">3 solutions</span>
-        </div>
-        <div class="asked-by">
-          Asked by <span class="user">Noob</span>
-          <time>today at 10:41am</time>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
-        <div class="meta">
-          <span>Firefox Mobile 1.0</span>
-          &bull;
-          <span>Mac OS X 10.6</span>
-          &bull;
-          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
-        </div>
-      </li>
-      <li>
-        <div class="people more-ten">
-          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
-                      '<mark>{count} people</mark> <span>have this problem</span>',
-                      35)|fe(count=35) }} {# TODO: set the count #}
-        </div>
-        <div class="title">
-          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
-          <span class="badge solved">solved</span>
-        </div>
-        <div class="asked-by">
-          Asked by <span class="user">Noob</span>
-          <time>today at 10:41am</time>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
-        <div class="meta">
-          <span>Firefox Mobile 1.0</span>
-          &bull;
-          <span>Mac OS X 10.6</span>
-          &bull;
-          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
-        </div>
-      </li>
-      <li>
-        <div class="people more-ten">
-          {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
-                      '<mark>{count} people</mark> <span>have this problem</span>',
-                      35)|fe(count=35) }} {# TODO: set the count #}
-        </div>
-        <div class="title">
-          <h2><a href="#">Lorem ipsum dolor sit amet, conectetur adipisicing elit, sed do eiusmod tempor</a></h2>
-          <span class="badge contributed">contributed</span>
-        </div>
-        <div class="asked-by">
-          Asked by <span class="user">Noob</span>
-          <time>today at 10:41am</time>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation...</p>
-        <div class="meta">
-          <span>Firefox Mobile 1.0</span>
-          &bull;
-          <span>Mac OS X 10.6</span>
-          &bull;
-          <span>{{ _('Tagged') }} lorem, ipsum, dolor, sit amet</span>
-        </div>
-      </li>
     </ol>
     {{ questions|paginator }}
   {% else %}

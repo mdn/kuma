@@ -105,3 +105,48 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = post(self.client, 'questions.solution',
                         args=[self.question.id, answer.id])
         eq_(403, response.status_code)
+
+    def test_question_vote_GET(self):
+        """Attempting to vote with HTTP GET returns a 405."""
+        response = get(self.client, 'questions.vote',
+                       args=[self.question.id])
+        eq_(405, response.status_code)
+
+    def common_vote(self):
+        """Helper method for question vote tests."""
+        # Check that there are no votes and vote form renders
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_('0 people', doc('div.have-problem mark')[0].text)
+        eq_(1, len(doc('div.me-too form')))
+
+        # Vote
+        post(self.client, 'questions.vote', args=[self.question.id])
+
+        # Check that there is 1 vote and vote form doesn't render
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_('1 person', doc('div.have-problem mark')[0].text)
+        eq_(0, len(doc('div.me-too form')))
+
+        # Voting again (same user) should not increment vote count
+        post(self.client, 'questions.vote', args=[self.question.id])
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_('1 person', doc('div.have-problem mark')[0].text)
+
+    def test_question_authenticated_vote(self):
+        """Authenticated user vote."""
+        # Common vote test
+        self.common_vote()
+
+    def test_question_anonymous_vote(self):
+        """Anonymous user vote."""
+        # Log out
+        self.client.logout()
+
+        # Common vote test
+        self.common_vote()
