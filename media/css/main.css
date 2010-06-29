@@ -34,6 +34,10 @@ input,textarea,select
     font-size:100%;
 }
 
+mark {
+    background: none;
+}
+
 /*----------------------------------
     Global
 ----------------------------------*/
