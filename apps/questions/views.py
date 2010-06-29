@@ -7,7 +7,7 @@ import jingo
 
 from sumo.utils import paginate
 from sumo.urlresolvers import reverse
-from .models import Question, Answer, QuestionVote
+from .models import Question, Answer, QuestionVote, AnswerVote
 from .forms import NewQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
 import questions as constants
@@ -146,6 +146,27 @@ def question_vote(request, question_id):
         vote.save()
 
     return HttpResponseRedirect(question.get_absolute_url())
+
+
+@require_POST
+def answer_vote(request, question_id, answer_id):
+    """Vote for Helpful/Not Helpful answers"""
+    answer = get_object_or_404(Answer, pk=answer_id, question=question_id)
+
+    if not answer.has_voted(request):
+        vote = AnswerVote(answer=answer)
+
+        if 'helpful' in request.POST:
+            vote.helpful = True
+
+        if request.user.is_authenticated():
+            vote.creator = request.user
+        else:
+            vote.anonymous_id = request.anonymous.anonymous_id
+
+        vote.save()
+
+    return HttpResponseRedirect(answer.get_absolute_url())
 
 
 #  Helper functions to deal with products dict

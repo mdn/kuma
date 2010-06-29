@@ -98,6 +98,20 @@ class Question(ModelBase):
 
         return qs.count() > 0
 
+    @property
+    def helpful_replies(self):
+        """Return answers that have been voted as helpful."""
+        votes = AnswerVote.objects.filter(answer__question=self, helpful=True)
+        helpful_ids = list(votes.values_list('answer', flat=True).distinct())
+        # Exclude the solution if it is set
+        if self.solution and self.solution.id in helpful_ids:
+            helpful_ids.remove(self.solution.id)
+
+        if len(helpful_ids) > 0:
+            return self.answers.filter(id__in=helpful_ids)
+        else:
+            return []
+
 
 class QuestionMetaData(ModelBase):
     """Metadata associated with a support question."""
@@ -168,6 +182,30 @@ class Answer(ModelBase):
         url = self.question.get_absolute_url()
         return urlparams(url, hash='answer-%s' % self.id, **query)
 
+    @property
+    def num_votes(self):
+        """Get the total number of votes for this answer."""
+        return AnswerVote.objects.filter(answer=self).count()
+
+    @property
+    def num_helpful_votes(self):
+        """Get the number of helpful votes for this answer."""
+        return AnswerVote.objects.filter(answer=self, helpful=True).count()
+
+    def has_voted(self, request):
+        """Did the user already vote for this answer?"""
+        if request.user.is_authenticated():
+            qs = AnswerVote.objects.filter(answer=self,
+                                           creator=request.user)
+        elif request.anonymous.has_id:
+            anon_id = request.anonymous.anonymous_id
+            qs = AnswerVote.objects.filter(answer=self,
+                                           anonymous_id=anon_id)
+        else:
+            return False
+
+        return qs.count() > 0
+
 
 class QuestionVote(ModelBase):
     """I have this problem too.
@@ -175,5 +213,15 @@ class QuestionVote(ModelBase):
     question = models.ForeignKey('Question', related_name='votes')
     created = models.DateTimeField(default=datetime.now, db_index=True)
     creator = models.ForeignKey(User, related_name='question_votes',
+                                null=True)
+    anonymous_id = models.CharField(max_length=40, db_index=True)
+
+
+class AnswerVote(ModelBase):
+    """Helpful or Not Helpful vote on Answer."""
+    answer = models.ForeignKey('Answer', related_name='votes')
+    helpful = models.BooleanField(default=False)
+    created = models.DateTimeField(default=datetime.now, db_index=True)
+    creator = models.ForeignKey(User, related_name='answer_votes',
                                 null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)

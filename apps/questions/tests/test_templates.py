@@ -12,6 +12,7 @@ class AnswersTemplateTestCase(TestCaseBase):
 
         self.client.login(username='jsocol', password='testpass')
         self.question = Question.objects.all()[0]
+        self.answer = self.question.answers.all()[0]
 
     def tearDown(self):
         super(AnswersTemplateTestCase, self).tearDown()
@@ -150,3 +151,72 @@ class AnswersTemplateTestCase(TestCaseBase):
 
         # Common vote test
         self.common_vote()
+
+    def common_answer_vote(self):
+        """Helper method for answer vote tests."""
+        # Check that there are no votes and vote form renders
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_('0 out of 0 people', doc('#answer-1 div.helpful mark')[0].text)
+        eq_(1, len(doc('form.helpful input[name="helpful"]')))
+
+        # Vote
+        post(self.client, 'questions.answer_vote', {'helpful': 'y'},
+             args=[self.question.id, self.answer.id])
+
+        # Check that there is 1 vote and vote form doesn't render
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+
+        eq_('1 out of 1 person', doc('#answer-1 div.helpful mark')[0].text)
+        eq_(0, len(doc('form.helpful input[name="helpful"]')))
+
+        # Voting again (same user) should not increment vote count
+        post(self.client, 'questions.answer_vote', {'helpful': 'y'},
+             args=[self.question.id, self.answer.id])
+        doc = pq(response.content)
+        eq_('1 out of 1 person', doc('#answer-1 div.helpful mark')[0].text)
+
+    def test_answer_authenticated_vote(self):
+        """Authenticated user answer vote."""
+        # log in as rrosario (didn't ask or answer question)
+        self.client.logout()
+        self.client.login(username='rrosario', password='testpass')
+
+        # Common vote test
+        self.common_answer_vote()
+
+    def test_answer_anonymous_vote(self):
+        """Anonymous user answer vote."""
+        # Log out
+        self.client.logout()
+
+        # Common vote test
+        self.common_answer_vote()
+
+    def test_answer_score(self):
+        """Test the helpful replies score."""
+        self.client.logout()
+
+        # A helpful vote
+        post(self.client, 'questions.answer_vote', {'helpful': 'y'},
+             args=[self.question.id, self.answer.id])
+
+        # Verify score (should be 1)
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_('1', doc('div.other-helpful span.votes')[0].text)
+
+        # A non-helpful vote
+        self.client.login(username='rrosario', password='testpass')
+        post(self.client, 'questions.answer_vote', {'not-helpful': 'y'},
+             args=[self.question.id, self.answer.id])
+
+        # Verify score (should be 0 now)
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_('0', doc('div.other-helpful span.votes')[0].text)

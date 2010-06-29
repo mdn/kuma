@@ -45,37 +45,34 @@
             </div>
             <div class="answer">
               <span class="user">{{ question.solution.creator }}</span>
-              <span class="votes">99 {# TODO #}</span>
+              <span class="votes">{{ 2 * question.solution.num_helpful_votes - question.solution.num_votes }}</span>
               {{ question.solution.content_parsed }}
             </div>
           </div>
         </div>
       {% endif %}
 
-      {# TODO: helpful answers #}
-      <div class="other-helpful">
-        <h3>{{ _('Other Helpful Replies') }}</h3>
+      {% for answer in question.helpful_replies %}
+        {% if loop.first %}
+          <div class="other-helpful">
+            <h3>{{ _('Other Helpful Replies') }}</h3>
+        {% endif %}
         <div class="ans-wrap">
           <div class="avatar">
-              avatar here
+              <a href="{{ profile_url(answer.creator) }}">
+                <img src="{{ profile_avatar(answer.creator) }}" height="48" width="48" alt="{{ answer.creator }}"/>
+              </a>
           </div>
           <div class="answer">
-            <span class="user">Steven Ritz</span>
-            <span class="votes">99</span>
-            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot; <a href="#">{{ _('More...') }}</a></p>
+            <span class="user">{{ answer.creator }}</span>
+            <span class="votes">{{ 2 * answer.num_helpful_votes - answer.num_votes }}</span>
+            <p>{{ answer.content_parsed|striptags()|truncate(170) }} <a href="{{ answer.get_absolute_url() }}">{{ _('More...') }}</a></p>
           </div>
         </div>
-        <div class="ans-wrap">
-          <div class="avatar">
-              avatar here
+        {% if loop.last %}
           </div>
-          <div class="answer">
-            <span class="user">Angelo Bandalamenti</span>
-            <span class="votes">66</span>
-            <p>&quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&quot; <a href="#">{{ _('More...') }}</a></p>
-          </div>
-        </div>
-      </div>
+        {% endif %}
+      {% endfor %}
       <div class="report-reply">
         <form class="report" action="#{# TODO #}" method="post">
           {{ csrf() }}
@@ -165,9 +162,9 @@
                   {{ csrf() }}
                   <input type="submit" class="btn g-btn" name="solution" value="{{ _('Solved It') }}" />
                 </form>
-              {% elif user != question.creator %}
+              {% elif not answer.has_voted(request) and user != question.creator and user != answer.creator %}
                 <h4>{{ _('Was this reply helpful?') }}</h4>
-                <form class="helpful" action="#{# TODO #}" method="post">
+                <form class="helpful" action="{{ url('questions.answer_vote', question_id=question.id, answer_id=answer.id) }}" method="post">
                   {{ csrf() }}
                   <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
                   <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
@@ -178,10 +175,10 @@
                 <div class="solved">{{ _('Solution chosen by author') }}</div>
               {% endif %}
 
-              <div class="helpful {# TODO: if zero people: add css class 'zero' #}">
+              <div class="helpful {% if answer.num_helpful_votes == 0 %}zero{% endif %}">
                 {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
                             '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
-                            16)|fe(count=14, total=16) }}
+                            answer.num_votes)|fe(count=answer.num_helpful_votes, total=answer.num_votes) }}
               </div>
             {% endif %}
 
