@@ -675,7 +675,7 @@ WebTrends.prototype.mozCustom=function(){
     this.WT.oss=this.dcsQP("q");
 
     //Set custom support referrer parameter
-    tempref = window.document.referrer.toLowerCase();
+    var tempref = window.document.referrer.toLowerCase();
     if (tempref.indexOf("/search") != -1) {
         this.WT.z_supportRef="search?";
     }else if (tempref.indexOf("style_mode=inproduct") != -1){
