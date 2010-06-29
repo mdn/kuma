@@ -24,6 +24,7 @@ function WebTrends(){
    this.DCSext={};
    this.images=[];
    this.index=0;
+   this.qp=[];
    this.exre=(function(){return(window.RegExp?new RegExp("dcs(uri)|(ref)|(aut)|(met)|(sta)|(sip)|(pro)|(byt)|(dat)|(p3p)|(cfg)|(redirect)|(cip)","i"):"");})();
    this.re=(function(){return(window.RegExp?(that.i18n?{"%25":/\%/g}:{"%09":/\t/g,"%20":/ /g,"%23":/\#/g,"%26":/\&/g,"%2B":/\+/g,"%3F":/\?/g,"%5C":/\\/g,"%22":/\"/g,"%7F":/\x7F/g,"%A0":/\xA0/g}):"");})();
 }
@@ -231,6 +232,26 @@ WebTrends.prototype.dcsET=function(){
    var e=(navigator.appVersion.indexOf("MSIE")!=-1)?"click":"mousedown";
    this.dcsBind(e,this.dcsDownload);
    this.dcsBind("contextmenu",this.dcsRightClick);
+}
+// Code section for Assign your query parameters to WebTrends query parameters. You will also need to configure the tag to recognize your query parameters.
+WebTrends.prototype.dcsQP=function(N){
+    if (typeof(N)=="undefined"){
+        return "";
+    }
+    var qry=location.search.substring(1);
+    if (qry!=""){
+        var pairs=qry.split("&");
+        for (var i=0;i<pairs.length;i++){
+            var pos=pairs[i].indexOf("=");
+            if (pos!=-1){
+                if (pairs[i].substring(0,pos)==N){
+                    this.qp[this.qp.length]=(i==0?"":"&")+pairs[i];
+                    return pairs[i].substring(pos+1);
+                }
+            }
+        }
+    }
+    return "";
 }
 WebTrends.prototype.dcsMultiTrack=function(){
    var args=dcsMultiTrack.arguments?dcsMultiTrack.arguments:arguments;
@@ -649,11 +670,36 @@ WebTrends.prototype.dcsChk=function() {
    }
    return ((cval % 1000) < (this.rate * 10));
 }
+WebTrends.prototype.mozCustom=function(){
+    //Set q to standard search parameter
+    this.WT.oss=this.dcsQP("q");
+
+    //Set custom support referrer parameter
+    tempref = window.document.referrer.toLowerCase();
+    if (tempref.indexOf("/search") != -1) {
+        this.WT.z_supportRef="search?";
+    }else if (tempref.indexOf("style_mode=inproduct") != -1){
+        this.WT.z_supportRef="InProduct";
+    }else if (tempref.indexOf("/kb/") != -1){
+        this.WT.z_supportRef="Homepage";
+    }
+}
+
+WebTrends.prototype.dcsBounce=function(){
+    if(typeof(this.WT.vt_f_s)!="undefined" && this.WT.vt_f_s==1){
+        this.WT.z_bounce="1";
+    }else{
+        this.WT.z_bounce="0";
+    }
+}
+
 WebTrends.prototype.dcsCollect=function(){
     if (this.enabled){
         this.dcsVar();
         this.dcsMeta();
         this.dcsAdv();
+        this.dcsBounce();
+        this.mozCustom();
         if (this.dcsChk()) {
                this.dcsTag();
                }
@@ -662,12 +708,6 @@ WebTrends.prototype.dcsCollect=function(){
 function dcsMultiTrack(){
    if (typeof(_tag)!="undefined"){
        return(_tag.dcsMultiTrack());
-   }
-}
-
-function dcsDebug(){
-   if (typeof(_tag)!="undefined"){
-       return(_tag.dcsDebug());
    }
 }
 Function.prototype.wtbind = function(obj){
@@ -679,4 +719,3 @@ Function.prototype.wtbind = function(obj){
 }
 var _tag=new WebTrends();
 _tag.dcsCollect();
-
