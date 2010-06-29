@@ -6,18 +6,16 @@
 
 {% block filter %}
 <div id="filter">
-  <label>{{ _('Posts:') }}</label>
   <ul>
-    {% if user.is_authenticated() %}
-      <li>
-        <a href="#{# TODO #}">{{ _('My Contributions') }}</a>
-      </li>
-    {% endif %}
     <li>
       <a href="#{# TODO #}">{{ _('Most Recent') }}</a>
     </li>
-    <li class="active {# TODO: conditional logic #}">
+    <li>
       <a href="#{# TODO #}">{{ _('Most Requested') }}</a>
+    </li>
+    <li class="separator">|</li>
+    <li{% if not filter %} class="active"{% endif %}>
+      <a href="{{ url('questions.questions') }}">{{ _('All') }}</a>
     </li>
     <li>
       <a href="#{# TODO #}">{{ _('Unsolved') }}</a>
@@ -25,9 +23,14 @@
     <li>
       <a href="#{# TODO #}">{{ _('Solved') }}</a>
     </li>
-    <li>
-      <a href="#{# TODO #}">{{ _('No Replies') }}</a>
+    <li{% if filter == 'no-replies' %} class="active"{% endif %}>
+      <a href="{{ url('questions.questions')|urlparams(filter='no-replies') }}">{{ _('No Replies') }}</a>
     </li>
+    {% if user.is_authenticated() %}
+      <li>
+        <a href="#{# TODO #}">{{ _('My Contributions') }}</a>
+      </li>
+    {% endif %}
   </ul>
 </div>
 {% endblock %}
@@ -36,7 +39,7 @@
   {% if questions.object_list %}
     <ol class="questions">
       {% for question in questions.object_list %}
-        <li>
+        <li id="question-{{ question.id }}">
           {% include 'questions/includes/have_problem.html' %}
           <div class="title">
             <h2><a href="{{ question.get_absolute_url() }}">{{ question.title }}</a></h2>

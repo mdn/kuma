@@ -17,7 +17,17 @@ import question_config as config
 def questions(request):
     """View the questions."""
 
-    questions_ = paginate(request, Question.objects.all(),
+    filter = request.GET.get('filter')
+
+    if filter == 'no-replies':
+        question_qs = Question.objects.filter(num_answers=0)
+    elif filter == 'replies':
+        question_qs = Question.objects.filter(num_answers__gt=0)
+    else:
+        question_qs = Question.objects.all()
+        filter = None
+
+    questions_ = paginate(request, question_qs,
                           per_page=constants.QUESTIONS_PER_PAGE)
 
     feed_urls = ((reverse('questions.feed'),
@@ -25,7 +35,7 @@ def questions(request):
 
     return jingo.render(request, 'questions/questions.html',
                         {'questions': questions_,
-                         'feeds': feed_urls})
+                         'feeds': feed_urls, 'filter': filter})
 
 
 def answers(request, question_id, form=None):

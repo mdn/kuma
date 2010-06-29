@@ -1,6 +1,8 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from sumo.urlresolvers import reverse
+from sumo.helpers import urlparams
 from questions.models import Question
 from questions.tests import TestCaseBase, post, get
 
@@ -32,7 +34,6 @@ class AnswersTemplateTestCase(TestCaseBase):
 
         new_answer = self.question.answers.order_by('-created')[0]
         eq_(content, new_answer.content)
-        new_answer.delete()
 
     def test_empty_answer(self):
         """Posting an empty answer shows error."""
@@ -220,3 +221,20 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id])
         doc = pq(response.content)
         eq_('0', doc('div.other-helpful span.votes')[0].text)
+
+
+class QuestionsTemplateTestCase(TestCaseBase):
+
+    def test_all_filter_highlight(self):
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_('active', doc('div#filter ul li')[-1].attrib['class'])
+        eq_('question-1', doc('ol.questions li')[0].attrib['id'])
+
+    def test_no_reply_filter(self):
+        url_ = urlparams(reverse('questions.questions'),
+                         filter='no-replies')
+        response = self.client.get(url_)
+        doc = pq(response.content)
+        eq_('active', doc('div#filter ul li')[-2].attrib['class'])
+        eq_('question-2', doc('ol.questions li')[0].attrib['id'])
