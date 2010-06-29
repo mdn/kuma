@@ -12,7 +12,8 @@
   </hgroup>
 
   <div id="support-search" role="search">
-    <form action="#{# TODO #}" method="get">
+    <form action="{{ url('search') }}" method="get">
+      <input type="hidden" name="w" value="2" />{# 2 is support questions #}
       <div class="wrap">
         <input type="text" class="text" name="q" placeholder="{{ _('Search Mozilla Support') }}" required="required" />
       </div>
@@ -35,6 +36,7 @@
         {% trans login_url=settings.LOGIN_URL, register_url=settings.REGISTER_URL %}
           Want to contribute? <a href="{{ login_url }}">Sign In</a> or <a href="{{ register_url }}">Register</a>
         {% endtrans %}
+      </p>
     {% endif %}
   </div>
 </div>
