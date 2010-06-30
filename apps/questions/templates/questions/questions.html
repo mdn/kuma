@@ -7,28 +7,28 @@
 {% block filter %}
 <div id="filter">
   <ul>
-    <li>
-      <a href="#{# TODO #}">{{ _('Most Recent') }}</a>
+    <li{% if not sort %} class="active"{% endif %}>
+      <a href="{{ url('questions.questions')|urlparams(filter=filter) }}">{{ _('Most Recent') }}</a>
     </li>
-    <li>
-      <a href="#{# TODO #}">{{ _('Most Requested') }}</a>
+    <li{% if sort == 'requested' %} class="active"{% endif %}>
+      <a href="{{ url('questions.questions')|urlparams(sort='requested', filter=filter) }}">{{ _('Most Requested') }}</a>
     </li>
     <li class="separator">|</li>
     <li{% if not filter %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions') }}">{{ _('All') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(sort=sort) }}">{{ _('All') }}</a>
     </li>
     <li{% if filter == 'unsolved' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='unsolved') }}">{{ _('Unsolved') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter='unsolved', sort=sort) }}">{{ _('Unsolved') }}</a>
     </li>
     <li{% if filter == 'solved' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='solved') }}">{{ _('Solved') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter='solved', sort=sort) }}">{{ _('Solved') }}</a>
     </li>
     <li{% if filter == 'no-replies' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='no-replies') }}">{{ _('No Replies') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter='no-replies', sort=sort) }}">{{ _('No Replies') }}</a>
     </li>
     {% if user.is_authenticated() %}
       <li{% if filter == 'my-contributions' %} class="active"{% endif %}>
-        <a href="{{ url('questions.questions')|urlparams(filter='my-contributions') }}">{{ _('My Contributions') }}</a>
+        <a href="{{ url('questions.questions')|urlparams(filter='my-contributions', sort=sort) }}">{{ _('My Contributions') }}</a>
       </li>
     {% endif %}
   </ul>

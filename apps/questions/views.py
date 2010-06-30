@@ -19,20 +19,29 @@ def questions(request):
     """View the questions."""
 
     filter = request.GET.get('filter')
+    sort_ = request.GET.get('sort')
+
+    if sort_ == 'requested':
+        order = '-num_votes_past_week'
+    else:
+        sort_ = None
+        order = '-updated'
 
     if filter == 'no-replies':
-        question_qs = Question.objects.filter(num_answers=0)
+        question_qs = Question.objects.filter(num_answers=0).order_by(order)
     elif filter == 'replies':
         question_qs = Question.objects.filter(num_answers__gt=0)
+        question_qs = question_qs.order_by(order)
     elif filter == 'solved':
-        question_qs = Question.objects.exclude(solution=None)
+        question_qs = Question.objects.exclude(solution=None).order_by(order)
     elif filter == 'unsolved':
-        question_qs = Question.objects.filter(solution=None)
+        question_qs = Question.objects.filter(solution=None).order_by(order)
     elif filter == 'my-contributions' and request.user.is_authenticated():
         criteria = Q(answers__creator=request.user) | Q(creator=request.user)
         question_qs = Question.objects.filter(criteria).distinct()
+        question_qs = question_qs.order_by(order)
     else:
-        question_qs = Question.objects.all()
+        question_qs = Question.objects.all().order_by(order)
         filter = None
 
     questions_ = paginate(request, question_qs,
@@ -42,8 +51,8 @@ def questions(request):
                   QuestionsFeed().title()),)
 
     return jingo.render(request, 'questions/questions.html',
-                        {'questions': questions_,
-                         'feeds': feed_urls, 'filter': filter})
+                        {'questions': questions_, 'feeds': feed_urls,
+                         'filter': filter, 'sort': sort_})
 
 
 def answers(request, question_id, form=None):

@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 import jinja2
@@ -10,6 +11,7 @@ from sumo.utils import WikiParser
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 import questions as constants
+from .tasks import update_question_votes
 
 
 class Question(ModelBase):
@@ -28,6 +30,7 @@ class Question(ModelBase):
                                  null=True)
     status = models.IntegerField(default=0, db_index=True)
     is_locked = models.BooleanField(default=False)
+    num_votes_past_week = models.PositiveIntegerField(default=0, db_index=True)
 
     class Meta:
         ordering = ['-updated']
@@ -42,8 +45,9 @@ class Question(ModelBase):
 
     def save(self, *args, **kwargs):
         """Override save method to take care of updated."""
-        if self.id:
+        if self.id and not kwargs.get('no_update'):
             self.updated = datetime.now()
+        kwargs.pop('no_update', None)
         super(Question, self).save(*args, **kwargs)
 
     def add_metadata(self, **kwargs):
@@ -77,12 +81,13 @@ class Question(ModelBase):
         """Get the number of votes for this question."""
         return QuestionVote.objects.filter(question=self).count()
 
-    @property
-    def num_votes_past_week(self):
+    def sync_num_votes_past_week(self):
         """Get the number of votes for this question in the past week."""
         last_week = datetime.now().date() - timedelta(days=7)
-        return QuestionVote.objects.filter(question=self,
-                                           created__gte=last_week).count()
+        n = QuestionVote.objects.filter(question=self,
+                                        created__gte=last_week).count()
+        self.num_votes_past_week = n
+        return n
 
     def has_voted(self, request):
         """Did the user already vote?"""
@@ -234,3 +239,11 @@ class AnswerVote(ModelBase):
     creator = models.ForeignKey(User, related_name='answer_votes',
                                 null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
+
+
+def send_vote_update_task(**kwargs):
+    if kwargs.get('created'):
+        q = kwargs.get('instance').question
+        update_question_votes.delay(q)
+
+post_save.connect(send_vote_update_task, sender=QuestionVote)

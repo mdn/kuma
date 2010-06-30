@@ -3,7 +3,7 @@ from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from questions.models import Question, Answer
+from questions.models import Question, Answer, QuestionVote
 from questions.tests import TestCaseBase, post, get
 
 
@@ -302,3 +302,19 @@ class QuestionsTemplateTestCase(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('li#question-1 span.contributed')))
         eq_(0, len(doc('li#question-2 span.contributed')))
+
+    def test_sort(self):
+        default = reverse('questions.questions')
+        sorted = urlparams(default, sort='requested')
+
+        q = Question.objects.get(pk=2)
+        qv = QuestionVote(question=q, anonymous_id='abc123')
+        qv.save()
+
+        response = self.client.get(default)
+        doc = pq(response.content)
+        eq_('question-1', doc('ol.questions li')[0].attrib['id'])
+
+        response = self.client.get(sorted)
+        doc = pq(response.content)
+        eq_('question-2', doc('ol.questions li')[0].attrib['id'])

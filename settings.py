@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     'search',
     'forums',
     'celery',
+    'cronjobs',
     'notifications',
     'identicons',
     'questions',

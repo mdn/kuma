@@ -14,18 +14,18 @@ class TestAnswer(TestCaseBase):
                             content='Lorem Ipsum Dolor',
                             creator_id=118533)
         question.save()
-        
+
         eq_(0, question.num_answers)
         eq_(None, question.last_answer)
-        
+
         answer = Answer(question=question, creator_id=47963,
                         content="Test Answer")
         answer.save()
-        
+
         question = Question.objects.get(pk=question.id)
         eq_(1, question.num_answers)
         eq_(answer, question.last_answer)
-        
+
         question.delete()
 
 
@@ -63,3 +63,19 @@ class TestQuestionMetadata(TestCaseBase):
         """Test the metadata property on Question model."""
         self.question.add_metadata(crash_id='1234567890')
         eq_('1234567890', self.question.metadata['crash_id'])
+
+
+class TestQuestionSave(TestCaseBase):
+    """Tests the Question.save() method."""
+
+    def test_updated(self):
+        q = Question.objects.all()[0]
+        updated = q.updated
+        q.save()
+        self.assertNotEqual(updated, q.updated)
+
+    def test_no_update(self):
+        q = Question.objects.all()[0]
+        updated = q.updated
+        q.save(no_update=True)
+        eq_(updated, q.updated)
