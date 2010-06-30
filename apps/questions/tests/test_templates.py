@@ -228,7 +228,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
     def test_all_filter_highlight(self):
         response = get(self.client, 'questions.questions')
         doc = pq(response.content)
-        eq_('active', doc('div#filter ul li')[-1].attrib['class'])
+        eq_('active', doc('div#filter ul li')[3].attrib['class'])
         eq_('question-1', doc('ol.questions li')[0].attrib['id'])
 
     def test_no_reply_filter(self):
@@ -236,5 +236,5 @@ class QuestionsTemplateTestCase(TestCaseBase):
                          filter='no-replies')
         response = self.client.get(url_)
         doc = pq(response.content)
-        eq_('active', doc('div#filter ul li')[-2].attrib['class'])
+        eq_('active', doc('div#filter ul li')[-1].attrib['class'])
         eq_('question-2', doc('ol.questions li')[0].attrib['id'])
