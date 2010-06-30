@@ -294,3 +294,11 @@ class QuestionsTemplateTestCase(TestCaseBase):
 
         # rrosario should have 0 questions in his contributions
         self._my_contributions_test_helper('rrosario', 0)
+
+    def test_contributed_badge(self):
+        # pcraciunoiu should have a contributor badge on question 1 but not 2
+        self.client.login(username='pcraciunoiu', password="testpass")
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_(1, len(doc('li#question-1 span.contributed')))
+        eq_(0, len(doc('li#question-2 span.contributed')))

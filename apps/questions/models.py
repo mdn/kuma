@@ -112,6 +112,15 @@ class Question(ModelBase):
         else:
             return []
 
+    def is_contributor(self, user):
+        """Did the passed in user contribute to this question?"""
+        if user.is_authenticated():
+            qs = self.answers.filter(creator=user)
+            if self.creator == user or qs.count() > 0:
+                return True
+
+        return False
+
 
 class QuestionMetaData(ModelBase):
     """Metadata associated with a support question."""
