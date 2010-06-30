@@ -3,7 +3,7 @@ from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from questions.models import Question
+from questions.models import Question, Answer
 from questions.tests import TestCaseBase, post, get
 
 
@@ -238,3 +238,40 @@ class QuestionsTemplateTestCase(TestCaseBase):
         doc = pq(response.content)
         eq_('active', doc('div#filter ul li')[-1].attrib['class'])
         eq_('question-2', doc('ol.questions li')[0].attrib['id'])
+
+    def test_solved_filter(self):
+        # initially there should be no solved answers
+        url_ = urlparams(reverse('questions.questions'),
+                         filter='solved')
+        response = self.client.get(url_)
+        doc = pq(response.content)
+        eq_('active', doc('div#filter ul li')[5].attrib['class'])
+        eq_(0, len(doc('ol.questions li')))
+
+        # solve one question then verify that it shows up
+        answer = Answer.objects.all()[0]
+        answer.question.solution = answer
+        answer.question.save()
+        response = self.client.get(url_)
+        doc = pq(response.content)
+        eq_(1, len(doc('ol.questions li')))
+        eq_('question-%s' % answer.question.id,
+            doc('ol.questions li')[0].attrib['id'])
+
+    def test_unsolved_filter(self):
+        # initially there should be 2 unsolved answers
+        url_ = urlparams(reverse('questions.questions'),
+                         filter='unsolved')
+        response = self.client.get(url_)
+        doc = pq(response.content)
+        eq_('active', doc('div#filter ul li')[4].attrib['class'])
+        eq_(2, len(doc('ol.questions li')))
+
+        # solve one question then verify that it doesn't show up
+        answer = Answer.objects.all()[0]
+        answer.question.solution = answer
+        answer.question.save()
+        response = self.client.get(url_)
+        doc = pq(response.content)
+        eq_(1, len(doc('ol.questions li')))
+        eq_(0, len(doc('ol.questions li#question-%s' % answer.question.id)))

@@ -17,11 +17,11 @@
     <li{% if not filter %} class="active"{% endif %}>
       <a href="{{ url('questions.questions') }}">{{ _('All') }}</a>
     </li>
-    <li>
-      <a href="#{# TODO #}">{{ _('Unsolved') }}</a>
+    <li{% if filter == 'unsolved' %} class="active"{% endif %}>
+      <a href="{{ url('questions.questions')|urlparams(filter='unsolved') }}">{{ _('Unsolved') }}</a>
     </li>
-    <li>
-      <a href="#{# TODO #}">{{ _('Solved') }}</a>
+    <li{% if filter == 'solved' %} class="active"{% endif %}>
+      <a href="{{ url('questions.questions')|urlparams(filter='solved') }}">{{ _('Solved') }}</a>
     </li>
     <li{% if filter == 'no-replies' %} class="active"{% endif %}>
       <a href="{{ url('questions.questions')|urlparams(filter='no-replies') }}">{{ _('No Replies') }}</a>
@@ -69,7 +69,7 @@
         </li>
       {% endfor %}
 
-      {# TODO: Implement remaining badges 
+      {# TODO: Implement remaining badges
         <span class="badge contributed">contributed</span>
       #}
 

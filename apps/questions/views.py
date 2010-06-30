@@ -23,6 +23,10 @@ def questions(request):
         question_qs = Question.objects.filter(num_answers=0)
     elif filter == 'replies':
         question_qs = Question.objects.filter(num_answers__gt=0)
+    elif filter == 'solved':
+        question_qs = Question.objects.exclude(solution=None)
+    elif filter == 'unsolved':
+        question_qs = Question.objects.filter(solution=None)
     else:
         question_qs = Question.objects.all()
         filter = None
