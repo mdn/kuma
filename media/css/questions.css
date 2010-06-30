@@ -486,6 +486,7 @@ div.solution:after {
 }
 
 div.ans-wrap {
+    clear: both;
     padding: 10px 0 0;
 }
 div.ans-wrap div.avatar {
@@ -530,7 +531,7 @@ div.answer p {
 div.other-helpful {
     color: #898378;
     margin: 10px 0 0;
-    padding: 15px 15px 0 15px;
+    padding: 15px;
     zoom: 1;
 }
 
