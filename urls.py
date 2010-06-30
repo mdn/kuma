@@ -1,6 +1,7 @@
-from django.conf.urls.defaults import include, patterns
+from django.conf.urls.defaults import include, patterns, url
 from django.conf import settings
 from django.contrib import admin
+from django.views.i18n import javascript_catalog
 
 import authority
 
@@ -16,6 +17,10 @@ urlpatterns = patterns('',
 
     # Kitsune admin (not Django admin).
     (r'^admin/', include('kadmin.urls')),
+
+    # Javascript translations.
+    url('^jsi18n/.*$', javascript_catalog,
+        {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
 )
 
 # Handle 404 and 500 errors

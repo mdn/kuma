@@ -24,7 +24,7 @@ PIL==1.1.7
 -e git://github.com/jsocol/didyoumean.git@cc11aeae400346fd4fc9e6334bd5ff80484839b5#egg=didyoumean
 
 # for l10n
--e git://github.com/clouserw/tower.git@1217a7184ef40520e059fadf359618972662c47e#egg=tower
+-e git://github.com/clouserw/tower.git#egg=tower
 
 # commonware, stuff we share
 -e git://github.com/jsocol/commonware.git#egg=commonware

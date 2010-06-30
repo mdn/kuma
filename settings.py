@@ -220,6 +220,14 @@ DOMAIN_METHODS = {
     ],
 }
 
+# These domains will not be merged into messages.pot and will use separate PO
+# files. See the following URL for an example of how to set these domains
+# in DOMAIN_METHODS.
+# http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
+STANDALONE_DOMAINS = [
+    'javascript',
+    ]
+
 # If you have trouble extracting strings with Tower, try setting this
 # to True
 TOWER_ADD_HEADERS = True

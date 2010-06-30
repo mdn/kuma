@@ -118,10 +118,10 @@ var Marky = {
 };
 
 Marky.button([
-    ['Bold', '/media/img/markup/text_bold.png', "'''", "'''", 'bold text'],
-    ['Italic', '/media/img/markup/text_italic.png', "''", "''", 'italic text'],
-    ['Article Link', '/media/img/markup/page_link.png', '[[', ']]', 'Knowledge Base Article'],
-    ['External Link', '/media/img/markup/world_link.png', '[http://example.com ', ']', 'external link'],
-    ['Numbered List', '/media/img/markup/text_list_numbers.png', '# ', '', 'Numbered list item', true],
-    ['Bulleted List', '/media/img/markup/text_list_bullets.png', '* ', '', 'Bulleted list item', true]
+    [gettext('Bold'), '/media/img/markup/text_bold.png', "'''", "'''", gettext('bold text')],
+    [gettext('Italic'), '/media/img/markup/text_italic.png', "''", "''", gettext('italic text')],
+    [gettext('Article Link'), '/media/img/markup/page_link.png', '[[', ']]', gettext('Knowledge Base Article')],
+    [gettext('External Link'), '/media/img/markup/world_link.png', '[http://example.com ', ']', gettext('external link')],
+    [gettext('Numbered List'), '/media/img/markup/text_list_numbers.png', '# ', '', gettext('Numbered list item'), true],
+    [gettext('Bulleted List'), '/media/img/markup/text_list_bullets.png', '* ', '', gettext('Bulleted list item'), true]
 ]);
