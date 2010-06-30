@@ -27,8 +27,8 @@
       <a href="{{ url('questions.questions')|urlparams(filter='no-replies') }}">{{ _('No Replies') }}</a>
     </li>
     {% if user.is_authenticated() %}
-      <li>
-        <a href="#{# TODO #}">{{ _('My Contributions') }}</a>
+      <li{% if filter == 'my-contributions' %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(filter='my-contributions') }}">{{ _('My Contributions') }}</a>
       </li>
     {% endif %}
   </ul>

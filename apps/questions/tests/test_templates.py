@@ -275,3 +275,22 @@ class QuestionsTemplateTestCase(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('ol.questions li')))
         eq_(0, len(doc('ol.questions li#question-%s' % answer.question.id)))
+
+    def _my_contributions_test_helper(self, username, expected_qty):
+        url_ = urlparams(reverse('questions.questions'),
+                         filter='my-contributions')
+        self.client.login(username=username, password="testpass")
+        response = self.client.get(url_)
+        doc = pq(response.content)
+        eq_('active', doc('div#filter ul li')[7].attrib['class'])
+        eq_(expected_qty, len(doc('ol.questions li')))
+
+    def test_my_contributions_filter(self):
+        # jsocol should have 2 questions in his contributions
+        self._my_contributions_test_helper('jsocol', 2)
+
+        # pcraciunoiu should have 1 questions in his contributions'
+        self._my_contributions_test_helper('pcraciunoiu', 1)
+
+        # rrosario should have 0 questions in his contributions
+        self._my_contributions_test_helper('rrosario', 0)

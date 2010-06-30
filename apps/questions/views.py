@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 import jingo
 
@@ -27,6 +28,9 @@ def questions(request):
         question_qs = Question.objects.exclude(solution=None)
     elif filter == 'unsolved':
         question_qs = Question.objects.filter(solution=None)
+    elif filter == 'my-contributions' and request.user.is_authenticated():
+        criteria = Q(answers__creator=request.user) | Q(creator=request.user)
+        question_qs = Question.objects.filter(criteria).distinct()
     else:
         question_qs = Question.objects.all()
         filter = None
