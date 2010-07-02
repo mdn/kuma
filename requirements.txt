@@ -15,7 +15,7 @@ Werkzeug==0.5.1
 Babel>=0.9.4
 phpserialize==1.2
 South==0.7
-celery
+celery==1.0.6
 python-dateutil
 PIL==1.1.7
 
