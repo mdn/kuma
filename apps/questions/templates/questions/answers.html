@@ -14,7 +14,8 @@
         </a>
       </div>
       <div class="asked-by">
-        {{ _('Asked by <span class="user">{user}</span>')|fe(user=question.creator) }}
+        {# L10n: {f} is the full username and {u} is the truncated username. #}
+        {{ _('Asked by <span class="user" title="{f}">{u}</span>')|fe(f=question.creator, u=question.creator.username|truncate(10, True)) }}
         <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
       </div>
     </div>
@@ -44,7 +45,7 @@
               </a>
             </div>
             <div class="answer">
-              <span class="user">{{ question.solution.creator }}</span>
+              <span class="user" title="{{question.solution.creator}}">{{ question.solution.creator.username|truncate(10, True) }}</span>
               <span class="votes">{{ 2 * question.solution.num_helpful_votes - question.solution.num_votes }}</span>
               {{ question.solution.content_parsed }}
             </div>
@@ -64,7 +65,7 @@
               </a>
           </div>
           <div class="answer">
-            <span class="user">{{ answer.creator }}</span>
+            <span class="user" title="{{answer.creator}}">{{ answer.creator.username|truncate(10, True) }}</span>
             <span class="votes">{{ 2 * answer.num_helpful_votes - answer.num_votes }}</span>
             <p>{{ answer.content_parsed|striptags()|truncate(170) }} <a href="{{ answer.get_absolute_url() }}">{{ _('More...') }}</a></p>
           </div>
@@ -134,7 +135,7 @@
               </a>
             </div>
             <div class="answered-by">
-              <span class="user">{{ answer.creator }}</span>
+              <span class="user" title="{{answer.creator}}">{{ answer.creator.username|truncate(10, True) }}</span>
               {% if answer.creator==question.creator %}
                 <span class="author">{{ _('Author') }}</span>
               {% else %}
@@ -206,7 +207,7 @@
           </a>
         </div>
         <div class="asked-by">
-          {{ _('<span class="user">{user}</span>')|fe(user=user) }}
+          <span class="user" title="{{user}}">{{ user.username|truncate(10, True) }}</span>
         </div>
       </div>
       <div class="main-section">
