@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User, Permission
 
@@ -11,6 +12,7 @@ from questions.models import Question, Answer, QuestionVote
 from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
                              tags_eq)
 from questions.views import UNAPPROVED_TAG, NO_TAG
+from questions.tasks import cache_top_contributors
 
 
 class AnswersTemplateTestCase(TestCaseBase):
@@ -513,3 +515,31 @@ class QuestionsTemplateTestCase(TestCaseBase):
         response = self.client.get(sorted)
         doc = pq(response.content)
         eq_('question-2', doc('ol.questions li')[0].attrib['id'])
+
+    def test_top_contributors(self):
+        # There should be no top contributors since there are no solutions.
+        cache_top_contributors()
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_(0, len(doc('#top-contributors ol li')))
+
+        # Solve a question and verify we now have a top conributor.
+        answer = Answer.objects.all()[0]
+        answer.created = datetime.now()
+        answer.save()
+        answer.question.solution = answer
+        answer.question.save()
+        cache_top_contributors()
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        lis = doc('#top-contributors ol li')
+        eq_(1, len(lis))
+        eq_('pcraciunoiu', lis[0].text)
+
+        # Make answer 8 days old. There should no be top contributors.
+        answer.created = datetime.now() - timedelta(days=8)
+        answer.save()
+        cache_top_contributors()
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_(0, len(doc('#top-contributors ol li')))

@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.cache import cache
+from django.conf import settings
 
 import jingo
 from taggit.models import Tag
@@ -18,6 +20,7 @@ from .models import Question, Answer, QuestionVote, AnswerVote
 from .forms import NewQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
 from .tags import add_existing_tag
+from .tasks import cache_top_contributors
 import questions as constants
 import question_config as config
 
@@ -63,7 +66,8 @@ def questions(request):
 
     return jingo.render(request, 'questions/questions.html',
                         {'questions': questions_, 'feeds': feed_urls,
-                         'filter': filter, 'sort': sort_})
+                         'filter': filter, 'sort': sort_,
+                         'top_contributors': _get_top_contributors()})
 
 
 def answers(request, question_id, form=None):
@@ -327,6 +331,18 @@ def _add_tag(request, question_id):
                 return tag_name
             raise
         return canonical_name
+
+
+def _get_top_contributors():
+    """Retrieves the top contributors from cache, if available.
+    Otherwise it creates a task for computing and caching them.
+
+    These are the users with the most solutions in the last week.
+    """
+    users = cache.get(settings.TOP_CONTRIBUTORS_CACHE_KEY)
+    if not users:
+        cache_top_contributors.delay()
+    return users
 
 
 #  Helper functions to deal with products dict

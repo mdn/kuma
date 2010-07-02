@@ -352,3 +352,7 @@ CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 # Anonymous user cookie
 ANONYMOUS_COOKIE_NAME = 'SUMO_ANONID'
 ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
+
+# Top contributors cache settings
+TOP_CONTRIBUTORS_CACHE_KEY = 'sumo:TopContributors'
+TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12

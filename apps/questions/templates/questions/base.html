@@ -61,23 +61,17 @@
         </a>
       </div>
     </div>
-    <div class="sd-module" id="top-contributors">
-      <h3>{{ _('Top Contributors') }}</h3>
-      <h4>{{ _('Most Solutions this Week') }}</h4>
-      <ol>
-        {# TODO #}
-        <li>Lorem Ipsum</li>
-        <li>Dolor sit Amet</li>
-        <li>Consectetur Adipisicing</li>
-        <li>Sed do Eiusmod</li>
-        <li>Tempor Incididunt</li>
-        <li>Labore Dolore</li>
-        <li>Magna Aliqua</li>
-        <li>Enim Minim</li>
-        <li>Veniam Nostrud</li>
-        <li>Exercitation Ullamco</li>
-      </ol>
-    </div>
+    {% if top_contributors %}
+      <div class="sd-module" id="top-contributors">
+        <h3>{{ _('Top Contributors') }}</h3>
+        <h4>{{ _('Most Solutions this Week') }}</h4>
+        <ol>
+          {% for user in top_contributors %}
+            <li>{{ user }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% endif %}
   {% endblock %}
 </div>
 

@@ -1,4 +1,8 @@
 from django.test import TestCase, client
+from datetime import datetime
+
+from django.conf import settings
+from django.template.defaultfilters import slugify
 
 from nose.tools import eq_
 
@@ -24,6 +28,13 @@ class TestCaseBase(TestCase):
 
         self.client = client.Client()
         self.client.get('/')
+
+        # create a new cache key for top contributors to avoid conflict
+        self.orig_tc_cache_key = settings.TOP_CONTRIBUTORS_CACHE_KEY
+        settings.TOP_CONTRIBUTORS_CACHE_KEY += slugify(datetime.now())
+
+    def tearDown(self):
+        settings.TOP_CONTRIBUTORS_CACHE_KEY = self.orig_tc_cache_key
 
 
 class TaggingTestCaseBase(TestCaseBase):
