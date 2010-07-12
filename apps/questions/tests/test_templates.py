@@ -69,8 +69,8 @@ class AnswersTemplateTestCase(TestCaseBase):
         doc = pq(response.content)
         error_msg = doc('ul.errorlist li a')[0]
         eq_(error_msg.text, 'Please keep the length of your content to ' +
-                            '10000 characters or less. It is currently ' +
-                            '10001 characters.')
+                            '10,000 characters or less. It is currently ' +
+                            '10,001 characters.')
 
     def test_solution(self):
         """Test accepting a solution."""
