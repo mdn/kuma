@@ -27,6 +27,10 @@
   {% endfor %}
 {% endif %}
 
+<!--[if lt IE 9]>
+{# html5-shiv.js must be inside <head/> to work. #}
+<script src="{{ MEDIA_URL }}js/libs/html5-shiv.js"></script>
+<![endif]-->
 </head>
 <body{% if classes %} class="{{ classes }}"{% endif %}>
 
