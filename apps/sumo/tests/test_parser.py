@@ -116,7 +116,7 @@ class TestWikiInternalLinks(TestCase):
 
     def test_simple_markup(self):
         text = '[[Installing Firefox]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox">' +
+        eq_('<p><a href="/en-US/kb/Installing+Firefox" rel="nofollow">' +
             'Installing Firefox</a>\n</p>',
             parser.parse(text))
 
@@ -129,70 +129,8 @@ class TestWikiInternalLinks(TestCase):
     def test_link_hash_markup(self):
         """Internal link with hash."""
         text = '[[Installing Firefox#section name]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_name">' +
-                'Installing Firefox#section name</a>\n</p>',
-            parser.parse(text))
-
-    def test_hash_only(self):
-        """Internal hash only."""
-        link = pq_link('[[#section 3]]')
-        eq_('#section_3', link.attr('href'))
-        eq_('#section 3', link.text())
-
-    def test_link_name(self):
-        """Internal link with name."""
-        link = pq_link('[[Installing Firefox|this name]]')
-        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
-        eq_('this name', link.text())
-
-    def test_link_with_extra_pipe(self):
-        link = pq_link('[[Installing Firefox|with|pipe]]')
-        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
-        eq_('with|pipe', link.text())
-
-    def test_hash_name(self):
-        """Internal hash with name."""
-        link = pq_link('[[#section 3|this name]]')
-        eq_('#section_3', link.attr('href'))
-        eq_('this name', link.text())
-
-    def test_get_wiki_link(self):
-        """Wiki links are properly built for existing pages."""
-        eq_('/en-US/kb/Installing+Firefox',
-            parser._getWikiLink('Installing Firefox'))
-
-    def test_get_wiki_link_create(self):
-        """Wiki links are properly built for inexisting pages."""
-        eq_(settings.WIKI_CREATE_URL % 'Inexistent+Page',
-            parser._getWikiLink('Inexistent Page'))
-
-
-class TestWikiInternalLinks(TestCase):
-    fixtures = ['pages.json']
-
-    def test_simple(self):
-        """Simple internal link markup."""
-        link = pq_link('[[Installing Firefox]]')
-        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
-        eq_('Installing Firefox', link.text())
-
-    def test_simple_markup(self):
-        text = '[[Installing Firefox]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox">' +
-            'Installing Firefox</a>\n</p>',
-            parser.parse(text))
-
-    def test_link_hash(self):
-        """Internal link with hash."""
-        link = pq_link('[[Installing Firefox#section name]]')
-        eq_('/en-US/kb/Installing+Firefox#section_name', link.attr('href'))
-        eq_('Installing Firefox#section name', link.text())
-
-    def test_link_hash_markup(self):
-        """Internal link with hash."""
-        text = '[[Installing Firefox#section name]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_name">' +
-                'Installing Firefox#section name</a>\n</p>',
+        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_name"' +
+                ' rel="nofollow">Installing Firefox#section name</a>\n</p>',
             parser.parse(text))
 
     def test_hash_only(self):
@@ -227,8 +165,8 @@ class TestWikiInternalLinks(TestCase):
     def test_link_hash_name_markup(self):
         """Internal link with hash and name."""
         text = '[[Installing Firefox#section 3|this name]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_3">' +
-            'this name</a>\n</p>', parser.parse(text))
+        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_3"' +
+            ' rel="nofollow">this name</a>\n</p>', parser.parse(text))
 
     def test_simple_edit(self):
         """Simple link for inexistent page."""
@@ -275,9 +213,10 @@ class TestWikiImageTags(TestCase):
 
     def test_page_link(self):
         """Link to a wiki page."""
-        img_a = pq_img('[[Image:file.png|page=Installing Firefox]]', 'a.img')
+        img_div = pq_img('[[Image:file.png|page=Installing Firefox]]')
+        img_a = img_div('a')
         img = img_a('img')
-        caption = img_a.text()
+        caption = img_div.text()
 
         eq_('file.png', img.attr('alt'))
         eq_('file.png', caption)
@@ -286,9 +225,10 @@ class TestWikiImageTags(TestCase):
 
     def test_page_link_edit(self):
         """Link to an inexistent wiki page."""
-        img_a = pq_img('[[Image:file.png|page=Article List]]', 'a.img')
+        img_div = pq_img('[[Image:file.png|page=Article List]]')
+        img_a = img_div('a')
         img = img_a('img')
-        caption = img_a.text()
+        caption = img_div.text()
 
         eq_('file.png', img.attr('alt'))
         eq_('file.png', caption)
@@ -297,10 +237,10 @@ class TestWikiImageTags(TestCase):
 
     def test_page_link_caption(self):
         """Link to a wiki page with caption."""
-        img_a = pq_img('[[Image:file.png|page=Article List|my caption]]',
-                       'a.img')
+        img_div = pq_img('[[Image:file.png|page=Article List|my caption]]')
+        img_a = img_div('a')
         img = img_a('img')
-        caption = img_a.text()
+        caption = img_div.text()
 
         eq_('my caption', img.attr('alt'))
         eq_('my caption', caption)
@@ -309,9 +249,10 @@ class TestWikiImageTags(TestCase):
 
     def test_link(self):
         """Link to an external page."""
-        img_a = pq_img('[[Image:file.png|link=http://example.com]]', 'a.img')
+        img_div = pq_img('[[Image:file.png|link=http://example.com]]')
+        img_a = img_div('a')
         img = img_a('img')
-        caption = img_a.text()
+        caption = img_div.text()
 
         eq_('file.png', img.attr('alt'))
         eq_('file.png', caption)
@@ -320,39 +261,37 @@ class TestWikiImageTags(TestCase):
 
     def test_link_caption(self):
         """Link to an external page with caption."""
-        img_a = pq_img('[[Image:file.png|link=http://example.com|my caption]]',
-                       'a.img')
-        img = img_a('img')
-        caption = img_a.text()
+        img_div = pq_img('[[Image:file.png|link=http://example.com|caption]]')
+        img_a = img_div('a')
+        img = img_div('img')
+        caption = img_div.text()
 
-        eq_('my caption', img.attr('alt'))
-        eq_('my caption', caption)
+        eq_('caption', img.attr('alt'))
+        eq_('caption', caption)
         eq_('/img/wiki_up/file.png', img.attr('src'))
         eq_('http://example.com', img_a.attr('href'))
 
     def test_link_align(self):
         """Link with align."""
-        img_a = pq_img(
-            '[[Image:file.png|link=http://example.com|align=left]]', 'a.img')
-        eq_('img left', img_a.attr('class'))
+        img_div = pq_img('[[Image:file.png|link=http://site.com|align=left]]')
+        eq_('img align-left', img_div.attr('class'))
 
     def test_link_align_invalid(self):
         """Link with invalid align."""
-        img_a = pq_img(
-            '[[Image:file.png|link=http://example.com|align=off]]', 'a.img')
-        eq_('img', img_a.attr('class'))
+        img_div = pq_img('[[Image:file.png|link=http://example.ro|align=inv]]')
+        eq_('img', img_div.attr('class'))
 
     def test_link_valign(self):
         """Link with valign."""
-        img_a = pq_img(
-            '[[Image:file.png|link=http://example.com|valign=top]]', 'a.img')
-        eq_('img top', img_a.attr('class'))
+        img = pq_img(
+            '[[Image:file.png|link=http://example.com|valign=top]]', 'img')
+        eq_('vertical-align: top;', img.attr('style'))
 
     def test_link_valign_invalid(self):
         """Link with invalid valign."""
-        img_a = pq_img(
-            '[[Image:file.png|link=http://example.com|valign=off]]', 'a.img')
-        eq_('img', img_a.attr('class'))
+        img = pq_img(
+            '[[Image:file.png|link=http://example.com|valign=off]]', 'img')
+        eq_(None, img.attr('style'))
 
     def test_alt(self):
         """Image alt attribute is overriden but caption is not."""
@@ -362,6 +301,12 @@ class TestWikiImageTags(TestCase):
 
         eq_('my alt', img.attr('alt'))
         eq_('my caption', caption)
+
+    def test_alt_empty(self):
+        """Image alt attribute can be empty."""
+        img = pq_img('[[Image:img.png|alt=|my caption]]', 'img')
+
+        eq_('', img.attr('alt'))
 
     def test_alt_unsafe(self):
         """Potentially unsafe alt content is escaped."""
@@ -393,7 +338,7 @@ class TestWikiImageTags(TestCase):
         img_div = pq_img('[[Image:img.png|width=invalid]]')
         img = img_div('img')
 
-        eq_('', img.attr('width'))
+        eq_(None, img.attr('width'))
 
     def test_height(self):
         """Image height attribute set."""
@@ -407,9 +352,19 @@ class TestWikiImageTags(TestCase):
         img_div = pq_img('[[Image:img.png|height=invalid]]')
         img = img_div('img')
 
-        eq_('', img.attr('height'))
+        eq_(None, img.attr('height'))
 
     def test_frameless(self):
         """Image container has frameless class if specified."""
         img = pq_img('[[Image:img.png|frameless|caption]]', 'img')
         eq_('frameless', img.attr('class'))
+        eq_('caption', img.attr('alt'))
+        eq_('/img/wiki_up/img.png', img.attr('src'))
+
+    def test_frameless_link(self):
+        """Image container has frameless class and link if specified."""
+        img_a = pq_img('[[Image:img.png|frameless|page=Installing Firefox]]',
+                       'a')
+        img = img_a('img')
+        eq_('frameless', img.attr('class'))
+        eq_('/en-US/kb/Installing+Firefox', img_a.attr('href'))

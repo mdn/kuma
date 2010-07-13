@@ -526,3 +526,42 @@ div.submit-or-cancel {
 div.submit-or-cancel input[type="submit"] {
     margin: 0 0 0 1em;
 }
+
+/* Image markup styling */
+div.img {
+    margin: 3px;
+}
+
+div.img.align-left {
+    float: left;
+}
+
+div.img.align-right {
+    float: right;
+}
+
+div.img.center {
+    text-align: center;
+}
+
+div.img-inner {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 3px;
+}
+
+div.img img {
+    margin: 0 auto;
+}
+
+div.img-inner div.caption {
+    color: #333;
+    padding: 7px 0 4px;
+    text-align: center;
+}
+
+div#main div.img a:hover {
+    text-decoration: none;
+}
+/* End image markup styling */

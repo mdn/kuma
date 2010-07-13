@@ -8,8 +8,8 @@ from .models import WikiPage
 
 
 ALLOWED_ATTRIBUTES = {
-    'a': ['href', 'title', 'class'],
-    'div': ['id', 'class'],
+    'a': ['href', 'title', 'class', 'rel'],
+    'div': ['id', 'class', 'style'],
     'h1': ['id'],
     'h2': ['id'],
     'h3': ['id'],
@@ -18,7 +18,7 @@ ALLOWED_ATTRIBUTES = {
     'h6': ['id'],
     'li': ['class'],
     'span': ['class'],
-    'img': ['class', 'src', 'alt', 'title', 'height', 'width'],
+    'img': ['class', 'src', 'alt', 'title', 'height', 'width', 'style'],
 }
 
 
