@@ -10,6 +10,7 @@ from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
 from sumo.utils import WikiParser
 from forums.tasks import build_notification
+from notifications.tasks import delete_watches
 import forums
 
 
@@ -69,6 +70,8 @@ class Thread(ModelBase):
             except IndexError:
                 forum.last_post = None
             forum.save()
+
+        delete_watches.delay(Thread, self.pk)
 
         super(Thread, self).delete(*args, **kwargs)
 

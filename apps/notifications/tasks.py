@@ -1,6 +1,7 @@
 import logging
 
 from django.core.mail import send_mass_mail
+from django.contrib.contenttypes.models import ContentType
 
 from celery.decorators import task
 
@@ -14,7 +15,7 @@ def send_notification(content_type, pk, subject, content, exclude=None):
     """Given a content type and ID, subject, and content, get the list of
     watchers and send them email."""
 
-    log.info("Got notification for %s: %s" % (content_type, pk))
+    log.info('Got notification for %s: %s' % (content_type, pk))
 
     watchers = EventWatch.uncached.filter(content_type=content_type,
                                           watch_id=pk)
@@ -25,3 +26,11 @@ def send_notification(content_type, pk, subject, content, exclude=None):
     emails = [(subject, content, from_address, [w.email]) for w in watchers]
 
     send_mass_mail(emails)
+
+
+@task(rate_limit='4/m')
+def delete_watches(cls, pk):
+    ct = ContentType.objects.get_for_model(cls)
+    log.info('Deleting watches for %s %s' % (ct, pk))
+    e = EventWatch.objects.filter(content_type=ct, watch_id=pk)
+    e.delete()
