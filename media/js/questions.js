@@ -96,9 +96,14 @@
         if (version) {
             return version[1];
         } else {
-            // bug 546563, default to 3.6 if version can't be determined
-            return false;
+            // Minefield pre-betas (nightlies)
+            version = /Minefield\/(\S+)/i.exec(navigator.userAgent);
+            if (version) {
+                return version[1];
+            }
         }
+
+        return '';
     }
 
     // Returns a string representing the user's operating system
