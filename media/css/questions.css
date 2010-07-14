@@ -246,7 +246,7 @@ ol.pagination li {
     padding: 0 2px;
 }
 
-ol.pagination li[rel="prev"] {
+ol.pagination li.prev {
     padding-left: 0;
 }
 
@@ -259,7 +259,7 @@ ol.pagination li a:hover {
     text-decoration: underline;
 }
 
-ol.pagination li[rel="prev"] a {
+ol.pagination li.prev a {
     padding-left: 0;
 }
 
