@@ -93,15 +93,49 @@
       </ul>
 
       <h4>{{ _('System Details') }}</h4>
-      <ul class="system">
-        {% if question.metadata.os %}
-          <li class="mac">{{ question.metadata.os }}</li>
-        {% endif %}
-        {% if question.metadata.ff_version %}
-          <li class="ff">Firefox {{ question.metadata.ff_version }}</li>
-        {% endif %}
-      </ul>
-      <p><a href="#">{{ _('More system details...') }}</a></p>
+      {% block system_info %}
+        <ul class="system">
+          {% if question.metadata.os %}
+            <li class="mac">{{ question.metadata.os }}</li>
+          {% endif %}
+          {% if question.metadata.ff_version %}
+            <li class="ff">Firefox {{ question.metadata.ff_version }}</li>
+          {% endif %}
+        </ul>
+      {% endblock %}
+      <p><a id="show-more-details" href="#more-system-details">{{ _('More system details...') }}</a></p>
+      <div class="more-system-details">
+        <h4>{{ _('Additional System Details') }}</h4>
+        <div class="wrap">
+          {{ self.system_info() }}
+          {% if question.metadata.sites_affected %}
+            <h5>{{ _('Sites Affected') }}</h5>
+            <p>{{ question.metadata.sites_affected }}</p>
+          {% endif %}
+          {% if question.metadata.crash_id %}
+            <h5>{{ _('Crash ID') }}</h5>
+            <p>{{ question.metadata.crash_id }}</p>
+          {% endif %}
+          {% if question.metadata.frequency %}
+            <h5>{{ _('This happened') }}</h5>
+            <p>{{ question.metadata.frequency }}</p>
+          {% endif %}
+          {% if question.metadata.started %}
+            <h5>{{ _('This started when...') }}</h5>
+            <p>{{ question.metadata.started }}</p>
+          {% endif %}
+          {% if question.metadata.troubleshooting %}
+            <h5>{{ _('More Information') }}</h5>
+            <p>{{ question.metadata.troubleshooting }}</p>
+          {% endif %}
+          {% if question.metadata.plugins %}
+            <h5>{{ _('Installed Plug-ins') }}</h5>
+            <div class="plugins">
+              {{ question.metadata.plugins|wiki_to_html }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
 
       {% set tags = question.tags.all() %}
       {% if tags or can_tag %}

@@ -592,36 +592,115 @@ div.side-section p {
     margin: 0.5em 0;
 }
 
-div.side-section ul.system li,
-div.side-section ul.subscribe li a {
+ul.system li,
+ul.subscribe li a {
     line-height: 21px;
     padding: 0 0 0 25px;
 }
 
-div.side-section ul.subscribe li.email a {
+ul.subscribe li.email a {
     background: transparent url(../img/questions/icon.email.gif) no-repeat left center;
 }
 
-div.side-section ul.subscribe li.rss a {
+ul.subscribe li.rss a {
     background: transparent url(../img/questions/icon.rss.gif) no-repeat left center;
 }
 
-div.side-section ul.system li.mac {
+ul.system li.mac {
      background: transparent url(../img/questions/icon.mac.gif) no-repeat left center;
 }
 
-div.side-section ul.system li.ff {
+ul.system li.ff {
      background: transparent url(../img/questions/icon.firefox.gif) no-repeat left center;
 }
 
-div.side-section ul.related {
+ul.related {
     list-style: disc;
 }
 
-div.side-section ul.related li {
+ul.related li {
     padding: 5px 0;
 }
 
+/* more system details modal */
+.js div.more-system-details {
+    display: none;
+}
+
+#more-system-details {
+    background: #fff;
+    border: solid 3px #898377;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 1px 2px 15px #aaa;
+    -moz-box-shadow: 1px 2px 15px #333;
+    -webkit-box-shadow: 1px 2px 15px #aaa;
+    color: #4B4740;
+    display: block;
+    font-size: 14px;
+    left: 50%;
+    margin-left: -310px;
+    padding: 20px;
+    position: fixed;
+    text-align: left;
+    top: 100px;
+    width: 580px;
+    z-index:10;
+}
+
+#modal-overlay {
+    background: #000;
+    height: 100%;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+#more-system-details a.close {
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}
+
+#more-system-details p,
+#more-system-details li {
+    color: #898378;
+}
+
+#more-system-details div.wrap {
+    height: 300px;
+    overflow: auto;
+}
+
+#more-system-details h4 {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0 0 10px;
+}
+
+#more-system-details h5 {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 15px 0 5px;
+}
+
+#more-system-details ul.system li {
+    display: inline-block;
+    padding-right: 40px;
+}
+
+#more-system-details div.plugins li {
+    background: transparent url(../img/questions/icon.plugin.gif) no-repeat 0 4px;
+    padding: 2px 0 2px 25px;
+}
+
+/* answers */
 ol.answers {
     clear: both;
     list-style: none;

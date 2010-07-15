@@ -11,6 +11,10 @@
         if($('body').is('.new-question')) {
             initNewQuestion();
         }
+
+        if($('body').is('.answers')) {
+            initMoreDetailsModal();
+        }
     }
 
     /*
@@ -138,6 +142,36 @@
             plugins = "";
         }
         return plugins;
+    }
+
+
+    /*
+     * Initialize the more details modal on answers page
+     */
+    function initMoreDetailsModal() {
+        $('#show-more-details').click(function(ev){
+            ev.preventDefault();
+
+            var $modal = $(this).closest('div.side-section')
+                                .find('div.more-system-details').clone();
+            $modal.attr('id', 'more-system-details')
+                  .append('<a href="#close" class="close">&#x2716;</a>');
+            $modal.find('a.close').click(closeModal);
+
+            var $overlay = $('<div id="modal-overlay"></div>');
+            $overlay.click(closeModal);
+
+            $('body').append($overlay).append($modal);
+
+            function closeModal(ev) {
+                ev.preventDefault();
+                $modal.unbind().remove();
+                $overlay.unbind().remove();
+                delete $modal;
+                delete $overlay;
+                return false;
+            }
+        });
     }
 
     $(document).ready(init);
