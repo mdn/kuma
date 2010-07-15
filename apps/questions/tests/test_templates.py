@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.models import User, Permission
 
 from nose.tools import eq_
@@ -387,6 +389,13 @@ class TaggingViewTestsAsAdmin(TaggingTestCaseBase):
         self.client.post(_add_async_tag_url(), data={'tag-name': 'RED'},
                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         tags_eq(Question.objects.get(pk=1), ['red'])
+
+    def test_add_new_canonicalizes(self):
+        """Adding a new tag as an admin should still canonicalize case."""
+        response = self.client.post(_add_async_tag_url(),
+                                    data={'tag-name': 'RED'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(json.loads(response.content)['canonicalName'], 'red')
 
 
 def _add_tag_url():

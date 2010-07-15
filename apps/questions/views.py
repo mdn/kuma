@@ -307,24 +307,25 @@ def _answers_data(request, question_id, form=None):
 
 
 def _add_tag(request, question_id):
-    """Add a named tag to a question.
+    """Add a named tag to a question, creating it first if appropriate.
 
     Tag name (case-insensitive) must be in request.POST['tag-name'].
 
-    If there is no such tag, raise Tag.DoesNotExist. If no tag name is
-    provided, return None. Otherwise, return the canonicalized tag name.
+    If there is no such tag and the user is not allowed to make new tags, raise
+    Tag.DoesNotExist. If no tag name is provided, return None. Otherwise,
+    return the canonicalized tag name.
 
     """
     tag_name = request.POST.get('tag-name', '').strip()
     if tag_name:
         question = get_object_or_404(Question, pk=question_id)
-
-        if request.user.has_perm('taggit.add_tag'):
-            question.tags.add(tag_name)  # implicitly creates if needed
-            return tag_name
-
-        # Can raise Tag.DoesNotExist:
-        canonical_name = add_existing_tag(tag_name, question.tags)
+        try:
+            canonical_name = add_existing_tag(tag_name, question.tags)
+        except Tag.DoesNotExist:
+            if request.user.has_perm('taggit.add_tag'):
+                question.tags.add(tag_name)  # implicitly creates if needed
+                return tag_name
+            raise
         return canonical_name
 
 

@@ -29,11 +29,11 @@ li.tag .remover:hover {
     color: #f45642;
 }
 
-li.tag.removing .tag-name {
+li.tag.in-progress .tag-name {
     color: #bbb;
 }
 
-li.tag.removing .remover {
+li.tag.in-progress .remover {
     color: #ccc;
 }
 

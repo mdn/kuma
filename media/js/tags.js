@@ -47,7 +47,8 @@
                 var tagName = $.trim($input.val()),
                     inVocab = inArrayCaseInsensitive(tagName, vocab) != -1,
                     isOnscreen = tagIsOnscreen(tagName, $tagList);
-                $adder.attr("disabled", !tagName.length || isOnscreen || (!canCreateTags && !inVocab));
+                $adder.attr("disabled", !tagName.length || isOnscreen ||
+                                        (!canCreateTags && !inVocab));
             }
 
             return tendAddButton;
@@ -112,9 +113,9 @@
                 var $remover = $(this),
                     $tag = $remover.closest(".tag"),
                     tagName = $tag.find(".tag-name").text();
-                $tag.addClass("removing");  // Dim for immediate feedback.
+                $tag.addClass("in-progress");  // Dim for immediate feedback.
                 $.ajax({
-                    type: 'POST',
+                    type: "POST",
                     url: $remover.closest("form.remove-tag-form").attr("data-action-async"),
                     data: {name: tagName},
                     success: function makeTagDisappear() {
@@ -123,9 +124,10 @@
                            // removed whose name is presently in the Add field.
                         },
                     error: function makeTagReappear() {
-                           $tag.removeClass("removing");
+                           $tag.removeClass("in-progress");
                         }
                 });
+                return false;
             }
         );
     }
@@ -141,27 +143,43 @@
                 $form.submit(
                     function() {
                         var $input = $form.find("input[name=tag-name]"),
-                            tagName = $input.val();
+                            tagName = $input.val(),
+                            $tag = putTagOnscreen(tagName);
 
-                        function makeTagShowUp(data) {
-                            var $tagList = formToTagList($form),
-                                canonicalName = data.canonicalName;
+                        // Add a ghostly tag to the onscreen list and return the tag element.
+                        // If the tag was already onscreen, do nothing and return null.
+                        function putTagOnscreen(tagName) {
+                            var $tagList = formToTagList($form);
 
-                            if (!(tagIsOnscreen(canonicalName, $tagList))) {
-                                var $tag = $("<li class='tag'><a class='tag-name' href='#'></a><input type='submit' value='&#x2716;' class='remover' /></li> ");
-                                $tag.find(".tag-name").text(canonicalName);
-                                $tag.find("input").attr("name", "remove-tag-" + canonicalName);
+                            if (!(tagIsOnscreen(tagName, $tagList))) {
+                                var $tag = $("<li class='tag in-progress'><a class='tag-name' href='#'></a><input type='submit' value='&#x2716;' class='remover' /></li> ");
+                                $tag.find(".tag-name").text(tagName);
+                                $tag.find("input").attr("name", "remove-tag-" + tagName);
                                 $tagList.append($tag);
-                                attachRemoverHandlerTo($tag);
+                                return $tag;
                             }
                         }
-
-                        $.post($form.attr("data-action-async"),
-                               {'tag-name': tagName},
-                               makeTagShowUp
-                        );
-                        // TODO: Give immediate feedback [bug 576681], and add
-                        // error callback.
+                        
+                        $.ajax({
+                            type: "POST",
+                            url: $form.attr("data-action-async"),
+                            data: {"tag-name": tagName},
+                            success: function solidifyTag(data) {
+                                         // Make an onscreen tag non-ghostly,
+                                         // canonicalize its name,
+                                         // activate its remover button, and
+                                         // add it to the local vocab.
+                                         var vocab = $form.closest("div.tags")[0].tagVocab,
+                                             canonicalName = data.canonicalName;
+                                         vocab.push(canonicalName);
+                                         $tag.find(".tag-name").text(canonicalName);
+                                         $tag.removeClass("in-progress");
+                                         attachRemoverHandlerTo($tag);
+                                     },
+                            error: function disintegrateTag(data) {
+                                       $tag.remove();
+                                   }
+                        });
                         $input.val("");
                         $form.find("input.adder").attr("disabled", true);
                         return false;
@@ -217,6 +235,7 @@
     }
 
     // Return whether the tag of the given name is in the visible list.
+    // The in-the-process-of-being-added-or-removed state is considered onscreen.
     function tagIsOnscreen(tagName, $tagList) {
         return inArrayCaseInsensitive(tagName, getAppliedTags($tagList)) != -1;
     }
