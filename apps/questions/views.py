@@ -293,19 +293,17 @@ def _answers_data(request, question_id, form=None):
     answers_ = paginate(request, question.answers.all(),
                         per_page=constants.ANSWERS_PER_PAGE)
     vocab = [t.name for t in Tag.objects.all()]  # TODO: Fetch only name.
-    can_tag = request.user.has_perm('questions.can_tag')
-    if not form:
-        form = AnswerForm()
     feed_urls = ((reverse('questions.answers.feed',
                           kwargs={'question_id': question_id}),
                   AnswersFeed().title(question)),)
 
     return {'question': question,
             'answers': answers_,
-            'form': form,
+            'form': form or AnswerForm(),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),
-            'can_tag': can_tag}
+            'can_tag': request.user.has_perm('questions.can_tag'),
+            'can_create_tags': request.user.has_perm('taggit.add_tag')}
 
 
 def _add_tag(request, question_id):
@@ -321,9 +319,12 @@ def _add_tag(request, question_id):
     if tag_name:
         question = get_object_or_404(Question, pk=question_id)
 
+        if request.user.has_perm('taggit.add_tag'):
+            question.tags.add(tag_name)  # implicitly creates if needed
+            return tag_name
+
         # Can raise Tag.DoesNotExist:
         canonical_name = add_existing_tag(tag_name, question.tags)
-
         return canonical_name
 
 

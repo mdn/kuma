@@ -5,7 +5,7 @@ from taggit.models import Tag
 
 from questions.models import Question, QuestionMetaData, Answer
 from questions.tags import add_existing_tag
-from questions.tests import TestCaseBase, TaggingTestCaseBase
+from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 
 
 class TestAnswer(TestCaseBase):
@@ -108,20 +108,14 @@ class AddExistingTagTests(TaggingTestCaseBase):
         Full testing of functionality is a matter for taggit's tests.
 
         """
-        _tags_eq_(self.untagged_question, [])
+        tags_eq(self.untagged_question, [])
 
     def test_add_existing_case_insensitive(self):
         """Assert add_existing_tag works case-insensitively."""
         add_existing_tag('LEMON', self.untagged_question.tags)
-        _tags_eq_(self.untagged_question, [u'lemon'])
+        tags_eq(self.untagged_question, [u'lemon'])
 
     @raises(Tag.DoesNotExist)
     def test_add_existing_no_such_tag(self):
         """Assert add_existing_tag doesn't work when the tag doesn't exist."""
         add_existing_tag('nonexistent tag', self.untagged_question.tags)
-
-
-def _tags_eq_(tagged_object, tag_names):
-    """Assert that the names of the tags on tagged_object are tag_names."""
-    eq_(sorted([t.name for t in tagged_object.tags.all()]),
-        sorted(tag_names))

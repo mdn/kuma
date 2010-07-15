@@ -1,5 +1,7 @@
 from django.test import TestCase, client
 
+from nose.tools import eq_
+
 from sumo.urlresolvers import reverse
 from questions.models import Question
 
@@ -28,3 +30,9 @@ class TaggingTestCaseBase(TestCaseBase):
     """Base testcase with additional setup for testing tagging"""
 
     fixtures = TestCaseBase.fixtures + ['taggit.json']
+
+
+def tags_eq(tagged_object, tag_names):
+    """Assert that the names of the tags on tagged_object are tag_names."""
+    eq_(sorted([t.name for t in tagged_object.tags.all()]),
+        sorted(tag_names))

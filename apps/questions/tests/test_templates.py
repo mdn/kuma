@@ -1,10 +1,13 @@
+from django.contrib.auth.models import User, Permission
+
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from questions.models import Question, Answer, QuestionVote
-from questions.tests import TestCaseBase, TaggingTestCaseBase, post, get
+from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
+                             tags_eq)
 from questions.views import UNAPPROVED_TAG, NO_TAG
 
 
@@ -224,19 +227,30 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_('0', doc('div.other-helpful span.votes')[0].text)
 
 
-class TaggingViewTests(TaggingTestCaseBase):
-    """Tests for views that add and remove tags
+class TaggingViewTestsAsTagger(TaggingTestCaseBase):
+    """Tests for views that add and remove tags, logged in as someone who can
+    add and remove but not create tags
 
     Also hits the tag-related parts of the answer template.
 
     """
     def setUp(self):
-        super(TaggingViewTests, self).setUp()
-        self.client.login(username='admin', password='testpass')
+        super(TaggingViewTestsAsTagger, self).setUp()
+
+        # Assign can_tag permission to the "tagger" user.
+        # Would be if there were a natural key for doing this via a fixture.
+        self._can_tag = Permission.objects.get_by_natural_key('can_tag',
+                                                              'questions',
+                                                              'question')
+        self._user = User.objects.get(username='tagger')
+        self._user.user_permissions.add(self._can_tag)
+
+        self.client.login(username='tagger', password='testpass')
 
     def tearDown(self):
         self.client.logout()
-        super(TaggingViewTests, self).tearDown()
+        self._user.user_permissions.remove(self._can_tag)
+        super(TaggingViewTestsAsTagger, self).tearDown()
 
     # add_tag view:
 
@@ -341,6 +355,38 @@ class TaggingViewTests(TaggingTestCaseBase):
                                     data={},
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertContains(response, NO_TAG, status_code=400)
+
+
+class TaggingViewTestsAsAdmin(TaggingTestCaseBase):
+    """Tests for views that create new tags, logged in as someone who can"""
+
+    def setUp(self):
+        super(TaggingViewTestsAsAdmin, self).setUp()
+        self.client.login(username='admin', password='testpass')
+
+    def tearDown(self):
+        self.client.logout()
+        super(TaggingViewTestsAsAdmin, self).tearDown()
+
+    def test_add_new_tag(self):
+        """Assert adding a nonexistent tag sychronously creates & adds it."""
+        self.client.post(_add_tag_url(), data={'tag-name': 'nonexistent tag'})
+        tags_eq(Question.objects.get(pk=1), ['nonexistent tag'])
+
+    def test_add_async_new_tag(self):
+        """Assert adding an nonexistent tag creates & adds it."""
+        response = self.client.post(_add_async_tag_url(),
+                                    data={'tag-name': 'nonexistent tag'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(response.status_code, 200)
+        tags_eq(Question.objects.get(pk=1), ['nonexistent tag'])
+
+    def test_add_new_case_insensitive(self):
+        """Adding a tag differing only in case from existing ones shouldn't
+        create a new tag."""
+        self.client.post(_add_async_tag_url(), data={'tag-name': 'RED'},
+                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        tags_eq(Question.objects.get(pk=1), ['red'])
 
 
 def _add_tag_url():

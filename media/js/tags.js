@@ -32,48 +32,26 @@
         // Return a function() that sets the enabledness of the Add button appropriately.
         function makeButtonTender($addForm) {
             var $adder = $addForm.find("input.adder"),
+                canCreateTags = $addForm.attr("data-can-create-tags") !== undefined,
                 $input = $addForm.find("input[name=tag-name]"),
                 vocab = $addForm.closest("div.tags")[0].tagVocab,
                 $tagList = formToTagList($addForm);
 
-            // Like inArray but for strings only and case-insensitive.
-            // TODO: Think about sorting and using binary search.
-            function inArrayCaseInsensitive(str, ary) {
-                var matcher = new RegExp("^" + escapeRegex(str) + "$", "i");
-                for (var i = 0; i < ary.length; i++)
-                    if (matcher.test(ary[i]))
-                        return i;
-                return -1;
-            }
-
-            // Enable Add button if the entered tag is in the vocabulary. Else, disable it.
+            // Enable Add button if the entered tag is in the vocabulary. Else,
+            // disable it. If the user has the can_add_tag permission, let him
+            // add whatever he wants, as long as it has some non-whitespace in
+            // it.
             function tendAddButton() {
                 // TODO: Optimization: use the calculation already done for the
                 // autocomplete menu to limit the search space.
                 var tagName = $.trim($input.val()),
-                    inVocab = inArrayCaseInsensitive(tagName, vocab) != -1;
-                $adder.attr("disabled", !inVocab || tagIsOnscreen(tagName, $tagList));
+                    inVocab = inArrayCaseInsensitive(tagName, vocab) != -1,
+                    isOnscreen = tagIsOnscreen(tagName, $tagList);
+                $adder.attr("disabled", !tagName.length || isOnscreen || (!canCreateTags && !inVocab));
             }
 
             return tendAddButton;
         }
-
-
-        // Case-insensitive array filter
-        // Ripped off from jquery.ui.autocomplete.js. Why can't I get at these
-        // via, e.g., $.ui.autocomplete.filter?
-
-        function escapeRegex( value ) {
-            return value.replace( /([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1" );
-        }
-
-        function filter(array, term) {
-            var matcher = new RegExp( escapeRegex(term), "i" );
-            return $.grep( array, function(value) {
-                return matcher.test( value.label || value.value || value );
-            });
-        }
-
 
         // Return an autocomplete vocab source callback that produces the
         // full vocab minus the already applied tags.
@@ -199,6 +177,33 @@
         return $addForm.closest("div.tags").find("ul.tag-list");
     }
 
+
+    // Case-insensitive array filter
+    // Ripped off from jquery.ui.autocomplete.js. Why can't I get at these
+    // via, e.g., $.ui.autocomplete.filter?
+
+    function escapeRegex( value ) {
+        return value.replace( /([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1" );
+    }
+
+    function filter(array, term) {
+        var matcher = new RegExp( escapeRegex(term), "i" );
+        return $.grep( array, function(value) {
+            return matcher.test( value.label || value.value || value );
+        });
+    }
+
+
+    // Like inArray but for strings only and case-insensitive.
+    // TODO: Think about sorting and using binary search.
+    function inArrayCaseInsensitive(str, ary) {
+        var matcher = new RegExp("^" + escapeRegex(str) + "$", "i");
+        for (var i = 0; i < ary.length; i++)
+            if (matcher.test(ary[i]))
+                return i;
+        return -1;
+    }
+
     // Return the tags already applied to an object.
     // Specifically, given a .tag-list, return an array of tag names in it.
     function getAppliedTags($tagList) {
@@ -213,7 +218,7 @@
 
     // Return whether the tag of the given name is in the visible list.
     function tagIsOnscreen(tagName, $tagList) {
-        return $.inArray(tagName, getAppliedTags($tagList)) != -1;
+        return inArrayCaseInsensitive(tagName, getAppliedTags($tagList)) != -1;
     }
 
     $(document).ready(init);
