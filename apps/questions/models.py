@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 
 import jinja2
 
@@ -14,6 +15,8 @@ from sumo.helpers import urlparams
 import questions as constants
 from .question_config import products
 from .tasks import update_question_votes, build_answer_notification
+from notifications.tasks import delete_watches
+from upload.models import ImageAttachment
 
 
 class Question(ModelBase, TaggableMixin):
@@ -34,6 +37,8 @@ class Question(ModelBase, TaggableMixin):
     status = models.IntegerField(default=0, db_index=True)
     is_locked = models.BooleanField(default=False)
     num_votes_past_week = models.PositiveIntegerField(default=0, db_index=True)
+
+    images = generic.GenericRelation(ImageAttachment)
 
     class Meta:
         ordering = ['-updated']
@@ -187,6 +192,8 @@ class Answer(ModelBase):
     updated_by = models.ForeignKey(User, null=True,
                                    related_name='answers_updated')
     upvotes = models.IntegerField(default=0, db_index=True)
+
+    images = generic.GenericRelation(ImageAttachment)
 
     class Meta:
         ordering = ['created']

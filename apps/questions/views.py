@@ -95,8 +95,10 @@ def questions(request):
 
 def answers(request, question_id, form=None, watch_form=None):
     """View the answers to a question."""
-    return jingo.render(request, 'questions/answers.html',
-                        _answers_data(request, question_id, form, watch_form))
+    ans_ = _answers_data(request, question_id, form, watch_form)
+    if request.user.is_authenticated():
+        ans_['images'] = ans_['question'].images.filter(creator=request.user)
+    return jingo.render(request, 'questions/answers.html', ans_)
 
 
 def new_question(request):

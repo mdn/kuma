@@ -1085,6 +1085,49 @@ div.edit-answer textarea,
 }
 
 /*
+ * Questions image upload form
+ */
+form div.attachments-upload {
+    margin: 1.5em 0;
+}
+
+form div.attachments-upload label {
+    display: block;
+    margin: .5em 0;
+}
+
+form div.attachments-upload div.add-attachment,
+form div.attachments-upload div.adding-attachment {
+    clear: left;
+    height: 4em;
+    padding-top: .5em;
+}
+form div.attachments-upload div.adding-attachment {
+    line-height: 4em;
+}
+form div.attachments-upload div.empty {
+    display: none;
+}
+
+form div.attachments-upload img.upload-progress {
+    display: none;
+}
+form div.attachments-upload img.upload-progress,
+form div.attachments-upload img.attachment {
+    background: url('../img/search/wait.gif') no-repeat center;
+    border: 1px solid #ccc;
+    float: left;
+    margin: 5px;
+    text-align: center;
+}
+
+#question-reply form.upload-input,
+form.upload-input {
+    margin: 0;
+    padding: 0;
+}
+
+/*
  * Buttons
  */
 a.btn,

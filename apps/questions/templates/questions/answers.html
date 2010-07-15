@@ -359,6 +359,31 @@
             <textarea name="content" id="id_content">{{ form.content.data or '' }}</textarea>
           </div>
 
+          <div class="attachments-upload"
+               data-post-url={{ url('upload.up_image_async',
+                                    model_name='questions.Question', object_pk=question.id)}}>
+            <div class="uploaded{% if not images %} empty{% endif %}">
+              <div>{{ _('Uploaded images:') }}</div>
+              <div class="attachments">
+                {% for image in images %}
+                  <a href="{{ image.file.url }}">
+                    <img class="attachment" src="{{ image.thumbnail.url }}"/>
+                  </a>
+                {% endfor %}
+                <img class="upload-progress"
+                     height="{{ settings.THUMBNAIL_SIZE }}"
+                     width="{{ settings.THUMBNAIL_SIZE }}"/>
+              </div>
+            </div>
+            <div class="add-attachment">
+              <label for="id_image">{{ _('Add images:') }}</label>
+              <input type="file" id="id_image" name="image" size="30"
+                 title="{{ _('Browse for an image to upload.') }}"/>
+            </div>
+            <div class="adding-attachment"></div>
+            <noscript>{{ _('JavaScript is disabled in your browser. To upload an image you must submit this form and edit it again.') }}</noscript>
+          </div>
+
           <div class="submit">
             <input type="submit" class="btn g-btn" value="{{ _('Post Reply') }}" />
           </div>

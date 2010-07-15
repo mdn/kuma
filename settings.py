@@ -177,6 +177,7 @@ INSTALLED_APPS = (
     'kadmin',
     'taggit',
     'flagit',
+    'upload',
 )
 
 # Extra apps for testing
@@ -280,9 +281,10 @@ MINIFY_BUNDLES = {
             'js/main.js',
         ),
         'questions': (
-            'js/questions.js',
-            'js/markup.js',
             'js/libs/jqueryui.min.js',
+            'js/markup.js',
+            'js/upload.js',
+            'js/questions.js',
             'js/tags.js',
         ),
         'search': (
@@ -346,6 +348,9 @@ REGISTER_URL = '/tiki-register.php'
 WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
 WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
 WIKI_UPLOAD_URL = '/img/wiki_up/'
+
+# Thumbnail size, in pixels
+THUMBNAIL_SIZE = 120
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
