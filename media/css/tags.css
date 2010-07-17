@@ -2,8 +2,7 @@
  * CSS for tag editing and display
  */
 ul.tag-list li {
-    white-space: nowrap;
-    display: inline;
+    display: inline-block;
 }
 
 ul.tag-list.immutable li:after {

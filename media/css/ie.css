@@ -19,9 +19,8 @@ ol.posts li div.content pre {
     word-wrap: break-word;
 }
 
-/* Image markup styling */
-div.img-inner {
+div.img-inner,
+ul.tag-list li {
     zoom: 1; /* force inline-block behavior on block elements in IE6 and IE7 */
     display: inline;
 }
-/* End image markup styling */
