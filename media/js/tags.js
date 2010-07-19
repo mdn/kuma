@@ -20,7 +20,7 @@
             function(index) {
                 var $tagContainer = $(this);
                 var parsedVocab = $.parseJSON($tagContainer.attr("data-tag-vocab-json"));
-                $tagContainer[0].tagVocab = parsedVocab;
+                $tagContainer.data("tagVocab", parsedVocab);
             }
         );
     }
@@ -34,7 +34,7 @@
             var $adder = $addForm.find("input.adder"),
                 canCreateTags = $addForm.attr("data-can-create-tags") !== undefined,
                 $input = $addForm.find("input[name=tag-name]"),
-                vocab = $addForm.closest("div.tags")[0].tagVocab,
+                vocab = $addForm.closest("div.tags").data("tagVocab"),
                 $tagList = formToTagList($addForm);
 
             // Enable Add button if the entered tag is in the vocabulary. Else,
@@ -59,7 +59,7 @@
         //
         // $tags -- a .tags element containing a vocab in its tagVocab attr
         function makeVocabCallback($tags) {
-            var vocab = $tags[0].tagVocab,
+            var vocab = $tags.data("tagVocab"),
                 $tagList = $tags.find("ul.tag-list");
 
             function vocabCallback(request, response) {
@@ -177,7 +177,7 @@
                                          // canonicalize its name,
                                          // activate its remover button, and
                                          // add it to the local vocab.
-                                         var vocab = $form.closest("div.tags")[0].tagVocab,
+                                         var vocab = $form.closest("div.tags").data("tagVocab"),
                                              canonicalName = data.canonicalName;
                                          vocab.push(canonicalName);
                                          $tag.find(".tag-name").text(canonicalName);
