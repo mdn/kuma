@@ -152,7 +152,13 @@
                     function() {
                         var $input = $form.find("input[name=tag-name]"),
                             tagName = $input.val(),
-                            $tag = putTagOnscreen(tagName);
+                            vocab = $form.closest("div.tags").data("tagVocab"),
+                            tagIndex = inArrayCaseInsensitive(tagName, vocab),
+                            $tag;
+
+                        if (tagIndex != -1)
+                            tagName = vocab[tagIndex];  // Canonicalize case.
+                        $tag = putTagOnscreen(tagName);
 
                         // Add a ghostly tag to the onscreen list and return the tag element.
                         // If the tag was already onscreen, do nothing and return null.
@@ -177,8 +183,7 @@
                                          // canonicalize its name,
                                          // activate its remover button, and
                                          // add it to the local vocab.
-                                         var vocab = $form.closest("div.tags").data("tagVocab"),
-                                             canonicalName = data.canonicalName;
+                                         var canonicalName = data.canonicalName;
                                          if (inArrayCaseInsensitive(canonicalName, vocab) == -1)
                                              vocab.push(canonicalName);
                                          $tag.find(".tag-name").text(canonicalName);
@@ -233,6 +238,7 @@
 
     // Return the tags already applied to an object.
     // Specifically, given a .tag-list, return an array of tag names in it.
+    // (Tags in the process of being added or removed are considered applied.)
     function getAppliedTags($tagList) {
         var tagNames = [];
         $tagList.find(".tag .tag-name").each(
