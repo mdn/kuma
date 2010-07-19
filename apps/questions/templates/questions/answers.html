@@ -81,20 +81,21 @@
         {% endif %}
       {% endfor %}
       <div class="report-reply">
-        <form class="report" action="#{# TODO #}" method="post">
-          {{ csrf() }}
-          <input type="submit" value="{{ _('Report this post') }}" />
-        </form>
         {% if user.has_perm('questions.lock_question') %}
           <form class="lock" action="{{ url('questions.lock', question.id) }}" method="post">
             {{ csrf() }}
-            <input type="submit" value="{% if question.is_locked %}{{ _('Unlock this post') }}{% else %}{{ _('Lock this post') }}{% endif %}" />
+            <input type="submit" class="submit" value="{% if question.is_locked %}{{ _('Unlock this post') }}{% else %}{{ _('Lock this post') }}{% endif %}" />
           </form>
         {% endif %}
         {% if user.has_perm('questions.delete_question') %}
           <a class="delete" href="{{ url('questions.delete', question.id) }}">
             {{ _('Delete this post') }}
           </a>
+        {% endif %}
+        {% if user.is_authenticated() and user != question.creator and not question.is_locked %}
+          <form class="report" action="{{ url('questions.flag', question.id) }}" method="post">
+            {% include 'questions/includes/flag_form.html' %}
+          </form>
         {% endif %}
         {% if not question.is_locked %}
           <a class="btn g-btn reply" href="#question-reply">{{ _('Post a New Reply') }}</a>
@@ -284,11 +285,9 @@
                             answer.num_votes)|fe(count=answer.num_helpful_votes, total=answer.num_votes) }}
               </div>
             {% endif %}
-
-            {% if user != answer.creator and not question.is_locked %}
-              <form class="report" action="#{# TODO #}" method="post">
-                {{ csrf() }}
-                <input type="submit" value="{{ _('Report this post') }}" />
+            {% if user.is_authenticated() and user != answer.creator and not question.is_locked  %}
+              <form class="report" action="{{ url('questions.answer_flag', question.id, answer.id) }}" method="post">
+                {% include 'questions/includes/flag_form.html' %}
               </form>
             {% endif %}
             {% if user.has_perm('questions.change_answer') %}

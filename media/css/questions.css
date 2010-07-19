@@ -610,10 +610,21 @@ div.report-reply form.lock,
 div.report-reply form.report {
     float: left;
     padding: 0 15px 0 0;
+    position: relative;
 }
 
 form.lock input,
 form.report input {
+    float: left;
+}
+
+.js form.report select,
+.js form.report input.text {
+    display: none;
+}
+
+form.lock input.submit,
+form.report input.submit {
     background: transparent url(../img/questions/icon.report.gif) no-repeat left center;
     border: none;
     color: #0489B7;
@@ -632,6 +643,60 @@ div.report-reply a.delete {
     font-size: 14px;
     margin: 0 15px 0 0;
     padding: 1px 0 0 20px;
+}
+
+form.report div.report-post-box {
+    background: #fff;
+    border: solid 3px #898377;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 1px 2px 15px #aaa;
+    -moz-box-shadow: 1px 2px 15px #333;
+    -webkit-box-shadow: 1px 2px 15px #aaa;
+    font-size: 14px;
+    left: -70px;
+    padding: 15px;
+    position: absolute;
+    top: 25px;
+    width: 255px;
+    z-index: 10;
+}
+
+form.report div.report-post-box a.close {
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}
+
+form.report div.report-post-box ul {
+    list-style: none;
+}
+
+form.report div.report-post-box li {
+    border: 0;
+    margin: 0;
+    padding: 3px 0;
+}
+
+form.report div.report-post-box input.text {
+    border: solid 1px #87C4DC;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    display: inline;
+    padding: 3px 8px;
+    width: 92%;
+}
+
+form.report.processing div.report-post-box a {
+    color: #bbb;
+    cursor: default;
+}
+
+form.report.processing div.report-post-box input.text {
+    border-color: #bbb;
 }
 
 div.report-reply a.reply {
@@ -889,6 +954,7 @@ ol.answers div.helpful.zero mark {
 
 ol.answers form.report {
     margin: 15px 0 0;
+    position: relative;
 }
 
 ol.answers a.edit,
@@ -898,7 +964,7 @@ ol.answers a.delete {
     float: left;
     font-size: 14px;
     margin: 7px 0 0;
-    padding: 0 0 0 23px;
+    padding: 0 0 0 30px;
 }
 
 ol.answers a.edit {
@@ -1252,4 +1318,42 @@ div.edit-answer div.forum-editor {
 
 div.edit-answer input.btn {
     margin-left: 1em;
+}
+
+/*
+ * Flagged content queue
+ */
+body.flagged #main-content {
+    float: none;
+    padding: 20px 200px 0 30px;
+    position: relative;
+    width: auto;
+}
+
+#flagged-queue h1 {
+    font-size: 30px;
+}
+
+#flagged-queue ul {
+    border-top: solid 1px #aaa;
+    list-style: none;
+    margin: 20px 0 0;
+}
+
+#flagged-queue li {
+    border-bottom: solid 1px #aaa;
+    padding: 5px 0;
+}
+#flagged-queue li h2 {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#flagged-queue li h3 {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#flagged-queue li div.wrap {
+    padding: 10px 25px;
 }

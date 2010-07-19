@@ -14,6 +14,7 @@
 
         if($('body').is('.answers')) {
             initMoreDetailsModal();
+            initReportPost();
         }
     }
 
@@ -173,6 +174,80 @@
                 delete $overlay;
                 return false;
             }
+        });
+    }
+
+    /*
+     * Initialize the 'Report Post' form (ajaxify)
+     */
+    function initReportPost() {
+        $('form.report input[type="submit"]').click(function(ev){
+            ev.preventDefault();
+            var $form = $(this).closest('form');
+            if ($form.is('.processing')) {
+                return false;
+            }
+            $('div.report-post-box').remove();
+
+            var html = '<div class="report-post-box"><a href="#close" ' +
+                       'class="close">&#x2716;</a><ul></ul></div>';
+                $modal = $(html),
+                $ul = $modal.find('ul');
+
+            $form.find('select option').each(function(){
+                var $this = $(this),
+                    $li = $('<li><a href="#"></a></li>'),
+                    $a = $li.find('a');
+                $a.attr('data-val', $this.attr('value')).text($this.text());
+                $ul.append($li);
+            });
+            $ul.append('<li><input type="text" class="text" ' +
+                       'name="modal-other" /></li>');
+
+            $modal.find('a.close').one('click', function(ev){
+                ev.preventDefault();
+                if ($form.is('.processing')) {
+                    return false;
+                }
+                $modal.remove();
+                return false;
+            });
+
+            $modal.find('ul a').click(function(ev){
+                ev.preventDefault();
+                if ($form.is('.processing')) {
+                    return false;
+                }
+                $form.addClass('processing');
+
+                $form.find('select').val($(this).attr('data-val'));
+                var other = $modal.find('input[name="modal-other"]').val();
+                $form.find('input[name="other"]').val(other);
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    success: function(data) {
+                        $modal.find('ul').replaceWith('<div class="msg">' +
+                                                    data.message + '</div>');
+                    },
+                    error: function() {
+                        var message = gettext("There was an error :(.");
+                        $modal.find('ul').replaceWith('<div class="msg">' +
+                                                      message + '</div>');
+                    },
+                    complete: function() {
+                        $form.removeClass('processing');
+                    }
+                });
+
+                return false;
+            });
+
+            $form.append($modal);
+
+            return false;
         });
     }
 

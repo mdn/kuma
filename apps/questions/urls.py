@@ -1,5 +1,10 @@
 from django.conf.urls.defaults import patterns, url
+from django.contrib.contenttypes.models import ContentType
+
 from .feeds import QuestionsFeed, AnswersFeed
+from .models import Question, Answer
+from flagit import views as flagit_views
+
 
 urlpatterns = patterns('questions.views',
     url(r'^$', 'questions', name='questions.questions'),
@@ -31,4 +36,12 @@ urlpatterns = patterns('questions.views',
         name='questions.add_tag_async'),
     url(r'^/(?P<question_id>\d+)/remove-tag-async$', 'remove_tag_async',
         name='questions.remove_tag_async'),
+
+    # Flag content ("Report this post")
+    url(r'^/(?P<object_id>\d+)/flag$', flagit_views.flag,
+        {'content_type': ContentType.objects.get_for_model(Question).id},
+        name='questions.flag'),
+    url(r'^/(?P<question_id>\d+)/flag/(?P<object_id>\d+)$', flagit_views.flag,
+        {'content_type': ContentType.objects.get_for_model(Answer).id},
+        name='questions.answer_flag'),
 )

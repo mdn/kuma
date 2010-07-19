@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     'questions',
     'kadmin',
     'taggit',
+    'flagit',
 )
 
 # Extra apps for testing
