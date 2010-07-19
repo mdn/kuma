@@ -188,6 +188,7 @@ def test_sphinx_down():
     Tests that the client times out when Sphinx is down.
     """
     wc = WikiClient()
+    wc.sphinx.SetServer('localhost', 65535)
     assert_raises(SearchError, wc.query, 'test')
 
 
