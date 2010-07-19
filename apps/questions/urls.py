@@ -9,6 +9,8 @@ from flagit import views as flagit_views
 urlpatterns = patterns('questions.views',
     url(r'^$', 'questions', name='questions.questions'),
     url(r'^/new$', 'new_question', name='questions.new_question'),
+    url(r'^/(?P<question_id>\d+)/confirm/(?P<confirmation_id>\w+)$',
+        'confirm_question_form', name='questions.confirm_form'),
     url(r'^/(?P<question_id>\d+)$', 'answers', name='questions.answers'),
     url(r'^/(?P<question_id>\d+)/edit$',
         'edit_question', name='questions.edit_question'),

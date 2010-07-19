@@ -75,6 +75,18 @@ h2 {
     font-size: 2em;
 }
 
+#modal-overlay {
+    background: #000;
+    height: 100%;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+}
+
 /*----------------------------------
     Header
 ----------------------------------*/

@@ -6,11 +6,13 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.template import Context, loader
+from django.core.mail import send_mail
 
 from celery.decorators import task
 from tower import ugettext as _
 
 from notifications.tasks import send_notification
+from sumo.urlresolvers import reverse
 
 
 log = logging.getLogger('k.task')
@@ -73,3 +75,17 @@ def build_solution_notification(question):
 
     send_notification.delay(ct, question.pk, subject, content,
                             exclude, 'solution')
+
+
+@task
+def send_confirmation_email(question):
+    log.debug('Sending confirmation email for question (id=%s)' % question.id)
+    from_address = 'notifications@support.mozilla.com'
+    subject = _('Please confirm your question: %s') % question.title
+    t = loader.get_template('questions/email/confirm_question.ltxt')
+    url = reverse('questions.confirm_form',
+                  args=[question.id, question.confirmation_id])
+    content = t.render(Context({'question_title': question.title,
+                                'confirm_url': url,
+                                'host': Site.objects.get_current().domain}))
+    send_mail(subject, content, from_address, [question.creator.email])

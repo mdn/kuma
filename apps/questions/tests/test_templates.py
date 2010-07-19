@@ -9,7 +9,7 @@ from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from questions.models import Question, Answer, QuestionVote
+from questions.models import Question, Answer, QuestionVote, UNCONFIRMED
 from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
                              tags_eq)
 from questions.views import UNAPPROVED_TAG, NO_TAG
@@ -928,3 +928,50 @@ class QuestionEditingTests(TestCaseBase):
         eq_(q.content, 'New content')
         eq_(q.metadata['ff_version'], 'New version')
         eq_(q.updated_by, User.objects.get(username='admin'))
+
+
+class AAQTemplateTestCase(TestCaseBase):
+    """Test the AAQ template."""
+    def setUp(self):
+        super(AAQTemplateTestCase, self).setUp()
+        self.client.login(username='jsocol', password='testpass')
+
+    def tearDown(self):
+        self.client.logout()
+        super(AAQTemplateTestCase, self).tearDown()
+
+    def test_full_workflow(self):
+        # Post a new question
+        url = urlparams(reverse('questions.new_question'),
+                        product='desktop', category='d1',
+                        search='A test question', showform=1)
+        data = {'title': 'A test question',
+                'content': 'I have this question that I hope...',
+                'sites_affected': 'http://example.com',
+                'ff_version': '3.6.6',
+                'os': 'Intel Mac OS X 10.6',
+                'plugins': '* Shockwave Flash 10.1 r53',
+                'useragent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X ' +
+                             '10.6; en-US; rv:1.9.2.6) Gecko/20100625 ' +
+                             'Firefox/3.6.6'}
+
+        response = self.client.post(url, data)
+        eq_(200, response.status_code)
+
+        # Verify questions is in db now
+        question = Question.objects.filter(title='A test question')[0]
+        eq_(UNCONFIRMED, question.status)
+
+        # Verify question doesn't show up in questions list yet
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_(0, len(doc('li#question-%s' % question.id)))
+
+        # Confirm the question and make sure it now appears in questions list
+        response = post(self.client, 'questions.confirm_form', {},
+                        args=[question.id, question.confirmation_id])
+        doc = pq(response.content)
+        eq_('jsocol', doc('#question div.asked-by span.user').text())
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_(1, len(doc('li#question-%s' % question.id)))

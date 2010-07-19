@@ -3,7 +3,7 @@
         "pk": 1,
         "model": "questions.question",
         "fields": {
-            "status": 0,
+            "status": 1,
             "updated": "2010-06-22 19:47:34",
             "creator": 118533,
             "is_locked": false,
@@ -17,7 +17,7 @@
         "pk": 2,
         "model": "questions.question",
         "fields": {
-            "status": 0,
+            "status": 1,
             "updated": "2010-06-21 19:47:34",
             "creator": 118533,
             "is_locked": false,

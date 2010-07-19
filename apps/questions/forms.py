@@ -46,7 +46,6 @@ class EditQuestionForm(forms.Form):
 
         We are adding fields here and not declaratively because the
         form fields to include depend on the selected product/category.
-
         """
         super(EditQuestionForm, self).__init__(*args, **kwargs)
 
@@ -120,10 +119,6 @@ class EditQuestionForm(forms.Form):
                                       max_length=30000,
                                       widget=widget)
             self.fields['troubleshooting'] = field
-
-        if not user or not user.is_authenticated():
-            self.fields['email'] = forms.EmailField(label=EMAIL_LABEL,
-                                                    help_text=EMAIL_HELP)
 
         if 'ff_version' in extra_fields:
             field = StrippedCharField(label=FF_VERSION_LABEL, required=False)

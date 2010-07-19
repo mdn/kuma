@@ -40,10 +40,44 @@
      * Initialize the new question page/form
      */
     function initNewQuestion() {
+        requireLogin();
+
         var $questionForm = $('#question-form');
         prepopulateSystemInfo($questionForm);
         initTitleEdit($questionForm);
         hideDetails($questionForm);
+    }
+
+    // If user isn't logged in, show login/register modal before
+    // rendering the new question form.
+    function requireLogin() {
+        if(!isLoggedIn()) {
+            $('#show-form-btn').click(function(ev) {
+                ev.preventDefault();
+
+                // Show login/register page in modal iframe
+                // Is there a better way to get this url?
+                var loginUrl = '/tiki-aaq_modal.php';
+
+                var $modal = $('<div id="login-modal"><iframe src="' +
+                               loginUrl + '"></iframe></div>');
+                var $overlay = $('<div id="modal-overlay"></div>');
+                $('body').append($overlay).append($modal);
+                var $iframe = $('iframe', $modal);
+                $iframe.load(function () {
+                    if ($iframe.contents().find('.success').length > 0) {
+                        // Time to continue, login was successful
+                        $('#show-form-btn').unbind().click();
+                    }
+                });
+
+                return false;
+            });
+        }
+    }
+
+    function isLoggedIn() {
+        return $('#greeting span.user').length > 0;
     }
 
     // Autofill in the info we can get via js

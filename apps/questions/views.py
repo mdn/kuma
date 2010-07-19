@@ -1,3 +1,4 @@
+import logging
 import json
 import logging
 
@@ -23,16 +24,21 @@ from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.utils import paginate
 from notifications import create_watch, destroy_watch
-from .models import Question, Answer, QuestionVote, AnswerVote
+from .models import (Question, Answer, QuestionVote, AnswerVote,
+                     CONFIRMED, UNCONFIRMED)
 from .forms import (NewQuestionForm, EditQuestionForm,
                     AnswerForm, WatchQuestionForm)
 from .feeds import QuestionsFeed, AnswersFeed
 from .tags import add_existing_tag
-from .tasks import cache_top_contributors, build_solution_notification
+from .tasks import (cache_top_contributors, build_solution_notification,
+                    send_confirmation_email)
 import questions as constants
 from .question_config import products
 from upload.models import ImageAttachment
 from upload.views import upload_images
+
+
+log = logging.getLogger('k.questions')
 
 
 log = logging.getLogger('k.questions')
@@ -56,21 +62,19 @@ def questions(request):
         sort_ = None
         order = '-updated'
 
+    question_qs = Question.objects.filter(status=CONFIRMED)
     if filter == 'no-replies':
-        question_qs = Question.objects.filter(num_answers=0).order_by(order)
+        question_qs = question_qs.filter(num_answers=0)
     elif filter == 'replies':
-        question_qs = Question.objects.filter(num_answers__gt=0)
-        question_qs = question_qs.order_by(order)
+        question_qs = question_qs.filter(num_answers__gt=0)
     elif filter == 'solved':
-        question_qs = Question.objects.exclude(solution=None).order_by(order)
+        question_qs = question_qs.exclude(solution=None)
     elif filter == 'unsolved':
-        question_qs = Question.objects.filter(solution=None).order_by(order)
+        question_qs = question_qs.filter(solution=None)
     elif filter == 'my-contributions' and request.user.is_authenticated():
         criteria = Q(answers__creator=request.user) | Q(creator=request.user)
-        question_qs = Question.objects.filter(criteria).distinct()
-        question_qs = question_qs.order_by(order)
+        question_qs = question_qs.filter(criteria).distinct()
     else:
-        question_qs = Question.objects.all().order_by(order)
         filter = None
 
     if tagged:
@@ -81,6 +85,7 @@ def questions(request):
         else:
             question_qs = Question.objects.get_empty_query_set()
 
+    question_qs = question_qs.order_by(order)
     questions_ = paginate(request, question_qs,
                           per_page=constants.QUESTIONS_PER_PAGE)
 
@@ -122,8 +127,9 @@ def new_question(request):
         search = request.GET.get('search', None)
         search_results = True if search else None  # TODO - get search results
         if request.GET.get('showform', False):
-            form = NewQuestionForm(user=request.user, product=product,
-                                   category=category,
+            if not request.user.is_authenticated():
+                return HttpResponseRedirect(settings.LOGIN_URL)
+            form = NewQuestionForm(product=product, category=category,
                                    initial={'title': search})
         else:
             form = None
@@ -138,8 +144,10 @@ def new_question(request):
                              'deadend': deadend})
 
     # Handle the form post
-    form = NewQuestionForm(user=request.user, product=product,
-                           category=category, data=request.POST)
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(settings.LOGIN_URL)
+    form = NewQuestionForm(product=product, category=category,
+                           data=request.POST)
 
     if form.is_valid():
         question = Question(creator=request.user,
@@ -156,7 +164,11 @@ def new_question(request):
         question.auto_tag()
 
         # Submitting the question counts as a vote
-        return question_vote(request, question.id)
+        question_vote(request, question.id)
+
+        send_confirmation_email.delay(question)
+        return jingo.render(request, 'questions/confirm_question.html',
+                            {'question': question})
 
     return jingo.render(request, 'questions/new_question.html',
                         {'form': form, 'products': products,
@@ -209,6 +221,25 @@ def edit_question(request, question_id):
                          'form': form,
                          'current_product': question.product,
                          'current_category': question.category})
+
+
+def confirm_question_form(request, question_id, confirmation_id):
+    """Confirm a question submitted."""
+    question = get_object_or_404(Question, pk=question_id,
+                                 confirmation_id=confirmation_id)
+
+    if question.status == UNCONFIRMED:
+        if request.method == 'GET':
+            template = 'questions/confirm_question_form.html'
+            return jingo.render(request, template,
+                                {'question': question})
+        else:
+            log.info("User %s is confirming question with id=%s " %
+                     (question.creator, question.id))
+            question.status = CONFIRMED
+            question.save()
+
+    return answers(request, question_id)
 
 
 @require_POST

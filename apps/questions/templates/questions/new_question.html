@@ -112,12 +112,11 @@
       <input type="hidden" name="category" value="{{ current_category.key }}" />
       <input type="hidden" name="search" value="{{ request.GET.search }}" />
       <input type="hidden" name="showform" value="1" />
-      <input type="submit" class="btn y-btn" value="None of these solve my problem" />
+      <input type="submit" id="show-form-btn" class="btn y-btn" value="None of these solve my problem" />
     </form>
   {% endif %}
 
 {% endblock %}
-
 
 {% block major_detail_instructions %}
   <h2>{{ _('Fill in the details of your question.') }}</h2>

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import re
+import hashlib
 
 from django.db import models
 from django.db.models.signals import post_save
@@ -22,6 +23,14 @@ from .tasks import update_question_votes, build_answer_notification
 from upload.models import ImageAttachment
 
 
+UNCONFIRMED = 0
+CONFIRMED = 1
+QUESTION_STATUS_CHOICES = (
+    (UNCONFIRMED, 'Unconfirmed'),
+    (CONFIRMED, 'Confirmed'),
+)
+
+
 class Question(ModelBase, TaggableMixin):
     """A support question."""
     title = models.CharField(max_length=255)
@@ -37,9 +46,11 @@ class Question(ModelBase, TaggableMixin):
     num_answers = models.IntegerField(default=0, db_index=True)
     solution = models.ForeignKey('Answer', related_name='solution_for',
                                  null=True)
-    status = models.IntegerField(default=0, db_index=True)
+    status = models.IntegerField(default=UNCONFIRMED, db_index=True,
+                                 choices=QUESTION_STATUS_CHOICES)
     is_locked = models.BooleanField(default=False)
     num_votes_past_week = models.PositiveIntegerField(default=0, db_index=True)
+    confirmation_id = models.CharField(max_length=40, db_index=True)
 
     images = generic.GenericRelation(ImageAttachment)
 
@@ -62,6 +73,14 @@ class Question(ModelBase, TaggableMixin):
         """Override save method to take care of updated."""
         if self.id and not no_update:
             self.updated = datetime.now()
+
+        # Generate a confirmation_id if necessary
+        if not self.id and not self.confirmation_id:
+            key = '%s-%s' % (self.title, datetime.now())
+            sha = hashlib.sha1()
+            sha.update(key)
+            self.confirmation_id = sha.hexdigest()
+
         super(Question, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):

@@ -1253,7 +1253,7 @@ input.g-btn:disabled {
 }
 
 /*
- * Ask a Questions
+ * Ask a Question
  */
 #ask-question {
     padding: 0 10px;
@@ -1547,4 +1547,45 @@ body.flagged #main-content {
 
 #flagged-queue li div.wrap {
     padding: 10px 25px;
+}
+
+#login-modal {
+    background: #fff;
+    border: solid 3px #898377;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 1px 2px 15px #aaa;
+    -moz-box-shadow: 1px 2px 15px #333;
+    -webkit-box-shadow: 1px 2px 15px #aaa;
+    color: #4B4740;
+    display: block;
+    font-size: 14px;
+    left: 50%;
+    margin-left: -410px;
+    padding: 20px;
+    position: fixed;
+    text-align: left;
+    top: 70px;
+    width: 780px;
+    z-index:10;
+}
+
+#login-modal iframe {
+    border: none;
+    height: 400px;
+    overflow: auto;
+    width: 100%;
+}
+
+div.confirm-question {
+    padding: 0 25px;
+}
+
+div.confirm-question h2{
+    margin: 0 0 15px;
+}
+
+div.confirm-question h3{
+    margin: 0 0 15px;
 }
