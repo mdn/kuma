@@ -179,7 +179,8 @@
                                          // add it to the local vocab.
                                          var vocab = $form.closest("div.tags").data("tagVocab"),
                                              canonicalName = data.canonicalName;
-                                         vocab.push(canonicalName);
+                                         if (inArrayCaseInsensitive(canonicalName, vocab) == -1)
+                                             vocab.push(canonicalName);
                                          $tag.find(".tag-name").text(canonicalName);
                                          $tag.removeClass("in-progress");
                                          attachRemoverHandlerTo($tag);
