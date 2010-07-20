@@ -117,8 +117,10 @@
             case "Windows NT 5.1":
                 return "Windows XP";
             case "Windows NT 6.0":
+            case "Windows NT 6.0; WOW64":
                 return "Windows Vista";
             case "Windows NT 6.1":
+            case "Windows NT 6.1; WOW64":
                 return "Windows 7";
             case "Linux i686":
                 return "Linux";
