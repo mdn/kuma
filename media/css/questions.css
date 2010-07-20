@@ -571,8 +571,9 @@ div.report-reply {
     padding: 20px 15px;
 }
 
-div.report-reply form {
+div.report-reply form.report {
     float: left;
+    padding: 0 15px 0 0;
 }
 
 form.report input {
@@ -580,6 +581,13 @@ form.report input {
     border: none;
     color: #0489B7;
     cursor: pointer;
+    font-size: 14px;
+    padding: 0 0 0 20px;
+}
+
+div.report-reply a.delete {
+    background: transparent url(../img/forums/delete.png) no-repeat left center;
+    float: left;
     font-size: 14px;
     padding: 0 0 0 20px;
 }
@@ -1115,4 +1123,32 @@ input.g-btn:disabled {
     color: #807970;
     font-size: 12px;
     padding: 2px 0 0 115px;
+}
+
+/* Delete Question/Answer Confirmation */
+div.to-delete {
+    padding: 0 0 0 30px;
+}
+
+div.to-delete label {
+    display:block;
+    font-weight:bold;
+    margin: 0.5em 0 0 0;
+}
+
+div.to-delete input {
+    margin: 0 0 0 1em;
+}
+
+div.to-delete form {
+    margin: 2em 0 0 0;
+}
+
+div.to-delete p {
+    margin: 0 0 1em;
+}
+
+div.to-delete div.content ul,
+div.to-delete div.content ol {
+    margin: 0 0 0 1.5em;
 }

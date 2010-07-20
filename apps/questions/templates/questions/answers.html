@@ -79,6 +79,11 @@
           {{ csrf() }}
           <input type="submit" value="{{ _('Report this post') }}" />
         </form>
+        {% if user.has_perm('questions.delete_question') %}
+          <a class="delete" href="{{ url('questions.delete', question.id) }}">
+            {{ _('Delete this post') }}
+          </a>
+        {% endif %}
         <a class="btn g-btn reply" href="#question-reply">{{ _('Post a New Reply') }}</a>
       </div>
     </div>

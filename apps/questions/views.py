@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.contrib.auth.decorators import permission_required
 from django.http import (HttpResponseRedirect, HttpResponse,
@@ -24,6 +25,9 @@ from .tags import add_existing_tag
 from .tasks import cache_top_contributors
 import questions as constants
 import question_config as config
+
+
+log = logging.getLogger('k.questions')
 
 
 UNAPPROVED_TAG = _lazy(u'That tag does not exist.')
@@ -305,6 +309,25 @@ def remove_tag_async(request, question_id):
 
     return HttpResponseBadRequest(json.dumps({'error': unicode(NO_TAG)}),
                                   mimetype='application/x-json')
+
+
+@login_required
+@permission_required('questions.delete_question')
+def delete_question(request, question_id):
+    """Delete a question"""
+    question = get_object_or_404(Question, pk=question_id)
+
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'questions/confirm_question_delete.html',
+                            {'question': question})
+
+    # Handle confirm delete form POST
+    log.warning('User %s is deleting question with id=%s' %
+                (request.user, question.id))
+    question.delete()
+
+    return HttpResponseRedirect(reverse('questions.questions'))
 
 
 def _answers_data(request, question_id, form=None):

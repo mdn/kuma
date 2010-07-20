@@ -230,6 +230,33 @@ class AnswersTemplateTestCase(TestCaseBase):
         doc = pq(response.content)
         eq_('0', doc('div.other-helpful span.votes')[0].text)
 
+    def test_delete_question_without_permissions(self):
+        """Deleting a question without permissions redirects to login."""
+        response = get(self.client, 'questions.delete',
+                       args=[self.question.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/questions/1/delete',
+            redirect[0])
+
+        response = post(self.client, 'questions.delete',
+                        args=[self.question.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/questions/1/delete',
+            redirect[0])
+
+    def test_delete_question_with_permissions(self):
+        """Deleting a question with permissions."""
+        self.client.login(username='admin', password='testpass')
+        response = get(self.client, 'questions.delete',
+                       args=[self.question.id])
+        eq_(200, response.status_code)
+
+        response = post(self.client, 'questions.delete',
+                        args=[self.question.id])
+        eq_(0, len(Question.objects.filter(pk=self.question.id)))
+
 
 class TaggingViewTestsAsTagger(TaggingTestCaseBase):
     """Tests for views that add and remove tags, logged in as someone who can
