@@ -77,6 +77,11 @@ ol.threads li div.author {
     width: 18%;
 }
 
+ol.forums div.last-post,
+ol.threads div.last-post {
+    line-height: 1.4em;
+}
+
 ol.forums-columns li.last-post,
 ol.forums div.last-post,
 ol.threads-columns li.last-post,
@@ -102,6 +107,13 @@ ol.threads li div {
     float: left;
     margin: 1% 0.5% 1% 0;
     padding: 0 1%;
+}
+
+ol.forums li,
+ol.threads li,
+ol.posts li {
+    font-size: 1.1em;
+    line-height: 1.4em;
 }
 
 ol.forums li hr,
@@ -154,6 +166,10 @@ ol.posts li div.content {
     float: left;
     padding: 0 1% 1em 1%;
     width: 72.9%;
+}
+
+ol.posts li div.content p {
+    line-height: 1.6em;
 }
 
 ol.posts li div.info {
