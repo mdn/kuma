@@ -119,6 +119,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'sumo.context_processors.global_settings',
+    'jingo_minify.helpers.build_ids'
 )
 
 MIDDLEWARE_CLASSES = (
