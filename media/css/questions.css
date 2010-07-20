@@ -214,8 +214,8 @@ ol.questions span.badge.contributed {
 }
 
 ol.questions div.asked-by {
-    font-size: 14px;
-    margin: 7px 0;
+    font-size: 12px;
+    margin: 7px 0 14px;
 }
 
 ol.questions div.asked-by span.user {
@@ -223,7 +223,10 @@ ol.questions div.asked-by span.user {
 }
 
 ol.questions p {
-    margin: 3px 0 0;
+    font-size: 14px;
+    line-height: 23px;
+    color: #4B4740;
+    margin: 0 0 14px;
 }
 
 ol.questions div.meta {
