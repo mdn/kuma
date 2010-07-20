@@ -32,6 +32,25 @@ class TestAnswer(TestCaseBase):
 
         question.delete()
 
+    def test_delete_last_answer_of_question(self):
+        """Deleting the last_answer of a Question should update the question.
+        """
+        question = Question.objects.all()[0]
+        last_answer = question.last_answer
+
+        # add a new answer and verify last_answer updated
+        answer = Answer(question=question, creator_id=47963,
+                        content="Test Answer")
+        answer.save()
+        question = Question.objects.get(pk=question.id)
+        eq_(question.last_answer.id, answer.id)
+
+        # delete the answer and last_answer should go back to previous value
+        answer.delete()
+        question = Question.objects.get(pk=question.id)
+        eq_(question.last_answer.id, last_answer.id)
+        eq_(Answer.objects.filter(pk=answer.id).count(), 0)
+
 
 class TestQuestionMetadata(TestCaseBase):
     """Tests handling question metadata"""

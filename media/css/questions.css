@@ -836,6 +836,15 @@ ol.answers form.report {
     margin: 15px 0 0;
 }
 
+ol.answers a.delete {
+    background: transparent url(../img/forums/delete.png) no-repeat left center;
+    clear: left;
+    float: left;
+    font-size: 14px;
+    margin: 7px 0 0;
+    padding: 0 0 0 23px;
+}
+
 /* reply to question */
 #question-reply {
     font-size: 14px;

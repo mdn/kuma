@@ -270,6 +270,11 @@
                 <input type="submit" value="{{ _('Report this post') }}" />
               </form>
             {% endif %}
+            {% if user.has_perm('questions.delete_answer') %}
+              <a class="delete" href="{{ url('questions.delete_answer', question.id, answer.id) }}">
+                {{ _('Delete this post') }}
+              </a>
+            {% endif %}
           </div>
         </li>
       {% endfor %}

@@ -330,6 +330,26 @@ def delete_question(request, question_id):
     return HttpResponseRedirect(reverse('questions.questions'))
 
 
+@login_required
+@permission_required('questions.delete_answer')
+def delete_answer(request, question_id, answer_id):
+    """Delete an answer"""
+    answer = get_object_or_404(Answer, pk=answer_id, question=question_id)
+
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'questions/confirm_answer_delete.html',
+                            {'answer': answer})
+
+    # Handle confirm delete form POST
+    log.warning('User %s is deleting answer with id=%s' %
+                (request.user, answer.id))
+    answer.delete()
+
+    return HttpResponseRedirect(reverse('questions.answers',
+                                args=[question_id]))
+
+
 def _answers_data(request, question_id, form=None):
     """Return a map of the minimal info necessary to draw an answers page."""
     question = get_object_or_404(Question, pk=question_id)

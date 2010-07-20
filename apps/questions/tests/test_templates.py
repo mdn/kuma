@@ -255,7 +255,38 @@ class AnswersTemplateTestCase(TestCaseBase):
 
         response = post(self.client, 'questions.delete',
                         args=[self.question.id])
-        eq_(0, len(Question.objects.filter(pk=self.question.id)))
+        eq_(0, Question.objects.filter(pk=self.question.id).count())
+
+    def test_delete_answer_without_permissions(self):
+        """Deleting an answer without permissions redirects to login."""
+        answer = self.question.last_answer
+        response = get(self.client, 'questions.delete_answer',
+                       args=[self.question.id, answer.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/' + \
+            'questions/1/delete/1',
+            redirect[0])
+
+        response = post(self.client, 'questions.delete_answer',
+                        args=[self.question.id, answer.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/' + \
+            'questions/1/delete/1',
+            redirect[0])
+
+    def test_delete_answer_with_permissions(self):
+        """Deleting an answer with permissions."""
+        answer = self.question.last_answer
+        self.client.login(username='admin', password='testpass')
+        response = get(self.client, 'questions.delete_answer',
+                       args=[self.question.id, answer.id])
+        eq_(200, response.status_code)
+
+        response = post(self.client, 'questions.delete_answer',
+                        args=[self.question.id, answer.id])
+        eq_(0, Answer.objects.filter(pk=self.question.id).count())
 
 
 class TaggingViewTestsAsTagger(TaggingTestCaseBase):
