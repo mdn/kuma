@@ -704,6 +704,7 @@ ul.related li {
 ol.answers {
     clear: both;
     list-style: none;
+    margin: 2.35em 0 0;
 }
 
 ol.answers li {
