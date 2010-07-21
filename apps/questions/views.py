@@ -16,6 +16,7 @@ from tower import ugettext_lazy as _lazy
 
 from sumo.utils import paginate
 from sumo.urlresolvers import reverse
+from sumo.helpers import urlparams
 from .models import Question, Answer, QuestionVote, AnswerVote
 from .forms import NewQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
@@ -33,6 +34,8 @@ def questions(request):
     """View the questions."""
 
     filter = request.GET.get('filter')
+    tagged = request.GET.get('tagged')
+    tags = None
     sort_ = request.GET.get('sort')
 
     if sort_ == 'requested':
@@ -58,6 +61,14 @@ def questions(request):
         question_qs = Question.objects.all().order_by(order)
         filter = None
 
+    if tagged:
+        tag_slugs = tagged.split(',')
+        tags = Tag.objects.filter(slug__in=tag_slugs)
+        if tags:
+            question_qs = question_qs.filter(tags__in=[t.name for t in tags])
+        else:
+            question_qs = Question.objects.get_empty_query_set()
+
     questions_ = paginate(request, question_qs,
                           per_page=constants.QUESTIONS_PER_PAGE)
 
@@ -67,7 +78,8 @@ def questions(request):
     return jingo.render(request, 'questions/questions.html',
                         {'questions': questions_, 'feeds': feed_urls,
                          'filter': filter, 'sort': sort_,
-                         'top_contributors': _get_top_contributors()})
+                         'top_contributors': _get_top_contributors(),
+                         'tags': tags, 'tagged': tagged})
 
 
 def answers(request, question_id, form=None):
@@ -245,7 +257,11 @@ def add_tag_async(request, question_id):
                             status=400)
 
     if canonical_name:
-        return HttpResponse(json.dumps({'canonicalName': canonical_name}),
+        tag = Tag.objects.get(name=canonical_name)
+        tag_url = urlparams(reverse('questions.questions'), tagged=tag.slug)
+        data = {'canonicalName': canonical_name,
+                'tagUrl': tag_url}
+        return HttpResponse(json.dumps(data),
                             mimetype='application/x-json')
 
     return HttpResponse(json.dumps({'error': unicode(NO_TAG)}),

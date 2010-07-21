@@ -151,7 +151,7 @@
           <ul class="tag-list{% if not can_tag %} immutable{% endif %}">
             {% for tag in tags %}
               <li class="tag">{# -#}
-                <a class="tag-name" href="#">{{ tag }}</a>
+                <a class="tag-name" href="{{ url('questions.questions')|urlparams(tagged=tag.slug) }}">{{ tag }}</a>
                 {%- if can_tag -%}
                   <input type="submit"
                          name="remove-tag-{{ tag }}"

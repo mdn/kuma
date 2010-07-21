@@ -543,3 +543,25 @@ class QuestionsTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.questions')
         doc = pq(response.content)
         eq_(0, len(doc('#top-contributors ol li')))
+
+    def test_tagged(self):
+        self.client.login(username='admin', password="testpass")
+        tagname = 'mobile'
+        tagged = urlparams(reverse('questions.questions'), tagged=tagname)
+
+        # First there should be no questions tagged 'mobile'
+        response = self.client.get(tagged)
+        doc = pq(response.content)
+        eq_(0, len(doc('ol.questions > li')))
+
+        # Tag a question 'mobile'
+        question = Question.objects.get(pk=2)
+        response = post(self.client, 'questions.add_tag',
+                        {'tag-name': tagname},
+                        args=[question.id])
+        eq_(200, response.status_code)
+
+        # Now there should be 1 question tagged 'mobile'
+        response = self.client.get(tagged)
+        doc = pq(response.content)
+        eq_(1, len(doc('ol.questions > li')))

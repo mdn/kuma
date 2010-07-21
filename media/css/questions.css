@@ -119,6 +119,20 @@ body {
     padding: 1px 4px 4px;
 }
 
+#tagged {
+    font-size: 18px;
+    margin: 0 0 20px;
+    padding: 0 0 0 25px;
+}
+
+#tagged label {
+    font-weight: bold;
+}
+
+#tagged a.show-all {
+    font-size: 14px;
+    margin: 0 0 0 25px;
+}
 /* main content layout */
 #main-content {
     float: left;

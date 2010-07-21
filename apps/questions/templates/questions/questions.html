@@ -5,30 +5,39 @@
 {% set classes = 'questions' %}
 
 {% block filter %}
+{% if tags %}
+  <div id="tagged">
+    <label>{{ _('Questions Tagged:') }}</label>
+    {% for tag in tags %}
+      <a href="{{ url('questions.questions')|urlparams(tagged=tag.slug, filter=filter, sort=sort) }}">{{ tag.name }}</a>{% if not loop.last %},{% endif %}
+    {% endfor %}
+    <a class="show-all" href="{{ url('questions.questions')|urlparams(filter=filter, sort=sort) }}">{{ _('Show All Questions') }}</a>
+  </div>
+{% endif %}
 <div id="filter">
   <ul>
     <li{% if not sort %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter=filter) }}">{{ _('Most Recent') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter=filter, tagged=tagged) }}">{{ _('Most Recent') }}</a>
     </li>
     <li{% if sort == 'requested' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(sort='requested', filter=filter) }}">{{ _('Most Requested') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(sort='requested', filter=filter, tagged=tagged) }}">{{ _('Most Requested') }}</a>
     </li>
     <li class="separator">|</li>
     <li{% if not filter %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(sort=sort) }}">{{ _('All') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(sort=sort, tagged=tagged) }}">{{ _('All') }}</a>
     </li>
     <li{% if filter == 'unsolved' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='unsolved', sort=sort) }}">{{ _('Unsolved') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter='unsolved', sort=sort, tagged=tagged) }}">{{ _('Unsolved') }}</a>
     </li>
     <li{% if filter == 'solved' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='solved', sort=sort) }}">{{ _('Solved') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter='solved', sort=sort, tagged=tagged) }}">{{ _('Solved') }}</a>
     </li>
     <li{% if filter == 'no-replies' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='no-replies', sort=sort) }}">{{ _('No Replies') }}</a>
+      <a href="{{ url('questions.questions')|urlparams(filter='no-replies', sort=sort, tagged=tagged) }}">{{ _('No Replies') }}</a>
     </li>
     {% if user.is_authenticated() %}
       <li{% if filter == 'my-contributions' %} class="active"{% endif %}>
-        <a href="{{ url('questions.questions')|urlparams(filter='my-contributions', sort=sort) }}">{{ _('My Contributions') }}</a>
+        <a href="{{ url('questions.questions')|urlparams(filter='my-contributions', sort=sort, tagged=tagged) }}">{{ _('My Contributions') }}</a>
       </li>
     {% endif %}
   </ul>
@@ -74,7 +83,7 @@
               {{ _('Tagged') }}
               <ul class="tag-list immutable">
                 {% for tag in tags %}
-                    <li><a class="tag-name" href="#">{{ tag }}</a></li>
+                    <li><a class="tag-name" href="{{ url('questions.questions')|urlparams(tagged=tag.slug, filter=filter, sort=sort) }}">{{ tag }}</a></li>
                 {% endfor %}
               </ul>
             {% endif %}

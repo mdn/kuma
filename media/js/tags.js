@@ -183,10 +183,11 @@
                                          // canonicalize its name,
                                          // activate its remover button, and
                                          // add it to the local vocab.
-                                         var canonicalName = data.canonicalName;
+                                         var canonicalName = data.canonicalName,
+                                             url = data.tagUrl;
                                          if (inArrayCaseInsensitive(canonicalName, vocab) == -1)
                                              vocab.push(canonicalName);
-                                         $tag.find(".tag-name").text(canonicalName);
+                                         $tag.find(".tag-name").text(canonicalName).attr("href", url);
                                          $tag.removeClass("in-progress");
                                          attachRemoverHandlerTo($tag);
                                      },
