@@ -21,8 +21,16 @@ CREATE INDEX `taggit_taggeditem_e4470c6e` ON `taggit_taggeditem` (`content_type_
 -- Added a unique constraint on taggit_tag.name. This keeps tag names case-insensitively unique, since we use MySQL's default collation for utf8, utf8_general_ci.
 
 
--- Make new permissions: --
+insert into auth_permission (name, content_type_id, codename) values ('Can add tags to and remove tags from questions', (select id from django_content_type where app_label='questions' and model='question'), 'tag_question');
 
--- Django doesn't seem to make this custom permission on startup.
--- It also doesn't seem to make any permissions except on syncdb, so I have no idea how any of our migrations worked in the past. I suppose it will turn up on staging at worst.
-insert into auth_permission (name, content_type_id, codename) values ('Can tag question', (select id from django_content_type where app_label='questions' and model='question'), 'tag_question');
+INSERT INTO django_content_type (name, app_label, model) VALUES ('Tag', 'taggit', 'tag');
+SET @ct = (SELECT LAST_INSERT_ID());
+INSERT INTO auth_permission (name, content_type_id, codename) VALUES ('Can add tag', @ct, 'add_tag'),
+                                                                     ('Can change tag', @ct, 'change_tag'),
+                                                                     ('Can delete tag', @ct, 'delete_tag');
+
+INSERT INTO django_content_type (name, app_label, model) VALUES ('Tagged Item', 'taggit', 'taggeditem');
+SET @ct = (SELECT LAST_INSERT_ID());
+INSERT INTO auth_permission (name, content_type_id, codename) VALUES ('Can add tagged item', @ct, 'add_taggeditem'),
+                                                                     ('Can change tagged item', @ct, 'change_taggeditem'),
+                                                                     ('Can delete tagged item', @ct, 'delete_taggeditem');

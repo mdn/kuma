@@ -194,7 +194,7 @@ def answer_vote(request, question_id, answer_id):
     return HttpResponseRedirect(answer.get_absolute_url())
 
 
-@permission_required('questions.can_tag')
+@permission_required('questions.tag_question')
 def add_tag(request, question_id):
     """Add a (case-insensitive) tag to question.
 
@@ -225,7 +225,7 @@ def add_tag(request, question_id):
     return jingo.render(request, 'questions/answers.html', template_data)
 
 
-@permission_required('questions.can_tag')
+@permission_required('questions.tag_question')
 @require_POST
 def add_tag_async(request, question_id):
     """Add a (case-insensitive) tag to question asyncronously. Return empty.
@@ -249,7 +249,7 @@ def add_tag_async(request, question_id):
                         status=400)
 
 
-@permission_required('questions.can_tag')
+@permission_required('questions.tag_question')
 @require_POST
 def remove_tag(request, question_id):
     """Remove a (case-insensitive) tag from question.
@@ -269,7 +269,7 @@ def remove_tag(request, question_id):
         reverse('questions.answers', args=[question_id]))
 
 
-@permission_required('questions.can_tag')
+@permission_required('questions.tag_question')
 @require_POST
 def remove_tag_async(request, question_id):
     """Remove a (case-insensitive) tag from question.
@@ -302,7 +302,7 @@ def _answers_data(request, question_id, form=None):
             'form': form or AnswerForm(),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),
-            'can_tag': request.user.has_perm('questions.can_tag'),
+            'can_tag': request.user.has_perm('questions.tag_question'),
             'can_create_tags': request.user.has_perm('taggit.add_tag')}
 
 

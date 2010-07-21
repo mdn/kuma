@@ -10,3 +10,5 @@ ALTER TABLE `notifications_eventwatch` ADD CONSTRAINT `content_type_id_refs_id_1
 CREATE INDEX `notifications_eventwatch_content_type_id` ON `notifications_eventwatch` (`content_type_id`);
 CREATE INDEX `notifications_eventwatch_watch_id` ON `notifications_eventwatch` (`watch_id`);
 CREATE INDEX `notifications_eventwatch_email` ON `notifications_eventwatch` (`email`);
+
+-- django_content_type and auth_permission entries are made in 10-create-questions-app.sql due to an historical deployment contingency.

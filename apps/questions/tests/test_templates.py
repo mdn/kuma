@@ -239,9 +239,9 @@ class TaggingViewTestsAsTagger(TaggingTestCaseBase):
     def setUp(self):
         super(TaggingViewTestsAsTagger, self).setUp()
 
-        # Assign can_tag permission to the "tagger" user.
-        # Would be if there were a natural key for doing this via a fixture.
-        self._can_tag = Permission.objects.get_by_natural_key('can_tag',
+        # Assign tag_question permission to the "tagger" user.
+        # Would be nice to have a natural key for doing this via a fixture.
+        self._can_tag = Permission.objects.get_by_natural_key('tag_question',
                                                               'questions',
                                                               'question')
         self._user = User.objects.get(username='tagger')

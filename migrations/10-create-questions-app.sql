@@ -1,4 +1,12 @@
 BEGIN;
+
+-- The eventwatch type is made here due to an historical deployment contingency:
+INSERT INTO django_content_type (name, app_label, model) VALUES ('event watch', 'notifications', 'eventwatch');
+SET @ct = (SELECT LAST_INSERT_ID());
+INSERT INTO auth_permission (name, content_type_id, codename) VALUES ('Can add event watch', @ct, 'add_eventwatch'),
+                                                                     ('Can change event watch', @ct, 'change_eventwatch'),
+                                                                     ('Can delete event watch', @ct, 'delete_eventwatch');
+
 CREATE TABLE `questions_questionforum` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `name` varchar(50) NOT NULL UNIQUE,
@@ -62,4 +70,22 @@ CREATE INDEX `questions_answer_created` ON `questions_answer` (`created`);
 CREATE INDEX `questions_answer_updated` ON `questions_answer` (`updated`);
 CREATE INDEX `questions_answer_updated_by_id` ON `questions_answer` (`updated_by_id`);
 CREATE INDEX `questions_answer_upvotes` ON `questions_answer` (`upvotes`);
+
+INSERT INTO django_content_type (name, app_label, model) VALUES ('question', 'questions', 'question');
+SET @ct = (SELECT LAST_INSERT_ID());
+INSERT INTO auth_permission (name, content_type_id, codename) VALUES ('Can add question', @ct, 'add_question'),
+                                                                     ('Can change question', @ct, 'change_question'),
+                                                                     ('Can delete question', @ct, 'delete_question');
+
+INSERT INTO django_content_type (name, app_label, model) VALUES ('question meta data', 'questions', 'questionmetadata');
+SET @ct = (SELECT LAST_INSERT_ID());
+INSERT INTO auth_permission (name, content_type_id, codename) VALUES ('Can add question meta data', @ct, 'add_questionmetadata'),
+                                                                     ('Can change question meta data', @ct, 'change_questionmetadata'),
+                                                                     ('Can delete question meta data', @ct, 'delete_questionmetadata');
+
+INSERT INTO django_content_type (name, app_label, model) VALUES ('answer', 'questions', 'answer');
+SET @ct = (SELECT LAST_INSERT_ID());
+INSERT INTO auth_permission (name, content_type_id, codename) VALUES ('Can add answer', @ct, 'add_answer'),
+                                                                     ('Can change answer', @ct, 'change_answer'),
+                                                                     ('Can delete answer', @ct, 'delete_answer');
 COMMIT;

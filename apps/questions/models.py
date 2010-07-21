@@ -35,7 +35,8 @@ class Question(ModelBase, TaggableMixin):
     class Meta:
         ordering = ['-updated']
         permissions = (
-                ('can_tag', 'Can add tags to and remove tags from questions'),
+                ('tag_question',
+                 'Can add tags to and remove tags from questions'),
             )
 
     def __unicode__(self):
