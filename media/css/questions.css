@@ -814,11 +814,16 @@ ol.answers span.author {
     font-size: 14px;
 }
 
+ol.answers p.edited,
 ol.answers p.posted {
     color: #898378;
     font-size: 12px;
     font-style: italic;
     margin: 0 0 5px 15px;
+}
+
+ol.answers p.edited {
+    font-size: 11px;
 }
 
 ol.answers div.content {
@@ -869,6 +874,7 @@ ol.answers form.report {
     margin: 15px 0 0;
 }
 
+ol.answers a.edit,
 ol.answers a.delete {
     background: transparent url(../img/forums/delete.png) no-repeat left center;
     clear: left;
@@ -876,6 +882,10 @@ ol.answers a.delete {
     font-size: 14px;
     margin: 7px 0 0;
     padding: 0 0 0 23px;
+}
+
+ol.answers a.edit {
+    background: transparent url(../img/forums/edit.png) no-repeat left center;
 }
 
 /* reply to question */
@@ -902,6 +912,7 @@ ol.answers a.delete {
     padding: 0;
 }
 
+div.edit-answer textarea,
 #question-reply textarea {
     border: solid 1px #87C4DC;
     border-radius: 8px;
@@ -1193,4 +1204,35 @@ div.to-delete p {
 div.to-delete div.content ul,
 div.to-delete div.content ol {
     margin: 0 0 0 1.5em;
+}
+
+/*
+ * Edit answer
+ */
+div.edit-answer {
+    font-size: 14px;
+    padding: 0 0 0 30px;
+}
+
+div.edit-answer ul.info {
+    list-style: none;
+    margin: 10px 0 0;
+}
+
+div.edit-answer ul.info li {
+    padding: 2px 0;
+}
+
+div.edit-answer ul.info label {
+    font-weight: bold;
+    float: left;
+    width: 150px;
+}
+
+div.edit-answer div.forum-editor {
+    padding-left: 0;
+}
+
+div.edit-answer input.btn {
+    margin-left: 1em;
 }

@@ -1,0 +1,51 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "questions/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{# L10n: {t} is the title of the question. #}
+{% set title = _('Editing an answer | {t} | Firefox Support Forum')|f(t=answer.question.title) %}
+
+{% block content %}
+  <div class="edit-answer">
+    <h2>{{ _('Edit an answer') }}</h2>
+    <ul class="info">
+      <li>
+        <label>{{ _('Created by:') }}</label>
+        {{ answer.creator }}
+      </li>
+      <li>
+        <label>{{ _('Created:') }}</label>
+        {{ datetimeformat(answer.created, format='longdatetime') }}
+      </li>
+      {% if answer.updated_by %}
+        <li>
+          <label>{{ _('Last updated by:') }}</label>
+          {{ answer.updated_by }}
+        </li>
+        <li>
+          <label>{{ _('Last updated:') }}</label>
+          {{ datetimeformat(answer.updated, format='longdatetime') }}
+        </li>
+      {% endif %}
+      <li>
+        <label>{{ _('Question:') }}</label>
+        {{ answer.question.title }}
+      </li>
+    </ul>
+    <form action="{{ url('questions.edit_answer', answer.question.id, answer.id) }}" method="post">
+      {{ csrf() }}
+      {{ errorlist(form) }}
+
+      <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
+        <div class="forum-editor">
+          <div class="forum-editor-tools"></div>
+          {{ form.content|safe }}
+        </div>
+      </div>
+
+      <div class="form-widget submit">
+        <a href="{{ url('questions.answers', answer.question.id) }}">{{ _('Cancel') }}</a>
+        <input type="submit" class="btn g-btn" value="{{ _('Update answer') }}" />
+      </div>
+    </form>
+  </div>
+{% endblock %}

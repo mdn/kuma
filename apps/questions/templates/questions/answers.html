@@ -239,6 +239,11 @@
             <div class="content">
               {{ answer.content_parsed|safe }}
             </div>
+            {% if answer.updated_by %}
+              <p class="edited">
+                {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=answer.updated_by.username, datetime=datetimeformat(answer.updated, format='longdatetime')) }}
+              </p>
+            {% endif %}
             {% if not question.is_locked %}
               <div class="reply">
                 <a href="#question-reply">{{ _('Reply to this post') }}</a>
@@ -280,6 +285,11 @@
                 {{ csrf() }}
                 <input type="submit" value="{{ _('Report this post') }}" />
               </form>
+            {% endif %}
+            {% if user.has_perm('questions.change_answer') %}
+              <a class="edit" href="{{ url('questions.edit_answer', question.id, answer.id) }}">
+                {{ _('Edit this post') }}
+              </a>
             {% endif %}
             {% if user.has_perm('questions.delete_answer') %}
               <a class="delete" href="{{ url('questions.delete_answer', question.id, answer.id) }}">

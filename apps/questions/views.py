@@ -373,6 +373,31 @@ def lock_question(request, question_id):
 
     return HttpResponseRedirect(question.get_absolute_url())
 
+@login_required
+@permission_required('questions.change_answer')
+def edit_answer(request, question_id, answer_id):
+    """Edit an answer."""
+    answer = get_object_or_404(Answer, pk=answer_id, question=question_id)
+
+    if request.method == 'GET':
+        form = AnswerForm({'content': answer.content})
+        return jingo.render(request, 'questions/edit_answer.html',
+                            {'form': form, 'answer': answer})
+
+    form = AnswerForm(request.POST)
+
+    if form.is_valid():
+        log.warning('User %s is editing answer with id=%s' %
+                    (request.user, answer.id))
+        answer.content = form.cleaned_data['content']
+        answer.updated_by = request.user
+        answer.save()
+
+        return HttpResponseRedirect(answer.get_absolute_url())
+
+    return jingo.render(request, 'questions/edit_answer.html',
+                        {'form': form, 'answer': answer})
+
 
 def _answers_data(request, question_id, form=None):
     """Return a map of the minimal info necessary to draw an answers page."""
