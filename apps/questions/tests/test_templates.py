@@ -289,6 +289,24 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(0, Answer.objects.filter(pk=self.question.id).count())
 
 
+class TaggedQuestionsTestCase(TaggingTestCaseBase):
+    """Questions/answers template tests that require tagged questions."""
+
+    def setUp(self):
+        super(TaggedQuestionsTestCase, self).setUp()
+
+        q = Question.objects.get(pk=1)
+        q.tags.add('green')
+
+    def test_related_list(self):
+        """Test that related Questions appear in the list."""
+        question = Question.objects.get(pk=1)
+        response = get(self.client, 'questions.answers',
+                       args=[question.id])
+        doc = pq(response.content)
+        eq_(1, len(doc('ul.related li')))
+
+
 class TaggingViewTestsAsTagger(TaggingTestCaseBase):
     """Tests for views that add and remove tags, logged in as someone who can
     add and remove but not create tags

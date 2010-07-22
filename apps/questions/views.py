@@ -359,9 +359,11 @@ def _answers_data(request, question_id, form=None):
     feed_urls = ((reverse('questions.answers.feed',
                           kwargs={'question_id': question_id}),
                   AnswersFeed().title(question)),)
+    related = question.tags.similar_objects()[:3]
 
     return {'question': question,
             'answers': answers_,
+            'related': related,
             'form': form or AnswerForm(),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),

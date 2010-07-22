@@ -189,19 +189,15 @@
         </div>
       {% endif %}
 
-      <h4>{{ _('Related Questions') }}</h4>
-      <ul class="related">
-        <li>
-          <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
-        </li>
-        <li>
-          <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
-        </li>
-        <li>
-          <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
-        </li>
-      </ul>
-      <p><a href="#">{{ _('Browse more Support Articles...') }}</a></p>
+      {% if related %}
+        <h4>{{ _('Related Questions') }}</h4>
+        <ul class="related">
+          {% for q in related %}
+            <li><a href="{{ q.get_absolute_url() }}">{{ q.title|truncate(30, True) }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <p><a href="{{ url('questions.questions') }}">{{ _('Browse more Support Questions...') }}</a></p>
     </div>
   </div>
 
