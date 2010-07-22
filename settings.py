@@ -206,16 +206,26 @@ def JINJA_CONFIG():
         config['bytecode_cache'] = bc
     return config
 
+# Let Tower know about our additional keywords.
+# DO NOT import an ngettext variant as _lazy.
+TOWER_KEYWORDS = {
+    '_lazy': None,
+}
+
 # Tells the extract script what files to look for l10n in and what function
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
     'messages': [
+        ('apps/forums/**', 'ignore'),
+        ('apps/questions/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
     ],
     'lhtml': [
+        ('apps/forums/**', 'ignore'),
+        ('apps/questions/**', 'ignore'),
         ('**/templates/**.lhtml',
             'tower.management.commands.extract.extract_tower_template'),
     ],
