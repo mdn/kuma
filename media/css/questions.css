@@ -227,6 +227,11 @@ ol.questions span.badge.contributed {
     color: #0489B6;
 }
 
+ol.questions span.badge.locked {
+    background: #fff0cb url(../img/forums/type/locked.png) no-repeat 5px center;
+    color: #a4813b;
+}
+
 ol.questions div.asked-by {
     font-size: 12px;
     margin: 7px 0 14px;
@@ -419,17 +424,38 @@ div.main-section h1 {
     padding: 0 0 0 15px;
 }
 
+/* Thread title badges */
+div.main-section div.badges {
+    margin: 5px 0 0 15px;
+}
+
+div.main-section div.badges span {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    float:left;
+    font-size: 16px;
+    margin: 0 10px 0 0;
+    padding: 2px 10px 2px 32px;
+}
+
+div.main-section div.badges span.locked {
+    background: #fff0cb url(../img/forums/type/locked.png) no-repeat 8px center;
+    color: #a4813b;
+}
+
 div.main-section h3 {
     color: #4B4740;
     font-size: 18px;
 }
 
 div.main-section div.content {
+    clear: both;
     color: #898378;
     font-size: 14px;
     line-height: 20px;
-    margin: 20px 0 0 0;
-    padding: 0 15px;
+    margin: 10px 0 0 0;
+    padding: 10px 15px 0;
 }
 
 div.main-section div.content p {
@@ -571,11 +597,13 @@ div.report-reply {
     padding: 20px 15px;
 }
 
+div.report-reply form.lock,
 div.report-reply form.report {
     float: left;
     padding: 0 15px 0 0;
 }
 
+form.lock input,
 form.report input {
     background: transparent url(../img/questions/icon.report.gif) no-repeat left center;
     border: none;
@@ -585,11 +613,16 @@ form.report input {
     padding: 0 0 0 20px;
 }
 
+form.lock input {
+    background-image: url(../img/forums/type/locked.png);
+}
+
 div.report-reply a.delete {
     background: transparent url(../img/forums/delete.png) no-repeat left center;
     float: left;
     font-size: 14px;
-    padding: 0 0 0 20px;
+    margin: 0 15px 0 0;
+    padding: 1px 0 0 20px;
 }
 
 div.report-reply a.reply {

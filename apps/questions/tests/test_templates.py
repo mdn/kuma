@@ -288,6 +288,66 @@ class AnswersTemplateTestCase(TestCaseBase):
                         args=[self.question.id, answer.id])
         eq_(0, Answer.objects.filter(pk=self.question.id).count())
 
+    def test_lock_question_without_permissions(self):
+        """Trying to lock a question without permission redirects to login."""
+        q = self.question
+        response = post(self.client, 'questions.lock', args=[q.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/' + \
+            'questions/1/lock',
+            redirect[0])
+
+    def test_lock_question_with_permissions_GET(self):
+        """Trying to lock a question via HTTP GET."""
+        response = get(self.client, 'questions.lock', args=[self.question.id])
+        eq_(405, response.status_code)
+
+    def test_lock_question_with_permissions_POST(self):
+        """Locking questions with permissions via HTTP POST."""
+        self.client.login(username='admin', password='testpass')
+        q = self.question
+        response = post(self.client, 'questions.lock', args=[q.id])
+        eq_(200, response.status_code)
+        eq_(True, Question.objects.get(pk=q.pk).is_locked)
+        doc = pq(response.content)
+        eq_(1, len(doc('#question div.badges span.locked')))
+
+        # now unlock it
+        response = post(self.client, 'questions.lock', args=[q.id])
+        eq_(200, response.status_code)
+        eq_(False, Question.objects.get(pk=q.pk).is_locked)
+        doc = pq(response.content)
+        eq_(0, len(doc('#question div.badges span.locked')))
+
+    def test_reply_to_locked_question_403(self):
+        """Locked questions can't be answered."""
+        q = self.question
+        q.is_locked = True
+        q.save()
+        response = post(self.client, 'questions.reply',
+                        {'content': 'just testing'}, args=[q.id])
+        eq_(403, response.status_code)
+
+    def test_vote_locked_question_403(self):
+        """Locked questions can't be voted on."""
+        q = self.question
+        q.is_locked = True
+        q.save()
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'questions.vote', args=[q.id])
+        eq_(403, response.status_code)
+
+    def test_vote_answer_to_locked_question_403(self):
+        """Answers to locked questions can't be voted on."""
+        q = self.question
+        q.is_locked = True
+        q.save()
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'questions.answer_vote',
+                        {'helpful': 'y'}, args=[q.id, self.answer.id])
+        eq_(403, response.status_code)
+
 
 class TaggedQuestionsTestCase(TaggingTestCaseBase):
     """Questions/answers template tests that require tagged questions."""

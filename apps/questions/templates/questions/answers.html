@@ -21,12 +21,15 @@
     </div>
     <div class="main-section">
       <h1>{{ question.title }}</h1>
+      <div class="badges">
+        {% if question.is_locked %}<span class="locked">{{ _('Locked') }}</span>{% endif %}
+      </div>
       <div class="content">
         {{ question.content_parsed|safe }}
       </div>
       <div class="problem">
         {% include 'questions/includes/have_problem.html' %}
-        {% if not question.has_voted(request) %}
+        {% if not question.is_locked and not question.has_voted(request) %}
           <div class="me-too">
             <form action="{{ url('questions.vote', question_id=question.id) }}" method="post">
               {{ csrf() }}
@@ -79,12 +82,20 @@
           {{ csrf() }}
           <input type="submit" value="{{ _('Report this post') }}" />
         </form>
+        {% if user.has_perm('questions.lock_question') %}
+          <form class="lock" action="{{ url('questions.lock', question.id) }}" method="post">
+            {{ csrf() }}
+            <input type="submit" value="{% if question.is_locked %}{{ _('Unlock this post') }}{% else %}{{ _('Lock this post') }}{% endif %}" />
+          </form>
+        {% endif %}
         {% if user.has_perm('questions.delete_question') %}
           <a class="delete" href="{{ url('questions.delete', question.id) }}">
             {{ _('Delete this post') }}
           </a>
         {% endif %}
-        <a class="btn g-btn reply" href="#question-reply">{{ _('Post a New Reply') }}</a>
+        {% if not question.is_locked %}
+          <a class="btn g-btn reply" href="#question-reply">{{ _('Post a New Reply') }}</a>
+        {% endif %}
       </div>
     </div>
     <div class="side-section">
@@ -228,25 +239,29 @@
             <div class="content">
               {{ answer.content_parsed|safe }}
             </div>
-            <div class="reply">
-              <a href="#question-reply">{{ _('Reply to this post') }}</a>
-            </div>
+            {% if not question.is_locked %}
+              <div class="reply">
+                <a href="#question-reply">{{ _('Reply to this post') }}</a>
+              </div>
+            {% endif %}
           </div>
           <div class="side-section">
             {% if answer.creator != question.creator %}
-              {% if not question.solution and user == question.creator %}
-                <h4>{{ _('Did this solve your problem?') }}</h4>
-                <form class="helpful" action="{{ url('questions.solution', question_id=question.id, answer_id=answer.id) }}" method="post">
-                  {{ csrf() }}
-                  <input type="submit" class="btn g-btn" name="solution" value="{{ _('Solved It') }}" />
-                </form>
-              {% elif not answer.has_voted(request) and user != question.creator and user != answer.creator %}
-                <h4>{{ _('Was this reply helpful?') }}</h4>
-                <form class="helpful" action="{{ url('questions.answer_vote', question_id=question.id, answer_id=answer.id) }}" method="post">
-                  {{ csrf() }}
-                  <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
-                  <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
-                </form>
+              {% if not question.is_locked %}
+                {% if not question.solution and user == question.creator %}
+                  <h4>{{ _('Did this solve your problem?') }}</h4>
+                  <form class="helpful" action="{{ url('questions.solution', question_id=question.id, answer_id=answer.id) }}" method="post">
+                    {{ csrf() }}
+                    <input type="submit" class="btn g-btn" name="solution" value="{{ _('Solved It') }}" />
+                  </form>
+                {% elif not answer.has_voted(request) and user != question.creator and user != answer.creator %}
+                  <h4>{{ _('Was this reply helpful?') }}</h4>
+                  <form class="helpful" action="{{ url('questions.answer_vote', question_id=question.id, answer_id=answer.id) }}" method="post">
+                    {{ csrf() }}
+                    <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+                    <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+                  </form>
+                {% endif %}
               {% endif %}
 
               {% if question.solution == answer %}
@@ -260,7 +275,7 @@
               </div>
             {% endif %}
 
-            {% if user != answer.creator %}
+            {% if user != answer.creator and not question.is_locked %}
               <form class="report" action="#{# TODO #}" method="post">
                 {{ csrf() }}
                 <input type="submit" value="{{ _('Report this post') }}" />
@@ -280,8 +295,15 @@
 
   <div id="question-reply">
     <h3>{{ _('Post a Reply') }}</h3>
-
-    {% if user.is_authenticated() %}
+    {% if question.is_locked %}
+      <div class="user-section"></div>
+      <div class="main-section">
+        <p>
+          {{ _('This question is locked.') }}
+        </p>
+      </div>
+      <div class="side-section"></div>
+    {% elif user.is_authenticated() %}
       <div class="user-section">
         <div class="avatar">
           <a href="{{ profile_url(user) }}">

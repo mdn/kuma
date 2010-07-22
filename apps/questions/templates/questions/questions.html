@@ -58,6 +58,9 @@
               {# L10n: {n} is the number of replies. #}
               <span class="badge replies">{{ ngettext('{n} reply', '{n} replies', question.num_answers)|fe(n=question.num_answers) }}</span>
             {% endif %}
+            {% if question.is_locked %}
+              <span class="badge locked">{{ _('Locked') }}</span>
+            {% endif %}
             {% if question.is_contributor(user) %}
               <span class="badge contributed">{{ _('Contributed') }}</span>
             {% endif %}

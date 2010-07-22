@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.cache import cache
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 
 import jingo
 from taggit.models import Tag
@@ -147,9 +148,12 @@ def new_question(request):
 @login_required
 def reply(request, question_id):
     """Post a new answer to a question."""
+    question = get_object_or_404(Question, pk=question_id)
+    if question.is_locked:
+        raise PermissionDenied
+
     form = AnswerForm(request.POST)
     if form.is_valid():
-        question = get_object_or_404(Question, pk=question_id)
         answer = Answer(question=question, creator=request.user,
                         content=form.cleaned_data['content'])
         answer.save()
@@ -165,6 +169,8 @@ def solution(request, question_id, answer_id):
     """Accept an answer as the solution to the question."""
     question = get_object_or_404(Question, pk=question_id)
     answer = get_object_or_404(Answer, pk=answer_id)
+    if question.is_locked:
+        raise PermissionDenied
 
     if question.creator != request.user:
         return HttpResponseForbidden()
@@ -179,6 +185,8 @@ def solution(request, question_id, answer_id):
 def question_vote(request, question_id):
     """I have this problem too."""
     question = get_object_or_404(Question, pk=question_id)
+    if question.is_locked:
+        raise PermissionDenied
 
     if not question.has_voted(request):
         vote = QuestionVote(question=question)
@@ -197,6 +205,8 @@ def question_vote(request, question_id):
 def answer_vote(request, question_id, answer_id):
     """Vote for Helpful/Not Helpful answers"""
     answer = get_object_or_404(Answer, pk=answer_id, question=question_id)
+    if answer.question.is_locked:
+        raise PermissionDenied
 
     if not answer.has_voted(request):
         vote = AnswerVote(answer=answer)
@@ -348,6 +358,20 @@ def delete_answer(request, question_id, answer_id):
 
     return HttpResponseRedirect(reverse('questions.answers',
                                 args=[question_id]))
+
+
+@require_POST
+@login_required
+@permission_required('questions.lock_question')
+def lock_question(request, question_id):
+    """Lock a question"""
+    question = get_object_or_404(Question, pk=question_id)
+    question.is_locked = not question.is_locked
+    log.info("User %s set is_locked=%s on question with id=%s " %
+             (request.user, question.is_locked, question.id))
+    question.save()
+
+    return HttpResponseRedirect(question.get_absolute_url())
 
 
 def _answers_data(request, question_id, form=None):
