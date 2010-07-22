@@ -93,7 +93,7 @@
           <a href="#{# TODO #}">{{ _('Receive updates via email') }}</a>
         </li>
         <li class="rss">
-          <a href="#{# TODO #}">{{ _("Subscribe to this page's feed") }}</a>
+          <a href="{{ url('questions.answers.feed', question.id) }}">{{ _("Subscribe to this page's feed") }}</a>
         </li>
       </ul>
 
