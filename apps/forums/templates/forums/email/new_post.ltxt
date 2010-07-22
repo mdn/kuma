@@ -13,6 +13,5 @@ is their reply:
 {% blocktrans %}
 To view this post on the site, click the following link, or
 paste it into your browser's location bar:
-
-https://{{ host }}{{ post_url }}
 {% endblocktrans %}
+https://{{ host }}{{ post_url }}

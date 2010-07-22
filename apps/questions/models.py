@@ -11,7 +11,8 @@ from sumo.parser import WikiParser
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 import questions as constants
-from .tasks import update_question_votes
+from .tasks import update_question_votes, build_answer_notification
+from notifications.tasks import delete_watches
 
 
 class Question(ModelBase, TaggableMixin):
@@ -53,6 +54,11 @@ class Question(ModelBase, TaggableMixin):
             self.updated = datetime.now()
         kwargs.pop('no_update', None)
         super(Question, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """Override delete to trigger delete_watches."""
+        delete_watches.delay(Question, self.pk)
+        super(Question, self).delete(*args, **kwargs)
 
     def add_metadata(self, **kwargs):
         """Add (save to db) the passed in metadata.
@@ -180,8 +186,7 @@ class Answer(ModelBase):
             self.question.last_answer = self
             self.question.save()
 
-            # TODO: Send notifications to thread watchers.
-            #build_notification.delay(self)
+            build_answer_notification.delay(self)
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent question info."""
