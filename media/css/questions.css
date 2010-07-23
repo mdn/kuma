@@ -379,7 +379,16 @@ body.answers #main-content {
     float: none;
     margin: 50px 0 0 0;
     padding: 20px 0 0;
+    position: relative;
     width: auto;
+}
+
+#back-link {
+    font-family: verdana, helvetica, arial, sans-serif;
+    font-size: 11px;
+    left: 25px;
+    position: absolute;
+    top: -25px;
 }
 
 #question {
