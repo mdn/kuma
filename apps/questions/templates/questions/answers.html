@@ -115,7 +115,9 @@
       {% block system_info %}
         <ul class="system">
           {% if question.metadata.os %}
-            <li class="mac">{{ question.metadata.os }}</li>
+            {% set os = question.metadata.os %}
+            {% set os_lower = os.lower() %}
+            <li class="{% if os_lower.find('mac') >= 0 %}mac{% elif os_lower.find('linux') >= 0 %}linux{% elif os_lower.find('win') >= 0 %}windows{% endif %}">{{ os }}</li>
           {% endif %}
           {% if question.metadata.ff_version %}
             <li class="ff">Firefox {{ question.metadata.ff_version }}</li>

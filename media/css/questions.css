@@ -677,6 +677,14 @@ ul.system li.mac {
      background: transparent url(../img/questions/icon.mac.gif) no-repeat left center;
 }
 
+ul.system li.windows {
+     background: transparent url(../img/questions/icon.windows.png) no-repeat left center;
+}
+
+ul.system li.linux {
+     background: transparent url(../img/questions/icon.linux.png) no-repeat left center;
+}
+
 ul.system li.ff {
      background: transparent url(../img/questions/icon.firefox.gif) no-repeat left center;
 }
