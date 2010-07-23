@@ -3,6 +3,7 @@ import logging
 
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied
+from django.contrib.contenttypes.models import ContentType
 from django.http import (HttpResponseRedirect, HttpResponse,
                          HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
@@ -11,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.cache import cache
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
 
 import jingo
 from taggit.models import Tag
@@ -32,6 +32,7 @@ from .tags import add_existing_tag
 from .tasks import cache_top_contributors, build_solution_notification
 import questions as constants
 from .question_config import products
+from upload.views import upload_images
 
 
 log = logging.getLogger('k.questions')
@@ -209,10 +210,18 @@ def reply(request, question_id):
         raise PermissionDenied
 
     form = AnswerForm(request.POST)
+    # NOJS: upload images, if any
+    upload_images(request, question)
+
     if form.is_valid():
         answer = Answer(question=question, creator=request.user,
                         content=form.cleaned_data['content'])
         answer.save()
+
+        ct = ContentType.objects.get_for_model(answer)
+        # Move over to the answer all of the images I added to the reply form
+        up_images = question.images.filter(creator=request.user)
+        up_images.update(content_type=ct, object_id=answer.id)
 
         return HttpResponseRedirect(answer.get_absolute_url())
 

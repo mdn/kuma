@@ -1,58 +1,60 @@
 import json
 
-from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import get_model
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import (HttpResponse, HttpResponseNotFound,
+                         HttpResponseBadRequest)
 
 from tower import ugettext as _
 
-from .forms import ImageUploadForm
 from .models import ImageAttachment
-from .utils import create_thumbnail
+from .utils import upload_images
 
 
+@login_required
+@require_POST
 def up_image_async(request, model_name, object_pk):
     """Upload all images in request.FILES."""
 
     # Lookup the model's content type
     m = get_model(*model_name.split('.'))
     if m is None:
-        return _raise_error_async(request, 'Model does not exist.')
+        message = _('Model does not exist.')
+        return HttpResponseBadRequest(
+            json.dumps({'status': 'error', 'message': message}))
 
     # Then look up the object by pk
-    if object_pk is not None:
-        try:
-            obj = m.objects.get(pk=object_pk)
-        except ObjectDoesNotExist:
-            return _raise_error_async(request, 'Object does not exist.')
+    try:
+        obj = m.objects.get(pk=object_pk)
+    except ObjectDoesNotExist:
+        message = _('Object does not exist.')
+        return HttpResponseNotFound(
+            json.dumps({'status': 'error', 'message': message}))
 
-    form = ImageUploadForm(request.POST, request.FILES)
-
-    if request.method == 'POST' and form.is_valid():
-        files = []
-        for name in request.FILES:
-            up_file = request.FILES[name]
-
-            image = ImageAttachment(content_object=obj, creator=request.user)
-            file_content = ContentFile(up_file.read())
-            image.file.save(up_file.name, file_content)
-            thumb_content = create_thumbnail(image.file)
-            image.thumbnail.save(up_file.name, thumb_content)
-            image.save()
-
-            files.append({'name': up_file.name, 'url': image.file.url,
-                          'thumbnail_url': image.thumbnail.url,
-                          'width': image.thumbnail.width,
-                          'height': image.thumbnail.height})
-
+    files = upload_images(request, obj)
+    if files is not None:
         return HttpResponse(
             json.dumps({'status': 'success', 'files': files}))
 
-    return _raise_error_async(request, 'Invalid or no image received')
+    message = _('Invalid or no image received.')
+    return HttpResponseBadRequest(
+        json.dumps({'status': 'error', 'message': message}))
 
 
-def _raise_error_async(request, message):
-    # raise 500 error
-    return HttpResponseServerError(
-        json.dumps({'status': 'error', 'message': _(message)}))
+@login_required
+def del_image_async(request, image_id):
+    """Delete an image given its object id."""
+    try:
+        image = ImageAttachment.objects.get(pk=image_id)
+    except ImageAttachment.DoesNotExist:
+        message = _('The requested image could not be found.')
+        return HttpResponseNotFound(
+            json.dumps({'status': 'error', 'message': message}))
+
+    image.file.delete()
+    image.thumbnail.delete()
+    image.delete()
+
+    return HttpResponse(json.dumps({'status': 'success'}))

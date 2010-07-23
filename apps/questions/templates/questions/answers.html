@@ -264,6 +264,18 @@
             <div class="content">
               {{ answer.content_parsed|safe }}
             </div>
+            <div class="ans-attachments">
+              {% for image in answer.images.all() %}
+                <div class="attachment">
+                  <a class="delete"
+                     href="{{ url('upload.del_image_async', image.pk) }}"
+                     title="{{ _('Delete this image') }}">✖</a>
+                  <a class="image" href="{{ image.file.url }}">
+                    <img src="{{ image.thumbnail.url }}"/>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
             {% if answer.updated_by %}
               <p class="edited">
                 {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=answer.updated_by.username, datetime=datetimeformat(answer.updated, format='longdatetime')) }}
@@ -350,7 +362,7 @@
         </div>
       </div>
       <div class="main-section">
-        <form action="{{ url('questions.reply', question_id=question.id) }}" method="post">
+        <form action="{{ url('questions.reply', question_id=question.id) }}" method="post" enctype="multipart/form-data">
           {{ csrf() }}
           {{ errorlist(form) }}
 
@@ -361,24 +373,29 @@
 
           <div class="attachments-upload"
                data-post-url={{ url('upload.up_image_async',
-                                    model_name='questions.Question', object_pk=question.id)}}>
+                                    'questions.Question', question.pk)}}>
             <div class="uploaded{% if not images %} empty{% endif %}">
               <div>{{ _('Uploaded images:') }}</div>
               <div class="attachments">
                 {% for image in images %}
-                  <a href="{{ image.file.url }}">
-                    <img class="attachment" src="{{ image.thumbnail.url }}"/>
-                  </a>
+                  <div class="attachment">
+                    <a class="delete"
+                       href="{{ url('upload.del_image_async', image.pk) }}"
+                       title="{{ _('Delete this image') }}">✖</a>
+                    <a class="image" href="{{ image.file.url }}">
+                      <img src="{{ image.thumbnail.url }}"/>
+                    </a>
+                  </div>
                 {% endfor %}
-                <img class="upload-progress"
-                     height="{{ settings.THUMBNAIL_SIZE }}"
-                     width="{{ settings.THUMBNAIL_SIZE }}"/>
+                <div class="upload-progress"
+                     style="height:{{ settings.THUMBNAIL_SIZE }}px;width:{{ settings.THUMBNAIL_SIZE }}px"></div>
               </div>
             </div>
             <div class="add-attachment">
               <label for="id_image">{{ _('Add images:') }}</label>
               <input type="file" id="id_image" name="image" size="30"
-                 title="{{ _('Browse for an image to upload.') }}"/>
+                     accept="{{ settings.IMAGE_ALLOWED_MIMETYPES }}"
+                     title="{{ _('Browse for an image to upload.') }}"/>
             </div>
             <div class="adding-attachment"></div>
             <noscript>{{ _('JavaScript is disabled in your browser. To upload an image you must submit this form and edit it again.') }}</noscript>

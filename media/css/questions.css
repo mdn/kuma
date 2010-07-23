@@ -1031,8 +1031,8 @@ ol.answers form.report {
     position: relative;
 }
 
-ol.answers a.edit,
-ol.answers a.delete {
+ol.answers div.side-section a.edit,
+ol.answers div.side-section a.delete {
     background: transparent url(../img/forums/delete.png) no-repeat left center;
     clear: left;
     float: left;
@@ -1041,7 +1041,7 @@ ol.answers a.delete {
     padding: 0 0 0 30px;
 }
 
-ol.answers a.edit {
+ol.answers div.side-section a.edit {
     background: transparent url(../img/forums/edit.png) no-repeat left center;
 }
 
@@ -1102,23 +1102,88 @@ form div.attachments-upload div.adding-attachment {
     height: 4em;
     padding-top: .5em;
 }
+
 form div.attachments-upload div.adding-attachment {
+    display: none;
     line-height: 4em;
 }
-form div.attachments-upload div.empty {
+
+form div.attachments-upload div.empty,
+form div.attachments-upload div.upload-progress {
     display: none;
 }
 
-form div.attachments-upload img.upload-progress {
-    display: none;
+form div.attachments-upload div.attachments a:hover img,
+div.ans-attachments a:hover img {
+    border: 1px solid #eee;
 }
-form div.attachments-upload img.upload-progress,
-form div.attachments-upload img.attachment {
-    background: url('../img/search/wait.gif') no-repeat center;
+
+div.ans-attachments {
+    padding: 10px 15px 0 10px;
+}
+
+form div.attachments-upload div.attachment,
+div.ans-attachments div.attachment {
+    display: inline-block;
+    position: relative;
+}
+
+form div.attachments-upload div.attachment:hover a.delete,
+ol.answers div.ans-attachments div.attachment:hover a.delete {
+    display: block;
+}
+
+form div.attachments-upload div.attachment div.overlay,
+div.ans-attachments div.attachment div.overlay {
+    background: #ccc url('../img/wait-trans.gif') no-repeat center;
+    opacity: .5;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    bottom: 5px;
+    right: 5px;
+}
+
+form div.attachments-upload div.attachment a.delete:hover,
+ol.answers div.ans-attachments div.attachment a.delete:hover {
+    opacity: 1;
+}
+
+form div.attachments-upload div.attachment a.delete,
+div.ans-attachments div.attachment a.delete {
+    background: #000;
+    border: 2px solid #fff;
+    border-radius: 1em;
+    color: #fff;
+    display: none;
+    font-family: Verdana;
+    font-weight: bold;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    opacity: .5;
+    padding: 0 .4em .1em;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+form div.attachments-upload div.upload-progress.show {
+    display: inline-block;
+}
+
+form div.attachments-upload div.upload-progress,
+form div.attachments-upload div.attachment img,
+div.ans-attachments div.attachment img {
+    background: url('../img/wait-trans.gif') no-repeat center;
     border: 1px solid #ccc;
-    float: left;
     margin: 5px;
     text-align: center;
+    vertical-align: top;
+}
+
+form div.attachments-upload noscript {
+    display: block;
+    margin-top: 1em;
 }
 
 #question-reply form.upload-input,

@@ -1,0 +1,38 @@
+[
+    {
+        "pk": 22,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "question",
+            "name": "question",
+            "app_label": "questions"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "site",
+            "name": "site",
+            "app_label": "sites"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "user",
+            "name": "user",
+            "app_label": "auth"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "imageattachment",
+            "name": "image attachment",
+            "app_label": "upload"
+        }
+    }
+]

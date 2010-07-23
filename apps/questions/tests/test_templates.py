@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User, Permission
+from django.conf import settings
 
 from nose.tools import eq_
 from pyquery import PyQuery as pq
@@ -14,6 +15,7 @@ from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
 from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
 from notifications import check_watch, create_watch
+from upload.models import ImageAttachment
 
 
 class AnswersTemplateTestCase(TestCaseBase):
@@ -43,6 +45,28 @@ class AnswersTemplateTestCase(TestCaseBase):
 
         new_answer = self.question.answers.order_by('-created')[0]
         eq_(content, new_answer.content)
+
+    def test_answer_upload(self):
+        """Posting answer attaches an existing uploaded image to the answer."""
+        f = open('apps/upload/tests/media/test.jpg')
+        post(self.client, 'upload.up_image_async', {'image': f},
+             args=['questions.Question', self.question.id])
+        f.close()
+
+        content = 'lorem ipsum dolor sit amet'
+        response = post(self.client, 'questions.reply',
+                        {'content': content},
+                        args=[self.question.id])
+        eq_(200, response.status_code)
+
+        new_answer = self.question.answers.order_by('-created')[0]
+        eq_(1, new_answer.images.count())
+        image = new_answer.images.all()[0]
+        eq_(settings.IMAGE_UPLOAD_PATH + 'test.jpg', image.file.name)
+        eq_('jsocol', image.creator.username)
+
+        # Clean up
+        ImageAttachment.objects.all().delete()
 
     def test_empty_answer(self):
         """Posting an empty answer shows error."""

@@ -349,8 +349,12 @@ WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
 WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
 WIKI_UPLOAD_URL = '/img/wiki_up/'
 
-# Thumbnail size, in pixels
-THUMBNAIL_SIZE = 120
+THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels
+THUMBNAIL_UPLOAD_PATH = 'uploads/images/thumbnails/'
+IMAGE_UPLOAD_PATH = 'uploads/images/'
+# A string listing image mime types to accept, comma separated.
+# String must not contain double quotes!
+IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
