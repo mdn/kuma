@@ -289,7 +289,7 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(0, Answer.objects.filter(pk=self.question.id).count())
 
     def test_edit_answer_without_permission(self):
-        """Editing an answer without permissions redirects to login.
+        """Editing an answer without permissions returns a 403.
 
         The edit link shouldn't show up on the Answers page."""
         response = get(self.client, 'questions.answers',
@@ -300,21 +300,13 @@ class AnswersTemplateTestCase(TestCaseBase):
         answer = self.question.last_answer
         response = get(self.client, 'questions.edit_answer',
                        args=[self.question.id, answer.id])
-        redirect = response.redirect_chain[0]
-        eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/' +
-            'questions/1/edit/1',
-            redirect[0])
+        eq_(403, response.status_code)
 
         content = 'New content for answer'
         response = post(self.client, 'questions.edit_answer',
                         {'content': content},
                         args=[self.question.id, answer.id])
-        redirect = response.redirect_chain[0]
-        eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/' +
-            'questions/1/edit/1',
-            redirect[0])
+        eq_(403, response.status_code)
 
     def test_edit_answer_with_permissions(self):
         """Editing an answer with permissions.
@@ -337,6 +329,41 @@ class AnswersTemplateTestCase(TestCaseBase):
                         {'content': content},
                         args=[self.question.id, answer.id])
         eq_(content, Answer.objects.get(pk=answer.id).content)
+
+    def test_answer_creator_can_edit(self):
+        """The creator of an answer can edit his/her answer."""
+        self.client.login(username='rrosario', password='testpass')
+
+        # Initially there should be no edit links
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        doc = pq(response.content)
+        eq_(0, len(doc('ol.answers a.edit')))
+
+        # Add an answer and verify the edit link shows up
+        content = 'lorem ipsum dolor sit amet'
+        response = post(self.client, 'questions.reply',
+                        {'content': content},
+                        args=[self.question.id])
+        doc = pq(response.content)
+        eq_(1, len(doc('ol.answers a.edit')))
+        new_answer = self.question.answers.order_by('-created')[0]
+        eq_(1, len(doc('#answer-%s a.edit' % new_answer.id)))
+        
+        # Make sure it can be edited
+        content = 'New content for answer'
+        response = post(self.client, 'questions.edit_answer',
+                        {'content': content},
+                        args=[self.question.id, new_answer.id])
+        eq_(200, response.status_code)
+        
+        # Now lock it and make sure it can't be edited
+        self.question.is_locked = True
+        self.question.save()
+        response = post(self.client, 'questions.edit_answer',
+                        {'content': content},
+                        args=[self.question.id, new_answer.id])
+        eq_(403, response.status_code)
 
     def test_lock_question_without_permissions(self):
         """Trying to lock a question without permission redirects to login."""

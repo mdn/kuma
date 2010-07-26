@@ -19,6 +19,7 @@ from tower import ugettext_lazy as _lazy
 from sumo.utils import paginate
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
+from access.decorators import has_perm_or_owns_or_403
 from .models import Question, Answer, QuestionVote, AnswerVote
 from .forms import NewQuestionForm, AnswerForm
 from .feeds import QuestionsFeed, AnswersFeed
@@ -374,10 +375,15 @@ def lock_question(request, question_id):
     return HttpResponseRedirect(question.get_absolute_url())
 
 @login_required
-@permission_required('questions.change_answer')
+@has_perm_or_owns_or_403('questions.change_answer', 'creator',
+                         (Answer, 'id__iexact', 'answer_id'),
+                         (Answer, 'id__iexact', 'answer_id'))
 def edit_answer(request, question_id, answer_id):
     """Edit an answer."""
     answer = get_object_or_404(Answer, pk=answer_id, question=question_id)
+
+    if answer.question.is_locked:
+        raise PermissionDenied
 
     if request.method == 'GET':
         form = AnswerForm({'content': answer.content})

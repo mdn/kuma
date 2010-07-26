@@ -290,7 +290,7 @@
                 {% include 'questions/includes/flag_form.html' %}
               </form>
             {% endif %}
-            {% if user.has_perm('questions.change_answer') %}
+            {% if not question.is_locked and has_perm_or_owns('questions.change_answer', answer, answer) %}
               <a class="edit" href="{{ url('questions.edit_answer', question.id, answer.id) }}">
                 {{ _('Edit this post') }}
               </a>
