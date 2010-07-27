@@ -5,7 +5,8 @@
         "fields": {
             "watch_id": 1,
             "email": "user118533@nowhere",
-            "content_type": ["forums", "thread"]
+            "content_type": ["forums", "thread"],
+            "event_type": "reply"
         }
     },
     {
@@ -14,7 +15,8 @@
         "fields": {
             "watch_id": 1,
             "email": "noone2@example.com",
-            "content_type": ["forums", "thread"]
+            "content_type": ["forums", "thread"],
+            "event_type": "reply"
         }
     }
 ]

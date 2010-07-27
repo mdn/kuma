@@ -11,14 +11,16 @@ log = logging.getLogger('k.notifications')
 
 
 @task
-def send_notification(content_type, pk, subject, content, exclude=None):
-    """Given a content type and ID, subject, and content, get the list of
-    watchers and send them email."""
+def send_notification(content_type, pk, subject, content, exclude=None,
+                      event_type='reply'):
+    """Given a content type and ID, event type, subject, and content, get
+    the list of watchers and send them email."""
 
-    log.info('Got notification for %s: %s' % (content_type, pk))
+    log.info('Got %s notification for %s: %s' % (event_type, content_type,
+                                                 pk))
 
     watchers = EventWatch.uncached.filter(content_type=content_type,
-                                          watch_id=pk)
+                                          watch_id=pk, event_type=event_type)
     if exclude:
         watchers = watchers.exclude(email__in=exclude)
 

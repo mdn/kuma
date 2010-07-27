@@ -348,7 +348,7 @@ div.sd-module p {
     width: 180px;
 }
 
-#ask-question-module div.ask-question a span.q{
+#ask-question-module div.ask-question a span.q {
     background: #fff;
     border: solid 1px #DA7C2F;
     border-radius: 15px;
@@ -453,6 +453,11 @@ div.main-section div.badges span.locked {
     color: #a4813b;
 }
 
+div.main-section div.badges span.watching {
+    background: #D7F8E0 url(../img/forums/watch.png) no-repeat 8px center;
+    color: #10C493;
+}
+
 div.main-section h3 {
     color: #4B4740;
     font-size: 18px;
@@ -520,6 +525,7 @@ div.problem div.have-problem.ten-more {
 div.me-too {
     float: right;
     padding: 13px 0 0;
+    position: relative;
     width: 170px;
 }
 
@@ -623,6 +629,7 @@ form.report input {
     display: none;
 }
 
+form.unwatch input.submit,
 form.lock input.submit,
 form.report input.submit {
     background: transparent url(../img/questions/icon.report.gif) no-repeat left center;
@@ -637,6 +644,11 @@ form.lock input {
     background-image: url(../img/forums/type/locked.png);
 }
 
+form.unwatch input {
+    background-image: url(../img/questions/icon.email.gif);
+    padding-left: 22px;
+}
+
 div.report-reply a.delete {
     background: transparent url(../img/forums/delete.png) no-repeat left center;
     float: left;
@@ -645,29 +657,11 @@ div.report-reply a.delete {
     padding: 1px 0 0 20px;
 }
 
+/* report post */
 form.report div.report-post-box {
-    background: #fff;
-    border: solid 3px #898377;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    box-shadow: 1px 2px 15px #aaa;
-    -moz-box-shadow: 1px 2px 15px #333;
-    -webkit-box-shadow: 1px 2px 15px #aaa;
-    font-size: 14px;
     left: -70px;
-    padding: 15px;
-    position: absolute;
     top: 25px;
     width: 255px;
-    z-index: 10;
-}
-
-form.report div.report-post-box a.close {
-    font-size: 18px;
-    position: absolute;
-    right: 8px;
-    top: 5px;
 }
 
 form.report div.report-post-box ul {
@@ -703,6 +697,48 @@ div.report-reply a.reply {
     float: right;
 }
 
+/* thanks for voting */
+#question-vote-thanks {
+    left: -120px;
+    top: 45px;
+    width: 355px;
+}
+
+#question-vote-thanks h1,
+#question-vote-thanks h2 {
+    font-size: 14px;
+    padding: 0;
+}
+
+#question-vote-thanks h2 {
+    color: #898378;
+}
+
+#question-vote-thanks p {
+    color: #898378;
+    margin: 20px 0 0;
+}
+
+#question-vote-thanks p strong{
+    color: #4B4740;
+    font-weight: normal;
+}
+
+#question-vote-thanks form {
+    margin: 5px 0 0;
+}
+
+#question-vote-thanks input#id_email {
+    display: block;
+    margin: 0 0 15px;
+    width: 230px;
+}
+
+#question-vote-thanks input.btn {
+    margin-right: 15px;
+}
+
+/* (right) side section */
 div.side-section {
     color: #898378;
     float: right;
@@ -730,7 +766,11 @@ ul.subscribe li a {
     padding: 0 0 0 25px;
 }
 
-ul.subscribe li.email a {
+ul.subscribe li.email {
+    position: relative;
+}
+
+ul.subscribe li.email a#email-subscribe-link {
     background: transparent url(../img/questions/icon.email.gif) no-repeat left center;
 }
 
@@ -762,23 +802,61 @@ ul.related li {
     padding: 5px 0;
 }
 
+/* email subscribe box */
+.js #email-subscribe {
+    display: none;
+    left: -50px;
+    top: 25px;
+    width: 235px;
+}
+
+.js li.email.show-form #email-subscribe {
+    display: block;
+}
+
+.no-js #email-subscribe {
+    padding: 0 0 10px;
+}
+
+.no-js #email-subscribe a.close,
+.no-js #email-subscribe span.cancel {
+    display: none;
+}
+
+#email-subscribe ul.errorlist,
+#email-subscribe ul.errorlist li {
+    margin: 0;
+    padding: 0;
+}
+
+#email-subscribe a {
+    padding: 0;
+}
+
+#email-subscribe form {
+    margin: 5px 0 0;
+}
+
+#email-subscribe input#id_email {
+    width: 230px;
+}
+
+#email-subscribe form ul {
+    padding: 10px 0;
+}
+
+#email-subscribe input.btn {
+    margin-right: 5px;
+}
+
 /* more system details modal */
 .js div.more-system-details {
     display: none;
 }
 
 #more-system-details {
-    background: #fff;
-    border: solid 3px #898377;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    box-shadow: 1px 2px 15px #aaa;
-    -moz-box-shadow: 1px 2px 15px #333;
-    -webkit-box-shadow: 1px 2px 15px #aaa;
     color: #4B4740;
     display: block;
-    font-size: 14px;
     left: 50%;
     margin-left: -310px;
     padding: 20px;
@@ -799,13 +877,6 @@ ul.related li {
     top: 0;
     width: 100%;
     z-index: 9;
-}
-
-#more-system-details a.close {
-    font-size: 18px;
-    position: absolute;
-    right: 8px;
-    top: 5px;
 }
 
 #more-system-details p,

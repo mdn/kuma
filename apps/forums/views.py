@@ -322,9 +322,9 @@ def watch_thread(request, forum_slug, thread_id):
 
     try:
         if check_watch(Thread, thread.id, request.user.email):
-            destroy_watch(Thread, thread.id, request.user.email)
+            destroy_watch(Thread, thread.id, request.user.email, 'reply')
         else:
-            create_watch(Thread, thread.id, request.user.email)
+            create_watch(Thread, thread.id, request.user.email, 'reply')
     except Thread.DoesNotExist:
         raise Http404
 

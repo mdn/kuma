@@ -26,6 +26,7 @@
       <h1>{{ question.title }}</h1>
       <div class="badges">
         {% if question.is_locked %}<span class="locked">{{ _('Locked') }}</span>{% endif %}
+        {% if is_watching(question) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
       </div>
       <div class="content">
         {{ question.content_parsed|safe }}
@@ -115,7 +116,15 @@
     <div class="side-section">
       <ul class="subscribe">
         <li class="email">
-          <a href="#{# TODO #}">{{ _('Receive updates via email') }}</a>
+          {% if is_watching(question) %}
+            <form class="unwatch" action="{{ url('questions.unwatch', question.id) }}" method="post">
+              {{ csrf() }}
+              <input type="submit" class="submit" value="{{ _('Stop receiving updates via email') }}" />
+            </form>
+          {% else %}
+            <a id="email-subscribe-link" href="#email-subscribe">{{ _('Receive updates via email') }}</a>
+            {% include "questions/includes/email_subscribe.html" %}
+          {% endif %}
         </li>
         <li class="rss">
           <a href="{{ url('questions.answers.feed', question.id) }}">{{ _("Subscribe to this page's feed") }}</a>
@@ -136,7 +145,7 @@
         </ul>
       {% endblock %}
       <p><a id="show-more-details" href="#more-system-details">{{ _('More system details...') }}</a></p>
-      <div class="more-system-details">
+      <div class="more-system-details pop-in">
         <h4>{{ _('Additional System Details') }}</h4>
         <div class="wrap">
           {{ self.system_info() }}

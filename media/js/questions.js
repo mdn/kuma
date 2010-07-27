@@ -15,6 +15,8 @@
         if($('body').is('.answers')) {
             initMoreDetailsModal();
             initReportPost();
+            initHaveThisProblemTooAjax();
+            initEmailSubscribeAjax();
         }
     }
 
@@ -189,7 +191,7 @@
             }
             $('div.report-post-box').remove();
 
-            var html = '<div class="report-post-box"><a href="#close" ' +
+            var html = '<div class="report-post-box pop-in"><a href="#close" ' +
                        'class="close">&#x2716;</a><ul></ul></div>';
                 $modal = $(html),
                 $ul = $modal.find('ul');
@@ -246,6 +248,79 @@
             });
 
             $form.append($modal);
+
+            return false;
+        });
+    }
+
+    /*
+     * Ajaxify the "I have this problem too" form
+     */
+    function initHaveThisProblemTooAjax() {
+        var $container = $('#question div.me-too');
+        initAjaxForm($container, '#question-vote-thanks');
+        $container.delegate('a.close, a.no-thanks', 'click', function(ev){
+            ev.preventDefault();
+            $container.unbind().remove();
+            return false;
+        });
+    }
+
+    /*
+     * Ajaxify email subscribe
+     */
+    function initEmailSubscribeAjax() {
+        var $container = $('#question ul.subscribe li.email'),
+            $link = $('#email-subscribe-link');
+        if ($link.length > 0) {
+            $link.click(function(ev) {
+                ev.preventDefault();
+                $(this).closest('li').addClass('show-form');
+                return false
+            });
+            initAjaxForm($container, '#email-subscribe');
+            $container.delegate('a.close, a.no-thanks', 'click', function(ev){
+                ev.preventDefault();
+                $container.removeClass('show-form');
+                return false;
+            });
+        }
+    }
+
+    // Helper
+    function initAjaxForm($container, boxSelector) {
+        $container.delegate('input[type="submit"]', 'click', function(ev){
+            ev.preventDefault();
+            var $form = $(this).closest('form');
+            if ($form.is('.processing')) {
+                return false;
+            }
+            $form.addClass('processing');
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    if (data.html) {
+                        $(boxSelector).remove();
+                        $container.append(data.html);
+                    } else if (data.message) {
+                        var html = '<a class="close" href="#close">' +
+                               '&#x2716;</a><div class="msg"></div>';
+                        $(boxSelector)
+                            .html(html)
+                            .find('div.msg').text(data.message);
+                    }
+                },
+                error: function() {
+                    var message = gettext("There was an error :(.");
+                    alert(message);
+                },
+                complete: function() {
+                    $form.removeClass('processing');
+                }
+            });
 
             return false;
         });

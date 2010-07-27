@@ -4,8 +4,9 @@ from django.contrib.auth.models import User
 
 import mock
 
-from questions.tasks import build_answer_notification
-from . import TestCaseBase
+from questions.tasks import (build_answer_notification,
+                             build_solution_notification)
+from . import TestCaseBase, post
 import notifications.tasks
 from questions.models import Question, Answer
 
@@ -47,6 +48,24 @@ paste it into your browser's location bar:
 
 https://testserver/en-US/questions/1#answer-%s
 """,
+    """
+
+Solution to question: Lorem ipsum dolor sit amet?
+
+jsocol has accepted a solution to the question 
+Lorem ipsum dolor sit amet?.
+
+========
+
+Just an answer.
+
+========
+
+To view the solution on the site, click the following link, or
+paste it into your browser's location bar:
+
+https://testserver/en-US/questions/1#answer-1
+""",
 )
 
 
@@ -60,7 +79,7 @@ class NotificationTestCase(TestCaseBase):
 
     @mock.patch_object(notifications.tasks.send_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_notification(self, get_current, delay):
+    def test_answer_notification(self, get_current, delay):
         get_current.return_value.domain = 'testserver'
 
         answer = Answer.objects.get(pk=1)
@@ -70,7 +89,26 @@ class NotificationTestCase(TestCaseBase):
             self.ct, answer.question.id,
             u'New answer to: %s' % answer.question.title,
             EMAIL_CONTENT[0],
-            (u'user47963@nowhere',))
+            (u'user47963@nowhere',),
+            'reply')
+
+    @mock.patch_object(notifications.tasks.send_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_solution_notification(self, get_current, delay):
+        get_current.return_value.domain = 'testserver'
+
+        answer = Answer.objects.get(pk=1)
+        question = answer.question
+        question.solution = answer
+        question.save()
+        build_solution_notification(question)
+
+        delay.assert_called_with(
+            self.ct, question.id,
+            u'Solution to: %s' % question.title,
+            EMAIL_CONTENT[2],
+            (u'user118533@nowhere',),
+            'solution')
 
     @mock.patch_object(notifications.tasks.send_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
@@ -86,4 +124,22 @@ class NotificationTestCase(TestCaseBase):
             self.ct, q.pk,
             u'New answer to: %s' % q.title,
             EMAIL_CONTENT[1] % a.pk,
-            (u'user118533@nowhere',))
+            (u'user118533@nowhere',),
+            'reply')
+
+    @mock.patch_object(notifications.tasks.send_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_notification_on_solution(self, get_current, delay):
+        get_current.return_value.domain = 'testserver'
+
+        answer = Answer.objects.get(pk=1)
+        question = answer.question
+        self.client.login(username='jsocol', password='testpass')
+        post(self.client, 'questions.solution', args=[question.id, answer.id])
+
+        delay.assert_called_with(
+            self.ct, question.id,
+            u'Solution to: %s' % question.title,
+            EMAIL_CONTENT[2],
+            (u'user118533@nowhere',),
+            'solution')

@@ -13,6 +13,7 @@ from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
                              tags_eq)
 from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
+from notifications import check_watch, create_watch
 
 
 class AnswersTemplateTestCase(TestCaseBase):
@@ -348,14 +349,14 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(1, len(doc('ol.answers a.edit')))
         new_answer = self.question.answers.order_by('-created')[0]
         eq_(1, len(doc('#answer-%s a.edit' % new_answer.id)))
-        
+
         # Make sure it can be edited
         content = 'New content for answer'
         response = post(self.client, 'questions.edit_answer',
                         {'content': content},
                         args=[self.question.id, new_answer.id])
         eq_(200, response.status_code)
-        
+
         # Now lock it and make sure it can't be edited
         self.question.is_locked = True
         self.question.save()
@@ -423,6 +424,57 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = post(self.client, 'questions.answer_vote',
                         {'helpful': 'y'}, args=[q.id, self.answer.id])
         eq_(403, response.status_code)
+
+    def test_watch_GET_405(self):
+        """Watch replies with HTTP GET results in 405."""
+        self.client.login(username='rrosario', password='testpass')
+        response = get(self.client, 'questions.watch',
+                       args=[self.question.id])
+        eq_(405, response.status_code)
+
+    def test_unwatch_GET_405(self):
+        """Unwatch replies with HTTP GET results in 405."""
+        self.client.login(username='rrosario', password='testpass')
+        response = get(self.client, 'questions.unwatch',
+                       args=[self.question.id])
+        eq_(405, response.status_code)
+
+    def test_watch_replies(self):
+        """Watch a question for replies."""
+        self.client.logout()
+        post(self.client, 'questions.watch',
+             {'email': 'somebody@nowhere.com', 'event_type': 'reply'},
+             args=[self.question.id])
+        assert check_watch(Question, self.question.id, 'somebody@nowhere.com',
+                           'reply'), 'Watch was not created'
+
+    def test_watch_replies_logged_in(self):
+        """Watch a question for replies (logged in)."""
+        self.client.login(username='rrosario', password='testpass')
+        user = User.objects.get(username='rrosario')
+        post(self.client, 'questions.watch',
+             {'email': 'user118577@nowhere.com', 'event_type': 'reply'},
+             args=[self.question.id])
+        assert check_watch(Question, self.question.id, user.email,
+                           'reply'), 'Watch was not created'
+
+    def test_watch_solution(self):
+        """Watch a question for solution."""
+        self.client.logout()
+        post(self.client, 'questions.watch',
+             {'email': 'somebody@nowhere.com', 'event_type': 'solution'},
+             args=[self.question.id])
+        assert check_watch(Question, self.question.id, 'somebody@nowhere.com',
+                           'solution'), 'Watch was not created'
+
+    def test_unwatch(self):
+        """Unwatch a question."""
+        self.client.login(username='rrosario', password='testpass')
+        user = User.objects.get(username='rrosario')
+        create_watch(Question, self.question.id, user.email, 'solution')
+        post(self.client, 'questions.unwatch', args=[self.question.id])
+        assert not check_watch(Question, self.question.id, user.email,
+                               'solution'), 'Watch was not destroyed'
 
 
 class TaggedQuestionsTestCase(TaggingTestCaseBase):

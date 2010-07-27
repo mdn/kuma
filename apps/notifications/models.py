@@ -16,19 +16,21 @@ class EventWatch(ModelBase):
 
     content_type = models.ForeignKey(ContentType)
     watch_id = models.IntegerField(db_index=True)
+    event_type = models.CharField(max_length=20, db_index=True)
     email = models.EmailField(db_index=True)
     hash = models.CharField(max_length=40, null=True, db_index=True)
 
     class Meta:
-        unique_together = (('content_type', 'watch_id', 'email'),)
+        unique_together = (('content_type', 'watch_id', 'email',
+                            'event_type'),)
 
     @property
     def key(self):
         if self.hash:
             return self.hash
 
-        key_ = '%s-%s-%s' % (self.content_type.id,
-                             self.watch_id, self.email)
+        key_ = '%s-%s-%s-%s' % (self.content_type.id, self.watch_id,
+                                self.email, self.event_type)
         sha = hashlib.sha1()
         sha.update(key_)
         return sha.hexdigest()

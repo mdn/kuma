@@ -565,3 +565,29 @@ div#main div.img a:hover {
     text-decoration: none;
 }
 /* End image markup styling */
+
+
+/*----------------------------------
+    Common "pop-in" styles 
+----------------------------------*/
+.js .pop-in {
+    background: #fff;
+    border: solid 3px #898377;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 1px 2px 15px #aaa;
+    -moz-box-shadow: 1px 2px 15px #333;
+    -webkit-box-shadow: 1px 2px 15px #aaa;
+    font-size: 14px;
+    padding: 15px;
+    position: absolute;
+    z-index: 8;
+}
+
+.pop-in a.close {
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}

@@ -15,17 +15,21 @@ from django.core.exceptions import PermissionDenied
 
 import jingo
 from taggit.models import Tag
+from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
 from access.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.utils import paginate
+from access.decorators import has_perm_or_owns_or_403
+from notifications import create_watch, check_watch, destroy_watch
 from .models import Question, Answer, QuestionVote, AnswerVote
-from .forms import NewQuestionForm, EditQuestionForm, AnswerForm
+from .forms import (NewQuestionForm, EditQuestionForm,
+                    AnswerForm, WatchQuestionForm)
 from .feeds import QuestionsFeed, AnswersFeed
 from .tags import add_existing_tag
-from .tasks import cache_top_contributors
+from .tasks import cache_top_contributors, build_solution_notification
 import questions as constants
 from .question_config import products
 
@@ -89,10 +93,10 @@ def questions(request):
                          'tags': tags, 'tagged': tagged})
 
 
-def answers(request, question_id, form=None):
+def answers(request, question_id, form=None, watch_form=None):
     """View the answers to a question."""
     return jingo.render(request, 'questions/answers.html',
-                        _answers_data(request, question_id, form))
+                        _answers_data(request, question_id, form, watch_form))
 
 
 def new_question(request):
@@ -227,6 +231,7 @@ def solution(request, question_id, answer_id):
 
     question.solution = answer
     question.save()
+    build_solution_notification.delay(question)
 
     return HttpResponseRedirect(answer.get_absolute_url())
 
@@ -247,6 +252,13 @@ def question_vote(request, question_id):
             vote.anonymous_id = request.anonymous.anonymous_id
 
         vote.save()
+
+        if request.is_ajax():
+            tmpl = 'questions/includes/question_vote_thanks.html'
+            form = _init_watch_form(request)
+            html = jingo.render_to_string(request, tmpl, {'question': question,
+                                                          'watch_form': form})
+            return HttpResponse(json.dumps({'html': html}))
 
     return HttpResponseRedirect(question.get_absolute_url())
 
@@ -423,6 +435,7 @@ def lock_question(request, question_id):
 
     return HttpResponseRedirect(question.get_absolute_url())
 
+
 @login_required
 @has_perm_or_owns_or_403('questions.change_answer', 'creator',
                          (Answer, 'id__iexact', 'answer_id'),
@@ -454,7 +467,53 @@ def edit_answer(request, question_id, answer_id):
                         {'form': form, 'answer': answer})
 
 
-def _answers_data(request, question_id, form=None):
+@require_POST
+def watch_question(request, question_id):
+    """Start watching a question for replies or solution."""
+    question = get_object_or_404(Question, pk=question_id)
+    form = WatchQuestionForm(request.POST)
+
+    # Process the form
+    if form.is_valid():
+        if request.user.is_authenticated():
+            email = request.user.email
+        else:
+            email = form.cleaned_data['email']
+        event_type = form.cleaned_data['event_type']
+        create_watch(Question, question.id, email, event_type)
+
+    # Respond to ajax request
+    if request.is_ajax():
+        if form.is_valid():
+            msg = _('You will be notified of updates by email.')
+            return HttpResponse(json.dumps({'message': msg}))
+
+        if request.POST.get('from_vote'):
+            tmpl = 'questions/includes/question_vote_thanks.html'
+        else:
+            tmpl = 'questions/includes/email_subscribe.html'
+
+        html = jingo.render_to_string(request, tmpl, {'question': question,
+                                                      'watch_form': form})
+        return HttpResponse(json.dumps({'html': html}))
+
+    # Respond to normal request
+    if form.is_valid():
+        return HttpResponseRedirect(question.get_absolute_url())
+
+    return answers(request, question.id, watch_form=form)
+
+
+@require_POST
+@login_required
+def unwatch_question(request, question_id):
+    """Stop watching a question."""
+    question = get_object_or_404(Question, pk=question_id)
+    destroy_watch(Question, question.id, request.user.email)
+    return HttpResponseRedirect(question.get_absolute_url())
+
+
+def _answers_data(request, question_id, form=None, watch_form=None):
     """Return a map of the minimal info necessary to draw an answers page."""
     question = get_object_or_404(Question, pk=question_id)
     answers_ = paginate(request, question.answers.all(),
@@ -469,6 +528,7 @@ def _answers_data(request, question_id, form=None):
             'answers': answers_,
             'related': related,
             'form': form or AnswerForm(),
+            'watch_form': watch_form or _init_watch_form(request, 'reply'),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),
             'can_tag': request.user.has_perm('questions.tag_question'),
@@ -508,3 +568,11 @@ def _get_top_contributors():
     if not users:
         cache_top_contributors.delay()
     return users
+
+
+# Initialize a WatchQuestionForm
+def _init_watch_form(request, event_type='solution'):
+    initial = {'event_type': event_type}
+    if request.user.is_authenticated():
+        initial['email'] = request.user.email
+    return WatchQuestionForm(initial=initial)

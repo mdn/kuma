@@ -178,3 +178,15 @@ class AnswerForm(forms.Form):
     class Meta:
         model = Answer
         fields = ('content',)
+
+
+class WatchQuestionForm(forms.Form):
+    """Form to subscribe to question updates."""
+    EVENT_TYPE_CHOICES = (
+        ('reply', 'when anybody replies.'),
+        ('solution', 'when a solution is found.'),
+    )
+
+    email = forms.EmailField()
+    event_type = forms.ChoiceField(choices=EVENT_TYPE_CHOICES,
+                                   widget=forms.RadioSelect)

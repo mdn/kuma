@@ -54,4 +54,22 @@ def build_answer_notification(answer):
     exclude = (answer.creator.email,)
 
     send_notification.delay(ct, answer.question.pk, subject,
-                            content, exclude)
+                            content, exclude, 'reply')
+
+
+@task
+def build_solution_notification(question):
+    ct = ContentType.objects.get_for_model(question)
+
+    subject = _('Solution to: %s') % question.title
+    t = loader.get_template('questions/email/solution.ltxt')
+    c = {'solution': question.solution.content,
+         'author': question.creator.username,
+         'question_title': question.title,
+         'host': Site.objects.get_current().domain,
+         'solution_url': question.solution.get_absolute_url()}
+    content = t.render(Context(c))
+    exclude = (question.creator.email,)
+
+    send_notification.delay(ct, question.pk, subject, content,
+                            exclude, 'solution')

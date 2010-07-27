@@ -122,7 +122,7 @@ class ThreadModelTestCase(ForumTestCase):
         eq_(Thread.objects.filter(pk=thread.id).count(), 0)
 
     def test_delete_removes_watches(self):
-        create_watch(Thread, 1, 'me@me.com')
+        create_watch(Thread, 1, 'me@me.com', 'reply')
         eq_(1, EventWatch.uncached.filter(watch_id=1).count())
         t = Thread.objects.get(pk=1)
         t.delete()

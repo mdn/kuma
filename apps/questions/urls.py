@@ -46,4 +46,10 @@ urlpatterns = patterns('questions.views',
     url(r'^/(?P<question_id>\d+)/flag/(?P<object_id>\d+)$', flagit_views.flag,
         {'content_type': ContentType.objects.get_for_model(Answer).id},
         name='questions.answer_flag'),
+
+    # Subcribe by email
+    url(r'^/(?P<question_id>\d+)/watch$', 'watch_question',
+        name='questions.watch'),
+    url(r'^/(?P<question_id>\d+)/unwatch$', 'unwatch_question',
+        name='questions.unwatch'),
 )
