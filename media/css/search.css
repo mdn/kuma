@@ -133,14 +133,17 @@ a.tablink {
 #search-tabs input[type="text"] {
     margin: 0.6em 0;
 }
-#search-tabs .container .checkboxes {
+#search-tabs .container .checkboxes,
+#search-tabs .container .radios {
     padding: 0.8em;
     overflow: auto;
 }
-#search-tabs .container .checkboxes ul {
+#search-tabs .container .checkboxes ul,
+#search-tabs .container .radios ul {
     padding: 0; margin: 0;
     overflow: auto;
 }
+#search-tabs .container .radios li,
 #search-tabs .container .checkboxes li {
     padding: 0;
     margin: 0.4em 0.3em;
@@ -148,6 +151,10 @@ a.tablink {
     display: block;
     width: 48%;
 }
+#search-tabs .container .radios li {
+    width: 30%;
+}
+#search-tabs .container .radios li label,
 #search-tabs .container .checkboxes li label {
     padding: 0;
     margin: 0;
@@ -189,7 +196,7 @@ a.tablink {
     color: #ffffff;
     font-weight: bold;
 }
-form .search-date input {
+form .showhide-input input {
     width: 7em !important;
 }
 

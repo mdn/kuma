@@ -60,7 +60,7 @@ class TestAnswer(TestCaseBase):
         answer = Answer(question=question, creator_id=47963,
                         content="Test Answer")
 
-        eq_(answer.creator_num_posts, 1)
+        eq_(answer.creator_num_posts, 2)
 
     def test_creator_num_answers(self):
         """Test retrieval of answer count for creator of a particular answer"""

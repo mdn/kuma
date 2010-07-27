@@ -23,7 +23,21 @@
             "is_locked": false,
             "created": "2010-06-21 19:47:34",
             "content": "Lorem ipsum dolor sit amet.\r\n\r\n* lorem\r\n* ipsum\r\n* dolor\r\n* sit\r\n* amet",
-            "title": "Lorem ipsum dolor sit amet?",
+            "title": "Lorem ipsum dolor sit amet audio?",
+            "num_answers": 0
+        }
+    },
+    {
+        "pk": 3,
+        "model": "questions.question",
+        "fields": {
+            "status": 0,
+            "updated": "2010-06-17 19:47:34",
+            "creator": 47963,
+            "is_locked": false,
+            "created": "2010-06-17 19:47:34",
+            "content": "It's a marvellous night for an audio lolrus.",
+            "title": "lolrus?",
             "num_answers": 0
         }
     },

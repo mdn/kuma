@@ -1,31 +1,25 @@
 $(document).ready(function() {
     // initiate tabs
     var tabs = $('#search-tabs').tabs(),
-        cache_search_date = $('.search-date');
+        cache_search_date = $('.showhide-input');
 
     $('#search-tabs input[name="q"]').autoPlaceholderText();
     $('#search-tabs input[name="author"]').autoPlaceholderText();
     $('#search-tabs input[name="tags"]').autoPlaceholderText();
 
     $("#tab-wrapper form").submit(function() {
-        var tabs = [$('#kb'), $('#support'), $('#discussion')], num_tabs = 3,
-            fields = ['input[name="q"]', 'input[name="author"]',
-                      'input[name="tags"]'],
-            num_fields = fields.length, fi = 0, ti = 0, the_input;
-
-        for (ti = 0; ti < num_tabs; ti++) {
-            for (fi = 0; fi < num_fields; fi++) {
-                the_input = $(fields[fi], tabs[ti]);
-                if (the_input.length > 0 &&
-                    the_input.val() == the_input.attr('placeholder')) {
-                    the_input.val('');
-                }
+        $('input.auto-fill').each(function() {
+            if ($(this).val() == $(this).attr('placeholder')) {
+                $(this).val('');
             }
-        }
+        });
     });
 
     $('.datepicker').datepicker();
     $('.datepicker').attr('readonly', 'readonly').css('background', '#ddd');
+
+    // Force numeric input for num_votes
+    $('input.numeric').numericInput();
 
     $('select', cache_search_date).change(function () {
         if ($(this).val() == 0) {
@@ -47,3 +41,28 @@ $(document).ready(function() {
             tabs.tabs('select', 0);
     }
 });
+
+/**
+ * Accept only numeric keystrokes.
+ *
+ * Based on http://snipt.net/GerryEng/jquery-making-textfield-only-accept-numeric-values
+ */
+jQuery.fn.numericInput = function (options) {
+    // Only works on <input/>
+    if (this[0].nodeName !== 'INPUT') {
+        return this;
+    }
+
+    this.keydown(function(event) {
+        // Allow only backspace and delete
+        if ( event.keyCode == 46 || event.keyCode == 8 ) {
+            // let it happen, don't do anything
+        } else if (event.shiftKey || event.keyCode < 48 || event.keyCode > 57) {
+            // Ensure that it is a number and stop the keypress
+            event.preventDefault(); 
+        }
+    });
+
+
+    return this;
+}

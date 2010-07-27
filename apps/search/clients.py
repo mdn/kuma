@@ -165,12 +165,32 @@ class SearchClient(object):
         self.sphinx.SetSortMode(mode, clause)
 
 
-class SupportClient(SearchClient):
-    """
-    Search the support forum
-    """
-    index = 'forum_threads'
-    weights = {'title': 2, 'content': 1}
+class QuestionsClient(SearchClient):
+    index = 'questions'
+    weights = {'title': 4, 'question_content': 3, 'answer_content': 3}
+
+    def __init__(self):
+        super(QuestionsClient, self).__init__()
+        self.groupsort = '@group desc'
+
+    def query(self, query, filters=None):
+        """
+        Query the questions index.
+
+        Returns a list of matching questions by grouping the answers
+        together.
+        """
+        self._process_filters(filters)
+
+        sc = self.sphinx
+        sc.SetFieldWeights(self.weights)
+        sc.SetGroupBy('question_id', constants.SPH_GROUPBY_ATTR,
+                      self.groupsort)
+
+        return self._query_sphinx(query)
+
+    def set_groupsort(self, groupsort=''):
+        self.groupsort = groupsort
 
 
 class WikiClient(SearchClient):
