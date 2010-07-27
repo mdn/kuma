@@ -1,43 +1,37 @@
 $(document).ready(function () {
-    var MAX_FILENAME_LENGTH = 80;  // max filename length in characters
+    var UPLOAD = {
+            max_filename_length: 80,  // max filename length in characters
+            error_title_up: gettext('Error uploading image'),
+            error_title_del: gettext('Error deleting image'),
+            error_login: gettext('Please check you are logged in, and try again.'),
+            $dialog: $('#upload_dialog'),
+        };
+    if (UPLOAD.$dialog.length <= 0) {
+        UPLOAD.$dialog = $('<div id="upload-dialog"></div>')
+                    .appendTo('body');
+    }
+    UPLOAD.$dialog.dialog({autoOpen: false});
 
-    // Delete an image
-    function deleteImageAttachment() {
-        var $that = $(this),
-            $attachment = $that.closest('.attachment'),
-            $image = $attachment.find('.image'),
-            $overlay = $that.closest('.overlay', $attachment);
-        $.ajax({
-            url: $that.attr('href'),
-            dataType: 'json',
-            error: function() {
-                $image.css('opacity', 1);
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    $attachment.remove();
-                }
-            }
-        });
-
-        if ($overlay.length <= 0) {
-            $overlay = $('<div class="overlay"></div>').appendTo($attachment);
+    function dialogSet(inner, title, stayClosed) {
+        UPLOAD.$dialog.html(inner);
+        UPLOAD.$dialog.dialog('option', 'title', title);
+        if (stayClosed === true) {
+            return;
         }
-        $overlay.show();
+        UPLOAD.$dialog.dialog('open');
+    }
 
-        $image.fadeTo(500, 0.5);
-
-        return false;
-    };
-
-    $('div.attachments-upload').delegate('a.delete', 'click',
-                                         deleteImageAttachment);
-    $('div.ans-attachments a.delete').click(deleteImageAttachment);
+    $('input.delete', 'div.attachments-list').each(function () {
+        $(this).wrapDeleteInput({
+            error_title_del: UPLOAD.error_title_del,
+            error_login: UPLOAD.error_login
+        });
+    });
 
     // Upload a file on input value change
     $('div.attachments-upload input[type="file"]').each(function() {
         $(this).closest('form').removeAttr('enctype');
-        $(this).uploadInput({
+        $(this).ajaxSubmitInput({
             url: $(this).closest('.attachments-upload').attr('data-post-url'),
             beforeSubmit: function($input) {
                 var $divUpload = $input.closest('.attachments-upload'),
@@ -50,9 +44,9 @@ $(document).ready(function () {
 
                 // truncate filename
                 $options.filename = $input.val().split(/[\/\\]/).pop();
-                if ($options.filename.length > MAX_FILENAME_LENGTH) {
+                if ($options.filename.length > UPLOAD.max_filename_length) {
                     $options.filename = $options.filename
-                        .substr(0, MAX_FILENAME_LENGTH - 3) + '...';
+                        .substr(0, UPLOAD.max_filename_length - 3) + '...';
                 }
 
                 $options.add.hide();
@@ -63,16 +57,20 @@ $(document).ready(function () {
                 $options.progress.addClass('show');
                 return $options;
             },
-            onComplete: function($input, $iframe, $options) {
-                var iframeContent = $iframe[0].contentWindow
-                                                 .document.body.innerHTML;
+            onComplete: function($input, iframeContent, $options) {
                 $input.closest('form')[0].reset();
                 if (!iframeContent) {
                     return;
                 }
-                var iframeJSON = $.parseJSON(iframeContent),
-                    upStatus = iframeJSON.status, upFile,
-                    $thumbnail;
+                var iframeJSON;
+                try {
+                    iframeJSON = $.parseJSON(iframeContent);
+                } catch(err) {
+                    if (err.substr(0, 12)  === 'Invalid JSON') {
+                        dialogSet(UPLOAD.error_login, UPLOAD.error_title_up);
+                    }
+                }
+                var upStatus = iframeJSON.status, upFile, $thumbnail;
 
                 if (upStatus == 'success') {
                     upFile = iframeJSON.files[0];
@@ -88,11 +86,17 @@ $(document).ready(function () {
                         .closest('div')
                         .addClass('attachment')
                         .insertBefore($options.progress);
-                    $thumbnail.prepend('<a class="delete" href="' +
-                                      upFile.delete_url + '">✖</a>');
+                    $thumbnail.prepend(
+                        '<input type="submit" class="delete" data-url="' +
+                        upFile.delete_url + '" value="✖"/>');
+                    $thumbnail.children().first().wrapDeleteInput({
+                        error_title_del: UPLOAD.error_title_del,
+                        error_login: UPLOAD.error_login
+                    });
                 } else {
-                    $options.adding.html(interpolate(
-                        gettext('Error uploading "%s"'), [$options.filename]));
+                    var message = interpolate(gettext('Error uploading "%s"'),
+                                             [$options.filename]);
+                    dialogSet(message, UPLOAD.error_title_up);
                 }
 
                 $options.adding.hide();
@@ -104,6 +108,71 @@ $(document).ready(function () {
 
 
 /**
+ * Wrap an input in its own form and bind delete handlers.
+ *
+ * Depends on ajaxSubmitInput, which it binds to the click event on the delete
+ * <input>.
+ * Optionally accepts an error message for invalid JSON and a title for
+ * the error message dialog.
+ *
+ * Uses jQueryUI for the dialog.
+ */
+jQuery.fn.wrapDeleteInput = function (options) {
+    // Only works on <input/>
+    if (this[0].nodeName !== 'INPUT') {
+        return this;
+    }
+
+    options = $.extend({
+        error_title_del: 'Error deleting',
+        error_json: 'Please check you are logged in, and try again.',
+    }, options);
+
+    var $that = this,
+        $attachment = $that.closest('.attachment'),
+        $image = $attachment.find('.image');
+
+    $that.ajaxSubmitInput({
+        url: $that.attr('data-url'),
+        inputEvent: 'click',
+        beforeSubmit: function($input) {
+            var $overlay = $input.closest('.overlay', $attachment);
+            if ($overlay.length <= 0) {
+                $overlay = $('<div class="overlay"></div>')
+                               .appendTo($attachment);
+            }
+            $overlay.show();
+            $image.fadeTo(500, 0.5);
+        },
+        onComplete: function($input, iframeContent, $options) {
+            if (!iframeContent) {
+                $image.css('opacity', 1);
+                return;
+            }
+            var iframeJSON;
+            try {
+                iframeJSON = $.parseJSON(iframeContent);
+            } catch(err) {
+                if (err.substr(0, 12)  === 'Invalid JSON') {
+                    dialogSet(options.error_json, options.error_title_del);
+                    $image.css('opacity', 1);
+                    return;
+                }
+            }
+            if (iframeJSON.status !== 'success') {
+                dialogSet(iframeJSON.message, options.error_title_del);
+                $image.css('opacity', 1);
+                return;
+            }
+            $attachment.remove();
+        }
+    });
+
+    return this;
+};
+
+
+/**
  * Takes a file input, wraps it in a form, creates an iframe and posts the form
  * to that iframe on submit.
  * Allows for the following options:
@@ -112,24 +181,24 @@ $(document).ready(function () {
  * onComplete: function called when iframe has finished loading and the upload
  *             is complete.
  */
-jQuery.fn.uploadInput = function (options) {
+jQuery.fn.ajaxSubmitInput = function (options) {
 
-    // Only works on <input type="file"/>
-    if (this[0].nodeName !== 'INPUT' ||
-        this.attr('type') !== 'file') {
+    // Only works on <input/>
+    if (this[0].nodeName !== 'INPUT') {
         return this;
     }
 
     options = $.extend({
         url: '/upload',
         accept: false,
+        inputEvent: 'change',
         beforeSubmit: function() {},
         onComplete: function() {}
     }, options);
 
     var uniqueID = Math.random() * 100000,
         $input = this,
-        parentForm = $input.closest('form'),
+        $parentForm = $input.closest('form'),
         iframeName = 'upload_' + uniqueID,
         $form = '<form class="upload-input" action="' +
                 options.url + '" target="' + iframeName +
@@ -147,14 +216,14 @@ jQuery.fn.uploadInput = function (options) {
     $input.wrap($form);
     $form = $input.closest('form');
     // add the csrfmiddlewaretoken to the upload form
-    parentForm.find('input[name="csrfmiddlewaretoken"]').clone()
-              .appendTo($form);
+    $('input[name="csrfmiddlewaretoken"]').first().clone().appendTo($form);
 
     $iframe.load(function() {
-        options.onComplete($input, $iframe, passJSON);
+        var iframeContent = $iframe[0].contentWindow.document.body.innerHTML;
+        options.onComplete($input, iframeContent, passJSON);
     });
 
-    $input.change(function() {
+    $input.bind(options.inputEvent, function() {
         passJSON = options.beforeSubmit($input);
 
         if (false === passJSON) {

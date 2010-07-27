@@ -9,6 +9,7 @@ from django.http import (HttpResponse, HttpResponseNotFound,
 
 from tower import ugettext as _
 
+from access.decorators import has_perm_or_owns_or_403
 from .models import ImageAttachment
 from .utils import upload_images
 
@@ -44,6 +45,10 @@ def up_image_async(request, model_name, object_pk):
 
 
 @login_required
+@require_POST
+@has_perm_or_owns_or_403('upload_imageattachment.image_upload', 'creator',
+                         (ImageAttachment, 'id__iexact', 'image_id'),
+                         (ImageAttachment, 'id__iexact', 'image_id'))
 def del_image_async(request, image_id):
     """Delete an image given its object id."""
     try:

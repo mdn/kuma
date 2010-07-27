@@ -62,7 +62,8 @@ class AnswersTemplateTestCase(TestCaseBase):
         new_answer = self.question.answers.order_by('-created')[0]
         eq_(1, new_answer.images.count())
         image = new_answer.images.all()[0]
-        eq_(settings.IMAGE_UPLOAD_PATH + 'test.jpg', image.file.name)
+        message = 'File name "%s" does not contain "test"' % image.file.name
+        assert 'test' in image.file.name, message
         eq_('jsocol', image.creator.username)
 
         # Clean up

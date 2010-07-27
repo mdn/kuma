@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "questions/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "upload/attachments.html" import attachments_form, attachment %}
 {# L10n: {q} is the title of the question. #}
 {% set title = _('{q} | Firefox Support Forum')|f(q=question.title) %}
 {% set classes = 'answers' %}
@@ -264,16 +265,9 @@
             <div class="content">
               {{ answer.content_parsed|safe }}
             </div>
-            <div class="ans-attachments">
+            <div class="ans-attachments attachments-list">
               {% for image in answer.images.all() %}
-                <div class="attachment">
-                  <a class="delete"
-                     href="{{ url('upload.del_image_async', image.pk) }}"
-                     title="{{ _('Delete this image') }}">✖</a>
-                  <a class="image" href="{{ image.file.url }}">
-                    <img src="{{ image.thumbnail.url }}"/>
-                  </a>
-                </div>
+                {{ attachment(image, user) }}
               {% endfor %}
             </div>
             {% if answer.updated_by %}
@@ -371,35 +365,7 @@
             <textarea name="content" id="id_content">{{ form.content.data or '' }}</textarea>
           </div>
 
-          <div class="attachments-upload"
-               data-post-url={{ url('upload.up_image_async',
-                                    'questions.Question', question.pk)}}>
-            <div class="uploaded{% if not images %} empty{% endif %}">
-              <div>{{ _('Uploaded images:') }}</div>
-              <div class="attachments">
-                {% for image in images %}
-                  <div class="attachment">
-                    <a class="delete"
-                       href="{{ url('upload.del_image_async', image.pk) }}"
-                       title="{{ _('Delete this image') }}">✖</a>
-                    <a class="image" href="{{ image.file.url }}">
-                      <img src="{{ image.thumbnail.url }}"/>
-                    </a>
-                  </div>
-                {% endfor %}
-                <div class="upload-progress"
-                     style="height:{{ settings.THUMBNAIL_SIZE }}px;width:{{ settings.THUMBNAIL_SIZE }}px"></div>
-              </div>
-            </div>
-            <div class="add-attachment">
-              <label for="id_image">{{ _('Add images:') }}</label>
-              <input type="file" id="id_image" name="image" size="30"
-                     accept="{{ settings.IMAGE_ALLOWED_MIMETYPES }}"
-                     title="{{ _('Browse for an image to upload.') }}"/>
-            </div>
-            <div class="adding-attachment"></div>
-            <noscript>{{ _('JavaScript is disabled in your browser. To upload an image you must submit this form and edit it again.') }}</noscript>
-          </div>
+          {{ attachments_form('questions.Question', question.pk, images, settings, user) }}
 
           <div class="submit">
             <input type="submit" class="btn g-btn" value="{{ _('Post Reply') }}" />

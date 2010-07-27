@@ -32,6 +32,7 @@ from .tags import add_existing_tag
 from .tasks import cache_top_contributors, build_solution_notification
 import questions as constants
 from .question_config import products
+from upload.models import ImageAttachment
 from upload.views import upload_images
 
 
@@ -210,8 +211,18 @@ def reply(request, question_id):
         raise PermissionDenied
 
     form = AnswerForm(request.POST)
-    # NOJS: upload images, if any
-    upload_images(request, question)
+
+    # NOJS: delete images
+    if 'delete_images' in request.POST:
+        for image_id in request.POST.getlist('delete_image'):
+            ImageAttachment.objects.get(pk=image_id).delete()
+
+        return answers(request, question_id, form)
+
+    # NOJS: upload image
+    if 'upload_image' in request.POST:
+        upload_images(request, question)
+        return answers(request, question_id, form)
 
     if form.is_valid():
         answer = Answer(question=question, creator=request.user,
@@ -457,6 +468,9 @@ def edit_answer(request, question_id, answer_id):
 
     if answer.question.is_locked:
         raise PermissionDenied
+
+    # NOJS: upload images, if any
+    upload_images(request, answer)
 
     if request.method == 'GET':
         form = AnswerForm({'content': answer.content})
