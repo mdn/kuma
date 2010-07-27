@@ -329,7 +329,7 @@ SEARCH_RESULTS_PER_PAGE = 10
 
 #
 # Search default settings
-# comma-separated tuple of category IDs
+# comma-separated tuple of included category IDs. Negative IDs are excluded.
 SEARCH_DEFAULT_CATEGORIES = (1, 17, 18, -3,)
 SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
@@ -357,6 +357,14 @@ IMAGE_UPLOAD_PATH = 'uploads/images/'
 # A string listing image mime types to accept, comma separated.
 # String must not contain double quotes!
 IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
+
+# Max number of wiki pages or other questions to suggest might answer the
+# question you're about to ask
+QUESTIONS_MAX_SUGGESTIONS = 5
+# Number of extra suggestion results to pull from Sphinx to make up for
+# possibly deleted wiki pages or question. To be safe, set this to the number
+# of things that could be deleted between indexer runs.
+QUESTIONS_SUGGESTION_SLOP = 3
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

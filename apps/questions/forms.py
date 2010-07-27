@@ -40,7 +40,7 @@ MSG_CONTENT_LONG = _lazy(u'Please keep the length of your content to %(limit_val
 class EditQuestionForm(forms.Form):
     """Form to edit an existing question"""
 
-    def __init__(self, user=None, product=None, category=None, *args,
+    def __init__(self, product=None, category=None, *args,
                  **kwargs):
         """Init the form.
 
@@ -156,11 +156,12 @@ class EditQuestionForm(forms.Form):
 class NewQuestionForm(EditQuestionForm):
     """Form to start a new question"""
 
-    def __init__(self, user=None, product=None, category=None, *args,
+    def __init__(self, product=None, category=None, *args,
                  **kwargs):
         """Add fields particular to new questions."""
-        super(NewQuestionForm, self).__init__(user, product, category, *args,
-                                              **kwargs)
+        super(NewQuestionForm, self).__init__(product=product,
+                                              category=category,
+                                              *args, **kwargs)
 
         # Collect user agent only when making a question for the first time.
         # Otherwise, we could grab moderators' user agents.
