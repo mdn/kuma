@@ -8,15 +8,14 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
-import jinja2
 import product_details
 from taggit.models import Tag
 
 from notifications import create_watch
 from notifications.tasks import delete_watches
 from sumo.models import ModelBase, TaggableMixin
-from sumo.parser import WikiParser
 from sumo.urlresolvers import reverse
+from sumo.utils import wiki_to_html
 from sumo.helpers import urlparams
 import questions as constants
 from questions.tags import add_existing_tag
@@ -68,8 +67,7 @@ class Question(ModelBase, TaggableMixin):
 
     @property
     def content_parsed(self):
-        parser = WikiParser()
-        return jinja2.Markup(parser.parse(self.content, False))
+        return wiki_to_html(self.content)
 
     def save(self, no_update=False, *args, **kwargs):
         """Override save method to take care of updated."""
@@ -259,8 +257,7 @@ class Answer(ModelBase):
 
     @property
     def content_parsed(self):
-        parser = WikiParser()
-        return jinja2.Markup(parser.parse(self.content, False))
+        return wiki_to_html(self.content)
 
     def save(self, *args, **kwargs):
         """Override save method to update question info and take care of

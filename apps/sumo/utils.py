@@ -3,6 +3,10 @@ import urllib
 from django.core import paginator
 from django.utils.encoding import smart_str
 
+import jinja2
+
+from .parser import WikiParser
+
 
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
@@ -38,3 +42,9 @@ def urlencode(items):
         return urllib.urlencode(items)
     except UnicodeEncodeError:
         return urllib.urlencode([(k, smart_str(v)) for k, v in items])
+
+
+def wiki_to_html(wiki_markup):
+    """Wiki Markup -> HTML"""
+    parser = WikiParser()
+    return jinja2.Markup(parser.parse(wiki_markup, False))

@@ -41,6 +41,7 @@ class WikiParser(object):
         wikimarkup.registerInternalLinkHook('Image', self.hookImageTag)
 
     def parse(self, text, showToc=True):
+        """Given wiki markup, return HTML."""
         return self.wikimarkup.parse(
             text, showToc, attributes=ALLOWED_ATTRIBUTES)
 
