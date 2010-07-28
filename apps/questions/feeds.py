@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.utils.html import strip_tags, escape
-
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
+from django.utils.encoding import smart_str
 
 from tower import ugettext as _
 
@@ -23,7 +23,10 @@ class QuestionsFeed(Feed):
 
     def items(self):
         return Question.objects.all().order_by(
-                '-last_answer__created')[:constants.QUESTIONS_PER_PAGE]
+            '-updated')[:constants.QUESTIONS_PER_PAGE]
+
+    def item_description(self, item):
+        return escape(item.content_parsed)
 
     def item_author_name(self, item):
         return item.creator
@@ -51,10 +54,10 @@ class AnswersFeed(Feed):
         return question.answers.order_by('-created')
 
     def item_title(self, item):
-        return strip_tags(item.content)[:100]
+        return strip_tags(item.content_parsed)[:100]
 
     def item_description(self, item):
-        return escape(item.content)
+        return escape(item.content_parsed)
 
     def item_author_name(self, item):
         return item.creator
