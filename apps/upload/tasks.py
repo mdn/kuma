@@ -23,6 +23,7 @@ def _create_thumbnail(file_path, longest_side=settings.THUMBNAIL_SIZE):
     Returns a thumbnail file with a set longest side.
     """
     originalImage = Image.open(file_path)
+    originalImage = originalImage.convert("RGB")
     (file_width, file_height) = originalImage.size
 
     (width, height) = _scale_dimensions(file_width, file_height, longest_side)
