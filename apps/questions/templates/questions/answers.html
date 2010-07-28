@@ -243,8 +243,8 @@
               {% if answer.creator==question.creator %}
                 <span class="author">{{ _('Author') }}</span>
               {% else %}
-                <span class="posts">{{ _('{numposts} posts')|f(numposts=999) }}</span>
-                <span class="answers">{{ _('{numanswers} answers')|f(numanswers=999) }}</span>
+                <span class="posts">{{ _('{numposts} posts')|f(numposts=answer.creator_num_posts) }}</span>
+                <span class="answers">{{ _('{numanswers} answers')|f(numanswers=answer.creator_num_answers) }}</span>
               {% endif %}
             </div>
           </div>

@@ -256,6 +256,18 @@ class Answer(ModelBase):
         return AnswerVote.objects.filter(answer=self).count()
 
     @property
+    def creator_num_posts(self):
+        criteria = models.Q(answers__creator=self.creator) |\
+                   models.Q(creator=self.creator)
+        return Question.objects.filter(criteria).count()
+
+    @property
+    def creator_num_answers(self):
+        return Question.objects.filter(
+                    solution__in=Answer.objects.filter(
+                                    creator=self.creator)).count()
+
+    @property
     def num_helpful_votes(self):
         """Get the number of helpful votes for this answer."""
         return AnswerVote.objects.filter(answer=self, helpful=True).count()

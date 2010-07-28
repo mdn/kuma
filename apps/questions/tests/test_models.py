@@ -44,6 +44,7 @@ class TestAnswer(TestCaseBase):
                         content="Test Answer")
         answer.save()
         question = Question.objects.get(pk=question.id)
+
         eq_(question.last_answer.id, answer.id)
 
         # delete the answer and last_answer should go back to previous value
@@ -52,6 +53,25 @@ class TestAnswer(TestCaseBase):
         eq_(question.last_answer.id, last_answer.id)
         eq_(Answer.objects.filter(pk=answer.id).count(), 0)
 
+    def test_creator_num_posts(self):
+        """Test retrieval of post count for creator of a particular answer"""
+        question = Question.objects.all()[0]
+        answer = Answer(question=question, creator_id=47963,
+                        content="Test Answer")
+
+        eq_(answer.creator_num_posts, 1)
+
+    def test_creator_num_answers(self):
+        """Test retrieval of answer count for creator of a particular answer"""
+        question = Question.objects.all()[0]
+        answer = Answer(question=question, creator_id=47963,
+                        content="Test Answer")
+        answer.save()
+
+        question.solution = answer
+        question.save()
+
+        eq_(answer.creator_num_answers, 1)
 
 class TestQuestionMetadata(TestCaseBase):
     """Tests handling question metadata"""
