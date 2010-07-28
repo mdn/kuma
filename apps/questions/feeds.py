@@ -25,6 +25,9 @@ class QuestionsFeed(Feed):
         return Question.objects.all().order_by(
             '-updated')[:constants.QUESTIONS_PER_PAGE]
 
+    def item_title(self, item):
+        return item.title
+
     def item_description(self, item):
         return escape(item.content_parsed)
 
