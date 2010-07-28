@@ -167,7 +167,6 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.answers',
                        args=[self.question.id])
         doc = pq(response.content)
-        eq_('0 out of 0 people', doc('#answer-1 div.helpful mark')[0].text)
         eq_(1, len(doc('form.helpful input[name="helpful"]')))
 
         # Vote

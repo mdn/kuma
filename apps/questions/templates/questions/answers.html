@@ -289,11 +289,13 @@
                 <div class="solved">{{ _('Solution chosen by author') }}</div>
               {% endif %}
 
-              <div class="helpful {% if answer.num_helpful_votes == 0 %}zero{% endif %}">
-                {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
-                            '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
-                            answer.num_votes)|fe(count=answer.num_helpful_votes, total=answer.num_votes) }}
-              </div>
+              {% if answer.num_votes != 0 %}
+                <div class="helpful {% if answer.num_helpful_votes == 0 %}zero{% endif %}">
+                  {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
+                              '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
+                              answer.num_votes)|fe(count=answer.num_helpful_votes, total=answer.num_votes) }}
+                </div>
+              {% endif %}
             {% endif %}
             {% if user.is_authenticated() and user != answer.creator and not question.is_locked  %}
               <form class="report" action="{{ url('questions.answer_flag', question.id, answer.id) }}" method="post">
