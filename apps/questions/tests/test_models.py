@@ -77,11 +77,7 @@ class TestQuestionMetadata(TestCaseBase):
         metadata = {'version': u'3.6.3', 'os': u'Windows 7'}
         self.question.add_metadata(**metadata)
         saved = QuestionMetaData.objects.filter(question=self.question)
-        eq_(saved.count(), 2)
-        eq_(saved[0].name, 'version')
-        eq_(saved[0].value, u'3.6.3')
-        eq_(saved[1].name, 'os')
-        eq_(saved[1].value, u'Windows 7')
+        eq_(dict((x.name, x.value) for x in saved), metadata)
 
     def test_metadata_property(self):
         """Test the metadata property on Question model."""
@@ -100,15 +96,15 @@ class TestQuestionMetadata(TestCaseBase):
         eq_(products['desktop']['categories']['d1'], self.question.category)
 
     def test_clear_mutable_metadata(self):
-        """Make sure it works and clears the internal cache."""
-        # Immutable stuff that shouldn't get cleared:
-        q = self.question
-        q.add_metadata(product='desktop')
-        q.add_metadata(category='d1')
-        q.add_metadata(useragent='Fyerfocks')
+        """Make sure it works and clears the internal cache.
 
-        # Mutable thing that should get cleared:
-        q.add_metadata(crash_id='7')
+        crash_id should get cleared, while product, category, and useragent
+        should remain.
+
+        """
+        q = self.question
+        q.add_metadata(product='desktop', category='d1', useragent='Fyerfocks',
+                       crash_id='7')
 
         q.metadata
         q.clear_mutable_metadata()
