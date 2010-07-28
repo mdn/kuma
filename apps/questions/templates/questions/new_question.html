@@ -27,7 +27,7 @@
 
 
 {% block category %}
-  {% if current_product and not current_category %}
+  {% if current_product and not current_category and current_product.categories %}
     <h2>{{ _('Which of these categories best describes your problem?') }}</h2>
     <ul class="select-one">
       {% for key, category in current_product.categories.iteritems() %}
@@ -47,24 +47,35 @@
   {% endif %}
 {% endblock %}
 
-
 {% block articles_and_search_results %}
-
-  {% if current_articles and not search_results and not form %}
-    <h2>{{ _('We have lots of helpful articles on <mark>{category}</mark> and hundreds of questions in our database. Try one of the following:')|fe(category=current_category.name) }}</h2>
-    <ul class="articles">
-      {% for article in current_articles %}
-        <li>
-          <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-    {% if not form %}
+  {% set form_header_set = False %}
+  {% if current_articles or current_html and not search_results and not form %}
+    {% if current_html %}
+      <h2>{{ current_html|safe }}</h2>
+    {% else %}
+      <h2>{{ _('We have lots of helpful articles on <mark>{category}</mark> and hundreds of questions in our database. Try one of the following:')|fe(category=current_category.name) }}</h2>
+    {% endif %}
+    {% if current_articles %}
+      <ul class="articles">
+        {% for article in current_articles %}
+          <li>
+            <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if not form and not deadend %}
+      {% set form_header_set = True %}
       <h2>{{ _('or, summarize your question in a sentence:') }}</h2>
     {% endif %}
   {% endif %}
 
-  {% if (current_articles or search_results) and not form %}
+  {% if current_category and ((current_articles or search_results or current_html)
+        or not (current_articles and search_results and current_html))
+        and not form and not deadend %}
+    {% if not form_header_set %}
+      <h2>{{ _('Summarize your question in a sentence:') }}</h2>
+    {% endif %}
     <form id="ask-search-form" class="search" action="#ask-search-form" method="get">
       <input type="hidden" name="product" value="{{ current_product.key }}" />
       <input type="hidden" name="category" value="{{ current_category.key }}" />

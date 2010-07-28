@@ -94,7 +94,8 @@
 
     // Is the question for FF on the desktop?
     function isDesktopFF() {
-        return document.location.search.indexOf('product=desktop') >= 0;
+        return document.location.search.indexOf('product=desktop') >= 0 ||
+               document.location.search.indexOf('product=beta') >= 0;
     }
 
     // Returns a string with the version of Firefox

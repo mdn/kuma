@@ -22,8 +22,7 @@ from access.decorators import has_perm_or_owns_or_403
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.utils import paginate
-from access.decorators import has_perm_or_owns_or_403
-from notifications import create_watch, check_watch, destroy_watch
+from notifications import create_watch, destroy_watch
 from .models import Question, Answer, QuestionVote, AnswerVote
 from .forms import (NewQuestionForm, EditQuestionForm,
                     AnswerForm, WatchQuestionForm)
@@ -110,9 +109,14 @@ def new_question(request):
     category_key = request.GET.get('category')
     if product and category_key:
         category = product['categories'].get(category_key)
+        deadend = category.get('deadend', False)
+        html = category.get('html')
+        articles = category.get('articles')
     else:
         category = None
-    articles = category['articles'] if category else None
+        deadend = product.get('deadend', False) if product else False
+        html = product.get('html') if product else None
+        articles = None
 
     if request.method == 'GET':
         search = request.GET.get('search', None)
@@ -129,7 +133,9 @@ def new_question(request):
                              'products': products,
                              'current_product': product,
                              'current_category': category,
-                             'current_articles': articles})
+                             'current_html': html,
+                             'current_articles': articles,
+                             'deadend': deadend})
 
     # Handle the form post
     form = NewQuestionForm(user=request.user, product=product,

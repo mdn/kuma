@@ -26,6 +26,7 @@ EMAIL_HELP = _lazy(u'A confirmation email will be sent to this address in order 
 FF_VERSION_LABEL = _lazy(u'Firefox version')
 OS_LABEL = _lazy(u'Operating system')
 PLUGINS_LABEL = _lazy(u'Installed plugins')
+ADDON_LABEL = _lazy(u'Extension/plugin you are having trouble with')
 
 # Validation error messages
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a question.')
@@ -103,6 +104,13 @@ class EditQuestionForm(forms.Form):
                                       max_length=255,
                                       widget=forms.TextInput())
             self.fields['started'] = field
+
+        if 'addon' in extra_fields:
+            field = StrippedCharField(label=ADDON_LABEL,
+                                      required=False,
+                                      max_length=255,
+                                      widget=forms.TextInput())
+            self.fields['addon'] = field
 
         if 'troubleshooting' in extra_fields:
             widget = forms.Textarea(attrs={'class': 'troubleshooting'})
