@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.core.files import File
+
+from tower import ugettext as _
 
 from sumo.helpers import reverse
 from .forms import ImageUploadForm
@@ -23,6 +26,9 @@ def create_image_attachment(up_file, obj, user):
     return image
 
 
+class FileTooLargeError(Exception):
+    pass
+
 def upload_images(request, obj):
     """
     Takes in a request object and returns a list with information about each
@@ -35,6 +41,11 @@ def upload_images(request, obj):
         files = []
         for name in request.FILES:
             up_file = request.FILES[name]
+            if up_file.size > settings.IMAGE_MAX_FILESIZE:
+                message = _('"%s" is too large (%sKB), the limit is %sKB') % (
+                    up_file.name, up_file.size >> 10,
+                    settings.IMAGE_MAX_FILESIZE >> 10)
+                raise FileTooLargeError(message)
 
             image = create_image_attachment(up_file, obj, request.user)
 

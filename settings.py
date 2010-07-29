@@ -350,6 +350,7 @@ WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
 WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
 WIKI_UPLOAD_URL = '/img/wiki_up/'
 
+IMAGE_MAX_FILESIZE = 1048576  # 1 megabyte, in bytes
 THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels
 THUMBNAIL_UPLOAD_PATH = 'uploads/images/thumbnails/'
 IMAGE_UPLOAD_PATH = 'uploads/images/'

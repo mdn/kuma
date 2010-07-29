@@ -72,9 +72,9 @@ $(document).ready(function () {
                 }
                 var upStatus = iframeJSON.status, upFile, $thumbnail;
 
+                $options.progress.removeClass('show');
                 if (upStatus == 'success') {
                     upFile = iframeJSON.files[0];
-                    $options.progress.removeClass('show');
                     $thumbnail = $('<img/>')
                         .attr({alt: upFile.name, title: upFile.name,
                                width: upFile.width, height: upFile.height,
@@ -94,9 +94,7 @@ $(document).ready(function () {
                         error_login: UPLOAD.error_login
                     });
                 } else {
-                    var message = interpolate(gettext('Error uploading "%s"'),
-                                             [$options.filename]);
-                    dialogSet(message, UPLOAD.error_title_up);
+                    dialogSet(iframeJSON.message, UPLOAD.error_title_up);
                 }
 
                 $options.adding.hide();

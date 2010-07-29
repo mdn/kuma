@@ -11,7 +11,7 @@ from tower import ugettext as _
 
 from access.decorators import has_perm_or_owns_or_403
 from .models import ImageAttachment
-from .utils import upload_images
+from .utils import upload_images, FileTooLargeError
 
 
 @login_required
@@ -34,7 +34,12 @@ def up_image_async(request, model_name, object_pk):
         return HttpResponseNotFound(
             json.dumps({'status': 'error', 'message': message}))
 
-    files = upload_images(request, obj)
+    try:
+        files = upload_images(request, obj)
+    except FileTooLargeError as e:
+        return HttpResponseBadRequest(
+            json.dumps({'status': 'error', 'message': e.args[0]}))
+
     if files is not None:
         return HttpResponse(
             json.dumps({'status': 'success', 'files': files}))
