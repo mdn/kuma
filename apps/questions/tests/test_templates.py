@@ -5,6 +5,7 @@ from django.contrib.auth.models import User, Permission
 from django.conf import settings
 
 from nose.tools import eq_
+from nose.plugins.skip import SkipTest
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
@@ -48,6 +49,12 @@ class AnswersTemplateTestCase(TestCaseBase):
 
     def test_answer_upload(self):
         """Posting answer attaches an existing uploaded image to the answer."""
+        
+        # Skip this test until we get the library situation figured out
+        # on Hudson.
+        # TODO(paulc): Stop skipping
+        raise SkipTest
+
         f = open('apps/upload/tests/media/test.jpg')
         post(self.client, 'upload.up_image_async', {'image': f},
              args=['questions.Question', self.question.id])
