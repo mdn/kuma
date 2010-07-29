@@ -117,7 +117,7 @@ class EditQuestionForm(forms.Form):
             field = StrippedCharField(label=TROUBLESHOOTING_LABEL,
                                       help_text=TROUBLESHOOTING_HELP,
                                       required=False,
-                                      max_length=10000,
+                                      max_length=30000,
                                       widget=widget)
             self.fields['troubleshooting'] = field
 
