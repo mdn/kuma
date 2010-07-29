@@ -9,7 +9,12 @@
     {% for object in objects %}
       {% if loop.first %}<ul>{% endif %}
       <li class="{{ object.content_type }}">
-        <h2>{{ _('Flagged {t} (Reason: {r})')|f(t=object.content_type, r=object.get_reason_display()) }}</h2>
+        <hgroup>
+          <h2>{{ _('Flagged {t} (Reason: {r})')|f(t=object.content_type, r=object.get_reason_display()) }}</h2>
+          {% if object.notes %}
+            <h3 class="notes">{{ _('Other reason:') }} {{ object.notes }}</h3>
+          {% endif %}
+        </hgroup>
         <div class="wrap">
           {% include 'flagit/includes/flagged_%s.html' % object.content_type %}
           <h3>{{ _('Update Status:') }}</h3>
