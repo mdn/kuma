@@ -501,6 +501,16 @@ class AnswersTemplateTestCase(TestCaseBase):
         assert not check_watch(Question, self.question.id, user.email,
                                'solution'), 'Watch was not destroyed'
 
+    def test_watch_solution_and_replies(self):
+        """User subscribes to solution and replies: page doesn't break"""
+        self.client.login(username='rrosario', password='testpass')
+        user = User.objects.get(username='rrosario')
+        create_watch(Question, self.question.id, user.email, 'reply')
+        create_watch(Question, self.question.id, user.email, 'solution')
+        response = get(self.client, 'questions.answers',
+                       args=[self.question.id])
+        eq_(200, response.status_code)
+
 
 class TaggedQuestionsTestCase(TaggingTestCaseBase):
     """Questions/answers template tests that require tagged questions."""

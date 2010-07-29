@@ -25,14 +25,10 @@ def check_watch(kls, id, email, event_type=None):
 
     ct = ContentType.objects.get_for_model(kls)
 
-    try:
-        kwargs = {'content_type': ct, 'watch_id': id, 'email': email}
-        if event_type:
-            kwargs['event_type'] = event_type
-        EventWatch.uncached.get(**kwargs)
-        return True
-    except EventWatch.DoesNotExist:
-        return False
+    kwargs = {'content_type': ct, 'watch_id': id, 'email': email}
+    if event_type:
+        kwargs['event_type'] = event_type
+    return EventWatch.uncached.filter(**kwargs).count() > 0
 
 
 def destroy_watch(kls, id, email, event_type=None):
