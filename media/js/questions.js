@@ -50,9 +50,19 @@
     function prepopulateSystemInfo($form) {
         if($.browser.mozilla && isDesktopFF()) {
             $form.find('input[name="useragent"]').val(navigator.userAgent);
-            $form.find('input[name="ff_version"]').val(getFirefoxVersion());
-            $form.find('input[name="os"]').val(getOS());
-            $form.find('textarea[name="plugins"]').val(getPlugins());
+
+            var $input = $form.find('input[name="ff_version"]')
+            if(!$input.val()) {
+                $input.val(getFirefoxVersion());
+            }
+            $input = $form.find('input[name="os"]');
+            if(!$input.val()) {
+                $input.val(getOS());
+            }
+            $input = $form.find('textarea[name="plugins"]');
+            if(!$input.val()) {
+                $input.val(getPlugins());
+            }
         }
     }
 
