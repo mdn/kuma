@@ -48,16 +48,17 @@
 
     // Autofill in the info we can get via js
     function prepopulateSystemInfo($form) {
+        var $input = $form.find('input[name="os"]');
+        if(!$input.val()) {
+            $input.val(getOS());
+        }
+
         if($.browser.mozilla && isDesktopFF()) {
             $form.find('input[name="useragent"]').val(navigator.userAgent);
 
-            var $input = $form.find('input[name="ff_version"]')
+            $input = $form.find('input[name="ff_version"]')
             if(!$input.val()) {
                 $input.val(getFirefoxVersion());
-            }
-            $input = $form.find('input[name="os"]');
-            if(!$input.val()) {
-                $input.val(getOS());
             }
             $input = $form.find('textarea[name="plugins"]');
             if(!$input.val()) {
@@ -126,29 +127,36 @@
 
     // Returns a string representing the user's operating system
     function getOS() {
-        var oscpu = navigator.oscpu;
-        switch (oscpu) {
-            case "Windows NT 5.1":
-                return "Windows XP";
-            case "Windows NT 6.0":
-            case "Windows NT 6.0; WOW64":
-                return "Windows Vista";
-            case "Windows NT 6.1":
-            case "Windows NT 6.1; WOW64":
-                return "Windows 7";
-            case "Linux i686":
-                return "Linux";
-            case "Intel Mac OS X 10.4":
-            case "PPC Mac OS X 10.4":
-                return "Mac OS X 10.4";
-            case "Intel Mac OS X 10.5":
-            case "PPC Mac OS X 10.5":
-                return "Mac OS X 10.5";
-            case "Intel Mac OS X 10.6":
-                return "Mac OS X 10.6";
-            default:
-                return oscpu;
+        var os = [
+                ['Windows 3.11', /Win16/i],
+                ['Windows 95', /(Windows 95)|(Win95)|(Windows_95)/i],
+                ['Windows 98', /(Windows 98)|(Win98)/i],
+                ['Windows 2000', /(Windows NT 5.0)|(Windows 2000)/i],
+                ['Windows XP', /(Windows NT 5.1)|(Windows XP)/i],
+                ['Windows Server 2003', /(Windows NT 5.2)/i],
+                ['Windows Vista', /(Windows NT 6.0)/i],
+                ['Windows 7', /(Windows NT 6.1)/i],
+                ['Windows NT 4.0', /(Windows NT 4.0)|(WinNT4.0)|(WinNT)|(Windows NT)/i],
+                ['Windows ME', /Windows ME/i],
+                ['Windows', /Windows/i],
+                ['OpenBSD', /OpenBSD/i],
+                ['SunOS', /SunOS/i],
+                ['Linux', /(Linux)|(X11)/i],
+                ['Mac OS X 10.4', /(Mac OS X 10.4)/i],
+                ['Mac OS X 10.5', /(Mac OS X 10.5)/i],
+                ['Mac OS X 10.6', /(Mac OS X 10.6)/i],
+                ['Mac OS', /(Mac_PowerPC)|(Macintosh)/i],
+                ['QNX', /QNX/i],
+                ['BeOS', /BeOS/i],
+                ['OS/2', /OS\/2/i],
+            ],
+            ua = navigator.userAgent;
+        for (var i=0, l=os.length; i<l; i++) {
+            if (os[i][1].test(ua)) {
+                return os[i][0];
+            }
         }
+        return navigator.oscpu || '';
     }
 
     // Returns wiki markup for the list of plugins
