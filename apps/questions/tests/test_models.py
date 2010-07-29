@@ -3,7 +3,8 @@ from nose.tools import eq_, raises
 import sumo.models
 from taggit.models import Tag
 
-from questions.models import Question, QuestionMetaData, Answer
+from questions.models import (Question, QuestionMetaData, Answer,
+                              _tenths_version)
 from questions.tags import add_existing_tag
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.question_config import products
@@ -133,6 +134,31 @@ class TestQuestionMetadata(TestCaseBase):
             "clear_mutable_metadata() didn't clear the cached metadata."
         eq_(dict(product='desktop', category='d1', useragent='Fyerfocks'), md)
 
+    def test_auto_tagging(self):
+        """Make sure tags get applied based on metadata on first save."""
+        Tag.objects.create(slug='green', name='green')
+        q = self.question
+        q.add_metadata(product='desktop', category='d1', ff_version='3.6.8',
+                       os='GREen')
+        q.save()
+        q.auto_tag()
+        tags_eq(q, ['desktop', 'websites', 'Firefox 3.6.8', 'Firefox 3.6',
+                    'green'])
+
+    def test_auto_tagging_restraint(self):
+        """Auto-tagging shouldn't tag unknown Firefox versions or OSes."""
+        q = self.question
+        q.add_metadata(ff_version='allyourbase', os='toaster 1.0')
+        q.save()
+        q.auto_tag()
+        tags_eq(q, [])
+
+    def test_tenths_version(self):
+        """Test the filter that turns 1.2.3 into 1.2."""
+        eq_(_tenths_version('1.2.3beta3'), '1.2')
+        eq_(_tenths_version('1.2rc'), '1.2')
+        eq_(_tenths_version('1.w'), '')
+
 
 class QuestionTests(TestCaseBase):
     """Tests for Question model"""
@@ -154,7 +180,7 @@ class QuestionTests(TestCaseBase):
     def test_default_manager(self):
         """Assert Question's default manager is SUMO's ManagerBase.
 
-        This is easy to get wrong with taggability.
+        This is easy to get wrong when mixing in taggability.
 
         """
         eq_(Question._default_manager.__class__, sumo.models.ManagerBase)

@@ -6,6 +6,7 @@ products = SortedDict([
     ('desktop', {
         'name': _('Firefox 3.6 or earlier on Desktops/Laptops/Netbooks'),
         'extra_fields': ['troubleshooting', 'ff_version', 'os', 'plugins'],
+        'tags': ['desktop'],
         'categories': SortedDict([
         ('d1', {
             'name': _('Firefox is having problems with certain web sites'),
@@ -16,12 +17,12 @@ products = SortedDict([
                 {'title': 'Problems using Facebook in Firefox',
                  'url': '/en-US/kb/Problems+using+Facebook+in+Firefox'},
             ],
-            'tag': ('websites',),
+            'tags': ['websites'],
         }),
         ('d2', {
             'name': _('Firefox is crashing or closing unexpectedly'),
             'extra_fields': ['crash_id'],
-            'tag': ('crash',),
+            'tags': ['crash'],
         }),
         ('d3', {
             'name': _('I have a problem with my bookmarks, cookies, history or settings'),
@@ -31,7 +32,7 @@ products = SortedDict([
                 {'title': 'Enabling and disabling cookies',
                  'url': '/en-US/kb/Enabling+and+disabling+cookies'},
             ],
-            'tag': ('data',),
+            'tags': ['data'],
         }),
         ('d4', {
             'name': _('I need help learning to use a Firefox feature'),
@@ -47,7 +48,7 @@ products = SortedDict([
                 {'title': 'Location bar autocomplete',
                  'url': '/en-US/kb/Location+bar+autocomplete'},
             ],
-            'tag': ('learning',),
+            'tags': ['learning'],
         }),
         ('d5', {
             'name': _('I have a problem with an extension or plugin'),
@@ -58,7 +59,7 @@ products = SortedDict([
                     'removing an extension or plugin, see <a '
                     'href="/en-US/kb/Uninstalling+add-ons">Uninstalling '
                     'add-ons</a>.',
-            'tag': ('addon',),
+            'tags': ['addon'],
         }),
         ('d6', {
             'name': _('I have another kind of problem with Firefox'),
@@ -73,37 +74,38 @@ products = SortedDict([
                 {'title': 'Menu bar is mising',
                  'url': '/en-US/kb/Menu+bar+is+missing'},
             ],
-            'tag': ('general',),
+            'tags': ['general'],
         }),
         ])
     }),
     ('beta', {
         'name': _('Firefox 4 betas on Desktops/Laptops/Netbooks'),
         'extra_fields': ['troubleshooting', 'ff_version', 'os', 'plugins'],
+        'tags': ['beta'],
         'categories': SortedDict([
         ('b1', {
             'name': _("I'm having trouble with the look and feel of the Firefox beta"),
-            'tag': ('ui',),
+            'tags': ['ui'],
         }),
         ('b2', {
             'name': _('Firefox is having problems with certain web sites'),
             'extra_fields': ['sites_affected'],
-            'tag': ('websites',),
+            'tags': ['websites'],
         }),
         ('b3', {
             'name': _('Firefox is crashing or closing unexpectedly'),
             'extra_fields': ['crash_id'],
-            'tag': ('crash',),
+            'tags': ['crash'],
         }),
         ('b4', {
             'name': _('I have a problem with an extension or plugin'),
             'extra_fields': ['addon'],
-            'tag': ('addon',),
+            'tags': ['addon'],
         }),
         ('b5', {
             'name': _('I have another kind of problem with Firefox'),
             'extra_fields': ['frequency', 'started'],
-            'tag': ('general',),
+            'tags': ['general'],
         }),
         ('b6', {
             'name': _('I have feedback/suggestions about the beta'),
@@ -117,11 +119,12 @@ products = SortedDict([
     ('mobile', {
         'name': _('Firefox on Mobile (Android or Maemo systems)'),
         'extra_fields': ['ff_version', 'os', 'plugins'],
+        'tags': ['mobile'],
         'categories': SortedDict([
             ('m1', {
                 'name': _('Firefox for mobile is having problems with certain web sites'),
                 'extra_fields': ['sites_affected'],
-                'tag': ('websites',),
+                'tags': ['websites'],
             }),
             ('m2', {
                 'name': _("I'm having trouble with the look and feel of Firefox for mobile"),
@@ -135,11 +138,11 @@ products = SortedDict([
                     {'title': 'How to use the Location Bar ',
                      'url': '/en-US/kb/How+to+use+the+Location+Bar'},
                 ],
-                'tag': ('ui',),
+                'tags': ['ui'],
             }),
             ('m3', {
                 'name': _('Firefox for mobile is crashing or closing unexpectedly'),
-                'tag': ('crash',),
+                'tags': ['crash'],
             }),
             ('m4', {
                 'name': _('I have a problem with an extension or plugin'),
@@ -151,7 +154,7 @@ products = SortedDict([
                         'href="http://mobile.support.mozilla.com'
                         '/en-US/kb/How+to+remove+or+disable+add-ons">'
                         'How to remove or disable add-ons</a>.',
-                'tag': ('addon',),
+                'tags': ['addon'],
             }),
             ('m5', {
                 'name': _('I have feedback/suggestions about Firefox for Mobile'),
@@ -162,6 +165,7 @@ products = SortedDict([
     }),
     ('home', {
         'name': _('Firefox Home App for iPhone'),
+        'tags': ['FxHome'],
         'categories': SortedDict([
             ('i1', {
                 'name': _("I'm having trouble setting up Firefox Home on my iPhone"),
@@ -169,7 +173,7 @@ products = SortedDict([
                     {'title': 'How to set up Firefox Home on your iPhone',
                      'url': '/en-US/kb/How+to+set+up+Firefox+Home+on+your+iPhone'},
                 ],
-                'tag': ('iphone',),
+                'tags': ['iphone'],
             }),
             ('i2', {
                 'name': _("I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
@@ -177,7 +181,7 @@ products = SortedDict([
                     {'title': 'How to sync Firefox settings between computers',
                      'url': '/en-US/kb/How+to+sync+Firefox+settings+between+computers'},
                 ],
-                'tag': ('desktop', 'sync',),
+                'tags': ['desktop', 'sync'],
             }),
             ('i3', {
                 'name': _('Not all my data is syncing between Firefox '
@@ -190,7 +194,7 @@ products = SortedDict([
                     {'title': 'Replace your Sync information',
                      'url': '/kb/Replace+your+Sync+information'},
                 ],
-                'tag': ('sync',),
+                'tags': ['sync'],
             }),
             ('i4', {
                 'name': _('I have feedback/suggestions about Firefox Home for iPhone'),
@@ -201,6 +205,7 @@ products = SortedDict([
     }),
     ('sync', {
         'name': _('Firefox Sync'),
+        'tags': ['sync'],
         'categories': SortedDict([
             ('s1', {
                 'name': _("I'm having trouble setting up Firefox Sync on my Nokia or Android device"),
@@ -208,7 +213,7 @@ products = SortedDict([
                     {'title': 'How to sync Firefox settings with a mobile device',
                      'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+sync+Firefox+settings+with+a+mobile+device'},
                 ],
-                'tag': ('iphone',),
+                'tags': ['mobile'],
             }),
             ('s2', {
                 'name': _("I'm having trouble setting up Firefox Home on my iPhone"),
@@ -216,7 +221,7 @@ products = SortedDict([
                     {'title': 'How to set up Firefox Home on your iPhone',
                      'url': '/en-US/kb/How+to+set+up+Firefox+Home+on+your+iPhone'},
                 ],
-                'tag': ('iphone',),
+                'tags': ['iphone'],
             }),
             ('s3', {
                 'name': _("I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
@@ -224,7 +229,7 @@ products = SortedDict([
                     {'title': 'How to sync Firefox settings between computers',
                      'url': '/en-US/kb/How+to+sync+Firefox+settings+between+computers'},
                 ],
-                'tag': ('desktop',),
+                'tags': ['desktop'],
             }),
             ('s4', {
                 'name': _('I have other problems syncing data between computers or devices'),
@@ -238,7 +243,7 @@ products = SortedDict([
                     {'title': 'Replace your Sync information',
                      'url': '/kb/Replace+your+Sync+information'},
                 ],
-                'tag': ('sync',),
+                'tags': ['sync'],
             }),
             ('s5', {
                 'name': _('I have feedback/suggestions about Firefox Home for iPhone'),

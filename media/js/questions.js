@@ -138,6 +138,14 @@
                 return "Windows 7";
             case "Linux i686":
                 return "Linux";
+            case "Intel Mac OS X 10.4":
+            case "PPC Mac OS X 10.4":
+                return "Mac OS X 10.4";
+            case "Intel Mac OS X 10.5":
+            case "PPC Mac OS X 10.5":
+                return "Mac OS X 10.5";
+            case "Intel Mac OS X 10.6":
+                return "Mac OS X 10.6";
             default:
                 return oscpu;
         }

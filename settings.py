@@ -178,6 +178,7 @@ INSTALLED_APPS = (
     'taggit',
     'flagit',
     'upload',
+    'product_details'
 )
 
 # Extra apps for testing

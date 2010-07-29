@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import re
 
 from django.db import models
 from django.db.models.signals import post_save
@@ -6,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 import jinja2
+import product_details
+from taggit.models import Tag
 
 from notifications.tasks import delete_watches
 from sumo.models import ModelBase, TaggableMixin
@@ -13,9 +16,9 @@ from sumo.parser import WikiParser
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 import questions as constants
+from questions.tags import add_existing_tag
 from .question_config import products
 from .tasks import update_question_votes, build_answer_notification
-from notifications.tasks import delete_watches
 from upload.models import ImageAttachment
 
 
@@ -55,11 +58,10 @@ class Question(ModelBase, TaggableMixin):
         parser = WikiParser()
         return jinja2.Markup(parser.parse(self.content, False))
 
-    def save(self, *args, **kwargs):
+    def save(self, no_update=False, *args, **kwargs):
         """Override save method to take care of updated."""
-        if self.id and not kwargs.get('no_update'):
+        if self.id and not no_update:
             self.updated = datetime.now()
-        kwargs.pop('no_update', None)
         super(Question, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
@@ -69,9 +71,11 @@ class Question(ModelBase, TaggableMixin):
 
     def add_metadata(self, **kwargs):
         """Add (save to db) the passed in metadata.
+
         Usage:
         question = Question.objects.get(pk=1)
         question.add_metadata(ff_version='3.6.3', os='Linux')
+
         """
         for key, value in kwargs.items():
             QuestionMetaData.objects.create(question=self, name=key,
@@ -102,17 +106,44 @@ class Question(ModelBase, TaggableMixin):
 
     @property
     def product(self):
-        """Return the product this question is about or None if unknown."""
+        """Return the product this question is about or an empty mapping if
+        unknown."""
         md = self.metadata
         if 'product' in md:
-            return products.get(md['product'])
+            return products.get(md['product'], {})
+        return {}
 
     @property
     def category(self):
-        """Return the category this question refers to or None if unknown."""
+        """Return the category this question refers to or an empty mapping if
+        unknown."""
         md = self.metadata
         if self.product and 'category' in md:
-            return self.product['categories'].get(md['category'])
+            return self.product['categories'].get(md['category'], {})
+        return {}
+
+    def auto_tag(self):
+        """Apply tags to myself that are implied by my contents."""
+        to_add = self.product.get('tags', []) + self.category.get('tags', [])
+
+        version = self.metadata.get('ff_version', '')
+        if version in product_details.firefox_history_development_releases or \
+           version in product_details.firefox_history_stability_releases or \
+           version in product_details.firefox_history_major_releases:
+            to_add.append('Firefox %s' % version)
+            tenths = _tenths_version(version)
+            if tenths:
+                to_add.append('Firefox %s' % tenths)
+
+        self.tags.add(*to_add)
+
+        # Add a tag for the OS if it already exists as a tag:
+        os = self.metadata.get('os')
+        if os:
+            try:
+                add_existing_tag(os, self.tags)
+            except Tag.DoesNotExist:
+                pass
 
     def get_absolute_url(self):
         return reverse('questions.answers',
@@ -320,3 +351,18 @@ def send_vote_update_task(**kwargs):
         update_question_votes.delay(q)
 
 post_save.connect(send_vote_update_task, sender=QuestionVote)
+
+
+_tenths_version_pattern = re.compile(r'(\d+\.\d+).*')
+
+def _tenths_version(full_version):
+    """Return the major and minor version numbers from a full version string.
+
+    Don't return bugfix version, beta status, or anything futher. If there is
+    no major or minor version in the string, return ''.
+
+    """
+    match = _tenths_version_pattern.match(full_version)
+    if match:
+        return match.group(1)
+    return ''

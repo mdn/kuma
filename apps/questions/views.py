@@ -152,6 +152,9 @@ def new_question(request):
             if category:
                 question.add_metadata(category=category['key'])
 
+        # The first time a question is saved, automatically apply some tags:
+        question.auto_tag()
+
         # Submitting the question counts as a vote
         return question_vote(request, question.id)
 

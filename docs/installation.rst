@@ -145,6 +145,21 @@ want to use ``requirements-dev.txt`` instead ::
     pip install -r requirements-dev.txt
 
 
+Initializing Mozilla Product Details
+------------------------------------
+
+One of the packages kitsune uses, Mozilla Product Details, needs to fetch JSON
+files containing historical Firefox version data and write them within its
+package directory. To set this up...
+
+#. Run ``./manage.py update_product_details`` to do the initial fetch.
+#. Schedule the above command to run periodically. Once a day is a reasonable
+   choice. It will fail safely on network failure.
+#. Arrange for the folder django-mozilla-product-details/product_details/json
+   to be writable by whomever runs ``./manage.py update_product_details`` and
+   readable by kitsune Python processes.
+
+
 Settings
 --------
 

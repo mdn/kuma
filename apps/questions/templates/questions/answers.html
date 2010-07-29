@@ -176,6 +176,10 @@
               {{ question.metadata.plugins|wiki_to_html }}
             </div>
           {% endif %}
+          {% if question.metadata.useragent %}
+            <h5>{{ _('User Agent') }}</h5>
+            <p>{{ question.metadata.useragent }}</p>
+          {% endif %}
         </div>
       </div>
 

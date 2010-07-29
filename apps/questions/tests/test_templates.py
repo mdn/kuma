@@ -615,22 +615,22 @@ class TaggingViewTestsAsTagger(TaggingTestCaseBase):
         """Assert removing an applied tag succeeds."""
         response = self.client.post(_remove_tag_url(),
                                     data={'remove-tag-colorless': 'dummy'})
-        self._assertRedirectsToQuestion2(response)
+        self._assert_redirects_to_question_2(response)
         eq_([t.name for t in Question.objects.get(pk=2).tags.all()], ['green'])
 
     def test_remove_unapplied_tag(self):
         """Test removing an unapplied tag fails silently."""
         response = self.client.post(_remove_tag_url(),
                                     data={'remove-tag-lemon': 'dummy'})
-        self._assertRedirectsToQuestion2(response)
+        self._assert_redirects_to_question_2(response)
 
     def test_remove_no_tag(self):
         """Make sure removing with no params provided redirects harmlessly."""
         response = self.client.post(_remove_tag_url(),
                                     data={})
-        self._assertRedirectsToQuestion2(response)
+        self._assert_redirects_to_question_2(response)
 
-    def _assertRedirectsToQuestion2(self, response):
+    def _assert_redirects_to_question_2(self, response):
         url = 'http://testserver%s' % reverse('questions.answers',
                                               kwargs={'question_id': 2})
         self.assertRedirects(response, url)
