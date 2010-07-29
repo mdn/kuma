@@ -3,7 +3,7 @@ from django.core.files import File
 from sumo.helpers import reverse
 from .forms import ImageUploadForm
 from .models import ImageAttachment
-from .tasks import generate_thumbnail
+from .tasks import generate_thumbnail, _scale_dimensions
 
 
 def create_image_attachment(up_file, obj, user):
@@ -39,10 +39,12 @@ def upload_images(request, obj):
             image = create_image_attachment(up_file, obj, request.user)
 
             delete_url = reverse('upload.del_image_async', args=[image.id])
+            im = image.file
+            (width, height) = _scale_dimensions(im.width, im.height)
             files.append({'name': up_file.name, 'url': image.file.url,
                           'thumbnail_url': image.thumbnail.url,
-                          'width': image.thumbnail.width,
-                          'height': image.thumbnail.height,
+                          'width': width,
+                          'height': height,
                           'delete_url': delete_url})
         return files
     return None
