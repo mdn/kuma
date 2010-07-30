@@ -21,7 +21,7 @@ from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
 from access.decorators import has_perm_or_owns_or_403
-from search.clients import WikiClient, QuestionsClient
+from search.clients import WikiClient, QuestionsClient, SearchError
 from search.utils import locale_or_default, sphinx_locale
 from sumo.models import WikiPage
 from sumo.urlresolvers import reverse
@@ -130,8 +130,12 @@ def new_question(request):
     if request.method == 'GET':
         search = request.GET.get('search', '')
         if search:
-            search_results = _search_suggestions(search,
-                                             locale_or_default(request.locale))
+            try:
+                search_results = _search_suggestions(
+                                 search, locale_or_default(request.locale))
+            except SearchError:
+                # Just quietly advance the user to the next step.
+                search_results = []
             tried_search = True
         else:
             search_results = []
@@ -208,13 +212,11 @@ def edit_question(request, question_id):
     if request.method == 'GET':
         initial = question.metadata.copy()
         initial.update(title=question.title, content=question.content)
-        form = EditQuestionForm(user=user,
-                                product=question.product,
+        form = EditQuestionForm(product=question.product,
                                 category=question.category,
                                 initial=initial)
     else:
         form = EditQuestionForm(data=request.POST,
-                                user=user,
                                 product=question.product,
                                 category=question.category)
         if form.is_valid():
@@ -631,10 +633,14 @@ def _search_suggestions(query, locale):
                 'value': (sphinx_locale(locale),)},
                {'filter': 'category',
                 'value': [x for x in settings.SEARCH_DEFAULT_CATEGORIES
-                          if x >= 0]}]
-    # Lazily build excerpts from results. Stop when we have enough:
+                          if x >= 0]},
+               {'filter': 'category',
+                'exclude': True,
+                'value': [-x for x in settings.SEARCH_DEFAULT_CATEGORIES
+                          if x < 0]}]
     raw_results = wiki_searcher.query(query, filters=filters,
                                       limit=query_limit)
+    # Lazily build excerpts from results. Stop when we have enough:
     results = islice((p for p in
                        (prepare(r, WikiPage, wiki_searcher, lambda x: x['id'])
                         for r in raw_results) if p),
@@ -644,7 +650,8 @@ def _search_suggestions(query, locale):
     # If we didn't find enough wiki pages to fill the page, pad it out with
     # other questions:
     if len(results) < max_suggestions:
-        question_searcher = QuestionsClient()  # questions is en-US only
+        question_searcher = QuestionsClient()
+        # questions app is en-US only.
         raw_results = question_searcher.query(query,
                                               limit=query_limit - len(results))
         results.extend(islice((p for p in
