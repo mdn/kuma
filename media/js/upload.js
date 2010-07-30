@@ -4,7 +4,7 @@ $(document).ready(function () {
             error_title_up: gettext('Error uploading image'),
             error_title_del: gettext('Error deleting image'),
             error_login: gettext('Please check you are logged in, and try again.'),
-            $dialog: $('#upload_dialog'),
+            $dialog: $('#upload_dialog')
         };
     if (UPLOAD.$dialog.length <= 0) {
         UPLOAD.$dialog = $('<div id="upload-dialog"></div>')
@@ -123,7 +123,7 @@ jQuery.fn.wrapDeleteInput = function (options) {
 
     options = $.extend({
         error_title_del: 'Error deleting',
-        error_json: 'Please check you are logged in, and try again.',
+        error_json: 'Please check you are logged in, and try again.'
     }, options);
 
     var $that = this,
