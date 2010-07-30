@@ -11,6 +11,7 @@ import jinja2
 import product_details
 from taggit.models import Tag
 
+from notifications import create_watch
 from notifications.tasks import delete_watches
 from sumo.models import ModelBase, TaggableMixin
 from sumo.parser import WikiParser
@@ -71,17 +72,23 @@ class Question(ModelBase, TaggableMixin):
 
     def save(self, no_update=False, *args, **kwargs):
         """Override save method to take care of updated."""
-        if self.id and not no_update:
+        new = not self.id
+
+        if not new and not no_update:
             self.updated = datetime.now()
 
         # Generate a confirmation_id if necessary
-        if not self.id and not self.confirmation_id:
+        if new and not self.confirmation_id:
             key = '%s-%s' % (self.title, datetime.now())
             sha = hashlib.sha1()
             sha.update(key)
             self.confirmation_id = sha.hexdigest()
 
         super(Question, self).save(*args, **kwargs)
+
+        if new:
+            # Authors should automatically watch their own questions.
+            create_watch(Question, self.id, self.creator.email, 'reply')
 
     def delete(self, *args, **kwargs):
         """Override delete to trigger delete_watches."""

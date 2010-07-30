@@ -1,5 +1,8 @@
+from django.contrib.auth.models import User
+
 from nose.tools import eq_, raises
 
+from notifications import check_watch
 import sumo.models
 from taggit.models import Tag
 
@@ -184,6 +187,24 @@ class QuestionTests(TestCaseBase):
 
         """
         eq_(Question._default_manager.__class__, sumo.models.ManagerBase)
+
+    def test_notification_created(self):
+        """Creating a new question auto-watches it."""
+
+        u = User.objects.get(pk=118533)
+        q = Question(creator=u, title='foo', content='bar')
+        q.save()
+
+        assert check_watch(Question, q.id, u.email, 'reply')
+
+    def test_no_notification_on_update(self):
+        """Saving an existing question does not watch it."""
+
+        q = Question.objects.get(pk=1)
+        assert not check_watch(Question, q.id, q.creator.email, 'reply')
+
+        q.save()
+        assert not check_watch(Question, q.id, q.creator.email, 'reply')
 
 
 class AddExistingTagTests(TaggingTestCaseBase):
