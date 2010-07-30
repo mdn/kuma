@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import re
-import hashlib
+import random
+import string
 
 from django.db import models
 from django.db.models.signals import post_save
@@ -79,10 +80,8 @@ class Question(ModelBase, TaggableMixin):
 
         # Generate a confirmation_id if necessary
         if new and not self.confirmation_id:
-            key = '%s-%s' % (self.title, datetime.now())
-            sha = hashlib.sha1()
-            sha.update(key)
-            self.confirmation_id = sha.hexdigest()
+            chars = [random.choice(string.ascii_letters) for x in xrange(10)]
+            self.confirmation_id = "".join(chars)
 
         super(Question, self).save(*args, **kwargs)
 
@@ -380,6 +379,7 @@ post_save.connect(send_vote_update_task, sender=QuestionVote)
 
 
 _tenths_version_pattern = re.compile(r'(\d+\.\d+).*')
+
 
 def _tenths_version(full_version):
     """Return the major and minor version numbers from a full version string.
