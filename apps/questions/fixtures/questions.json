@@ -31,7 +31,7 @@
         "pk": 3,
         "model": "questions.question",
         "fields": {
-            "status": 0,
+            "status": 1,
             "updated": "2010-06-17 19:47:34",
             "creator": 47963,
             "is_locked": false,
