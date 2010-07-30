@@ -76,7 +76,7 @@
     {% if not form_header_set %}
       <h2>{{ _('Summarize your question in a sentence:') }}</h2>
     {% endif %}
-    <form id="ask-search-form" class="search" action="#ask-search-form" method="get">
+    <form id="ask-search-form" class="search" action="{% if settings.SESSION_COOKIE_SECURE %}https://{{ host }}{{ request.get_full_path() }}{% endif %}#ask-search-form" method="get">
       <input type="hidden" name="product" value="{{ current_product.key }}" />
       <input type="hidden" name="category" value="{{ current_category.key }}" />
       <input type="text" class="question" name="search" value="{{ request.GET.search }}" />

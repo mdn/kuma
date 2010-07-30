@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.cache import cache
 from django.conf import settings
+from django.contrib.sites.models import Site
 
 import jingo
 from taggit.models import Tag
@@ -141,7 +142,8 @@ def new_question(request):
                              'current_category': category,
                              'current_html': html,
                              'current_articles': articles,
-                             'deadend': deadend})
+                             'deadend': deadend,
+                             'host': Site.objects.get_current().domain})
 
     # Handle the form post
     if not request.user.is_authenticated():
