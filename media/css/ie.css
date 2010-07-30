@@ -24,3 +24,8 @@ ul.tag-list li {
     zoom: 1; /* force inline-block behavior on block elements in IE6 and IE7 */
     display: inline;
 }
+
+/* set widths aren't respected with long content */
+#main-content {
+    overflow: hidden;
+}
