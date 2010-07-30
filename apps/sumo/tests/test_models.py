@@ -25,7 +25,7 @@ class TestWikiPage(test.TestCase):
     fixtures = ['pages.json']
 
     def test_get_url(self):
-        w = WikiPage.objects.create(pk=1, lang='en', pageName='My Test Page')
+        w = WikiPage.objects.create(pk=1, lang='en', title='My Test Page')
         eq_(w.get_url(), '/en-US/kb/My+Test+Page')
 
     def test_get_create_url(self):
@@ -35,7 +35,7 @@ class TestWikiPage(test.TestCase):
 
     def test_get_edit_url(self):
         """Edit url for a page exists."""
-        w = WikiPage.objects.get(pageName='Installing Firefox')
+        w = WikiPage.objects.get(title='Installing Firefox')
         eq_('/tiki-editpage.php?page=Installing+Firefox', w.get_edit_url())
 
 

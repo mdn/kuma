@@ -434,7 +434,7 @@ class SearchTest(SphinxTestCase):
         eq_(1, len(results))
         page = WikiPage.objects.get(pk=results[0]['id'])
         try:
-            excerpt = wc.excerpt(page.data, q)
+            excerpt = wc.excerpt(page.content, q)
             render('{{ c }}', {'c': excerpt})
         except UnicodeDecodeError:
             self.fail('Raised UnicodeDecodeError.')

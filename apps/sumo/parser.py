@@ -50,7 +50,7 @@ class WikiParser(object):
         Checks the page exists, and returns its URL, or the URL to create it.
         """
         try:
-            return WikiPage.objects.get(pageName=link).get_url()
+            return WikiPage.objects.get(title=link).get_url()
         except WikiPage.DoesNotExist:
             return WikiPage.get_create_url(link)
 

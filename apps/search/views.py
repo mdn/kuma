@@ -437,7 +437,7 @@ def search(request):
             if documents[i]['attrs'].get('category', False) != False:
                 wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
 
-                excerpt = wc.excerpt(wiki_page.data, cleaned['q'])
+                excerpt = wc.excerpt(wiki_page.content, cleaned['q'])
                 summary = jinja2.Markup(excerpt)
 
                 result = {'search_summary': summary,
