@@ -49,7 +49,7 @@
 
 {% block articles_and_search_results %}
   {% set form_header_set = False %}
-  {% if current_articles or current_html and not search_results and not form %}
+  {% if (current_articles or current_html) and not search_results and not form %}
     {% if current_html %}
       <h2>{{ current_html|safe }}</h2>
     {% else %}
