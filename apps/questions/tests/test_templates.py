@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User, Permission
 
-from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -48,8 +47,6 @@ class AnswersTemplateTestCase(TestCaseBase):
 
     def test_answer_upload(self):
         """Posting answer attaches an existing uploaded image to the answer."""
-        # TODO (paulc): Fix me, kind sir.
-        raise SkipTest
 
         f = open('apps/upload/tests/media/test.jpg')
         post(self.client, 'upload.up_image_async', {'image': f},
