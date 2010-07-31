@@ -49,7 +49,7 @@
 
 {% block articles_and_search_results %}
   {% set form_header_set = False %}
-  {% if current_articles or current_html and not search_results and not form %}
+  {% if (current_articles or current_html) and not search_results and not form %}
     {% if current_html %}
       <h2>{{ current_html|safe }}</h2>
     {% else %}
@@ -87,24 +87,14 @@
   {% if search_results and not form %}
     <h3>{{ _("We've found some articles and previously answered questions that may solve your issue:") }}</h3>
     <ul class="search-results">
-      <li>
-        <a href="#">Lorem ipsum dolor sit amet?</a>
-        <p>
-          Fermentum magnis ullamcorper mauris elementum suspendisse, velit litora feugiat aliquet, accumsan mi fusce aliquam leo ullamcorper dapibus, gravida lectus feugiat habitasse cubilia, sociis...
-        </p>
-      </li>
-      <li>
-        <a href="#">Lorem ipsum dolor sit amet?</a>
-        <p>
-          Fermentum magnis ullamcorper mauris elementum suspendisse, velit litora feugiat aliquet, accumsan mi fusce aliquam leo ullamcorper dapibus, gravida lectus feugiat habitasse cubilia, sociis...
-        </p>
-      </li>
-      <li>
-        <a href="#">Lorem ipsum dolor sit amet?</a>
-        <p>
-          Fermentum magnis ullamcorper mauris elementum suspendisse, velit litora feugiat aliquet, accumsan mi fusce aliquam leo ullamcorper dapibus, gravida lectus feugiat habitasse cubilia, sociis...
-        </p>
-      </li>
+      {% for result in search_results %}
+        <li>
+          <a href="{{ result['url'] }}">{{ result['title'] }}</a>
+          <p>
+            {{ result['excerpt_html']|safe }}
+          </p>
+        </li>
+      {% endfor %}
     </ul>
 
     <form action="#question-form" method="get">

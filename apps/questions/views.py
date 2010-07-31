@@ -1,9 +1,9 @@
-import logging
+from itertools import islice
 import json
 import logging
 
 from django.contrib.auth.decorators import permission_required
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.contenttypes.models import ContentType
 from django.http import (HttpResponseRedirect, HttpResponse,
                          HttpResponseBadRequest, HttpResponseForbidden)
@@ -21,6 +21,9 @@ from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
 from access.decorators import has_perm_or_owns_or_403
+from search.clients import WikiClient, QuestionsClient, SearchError
+from search.utils import locale_or_default, sphinx_locale
+from sumo.models import WikiPage
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.utils import paginate
@@ -125,12 +128,26 @@ def new_question(request):
         articles = None
 
     if request.method == 'GET':
-        search = request.GET.get('search', None)
-        search_results = True if search else None  # TODO - get search results
-        if request.GET.get('showform', False):
+        search = request.GET.get('search', '')
+        if search:
+            try:
+                search_results = _search_suggestions(
+                                 search, locale_or_default(request.locale))
+            except SearchError:
+                # Just quietly advance the user to the next step.
+                search_results = []
+            tried_search = True
+        else:
+            search_results = []
+            tried_search = False
+
+        if ((tried_search and not search_results) or
+            request.GET.get('showform')):
+            # Before we show him the form, make sure the user is auth'd:
             if not request.user.is_authenticated():
                 return HttpResponseRedirect(settings.LOGIN_URL)
-            form = NewQuestionForm(product=product, category=category,
+            form = NewQuestionForm(product=product,
+                                   category=category,
                                    initial={'title': search})
         else:
             form = None
@@ -195,13 +212,11 @@ def edit_question(request, question_id):
     if request.method == 'GET':
         initial = question.metadata.copy()
         initial.update(title=question.title, content=question.content)
-        form = EditQuestionForm(user=user,
-                                product=question.product,
+        form = EditQuestionForm(product=question.product,
                                 category=question.category,
                                 initial=initial)
     else:
         form = EditQuestionForm(data=request.POST,
-                                user=user,
                                 product=question.product,
                                 category=question.category)
         if form.is_valid():
@@ -578,6 +593,74 @@ def unwatch_question(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     destroy_watch(Question, question.id, request.user.email)
     return HttpResponseRedirect(question.get_absolute_url())
+
+
+def _search_suggestions(query, locale):
+    """Return an iterable of the most relevant wiki pages and questions.
+
+    query -- full text to search on
+    locale -- locale to limit to
+
+    Items returned are dicts:
+        { 'url': URL where the article can be viewed,
+          'title': Title of the article,
+          'excerpt_html': Excerpt of the article with search terms hilighted,
+                          formatted in HTML }
+
+    Weights wiki pages infinitely higher than questions at the moment.
+
+    """
+    def prepare(result, model, searcher, result_to_id):
+        """Turn a search result from a Sphinx client into a dict for templates.
+
+        Return {} if an object corresponding to the result cannot be found.
+
+        """
+        try:
+            obj = model.objects.get(pk=result_to_id(result))
+        except ObjectDoesNotExist:
+            return {}
+        return {'url': obj.get_absolute_url(),
+                'title': obj.title,
+                'excerpt_html': searcher.excerpt(obj.content, query)}
+
+    max_suggestions = settings.QUESTIONS_MAX_SUGGESTIONS
+    query_limit = max_suggestions + settings.QUESTIONS_SUGGESTION_SLOP
+
+    # Search wiki pages:
+    wiki_searcher = WikiClient()
+    filters = [{'filter': 'locale',
+                'value': (sphinx_locale(locale),)},
+               {'filter': 'category',
+                'value': [x for x in settings.SEARCH_DEFAULT_CATEGORIES
+                          if x >= 0]},
+               {'filter': 'category',
+                'exclude': True,
+                'value': [-x for x in settings.SEARCH_DEFAULT_CATEGORIES
+                          if x < 0]}]
+    raw_results = wiki_searcher.query(query, filters=filters,
+                                      limit=query_limit)
+    # Lazily build excerpts from results. Stop when we have enough:
+    results = islice((p for p in
+                       (prepare(r, WikiPage, wiki_searcher, lambda x: x['id'])
+                        for r in raw_results) if p),
+                     max_suggestions)
+    results = list(results)
+
+    # If we didn't find enough wiki pages to fill the page, pad it out with
+    # other questions:
+    if len(results) < max_suggestions:
+        question_searcher = QuestionsClient()
+        # questions app is en-US only.
+        raw_results = question_searcher.query(query,
+                                              limit=query_limit - len(results))
+        results.extend(islice((p for p in
+                               (prepare(r, Question, question_searcher,
+                                        lambda x: x['attrs']['question_id'])
+                                for r in raw_results) if p),
+                              max_suggestions - len(results)))
+
+    return results
 
 
 def _answers_data(request, question_id, form=None, watch_form=None):

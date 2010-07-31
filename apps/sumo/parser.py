@@ -41,6 +41,7 @@ class WikiParser(object):
         wikimarkup.registerInternalLinkHook('Image', self.hookImageTag)
 
     def parse(self, text, showToc=True):
+        """Given wiki markup, return HTML."""
         return self.wikimarkup.parse(
             text, showToc, attributes=ALLOWED_ATTRIBUTES)
 
@@ -49,7 +50,7 @@ class WikiParser(object):
         Checks the page exists, and returns its URL, or the URL to create it.
         """
         try:
-            return WikiPage.objects.get(pageName=link).get_url()
+            return WikiPage.objects.get(title=link).get_url()
         except WikiPage.DoesNotExist:
             return WikiPage.get_create_url(link)
 

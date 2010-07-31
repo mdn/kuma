@@ -18,7 +18,7 @@ from questions.models import Question
 from sumo.utils import paginate, urlencode
 from .clients import (QuestionsClient, WikiClient,
                       DiscussionClient, SearchError)
-from .utils import crc32
+from .utils import crc32, locale_or_default, sphinx_locale
 import search as constants
 from sumo_locales import LOCALES
 
@@ -198,9 +198,7 @@ def search(request):
             json.dumps({'error': _('Invalid callback function.')}),
             mimetype=mimetype, status=400)
 
-    language = request.GET.get('language', request.locale)
-    if not language in LOCALES:
-        language = settings.LANGUAGE_CODE
+    language = locale_or_default(request.GET.get('language', request.locale))
     r = request.GET.copy()
     a = request.GET.get('a', '0')
 
@@ -241,7 +239,7 @@ def search(request):
         return search_
 
     cleaned = search_form.cleaned_data
-    search_locale = (crc32(LOCALES[language].internal),)
+    search_locale = (sphinx_locale(language),)
 
     try:
         page = int(request.GET.get('page', 1))
@@ -437,7 +435,7 @@ def search(request):
             if documents[i]['attrs'].get('category', False) != False:
                 wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
 
-                excerpt = wc.excerpt(wiki_page.data, cleaned['q'])
+                excerpt = wc.excerpt(wiki_page.content, cleaned['q'])
                 summary = jinja2.Markup(excerpt)
 
                 result = {'search_summary': summary,

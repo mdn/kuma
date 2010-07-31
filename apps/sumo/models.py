@@ -158,9 +158,9 @@ class ForumThread(ModelBase):
 
 class WikiPage(ModelBase):
     page_id = models.AutoField(primary_key=True)
-    pageName = models.CharField(max_length=160, unique=True)
+    title = models.CharField(db_column='pageName', max_length=160, unique=True)
     hits = models.IntegerField(null=True)
-    data = models.TextField(null=True)
+    content = models.TextField(db_column='data', null=True)
     description = models.CharField(max_length=200, null=True)
     desc_auto = models.CharField(max_length=1)
     lastModif = models.IntegerField(null=True)
@@ -187,17 +187,18 @@ class WikiPage(ModelBase):
         db_table = "tiki_pages"
 
     def __unicode__(self):
-        return self.pageName
+        return self.title
 
     @property
     def name(self):
-        return self.pageName
+        return self.title
 
     def get_url(self):
         """
-        TODO: Once we can use reverse(), use reverse()
+        TODO: Once we can use reverse(), use reverse(), and turn this into
+        get_absolute_url, below.
         """
-        name = self.pageName.replace(' ', '+')
+        name = self.title.replace(' ', '+')
 
         if self.lang in INTERNAL_MAP:
             lang = INTERNAL_MAP[self.lang]
@@ -206,11 +207,13 @@ class WikiPage(ModelBase):
 
         return u'/%s/kb/%s' % (lang, name,)
 
+    get_absolute_url = get_url
+
     def get_edit_url(self):
         """
         TODO: Once we can use reverse(), use reverse()
         """
-        return settings.WIKI_EDIT_URL % self.pageName.replace(' ', '+')
+        return settings.WIKI_EDIT_URL % self.title.replace(' ', '+')
 
     @classmethod
     def get_create_url(cls, name):

@@ -56,7 +56,6 @@ class SearchClient(object):
     def __init__(self):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
-        self.sphinx.SetLimits(0, settings.SEARCH_MAX_RESULTS)
 
         # initialize regexes for markup cleaning
         self.truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
@@ -72,7 +71,7 @@ class SearchClient(object):
 
                 self.compiled_patterns.append(p)
 
-    def _process_filters(self, filters=None):
+    def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
         sc = self.sphinx
         sc.ResetFilters()
@@ -86,6 +85,9 @@ class SearchClient(object):
             else:
                 sc.SetFilter(f['filter'], f['value'],
                              f.get('exclude', False))
+
+    def _prepare(self):
+        """Override to twiddle `self.sphinx` before the query gets sent."""
 
     def _query_sphinx(self, query=''):
         """
@@ -110,14 +112,15 @@ class SearchClient(object):
         else:
             return []
 
-    def query(self, query, filters=None):
-        """
-        Query the search index.
-        """
-        self._process_filters(filters)
+    def query(self, query, filters=None, offset=0,
+              limit=settings.SEARCH_MAX_RESULTS):
+        """Query the search index."""
+        self._prepare_filters(filters)
 
         self.sphinx.SetFieldWeights(self.weights)
+        self.sphinx.SetLimits(offset, limit)
 
+        self._prepare()
         return self._query_sphinx(query)
 
     def excerpt(self, result, query):
@@ -173,21 +176,11 @@ class QuestionsClient(SearchClient):
         super(QuestionsClient, self).__init__()
         self.groupsort = '@group desc'
 
-    def query(self, query, filters=None):
-        """
-        Query the questions index.
-
-        Returns a list of matching questions by grouping the answers
-        together.
-        """
-        self._process_filters(filters)
-
-        sc = self.sphinx
-        sc.SetFieldWeights(self.weights)
-        sc.SetGroupBy('question_id', constants.SPH_GROUPBY_ATTR,
+    def _prepare(self):
+        """Prepare to group the answers together."""
+        super(QuestionsClient, self)._prepare()
+        self.sphinx.SetGroupBy('question_id', constants.SPH_GROUPBY_ATTR,
                       self.groupsort)
-
-        return self._query_sphinx(query)
 
     def set_groupsort(self, groupsort=''):
         self.groupsort = groupsort
@@ -212,21 +205,15 @@ class DiscussionClient(SearchClient):
         super(DiscussionClient, self).__init__()
         self.groupsort = '@group desc'
 
-    def query(self, query, filters=None):
+    def _prepare(self):
+        """Group posts together, and ensure thread['attrs']['updated'] is the
+        last post's updated date.
+
         """
-        Query the search index.
-
-        Returns a list of matching threads by grouping posts together.
-        Ensures thread['attrs']['updated'] is the last post's updated date.
-        """
-        self._process_filters(filters)
-
-        sc = self.sphinx
-        sc.SetFieldWeights(self.weights)
-        sc.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR, self.groupsort)
-        sc.SetSortMode(constants.SPH_SORT_ATTR_ASC, 'created')
-
-        return self._query_sphinx(query)
+        super(DiscussionClient, self)._prepare()
+        self.sphinx.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR,
+                               self.groupsort)
+        self.sphinx.SetSortMode(constants.SPH_SORT_ATTR_ASC, 'created')
 
     def set_groupsort(self, groupsort=''):
         self.groupsort = groupsort
