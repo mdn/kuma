@@ -156,6 +156,15 @@ class ForumThread(ModelBase):
         return reverse(u'/forum/%s/%s' % (self.object, self.threadId,))
 
 
+class ForumThreadMetaData(ModelBase):
+    threadId = models.IntegerField()
+    name = models.CharField(max_length=255)
+    value = models.TextField(null=True)
+
+    class Meta:
+        db_table = 'tiki_comments_metadata'
+
+
 class WikiPage(ModelBase):
     page_id = models.AutoField(primary_key=True)
     title = models.CharField(db_column='pageName', max_length=160, unique=True)

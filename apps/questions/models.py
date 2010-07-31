@@ -146,7 +146,11 @@ class Question(ModelBase, TaggableMixin):
         return {}
 
     def auto_tag(self):
-        """Apply tags to myself that are implied by my contents."""
+        """Apply tags to myself that are implied by my contents.
+
+        You don't need to call save on the question after this.
+
+        """
         to_add = self.product.get('tags', []) + self.category.get('tags', [])
 
         version = self.metadata.get('ff_version', '')
@@ -259,8 +263,9 @@ class Answer(ModelBase):
     def content_parsed(self):
         return wiki_to_html(self.content)
 
-    def save(self, *args, **kwargs):
-        """Override save method to update question info and take care of
+    def save(self, no_notify=False, *args, **kwargs):
+        """
+        Override save method to update question info and take care of
         updated.
         """
 
@@ -276,7 +281,8 @@ class Answer(ModelBase):
             self.question.last_answer = self
             self.question.save()
 
-            build_answer_notification.delay(self)
+            if not no_notify:
+                build_answer_notification.delay(self)
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent question info."""

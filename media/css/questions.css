@@ -298,6 +298,12 @@ ol.pagination li.selected a:hover {
     text-decoration:none;
 }
 
+/* on question page */
+div#question div.content h2 {
+    font-size: 160%;
+    margin-bottom: .3em;
+}
+
 /* side modules */
 div.sd-module {
     background:transparent url(../img/questions/bkg.askquestion.gif) no-repeat;

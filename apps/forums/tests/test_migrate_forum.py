@@ -53,15 +53,16 @@ class MigrateForumTestCase(TestCase):
             self.assertNotEquals(0, len(f.description))
 
     def test_fake_user(self):
-        """FakeUser exists in both models."""
+        """Anonymous user exists in both models."""
+        anonymous_name = 'AnonymousUser'
         try:
-            User.objects.get(username='FakeUser')
+            User.objects.get(username=anonymous_name)
         except User.DoesNotExist:
-            self.fail('Django FakeUser not created.')
+            self.fail(anonymous_name)
         try:
-            TikiUser.objects.get(login='FakeUser')
+            TikiUser.objects.get(login=anonymous_name)
         except TikiUser.DoesNotExist:
-            self.fail('Tiki FakeUser not created.')
+            self.fail('Tiki %s not created.' % anonymous_name)
 
     def test_thread_forum(self):
         """Thread's forum is properly set."""
