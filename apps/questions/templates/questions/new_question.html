@@ -84,25 +84,31 @@
     </form>
   {% endif %}
 
-  {% if search_results and not form %}
-    <h3>{{ _("We've found some articles and previously answered questions that may solve your issue:") }}</h3>
-    <ul class="search-results">
-      {% for result in search_results %}
-        <li>
-          <a href="{{ result['url'] }}">{{ result['title'] }}</a>
-          <p>
-            {{ result['excerpt_html']|safe }}
-          </p>
-        </li>
-      {% endfor %}
-    </ul>
+  {% if tried_search and not form %}
+    {% if search_results %}
+      <h3>{{ _("We've found some articles and previously answered questions that may solve your issue:") }}</h3>
+      <ul class="search-results">
+        {% for result in search_results %}
+          <li>
+            <a href="{{ result['url'] }}">{{ result['title'] }}</a>
+            <p>
+              {{ result['excerpt_html']|safe }}
+            </p>
+          </li>
+        {% endfor %}
+      </ul>
+      {% set button_text = _('None of these solve my problem') %}
+    {% else %}
+      <h3 class="no-results">{{ _('This question has not been asked before.') }}</h3>
+      {% set button_text = _('Provide more details') %}
+    {% endif %}
 
     <form action="#question-form" method="get">
       <input type="hidden" name="product" value="{{ current_product.key }}" />
       <input type="hidden" name="category" value="{{ current_category.key }}" />
       <input type="hidden" name="search" value="{{ request.GET.search }}" />
       <input type="hidden" name="showform" value="1" />
-      <input type="submit" id="show-form-btn" class="btn y-btn" value="None of these solve my problem" />
+      <input type="submit" id="show-form-btn" class="btn y-btn" value="{{ button_text }}" />
     </form>
   {% endif %}
 

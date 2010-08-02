@@ -141,9 +141,8 @@ def new_question(request):
             search_results = []
             tried_search = False
 
-        if ((tried_search and not search_results) or
-            request.GET.get('showform')):
-            # Before we show him the form, make sure the user is auth'd:
+        if request.GET.get('showform'):
+            # Before we show the form, make sure the user is auth'd:
             if not request.user.is_authenticated():
                 return HttpResponseRedirect(settings.LOGIN_URL)
             form = NewQuestionForm(product=product,
@@ -154,6 +153,7 @@ def new_question(request):
 
         return jingo.render(request, 'questions/new_question.html',
                             {'form': form, 'search_results': search_results,
+                             'tried_search': tried_search,
                              'products': products,
                              'current_product': product,
                              'current_category': category,

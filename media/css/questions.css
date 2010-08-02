@@ -1277,6 +1277,10 @@ input.g-btn:disabled {
     font-size: 16px;
 }
 
+#ask-question h3.no-results {
+    margin-bottom: 15px;
+}
+
 #ask-question mark {
     font-style: italic;
 }
