@@ -29,3 +29,9 @@ ul.tag-list li {
 #main-content {
     overflow: hidden;
 }
+
+form div.attachments-upload div.attachment,
+div.ans-attachments div.attachment {
+    display: inline; /* force inline-block behavior on block elements in IE6 and IE7 */
+    zoom: 1;
+}
