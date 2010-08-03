@@ -934,8 +934,8 @@ class AAQTemplateTestCase(TestCaseBase):
         self.client.login(username='jsocol', password='testpass')
 
     def tearDown(self):
-        self.client.logout()
         super(AAQTemplateTestCase, self).tearDown()
+        self.client.logout()
 
     def test_full_workflow(self):
         # Post a new question
