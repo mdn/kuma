@@ -35,3 +35,12 @@ div.ans-attachments div.attachment {
     display: inline; /* force inline-block behavior on block elements in IE6 and IE7 */
     zoom: 1;
 }
+
+*html div.main-section { /* ie6 only */
+    position: relative;
+}
+
+*html form div.attachments-upload div.hover input.delete,
+*html div.ans-attachments div.hover input.delete { /* ie6 only */
+    display: block;
+}
