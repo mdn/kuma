@@ -26,7 +26,7 @@ ul.tag-list li {
 }
 
 /* set widths aren't respected with long content */
-#main-content {
+body.questions #main-content {
     overflow: hidden;
 }
 
