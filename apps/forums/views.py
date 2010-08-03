@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
@@ -16,7 +16,8 @@ from sumo.utils import paginate
 from .models import Forum, Thread, Post
 from .forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
 from .feeds import ThreadsFeed, PostsFeed
-from notifications import create_watch, check_watch, destroy_watch
+from notifications import create_watch, destroy_watch
+from .tasks import build_reply_notification, build_thread_notification
 import forums as constants
 
 log = logging.getLogger('k.forums')
@@ -119,6 +120,9 @@ def reply(request, forum_slug, thread_id):
             reply_.author = request.user
             reply_.save()
 
+            # Send notifications to thread/forum watchers.
+            build_reply_notification.delay(reply_)
+
             return HttpResponseRedirect(reply_.get_absolute_url())
 
     return posts(request, forum_slug, thread_id, form)
@@ -144,6 +148,9 @@ def new_thread(request, forum_slug):
         post = thread.new_post(author=request.user,
                                content=form.cleaned_data['content'])
         post.save()
+
+        # Send notifications to forum watchers.
+        build_thread_notification.delay(post)
 
         return HttpResponseRedirect(
             reverse('forums.posts', args=[forum_slug, thread.id]))
@@ -337,24 +344,33 @@ def delete_post(request, forum_slug, thread_id, post_id):
     return HttpResponseRedirect(goto)
 
 
-@login_required
 @require_POST
+@login_required
 def watch_thread(request, forum_slug, thread_id):
-    """Toggle whether a thread is being watched."""
-    # TODO: Have a separate watch_thread() and unwatch_thread() to avoid a
-    # race condition where a double-bounce on the "watch" button watches and
-    # then unwatches a thread. [572836]
+    """Watch/unwatch a thread (based on 'watch' POST param)."""
 
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
-    try:
-        if check_watch(Thread, thread.id, request.user.email):
-            destroy_watch(Thread, thread.id, request.user.email, 'reply')
-        else:
-            create_watch(Thread, thread.id, request.user.email, 'reply')
-    except Thread.DoesNotExist:
-        raise Http404
+    if request.POST.get('watch') == 'yes':
+        create_watch(Thread, thread.id, request.user.email, 'reply')
+    else:
+        destroy_watch(Thread, thread.id, request.user.email, 'reply')
 
     return HttpResponseRedirect(reverse('forums.posts',
                                         args=[forum_slug, thread_id]))
+
+
+@require_POST
+@login_required
+def watch_forum(request, forum_slug):
+    """Watch/unwatch a forum (based on 'watch' POST param)."""
+
+    forum = get_object_or_404(Forum, slug=forum_slug)
+
+    if request.POST.get('watch') == 'yes':
+        create_watch(Forum, forum.id, request.user.email, 'post')
+    else:
+        destroy_watch(Forum, forum.id, request.user.email, 'post')
+
+    return HttpResponseRedirect(reverse('forums.threads', args=[forum_slug]))

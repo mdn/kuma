@@ -212,6 +212,11 @@ a#new-thread {
     padding-left: 10px;
 }
 
+div.forum-actions {
+    clear: left;
+    padding: 0.5em 0 0;
+}
+
 div.thread-actions {
     clear: left;
     padding-top: 1em;

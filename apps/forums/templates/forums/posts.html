@@ -16,12 +16,14 @@
   </div>
   <div class="thread-actions">
     {% if user.is_authenticated() %}
-      <form action="{{ url('forums.watch', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+      <form action="{{ url('forums.watch_thread', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
         {{ csrf() }}
         {% if is_watching(thread) %}
           {% set watch = _('Stop watching') %}
+          <input type="hidden" name="watch" value="no" />
         {% else %}
           {% set watch = _('Watch this thread') %}
+          <input type="hidden" name="watch" value="yes" />
         {% endif %}
         <input type="image" alt="{{ watch }}" title="{{ watch }}" src="{{ MEDIA_URL }}img/forums/watch.png"/>
       </form>

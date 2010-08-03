@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from forums.models import Forum, Thread, Post
 from forums.tests import ForumTestCase, get, post
+from notifications import check_watch
 
 
 class PostsTemplateTestCase(ForumTestCase):
@@ -187,6 +188,27 @@ class ThreadsTemplateTestCase(ForumTestCase):
 
         edited_t = Thread.uncached.get(pk=2)
         eq_('new title', edited_t.title)
+
+    def test_watch_GET_405(self):
+        """Watch forum with HTTP GET results in 405."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        response = get(self.client, 'forums.watch_forum', args=[f.id])
+        eq_(405, response.status_code)
+
+    def test_watch_forum(self):
+        """Watch then unwatch a forum."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        post(self.client, 'forums.watch_forum', {'watch': 'yes'},
+             args=[f.slug])
+        assert check_watch(Forum, f.id, 'user118577@nowhere',
+                           'post'), 'Watch was not created'
+
+        post(self.client, 'forums.watch_forum', {'watch': 'no'},
+             args=[f.slug])
+        assert not check_watch(Forum, f.id, 'user118577@nowhere',
+                           'post'), 'Watch was not created'
 
 
 class ForumsTemplateTestCase(ForumTestCase):

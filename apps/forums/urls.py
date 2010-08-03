@@ -29,5 +29,7 @@ urlpatterns = patterns('forums.views',
     url(r'^/(?P<forum_slug>[\w\-]+)/(?P<thread_id>\d+)/(?P<post_id>\d+)/delete$',
         'delete_post', name='forums.delete_post'),
     url(r'^/(?P<forum_slug>[\w\-]+)/(?P<thread_id>\d+)/watch',
-        'watch_thread', name='forums.watch'),
+        'watch_thread', name='forums.watch_thread'),
+    url(r'^/(?P<forum_slug>[\w\-]+)/watch',
+        'watch_forum', name='forums.watch_forum'),
 )
