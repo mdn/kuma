@@ -5,8 +5,8 @@ from django.test import TestCase
 from nose.tools import eq_
 
 from questions.management.commands.migrate_questions import (
-    create_question, create_answer,
-    _clean_question_content, create_question_metadata)
+    create_question, create_answer, update_question_updated_date,
+    clean_question_content, create_question_metadata)
 from questions.models import CONFIRMED
 from sumo.models import ForumThread as TikiThread
 
@@ -42,7 +42,7 @@ class MigrateManualTestCase(TestCase):
         """Question is marked as solved when type is 'o'."""
         t = TikiThread.objects.filter(type='o', parentId=0)[0]
         q = create_question(t)
-        q.save()
+        q.save(no_update=True)
 
         p = TikiThread.objects.filter(type='o', parentId=t.threadId)[0]
         a = create_answer(q, p, t)
@@ -51,13 +51,52 @@ class MigrateManualTestCase(TestCase):
         # And then the newly created answer is a solution
         eq_(a, q.solution)
 
+    def test_question_updated_date_add_answer(self):
+        """Question's updated date is not affected when adding an answer."""
+        t = TikiThread.objects.filter(type='o', parentId=0)[0]
+        q = create_question(t)
+        q.save(no_update=True)
+
+        p = TikiThread.objects.filter(type='o', parentId=t.threadId)[0]
+        create_answer(q, p, t)
+        # Check created date is the same as the tiki equivalent
+        eq_(datetime.fromtimestamp(t.commentDate), q.updated)
+
+    def test_question_updated_date_clean_content(self):
+        """Cleaning the question's content does not affect its updated date."""
+        t = TikiThread.objects.filter(threadId=736751)[0]
+        q = create_question(t)
+
+        clean_question_content(q)
+        eq_(datetime.fromtimestamp(t.commentDate), q.updated)
+
+    def test_update_question_updated_date(self):
+        """A question's updated date is set twice: on creation and when calling
+        `update_question_updated_date`
+
+        """
+        t = TikiThread.objects.filter(type='o', parentId=0)[0]
+        q = create_question(t)
+        q.save(no_update=True)
+        eq_(datetime.fromtimestamp(t.commentDate), q.updated)
+
+        p = TikiThread.objects.filter(type='o', parentId=t.threadId)[0]
+        create_answer(q, p, t)
+        # Updated date is unchanged
+        eq_(datetime.fromtimestamp(t.commentDate), q.updated)
+
+        # Now call the function to be tested
+        update_question_updated_date(q)
+        # Check created date is the same as the tiki equivalent
+        eq_(datetime.fromtimestamp(p.commentDate), q.updated)
+
     def test_question_metadata(self):
         """Question metadata is populated."""
         t = TikiThread.objects.filter(threadId=736751)[0]
         q = create_question(t)
 
         create_question_metadata(q)
-        q.save()
+        q.save(no_update=True)
 
         eq_('d3', q.metadata_set.filter(name='category')[0].value)
         eq_('desktop', q.metadata_set.filter(name='product')[0].value)
@@ -74,7 +113,7 @@ class MigrateManualTestCase(TestCase):
         t = TikiThread.objects.filter(threadId=736751)[0]
         q = create_question(t)
 
-        _clean_question_content(q)
+        clean_question_content(q)
 
         # First check content is clean
         eq_(True, q.content.startswith('I recently had'))

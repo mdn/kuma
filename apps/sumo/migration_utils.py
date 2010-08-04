@@ -55,22 +55,28 @@ def fetch_posts(tiki_thread, num, offset=0):
         '-commentDate')[start:end]
 
 
+patterns_version = ('Firefox/(\S+)', 'Minefield/(\S+)')
+
+# Store these to avoid recompiling on future calls of the get_firefox_version
+compiled_patterns_version = []
+for p in patterns_version:
+    compiled_patterns_version.append(re.compile(p, re.IGNORECASE))
+
+
 def get_firefox_version(user_agent):
     """
     Takes a user agent and returns the Firefox version.
 
     Ported from the JavaScript version in apps/media/questions.js
     """
-    patterns = ('Firefox/(\S+)', 'Minefield/(\S+)')
-    for pattern in patterns:
-        p = re.compile(pattern, re.IGNORECASE)
+    for p in compiled_patterns_version:
         m = p.search(user_agent)
         if m:
             return m.group(1)
     return ''
 
 
-patterns = (
+patterns_os = (
     ('Windows 3.11', 'Win16'),
     ('Windows 95', '(Windows 95)|(Win95)|(Windows_95)'),
     ('Windows 98', '(Windows 98)|(Win98)'),
@@ -94,10 +100,10 @@ patterns = (
     ('OS/2', 'OS/2'),
 )
 
-# Store these to avoid recompiling on future calls of the get_OS method
-compiled_patterns = []
-for p in patterns:
-    compiled_patterns.append((p[0], re.compile(p[1], re.IGNORECASE)))
+# Store these to avoid recompiling on future calls of the get_OS
+compiled_patterns_os = []
+for p in patterns_os:
+    compiled_patterns_os.append((p[0], re.compile(p[1], re.IGNORECASE)))
 
 
 def get_OS(user_agent):
@@ -106,7 +112,7 @@ def get_OS(user_agent):
 
     Ported from the JavaScript version in apps/media/questions.js
     """
-    for p in compiled_patterns:
+    for p in compiled_patterns_os:
         m = p[1].search(user_agent)
         if m:
             return p[0]

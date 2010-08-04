@@ -17,6 +17,8 @@ import re
 
 from django.core.management.base import BaseCommand, CommandError
 
+from multidb.pinning import pin_this_thread
+
 from questions.models import Question, Answer, CONFIRMED
 from questions.question_config import products
 from sumo.models import (Forum as TikiForum,
@@ -38,7 +40,7 @@ def create_answer(question, tiki_post, tiki_thread):
 
     ans = Answer(question=question, creator=creator, content=content,
                  created=created, updated=created)
-    ans.save(no_notify=True)  # don't send a reply notification
+    ans.save(no_update=True, no_notify=True)  # don't send a reply notification
 
     # Set answer as solution
     if tiki_post.type == 'o' and tiki_thread.type == 'o':
@@ -47,39 +49,55 @@ def create_answer(question, tiki_post, tiki_thread):
     return ans
 
 
-def _clean_question_content(question):
+patterns_clean = (
+    '^== Troubleshooting information ==\n(.*?)^==',
+    '^== Issue ==\n(.*?)^==',
+    '^== Firefox version ==\n(.*?)^==',
+    '^== Operating system ==\n(.*?)^==',
+    '^== User Agent ==\n(.*?)^==',
+    '^== Plugins installed ==\n(.*)',
+    '^== Description ==\n',
+)
+
+compiled_patterns_clean = []
+for pattern in patterns_clean:
+    compiled_patterns_clean.append(re.compile(
+        pattern, re.MULTILINE | re.DOTALL | re.IGNORECASE))
+
+# Description has a different replace rule, so keep it separate
+compiled_pattern_description = compiled_patterns_clean.pop()
+
+
+def clean_question_content(question):
     """Cleans everything after troubleshooting in old threads (user agent, OS,
     etc.) and adds troubleshooting as metadata.
 
     """
-    def compile_pattern(pattern):
-        return re.compile(pattern, re.MULTILINE | re.DOTALL | re.IGNORECASE)
 
-    patterns = (
-        '^== Troubleshooting information ==\n(.*?)^==',
-        '^== Issue ==\n(.*?)^==',
-        '^== Firefox version ==\n(.*?)^==',
-        '^== Operating system ==\n(.*?)^==',
-        '^== User Agent ==\n(.*?)^==',
-        '^== Plugins installed ==\n(.*)',
-    )
-    m = compile_pattern(patterns[0]).search(question.content)
-
+    m = compiled_patterns_clean[0].search(question.content)
     if m:
         troubleshooting = m.group(1)
 
-    for pattern in patterns:
-        p = compile_pattern(pattern)
+    for p in compiled_patterns_clean:
         question.content = p.sub('==', question.content)
 
-    p = compile_pattern('^== Description ==\n')
-    question.content = p.sub('', question.content)
+    question.content = compiled_pattern_description.sub('', question.content)
 
     question.content = question.content.rstrip(' \t\r\n=')
-    question.save()
+    question.save(no_update=True)
 
     if m:
         question.add_metadata(troubleshooting=troubleshooting)
+
+
+def update_question_updated_date(question):
+    """Update the question's updated date and set it to that of the most recent
+    answer.
+
+    """
+    if question.last_answer:
+        question.updated = question.last_answer.updated
+        question.save(no_update=True)
 
 
 def create_question(tiki_thread):
@@ -97,7 +115,7 @@ def create_question(tiki_thread):
     question = Question(
         id=tiki_thread.threadId, title=tiki_thread.title, creator=creator,
         is_locked=is_locked, status=CONFIRMED, confirmation_id='',
-        created=created, content=content)
+        created=created, updated=created, content=content)
 
     return question
 
@@ -109,7 +127,7 @@ def create_question_metadata(question):
     """
     dirty_content = question.content
 
-    _clean_question_content(question)
+    clean_question_content(question)
     metadata = TikiThreadMetaData.objects.filter(threadId=question.id)
 
     for meta in metadata:
@@ -151,6 +169,8 @@ class Command(BaseCommand):
     max_total_threads = 15000  # Max number of threads to migrate
 
     def handle(self, *args, **options):
+        pin_this_thread()
+
         # Requires at least one forum_id
         if args:
             raise CommandError('Usage: ./manage.py migrate_questions')
@@ -211,6 +231,9 @@ class Command(BaseCommand):
                 create_answer(question, tiki_post, tiki_thread)
                 post_i = post_i + 1
 
+            # Now that all answers have been migrated, update the question's
+            # updated date
+            update_question_updated_date(question)
             thread_i = thread_i + 1
 
         if options['verbosity'] > 0:

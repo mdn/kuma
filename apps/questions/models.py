@@ -263,7 +263,7 @@ class Answer(ModelBase):
     def content_parsed(self):
         return wiki_to_html(self.content)
 
-    def save(self, no_notify=False, *args, **kwargs):
+    def save(self, no_update=False, no_notify=False, *args, **kwargs):
         """
         Override save method to update question info and take care of
         updated.
@@ -279,7 +279,7 @@ class Answer(ModelBase):
         if new:
             self.question.num_answers = self.question.answers.count()
             self.question.last_answer = self
-            self.question.save()
+            self.question.save(no_update)
 
             if not no_notify:
                 build_answer_notification.delay(self)
