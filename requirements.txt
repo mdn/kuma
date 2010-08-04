@@ -21,10 +21,6 @@ celery==1.0.6
 python-dateutil
 PIL==1.1.7
 
-# for spell checking
--e svn+http://pyhunspell.googlecode.com/svn/trunk@6#egg=hunspell-0.1-py2.6-dev_r6
--e git://github.com/jsocol/didyoumean.git@cc11aeae400346fd4fc9e6334bd5ff80484839b5#egg=didyoumean
-
 # for l10n
 -e git://github.com/clouserw/tower.git#egg=tower
 

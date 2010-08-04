@@ -33,18 +33,6 @@ div.search-count {
     padding: 0.2em 0 1em;
 }
 
-/* Bug 525944 - Using pspell for spelling suggestions */
-div.search-suggestion {
-    color: #cc4047;
-    font-size: 120%;
-    padding: .3em 0;
-}
-
-span.corrected {
-    font-weight: bold;
-}
-/* END Bug 525944 */
-
 /* Bug 527859 - Add search form to top and bottom of results */
 div.search-refine {
     margin: .5em 0;

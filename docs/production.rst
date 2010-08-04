@@ -17,14 +17,6 @@ The full list of requirements is:
 
 * `setuptools <http://pypi.python.org/pypi/setuptools#downloads>`_
 
-* `Hunspell <http://hunspell.sourceforge.net/>`_ (Specifically, headers for
-  `PyHunspell <http://code.google.com/p/pyhunspell/>`_.)
-
-  * With Hunspell, you will also need dictionaries, either from Hunspell or
-    MySpell, to provide spelling suggestions on search queries.
-
-  * Note that Hunspell is required even if no dictionaries are installed.
-
 * MySQL headers (for the Python-MySQL connector).
 
 * `virtualenv <http://pypi.python.org/pypi/virtualenv>`_
@@ -73,10 +65,6 @@ The following settings may need to be set:
   We recommend ``CACHE_PREFIX = 'sumo:'`` if anything.
 ``SECRET_KEY``
   Set this to something long, random, and secret.
-``DICT_DIR``
-  If MySpell dictionaries are not installed in ``/usr/share/myspell/``, you
-  can set this to their location. (The directory should include files named
-  ``%LOCALE%.dic`` and ``%LOCALE%.aff``
 ``SPHINX_HOST``
   Point to the Sphinx host.
 ``SPHINX_PORT``

@@ -301,12 +301,6 @@ MINIFY_BUNDLES = {
 JAVA_BIN = '/usr/bin/java'
 
 #
-# Directory storing myspell dictionaries (with trailing slash)
-DICT_DIR = '/usr/share/myspell/'
-# Path to a file with a list of custom words.
-WORD_LIST = path('configs/words.txt')
-
-#
 # Session cookies
 SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
