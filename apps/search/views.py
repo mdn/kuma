@@ -13,10 +13,12 @@ import jinja2
 from tower import ugettext as _
 
 from forums.models import Forum as DiscussionForum, Thread, Post
-from sumo.models import ForumThread, WikiPage, Category
+from sumo.models import WikiPage, Category
+from questions.models import Question
 from sumo.utils import paginate, urlencode
-from .clients import SupportClient, WikiClient, DiscussionClient, SearchError
-from .utils import crc32
+from .clients import (QuestionsClient, WikiClient,
+                      DiscussionClient, SearchError)
+from .utils import crc32, locale_or_default, sphinx_locale
 import search as constants
 from sumo_locales import LOCALES
 
@@ -100,7 +102,10 @@ def search(request):
         a = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
         # KB fields
-        tags = forms.CharField(label=_('Tags'), required=False)
+        tag_widget = forms.TextInput(attrs={'placeholder': _('tag1, tag2'),
+                                            'class': 'auto-fill'})
+        tags = forms.CharField(label=_('Tags'), required=False,
+                               widget=tag_widget)
 
         language = forms.ChoiceField(
             label=_('Language'), required=False,
@@ -113,12 +118,7 @@ def search(request):
             widget=forms.CheckboxSelectMultiple,
             label=_('Category'), choices=categories, required=False)
 
-        # Support and discussion forums fields
-        status = forms.TypedChoiceField(
-            label=_('Post status'), coerce=int, empty_value=0,
-            choices=constants.STATUS_LIST, required=False)
-        author = forms.CharField(required=False)
-
+        # Support questions and discussion forums fields
         created = forms.TypedChoiceField(
             label=_('Created'), coerce=int, empty_value=0,
             choices=constants.DATE_LIST, required=False)
@@ -129,17 +129,60 @@ def search(request):
             choices=constants.DATE_LIST, required=False)
         updated_date = forms.CharField(required=False)
 
+        user_widget = forms.TextInput(attrs={'placeholder': _('username'),
+                                             'class': 'auto-fill'})
+
+        # Discussion forums fields
+        author = forms.CharField(required=False, widget=user_widget)
+
         sortby = forms.TypedChoiceField(
             label=_('Sort results by'), coerce=int, empty_value=0,
-            choices=constants.SORTBY_LIST, required=False)
+            choices=constants.SORTBY_FORUMS, required=False)
 
         thread_type = NoValidateMultipleChoiceField(
             label=_('Thread type'), choices=constants.DISCUSSION_STATUS_LIST,
-            required=False)
+            required=False,
+            widget=forms.CheckboxSelectMultiple)
 
         forums = [(f.id, f.name) for f in DiscussionForum.objects.all()]
         forum = NoValidateMultipleChoiceField(label=_('Search in forum'),
                                               choices=forums, required=False)
+
+        # Support questions fields
+        asked_by = forms.CharField(required=False, widget=user_widget)
+        answered_by = forms.CharField(required=False, widget=user_widget)
+
+        sortby_questions = forms.TypedChoiceField(
+            label=_('Sort results by'), coerce=int, empty_value=0,
+            choices=constants.SORTBY_QUESTIONS, required=False)
+
+        is_locked = forms.TypedChoiceField(
+            label=_('Locked'), coerce=int, empty_value=0,
+            choices=constants.TERNARY_LIST, required=False,
+            widget=forms.RadioSelect)
+
+        is_solved = forms.TypedChoiceField(
+            label=_('Solved'), coerce=int, empty_value=0,
+            choices=constants.TERNARY_LIST, required=False,
+            widget=forms.RadioSelect)
+
+        has_answers = forms.TypedChoiceField(
+            label=_('Has answers'), coerce=int, empty_value=0,
+            choices=constants.TERNARY_LIST, required=False,
+            widget=forms.RadioSelect)
+
+        has_helpful = forms.TypedChoiceField(
+            label=_('Has helpful answers'), coerce=int, empty_value=0,
+            choices=constants.TERNARY_LIST, required=False,
+            widget=forms.RadioSelect)
+
+        num_voted = forms.TypedChoiceField(
+            label=_('Votes'), coerce=int, empty_value=0,
+            choices=constants.NUMBER_LIST, required=False)
+        num_votes = forms.IntegerField(required=False)
+
+        q_tags = forms.CharField(label=_('Tags'), required=False,
+                                 widget=tag_widget)
 
     # JSON-specific variables
     is_json = (request.GET.get('format') == 'json')
@@ -155,9 +198,7 @@ def search(request):
             json.dumps({'error': _('Invalid callback function.')}),
             mimetype=mimetype, status=400)
 
-    language = request.GET.get('language', request.locale)
-    if not language in LOCALES:
-        language = settings.LANGUAGE_CODE
+    language = locale_or_default(request.GET.get('language', request.locale))
     r = request.GET.copy()
     a = request.GET.get('a', '0')
 
@@ -185,20 +226,20 @@ def search(request):
                 json.dumps({'error': _('Invalid search data.')}),
                 mimetype=mimetype,
                 status=400)
-        else:
-            search_ = jingo.render(request, 'form.html',
-                                {'advanced': a, 'request': request,
-                                 'search_form': search_form})
-            search_['Cache-Control'] = 'max-age=%s' % \
-                                       (settings.SEARCH_CACHE_PERIOD * 60)
-            search_['Expires'] = (datetime.utcnow() +
-                                  timedelta(
-                                    minutes=settings.SEARCH_CACHE_PERIOD)) \
-                                  .strftime(expires_fmt)
-            return search_
+
+        search_ = jingo.render(request, 'search/form.html',
+                            {'advanced': a, 'request': request,
+                             'search_form': search_form})
+        search_['Cache-Control'] = 'max-age=%s' % \
+                                   (settings.SEARCH_CACHE_PERIOD * 60)
+        search_['Expires'] = (datetime.utcnow() +
+                              timedelta(
+                                minutes=settings.SEARCH_CACHE_PERIOD)) \
+                              .strftime(expires_fmt)
+        return search_
 
     cleaned = search_form.cleaned_data
-    search_locale = (crc32(LOCALES[language].internal),)
+    search_locale = (sphinx_locale(language),)
 
     try:
         page = int(request.GET.get('page', 1))
@@ -216,6 +257,7 @@ def search(request):
 
     documents = []
     filters_w = []
+    filters_q = []
     filters_f = []
 
     # wiki filters
@@ -249,32 +291,47 @@ def search(request):
                 })
     # End of wiki filters
 
-    # Support forum specific filters
+    # Support questions specific filters
     if cleaned['w'] & constants.WHERE_SUPPORT:
-        status = cleaned['status']
-        # No replies case is not stored in status
-        if status == constants.STATUS_ALIAS_NR:
-            filters_f.append({
-                'filter': 'replies',
-                'value': (0,),
+
+        # Solved is set by default if using basic search
+        if a == '0' and not cleaned['is_solved']:
+            cleaned['is_solved'] = constants.TERNARY_YES
+
+        # These filters are ternary, they can be either YES, NO, or OFF
+        toggle_filters = ('is_locked', 'is_solved', 'has_answers',
+                          'has_helpful')
+        for filter_name in toggle_filters:
+            if cleaned[filter_name] == constants.TERNARY_YES:
+                filters_q.append({
+                    'filter': filter_name,
+                    'value': (True,),
+                })
+            if cleaned[filter_name] == constants.TERNARY_NO:
+                filters_q.append({
+                    'filter': filter_name,
+                    'value': (False,),
+                })
+
+        if cleaned['asked_by']:
+            filters_q.append({
+                'filter': 'question_creator',
+                'value': (crc32(cleaned['asked_by']),),
             })
 
-            # Avoid filtering by status
-            status = None
-
-        if status:
-            filters_f.append({
-                'filter': 'status',
-                'value': constants.STATUS_ALIAS_REVERSE[status],
+        if cleaned['answered_by']:
+            filters_q.append({
+                'filter': 'answer_creator',
+                'value': (crc32(cleaned['answered_by']),),
             })
 
-        if cleaned['author']:
-            filters_f.append({
-                'filter': 'author_ord',
-                'value': (crc32(cleaned['author']),
-                          crc32(cleaned['author'] +
-                              ' (anon)'),),
-            })
+        q_tags = [crc32(t.strip()) for t in cleaned['q_tags'].split()]
+        if q_tags:
+            for t in q_tags:
+                filters_q.append({
+                    'filter': 'tag',
+                    'value': (t,),
+                    })
 
     # Discussion forum specific filters
     if cleaned['w'] & constants.WHERE_DISCUSSION:
@@ -306,23 +363,31 @@ def search(request):
     # Filters common to support and discussion forums
     # Created filter
     unix_now = int(time.time())
-    date_filters = (('created', cleaned['created'], cleaned['created_date']),
-                    ('updated', cleaned['updated'], cleaned['updated_date']))
-    for filter_name, filter_option, filter_date in date_filters:
-        if filter_option == constants.DATE_BEFORE:
-            filters_f.append({
+    interval_filters = (
+        ('created', cleaned['created'], cleaned['created_date']),
+        ('updated', cleaned['updated'], cleaned['updated_date']),
+        ('question_votes', cleaned['num_voted'], cleaned['num_votes']))
+    for filter_name, filter_option, filter_date in interval_filters:
+        if filter_option == constants.INTERVAL_BEFORE:
+            before = {
                 'range': True,
                 'filter': filter_name,
                 'min': 0,
                 'max': max(filter_date, 0),
-            })
-        elif filter_option == constants.DATE_AFTER:
-            filters_f.append({
+            }
+            if filter_name != 'question_votes':
+                filters_f.append(before)
+            filters_q.append(before)
+        elif filter_option == constants.INTERVAL_AFTER:
+            after = {
                 'range': True,
                 'filter': filter_name,
                 'min': min(filter_date, unix_now),
                 'max': unix_now,
-            })
+            }
+            if filter_name != 'question_votes':
+                filters_f.append(after)
+            filters_q.append(after)
 
     sortby = int(request.GET.get('sortby', 0))
     try:
@@ -332,16 +397,16 @@ def search(request):
             documents += wc.query(cleaned['q'], filters_w)
 
         if cleaned['w'] & constants.WHERE_SUPPORT:
-            sc = SupportClient()  # Support forum SearchClient instance
+            qc = QuestionsClient()  # Support question SearchClient instance
 
             # Sort results by
             try:
-                sc.set_sort_mode(constants.SORT[sortby][0],
-                                 constants.SORT[sortby][1])
+                qc.set_sort_mode(constants.SORT_QUESTIONS[sortby][0],
+                                 constants.SORT_QUESTIONS[sortby][1])
             except IndexError:
                 pass
 
-            documents += sc.query(cleaned['q'], filters_f)
+            documents += qc.query(cleaned['q'], filters_q)
 
         if cleaned['w'] & constants.WHERE_DISCUSSION:
             dc = DiscussionClient()  # Discussion forums SearchClient instance
@@ -359,8 +424,8 @@ def search(request):
             return HttpResponse(json.dumps({'error':
                                              _('Search Unavailable')}),
                                 mimetype=mimetype, status=503)
-        else:
-            return jingo.render(request, 'down.html', {}, status=503)
+
+        return jingo.render(request, 'search/down.html', {}, status=503)
 
     pages = paginate(request, documents, settings.SEARCH_RESULTS_PER_PAGE)
 
@@ -370,22 +435,23 @@ def search(request):
             if documents[i]['attrs'].get('category', False) != False:
                 wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
 
-                excerpt = wc.excerpt(wiki_page.data, cleaned['q'])
+                excerpt = wc.excerpt(wiki_page.content, cleaned['q'])
                 summary = jinja2.Markup(excerpt)
 
                 result = {'search_summary': summary,
                           'url': wiki_page.get_url(),
                           'title': wiki_page.name, }
                 results.append(result)
-            elif documents[i]['attrs'].get('forumid', False) != False:
-                support_thread = ForumThread.objects.get(pk=documents[i]['id'])
+            elif documents[i]['attrs'].get('question_creator', False) != False:
+                question = Question.objects.get(
+                    pk=documents[i]['attrs']['question_id'])
 
-                excerpt = sc.excerpt(support_thread.data, cleaned['q'])
+                excerpt = qc.excerpt(question.content, cleaned['q'])
                 summary = jinja2.Markup(excerpt)
 
                 result = {'search_summary': summary,
-                          'url': support_thread.get_url(),
-                          'title': support_thread.name, }
+                          'url': question.get_absolute_url(),
+                          'title': question.title, }
                 results.append(result)
             else:
                 thread = Thread.objects.get(
@@ -401,7 +467,7 @@ def search(request):
                 results.append(result)
         except IndexError:
             break
-        except (WikiPage.DoesNotExist, ForumThread.DoesNotExist,
+        except (WikiPage.DoesNotExist, Question.DoesNotExist,
                 Thread.DoesNotExist):
             continue
 
@@ -424,7 +490,7 @@ def search(request):
 
         return HttpResponse(json_data, mimetype=mimetype)
 
-    results_ = jingo.render(request, 'results.html',
+    results_ = jingo.render(request, 'search/results.html',
         {'num_results': len(documents), 'results': results, 'q': cleaned['q'],
          'pages': pages, 'w': cleaned['w'], 'refine_query': refine_query,
          'search_form': search_form, 'lang_name': lang_name, })

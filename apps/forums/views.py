@@ -14,6 +14,7 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
 from .forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
+from .feeds import ThreadsFeed, PostsFeed
 from notifications import create_watch, check_watch, destroy_watch
 import forums as constants
 
@@ -65,13 +66,13 @@ def threads(request, forum_slug):
     threads_ = paginate(request, threads_,
                         per_page=constants.THREADS_PER_PAGE)
 
-    feed_url = reverse('forums.threads.feed',
-                       kwargs={'forum_slug': forum_slug})
+    feed_urls = ((reverse('forums.threads.feed', args=[forum_slug]),
+                  ThreadsFeed().title(forum)),)
 
     return jingo.render(request, 'forums/threads.html',
                         {'forum': forum, 'threads': threads_,
                          'sort': sort, 'desc_toggle': desc_toggle,
-                         'feed_url': feed_url})
+                         'feeds': feed_urls})
 
 
 def posts(request, forum_slug, thread_id, form=None):
@@ -86,14 +87,15 @@ def posts(request, forum_slug, thread_id, form=None):
     if not form:
         form = ReplyForm()
 
-    feed_url = reverse('forums.posts.feed',
-                       kwargs={'forum_slug': forum_slug,
-                       'thread_id': thread_id})
+    feed_urls = ((reverse('forums.posts.feed',
+                          kwargs={'forum_slug': forum_slug,
+                                  'thread_id': thread_id}),
+                  PostsFeed().title(thread)),)
 
     return jingo.render(request, 'forums/posts.html',
                         {'forum': forum, 'thread': thread,
                          'posts': posts_, 'form': form,
-                         'feed_url': feed_url})
+                         'feeds': feed_urls})
 
 
 @login_required
@@ -320,9 +322,9 @@ def watch_thread(request, forum_slug, thread_id):
 
     try:
         if check_watch(Thread, thread.id, request.user.email):
-            destroy_watch(Thread, thread.id, request.user.email)
+            destroy_watch(Thread, thread.id, request.user.email, 'reply')
         else:
-            create_watch(Thread, thread.id, request.user.email)
+            create_watch(Thread, thread.id, request.user.email, 'reply')
     except Thread.DoesNotExist:
         raise Http404
 

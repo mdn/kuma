@@ -1,0 +1,52 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% set classes = 'img' %}
+{% if params['align'] %}
+  {% set classes = classes + ' align-' + params['align'] %}
+{% endif %}
+{% if params['frameless'] or params['valign'] %}
+  {% set has_frame = False %}
+{% else %}
+  {% set has_frame = True %}
+{% endif %}
+
+{% if has_frame %}
+  <div class="{{ classes }}">
+    <div class="img-inner">
+{% endif %}
+
+{% if params['link'] %}
+  <a href="{{ params['link'] }}">
+{% endif %}
+
+<img {% if not has_frame %}class="frameless"{% endif %}
+  src="{{ img_path }}"
+  alt="{% if 'alt' in params %}{{ params['alt'] }}{% else %}{{ caption }}{% endif %}"
+  title="{{ caption }}"
+  {% if params['width'] and params['width']|int(None) %}
+    width="{{ params['width']|int('') }}"
+  {% endif %}
+  {% if params['height'] and params['height']|int(None) %}
+    height="{{ params['height']|int('') }}"
+  {% endif %}
+  {% if params['valign'] %}
+    style="vertical-align:{{ params['valign'] }}"
+  {% endif %}
+  />
+
+{% if params['link'] %}
+  </a>
+{% endif %}
+
+{% if has_frame %}
+
+  {% if caption %}
+    <div class="caption"
+      {% if params['width'] %}
+        style="width:{{ params['width']|int('') }}px"
+      {% endif %}
+    >{{ caption }}</div>
+  {% endif %}
+  </div>
+  </div>{# /classes #}
+{% endif %}
+

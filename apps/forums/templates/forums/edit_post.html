@@ -1,13 +1,12 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "forums/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {# L10n: {f} if the name of the forum, {t} if the name of the thread. #}
-{% set title = _('Editing a post | {t} | {f} | Forums')|f(t=thread.title,f=forum.name) %}
+{% set title = _('Edit a post | {t} | {f} | Forums')|f(t=thread.title,f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')),
                  (url('forums.threads', forum.slug), forum.name),
                  (url('forums.posts', forum.slug, thread.id), thread.title),
                  (None, _('Edit a post'))] %}
-{% set scripts = ('forums',) %}
 
 {% block content %}
   <h2>{{ _('Edit a post') }}</h2>
@@ -17,9 +16,11 @@
     {{ errorlist(form) }}
 
     <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
-      <div class="forum-editor-tools"></div>
       {{ form.content.label_tag()|safe }}
-      {{ form.content|safe }}
+      <div class="forum-editor">
+        <div class="forum-editor-tools"></div>
+        {{ form.content|safe }}
+      </div>
     </div>
 
     <div class="form-widget submit">

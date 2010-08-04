@@ -1,21 +1,22 @@
+import threading
+
 from django.conf import settings
 from django.core.urlresolvers import reverse as django_reverse
-from django.utils.thread_support import currentThread
 from django.utils.translation.trans_real import parse_accept_lang_header
 
 
 # Thread-local storage for URL prefixes. Access with (get|set)_url_prefix.
-_prefixes = {}
+_locals = threading.local()
 
 
 def set_url_prefix(prefix):
     """Set the ``prefix`` for the current thread."""
-    _prefixes[currentThread()] = prefix
+    _locals.prefix = prefix
 
 
 def get_url_prefix():
     """Get the prefix for the current thread, or None."""
-    return _prefixes.get(currentThread())
+    return getattr(_locals, 'prefix', None)
 
 
 def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None):

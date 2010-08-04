@@ -13,8 +13,9 @@ def has_perm(context, perm, obj):
 
     Returns boolean.
     """
-    check = authority.get_check(context['request'].user, perm)
-    return check(obj)
+    user = context['request'].user
+    check = authority.get_check(user, perm)
+    return check(obj) or user.has_perm(perm)
 
 
 @register.function
@@ -26,5 +27,6 @@ def has_perm_or_owns(context, perm, obj, perm_obj, field_name='creator'):
     Ownership is determined by comparing perm_obj.field_name to the user in
     context.
     """
-    return access.has_perm_or_owns(context['request'].user, perm, obj,
-                                   perm_obj, field_name)
+    user = context['request'].user
+    return access.has_perm_or_owns(user, perm, obj, perm_obj, field_name) or \
+           user.has_perm(perm)

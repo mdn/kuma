@@ -13,44 +13,19 @@ Uses a markup converter to transform TikiWiki syntax to MediaWiki syntax.
 """
 from datetime import datetime
 
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from django.template.defaultfilters import slugify
 from django.utils.html import strip_tags
 
 from forums.models import Forum, Thread, Post
-from sumo.models import (Forum as TikiForum, ForumThread as TikiThread,
-                         TikiUser)
+from sumo.models import Forum as TikiForum
 from sumo.converter import TikiMarkupConverter
+from sumo.migration_utils import get_django_user, fetch_threads, fetch_posts
 
 
 # Converts TikiWiki syntax to MediaWiki syntax
 converter = TikiMarkupConverter()
-
-
-def get_fake_user():
-    """Get a fake user. If one does not exist, create it."""
-    try:
-        return User.objects.get(username='FakeUser')
-    except User.DoesNotExist:
-        tiki_user = TikiUser.objects.create(
-            login='FakeUser', password='md5$pass', hash='md5$hash',
-            email='nobody@support.mozilla.com')
-        return User.objects.create(
-            id=tiki_user.userId, username='FakeUser',
-            email='nobody@support.mozilla.com')
-
-
-def get_django_user(tiki_thread):
-    """Get the django user for this thread's username."""
-    try:
-        user = User.objects.get(username=tiki_thread.userName)
-    except User.DoesNotExist:
-        # Assign a dummy user to this thread
-        user = get_fake_user()
-
-    return user
 
 
 def create_post(thread, tiki_post):
@@ -101,26 +76,6 @@ def create_forum(tiki_forum):
             (tiki_forum.name, forum_slug))
 
     return forum
-
-
-def fetch_threads(tiki_forum, num, offset=0):
-    """Gets the next num threads for tiki_forum.forumId given offset."""
-    # slice and dice
-    start = offset
-    end = offset + num
-
-    return TikiThread.objects.filter(
-        objectType='forum', object=tiki_forum.forumId, parentId=0)[start:end]
-
-
-def fetch_posts(tiki_thread, num, offset=0):
-    """Gets the next num posts for tiki_thread.threadId given offset."""
-    # slice and dice
-    start = offset
-    end = offset + num
-
-    return TikiThread.objects.filter(
-        objectType='forum', parentId=tiki_thread.threadId)[start:end]
 
 
 class Command(BaseCommand):

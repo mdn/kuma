@@ -1,0 +1,18 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "questions/base.html" %}
+{% set title = _('Confirm Question') %}
+{% set classes = 'questions' %}
+
+{% block content %}
+<div class="confirm-question">
+  <h2>{{ _('Please confirm that you entered the question below.')}}</h2>
+  <h3>{{ question.title }}</h3>
+  <form action="" method="post">
+    {{ csrf() }}
+    <div class="submit-or-cancel">
+      <a href="{{ url('questions.questions') }}">{{ _('Cancel') }}</a>
+      <input type="submit" value="Confirm"/>
+    </div>
+  </form>
+</div>
+{% endblock %}

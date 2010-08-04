@@ -9,6 +9,8 @@ from forums.models import Forum, Thread, Post
 from forums.tests import ForumTestCase
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
+from notifications import create_watch
+from notifications.models import EventWatch
 
 
 class ForumModelTestCase(ForumTestCase):
@@ -93,6 +95,8 @@ class ThreadModelTestCase(ForumTestCase):
     def setUp(self):
         super(ThreadModelTestCase, self).setUp()
 
+        self.fixtures = self.fixtures + ['notifications.json']
+
         # Warm up the prefixer for reverse()
         client.Client().get('/')
 
@@ -116,6 +120,13 @@ class ThreadModelTestCase(ForumTestCase):
         forum = Forum.objects.get(pk=1)
         eq_(forum.last_post.id, last_post.id)
         eq_(Thread.objects.filter(pk=thread.id).count(), 0)
+
+    def test_delete_removes_watches(self):
+        create_watch(Thread, 1, 'me@me.com', 'reply')
+        eq_(1, EventWatch.uncached.filter(watch_id=1).count())
+        t = Thread.objects.get(pk=1)
+        t.delete()
+        eq_(0, EventWatch.uncached.filter(watch_id=1).count())
 
 
 class SaveDateTestCase(ForumTestCase):
@@ -206,3 +217,8 @@ class SaveDateTestCase(ForumTestCase):
         p.save()
         eq_(created_, p.created)
         eq_(created_, p.updated)
+
+    def test_content_parsed_sanity(self):
+        """The content_parsed field is populated."""
+        p = Post.objects.get(pk=4)
+        eq_('<p>yet another post\n</p>', p.content_parsed)

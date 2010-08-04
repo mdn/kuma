@@ -3,13 +3,12 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
-import jinja2
-
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
-from sumo.utils import WikiParser
+from sumo.utils import wiki_to_html
 from forums.tasks import build_notification
+from notifications.tasks import delete_watches
 import forums
 
 
@@ -69,6 +68,8 @@ class Thread(ModelBase):
             except IndexError:
                 forum.last_post = None
             forum.save()
+
+        delete_watches.delay(Thread, self.pk)
 
         super(Thread, self).delete(*args, **kwargs)
 
@@ -174,5 +175,4 @@ class Post(ModelBase):
 
     @property
     def content_parsed(self):
-        parser = WikiParser()
-        return jinja2.Markup(parser.parse(self.content, False))
+        return wiki_to_html(self.content)

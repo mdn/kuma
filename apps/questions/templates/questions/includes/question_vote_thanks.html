@@ -1,0 +1,29 @@
+{% from "layout/errorlist.html" import errorlist %}
+<div id="question-vote-thanks" class="pop-in">
+  <a class="close" href="#close">&#x2716;</a>
+  <hgroup>
+    <h1>{{ _('Thanks for letting us know you have this problem.') }}</h1>
+    <h2>{{ _('Identifying common problems helps the community answer your questions more quickly.') }}</h2>
+  </hgroup>
+  <p>
+    <strong>{{ _('Want to know when a solution is found?') }}</strong>
+    {% if not user.is_authenticated() %}
+      {{ _("Please provide an email address and we'll send you an alert.") }}
+    {% endif %}
+  </p>
+  <form action="{{ url('questions.watch', question.id) }}" method="post">
+    {{ csrf() }}
+    <input type="hidden" name="from_vote" value="yes" />
+    {{ errorlist(watch_form) }}
+    {{ watch_form.event_type.as_hidden()|safe }}
+
+    {% if user.is_authenticated() %}
+      {{ watch_form.email.as_hidden()|safe }}
+    {% else %}
+      {{ watch_form.email|safe }}
+    {% endif %}
+
+    <input type="submit" class="btn g-btn" value="{{ _('Send Updates') }}" />
+    <a class="no-thanks" href="{{ question.get_absolute_url() }}">{{ _('No Thanks') }}</a>
+  </form>
+</div>

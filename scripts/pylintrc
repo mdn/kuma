@@ -38,8 +38,9 @@ output_format=parseable
 # :W0201: Attribute %r defined outside __init__
 # :E1102: _lazy is in fact callable
 # :R0801: empty files happen to be identical
+# :R0904: Too many public methods in search tests
 
-disable-msg=C0111,C0103,W0403,W0142,W0232,E1101,R0201,W0402,W0141,W0212,W0201,E1102,R0801,
+disable-msg=C0111,C0103,W0403,W0142,W0232,E1101,R0201,W0402,W0141,W0212,W0201,E1102,R0801,R0904,
 
 [DESIGN]
 max-args=6

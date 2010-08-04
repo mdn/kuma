@@ -14,14 +14,14 @@
     <span id="where" style="display: none">{{ search_form.w.data or '' }}</span>
     <ul>
       <li><a title="{{ _('Search the Knowledge Base') }}" class="tablink" href="#kb">{{ _('Knowledge Base') }}</a></li>
-      <li><a title="{{ _('Search the Support Forum') }}" class="tablink" href="#support">{{ _('Support Forum') }}</a></li>
+      <li><a title="{{ _('Search the Support Questions') }}" class="tablink" href="#support">{{ _('Support Questions') }}</a></li>
       <li><a title="{{ _('Search the Discussion Forums') }}" class="tablink" href="#discussion">{{ _('Discussion Forums') }}</a></li>
     </ul>
     <div id="tab-wrapper">
     <form id="kb" method="get">
       <div class="container">
         <label for="kb_q">{{ _('Article contains') }}</label>
-        <input name="q" id="kb_q" value="{{ search_form.q.data or '' }}" type="text" />
+        <input name="q" class="auto-fill" id="kb_q" placeholder="{{ _('crashes on youtube') }}" value="{{ search_form.q.data or '' }}" type="text" />
       </div>
 
       <div class="container">
@@ -31,8 +31,8 @@
 
       <div class="container">
         {{ search_form.category.label_tag()|safe }}
-        <div class="category">
-        {{ search_form.category|safe }}
+        <div class="category checkboxes">
+          {{ search_form.category|safe }}
         </div>
       </div>
 
@@ -56,26 +56,70 @@
     <form method="get" id="support">
       <div class="container">
         <label for="support_q">{{ _('Post contains') }}</label>
-        <input name="q" id="support_q" value="{{ search_form.q.data or '' }}" type="text" />
+        <input name="q" class="auto-fill" id="support_q" placeholder="{{ _('crashes on youtube') }}" value="{{ search_form.q.data or '' }}" type="text" />
       </div>
 
       <div class="container">
-        {{ search_form.status.label_tag()|safe }}
-        {{ search_form.status|safe }}
+        {{ search_form.is_locked.label_tag()|safe }}
+        <div class="is_locked radios">
+          {{ search_form.is_locked|safe }}
+        </div>
       </div>
 
       <div class="container">
-        {{ search_form.author.label_tag()|safe }}
-        {{ search_form.author|safe }}
+        {{ search_form.is_solved.label_tag()|safe }}
+        <div class="is_solved radios">
+          {{ search_form.is_solved|safe }}
+        </div>
       </div>
 
-      <div class="container search-date">
+      <div class="container">
+        {{ search_form.has_answers.label_tag()|safe }}
+        <div class="has_answer radios">
+          {{ search_form.has_answers|safe }}
+        </div>
+      </div>
+
+      <div class="container">
+        {{ search_form.has_helpful.label_tag()|safe }}
+        <div class="has_helpful radios">
+          {{ search_form.has_helpful|safe }}
+        </div>
+      </div>
+
+      <div class="container showhide-input">
+        {{ search_form.num_voted.label_tag()|safe }}
+        {{ search_form.num_voted|safe }}
+        <input name="num_votes" class="numeric" type="text"
+               value="{{ search_form.num_votes.data or '' }}"
+               title="{{ _('Number of votes. Must be an integer.') }}" />
+      </div>
+
+      <div class="container">
+        {{ search_form.asked_by.label_tag()|safe }}
+        {{ search_form.asked_by|safe }}
+      </div>
+
+      <div class="container">
+        {{ search_form.answered_by.label_tag()|safe }}
+        {{ search_form.answered_by|safe }}
+      </div>
+
+      <div class="container">
+        {{ search_form.q_tags.label_tag()|safe }}
+        {{ search_form.q_tags|safe }}
+        <div class="search-tips-small">
+          {{ _('Note: Searching for "tag1, tag2" returns questions tagged with both tag1 and tag2') }}
+        </div>
+      </div>
+
+      <div class="container showhide-input">
         {{ search_form.created.label_tag()|safe }}
         {{ search_form.created|safe }}
         <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
       </div>
 
-      <div class="container search-date">
+      <div class="container showhide-input">
         {{ search_form.updated.label_tag()|safe }}
         {{ search_form.updated|safe }}
         <input name="updated_date" type="text" value="{{ search_form.updated_date.data or '' }}" class="datepicker" title="{{ _('Updated date. Format: mm/dd/yy') }}" />
@@ -98,12 +142,14 @@
     <form method="get" id="discussion">
       <div class="container">
         <label for="discussion_q">{{ _('Thread contains') }}</label>
-        <input name="q" id="discussion_q" value="{{ search_form.q.data or '' }}" type="text" />
+        <input name="q" class="auto-fill" id="discussion_q" placeholder="{{ _('crashes on youtube') }}" value="{{ search_form.q.data or '' }}" type="text" />
       </div>
 
       <div class="container">
         {{ search_form.thread_type.label_tag()|safe }}
-        {{ search_form.thread_type|safe }}
+        <div class="thread-type checkboxes">
+          {{ search_form.thread_type|safe }}
+        </div>
       </div>
 
       <div class="container">
@@ -111,13 +157,13 @@
         {{ search_form.author|safe }}
       </div>
 
-      <div class="container search-date">
+      <div class="container showhide-input">
         {{ search_form.created.label_tag()|safe }}
         {{ search_form.created|safe }}
         <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
       </div>
 
-      <div class="container search-date">
+      <div class="container showhide-input">
         {{ search_form.updated.label_tag()|safe }}
         {{ search_form.updated|safe }}
         <input name="updated_date" type="text" value="{{ search_form.updated_date.data or '' }}" class="datepicker" title="{{ _('Updated date. Format: mm/dd/yy') }}" />

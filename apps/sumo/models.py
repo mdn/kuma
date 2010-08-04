@@ -1,11 +1,13 @@
 from django.db import models
 
 import caching.base
+from taggit.managers import TaggableManager
 
+import settings
 from sumo.urlresolvers import get_url_prefix
 from sumo_locales import INTERNAL_MAP
 
-# Our apps should subclass BaseManager instead of models.Manager or
+# Our apps should subclass ManagerBase instead of models.Manager or
 # caching.base.CachingManager directly.
 ManagerBase = caching.base.CachingManager
 
@@ -22,6 +24,19 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
     objects = ManagerBase()
     uncached = models.Manager()
+
+    class Meta:
+        abstract = True
+
+
+class TaggableMixin(models.Model):
+    """Mixin for taggable models that still allows caching manager to be the
+    default manager
+
+    Mix this in after ModelBase.
+
+    """
+    tags = TaggableManager()
 
     class Meta:
         abstract = True
@@ -141,11 +156,20 @@ class ForumThread(ModelBase):
         return reverse(u'/forum/%s/%s' % (self.object, self.threadId,))
 
 
+class ForumThreadMetaData(ModelBase):
+    threadId = models.IntegerField()
+    name = models.CharField(max_length=255)
+    value = models.TextField(null=True)
+
+    class Meta:
+        db_table = 'tiki_comments_metadata'
+
+
 class WikiPage(ModelBase):
     page_id = models.AutoField(primary_key=True)
-    pageName = models.CharField(max_length=160, unique=True)
+    title = models.CharField(db_column='pageName', max_length=160, unique=True)
     hits = models.IntegerField(null=True)
-    data = models.TextField(null=True)
+    content = models.TextField(db_column='data', null=True)
     description = models.CharField(max_length=200, null=True)
     desc_auto = models.CharField(max_length=1)
     lastModif = models.IntegerField(null=True)
@@ -172,17 +196,18 @@ class WikiPage(ModelBase):
         db_table = "tiki_pages"
 
     def __unicode__(self):
-        return self.pageName
+        return self.title
 
     @property
     def name(self):
-        return self.pageName
+        return self.title
 
     def get_url(self):
         """
-        TODO: Once we can use reverse(), use reverse()
+        TODO: Once we can use reverse(), use reverse(), and turn this into
+        get_absolute_url, below.
         """
-        name = self.pageName.replace(' ', '+')
+        name = self.title.replace(' ', '+')
 
         if self.lang in INTERNAL_MAP:
             lang = INTERNAL_MAP[self.lang]
@@ -190,6 +215,21 @@ class WikiPage(ModelBase):
             lang = self.lang
 
         return u'/%s/kb/%s' % (lang, name,)
+
+    get_absolute_url = get_url
+
+    def get_edit_url(self):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return settings.WIKI_EDIT_URL % self.title.replace(' ', '+')
+
+    @classmethod
+    def get_create_url(cls, name):
+        """
+        TODO: Once we can use reverse(), use reverse()
+        """
+        return settings.WIKI_CREATE_URL % name.replace(' ', '+')
 
 
 class Category(ModelBase):

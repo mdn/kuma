@@ -1,14 +1,16 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 <!DOCTYPE html>
-<html lang="{{ request.locale }}" dir="{{ dir }}">
+<html class="no-js" lang="{{ request.locale }}" {% if dir %}dir="{{ dir }}"{% endif %}>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>{{ title }} | {{ settings.SITE_TITLE }}</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 <link rel="search" type="application/opensearchdescription+xml" title="Firefox Support" href="/search.xml"/>
-{% if feed_url %}
-<link rel="alternate" type="application/atom+xml" href="{{ feed_url }}"/>
+{% if feeds %}
+  {% for feed in feeds %}
+    <link rel="alternate" type="application/atom+xml" href="{{ feed[0] }}" title="{{ feed[1] }}"/>
+  {% endfor %}
 {% endif %}
 
 {{ css('common') }}
@@ -25,6 +27,10 @@
   {% endfor %}
 {% endif %}
 
+<!--[if lt IE 9]>
+{# html5-shiv.js must be inside <head/> to work. #}
+<script src="{{ MEDIA_URL }}js/libs/html5-shiv.js"></script>
+<![endif]-->
 </head>
 <body{% if classes %} class="{{ classes }}"{% endif %}>
 
@@ -39,11 +45,15 @@
 
 <div id="content">
 
+{% block sidebar %}
 <div id="sidebar">
 {% include 'layout/sidebar.html' %}
 </div>
+{% endblock %}
 
+{% block breadcrumbs %}
 {{ breadcrumbs(crumbs) }}
+{% endblock %}
 
 <div id="main" role="main">
 {% block content_area %}
@@ -59,14 +69,14 @@
   </div>{# /#footer-contents #}
 </div>{# /#footer #}
 
+<script src="{{ url('jsi18n') }}/build:{{ BUILD_ID_JS }}"></script>
 {{ js('common') }}
 {% for script in scripts %}
 {{ js(script) }}
 {% endfor %}
 
 {# Webtrends Stats Tracking #}
-{# TODO: Move this to /media/. #}
-<script defer src="/js/webtrends.js"></script>
+<script src="{{ MEDIA_URL }}js/webtrends.js" defer></script>
 <noscript>
     <img id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcskot6d000000w0qxqho15rf_7r6o/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.6.2"/>
 </noscript>

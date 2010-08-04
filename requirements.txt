@@ -1,12 +1,14 @@
 -e svn+http://code.djangoproject.com/svn/django/trunk@13302#egg=Django
 -e git://github.com/jbalogh/django-multidb-router.git@25ca0c68929144ed9020d89f2ea1e941c7f9aeca#egg=django-multidb-router
--e git://github.com/jbalogh/django-cache-machine.git@bdee25ba4eeb20758da86f4013edbc48a77bcc6e#egg=django-cache-machine
+-e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
 -e git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 Jinja2==2.2.1
 -e git://github.com/jbalogh/jingo.git@c73d2c55182301e6f3ce507fc9a17ea843fed24f#egg=jingo
 -e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
 -e git://github.com/jsocol/bleach.git#egg=bleach
 -e git://github.com/jbalogh/schematic.git#egg=schematic
+-e git://github.com/jsocol/django-cronjobs.git#egg=django_cronjobs
+-e git://github.com/fwenzel/django-mozilla-product-details#egg=django-mozilla-product-details
 
 GitPython==0.1.7
 MySQL-python==1.2.3c1
@@ -15,7 +17,7 @@ Werkzeug==0.5.1
 Babel>=0.9.4
 phpserialize==1.2
 South==0.7
-celery
+celery==1.0.6
 python-dateutil
 PIL==1.1.7
 
@@ -24,7 +26,7 @@ PIL==1.1.7
 -e git://github.com/jsocol/didyoumean.git@cc11aeae400346fd4fc9e6334bd5ff80484839b5#egg=didyoumean
 
 # for l10n
--e git://github.com/clouserw/tower.git@1217a7184ef40520e059fadf359618972662c47e#egg=tower
+-e git://github.com/clouserw/tower.git#egg=tower
 
 # commonware, stuff we share
 -e git://github.com/jsocol/commonware.git#egg=commonware
@@ -36,3 +38,5 @@ pytz
 -e git://github.com/pcraciunoiu/py-wikimarkup.git#egg=py-wikimarkup
 
 -e hg+http://bitbucket.org/danfairs/django-authority#egg=django_authority
+
+django-taggit==0.8.0

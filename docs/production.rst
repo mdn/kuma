@@ -35,6 +35,9 @@ The full list of requirements is:
 
 * RabbitMQ
 
+* libjpeg or a similar library for JPEG support that works with
+  `PIL <http://www.pythonware.com/products/pil/>`
+
 * The Python packages in the ``requirements.txt`` file.
 
 

@@ -29,6 +29,9 @@ class ThreadsFeed(Feed):
         return forum.thread_set.order_by(
                 '-last_post__created')[:constants.THREADS_PER_PAGE]
 
+    def item_title(self, item):
+        return item.title
+
     def item_author_name(self, item):
         return item.creator
 

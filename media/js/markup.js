@@ -8,10 +8,14 @@
                              'default text']);
 
         MarkupEditor.button([
-            ['name', 'image', 'open tag', 'close tag', 'default text'],
+            ['name', 'image', 'open tag', 'close tag', 'default text', everyline?],
             ...
         ]);
     </script>
+
+    Note: `everyline?` is a boolean value that says whether or not the selected
+          text should be broken into multiple lines and have the markup applied
+          to each line or not. Default is false (do not apply this behavior).
 */
 
 var Marky = {
@@ -51,6 +55,12 @@ var Marky = {
         }
     },
 
+    _applyEveryLine: function(opentag, closetag, block) {
+        return $.map(block.split('\n'), function(line) {
+            return (line.replace(/\s+/, '').length ? opentag + line + closetag : line);
+        });
+    },
+
     _click: function(button) {
         var textarea = $(this.textarea)[0];
         textarea.focus();
@@ -63,11 +73,16 @@ var Marky = {
             if(!selText.length)
                 selText = button[4];
 
-            range.text = button[2] + selText + button[3];
+            if(button[5] && -~selText.indexOf('\n')) {
+                var splitText = this._applyEveryLine(button[2], button[3], selText);
+                range.text = splitText.join('\n');
+            } else {
+                range.text = button[2] + selText + button[3];
 
-            if(range.moveStart) {
-                range.moveStart('character', (-1 * button[2].length) - selText.length);
-                range.moveEnd('character', (-1 * button[3].length));
+                if(range.moveStart) {
+                    range.moveStart('character', (-1 * button[2].length) - selText.length);
+                    range.moveEnd('character', (-1 * button[3].length));
+                }
             }
 
             range.select();
@@ -80,22 +95,33 @@ var Marky = {
             if(!selText.length)
                 selText = button[4];
 
-            textarea.value =
-                textarea.value.substring(0, textarea.selectionStart) +
-                button[2] + selText + button[3] +
-                textarea.value.substring(textarea.selectionEnd);
+            if(button[5] && -~selText.indexOf('\n')) {
+                var splitText = this._applyEveryLine(button[2], button[3], selText).join('\n');
+                textarea.value =
+                    textarea.value.substring(0, textarea.selectionStart) +
+                    splitText +
+                    textarea.value.substring(textarea.selectionEnd);
 
-            textarea.selectionStart = selStart + button[2].length;
-            textarea.selectionEnd = textarea.selectionStart + selText.length;
+                textarea.selectionStart = selStart;
+                textarea.selectionEnd = textarea.selectionStart + splitText.length;
+            } else {
+                textarea.value =
+                    textarea.value.substring(0, textarea.selectionStart) +
+                    button[2] + selText + button[3] +
+                    textarea.value.substring(textarea.selectionEnd);
+
+                textarea.selectionStart = selStart + button[2].length;
+                textarea.selectionEnd = textarea.selectionStart + selText.length;
+            }
         }
     }
 };
 
 Marky.button([
-    ['Bold', '/media/img/markup/text_bold.png', "'''", "'''", 'bold text'],
-    ['Italic', '/media/img/markup/text_italic.png', "''", "''", 'italic text'],
-    ['Article Link', '/media/img/markup/page_link.png', '[[', ']]', 'Knowledge Base Article'],
-    ['External Link', '/media/img/markup/world_link.png', '[http://example.com ', ']', 'external link'],
-    ['Numbered List', '/media/img/markup/text_list_numbers.png', '# ', '', 'Numbered list item'],
-    ['Bulleted List', '/media/img/markup/text_list_bullets.png', '* ', '', 'Bulleted list item']
+    [gettext('Bold'), '/media/img/markup/text_bold.png', "'''", "'''", gettext('bold text')],
+    [gettext('Italic'), '/media/img/markup/text_italic.png', "''", "''", gettext('italic text')],
+    [gettext('Article Link'), '/media/img/markup/page_link.png', '[[', ']]', gettext('Knowledge Base Article')],
+    [gettext('External Link'), '/media/img/markup/world_link.png', '[http://example.com ', ']', gettext('external link')],
+    [gettext('Numbered List'), '/media/img/markup/text_list_numbers.png', '# ', '', gettext('Numbered list item'), true],
+    [gettext('Bulleted List'), '/media/img/markup/text_list_bullets.png', '* ', '', gettext('Bulleted list item'), true]
 ]);

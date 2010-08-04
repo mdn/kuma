@@ -1,0 +1,84 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "layout/base.html" %}
+{% set styles = ('questions',) %}
+{% set scripts = ('questions',) %}
+
+{% block content_area %}
+
+<div id="main-hdr">
+  <hgroup>
+    <h1><a href="{{ url('questions.questions') }}">{{ _('Firefox Support Forum') }}</a></h1>
+    <h2>{{ _('The Official Community-Driven Support Web Site for Firefox') }}</h2>
+  </hgroup>
+
+  <div id="support-search" role="search">
+    <form action="{{ url('search') }}" method="get">
+      <input type="hidden" name="w" value="2" />{# 2 is support questions #}
+      <div class="wrap">
+        <input type="text" class="text" name="q" placeholder="{{ _('Search Mozilla Support') }}" required="required" />
+      </div>
+      <noscript>
+        <input type="submit" class="submit" value="{{ _('Search') }}" />
+      </noscript>
+    </form>
+  </div>
+
+  <div id="greeting">
+    {% if user.is_authenticated() %}
+      {{ _('Welcome, <span class="user">{user}</span>.')|fe(user=user) }}
+      <nav>
+        <a href="{{ profile_url(user) }}">{{ _('Profile') }}</a>
+        &bull;
+        <a href="{{ settings.LOGOUT_URL }}">{{ _('Sign Out') }}</a>
+      </nav>
+    {% else %}
+      <p>
+        {% trans login_url=settings.LOGIN_URL, register_url=settings.REGISTER_URL %}
+          Want to contribute? <a href="{{ login_url }}">Sign In</a> or <a href="{{ register_url }}">Register</a>
+        {% endtrans %}
+      </p>
+    {% endif %}
+  </div>
+</div>
+
+{% block filter %}
+{% endblock %}
+
+<div id="main-content">
+  {% block content %}
+  {% endblock %}
+</div>
+
+<div id="main-sd">
+  {% block side %}
+    <div class="sd-module" id="ask-question-module">
+      <h3>{{ _("Can't Find an Answer?") }}</h3>
+      <p>{{ _('Post your question to the support forum. The Firefox community is here to help!') }}</p>
+      <div class="ask-question">
+        <a href="{{ url('questions.new_question') }}">
+          <span class="q">?</span>
+          {{ _('Ask a Question') }}
+        </a>
+      </div>
+    </div>
+    {% if top_contributors %}
+      <div class="sd-module" id="top-contributors">
+        <h3>{{ _('Top Contributors') }}</h3>
+        <h4>{{ _('Most Solutions this Week') }}</h4>
+        <ol>
+          {% for user in top_contributors %}
+            <li>{{ user }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% endif %}
+  {% endblock %}
+</div>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

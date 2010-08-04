@@ -1,10 +1,12 @@
 from django.core import mail
 from django import test
+from django.contrib.contenttypes.models import ContentType
 
 from nose.tools import eq_
 
-from notifications.tasks import send_notification
+from notifications.tasks import send_notification, delete_watches
 from notifications.models import EventWatch
+from forums.models import Thread
 
 
 class SendNotificationTestCase(test.TestCase):
@@ -36,3 +38,19 @@ class SendNotificationTestCase(test.TestCase):
         send_notification(e.content_type, e.watch_id,
                           'My Subject', 'My Content')
         eq_(mail.outbox[0].from_email, 'notifications@support.mozilla.com')
+
+
+class DeleteNotificationsTestCase(test.TestCase):
+
+    fixtures = ['notifications.json']
+
+    def test_delete_task(self):
+        eq_(0, EventWatch.uncached.filter(watch_id=2).count())
+        ct = ContentType.objects.get_for_model(Thread)
+        EventWatch.objects.create(content_type=ct, watch_id=2,
+                                  email='me@x.org')
+        EventWatch.objects.create(content_type=ct, watch_id=2,
+                                  email='you@x.org')
+        eq_(2, EventWatch.uncached.filter(watch_id=2).count())
+        delete_watches(Thread, 2)
+        eq_(0, EventWatch.uncached.filter(watch_id=2).count())

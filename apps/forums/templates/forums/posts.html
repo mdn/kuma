@@ -1,12 +1,11 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "forums/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {# L10n: {t} is the title of the thread. {f} is the name of the forum. #}
 {% set title = _('{t} | {f} | Forums')|f(t=thread.title, f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')),
                  (url('forums.threads', forum.slug), forum.name),
                  (None, thread.title)] %}
-{% set scripts = ('forums',) %}
 
 {% block content %}
   <h2>{{ thread.title }}</h2>

@@ -34,6 +34,10 @@ input,textarea,select
     font-size:100%;
 }
 
+mark {
+    background: none;
+}
+
 /*----------------------------------
     Global
 ----------------------------------*/
@@ -69,6 +73,18 @@ h1 {
 
 h2 {
     font-size: 2em;
+}
+
+#modal-overlay {
+    background: #000;
+    height: 100%;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
 }
 
 /*----------------------------------
@@ -368,6 +384,7 @@ h2 {
 ----------------------------------*/
 
 #content {
+    clear:both;
     width: 920px;
     margin: auto;
     text-align: left;
@@ -479,3 +496,123 @@ ol.pagination li {
 ol.pagination li.selected a {
     color: #000;
 }
+
+/* Markup editor */
+div.forum-editor {
+    padding: 1em;
+}
+
+div.forum-editor textarea {
+    width: 100%;
+}
+
+div.forum-editor-notes {
+    float: left;
+    padding: 1em 0 0 1em;
+}
+
+div.forum-editor-notes p {
+    margin-top: .8em;
+}
+
+div.forum-editor-actions {
+    clear: both;
+    border-top: 2px solid #fff;
+    padding: 1em 2em;
+    text-align: right;
+}
+
+div.forum-editor-tools img {
+    margin: 0 0.3em 0 0;
+}
+
+img.markup-toolbar-button {
+    cursor: pointer;
+}
+
+/* Submit or cancel switches */
+div.submit-or-cancel {
+    padding: 1em 0;
+}
+
+div.submit-or-cancel input[type="submit"] {
+    margin: 0 0 0 1em;
+}
+
+/* Image markup styling */
+div.img {
+    margin: 3px;
+}
+
+div.img.align-left {
+    float: left;
+}
+
+div.img.align-right {
+    float: right;
+}
+
+div.img.center {
+    text-align: center;
+}
+
+div.img-inner {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 3px;
+}
+
+div.img img {
+    margin: 0 auto;
+}
+
+div.img-inner div.caption {
+    color: #333;
+    padding: 7px 0 4px;
+    text-align: center;
+}
+
+div#main div.img a:hover {
+    text-decoration: none;
+}
+/* End image markup styling */
+
+/*----------------------------------
+    Common "pop-in" styles 
+----------------------------------*/
+.js .pop-in {
+    background: #fff;
+    border: solid 3px #898377;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 1px 2px 15px #aaa;
+    -moz-box-shadow: 1px 2px 15px #333;
+    -webkit-box-shadow: 1px 2px 15px #aaa;
+    font-size: 14px;
+    padding: 15px;
+    position: absolute;
+    z-index: 8;
+}
+
+.pop-in a.close {
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}
+
+/* jQueryUI styles */
+a.ui-state-hover {
+    border: none !important;
+}
+a.ui-dialog-titlebar-close {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
+div#upload-dialog {
+    padding: .5em;
+}
+/* END jQueryUI styles

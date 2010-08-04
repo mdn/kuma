@@ -23,12 +23,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kitsune', # Or path to database file if using sqlite3.
-        'USER': '', # Not used with sqlite3.
-        'PASSWORD': '', # Not used with sqlite3.
-        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '', # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'kitsune',  # Or path to database file if using sqlite3.
+        'USER': '',  # Not used with sqlite3.
+        'PASSWORD': '',  # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     }
 }
@@ -119,6 +119,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'sumo.context_processors.global_settings',
+    'jingo_minify.helpers.build_ids'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -130,6 +131,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'sumo.anonymous.AnonymousIdentityMiddleware',
 
     # TODO: Replace with Kitsune auth.
     'sumo.middleware.TikiCookieMiddleware',
@@ -138,7 +140,7 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'sumo.backends.SessionBackend', # TODO: Replace with Kitsune auth.
+    'sumo.backends.SessionBackend',  # TODO: Replace with Kitsune auth.
 )
 
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
@@ -150,6 +152,8 @@ TEMPLATE_DIRS = (
     path('templates'),
 )
 
+# TODO: Figure out why changing the order of apps (for example, moving taggit
+# higher in the list) breaks tests.
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -166,8 +170,15 @@ INSTALLED_APPS = (
     'search',
     'forums',
     'celery',
+    'cronjobs',
     'notifications',
     'identicons',
+    'questions',
+    'kadmin',
+    'taggit',
+    'flagit',
+    'upload',
+    'product_details'
 )
 
 # Extra apps for testing
@@ -180,11 +191,12 @@ if DEBUG:
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 
+
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
     from caching.base import cache
-    config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',],
+    config = {'extensions': ['tower.template.i18n', 'caching.ext.cache', ],
               'finalize': lambda x: x if x is not None else ''}
     if 'memcached' in cache.scheme and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
@@ -197,16 +209,26 @@ def JINJA_CONFIG():
         config['bytecode_cache'] = bc
     return config
 
+# Let Tower know about our additional keywords.
+# DO NOT import an ngettext variant as _lazy.
+TOWER_KEYWORDS = {
+    '_lazy': None,
+}
+
 # Tells the extract script what files to look for l10n in and what function
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
     'messages': [
+        ('apps/forums/**', 'ignore'),
+        ('apps/questions/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
     ],
     'lhtml': [
+        ('apps/forums/**', 'ignore'),
+        ('apps/questions/**', 'ignore'),
         ('**/templates/**.lhtml',
             'tower.management.commands.extract.extract_tower_template'),
     ],
@@ -215,6 +237,14 @@ DOMAIN_METHODS = {
         ('media/js/*.js', 'javascript'),
     ],
 }
+
+# These domains will not be merged into messages.pot and will use separate PO
+# files. See the following URL for an example of how to set these domains
+# in DOMAIN_METHODS.
+# http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
+STANDALONE_DOMAINS = [
+    'javascript',
+    ]
 
 # If you have trouble extracting strings with Tower, try setting this
 # to True
@@ -226,7 +256,16 @@ MINIFY_BUNDLES = {
         'common': (
             'css/main.css',
             'css/sidebar.css',
+        ),
+        'forums': (
             'css/forums.css',
+        ),
+        'questions': (
+            'css/questions.css',
+            'css/tags.css',
+            'css/jqueryui/jquery.ui.core.css',
+            'css/jqueryui/jquery.ui.autocomplete.css',
+            'css/jqueryui/jquery.ui.theme.css',
         ),
         'search': (
             'css/search.css',
@@ -237,12 +276,20 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'common': (
-            'js/jquery.min.js',
+            'js/libs/jquery.min.js',
+            'js/libs/modernizr-1.1.min.js',
             'js/menu.js',
             'js/main.js',
         ),
+        'questions': (
+            'js/libs/jqueryui.min.js',
+            'js/markup.js',
+            'js/upload.js',
+            'js/questions.js',
+            'js/tags.js',
+        ),
         'search': (
-            'js/jqueryui.min.js',
+            'js/libs/jqueryui.min.js',
             'js/search.js',
         ),
         'forums': (
@@ -254,7 +301,7 @@ MINIFY_BUNDLES = {
 JAVA_BIN = '/usr/bin/java'
 
 #
-# Directory storying myspell dictionaries (with trailing slash)
+# Directory storing myspell dictionaries (with trailing slash)
 DICT_DIR = '/usr/share/myspell/'
 # Path to a file with a list of custom words.
 WORD_LIST = path('configs/words.txt')
@@ -275,14 +322,14 @@ SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
 
 #
 # Sphinx results tweaking
-SEARCH_FORUM_MIN_AGE = 7 # age before which decay doesn't apply, in days
-SEARCH_FORUM_HALF_LIFE = 14 # controls the decay rate, in days
+SEARCH_FORUM_MIN_AGE = 7  # age before which decay doesn't apply, in days
+SEARCH_FORUM_HALF_LIFE = 14  # controls the decay rate, in days
 SEARCH_MAX_RESULTS = 1000
 SEARCH_RESULTS_PER_PAGE = 10
 
 #
 # Search default settings
-# comma-separated tuple of category IDs
+# comma-separated tuple of included category IDs. Negative IDs are excluded.
 SEARCH_DEFAULT_CATEGORIES = (1, 17, 18, -3,)
 SEARCH_SUMMARY_LENGTH = 275
 # because of markup cleanup, search summaries lengths vary quite a bit
@@ -299,6 +346,25 @@ SEARCH_CACHE_PERIOD = 15
 LOGIN_URL = '/tiki-login.php'
 LOGOUT_URL = '/tiki-logout.php'
 REGISTER_URL = '/tiki-register.php'
+WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
+WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
+WIKI_UPLOAD_URL = '/img/wiki_up/'
+
+IMAGE_MAX_FILESIZE = 1048576  # 1 megabyte, in bytes
+THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels
+THUMBNAIL_UPLOAD_PATH = 'uploads/images/thumbnails/'
+IMAGE_UPLOAD_PATH = 'uploads/images/'
+# A string listing image mime types to accept, comma separated.
+# String must not contain double quotes!
+IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
+
+# Max number of wiki pages or other questions to suggest might answer the
+# question you're about to ask
+QUESTIONS_MAX_SUGGESTIONS = 5
+# Number of extra suggestion results to pull from Sphinx to make up for
+# possibly deleted wiki pages or question. To be safe, set this to the number
+# of things that could be deleted between indexer runs.
+QUESTIONS_SUGGESTION_SLOP = 3
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -312,3 +378,11 @@ BROKER_VHOST = 'kitsune'
 CELERY_RESULT_BACKEND = 'amqp'
 CELERY_IGNORE_RESULT = True
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
+
+# Anonymous user cookie
+ANONYMOUS_COOKIE_NAME = 'SUMO_ANONID'
+ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
+
+# Top contributors cache settings
+TOP_CONTRIBUTORS_CACHE_KEY = 'sumo:TopContributors'
+TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12

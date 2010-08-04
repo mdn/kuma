@@ -28,7 +28,6 @@ To view this post on the site, click the following link, or
 paste it into your browser's location bar:
 
 https://testserver/en-US/forums/test-forum/2#post-4
-
 """,
     u"""
 
@@ -47,7 +46,6 @@ To view this post on the site, click the following link, or
 paste it into your browser's location bar:
 
 https://testserver/en-US/forums/test-forum/2#post-%s
-
 """,)
 
 

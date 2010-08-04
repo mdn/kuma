@@ -13,3 +13,34 @@
 #content-inner {
     width:679px;
 }
+
+ol.posts li div.content pre {
+    white-space: pre;
+    word-wrap: break-word;
+}
+
+div.img-inner,
+ul.tag-list li {
+    zoom: 1; /* force inline-block behavior on block elements in IE6 and IE7 */
+    display: inline;
+}
+
+/* set widths aren't respected with long content */
+body.questions #main-content {
+    overflow: hidden;
+}
+
+form div.attachments-upload div.attachment,
+div.ans-attachments div.attachment {
+    display: inline; /* force inline-block behavior on block elements in IE6 and IE7 */
+    zoom: 1;
+}
+
+*html div.main-section { /* ie6 only */
+    position: relative;
+}
+
+*html form div.attachments-upload div.hover input.delete,
+*html div.ans-attachments div.hover input.delete { /* ie6 only */
+    display: block;
+}

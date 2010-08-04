@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, AnonymousUser
 import test_utils
 
 from notifications.helpers import is_watching
+from notifications.models import EventWatch
 from forums.models import Thread
 
 

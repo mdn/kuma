@@ -13,7 +13,7 @@ from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 
 from .urlresolvers import reverse
-from .utils import urlencode
+from .utils import urlencode, wiki_to_html
 
 
 class DateTimeFormatError(Exception):
@@ -58,7 +58,10 @@ def urlparams(url_, hash=None, **query):
 
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)
-    return jinja2.Markup(new.geturl())
+    return new.geturl()
+
+
+wiki_to_html = register.filter(wiki_to_html)
 
 
 class Paginator(object):

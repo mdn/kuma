@@ -1,0 +1,396 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "questions/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% from "upload/attachments.html" import attachments_form, attachment %}
+{# L10n: {q} is the title of the question. #}
+{% set title = _('{q} | Firefox Support Forum')|f(q=question.title) %}
+{% set classes = 'answers' %}
+
+{% block content %}
+  <div id="back-link">
+    <a href="{{ url('questions.questions') }}">&laquo; {{ _('Back to the Firefox Support Forum') }}</a>
+  </div>
+  <div id="question">
+    <div class="user-section">
+      <div class="avatar">
+        <a href="{{ profile_url(question.creator) }}">
+          <img src="{{ profile_avatar(question.creator) }}" height="48" width="48" alt="{{ question.creator }}"/>
+        </a>
+      </div>
+      <div class="asked-by">
+        {# L10n: {f} is the full username and {u} is the truncated username. #}
+        {{ _('Asked by <span class="user" title="{f}">{u}</span>')|fe(f=question.creator, u=question.creator.username|truncate(10, True)) }}
+        <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
+      </div>
+    </div>
+    <div class="main-section">
+      <h1>{{ question.title }}</h1>
+      <div class="badges">
+        {% if question.is_locked %}<span class="locked">{{ _('Locked') }}</span>{% endif %}
+        {% if is_watching(question) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
+      </div>
+      <div class="content">
+        {{ question.content_parsed|safe }}
+      </div>
+      {% if question.updated_by %}
+        <p class="edited">
+          {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=question.updated_by.username, datetime=datetimeformat(question.updated, format='longdatetime')) }}
+        </p>
+      {% endif %}
+      <div class="problem">
+        {% include 'questions/includes/have_problem.html' %}
+        {% if not question.is_locked and not question.has_voted(request) %}
+          <div class="me-too">
+            <form action="{{ url('questions.vote', question_id=question.id) }}" method="post">
+              {{ csrf() }}
+              <input class="btn y-btn" type="submit" value="{{ _('I have this problem too.') }}">
+            </form>
+          </div>
+        {% endif %}
+      </div>
+      {% if question.solution %}
+        <div class="solution">
+          <h3>{{ _('Solution Chosen by {user}')|f(user=question.creator) }}</h3>
+          <div class="ans-wrap">
+            <div class="avatar">
+              <a href="{{ profile_url(question.solution.creator) }}">
+                <img src="{{ profile_avatar(question.solution.creator) }}" height="48" width="48" alt="{{ question.solution.creator }}"/>
+              </a>
+            </div>
+            <div class="answer">
+              <span class="user" title="{{question.solution.creator}}">{{ question.solution.creator.username|truncate(10, True) }}</span>
+              <span class="votes">{{ 2 * question.solution.num_helpful_votes - question.solution.num_votes }}</span>
+              {{ question.solution.content_parsed }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% for answer in question.helpful_replies %}
+        {% if loop.first %}
+          <div class="other-helpful">
+            <h3>{{ _('Other Helpful Replies') }}</h3>
+        {% endif %}
+        <div class="ans-wrap">
+          <div class="avatar">
+              <a href="{{ profile_url(answer.creator) }}">
+                <img src="{{ profile_avatar(answer.creator) }}" height="48" width="48" alt="{{ answer.creator }}"/>
+              </a>
+          </div>
+          <div class="answer">
+            <span class="user" title="{{answer.creator}}">{{ answer.creator.username|truncate(10, True) }}</span>
+            <span class="votes">{{ 2 * answer.num_helpful_votes - answer.num_votes }}</span>
+            <p>{{ answer.content_parsed|striptags()|truncate(170) }} <a href="{{ answer.get_absolute_url() }}">{{ _('More...') }}</a></p>
+          </div>
+        </div>
+        {% if loop.last %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <div class="report-reply">
+        {% if user.has_perm('questions.change_question') or (not question.is_locked and question.creator == user) %}
+          <span class="edit">
+            <a href="{{ url('questions.edit_question', question.id) }}">{{ _('Edit this post') }}</a>
+          </span>
+        {% endif %}
+        {% if user.has_perm('questions.lock_question') %}
+          <form class="lock" action="{{ url('questions.lock', question.id) }}" method="post">
+            {{ csrf() }}
+            <input type="submit" class="submit" value="{% if question.is_locked %}{{ _('Unlock this post') }}{% else %}{{ _('Lock this post') }}{% endif %}" />
+          </form>
+        {% endif %}
+        {% if user.has_perm('questions.delete_question') %}
+          <a class="delete" href="{{ url('questions.delete', question.id) }}">
+            {{ _('Delete this post') }}
+          </a>
+        {% endif %}
+        {% if user.is_authenticated() and user != question.creator and not question.is_locked %}
+          <form class="report" action="{{ url('questions.flag', question.id) }}" method="post">
+            {% include 'questions/includes/flag_form.html' %}
+          </form>
+        {% endif %}
+        {% if not question.is_locked %}
+          <a class="btn g-btn reply" href="#question-reply">{{ _('Post a New Reply') }}</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="side-section">
+      <ul class="subscribe">
+        <li class="email">
+          {% if is_watching(question) %}
+            <form class="unwatch" action="{{ url('questions.unwatch', question.id) }}" method="post">
+              {{ csrf() }}
+              <input type="submit" class="submit" value="{{ _('Stop receiving updates via email') }}" />
+            </form>
+          {% else %}
+            <a id="email-subscribe-link" href="#email-subscribe">{{ _('Receive updates via email') }}</a>
+            {% include "questions/includes/email_subscribe.html" %}
+          {% endif %}
+        </li>
+        <li class="rss">
+          <a href="{{ url('questions.answers.feed', question.id) }}">{{ _("Subscribe to this page's feed") }}</a>
+        </li>
+      </ul>
+
+      <h4>{{ _('System Details') }}</h4>
+      {% block system_info %}
+        <ul class="system">
+          {% if question.metadata.os %}
+            {% set os = question.metadata.os %}
+            {% set os_lower = os.lower() %}
+            <li class="{% if os_lower.find('mac') >= 0 %}mac{% elif os_lower.find('linux') >= 0 %}linux{% elif os_lower.find('win') >= 0 %}windows{% endif %}">{{ os }}</li>
+          {% endif %}
+          {% if question.metadata.ff_version %}
+            <li class="ff">Firefox {{ question.metadata.ff_version }}</li>
+          {% endif %}
+        </ul>
+      {% endblock %}
+      <p><a id="show-more-details" href="#more-system-details">{{ _('More system details...') }}</a></p>
+      <div class="more-system-details pop-in">
+        <h4>{{ _('Additional System Details') }}</h4>
+        <div class="wrap">
+          {{ self.system_info() }}
+          {% if question.metadata.sites_affected %}
+            <h5>{{ _('Sites Affected') }}</h5>
+            <p>{{ question.metadata.sites_affected }}</p>
+          {% endif %}
+          {% if question.metadata.crash_id %}
+            <h5>{{ _('Crash ID') }}</h5>
+            <p>{{ question.metadata.crash_id }}</p>
+          {% endif %}
+          {% if question.metadata.frequency %}
+            <h5>{{ _('This happened') }}</h5>
+            <p>{{ question.metadata.frequency }}</p>
+          {% endif %}
+          {% if question.metadata.started %}
+            <h5>{{ _('This started when...') }}</h5>
+            <p>{{ question.metadata.started }}</p>
+          {% endif %}
+          {% if question.metadata.troubleshooting %}
+            <h5>{{ _('More Information') }}</h5>
+            <p>{{ question.metadata.troubleshooting }}</p>
+          {% endif %}
+          {% if question.metadata.plugins %}
+            <h5>{{ _('Installed Plug-ins') }}</h5>
+            <div class="plugins">
+              {{ question.metadata.plugins|wiki_to_html }}
+            </div>
+          {% endif %}
+          {% if question.metadata.useragent %}
+            <h5>{{ _('User Agent') }}</h5>
+            <p>{{ question.metadata.useragent }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      {% set tags = question.tags.all() %}
+      {% if tags or can_tag %}
+        <h4>{{ _('Tags') }}</h4>
+        <div class="tags"{% if can_tag %} data-tag-vocab-json="{{ tag_vocab }}"{% endif %}>
+          {% if can_tag %}
+            <form action="{{ url('questions.remove_tag', question.id) }}"
+                  data-action-async="{{ url('questions.remove_tag_async', question.id) }}"
+                  method="POST"
+                  class="remove-tag-form">
+              {{ csrf() }}
+          {% endif %}
+          <ul class="tag-list{% if not can_tag %} immutable{% endif %}">
+            {% for tag in tags %}
+              <li class="tag">{# -#}
+                <a class="tag-name" href="{{ url('questions.questions')|urlparams(tagged=tag.slug) }}">{{ tag }}</a>
+                {%- if can_tag -%}
+                  <input type="submit"
+                         name="remove-tag-{{ tag }}"
+                         value="&#x2716;"
+                         class="remover" />
+                {%- endif -%}
+              </li>
+            {% endfor %}
+          </ul>
+          {% if can_tag %}
+            </form>
+          {% endif %}
+
+          {% if can_tag %}
+            {% if tag_adding_error %}
+              <p class="tag-error-message">{{ tag_adding_error }}</p>
+            {% endif %}
+            <form action="{{ url('questions.add_tag', question.id) }}"
+                  data-action-async="{{ url('questions.add_tag_async', question.id) }}"
+                  method="POST"
+                  class="add-tag-form"
+                  {% if can_create_tags %}data-can-create-tags="1"{% endif %}>
+              {{ csrf() }}
+              <input type="text" name="tag-name" size="12"
+                     class="autocomplete-tags {% if tag_adding_error %} invalid{% endif %}"
+                     value="{{ tag_adding_value }}" />
+              <input class="adder btn g-btn" type="submit" value="{{ _('Add') }}" />
+            </form>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if related %}
+        <h4>{{ _('Related Questions') }}</h4>
+        <ul class="related">
+          {% for q in related %}
+            <li><a href="{{ q.get_absolute_url() }}">{{ q.title|truncate(30, True) }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <p><a href="{{ url('questions.questions') }}">{{ _('Browse more Support Questions...') }}</a></p>
+    </div>
+  </div>
+
+  {% if answers.object_list %}
+    <ol class="answers">
+      {% for answer in answers.object_list %}
+        <li id="answer-{{ answer.id }}" class="{% if answer.creator == question.creator %}author{% endif %}{% if question.solution == answer %} solution{% endif %}">
+          <div class="user-section">
+            <div class="avatar">
+              <a href="{{ profile_url(answer.creator) }}">
+                <img src="{{ profile_avatar(answer.creator) }}" height="48" width="48" alt="{{ answer.creator }}"/>
+              </a>
+            </div>
+            <div class="answered-by">
+              <span class="user" title="{{answer.creator}}">{{ answer.creator.username|truncate(10, True) }}</span>
+              {% if answer.creator==question.creator %}
+                <span class="author">{{ _('Author') }}</span>
+              {% else %}
+                <span class="posts">{{ _('{numposts} posts')|f(numposts=answer.creator_num_posts) }}</span>
+                <span class="answers">{{ _('{numanswers} answers')|f(numanswers=answer.creator_num_answers) }}</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="main-section">
+            <p class="posted">
+              {{ _('Posted <time>{datetime}</time>:')|fe(datetime=datetimeformat(answer.created, format='longdatetime')) }}
+            </p>
+            <div class="content">
+              {{ answer.content_parsed|safe }}
+            </div>
+            <div class="ans-attachments attachments-list">
+              {% for image in answer.images.all() %}
+                {{ attachment(image, user) }}
+              {% endfor %}
+            </div>
+            {% if answer.updated_by %}
+              <p class="edited">
+                {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=answer.updated_by.username, datetime=datetimeformat(answer.updated, format='longdatetime')) }}
+              </p>
+            {% endif %}
+            {% if not question.is_locked %}
+              <div class="reply">
+                <a href="#question-reply">{{ _('Reply to this post') }}</a>
+              </div>
+            {% endif %}
+          </div>
+          <div class="side-section">
+            {% if answer.creator != question.creator %}
+              {% if not question.is_locked %}
+                {% if not question.solution and user == question.creator %}
+                  <h4>{{ _('Did this solve your problem?') }}</h4>
+                  <form class="helpful" action="{{ url('questions.solution', question_id=question.id, answer_id=answer.id) }}" method="post">
+                    {{ csrf() }}
+                    <input type="submit" class="btn g-btn" name="solution" value="{{ _('Solved It') }}" />
+                  </form>
+                {% elif not answer.has_voted(request) and user != question.creator and user != answer.creator %}
+                  <h4>{{ _('Was this reply helpful?') }}</h4>
+                  <form class="helpful" action="{{ url('questions.answer_vote', question_id=question.id, answer_id=answer.id) }}" method="post">
+                    {{ csrf() }}
+                    <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
+                    <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
+                  </form>
+                {% endif %}
+              {% endif %}
+
+              {% if question.solution == answer %}
+                <div class="solved">{{ _('Solution chosen by author') }}</div>
+              {% endif %}
+
+              {% if answer.num_votes != 0 %}
+                <div class="helpful {% if answer.num_helpful_votes == 0 %}zero{% endif %}">
+                  {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
+                              '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
+                              answer.num_votes)|fe(count=answer.num_helpful_votes, total=answer.num_votes) }}
+                </div>
+              {% endif %}
+            {% endif %}
+            {% if user.is_authenticated() and user != answer.creator and not question.is_locked  %}
+              <form class="report" action="{{ url('questions.answer_flag', question.id, answer.id) }}" method="post">
+                {% include 'questions/includes/flag_form.html' %}
+              </form>
+            {% endif %}
+            {% if not question.is_locked and has_perm_or_owns('questions.change_answer', answer, answer) %}
+              <a class="edit" href="{{ url('questions.edit_answer', question.id, answer.id) }}">
+                {{ _('Edit this post') }}
+              </a>
+            {% endif %}
+            {% if user.has_perm('questions.delete_answer') %}
+              <a class="delete" href="{{ url('questions.delete_answer', question.id, answer.id) }}">
+                {{ _('Delete this post') }}
+              </a>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+    {{ answers|paginator }}
+  {% endif %}
+
+  <div id="question-reply">
+    <h3>{{ _('Post a Reply') }}</h3>
+    {% if question.is_locked %}
+      <div class="user-section"></div>
+      <div class="main-section">
+        <p>
+          {{ _('This question is locked.') }}
+        </p>
+      </div>
+      <div class="side-section"></div>
+    {% elif user.is_authenticated() %}
+      <div class="user-section">
+        <div class="avatar">
+          <a href="{{ profile_url(user) }}">
+            <img src="{{ profile_avatar(user) }}" height="48" width="48" alt="{{ user }}"/>
+          </a>
+        </div>
+        <div class="asked-by">
+          <span class="user" title="{{user}}">{{ user.username|truncate(10, True) }}</span>
+        </div>
+      </div>
+      <div class="main-section">
+        <form action="{{ url('questions.reply', question_id=question.id) }}" method="post" enctype="multipart/form-data">
+          {{ csrf() }}
+          {{ errorlist(form) }}
+
+          <div class="forum-editor{% if form.content.errors %} invalid{% endif %}">
+            <div class="forum-editor-tools"></div>
+            <textarea name="content" id="id_content">{{ form.content.data or '' }}</textarea>
+          </div>
+
+          {{ attachments_form('questions.Question', question.pk, images, settings, user) }}
+
+          <div class="submit">
+            <input type="submit" class="btn g-btn" value="{{ _('Post Reply') }}" />
+          </div>
+        </form>
+      </div>
+      <div class="side-section"></div>
+    {% else %}
+      <div class="user-section"></div>
+      <div class="main-section">
+        <p>
+          {{ _('You must <a href="{url}">log in to your account</a> to reply to posts.')|fe(url=settings.LOGIN_URL) }}
+        </p>
+        <p>
+          {{ _("Don't have an account? You can <a href='{url}'>create a free account</a> now.")|fe(url=settings.REGISTER_URL) }}
+        </p>
+      </div>
+      <div class="side-section"></div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block side %}
+{% endblock %}
