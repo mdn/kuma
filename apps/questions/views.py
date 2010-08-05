@@ -45,9 +45,6 @@ from upload.views import upload_images
 log = logging.getLogger('k.questions')
 
 
-log = logging.getLogger('k.questions')
-
-
 UNAPPROVED_TAG = _lazy(u'That tag does not exist.')
 NO_TAG = _lazy(u'Please provide a tag.')
 
