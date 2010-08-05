@@ -82,7 +82,8 @@ def questions(request):
         tag_slugs = tagged.split(',')
         tags = Tag.objects.filter(slug__in=tag_slugs)
         if tags:
-            question_qs = question_qs.filter(tags__in=[t.name for t in tags])
+            for t in tags:
+                question_qs = question_qs.filter(tags__in=[t.name])
         else:
             question_qs = Question.objects.get_empty_query_set()
 
