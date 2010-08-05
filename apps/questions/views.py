@@ -669,11 +669,9 @@ def _answers_data(request, question_id, form=None, watch_form=None):
     feed_urls = ((reverse('questions.answers.feed',
                           kwargs={'question_id': question_id}),
                   AnswersFeed().title(question)),)
-    related = question.tags.similar_objects()[:3]
 
     return {'question': question,
             'answers': answers_,
-            'related': related,
             'form': form or AnswerForm(),
             'watch_form': watch_form or _init_watch_form(request, 'reply'),
             'feeds': feed_urls,
