@@ -244,4 +244,4 @@ jQuery.fn.ajaxSubmitInput = function (options) {
     });
 
     return this;
-}
+};
