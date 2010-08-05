@@ -146,7 +146,7 @@ class Question(ModelBase, TaggableMixin):
         return {}
 
     def auto_tag(self):
-        """Apply tags to myself that are implied by my contents.
+        """Apply tags to myself that are implied by my metadata.
 
         You don't need to call save on the question after this.
 

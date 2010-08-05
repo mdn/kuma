@@ -15,15 +15,15 @@ class MigrateManualTestCase(TestCase):
     fixtures = ['users.json', 'tikiusers.json', 'questions_tiki.json']
 
     def test_question_basic(self):
-        t = TikiThread.objects.filter(threadId=737114)[0]
+        t = TikiThread.objects.filter(threadId=727433)[0]
         q = create_question(t)
-        eq_(737114, q.id)
+        eq_(727433, q.id)
         eq_(t.title, q.title)
-        eq_('pcraciunoiu', q.creator.username)
+        eq_('AnonymousUser', q.creator.username)
         eq_(False, q.is_locked)
         eq_(CONFIRMED, q.status)
         eq_('', q.confirmation_id)
-        eq_('2010-07-25 23:05:00', str(q.created))
+        eq_('2010-07-15 21:52:03', str(q.created))
         self.assertNotEquals(0, len(q.content))
 
     def test_question_locked(self):
@@ -64,7 +64,7 @@ class MigrateManualTestCase(TestCase):
 
     def test_question_updated_date_clean_content(self):
         """Cleaning the question's content does not affect its updated date."""
-        t = TikiThread.objects.filter(threadId=736751)[0]
+        t = TikiThread.objects.filter(threadId=728030)[0]
         q = create_question(t)
 
         clean_question_content(q)
@@ -77,8 +77,8 @@ class MigrateManualTestCase(TestCase):
         """
         t = TikiThread.objects.filter(type='o', parentId=0)[0]
         q = create_question(t)
-        q.save(no_update=True)
         eq_(datetime.fromtimestamp(t.commentDate), q.updated)
+        q.save(no_update=True)
 
         p = TikiThread.objects.filter(type='o', parentId=t.threadId)[0]
         create_answer(q, p, t)
@@ -92,35 +92,20 @@ class MigrateManualTestCase(TestCase):
 
     def test_question_metadata(self):
         """Question metadata is populated."""
-        t = TikiThread.objects.filter(threadId=736751)[0]
+        t = TikiThread.objects.filter(threadId=727433)[0]
         q = create_question(t)
 
         create_question_metadata(q)
-        q.save(no_update=True)
 
-        eq_('d3', q.metadata_set.filter(name='category')[0].value)
-        eq_('desktop', q.metadata_set.filter(name='product')[0].value)
-        eq_('3.6.6', q.metadata_set.filter(name='ff_version')[0].value)
-        eq_(1, q.metadata_set.filter(name='useragent').count())
-        eq_(1, q.metadata_set.filter(name='plugins').count())
-        eq_(1, q.metadata_set.filter(name='troubleshooting').count())
+        eq_('home', q.metadata_set.filter(name='product')[0].value)
 
     def test_clean_question_content(self):
-        """Question content is cleaned up and metadata for troubleshooting is
-        set accordingly.
-
-        """
-        t = TikiThread.objects.filter(threadId=736751)[0]
+        """Question content is cleaned up."""
+        t = TikiThread.objects.filter(threadId=728030)[0]
         q = create_question(t)
 
         clean_question_content(q)
 
-        # First check content is clean
-        eq_(True, q.content.startswith('I recently had'))
-        eq_(True, q.content.endswith('have.'))
-
-        # Now check metadata for troubleshooting
-        eq_(1, q.metadata_set.filter(name='troubleshooting').count())
-        eq_(u'ADP 1.2.1\nJava Console 6.0.2.1\nMicrosoft.NET Framework ' +
-                'Assistant 1.2.1\n\n',
-            q.metadata_set.filter(name='troubleshooting')[0].value)
+        # Check content is clean
+        eq_(True, q.content.startswith('Upon installation on my 3G'))
+        eq_(True, q.content.endswith('Firefox opened'))

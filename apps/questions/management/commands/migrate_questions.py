@@ -20,12 +20,10 @@ from django.core.management.base import BaseCommand, CommandError
 from multidb.pinning import pin_this_thread
 
 from questions.models import Question, Answer, CONFIRMED
-from questions.question_config import products
 from sumo.models import (Forum as TikiForum,
                          ForumThreadMetaData as TikiThreadMetaData)
 from sumo.converter import TikiMarkupConverter
-from sumo.migration_utils import (get_django_user, fetch_threads, fetch_posts,
-                                  get_firefox_version, get_OS)
+from sumo.migration_utils import get_django_user, fetch_threads, fetch_posts
 
 
 # Converts TikiWiki syntax to MediaWiki syntax
@@ -74,10 +72,6 @@ def clean_question_content(question):
 
     """
 
-    m = compiled_patterns_clean[0].search(question.content)
-    if m:
-        troubleshooting = m.group(1)
-
     for p in compiled_patterns_clean:
         question.content = p.sub('==', question.content)
 
@@ -85,9 +79,6 @@ def clean_question_content(question):
 
     question.content = question.content.rstrip(' \t\r\n=')
     question.save(no_update=True)
-
-    if m:
-        question.add_metadata(troubleshooting=troubleshooting)
 
 
 def update_question_updated_date(question):
@@ -125,44 +116,25 @@ def create_question_metadata(question):
     Look up metadata in the question and tiki_comments_metadata and create and
     attach it to the QuestionMetaData model.
     """
-    dirty_content = question.content
-
     clean_question_content(question)
     metadata = TikiThreadMetaData.objects.filter(threadId=question.id)
 
     for meta in metadata:
         if meta.name == 'useragent':
             question.add_metadata(useragent=meta.value)
-            # Look for OS and version
-            os_ = get_OS(meta.value)
-            if os_:
-                question.add_metadata(os=os_)
-            version = get_firefox_version(meta.value)
-            if version:
-                question.add_metadata(ff_version=version)
-
-        elif meta.name == 'plugins':
-            question.add_metadata(plugins=meta.value)
 
     # Potential remaining metadata: sites_affected, troubleshooting
 
     # Setting all questions to the desktop product
-    question.add_metadata(product='desktop')
-
-    # Set category based on the content
-    cats = products['desktop']['categories']
-    for c_name in cats:
-        if unicode(cats[c_name]['name']) in dirty_content:
-            question.add_metadata(category=c_name)
-            break
+    question.add_metadata(product='home')
 
     # Auto-tag this question after the metadata is added
     question.auto_tag()
 
 
 class Command(BaseCommand):
-    forum_id = 1
-    help = 'Migrate data from forum 1.'
+    forum_id = 6
+    help = 'Migrate data from forum 6.'
     max_threads = 100  # Max number of threads to store at any time
     max_posts = 100    # Max number of posts to store at any time
 
