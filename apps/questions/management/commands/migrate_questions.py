@@ -14,6 +14,7 @@ Uses a markup converter to transform TikiWiki syntax to MediaWiki syntax.
 """
 from datetime import datetime
 import re
+import time
 
 from django.core.management.base import BaseCommand, CommandError
 
@@ -21,9 +22,23 @@ from multidb.pinning import pin_this_thread
 
 from questions.models import Question, Answer, CONFIRMED
 from sumo.models import (Forum as TikiForum,
+                         ForumThread as TikiThread,
                          ForumThreadMetaData as TikiThreadMetaData)
 from sumo.converter import TikiMarkupConverter
 from sumo.migration_utils import get_django_user, fetch_threads, fetch_posts
+
+
+CWW_REPLY_TITLE = 'Comment on thread %s'
+CWW_REPLY_CONTENT = """We have migrated this forum thread to our new support\
+ system. The current system will no longer be accessible in a couple of months.
+
+Please use and bookmark the link below to access and reply to this thread from\
+ now on.
+
+__[/questions/%s|http://support.mozilla.com/questions/%s]__
+
+Thank you!
+"""
 
 
 # Converts TikiWiki syntax to MediaWiki syntax
@@ -91,6 +106,14 @@ def update_question_updated_date(question):
         question.save(no_update=True)
 
 
+def post_reply_in_old_thread(tiki_thread, question):
+    return TikiThread.objects.create(
+        type='n', object=6, objectType='forum', parentId=tiki_thread.threadId,
+        userName='Cww', commentDate=int(time.time()),
+        title=CWW_REPLY_TITLE % tiki_thread.threadId,
+        data=CWW_REPLY_CONTENT % (question.id, question.id))
+
+
 def create_question(tiki_thread):
     """
     Create a question from a Tiki thread.
@@ -104,7 +127,7 @@ def create_question(tiki_thread):
     is_locked = (tiki_thread.type == 'l' or tiki_thread.type == 'a')
 
     question = Question(
-        id=tiki_thread.threadId, title=tiki_thread.title, creator=creator,
+        title=tiki_thread.title, creator=creator,
         is_locked=is_locked, status=CONFIRMED, confirmation_id='',
         created=created, updated=created, content=content)
 
@@ -206,6 +229,7 @@ class Command(BaseCommand):
             # Now that all answers have been migrated, update the question's
             # updated date
             update_question_updated_date(question)
+            post_reply_in_old_thread(tiki_thread, question)
             thread_i = thread_i + 1
 
         if options['verbosity'] > 0:

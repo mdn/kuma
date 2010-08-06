@@ -6,7 +6,8 @@ from nose.tools import eq_
 
 from questions.management.commands.migrate_questions import (
     create_question, create_answer, update_question_updated_date,
-    clean_question_content, create_question_metadata)
+    clean_question_content, create_question_metadata,
+    post_reply_in_old_thread)
 from questions.models import CONFIRMED
 from sumo.models import ForumThread as TikiThread
 
@@ -17,14 +18,23 @@ class MigrateManualTestCase(TestCase):
     def test_question_basic(self):
         t = TikiThread.objects.filter(threadId=727433)[0]
         q = create_question(t)
-        eq_(727433, q.id)
         eq_(t.title, q.title)
         eq_('AnonymousUser', q.creator.username)
         eq_(False, q.is_locked)
         eq_(CONFIRMED, q.status)
-        eq_('', q.confirmation_id)
         eq_('2010-07-15 21:52:03', str(q.created))
         self.assertNotEquals(0, len(q.content))
+
+    def test_question_reply_to_thread(self):
+        """When a question is created, the corresponding Tiki thread is replied
+        to."""
+        t = TikiThread.objects.filter(threadId=714290)[0]
+        q = create_question(t)
+        q.save(no_update=True)
+        post_reply_in_old_thread(t, q)
+        r = TikiThread.objects.filter(parentId=714290) \
+                .order_by('-commentDate')[0]
+        eq_('Comment on thread %s' % t.threadId, r.title)
 
     def test_question_locked(self):
         """Type 'l' are locked questions."""
