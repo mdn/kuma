@@ -31,7 +31,8 @@ from notifications import create_watch, destroy_watch
 from .models import (Question, Answer, QuestionVote, AnswerVote,
                      CONFIRMED, UNCONFIRMED)
 from .forms import (NewQuestionForm, EditQuestionForm,
-                    AnswerForm, WatchQuestionForm)
+                    AnswerForm, WatchQuestionForm,
+                    FREQUENCY_CHOICES)
 from .feeds import QuestionsFeed, AnswersFeed
 from .tags import add_existing_tag
 from .tasks import (cache_top_contributors, build_solution_notification,
@@ -675,6 +676,7 @@ def _answers_data(request, question_id, form=None, watch_form=None):
     feed_urls = ((reverse('questions.answers.feed',
                           kwargs={'question_id': question_id}),
                   AnswersFeed().title(question)),)
+    frequencies = dict(FREQUENCY_CHOICES)
 
     return {'question': question,
             'answers': answers_,
@@ -682,6 +684,7 @@ def _answers_data(request, question_id, form=None, watch_form=None):
             'watch_form': watch_form or _init_watch_form(request, 'reply'),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),
+            'frequencies': frequencies,
             'can_tag': request.user.has_perm('questions.tag_question'),
             'can_create_tags': request.user.has_perm('taggit.add_tag')}
 
