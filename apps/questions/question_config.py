@@ -22,6 +22,18 @@ products = SortedDict([
         ('d2', {
             'name': _('Firefox is crashing or closing unexpectedly'),
             'extra_fields': ['crash_id'],
+            'articles': [
+                {'title': 'Firefox crashes',
+                 'url': '/en-US/kb/Firefox+Crashes'},
+                {'title': 'Firefox crashes when you open it',
+                 'url': '/en-US/kb/Firefox+crashes+when+you+open+it'},
+                {'title': 'Firefox crashes when loading certain pages',
+                 'url': '/en-US/kb/Firefox+crashes+when+loading+certain+pages'},
+                {'title': 'Firefox crashes when you exit it',
+                 'url': '/en-US/kb/Firefox+crashes+when+you+exit+it'},
+                {'title': 'The Adobe Flash plugin has crashed',
+                 'url': '/en-US/kb/The+Adobe+Flash+plugin+has+crashed'},
+            ],
             'tags': ['crash'],
         }),
         ('d3', {
@@ -109,9 +121,10 @@ products = SortedDict([
         }),
         ('b6', {
             'name': _('I have feedback/suggestions about the beta'),
-            'html': 'You can provide feedback and suggestions<br /> 1) at our quick'
-                    ' feedback form<br /> 2) by taking our feedback survey or<br /> 3) by'
-                    ' suggesting features in our feedback forums.',
+            'html': 'Firefox 4 beta versions have a feedback system built in.'
+                    ' For more details, see our '
+                    '<a href="http://www.mozilla.com/en-US/firefox/beta/feedback/">'
+                    'beta feedback page</a>.',
             'deadend': True,
         }),
         ])
@@ -158,7 +171,14 @@ products = SortedDict([
             }),
             ('m5', {
                 'name': _('I have feedback/suggestions about Firefox for Mobile'),
-                'html': 'You can provide feedback and suggestions in our feedback forums.',
+                'html': '<p>You can provide suggestions for '
+                        '<strong>Firefox on Maemo</strong> in the '
+                        '<a href="http://firefoxformobile.uservoice.com/forums/70215-firefox-for-maemo-ideas">'
+                        'Maemo feedback forum</a>.</p>'
+                        '<p>You can provide suggestions for '
+                        '<strong>Firefox on Android</strong> in the '
+                        '<a href="http://firefoxformobile.uservoice.com/forums/70211-firefox-for-android-ideas">'
+                        'Android feedback forum</a>.</p>',
                 'deadend': True,
             }),
         ])
@@ -198,7 +218,9 @@ products = SortedDict([
             }),
             ('i4', {
                 'name': _('I have feedback/suggestions about Firefox Home for iPhone'),
-                'html': 'You can provide feedback and suggestions in our feedback forums.',
+                'html': 'You can provide suggestions in our '
+                        '<a href="http://firefoxformobile.uservoice.com/forums/67057-firefox-home-ideas">'
+                        'Firefox Home feedback forum</a>.',
                 'deadend': True,
             }),
         ])
@@ -247,7 +269,9 @@ products = SortedDict([
             }),
             ('s5', {
                 'name': _('I have feedback/suggestions about Firefox Home for iPhone'),
-                'html': 'You can provide feedback and suggestions in our feedback forums.',
+                'html': 'You can provide suggestions in our '
+                        '<a href="http://assets2.getsatisfaction.com/mozilla_labs/products/mozilla_labs_weave_sync">'
+                        'Firefox Sync feedback forum</a>.',
                 'deadend': True,
             }),
         ])
