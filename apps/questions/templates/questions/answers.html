@@ -168,7 +168,7 @@
           {% endif %}
           {% if question.metadata.troubleshooting %}
             <h5>{{ _('More Information') }}</h5>
-            <p>{{ question.metadata.troubleshooting }}</p>
+            <p>{{ question.metadata.troubleshooting|trim|collapse_linebreaks|nl2br }}</p>
           {% endif %}
           {% if question.metadata.plugins %}
             <h5>{{ _('Installed Plug-ins') }}</h5>
