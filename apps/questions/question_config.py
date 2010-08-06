@@ -170,7 +170,7 @@ products = SortedDict([
                 'tags': ['addon'],
             }),
             ('m5', {
-                'name': _('I have feedback/suggestions about Firefox for Mobile'),
+                'name': _('I have suggestions for how to improve Firefox for Mobile'),
                 'html': '<p>You can provide suggestions for '
                         '<strong>Firefox on Maemo</strong> in the '
                         '<a href="http://firefoxformobile.uservoice.com/forums/70215-firefox-for-maemo-ideas">'
@@ -217,7 +217,7 @@ products = SortedDict([
                 'tags': ['sync'],
             }),
             ('i4', {
-                'name': _('I have feedback/suggestions about Firefox Home for iPhone'),
+                'name': _('I have suggestions for how to improve Firefox Home for iPhone'),
                 'html': 'You can provide suggestions in our '
                         '<a href="http://firefoxformobile.uservoice.com/forums/67057-firefox-home-ideas">'
                         'Firefox Home feedback forum</a>.',
@@ -268,7 +268,7 @@ products = SortedDict([
                 'tags': ['sync'],
             }),
             ('s5', {
-                'name': _('I have feedback/suggestions about Firefox Home for iPhone'),
+                'name': _('I have suggestions for how to improve Firefox Sync'),
                 'html': 'You can provide suggestions in our '
                         '<a href="http://assets2.getsatisfaction.com/mozilla_labs/products/mozilla_labs_weave_sync">'
                         'Firefox Sync feedback forum</a>.',
