@@ -260,7 +260,8 @@ def confirm_question_form(request, question_id, confirmation_id):
             question.status = CONFIRMED
             question.save()
 
-    return answers(request, question_id)
+    return HttpResponseRedirect(reverse('questions.answers',
+                                        args=[question_id]))
 
 
 @require_POST

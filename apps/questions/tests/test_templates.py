@@ -971,6 +971,9 @@ class AAQTemplateTestCase(TestCaseBase):
         # Confirm the question and make sure it now appears in questions list
         response = post(self.client, 'questions.confirm_form', {},
                         args=[question.id, question.confirmation_id])
+        eq_(1, len(response.redirect_chain))
+        eq_(('http://testserver/en-US/questions/%s' % question.id, 302),
+            response.redirect_chain[0])
         doc = pq(response.content)
         eq_('jsocol', doc('#question div.asked-by span.user').text())
         response = get(self.client, 'questions.questions')
