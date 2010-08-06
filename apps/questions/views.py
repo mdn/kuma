@@ -5,7 +5,7 @@ import logging
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.contenttypes.models import ContentType
-from django.http import (HttpResponseRedirect, HttpResponse,
+from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_http_methods
@@ -112,10 +112,15 @@ def answers(request, question_id, form=None, watch_form=None):
 def new_question(request):
     """Ask a new question."""
 
-    product = products.get(request.GET.get('product'))
+    product_key = request.GET.get('product')
+    product = products.get(product_key)
+    if product_key and not product:
+        raise Http404
     category_key = request.GET.get('category')
     if product and category_key:
         category = product['categories'].get(category_key)
+        if not category:
+            raise Http404
         deadend = category.get('deadend', False)
         html = category.get('html')
         articles = category.get('articles')

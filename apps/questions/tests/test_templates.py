@@ -976,3 +976,14 @@ class AAQTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.questions')
         doc = pq(response.content)
         eq_(1, len(doc('li#question-%s' % question.id)))
+
+    def test_invalid_product_404(self):
+        url = urlparams(reverse('questions.new_question'), product='lipsum')
+        response = self.client.get(url)
+        eq_(404, response.status_code)
+
+    def test_invalid_category_404(self):
+        url = urlparams(reverse('questions.new_question'),
+                        product='desktop', category='lipsum')
+        response = self.client.get(url)
+        eq_(404, response.status_code)
