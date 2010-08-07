@@ -6,6 +6,7 @@ from notifications import check_watch
 import sumo.models
 from taggit.models import Tag
 
+from flagit.models import FlaggedObject
 from questions.models import (Question, QuestionMetaData, Answer,
                               _tenths_version)
 from questions.tags import add_existing_tag
@@ -36,6 +37,39 @@ class TestAnswer(TestCaseBase):
         eq_(answer, question.last_answer)
 
         question.delete()
+
+    def test_delete_question_removes_flag(self):
+        """Deleting a question also removes the flags on that question."""
+        question = Question(title='Test Question',
+                            content='Lorem Ipsum Dolor',
+                            creator_id=118533)
+        question.save()
+        FlaggedObject.objects.create(
+            status=0, content_object=question,
+            reason='language', creator_id=118533)
+        eq_(1, FlaggedObject.objects.count())
+
+        question.delete()
+        eq_(0, FlaggedObject.objects.count())
+
+    def test_delete_answer_removes_flag(self):
+        """Deleting an answer also removes the flags on that answer."""
+        question = Question(title='Test Question',
+                            content='Lorem Ipsum Dolor',
+                            creator_id=118533)
+        question.save()
+
+        answer = Answer(question=question, creator_id=47963,
+                        content="Test Answer")
+        answer.save()
+
+        FlaggedObject.objects.create(
+            status=0, content_object=answer,
+            reason='language', creator_id=118533)
+        eq_(1, FlaggedObject.objects.count())
+
+        answer.delete()
+        eq_(0, FlaggedObject.objects.count())
 
     def test_delete_last_answer_of_question(self):
         """Deleting the last_answer of a Question should update the question.
@@ -90,6 +124,7 @@ class TestAnswer(TestCaseBase):
         question.save()
 
         eq_(answer.creator_num_answers, 1)
+
 
 class TestQuestionMetadata(TestCaseBase):
     """Tests handling question metadata"""

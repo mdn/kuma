@@ -11,6 +11,7 @@ from django.contrib.contenttypes import generic
 import product_details
 from taggit.models import Tag
 
+from flagit.models import FlaggedObject
 from notifications import create_watch
 from notifications.tasks import delete_watches
 from sumo.models import ModelBase, TaggableMixin
@@ -54,6 +55,7 @@ class Question(ModelBase, TaggableMixin):
     confirmation_id = models.CharField(max_length=40, db_index=True)
 
     images = generic.GenericRelation(ImageAttachment)
+    flags = generic.GenericRelation(FlaggedObject)
 
     class Meta:
         ordering = ['-updated']
@@ -252,6 +254,7 @@ class Answer(ModelBase):
     upvotes = models.IntegerField(default=0, db_index=True)
 
     images = generic.GenericRelation(ImageAttachment)
+    flags = generic.GenericRelation(FlaggedObject)
 
     class Meta:
         ordering = ['created']

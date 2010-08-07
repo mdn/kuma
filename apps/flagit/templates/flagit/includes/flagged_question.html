@@ -11,7 +11,7 @@
 <h3>{{ _('Take Action:') }}</h3>
 <div class="actions">
   <a href="{{ object.content_object.get_absolute_url() }}">View</a>
-  <a href="# {# TODO: depends on Erik's patch that adds edit question #}">Edit</a>
+  <a href="{{ url('questions.edit_question', object.content_object.id) }}">Edit</a>
   {% if user.has_perm('questions.delete_question') %}
     <a class="delete" href="{{ url('questions.delete', object.content_object.id) }}">{{ _('Delete') }}</a>
   {% endif %}
