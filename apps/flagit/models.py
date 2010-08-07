@@ -51,3 +51,7 @@ class FlaggedObject(ModelBase):
     class Meta:
         unique_together = (('content_type', 'object_id', 'creator'),)
         ordering = ['created']
+        permissions = (
+                ('can_moderate',
+                 'Can moderate flagged objects'),
+            )
