@@ -57,6 +57,20 @@ class TestAnswer(TestCaseBase):
         eq_(question.last_answer.id, last_answer.id)
         eq_(Answer.objects.filter(pk=answer.id).count(), 0)
 
+    def test_delete_solution_of_question(self):
+        """Deleting the solution of a Question should update the question.
+        """
+        # set a solution to the question
+        question = Question.objects.all()[0]
+        solution = question.last_answer
+        question.solution = solution
+        question.save()
+
+        # delete the solution and question.solution should go back to None
+        solution.delete()
+        question = Question.objects.get(pk=question.id)
+        eq_(question.solution, None)
+
     def test_creator_num_posts(self):
         """Test retrieval of post count for creator of a particular answer"""
         question = Question.objects.all()[0]

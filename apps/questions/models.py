@@ -287,13 +287,16 @@ class Answer(ModelBase):
     def delete(self, *args, **kwargs):
         """Override delete method to update parent question info."""
         question = Question.uncached.get(pk=self.question.id)
-        if question.last_answer and question.last_answer == self:
+        if question.last_answer == self:
             answers = question.answers.all().order_by('-created')
             try:
                 question.last_answer = answers[1]
             except IndexError:
                 # The question has only one answer
                 question.last_answer = None
+        if question.solution == self:
+            question.solution = None
+
         question.num_answers = question.answers.count() - 1
         question.save()
 
