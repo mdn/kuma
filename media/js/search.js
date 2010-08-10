@@ -49,7 +49,7 @@ $(document).ready(function() {
  */
 jQuery.fn.numericInput = function (options) {
     // Only works on <input/>
-    if (this[0].nodeName !== 'INPUT') {
+    if (!this.is('input')) {
         return this;
     }
 
