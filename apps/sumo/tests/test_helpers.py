@@ -13,8 +13,8 @@ import jingo
 from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 
-from sumo.helpers import (profile_url, profile_avatar,
-                          datetimeformat, DateTimeFormatError)
+from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
+                          DateTimeFormatError, collapse_linebreaks)
 from sumo.urlresolvers import reverse
 
 
@@ -62,6 +62,15 @@ class TestHelpers(TestCase):
         user = User.objects.create(pk=500001, username=u'testuser2')
         eq_(u'/tiki-show_user_avatar.php?user=testuser2',
             profile_avatar(user))
+
+    def test_collapse_linebreaks(self):
+        """Make sure collapse_linebreaks works on some tricky cases."""
+        eq_(collapse_linebreaks('\r\n \t  \n\r  Trouble\r\n\r\nshooting \r\n'),
+            '\r\n  Trouble\r\nshooting\r\n')
+        eq_(collapse_linebreaks('Application Basics\n      \n\n      \n      '
+                                '\n\n\n        \n          \n            \n   '
+                                '           Name'),
+                                'Application Basics\r\n              Name')
 
 
 class TestDateTimeFormat(TestCase):

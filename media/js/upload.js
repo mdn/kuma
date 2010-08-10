@@ -88,7 +88,7 @@ $(document).ready(function () {
                         .insertBefore($options.progress);
                     $thumbnail.prepend(
                         '<input type="submit" class="delete" data-url="' +
-                        upFile.delete_url + '" value="✖"/>');
+                        upFile.delete_url + '" value="&#x2716;"/>');
                     $thumbnail.children().first().wrapDeleteInput({
                         error_title_del: UPLOAD.error_title_del,
                         error_login: UPLOAD.error_login
@@ -244,4 +244,4 @@ jQuery.fn.ajaxSubmitInput = function (options) {
     });
 
     return this;
-}
+};

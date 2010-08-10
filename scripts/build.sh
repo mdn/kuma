@@ -26,7 +26,6 @@ ROOT_URLCONF = 'workspace.urls'
 LOG_LEVEL = logging.ERROR
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
-DICT_DIR='/usr/local/share/myspell/'
 SETTINGS
 
 echo "Starting tests..."

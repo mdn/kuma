@@ -5,7 +5,7 @@ import logging
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.contrib.contenttypes.models import ContentType
-from django.http import (HttpResponseRedirect, HttpResponse,
+from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_http_methods
@@ -31,7 +31,8 @@ from notifications import create_watch, destroy_watch
 from .models import (Question, Answer, QuestionVote, AnswerVote,
                      CONFIRMED, UNCONFIRMED)
 from .forms import (NewQuestionForm, EditQuestionForm,
-                    AnswerForm, WatchQuestionForm)
+                    AnswerForm, WatchQuestionForm,
+                    FREQUENCY_CHOICES)
 from .feeds import QuestionsFeed, AnswersFeed
 from .tags import add_existing_tag
 from .tasks import (cache_top_contributors, build_solution_notification,
@@ -40,9 +41,6 @@ import questions as constants
 from .question_config import products
 from upload.models import ImageAttachment
 from upload.views import upload_images
-
-
-log = logging.getLogger('k.questions')
 
 
 log = logging.getLogger('k.questions')
@@ -85,7 +83,8 @@ def questions(request):
         tag_slugs = tagged.split(',')
         tags = Tag.objects.filter(slug__in=tag_slugs)
         if tags:
-            question_qs = question_qs.filter(tags__in=[t.name for t in tags])
+            for t in tags:
+                question_qs = question_qs.filter(tags__in=[t.name])
         else:
             question_qs = Question.objects.get_empty_query_set()
 
@@ -114,10 +113,15 @@ def answers(request, question_id, form=None, watch_form=None):
 def new_question(request):
     """Ask a new question."""
 
-    product = products.get(request.GET.get('product'))
+    product_key = request.GET.get('product')
+    product = products.get(product_key)
+    if product_key and not product:
+        raise Http404
     category_key = request.GET.get('category')
     if product and category_key:
         category = product['categories'].get(category_key)
+        if not category:
+            raise Http404
         deadend = category.get('deadend', False)
         html = category.get('html')
         articles = category.get('articles')
@@ -256,7 +260,8 @@ def confirm_question_form(request, question_id, confirmation_id):
             question.status = CONFIRMED
             question.save()
 
-    return answers(request, question_id)
+    return HttpResponseRedirect(reverse('questions.answers',
+                                        args=[question_id]))
 
 
 @require_POST
@@ -672,15 +677,15 @@ def _answers_data(request, question_id, form=None, watch_form=None):
     feed_urls = ((reverse('questions.answers.feed',
                           kwargs={'question_id': question_id}),
                   AnswersFeed().title(question)),)
-    related = question.tags.similar_objects()[:3]
+    frequencies = dict(FREQUENCY_CHOICES)
 
     return {'question': question,
             'answers': answers_,
-            'related': related,
             'form': form or AnswerForm(),
             'watch_form': watch_form or _init_watch_form(request, 'reply'),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),
+            'frequencies': frequencies,
             'can_tag': request.user.has_perm('questions.tag_question'),
             'can_create_tags': request.user.has_perm('taggit.add_tag')}
 

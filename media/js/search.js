@@ -65,4 +65,4 @@ jQuery.fn.numericInput = function (options) {
 
 
     return this;
-}
+};

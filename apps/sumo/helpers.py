@@ -1,6 +1,7 @@
 import cgi
 import urlparse
 import datetime
+import re
 
 from django.utils.encoding import smart_unicode
 from django.conf import settings
@@ -192,3 +193,24 @@ def datetimeformat(context, value, format='shortdatetime'):
     else:
         # Unknown format
         raise DateTimeFormatError
+
+
+_whitespace_then_break = re.compile(r'[\r\n\t ]+[\r\n]+')
+
+
+@register.filter
+def collapse_linebreaks(text):
+    """Replace consecutive CRs and/or LFs with single CRLFs.
+
+    CRs or LFs with nothing but whitespace between them are still considered
+    consecutive.
+
+    As a nice side effect, also strips trailing whitespace from lines that are
+    followed by line breaks.
+
+    """
+    # I previously tried an heuristic where we'd cut the number of linebreaks
+    # in half until there remained at least one lone linebreak in the text.
+    # However, about:support in some versions of Firefox does yield some hard-
+    # wrapped paragraphs using single linebreaks.
+    return _whitespace_then_break.sub('\r\n', text)

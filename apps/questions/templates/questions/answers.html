@@ -160,7 +160,7 @@
           {% endif %}
           {% if question.metadata.frequency %}
             <h5>{{ _('This happened') }}</h5>
-            <p>{{ question.metadata.frequency }}</p>
+            <p>{{ frequencies[question.metadata.frequency] }}</p>
           {% endif %}
           {% if question.metadata.started %}
             <h5>{{ _('This started when...') }}</h5>
@@ -168,7 +168,7 @@
           {% endif %}
           {% if question.metadata.troubleshooting %}
             <h5>{{ _('More Information') }}</h5>
-            <p>{{ question.metadata.troubleshooting }}</p>
+            <p>{{ question.metadata.troubleshooting|trim|collapse_linebreaks|nl2br }}</p>
           {% endif %}
           {% if question.metadata.plugins %}
             <h5>{{ _('Installed Plug-ins') }}</h5>

@@ -127,6 +127,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.LocaleURLMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
+    'sumo.middleware.NoCacheHttpsMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -299,12 +300,6 @@ MINIFY_BUNDLES = {
 }
 
 JAVA_BIN = '/usr/bin/java'
-
-#
-# Directory storing myspell dictionaries (with trailing slash)
-DICT_DIR = '/usr/share/myspell/'
-# Path to a file with a list of custom words.
-WORD_LIST = path('configs/words.txt')
 
 #
 # Session cookies

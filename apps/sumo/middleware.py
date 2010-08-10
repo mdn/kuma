@@ -91,3 +91,16 @@ class Forbidden403Middleware(object):
             return handle403(request)
         # If not 403, return response unmodified
         return response
+
+
+class NoCacheHttpsMiddleware(object):
+    """
+    Sets no-cache headers when HTTPS META variable is set
+    and not equal to 'off'.
+    """
+    def process_response(self, request, response):
+        if 'HTTPS' in request.META and request.META['HTTPS'] != 'off':
+            response['Expires'] = 'Thu, 19 Nov 1981 08:52:00 GMT'
+            response['Cache-Control'] = 'no-cache, must-revalidate'
+            response['Pragma'] = 'no-cache'
+        return response
