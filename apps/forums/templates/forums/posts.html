@@ -71,7 +71,7 @@
             <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
             <div class="post-actions">
             {% if not thread.is_locked and
-                   has_perm_or_owns('forums_forum.post_edit_forum', post, thread, 'author') %}
+                   has_perm_or_owns('forums_forum.post_edit_forum', post, forum, 'author') %}
               <a href="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
             {% endif %}
             {% if has_perm('forums_forum.post_delete_forum', forum) %}
