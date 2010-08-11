@@ -89,6 +89,21 @@ class ForumModelTestCase(ForumTestCase):
         post.delete()
         eq_(0, Thread.objects.filter(pk=thread.id).count())
 
+    def test_public_access(self):
+        """Assert Forums think they're publicly viewable and postable at
+        appropriate times."""
+        forum = Forum.objects.get(pk=1)
+        unprivileged_user = User.objects.get(pk=118533)
+        assert forum.allows_viewing_by(unprivileged_user)
+        assert forum.allows_posting_by(unprivileged_user)
+
+    def test_access_restriction(self):
+        """Assert Forums are inaccessible to the public when restricted."""
+        forum = Forum.objects.get(pk=3)
+        unprivileged_user = User.objects.get(pk=118533)
+        assert not forum.allows_viewing_by(unprivileged_user)
+        assert not forum.allows_posting_by(unprivileged_user)
+
 
 class ThreadModelTestCase(ForumTestCase):
 

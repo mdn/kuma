@@ -16,6 +16,27 @@
         }
     },
     {
+        "pk": 3,
+        "model": "forums.forum",
+        "fields": {
+            "name": "Restricted Forum",
+            "slug": "restricted-forum"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "forums.thread",
+        "fields": {
+            "is_sticky": false,
+            "forum": 3,
+            "created": "2010-04-28 16:04:42",
+            "is_locked": false,
+            "creator": 118533,
+            "replies": 0,
+            "title": "Thread in a restricted forum"
+        }
+    },
+    {
         "pk": 5,
         "model": "forums.thread",
         "fields": {

@@ -12,8 +12,7 @@ def has_perm(context, perm, obj):
 
     Returns boolean.
     """
-    user = context['request'].user
-    return access.has_perm(user, perm, obj)
+    return access.has_perm(context['request'].user, perm, obj)
 
 
 @register.function

@@ -13,6 +13,8 @@ def has_perm_or_owns_or_403(perm, owner_attr, obj_lookup, perm_obj_lookup,
     """Act like permission_required_or_403 but also grant permission to owners.
 
     Arguments:
+        perm: authority permission to check, e.g. 'forums_forum.edit_forum'
+
         owner_attr: Attr of model object that references the owner
 
         obj_lookup: Triple that specifies a lookup to the object on which
@@ -38,7 +40,7 @@ def has_perm_or_owns_or_403(perm, owner_attr, obj_lookup, perm_obj_lookup,
                 if granted or user.has_perm(perm):
                     return view_func(request, *args, **kwargs)
 
-            # in all other cases, permission denied
+            # In all other cases, permission denied
             return HttpResponseForbidden()
 
         return wraps(view_func)(_wrapped_view)

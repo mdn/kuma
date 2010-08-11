@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
@@ -25,10 +25,10 @@ log = logging.getLogger('k.forums')
 
 def forums(request):
     """View all the forums."""
-
-    forums_ = paginate(request, Forum.objects.all())
-
-    return jingo.render(request, 'forums/forums.html', {'forums': forums_})
+    forums_ = [f for f in Forum.objects.all() if
+               f.allows_viewing_by(request.user)]
+    return jingo.render(request, 'forums/forums.html',
+                       {'forums': paginate(request, forums_)})
 
 
 def sort_threads(threads_, sort=0, desc=0):
@@ -50,8 +50,9 @@ def sort_threads(threads_, sort=0, desc=0):
 
 def threads(request, forum_slug):
     """View all the threads in a forum."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
+    if not forum.allows_viewing_by(request.user):
+        raise Http404  # Pretend there's nothing there.
 
     try:
         sort = int(request.GET.get('sort', 0))
@@ -79,8 +80,10 @@ def threads(request, forum_slug):
 
 def posts(request, forum_slug, thread_id, form=None):
     """View all the posts in a thread."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
+    if not forum.allows_viewing_by(request.user):
+        raise Http404
+
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     posts_ = paginate(request, thread.post_set.all(),
@@ -104,20 +107,22 @@ def posts(request, forum_slug, thread_id, form=None):
 @login_required
 def reply(request, forum_slug, thread_id):
     """Reply to a thread."""
-    form = ReplyForm(request.POST)
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    user = request.user
+    if not forum.allows_posting_by(user):
+        if forum.allows_viewing_by(user):
+            raise PermissionDenied
+        else:
+            raise Http404
 
+    form = ReplyForm(request.POST)
     if form.is_valid():
-        forum = get_object_or_404(Forum, slug=forum_slug)
         thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
-        # A reply or two might sneak in after the thread is locked due to
-        # replication lag, but that should be very rare and won't result in a
-        # user-visible error. Not worth pinning to master as long as we're not
-        # even using one transaction per request.
         if not thread.is_locked:
             reply_ = form.save(commit=False)
             reply_.thread = thread
-            reply_.author = request.user
+            reply_.author = user
             reply_.save()
 
             # Send notifications to thread/forum watchers.
@@ -131,8 +136,13 @@ def reply(request, forum_slug, thread_id):
 @login_required
 def new_thread(request, forum_slug):
     """Start a new thread."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
+    user = request.user
+    if not forum.allows_posting_by(user):
+        if forum.allows_viewing_by(user):
+            raise PermissionDenied
+        else:
+            raise Http404
 
     if request.method == 'GET':
         form = NewThreadForm()
@@ -142,10 +152,10 @@ def new_thread(request, forum_slug):
     form = NewThreadForm(request.POST)
 
     if form.is_valid():
-        thread = forum.thread_set.create(creator=request.user,
+        thread = forum.thread_set.create(creator=user,
                                          title=form.cleaned_data['title'])
         thread.save()
-        post = thread.new_post(author=request.user,
+        post = thread.new_post(author=user,
                                content=form.cleaned_data['content'])
         post.save()
 
@@ -159,13 +169,15 @@ def new_thread(request, forum_slug):
                         {'form': form, 'forum': forum})
 
 
+# TODO: permission_required_... decorators leak the existence of unviewable
+# forums by returning 403 rather than 404. Rewrite views to not use those
+# decorators.
 @require_POST
 @login_required
 @permission_required_or_403('forums_forum.thread_locked_forum',
                             (Forum, 'slug__iexact', 'forum_slug'))
 def lock_thread(request, forum_slug, thread_id):
     """Lock/Unlock a thread."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
     thread.is_locked = not thread.is_locked
@@ -235,7 +247,6 @@ def edit_thread(request, forum_slug, thread_id):
                             (Forum, 'slug__iexact', 'forum_slug'))
 def delete_thread(request, forum_slug, thread_id):
     """Delete a thread."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
@@ -254,24 +265,33 @@ def delete_thread(request, forum_slug, thread_id):
 
 @require_POST
 @login_required
-@permission_required_or_403('forums_forum.thread_move_forum',
-                            (Forum, 'slug__iexact', 'forum_slug'))
 def move_thread(request, forum_slug, thread_id):
     """Move a thread."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
+    user = request.user
 
     new_forum_id = request.POST.get('forum')
     new_forum = get_object_or_404(Forum, id=new_forum_id)
 
-    if not has_perm(request.user, 'forums_forum.thread_move_forum',
-                    new_forum):
+    # Don't admit that unviewable forums exist or allow escalation of privs by
+    # moving things to a looser forum:
+    if not (forum.allows_viewing_by(user) and
+            new_forum.allows_viewing_by(user)):
+        raise Http404
+
+    # Don't allow the equivalent of posting here by posting elsewhere then
+    # moving:
+    if not new_forum.allows_posting_by(user):
+        raise PermissionDenied
+
+    if not (has_perm(user, 'forums_forum.thread_move_forum', new_forum) and
+            has_perm(user, 'forums_forum.thread_move_forum', forum)):
         raise PermissionDenied
 
     # Handle confirm delete form POST
     log.warning('User %s is moving thread with id=%s to forum with id=%s' %
-                (request.user, thread.id, new_forum_id))
+                (user, thread.id, new_forum_id))
     thread.forum = new_forum
     thread.save()
 
@@ -284,7 +304,6 @@ def move_thread(request, forum_slug, thread_id):
                          (Forum, 'slug__iexact', 'forum_slug'))
 def edit_post(request, forum_slug, thread_id, post_id):
     """Edit a post."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
     post = get_object_or_404(Post, pk=post_id, thread=thread)
@@ -319,7 +338,6 @@ def edit_post(request, forum_slug, thread_id, post_id):
                             (Forum, 'slug__iexact', 'forum_slug'))
 def delete_post(request, forum_slug, thread_id, post_id):
     """Delete a post."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
     post = get_object_or_404(Post, pk=post_id, thread=thread)
@@ -348,8 +366,10 @@ def delete_post(request, forum_slug, thread_id, post_id):
 @login_required
 def watch_thread(request, forum_slug, thread_id):
     """Watch/unwatch a thread (based on 'watch' POST param)."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
+    if not forum.allows_viewing_by(request.user):
+        raise Http404
+
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     if request.POST.get('watch') == 'yes':
@@ -365,8 +385,9 @@ def watch_thread(request, forum_slug, thread_id):
 @login_required
 def watch_forum(request, forum_slug):
     """Watch/unwatch a forum (based on 'watch' POST param)."""
-
     forum = get_object_or_404(Forum, slug=forum_slug)
+    if not forum.allows_viewing_by(request.user):
+        raise Http404
 
     if request.POST.get('watch') == 'yes':
         create_watch(Forum, forum.id, request.user.email, 'post')
