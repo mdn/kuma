@@ -24,7 +24,7 @@ class AnswersTemplateTestCase(TestCaseBase):
         super(AnswersTemplateTestCase, self).setUp()
 
         self.client.login(username='jsocol', password='testpass')
-        self.question = Question.objects.all()[0]
+        self.question = Question.objects.get(pk=1)
         self.answer = self.question.answers.all()[0]
 
     def tearDown(self):
