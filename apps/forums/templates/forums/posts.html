@@ -47,6 +47,19 @@
         <input type="image" src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Change sticky status') }}" title="{{ _('Change sticky status') }}" />
       </form>
     {% endif %}
+    {% if has_perm('forums_forum.thread_move_forum', forum) %}
+      <form class="move" action="{{ url('forums.move_thread', forum.slug, thread.id) }}" method="post">
+        {{ csrf() }}
+        <select name="forum">
+          {% for f in forums %}
+            {% if has_perm('forums_forum.thread_move_forum', f) %}
+              <option value="{{ f.id }}" {% if f == forum %}selected="selected"{% endif %}>{{ f.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <input type="submit" value="Move Thread" />
+      </form>
+    {% endif %}
   </div>
 
   <div class="thread-watch">

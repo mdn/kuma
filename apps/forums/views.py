@@ -10,6 +10,7 @@ import jingo
 from authority.decorators import permission_required_or_403
 
 from access.decorators import has_perm_or_owns_or_403
+from access import has_perm
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from .models import Forum, Thread, Post
@@ -95,7 +96,8 @@ def posts(request, forum_slug, thread_id, form=None):
     return jingo.render(request, 'forums/posts.html',
                         {'forum': forum, 'thread': thread,
                          'posts': posts_, 'form': form,
-                         'feeds': feed_urls})
+                         'feeds': feed_urls,
+                         'forums': Forum.objects.all()})
 
 
 @login_required
@@ -241,6 +243,32 @@ def delete_thread(request, forum_slug, thread_id):
     thread.delete()
 
     return HttpResponseRedirect(reverse('forums.threads', args=[forum_slug]))
+
+
+@require_POST
+@login_required
+@permission_required_or_403('forums_forum.thread_move_forum',
+                            (Forum, 'slug__iexact', 'forum_slug'))
+def move_thread(request, forum_slug, thread_id):
+    """Move a thread."""
+
+    forum = get_object_or_404(Forum, slug=forum_slug)
+    thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
+
+    new_forum_id = request.POST.get('forum')
+    new_forum = get_object_or_404(Forum, id=new_forum_id)
+
+    if not has_perm(request.user, 'forums_forum.thread_move_forum',
+                    new_forum):
+        raise PermissionDenied
+
+    # Handle confirm delete form POST
+    log.warning('User %s is moving thread with id=%s to forum with id=%s' %
+                (request.user, thread.id, new_forum_id))
+    thread.forum = new_forum
+    thread.save()
+
+    return HttpResponseRedirect(thread.get_absolute_url())
 
 
 @login_required

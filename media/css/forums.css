@@ -222,6 +222,10 @@ div.thread-actions form {
     display: inline;
 }
 
+div.thread-actions form.move {
+    float: right;
+}
+
 ol.posts li div.post-actions {
    margin: 1em 0;
 }

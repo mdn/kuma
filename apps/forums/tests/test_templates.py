@@ -256,6 +256,28 @@ class ForumsTemplateTestCase(ForumTestCase):
                        args=[self.forum.slug, self.thread.id])
         eq_(405, response.status_code)
 
+    def test_move_thread_403(self):
+        """Moving a thread without permissions returns 403."""
+        response = post(self.client, 'forums.move_thread',
+                        args=[self.forum.slug, self.thread.id])
+        eq_(403, response.status_code)
+
+    def test_move_thread_405(self):
+        """Moving a thread via a GET instead of a POST request."""
+        response = get(self.client, 'forums.move_thread',
+                       args=[self.forum.slug, self.thread.id])
+        eq_(405, response.status_code)
+
+    def test_move_thread(self):
+        """Move a thread."""
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'forums.move_thread',
+                        {'forum': 2},
+                        args=[self.forum.slug, self.thread.id])
+        eq_(200, response.status_code)
+        thread = Thread.objects.get(pk=self.thread.pk)
+        eq_(2, thread.forum.id)
+
     def test_post_edit_403(self):
         """Editing a post without permissions returns 403."""
         response = get(self.client, 'forums.edit_post',
