@@ -1,0 +1,4 @@
+MySQL-python==1.2.3c1
+Jinja2==2.2.1
+PIL==1.1.7
+lxml==2.2.6

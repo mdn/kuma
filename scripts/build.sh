@@ -7,7 +7,7 @@ VENV=$WORKSPACE/venv
 echo "Starting build..."
 
 # Clean up after last time.
-find . -name '*.pyc' | xargs rm
+find . -name '*.pyc' -exec rm {} \;
 
 if [ ! -d "$VENV/bin" ]; then
     echo "No virtualenv found; making one..."
@@ -16,7 +16,7 @@ fi
 
 source $VENV/bin/activate
 
-pip install -qr requirements-dev.txt
+pip install -qUr requirements/dev.txt
 
 python manage.py update_product_details
 
