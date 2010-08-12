@@ -67,7 +67,7 @@
           </div>
           <div class="asked-by">
             {{ _('Asked by <span class="user">{user}</span>')|fe(user=question.creator) }}
-            <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
+            {{ datetimeformat(question.created, format='longdatetime') }}
           </div>
           <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
           <div class="meta">

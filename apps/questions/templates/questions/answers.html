@@ -20,7 +20,7 @@
       <div class="asked-by">
         {# L10n: {f} is the full username and {u} is the truncated username. #}
         {{ _('Asked by <span class="user" title="{f}">{u}</span>')|fe(f=question.creator, u=question.creator.username|truncate(10, True)) }}
-        <time>{{ datetimeformat(question.created, format='longdatetime') }}</time>
+        {{ datetimeformat(question.created, format='longdatetime') }}
       </div>
     </div>
     <div class="main-section">
@@ -34,7 +34,7 @@
       </div>
       {% if question.updated_by %}
         <p class="edited">
-          {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=question.updated_by.username, datetime=datetimeformat(question.updated, format='longdatetime')) }}
+          {{ _('Modified {datetime} by {name}')|f(name=question.updated_by.username, datetime=datetimeformat(question.updated, format='longdatetime'))|safe }}
         </p>
       {% endif %}
       <div class="problem">

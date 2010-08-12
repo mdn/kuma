@@ -20,7 +20,7 @@
   {{ post.content_parsed }}
 </div>
 <div class="info">
-  <time>{{ datetimeformat(post.created, format='longdatetime') }}</time>
+  {{ datetimeformat(post.created, format='longdatetime') }}
   <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
   {% if post.id and user.is_authenticated() and not thread.is_locked %}
     <span class="post-action">
@@ -29,7 +29,7 @@
   {% endif %}
   {% if post.created != post.updated %}
     <span class="post-modified">
-      {{ _('Modified by {name} on <time>{datetime}</time>')|fe(name=post.updated_by.username, datetime=datetimeformat(post.updated, format='longdatetime')) }}
+      {{ _('Modified by {name} on {datetime}')|f(name=post.updated_by.username, datetime=datetimeformat(post.updated, format='longdatetime'))|safe }}
     </span>
   {% endif %}
 </div>

@@ -178,21 +178,24 @@ def datetimeformat(context, value, format='shortdatetime'):
     if format == 'shortdatetime':
         # Check if the date is today
         if value.toordinal() == datetime.date.today().toordinal():
-            return _lazy('Today at %s') % format_time(
-                tzvalue, format='short', locale=locale)
+            formatted = _lazy('Today at %s') % format_time(
+                                    tzvalue, format='short', locale=locale)
         else:
-            return format_datetime(tzvalue, format='short', locale=locale)
+            formatted = format_datetime(tzvalue, format='short', locale=locale)
     elif format == 'longdatetime':
-        return format_datetime(tzvalue, format='long', locale=locale)
+        formatted = format_datetime(tzvalue, format='long', locale=locale)
     elif format == 'date':
-        return format_date(tzvalue, locale=locale)
+        formatted = format_date(tzvalue, locale=locale)
     elif format == 'time':
-        return format_time(tzvalue, locale=locale)
+        formatted = format_time(tzvalue, locale=locale)
     elif format == 'datetime':
-        return format_datetime(tzvalue, locale=locale)
+        formatted = format_datetime(tzvalue, locale=locale)
     else:
         # Unknown format
         raise DateTimeFormatError
+
+    return jinja2.Markup('<time datetime="%s">%s</time>' % \
+                         (tzvalue.isoformat(), formatted))
 
 
 _whitespace_then_break = re.compile(r'[\r\n\t ]+[\r\n]+')

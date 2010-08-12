@@ -17,7 +17,7 @@
 </div>
 <div class="main-section">
   <p class="posted">
-    {{ _('Posted <time>{datetime}</time>:')|fe(datetime=datetimeformat(answer.created, format='longdatetime')) }}
+    {{ _('Posted {datetime}:')|f(datetime=datetimeformat(answer.created, format='longdatetime'))|safe }}
   </p>
   <div class="content">
     {{ answer.content_parsed|safe }}
@@ -29,7 +29,7 @@
   </div>
   {% if answer.updated_by %}
     <p class="edited">
-      {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=answer.updated_by.username, datetime=datetimeformat(answer.updated, format='longdatetime')) }}
+      {{ _('Modified {datetime} by {name}')|f(name=answer.updated_by.username, datetime=datetimeformat(answer.updated, format='longdatetime'))|safe }}
     </p>
   {% endif %}
   {% if answer.id and not question.is_locked %}

@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from nose.tools import eq_
-from nose.tools import assert_raises
-import test_utils
-
 from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import User
 
+from nose.tools import eq_
+from nose.tools import assert_raises
+import test_utils
 import jingo
 from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
+from pyquery import PyQuery as pq
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
                           DateTimeFormatError, collapse_linebreaks)
@@ -87,7 +87,7 @@ class TestDateTimeFormat(TestCase):
         value_expected = 'Today at %s' % format_time(date_today,
                                                      format='short',
                                                      locale=u'en_US')
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_locale(self):
         """Expects shortdatetime in French."""
@@ -96,7 +96,7 @@ class TestDateTimeFormat(TestCase):
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'fr')
         value_returned = datetimeformat(self.context, value_test)
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_default(self):
         """Expects shortdatetime."""
@@ -104,7 +104,7 @@ class TestDateTimeFormat(TestCase):
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test)
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_longdatetime(self):
         """Expects long format."""
@@ -114,7 +114,7 @@ class TestDateTimeFormat(TestCase):
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime')
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_date(self):
         """Expects date format."""
@@ -122,7 +122,7 @@ class TestDateTimeFormat(TestCase):
         value_expected = format_date(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='date')
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_time(self):
         """Expects time format."""
@@ -130,7 +130,7 @@ class TestDateTimeFormat(TestCase):
         value_expected = format_time(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='time')
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_datetime(self):
         """Expects datetime format."""
@@ -138,7 +138,7 @@ class TestDateTimeFormat(TestCase):
         value_expected = format_datetime(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='datetime')
-        eq_(value_returned, value_expected)
+        eq_(pq(value_returned)('time').text(), value_expected)
 
     def test_unknown_format(self):
         """Unknown format raises DateTimeFormatError."""
