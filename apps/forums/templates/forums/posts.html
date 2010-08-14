@@ -78,41 +78,7 @@
     <ol class="posts">
       {% for post in posts.object_list %}
         <li id="post-{{ post.id }}">
-          <div class="author">
-            <a href="{{ profile_url(post.author) }}">
-              <img src="{{ profile_avatar(post.author) }}" height="45" width="45" alt=""/>
-            </a>
-            <a href="{{ profile_url(post.author) }}">{{ post.author }}</a>
-            <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
-            <div class="post-actions">
-            {% if not thread.is_locked and
-                   has_perm_or_owns('forums_forum.post_edit_forum', post, forum, 'author') %}
-              <a href="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
-            {% endif %}
-            {% if has_perm('forums_forum.post_delete_forum', forum) %}
-              <a href="{{ url('forums.delete_post', forum.slug, thread.id, post.id) }}">
-                <img src="{{ MEDIA_URL }}img/forums/delete.png" alt="{{ _('Delete') }}" title="{{ _('Delete') }}">
-              </a>
-            {% endif %}
-            </div>
-          </div>
-          <div class="content">
-            {{ post.content_parsed }}
-          </div>
-          <div class="info">
-            <time>{{ datetimeformat(post.created, format='longdatetime') }}</time>
-            <a href="#post-{{ post.id }}" class="permalink" title="{{ _('Link to this post.') }}">#</a>
-            {% if user.is_authenticated() and not thread.is_locked %}
-              <span class="post-action">
-                <a href="#thread-reply">{{ _('Reply') }}</a>
-              </span>
-            {% endif %}
-            {% if post.created != post.updated %}
-              <span class="post-modified">
-                {{ _('Modified by {name} on <time>{datetime}</time>')|fe(name=post.updated_by.username, datetime=datetimeformat(post.updated, format='longdatetime')) }}
-              </span>
-            {% endif %}
-          </div>
+          {% include "forums/includes/post.html" %}
         </li>
       {% endfor %}
     </ol>
@@ -138,7 +104,8 @@
         </div>
 
         <div class="forum-editor-actions">
-          <input type="submit" value="Reply" />
+          <input type="submit" name="preview" value="{{ _('Preview') }}" />
+          <input type="submit" value="{{ _('Reply') }}" />
         </div>
       </form>
     </div>
@@ -147,6 +114,17 @@
       <h3>{{ _('Post a reply') }}</h3>
 
       <p id="thread-locked">{{ _('This thread has been locked. It is no longer possible to post new replies.') }}</p>
+    </div>
+  {% endif %}
+  {% if reply_preview %}
+    <div id="post-preview">
+      <h3>{{ _('Reply Preview:') }}</h3>
+      <ol class="posts">
+        <li>
+          {% set post = reply_preview %}
+          {% include "forums/includes/post.html" %}
+        </li>
+      </ol>
     </div>
   {% endif %}
 

@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -78,7 +79,7 @@ def threads(request, forum_slug):
                          'feeds': feed_urls})
 
 
-def posts(request, forum_slug, thread_id, form=None):
+def posts(request, forum_slug, thread_id, form=None, reply_preview=None):
     """View all the posts in a thread."""
     forum = get_object_or_404(Forum, slug=forum_slug)
     if not forum.allows_viewing_by(request.user):
@@ -100,6 +101,7 @@ def posts(request, forum_slug, thread_id, form=None):
     return jingo.render(request, 'forums/posts.html',
                         {'forum': forum, 'thread': thread,
                          'posts': posts_, 'form': form,
+                         'reply_preview': reply_preview,
                          'feeds': feed_urls,
                          'forums': Forum.objects.all()})
 
@@ -116,21 +118,25 @@ def reply(request, forum_slug, thread_id):
             raise Http404
 
     form = ReplyForm(request.POST)
+    reply_preview = None
     if form.is_valid():
         thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
         if not thread.is_locked:
             reply_ = form.save(commit=False)
             reply_.thread = thread
-            reply_.author = user
-            reply_.save()
+            reply_.author = request.user
+            if 'preview' in request.POST:
+                reply_preview = reply_
+            else:
+                reply_.save()
 
-            # Send notifications to thread/forum watchers.
-            build_reply_notification.delay(reply_)
+                # Send notifications to thread/forum watchers.
+                build_reply_notification.delay(reply_)
 
-            return HttpResponseRedirect(reply_.get_absolute_url())
+                return HttpResponseRedirect(reply_.get_absolute_url())
 
-    return posts(request, forum_slug, thread_id, form)
+    return posts(request, forum_slug, thread_id, form, reply_preview)
 
 
 @login_required
@@ -150,23 +156,30 @@ def new_thread(request, forum_slug):
                             {'form': form, 'forum': forum})
 
     form = NewThreadForm(request.POST)
-
+    post_preview = None
     if form.is_valid():
-        thread = forum.thread_set.create(creator=user,
-                                         title=form.cleaned_data['title'])
-        thread.save()
-        post = thread.new_post(author=user,
-                               content=form.cleaned_data['content'])
-        post.save()
+        if 'preview' in request.POST:
+            thread = Thread(creator=request.user,
+                            title=form.cleaned_data['title'])
+            post_preview = Post(thread=thread, author=request.user,
+                                content=form.cleaned_data['content'])
+        else:
+            thread = forum.thread_set.create(creator=request.user,
+                                             title=form.cleaned_data['title'])
+            thread.save()
+            post = thread.new_post(author=request.user,
+                                   content=form.cleaned_data['content'])
+            post.save()
 
-        # Send notifications to forum watchers.
-        build_thread_notification.delay(post)
+            # Send notifications to forum watchers.
+            build_thread_notification.delay(post)
 
-        return HttpResponseRedirect(
-            reverse('forums.posts', args=[forum_slug, thread.id]))
+            return HttpResponseRedirect(
+                reverse('forums.posts', args=[forum_slug, thread.id]))
 
     return jingo.render(request, 'forums/new_thread.html',
-                        {'form': form, 'forum': forum})
+                        {'form': form, 'forum': forum,
+                         'post_preview': post_preview})
 
 
 # TODO: permission_required_... decorators leak the existence of unviewable
@@ -318,19 +331,23 @@ def edit_post(request, forum_slug, thread_id, post_id):
                              'thread': thread, 'post': post})
 
     form = EditPostForm(request.POST)
-
+    post_preview = None
     if form.is_valid():
-        log.warning('User %s is editing post with id=%s' %
-                    (request.user, post.id))
         post.content = form.cleaned_data['content']
         post.updated_by = request.user
-        post.save()
-
-        return HttpResponseRedirect(post.get_absolute_url())
+        if 'preview' in request.POST:
+            post.updated = datetime.now()
+            post_preview = post
+        else:
+            log.warning('User %s is editing post with id=%s' %
+                        (request.user, post.id))
+            post.save()
+            return HttpResponseRedirect(post.get_absolute_url())
 
     return jingo.render(request, 'forums/edit_post.html',
                         {'form': form, 'forum': forum,
-                         'thread': thread, 'post': post})
+                         'thread': thread, 'post': post,
+                         'post_preview': post_preview})
 
 
 @login_required

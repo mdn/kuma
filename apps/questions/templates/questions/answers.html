@@ -1,7 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "questions/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% from "upload/attachments.html" import attachments_form, attachment %}
+{% from "upload/attachments.html" import attachments_form %}
 {# L10n: {q} is the title of the question. #}
 {% set title = _('{q} | Firefox Support Forum')|f(q=question.title) %}
 {% set classes = 'answers' %}
@@ -246,92 +246,7 @@
     <ol class="answers">
       {% for answer in answers.object_list %}
         <li id="answer-{{ answer.id }}" class="{% if answer.creator == question.creator %}author{% endif %}{% if question.solution == answer %} solution{% endif %}">
-          <div class="user-section">
-            <div class="avatar">
-              <a href="{{ profile_url(answer.creator) }}">
-                <img src="{{ profile_avatar(answer.creator) }}" height="48" width="48" alt="{{ answer.creator }}"/>
-              </a>
-            </div>
-            <div class="answered-by">
-              <span class="user" title="{{answer.creator}}">{{ answer.creator.username|truncate(10, True) }}</span>
-              {% if answer.creator==question.creator %}
-                <span class="author">{{ _('Author') }}</span>
-              {% else %}
-                <span class="posts">{{ _('{numposts} posts')|f(numposts=answer.creator_num_posts) }}</span>
-                <span class="answers">{{ _('{numanswers} answers')|f(numanswers=answer.creator_num_answers) }}</span>
-              {% endif %}
-            </div>
-          </div>
-          <div class="main-section">
-            <p class="posted">
-              {{ _('Posted <time>{datetime}</time>:')|fe(datetime=datetimeformat(answer.created, format='longdatetime')) }}
-            </p>
-            <div class="content">
-              {{ answer.content_parsed|safe }}
-            </div>
-            <div class="ans-attachments attachments-list">
-              {% for image in answer.images.all() %}
-                {{ attachment(image, user) }}
-              {% endfor %}
-            </div>
-            {% if answer.updated_by %}
-              <p class="edited">
-                {{ _('Modified <time>{datetime}</time> by {name}')|fe(name=answer.updated_by.username, datetime=datetimeformat(answer.updated, format='longdatetime')) }}
-              </p>
-            {% endif %}
-            {% if not question.is_locked %}
-              <div class="reply">
-                <a href="#question-reply">{{ _('Reply to this post') }}</a>
-              </div>
-            {% endif %}
-          </div>
-          <div class="side-section">
-            {% if answer.creator != question.creator %}
-              {% if not question.is_locked %}
-                {% if not question.solution and user == question.creator %}
-                  <h4>{{ _('Did this solve your problem?') }}</h4>
-                  <form class="helpful" action="{{ url('questions.solution', question_id=question.id, answer_id=answer.id) }}" method="post">
-                    {{ csrf() }}
-                    <input type="submit" class="btn g-btn" name="solution" value="{{ _('Solved It') }}" />
-                  </form>
-                {% elif not answer.has_voted(request) and user != question.creator and user != answer.creator %}
-                  <h4>{{ _('Was this reply helpful?') }}</h4>
-                  <form class="helpful" action="{{ url('questions.answer_vote', question_id=question.id, answer_id=answer.id) }}" method="post">
-                    {{ csrf() }}
-                    <input type="submit" class="btn g-btn" name="helpful" value="{{ _('Helpful') }}" />
-                    <input type="submit" class="btn g-btn" name="not-helpful" value="{{ _('Not Helpful') }}" />
-                  </form>
-                {% endif %}
-              {% endif %}
-
-              {% if question.solution == answer %}
-                <div class="solved">{{ _('Solution chosen by author') }}</div>
-              {% endif %}
-
-              {% if answer.num_votes != 0 %}
-                <div class="helpful {% if answer.num_helpful_votes == 0 %}zero{% endif %}">
-                  {{ ngettext('<mark>{count} out of {total} person</mark> <span>found this reply helpful</span>',
-                              '<mark>{count} out of {total} people</mark> <span>found this reply helpful</span>',
-                              answer.num_votes)|fe(count=answer.num_helpful_votes, total=answer.num_votes) }}
-                </div>
-              {% endif %}
-            {% endif %}
-            {% if user.is_authenticated() and user != answer.creator and not question.is_locked  %}
-              <form class="report" action="{{ url('questions.answer_flag', question.id, answer.id) }}" method="post">
-                {% include 'questions/includes/flag_form.html' %}
-              </form>
-            {% endif %}
-            {% if not question.is_locked and has_perm_or_owns('questions.change_answer', answer, answer) %}
-              <a class="edit" href="{{ url('questions.edit_answer', question.id, answer.id) }}">
-                {{ _('Edit this post') }}
-              </a>
-            {% endif %}
-            {% if user.has_perm('questions.delete_answer') %}
-              <a class="delete" href="{{ url('questions.delete_answer', question.id, answer.id) }}">
-                {{ _('Delete this post') }}
-              </a>
-            {% endif %}
-          </div>
+          {% include "questions/includes/answer.html" %}
         </li>
       {% endfor %}
     </ol>
@@ -360,7 +275,7 @@
         </div>
       </div>
       <div class="main-section">
-        <form action="{{ url('questions.reply', question_id=question.id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ url('questions.reply', question_id=question.id) }}#question-reply" method="post" enctype="multipart/form-data">
           {{ csrf() }}
           {{ errorlist(form) }}
 
@@ -372,6 +287,7 @@
           {{ attachments_form('questions.Question', question.pk, images, settings, user) }}
 
           <div class="submit">
+            <input type="submit" class="btn y-btn" name="preview" value="{{ _('Preview Reply') }}" />
             <input type="submit" class="btn g-btn" value="{{ _('Post Reply') }}" />
           </div>
         </form>
@@ -390,6 +306,17 @@
       <div class="side-section"></div>
     {% endif %}
   </div>
+  {% if answer_preview %}
+    <div id="answer-preview">
+      <h3>{{ _('Reply Preview:') }}</h3>
+      <ol class="answers">
+        <li>
+          {% set answer = answer_preview %}
+          {% include "questions/includes/answer.html" %}
+        </li>
+      </ol>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block side %}

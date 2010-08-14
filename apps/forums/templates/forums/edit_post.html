@@ -25,7 +25,20 @@
 
     <div class="form-widget submit">
       <a href="{{ url('forums.posts', forum.slug, thread.id) }}">{{ _('Cancel') }}</a>
+      <input type="submit" name="preview" value="{{ _('Preview') }}" />
       <input type="submit" value="{{ _('Update post') }}" />
     </div>
   </form>
+
+  {% if post_preview %}
+    <div id="post-preview">
+      <h3>{{ _('Post Preview:') }}</h3>
+      <ol class="posts">
+        <li>
+          {% set post = post_preview %}
+          {% include "forums/includes/post.html" %}
+        </li>
+      </ol>
+    </div>
+  {% endif %}
 {% endblock %}

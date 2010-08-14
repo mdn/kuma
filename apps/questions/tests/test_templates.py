@@ -512,6 +512,18 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id])
         eq_(200, response.status_code)
 
+    def test_preview_answer(self):
+        """Preview an answer."""
+        num_answers = self.question.answers.count()
+        content = 'Awesome answer.'
+        response = post(self.client, 'questions.reply',
+                        {'content': content, 'preview': 'any string'},
+                        args=[self.question.id])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(content, doc('#answer-preview div.content').text())
+        eq_(num_answers, self.question.answers.count())
+
 
 class TaggedQuestionsTestCase(TaggingTestCaseBase):
     """Questions/answers template tests that require tagged questions."""

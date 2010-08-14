@@ -111,6 +111,21 @@ class PostsTemplateTestCase(ForumTestCase):
                             args=['restricted-forum', 6])
         eq_(403, response.status_code)
 
+    def test_preview_reply(self):
+        """Preview a reply."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        t = f.thread_set.all()[0]
+        num_posts = t.post_set.count()
+        content = 'Full of awesome.'
+        response = post(self.client, 'forums.reply',
+                        {'content': content, 'preview': 'any string'},
+                        args=[f.slug, t.id])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(content, doc('#post-preview div.content').text())
+        eq_(num_posts, t.post_set.count())
+
 
 class ThreadsTemplateTestCase(ForumTestCase):
 
@@ -378,3 +393,20 @@ class ForumsTemplateTestCase(ForumTestCase):
 
         doc = pq(response.content)
         eq_('Access denied', doc('#content-inner h2').text())
+
+
+class NewThreadTemplateTestCase(ForumTestCase):
+
+    def test_preview(self):
+        """Preview the thread post."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        num_threads = f.thread_set.count()
+        content = 'Full of awesome.'
+        response = post(self.client, 'forums.new_thread',
+                        {'title': 'Topic', 'content': content,
+                         'preview': 'any string'}, args=[f.slug])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(content, doc('#post-preview div.content').text())
+        eq_(num_threads, f.thread_set.count())

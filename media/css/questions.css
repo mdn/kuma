@@ -1057,7 +1057,8 @@ ol.answers div.side-section a.edit {
     padding: 30px 0 20px 0;
 }
 
-#question-reply h3 {
+#question-reply h3,
+#answer-preview h3 {
     font-size: 18px;
     margin: 0 0 20px 135px;
 }
@@ -1088,6 +1089,10 @@ div.edit-answer textarea,
 
 #question-reply div.submit {
     margin: 15px 0 0;
+}
+
+#question-reply div.submit input {
+    margin: 0 10px 0 0;
 }
 
 /*
@@ -1200,6 +1205,22 @@ form.upload-input {
 
 form div.attachments-upload input.image-delete {
     margin-top: 1em;
+}
+
+/*
+ * Answer preview
+ */
+#answer-preview {
+    clear: both;
+    padding: 40px 0 0;
+}
+
+#answer-preview li {
+    border-top: 1px solid #F5F4F3;
+}
+
+div.edit-answer #answer-preview h3 {
+    margin-left: 0;
 }
 
 /*

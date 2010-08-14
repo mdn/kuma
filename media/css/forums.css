@@ -194,7 +194,8 @@ div#thread-reply {
     background-color: #edf7fA;
 }
 
-div#thread-reply h3 {
+div#thread-reply h3,
+div#post-preview h3 {
     padding: .5em 0 0 .5em;
     font-weight: normal;
     font-size: 180%;
@@ -260,6 +261,23 @@ ol.posts li div.author {
     float: left;
     width: 21%;
     padding: 0 1% 1em 1%;
+}
+
+/* Reply Preview */
+#post-preview {
+    margin: 10px 0 0;
+}
+
+div#post-preview h3 {
+    padding-left: 0;
+}
+
+#post-preview ol {
+    margin: 10px 0 0;
+}
+
+#post-preview li {
+    background: #f0f0f0;
 }
 
 /* Wiki markup for posts */
