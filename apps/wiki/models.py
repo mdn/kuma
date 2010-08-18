@@ -74,6 +74,11 @@ class Document(ModelBase, TaggableMixin):
     class Meta(object):
         unique_together = (('parent', 'locale'), ('title', 'locale'))
 
+    # Keep this for polymorphism with Questions for search results?
+    # @property
+    # def content_parsed(self):
+    #     return self.html
+
 
 # Caveats:
 #  * There's no immutable per-document revision ID revision (e.g., 0..63). We
@@ -107,22 +112,17 @@ class Revision(ModelBase):
     based_on = models.ForeignKey('self', null=True)  # limited_to default
                                                      # locale's revs
 
-    # Keep this for polymorphism with Questions for search results?
-    @property
-    def content_parsed(self):
-        return wiki_to_html(self.content)
-
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
 # enumeration table of int-to-string is not represented in the DB because of
 # difficulty working DB-dwelling gettext keys into our l10n workflow.
 class FirefoxVersion(ModelBase):
     """A Firefox version, version range, etc. used to categorize documents"""
-    item_id = models.IntegerField(choices=FIREFOX_VERSIONS)
+    item_id = models.IntegerField(choices=FIREFOX_VERSIONS, db_index=True)
     document = models.ForeignKey(Document, related_name='firefox_versions')
 
 
 class OperatingSystem(ModelBase):
     """An operating system used to categorize documents"""
-    item_id = models.IntegerField(choices=OPERATING_SYSTEMS)
+    item_id = models.IntegerField(choices=OPERATING_SYSTEMS, db_index=True)
     document = models.ForeignKey(Document, related_name='operating_systems')
