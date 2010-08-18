@@ -3,18 +3,17 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
+from access import has_perm, perm_is_defined_on
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
 from sumo.utils import wiki_to_html
-from forums.tasks import build_notification
 from notifications.tasks import delete_watches
 import forums
 
 
 class ThreadLockedError(Exception):
     """Trying to create a post in a locked thread."""
-    pass
 
 
 class Forum(ModelBase):
@@ -25,11 +24,45 @@ class Forum(ModelBase):
     last_post = models.ForeignKey('Post', related_name='last_post_in_forum',
                                   null=True)
 
+    class Meta(object):
+        permissions = (
+                ('view_in_forum',
+                 'Can view restricted forums'),
+                ('post_in_forum',
+                 'Can post in restricted forums'))
+
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('forums.threads', kwargs={'forum_slug': self.slug})
+
+    def allows_viewing_by(self, user):
+        """Return whether a user can view me, my threads, and their posts."""
+        return (self._allows_public_viewing() or
+                has_perm(user, 'forums_forum.view_in_forum', self))
+
+    def _allows_public_viewing(self):
+        """Return whether I am a world-readable forum.
+
+        If a django-authority permission relates to me, I am considered non-
+        public. (We assume that you attached a permission to me in order to
+        assign it to some users or groups.) Considered adding a Public flag to
+        this model, but we didn't want it to show up on form and thus be
+        accidentally flippable by readers of the Admin forum, who are all
+        privileged enough to do so.
+
+        """
+        return not perm_is_defined_on('forums_forum.view_in_forum', self)
+
+    def allows_posting_by(self, user):
+        """Return whether a user can make threads and posts in me."""
+        return (self._allows_public_posting() or
+                has_perm(user, 'forums_forum.post_in_forum', self))
+
+    def _allows_public_posting(self):
+        """Return whether I am a world-writable forum."""
+        return not perm_is_defined_on('forums_forum.post_in_forum', self)
 
 
 class Thread(ModelBase):
@@ -125,9 +158,6 @@ class Post(ModelBase):
 
             self.thread.forum.last_post = self
             self.thread.forum.save()
-
-            # Send notifications to thread watchers.
-            build_notification.delay(self)
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent thread info."""

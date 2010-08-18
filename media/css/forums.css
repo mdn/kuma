@@ -212,6 +212,11 @@ a#new-thread {
     padding-left: 10px;
 }
 
+div.forum-actions {
+    clear: left;
+    padding: 0.5em 0 0;
+}
+
 div.thread-actions {
     clear: left;
     padding-top: 1em;
@@ -220,6 +225,10 @@ div.thread-actions {
 
 div.thread-actions form {
     display: inline;
+}
+
+div.thread-actions form.move {
+    float: right;
 }
 
 ol.posts li div.post-actions {

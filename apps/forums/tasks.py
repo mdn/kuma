@@ -9,8 +9,9 @@ from notifications.tasks import send_notification
 
 
 @task
-def build_notification(post):
-    ct = ContentType.objects.get_for_model(post.thread)
+def build_reply_notification(post):
+    thread_ct = ContentType.objects.get_for_model(post.thread)
+    forum_ct = ContentType.objects.get_for_model(post.thread.forum)
 
     subject = _('Reply to: %s') % post.thread.title
     t = loader.get_template('forums/email/new_post.ltxt')
@@ -21,4 +22,28 @@ def build_notification(post):
     content = t.render(Context(c))
     exclude = (post.author.email,)
 
-    send_notification.delay(ct.id, post.thread.id, subject, content, exclude)
+    # Send to thread watchers
+    send_notification.delay(thread_ct.id, post.thread.id, subject,
+                            content, exclude, 'reply')
+    # And forum watchers
+    send_notification.delay(forum_ct.id, post.thread.forum.id, subject,
+                            content, exclude, 'post')
+
+
+@task
+def build_thread_notification(post):
+    forum_ct = ContentType.objects.get_for_model(post.thread.forum)
+
+    subject = _('New thread in %s forum: %s') % (post.thread.forum.name,
+                                                 post.thread.title)
+    t = loader.get_template('forums/email/new_thread.ltxt')
+    c = {'post': post.content, 'author': post.author.username,
+         'host': Site.objects.get_current().domain,
+         'thread_title': post.thread.title,
+         'post_url': post.thread.get_absolute_url()}
+    content = t.render(Context(c))
+    exclude = (post.thread.creator.email,)
+
+    # Send to forum watchers
+    send_notification.delay(forum_ct.id, post.thread.forum.id, subject,
+                            content, exclude, 'post')

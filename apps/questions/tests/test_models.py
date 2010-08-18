@@ -74,7 +74,7 @@ class TestAnswer(TestCaseBase):
     def test_delete_last_answer_of_question(self):
         """Deleting the last_answer of a Question should update the question.
         """
-        question = Question.objects.all()[0]
+        question = Question.objects.get(pk=1)
         last_answer = question.last_answer
 
         # add a new answer and verify last_answer updated
@@ -95,7 +95,7 @@ class TestAnswer(TestCaseBase):
         """Deleting the solution of a Question should update the question.
         """
         # set a solution to the question
-        question = Question.objects.all()[0]
+        question = Question.objects.get(pk=1)
         solution = question.last_answer
         question.solution = solution
         question.save()

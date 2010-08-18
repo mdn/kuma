@@ -11,6 +11,9 @@ products = SortedDict([
         ('d1', {
             'name': _('Firefox is having problems with certain web sites'),
             'extra_fields': ['sites_affected'],
+            'html': 'We have lots of helpful articles on <em>problems with web'
+                    ' sites</em> and hundreds of questions in our database. '
+                    'Try one of the following:',
             'articles': [
                 {'title': 'Firefox cannot load websites but other programs can',
                  'url': '/en-US/kb/Firefox+cannot+load+websites+but+other+programs+can'},
@@ -22,6 +25,9 @@ products = SortedDict([
         ('d2', {
             'name': _('Firefox is crashing or closing unexpectedly'),
             'extra_fields': ['crash_id'],
+            'html': 'We have lots of helpful articles on <em>crashes</em> '
+                    'and hundreds of questions in our database. Try one of '
+                    'the following:',
             'articles': [
                 {'title': 'Firefox crashes',
                  'url': '/en-US/kb/Firefox+Crashes'},
@@ -38,6 +44,9 @@ products = SortedDict([
         }),
         ('d3', {
             'name': _('I have a problem with my bookmarks, cookies, history or settings'),
+            'html': 'We have lots of helpful articles on <em>bookmarks, '
+                    'cookies, history or settings</em> and hundreds of '
+                    'questions in our database. Try one of the following:',
             'articles': [
                 {'title': 'Deleting Cookies',
                  'url': '/en-US/kb/Deleting+cookies'},
@@ -48,6 +57,9 @@ products = SortedDict([
         }),
         ('d4', {
             'name': _('I need help learning to use a Firefox feature'),
+            'html': 'We have lots of helpful articles to get you started <em>'
+                    'learning and using Firefox</em> and hundreds of questions'
+                    ' in our database. Try one of the following:',
             'articles': [
                 {'title': 'How to set the home page',
                  'url': '/en-US/kb/How+to+set+the+home+page'},
@@ -76,6 +88,9 @@ products = SortedDict([
         ('d6', {
             'name': _('I have another kind of problem with Firefox'),
             'extra_fields': ['frequency', 'started'],
+            'html': 'We have lots of helpful articles on <em>general Firefox '
+                    'issues</em> and hundreds of questions in our database. '
+                    'Try one of the following:',
             'articles': [
                 {'title': 'The Adobe Flash plugin has crashed',
                  'url': '/en-US/kb/The+Adobe+Flash+plugin+has+crashed'},
@@ -140,18 +155,26 @@ products = SortedDict([
                 'tags': ['websites'],
             }),
             ('m2', {
-                'name': _("I'm having trouble with the look and feel of Firefox for mobile"),
+                'name': _("I'm having trouble learning to use Firefox for mobile"),
+                'html': 'We have lots of helpful articles to get you started '
+                        '<em>learning to use Firefox for mobile</em> and '
+                        'hundreds of questions in our database. Try one of the'
+                        ' following:',
                 'articles': [
                     {'title': 'How to navigate Web pages',
-                     'url': '/en-US/kb/How+to+navigate+Web+pages'},
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+navigate+Web+pages'},
                     {'title': 'How to open a new tab',
-                     'url': '/en-US/kb/How+to+open+a+new+tab'},
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+open+a+new+tab'},
                     {'title': 'How to add a bookmark',
-                     'url': '/en-US/kb/How+to+add+a+bookmark'},
-                    {'title': 'How to use the Location Bar ',
-                     'url': '/en-US/kb/How+to+use+the+Location+Bar'},
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+add+a+bookmark'},
+                    {'title': 'How to use the Location Bar',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+use+the+Location+Bar'},
+                    {'title': 'How to zoom in and out',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+zoom+in+and+out'},
+                    {'title': 'How to manage downloads',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+manage+downloads'},
                 ],
-                'tags': ['ui'],
+                'tags': ['learning'],
             }),
             ('m3', {
                 'name': _('Firefox for mobile is crashing or closing unexpectedly'),
@@ -170,7 +193,30 @@ products = SortedDict([
                 'tags': ['addon'],
             }),
             ('m5', {
-                'name': _('I have suggestions for how to improve Firefox for Mobile'),
+                'name': _('I have another kind of problem with Firefox for mobile'),
+                'extra_fields': ['frequency'],
+                'html': 'We have lots of helpful articles on <em>general '
+                        'issues with Firefox for mobile</em> and hundreds '
+                        'of questions in our database. Try one of the '
+                        'following:',
+                'articles': [
+                    {'title': 'Will Firefox work on my phone',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/Will+Firefox+work+on+my+phone'},
+                    {'title': 'How to install Firefox on N900',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+install+Firefox+on+N900'},
+                    {'title': 'How to find and install add-ons',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+find+and+install+add-ons'},
+                    {'title': 'How to sync Firefox settings with a mobile device',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+sync+Firefox+settings+with+a+mobile+device'},
+                    {'title': 'How to remove or disable add-ons',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+remove+or+disable+add-ons'},
+                    {'title': 'How to change preferences',
+                     'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+change+preferences'},
+                ],
+                'tags': ['general'],
+            }),
+            ('m6', {
+                'name': _('I have suggestions for how to improve Firefox for mobile'),
                 'html': '<p>You can provide suggestions for '
                         '<strong>Firefox on Maemo</strong> in the '
                         '<a href="http://firefoxformobile.uservoice.com/forums/70215-firefox-for-maemo-ideas">'
@@ -189,6 +235,9 @@ products = SortedDict([
         'categories': SortedDict([
             ('i1', {
                 'name': _("I'm having trouble setting up Firefox Home on my iPhone"),
+                'html': 'We have lots of helpful articles on <em>setting up '
+                        'Firefox Home</em> and hundreds of questions in our '
+                        'database. Try the following:',
                 'articles': [
                     {'title': 'How to set up Firefox Home on your iPhone',
                      'url': '/en-US/kb/How+to+set+up+Firefox+Home+on+your+iPhone'},
@@ -197,6 +246,9 @@ products = SortedDict([
             }),
             ('i2', {
                 'name': _("I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
+                'html': 'We have lots of helpful articles on <em>setting up '
+                        'Firefox Sync</em> and hundreds of questions in our '
+                        'database. Try the following:',
                 'articles': [
                     {'title': 'How to sync Firefox settings between computers',
                      'url': '/en-US/kb/How+to+sync+Firefox+settings+between+computers'},
@@ -205,7 +257,10 @@ products = SortedDict([
             }),
             ('i3', {
                 'name': _('Not all my data is syncing between Firefox '
-                          'and Firefox Home or I have other problems syncing'),
+                          'and Firefox Home or I have other problems '),
+                'html': 'We have lots of helpful articles on <em>Firefox Home '
+                        'issues</em> and hundreds of questions in our '
+                        'database. Try one of the following:',
                 'articles': [
                     {'title': 'Firefox Home does not work ',
                      'url': '/kb/Firefox+Home+does+not+work'},
@@ -214,7 +269,7 @@ products = SortedDict([
                     {'title': 'Replace your Sync information',
                      'url': '/kb/Replace+your+Sync+information'},
                 ],
-                'tags': ['sync'],
+                'tags': ['general'],
             }),
             ('i4', {
                 'name': _('I have suggestions for how to improve Firefox Home for iPhone'),
@@ -231,6 +286,9 @@ products = SortedDict([
         'categories': SortedDict([
             ('s1', {
                 'name': _("I'm having trouble setting up Firefox Sync on my Nokia or Android device"),
+                'html': 'We have lots of helpful articles on <em>setting up '
+                        'Firefox Sync in Firefox for mobile</em> and hundreds '
+                        'of questions in our database. Try the following:',
                 'articles': [
                     {'title': 'How to sync Firefox settings with a mobile device',
                      'url': 'http://mobile.support.mozilla.com/en-US/kb/How+to+sync+Firefox+settings+with+a+mobile+device'},
@@ -239,6 +297,9 @@ products = SortedDict([
             }),
             ('s2', {
                 'name': _("I'm having trouble setting up Firefox Home on my iPhone"),
+                'html': 'We have lots of helpful articles on <em>setting up '
+                        'Firefox Home</em> and hundreds of questions in our '
+                        'database. Try one of the following:',
                 'articles': [
                     {'title': 'How to set up Firefox Home on your iPhone',
                      'url': '/en-US/kb/How+to+set+up+Firefox+Home+on+your+iPhone'},
@@ -247,6 +308,9 @@ products = SortedDict([
             }),
             ('s3', {
                 'name': _("I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
+                'html': 'We have lots of helpful articles on <em>setting up '
+                        'Firefox Sync</em> and hundreds of questions in our '
+                        'database. Try one of the following:',
                 'articles': [
                     {'title': 'How to sync Firefox settings between computers',
                      'url': '/en-US/kb/How+to+sync+Firefox+settings+between+computers'},
@@ -255,6 +319,9 @@ products = SortedDict([
             }),
             ('s4', {
                 'name': _('I have other problems syncing data between computers or devices'),
+                'html': 'We have lots of helpful articles on <em>Firefox sync'
+                        '</em> and hundreds of questions in our database. Try '
+                        'one of the following:',
                 'articles': [
                     {'title': 'Firefox Sync is not working',
                      'url': '/en-US/kb/Firefox+Sync+is+not+working'},
@@ -265,7 +332,7 @@ products = SortedDict([
                     {'title': 'Replace your Sync information',
                      'url': '/kb/Replace+your+Sync+information'},
                 ],
-                'tags': ['sync'],
+                'tags': ['general'],
             }),
             ('s5', {
                 'name': _('I have suggestions for how to improve Firefox Sync'),

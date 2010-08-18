@@ -1,3 +1,4 @@
+from mock import patch_object, Mock
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -5,6 +6,8 @@ from django.contrib.auth.models import User
 
 from forums.models import Forum, Thread, Post
 from forums.tests import ForumTestCase, get, post
+from notifications import check_watch
+from sumo.urlresolvers import reverse
 
 
 class PostsTemplateTestCase(ForumTestCase):
@@ -88,6 +91,26 @@ class PostsTemplateTestCase(ForumTestCase):
         edited_p = Post.uncached.get(pk=p.pk)
         eq_('More new content', edited_p.content)
 
+    def test_read_without_permission(self):
+        """Listing posts without the view_in_forum permission should 404."""
+        response = get(self.client, 'forums.posts', args=['restricted-forum', 6])
+        eq_(404, response.status_code)
+
+    def test_reply_without_view_permission(self):
+        """Posting without view_in_forum permission should 404."""
+        self.client.login(username='jsocol', password='testpass')
+        response = post(self.client, 'forums.reply', {'content': 'Blahs'},
+                        args=['restricted-forum', 6])
+        eq_(404, response.status_code)
+
+    def test_reply_without_post_permission(self):
+        """Posting without post_in_forum permission should 403."""
+        self.client.login(username='jsocol', password='testpass')
+        with patch_object(Forum, 'allows_viewing_by', Mock(return_value=True)):
+            response = post(self.client, 'forums.reply', {'content': 'Blahs'},
+                            args=['restricted-forum', 6])
+        eq_(403, response.status_code)
+
 
 class ThreadsTemplateTestCase(ForumTestCase):
 
@@ -112,6 +135,21 @@ class ThreadsTemplateTestCase(ForumTestCase):
         errors = doc('ul.errorlist li a')
         eq_(errors[0].text, 'Please provide a title.')
         eq_(errors[1].text, 'Please provide a message.')
+
+    def test_new_thread_without_view_permission(self):
+        """Making a new thread without view permission should 404."""
+        self.client.login(username='jsocol', password='testpass')
+        response = post(self.client, 'forums.new_thread',
+                        {'title': 'Blahs', 'content': 'Blahs'}, args=['restricted-forum'])
+        eq_(404, response.status_code)
+
+    def test_new_thread_without_post_permission(self):
+        """Making a new thread without post permission should 403."""
+        self.client.login(username='jsocol', password='testpass')
+        with patch_object(Forum, 'allows_viewing_by', Mock(return_value=True)):
+            response = post(self.client, 'forums.new_thread',
+                            {'title': 'Blahs', 'content': 'Blahs'}, args=['restricted-forum'])
+        eq_(403, response.status_code)
 
     def test_new_short_thread_errors(self):
         """Posting a short new thread shows errors."""
@@ -188,6 +226,49 @@ class ThreadsTemplateTestCase(ForumTestCase):
         edited_t = Thread.uncached.get(pk=2)
         eq_('new title', edited_t.title)
 
+    def test_watch_GET_405(self):
+        """Watch forum with HTTP GET results in 405."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        response = get(self.client, 'forums.watch_forum', args=[f.id])
+        eq_(405, response.status_code)
+
+    def test_watch_forum(self):
+        """Watch then unwatch a forum."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        post(self.client, 'forums.watch_forum', {'watch': 'yes'},
+             args=[f.slug])
+        assert check_watch(Forum, f.id, 'user118577@nowhere',
+                           'post'), 'Watch was not created'
+
+        post(self.client, 'forums.watch_forum', {'watch': 'no'},
+             args=[f.slug])
+        assert not check_watch(Forum, f.id, 'user118577@nowhere',
+                           'post'), 'Watch was not created'
+
+    def test_watch_forum_without_permission(self):
+        """Watching forums without the view_in_forum permission should 404."""
+        self.client.login(username='jsocol', password='testpass')
+        response = self.client.post(reverse('forums.watch_forum',
+                                            args=['restricted-forum']),
+                                    {'watch': 'yes'}, follow=False)
+        eq_(404, response.status_code)
+
+    def test_watch_thread_without_permission(self):
+        """Watching threads without the view_in_forum permission should 404."""
+        self.client.login(username='jsocol', password='testpass')
+        response = self.client.post(reverse('forums.watch_thread',
+                                            args=['restricted-forum', 6]),
+                                    {'watch': 'yes'}, follow=False)
+        eq_(404, response.status_code)
+
+    def test_read_without_permission(self):
+        """Listing threads without the view_in_forum permission should 404."""
+        response = get(self.client, 'forums.threads',
+                       args=['restricted-forum'])
+        eq_(404, response.status_code)
+
 
 class ForumsTemplateTestCase(ForumTestCase):
 
@@ -201,8 +282,8 @@ class ForumsTemplateTestCase(ForumTestCase):
         self.client.login(username='jsocol', password='testpass')
 
     def tearDown(self):
-        super(ForumsTemplateTestCase, self).tearDown()
         self.client.logout()
+        super(ForumsTemplateTestCase, self).tearDown()
 
     def test_last_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
@@ -211,6 +292,11 @@ class ForumsTemplateTestCase(ForumTestCase):
         last_post_link = doc('ol.forums div.last-post a:not(.username)')[0]
         href = last_post_link.attrib['href']
         eq_(href.split('#')[1], 'post-25')
+
+    def test_restricted_is_invisible(self):
+        """Forums with restricted view_in permission shouldn't show up."""
+        response = get(self.client, 'forums.forums')
+        self.assertNotContains(response, 'restricted-forum')
 
     def test_edit_thread_403(self):
         """Editing a thread without permissions returns 403."""
@@ -255,6 +341,28 @@ class ForumsTemplateTestCase(ForumTestCase):
         response = get(self.client, 'forums.lock_thread',
                        args=[self.forum.slug, self.thread.id])
         eq_(405, response.status_code)
+
+    def test_move_thread_403(self):
+        """Moving a thread without permissions returns 403."""
+        response = post(self.client, 'forums.move_thread', {'forum': 2},
+                        args=[self.forum.slug, self.thread.id])
+        eq_(403, response.status_code)
+
+    def test_move_thread_405(self):
+        """Moving a thread via a GET instead of a POST request."""
+        response = get(self.client, 'forums.move_thread',
+                       args=[self.forum.slug, self.thread.id])
+        eq_(405, response.status_code)
+
+    def test_move_thread(self):
+        """Move a thread."""
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'forums.move_thread',
+                        {'forum': 2},
+                        args=[self.forum.slug, self.thread.id])
+        eq_(200, response.status_code)
+        thread = Thread.objects.get(pk=self.thread.pk)
+        eq_(2, thread.forum.id)
 
     def test_post_edit_403(self):
         """Editing a post without permissions returns 403."""

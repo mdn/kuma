@@ -16,12 +16,14 @@
   </div>
   <div class="thread-actions">
     {% if user.is_authenticated() %}
-      <form action="{{ url('forums.watch', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
+      <form action="{{ url('forums.watch_thread', forum_slug=forum.slug, thread_id=thread.id) }}" method="post">
         {{ csrf() }}
         {% if is_watching(thread) %}
           {% set watch = _('Stop watching') %}
+          <input type="hidden" name="watch" value="no" />
         {% else %}
           {% set watch = _('Watch this thread') %}
+          <input type="hidden" name="watch" value="yes" />
         {% endif %}
         <input type="image" alt="{{ watch }}" title="{{ watch }}" src="{{ MEDIA_URL }}img/forums/watch.png"/>
       </form>
@@ -45,6 +47,19 @@
       <form action="{{ url('forums.sticky_thread', forum.slug, thread.id) }}" method="post">
         {{ csrf() }}
         <input type="image" src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Change sticky status') }}" title="{{ _('Change sticky status') }}" />
+      </form>
+    {% endif %}
+    {% if has_perm('forums_forum.thread_move_forum', forum) %}
+      <form class="move" action="{{ url('forums.move_thread', forum.slug, thread.id) }}" method="post">
+        {{ csrf() }}
+        <select name="forum">
+          {% for f in forums %}
+            {% if has_perm('forums_forum.thread_move_forum', f) %}
+              <option value="{{ f.id }}" {% if f == forum %}selected="selected"{% endif %}>{{ f.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        <input type="submit" value="Move Thread" />
       </form>
     {% endif %}
   </div>
@@ -71,7 +86,7 @@
             <span class="posts">{{ _('{0} posts')|f(post.author.post_set.count()) }}</span>
             <div class="post-actions">
             {% if not thread.is_locked and
-                   has_perm_or_owns('forums_forum.post_edit_forum', post, thread, 'author') %}
+                   has_perm_or_owns('forums_forum.post_edit_forum', post, forum, 'author') %}
               <a href="{{ url('forums.edit_post', forum.slug, thread.id, post.id) }}"><img src="{{ MEDIA_URL }}img/forums/edit.png" alt="{{ _('Edit') }}" title="{{ _('Edit') }}"/></a>
             {% endif %}
             {% if has_perm('forums_forum.post_delete_forum', forum) %}

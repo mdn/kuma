@@ -68,5 +68,59 @@
             "approved": 1,
             "date_approved": "2010-05-20 10:37:22"
         }
+    },
+    {
+        "pk": 6,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-08-10 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 1,
+            "content_type": ["forums", "forum"],
+            "codename": "forums_forum.thread_move_forum",
+            "approved": 1,
+            "date_approved": "2010-08-10 10:37:22"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-08-10 10:37:22",
+            "group": 1,
+            "creator": 1,
+            "object_id": 2,
+            "content_type": ["forums", "forum"],
+            "codename": "forums_forum.thread_move_forum",
+            "approved": 1,
+            "date_approved": "2010-08-10 10:37:22"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "creator": 1,
+            "object_id": 3,
+            "content_type": ["forums", "forum"],
+            "codename": "forums_forum.view_in_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:37:22"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "authority.permission",
+        "fields": {
+            "date_requested": "2010-05-20 10:37:22",
+            "creator": 1,
+            "object_id": 3,
+            "content_type": ["forums", "forum"],
+            "codename": "forums_forum.post_in_forum",
+            "approved": 1,
+            "date_approved": "2010-05-20 10:37:22"
+        }
     }
 ]

@@ -138,7 +138,7 @@ class ForumTestPermissions(TestCase):
                 eq_(allowed, True)
 
     def test_util_has_perm_or_owns_sanity(self):
-        """Sanity check for has_perm_or_owns."""
+        """Sanity check for access.has_perm_or_owns."""
         me = User.objects.get(pk=118533)
         my_t = Thread.objects.filter(creator=me)[0]
         other_t = Thread.objects.exclude(creator=me)[0]
@@ -147,3 +147,17 @@ class ForumTestPermissions(TestCase):
         eq_(allowed, True)
         allowed = access.has_perm_or_owns(me, perm, other_t, self.forum_1)
         eq_(allowed, False)
+
+    def test_has_perm_per_object(self):
+        """Assert has_perm checks per-object permissions correctly."""
+        user = User.objects.get(pk=47963)
+        perm = 'forums_forum.thread_edit_forum'
+        assert access.has_perm(user, perm, self.forum_1)
+        assert not access.has_perm(user, perm, self.forum_2)
+
+    def test_perm_is_defined_on(self):
+        """Test whether we check for permission relationship, independent of
+        whether the permission is actually assigned to anyone."""
+        perm = 'forums_forum.view_in_forum'
+        assert access.perm_is_defined_on(perm, Forum.objects.get(pk=3))
+        assert not access.perm_is_defined_on(perm, Forum.objects.get(pk=2))
