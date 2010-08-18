@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from sumo.models import ModelBase, TaggableMixin
-from sumo.utils import wiki_to_html
 
 
 # Disruptiveness of edits to translated versions. Keys indicate the relative
@@ -40,6 +39,23 @@ OPERATING_SYSTEMS = (
     (5, _lazy('Android')))
 
 
+def _inherited(parent_attr, direct_attr):
+    """Return a descriptor delegating to an attr of the original document.
+
+    If `self` is a translation, the descriptor delegates to the attribute
+    `parent_attr` from the original document. Otherwise, it delegates to the
+    attribute `direct_attr` from `self`.
+
+    """
+    getter = lambda self: (getattr(self.parent, parent_attr)
+                               if self.parent
+                           else getattr(self, direct_attr))
+    setter = lambda self, val: (setattr(self.parent, parent_attr,
+                                        val) if self.parent else
+                                setattr(self, direct_attr, val))
+    return property(getter, setter)
+
+
 class Document(ModelBase, TaggableMixin):
     """A localized knowledgebase document, not revision-specific."""
     title = models.CharField(max_length=255, db_index=True)
@@ -54,7 +70,7 @@ class Document(ModelBase, TaggableMixin):
 
     # The Document I was translated from. NULL iff this doc is in the default
     # locale. TODO: validate against settings.WIKI_DEFAULT_LANGUAGE.
-    parent = models.ForeignKey('self', related_name='children', null=True)
+    parent = models.ForeignKey('self', related_name='translations', null=True)
 
     # Cached HTML rendering of wiki markup:
     html = models.TextField(editable=False)
@@ -71,6 +87,9 @@ class Document(ModelBase, TaggableMixin):
     #    defined in the respective classes below. Use them as in
     #    test_firefox_versions.
 
+    # TODO: Rethink indexes once controller code is near complete. Depending on
+    # how MySQL uses indexes, we probably don't need individual indexes on
+    # title and locale as well as a combined (title, locale) one.
     class Meta(object):
         unique_together = (('parent', 'locale'), ('title', 'locale'))
 
@@ -78,6 +97,11 @@ class Document(ModelBase, TaggableMixin):
     # @property
     # def content_parsed(self):
     #     return self.html
+
+    # FF version and OS are hung off the original, untranslated document and
+    # dynamically inherited by translations:
+    firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
+    operating_systems = _inherited('operating_systems', 'operating_system_set')
 
 
 # Caveats:
@@ -119,10 +143,10 @@ class Revision(ModelBase):
 class FirefoxVersion(ModelBase):
     """A Firefox version, version range, etc. used to categorize documents"""
     item_id = models.IntegerField(choices=FIREFOX_VERSIONS, db_index=True)
-    document = models.ForeignKey(Document, related_name='firefox_versions')
+    document = models.ForeignKey(Document, related_name='firefox_version_set')
 
 
 class OperatingSystem(ModelBase):
     """An operating system used to categorize documents"""
     item_id = models.IntegerField(choices=OPERATING_SYSTEMS, db_index=True)
-    document = models.ForeignKey(Document, related_name='operating_systems')
+    document = models.ForeignKey(Document, related_name='operating_system_set')
