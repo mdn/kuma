@@ -272,6 +272,9 @@ MINIFY_BUNDLES = {
         'search': (
             'css/search.css',
         ),
+        'wiki': (
+            'css/wiki.css',
+        ),
         'ie': (
             'css/ie.css',
         ),
@@ -296,7 +299,9 @@ MINIFY_BUNDLES = {
         ),
         'forums': (
             'js/markup.js',
-        )
+        ),
+        'wiki': (
+        ),
     },
 }
 
