@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 
 import mock
 
+from questions.models import Question, Answer
 from questions.tasks import (build_answer_notification,
                              build_solution_notification)
-from . import TestCaseBase, post
+from . import TestCaseBase
 import notifications.tasks
-from questions.models import Question, Answer
+from sumo.tests import post
 
 
 EMAIL_CONTENT = (

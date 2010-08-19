@@ -44,7 +44,7 @@ def urlencode(items):
         return urllib.urlencode([(k, smart_str(v)) for k, v in items])
 
 
-def wiki_to_html(wiki_markup):
+def wiki_to_html(wiki_markup, wiki_hooks=False):
     """Wiki Markup -> HTML"""
-    parser = WikiParser()
+    parser = WikiParser(wiki_hooks=wiki_hooks)
     return jinja2.Markup(parser.parse(wiki_markup, False))

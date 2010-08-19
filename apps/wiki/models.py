@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from sumo.models import ModelBase, TaggableMixin
+from sumo.urlresolvers import reverse
+from sumo.utils import wiki_to_html
 
 
 # Disruptiveness of edits to translated versions. Keys indicate the relative
@@ -93,15 +95,18 @@ class Document(ModelBase, TaggableMixin):
     class Meta(object):
         unique_together = (('parent', 'locale'), ('title', 'locale'))
 
-    # Keep this for polymorphism with Questions for search results?
-    # @property
-    # def content_parsed(self):
-    #     return self.html
+    @property
+    def content_parsed(self):
+        return self.html
 
     # FF version and OS are hung off the original, untranslated document and
     # dynamically inherited by translations:
     firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
     operating_systems = _inherited('operating_systems', 'operating_system_set')
+
+    def get_absolute_url(self):
+        return reverse('wiki.document',
+                       kwargs={'document_slug': self.title.replace(' ', '+')})
 
 
 # Caveats:
@@ -119,7 +124,7 @@ class Revision(ModelBase):
     # Keywords are used mostly to affect search rankings. Moderators may not
     # have the language expertise to translate keywords, so we put them in the
     # Revision so the translators can handle them:
-    keywords = models.CharField(max_length=255)
+    keywords = models.CharField(max_length=255, blank=True)
 
     created = models.DateTimeField(default=datetime.now)
     reviewed = models.DateTimeField(null=True)
@@ -135,6 +140,17 @@ class Revision(ModelBase):
     # date.
     based_on = models.ForeignKey('self', null=True)  # limited_to default
                                                      # locale's revs
+
+    def save(self, *args, **kwargs):
+        super(Revision, self).save(*args, **kwargs)
+
+        # When a revision is approved, re-cache the document's html content
+        if self.is_approved and (
+                not self.document.current_revision or
+                self.document.current_revision.id < self.id):
+            self.document.html = wiki_to_html(self.content, wiki_hooks=True)
+            self.document.current_revision = self
+            self.document.save()
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

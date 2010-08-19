@@ -1,10 +1,7 @@
 from django.test import TestCase, client
+from django.contrib.auth.models import User
 
-from sumo.urlresolvers import reverse
-
-
-get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
-post = lambda c, v, data={}, **kw: c.post(reverse(v, **kw), data, follow=True)
+from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 
 
 class TestCaseBase(TestCase):
@@ -18,3 +15,36 @@ class TestCaseBase(TestCase):
 
     def tearDown(self):
         pass
+
+
+def document(**kwargs):
+    """Return an empty document with enough stuff filled out that it can be
+    saved."""
+    if 'category' not in kwargs:
+        kwargs['category'] = CATEGORIES[0][0]  # arbitrary
+    return Document(**kwargs)
+
+
+def revision(**kwargs):
+    """Return an empty revision with enough stuff filled out that it can be
+    saved."""
+    u = None
+    if 'creator' not in kwargs:
+        try:
+            u = User.objects.get(username='testuser')
+        except User.DoesNotExist:
+            u = User(username='testuser', email='me@nobody.test')
+            u.save()
+
+    d = None
+    if 'document' not in kwargs:
+        d = document()
+        d.save()
+
+    defaults = {'summary': 'Some summary', 'content': 'Some content',
+                'significance': SIGNIFICANCES[0][0], 'comment': 'Some comment',
+                'creator': u, 'document': d}
+
+    defaults.update(kwargs)
+
+    return Revision(**defaults)

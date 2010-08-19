@@ -1,10 +1,11 @@
 from django.utils.http import urlquote
+from django.conf import settings
 
-import wikimarkup
+from wikimarkup.parser import Parser
 import jingo
+from tower import ugettext_lazy as _lazy
 
-from settings import WIKI_UPLOAD_URL
-from .models import WikiPage
+from sumo.urlresolvers import reverse
 
 
 ALLOWED_ATTRIBUTES = {
@@ -34,27 +35,36 @@ class WikiParser(object):
     Wrapper for wikimarkup. Adds Kitsune-specific callbacks and setup.
     """
 
-    def __init__(self):
-        # Register this hook so it gets called
-        self.wikimarkup = wikimarkup
-        wikimarkup.registerInternalLinkHook(None, self.hookInternalLink)
-        wikimarkup.registerInternalLinkHook('Image', self.hookImageTag)
+    def __init__(self, wiki_hooks=False):
+        self.parser = Parser()
+        # Register default hooks
+        self.parser.registerInternalLinkHook(None, self.hook_internal_link)
+        self.parser.registerInternalLinkHook('Image', self.hook_image_tag)
+
+        # The wiki has additional hooks not used elsewhere
+        if wiki_hooks:
+            self.parser.registerInternalLinkHook('Include', self.hook_include)
 
     def parse(self, text, showToc=True):
         """Given wiki markup, return HTML."""
-        return self.wikimarkup.parse(
-            text, showToc, attributes=ALLOWED_ATTRIBUTES)
+        return self.parser.parse(text, showToc, attributes=ALLOWED_ATTRIBUTES)
+
+    def hook_include(self, parser, space, title):
+        """Returns the document's parsed content."""
+        from wiki.models import Document
+        try:
+            return Document.objects.get(title=title).content_parsed
+        except Document.DoesNotExist:
+            return _lazy('The document "%s" does not exist.') % title
 
     def _getWikiLink(self, link):
         """
         Checks the page exists, and returns its URL, or the URL to create it.
         """
-        try:
-            return WikiPage.objects.get(title=link).get_url()
-        except WikiPage.DoesNotExist:
-            return WikiPage.get_create_url(link)
+        return reverse('wiki.document',
+                       kwargs={'document_slug': link.replace(' ', '+')})
 
-    def hookInternalLink(self, parser, space, name):
+    def hook_internal_link(self, parser, space, name):
         """Parses text and returns internal link."""
         link = name
         text = name
@@ -82,7 +92,7 @@ class WikiParser(object):
 
     def _getImagePath(self, link):
         """Returns an uploaded image's path for image paths in markup."""
-        return WIKI_UPLOAD_URL + urlquote(link)
+        return settings.WIKI_UPLOAD_URL + urlquote(link)
 
     def _buildImageParams(self, items):
         """
@@ -111,7 +121,7 @@ class WikiParser(object):
 
         return params
 
-    def hookImageTag(self, parser, space, name):
+    def hook_image_tag(self, parser, space, name):
         """Adds syntax for inserting images."""
         link = name
         caption = name

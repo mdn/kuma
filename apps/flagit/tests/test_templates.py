@@ -1,9 +1,10 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from questions.models import Answer
-from flagit.tests import TestCaseBase, post, get
+from flagit.tests import TestCaseBase
 from flagit.models import FlaggedObject
+from questions.models import Answer
+from sumo.tests import post, get
 
 
 class FlaggedQueueTestCase(TestCaseBase):

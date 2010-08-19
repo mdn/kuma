@@ -6,12 +6,7 @@ from django.template.defaultfilters import slugify
 
 from nose.tools import eq_
 
-from sumo.urlresolvers import reverse
 from questions.models import Question
-
-
-get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
-post = lambda c, v, data={}, **kw: c.post(reverse(v, **kw), data, follow=True)
 
 
 class TestCaseBase(TestCase):

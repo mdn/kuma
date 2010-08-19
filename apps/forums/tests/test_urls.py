@@ -1,7 +1,8 @@
 from nose.tools import eq_
 
 from forums.models import Forum
-from forums.tests import ForumTestCase, get, post
+from forums.tests import ForumTestCase
+from sumo.tests import get, post
 
 
 class BelongsTestCase(ForumTestCase):

@@ -3,16 +3,8 @@ from django.test import TestCase
 from nose.tools import eq_
 from taggit.models import TaggedItem
 
-from wiki.models import (Document, FirefoxVersion, OperatingSystem,
-                         SIGNIFICANCES)
-
-
-def _document(**kwargs):
-    """Return an empty document with enough stuff filled out that it can be
-    saved."""
-    if 'category' not in kwargs:
-        kwargs['category'] = SIGNIFICANCES[0][0]  # arbitrary
-    return Document(**kwargs)
+from wiki.models import FirefoxVersion, OperatingSystem
+from wiki.tests import document, revision
 
 
 def _objects_eq(manager, list_):
@@ -28,7 +20,7 @@ class DocumentTests(TestCase):
         # TODO: Move to wherever the tests for TaggableMixin are.
         # This works because Django's delete() sees the `tags` many-to-many
         # field (actually a manager) and follows the reference.
-        d = _document()
+        d = document()
         d.save()
         d.tags.add('grape')
         eq_(1, TaggedItem.objects.count())
@@ -38,8 +30,8 @@ class DocumentTests(TestCase):
 
     def _test_inheritance(self, enum_class, attr, direct_attr):
         """Test a descriptor's handling of parent delegation."""
-        parent = _document()
-        child = _document(parent=parent, title='Some Other Title')
+        parent = document()
+        child = document(parent=parent, title='Some Other Title')
         e1 = enum_class(item_id=1)
         parent.save()
 
@@ -69,7 +61,7 @@ class DocumentTests(TestCase):
 
     def _test_int_sets_and_descriptors(self, enum_class, attr):
         """Test our lightweight int sets & descriptors' getting and setting."""
-        d = _document()
+        d = document()
         d.save()
         _objects_eq(getattr(d, attr), [])
 
@@ -93,3 +85,37 @@ class DocumentTests(TestCase):
 
 class RevisionTests(TestCase):
     """Tests for the Revision model"""
+    def test_approved_revision_updates_html(self):
+        """Creating an approved revision updates document.html"""
+        d = document(html='This goes away')
+        d.save()
+        r = revision(document=d, content='Replace document html',
+                     is_approved=True)
+        r.save()
+
+        assert 'Replace document html' in d.html, \
+               '"Replace document html" not in %s' % d.html
+
+        # Creating another approved revision replaces it again
+        r = revision(document=d, content='Replace html again',
+                     is_approved=True)
+        r.save()
+
+        assert 'Replace html again' in d.html, \
+               '"Replace html again" not in %s' % d.html
+
+    def test_unapproved_revision_not_updates_html(self):
+        """Creating an unapproved revision does not update document.html"""
+        d = document()
+        d.save()
+        r = revision(document=d, content='Here to stay',
+                      is_approved=True)
+        r.save()
+
+        assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
+
+        # Creating another approved revision keeps initial content
+        r = revision(document=d, content='Fail to replace html')
+        r.save()
+
+        assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html

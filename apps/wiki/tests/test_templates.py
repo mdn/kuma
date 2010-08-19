@@ -2,7 +2,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from wiki.models import Document
-from wiki.tests import TestCaseBase, get
+from wiki.tests import TestCaseBase
 
 
 class DocumentTests(TestCaseBase):
@@ -12,7 +12,7 @@ class DocumentTests(TestCaseBase):
         d = Document(title='Test Document', html='<div>Lorem Ipsum</div>',
                      category=1, locale='en-US')
         d.save()
-        response = get(self.client, 'wiki.document', args=[d.id])
+        response = self.client.get(d.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(d.title, doc('#main-content h1').text())

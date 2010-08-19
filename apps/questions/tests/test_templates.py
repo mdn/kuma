@@ -7,14 +7,14 @@ from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.urlresolvers import reverse
-from sumo.helpers import urlparams
+from notifications import check_watch, create_watch
 from questions.models import Question, Answer, QuestionVote, UNCONFIRMED
-from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
-                             tags_eq)
+from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
-from notifications import check_watch, create_watch
+from sumo.urlresolvers import reverse
+from sumo.helpers import urlparams
+from sumo.tests import get, post
 from upload.models import ImageAttachment
 
 
