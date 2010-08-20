@@ -7,8 +7,6 @@ from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 class TestCaseBase(TestCase):
     """Base TestCase for the wiki app test cases."""
 
-    fixtures = []
-
     def setUp(self):
         self.client = client.Client()
         self.client.get('/')

@@ -2,7 +2,7 @@
 {% extends "wiki/base.html" %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c} | Firefox Support')|f(t=document.title, c=document.get_category_display()) %}
-{% set crumbs = [(None, document.get_category_display()),
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (None, document.title)] %}
 
 {% block content %}

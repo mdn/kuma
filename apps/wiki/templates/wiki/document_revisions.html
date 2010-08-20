@@ -1,0 +1,34 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% set title = _('Revisions | {document} | Firefox Support')|fe(document=document.title) %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (document.get_absolute_url(), document.title),
+                 (None, _('Revisions'))] %}
+
+{% block content %}
+  <div id="breadcrumbs">
+    {{ _('You are here:') }}
+    {{ breadcrumbs(crumbs) }}
+  </div>
+  <hgroup>
+    <h1>{{ _('Revisions') }}</h1>
+    <h2>{{ document.title }}</h2>
+  </hgroup>
+  <div id="revision-list">
+    {% for rev in revisions %}
+      {% if loop.first %}<ul>{% endif %}
+      <li class="{% if document.current_revision == rev %}current{% endif %}">
+        {{ datetimeformat(rev.created, format='datetime') }}
+        {{ rev.creator }}
+      </li>
+      {% if loop.last %}</ul>{% endif %}
+    {% else %}
+      {{ _('This document has no revisions.') }}
+    {% endfor %}
+  </div>
+  <div id="actions">
+    {% if user.has_perm('wiki.add_revision') %}
+      <a href="{{ url('wiki.new_revision', document.id) }}">Add a Revision</a>
+    {% endif %}
+  </div>
+{% endblock %}
