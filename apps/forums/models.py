@@ -64,6 +64,21 @@ class Forum(ModelBase):
         """Return whether I am a world-writable forum."""
         return not perm_is_defined_on('forums_forum.post_in_forum', self)
 
+    def update_last_post(self, exclude_thread=None, exclude_post=None):
+        """Set my last post to the newest, excluding given thread and post."""
+        posts = Post.objects.filter(thread__forum=self)
+        if exclude_thread:
+            posts = posts.exclude(thread=exclude_thread)
+        if exclude_post:
+            posts = posts.exclude(id=exclude_post.id)
+        posts = posts.order_by('-created')
+        try:
+            last = posts[0]
+        except IndexError:
+            self.last_post = None
+        else:
+            self.last_post = last
+
 
 class Thread(ModelBase):
     id = models.AutoField(primary_key=True)
@@ -91,15 +106,9 @@ class Thread(ModelBase):
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent forum info."""
-
         forum = Forum.uncached.get(pk=self.forum.id)
         if forum.last_post and forum.last_post.thread_id == self.id:
-            try:
-                forum.last_post = Post.objects.filter(thread__forum=forum) \
-                                              .exclude(thread=self) \
-                                              .order_by('-created')[0]
-            except IndexError:
-                forum.last_post = None
+            forum.update_last_post(exclude_thread=self)
             forum.save()
 
         delete_watches.delay(Thread, self.pk)
@@ -117,6 +126,19 @@ class Thread(ModelBase):
         return reverse('forums.posts',
                        kwargs={'forum_slug': self.forum.slug,
                                'thread_id': self.id})
+
+    def update_last_post(self, exclude_post=None):
+        """Set my last post to the newest, excluding `exclude_post`."""
+        posts = self.post_set
+        if exclude_post:
+            posts = posts.exclude(id=exclude_post.id)
+        posts = posts.order_by('-created')
+        try:
+            last = posts[0]
+        except IndexError:
+            pass  # Threads must have at least 1 post. Thread will be deleted.
+        else:
+            self.last_post = last
 
 
 class Post(ModelBase):
@@ -143,7 +165,6 @@ class Post(ModelBase):
         Override save method to update parent thread info and take care of
         created and updated.
         """
-
         new = self.id is None
 
         if not new:
@@ -161,25 +182,15 @@ class Post(ModelBase):
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent thread info."""
-
         thread = Thread.uncached.get(pk=self.thread.id)
         if thread.last_post_id and thread.last_post_id == self.id:
-            try:
-                thread.last_post = thread.post_set.all() \
-                                                  .order_by('-created')[1]
-            except IndexError:
-                # The thread has only one Post so let the delete cascade.
-                pass
+            thread.update_last_post(exclude_post=self)
         thread.replies = thread.post_set.count() - 2
         thread.save()
 
         forum = Forum.uncached.get(pk=thread.forum.id)
         if forum.last_post_id and forum.last_post_id == self.id:
-            try:
-                forum.last_post = Post.objects.filter(thread__forum=forum) \
-                                              .order_by('-created')[1]
-            except IndexError:
-                forum.last_post = None
+            forum.update_last_post(exclude_post=self)
             forum.save()
 
         super(Post, self).delete(*args, **kwargs)
