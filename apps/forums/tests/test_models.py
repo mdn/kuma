@@ -78,17 +78,6 @@ class ForumModelTestCase(ForumTestCase):
         eq_(forum.last_post.id, last_post.id)
         eq_(thread.last_post.id, last_post.id)
 
-    def test_delete_last_and_only_post_in_thread(self):
-        """Deleting the only post in a thread should delete the thread"""
-        forum = Forum.objects.get(pk=1)
-        thread = Thread(title="test", forum=forum, creator_id=118533)
-        thread.save()
-        post = Post(thread=thread, content="test", author=thread.creator)
-        post.save()
-        eq_(1, thread.post_set.count())
-        post.delete()
-        eq_(0, Thread.objects.filter(pk=thread.id).count())
-
     def test_public_access(self):
         """Assert Forums think they're publicly viewable and postable at
         appropriate times."""
@@ -103,6 +92,28 @@ class ForumModelTestCase(ForumTestCase):
         unprivileged_user = User.objects.get(pk=118533)
         assert not forum.allows_viewing_by(unprivileged_user)
         assert not forum.allows_posting_by(unprivileged_user)
+
+    def test_move_updates_last_posts(self):
+        """Moving the thread containing a forum's last post to a new forum
+        should update the last_post of both forums. Consequently, deleting
+        the last post shouldn't delete the old forum. [bug 588994]"""
+        old_forum = Forum.objects.get(pk=1)  # forum 1 has newest post
+        new_forum = Forum.objects.get(pk=2)
+        last_post = old_forum.last_post
+        thread = last_post.thread
+        thread.forum = new_forum
+        thread.save()
+
+        # Old forum's last_post updated?
+        self.assertNotEqual(Forum.objects.get(pk=1).last_post, last_post)
+
+        # New forum's last_post updated?
+        eq_(Forum.objects.get(pk=2).last_post, last_post)
+
+        # Delete the post, and both forums should still exist:
+        last_post.delete()
+        eq_(1, Forum.objects.filter(pk=1).count())
+        eq_(1, Forum.objects.filter(pk=2).count())
 
 
 class ThreadModelTestCase(ForumTestCase):
@@ -130,7 +141,7 @@ class ThreadModelTestCase(ForumTestCase):
         forum = Forum.objects.get(pk=1)
         eq_(forum.last_post.id, post.id)
 
-        # delete the post, very last_post updated
+        # delete the post, verify last_post updated
         thread.delete()
         forum = Forum.objects.get(pk=1)
         eq_(forum.last_post.id, last_post.id)
@@ -142,6 +153,17 @@ class ThreadModelTestCase(ForumTestCase):
         t = Thread.objects.get(pk=1)
         t.delete()
         eq_(0, EventWatch.uncached.filter(watch_id=1).count())
+
+    def test_delete_last_and_only_post_in_thread(self):
+        """Deleting the only post in a thread should delete the thread"""
+        forum = Forum.objects.get(pk=1)
+        thread = Thread(title="test", forum=forum, creator_id=118533)
+        thread.save()
+        post = Post(thread=thread, content="test", author=thread.creator)
+        post.save()
+        eq_(1, thread.post_set.count())
+        post.delete()
+        eq_(0, Thread.objects.filter(pk=thread.id).count())
 
 
 class SaveDateTestCase(ForumTestCase):

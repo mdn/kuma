@@ -12,6 +12,21 @@ from notifications.tasks import delete_watches
 import forums
 
 
+def _last_post_from(posts, exclude_post=None):
+    """Return the most recent post in the given set, excluding the given post.
+
+    If there are none, return None.
+
+    """
+    if exclude_post:
+        posts = posts.exclude(id=exclude_post.id)
+    posts = posts.order_by('-created')
+    try:
+        return posts[0]
+    except IndexError:
+        return None
+
+
 class ThreadLockedError(Exception):
     """Trying to create a post in a locked thread."""
 
@@ -69,15 +84,7 @@ class Forum(ModelBase):
         posts = Post.objects.filter(thread__forum=self)
         if exclude_thread:
             posts = posts.exclude(thread=exclude_thread)
-        if exclude_post:
-            posts = posts.exclude(id=exclude_post.id)
-        posts = posts.order_by('-created')
-        try:
-            last = posts[0]
-        except IndexError:
-            self.last_post = None
-        else:
-            self.last_post = last
+        self.last_post = _last_post_from(posts, exclude_post=exclude_post)
 
 
 class Thread(ModelBase):
@@ -95,6 +102,24 @@ class Thread(ModelBase):
 
     class Meta:
         ordering = ['-is_sticky', '-last_post__created']
+
+    def __setattr__(self, attr, val):
+        """Notice when the forum field changes.
+
+        A property won't do here, because it usurps the "forum" name and
+        prevents us from using lookups like Thread.objects.filter(forum=f).
+
+        """
+        # When http://code.djangoproject.com/ticket/3148 adds nice getter and
+        # setter hooks, use those instead.
+        if attr == 'forum' and not hasattr(self, '_old_forum'):
+            try:
+                old = self.forum
+            except AttributeError:  # When making a new Thread(forum=3), the
+                pass                # forum attr doesn't exist yet.
+            else:
+                self._old_forum = old
+        super(Thread, self).__setattr__(attr, val)
 
     @property
     def last_page(self):
@@ -127,18 +152,25 @@ class Thread(ModelBase):
                        kwargs={'forum_slug': self.forum.slug,
                                'thread_id': self.id})
 
+    def save(self, *args, **kwargs):
+        super(Thread, self).save(*args, **kwargs)
+        old_forum = getattr(self, '_old_forum', None)
+        new_forum = self.forum
+        if old_forum and old_forum != new_forum:
+            old_forum.update_last_post(exclude_thread=self)
+            old_forum.save()
+            new_forum.update_last_post()
+            new_forum.save()
+            del self._old_forum
+
     def update_last_post(self, exclude_post=None):
-        """Set my last post to the newest, excluding `exclude_post`."""
-        posts = self.post_set
-        if exclude_post:
-            posts = posts.exclude(id=exclude_post.id)
-        posts = posts.order_by('-created')
-        try:
-            last = posts[0]
-        except IndexError:
-            pass  # Threads must have at least 1 post. Thread will be deleted.
-        else:
+        """Set my last post to the newest, excluding the given post."""
+        last = _last_post_from(self.post_set, exclude_post=exclude_post)
+        if last:
             self.last_post = last
+        # Otherwise, I have no posts. We leave the reference to the nonexistent
+        # or unrelated post in place, which causes Django to automatically
+        # delete me.
 
 
 class Post(ModelBase):

@@ -302,7 +302,6 @@ def move_thread(request, forum_slug, thread_id):
             has_perm(user, 'forums_forum.thread_move_forum', forum)):
         raise PermissionDenied
 
-    # Handle confirm delete form POST
     log.warning('User %s is moving thread with id=%s to forum with id=%s' %
                 (user, thread.id, new_forum_id))
     thread.forum = new_forum
