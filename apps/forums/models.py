@@ -32,7 +32,6 @@ class ThreadLockedError(Exception):
 
 
 class Forum(ModelBase):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
     description = models.TextField(null=True)
@@ -88,7 +87,6 @@ class Forum(ModelBase):
 
 
 class Thread(ModelBase):
-    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     forum = models.ForeignKey('Forum')
     created = models.DateTimeField(default=datetime.datetime.now,
@@ -174,7 +172,6 @@ class Thread(ModelBase):
 
 
 class Post(ModelBase):
-    id = models.AutoField(primary_key=True)
     thread = models.ForeignKey('Thread')
     content = models.TextField()
     author = models.ForeignKey(User)
