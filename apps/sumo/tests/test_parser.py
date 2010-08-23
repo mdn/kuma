@@ -13,7 +13,7 @@ def pq_link(p, text):
 
 
 class TestWikiInclude(TestCase):
-    def testrevision_include(self):
+    def test_revision_include(self):
         """Simple include markup."""
         p = WikiParser(True)
         d = document(title='Test title')
@@ -29,10 +29,6 @@ class TestWikiInclude(TestCase):
         doc = pq(p.parse('[[Include:Another title]]'))
         eq_('The document "Another title" does not exist.', doc.text())
 
-        d.current_revision = None
-        d.delete()
-        r.delete()
-
 
 class TestWikiParser(TestCase):
     def setUp(self):
@@ -42,11 +38,6 @@ class TestWikiParser(TestCase):
                           is_approved=True)
         self.r.save()
         self.p = WikiParser()
-
-    def tearDown(self):
-        self.d.current_revision = None
-        self.d.delete()
-        self.r.delete()
 
     def test_image_path_sanity(self):
         """Image URLs are prefixed with the upload path."""
@@ -139,11 +130,6 @@ class TestWikiInternalLinks(TestCase):
         self.r.save()
         self.p = WikiParser()
 
-    def tearDown(self):
-        self.d.current_revision = None
-        self.d.delete()
-        self.r.delete()
-
     def test_simple(self):
         """Simple internal link markup."""
         link = pq_link(self.p, '[[Installing Firefox]]')
@@ -230,11 +216,6 @@ class TestWikiImageTags(TestCase):
                           is_approved=True)
         self.r.save()
         self.p = WikiParser()
-
-    def tearDown(self):
-        self.d.current_revision = None
-        self.d.delete()
-        self.r.delete()
 
     def test_empty(self):
         """Empty image tag markup does not change."""
