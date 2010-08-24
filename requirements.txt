@@ -3,7 +3,7 @@
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
 -e git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 Jinja2==2.2.1
--e git://github.com/jbalogh/jingo.git@c73d2c55182301e6f3ce507fc9a17ea843fed24f#egg=jingo
+-e git://github.com/jbalogh/jingo.git#egg=jingo
 -e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
 -e git://github.com/jsocol/bleach.git#egg=bleach
 -e git://github.com/jbalogh/schematic.git#egg=schematic
