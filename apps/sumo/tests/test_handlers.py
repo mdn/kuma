@@ -1,4 +1,6 @@
-from django.test import Client, TestCase
+from django.test import Client
+
+from sumo.tests import TestCase
 
 
 class TestHandlers(TestCase):

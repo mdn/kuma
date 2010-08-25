@@ -1,5 +1,4 @@
 from django.core import mail
-from django import test
 from django.contrib.contenttypes.models import ContentType
 
 from nose.tools import eq_
@@ -7,9 +6,10 @@ from nose.tools import eq_
 from notifications.tasks import send_notification, delete_watches
 from notifications.models import EventWatch
 from forums.models import Thread
+from sumo.tests import TestCase
 
 
-class SendNotificationTestCase(test.TestCase):
+class SendNotificationTestCase(TestCase):
 
     fixtures = ['notifications.json']
 
@@ -40,7 +40,7 @@ class SendNotificationTestCase(test.TestCase):
         eq_(mail.outbox[0].from_email, 'notifications@support.mozilla.com')
 
 
-class DeleteNotificationsTestCase(test.TestCase):
+class DeleteNotificationsTestCase(TestCase):
 
     fixtures = ['notifications.json']
 

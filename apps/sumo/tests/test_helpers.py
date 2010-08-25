@@ -2,7 +2,6 @@
 import datetime
 
 from django.conf import settings
-from django.test import TestCase
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
@@ -15,6 +14,7 @@ from pyquery import PyQuery as pq
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
                           DateTimeFormatError, collapse_linebreaks)
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 

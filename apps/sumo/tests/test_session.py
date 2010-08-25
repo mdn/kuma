@@ -2,10 +2,9 @@ from datetime import datetime
 
 from django.contrib.auth.models import User, AnonymousUser
 
-from test_utils import TestCase
-
 from sumo import backends
 from sumo.models import Session, TikiUser
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 

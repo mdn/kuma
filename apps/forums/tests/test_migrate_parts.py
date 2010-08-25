@@ -1,12 +1,11 @@
 from datetime import datetime
 
-from django.test import TestCase
-
 from nose.tools import eq_
 
 from forums.management.commands.migrate_forum import (
     create_forum, create_thread, create_post)
 from sumo.models import Forum as TikiForum, ForumThread as TikiThread
+from sumo.tests import TestCase
 
 
 def helper_create_forum():

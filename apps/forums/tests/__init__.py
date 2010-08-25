@@ -1,11 +1,10 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
 
 from forums.models import Forum, Thread, Post, ThreadLockedError
 from forums.views import sort_threads
-from sumo.tests import get, LocalizingClient
+from sumo.tests import get, LocalizingClient, TestCase
 
 
 def fixtures_setup():

@@ -1,8 +1,7 @@
-from django.test import TestCase
-
 from nose.tools import eq_
 
 from sumo.converter import TikiMarkupConverter
+from sumo.tests import TestCase
 
 
 converter = TikiMarkupConverter()

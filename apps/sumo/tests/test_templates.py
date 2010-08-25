@@ -1,11 +1,9 @@
-from django.test import TestCase
-
 from nose.tools import eq_, raises
 from pyquery import PyQuery as pq
 import jingo
 import test_utils
 
-from sumo.tests import LocalizingClient
+from sumo.tests import LocalizingClient, TestCase
 from sumo.urlresolvers import reverse
 
 

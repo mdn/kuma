@@ -1,8 +1,7 @@
-from django.test import TestCase
-
 from nose.tools import eq_
 from taggit.models import TaggedItem
 
+from sumo.tests import TestCase
 from wiki.models import FirefoxVersion, OperatingSystem
 from wiki.tests import document, revision
 

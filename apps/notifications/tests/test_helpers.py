@@ -1,4 +1,3 @@
-from django import test
 from django.contrib.auth.models import User, AnonymousUser
 
 import test_utils
@@ -6,9 +5,10 @@ import test_utils
 from notifications.helpers import is_watching
 from notifications.models import EventWatch
 from forums.models import Thread
+from sumo.tests import TestCase
 
 
-class NotificationHelperTestCase(test.TestCase):
+class NotificationHelperTestCase(TestCase):
 
     fixtures = ['users.json', 'posts.json', 'notifications.json']
 

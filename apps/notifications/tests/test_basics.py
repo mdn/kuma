@@ -1,6 +1,5 @@
 import hashlib
 
-from django import test
 from django.contrib.contenttypes.models import ContentType
 
 from nose.tools import eq_
@@ -10,9 +9,10 @@ from notifications.models import EventWatch
 from forums.models import Post, Thread
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
+from sumo.tests import TestCase
 
 
-class WatchTestCase(test.TestCase):
+class WatchTestCase(TestCase):
 
     fixtures = ['users.json', 'posts.json', 'notifications.json']
 

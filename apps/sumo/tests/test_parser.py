@@ -1,10 +1,10 @@
-from django.test import TestCase
 from django.conf import settings
 
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.parser import WikiParser
+from sumo.tests import TestCase
 from wiki.tests import document, revision
 
 

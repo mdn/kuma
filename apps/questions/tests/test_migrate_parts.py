@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from django.test import TestCase
-
 from nose.tools import eq_
 
 from questions.management.commands.migrate_questions import (
@@ -10,6 +8,7 @@ from questions.management.commands.migrate_questions import (
     post_reply_in_old_thread)
 from questions.models import CONFIRMED
 from sumo.models import ForumThread as TikiThread
+from sumo.tests import TestCase
 
 
 class MigrateManualTestCase(TestCase):

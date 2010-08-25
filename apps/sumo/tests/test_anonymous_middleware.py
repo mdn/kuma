@@ -1,12 +1,12 @@
 from nose.tools import eq_
 
-from django.test import TestCase
 from django.http import HttpResponse
 from django.conf import settings
 
 import test_utils
 
 from sumo.anonymous import AnonymousIdentityMiddleware
+from sumo.tests import TestCase
 
 
 class TestAnonymousMiddleware(TestCase):

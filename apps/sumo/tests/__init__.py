@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.test.client import Client
 
+from test_utils import TestCase  # So others can import it from here
+
 from sumo.urlresolvers import reverse, split_path
 
 

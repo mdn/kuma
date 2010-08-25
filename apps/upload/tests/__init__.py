@@ -1,13 +1,12 @@
 import json
 
 from django.contrib.auth.models import User
-from django.test import TestCase
 
 from nose.tools import eq_
 from nose.plugins.skip import SkipTest
 
 from questions.models import Question
-from sumo.tests import post, LocalizingClient
+from sumo.tests import post, LocalizingClient, TestCase
 from upload.models import ImageAttachment
 
 

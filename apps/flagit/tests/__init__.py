@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from django.test import TestCase
 from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from sumo.tests import LocalizingClient
+from sumo.tests import TestCase
 
 
 class TestCaseBase(TestCase):

@@ -1,4 +1,3 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
@@ -6,6 +5,7 @@ import test_utils
 
 import access
 from .helpers import has_perm, has_perm_or_owns
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from forums.models import Forum, Thread
 

@@ -1,18 +1,17 @@
 from nose.tools import eq_
 
-from django import test
-
 import jingo
 
-from sumo.models import WikiPage, TikiUser
 from sumo import backends
+from sumo.models import WikiPage, TikiUser
+from sumo.tests import TestCase
 
 
 def setup():
     jingo.load_helpers()
 
 
-class TestWikiPage(test.TestCase):
+class TestWikiPage(TestCase):
     fixtures = ['pages.json']
 
     def test_get_url(self):
@@ -30,7 +29,7 @@ class TestWikiPage(test.TestCase):
         eq_('/tiki-editpage.php?page=Installing+Firefox', w.get_edit_url())
 
 
-class TestTikiUserModel(test.TestCase):
+class TestTikiUserModel(TestCase):
 
     def test_django_user(self):
         tiki_user = TikiUser.objects.create(pk=1234, login='djangotestuser',

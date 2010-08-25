@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.core import management
-from django.test import TestCase
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
@@ -9,6 +8,7 @@ from nose.tools import eq_
 from forums.models import Forum, Thread, Post
 from sumo.models import (Forum as TikiForum, ForumThread as TikiThread,
                          TikiUser)
+from sumo.tests import TestCase
 
 
 class MigrateForumTestCase(TestCase):

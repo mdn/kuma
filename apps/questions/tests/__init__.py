@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 from nose.tools import eq_
 
 from questions.models import Question
-from sumo.tests import LocalizingClient
+from sumo.tests import LocalizingClient, TestCase
 
 
 class TestCaseBase(TestCase):

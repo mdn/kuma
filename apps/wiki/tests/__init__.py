@@ -1,7 +1,6 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 
-from sumo.tests import LocalizingClient
+from sumo.tests import LocalizingClient, TestCase
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 
 
