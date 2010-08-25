@@ -1,3 +1,29 @@
 /*
  * Knowledge Base CSS
  */
+
+/* New / Edit Document */
+#document-form li {
+    clear: both;
+    list-style: none;
+    padding: 5px 0;
+}
+#document-form li label {
+    float: left;
+    width: 125px;
+}
+#document-form li li {
+    display: inline;
+}
+
+#document-form input[type="text"] {
+    width: 300px;
+}
+
+#document-form textarea {
+    width: 500px;
+}
+
+#document-form textarea[name="content"] {
+    height: 500px;
+}

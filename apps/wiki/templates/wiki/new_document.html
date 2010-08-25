@@ -1,21 +1,25 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% set title = _('Create a New KB Article | Firefox Support') %}
-{% set crumbs = [(None, _('New KB Article'))] %}
+{% set title = _('Create a New Article | Knowledge Base | Firefox Support') %}
+{# TODO: Change KB url to landing page when we have one #}
+{% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
+                 (None, _('New Article'))] %}
 
 {% block content %}
   <div id="breadcrumbs">
     {{ _('You are here:') }}
     {{ breadcrumbs(crumbs) }}
   </div>
-  <h1>{{ _('Create a New KB Article') }}</h1>
+  <h1>{{ _('Create a New Knowledge Base Article') }}</h1>
   <div id="document-form">
     <form action="" method="post">
       {{ csrf() }}
-      {{ errorlist(form) }}
+      {{ errorlist(document_form) }}
+      {{ errorlist(revision_form) }}
       <ul>
-        {{ form.as_ul()|safe }}
+        {{ document_form.as_ul()|safe }}
+        {{ revision_form.as_ul()|safe }}
       </ul>
       <div class="submit">
         <input type="submit" value="{{_('Save') }}">

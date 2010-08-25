@@ -4,7 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
-from wiki.models import Document, Revision
+from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 from wiki.tests import TestCaseBase
 
 
@@ -42,16 +42,87 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST(self):
         """HTTP POST to new document URL creates the document."""
         self.client.login(username='admin', password='testpass')
-        title = 'A Test Article'
-        response = self.client.post(reverse('wiki.new_document'),
-                                    {'title': title,
-                                     'category': 1,
-                                     # This is throwing an IntegrityError.
-                                     #'tags': 'test1, test2',
-                                    }, follow=True)
-        d = Document.objects.get(title=title)
+        tags = ['tag1', 'tag2']
+        data = self._new_document_data(tags)
+        response = self.client.post(reverse('wiki.new_document'), data,
+                                    follow=True)
+        d = Document.objects.get(title=data['title'])
         eq_([('http://testserver/en-US/kb/%s/history' % d.id, 302)],
             response.redirect_chain)
+        eq_(data['category'], d.category)
+        eq_(tags, list(d.tags.values_list('name', flat=True)))
+        eq_(data['firefox_versions'],
+            list(d.firefox_versions.values_list('item_id', flat=True)))
+        eq_(data['operating_systems'],
+            list(d.operating_systems.values_list('item_id', flat=True)))
+        r = d.revisions.all()[0]
+        eq_(data['keywords'], r.keywords)
+        eq_(data['summary'], r.summary)
+        eq_(data['content'], r.content)
+        eq_(data['significance'], r.significance)
+
+    def test_new_document_POST_empty_title(self):
+        """Trigger required field validation for title."""
+        self.client.login(username='admin', password='testpass')
+        data = self._new_document_data(['tag1', 'tag2'])
+        data['title'] = ''
+        response = self.client.post(reverse('wiki.new_document'), data,
+                                    follow=True)
+        doc = pq(response.content)
+        ul = doc('#document-form > form > ul.errorlist')
+        eq_(1, len(ul))
+        eq_('Please provide a title.', ul('li').text())
+
+    def test_new_document_POST_empty_content(self):
+        """Trigger required field validation for content."""
+        self.client.login(username='admin', password='testpass')
+        data = self._new_document_data(['tag1', 'tag2'])
+        data['content'] = ''
+        response = self.client.post(reverse('wiki.new_document'), data,
+                                    follow=True)
+        doc = pq(response.content)
+        ul = doc('#document-form > form > ul.errorlist')
+        eq_(1, len(ul))
+        eq_('Please provide content.', ul('li').text())
+
+    def test_new_document_POST_invalid_category(self):
+        """Try to create a new document with an invalid category value."""
+        self.client.login(username='admin', password='testpass')
+        data = self._new_document_data(['tag1', 'tag2'])
+        data['category'] = 963
+        response = self.client.post(reverse('wiki.new_document'), data,
+                                    follow=True)
+        doc = pq(response.content)
+        ul = doc('#document-form > form > ul.errorlist')
+        eq_(1, len(ul))
+        eq_('Select a valid choice. 963 is not one of the available choices.',
+            ul('li').text())
+
+    def test_new_document_POST_invalid_ff_version(self):
+        """Try to create a new document with an invalid firefox version."""
+        self.client.login(username='admin', password='testpass')
+        data = self._new_document_data(['tag1', 'tag2'])
+        data['firefox_versions'] = [1337]
+        response = self.client.post(reverse('wiki.new_document'), data,
+                                    follow=True)
+        doc = pq(response.content)
+        ul = doc('#document-form > form > ul.errorlist')
+        eq_(1, len(ul))
+        eq_('Select a valid choice. 1337 is not one of the available choices.',
+            ul('li').text())
+
+    def _new_document_data(self, tags):
+        return {
+            'title': 'A Test Article',
+            'tags': ','.join(tags),
+            'firefox_versions': [1, 2],
+            'operating_systems': [1, 3],
+            'category': CATEGORIES[0][0],
+            'keywords': 'key1, key2',
+            'summary': 'lipsum',
+            'content': 'lorem ipsum dolor sit amet',
+            'significance': SIGNIFICANCES[0][0],
+        }
 
 
 class NewRevisionTests(TestCaseBase):
@@ -84,7 +155,7 @@ class NewRevisionTests(TestCaseBase):
                                      'keywords': 'keyword1 keyword2',
                                      'significance': 10})
         eq_(302, response.status_code)
-        eq_(1,d.revisions.count())
+        eq_(1, d.revisions.count())
 
 
 class DocumentListTests(TestCaseBase):
@@ -92,7 +163,7 @@ class DocumentListTests(TestCaseBase):
 
     def test_category_list(self):
         """Verify the category documents list view."""
-        d = _create_document();
+        d = _create_document()
         response = self.client.get(reverse('wiki.category',
                                    args=[d.category]))
         doc = pq(response.content)

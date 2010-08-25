@@ -45,20 +45,32 @@ def list_documents(request, category=None):
 def new_document(request):
     """Create a new wiki document."""
     if request.method == 'GET':
-        form = DocumentForm()
-        return jingo.render(request, 'wiki/new_document.html', {'form': form})
+        doc_form = DocumentForm()
+        rev_form = RevisionForm()
+        return jingo.render(request, 'wiki/new_document.html',
+                            {'document_form': doc_form,
+                             'revision_form': rev_form})
 
-    form = DocumentForm(request.POST)
+    doc_form = DocumentForm(request.POST)
+    rev_form = RevisionForm(request.POST)
 
-    if form.is_valid():
-        doc = form.save()
+    if doc_form.is_valid() and rev_form.is_valid():
+        doc = doc_form.save()
 
-        # TODO: firefox_versions + operating_systems
+        doc.firefox_versions = doc_form.cleaned_data['firefox_versions']
+        doc.operating_systems = doc_form.cleaned_data['operating_systems']
+
+        rev = rev_form.save(commit=False)
+        rev.document = doc
+        rev.creator = request.user
+        rev.save()
 
         return HttpResponseRedirect(reverse('wiki.document_revisions',
                                     args=[doc.id]))
 
-    return jingo.render(request, 'wiki/new_document.html', {'form': form})
+    return jingo.render(request, 'wiki/new_document.html',
+                        {'document_form': doc_form,
+                         'revision_form': rev_form})
 
 
 @login_required

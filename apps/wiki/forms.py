@@ -1,10 +1,14 @@
 from django import forms
 
 from tower import ugettext_lazy as _lazy
+from tower import ugettext as _
 
 from sumo.form_fields import StrippedCharField
-from .models import Document, Revision
+from .models import (Document, Revision, FirefoxVersion, OperatingSystem,
+                     FIREFOX_VERSIONS, OPERATING_SYSTEMS)
 
+
+KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
 TITLE_SHORT = _lazy(u'Your title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
@@ -25,6 +29,24 @@ class DocumentForm(forms.ModelForm):
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
 
+    firefox_versions = forms.MultipleChoiceField(
+                                label=_('Firefox Version'),
+                                choices=FIREFOX_VERSIONS, required=False,
+                                widget=forms.CheckboxSelectMultiple())
+
+    operating_systems = forms.MultipleChoiceField(
+                                label=_('Operating Systems'),
+                                choices=OPERATING_SYSTEMS, required=False,
+                                widget=forms.CheckboxSelectMultiple())
+
+    def clean_firefox_versions(self):
+        data = self.cleaned_data['firefox_versions']
+        return [FirefoxVersion(item_id=int(x)) for x in data]
+
+    def clean_operating_systems(self):
+        data = self.cleaned_data['operating_systems']
+        return [OperatingSystem(item_id=int(x)) for x in data]
+
     class Meta:
         model = Document
         fields = ('title', 'category', 'tags')
@@ -32,11 +54,14 @@ class DocumentForm(forms.ModelForm):
 
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
+    keywords = StrippedCharField(required=False, help_text=KEYWORDS_HELP_TEXT)
+
     summary = StrippedCharField(
                 min_length=5, max_length=1000, widget=forms.Textarea(),
                 error_messages={'required': SUMMARY_REQUIRED,
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
+
     content = StrippedCharField(
                 min_length=5, max_length=10000, widget=forms.Textarea(),
                 error_messages={'required': CONTENT_REQUIRED,
@@ -45,4 +70,4 @@ class RevisionForm(forms.ModelForm):
 
     class Meta:
         model = Revision
-        fields = ('summary', 'content', 'keywords', 'significance')
+        fields = ('keywords', 'summary', 'content', 'significance')

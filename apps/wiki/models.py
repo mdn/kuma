@@ -17,7 +17,8 @@ SIGNIFICANCES = (
     (10, _lazy('Minor details like punctuation and spelling errors')),
     (20, _lazy("Content changes that don't require immediate translation")),
     (30, _lazy('Major content changes that will make older translations '
-               'inaccurate')))
+               'inaccurate')),
+    (40, _lazy('New document')))
 
 CATEGORIES = (
     (1, _lazy('Troubleshooting')),)
