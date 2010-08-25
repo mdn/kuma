@@ -50,7 +50,7 @@ class NewDocumentTests(TestCaseBase):
                                      #'tags': 'test1, test2',
                                     }, follow=True)
         d = Document.objects.get(title=title)
-        eq_([('http://testserver/en-US/kb/%s/revisions' % d.id, 302)],
+        eq_([('http://testserver/en-US/kb/%s/history' % d.id, 302)],
             response.redirect_chain)
 
 
