@@ -64,7 +64,8 @@ def del_image_async(request, image_id):
             json.dumps({'status': 'error', 'message': message}))
 
     image.file.delete()
-    image.thumbnail.delete()
+    if image.thumbnail:
+        image.thumbnail.delete()
     image.delete()
 
     return HttpResponse(json.dumps({'status': 'success'}))

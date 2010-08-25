@@ -17,7 +17,6 @@ def create_image_attachment(up_file, obj, user):
     image = ImageAttachment(content_object=obj, creator=user)
     file_ = File(up_file)
     image.file.save(up_file.name, file_, save=False)
-    image.thumbnail.save(up_file.name, file_, save=False)
     image.save()
 
     # Generate thumbnail off thread

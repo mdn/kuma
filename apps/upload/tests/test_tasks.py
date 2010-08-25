@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.files import File
 
 from nose.tools import eq_
 
@@ -8,7 +9,6 @@ from sumo.tests import TestCase
 from upload.models import ImageAttachment
 from upload.tasks import (_scale_dimensions, _create_thumbnail,
                           generate_thumbnail)
-from upload.utils import create_image_attachment
 
 
 class ScaleDimensionsTestCase(TestCase):
@@ -76,5 +76,13 @@ class GenerateThumbnail(TestCase):
         ImageAttachment.objects.all().delete()
 
     def test_basic(self):
-        """generate_thumbnail overrides image thumbnail."""
-        # TODO: cover functionality of upload.tasks.generate_thumbnail
+        """generate_thumbnail creates a thumbnail."""
+        image = ImageAttachment(content_object=self.obj, creator=self.user)
+        with open('apps/upload/tests/media/test.jpg') as f:
+            up_file = File(f)
+            image.file.save(up_file.name, up_file, save=True)
+
+        generate_thumbnail(image, up_file.name)
+
+        eq_(90, image.thumbnail.width)
+        eq_(120, image.thumbnail.height)
