@@ -19,5 +19,5 @@ pytz
 -e git://github.com/fwenzel/django-mozilla-product-details#egg=django-mozilla-product-details
 -e git://github.com/clouserw/tower.git#egg=tower
 -e git://github.com/jsocol/commonware.git#egg=commonware
--e git://github.com/pcraciunoiu/py-wikimarkup.git@8b19befb719526735d08f5a185cf7cd1a382e4ad#egg=py-wikimarkup
+-e git://github.com/pcraciunoiu/py-wikimarkup.git#egg=py-wikimarkup
 -e hg+http://bitbucket.org/danfairs/django-authority#egg=django_authority
