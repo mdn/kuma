@@ -12,12 +12,26 @@ from notifications.tasks import delete_watches
 import forums
 
 
+def _last_post_from(posts, exclude_post=None):
+    """Return the most recent post in the given set, excluding the given post.
+
+    If there are none, return None.
+
+    """
+    if exclude_post:
+        posts = posts.exclude(id=exclude_post.id)
+    posts = posts.order_by('-created')
+    try:
+        return posts[0]
+    except IndexError:
+        return None
+
+
 class ThreadLockedError(Exception):
     """Trying to create a post in a locked thread."""
 
 
 class Forum(ModelBase):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
     description = models.TextField(null=True)
@@ -64,9 +78,15 @@ class Forum(ModelBase):
         """Return whether I am a world-writable forum."""
         return not perm_is_defined_on('forums_forum.post_in_forum', self)
 
+    def update_last_post(self, exclude_thread=None, exclude_post=None):
+        """Set my last post to the newest, excluding given thread and post."""
+        posts = Post.objects.filter(thread__forum=self)
+        if exclude_thread:
+            posts = posts.exclude(thread=exclude_thread)
+        self.last_post = _last_post_from(posts, exclude_post=exclude_post)
+
 
 class Thread(ModelBase):
-    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     forum = models.ForeignKey('Forum')
     created = models.DateTimeField(default=datetime.datetime.now,
@@ -81,6 +101,24 @@ class Thread(ModelBase):
     class Meta:
         ordering = ['-is_sticky', '-last_post__created']
 
+    def __setattr__(self, attr, val):
+        """Notice when the forum field changes.
+
+        A property won't do here, because it usurps the "forum" name and
+        prevents us from using lookups like Thread.objects.filter(forum=f).
+
+        """
+        # When http://code.djangoproject.com/ticket/3148 adds nice getter and
+        # setter hooks, use those instead.
+        if attr == 'forum' and not hasattr(self, '_old_forum'):
+            try:
+                old = self.forum
+            except AttributeError:  # When making a new Thread(forum=3), the
+                pass                # forum attr doesn't exist yet.
+            else:
+                self._old_forum = old
+        super(Thread, self).__setattr__(attr, val)
+
     @property
     def last_page(self):
         """Returns the page number for the last post."""
@@ -91,15 +129,9 @@ class Thread(ModelBase):
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent forum info."""
-
         forum = Forum.uncached.get(pk=self.forum.id)
         if forum.last_post and forum.last_post.thread_id == self.id:
-            try:
-                forum.last_post = Post.objects.filter(thread__forum=forum) \
-                                              .exclude(thread=self) \
-                                              .order_by('-created')[0]
-            except IndexError:
-                forum.last_post = None
+            forum.update_last_post(exclude_thread=self)
             forum.save()
 
         delete_watches.delay(Thread, self.pk)
@@ -118,9 +150,28 @@ class Thread(ModelBase):
                        kwargs={'forum_slug': self.forum.slug,
                                'thread_id': self.id})
 
+    def save(self, *args, **kwargs):
+        super(Thread, self).save(*args, **kwargs)
+        old_forum = getattr(self, '_old_forum', None)
+        new_forum = self.forum
+        if old_forum and old_forum != new_forum:
+            old_forum.update_last_post(exclude_thread=self)
+            old_forum.save()
+            new_forum.update_last_post()
+            new_forum.save()
+            del self._old_forum
+
+    def update_last_post(self, exclude_post=None):
+        """Set my last post to the newest, excluding the given post."""
+        last = _last_post_from(self.post_set, exclude_post=exclude_post)
+        if last:
+            self.last_post = last
+        # Otherwise, I have no posts. We leave the reference to the nonexistent
+        # or unrelated post in place, which causes Django to automatically
+        # delete me.
+
 
 class Post(ModelBase):
-    id = models.AutoField(primary_key=True)
     thread = models.ForeignKey('Thread')
     content = models.TextField()
     author = models.ForeignKey(User)
@@ -143,7 +194,6 @@ class Post(ModelBase):
         Override save method to update parent thread info and take care of
         created and updated.
         """
-
         new = self.id is None
 
         if not new:
@@ -161,25 +211,15 @@ class Post(ModelBase):
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent thread info."""
-
         thread = Thread.uncached.get(pk=self.thread.id)
         if thread.last_post_id and thread.last_post_id == self.id:
-            try:
-                thread.last_post = thread.post_set.all() \
-                                                  .order_by('-created')[1]
-            except IndexError:
-                # The thread has only one Post so let the delete cascade.
-                pass
+            thread.update_last_post(exclude_post=self)
         thread.replies = thread.post_set.count() - 2
         thread.save()
 
         forum = Forum.uncached.get(pk=thread.forum.id)
         if forum.last_post_id and forum.last_post_id == self.id:
-            try:
-                forum.last_post = Post.objects.filter(thread__forum=forum) \
-                                              .order_by('-created')[1]
-            except IndexError:
-                forum.last_post = None
+            forum.update_last_post(exclude_post=self)
             forum.save()
 
         super(Post, self).delete(*args, **kwargs)

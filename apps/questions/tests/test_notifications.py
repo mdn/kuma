@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 
 import mock
 
+from questions.models import Question, Answer
 from questions.tasks import (build_answer_notification,
                              build_solution_notification)
-from . import TestCaseBase, post
+from . import TestCaseBase
 import notifications.tasks
-from questions.models import Question, Answer
+from sumo.tests import post
 
 
 EMAIL_CONTENT = (
@@ -101,6 +102,35 @@ class NotificationTestCase(TestCaseBase):
         question = answer.question
         question.solution = answer
         question.save()
+        build_solution_notification(question)
+
+        delay.assert_called_with(
+            self.ct, question.id,
+            u'Solution to: %s' % question.title,
+            EMAIL_CONTENT[2],
+            (u'user118533@nowhere',),
+            'solution')
+
+    @mock.patch_object(notifications.tasks.send_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_solution_notification_deleted(self, get_current, delay):
+        """Calling build_solution_notification should not query the
+        questions_question table.
+
+        This test attempts to simulate the replication lag presumed to cause
+        bug 585029.
+
+        """
+        get_current.return_value.domain = 'testserver'
+
+        answer = Answer.objects.get(pk=1)
+        question = Question.objects.get(pk=1)
+        question.solution = answer
+        question.save()
+
+        # Delete the question, pretend it hasn't been replicated yet
+        Question.objects.get(pk=question.pk).delete()
+
         build_solution_notification(question)
 
         delay.assert_called_with(

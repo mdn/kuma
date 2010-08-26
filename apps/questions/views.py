@@ -1,6 +1,7 @@
 from itertools import islice
 import json
 import logging
+from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
@@ -102,9 +103,11 @@ def questions(request):
                          'tags': tags, 'tagged': tagged})
 
 
-def answers(request, question_id, form=None, watch_form=None):
+def answers(request, question_id, form=None, watch_form=None,
+            answer_preview=None):
     """View the answers to a question."""
-    ans_ = _answers_data(request, question_id, form, watch_form)
+    ans_ = _answers_data(request, question_id, form, watch_form,
+                         answer_preview)
     if request.user.is_authenticated():
         ans_['images'] = ans_['question'].images.filter(creator=request.user)
     return jingo.render(request, 'questions/answers.html', ans_)
@@ -269,6 +272,7 @@ def confirm_question_form(request, question_id, confirmation_id):
 def reply(request, question_id):
     """Post a new answer to a question."""
     question = get_object_or_404(Question, pk=question_id)
+    answer_preview = None
     if question.is_locked:
         raise PermissionDenied
 
@@ -289,16 +293,19 @@ def reply(request, question_id):
     if form.is_valid():
         answer = Answer(question=question, creator=request.user,
                         content=form.cleaned_data['content'])
-        answer.save()
+        if 'preview' in request.POST:
+            answer_preview = answer
+        else:
+            answer.save()
+            ct = ContentType.objects.get_for_model(answer)
+            # Move over to the answer all of the images I added to the
+            # reply form
+            up_images = question.images.filter(creator=request.user)
+            up_images.update(content_type=ct, object_id=answer.id)
 
-        ct = ContentType.objects.get_for_model(answer)
-        # Move over to the answer all of the images I added to the reply form
-        up_images = question.images.filter(creator=request.user)
-        up_images.update(content_type=ct, object_id=answer.id)
+            return HttpResponseRedirect(answer.get_absolute_url())
 
-        return HttpResponseRedirect(answer.get_absolute_url())
-
-    return answers(request, question_id, form)
+    return answers(request, question_id, form, answer_preview=answer_preview)
 
 
 @require_POST
@@ -527,7 +534,7 @@ def lock_question(request, question_id):
 def edit_answer(request, question_id, answer_id):
     """Edit an answer."""
     answer = get_object_or_404(Answer, pk=answer_id, question=question_id)
-
+    answer_preview = None
     if answer.question.is_locked:
         raise PermissionDenied
 
@@ -542,16 +549,20 @@ def edit_answer(request, question_id, answer_id):
     form = AnswerForm(request.POST)
 
     if form.is_valid():
-        log.warning('User %s is editing answer with id=%s' %
-                    (request.user, answer.id))
         answer.content = form.cleaned_data['content']
         answer.updated_by = request.user
-        answer.save()
-
-        return HttpResponseRedirect(answer.get_absolute_url())
+        if 'preview' in request.POST:
+            answer.updated = datetime.now()
+            answer_preview = answer
+        else:
+            log.warning('User %s is editing answer with id=%s' %
+                        (request.user, answer.id))
+            answer.save()
+            return HttpResponseRedirect(answer.get_absolute_url())
 
     return jingo.render(request, 'questions/edit_answer.html',
-                        {'form': form, 'answer': answer})
+                        {'form': form, 'answer': answer,
+                         'answer_preview': answer_preview})
 
 
 @require_POST
@@ -668,7 +679,8 @@ def _search_suggestions(query, locale):
     return results
 
 
-def _answers_data(request, question_id, form=None, watch_form=None):
+def _answers_data(request, question_id, form=None, watch_form=None,
+                  answer_preview=None):
     """Return a map of the minimal info necessary to draw an answers page."""
     question = get_object_or_404(Question, pk=question_id)
     answers_ = paginate(request, question.answers.all(),
@@ -682,6 +694,7 @@ def _answers_data(request, question_id, form=None, watch_form=None):
     return {'question': question,
             'answers': answers_,
             'form': form or AnswerForm(),
+            'answer_preview': answer_preview,
             'watch_form': watch_form or _init_watch_form(request, 'reply'),
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),

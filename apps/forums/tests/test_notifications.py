@@ -8,7 +8,7 @@ from forums.tasks import build_reply_notification, build_thread_notification
 import notifications.tasks
 from . import ForumTestCase
 from forums.models import Post, Thread, Forum
-from forums.tests import post
+from sumo.tests import post
 
 
 EMAIL_CONTENT = (

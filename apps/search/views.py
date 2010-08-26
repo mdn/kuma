@@ -61,6 +61,8 @@ def search(request):
                     cleaned_data[field_option] = None
 
             # Validate all integer fields
+            if not cleaned_data.get('num_votes'):
+                cleaned_data['num_votes'] = 0
 
             # Set defaults for MultipleChoiceFields and convert to ints.
             # Ticket #12398 adds TypedMultipleChoiceField which would replace

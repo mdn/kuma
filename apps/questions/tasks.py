@@ -62,6 +62,8 @@ def build_answer_notification(answer):
 @task
 def build_solution_notification(question):
     ct = ContentType.objects.get_for_model(question)
+    # Cache solution.question as a workaround for replication lag (bug 585029)
+    question.solution.question = question
 
     subject = _('Solution to: %s') % question.title
     t = loader.get_template('questions/email/solution.ltxt')

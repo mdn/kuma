@@ -7,14 +7,14 @@ from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.urlresolvers import reverse
-from sumo.helpers import urlparams
+from notifications import check_watch, create_watch
 from questions.models import Question, Answer, QuestionVote, UNCONFIRMED
-from questions.tests import (TestCaseBase, TaggingTestCaseBase, post, get,
-                             tags_eq)
+from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
-from notifications import check_watch, create_watch
+from sumo.urlresolvers import reverse
+from sumo.helpers import urlparams
+from sumo.tests import get, post
 from upload.models import ImageAttachment
 
 
@@ -511,6 +511,18 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.answers',
                        args=[self.question.id])
         eq_(200, response.status_code)
+
+    def test_preview_answer(self):
+        """Preview an answer."""
+        num_answers = self.question.answers.count()
+        content = 'Awesome answer.'
+        response = post(self.client, 'questions.reply',
+                        {'content': content, 'preview': 'any string'},
+                        args=[self.question.id])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(content, doc('#answer-preview div.content').text())
+        eq_(num_answers, self.question.answers.count())
 
 
 class TaggedQuestionsTestCase(TaggingTestCaseBase):

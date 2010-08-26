@@ -2,9 +2,10 @@ from django.contrib.contenttypes.models import ContentType
 
 from nose.tools import eq_
 
-from questions.models import Question
-from flagit.tests import TestCaseBase, post
+from flagit.tests import TestCaseBase
 from flagit.models import FlaggedObject
+from questions.models import Question
+from sumo.tests import post
 
 
 class FlagTestCase(TestCaseBase):

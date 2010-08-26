@@ -5,9 +5,11 @@ SETTINGS_DIR = os.path.realpath(
         os.path.join(os.path.dirname(__file__), os.path.sep.join(('..',)*2)))
 
 sys.path.append(SETTINGS_DIR)
-sys.path.append(os.path.join(SETTINGS_DIR,'lib'))
 
-import settings_local as settings
+# manage adds /apps, /lib and /vendor to the Python path.
+import manage
+
+from django.conf import settings
 
 s = settings.DATABASES['default']
 MYSQL_PASS = s['PASSWORD']

@@ -1,0 +1,40 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{# L10n: {t} is the title of the document. {c} is the category. #}
+{% set title = _('{t} | {c} | Firefox Support')|f(t=document.title, c=document.get_category_display()) %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (None, document.title)] %}
+
+{% block content %}
+  <div id="breadcrumbs">
+    {{ _('You are here:') }}
+    {{ breadcrumbs(crumbs) }}
+  </div>
+  <h1>{{ document.title }}</h1>
+  <div id="doc-content">
+    {{ document.html|safe }}
+  </div>
+  <div id="more-help">
+    <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
+    <ul>
+      <li>
+        {{ _('Browse a list of related articles:') }}
+        {# TODO: insert list here #}
+      </li>
+      <li>
+        {# TODO: insert url below #}
+        {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url='#', category=document.get_category_display()) }}
+      </li>
+      <li>
+        {{ _('Try searching instead:') }}
+        <form action="{{ url('search') }}" method="get">
+          <input type="text" class="text" name="q" placeholder="{{ _('Search Mozilla Support') }}" required="required" />
+          <input type="submit" class="submit" value="{{ _('Search') }}" />
+        </form>
+      </li>
+      <li>
+        {{ _('Ask your question to our helpful <a href="{url}">support community</a>.')|fe(url=url('questions.new_question')) }}
+      </li>
+    </ul>
+  </div>
+{% endblock %}

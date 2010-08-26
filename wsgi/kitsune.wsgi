@@ -1,58 +1,41 @@
 import os
 import site
+from datetime import datetime
 
-# Add the kitsune dir to the python path so we can import manage which sets up
-# other paths and settings.
+# Remember when mod_wsgi loaded this file so we can track it in nagios.
+wsgi_loaded = datetime.now()
+
+# Add the zamboni dir to the python path so we can import manage.
 wsgidir = os.path.dirname(__file__)
 site.addsitedir(os.path.abspath(os.path.join(wsgidir, '../')))
 
-# We let Apache tell us where to find site packages through the SITE variable
-# in the wsgi environment. That means we can't import anything from django or
-# kitsune until we're inside of a request, so the first time through will run
-# basic imports and validates our models (which cascades to import
-# <apps>.models).
+# manage adds /apps, /lib, and /vendor to the Python path.
+import manage
 
+import django.conf
+import django.core.handlers.wsgi
+import django.core.management
+import django.utils
 
-class KitsuneApp:
+# Do validate and activate translations like using `./manage.py runserver`.
+# http://blog.dscpl.com.au/2010/03/improved-wsgi-script-for-use-with.html
+django.utils.translation.activate(django.conf.settings.LANGUAGE_CODE)
+utility = django.core.management.ManagementUtility()
+command = utility.fetch_command('runserver')
+command.validate()
 
-    def __init__(self):
-        self.setup = False
+# This is what mod_wsgi runs.
+django_app = django.core.handlers.wsgi.WSGIHandler()
 
-    def __call__(self, env, start_response):
-        if not self.setup:
-            self.setup_app(env)
-            self.setup = True
-        return self.kitsune_app(env, start_response)
+# Normally we could let WSGIHandler run directly, but while we're dark
+# launching, we want to force the script name to be empty so we don't create
+# any /z links through reverse.  This fixes bug 554576.
+def application(env, start_response):
+    if 'HTTP_X_ZEUS_DL_PT' in env:
+        env['SCRIPT_URL'] = env['SCRIPT_NAME'] = ''
+    env['wsgi.loaded'] = wsgi_loaded
+    return django_app(env, start_response)
 
-    def setup_app(self, env):
-        if 'SITE' in env:
-            site.addsitedir(env['SITE'])
-
-        # manage adds the `apps` and `lib` directories to the path.
-        import manage
-
-        import django.conf
-        import django.core.handlers.wsgi
-        import django.core.management
-        import django.utils
-
-        # Do validate and activate translations like using
-        # `./manage.py runserver`
-        # http://blog.dscpl.com/au/2010/03/improved-wsgi-script-for-use-with.html
-        utility = django.core.management.ManagementUtility()
-        command = utility.fetch_command('runserver')
-        command.validate()
-        django.utils.translation.activate(django.conf.settings.LANGUAGE_CODE)
-
-        # This is what mod_wsgi runs.
-        self.wsgi_handler = django.core.handlers.wsgi.WSGIHandler()
-
-    def kitsune_app(self, env, start_response):
-        if 'HTTP_X_ZEUS_DL_PT' in env:
-            env['SCRIPT_URL'] = env['SCRIPT_NAME'] = ''
-        return self.wsgi_handler(env, start_response)
-
-application = KitsuneApp()
 
 # Uncomment this to figure out what's going on with the mod_wsgi environment.
 # def application(env, start_response):

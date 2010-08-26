@@ -5,8 +5,9 @@ from pyquery import PyQuery as pq
 from django.contrib.auth.models import User
 
 from forums.models import Forum, Thread, Post
-from forums.tests import ForumTestCase, get, post
+from forums.tests import ForumTestCase
 from notifications import check_watch
+from sumo.tests import get, post
 from sumo.urlresolvers import reverse
 
 
@@ -93,7 +94,8 @@ class PostsTemplateTestCase(ForumTestCase):
 
     def test_read_without_permission(self):
         """Listing posts without the view_in_forum permission should 404."""
-        response = get(self.client, 'forums.posts', args=['restricted-forum', 6])
+        response = get(self.client, 'forums.posts',
+                       args=['restricted-forum', 6])
         eq_(404, response.status_code)
 
     def test_reply_without_view_permission(self):
@@ -110,6 +112,21 @@ class PostsTemplateTestCase(ForumTestCase):
             response = post(self.client, 'forums.reply', {'content': 'Blahs'},
                             args=['restricted-forum', 6])
         eq_(403, response.status_code)
+
+    def test_preview_reply(self):
+        """Preview a reply."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        t = f.thread_set.all()[0]
+        num_posts = t.post_set.count()
+        content = 'Full of awesome.'
+        response = post(self.client, 'forums.reply',
+                        {'content': content, 'preview': 'any string'},
+                        args=[f.slug, t.id])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(content, doc('#post-preview div.content').text())
+        eq_(num_posts, t.post_set.count())
 
 
 class ThreadsTemplateTestCase(ForumTestCase):
@@ -140,7 +157,8 @@ class ThreadsTemplateTestCase(ForumTestCase):
         """Making a new thread without view permission should 404."""
         self.client.login(username='jsocol', password='testpass')
         response = post(self.client, 'forums.new_thread',
-                        {'title': 'Blahs', 'content': 'Blahs'}, args=['restricted-forum'])
+                        {'title': 'Blahs', 'content': 'Blahs'},
+                        args=['restricted-forum'])
         eq_(404, response.status_code)
 
     def test_new_thread_without_post_permission(self):
@@ -148,7 +166,8 @@ class ThreadsTemplateTestCase(ForumTestCase):
         self.client.login(username='jsocol', password='testpass')
         with patch_object(Forum, 'allows_viewing_by', Mock(return_value=True)):
             response = post(self.client, 'forums.new_thread',
-                            {'title': 'Blahs', 'content': 'Blahs'}, args=['restricted-forum'])
+                            {'title': 'Blahs', 'content': 'Blahs'},
+                            args=['restricted-forum'])
         eq_(403, response.status_code)
 
     def test_new_short_thread_errors(self):
@@ -378,3 +397,20 @@ class ForumsTemplateTestCase(ForumTestCase):
 
         doc = pq(response.content)
         eq_('Access denied', doc('#content-inner h2').text())
+
+
+class NewThreadTemplateTestCase(ForumTestCase):
+
+    def test_preview(self):
+        """Preview the thread post."""
+        self.client.login(username='rrosario', password='testpass')
+        f = Forum.objects.filter()[0]
+        num_threads = f.thread_set.count()
+        content = 'Full of awesome.'
+        response = post(self.client, 'forums.new_thread',
+                        {'title': 'Topic', 'content': content,
+                         'preview': 'any string'}, args=[f.slug])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(content, doc('#post-preview div.content').text())
+        eq_(num_threads, f.thread_set.count())

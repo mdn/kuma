@@ -1,0 +1,21 @@
+#
+# This pulls in requirements specific for development.
+
+-r prod.txt
+
+Werkzeug==0.5.1
+ipython==0.10
+sqlparse==0.1.1
+nose==0.11.1
+coverage==3.2b4
+selenium==1.0.1
+mock==0.6.0
+pyquery==0.5
+translate-toolkit==1.6.0
+pylint==0.20.0
+
+-e git://github.com/jbalogh/check.git@1c73813fcd085020decc6f72caf232f71150db0a#egg=check
+-e git://github.com/robhudson/django-debug-toolbar.git@d05dcbb4aa93b1ce9d097ed8d537f06eb2491f5e#egg=django_debug_toolbar
+-e git://github.com/jbalogh/django-debug-cache-panel@dbdffc6048bde9e551f9bc01975ad3373b9c9427#egg=cache_panel
+-e git://github.com/jbalogh/django-nose.git@70de9dd19e40bd292cdac06c51b6bfe703731504#egg=django_nose
+-e git://github.com/jbalogh/test-utils.git@c4c31905a95e59dcc8919c1030b23848ad7fbca6#egg=test-utils

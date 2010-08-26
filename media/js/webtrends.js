@@ -677,7 +677,7 @@ WebTrends.prototype.mozCustom=function(){
     //Set custom support referrer parameter
     var tempref = window.document.referrer.toLowerCase();
     if (tempref.indexOf("/search") != -1) {
-        this.WT.z_supportRef="search?";
+        this.WT.z_supportRef="Search";
     }else if (tempref.indexOf("style_mode=inproduct") != -1){
         this.WT.z_supportRef="InProduct";
     }else if (tempref.indexOf("/kb/") != -1){

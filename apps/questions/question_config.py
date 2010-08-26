@@ -218,13 +218,9 @@ products = SortedDict([
             ('m6', {
                 'name': _('I have suggestions for how to improve Firefox for mobile'),
                 'html': '<p>You can provide suggestions for '
-                        '<strong>Firefox on Maemo</strong> in the '
-                        '<a href="http://firefoxformobile.uservoice.com/forums/70215-firefox-for-maemo-ideas">'
-                        'Maemo feedback forum</a>.</p>'
-                        '<p>You can provide suggestions for '
-                        '<strong>Firefox on Android</strong> in the '
-                        '<a href="http://firefoxformobile.uservoice.com/forums/70211-firefox-for-android-ideas">'
-                        'Android feedback forum</a>.</p>',
+                        '<strong>Firefox on Android or Maemo</strong> in the '
+                        '<a href="http://firefoxformobile.uservoice.com/forums/70211-firefox-for-mobile-ideas">'
+                        'Firefox for mobile feedback forum</a>.</p>',
                 'deadend': True,
             }),
         ])

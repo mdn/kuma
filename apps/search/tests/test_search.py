@@ -25,7 +25,6 @@ from search.clients import (WikiClient, QuestionsClient,
                             DiscussionClient, SearchError)
 from sumo.models import WikiPage
 from forums.models import Post
-import forums.tests as forum_tests
 
 
 def render(s, context):
@@ -148,7 +147,7 @@ class SphinxTestCase(test_utils.TransactionTestCase):
     """
 
     fixtures = ['pages.json', 'categories.json', 'users.json',
-                'posts.json', 'questions.json',]
+                'posts.json', 'questions.json', ]
     sphinx = True
     sphinx_is_running = False
 
@@ -315,6 +314,11 @@ class SearchTest(SphinxTestCase):
             assert (results[0]['attrs'][test_for[i]] >
                     results[-1]['attrs'][test_for[i]])
             i += 1
+
+    def test_num_voted_none(self):
+        qs = {'q': '', 'w': 2, 'a': 1, 'num_voted': 2, 'num_votes': ''}
+        response = self.client.get(reverse('search'), qs)
+        eq_(200, response.status_code)
 
     def test_created(self):
         """Basic functionality of created filter."""

@@ -19,8 +19,8 @@ def send_notification(content_type, pk, subject, content, exclude=None,
     log.info('Got %s notification for %s: %s' % (event_type, content_type,
                                                  pk))
 
-    watchers = EventWatch.uncached.filter(content_type=content_type,
-                                          watch_id=pk, event_type=event_type)
+    watchers = EventWatch.uncached.using('default').filter(
+        content_type=content_type, watch_id=pk, event_type=event_type)
     if exclude:
         watchers = watchers.exclude(email__in=exclude)
 
@@ -34,5 +34,6 @@ def send_notification(content_type, pk, subject, content, exclude=None,
 def delete_watches(cls, pk):
     ct = ContentType.objects.get_for_model(cls)
     log.info('Deleting watches for %s %s' % (ct, pk))
-    e = EventWatch.objects.filter(content_type=ct, watch_id=pk)
+    e = EventWatch.uncached.using('default').filter(
+        content_type=ct, watch_id=pk)
     e.delete()

@@ -129,7 +129,7 @@ $(document).ready(function () {
  */
 jQuery.fn.wrapDeleteInput = function (options) {
     // Only works on <input/>
-    if (this[0].nodeName !== 'INPUT') {
+    if (!this.is('input')) {
         return this;
     }
 
@@ -192,9 +192,8 @@ jQuery.fn.wrapDeleteInput = function (options) {
  *             is complete.
  */
 jQuery.fn.ajaxSubmitInput = function (options) {
-
     // Only works on <input/>
-    if (this[0].nodeName !== 'INPUT') {
+    if (!this.is('input')) {
         return this;
     }
 

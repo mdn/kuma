@@ -83,15 +83,7 @@
                     delay: 0,
                     minLength: 1  // Adjust with size of vocab.
                                   // Starting small for discoverability.
-                })
-                // Work around jQuery UI bug http://dev.jqueryui.com/ticket/5275:
-                .data("autocomplete")._renderItem = function(ul, item) {
-                        var a = $("<a></a>").text(item.label);
-                        return $("<li></li>")
-                            .data("item.autocomplete", item)
-                            .append(a)
-                            .appendTo(ul);
-                    };
+                });
 
                 tender = makeButtonTender($input.closest("form"));
                 // keyup isn't triggered by pasting into the field. FWIW,

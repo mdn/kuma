@@ -1,0 +1,30 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Create a New Revision | {document} | Firefox Support')|f(document=document.title) %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (document.get_absolute_url(), document.title),
+                 (None, _('New Revision'))] %}
+
+{% block content %}
+  <div id="breadcrumbs">
+    {{ _('You are here:') }}
+    {{ breadcrumbs(crumbs) }}
+  </div>
+  <hgroup>
+    <h1>{{ _('Create a New Revision') }}</h1>
+    <h2>{{ document.title }}</h2>
+  </hgroup>
+  <div id="revision-form">
+    <form action="" method="post">
+      {{ csrf() }}
+      {{ errorlist(form) }}
+      <ul>
+        {{ form.as_ul()|safe }}
+      </ul>
+      <div class="submit">
+        <input type="submit" value="{{_('Save') }}">
+      </div>
+    </form>
+  </div>
+{% endblock %}

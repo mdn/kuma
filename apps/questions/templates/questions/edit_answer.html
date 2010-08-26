@@ -4,6 +4,7 @@
 {% from "upload/attachments.html" import attachments_form %}
 {# L10n: {t} is the title of the question. #}
 {% set title = _('Editing an answer | {t} | Firefox Support Forum')|f(t=answer.question.title) %}
+{% set classes = 'answers' %}
 
 {% block content %}
   <div class="edit-answer">
@@ -47,8 +48,25 @@
 
       <div class="form-widget submit">
         <a href="{{ url('questions.answers', answer.question.id) }}">{{ _('Cancel') }}</a>
+        <input type="submit" class="btn y-btn" name="preview" value="{{ _('Preview Reply') }}" />
         <input type="submit" class="btn g-btn" value="{{ _('Update answer') }}" />
       </div>
     </form>
+
+    {% if answer_preview %}
+      <div id="answer-preview">
+        <h3>{{ _('Answer Preview:') }}</h3>
+        <ol class="answers">
+          <li>
+            {% set answer = answer_preview %}
+            {% set question = answer.question %}
+            {% include "questions/includes/answer.html" %}
+          </li>
+        </ol>
+      </div>
+    {% endif %}
   </div>
+{% endblock %}
+
+{% block side %}
 {% endblock %}

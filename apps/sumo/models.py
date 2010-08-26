@@ -1,9 +1,9 @@
+from django.conf import settings
 from django.db import models
 
 import caching.base
 from taggit.managers import TaggableManager
 
-import settings
 from sumo.urlresolvers import get_url_prefix
 from sumo_locales import INTERNAL_MAP
 
