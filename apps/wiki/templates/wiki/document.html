@@ -12,7 +12,11 @@
   </div>
   <h1>{{ document.title }}</h1>
   <div id="doc-content">
-    {{ document.html|safe }}
+    {% if document.current_revision %}
+      {{ document.html|safe }}
+    {% else %}
+      {{ _("This article doesn't have approved content yet.") }}
+    {% endif %}
   </div>
   <div id="more-help">
     <h2>{{ _("Couldn't find what you were looking for?") }}</h2>

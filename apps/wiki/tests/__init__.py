@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.cache import cache
 
 from sumo.tests import LocalizingClient, TestCase
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
@@ -9,6 +10,7 @@ class TestCaseBase(TestCase):
 
     def setUp(self):
         self.client = LocalizingClient()
+        cache.clear()
 
     def tearDown(self):
         pass

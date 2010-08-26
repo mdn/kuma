@@ -75,32 +75,90 @@ def new_document(request):
 
 @login_required
 @permission_required('wiki.add_revision')
-def new_revision(request, document_id, based_on=None):
+def new_revision(request, document_slug, revision_id=None):
     """Create a new revision of a wiki document."""
-    doc = get_object_or_404(Document, pk=document_id)
+    doc = get_object_or_404(Document, title=document_slug.replace('+', ' '))
+
     if request.method == 'GET':
-        form = RevisionForm()
+        if revision_id:
+            rev = get_object_or_404(Revision, pk=revision_id)
+        elif doc.current_revision:
+            rev = doc.current_revision
+        else:
+            rev = doc.revisions.order_by('-created')[0]
+
+        initial = {
+            'keywords': rev.keywords,
+            'content': rev.content,
+            'summary': rev.summary,
+        }
+        rev_form = RevisionForm(initial=initial)
+
+        # If the Document doesn't have a current_revision (nothing approved)
+        # then all the Document fields are still editable. Once there is an
+        # approved Revision, the Document fields are locked.
+        if not doc.current_revision:
+            initial = {
+                'title': doc.title,
+                'category': doc.category,
+                'tags': ','.join([t.name for t in doc.tags.all()]),
+                'firefox_versions': [x.item_id for x in
+                                     doc.firefox_versions.all()],
+                'operating_systems': [x.item_id for x in
+                                      doc.operating_systems.all()],
+            }
+            doc_form = DocumentForm(initial=initial)
+        else:
+            doc_form = None
+
         return jingo.render(request, 'wiki/new_revision.html',
-                            {'form': form, 'document': doc})
+                            {'revision_form': rev_form,
+                             'document_form': doc_form,
+                             'document': doc})
 
-    form = RevisionForm(request.POST)
+    rev_form = RevisionForm(request.POST)
+    if not doc.current_revision:
+        doc_form = DocumentForm(request.POST)
+    else:
+        doc_form = None
 
-    if form.is_valid():
-        rev = form.save(commit=False)
+    if rev_form.is_valid() and (not doc_form or doc_form.is_valid()):
+        if doc_form:
+            document = doc_form.save(commit=False)
+            document.id = doc.id
+            document.save()
+
+            # TODO: Use the tagging widget instead of this?
+            tags = doc_form.cleaned_data['tags']
+            doc.tags.exclude(name__in=tags).delete()
+            doc.tags.add(*tags)
+
+            ffv = doc_form.cleaned_data['firefox_versions']
+            doc.firefox_versions.exclude(item_id__in=
+                                         [x.item_id for x in ffv]).delete()
+            doc.firefox_versions = ffv
+            os = doc_form.cleaned_data['operating_systems']
+            doc.operating_systems.exclude(item_id__in=
+                                          [x.item_id for x in os]).delete()
+            doc.operating_systems = os
+
+        rev = rev_form.save(commit=False)
         rev.document = doc
         rev.creator = request.user
         rev.save()
 
         return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                            args=[document_id]))
+                                            args=[document_slug]))
 
     return jingo.render(request, 'wiki/new_revision.html',
-                        {'form': form, 'document': doc})
+                        {'revision_form': rev_form,
+                         'document_form': doc_form,
+                         'document': doc})
 
 
-def document_revisions(request, document_id):
+def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
-    doc = get_object_or_404(Document, pk=document_id)
+    doc = get_object_or_404(Document, title=document_slug.replace('+', ' '))
     revs = Revision.objects.filter(document=doc)
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs,

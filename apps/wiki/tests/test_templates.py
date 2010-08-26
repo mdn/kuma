@@ -10,6 +10,7 @@ from wiki.tests import TestCaseBase
 
 class DocumentTests(TestCaseBase):
     """Tests for the Document template"""
+    fixtures = ['users.json']
 
     def test_document_view(self):
         """Load the document view page and verify the title and content."""
@@ -43,7 +44,7 @@ class NewDocumentTests(TestCaseBase):
         """HTTP POST to new document URL creates the document."""
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2']
-        data = self._new_document_data(tags)
+        data = _new_document_data(tags)
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         d = Document.objects.get(title=data['title'])
@@ -64,7 +65,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_empty_title(self):
         """Trigger required field validation for title."""
         self.client.login(username='admin', password='testpass')
-        data = self._new_document_data(['tag1', 'tag2'])
+        data = _new_document_data(['tag1', 'tag2'])
         data['title'] = ''
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -76,7 +77,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_empty_content(self):
         """Trigger required field validation for content."""
         self.client.login(username='admin', password='testpass')
-        data = self._new_document_data(['tag1', 'tag2'])
+        data = _new_document_data(['tag1', 'tag2'])
         data['content'] = ''
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -88,7 +89,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_invalid_category(self):
         """Try to create a new document with an invalid category value."""
         self.client.login(username='admin', password='testpass')
-        data = self._new_document_data(['tag1', 'tag2'])
+        data = _new_document_data(['tag1', 'tag2'])
         data['category'] = 963
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -101,7 +102,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_invalid_ff_version(self):
         """Try to create a new document with an invalid firefox version."""
         self.client.login(username='admin', password='testpass')
-        data = self._new_document_data(['tag1', 'tag2'])
+        data = _new_document_data(['tag1', 'tag2'])
         data['firefox_versions'] = [1337]
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -110,19 +111,6 @@ class NewDocumentTests(TestCaseBase):
         eq_(1, len(ul))
         eq_('Select a valid choice. 1337 is not one of the available choices.',
             ul('li').text())
-
-    def _new_document_data(self, tags):
-        return {
-            'title': 'A Test Article',
-            'tags': ','.join(tags),
-            'firefox_versions': [1, 2],
-            'operating_systems': [1, 3],
-            'category': CATEGORIES[0][0],
-            'keywords': 'key1, key2',
-            'summary': 'lipsum',
-            'content': 'lorem ipsum dolor sit amet',
-            'significance': SIGNIFICANCES[0][0],
-        }
 
 
 class NewRevisionTests(TestCaseBase):
@@ -133,33 +121,83 @@ class NewRevisionTests(TestCaseBase):
         """Trying to create a new revision wihtout permission returns 403."""
         d = _create_document()
         self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision', args=[d.id]))
+        response = self.client.get(reverse('wiki.new_revision',
+                                           args=[d.title.replace(' ', '+')]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
         d = _create_document()
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision', args=[d.id]))
+        response = self.client.get(reverse('wiki.new_revision',
+                                           args=[d.title.replace(' ', '+')]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#revision-form textarea[name="content"]')))
+        eq_(1, len(doc('#document-form textarea[name="content"]')))
 
-    def test_new_revision_POST(self):
-        """HTTP POST to new revision URL creates the revision."""
+    def test_new_revision_GET_based_on(self):
+        """HTTP GET to new revision URL based on another revision.
+
+        This case should render the form with the fields pre-populated
+        with the based-on revision info.
+
+        """
+        d = _create_document()
+        r = Revision(document=d, keywords='ky1, kw2', summary='the summary',
+                     content='<div>The content here</div>', creator_id=118577,
+                     significance=SIGNIFICANCES[0][0])
+        r.save()
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(reverse('wiki.new_revision_based_on',
+                                           args=[d.title.replace(' ', '+'),
+                                                 r.id]))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(doc('#id_keywords')[0].value, r.keywords)
+        eq_(doc('#id_summary')[0].value, r.summary)
+        eq_(doc('#id_content')[0].value, r.content)
+
+    def test_new_revision_POST_document_with_current(self):
+        """HTTP POST to new revision URL creates the revision on a document.
+
+        The document in this case already has a current_revision, therefore
+        the document document fields are not editable.
+
+        """
         d = _create_document()
         self.client.login(username='admin', password='testpass')
-        response = self.client.post(reverse('wiki.new_revision', args=[d.id]),
+        response = self.client.post(reverse('wiki.new_revision',
+                                            args=[d.title.replace(' ', '+')]),
                                     {'summary': 'A brief summary',
                                      'content': 'The article content',
                                      'keywords': 'keyword1 keyword2',
                                      'significance': 10})
         eq_(302, response.status_code)
-        eq_(1, d.revisions.count())
+        eq_(2, d.revisions.count())
+
+    def test_new_revision_POST_document_without_current(self):
+        """HTTP POST to new revision URL creates the revision on a document.
+
+        The document in this case doesn't have a current_revision, therefore
+        the document fields are open for editing.
+
+        """
+        d = _create_document()
+        d.current_revision = None
+        d.save()
+        self.client.login(username='admin', password='testpass')
+        tags = ['tag1', 'tag2', 'tag3']
+        data = _new_document_data(tags)
+        response = self.client.post(reverse('wiki.new_revision',
+                                            args=[d.title.replace(' ', '+')]),
+                                    data)
+        eq_(302, response.status_code)
+        eq_(2, d.revisions.count())
 
 
 class DocumentListTests(TestCaseBase):
     """Tests for the All and Category template"""
+    fixtures = ['users.json']
 
     def test_category_list(self):
         """Verify the category documents list view."""
@@ -197,14 +235,34 @@ class DocumentRevisionsTests(TestCaseBase):
                       creator=user)
         r2.save()
         response = self.client.get(reverse('wiki.document_revisions',
-                                   args=[d.id]))
+                                   args=[d.title.replace(' ', '+')]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(2, len(doc('#revision-list > ul > li')))
+        eq_(3, len(doc('#revision-list > ul > li')))
 
 
 def _create_document(title='Test Document'):
     d = Document(title=title, html='<div>Lorem Ipsum</div>',
                  category=1, locale='en-US')
     d.save()
+    r = Revision(document=d, keywords='key1, key2', summary='lipsum',
+                 content='<div>Lorem Ipsum</div>', creator_id=118577,
+                 significance=SIGNIFICANCES[0][0])
+    r.save()
+    d.current_revision = r
+    d.save()
     return d
+
+
+def _new_document_data(tags):
+    return {
+        'title': 'A Test Article',
+        'tags': ','.join(tags),
+        'firefox_versions': [1, 2],
+        'operating_systems': [1, 3],
+        'category': CATEGORIES[0][0],
+        'keywords': 'key1, key2',
+        'summary': 'lipsum',
+        'content': 'lorem ipsum dolor sit amet',
+        'significance': SIGNIFICANCES[0][0],
+    }

@@ -28,7 +28,7 @@
   </div>
   <div id="actions">
     {% if user.has_perm('wiki.add_revision') %}
-      <a href="{{ url('wiki.new_revision', document.id) }}">Add a Revision</a>
+      <a href="{{ url('wiki.new_revision', document.title.replace(' ', '+')) }}">Add a Revision</a>
     {% endif %}
   </div>
 {% endblock %}

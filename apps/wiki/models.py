@@ -109,6 +109,9 @@ class Document(ModelBase, TaggableMixin):
         return reverse('wiki.document',
                        kwargs={'document_slug': self.title.replace(' ', '+')})
 
+    def __unicode__(self):
+        return '[%s] %s' % (self.locale, self.title)
+
 
 # Caveats:
 #  * There's no immutable per-document revision ID revision (e.g., 0..63). We
@@ -152,6 +155,10 @@ class Revision(ModelBase):
             self.document.html = wiki_to_html(self.content, wiki_hooks=True)
             self.document.current_revision = self
             self.document.save()
+
+    def __unicode__(self):
+        return u'[%s] %s: %s' % (self.document.locale, self.document.title,
+                                 self.content[:50])
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

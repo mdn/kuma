@@ -1,29 +1,73 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% set title = _('Create a New Revision | {document} | Firefox Support')|f(document=document.title) %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+{% set title = _('Edit Article | {document} | Firefox Support')|f(document=document.title) %}
+{# TODO: Change KB url to landing page when we have one #}
+{% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
+                 (url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
-                 (None, _('New Revision'))] %}
+                 (None, _('Edit Article'))] %}
 
 {% block content %}
   <div id="breadcrumbs">
     {{ _('You are here:') }}
     {{ breadcrumbs(crumbs) }}
   </div>
-  <hgroup>
-    <h1>{{ _('Create a New Revision') }}</h1>
-    <h2>{{ document.title }}</h2>
-  </hgroup>
-  <div id="revision-form">
+  <h1>{{ _('Edit Article') }}</h1>
+  {% if not document_form %}
+    <div id="document-info">
+      <ul>
+        <li>
+          <label>{{ _('Title:') }}</label>
+          {{ document.title }}
+        </li>
+        <li>
+          <label>{{ _('Locale:' )}}</label>
+          {{ document.locale }}
+        </li>
+        <li>
+          <label>{{ _('Category:') }}</label>
+          {{ document.get_category_display() }}
+        </li>
+        <li>
+          <label>{{ _('Tags:') }}</label>
+          {% for tag in document.tags.all() %}
+            {{ tag.name }}
+            {% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </li>
+        <li>
+          <label>{{ _('Firefox Versions:') }}</label>
+          {% for ff_v in document.firefox_versions.all() %}
+            {{ ff_v.get_item_id_display() }}
+            {% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </li>
+        <li>
+          <label>{{ _('Operating Systems:') }}</label>
+          {% for os in document.operating_systems.all() %}
+            {{ os.get_item_id_display() }}
+            {% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </li>
+      </ul>
+    </div>
+  {% endif %}
+  <div id="document-form">
     <form action="" method="post">
       {{ csrf() }}
-      {{ errorlist(form) }}
+      {% if document_form %}
+        {{ errorlist(document_form) }}
+      {% endif %}
+      {{ errorlist(revision_form) }}
       <ul>
-        {{ form.as_ul()|safe }}
+        {% if document_form %}
+          {{ document_form.as_ul()|safe }}
+        {% endif %}
+        {{ revision_form.as_ul()|safe }}
       </ul>
       <div class="submit">
-        <input type="submit" value="{{_('Save') }}">
+        <input type="submit" value="{{ _('Submit for Review') }}">
       </div>
     </form>
   </div>

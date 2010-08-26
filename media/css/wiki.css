@@ -3,15 +3,19 @@
  */
 
 /* New / Edit Document */
+#document-info li,
 #document-form li {
     clear: both;
     list-style: none;
     padding: 5px 0;
 }
+
+#document-info li label,
 #document-form li label {
     float: left;
     width: 125px;
 }
+
 #document-form li li {
     display: inline;
 }
