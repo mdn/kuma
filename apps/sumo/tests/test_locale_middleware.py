@@ -2,8 +2,6 @@ from django.test import Client, TestCase
 
 
 class TestLocaleMiddleware(TestCase):
-    client = Client()
-
     def test_default_redirect(self):
         # User wants en-us, we send en-US
         response = self.client.get('/search', follow=True,

@@ -2,8 +2,6 @@ from django.test import Client, TestCase
 
 
 class TestHandlers(TestCase):
-    client = Client()
-
     def test_404_strip_slash(self):
         """Requesting a URL with a trailing slash should remove the slash
         and redirect."""
