@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 from django.contrib.contenttypes.models import ContentType
 
-from .feeds import QuestionsFeed, AnswersFeed
+from .feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
 from .models import Question, Answer
 from flagit import views as flagit_views
 
@@ -25,9 +25,6 @@ urlpatterns = patterns('questions.views',
         name='questions.edit_answer'),
     url(r'^/(?P<question_id>\d+)/solution/(?P<answer_id>\d+)$', 'solution',
         name='questions.solution'),
-    url(r'^/feed$', QuestionsFeed(), name='questions.feed'),
-    url(r'^/(?P<question_id>\d+)/feed$', AnswersFeed(),
-        name='questions.answers.feed'),
     url(r'^/(?P<question_id>\d+)/vote$', 'question_vote',
         name='questions.vote'),
     url(r'^/(?P<question_id>\d+)/vote/(?P<answer_id>\d+)$',
@@ -54,4 +51,11 @@ urlpatterns = patterns('questions.views',
         name='questions.watch'),
     url(r'^/(?P<question_id>\d+)/unwatch$', 'unwatch_question',
         name='questions.unwatch'),
+
+    # Feeds
+    url(r'^/feed$', QuestionsFeed(), name='questions.feed'),
+    url(r'^/(?P<question_id>\d+)/feed$', AnswersFeed(),
+        name='questions.answers.feed'),
+    url(r'^/tagged/(?P<tag_slug>[\w\-]+)/feed$', TaggedQuestionsFeed(),
+        name='questions.tagged_feed'),
 )

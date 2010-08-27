@@ -2,13 +2,14 @@ from django.shortcuts import get_object_or_404
 from django.utils.html import strip_tags, escape
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
-from django.utils.encoding import smart_str
 
 from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
+from taggit.models import Tag
+from sumo.helpers import urlparams
 
-from .models import Question
+from .models import Question, CONFIRMED
 import questions as constants
 
 
@@ -22,8 +23,8 @@ class QuestionsFeed(Feed):
         return reverse('questions.questions')
 
     def items(self):
-        return Question.objects.all().order_by(
-            '-updated')[:constants.QUESTIONS_PER_PAGE]
+        qs = Question.objects.filter(status=CONFIRMED)
+        return qs.order_by('-updated')[:constants.QUESTIONS_PER_PAGE]
 
     def item_title(self, item):
         return item.title
@@ -36,6 +37,22 @@ class QuestionsFeed(Feed):
 
     def item_pubdate(self, item):
         return item.created
+
+
+class TaggedQuestionsFeed(QuestionsFeed):
+
+    def get_object(self, request, tag_slug):
+        return get_object_or_404(Tag, slug=tag_slug)
+
+    def title(self, tag):
+        return _('Recently updated questions tagged %s' % tag.name)
+
+    def link(self, tag):
+        return urlparams(reverse('questions.questions'), tagged=tag.slug)
+
+    def items(self, tag):
+        qs = Question.objects.filter(status=CONFIRMED, tags__in=[tag.name])
+        return qs.order_by('-updated')[:constants.QUESTIONS_PER_PAGE]
 
 
 class AnswersFeed(Feed):

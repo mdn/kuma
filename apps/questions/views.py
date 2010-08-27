@@ -34,7 +34,7 @@ from .models import (Question, Answer, QuestionVote, AnswerVote,
 from .forms import (NewQuestionForm, EditQuestionForm,
                     AnswerForm, WatchQuestionForm,
                     FREQUENCY_CHOICES)
-from .feeds import QuestionsFeed, AnswersFeed
+from .feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
 from .tags import add_existing_tag
 from .tasks import (cache_top_contributors, build_solution_notification,
                     send_confirmation_email)
@@ -80,21 +80,25 @@ def questions(request):
     else:
         filter = None
 
+    feed_urls = ((reverse('questions.feed'),
+                  QuestionsFeed().title()),)
+
     if tagged:
         tag_slugs = tagged.split(',')
         tags = Tag.objects.filter(slug__in=tag_slugs)
         if tags:
             for t in tags:
                 question_qs = question_qs.filter(tags__in=[t.name])
+            if len(tags) == 1:
+                feed_urls += ((reverse('questions.tagged_feed',
+                                       args=[tags[0].slug]),
+                               TaggedQuestionsFeed().title(tags[0])),)
         else:
             question_qs = Question.objects.get_empty_query_set()
 
     question_qs = question_qs.order_by(order)
     questions_ = paginate(request, question_qs,
                           per_page=constants.QUESTIONS_PER_PAGE)
-
-    feed_urls = ((reverse('questions.feed'),
-                  QuestionsFeed().title()),)
 
     return jingo.render(request, 'questions/questions.html',
                         {'questions': questions_, 'feeds': feed_urls,
