@@ -6,8 +6,10 @@ from nose.tools import eq_
 from nose.plugins.skip import SkipTest
 
 from questions.models import Question
+from sumo.urlresolvers import reverse
 from sumo.tests import post, LocalizingClient, TestCase
 from upload.models import ImageAttachment
+from upload.utils import create_image_attachment
 
 
 class CreateImageAttachmentTestCase(TestCase):
