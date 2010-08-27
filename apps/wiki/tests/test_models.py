@@ -14,6 +14,23 @@ def _objects_eq(manager, list_):
 class DocumentTests(TestCase):
     """Tests for the Document model"""
 
+    def test_document_is_template(self):
+        """is_template stays in sync with the title"""
+        d = document(title='test')
+        d.save()
+
+        assert not d.is_template
+
+        d.title = 'Template:test'
+        d.save()
+
+        assert d.is_template
+
+        d.title = 'Back to document'
+        d.save()
+
+        assert not d.is_template
+
     def test_delete_tagged_document(self):
         """Make sure deleting a tagged doc deletes its tag relationships."""
         # TODO: Move to wherever the tests for TaggableMixin are.

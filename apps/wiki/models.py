@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from sumo.models import ModelBase, TaggableMixin
-from sumo.utils import wiki_to_html
 from sumo.urlresolvers import reverse
+from wiki import TEMPLATE_TITLE_PREFIX
 
 
 # Disruptiveness of edits to translated versions. Keys indicate the relative
@@ -64,6 +64,12 @@ class Document(ModelBase, TaggableMixin):
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
+    # Is this document a template or not?
+    # TODO: Localizing templates does not allow changing titles
+    is_template = models.BooleanField(default=False, editable=False,
+                                      db_index=True)
+
+    # TODO: validate (against settings.SUMO_LANGUAGES?)
     locale = models.CharField(max_length=7, db_index=True,
                               default=settings.WIKI_DEFAULT_LANGUAGE,
                               choices=settings.LANGUAGE_CHOICES)
@@ -91,6 +97,10 @@ class Document(ModelBase, TaggableMixin):
     class Meta(object):
         unique_together = (('parent', 'locale'), ('title', 'locale'),
                            ('slug', 'locale'))
+
+    def save(self, *args, **kwargs):
+        self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
+        super(Document, self).save(*args, **kwargs)
 
     @property
     def content_parsed(self):
@@ -145,6 +155,7 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
+            from sumo.utils import wiki_to_html
             self.document.html = wiki_to_html(self.content, wiki_hooks=True)
             self.document.current_revision = self
             self.document.save()
