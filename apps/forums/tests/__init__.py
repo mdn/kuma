@@ -1,11 +1,11 @@
-from django.test import TestCase, client
+from django.test import TestCase
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
 
 from forums.models import Forum, Thread, Post, ThreadLockedError
 from forums.views import sort_threads
-from sumo.tests import get
+from sumo.tests import get, LocalizingClient
 
 
 def fixtures_setup():
@@ -42,9 +42,7 @@ class ForumTestCase(TestCase):
         installed. This will set them to the correct values."""
 
         fixtures_setup()
-
-        self.client = client.Client()
-        self.client.get('/')
+        self.client = LocalizingClient()
 
 
 class PostTestCase(ForumTestCase):

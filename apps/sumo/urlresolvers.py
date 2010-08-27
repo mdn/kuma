@@ -1,6 +1,7 @@
 import threading
 
 from django.conf import settings
+from django.core.handlers.wsgi import WSGIRequest
 from django.core.urlresolvers import reverse as django_reverse
 from django.utils.translation.trans_real import parse_accept_lang_header
 
@@ -9,19 +10,32 @@ from django.utils.translation.trans_real import parse_accept_lang_header
 _locals = threading.local()
 
 
-def set_url_prefix(prefix):
-    """Set the ``prefix`` for the current thread."""
-    _locals.prefix = prefix
+def set_url_prefixer(prefixer):
+    """Set the Prefixer for the current thread."""
+    _locals.prefixer = prefixer
 
 
-def get_url_prefix():
-    """Get the prefix for the current thread, or None."""
-    return getattr(_locals, 'prefix', None)
+def get_url_prefixer():
+    """Get the Prefixer for the current thread, or None."""
+    return getattr(_locals, 'prefixer', None)
 
 
-def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None):
-    """Wraps Django's reverse to prepend the correct locale."""
-    prefixer = get_url_prefix()
+def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
+            force_locale=False):
+    """Wraps Django's reverse to prepend the correct locale.
+
+    force_locale -- Ordinarily, if get_url_prefixer() returns None, we return
+        an unlocalized URL, which will be localized via redirect when visited.
+        Set force_locale to True to force the insertion of a default locale
+        when there is no set prefixer. If you are writing a test and simply
+        wish to avoid LocaleURLMiddleware's initial 301 when passing in an
+        unprefixed URL, it is probably easier to substitute LocalizingClient
+        for any uses of django.test.client.Client and forgo this kwarg.
+
+    """
+    prefixer = get_url_prefixer()
+    if not prefixer and force_locale:
+        prefixer = Prefixer()
 
     if prefixer:
         prefix = prefix or '/'
@@ -38,33 +52,33 @@ def find_supported(test):
             x.split('-', 1)[0] == test.lower().split('-', 1)[0]]
 
 
-class Prefixer(object):
+def split_path(path):
+    """
+    Split the requested path into (locale, path).
 
-    def __init__(self, request):
-        self.request = request
-        split = self.split_path(request.path_info)
-        self.locale, self.shortened_path = split
+    locale will be empty if it isn't found.
+    """
+    path = path.lstrip('/')
 
-    def split_path(self, path_):
-        """
-        Split the requested path into (locale, path).
+    # Use partition instead of split since it always returns 3 parts
+    first, _, rest = path.partition('/')
 
-        locale will be empty if it isn't found.
-        """
-        path = path_.lstrip('/')
-
-        # Use partitition instead of split since it always returns 3 parts
-        first, _, rest = path.partition('/')
-
-        lang = first.lower()
-        if lang in settings.LANGUAGE_URL_MAP:
-            return settings.LANGUAGE_URL_MAP[lang], rest
+    lang = first.lower()
+    if lang in settings.LANGUAGE_URL_MAP:
+        return settings.LANGUAGE_URL_MAP[lang], rest
+    else:
+        supported = find_supported(first)
+        if supported:
+            return supported[0], rest
         else:
-            supported = find_supported(first)
-            if len(supported):
-                return supported[0], rest
-            else:
-                return '', path
+            return '', path
+
+
+class Prefixer(object):
+    def __init__(self, request=None):
+        """If request is omitted, fall back to a default locale."""
+        self.request = request or WSGIRequest({'REQUEST_METHOD': 'bogus'})
+        self.locale, self.shortened_path = split_path(self.request.path_info)
 
     def get_language(self):
         """

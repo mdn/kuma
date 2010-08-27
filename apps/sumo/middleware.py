@@ -12,7 +12,7 @@ from django.contrib import auth
 
 import tower
 
-from . import urlresolvers
+from .urlresolvers import Prefixer, set_url_prefixer, split_path
 from .models import Session
 from sumo.helpers import urlparams
 from sumo.views import handle403
@@ -26,8 +26,8 @@ class LocaleURLMiddleware(object):
     """
 
     def process_request(self, request):
-        prefixer = urlresolvers.Prefixer(request)
-        urlresolvers.set_url_prefix(prefixer)
+        prefixer = Prefixer(request)
+        set_url_prefixer(prefixer)
         full_path = prefixer.fix(prefixer.shortened_path)
 
         if 'lang' in request.GET:
@@ -50,7 +50,7 @@ class LocaleURLMiddleware(object):
 
             # Vary on Accept-Language if we changed the locale
             old_locale = prefixer.locale
-            new_locale, _ = prefixer.split_path(full_path)
+            new_locale, _ = split_path(full_path)
             if old_locale != new_locale:
                 response['Vary'] = 'Accept-Language'
 
@@ -59,6 +59,15 @@ class LocaleURLMiddleware(object):
         request.path_info = '/' + prefixer.shortened_path
         request.locale = prefixer.locale
         tower.activate(prefixer.locale)
+
+    def process_response(self, request, response):
+        """Unset the thread-local var we set during `process_request`."""
+        # This makes mistaken tests (that should use LocalizingClient but
+        # use Client instead) fail loudly and reliably. Otherwise, the set
+        # prefixer bleeds from one test to the next, making tests
+        # order-dependent and causing hard-to-track failures.
+        set_url_prefixer(None)
+        return response
 
 
 class TikiCookieMiddleware(object):

@@ -1,4 +1,3 @@
-from django.test.client import Client
 from django.test import TestCase
 
 from nose.tools import eq_, raises
@@ -6,17 +5,17 @@ from pyquery import PyQuery as pq
 import jingo
 import test_utils
 
+from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
 
 
 def setup():
     jingo.load_helpers()
-    Client().get('/')
 
 
 def test_breadcrumb():
     """Make sure breadcrumb links start with /."""
-    c = Client()
+    c = LocalizingClient()
     response = c.get(reverse('search'))
 
     doc = pq(response.content)

@@ -1,12 +1,12 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 
 import jingo
 
 from sumo.urlresolvers import reverse
 from .models import EventWatch
+
 
 def remove(request, key):
     """Verify and remove an EventWatch."""

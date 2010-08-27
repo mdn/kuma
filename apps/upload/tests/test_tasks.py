@@ -1,8 +1,4 @@
-from PIL import Image
-
 from django.conf import settings
-from django.core.files import File
-from django.core.files.images import ImageFile
 from django.contrib.auth.models import User
 from django.test import TestCase
 

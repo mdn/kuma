@@ -46,7 +46,7 @@ class TestHelpers(TestCase):
     def test_urlparams_unicode(self):
         context = {'var': u'Fran\xc3\xa7ais'}
         template = '{{ url("search")|urlparams(q=var) }}'
-        eq_(u'/en-US/search?q=Fran%C3%A7ais', render(template, context))
+        eq_(u'/search?q=Fran%C3%A7ais', render(template, context))
 
     def test_urlparams_valid(self):
         context = {'a': 'foo', 'b': 'bar'}

@@ -1,6 +1,7 @@
-from django.test import TestCase, client
+from django.test import TestCase
 from django.contrib.auth.models import User
 
+from sumo.tests import LocalizingClient
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 
 
@@ -8,8 +9,7 @@ class TestCaseBase(TestCase):
     """Base TestCase for the wiki app test cases."""
 
     def setUp(self):
-        self.client = client.Client()
-        self.client.get('/')
+        self.client = LocalizingClient()
 
     def tearDown(self):
         pass

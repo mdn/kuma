@@ -577,7 +577,8 @@ class TaggingViewTestsAsTagger(TaggingTestCaseBase):
         """Assert GETting the add_tag view redirects to the answers page."""
         response = self.client.get(_add_tag_url())
         url = 'http://testserver%s' % reverse('questions.answers',
-                                              kwargs={'question_id': 1})
+                                              kwargs={'question_id': 1},
+                                              force_locale=True)
         self.assertRedirects(response, url)
 
     def test_add_nonexistent_tag(self):
@@ -648,7 +649,8 @@ class TaggingViewTestsAsTagger(TaggingTestCaseBase):
 
     def _assert_redirects_to_question_2(self, response):
         url = 'http://testserver%s' % reverse('questions.answers',
-                                              kwargs={'question_id': 2})
+                                              kwargs={'question_id': 2},
+                                              force_locale=True)
         self.assertRedirects(response, url)
 
     # remove_tag_async view:
@@ -931,7 +933,8 @@ class QuestionEditingTests(TestCaseBase):
 
         # Make sure the form redirects and thus appears to succeed:
         url = 'http://testserver%s' % reverse('questions.answers',
-                                           kwargs={'question_id': question_id})
+                                           kwargs={'question_id': question_id},
+                                           force_locale=True)
         self.assertRedirects(response, url)
 
         # Make sure the static fields, the metadata, and the updated_by field

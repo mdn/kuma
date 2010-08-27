@@ -61,6 +61,7 @@ def build_answer_notification(answer):
 
 @task
 def build_solution_notification(question):
+    """Send emails to everyone watching the question--except the asker."""
     ct = ContentType.objects.get_for_model(question)
     # Cache solution.question as a workaround for replication lag (bug 585029)
     question.solution.question = question

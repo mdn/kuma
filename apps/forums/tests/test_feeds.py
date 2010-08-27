@@ -1,8 +1,6 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from django.test import client
-
 from forums.feeds import ThreadsFeed, PostsFeed
 from forums.models import Forum, Thread
 from forums.tests import ForumTestCase, get
@@ -12,9 +10,6 @@ class ForumTestFeedSorting(ForumTestCase):
 
     def setUp(self):
         super(ForumTestFeedSorting, self).setUp()
-
-        # Warm up the prefixer for reverse()
-        client.Client().get('/')
 
     def test_threads_sort(self):
         """Ensure that threads are being sorted properly by date/time."""

@@ -29,6 +29,7 @@ def create_image_attachment(up_file, obj, user):
 class FileTooLargeError(Exception):
     pass
 
+
 def upload_images(request, obj):
     """
     Takes in a request object and returns a list with information about each

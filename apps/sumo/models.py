@@ -4,15 +4,11 @@ from django.db import models
 import caching.base
 from taggit.managers import TaggableManager
 
-from sumo.urlresolvers import get_url_prefix
 from sumo_locales import INTERNAL_MAP
 
 # Our apps should subclass ManagerBase instead of models.Manager or
 # caching.base.CachingManager directly.
 ManagerBase = caching.base.CachingManager
-
-
-reverse = lambda x: get_url_prefix().fix(x)
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
@@ -107,13 +103,6 @@ class Forum(ModelBase):
     def __unicode__(self):
         return self.name
 
-    def get_url(self):
-        """
-        TODO: Once we can use reverse(), use reverse()
-        """
-
-        return reverse(u'/forum/%s' % (self.forumId,))
-
 
 class ForumThread(ModelBase):
     threadId = models.AutoField(primary_key=True)
@@ -147,13 +136,6 @@ class ForumThread(ModelBase):
     @property
     def name(self):
         return self.title
-
-    def get_url(self):
-        """
-        TODO: Once we can use reverse(), use reverse()
-        """
-
-        return reverse(u'/forum/%s/%s' % (self.object, self.threadId,))
 
 
 class ForumThreadMetaData(ModelBase):

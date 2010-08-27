@@ -12,6 +12,23 @@ import notifications.tasks
 from sumo.tests import post
 
 
+# These mails are generated using reverse() calls, which return different
+# results depending on whether a request is being processed at the time. This
+# is because reverse() depends on a thread-local var which is set/unset at
+# request boundaries by LocaleURLMiddleware. While a request is in progress,
+# reverse() prepends a locale code; otherwise, it doesn't. Thus, when making a
+# mock request that fires off a celery task that generates one of these emails,
+# expect a locale in reverse()d URLs. When firing off a celery task outside the
+# scope of a request, expect none. For example, when firing an email-building
+# task from within a POST request, compare the result with
+# SOLUTION_EMAIL_INSIDE_REQUEST. When calling the task directly from the test,
+# compare with SOLUTION_EMAIL_OUTSIDE_REQUEST.
+#
+# In production, with CELERY_ALWAYS_EAGER=False, celery tasks run in a
+# different interpreter (with no access to the thread-local), so reverse() will
+# never prepend a locale code unless passed force_locale=True. Thus, these
+# test-emails with locale prefixes are not identical to the ones sent in
+# production.
 EMAIL_CONTENT = (
     """
 
@@ -29,7 +46,7 @@ An answer & stuff.
 To view this answer on the site, click the following link, or
 paste it into your browser's location bar:
 
-https://testserver/en-US/questions/1#answer-1
+https://testserver/questions/1#answer-1
 """,
     """
 
@@ -47,8 +64,9 @@ an answer
 To view this answer on the site, click the following link, or
 paste it into your browser's location bar:
 
-https://testserver/en-US/questions/1#answer-%s
-""",
+https://testserver/questions/1#answer-%s
+""")
+SOLUTION_EMAIL_INSIDE_REQUEST, SOLUTION_EMAIL_OUTSIDE_REQUEST = [
     """
 
 Solution to question: Lorem ipsum dolor sit amet?
@@ -65,9 +83,8 @@ An answer & stuff.
 To view the solution on the site, click the following link, or
 paste it into your browser's location bar:
 
-https://testserver/en-US/questions/1#answer-1
-""",
-)
+https://testserver%s/questions/1#answer-1
+""" % s for s in ['/en-US', '']]
 
 
 class NotificationTestCase(TestCaseBase):
@@ -107,7 +124,7 @@ class NotificationTestCase(TestCaseBase):
         delay.assert_called_with(
             self.ct, question.id,
             u'Solution to: %s' % question.title,
-            EMAIL_CONTENT[2],
+            SOLUTION_EMAIL_OUTSIDE_REQUEST,
             (u'user118533@nowhere',),
             'solution')
 
@@ -136,7 +153,7 @@ class NotificationTestCase(TestCaseBase):
         delay.assert_called_with(
             self.ct, question.id,
             u'Solution to: %s' % question.title,
-            EMAIL_CONTENT[2],
+            SOLUTION_EMAIL_OUTSIDE_REQUEST,
             (u'user118533@nowhere',),
             'solution')
 
@@ -170,6 +187,6 @@ class NotificationTestCase(TestCaseBase):
         delay.assert_called_with(
             self.ct, question.id,
             u'Solution to: %s' % question.title,
-            EMAIL_CONTENT[2],
+            SOLUTION_EMAIL_INSIDE_REQUEST,
             (u'user118533@nowhere',),
             'solution')

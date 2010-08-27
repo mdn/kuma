@@ -53,7 +53,7 @@ class TestWikiParser(TestCase):
         """_buildImageParams handles wiki pages."""
         items = ['page=Installing Firefox']
         params = self.p._buildImageParams(items)
-        eq_('/en-US/kb/Installing+Firefox', params['link'])
+        eq_('/kb/Installing+Firefox', params['link'])
 
     def test_image_params_link(self):
         """_buildImageParams handles external links."""
@@ -65,7 +65,7 @@ class TestWikiParser(TestCase):
         """_buildImageParams - wiki page overrides link."""
         items = ['page=Installing Firefox', 'link=http://example.com']
         params = self.p._buildImageParams(items)
-        eq_('/en-US/kb/Installing+Firefox', params['link'])
+        eq_('/kb/Installing+Firefox', params['link'])
 
     def test_image_params_align(self):
         """Align valid options."""
@@ -117,7 +117,7 @@ class TestWikiParser(TestCase):
 
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
-        eq_('/en-US/kb/Installing+Firefox',
+        eq_('/kb/Installing+Firefox',
             self.p._getWikiLink('Installing Firefox'))
 
 
@@ -133,25 +133,25 @@ class TestWikiInternalLinks(TestCase):
     def test_simple(self):
         """Simple internal link markup."""
         link = pq_link(self.p, '[[Installing Firefox]]')
-        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
+        eq_('/kb/Installing+Firefox', link.attr('href'))
         eq_('Installing Firefox', link.text())
 
     def test_simple_markup(self):
         text = '[[Installing Firefox]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox" rel="nofollow">' +
+        eq_('<p><a href="/kb/Installing+Firefox" rel="nofollow">' +
             'Installing Firefox</a>\n</p>',
             self.p.parse(text))
 
     def test_link_hash(self):
         """Internal link with hash."""
         link = pq_link(self.p, '[[Installing Firefox#section name]]')
-        eq_('/en-US/kb/Installing+Firefox#section_name', link.attr('href'))
+        eq_('/kb/Installing+Firefox#section_name', link.attr('href'))
         eq_('Installing Firefox#section name', link.text())
 
     def test_link_hash_markup(self):
         """Internal link with hash."""
         text = '[[Installing Firefox#section name]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_name"' +
+        eq_('<p><a href="/kb/Installing+Firefox#section_name"' +
                 ' rel="nofollow">Installing Firefox#section name</a>\n</p>',
             self.p.parse(text))
 
@@ -164,12 +164,12 @@ class TestWikiInternalLinks(TestCase):
     def test_link_name(self):
         """Internal link with name."""
         link = pq_link(self.p, '[[Installing Firefox|this name]]')
-        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
+        eq_('/kb/Installing+Firefox', link.attr('href'))
         eq_('this name', link.text())
 
     def test_link_with_extra_pipe(self):
         link = pq_link(self.p, '[[Installing Firefox|with|pipe]]')
-        eq_('/en-US/kb/Installing+Firefox', link.attr('href'))
+        eq_('/kb/Installing+Firefox', link.attr('href'))
         eq_('with|pipe', link.text())
 
     def test_hash_name(self):
@@ -181,25 +181,25 @@ class TestWikiInternalLinks(TestCase):
     def test_link_hash_name(self):
         """Internal link with hash and name."""
         link = pq_link(self.p, '[[Installing Firefox#section 3|this name]]')
-        eq_('/en-US/kb/Installing+Firefox#section_3', link.attr('href'))
+        eq_('/kb/Installing+Firefox#section_3', link.attr('href'))
         eq_('this name', link.text())
 
     def test_link_hash_name_markup(self):
         """Internal link with hash and name."""
         text = '[[Installing Firefox#section 3|this name]]'
-        eq_('<p><a href="/en-US/kb/Installing+Firefox#section_3"' +
+        eq_('<p><a href="/kb/Installing+Firefox#section_3"' +
             ' rel="nofollow">this name</a>\n</p>', self.p.parse(text))
 
     def test_simple_create(self):
         """Simple link for inexistent page."""
         link = pq_link(self.p, '[[A new page]]')
-        eq_('/en-US/kb/A+new+page', link.attr('href'))
+        eq_('/kb/A+new+page', link.attr('href'))
         eq_('A new page', link.text())
 
     def test_link_edit_hash_name(self):
         """Internal link for inexistent page with hash and name."""
         link = pq_link(self.p, '[[A new page#section 3|this name]]')
-        eq_('/en-US/kb/A+new+page#section_3', link.attr('href'))
+        eq_('/kb/A+new+page#section_3', link.attr('href'))
         eq_('this name', link.text())
 
 
@@ -249,10 +249,10 @@ class TestWikiImageTags(TestCase):
         eq_('file.png', img.attr('alt'))
         eq_('file.png', caption)
         eq_('/img/wiki_up/file.png', img.attr('src'))
-        eq_('/en-US/kb/Installing+Firefox', img_a.attr('href'))
+        eq_('/kb/Installing+Firefox', img_a.attr('href'))
 
     def test_page_link_edit(self):
-        """Link to an inexistent wiki page."""
+        """Link to a nonexistent wiki page."""
         img_div = pq_img(self.p, '[[Image:file.png|page=Article List]]')
         img_a = img_div('a')
         img = img_a('img')
@@ -261,7 +261,7 @@ class TestWikiImageTags(TestCase):
         eq_('file.png', img.attr('alt'))
         eq_('file.png', caption)
         eq_('/img/wiki_up/file.png', img.attr('src'))
-        eq_('/en-US/kb/Article+List', img_a.attr('href'))
+        eq_('/kb/Article+List', img_a.attr('href'))
 
     def test_page_link_caption(self):
         """Link to a wiki page with caption."""
@@ -274,7 +274,7 @@ class TestWikiImageTags(TestCase):
         eq_('my caption', img.attr('alt'))
         eq_('my caption', caption)
         eq_('/img/wiki_up/file.png', img.attr('src'))
-        eq_('/en-US/kb/Article+List', img_a.attr('href'))
+        eq_('/kb/Article+List', img_a.attr('href'))
 
     def test_link(self):
         """Link to an external page."""
@@ -399,4 +399,4 @@ class TestWikiImageTags(TestCase):
             self.p, '[[Image:img.png|frameless|page=Installing Firefox]]', 'a')
         img = img_a('img')
         eq_('frameless', img.attr('class'))
-        eq_('/en-US/kb/Installing+Firefox', img_a.attr('href'))
+        eq_('/kb/Installing+Firefox', img_a.attr('href'))

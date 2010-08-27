@@ -4,21 +4,12 @@ from django import test
 
 import jingo
 
-from sumo.models import ForumThread, WikiPage, Forum, TikiUser
+from sumo.models import WikiPage, TikiUser
 from sumo import backends
 
 
 def setup():
     jingo.load_helpers()
-    test.Client().get('/')
-
-
-class TestForumThreadModel(test.TestCase):
-    fixtures = ['threads.json']
-
-    def test_get_url(self):
-        f = ForumThread.objects.create(pk=12345, object=1)
-        eq_(f.get_url(), '/en-US/forum/1/12345')
 
 
 class TestWikiPage(test.TestCase):
@@ -37,14 +28,6 @@ class TestWikiPage(test.TestCase):
         """Edit url for a page exists."""
         w = WikiPage.objects.get(title='Installing Firefox')
         eq_('/tiki-editpage.php?page=Installing+Firefox', w.get_edit_url())
-
-
-class TestForumModel(test.TestCase):
-    fixtures = ['forums.json']
-
-    def test_sanity(self):
-        f = Forum.objects.create(pk=12, name='My Test Forum')
-        eq_(f.get_url(), '/en-US/forum/12')
 
 
 class TestTikiUserModel(test.TestCase):

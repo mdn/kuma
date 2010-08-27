@@ -1,6 +1,5 @@
 import datetime
 
-from django.test import client
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
@@ -17,9 +16,6 @@ class ForumModelTestCase(ForumTestCase):
 
     def setUp(self):
         super(ForumModelTestCase, self).setUp()
-
-        # Warm up the prefixer for reverse()
-        client.Client().get('/')
 
     def test_forum_absolute_url(self):
         f = Forum.objects.get(pk=1)
@@ -120,11 +116,7 @@ class ThreadModelTestCase(ForumTestCase):
 
     def setUp(self):
         super(ThreadModelTestCase, self).setUp()
-
         self.fixtures = self.fixtures + ['notifications.json']
-
-        # Warm up the prefixer for reverse()
-        client.Client().get('/')
 
     def test_delete_thread_with_last_forum_post(self):
         """Deleting the thread with a forum's last post should

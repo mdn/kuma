@@ -1,10 +1,7 @@
 from nose.tools import eq_
 
-from django.test.client import Client
-
-import test_utils
-
 from sumo.urlresolvers import reverse
+from sumo.tests import LocalizingClient
 
 from .test_search import SphinxTestCase
 
@@ -12,7 +9,7 @@ from .test_search import SphinxTestCase
 class JSONTest(SphinxTestCase):
     def test_json_format(self):
         """JSON without callback should return application/json"""
-        c = Client()
+        c = LocalizingClient()
         response = c.get(reverse('search'), {
             'q': 'bookmarks',
             'format': 'json',
@@ -21,7 +18,7 @@ class JSONTest(SphinxTestCase):
 
     def test_json_callback_validation(self):
         """Various json callbacks -- validation"""
-        c = Client()
+        c = LocalizingClient()
         q = 'bookmarks'
         format = 'json'
 
@@ -56,7 +53,7 @@ class JSONTest(SphinxTestCase):
 
     def test_json_empty_query(self):
         """Empty query returns JSON format"""
-        c = Client()
+        c = LocalizingClient()
 
         # Test with flags for advanced search or not
         a_types = (0, 1, 2)
@@ -69,7 +66,7 @@ class JSONTest(SphinxTestCase):
 
 def test_json_down():
     """When the Sphinx is down, return JSON and 503 status"""
-    c = Client()
+    c = LocalizingClient()
 
     # Test with flags for advanced search or not
     callbacks = (
@@ -83,5 +80,5 @@ def test_json_down():
             'q': 'json down', 'format': 'json',
             'callback': callback,
         })
-        eq_(response['Content-Type'], mimetype);
+        eq_(response['Content-Type'], mimetype)
         eq_(response.status_code, status)

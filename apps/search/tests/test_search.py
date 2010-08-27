@@ -7,7 +7,6 @@ import time
 import json
 import socket
 
-from django.test import client
 from django.db import connection
 
 import mock
@@ -24,6 +23,7 @@ from search.utils import start_sphinx, stop_sphinx, reindex, crc32
 from search.clients import (WikiClient, QuestionsClient,
                             DiscussionClient, SearchError)
 from sumo.models import WikiPage
+from sumo.tests import LocalizingClient
 from forums.models import Post
 
 
@@ -147,7 +147,7 @@ class SphinxTestCase(test_utils.TransactionTestCase):
     """
 
     fixtures = ['pages.json', 'categories.json', 'users.json',
-                'posts.json', 'questions.json', ]
+                'posts.json', 'questions.json']
     sphinx = True
     sphinx_is_running = False
 
@@ -200,10 +200,7 @@ class SearchTest(SphinxTestCase):
 
     def setUp(self):
         super(SearchTest, self).setUp()
-        self.client = client.Client()
-
-        # Warm up the prefixer
-        self.client.get('/')
+        self.client = LocalizingClient()
 
     def test_indexer(self):
         wc = WikiClient()

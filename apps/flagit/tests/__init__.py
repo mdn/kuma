@@ -1,8 +1,10 @@
 from datetime import datetime
 
-from django.test import TestCase, client
+from django.test import TestCase
 from django.conf import settings
 from django.template.defaultfilters import slugify
+
+from sumo.tests import LocalizingClient
 
 
 class TestCaseBase(TestCase):
@@ -12,8 +14,7 @@ class TestCaseBase(TestCase):
 
     def setUp(self):
         """Setup"""
-        self.client = client.Client()
-        self.client.get('/')
+        self.client = LocalizingClient()
 
         # Change the CACHE_PREFIX to avoid conflicts
         self.orig_cache_prefix = getattr(settings, 'CACHE_PREFIX', None)
