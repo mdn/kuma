@@ -188,6 +188,7 @@ INSTALLED_APPS = (
     'product_details',
     'wiki',
     'gallery',
+    'customercare',
 )
 
 # Extra apps for testing
@@ -421,3 +422,7 @@ GALLERY_VIDEO_PATH = 'uploads/gallery/videos/'
 GALLERY_VIDEO_THUMBNAIL_PATH = 'uploads/gallery/videos/thumbnails/'
 THUMBNAIL_PROGRESS_URL = MEDIA_URL + 'img/wait-trans.gif'
 VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes
+
+# Customare care tweet collection settings
+CC_MAX_TWEETS = 500 # Max. no. of tweets in DB
+CC_TWEETS_PERPAGE = 100 # How many tweets to collect in one go. Max: 100.
