@@ -13,8 +13,16 @@ if [ -z $1 ]; then
     echo "Continuing, but don't say you weren't warned."
 fi
 
+if [ -z $2 ]; then
+    echo "Warning: You should provide a unique Sphinx port for this build."
+    SPHINX_PORT=3381
+else
+    SPHINX_PORT=$2
+fi
+
+
 # Clean up after last time.
-find . -name '*.pyc' -exec rm {} \;
+find . -name '*.pyc' -delete;
 
 # Using a virtualenv for python26 and compiled requirements.
 if [ ! -d "$VENV/bin" ]; then
@@ -45,6 +53,7 @@ DATABASES['default']['NAME'] = 'kitsune_$1'
 DATABASES['default']['TEST_NAME'] = 'test_kitsune_$1'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
+SPHINX_PORT = '$SPHINX_PORT'
 SETTINGS
 
 echo "Starting tests..."
