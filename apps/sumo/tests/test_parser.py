@@ -29,6 +29,9 @@ class TestWikiInclude(TestCase):
         doc = pq(p.parse('[[Include:Another title]]'))
         eq_('The document "Another title" does not exist.', doc.text())
 
+def pq_link(p, text):
+    return pq(p.parse(text))('a')
+
 
 class TestWikiParser(TestCase):
     def setUp(self):
@@ -37,6 +40,9 @@ class TestWikiParser(TestCase):
         self.r = revision(document=self.d, content='Test content',
                           is_approved=True)
         self.r.save()
+        self.p = WikiParser()
+
+    def setUp(self):
         self.p = WikiParser()
 
     def test_image_path_sanity(self):
@@ -130,6 +136,9 @@ class TestWikiInternalLinks(TestCase):
         self.r.save()
         self.p = WikiParser()
 
+    def setUp(self):
+        self.p = WikiParser()
+
     def test_simple(self):
         """Simple internal link markup."""
         link = pq_link(self.p, '[[Installing Firefox]]')
@@ -215,6 +224,9 @@ class TestWikiImageTags(TestCase):
         self.r = revision(document=self.d, content='Test content',
                           is_approved=True)
         self.r.save()
+        self.p = WikiParser()
+
+    def setUp(self):
         self.p = WikiParser()
 
     def test_empty(self):
@@ -315,13 +327,15 @@ class TestWikiImageTags(TestCase):
 
     def test_link_valign(self):
         """Link with valign."""
-        img = pq_img(self.p,
+        img = pq_img(
+            self.p,
             '[[Image:file.png|link=http://example.com|valign=top]]', 'img')
         eq_('vertical-align: top;', img.attr('style'))
 
     def test_link_valign_invalid(self):
         """Link with invalid valign."""
-        img = pq_img(self.p,
+        img = pq_img(
+            self.p,
             '[[Image:file.png|link=http://example.com|valign=off]]', 'img')
         eq_(None, img.attr('style'))
 
