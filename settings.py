@@ -62,13 +62,13 @@ LANGUAGE_CODE = 'en-US'
 
 # Supported languages
 SUMO_LANGUAGES = (
-    'ar', 'as', 'ast', 'bg', 'bn-BD', 'bn-IN', 'bs', 'ca', 'cs', 'da', 'de',
-    'el', 'en-US', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'fur', 'fy-NL',
-    'ga-IE', 'gd', 'gl', 'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'id', 'ilo',
-    'is', 'it', 'ja', 'kk', 'kn', 'ko', 'lt', 'mk', 'mn', 'mr', 'ms', 'nb-NO',
-    'nl', 'no', 'oc', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'rm', 'ro', 'ru', 'rw',
-    'si', 'sk', 'sl', 'sq', 'sr-CYRL', 'sr-LATN', 'sv-SE', 'ta-LK', 'te',
-    'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW',
+    'ak', 'ar', 'as', 'ast', 'bg', 'bn-BD', 'bn-IN', 'bs', 'ca', 'cs', 'da',
+    'de', 'el', 'en-US', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'fur',
+    'fy-NL', 'ga-IE', 'gd', 'gl', 'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'hy-AM',
+    'id', 'ilo', 'is', 'it', 'ja', 'kk', 'kn', 'ko', 'lt', 'mk', 'mn', 'mr',
+    'ms', 'nb-NO', 'nl', 'no', 'oc', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'rm',
+    'ro', 'ru', 'rw', 'si', 'sk', 'sl', 'sq', 'sr-CYRL', 'sr-LATN', 'sv-SE',
+    'ta-LK', 'te', 'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW',
 )
 
 LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in SUMO_LANGUAGES])
