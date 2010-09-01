@@ -3,7 +3,8 @@ from django.conf import settings
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.parser import (WikiParser, _build_template_params as _btp,
+from sumo.parser import (WikiParser, _getImagePath, _buildImageParams,
+                         _getWikiLink, _build_template_params as _btp,
                          _format_template_content as _ftc, _key_split,
                          PATTERNS)
 from sumo.tests import TestCase
@@ -263,29 +264,29 @@ class TestWikiParser(TestCase):
     def test_image_path_sanity(self):
         """Image URLs are prefixed with the upload path."""
         eq_(settings.WIKI_UPLOAD_URL + 'file.png',
-            self.p._getImagePath('file.png'))
+            _getImagePath('file.png'))
 
     def test_image_path_special_chars(self):
         """Image URLs with Unicode are prefixed with the upload path."""
         eq_(settings.WIKI_UPLOAD_URL + 'parl%C3%A9%20Fran%C3%A7ais.png',
-            self.p._getImagePath(u'parl\u00e9 Fran\u00e7ais.png'))
+            _getImagePath(u'parl\u00e9 Fran\u00e7ais.png'))
 
     def test_image_params_page(self):
         """_buildImageParams handles wiki pages."""
         items = ['page=Installing Firefox']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
 
     def test_image_params_link(self):
         """_buildImageParams handles external links."""
         items = ['link=http://example.com']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         eq_('http://example.com', params['link'])
 
     def test_image_params_page_link(self):
         """_buildImageParams - wiki page overrides link."""
         items = ['page=Installing Firefox', 'link=http://example.com']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
 
     def test_image_params_align(self):
@@ -293,13 +294,13 @@ class TestWikiParser(TestCase):
         align_vals = ('none', 'left', 'center', 'right')
         for align in align_vals:
             items = ['align=' + align]
-            params = self.p._buildImageParams(items)
+            params = _buildImageParams(items)
             eq_(align, params['align'])
 
     def test_image_params_align_invalid(self):
         """Align invalid options."""
         items = ['align=zzz']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         assert not 'align' in params, 'Align is present in params'
 
     def test_image_params_valign(self):
@@ -308,38 +309,38 @@ class TestWikiParser(TestCase):
                        'middle', 'bottom', 'text-bottom')
         for valign in valign_vals:
             items = ['valign=' + valign]
-            params = self.p._buildImageParams(items)
+            params = _buildImageParams(items)
             eq_(valign, params['valign'])
 
     def test_image_params_valign_invalid(self):
         """Vertical align invalid options."""
         items = ['valign=zzz']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         assert not 'valign' in params, 'Vertical align is present in params'
 
     def test_image_params_alt(self):
         """Image alt override."""
         items = ['alt=some alternative text']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         eq_('some alternative text', params['alt'])
 
     def test_image_params_frameless(self):
         """Frameless image."""
         items = ['frameless']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         eq_(True, params['frameless'])
 
     def test_image_params_width_height(self):
         """Image width."""
         items = ['width=10', 'height=20']
-        params = self.p._buildImageParams(items)
+        params = _buildImageParams(items)
         eq_('10', params['width'])
         eq_('20', params['height'])
 
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
         eq_('/en-US/kb/installing-firefox',
-            self.p._getWikiLink('Installing Firefox'))
+            _getWikiLink('Installing Firefox'))
 
 
 class TestWikiInternalLinks(TestCase):
