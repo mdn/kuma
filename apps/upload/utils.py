@@ -53,7 +53,7 @@ def upload_images(request, obj):
             im = image.file
             (width, height) = _scale_dimensions(im.width, im.height)
             files.append({'name': up_file.name, 'url': image.file.url,
-                          'thumbnail_url': image.thumbnail.url,
+                          'thumbnail_url': image.thumbnail_or_file().url,
                           'width': width,
                           'height': height,
                           'delete_url': delete_url})

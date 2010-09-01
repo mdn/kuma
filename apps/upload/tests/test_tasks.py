@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
+from django.core.files.images import ImageFile
+from django.test import TestCase
 
 from nose.tools import eq_
 
@@ -13,7 +15,7 @@ from upload.tasks import (_scale_dimensions, _create_thumbnail,
 
 class ScaleDimensionsTestCase(TestCase):
 
-    def test_basic(self):
+    def test_scale_dimensions_default(self):
         """A square image of exact size is not scaled."""
         ts = settings.THUMBNAIL_SIZE
         (width, height) = _scale_dimensions(ts, ts, ts)
@@ -58,10 +60,15 @@ class ScaleDimensionsTestCase(TestCase):
 
 class CreateThumbnailTestCase(TestCase):
 
-    def test_basic(self):
+    def test_create_thumbnail_default(self):
         """A thumbnail is created from an image file."""
-        # TODO: cover functionality of upload.tasks._create_thumbnail
-        pass
+        thumb_content = _create_thumbnail('apps/upload/tests/media/test.jpg')
+        actual_thumb = ImageFile(thumb_content)
+        with open('apps/upload/tests/media/test_thumb.jpg') as f:
+            expected_thumb = ImageFile(f)
+
+        eq_(expected_thumb.width, actual_thumb.width)
+        eq_(expected_thumb.height, actual_thumb.height)
 
 
 class GenerateThumbnail(TestCase):
@@ -75,7 +82,7 @@ class GenerateThumbnail(TestCase):
     def tearDown(self):
         ImageAttachment.objects.all().delete()
 
-    def test_basic(self):
+    def test_generate_thumbnail_default(self):
         """generate_thumbnail creates a thumbnail."""
         image = ImageAttachment(content_object=self.obj, creator=self.user)
         with open('apps/upload/tests/media/test.jpg') as f:
