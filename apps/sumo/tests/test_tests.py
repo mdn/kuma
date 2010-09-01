@@ -13,7 +13,8 @@ CACHE_KEY = 'sumo_cache_flushing_test'
 class CacheFlushingTests(TestCase):
     """Tests that make sure SUMO's base TestCase flushes memcached.
 
-    This whole class comprises one conceptual test in two parts, which must run in the listed order.
+    This whole class comprises one conceptual test in two parts, which must
+    run in the listed order.
 
     """
     def test_1_store(self):
