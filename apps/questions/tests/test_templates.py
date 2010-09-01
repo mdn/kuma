@@ -779,7 +779,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
         response = self.client.get(url_)
         doc = pq(response.content)
         eq_('active', doc('div#filter ul li')[4].attrib['class'])
-        eq_(3, len(doc('ol.questions li')))
+        eq_(4, len(doc('ol.questions li')))
 
         # solve one question then verify that it doesn't show up
         answer = Answer.objects.all()[0]
@@ -787,7 +787,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
         answer.question.save()
         response = self.client.get(url_)
         doc = pq(response.content)
-        eq_(2, len(doc('ol.questions li')))
+        eq_(3, len(doc('ol.questions li')))
         eq_(0, len(doc('ol.questions li#question-%s' % answer.question.id)))
 
     def _my_contributions_test_helper(self, username, expected_qty):
@@ -801,10 +801,10 @@ class QuestionsTemplateTestCase(TestCaseBase):
 
     def test_my_contributions_filter(self):
         # jsocol should have 2 questions in his contributions
-        self._my_contributions_test_helper('jsocol', 2)
+        self._my_contributions_test_helper('jsocol', 3)
 
         # pcraciunoiu should have 2 questions in his contributions'
-        self._my_contributions_test_helper('pcraciunoiu', 2)
+        self._my_contributions_test_helper('pcraciunoiu', 3)
 
         # rrosario should have 0 questions in his contributions
         self._my_contributions_test_helper('rrosario', 0)

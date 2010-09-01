@@ -10,6 +10,7 @@ from flagit.models import FlaggedObject
 from questions.models import (Question, QuestionMetaData, Answer,
                               _tenths_version)
 from questions.tags import add_existing_tag
+from questions.tasks import update_answer_pages
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.question_config import products
 
@@ -105,13 +106,32 @@ class TestAnswer(TestCaseBase):
         question = Question.objects.get(pk=question.id)
         eq_(question.solution, None)
 
+    def test_update_page_task(self):
+        answer = Answer.objects.get(pk=1)
+        answer.page = 4
+        answer.save()
+        answer = Answer.objects.get(pk=1)
+        assert answer.page == 4
+        update_answer_pages(answer.question)
+        a = Answer.objects.get(pk=1)
+        assert a.page == 1
+
+    def test_delete_updates_pages(self):
+        a1 = Answer.objects.get(pk=2)
+        a2 = Answer.objects.get(pk=3)
+        a1.page = 7
+        a1.save()
+        a2.delete()
+        a3 = Answer.objects.filter(question=a1.question)[0]
+        assert a3.page == 1, "Page was %s" % a3.page
+
     def test_creator_num_posts(self):
         """Test retrieval of post count for creator of a particular answer"""
         question = Question.objects.all()[0]
         answer = Answer(question=question, creator_id=47963,
                         content="Test Answer")
 
-        eq_(answer.creator_num_posts, 2)
+        eq_(answer.creator_num_posts, 4)
 
     def test_creator_num_answers(self):
         """Test retrieval of answer count for creator of a particular answer"""

@@ -42,6 +42,20 @@
         }
     },
     {
+        "pk": 4,
+        "model": "questions.question",
+        "fields": {
+            "status": 1,
+            "updated": "2010-06-17 19:47:34",
+            "creator": 47963,
+            "is_locked": false,
+            "created": "2010-06-17 19:47:34",
+            "content": "It's a marvellous night for an audio lolrus foo.",
+            "title": "lolrus too?",
+            "num_answers": 2
+        }
+    },
+    {
         "pk": 1,
         "model": "questions.questionmetadata",
         "fields": {
@@ -123,6 +137,30 @@
             "creator": 47963,
             "question": 1,
             "content": "An answer & stuff.",
+            "upvotes": 0
+        }
+    },
+    {
+        "pk": 2,
+        "model": "questions.answer",
+        "fields": {
+            "updated": "2010-06-23 19:48:00",
+            "created": "2010-06-23 19:48:00",
+            "creator": 118533,
+            "question": 4,
+            "content": "An answer & stuff, too.",
+            "upvotes": 0
+        }
+    },
+    {
+        "pk": 3,
+        "model": "questions.answer",
+        "fields": {
+            "updated": "2010-06-24 19:48:00",
+            "created": "2010-06-24 19:48:00",
+            "creator": 118533,
+            "question": 4,
+            "content": "An answer & stuff, too.",
             "upvotes": 0
         }
     }

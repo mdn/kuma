@@ -12,6 +12,7 @@ from celery.decorators import task
 from tower import ugettext as _
 
 from notifications.tasks import send_notification
+from questions import ANSWERS_PER_PAGE
 from sumo.urlresolvers import reverse
 
 
@@ -92,3 +93,15 @@ def send_confirmation_email(question):
                                 'confirm_url': url,
                                 'host': Site.objects.get_current().domain}))
     send_mail(subject, content, from_address, [question.creator.email])
+
+
+@task(rate_limit='4/m')
+def update_answer_pages(question):
+    log.debug('Recalculating answer page numbers for question %s: %s' %
+              (question.pk, question.title))
+
+    i = 0
+    for answer in question.answers.using('default').order_by('created').all():
+        answer.page = i / ANSWERS_PER_PAGE + 1
+        answer.save(no_update=True, no_notify=True)
+        i += 1

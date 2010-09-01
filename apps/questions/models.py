@@ -21,7 +21,8 @@ from sumo.helpers import urlparams
 import questions as constants
 from questions.tags import add_existing_tag
 from .question_config import products
-from .tasks import update_question_votes, build_answer_notification
+from .tasks import (update_question_votes, build_answer_notification,
+                    update_answer_pages)
 from upload.models import ImageAttachment
 
 
@@ -252,6 +253,7 @@ class Answer(ModelBase):
     updated_by = models.ForeignKey(User, null=True,
                                    related_name='answers_updated')
     upvotes = models.IntegerField(default=0, db_index=True)
+    page = models.IntegerField(default=1)
 
     images = generic.GenericRelation(ImageAttachment)
     flags = generic.GenericRelation(FlaggedObject)
@@ -274,7 +276,10 @@ class Answer(ModelBase):
 
         new = self.id is None
 
-        if not new:
+        if new:
+            page = self.question.num_answers / constants.ANSWERS_PER_PAGE + 1
+            self.page = page
+        else:
             self.updated = datetime.now()
 
         super(Answer, self).save(*args, **kwargs)
@@ -305,21 +310,15 @@ class Answer(ModelBase):
 
         super(Answer, self).delete(*args, **kwargs)
 
-    @property
-    def page(self):
-        """Get the page of the question on which this answer is found."""
-        t = self.question
-        earlier = t.answers.filter(created__lte=self.created).count() - 1
-        if earlier < 1:
-            return 1
-        return earlier / constants.ANSWERS_PER_PAGE + 1
+        update_answer_pages.delay(question)
 
     def get_absolute_url(self):
         query = {}
         if self.page > 1:
             query = {'page': self.page}
 
-        url = self.question.get_absolute_url()
+        url = reverse('questions.answers',
+                      kwargs={'question_id': self.question_id})
         return urlparams(url, hash='answer-%s' % self.id, **query)
 
     @property

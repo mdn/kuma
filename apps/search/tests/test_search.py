@@ -236,7 +236,7 @@ class SearchTest(SphinxTestCase):
         qs = {'a': 1, 'format': 'json', 'page': 'invalid'}
         response = self.client.get(reverse('search'), qs)
         eq_(200, response.status_code)
-        eq_(4, json.loads(response.content)['total'])
+        eq_(5, json.loads(response.content)['total'])
 
     def test_search_metrics(self):
         """Ensure that query strings are added to search results"""
@@ -266,7 +266,7 @@ class SearchTest(SphinxTestCase):
     def test_category_invalid(self):
         qs = {'a': 1, 'w': 3, 'format': 'json', 'category': 'invalid'}
         response = self.client.get(reverse('search'), qs)
-        eq_(4, json.loads(response.content)['total'])
+        eq_(5, json.loads(response.content)['total'])
 
     def test_no_filter(self):
         """Test searching with no filters."""
@@ -363,7 +363,7 @@ class SearchTest(SphinxTestCase):
         qs = {'a': 1, 'w': 2, 'format': 'json',
               'sortby': 1, 'updated_date': '06/20/2010'}
         updated_vals = (
-            (1, '/3'),
+            (1, '/4'),
             (2, '/2'),
         )
 
@@ -380,7 +380,7 @@ class SearchTest(SphinxTestCase):
         qs = {'a': 1, 'w': 2, 'format': 'json',
               'updated': 1, 'updated_date': 'invalid'}
         response = self.client.get(reverse('search'), qs)
-        eq_(3, json.loads(response.content)['total'])
+        eq_(4, json.loads(response.content)['total'])
 
     def test_updated_nonexistent(self):
         """updated is set while updated_date is left out of the query."""
@@ -404,7 +404,7 @@ class SearchTest(SphinxTestCase):
         author_vals = (
             ('DoesNotExist', 0),
             ('jsocol', 2),
-            ('pcraciunoiu', 1),
+            ('pcraciunoiu', 2),
         )
 
         for author, total in author_vals:
