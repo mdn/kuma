@@ -4,6 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
+from sumo.tests import post
 from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 from wiki.tests import TestCaseBase, document, revision
 
@@ -166,7 +167,8 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.new_revision', args=[d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2', 'significance': 10})
+             'keywords': 'keyword1 keyword2',
+             'significance': SIGNIFICANCES[0][0]})
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
 
@@ -183,8 +185,8 @@ class NewRevisionTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2', 'tag3']
         data = _new_document_data(tags)
-        url = reverse('wiki.new_revision', args=[d.slug])
-        response = self.client.post(url, data)
+        response = self.client.post(reverse('wiki.new_revision',
+                                    args=[d.slug]), data)
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
 
@@ -221,18 +223,74 @@ class DocumentRevisionsTests(TestCaseBase):
         d = _create_document()
         user = User.objects.get(pk=118533)
         r1 = revision(summary="a tweak", content='lorem ipsum dolor',
-                      significance=10, keywords='kw1 kw2', document=d,
-                      creator=user)
+                      significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
+                      document=d, creator=user)
         r1.save()
         r2 = revision(summary="another tweak", content='lorem dimsum dolor',
-                      significance=10, keywords='kw1 kw2', document=d,
-                      creator=user)
+                      significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
+                      document=d, creator=user)
         r2.save()
         response = self.client.get(reverse('wiki.document_revisions',
                                    args=[d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(3, len(doc('#revision-list > ul > li')))
+
+
+class ReviewRevisionTests(TestCaseBase):
+    """Tests for Review Revisions"""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(ReviewRevisionTests, self).setUp()
+        self.document = _create_document()
+        user = User.objects.get(pk=118533)
+        self.revision = Revision(summary="lipsum",
+                                 content='<div>Lorem Ipsum Dolor</div>',
+                                 significance=SIGNIFICANCES[0][0],
+                                 keywords='kw1 kw2', document=self.document,
+                                 creator=user)
+        self.revision.save()
+
+        self.client.login(username='admin', password='testpass')
+
+    def test_approve_revision(self):
+        """Verify revision approval."""
+        significance = SIGNIFICANCES[0][0]
+        response = post(self.client, 'wiki.review_revision',
+                        {'approve': 'Approve Revision',
+                         'significance': significance},
+                        args=[self.document.slug, self.revision.id])
+        eq_(200, response.status_code)
+        r = Revision.uncached.get(pk=self.revision.id)
+        eq_(significance, r.significance)
+        assert r.reviewed
+        assert r.is_approved
+
+    def test_reject_revision(self):
+        """Verify revision rejection."""
+        comment = 'no good'
+        response = post(self.client, 'wiki.review_revision',
+                        {'reject': 'Reject Revision',
+                         'comment': comment},
+                        args=[self.document.slug, self.revision.id])
+        eq_(200, response.status_code)
+        r = Revision.uncached.get(pk=self.revision.id)
+        eq_(comment, r.comment)
+        assert r.reviewed
+        assert not r.is_approved
+
+    def test_review_without_permission(self):
+        """Make sure unauthorized users can't review revisions."""
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'wiki.review_revision',
+                        {'reject': 'Reject Revision'},
+                        args=[self.document.slug, self.revision.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/kb/'
+            'test-document/review/' + str(self.revision.id),
+            redirect[0])
 
 
 def _create_document(title='Test Document'):

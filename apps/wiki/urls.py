@@ -14,4 +14,6 @@ urlpatterns = patterns('wiki.views',
         name='wiki.new_revision'),
     url(r'^/(?P<document_slug>[^\/]+)/edit/(?P<revision_id>\d+)$',
         'new_revision', name='wiki.new_revision_based_on'),
+    url(r'^/(?P<document_slug>[^\/]+)/review/(?P<revision_id>\d+)$',
+        'review_revision', name='wiki.review_revision'),
 )

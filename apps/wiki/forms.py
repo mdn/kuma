@@ -5,7 +5,7 @@ from tower import ugettext as _
 
 from sumo.form_fields import StrippedCharField
 from .models import (Document, Revision, FirefoxVersion, OperatingSystem,
-                     FIREFOX_VERSIONS, OPERATING_SYSTEMS)
+                     FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES)
 
 
 KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
@@ -22,6 +22,7 @@ SUMMARY_LONG = _lazy(u'Please keep the length of the summary to %(limit_value)s 
 CONTENT_REQUIRED = _lazy(u'Please provide content.')
 CONTENT_SHORT = _lazy(u'The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
 CONTENT_LONG = _lazy(u'Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
+COMMENT_LONG = _lazy(u'Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
 
 
 class DocumentForm(forms.ModelForm):
@@ -79,3 +80,13 @@ class RevisionForm(forms.ModelForm):
     class Meta:
         model = Revision
         fields = ('keywords', 'summary', 'content', 'significance')
+
+
+class ReviewForm(forms.Form):
+    comment = StrippedCharField(max_length=255, widget=forms.Textarea(),
+                                required=False,
+                                error_messages={'max_length': COMMENT_LONG})
+
+    significance = forms.ChoiceField(
+                    choices=SIGNIFICANCES, required=False,
+                    widget=forms.RadioSelect())

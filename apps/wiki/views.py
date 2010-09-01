@@ -1,3 +1,6 @@
+from difflib import HtmlDiff
+from datetime import datetime
+
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -7,7 +10,7 @@ import jingo
 
 from sumo.urlresolvers import reverse
 from .models import Document, Revision, CATEGORIES
-from .forms import DocumentForm, RevisionForm
+from .forms import DocumentForm, RevisionForm, ReviewForm
 
 
 #log = logging.getLogger('k.wiki')
@@ -166,3 +169,40 @@ def document_revisions(request, document_slug):
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs,
                          'document': doc})
+
+
+@login_required
+@permission_required('wiki.review_revision')
+def review_revision(request, document_slug, revision_id):
+    """Review a revision of a wiki document."""
+    rev = get_object_or_404(Revision, pk=revision_id,
+                            document__slug=document_slug)
+    doc = rev.document
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid() and not rev.reviewed:
+            # Don't allow revisions to be reviewed twice
+            rev.is_approved = 'approve' in request.POST
+            rev.reviewer = request.user
+            rev.reviewed = datetime.now()
+            rev.comment = form.cleaned_data['comment']
+            if rev.is_approved:
+                rev.significance = form.cleaned_data['significance']
+            rev.save()
+
+            return HttpResponseRedirect(reverse('wiki.document_revisions',
+                                                args=[document_slug]))
+
+    diff = None
+    if doc.current_revision:
+        html_diff = HtmlDiff(wrapcolumn=60)
+        diff = html_diff.make_table(
+                    doc.current_revision.content.splitlines(),
+                    rev.content.splitlines(),
+                    context=True)
+
+    return jingo.render(request, 'wiki/review_revision.html',
+                        {'revision': rev, 'document': doc, 'diff': diff,
+                         'form': form})

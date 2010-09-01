@@ -31,3 +31,77 @@
 #document-form textarea[name="content"] {
     height: 500px;
 }
+
+/* Review revision */
+body.review #main-content h3 {
+    font-weight: bold;
+    margin: 20px 0 0;
+}
+
+#revision-content,
+#revision-html {
+    margin: 10px 0;
+}
+
+body.review #actions {
+    margin: 20px 0;
+}
+
+.js form.pop-in {
+    display: none;
+}
+
+form.pop-in legend {
+    font-weight: bold;
+}
+
+#review-modal {
+    color: #4B4740;
+    display: block;
+    left: 50%;
+    margin-left: -220px;
+    padding: 20px;
+    position: fixed;
+    text-align: left;
+    top: 100px;
+    width: 400px;
+    z-index:10;
+}
+
+/* Revision diffs */
+#revision-diff header div {
+    display: inline-block;
+    width: 458px;
+}
+
+table.diff {
+    border: solid 1px #999;
+    clear: both;
+    font-family:Courier;
+    margin: 15px 0;
+    width: 100%;
+}
+
+.diff_header {
+    background-color:#e0e0e0;
+}
+
+td.diff_header {
+    text-align:right;
+}
+
+.diff_next {
+    background-color:#c0c0c0;
+}
+
+.diff_add {
+    background-color:#aaffaa;
+}
+
+.diff_chg {
+    background-color:#ffff77
+}
+
+.diff_sub {
+    background-color:#ffaaaa
+}
