@@ -1,13 +1,11 @@
 from django.conf import settings
 from django.utils.http import urlquote
-from django.conf import settings
 
 from wikimarkup.parser import Parser
 import jingo
 from tower import ugettext_lazy as _lazy
 
 from sumo.urlresolvers import reverse
-from .models import WikiPage
 
 
 ALLOWED_ATTRIBUTES = {

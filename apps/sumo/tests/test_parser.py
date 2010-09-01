@@ -8,10 +8,6 @@ from sumo.tests import TestCase
 from wiki.tests import document, revision
 
 
-def pq_link(p, text):
-    return pq(p.parse(text))('a')
-
-
 class TestWikiInclude(TestCase):
     def test_revision_include(self):
         """Simple include markup."""
@@ -40,9 +36,6 @@ class TestWikiParser(TestCase):
         self.r = revision(document=self.d, content='Test content',
                           is_approved=True)
         self.r.save()
-        self.p = WikiParser()
-
-    def setUp(self):
         self.p = WikiParser()
 
     def test_image_path_sanity(self):
@@ -136,9 +129,6 @@ class TestWikiInternalLinks(TestCase):
         self.r.save()
         self.p = WikiParser()
 
-    def setUp(self):
-        self.p = WikiParser()
-
     def test_simple(self):
         """Simple internal link markup."""
         link = pq_link(self.p, '[[Installing Firefox]]')
@@ -224,9 +214,6 @@ class TestWikiImageTags(TestCase):
         self.r = revision(document=self.d, content='Test content',
                           is_approved=True)
         self.r.save()
-        self.p = WikiParser()
-
-    def setUp(self):
         self.p = WikiParser()
 
     def test_empty(self):
