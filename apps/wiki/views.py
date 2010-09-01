@@ -17,7 +17,8 @@ def document(request, document_slug):
     """View a wiki document."""
     # This may change depending on how we decide to structure
     # the url and handle locales.
-    doc = get_object_or_404(Document, title=document_slug.replace('+', ' '))
+    doc = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
     return jingo.render(request, 'wiki/document.html',
                         {'document': doc})
 
@@ -66,7 +67,7 @@ def new_document(request):
         rev.save()
 
         return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                    args=[doc.id]))
+                                    args=[doc.slug]))
 
     return jingo.render(request, 'wiki/new_document.html',
                         {'document_form': doc_form,
@@ -77,7 +78,8 @@ def new_document(request):
 @permission_required('wiki.add_revision')
 def new_revision(request, document_slug, revision_id=None):
     """Create a new revision of a wiki document."""
-    doc = get_object_or_404(Document, title=document_slug.replace('+', ' '))
+    doc = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
 
     if request.method == 'GET':
         if revision_id:
@@ -158,7 +160,8 @@ def new_revision(request, document_slug, revision_id=None):
 
 def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
-    doc = get_object_or_404(Document, title=document_slug.replace('+', ' '))
+    doc = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
     revs = Revision.objects.filter(document=doc)
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs,

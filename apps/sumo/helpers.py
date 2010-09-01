@@ -3,8 +3,9 @@ import urlparse
 import datetime
 import re
 
-from django.utils.encoding import smart_unicode
 from django.conf import settings
+from django.utils.encoding import smart_unicode
+from django.utils.http import urlencode
 
 import jinja2
 from jingo import register, env
@@ -14,7 +15,7 @@ from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 
 from .urlresolvers import reverse
-from .utils import urlencode, wiki_to_html
+from .utils import wiki_to_html
 
 
 class DateTimeFormatError(Exception):

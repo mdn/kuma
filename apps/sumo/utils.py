@@ -1,7 +1,5 @@
-import urllib
-
 from django.core import paginator
-from django.utils.encoding import smart_str
+from django.utils.http import urlencode
 
 import jinja2
 
@@ -33,15 +31,6 @@ def paginate(request, queryset, per_page=20):
 
     paginated.url = u'%s?%s' % (base, qsa)
     return paginated
-
-
-def urlencode(items):
-    """A Unicode-safe URLencoder."""
-
-    try:
-        return urllib.urlencode(items)
-    except UnicodeEncodeError:
-        return urllib.urlencode([(k, smart_str(v)) for k, v in items])
 
 
 def wiki_to_html(wiki_markup, wiki_hooks=False):

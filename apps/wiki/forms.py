@@ -13,6 +13,9 @@ KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
 TITLE_SHORT = _lazy(u'Your title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
 TITLE_LONG = _lazy(u'Please keep the length of your title to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
+SLUG_REQUIRED = _lazy(u'Please provide a slug.')
+SLUG_SHORT = _lazy(u'Your slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
+SLUG_LONG = _lazy(u'Please keep the length of your slug to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
 SUMMARY_REQUIRED = _lazy(u'Please provide a summary.')
 SUMMARY_SHORT = _lazy(u'The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
 SUMMARY_LONG = _lazy(u'Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
@@ -28,6 +31,11 @@ class DocumentForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
+    slug = StrippedCharField(min_length=5, max_length=255,
+                             widget=forms.TextInput(),
+                             error_messages={'required': SLUG_REQUIRED,
+                                             'min_length': SLUG_SHORT,
+                                             'max_length': SLUG_LONG})
 
     firefox_versions = forms.MultipleChoiceField(
                                 label=_('Firefox Version'),
@@ -49,7 +57,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'category', 'tags')
+        fields = ('title', 'slug', 'category', 'tags')
 
 
 class RevisionForm(forms.ModelForm):

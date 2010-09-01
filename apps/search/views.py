@@ -7,6 +7,7 @@ from django import forms
 from django.forms.util import ValidationError
 from django.conf import settings
 from django.http import HttpResponse
+from django.utils.http import urlencode
 
 import jingo
 import jinja2
@@ -15,7 +16,7 @@ from tower import ugettext as _
 from forums.models import Forum as DiscussionForum, Thread, Post
 from sumo.models import WikiPage, Category
 from questions.models import Question
-from sumo.utils import paginate, urlencode
+from sumo.utils import paginate
 from .clients import (QuestionsClient, WikiClient,
                       DiscussionClient, SearchError)
 from .utils import crc32, locale_or_default, sphinx_locale

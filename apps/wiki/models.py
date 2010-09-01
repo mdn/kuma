@@ -5,9 +5,9 @@ from tower import ugettext_lazy as _lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.http import urlquote
 
 from sumo.models import ModelBase, TaggableMixin
-from sumo.urlresolvers import reverse
 from sumo.utils import wiki_to_html
 
 
@@ -62,6 +62,7 @@ def _inherited(parent_attr, direct_attr):
 class Document(ModelBase, TaggableMixin):
     """A localized knowledgebase document, not revision-specific."""
     title = models.CharField(max_length=255, db_index=True)
+    slug = models.CharField(max_length=255, db_index=True)
 
     # TODO: validate (against settings.SUMO_LANGUAGES?)
     locale = models.CharField(max_length=7, db_index=True,
@@ -94,7 +95,8 @@ class Document(ModelBase, TaggableMixin):
     # how MySQL uses indexes, we probably don't need individual indexes on
     # title and locale as well as a combined (title, locale) one.
     class Meta(object):
-        unique_together = (('parent', 'locale'), ('title', 'locale'))
+        unique_together = (('parent', 'locale'), ('title', 'locale'),
+                           ('slug', 'locale'))
 
     @property
     def content_parsed(self):
@@ -106,8 +108,7 @@ class Document(ModelBase, TaggableMixin):
     operating_systems = _inherited('operating_systems', 'operating_system_set')
 
     def get_absolute_url(self):
-        return reverse('wiki.document',
-                       kwargs={'document_slug': self.title.replace(' ', '+')})
+        return '/%s/kb/%s' % (self.locale, urlquote(self.slug))
 
     def __unicode__(self):
         return '[%s] %s' % (self.locale, self.title)

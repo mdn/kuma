@@ -5,7 +5,7 @@ from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
-from wiki.tests import TestCaseBase
+from wiki.tests import TestCaseBase, document, revision
 
 
 class DocumentTests(TestCaseBase):
@@ -48,7 +48,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         d = Document.objects.get(title=data['title'])
-        eq_([('http://testserver/en-US/kb/%s/history' % d.id, 302)],
+        eq_([('http://testserver/en-US/kb/%s/history' % d.slug, 302)],
             response.redirect_chain)
         eq_(data['category'], d.category)
         eq_(tags, list(d.tags.values_list('name', flat=True)))
@@ -121,16 +121,14 @@ class NewRevisionTests(TestCaseBase):
         """Trying to create a new revision wihtout permission returns 403."""
         d = _create_document()
         self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision',
-                                           args=[d.title.replace(' ', '+')]))
+        response = self.client.get(reverse('wiki.new_revision', args=[d.slug]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
         d = _create_document()
         self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision',
-                                           args=[d.title.replace(' ', '+')]))
+        response = self.client.get(reverse('wiki.new_revision', args=[d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('#document-form textarea[name="content"]')))
@@ -149,8 +147,7 @@ class NewRevisionTests(TestCaseBase):
         r.save()
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.new_revision_based_on',
-                                           args=[d.title.replace(' ', '+'),
-                                                 r.id]))
+                                           args=[d.slug, r.id]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(doc('#id_keywords')[0].value, r.keywords)
@@ -166,12 +163,10 @@ class NewRevisionTests(TestCaseBase):
         """
         d = _create_document()
         self.client.login(username='admin', password='testpass')
-        response = self.client.post(reverse('wiki.new_revision',
-                                            args=[d.title.replace(' ', '+')]),
-                                    {'summary': 'A brief summary',
-                                     'content': 'The article content',
-                                     'keywords': 'keyword1 keyword2',
-                                     'significance': 10})
+        response = self.client.post(
+            reverse('wiki.new_revision', args=[d.slug]),
+            {'summary': 'A brief summary', 'content': 'The article content',
+             'keywords': 'keyword1 keyword2', 'significance': 10})
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
 
@@ -188,8 +183,7 @@ class NewRevisionTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2', 'tag3']
         data = _new_document_data(tags)
-        response = self.client.post(reverse('wiki.new_revision',
-                                            args=[d.title.replace(' ', '+')]),
+        response = self.client.post(reverse('wiki.new_revision', args=[d.slug]),
                                     data)
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
@@ -226,23 +220,23 @@ class DocumentRevisionsTests(TestCaseBase):
         """Verify the document revisions list view."""
         d = _create_document()
         user = User.objects.get(pk=118533)
-        r1 = Revision(summary="a tweak", content='lorem ipsum dolor',
+        r1 = revision(summary="a tweak", content='lorem ipsum dolor',
                       significance=10, keywords='kw1 kw2', document=d,
                       creator=user)
         r1.save()
-        r2 = Revision(summary="another tweak", content='lorem dimsum dolor',
+        r2 = revision(summary="another tweak", content='lorem dimsum dolor',
                       significance=10, keywords='kw1 kw2', document=d,
                       creator=user)
         r2.save()
         response = self.client.get(reverse('wiki.document_revisions',
-                                   args=[d.title.replace(' ', '+')]))
+                                   args=[d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(3, len(doc('#revision-list > ul > li')))
 
 
 def _create_document(title='Test Document'):
-    d = Document(title=title, html='<div>Lorem Ipsum</div>',
+    d = document(title=title, html='<div>Lorem Ipsum</div>',
                  category=1, locale='en-US')
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
@@ -257,6 +251,7 @@ def _create_document(title='Test Document'):
 def _new_document_data(tags):
     return {
         'title': 'A Test Article',
+        'slug': 'a-test-article',
         'tags': ','.join(tags),
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],

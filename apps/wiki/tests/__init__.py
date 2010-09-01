@@ -1,5 +1,8 @@
+from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.core.cache import cache
+
+from datetime import datetime
 
 from sumo.tests import LocalizingClient, TestCase
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
@@ -19,9 +22,11 @@ class TestCaseBase(TestCase):
 def document(**kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    if 'category' not in kwargs:
-        kwargs['category'] = CATEGORIES[0][0]  # arbitrary
-    return Document(**kwargs)
+    auto_title = str(datetime.now())
+    defaults = {'category': CATEGORIES[0][0], 'title': auto_title}
+    defaults.update(kwargs)
+    defaults['slug'] = slugify(defaults['title'])
+    return Document(**defaults)
 
 
 def revision(**kwargs):

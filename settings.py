@@ -305,6 +305,9 @@ MINIFY_BUNDLES = {
             'js/markup.js',
         ),
         'wiki': (
+            'js/libs/django/urlify.js',
+            'js/libs/django/prepopulate.js',
+            'js/wiki.js',
         ),
     },
 }

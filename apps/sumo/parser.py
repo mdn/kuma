@@ -61,8 +61,13 @@ class WikiParser(object):
         """
         Checks the page exists, and returns its URL, or the URL to create it.
         """
-        return reverse('wiki.document',
-                       kwargs={'document_slug': link.replace(' ', '+')})
+        from wiki.models import Document
+        try:
+            d = Document.objects.get(title=link)
+        except Document.DoesNotExist:
+            from sumo.helpers import urlparams
+            return urlparams(reverse('wiki.new_document'), title=link)
+        return d.get_absolute_url()
 
     def hook_internal_link(self, parser, space, name):
         """Parses text and returns internal link."""
