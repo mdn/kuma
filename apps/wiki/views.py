@@ -136,12 +136,12 @@ def new_revision(request, document_slug, revision_id=None):
             doc.tags.add(*tags)
 
             ffv = doc_form.cleaned_data['firefox_versions']
-            doc.firefox_versions.exclude(item_id__in=
-                                         [x.item_id for x in ffv]).delete()
+            doc.firefox_versions.exclude(
+                item_id__in=[x.item_id for x in ffv]).delete()
             doc.firefox_versions = ffv
             os = doc_form.cleaned_data['operating_systems']
-            doc.operating_systems.exclude(item_id__in=
-                                          [x.item_id for x in os]).delete()
+            doc.operating_systems.exclude(
+                item_id__in=[x.item_id for x in os]).delete()
             doc.operating_systems = os
 
         rev = rev_form.save(commit=False)

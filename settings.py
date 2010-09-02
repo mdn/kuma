@@ -68,8 +68,8 @@ SUMO_LANGUAGES = (
     'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW',
 )
 
-LANGUAGES = dict([(i.lower(), LOCALES[i].native)
-                 for i in SUMO_LANGUAGES])
+LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in SUMO_LANGUAGES])
+LANGUAGES = dict([(i.lower(), LOCALES[i].native) for i in SUMO_LANGUAGES])
 
 LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
 
@@ -183,7 +183,8 @@ INSTALLED_APPS = (
     'flagit',
     'upload',
     'product_details',
-    'wiki'
+    'wiki',
+    'gallery',
 )
 
 # Extra apps for testing
@@ -397,3 +398,10 @@ TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
+
+# Gallery settings
+GALLERY_DEFAULT_LANGUAGE = WIKI_DEFAULT_LANGUAGE
+GALLERY_IMAGE_PATH = 'uploads/gallery/images/'
+GALLERY_IMAGE_THUMBNAIL_PATH = 'uploads/gallery/images/thumbnails/'
+GALLERY_VIDEO_PATH = 'uploads/gallery/videos/'
+GALLERY_VIDEO_THUMBNAIL_PATH = 'uploads/gallery/videos/thumbnails/'

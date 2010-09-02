@@ -64,9 +64,9 @@ class Document(ModelBase, TaggableMixin):
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
-    # TODO: validate (against settings.SUMO_LANGUAGES?)
     locale = models.CharField(max_length=7, db_index=True,
-                              default=settings.WIKI_DEFAULT_LANGUAGE)
+                              default=settings.WIKI_DEFAULT_LANGUAGE,
+                              choices=settings.LANGUAGE_CHOICES)
 
     # Latest approved revision. (Remove "+" to enable reverse link.)
     current_revision = models.ForeignKey('Revision', null=True,

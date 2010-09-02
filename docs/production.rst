@@ -90,3 +90,23 @@ JavaScript and CSS. To generate the compressed files, just run::
     ./manage.py compress_assests
 
 and new files will be created in the /media/ directory.
+
+
+Uploads
+-----------------
+
+Uploaded files must be served from anywhere under the media folder. The full
+path to this folder can be changed in the setting ``MEDIA_ROOT``.
+
+Here are the currently defined upload paths, all relative to ``MEDIA_ROOT``:
+
+``THUMBNAIL_UPLOAD_PATH``
+  Thumbnails of images for questions. defaults to
+  ``uploads/images/thumbnails/``
+``IMAGE_UPLOAD_PATH``
+  Images for questions, defaults to ``uploads/images/``
+``GALLERY_THUMBNAIL_PATH``
+  Thumbnails of video/images for the media gallery, defaults to
+  ``uploads/gallery/thumbnails/``
+``GALLERY_PATH``
+  Video/images for the media gallery, defaults to ``uploads/gallery/``

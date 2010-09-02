@@ -183,8 +183,8 @@ class NewRevisionTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2', 'tag3']
         data = _new_document_data(tags)
-        response = self.client.post(reverse('wiki.new_revision', args=[d.slug]),
-                                    data)
+        url = reverse('wiki.new_revision', args=[d.slug])
+        response = self.client.post(url, data)
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
 
