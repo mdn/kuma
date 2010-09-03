@@ -4,6 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
+from sumo.helpers import urlparams
 from sumo.tests import post
 from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 from wiki.tests import TestCaseBase, document, revision
@@ -291,6 +292,50 @@ class ReviewRevisionTests(TestCaseBase):
         eq_('http://testserver/tiki-login.php?next=/en-US/kb/'
             'test-document/review/' + str(self.revision.id),
             redirect[0])
+
+
+class CompareRevisionTests(TestCaseBase):
+    """Tests for Review Revisions"""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(CompareRevisionTests, self).setUp()
+        self.document = _create_document()
+        self.revision1 = self.document.current_revision
+        user = User.objects.get(pk=118533)
+        self.revision2 = Revision(summary="lipsum",
+                                 content='<div>Lorem Ipsum Dolor</div>',
+                                 significance=10, keywords='kw1 kw2',
+                                 document=self.document, creator=user)
+        self.revision2.save()
+
+        self.client.login(username='admin', password='testpass')
+
+    def test_compare_revisions(self):
+        """Compare two revisions"""
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {
+            'from': self.revision1.id,
+            'to': self.revision2.id}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('Dolor',  doc('#revision-diff span.diff_add').text())
+
+    def test_compare_revisions_missing_query_param(self):
+        """Try to compare two revisions, with a missing query string param."""
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {'from': self.revision1.id}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(404, response.status_code)
+
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {'to': self.revision1.id}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(404, response.status_code)
 
 
 def _create_document(title='Test Document'):

@@ -1,0 +1,33 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Compare Revisions | {document} | Firefox Support')|f(document=document.title) %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (document.get_absolute_url(), document.title),
+                 (None, _('Compare Revisions'))] %}
+{% set classes = 'compare' %}
+
+{% block content %}
+  <div id="breadcrumbs">
+    {{ _('You are here:') }}
+    {{ breadcrumbs(crumbs) }}
+  </div>
+  <hgroup>
+    <h1>{{ _('Compare Revisions') }}</h1>
+    <h2>{{ document.title }}</h2>
+  </hgroup>
+  <div id="revision-diff">
+    <header>
+      <div>
+        <h3>{{ ('Revision {num}')|f(num=revision_from.id) }}</h3>
+        <p>{{ _('by {user} on {date}')|f(user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
+      </div>
+      <div>
+        <h3>{{ ('Revision {num}')|f(num=revision_to.id) }}</h3>
+        <p>{{ _('by {user} on {date}')|f(user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
+      </div>
+    </header>
+    {{ diff_table(revision_from.content, revision_to.content) }}
+  </div>
+  <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to Revision History') }}</a></p>
+{% endblock %}

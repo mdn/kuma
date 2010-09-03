@@ -1,4 +1,3 @@
-from difflib import HtmlDiff
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404
@@ -195,14 +194,26 @@ def review_revision(request, document_slug, revision_id):
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document_slug]))
 
-    diff = None
-    if doc.current_revision:
-        html_diff = HtmlDiff(wrapcolumn=60)
-        diff = html_diff.make_table(
-                    doc.current_revision.content.splitlines(),
-                    rev.content.splitlines(),
-                    context=True)
-
     return jingo.render(request, 'wiki/review_revision.html',
-                        {'revision': rev, 'document': doc, 'diff': diff,
-                         'form': form})
+                        {'revision': rev, 'document': doc, 'form': form})
+
+
+def compare_revisions(request, document_slug):
+    """Compare two wiki document revisions.
+
+    The ids are passed as query string parameters (to and from).
+
+    """
+    doc = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
+    if 'from' not in request.GET or 'to' not in request.GET:
+        raise Http404
+
+    revision_from = get_object_or_404(Revision, document=doc,
+                                      id=request.GET.get('from'))
+    revision_to = get_object_or_404(Revision, document=doc,
+                                    id=request.GET.get('to'))
+
+    return jingo.render(request, 'wiki/compare_revisions.html',
+                        {'document': doc, 'revision_from': revision_from,
+                         'revision_to': revision_to})
