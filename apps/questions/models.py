@@ -14,10 +14,10 @@ from taggit.models import Tag
 from flagit.models import FlaggedObject
 from notifications import create_watch
 from notifications.tasks import delete_watches
-from sumo.models import ModelBase, TaggableMixin
-from sumo.urlresolvers import reverse
-from sumo.utils import wiki_to_html
 from sumo.helpers import urlparams
+from sumo.models import ModelBase, TaggableMixin
+from sumo.parser import wiki_to_html
+from sumo.urlresolvers import reverse
 import questions as constants
 from questions.tags import add_existing_tag
 from .question_config import products

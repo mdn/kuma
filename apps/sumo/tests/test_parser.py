@@ -4,9 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.parser import (WikiParser, _getImagePath, _buildImageParams,
-                         _getWikiLink, _build_template_params as _btp,
-                         _format_template_content as _ftc, _key_split,
-                         PATTERNS)
+                         _getWikiLink)
 from sumo.tests import TestCase
 from wiki.tests import document, revision
 
@@ -15,243 +13,13 @@ def pq_link(p, text):
     return pq(p.parse(text))('a')
 
 
-def doc_rev_parser(content, title='Installing Firefox'):
-    p = WikiParser(wiki_hooks=True)
+def doc_rev_parser(content, title='Installing Firefox', parser_cls=WikiParser):
+    p = parser_cls()
     d = document(title=title)
     d.save()
     r = revision(document=d, content=content, is_approved=True)
     r.save()
     return (d, r, p)
-
-
-def markup_helper(content, markup, title='Template:test'):
-    p = doc_rev_parser(content, title)[2]
-    doc = pq(p.parse(markup))
-    return (doc, p)
-
-
-class SimpleSyntaxTestCase(TestCase):
-    """Simple syntax regexing, like {note}...{/note}, {key Ctrl+K}"""
-    fixtures = ['users.json']
-
-    def test_note_simple(self):
-        """Simple note syntax"""
-        p = WikiParser()
-        doc = pq(p.parse('{note}this is a note{/note}'))
-        eq_('this is a note', doc('div.note').text())
-
-    def test_warning_simple(self):
-        """Simple warning syntax"""
-        p = WikiParser()
-        doc = pq(p.parse('{warning}this is a warning{/warning}'))
-        eq_('this is a warning', doc('div.warning').text())
-
-    def test_warning_multiline(self):
-        """Multiline warning syntax"""
-        p = WikiParser()
-        doc = pq(p.parse('{warning}\nthis is a warning\n{/warning}'))
-        eq_('this is a warning', doc('div.warning').text())
-
-    def test_warning_multiline_breaks(self):
-        """Multiline breaks warning syntax"""
-        p = WikiParser()
-        doc = pq(p.parse('\n\n{warning}\n\nthis is a warning\n\n'
-                         '{/warning}\n\n'))
-        eq_('this is a warning', doc('div.warning').text())
-
-    def test_general_warning_note(self):
-        """A bunch of wiki text with {warning} and {note}"""
-        p = WikiParser()
-        doc = pq(p.parse('\n\n{warning}\n\nthis is a warning\n\n{note}'
-                         'this is a note{warning}!{/warning}{/note}'
-                         "[[Installing Firefox]] '''internal''' ''link''"
-                         '{/warning}\n\n'))
-        eq_('!', doc('div.warning div.warning').text())
-        eq_('this is a note !', doc('div.note').text())
-        eq_('Installing Firefox', doc('a').text())
-        eq_('internal', doc('strong').text())
-        eq_('link', doc('em').text())
-
-    def test_key_inline(self):
-        """{key} stays inline"""
-        p = WikiParser()
-        doc = pq(p.parse('{key Cmd+Shift+Q}'))
-        eq_(1, len(doc('p')))
-        eq_(u'<span class="key">Cmd</span> + <span class="key">Shift</span>'
-            u' + <span class="key">Q</span>', doc.html().replace('\n', ''))
-
-    def test_template_inline(self):
-        """Inline templates are not wrapped in <p>s"""
-        doc, p = markup_helper('<span class="key">{{{1}}}</span>',
-                               '[[T:test|Cmd]] + [[T:test|Shift]]')
-        eq_(1, len(doc('p')))
-
-    def test_template_multiline(self):
-        """Multiline templates are wrapped in <p>s"""
-        doc, p = markup_helper('<span class="key">\n{{{1}}}</span>',
-                               '[[T:test|Cmd]]')
-        eq_(3, len(doc('p')))
-
-    def test_key_split_callback(self):
-        """The _key_split regex callback does what it claims"""
-        key_p = PATTERNS[2][0]
-        # Multiple keys, with spaces
-        eq_('<span class="key">ctrl</span> + <span class="key">alt</span> + '
-            '<span class="key">del</span>',
-            key_p.sub(_key_split, '{key ctrl + alt +   del}'))
-        # Single key with spaces in it
-        eq_('<span class="key">a key</span>',
-            key_p.sub(_key_split, '{key a key}'))
-        # Multiple keys with quotes and spaces
-        eq_('<span class="key">"Param-One" and</span> + <span class="key">'
-            'param</span> + <span class="key">two</span>',
-            key_p.sub(_key_split, '{key  "Param-One" and + param+two}'))
-        eq_('<span class="key">multi\nline</span> + '
-            '<span class="key">me</span>',
-            key_p.sub(_key_split, '{key multi\nline\n+me}'))
-
-    def test_key_split_brace_callback(self):
-        """Adding brace inside {key ...}"""
-        key_p = PATTERNS[2][0]
-        eq_('<span class="key">ctrl</span> + <span class="key">and</span> '
-            'Here is }',
-            key_p.sub(_key_split, '{key ctrl + and} Here is }'))
-        eq_('<span class="key">ctrl</span> + <span class="key">and</span> + '
-            '<span class="key">{</span>',
-            key_p.sub(_key_split, '{key ctrl + and + {}'))
-
-    def test_simple_inline_custom(self):
-        """Simple custom inline syntax: menu, button, filepath"""
-        p = WikiParser()
-        tags = ['menu', 'button', 'filepath']
-        for tag in tags:
-            doc = pq(p.parse('{%s this is a %s}' % (tag, tag)))
-            eq_('this is a ' + tag, doc('span.' + tag).text())
-
-    def test_general_warning_note_inline_custom(self):
-        """A mix of custom inline syntax with warnings and notes"""
-        p = WikiParser()
-        doc = pq(p.parse('\n\n{warning}\n\nthis is a {button warning}\n{note}'
-                         'this is a {menu note}{warning}!{/warning}{/note}'
-                         "'''{filepath internal}''' ''{menu hi!}''{/warning}"))
-        eq_('warning', doc('div.warning span.button').text())
-        eq_('this is a note !', doc('div.note').text())
-        eq_('note', doc('div.warning div.note span.menu').text())
-        eq_('internal', doc('strong span.filepath').text())
-        eq_('hi!', doc('em span.menu').text())
-
-
-class TestWikiTemplate(TestCase):
-    fixtures = ['users.json']
-
-    def test_template(self):
-        """Simple template markup."""
-        doc = markup_helper('Test content', '[[Template:test]]')[0]
-        eq_('Test content', doc.text())
-
-    def test_template_does_not_exist(self):
-        """Return a message if template does not exist"""
-        p = WikiParser(wiki_hooks=True)
-        doc = pq(p.parse('[[Template:test]]'))
-        eq_('The template "test" does not exist.', doc.text())
-
-    def test_template_anonymous_params(self):
-        """Template markup with anonymous parameters."""
-        doc, p = markup_helper('{{{1}}}:{{{2}}}', '[[Template:test|one|two]]')
-        eq_('one:two', doc.text())
-        doc = pq(p.parse('[[T:test|two|one]]'))
-        eq_('two:one', doc.text())
-
-    def test_template_named_params(self):
-        """Template markup with named parameters."""
-        doc, p = markup_helper('{{{a}}}:{{{b}}}',
-                             '[[Template:test|a=one|b=two]]')
-        eq_('one:two', doc.text())
-        doc = pq(p.parse('[[T:test|a=two|b=one]]'))
-        eq_('two:one', doc.text())
-
-    def test_template_numbered_params(self):
-        """Template markup with numbered parameters."""
-        doc, p = markup_helper('{{{1}}}:{{{2}}}',
-                               '[[Template:test|2=one|1=two]]')
-        eq_('two:one', doc.text())
-        doc = pq(p.parse('[[T:test|2=two|1=one]]'))
-        eq_('one:two', doc.text())
-
-    def test_template_wiki_markup(self):
-        """A template with wiki markup"""
-        doc = markup_helper("{{{1}}}:{{{2}}}\n''wiki''\n'''markup'''",
-                            '[[Template:test|2=one|1=two]]')[0]
-
-        eq_('two:one', doc('p')[1].text.replace('\n', ''))
-        eq_('wiki', doc('em')[0].text)
-        eq_('markup', doc('strong')[0].text)
-
-    def test_template_args_inline_wiki_markup(self):
-        """Args that contain inline wiki markup are parsed"""
-        doc = markup_helper('{{{1}}}\n\n{{{2}}}',
-                            "[[Template:test|'''one'''|''two'']]")[0]
-
-        eq_("<p/><p><strong>one</strong></p><p><em>two</em></p><p/>",
-            doc.html().replace('\n', ''))
-
-    def test_template_args_block_wiki_markup(self):
-        """Args that contain block level wiki markup aren't parsed"""
-        doc = markup_helper('{{{1}}}\n\n{{{2}}}',
-                            "[[Template:test|* ordered|# list]]")[0]
-
-        eq_("<p/><p>* ordered</p><p># list</p><p/>",
-            doc.html().replace('\n', ''))
-
-    def test_format_template_content_named(self):
-        """_ftc handles named arguments"""
-        eq_('ab', _ftc('{{{some}}}{{{content}}}',
-                       {'some': 'a', 'content': 'b'}))
-
-    def test_format_template_content_numbered(self):
-        """_ftc handles numbered arguments"""
-        eq_('a:b', _ftc('{{{1}}}:{{{2}}}', {'1': 'a', '2': 'b'}))
-
-    def test_build_template_params_anonymous(self):
-        """_btp handles anonymous arguments"""
-        eq_({'1': '<span>a</span>', '2': 'test'},
-            _btp(['<span>a</span>', 'test']))
-
-    def test_build_template_params_numbered(self):
-        """_btp handles numbered arguments"""
-        eq_({'20': 'a', '10': 'test'}, _btp(['20=a', '10=test']))
-
-    def test_build_template_params_named(self):
-        """_btp handles only named-arguments"""
-        eq_({'a': 'b', 'hi': 'test'}, _btp(['hi=test', 'a=b']))
-
-    def test_build_template_params_named_anonymous(self):
-        """_btp handles mixed named and anonymous arguments"""
-        eq_({'1': 'a', 'hi': 'test'}, _btp(['hi=test', 'a']))
-
-    def test_build_template_params_named_numbered(self):
-        """_btp handles mixed named and numbered arguments"""
-        eq_({'10': 'a', 'hi': 'test'}, _btp(['hi=test', '10=a']))
-
-    def test_build_template_params_named_anonymous_numbered(self):
-        """_btp handles mixed named, anonymous and numbered arguments"""
-        eq_({'1': 'a', 'hi': 'test', '3': 'z'}, _btp(['hi=test', 'a', '3=z']))
-
-
-class TestWikiInclude(TestCase):
-    fixtures = ['users.json']
-
-    def test_revision_include(self):
-        """Simple include markup."""
-        p = doc_rev_parser('Test content', 'Test title')[2]
-
-        # Existing title returns document's content
-        doc = pq(p.parse('[[Include:Test title]]'))
-        eq_('Test content', doc.text())
-
-        # Nonexisting title returns 'Document not found'
-        doc = pq(p.parse('[[Include:Another title]]'))
-        eq_('The document "Another title" does not exist.', doc.text())
 
 
 class TestWikiParser(TestCase):
@@ -341,6 +109,11 @@ class TestWikiParser(TestCase):
         """Wiki links are properly built for existing pages."""
         eq_('/en-US/kb/installing-firefox',
             _getWikiLink('Installing Firefox'))
+
+    def test_showfor(self):
+        """<showfor> tags should be escaped, not obeyed."""
+        eq_('<p>&lt;showfor&gt;smoo&lt;/showfor&gt;</p>',
+            self.p.parse('<showfor>smoo</showfor>').replace('\n', ''))
 
 
 class TestWikiInternalLinks(TestCase):

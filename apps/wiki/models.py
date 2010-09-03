@@ -85,6 +85,12 @@ class Document(ModelBase, TaggableMixin):
     # Cached HTML rendering of wiki markup:
     html = models.TextField(editable=False)
 
+    # Uncomment if/when we need a denormalized flag for how significantly
+    # outdated this translation is. We probably will to support the dashboard.
+    # If you do this, also make a periodic task to audit it occasionally.
+    #
+    # outdated = IntegerField(choices=SIGNIFICANCES, editable=False)
+
     category = models.IntegerField(choices=CATEGORIES)
     # firefox_versions,
     # operating_systems:
@@ -155,8 +161,8 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            from sumo.utils import wiki_to_html
-            self.document.html = wiki_to_html(self.content, wiki_hooks=True)
+            from wiki.parser import wiki_to_html
+            self.document.html = wiki_to_html(self.content)
             self.document.current_revision = self
             self.document.save()
 

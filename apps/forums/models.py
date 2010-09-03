@@ -4,10 +4,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from access import has_perm, perm_is_defined_on
-from sumo.helpers import urlparams
+from sumo.helpers import urlparams, wiki_to_html
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
-from sumo.helpers import wiki_to_html
 from notifications.tasks import delete_watches
 import forums
 

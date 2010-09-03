@@ -1,8 +1,6 @@
 from django.core import paginator
 from django.utils.http import urlencode
 
-from .parser import WikiParser
-
 
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
@@ -29,9 +27,3 @@ def paginate(request, queryset, per_page=20):
 
     paginated.url = u'%s?%s' % (base, qsa)
     return paginated
-
-
-def wiki_to_html(wiki_markup, wiki_hooks=False):
-    """Wiki Markup -> HTML"""
-    parser = WikiParser(wiki_hooks=wiki_hooks)
-    return parser.parse(wiki_markup, False)

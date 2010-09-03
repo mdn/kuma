@@ -14,8 +14,8 @@ from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 
+import sumo.parser
 from .urlresolvers import reverse
-from . import utils
 
 
 class DateTimeFormatError(Exception):
@@ -65,10 +65,9 @@ def urlparams(url_, hash=None, **query):
 
 
 @register.filter
-def wiki_to_html(wiki_markup, wiki_hooks=False):
+def wiki_to_html(wiki_markup):
     """Wiki Markup -> HTML jinja2.Markup object"""
-    return jinja2.Markup(utils.wiki_to_html(wiki_markup=wiki_markup,
-                                            wiki_hooks=wiki_hooks))
+    return jinja2.Markup(sumo.parser.wiki_to_html(wiki_markup))
 
 
 class Paginator(object):

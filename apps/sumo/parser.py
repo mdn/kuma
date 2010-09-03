@@ -1,11 +1,9 @@
-import re
-
 from django.conf import settings
 from django.utils.http import urlquote
 
 from wikimarkup.parser import Parser
 import jingo
-from tower import ugettext_lazy as _lazy
+import jinja2
 
 from sumo.urlresolvers import reverse
 from wiki.models import Document
@@ -24,50 +22,16 @@ ALLOWED_ATTRIBUTES = {
     'span': ['class'],
     'img': ['class', 'src', 'alt', 'title', 'height', 'width', 'style'],
 }
-
-
 IMAGE_PARAMS = {
     'align': ('none', 'left', 'center', 'right'),
     'valign': ('baseline', 'sub', 'super', 'top', 'text-top', 'middle',
               'bottom', 'text-bottom'),
 }
 
-TEMPLATE_ARG_REGEX = re.compile('{{{([^{]+?)}}}')
 
-
-class WikiParser(Parser):
-    """Wrapper for wikimarkup which adds Kitsune-specific callbacks and setup.
-    """
-
-    def __init__(self, base_url=None, wiki_hooks=False):
-        super(WikiParser, self).__init__(base_url)
-
-        # Register default hooks
-        self.registerInternalLinkHook(None, _hook_internal_link)
-        self.registerInternalLinkHook('Image', _hook_image_tag)
-
-        # The wiki has additional hooks not used elsewhere
-        if wiki_hooks:
-            self.registerInternalLinkHook('Include', _hook_include)
-            self.registerInternalLinkHook('Template', _hook_template)
-            self.registerInternalLinkHook('T', _hook_template)
-
-    def parse(self, text, show_toc=True, tags=None, attributes=None):
-        """Given wiki markup, return HTML."""
-        text = parse_simple_syntax(text)
-        parser_kwargs = {'tags': tags} if tags else {}
-        return super(WikiParser, self).parse(text, show_toc=show_toc, attributes=attributes or ALLOWED_ATTRIBUTES, **parser_kwargs)
-
-
-# Wiki parser hooks
-
-def _hook_include(parser, space, title):
-    """Returns the document's parsed content."""
-    from wiki.models import Document
-    try:
-        return Document.objects.get(title=title).content_parsed
-    except Document.DoesNotExist:
-        return _lazy('The document "%s" does not exist.') % title
+def wiki_to_html(wiki_markup):
+    """Wiki Markup -> HTML"""
+    return WikiParser().parse(wiki_markup, show_toc=False)
 
 
 def _getWikiLink(link):
@@ -172,105 +136,19 @@ def _hook_image_tag(parser, space, name):
     return template.render(**r_kwargs)
 
 
-# Wiki templates are documents that receive arguments.
-#
-# They can be useful when including similar content in multiple places,
-# with slight variations. For examples and details see:
-# http://www.mediawiki.org/wiki/Help:Templates
-#
-def _hook_template(parser, space, title):
-    """Handles Template:Template name, formatting the content using given
-    args"""
-    # To avoid circular imports, wiki.models imports wiki_to_html
-    params = title.split('|')
-    short_title = params.pop(0)
-    template_title = 'Template:' + short_title
-
-    try:
-        t = Document.objects.get(title=template_title, is_template=True)
-    except Document.DoesNotExist:
-        return _lazy('The template "%s" does not exist.') % short_title
-
-    c = t.current_revision.content.rstrip()
-    # Note: this completely ignores the allowed attributes passed to the
-    # WikiParser.parse() method, and defaults to ALLOWED_ATTRIBUTES
-    parsed = parser.parse(c, show_toc=False, attributes=ALLOWED_ATTRIBUTES)
-
-    if '\n' not in c:
-        parsed = parsed.replace('<p>', '')
-        parsed = parsed.replace('</p>', '')
-    # Do some string formatting to replace parameters
-    return _format_template_content(parsed, _build_template_params(params))
-
-
-def _format_template_content(content, params):
-    """Formats a template's content using passed in arguments"""
-
-    def arg_replace(matchobj):
-        """Takes a regex matching {{{name}} and returns params['name']"""
-        param_name = matchobj.group(1)
-        if param_name in params:
-            return params[param_name]
-
-    return TEMPLATE_ARG_REGEX.sub(arg_replace, content)
-
-
-def _build_template_params(params_str):
-    """Builds a dictionary from a given list of raw strings passed in by the
-    user.
-
-    Example syntax it handles:
-    * ['one', 'two']   turns into     {1: 'one', 2: 'two'}
-    * ['12=blah']      turns into     {12: 'blah'}
-    * ['name=value']   turns into     {'name': 'value'}
-
+class WikiParser(Parser):
+    """Wrapper for wikimarkup which adds Kitsune-specific callbacks and setup.
     """
-    i = 0
-    params = {}
-    for item in params_str:
-        param, _, value = item.partition('=')
 
-        if value:
-            params[param] = value
-        else:
-            i = i + 1
-            params[str(i)] = param
+    def __init__(self, base_url=None):
+        super(WikiParser, self).__init__(base_url)
 
-    return params
+        # Register default hooks
+        self.registerInternalLinkHook(None, _hook_internal_link)
+        self.registerInternalLinkHook('Image', _hook_image_tag)
 
-
-# Custom syntax using regexes follows below.
-# * turn tags of the form {tag content} into <span class="tag">content</span>
-# * expand {key ctrl+alt} into <span class="key">ctrl</span> +
-#   <span class="key">alt</span>
-# * turn {note}note{/note} into <div class="note">a note</div>
-
-def _key_split(matchobj):
-    """Expands a {key a+b+c} syntax into <span class="key">a</span> + ...
-
-    More explicitly, it takes a regex matching {key ctrl+alt+del} and returns:
-    <span class="key">ctrl</span> + <span class="key">alt</span> +
-    <span class="key">del</span>
-
-    """
-    keys = [k.strip() for k in matchobj.group(1).split('+')]
-    return ' + '.join(['<span class="key">%s</span>' % key for key in keys])
-
-
-PATTERNS = [
-    (re.compile(pattern, re.DOTALL), replacement) for
-    pattern, replacement in (
-        # (x, y), replace x with y
-        (r'{(?P<name>note|warning)}', '<div class="\g<name>">'),
-        (r'\{/(note|warning)\}', '</div>'),
-        # To use } as a key, this syntax won't work. Use [[T:key|}]] instead
-        (r'\{key (.+?)\}', _key_split),  # ungreedy: stop at the first }
-        (r'{(?P<name>button|menu|filepath) (?P<content>.*?)}',
-         '<span class="\g<name>">\g<content></span>'),
-    )]
-
-
-def parse_simple_syntax(text):
-    for pattern, replacement in PATTERNS:
-        text = pattern.sub(replacement, text)
-    return text
+    def parse(self, text, show_toc=None, tags=None, attributes=None):
+        """Given wiki markup, return HTML."""
+        parser_kwargs = {'tags': tags} if tags else {}
+        return super(WikiParser, self).parse(text, show_toc=show_toc,
+            attributes=attributes or ALLOWED_ATTRIBUTES, **parser_kwargs)
