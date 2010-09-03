@@ -165,10 +165,10 @@ def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
-    revs = Revision.objects.filter(document=doc)
+    revs = Revision.objects.filter(document=doc).order_by('-created')
+
     return jingo.render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs,
-                         'document': doc})
+                        {'revisions': revs, 'document': doc})
 
 
 @login_required

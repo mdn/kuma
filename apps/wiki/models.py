@@ -102,6 +102,10 @@ class Document(ModelBase, TaggableMixin):
     def content_parsed(self):
         return self.html
 
+    @property
+    def language(self):
+        return settings.LANGUAGES[self.locale.lower()]
+
     # FF version and OS are hung off the original, untranslated document and
     # dynamically inherited by translations:
     firefox_versions = _inherited('firefox_versions', 'firefox_version_set')

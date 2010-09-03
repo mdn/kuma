@@ -32,6 +32,72 @@
     height: 500px;
 }
 
+/* Revision history */
+#locale-list ul {
+    display: inline;
+}
+
+#locale-list li {
+    display: inline-block;
+    list-style: none;
+    padding: 0 5px;
+}
+
+#revision-list form {
+    margin: 10px 0;
+}
+
+#revision-list ul {
+    margin: 10px 0;
+}
+
+#revision-list li {
+    list-style: none;
+}
+
+#revision-list li.current {
+    border-top: solid 1px #999;
+    margin: 5px 0 0;
+    padding: 5px 0 0;
+}
+
+#revision-list li.rejected * {
+    color: #ccc;
+    text-decoration: line-through;
+}
+
+#revision-list div.radio {
+    display: inline-block;
+    text-align: center;
+    width: 15px;
+}
+
+#revision-list div.date {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    width: 150px;
+}
+
+#revision-list div.status {
+    display: inline-block;
+    width: 90px;
+}
+
+#revision-list div.significance {
+    display: inline-block;
+    width: 35px;
+}
+
+#revision-list div.creator {
+    display: inline-block;
+    width: 125px;
+}
+
+#revision-list div.comment {
+    display: inline-block;
+    width: 400px;
+}
+
 /* Review revision */
 body.review #main-content h3 {
     font-weight: bold;

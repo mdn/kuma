@@ -65,7 +65,7 @@
           <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           {{ form.significance|safe }}
           <div class="message">
-            <label for="id-approve-comment">{{ _('Leave a message for the contributor: <span class="optional">optional</span>')|safe }}</label>
+            <label for="id-approve-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
             <textarea id="id-approve-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
           </div>
           <input type="submit" name="approve" value="{{ _('Accept') }}">
@@ -79,7 +79,7 @@
           <legend>{{ _('Reject this Revision') }}</legend>
           <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <div class="message">
-            <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">optional</span>')|safe }}</label>
+            <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
             <textarea id="id-reject-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
           </div>
           <input type="submit" name="reject" value="{{ _('Reject') }}">

@@ -32,7 +32,8 @@ def paginator(pager):
 @register.function
 def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
-    return reverse(viewname, args=args, kwargs=kwargs)
+    locale = kwargs.pop('locale', None)
+    return reverse(viewname, locale=locale, args=args, kwargs=kwargs)
 
 
 @register.filter

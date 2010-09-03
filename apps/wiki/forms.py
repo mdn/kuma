@@ -88,5 +88,5 @@ class ReviewForm(forms.Form):
                                 error_messages={'max_length': COMMENT_LONG})
 
     significance = forms.ChoiceField(
-                    choices=SIGNIFICANCES, required=False,
-                    widget=forms.RadioSelect())
+                    choices=SIGNIFICANCES, initial=SIGNIFICANCES[0][0],
+                    required=False, widget=forms.RadioSelect())

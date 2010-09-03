@@ -13,7 +13,7 @@ from pytz import timezone
 from pyquery import PyQuery as pq
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
-                          DateTimeFormatError, collapse_linebreaks)
+                          DateTimeFormatError, collapse_linebreaks, url)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -149,3 +149,12 @@ class TestDateTimeFormat(TestCase):
     def test_invalid_value(self):
         """Passing invalid value raises ValueError."""
         assert_raises(ValueError, datetimeformat, self.context, 'invalid')
+
+
+class TestUrlHelper(TestCase):
+    """Tests for the url helper."""
+
+    def test_with_locale(self):
+        """Passing a locale to url creates a URL for that locale."""
+        u = url('jsi18n', locale='es')
+        eq_(u'/es/jsi18n/', u)

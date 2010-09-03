@@ -21,7 +21,7 @@ def get_url_prefixer():
 
 
 def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
-            force_locale=False):
+            force_locale=False, locale=None):
     """Wraps Django's reverse to prepend the correct locale.
 
     force_locale -- Ordinarily, if get_url_prefixer() returns None, we return
@@ -33,7 +33,10 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
         for any uses of django.test.client.Client and forgo this kwarg.
 
     """
-    prefixer = get_url_prefixer()
+    if locale:
+        prefixer = Prefixer(locale=locale)
+    else:
+        prefixer = get_url_prefixer()
     if not prefixer and force_locale:
         prefixer = Prefixer()
 
@@ -75,10 +78,12 @@ def split_path(path):
 
 
 class Prefixer(object):
-    def __init__(self, request=None):
+    def __init__(self, request=None, locale=None):
         """If request is omitted, fall back to a default locale."""
         self.request = request or WSGIRequest({'REQUEST_METHOD': 'bogus'})
         self.locale, self.shortened_path = split_path(self.request.path_info)
+        if locale:
+            self.locale = locale
 
     def get_language(self):
         """

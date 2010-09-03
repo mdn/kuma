@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% set title = _('Revisions | {document} | Firefox Support')|fe(document=document.title) %}
+{% set title = _('Revision History | {document} | Firefox Support')|fe(document=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Revisions'))] %}
@@ -10,25 +10,79 @@
     {{ _('You are here:') }}
     {{ breadcrumbs(crumbs) }}
   </div>
-  <hgroup>
-    <h1>{{ _('Revisions') }}</h1>
-    <h2>{{ document.title }}</h2>
-  </hgroup>
-  <div id="revision-list">
-    {% for rev in revisions %}
-      {% if loop.first %}<ul>{% endif %}
-      <li class="{% if document.current_revision == rev %}current{% endif %}">
-        {{ datetimeformat(rev.created, format='datetime') }}
-        {{ rev.creator }}
+  <h1>{{ _('History of {title}')|fe(title=document.title) }}</h1>
+  <div id="locale-list">
+    <label>{{ _('Revision history for:') }}</label>
+    <ul>
+      {% if document.parent %}
+        <li>
+          <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
+        </li>
+      {% endif %}
+      <li>
+        <span>{{ document.language }}</span>
       </li>
-      {% if loop.last %}</ul>{% endif %}
+    </ul>
+  </div>
+  <div id="revision-list">
+    {% if revisions %}
+      <form action="#TODO-diff-url" method="get">
+        <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+        {% set reached_current = False %}
+        {% for rev in revisions %}
+          {% if document.current_revision == rev %}
+            {% set reached_current = True %}
+          {% endif %}
+          {% if loop.first %}<ul>{% endif %}
+          <li class="{% if document.current_revision == rev %}current{% endif %}{% if rev.reviewed and not rev.is_approved %}rejected{% endif %}">
+            <div class="radio">
+              {% if not loop.first %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
+            </div>
+            <div class="radio">
+              {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
+            </div>
+            <div class="date">
+              {{ datetimeformat(rev.created, format='datetime') }}
+            </div>
+            <div class="status">
+              {% if not rev.reviewed %}
+                {% if not reached_current %}
+                  <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
+                {% else %}
+                  <span class="unreviewed">{{ _('Unreviewed') }}</span>
+                {% endif %}
+              {% else %}
+                {% if document.current_revision == rev %}
+                  <span class="current">{{ _('Current') }}</span>
+                {% elif rev.is_approved %}
+                  <span class="approved">{{ _('Approved') }}</span>
+                {% else %}
+                  <span class="rejected">{{ _('Rejected') }}</span>
+                {% endif %}
+              {% endif %}
+            </div>
+            <div class="significance">
+              {% if rev.significance == 20 %}
+                M
+              {% elif rev.significance == 30 %}
+                MT
+              {% else %}
+                &nbsp;
+              {% endif %}
+            </div>
+            <div class="creator">
+              {{ rev.creator }}
+            </div>
+            <div class="comment">
+              {{ rev.comment }}
+            </div>
+          </li>
+          {% if loop.last %}</ul>{% endif %}
+        {% endfor %}
+        <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+      </form>
     {% else %}
       {{ _('This document has no revisions.') }}
-    {% endfor %}
-  </div>
-  <div id="actions">
-    {% if user.has_perm('wiki.add_revision') %}
-      <a href="{{ url('wiki.new_revision', document.slug) }}">Add a Revision</a>
     {% endif %}
   </div>
 {% endblock %}
