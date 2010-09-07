@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import patterns, url
 
-
 urlpatterns = patterns('gallery.views',
     url(r'^$', 'gallery', name='gallery.gallery'),
-    url(r'^/images$', 'gallery', {'filter': 'images'},
-        name='gallery.gallery_images'),
-    url(r'^/videos$', 'gallery', {'filter': 'videos'},
-        name='gallery.gallery_videos'),
-    url(r'^/media/(?P<media_type>\w+)/(?P<media_id>\d+)$',
+    url(r'^/(?P<media_type>\w+)s$', 'gallery', name='gallery.gallery_media'),
+    url(r'^/(?P<media_type>\w+)/upload_async$', 'up_media_async',
+        name='gallery.up_media_async'),
+    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)/delete_async$',
+        'del_media_async', name='gallery.del_media_async'),
+    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)$',
         'media', name='gallery.media'),
 )

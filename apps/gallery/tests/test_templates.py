@@ -1,14 +1,19 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.tests import TestCase
-from sumo.tests import get
-from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
+from sumo.tests import TestCase, get
+from sumo.urlresolvers import reverse
+from gallery.models import Image
 from gallery.tests import image
 
 
 class GalleryPageCase(TestCase):
+    fixtures = ['users.json']
+
+    def tearDown(self):
+        Image.objects.all().delete()
+        super(GalleryPageCase, self).tearDown()
 
     def test_gallery_images(self):
         """Test that all images show up on images gallery page.
@@ -17,17 +22,18 @@ class GalleryPageCase(TestCase):
 
         """
         img = image()
-        response = get(self.client, 'gallery.gallery_images')
+        response = get(self.client, 'gallery.gallery_media',
+                       args=['image'])
         eq_(200, response.status_code)
         doc = pq(response.content)
         imgs = doc('section.gallery li img')
         eq_(1, len(imgs))
-        eq_(img.thumbnail_or_file().url, imgs[0].attrib['src'])
+        eq_(img.thumbnail_url_if_set(), imgs[0].attrib['src'])
 
     def test_gallery_locale(self):
         """Test that images only show for their set locale."""
         image(locale='es')
-        url = reverse('gallery.gallery_images')
+        url = reverse('gallery.gallery_media', args=['image'])
         response = self.client.get(url, follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
@@ -43,6 +49,11 @@ class GalleryPageCase(TestCase):
 
 
 class MediaPageCase(TestCase):
+    fixtures = ['users.json']
+
+    def tearDown(self):
+        Image.objects.all().delete()
+        super(MediaPageCase, self).tearDown()
 
     def test_image_media_page(self):
         """Test the media page."""

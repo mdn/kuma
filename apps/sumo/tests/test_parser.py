@@ -31,6 +31,7 @@ def markup_helper(content, markup, title='Template:test'):
 
 class SimpleSyntaxTestCase(TestCase):
     """Simple syntax regexing, like {note}...{/note}, {key Ctrl+K}"""
+    fixtures = ['users.json']
 
     def test_note_simple(self):
         """Simple note syntax"""
@@ -140,6 +141,8 @@ class SimpleSyntaxTestCase(TestCase):
 
 
 class TestWikiTemplate(TestCase):
+    fixtures = ['users.json']
+
     def test_template(self):
         """Simple template markup."""
         doc = markup_helper('Test content', '[[Template:test]]')[0]
@@ -235,6 +238,8 @@ class TestWikiTemplate(TestCase):
 
 
 class TestWikiInclude(TestCase):
+    fixtures = ['users.json']
+
     def test_revision_include(self):
         """Simple include markup."""
         p = doc_rev_parser('Test content', 'Test title')[2]
@@ -249,6 +254,8 @@ class TestWikiInclude(TestCase):
 
 
 class TestWikiParser(TestCase):
+    fixtures = ['users.json']
+
     def setUp(self):
         self.d, self.r, self.p = doc_rev_parser(
             'Test content', 'Installing Firefox')
@@ -336,6 +343,8 @@ class TestWikiParser(TestCase):
 
 
 class TestWikiInternalLinks(TestCase):
+    fixtures = ['users.json']
+
     def setUp(self):
         self.d, self.r, self.p = doc_rev_parser(
             'Test content', 'Installing Firefox')
@@ -419,6 +428,8 @@ def pq_img(p, text, selector='div.img'):
 
 
 class TestWikiImageTags(TestCase):
+    fixtures = ['users.json']
+
     def setUp(self):
         self.d, self.r, self.p = doc_rev_parser(
             'Test content', 'Installing Firefox')

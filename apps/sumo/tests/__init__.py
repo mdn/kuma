@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.test.client import Client
 
 from test_utils import TestCase  # So others can import it from here
@@ -31,3 +32,17 @@ class LocalizingClient(Client):
     # If you use this, you might also find the force_locale=True argument to
     # sumo.urlresolvers.reverse() handy, in case you need to force locale
     # prepending in a one-off case or do it outside a mock request.
+
+
+class FixtureMissingError(Exception):
+    """Raise this if a fixture is missing"""
+
+
+def get_user(username='jsocol'):
+    """Return a django user or raise FixtureMissingError"""
+    try:
+        return User.objects.get(username=username)
+    except User.DoesNotExist:
+        raise FixtureMissingError(
+            'Username "%s" not found. You probably forgot to import a'
+            ' users fixture.' % username)

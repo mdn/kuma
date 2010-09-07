@@ -98,15 +98,20 @@ Uploads
 Uploaded files must be served from anywhere under the media folder. The full
 path to this folder can be changed in the setting ``MEDIA_ROOT``.
 
-Here are the currently defined upload paths, all relative to ``MEDIA_ROOT``:
+Here are the currently defined upload settings. All paths are relative to
+``MEDIA_ROOT``::
 
 ``THUMBNAIL_UPLOAD_PATH``
   Thumbnails of images for questions. defaults to
-  ``uploads/images/thumbnails/``
+  ``uploads/images/thumbnails/``.
 ``IMAGE_UPLOAD_PATH``
-  Images for questions, defaults to ``uploads/images/``
-``GALLERY_THUMBNAIL_PATH``
+  Images for questions, defaults to ``uploads/images/``.
+``GALLERY_IMAGE_THUMBNAIL_PATH``, ``GALLERY_VIDEO_THUMBNAIL_PATH``
   Thumbnails of video/images for the media gallery, defaults to
-  ``uploads/gallery/thumbnails/``
-``GALLERY_PATH``
-  Video/images for the media gallery, defaults to ``uploads/gallery/``
+  ``uploads/gallery/thumbnails/``.
+``GALLERY_IMAGE_PATH``, ``GALLERY_VIDEO_PATH``
+  Video/images for the media gallery, defaults to ``uploads/gallery/``.
+``IMAGE_MAX_FILESIZE``, ``VIDEO_MAX_FILESIZE``
+  Maximum size for uploaded images (defaults to 1mb) or videos (16mb).
+``THUMBNAIL_PROGRESS_URL``
+  URL to an image, used to indicate thumbnail generation is in progress.

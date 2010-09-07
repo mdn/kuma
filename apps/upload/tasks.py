@@ -11,14 +11,15 @@ log = logging.getLogger('k.task')
 
 
 @task(rate_limit='15/m')
-def generate_thumbnail(image, image_name):
+def generate_image_thumbnail(image, image_name):
     """Generate a thumbnail given an image and a name."""
-    log.info('Generating thumbnail for ImageAttachment %s.' % image.id)
-    thumb_content = _create_thumbnail(image.file.path)
+    log.info('Generating thumbnail for %(model_class)s %(id)s.' %
+             {'model_class': image.__class__.__name__, 'id': image.id})
+    thumb_content = _create_image_thumbnail(image.file.path)
     image.thumbnail.save(image_name, thumb_content, save=True)
 
 
-def _create_thumbnail(file_path, longest_side=settings.THUMBNAIL_SIZE):
+def _create_image_thumbnail(file_path, longest_side=settings.THUMBNAIL_SIZE):
     """
     Returns a thumbnail file with a set longest side.
     """

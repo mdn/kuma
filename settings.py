@@ -416,3 +416,5 @@ GALLERY_IMAGE_PATH = 'uploads/gallery/images/'
 GALLERY_IMAGE_THUMBNAIL_PATH = 'uploads/gallery/images/thumbnails/'
 GALLERY_VIDEO_PATH = 'uploads/gallery/videos/'
 GALLERY_VIDEO_THUMBNAIL_PATH = 'uploads/gallery/videos/thumbnails/'
+THUMBNAIL_PROGRESS_URL = MEDIA_URL + 'img/wait-trans.gif'
+VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes

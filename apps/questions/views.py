@@ -41,7 +41,7 @@ from .tasks import (cache_top_contributors, build_solution_notification,
 import questions as constants
 from .question_config import products
 from upload.models import ImageAttachment
-from upload.views import upload_images
+from upload.views import upload_imageattachment
 
 
 log = logging.getLogger('k.questions')
@@ -291,7 +291,7 @@ def reply(request, question_id):
 
     # NOJS: upload image
     if 'upload_image' in request.POST:
-        upload_images(request, question)
+        upload_imageattachment(request, question)
         return answers(request, question_id, form)
 
     if form.is_valid():
@@ -543,7 +543,7 @@ def edit_answer(request, question_id, answer_id):
         raise PermissionDenied
 
     # NOJS: upload images, if any
-    upload_images(request, answer)
+    upload_imageattachment(request, answer)
 
     if request.method == 'GET':
         form = AnswerForm({'content': answer.content})

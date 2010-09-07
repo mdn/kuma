@@ -101,6 +101,8 @@ class DocumentTests(TestCase):
 
 class RevisionTests(TestCase):
     """Tests for the Revision model"""
+    fixtures = ['users.json']
+
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
         d = document(html='This goes away')

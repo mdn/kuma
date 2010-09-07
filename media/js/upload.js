@@ -74,7 +74,7 @@ $(document).ready(function () {
 
                 $options.progress.removeClass('show');
                 if (upStatus == 'success') {
-                    upFile = iframeJSON.files[0];
+                    upFile = iframeJSON.file;
                     $thumbnail = $('<img/>')
                         .attr({alt: upFile.name, title: upFile.name,
                                width: upFile.width, height: upFile.height,

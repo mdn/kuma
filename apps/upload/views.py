@@ -11,7 +11,7 @@ from tower import ugettext as _
 
 from access.decorators import has_perm_or_owns_or_403
 from .models import ImageAttachment
-from .utils import upload_images, FileTooLargeError
+from .utils import upload_imageattachment, FileTooLargeError
 
 
 @login_required
@@ -35,23 +35,24 @@ def up_image_async(request, model_name, object_pk):
             json.dumps({'status': 'error', 'message': message}))
 
     try:
-        files = upload_images(request, obj)
+        file_info = upload_imageattachment(request, obj)
     except FileTooLargeError as e:
         return HttpResponseBadRequest(
             json.dumps({'status': 'error', 'message': e.args[0]}))
 
-    if files is not None:
+    if isinstance(file_info, dict) and 'thumbnail_url' in file_info:
         return HttpResponse(
-            json.dumps({'status': 'success', 'files': files}))
+            json.dumps({'status': 'success', 'file': file_info}))
 
     message = _('Invalid or no image received.')
     return HttpResponseBadRequest(
-        json.dumps({'status': 'error', 'message': message}))
+        json.dumps({'status': 'error', 'message': message,
+                    'errors': file_info}))
 
 
 @login_required
 @require_POST
-@has_perm_or_owns_or_403('upload_imageattachment.image_upload', 'creator',
+@has_perm_or_owns_or_403('upload.image_upload', 'creator',
                          (ImageAttachment, 'id__iexact', 'image_id'),
                          (ImageAttachment, 'id__iexact', 'image_id'))
 def del_image_async(request, image_id):

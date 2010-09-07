@@ -1,61 +1,80 @@
 from django.conf import settings
 from django.core.files import File
 
-from tower import ugettext as _
+from tower import ugettext_lazy as _lazy
 
-from sumo.helpers import reverse
-from .forms import ImageUploadForm
+from .forms import ImageAttachmentUploadForm
 from .models import ImageAttachment
-from .tasks import generate_thumbnail, _scale_dimensions
+from .tasks import generate_image_thumbnail, _scale_dimensions
 
 
-def create_image_attachment(up_file, obj, user):
+def check_file_size(f, max_allowed_size):
+    """Check the file size of f is less than max_allowed_size
+
+    Raise FileTooLargeError if the check fails.
+
+    """
+    if f.size > max_allowed_size:
+        message = _lazy('"%s" is too large (%sKB), the limit is %sKB') % (
+            f.name, f.size >> 10, max_allowed_size >> 10)
+        raise FileTooLargeError(message)
+
+
+def create_imageattachment(files, user, max_allowed_size, obj):
     """
     Given an uploaded file, a user and an object, it creates an ImageAttachment
     owned by `user` and attached to `obj`.
     """
+    up_file = files.values()[0]
+    check_file_size(up_file, max_allowed_size)
+
     image = ImageAttachment(content_object=obj, creator=user)
-    file_ = File(up_file)
-    image.file.save(up_file.name, file_, save=False)
-    image.save()
+    image.file.save(up_file.name, File(up_file), save=True)
 
     # Generate thumbnail off thread
-    generate_thumbnail.delay(image, up_file.name)
+    generate_image_thumbnail.delay(image, up_file.name)
 
-    return image
+    (width, height) = _scale_dimensions(image.file.width, image.file.height)
+    return {'name': up_file.name, 'url': image.file.url,
+            'thumbnail_url': image.thumbnail_if_set().url,
+            'width': width, 'height': height,
+            'delete_url': image.get_delete_url()}
 
 
 class FileTooLargeError(Exception):
     pass
 
 
-def upload_images(request, obj):
-    """
-    Takes in a request object and returns a list with information about each
-    image: name, url, thumbnail_url, width, height.
+def upload_imageattachment(request, obj):
+    """Uploads image attachments. See upload_media.
 
-    Attaches images to the given object.
+    Attaches images to the given object, using the create_imageattachment
+    callback.
+
     """
-    form = ImageUploadForm(request.POST, request.FILES)
+    return upload_media(
+        request, ImageAttachmentUploadForm, create_imageattachment,
+        settings.IMAGE_MAX_FILESIZE, obj=obj)
+
+
+def upload_media(request, form_cls, up_file_callback, max_allowed_size,
+                 **kwargs):
+    """
+    Uploads media files and returns a list with information about each media:
+    name, url, thumbnail_url, width, height.
+
+    Args:
+    * request object
+    * form class, used to instantiate and validate form for upload
+    * callback to save the file given its content and creator
+    * max upload size per one file
+    * extra kwargs will all be passed to the callback
+
+    """
+    form = form_cls(request.POST, request.FILES)
     if request.method == 'POST' and form.is_valid():
-        files = []
-        for name in request.FILES:
-            up_file = request.FILES[name]
-            if up_file.size > settings.IMAGE_MAX_FILESIZE:
-                message = _('"%s" is too large (%sKB), the limit is %sKB') % (
-                    up_file.name, up_file.size >> 10,
-                    settings.IMAGE_MAX_FILESIZE >> 10)
-                raise FileTooLargeError(message)
-
-            image = create_image_attachment(up_file, obj, request.user)
-
-            delete_url = reverse('upload.del_image_async', args=[image.id])
-            im = image.file
-            (width, height) = _scale_dimensions(im.width, im.height)
-            files.append({'name': up_file.name, 'url': image.file.url,
-                          'thumbnail_url': image.thumbnail_or_file().url,
-                          'width': width,
-                          'height': height,
-                          'delete_url': delete_url})
-        return files
+        return up_file_callback(request.FILES, request.user, max_allowed_size,
+                                **kwargs)
+    elif not form.is_valid():
+        return form.errors
     return None

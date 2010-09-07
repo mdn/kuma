@@ -2,15 +2,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
 from django.core.files.images import ImageFile
-from django.test import TestCase
 
 from nose.tools import eq_
 
 from questions.models import Question
 from sumo.tests import TestCase
 from upload.models import ImageAttachment
-from upload.tasks import (_scale_dimensions, _create_thumbnail,
-                          generate_thumbnail)
+from upload.tasks import (_scale_dimensions, _create_image_thumbnail,
+                          generate_image_thumbnail)
 
 
 class ScaleDimensionsTestCase(TestCase):
@@ -60,9 +59,10 @@ class ScaleDimensionsTestCase(TestCase):
 
 class CreateThumbnailTestCase(TestCase):
 
-    def test_create_thumbnail_default(self):
+    def test_create_image_thumbnail_default(self):
         """A thumbnail is created from an image file."""
-        thumb_content = _create_thumbnail('apps/upload/tests/media/test.jpg')
+        thumb_content = _create_image_thumbnail(
+            'apps/upload/tests/media/test.jpg')
         actual_thumb = ImageFile(thumb_content)
         with open('apps/upload/tests/media/test_thumb.jpg') as f:
             expected_thumb = ImageFile(f)
@@ -82,14 +82,14 @@ class GenerateThumbnail(TestCase):
     def tearDown(self):
         ImageAttachment.objects.all().delete()
 
-    def test_generate_thumbnail_default(self):
-        """generate_thumbnail creates a thumbnail."""
+    def test_generate_image_thumbnail_default(self):
+        """generate_image_thumbnail creates a thumbnail."""
         image = ImageAttachment(content_object=self.obj, creator=self.user)
         with open('apps/upload/tests/media/test.jpg') as f:
             up_file = File(f)
             image.file.save(up_file.name, up_file, save=True)
 
-        generate_thumbnail(image, up_file.name)
+        generate_image_thumbnail(image, up_file.name)
 
         eq_(90, image.thumbnail.width)
         eq_(120, image.thumbnail.height)
