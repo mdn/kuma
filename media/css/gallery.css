@@ -1,0 +1,51 @@
+/*
+ * Media Gallery CSS
+ */
+
+/* media gallery grid view */
+section.gallery header div.wrap {
+    border-bottom: solid 1px #aaa;
+    border-top: solid 1px #aaa;
+    display: block;
+    margin: 5px 0;
+    padding: 5px 0;
+}
+
+#gallery-search,
+#media-type-filter {
+    display: inline-block;
+    width: 458px;
+}
+
+#media-type-filter {
+    text-align: right;
+}
+
+#media-type-filter span {
+    font-weight: bold;
+}
+
+section.gallery ol li {
+    display: inline-block;
+    height: 184px;
+    text-align: center;
+    width: 183px;
+}
+
+section.gallery ol li img {
+    max-height: 175px;
+    max-width: 175px;
+}
+
+/* media page */
+section.media header,
+section.media footer {
+    display: block;
+    margin: 10px 0;
+    padding: 10px 0;
+}
+
+section.media header div {
+    display: inline-block;
+    padding: 0 5px;
+}

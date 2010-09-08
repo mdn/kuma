@@ -1,0 +1,64 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "gallery/base.html" %}
+{% set title = _('Media Gallery | Firefox Support') %}
+{% set crumbs = [(None, _('Media Gallery'))] %}
+
+{% block content %}
+  <div id="breadcrumbs">
+    {{ _('You are here:') }}
+    {{ breadcrumbs(crumbs) }}
+  </div>
+  <section class="gallery">
+    <header>
+      <h1>{{ _('Media Gallery') }}</h1>
+      <div id="locale-filter">
+        <form action="" method="get">
+          <label for="select-locale">{{ _('Show media for:') }}</label>
+          <select id="select-locale" name="locale">
+            {% for lang in settings.LANGUAGE_CHOICES %}
+              <option value="{{ lang[0] }}" {% if lang[0] == locale %}selected="selected"{% endif %}>{{ lang[1] }} ({{ lang[0] }})</option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="{{ _('Go') }}">
+        </form>
+      </div>
+      <div class="wrap">
+        <div id="gallery-search">
+          <form action="" method="get">
+            <input type="text" name="q" required="required" />
+            <input type="submit" value="{{ _('Search Gallery') }}">
+          </form>
+        </div>
+        <div id="media-type-filter">
+          {{ _("Show:") }}
+          {% if filter == 'images' %}
+            <span>{{ _('Images') }}</span>
+          {% else %}
+            <a href="{{ url('gallery.gallery_images') }}">{{ _('Images') }}</a>
+          {% endif %}
+          {% if filter == 'videos' %}
+            <span>{{ _('Videos') }}</span>
+          {% else %}
+            <a href="{{ url('gallery.gallery_videos') }}">{{ _('Videos') }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+    {% if media.object_list %}
+      <ol>
+        {% for m in media.object_list %}
+          <li>
+            <a href="{{ m.get_absolute_url() }}" title="{{ m.title }}">
+              <img src="{{ m.thumbnail_or_file().url }}" alt="{{ m.title }}" />
+            </a>
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p>{{ _('Nothing to show.') }}</p>
+    {% endif %}
+    <footer>
+      {{ media|paginator }}
+    </footer>
+  </section>
+{% endblock %}

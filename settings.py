@@ -280,6 +280,9 @@ MINIFY_BUNDLES = {
         'wiki': (
             'css/wiki.css',
         ),
+        'gallery': (
+            'css/gallery.css',
+        ),
         'ie': (
             'css/ie.css',
         ),
@@ -309,6 +312,8 @@ MINIFY_BUNDLES = {
             'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
             'js/wiki.js',
+        ),
+        'gallery': (
         ),
     },
 }

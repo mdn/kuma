@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     (r'^flagged', include('flagit.urls')),
     (r'^upload', include('upload.urls')),
     (r'^kb', include('wiki.urls')),
+    (r'^gallery', include('gallery.urls')),
 
     # Kitsune admin (not Django admin).
     (r'^admin/', include('kadmin.urls')),
