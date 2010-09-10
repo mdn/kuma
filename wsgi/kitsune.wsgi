@@ -34,6 +34,7 @@ def application(env, start_response):
     if 'HTTP_X_ZEUS_DL_PT' in env:
         env['SCRIPT_URL'] = env['SCRIPT_NAME'] = ''
     env['wsgi.loaded'] = wsgi_loaded
+    env['platform.name'] = django.conf.settings.PLATFORM_NAME
     return django_app(env, start_response)
 
 
