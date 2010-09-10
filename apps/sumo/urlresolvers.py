@@ -32,13 +32,19 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
         unprefixed URL, it is probably easier to substitute LocalizingClient
         for any uses of django.test.client.Client and forgo this kwarg.
 
+    locale -- By default, reverse prepends the current locale (if set) or
+        the default locale if force_locale == True. To override this behavior
+        and have it prepend a different locale, pass in the locale parameter
+        with the desired locale. When passing a locale, the force_locale is
+        not used and is implicitly True.
+
     """
     if locale:
         prefixer = Prefixer(locale=locale)
     else:
         prefixer = get_url_prefixer()
-    if not prefixer and force_locale:
-        prefixer = Prefixer()
+        if not prefixer and force_locale:
+            prefixer = Prefixer()
 
     if prefixer:
         prefix = prefix or '/'

@@ -5,10 +5,10 @@ from tower import ugettext_lazy as _lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.http import urlquote
 
 from sumo.models import ModelBase, TaggableMixin
 from sumo.utils import wiki_to_html
+from sumo.urlresolvers import reverse
 
 
 # Disruptiveness of edits to translated versions. Keys indicate the relative
@@ -112,7 +112,7 @@ class Document(ModelBase, TaggableMixin):
     operating_systems = _inherited('operating_systems', 'operating_system_set')
 
     def get_absolute_url(self):
-        return '/%s/kb/%s' % (self.locale, urlquote(self.slug))
+        return reverse('wiki.document', locale=self.locale, args=[self.slug])
 
     def __unicode__(self):
         return '[%s] %s' % (self.locale, self.title)
