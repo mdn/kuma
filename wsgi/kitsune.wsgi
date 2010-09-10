@@ -9,6 +9,9 @@ wsgi_loaded = datetime.now()
 wsgidir = os.path.dirname(__file__)
 site.addsitedir(os.path.abspath(os.path.join(wsgidir, '../')))
 
+# For django-celery
+os.environ['CELERY_LOADER'] = 'django'
+
 # manage adds /apps, /lib, and /vendor to the Python path.
 import manage
 
