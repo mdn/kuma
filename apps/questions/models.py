@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
-import product_details
+from product_details import product_details
 from taggit.models import Tag
 
 from flagit.models import FlaggedObject
