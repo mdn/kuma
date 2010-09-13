@@ -3,6 +3,7 @@
 
 cd $WORKSPACE
 VENV=$WORKSPACE/venv
+VENDOR=$WORKSPACE/vendor
 
 echo "Starting build..."
 
@@ -15,14 +16,24 @@ fi
 # Clean up after last time.
 find . -name '*.pyc' -exec rm {} \;
 
+# Using a virtualenv for python26 and compiled requirements.
 if [ ! -d "$VENV/bin" ]; then
     echo "No virtualenv found; making one..."
     virtualenv --no-site-packages $VENV
 fi
-
 source $VENV/bin/activate
+pip install -qr requirements/compiled.txt
 
-pip install -qUr requirements/dev.txt
+# Using a vendor library for the rest.
+if [ ! -d "$VENDOR" ]; then
+    echo "No vendor library found; making one..."
+    git clone --recursive git://github.com/jsocol/kitsune-lib.git $VENDOR
+fi
+echo "Updating vendor library..."
+pushd $VENDOR > /dev/null
+git pull -q origin master
+git submodule --quiet update --init
+popd > /dev/null
 
 python manage.py update_product_details
 
