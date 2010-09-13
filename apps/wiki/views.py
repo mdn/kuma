@@ -82,15 +82,14 @@ def new_revision(request, document_slug, revision_id=None):
     """Create a new revision of a wiki document."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
+    if revision_id:
+        rev = get_object_or_404(Revision, pk=revision_id, document=doc)
+    elif doc.current_revision:
+        rev = doc.current_revision
+    else:
+        rev = doc.revisions.order_by('-created')[0]
 
     if request.method == 'GET':
-        if revision_id:
-            rev = get_object_or_404(Revision, pk=revision_id)
-        elif doc.current_revision:
-            rev = doc.current_revision
-        else:
-            rev = doc.revisions.order_by('-created')[0]
-
         initial = {
             'keywords': rev.keywords,
             'content': rev.content,
@@ -146,10 +145,11 @@ def new_revision(request, document_slug, revision_id=None):
                 item_id__in=[x.item_id for x in os]).delete()
             doc.operating_systems = os
 
-        rev = rev_form.save(commit=False)
-        rev.document = doc
-        rev.creator = request.user
-        rev.save()
+        new_rev = rev_form.save(commit=False)
+        new_rev.document = doc
+        new_rev.creator = request.user
+        new_rev.based_on = rev
+        new_rev.save()
 
         return HttpResponseRedirect(reverse('wiki.document_revisions',
                                             args=[document_slug]))

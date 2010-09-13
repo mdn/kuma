@@ -173,6 +173,9 @@ class NewRevisionTests(TestCaseBase):
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
 
+        new_rev = d.revisions.order_by('-id')[0]
+        eq_(d.current_revision, new_rev.based_on)
+
     def test_new_revision_POST_document_without_current(self):
         """HTTP POST to new revision URL creates the revision on a document.
 
@@ -181,6 +184,7 @@ class NewRevisionTests(TestCaseBase):
 
         """
         d = _create_document()
+        rev = d.current_revision
         d.current_revision = None
         d.save()
         self.client.login(username='admin', password='testpass')
@@ -190,6 +194,9 @@ class NewRevisionTests(TestCaseBase):
                                     args=[d.slug]), data)
         eq_(302, response.status_code)
         eq_(2, d.revisions.count())
+
+        new_rev = d.revisions.order_by('-id')[0]
+        eq_(rev, new_rev.based_on)
 
 
 class DocumentListTests(TestCaseBase):
