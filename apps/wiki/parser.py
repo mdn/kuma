@@ -175,8 +175,8 @@ class ForParser(HTMLParser):
         weren't enough, run through Bleach.
 
         """
-        # If there's nothing on the stack, bail out; we discard closers whose
-        # openers don't seem to be around:
+        # If there's nothing on the tag stack, bail out; we discard closers
+        # whose openers don't seem to be around:
         if self._node is self._root:
             return
 
@@ -188,10 +188,10 @@ class ForParser(HTMLParser):
             if self._node is self._root:
                 return
 
-        # Now that we've closed the tags that were left hanging open, close the
-        # one we actually encountered. if self._node either matches the closer
-        # we're at, or self._node isn't a <for>, meaning it's the input
-        # stream that's at fault, so drop it.
+        # Close the tag we actually encountered if it's the one we expect.
+        # Either self._node matches the closer we're at, or self._node isn't a
+        # <for>. The latter case indicates that the input stream is at fault,
+        # in which case we ignore the closer.
         if self._node.tag == tag:
             self._node = self._node.getparent()
 
@@ -200,6 +200,7 @@ class ForParser(HTMLParser):
         self._make_descendent(tag, attrs)
 
     def handle_data(self, data):
+        # How I hate lxml's choice of not making text nodes proper nodes.
         n = self._node
         if len(n):  # Even some childless nodes are True.
             if n[-1].tail:
@@ -256,7 +257,10 @@ class ForParser(HTMLParser):
         """Turn {for ...} into <for data-for="...">."""
         if not attrs:
             return '<for>'
-        return '<for data-for=' + quoteattr(attrs) + '>'
+        # Strip leading and trailing whitespace from each value for easier
+        # matching in the JS:
+        stripped = ','.join([x.strip() for x in attrs.split(',')])
+        return '<for data-for=' + quoteattr(stripped) + '>'
 
     _FOR_OR_CLOSER = re.compile(r'(\s*)'
                                     r'(\{for(?: +([^\}]*))?\}|{/for})'

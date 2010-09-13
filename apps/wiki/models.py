@@ -1,4 +1,5 @@
 from datetime import datetime
+from itertools import chain
 
 from tower import ugettext_lazy as _lazy
 
@@ -23,23 +24,35 @@ SIGNIFICANCES = (
 CATEGORIES = (
     (1, _lazy('Troubleshooting')),)
 
-# General FF versions used to filter article searches, etc.:
+# General FF versions used to filter article searches, power {for} tags, etc.:
+#
 # TODO: If we store these here rather than in the DB, how do we turn the "all"
 # case into Sphinx multi-value attrs?
-FIREFOX_VERSIONS = (
-    (1, _lazy('Firefox 4.0')),
-    (2, _lazy('Firefox 3.5-3.6')),
-    (3, _lazy('Firefox 3.0')),
-    (4, _lazy('Firefox Mobile 1.1')),
-    (5, _lazy('Firefox Mobile 1.0')))
+#
+# Iterables of (ID, name, abbreviation for {for} tags) grouped into optgroups:
+GROUPED_FIREFOX_VERSIONS = (
+    (_lazy('Desktop:'), (
+        # The first option is the default for {for} display. This should be the
+        # newest version.
+        (1, _lazy('Firefox 4.0'), 'fx4'),
+        (2, _lazy('Firefox 3.5-3.6'), 'fx35'),
+        (3, _lazy('Firefox 3.0'), 'fx3'))),
+    (_lazy('Mobile:'), (
+        (4, _lazy('Firefox Mobile 1.1'), 'm11'),
+        (5, _lazy('Firefox Mobile 1.0'), 'm1'))))
 
-# OSes used to filter articles:
+# Flattened:  # TODO: perhaps use optgroups everywhere instead
+FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
+                                 GROUPED_FIREFOX_VERSIONS]))
+
+# OSes used to filter articles and declare {for} sections:
 OPERATING_SYSTEMS = (
-    (1, _lazy('Windows')),
-    (2, _lazy('Mac OS X')),
-    (3, _lazy('Linux')),
-    (4, _lazy('Maemo')),
-    (5, _lazy('Android')))
+    # The first is the default for {for} display.
+    (1, _lazy('Windows'), 'win'),
+    (2, _lazy('Mac OS X'), 'mac'),
+    (3, _lazy('Linux'), 'linux'),
+    (4, _lazy('Maemo'), 'maemo'),
+    (5, _lazy('Android'), 'android'))
 
 
 def _inherited(parent_attr, direct_attr):
@@ -176,11 +189,15 @@ class Revision(ModelBase):
 # difficulty working DB-dwelling gettext keys into our l10n workflow.
 class FirefoxVersion(ModelBase):
     """A Firefox version, version range, etc. used to categorize documents"""
-    item_id = models.IntegerField(choices=FIREFOX_VERSIONS, db_index=True)
+    item_id = models.IntegerField(choices=[(id, name) for id, name, abbr in
+                                           FIREFOX_VERSIONS],
+                                  db_index=True)
     document = models.ForeignKey(Document, related_name='firefox_version_set')
 
 
 class OperatingSystem(ModelBase):
     """An operating system used to categorize documents"""
-    item_id = models.IntegerField(choices=OPERATING_SYSTEMS, db_index=True)
+    item_id = models.IntegerField(choices=[(id, name) for id, name, abbr in
+                                           OPERATING_SYSTEMS],
+                                  db_index=True)
     document = models.ForeignKey(Document, related_name='operating_system_set')

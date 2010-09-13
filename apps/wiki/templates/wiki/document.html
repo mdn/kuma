@@ -11,6 +11,31 @@
     {{ breadcrumbs(crumbs) }}
   </div>
   <h1>{{ document.title }}</h1>
+  {% if document.current_revision %}
+    <div id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
+      <h2>{{ _("Table of Contents") }}</h2>
+      <ol></ol>
+    </div>
+    <div id="support-for">
+      <div>
+        <h2>{{ _("Support for:") }}</h2>
+        <select id="os" data-oses="{{ oses_json }}" class="enable-if-js" disabled="disabled">
+          {% for _, name, slug in oses %}
+            <option value="{{ slug }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select id="browser" data-browsers="{{ browsers_json }}" class="enable-if-js" disabled="disabled">
+          {% for label, options in browsers %}
+            <optgroup label="{{ label }}">
+              {% for _, name, slug in options %}
+                <option value="{{ slug }}">{{ name }}</option>
+              {% endfor %}
+            </optgroup>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  {% endif %}
   <div id="doc-content">
     {% if document.current_revision %}
       {{ document.html|safe }}

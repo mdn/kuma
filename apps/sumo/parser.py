@@ -3,7 +3,6 @@ from django.utils.http import urlquote
 
 from wikimarkup.parser import Parser
 import jingo
-import jinja2
 
 from sumo.urlresolvers import reverse
 from wiki.models import Document

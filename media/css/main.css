@@ -58,7 +58,7 @@ body.html-rtl {
     clear: both;
 }
 
-a {
+a:link, a:visited, a:active {
     color: #0489B7;
     text-decoration: none;
 }

@@ -54,12 +54,16 @@ class DocumentForm(forms.ModelForm):
 
     firefox_versions = forms.MultipleChoiceField(
                                 label=_('Firefox Version'),
-                                choices=FIREFOX_VERSIONS, required=False,
+                                choices=[(id, name) for id, name, abbr in
+                                         FIREFOX_VERSIONS],
+                                required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
     operating_systems = forms.MultipleChoiceField(
                                 label=_('Operating Systems'),
-                                choices=OPERATING_SYSTEMS, required=False,
+                                choices=[(id, name) for id, name, abbr in
+                                         OPERATING_SYSTEMS],
+                                required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
     def clean_firefox_versions(self):

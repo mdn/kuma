@@ -165,9 +165,41 @@ td.diff_header {
 }
 
 .diff_chg {
-    background-color:#ffff77
+    background-color:#ffff77;
 }
 
 .diff_sub {
-    background-color:#ffaaaa
+    background-color:#ffaaaa;
+}
+
+/* Document view */
+
+html.no-js .hide-if-no-js {
+    display: none;
+}
+
+#toc, div#support-for {
+    border: 1px gray solid;
+    padding: .5em;
+}
+
+#toc ol {
+    margin-left: 1em;
+    list-style-type: decimal;
+}
+
+#toc ol ol {
+    list-style-type: upper-alpha;
+}
+
+#toc ol ol ol {
+    list-style-type: lower-alpha;
+}
+
+#toc ol ol ol ol {
+    list-style-type: decimal;
+}
+
+#toc ol ol ol ol ol {
+    list-style-type: upper-alpha;
 }

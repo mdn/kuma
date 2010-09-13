@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -6,10 +7,19 @@ from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseRedirect, Http404
 
 import jingo
+from tower import ugettext_lazy as _lazy
 
 from sumo.urlresolvers import reverse
-from .models import Document, Revision, CATEGORIES
+from .models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
+                     FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
 from .forms import DocumentForm, RevisionForm, ReviewForm
+
+
+OS_ABBR_JSON = json.dumps(dict([(slug, True)
+                                for id, name, slug in OPERATING_SYSTEMS]))
+BROWSER_ABBR_JSON = json.dumps(dict([(slug, True)
+                                     for id, name, slug in FIREFOX_VERSIONS]))
+MISSING_MSG = _lazy('[missing header]')
 
 
 def document(request, document_slug):
@@ -19,7 +29,12 @@ def document(request, document_slug):
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
     return jingo.render(request, 'wiki/document.html',
-                        {'document': doc})
+                        {'document': doc,
+                         'oses': OPERATING_SYSTEMS,
+                         'oses_json': OS_ABBR_JSON,
+                         'browsers': GROUPED_FIREFOX_VERSIONS,
+                         'browsers_json': BROWSER_ABBR_JSON,
+                         'missing_msg_json': json.dumps(unicode(MISSING_MSG))})
 
 
 def list_documents(request, category=None):
