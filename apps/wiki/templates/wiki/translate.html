@@ -1,0 +1,134 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}parent
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Translate Article | {document} | Firefox Support')|f(document=parent.title) %}
+{% set crumbs = [(url('wiki.category', parent.category), parent.get_category_display()),
+                 (parent.get_absolute_url(), parent.title),
+                 (None, _('Translate Article'))] %}
+{% set classes = 'translate' %}
+
+{% block content %}
+  {% set language = settings.LANGUAGES[locale.lower()] %}
+  <div id="breadcrumbs">
+    {{ _('You are here:') }}
+    {{ breadcrumbs(crumbs) }}
+  </div>
+  <h1>{{ _('Translating {title}')|f(title=parent.title) }}</h1>
+  <div class="change-locale">
+    <p>
+      {{ _('Translating article to {locale}' )|f(locale=language) }}.
+      <a class="change" href="#change-locale">Change</a>
+    </p>
+    <div id="change-locale" class="pop-in">
+      <ul>
+        {% for locale in settings.LANGUAGE_CHOICES %}
+          {% if locale[0] != settings.WIKI_DEFAULT_LANGUAGE %}
+            <li><a href="{{ url('wiki.translate', locale=locale[0], document_slug=parent.slug) }}" title="{{ locale[1] }}">{{ locale[0] }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <form action="" method="post">
+    {{ csrf() }}
+    <h2>{{ _('Translate Description') }}</h2>
+    {{ errorlist(document_form) }}
+    <ul class="description">
+      <li>
+        <div class="approved">
+          <h3>{{ _('Last Approved Title:') }}</h3>
+          <div class="val">{{ parent.title }}</div>
+        </div>
+        <div class="localized">
+          <h3>{{ _('Title in {locale}:')|f(locale=language) }}</h3>
+          {{ document_form.title|safe }}
+        </div>
+      </li>
+      <li>
+        <div class="approved">
+          <h3>{{ _('Last Approved Slug:') }}</h3>
+          <div class="val">{{ parent.slug }}</div>
+        </div>
+        <div class="localized">
+          <h3>{{ _('Slug in {locale}:')|f(locale=language) }}</h3>
+          {{ document_form.slug|safe }}
+        </div>
+      </li>
+      <li>
+        <div class="approved">
+          <h3>{{ _('Last Approved Category:') }}</h3>
+          <div class="val">{{ parent.get_category_display() }}</div>
+        </div>
+        <div class="localized">
+          <h3>{{ _('Category in {locale}:')|f(locale=language) }}</h3>
+          {{ document_form.category|safe }}
+        </div>
+      </li>
+      <li>
+        <div class="approved">
+          <h3>{{ _('Last Approved Topics:') }}</h3>
+          <div class="val">
+            {% for tag in parent.tags.all() %}
+              {{ tag.name }}
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="localized">
+          <h3>{{ _('Topics in {locale}:')|f(locale=language) }}</h3>
+          {{ document_form.tags|safe }}
+        </div>
+      </li>
+      <li>
+        <div class="approved">
+          <h3>{{ _('Last Approved Keywords:') }}</h3>
+          <div class="val">{{ parent.current_revision.keywords }}</div>
+        </div>
+        <div class="localized">
+          <h3>{{ _('Keywords in {locale}:')|f(locale=language) }}</h3>
+          {{ revision_form.keywords|safe }}
+        </div>
+      </li>
+      <li>
+        <div class="approved">
+          <h3>{{ _('Last Approved Summary:') }}</h3>
+          <div class="val">{{ parent.current_revision.summary }}</div>
+        </div>
+        <div class="localized">
+          <h3>{{ _('Summary in {locale}:')|f(locale=language) }}</h3>
+          {{ revision_form.summary|safe }}
+        </div>
+      </li>
+    </ul>
+
+    <h2>{{ _('Translate Content') }}</h2>
+    {{ errorlist(revision_form) }}
+    {% if document.current_revision %}
+      {% set revision_from = document.current_revision.based_on %}
+      {% set revision_to = parent.current_revision %}
+      {% include 'wiki/includes/revision_diff.html' %}
+      {# TODO: 'change revisions' link and modal selector #}
+    {% else %}
+      <p>{{ _('Note: There are no approved translations for this article.') }}
+    {% endif %}
+    <div id="content-fields">
+      <div class="approved">
+        <h3>{{ _('Approved {default_locale} Version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
+        <textarea readonly="readonly">{{ parent.current_revision.content }}</textarea>
+      </div>
+      <div class="localized">
+        <h3>{{ _('{locale} Translation')|f(locale=language) }}</h3>
+        {{ revision_form.content|safe }}
+      </div>
+    </div>
+    <div class="significance">
+      <label for="id-significance">{{ _('Significance:') }}</label>
+      {{ revision_form.significance|safe }}
+    </div>
+    <div class="submit">
+      <input type="submit" value="{{ _('Submit for Review') }}">
+      {# TODO: save for later #}
+      <a href="{{ url('wiki.document', parent.slug) }}">{{ _('Cancel Changes') }}</a>
+    </div>
+  </form>
+{% endblock %}

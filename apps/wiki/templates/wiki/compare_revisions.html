@@ -16,18 +16,6 @@
     <h1>{{ _('Compare Revisions') }}</h1>
     <h2>{{ document.title }}</h2>
   </hgroup>
-  <div id="revision-diff">
-    <header>
-      <div>
-        <h3>{{ ('Revision {num}')|f(num=revision_from.id) }}</h3>
-        <p>{{ _('by {user} on {date}')|f(user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
-      </div>
-      <div>
-        <h3>{{ ('Revision {num}')|f(num=revision_to.id) }}</h3>
-        <p>{{ _('by {user} on {date}')|f(user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
-      </div>
-    </header>
-    {{ diff_table(revision_from.content, revision_to.content) }}
-  </div>
+  {% include 'wiki/includes/revision_diff.html' %}
   <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to Revision History') }}</a></p>
 {% endblock %}

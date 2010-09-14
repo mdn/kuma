@@ -27,7 +27,9 @@
   <div id="revision-list">
     {% if revisions %}
       <form action="{{ url('wiki.compare_revisions', document.slug) }}" method="get">
-        <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+        {% if revisions.count() > 1 %}
+          <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+        {% endif %}
         {% set reached_current = False %}
         {% for rev in revisions %}
           {% if document.current_revision == rev %}
@@ -79,7 +81,9 @@
           </li>
           {% if loop.last %}</ul>{% endif %}
         {% endfor %}
-        <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+        {% if revisions.count() > 1 %}
+          <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+        {% endif %}
       </form>
     {% else %}
       {{ _('This document has no revisions.') }}

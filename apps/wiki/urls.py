@@ -18,4 +18,6 @@ urlpatterns = patterns('wiki.views',
         'review_revision', name='wiki.review_revision'),
     url(r'^/(?P<document_slug>[^\/]+)/compare$',
         'compare_revisions', name='wiki.compare_revisions'),
+    url(r'^/(?P<document_slug>[^\/]+)/translate$',
+        'translate', name='wiki.translate'),
 )

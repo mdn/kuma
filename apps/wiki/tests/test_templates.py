@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from nose.tools import eq_
 from pyquery import PyQuery as pq
@@ -8,6 +9,8 @@ from sumo.helpers import urlparams
 from sumo.tests import post, get
 from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 from wiki.tests import TestCaseBase, document, revision
+from wiki.forms import DocumentForm, RevisionForm
+from wiki.views import _process_doc_and_rev_form
 
 
 class DocumentTests(TestCaseBase):
@@ -52,6 +55,7 @@ class NewDocumentTests(TestCaseBase):
         d = Document.objects.get(title=data['title'])
         eq_([('http://testserver/en-US/kb/%s/history' % d.slug, 302)],
             response.redirect_chain)
+        eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
         eq_(data['category'], d.category)
         eq_(tags, list(d.tags.values_list('name', flat=True)))
         eq_(data['firefox_versions'],
@@ -63,6 +67,17 @@ class NewDocumentTests(TestCaseBase):
         eq_(data['summary'], r.summary)
         eq_(data['content'], r.content)
         eq_(data['significance'], r.significance)
+
+    def test_new_document_other_locale(self):
+        """Make sure we can create a document in a non-default locale."""
+        self.client.login(username='admin', password='testpass')
+        data = _new_document_data(['tag1', 'tag2'])
+        locale = 'es'
+        response = self.client.post(reverse('wiki.new_document', 
+                                            locale=locale),
+                                    data, follow=True)
+        d = Document.objects.get(title=data['title'])
+        eq_(locale, d.locale)
 
     def test_new_document_POST_empty_title(self):
         """Trigger required field validation for title."""
@@ -114,6 +129,44 @@ class NewDocumentTests(TestCaseBase):
         eq_('Select a valid choice. 1337 is not one of the available choices.',
             ul('li').text())
 
+    def test_doc_and_rev_form_processing(self):
+        """Test the helper function that persists the forms."""
+        user = User.objects.get(pk=118533)
+
+        # First we test the helper with a document in the default language.
+        # This should create the document and revision.
+        locale = settings.WIKI_DEFAULT_LANGUAGE
+        tags = ['t1', 't2']
+        data = _new_document_data(tags)
+        doc_form = DocumentForm(data)
+        rev_form = RevisionForm(data)
+        assert doc_form.is_valid() and rev_form.is_valid()
+        _process_doc_and_rev_form(doc_form, rev_form, locale, user,
+                                  None, None)
+        doc = Document.objects.get(slug=data['slug'], locale=locale)
+        rev = doc.revisions.all()[0]
+        _verify_doc_and_rev_data(data, doc, rev)
+        eq_(tags, list(doc.tags.values_list('name', flat=True)))
+        eq_(user, rev.creator)
+
+        # Now we test the helper translating a document to Spanish. This
+        # should create a new document with parent set to the document
+        # created above and a revision based_on the revision created above.
+        locale = 'es'
+        data.update({'title': 'nuevo titulo', 'slug': 'nuevo-titulo',
+                     'content': 'la traduccion del contenido',
+                     'summary': 'el resumen'})
+        doc_form = DocumentForm(data)
+        rev_form = RevisionForm(data)
+        assert doc_form.is_valid() and rev_form.is_valid()
+        _process_doc_and_rev_form(doc_form, rev_form, locale, user,
+                                  doc, rev)
+        doc_es = Document.objects.get(slug=data['slug'], locale=locale)
+        rev_es = doc_es.revisions.all()[0]
+        _verify_doc_and_rev_data(data, doc_es, rev_es)
+        eq_(doc, doc_es.parent)
+        eq_(rev, rev_es.based_on)
+
 
 class NewRevisionTests(TestCaseBase):
     """Tests for the New Revision template"""
@@ -125,7 +178,7 @@ class NewRevisionTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
 
     def test_new_revision_GET_without_perm(self):
-        """Trying to create a new revision wihtout permission returns 403."""
+        """Try to create a new revision without permission."""
         self.client.login(username='rrosario', password='testpass')
         response = self.client.get(reverse('wiki.new_revision',
                                            args=[self.d.slug]))
@@ -368,9 +421,83 @@ class CompareRevisionTests(TestCaseBase):
         eq_(404, response.status_code)
 
 
+class TranslateTests(TestCaseBase):
+    """Tests for the Translate page"""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(TranslateTests, self).setUp()
+        self.d = _create_document()
+        self.client.login(username='admin', password='testpass')
+
+    def test_translate_GET_without_perm(self):
+        """Try to create a translation without permission."""
+        self.client.login(username='rrosario', password='testpass')
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        response = self.client.get(url)
+        eq_(302, response.status_code)
+
+    def test_translate_GET_with_perm(self):
+        """HTTP GET to translate URL renders the form."""
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(1, len(doc('form textarea[name="content"]')))
+
+    def test_first_translation_to_locale(self):
+        """Create the first translation of a doc to new locale."""
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        data = _translation_data()
+        response = self.client.post(url, data)
+        eq_(302, response.status_code)
+        new_doc = Document.objects.get(slug=data['slug'])
+        eq_('es', new_doc.locale)
+        eq_(data['title'], new_doc.title)
+        eq_(self.d, new_doc.parent)
+        rev = new_doc.revisions.all()[0]
+        eq_(data['keywords'], rev.keywords)
+        eq_(data['summary'], rev.summary)
+        eq_(data['content'], rev.content)
+
+    def test_another_translation_to_locale(self):
+        """Create the second translation of a doc."""
+        # First create the first one with test above
+        self.test_first_translation_to_locale()
+        # Approve the translation
+        rev_es = Revision.objects.filter(document__locale='es')[0]
+        rev_es.is_approved = True
+        rev_es.save()
+
+        # Create and approve a new en-US revision
+        rev_enUS = Revision(summary="lipsum",
+                       content='lorem ipsum dolor sit amet new',
+                       significance=10, keywords='kw1 kw2',
+                       document=self.d, creator_id=118577, is_approved=True)
+        rev_enUS.save()
+
+        # Verify the form renders with correct content
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        response = self.client.get(url)
+        doc = pq(response.content)
+        eq_(rev_es.content, doc('#id_content').text())
+        eq_(rev_enUS.content, doc('#content-fields textarea[readonly]').text())
+
+        # Post the translation and verify
+        data = _translation_data()
+        data['content'] = 'loremo ipsumo doloro sito ameto nuevo'
+        response = self.client.post(url, data)
+        doc = Document.objects.get(slug=data['slug'])
+        rev = doc.revisions.filter(content=data['content'])[0]
+        eq_(data['keywords'], rev.keywords)
+        eq_(data['summary'], rev.summary)
+        eq_(data['content'], rev.content)
+        assert not rev.is_approved
+
+
 def _create_document(title='Test Document'):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
-                 category=1, locale='en-US')
+                 category=1, locale=settings.WIKI_DEFAULT_LANGUAGE)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=118577,
@@ -394,3 +521,23 @@ def _new_document_data(tags):
         'content': 'lorem ipsum dolor sit amet',
         'significance': SIGNIFICANCES[0][0],
     }
+
+
+def _translation_data():
+    return {
+        'title': 'Un Test Articulo', 'slug': 'un-test-articulo',
+        'category': CATEGORIES[0][0],
+        'tags': 'tagUno,tagDos,tagTres',
+        'keywords': 'keyUno, keyDos, keyTres',
+        'summary': 'lipsumo',
+        'content': 'loremo ipsumo doloro sito ameto',
+        'significance': SIGNIFICANCES[0][0]}
+
+
+def _verify_doc_and_rev_data(data, doc, rev):
+    """Verify that the Document and Revision match the data."""
+    eq_(data['title'], doc.title)
+    eq_(data['category'], doc.category)
+    eq_(data['summary'], rev.summary)
+    eq_(data['keywords'], rev.keywords)
+    eq_(data['content'], rev.content)

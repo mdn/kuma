@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseRedirect, Http404
+from django.conf import settings
 
 import jingo
 from tower import ugettext_lazy as _lazy
@@ -97,7 +98,10 @@ def new_document(request):
     rev_form = RevisionForm(request.POST)
 
     if doc_form.is_valid() and rev_form.is_valid():
-        doc = doc_form.save()
+        doc = doc_form.save(commit=False)
+        doc.locale = request.locale
+        doc.save()
+        doc_form.save_m2m()
 
         doc.firefox_versions = doc_form.cleaned_data['firefox_versions']
         doc.operating_systems = doc_form.cleaned_data['operating_systems']
@@ -118,9 +122,16 @@ def new_document(request):
 @login_required
 @permission_required('wiki.add_revision')
 def new_revision(request, document_slug, revision_id=None):
-    """Create a new revision of a wiki document."""
+    """Create a new revision of a wiki document in default locale."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
+
+    # If this document has a parent then the edit is handled by the
+    # translate view, redirect there.
+    if doc.parent:
+        return HttpResponseRedirect(reverse('wiki.translate',
+                                            args=[doc.parent.slug]))
+
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
     elif doc.current_revision:
@@ -129,27 +140,13 @@ def new_revision(request, document_slug, revision_id=None):
         rev = doc.revisions.order_by('-created')[0]
 
     if request.method == 'GET':
-        initial = {
-            'keywords': rev.keywords,
-            'content': rev.content,
-            'summary': rev.summary,
-        }
-        rev_form = RevisionForm(initial=initial)
+        rev_form = RevisionForm(initial=_revision_form_initial(rev))
 
         # If the Document doesn't have a current_revision (nothing approved)
         # then all the Document fields are still editable. Once there is an
         # approved Revision, the Document fields are locked.
         if not doc.current_revision:
-            initial = {
-                'title': doc.title,
-                'category': doc.category,
-                'tags': ','.join([t.name for t in doc.tags.all()]),
-                'firefox_versions': [x.item_id for x in
-                                     doc.firefox_versions.all()],
-                'operating_systems': [x.item_id for x in
-                                      doc.operating_systems.all()],
-            }
-            doc_form = DocumentForm(initial=initial)
+            doc_form = DocumentForm(initial=_document_form_initial(doc))
         else:
             doc_form = None
 
@@ -161,30 +158,8 @@ def new_revision(request, document_slug, revision_id=None):
             doc_form = None
 
         if rev_form.is_valid() and (not doc_form or doc_form.is_valid()):
-            if doc_form:
-                document = doc_form.save(commit=False)
-                document.id = doc.id
-                document.save()
-
-                # TODO: Use the tagging widget instead of this?
-                tags = doc_form.cleaned_data['tags']
-                doc.tags.exclude(name__in=tags).delete()
-                doc.tags.add(*tags)
-
-                ffv = doc_form.cleaned_data['firefox_versions']
-                doc.firefox_versions.exclude(
-                    item_id__in=[x.item_id for x in ffv]).delete()
-                doc.firefox_versions = ffv
-                os = doc_form.cleaned_data['operating_systems']
-                doc.operating_systems.exclude(
-                    item_id__in=[x.item_id for x in os]).delete()
-                doc.operating_systems = os
-
-            new_rev = rev_form.save(commit=False)
-            new_rev.document = doc
-            new_rev.creator = request.user
-            new_rev.based_on = rev
-            new_rev.save()
+            _process_doc_and_rev_form(doc_form, rev_form, request.locale,
+                                      request.user, None, rev, doc)
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document_slug]))
@@ -253,3 +228,106 @@ def compare_revisions(request, document_slug):
                         {'document': doc, 'revision_from': revision_from,
                          'revision_to': revision_to})
 
+
+@login_required
+@permission_required('wiki.add_revision')
+def translate(request, document_slug):
+    """Create a new translation of a wiki document.
+
+    * document_slug is for the default locale
+    * translation is to the request locale
+
+    """
+    if settings.WIKI_DEFAULT_LANGUAGE == request.locale:
+        # Don't translate to the default
+        raise Http404
+
+    parent_doc = get_object_or_404(
+        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+    try:
+        doc = parent_doc.translations.get(locale=request.locale)
+    except Document.DoesNotExist:
+        doc = None
+
+    if request.method == 'GET':
+        if doc:
+            doc_initial = _document_form_initial(doc)
+            if doc.current_revision:
+                rev = doc.current_revision
+            else:
+                rev = doc.revisions.order_by('-created')[0]
+            rev_initial = _revision_form_initial(rev)
+        else:
+            doc_initial = None
+            rev_initial = None
+
+        doc_form = DocumentForm(initial=doc_initial)
+        rev_form = RevisionForm(initial=rev_initial)
+    else:  # POST
+        doc_form = DocumentForm(request.POST)
+        rev_form = RevisionForm(request.POST)
+        if doc_form.is_valid() and rev_form.is_valid():
+            _process_doc_and_rev_form(
+                doc_form, rev_form, request.locale, request.user,
+                parent_doc, parent_doc.current_revision, doc)
+
+            url = reverse('wiki.document_revisions',
+                          args=[doc_form.cleaned_data['slug']])
+            return HttpResponseRedirect(url)
+
+    return jingo.render(request, 'wiki/translate.html',
+                        {'parent': parent_doc, 'document': doc,
+                         'document_form': doc_form, 'revision_form': rev_form,
+                         'locale': request.locale})
+
+
+def _document_form_initial(document):
+    """Return a dict with the document data pertinent for the form."""
+    return {'title': document.title,
+            'slug': document.slug,
+            'category': document.category,
+            'tags': ','.join([t.name for t in document.tags.all()]),
+            'firefox_versions': [x.item_id for x in
+                                 document.firefox_versions.all()],
+            'operating_systems': [x.item_id for x in
+                                  document.operating_systems.all()]}
+
+
+def _revision_form_initial(revision):
+    """Return a dict with the revision data pertinent for the form."""
+    return {'keywords': revision.keywords, 'content': revision.content,
+            'summary': revision.summary}
+
+
+def _process_doc_and_rev_form(document_form, revision_form, locale, user,
+                              parent_doc, base_revision, document=None):
+    """Persist the Document and Revision forms."""
+    if document_form:
+        doc = document_form.save(commit=False)
+        doc.locale = locale
+        doc.parent = parent_doc
+        if document:
+            doc.id = document.id
+        doc.save()
+
+        # TODO: Use the tagging widget instead of this?
+        tags = document_form.cleaned_data['tags']
+        doc.tags.exclude(name__in=tags).delete()
+        doc.tags.add(*tags)
+
+        ffv = document_form.cleaned_data['firefox_versions']
+        doc.firefox_versions.exclude(
+            item_id__in=[x.item_id for x in ffv]).delete()
+        doc.firefox_versions = ffv
+        os = document_form.cleaned_data['operating_systems']
+        doc.operating_systems.exclude(
+            item_id__in=[x.item_id for x in os]).delete()
+        doc.operating_systems = os
+    else:
+        doc = document
+
+    new_rev = revision_form.save(commit=False)
+    new_rev.document = doc
+    new_rev.creator = user
+    new_rev.based_on = base_revision
+    new_rev.save()

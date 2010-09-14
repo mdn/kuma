@@ -15,6 +15,7 @@
         initPrepopulatedSlugs();
         initReviewModal();
         initForTags();
+        initChangeTranslateLocale();
     }
 
     // Return the OS that the cookie indicates or, failing that, that appears
@@ -202,7 +203,37 @@
         });
     }
 
+    /*
+     * Initialize the Change locale link on the translate page
+     */
+    function initChangeTranslateLocale() {
+        // This only applies to the Translate page
+        if (!$('body').is('.translate')) {
+            return;
+        }
+
+        // Add the close button to the modal and handle clicks
+        $('#change-locale')
+            .append('<a href="#close" class="close">&#x2716;</a>')
+            .click(function(ev){
+                ev.stopPropagation();
+            })
+            .find('a.close')
+                .click(function(ev){
+                    $('div.change-locale').removeClass('open');
+                });
+
+        // Open the modal on click of the "change" link
+        $('div.change-locale a.change').click(function(ev){
+            ev.preventDefault()
+            $(this).closest('div.change-locale').addClass('open');
+            $('body').one('click', function(ev) {
+                $('div.change-locale').removeClass('open');
+            });
+            return false;
+        });
+    }
+
     $(document).ready(init);
 
 }());
-

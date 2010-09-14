@@ -19,19 +19,9 @@
   {% if revision.reviewed %}
     <p>{{ _('This revision was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}</p>
   {% elif document.current_revision %}
-    <div id="revision-diff">
-      <header>
-        <div>
-          <h3>{{ _('Current Revision') }}</h3>
-          <p>{{ _('by {user} on {date}')|f(user=document.current_revision.creator, date=datetimeformat(document.current_revision.created, format='longdatetime'))|safe }}</p>
-        </div>
-        <div>
-          <h3>{{ ('Revision {num}')|f(num=revision.id) }}</h3>
-          <p>{{ _('by {user} on {date}')|f(user=revision.creator, date=datetimeformat(revision.created, format='longdatetime'))|safe }}</p>
-        </div>
-      </header>
-      {{ diff_table(document.current_revision.content, revision.content) }}
-    </div>
+    {% set revision_from = document.current_revision %}
+    {% set revision_to = revision %}
+    {% include 'wiki/includes/revision_diff.html' %}
   {% else %}
     <p>{{ _('This document does not have a current revision.') }}</p>
     <h3>{{ _('Revision source:') }}</h3>
