@@ -11,18 +11,32 @@ from .models import (Document, Revision, FirefoxVersion, OperatingSystem,
 KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
-TITLE_SHORT = _lazy(u'Your title is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
-TITLE_LONG = _lazy(u'Please keep the length of your title to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
-SLUG_REQUIRED = _lazy(u'Please provide a slug.')
-SLUG_SHORT = _lazy(u'Your slug is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
-SLUG_LONG = _lazy(u'Please keep the length of your slug to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
+TITLE_SHORT = _lazy(u'The title is too short (%(show_value)s characters). '
+                    u'It must be at least %(limit_value)s characters.')
+TITLE_LONG = _lazy(u'Please keep the length of the title to %(limit_value)s '
+                   u'characters or less. It is currently %(show_value)s '
+                   u'characters.')
+SLUG_REQUIRED = _lazy('Please provide a slug.')
+SLUG_SHORT = _lazy(u'The slug is too short (%(show_value)s characters). '
+                   u'It must be at least %(limit_value)s characters.')
+SLUG_LONG = _lazy(u'Please keep the length of the slug to %(limit_value)s '
+                  u'characters or less. It is currently %(show_value)s '
+                  u'characters.')
 SUMMARY_REQUIRED = _lazy(u'Please provide a summary.')
-SUMMARY_SHORT = _lazy(u'The summary is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
-SUMMARY_LONG = _lazy(u'Please keep the length of the summary to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
-CONTENT_REQUIRED = _lazy(u'Please provide content.')
-CONTENT_SHORT = _lazy(u'The content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
-CONTENT_LONG = _lazy(u'Please keep the length of the content to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
-COMMENT_LONG = _lazy(u'Please keep the length of the comment to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
+SUMMARY_SHORT = _lazy(u'The summary is too short (%(show_value)s characters). '
+                      u'It must be at least %(limit_value)s characters.')
+SUMMARY_LONG = _lazy(u'Please keep the length of the summary to '
+                     u'%(limit_value)s characters or less. It is currently '
+                     u'%(show_value)s characters.')
+CONTENT_REQUIRED = _lazy('Please provide content.')
+CONTENT_SHORT = _lazy(u'The content is too short (%(show_value)s characters). '
+                      u'It must be at least %(limit_value)s characters.')
+CONTENT_LONG = _lazy(u'Please keep the length of the content to '
+                     u'%(limit_value)s characters or less. It is currently '
+                     u'%(show_value)s characters.')
+COMMENT_LONG = _lazy(u'Please keep the length of the comment to '
+                     u'%(limit_value)s characters or less. It is currently '
+                     u'%(show_value)s characters.')
 
 
 class DocumentForm(forms.ModelForm):

@@ -12,9 +12,6 @@ from .models import Document, Revision, CATEGORIES
 from .forms import DocumentForm, RevisionForm, ReviewForm
 
 
-#log = logging.getLogger('k.wiki')
-
-
 def document(request, document_slug):
     """View a wiki document."""
     # This may change depending on how we decide to structure

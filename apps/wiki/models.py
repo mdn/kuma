@@ -79,12 +79,6 @@ class Document(ModelBase, TaggableMixin):
     # Cached HTML rendering of wiki markup:
     html = models.TextField(editable=False)
 
-    # Uncomment if/when we need a denormalized flag for how significantly
-    # outdated this translation is. We probably will to support the dashboard.
-    # If you do this, also make a periodic task to audit it occasionally.
-    #
-    # outdated = IntegerField(choices=SIGNIFICANCES, editable=False)
-
     category = models.IntegerField(choices=CATEGORIES)
     # firefox_versions,
     # operating_systems:
@@ -118,12 +112,6 @@ class Document(ModelBase, TaggableMixin):
         return '[%s] %s' % (self.locale, self.title)
 
 
-# Caveats:
-#  * There's no immutable per-document revision ID revision (e.g., 0..63). We
-#    can number them in the view, but deleting one will cause the later ones to
-#    be renumbered. We can still use the pkey as an immutable unique value. Is
-#    this a problem? If so, we could let admins make a rev inaccessible rather
-#    than actually deleting it.
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
     document = models.ForeignKey(Document, related_name='revisions')

@@ -119,18 +119,22 @@ class NewRevisionTests(TestCaseBase):
     """Tests for the New Revision template"""
     fixtures = ['users.json']
 
+    def setUp(self):
+        super(NewRevisionTests, self).setUp()
+        self.d = _create_document()
+        self.client.login(username='admin', password='testpass')
+
     def test_new_revision_GET_without_perm(self):
         """Trying to create a new revision wihtout permission returns 403."""
-        d = _create_document()
         self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision', args=[d.slug]))
+        response = self.client.get(reverse('wiki.new_revision',
+                                           args=[self.d.slug]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
-        d = _create_document()
-        self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision', args=[d.slug]))
+        response = self.client.get(reverse('wiki.new_revision',
+                                           args=[self.d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('#document-form textarea[name="content"]')))
@@ -142,14 +146,12 @@ class NewRevisionTests(TestCaseBase):
         with the based-on revision info.
 
         """
-        d = _create_document()
-        r = Revision(document=d, keywords='ky1, kw2', summary='the summary',
-                     content='<div>The content here</div>', creator_id=118577,
-                     significance=SIGNIFICANCES[0][0])
+        r = Revision(document=self.d, keywords='ky1, kw2',
+                     summary='the summary', significance=SIGNIFICANCES[0][0],
+                     content='<div>The content here</div>', creator_id=118577)
         r.save()
-        self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.new_revision_based_on',
-                                           args=[d.slug, r.id]))
+                                           args=[self.d.slug, r.id]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(doc('#id_keywords')[0].value, r.keywords)
@@ -163,18 +165,16 @@ class NewRevisionTests(TestCaseBase):
         the document document fields are not editable.
 
         """
-        d = _create_document()
-        self.client.login(username='admin', password='testpass')
         response = self.client.post(
-            reverse('wiki.new_revision', args=[d.slug]),
+            reverse('wiki.new_revision', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
              'keywords': 'keyword1 keyword2',
              'significance': SIGNIFICANCES[0][0]})
         eq_(302, response.status_code)
-        eq_(2, d.revisions.count())
+        eq_(2, self.d.revisions.count())
 
-        new_rev = d.revisions.order_by('-id')[0]
-        eq_(d.current_revision, new_rev.based_on)
+        new_rev = self.d.revisions.order_by('-id')[0]
+        eq_(self.d.current_revision, new_rev.based_on)
 
     def test_new_revision_POST_document_without_current(self):
         """HTTP POST to new revision URL creates the revision on a document.
@@ -183,20 +183,32 @@ class NewRevisionTests(TestCaseBase):
         the document fields are open for editing.
 
         """
-        d = _create_document()
-        rev = d.current_revision
-        d.current_revision = None
-        d.save()
-        self.client.login(username='admin', password='testpass')
+        rev = self.d.current_revision
+        self.d.current_revision = None
+        self.d.save()
         tags = ['tag1', 'tag2', 'tag3']
         data = _new_document_data(tags)
         response = self.client.post(reverse('wiki.new_revision',
-                                    args=[d.slug]), data)
+                                    args=[self.d.slug]), data)
         eq_(302, response.status_code)
-        eq_(2, d.revisions.count())
+        eq_(2, self.d.revisions.count())
 
-        new_rev = d.revisions.order_by('-id')[0]
+        new_rev = self.d.revisions.order_by('-id')[0]
         eq_(rev, new_rev.based_on)
+
+    def test_new_revision_POST_removes_old_tags(self):
+        """Changing the tags on a document removes the old tags from
+        that document."""
+        self.d.current_revision = None
+        self.d.save()
+        tags = ['tag1', 'tag2', 'tag3']
+        self.d.tags.add(*tags)
+        eq_(tags, list(self.d.tags.values_list('name', flat=True)))
+        tags = ['tag1', 'tag4']
+        data = _new_document_data(tags)
+        self.client.post(reverse('wiki.new_revision', args=[self.d.slug]),
+                         data)
+        eq_(tags, list(self.d.tags.values_list('name', flat=True)))
 
 
 class DocumentListTests(TestCaseBase):
