@@ -111,45 +111,41 @@ def new_revision(request, document_slug, revision_id=None):
         else:
             doc_form = None
 
-        return jingo.render(request, 'wiki/new_revision.html',
-                            {'revision_form': rev_form,
-                             'document_form': doc_form,
-                             'document': doc})
+    else:  # POST
+        rev_form = RevisionForm(request.POST)
+        if not doc.current_revision:
+            doc_form = DocumentForm(request.POST)
+        else:
+            doc_form = None
 
-    rev_form = RevisionForm(request.POST)
-    if not doc.current_revision:
-        doc_form = DocumentForm(request.POST)
-    else:
-        doc_form = None
+        if rev_form.is_valid() and (not doc_form or doc_form.is_valid()):
+            if doc_form:
+                document = doc_form.save(commit=False)
+                document.id = doc.id
+                document.save()
 
-    if rev_form.is_valid() and (not doc_form or doc_form.is_valid()):
-        if doc_form:
-            document = doc_form.save(commit=False)
-            document.id = doc.id
-            document.save()
+                # TODO: Use the tagging widget instead of this?
+                tags = doc_form.cleaned_data['tags']
+                doc.tags.exclude(name__in=tags).delete()
+                doc.tags.add(*tags)
 
-            # TODO: Use the tagging widget instead of this?
-            tags = doc_form.cleaned_data['tags']
-            doc.tags.exclude(name__in=tags).delete()
-            doc.tags.add(*tags)
+                ffv = doc_form.cleaned_data['firefox_versions']
+                doc.firefox_versions.exclude(
+                    item_id__in=[x.item_id for x in ffv]).delete()
+                doc.firefox_versions = ffv
+                os = doc_form.cleaned_data['operating_systems']
+                doc.operating_systems.exclude(
+                    item_id__in=[x.item_id for x in os]).delete()
+                doc.operating_systems = os
 
-            ffv = doc_form.cleaned_data['firefox_versions']
-            doc.firefox_versions.exclude(
-                item_id__in=[x.item_id for x in ffv]).delete()
-            doc.firefox_versions = ffv
-            os = doc_form.cleaned_data['operating_systems']
-            doc.operating_systems.exclude(
-                item_id__in=[x.item_id for x in os]).delete()
-            doc.operating_systems = os
+            new_rev = rev_form.save(commit=False)
+            new_rev.document = doc
+            new_rev.creator = request.user
+            new_rev.based_on = rev
+            new_rev.save()
 
-        new_rev = rev_form.save(commit=False)
-        new_rev.document = doc
-        new_rev.creator = request.user
-        new_rev.based_on = rev
-        new_rev.save()
-
-        return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                            args=[document_slug]))
+            return HttpResponseRedirect(reverse('wiki.document_revisions',
+                                                args=[document_slug]))
 
     return jingo.render(request, 'wiki/new_revision.html',
                         {'revision_form': rev_form,

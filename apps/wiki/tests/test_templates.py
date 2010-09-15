@@ -333,9 +333,7 @@ class CompareRevisionTests(TestCaseBase):
     def test_compare_revisions(self):
         """Compare two revisions"""
         url = reverse('wiki.compare_revisions', args=[self.document.slug])
-        query = {
-            'from': self.revision1.id,
-            'to': self.revision2.id}
+        query = {'from': self.revision1.id, 'to': self.revision2.id}
         url = urlparams(url, **query)
         response = self.client.get(url)
         eq_(200, response.status_code)
