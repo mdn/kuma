@@ -1,8 +1,6 @@
 from django.core import paginator
 from django.utils.http import urlencode
 
-import jinja2
-
 from .parser import WikiParser
 
 
@@ -36,4 +34,4 @@ def paginate(request, queryset, per_page=20):
 def wiki_to_html(wiki_markup, wiki_hooks=False):
     """Wiki Markup -> HTML"""
     parser = WikiParser(wiki_hooks=wiki_hooks)
-    return jinja2.Markup(parser.parse(wiki_markup, False))
+    return parser.parse(wiki_markup, False)

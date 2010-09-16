@@ -99,17 +99,22 @@ class DocumentTests(TestCase):
                                             'operating_systems')
 
 
+def doc_rev(html, content):
+    """Helper creates a document and revision given html and content."""
+    d = document(html=html)
+    d.save()
+    r = revision(document=d, content=content, is_approved=True)
+    r.save()
+    return (d, r)
+
+
 class RevisionTests(TestCase):
     """Tests for the Revision model"""
     fixtures = ['users.json']
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
-        d = document(html='This goes away')
-        d.save()
-        r = revision(document=d, content='Replace document html',
-                     is_approved=True)
-        r.save()
+        d, _ = doc_rev('This goes away', 'Replace document html')
 
         assert 'Replace document html' in d.html, \
                '"Replace document html" not in %s' % d.html
@@ -124,11 +129,7 @@ class RevisionTests(TestCase):
 
     def test_unapproved_revision_not_updates_html(self):
         """Creating an unapproved revision does not update document.html"""
-        d = document()
-        d.save()
-        r = revision(document=d, content='Here to stay',
-                      is_approved=True)
-        r.save()
+        d, _ = doc_rev('', 'Here to stay')
 
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
 
@@ -137,3 +138,9 @@ class RevisionTests(TestCase):
         r.save()
 
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
+
+    def test_revision_unicode(self):
+        """Revision containing unicode characters is saved successfully."""
+        str = u' \r\nFirefox informa\xe7\xf5es \u30d8\u30eb'
+        _, r = doc_rev('', str)
+        eq_(str, r.content)

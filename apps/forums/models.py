@@ -7,7 +7,7 @@ from access import has_perm, perm_is_defined_on
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
-from sumo.utils import wiki_to_html
+from sumo.helpers import wiki_to_html
 from notifications.tasks import delete_watches
 import forums
 
