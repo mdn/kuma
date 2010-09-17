@@ -1,9 +1,10 @@
 from django import forms
+from django.conf import settings
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils import translation
 
-from babel import Locale
+from babel import Locale, localedata
 from babel.support import Format
 from tower import ugettext_lazy as _
 
@@ -64,6 +65,15 @@ class MaxLengthValidator(validators.MaxLengthValidator, BaseValidator):
 
 
 def _format_decimal(num, format=None):
+    """Returns the string of a number formatted for the current language.
+
+    Uses django's translation.get_language() to find the current language from
+    the request.
+    Falls back to the default language if babel does not support the current.
+
+    """
     lang = translation.get_language()
+    if not localedata.exists(lang):
+        lang = settings.LANGUAGE_CODE
     locale = Locale(translation.to_locale(lang))
     return Format(locale).decimal(num, format)
