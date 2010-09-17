@@ -309,7 +309,7 @@ class Revision(ModelBase):
     reviewer = models.ForeignKey(User, related_name='reviewed_revisions',
                                  null=True)
     creator = models.ForeignKey(User, related_name='created_revisions')
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False, db_index=True)
 
     # The default locale's rev that was current when the Edit button was hit to
     # create this revision. Used to determine whether localizations are out of
