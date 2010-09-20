@@ -5,8 +5,9 @@
 
 (function () {
     var OSES = $.parseJSON($('select#os').attr('data-oses')),  // {'mac': true, 'win': true, ...}
-        BROWSERS = $.parseJSON($('select#browser').attr('data-browsers')),  // {'ff4': true, ...}
-        MISSING_MSG = $.parseJSON($('#toc').attr('data-missing-msg'));
+        BROWSERS = $.parseJSON($('select#browser').attr('data-browsers')),  // {'fx4': true, ...}
+        VERSIONS = $.parseJSON($('select#browser').attr('data-version-groups')),  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
+        MISSING_MSG = $.parseJSON($('#toc').attr('data-missing-msg'));  // l10nized "missing header" message
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
@@ -16,19 +17,30 @@
         initForTags();
     }
 
-    // The OS that...
-    //     * The user selected
-    //     * The cookie indicates
-    //     * Appears to be running
-    // ...in that order of precedence.
-    // TODO: sniff
-    function selectedOs() {
-        return $('select#os').attr('value');
+    // Return the OS that the cookie indicates or, failing that, that appears
+    // to be running. Possible values are {mac, win, linux, maemo, android,
+    // undefined}. TODO: cookie stuff
+    function guessOs() {
+        return BrowserDetect.OS;
     }
 
-    // TODO: sniff
-    function selectedBrowser() {
-        return $('select#browser').attr('value');
+    // Return the browser and version that the cookie indicates or, failing
+    // that, that appears to be running. Possible values resemble {fx4, fx35,
+    // m1, m11}. Return undefined if the currently running browser can't be
+    // identified. TODO: cookie stuff
+    function guessBrowser() {
+        var browser = BrowserDetect.browser,
+            version = BrowserDetect.version;
+        
+        if ((browser === undefined) || (version === undefined) || !VERSIONS[browser]) {
+            return;
+        }
+        
+        for (var i = 0; i < VERSIONS[browser].length; i++) {
+            if (version < VERSIONS[browser][i][0]) {
+                return browser + VERSIONS[browser][i][1];
+            }
+        }
     }
 
     // Hide/show the proper page sections that are marked with {for} tags as
@@ -37,7 +49,8 @@
     function initForTags() {
         function updateForsAndToc() {
             // Hide and show document sections accordingly:
-            showAndHideFors(selectedOs(), selectedBrowser());
+            showAndHideFors($('select#os').attr('value'),
+                            $('select#browser').attr('value'));
 
             // Update the table of contents in case headers were hidden or shown:
             $('#toc ol').empty().append(filteredToc($('#doc-content')).children());
@@ -46,14 +59,17 @@
         }
 
         var $osMenu = $('select#os'),
-            $browserMenu = $('select#browser');
+            $browserMenu = $('select#browser'),
+            guess;
 
         $osMenu.change(updateForsAndToc);
         $browserMenu.change(updateForsAndToc);
 
-        // Select the sniffed or cookied browser or OS:
-        $osMenu.attr('value', selectedOs());
-        $browserMenu.attr('value', selectedBrowser());
+        // Select the sniffed or cookied browser or OS if there is one:
+        if (guess = guessOs())
+            $osMenu.attr('value', guess);
+        if (guess = guessBrowser())
+            $browserMenu.attr('value', guess);
 
         // Fire off the change handler for the first time:
         updateForsAndToc();
@@ -166,12 +182,13 @@
             var osAttrs = {}, browserAttrs = {},
                 foundAnyOses = false, foundAnyBrowsers = false,
                 $for = $(this);
+
             // Divide {for} attrs into OSes and browsers:
             $($for.attr('data-for').split(',')).each(function(index) {
-                if (OSES[this]) {
+                if (OSES.hasOwnProperty(this)) {
                     osAttrs[this] = true;
                     foundAnyOses = true;
-                } else if (BROWSERS[this]) {
+                } else if (BROWSERS.hasOwnProperty(this)) {
                     browserAttrs[this] = true;
                     foundAnyBrowsers = true;
                 }

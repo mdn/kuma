@@ -54,14 +54,14 @@ class DocumentForm(forms.ModelForm):
 
     firefox_versions = forms.MultipleChoiceField(
                                 label=_('Firefox Version'),
-                                choices=[(id, name) for id, name, abbr in
+                                choices=[(v.id, v.name) for v in
                                          FIREFOX_VERSIONS],
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
     operating_systems = forms.MultipleChoiceField(
                                 label=_('Operating Systems'),
-                                choices=[(id, name) for id, name, abbr in
+                                choices=[(o.id, o.name) for o in
                                          OPERATING_SYSTEMS],
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())

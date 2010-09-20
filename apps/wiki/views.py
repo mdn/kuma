@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+from string import ascii_letters
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -15,11 +16,36 @@ from .models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
 from .forms import DocumentForm, RevisionForm, ReviewForm
 
 
-OS_ABBR_JSON = json.dumps(dict([(slug, True)
-                                for id, name, slug in OPERATING_SYSTEMS]))
-BROWSER_ABBR_JSON = json.dumps(dict([(slug, True)
-                                     for id, name, slug in FIREFOX_VERSIONS]))
+OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
+                                for o in OPERATING_SYSTEMS]))
+BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, True)
+                                     for v in FIREFOX_VERSIONS]))
 MISSING_MSG = _lazy('[missing header]')
+
+
+def _version_groups(versions):
+    """Group versions so browser+version pairs can be mapped to {for} slugs.
+
+    See test_version_groups for an example.
+
+    """
+    def split_slug(slug):
+        """Given something like fx35, split it into an alphabetic prefix and a
+        suffix, returning a 2-tuple like ('fx', '35')."""
+        right = slug.lstrip(ascii_letters)
+        left_len = len(slug) - len(right)
+        return slug[:left_len], slug[left_len:]
+
+    slug_groups = {}
+    for v in versions:
+        left, right = split_slug(v.slug)
+        slug_groups.setdefault(left, []).append((v.max_version, right))
+    for g in slug_groups.itervalues():
+        g.sort()
+    return slug_groups
+
+
+VERSION_GROUP_JSON = json.dumps(_version_groups(FIREFOX_VERSIONS))
 
 
 def document(request, document_slug):
@@ -34,6 +60,7 @@ def document(request, document_slug):
                          'oses_json': OS_ABBR_JSON,
                          'browsers': GROUPED_FIREFOX_VERSIONS,
                          'browsers_json': BROWSER_ABBR_JSON,
+                         'version_group_json': VERSION_GROUP_JSON,
                          'missing_msg_json': json.dumps(unicode(MISSING_MSG))})
 
 
@@ -225,3 +252,4 @@ def compare_revisions(request, document_slug):
     return jingo.render(request, 'wiki/compare_revisions.html',
                         {'document': doc, 'revision_from': revision_from,
                          'revision_to': revision_to})
+
