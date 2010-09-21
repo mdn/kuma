@@ -46,7 +46,8 @@
             "is_locked": true,
             "creator": 47963,
             "replies": 0,
-            "title": "Locked Sticky Thread"
+            "title": "Locked Sticky Thread",
+            "last_post": 27
         }
     },
     {
@@ -59,7 +60,8 @@
             "is_locked": true,
             "creator": 118533,
             "replies": 1,
-            "title": "A thread with a very very long title that should get truncated in the breadcrumbs."
+            "title": "A thread with a very very long title that should get truncated in the breadcrumbs.",
+            "last_post": 25
         }
     },
     {
@@ -72,7 +74,8 @@
             "is_locked": true,
             "creator": 1,
             "replies": 0,
-            "title": "Locked Thread"
+            "title": "Locked Thread",
+            "last_post": 5
         }
     },
     {
@@ -85,7 +88,8 @@
             "is_locked": false,
             "creator": 118533,
             "replies": 1,
-            "title": "Sticky Thread"
+            "title": "Sticky Thread",
+            "last_post": 4
         }
     },
     {
@@ -98,7 +102,8 @@
             "is_locked": false,
             "creator": 118533,
             "replies": 20,
-            "title": "My first thread"
+            "title": "My first thread",
+            "last_post": 24
         }
     },
     {

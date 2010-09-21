@@ -1,43 +1,13 @@
 import logging
 import socket
-import re
 
 from django.conf import settings
-from django.utils.encoding import smart_unicode
 
 from bleach import Bleach
 
 import search as constants
 from .sphinxapi import SphinxClient
 
-MARKUP_PATTERNS = (
-    (r'^!+',),
-    (r'^;:',),
-    (r'^#',),
-    (r'\n|\r',),
-    (r'\{maketoc\}',),
-    (r'\{ANAME.*?ANAME\}',),
-    (r'\{[a-zA-Z]+.*?\}',),
-    (r'\{.*?$',),
-    (r'__',),
-    (r'\'\'',),
-    (r'%{2,}',),
-    (r'\*|\^|;|/\}',),
-    (r'~/?np~',),
-    (r'~/?(h|t)c~',),
-    (r'\(spans.*?\)',),
-    (r'\}',),
-    (r'\(\(.*?\|(?P<name>.*?)\)\)', '\g<name>'),
-    (r'\(\((?P<name>.*?)\)\)', '\g<name>'),
-    (r'\(\(',),
-    (r'\)\)',),
-    (r'\[.+?\|(?P<name>.+?)\]', '\g<name>'),
-    (r'\[(?P<name>.+?)\]', '\g<name>'),
-    (r'/wiki_up.*? ',),
-    (r'&quot;',),
-    (r'^!! Issue.+!! Description',),
-    (r'\s+',),
-)
 
 log = logging.getLogger('k.search')
 
@@ -56,20 +26,6 @@ class SearchClient(object):
     def __init__(self):
         self.sphinx = SphinxClient()
         self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
-
-        # initialize regexes for markup cleaning
-        self.truncate_pattern = re.compile(r'\s.*', re.MULTILINE)
-        self.compiled_patterns = []
-
-        if MARKUP_PATTERNS:
-            for pattern in MARKUP_PATTERNS:
-                p = [re.compile(pattern[0], re.MULTILINE)]
-                if len(pattern) > 1:
-                    p.append(pattern[1])
-                else:
-                    p.append(' ')
-
-                self.compiled_patterns.append(p)
 
     def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
@@ -139,28 +95,15 @@ class SearchClient(object):
         try:
             # build excerpts that are longer and truncate
             # see multiplier constant definition for details
-            raw_excerpt = self.sphinx.BuildExcerpts(
+            excerpt = self.sphinx.BuildExcerpts(
                 documents, self.index, query,
-                {'limit': settings.SEARCH_SUMMARY_LENGTH
-                 * settings.SEARCH_SUMMARY_LENGTH_MULTIPLIER})[0]
+                {'limit': settings.SEARCH_SUMMARY_LENGTH})[0]
         except socket.error:
             log.error('Socket error building excerpt!')
-            raw_excerpt = ''
+            excerpt = ''
         except socket.timeout:
             log.error('Building excerpt timed out!')
-            raw_excerpt = ''
-
-        excerpt = smart_unicode(raw_excerpt)
-        for p in self.compiled_patterns:
-            excerpt = p[0].sub(p[1], excerpt)
-
-        # truncate long excerpts
-        if len(excerpt) > settings.SEARCH_SUMMARY_LENGTH:
-            excerpt = excerpt[:settings.SEARCH_SUMMARY_LENGTH] \
-                + self.truncate_pattern.sub('',
-                    excerpt[settings.SEARCH_SUMMARY_LENGTH:])
-            if not excerpt.endswith('.'):
-                excerpt += u'...'
+            excerpt = ''
 
         return self.bleach.clean(excerpt)
 

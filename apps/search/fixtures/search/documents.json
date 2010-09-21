@@ -1,0 +1,203 @@
+[
+    {
+        "pk": 1,
+        "model": "wiki.document",
+        "fields": {
+            "category": 1,
+            "title": "an article title",
+            "locale": "en-US",
+            "current_revision": 21,
+            "is_template": false,
+            "html": "<p>the keyword video only appears in the body of this article\n</p>",
+            "slug": "article-title"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "wiki.document",
+        "fields": {
+            "category": 2,
+            "title": "japanese article",
+            "locale": "ja",
+            "current_revision": 14,
+            "is_template": false,
+            "html": "<p>\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b\n</p>",
+            "slug": "japanese-article"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "wiki.document",
+        "fields": {
+            "category": 1,
+            "parent": 1,
+            "title": "spanish article",
+            "locale": "es",
+            "current_revision": 15,
+            "is_template": false,
+            "html": "<p>spanish content goes here\n</p>",
+            "slug": "spanish-article"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "wiki.document",
+        "fields": {
+            "category": 1,
+            "parent": 1,
+            "title": "le title",
+            "locale": "fr",
+            "current_revision": 19,
+            "is_template": false,
+            "html": "<p>ceci n'est pas une pipe\n</p><p>mon dieu!\n</p>",
+            "slug": "le-title"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "wiki.document",
+        "fields": {
+            "category": 1,
+            "parent": null,
+            "title": "lorem ipsum",
+            "locale": "en-US",
+            "current_revision": 22,
+            "is_template": false,
+            "html": "<p>audio is in this <strong>but the word for tough things</strong> will be ignored\n</p>",
+            "slug": "lorem-ipsum"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "",
+            "based_on": 11,
+            "is_approved": true,
+            "created": "2010-09-14 15:09:35",
+            "summary": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b",
+            "reviewed": "2010-09-14 15:09:40",
+            "content": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b\r\n\r\n",
+            "significance": 10,
+            "keywords": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb",
+            "reviewer": 118533,
+            "document": 2,
+            "creator": 118533
+        }
+    },
+    {
+        "pk": 15,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "",
+            "based_on": 5,
+            "is_approved": true,
+            "created": "2010-09-17 07:32:11",
+            "summary": "yeah OK whatever",
+            "reviewed": "2010-09-17 07:32:27",
+            "content": "anothero summario goello har",
+            "significance": 40,
+            "keywords": "this is the only place that says foobar",
+            "reviewer": 118533,
+            "document": 3,
+            "creator": 118533
+        }
+    },
+    {
+        "pk": 19,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "",
+            "based_on": 18,
+            "is_approved": true,
+            "created": "2010-09-23 08:18:56",
+            "summary": "ceci n'est pas une pipe!",
+            "reviewed": "2010-09-23 08:23:08",
+            "content": "ceci n'est pas une pipe\r\n\r\nmon dieu!",
+            "significance": 30,
+            "keywords": "boulot",
+            "reviewer": 118533,
+            "document": 4,
+            "creator": 118533
+        }
+    },
+    {
+        "pk": 21,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "",
+            "based_on": 20,
+            "is_approved": true,
+            "created": "2010-09-29 09:09:52",
+            "summary": "the keyword audio only appears in the summary of this article",
+            "reviewed": "2010-09-29 09:10:08",
+            "content": "the keyword video only appears in the body of this article",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 118533,
+            "document": 1,
+            "creator": 118533
+        }
+    },
+    {
+        "pk": 22,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "",
+            "based_on": null,
+            "is_approved": true,
+            "created": "2010-09-30 09:12:10",
+            "summary": "this article contains the word for things you can hear",
+            "reviewed": "2010-09-30 09:12:25",
+            "content": "audio is in this <strong>but the word for tough things</strong> will be ignored",
+            "significance": 30,
+            "keywords": "ghosts",
+            "reviewer": 118533,
+            "document": 5,
+            "creator": 118533
+        }
+    },
+    {
+        "pk": 100,
+        "model": "taggit.tag",
+        "fields": {
+            "name": "extant",
+            "slug": "extant"
+        }
+    },
+    {
+        "pk": 101,
+        "model": "taggit.tag",
+        "fields": {
+            "name": "tagged",
+            "slug": "tagged"
+        }
+    },
+    {
+        "pk": 1000,
+        "model": "taggit.taggeditem",
+        "fields": {
+            "tag": 100,
+            "content_type": ["wiki", "document"],
+            "object_id": 1
+        }
+    },
+    {
+        "pk": 1001,
+        "model": "taggit.taggeditem",
+        "fields": {
+            "tag": 100,
+            "content_type": ["wiki", "document"],
+            "object_id": 5
+        }
+    },
+    {
+        "pk": 1002,
+        "model": "taggit.taggeditem",
+        "fields": {
+            "tag": 101,
+            "content_type": ["wiki", "document"],
+            "object_id": 1
+        }
+    }
+]

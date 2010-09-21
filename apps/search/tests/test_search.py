@@ -7,137 +7,28 @@ import time
 import json
 import socket
 
-from django.db import connection
+from django.conf import settings
 
+import jingo
 import mock
 from nose import SkipTest
 from nose.tools import assert_raises, eq_
-import test_utils
-import jingo
 from pyquery import PyQuery as pq
+import test_utils
 
-from manage import settings
-from sumo.urlresolvers import reverse
+from forums.models import Post
 import search as constants
-from search.utils import start_sphinx, stop_sphinx, reindex, crc32
 from search.clients import (WikiClient, QuestionsClient,
                             DiscussionClient, SearchError)
-from sumo.models import WikiPage
+from search.utils import start_sphinx, stop_sphinx, reindex, crc32
 from sumo.tests import LocalizingClient
-from forums.models import Post
+from sumo.urlresolvers import reverse
+from wiki.models import Document
 
 
 def render(s, context):
     t = jingo.env.from_string(s)
     return t.render(**context)
-
-
-def create_extra_tables():
-    """
-    Creates extra tables necessary for Sphinx indexing.
-
-    XXX: This is the Wrong Way&trade; to do this! I'm only falling back
-    to this option because I've exhausted all the other possibilities.
-    This should GO AWAY when we get rid of the tiki_objects mess.
-    """
-    cursor = connection.cursor()
-
-    cursor.execute('SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0;')
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS `tiki_freetags` (
-          `tagId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-          `tag` varchar(30) NOT NULL DEFAULT '',
-          `raw_tag` varchar(50) NOT NULL DEFAULT '',
-          `lang` varchar(16) DEFAULT NULL,
-          PRIMARY KEY (`tagId`)
-        ) ENGINE=MyISAM AUTO_INCREMENT=12176 DEFAULT CHARSET=latin1;
-        """)
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS `tiki_freetagged_objects` (
-          `tagId` int(12) NOT NULL AUTO_INCREMENT,
-          `objectId` int(11) NOT NULL DEFAULT '0',
-          `user` varchar(200) NOT NULL DEFAULT '',
-          `created` int(14) NOT NULL DEFAULT '0',
-          PRIMARY KEY (`tagId`,`user`,`objectId`),
-          KEY `tagId` (`tagId`),
-          KEY `user` (`user`),
-          KEY `objectId` (`objectId`)
-        ) ENGINE=MyISAM AUTO_INCREMENT=12176 DEFAULT CHARSET=latin1;
-        """)
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS `tiki_objects` (
-          `objectId` int(12) NOT NULL AUTO_INCREMENT,
-          `type` varchar(50) DEFAULT NULL,
-          `itemId` varchar(255) DEFAULT NULL,
-          `description` text,
-          `created` int(14) DEFAULT NULL,
-          `name` varchar(200) DEFAULT NULL,
-          `href` varchar(200) DEFAULT NULL,
-          `hits` int(8) DEFAULT NULL,
-          PRIMARY KEY (`objectId`),
-          KEY `type` (`type`,`itemId`),
-          KEY `itemId` (`itemId`,`type`)
-        ) ENGINE=MyISAM AUTO_INCREMENT=35581 DEFAULT CHARSET=latin1;
-        """)
-
-    cursor.execute("""
-        INSERT IGNORE INTO tiki_objects (objectId, type, itemId, name) VALUES
-            (79, 'wiki page', 'Firefox Support Home Page',
-                'Firefox Support Home Page'),
-            (84, 'wiki page', 'Style Guide', 'Style Guide'),
-            (62, 'wiki page', 'Video or audio does not play',
-                'Video or audio does not play');
-        """)
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS `tiki_category_objects` (
-          `catObjectId` int(12) NOT NULL DEFAULT '0',
-          `categId` int(12) NOT NULL DEFAULT '0',
-          PRIMARY KEY (`catObjectId`,`categId`),
-          KEY `categId` (`categId`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-        """)
-
-    cursor.execute("""
-        INSERT IGNORE INTO tiki_category_objects (catObjectId, categId) VALUES
-            (79, 8), (84, 23), (62, 1), (62, 13),
-            (62, 14), (62, 19), (62, 25);
-        """)
-
-    cursor.execute("""
-        INSERT IGNORE INTO tiki_freetags (tagId, tag, raw_tag, lang) VALUES
-            (1, 'installation', 'installation', 'en'),
-            (26, 'video', 'video', 'en'),
-            (28, 'realplayer', 'realplayer', 'en');
-        """)
-
-    cursor.execute("""
-        INSERT IGNORE INTO tiki_freetagged_objects (tagId, objectId, user,
-            created) VALUES
-            (1, 5, 'admin', 1185895872),
-            (26, 62, 'np', 188586976),
-            (28, 62, 'Vectorspace', 186155207);
-        """)
-
-    cursor.execute('SET SQL_NOTES=@OLD_SQL_NOTES;')
-
-
-def destroy_extra_tables():
-    """
-    Removes the extra tables created by create_extra_tables.
-    """
-
-    cursor = connection.cursor()
-
-    cursor.execute('SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0;')
-    cursor.execute('DROP TABLE IF EXISTS tiki_category_objects')
-    cursor.execute('DROP TABLE IF EXISTS tiki_objects')
-    cursor.execute('DROP TABLE IF EXISTS tiki_freetagged_objects')
-    cursor.execute('DROP TABLE IF EXISTS tiki_freetags')
-    cursor.execute('SET SQL_NOTES=@OLD_SQL_NOTES;')
 
 
 class SphinxTestCase(test_utils.TransactionTestCase):
@@ -146,15 +37,12 @@ class SphinxTestCase(test_utils.TransactionTestCase):
     when testing any feature that requires sphinx.
     """
 
-    fixtures = ['pages.json', 'categories.json', 'users.json',
+    fixtures = ['users.json', 'search/documents.json',
                 'posts.json', 'questions.json']
     sphinx = True
     sphinx_is_running = False
 
     def setUp(self):
-
-        create_extra_tables()
-
         if not SphinxTestCase.sphinx_is_running:
             if not settings.SPHINX_SEARCHD or not settings.SPHINX_INDEXER:
                 raise SkipTest()
@@ -174,9 +62,6 @@ class SphinxTestCase(test_utils.TransactionTestCase):
 
     @classmethod
     def tearDownClass(cls):
-
-        destroy_extra_tables()
-
         if SphinxTestCase.sphinx_is_running:
             stop_sphinx()
             SphinxTestCase.sphinx_is_running = False
@@ -193,7 +78,6 @@ def test_sphinx_down():
 
 # TODO(jsocol):
 # * Add tests for all Questions filters.
-# * Fix skipped tests.
 # * Replace magic numbers with the defined constants.
 
 class SearchTest(SphinxTestCase):
@@ -204,7 +88,7 @@ class SearchTest(SphinxTestCase):
 
     def test_indexer(self):
         wc = WikiClient()
-        results = wc.query('practice')
+        results = wc.query('audio')
         eq_(2, len(results))
 
     def test_content(self):
@@ -236,7 +120,7 @@ class SearchTest(SphinxTestCase):
         qs = {'a': 1, 'format': 'json', 'page': 'invalid'}
         response = self.client.get(reverse('search'), qs)
         eq_(200, response.status_code)
-        eq_(5, json.loads(response.content)['total'])
+        eq_(6, json.loads(response.content)['total'])
 
     def test_search_metrics(self):
         """Ensure that query strings are added to search results"""
@@ -246,57 +130,44 @@ class SearchTest(SphinxTestCase):
 
     def test_category(self):
         wc = WikiClient()
-        results = wc.query('', ({'filter': 'category', 'value': [13]},))
+        results = wc.query('', ({'filter': 'category', 'value': [1]},))
+        eq_(4, len(results))
+        results = wc.query('', ({'filter': 'category', 'value': [2]},))
         eq_(1, len(results))
 
     def test_category_exclude(self):
-
-        # TODO(jsocol): Finish cleaning up these tests/fixtures.
-        raise SkipTest
-
-        response = self.client.get(reverse('search'),
-                                   {'q': 'block', 'format': 'json', 'w': 3})
+        q = {'q': 'audio', 'format': 'json', 'w': 1}
+        response = self.client.get(reverse('search'), q)
         eq_(2, json.loads(response.content)['total'])
 
-        response = self.client.get(reverse('search'),
-                                   {'q': 'forum', 'category': -13,
-                                    'format': 'json', 'w': 1})
-        eq_(1, json.loads(response.content)['total'])
+        q = {'q': 'audio', 'category': -1, 'format': 'json', 'w': 1}
+        response = self.client.get(reverse('search'), q)
+        eq_(0, json.loads(response.content)['total'])
 
     def test_category_invalid(self):
         qs = {'a': 1, 'w': 3, 'format': 'json', 'category': 'invalid'}
         response = self.client.get(reverse('search'), qs)
-        eq_(5, json.loads(response.content)['total'])
+        eq_(6, json.loads(response.content)['total'])
 
     def test_no_filter(self):
         """Test searching with no filters."""
         wc = WikiClient()
 
         results = wc.query('')
-        eq_(10, len(results))
+        eq_(5, len(results))
 
     def test_range_filter(self):
         """Test filtering on a range."""
         wc = WikiClient()
         filter_ = ({'filter': 'updated',
-                    'max': 1244355125,
-                    'min': 1244355115,
+                    'max': 1285765791,
+                    'min': 1284664176,
                     'range': True},)
         results = wc.query('', filter_)
-        eq_(1, len(results))
-
-    def test_search_en_locale(self):
-        """Searches from the en-US locale should return documents from en."""
-        qs = {'q': 'contribute', 'w': 1, 'format': 'json', 'category': 23}
-        response = self.client.get(reverse('search'), qs)
-        eq_(1, json.loads(response.content)['total'])
+        eq_(2, len(results))
 
     def test_sort_mode(self):
         """Test set_sort_mode()."""
-
-        # TODO(jsocol): Finish cleaning up these tests/fixtures.
-        raise SkipTest
-
         # Initialize client and attrs.
         qc = QuestionsClient()
         test_for = ('updated', 'created', 'replies')
@@ -305,11 +176,12 @@ class SearchTest(SphinxTestCase):
         for sort_mode in constants.SORT_QUESTIONS[1:]:  # Skip default sorting.
             qc.set_sort_mode(sort_mode[0], sort_mode[1])
             results = qc.query('')
-            eq_(3, len(results))
+            eq_(4, len(results))
 
-            # Compare first and last.
-            assert (results[0]['attrs'][test_for[i]] >
-                    results[-1]['attrs'][test_for[i]])
+            # Compare first and second.
+            x = results[0]['attrs'][test_for[i]]
+            y = results[1]['attrs'][test_for[i]]
+            assert x > y, '%s !> %s' % (x, y)
             i += 1
 
     def test_num_voted_none(self):
@@ -413,13 +285,13 @@ class SearchTest(SphinxTestCase):
             eq_(total, json.loads(response.content)['total'])
 
     def test_tags(self):
-        """Search for tags, includes multiple"""
+        """Search for tags, includes multiple."""
         qs = {'a': 1, 'w': 1, 'format': 'json'}
         tags_vals = (
             ('doesnotexist', 0),
-            ('video', 1),
-            ('realplayer video', 1),
-            ('realplayer installation', 0),
+            ('extant', 2),
+            ('tagged', 1),
+            ('extant tagged', 1),
         )
 
         for tag_string, total in tags_vals:
@@ -430,20 +302,23 @@ class SearchTest(SphinxTestCase):
     def test_unicode_excerpt(self):
         """Unicode characters in the excerpt should not be a problem."""
         wc = WikiClient()
-        q = 'contribute'
-        results = wc.query(q)
-        eq_(1, len(results))
-        page = WikiPage.objects.get(pk=results[0]['id'])
+        page = Document.objects.get(pk=2)
         try:
-            excerpt = wc.excerpt(page.content, q)
+            excerpt = wc.excerpt(page.html, u'\u3068')
             render('{{ c }}', {'c': excerpt})
         except UnicodeDecodeError:
             self.fail('Raised UnicodeDecodeError.')
 
     def test_clean_excerpt(self):
         """SearchClient.excerpt() should not allow disallowed HTML through."""
-        wc = WikiClient()
-        eq_('<b>test</b>&lt;/style&gt;', wc.excerpt('test</style>', 'test'))
+        wc = WikiClient()  # Index strips HTML
+        qc = QuestionsClient()  # Index does not strip HTML
+        input = 'test <div>the start of something</div>'
+        output_strip = '<b>test</b>  the start of something'
+        output_nostrip = ('<b>test</b> &lt;div&gt;the start of '
+                          'something&lt;/div&gt;')
+        eq_(output_strip, wc.excerpt(input, 'test'))
+        eq_(output_nostrip, qc.excerpt(input, 'test'))
 
     def test_empty_content_excerpt(self):
         """SearchClient.excerpt() returns empty string for empty content."""
@@ -542,12 +417,8 @@ class SearchTest(SphinxTestCase):
 
     def test_discussion_filter_updated(self):
         """Filter for updated date."""
-
-        # TODO(jsocol): Finish cleaning up these tests/fixtures.
-        raise SkipTest
-
         qs = {'a': 1, 'w': 4, 'format': 'json',
-              'sortby': 1, 'updated_date': '05/03/2010'}
+              'sortby': 1, 'updated_date': '05/04/2010'}
         updated_vals = (
             (1, '/1'),
             (2, '/4'),
@@ -558,15 +429,11 @@ class SearchTest(SphinxTestCase):
             response = self.client.get(reverse('search'), qs)
             result = json.loads(response.content)['results'][0]
             url_end = result['url'].endswith(url_id)
-            assert url_end, ('Url was "%s", expected to end with "%s"' %
+            assert url_end, ('URL was "%s", expected to end with "%s"' %
                              (result['url'], url_id))
 
     def test_discussion_sort_mode(self):
         """Test set_groupsort()."""
-
-        # TODO(jsocol): Finish cleaning up these tests/fixtures.
-        raise SkipTest
-
         # Initialize client and attrs.
         dc = DiscussionClient()
         test_for = ('updated', 'created', 'replies')
@@ -581,6 +448,40 @@ class SearchTest(SphinxTestCase):
             assert (results[0]['attrs'][test_for[i]] >
                     results[-1]['attrs'][test_for[i]])
             i += 1
+
+    def test_wiki_index_keywords(self):
+        """The keywords field of a revision is indexed."""
+        wc = WikiClient()
+        results = wc.query('foobar')
+        eq_(1, len(results))
+        eq_(3, results[0]['id'])
+
+    def test_wiki_index_summary(self):
+        """The summary field of a revision is indexed."""
+        wc = WikiClient()
+        results = wc.query('whatever')
+        eq_(1, len(results))
+        eq_(3, results[0]['id'])
+
+    def test_wiki_index_content(self):
+        """Obviously the content should be indexed."""
+        wc = WikiClient()
+        results = wc.query('video')
+        eq_(1, len(results))
+        eq_(1, results[0]['id'])
+
+    def test_wiki_index_strip_html(self):
+        """HTML should be stripped, not indexed."""
+        wc = WikiClient()
+        results = wc.query('strong')
+        eq_(0, len(results))
+
+    def test_ngram_chars(self):
+        """Ideographs are handled correctly."""
+        wc = WikiClient()
+        results = wc.query(u'\u30c1')
+        eq_(1, len(results))
+        eq_(2, results[0]['id'])
 
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)
