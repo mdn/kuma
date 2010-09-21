@@ -314,8 +314,9 @@ MINIFY_BUNDLES = {
         'wiki': (
             'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
-            'js/wiki.js',
+            'js/libs/jquery.cookie.js',
             'js/browserdetect.js',
+            'js/wiki.js',
         ),
         'gallery': (
         ),

@@ -20,28 +20,28 @@
 
     // Return the OS that the cookie indicates or, failing that, that appears
     // to be running. Possible values are {mac, win, linux, maemo, android,
-    // undefined}. TODO: cookie stuff
-    function guessOs() {
-        return BrowserDetect.OS;
+    // undefined}.
+    function initialOs() {
+        return $.cookie('for_os') || BrowserDetect.OS;
     }
 
     // Return the browser and version that the cookie indicates or, failing
     // that, that appears to be running. Possible values resemble {fx4, fx35,
     // m1, m11}. Return undefined if the currently running browser can't be
-    // identified. TODO: cookie stuff
-    function guessBrowser() {
-        var browser = BrowserDetect.browser,
-            version = BrowserDetect.version;
-        
-        if ((browser === undefined) || (version === undefined) || !VERSIONS[browser]) {
-            return;
-        }
-        
-        for (var i = 0; i < VERSIONS[browser].length; i++) {
-            if (version < VERSIONS[browser][i][0]) {
-                return browser + VERSIONS[browser][i][1];
+    // identified.
+    function initialBrowser() {
+        function getVersionGroup(browser, version) {
+            if ((browser === undefined) || (version === undefined) || !VERSIONS[browser]) {
+                return;
+            }
+
+            for (var i = 0; i < VERSIONS[browser].length; i++) {
+                if (version < VERSIONS[browser][i][0]) {
+                    return browser + VERSIONS[browser][i][1];
+                }
             }
         }
+        return $.cookie('for_browser') || getVersionGroup(BrowserDetect.browser, BrowserDetect.version);
     }
 
     // Hide/show the proper page sections that are marked with {for} tags as
@@ -59,18 +59,26 @@
             return false;
         }
 
+        function makeMenuChangeHandler(cookieName) {
+            function handler() {
+                $.cookie(cookieName, $(this).attr('value'), {path: '/'});
+                updateForsAndToc();
+            }
+            return handler;
+        }
+
         var $osMenu = $('select#os'),
             $browserMenu = $('select#browser'),
-            guess;
+            initial;
 
-        $osMenu.change(updateForsAndToc);
-        $browserMenu.change(updateForsAndToc);
+        $osMenu.change(makeMenuChangeHandler('for_os'));
+        $browserMenu.change(makeMenuChangeHandler('for_browser'));
 
         // Select the sniffed or cookied browser or OS if there is one:
-        if (guess = guessOs())
-            $osMenu.attr('value', guess);
-        if (guess = guessBrowser())
-            $browserMenu.attr('value', guess);
+        if (initial = initialOs())
+            $osMenu.attr('value', initial);  // does not fire change event
+        if (initial = initialBrowser())
+            $browserMenu.attr('value', initial);
 
         // Fire off the change handler for the first time:
         updateForsAndToc();
