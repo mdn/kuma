@@ -268,22 +268,30 @@ class DocumentListTests(TestCaseBase):
     """Tests for the All and Category template"""
     fixtures = ['users.json']
 
+    def setUp(self):
+        super(DocumentListTests, self).setUp()
+        self.locale = settings.WIKI_DEFAULT_LANGUAGE
+        self.doc = _create_document(locale=self.locale)
+        _create_document(locale=self.locale, title='Another one')
+
+        # Create a document in different locale to make sure it doesn't show
+        _create_document(parent=self.doc, locale='es')
+        
+
     def test_category_list(self):
         """Verify the category documents list view."""
-        d = _create_document()
         response = self.client.get(reverse('wiki.category',
-                                   args=[d.category]))
+                                   args=[self.doc.category]))
         doc = pq(response.content)
-        eq_(Document.objects.filter(category=d.category).count(),
+        cat = self.doc.category
+        eq_(Document.objects.filter(category=cat, locale=self.locale).count(),
             len(doc('#document-list li')))
 
     def test_all_list(self):
         """Verify the all documents list view."""
-        _create_document()
-        _create_document('Another one')
         response = self.client.get(reverse('wiki.all_documents'))
         doc = pq(response.content)
-        eq_(Document.objects.all().count(),
+        eq_(Document.objects.filter(locale=self.locale).count(),
             len(doc('#document-list li')))
 
 
@@ -495,9 +503,10 @@ class TranslateTests(TestCaseBase):
         assert not rev.is_approved
 
 
-def _create_document(title='Test Document'):
+def _create_document(title='Test Document', parent=None,
+                     locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
-                 category=1, locale=settings.WIKI_DEFAULT_LANGUAGE)
+                 category=1, locale=locale, parent=parent)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=118577,

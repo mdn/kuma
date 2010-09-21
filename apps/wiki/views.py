@@ -67,7 +67,7 @@ def document(request, document_slug):
 
 def list_documents(request, category=None):
     """List wiki documents."""
-    docs = Document.objects.all()
+    docs = Document.objects.filter(locale=request.locale)
     if category:
         docs = docs.filter(category=category)
         try:
