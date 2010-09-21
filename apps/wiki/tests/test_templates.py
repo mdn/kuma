@@ -5,7 +5,7 @@ from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from sumo.tests import post
+from sumo.tests import post, get
 from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 from wiki.tests import TestCaseBase, document, revision
 
@@ -266,13 +266,26 @@ class ReviewRevisionTests(TestCaseBase):
         self.document = _create_document()
         user = User.objects.get(pk=118533)
         self.revision = Revision(summary="lipsum",
-                                 content='<div>Lorem Ipsum Dolor</div>',
+                                 content='<div>Lorem {for mac}Ipsum{/for} '
+                                         'Dolor</div>',
                                  significance=SIGNIFICANCES[0][0],
                                  keywords='kw1 kw2', document=self.document,
                                  creator=user)
         self.revision.save()
 
         self.client.login(username='admin', password='testpass')
+
+    def test_fancy_renderer(self):
+        """Make sure it renders the whizzy new wiki syntax."""
+        # The right branch of the template renders only when there's no current
+        # revision.
+        self.document.current_revision = None
+        self.document.save()
+
+        response = get(self.client, 'wiki.review_revision',
+                       args=[self.document.slug, self.revision.id])
+        self.assertContains(response,
+                            '<span data-for="mac" class="for">Ipsum</span>')
 
     def test_approve_revision(self):
         """Verify revision approval."""

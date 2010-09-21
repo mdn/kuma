@@ -189,6 +189,11 @@ class Revision(ModelBase):
         return u'[%s] %s: %s' % (self.document.locale, self.document.title,
                                  self.content[:50])
 
+    @property
+    def content_parsed(self):
+        from wiki.parser import wiki_to_html
+        return wiki_to_html(self.content)
+
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
 # enumeration table of int-to-string is not represented in the DB because of

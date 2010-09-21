@@ -40,7 +40,7 @@
     </div>
     <h3>{{ _('Revision rendered html:') }}</h3>
     <div id="revision-html">
-      {{ revision.content|wiki_to_html }}
+      {{ revision.content_parsed|safe }}
     </div>
   {% endif %}
 
