@@ -191,7 +191,7 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-    weights = {'pageName': 4, 'content': 1, 'keywords': 4, 'tag': 2}
+    weights = {'title': 4, 'content': 1, 'keywords': 4, 'tag': 2, 'summary': 2}
 
 
 class DiscussionClient(SearchClient):

@@ -407,7 +407,7 @@
     },
     "en-US":{
         "English":"English",
-        "internal":"en",
+        "internal":"en-US",
         "external":"en-US",
         "dictionary":"en-US",
         "native":"English"
