@@ -185,15 +185,25 @@
     // browser combination.
     //
     // Hidden are {for}s that {list at least one OS but not the passed-in one}
-    // or that {list at least one browser but not the passed-in one}.
+    // or that {list at least one browser but not the passed-in one}. Also, the
+    // entire condition can be inverted by prefixing it with "not ", as in {for
+    // not mac,linux}.
     function showAndHideFors(os, browser) {
         $('.for').each(function(index) {
             var osAttrs = {}, browserAttrs = {},
                 foundAnyOses = false, foundAnyBrowsers = false,
-                $for = $(this);
+                forData,
+                isInverted,
+                shouldHide;
+
+            // Catch the "not" operator if it's there:
+            forData = $(this).attr('data-for');
+            isInverted = forData.substring(0, 4) == 'not ';
+            if (isInverted)
+                forData = forData.substring(4);  // strip off "not "
 
             // Divide {for} attrs into OSes and browsers:
-            $($for.attr('data-for').split(',')).each(function(index) {
+            $(forData.split(',')).each(function(index) {
                 if (OSES.hasOwnProperty(this)) {
                     osAttrs[this] = true;
                     foundAnyOses = true;
@@ -203,8 +213,9 @@
                 }
             });
 
-            if ((foundAnyOses && !osAttrs.hasOwnProperty(os)) ||
-                (foundAnyBrowsers && !browserAttrs.hasOwnProperty(browser)))
+            shouldHide = (foundAnyOses && !osAttrs.hasOwnProperty(os)) ||
+                         (foundAnyBrowsers && !browserAttrs.hasOwnProperty(browser));
+            if ((shouldHide && !isInverted) || (!shouldHide && isInverted))
                 $(this).hide();  // saves original visibility, which is nice
             else
                 $(this).show();  // restores original visibility
