@@ -5,6 +5,7 @@ from string import ascii_letters
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
 from django.conf import settings
 
@@ -119,12 +120,15 @@ def new_document(request):
                          'revision_form': rev_form})
 
 
-@login_required
-@permission_required('wiki.add_revision')
+@login_required  # TODO: Stop repeating this knowledge here and in
+                 # Document.allows_editing_by.
 def new_revision(request, document_slug, revision_id=None):
     """Create a new revision of a wiki document in default locale."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
+
+    if not doc.allows_editing_by(request.user):
+        raise PermissionDenied
 
     # If this document has a parent then the edit is handled by the
     # translate view, redirect there.

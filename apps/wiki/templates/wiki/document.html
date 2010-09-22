@@ -67,3 +67,13 @@
     </ul>
   </div>
 {% endblock %}
+{% block sidebar %}
+<ul class="common-actions" />
+<ul class="uncommon-actions">
+  {% if document.allows_editing_by(user) %}
+    <li>
+      <a href="{{ url('wiki.new_revision', document_slug=document.slug) }}">Edit</a>
+    </li>
+  {% endif %}
+</ul>
+{% endblock %}

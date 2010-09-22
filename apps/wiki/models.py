@@ -146,6 +146,16 @@ class Document(ModelBase, TaggableMixin):
     def __unicode__(self):
         return '[%s] %s' % (self.locale, self.title)
 
+    def allows_editing_by(self, user):
+        """Return whether `user` is allowed to create new revisions of me.
+
+        The motivation behind this method is that templates and other types of
+        docs may have different permissions.
+
+        """
+        # TODO: Add tests for templateness or whatever is required.
+        return user.has_perm('wiki.add_revision')
+
 
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""

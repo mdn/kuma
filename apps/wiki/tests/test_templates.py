@@ -32,7 +32,7 @@ class NewDocumentTests(TestCaseBase):
     fixtures = ['users.json']
 
     def test_new_document_GET_without_perm(self):
-        """Trying to create a new document without permission returns 403."""
+        """Trying to create a document without permission redirects to login"""
         self.client.login(username='rrosario', password='testpass')
         response = self.client.get(reverse('wiki.new_document'))
         eq_(302, response.status_code)
@@ -177,12 +177,20 @@ class NewRevisionTests(TestCaseBase):
         self.d = _create_document()
         self.client.login(username='admin', password='testpass')
 
-    def test_new_revision_GET_without_perm(self):
-        """Try to create a new revision without permission."""
-        self.client.login(username='rrosario', password='testpass')
+    def test_new_revision_GET_logged_out(self):
+        """Creating a revision without being logged in redirects to login page.
+        """
+        self.client.logout()
         response = self.client.get(reverse('wiki.new_revision',
                                            args=[self.d.slug]))
         eq_(302, response.status_code)
+
+    def test_new_revision_GET_without_perm(self):
+        """Trying to create a revision without permission returns 403."""
+        self.client.login(username='rrosario', password='testpass')
+        response = self.client.get(reverse('wiki.new_revision',
+                                           args=[self.d.slug]))
+        eq_(403, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
