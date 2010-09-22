@@ -1,0 +1,46 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% from "layout/errorlist.html" import errorlist %}
+{% if revision.reviewed %}
+  <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
+{% else %}
+  <div id="actions">
+    {{ errorlist(form) }}
+    <form action="" method="post">
+      {{ csrf() }}
+      <input id="btn-approve" type="submit" name="approve" value="{% if document.parent %}{{_('Approve Translation')  }}{% else %}{{ _('Approve Revision') }}{% endif %}">
+      <input id="btn-reject" type="submit" name="reject" value="{% if document.parent %}{{_('Reject Translation')  }}{% else %}{{ _('Reject Revision') }}{% endif %}">
+      <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel Review') }}</a>
+    </form>
+
+    <form class="accept-form pop-in" action="" method="post">
+      {{ csrf() }}
+      <fieldset>
+        <legend>{% if document.parent %}{{ _('Accept this Translation') }}{% else %}{{ _('Accept this Revision') }}{% endif %}</legend>
+        <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        {% if not document.parent %}
+          {{ form.significance|safe }}
+        {% endif %}
+        <div class="message">
+          <label for="id-approve-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
+          <textarea id="id-approve-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
+        </div>
+        <input type="submit" name="approve" value="{{ _('Accept') }}">
+        <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
+      </fieldset>
+    </form>
+
+    <form class="reject-form pop-in" action="" method="post">
+      {{ csrf() }}
+      <fieldset>
+        <legend>{% if document.parent %}{{ _('Reject this Translation') }}{% else %}{{ _('Reject this Revision') }}{% endif %}</legend>
+        <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="message">
+          <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
+          <textarea id="id-reject-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
+        </div>
+        <input type="submit" name="reject" value="{{ _('Reject') }}">
+        <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
+      </fieldset>
+    </form>
+  </div>
+{% endif %}

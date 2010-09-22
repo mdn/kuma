@@ -73,8 +73,7 @@ class NewDocumentTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
         data = _new_document_data(['tag1', 'tag2'])
         locale = 'es'
-        response = self.client.post(reverse('wiki.new_document', 
-                                            locale=locale),
+        self.client.post(reverse('wiki.new_document', locale=locale),
                                     data, follow=True)
         d = Document.objects.get(title=data['title'])
         eq_(locale, d.locale)
@@ -284,7 +283,6 @@ class DocumentListTests(TestCaseBase):
 
         # Create a document in different locale to make sure it doesn't show
         _create_document(parent=self.doc, locale='es')
-        
 
     def test_category_list(self):
         """Verify the category documents list view."""
@@ -327,7 +325,7 @@ class DocumentRevisionsTests(TestCaseBase):
 
 
 class ReviewRevisionTests(TestCaseBase):
-    """Tests for Review Revisions"""
+    """Tests for Review Revisions and Translations"""
     fixtures = ['users.json']
 
     def setUp(self):
@@ -394,6 +392,57 @@ class ReviewRevisionTests(TestCaseBase):
             'test-document/review/' + str(self.revision.id),
             redirect[0])
 
+    def test_review_translation(self):
+        """Make sure it works for localizations as well."""
+        doc = self.document
+        user = User.objects.get(pk=118533)
+
+        # Create the translated document based on the current revision
+        doc_es = _create_document(locale='es', parent=doc)
+        rev_es1 = doc_es.current_revision
+        rev_es1.based_on = doc.current_revision
+        rev_es1.save()
+
+        # Add a new revision to the parent and set it as the current one
+        rev = revision(summary="another tweak", content='lorem dimsum dolor',
+                       significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
+                       document=doc, creator=user,
+                       based_on=self.revision)
+        rev.save()
+        doc.current_revision = rev
+        doc.save()
+
+        # Create a new translation based on the new current revision
+        rev_es2 = Revision(summary="lipsum",
+                          content='<div>Lorem {for mac}Ipsum{/for} '
+                                  'Dolor</div>',
+                          significance=SIGNIFICANCES[0][0],
+                          keywords='kw1 kw2', document=doc_es,
+                          creator=user, based_on=doc.current_revision)
+        rev_es2.save()
+
+        # Whew, now render the review page
+        self.client.login(username='admin', password='testpass')
+        url = reverse('wiki.review_revision', locale='es',
+                      args=[doc_es.slug, rev_es2.id])
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(u'Revision %s Revision %s Current Public Translation Submitted'
+            u' Translation Approved English Version: Submitted Espa\xf1ol '
+            u'Translation' % (rev_es1.based_on.id, rev.id),
+            doc('div.revision-diff h3').text())
+
+        # And finally, approve the translation
+        response = self.client.post(url, {'approve': 'Approve Translation'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        d = Document.uncached.get(pk=doc_es.id)
+        r = Revision.uncached.get(pk=rev_es2.id)
+        eq_(d.current_revision, r)
+        assert r.reviewed
+        assert r.is_approved
+
 
 class CompareRevisionTests(TestCaseBase):
     """Tests for Review Revisions"""
@@ -420,7 +469,7 @@ class CompareRevisionTests(TestCaseBase):
         response = self.client.get(url)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Dolor',  doc('#revision-diff span.diff_add').text())
+        eq_('Dolor',  doc('div.revision-diff span.diff_add').text())
 
     def test_compare_revisions_missing_query_param(self):
         """Try to compare two revisions, with a missing query string param."""

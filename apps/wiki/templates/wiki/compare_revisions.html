@@ -17,5 +17,5 @@
     <h2>{{ document.title }}</h2>
   </hgroup>
   {% include 'wiki/includes/revision_diff.html' %}
-  <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to Revision History') }}</a></p>
+  <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
 {% endblock %}

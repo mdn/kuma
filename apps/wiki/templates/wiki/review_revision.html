@@ -1,10 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% set title = _('Review Revision {id} | {document} | Firefox Support')|f(document=document.title, id=revision.id) %}
+{% set title = _('Review Revision {id} | {document}')|f(document=document.title, id=revision.id) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title),
-                 (None, _('Review Revision'))] %}
+                 (document.get_absolute_url(), document.title)] %}
 {% set classes = 'review' %}
 
 {% block content %}
@@ -12,16 +11,19 @@
     {{ _('You are here:') }}
     {{ breadcrumbs(crumbs) }}
   </div>
-  <hgroup>
-    <h1>{{ _('Review Revision {id}')|f(id=revision.id) }}</h1>
-    <h2>{{ document.title }}</h2>
-  </hgroup>
+
+  <h1>{{ _('Review Revision of {title}')|f(title=document.title) }}</h1>
+  <p>{{ _('Reviewing Revision {id} by {user}')|f(id=revision.id, user=revision.creator) }}.
+  <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
+
   {% if revision.reviewed %}
-    <p>{{ _('This revision was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}</p>
+    <p>
+      {{ _('This revision was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}
+    </p>
   {% elif document.current_revision %}
-    {% set revision_from = document.current_revision %}
-    {% set revision_to = revision %}
-    {% include 'wiki/includes/revision_diff.html' %}
+    {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current Public Revision'), revision_to_header = _('Submitted Revision') %}
+      {% include 'wiki/includes/revision_diff.html' %}
+    {% endwith %}
   {% else %}
     <p>{{ _('This document does not have a current revision.') }}</p>
     <h3>{{ _('Revision source:') }}</h3>
@@ -36,46 +38,5 @@
 
   {# TODO: diff? the summary and keywords #}
 
-  {% if revision.reviewed %}
-    <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to Revision History') }}</a></p>
-  {% else %}
-    <div id="actions">
-      {{ errorlist(form) }}
-      <form action="" method="post">
-        {{ csrf() }}
-        <input id="btn-approve" type="submit" name="approve" value="{{ _('Approve Revision') }}">
-        <input id="btn-reject" type="submit" name="reject" value="{{ _('Reject Revision') }}">
-        <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel Review') }}</a>
-      </form>
-
-      <form class="accept-form pop-in" action="" method="post">
-        {{ csrf() }}
-        <fieldset>
-          <legend>{{ _('Accept this Revision') }}</legend>
-          <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          {{ form.significance|safe }}
-          <div class="message">
-            <label for="id-approve-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
-            <textarea id="id-approve-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
-          </div>
-          <input type="submit" name="approve" value="{{ _('Accept') }}">
-          <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
-        </fieldset>
-      </form>
-
-      <form class="reject-form pop-in" action="" method="post">
-        {{ csrf() }}
-        <fieldset>
-          <legend>{{ _('Reject this Revision') }}</legend>
-          <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <div class="message">
-            <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
-            <textarea id="id-reject-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
-          </div>
-          <input type="submit" name="reject" value="{{ _('Reject') }}">
-          <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
-        </fieldset>
-      </form>
-    </div>
-  {% endif %}
+  {% include 'wiki/includes/review_form.html' %}
 {% endblock %}

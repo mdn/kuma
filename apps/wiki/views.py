@@ -201,14 +201,18 @@ def review_revision(request, document_slug, revision_id):
             rev.reviewer = request.user
             rev.reviewed = datetime.now()
             rev.comment = form.cleaned_data['comment']
-            if rev.is_approved:
+            if form.cleaned_data['significance']:
                 rev.significance = form.cleaned_data['significance']
             rev.save()
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document_slug]))
 
-    return jingo.render(request, 'wiki/review_revision.html',
+    if doc.parent:  # A translation
+        template = 'wiki/review_translation.html'
+    else:
+        template = 'wiki/review_revision.html'
+    return jingo.render(request, template,
                         {'revision': rev, 'document': doc, 'form': form})
 
 

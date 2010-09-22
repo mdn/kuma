@@ -28,7 +28,7 @@
     {% if revisions %}
       <form action="{{ url('wiki.compare_revisions', document.slug) }}" method="get">
         {% if revisions.count() > 1 %}
-          <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+          <input type="submit" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
         {% endif %}
         {% set reached_current = False %}
         {% for rev in revisions %}
@@ -82,7 +82,7 @@
           {% if loop.last %}</ul>{% endif %}
         {% endfor %}
         {% if revisions.count() > 1 %}
-          <input type="submit" value="{{ _('Compare Selected Revisions') }}">
+          <input type="submit" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
         {% endif %}
       </form>
     {% else %}

@@ -1,14 +1,26 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {# TODO: This should probably be a macro. To make it so, we need to change datetimeformat to not expect request to be in the context (probably explicitly passing in the locale when using). #}
-<div id="revision-diff">
+<div class="revision-diff">
   <header>
     <div>
-      <h3>{{ ('Revision {num}')|f(num=revision_from.id) }}</h3>
-      <p>{{ _('by {user} on {date}')|f(user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
+      <h3>
+        {% if revision_from_header %}
+          {{ revision_from_header}}
+        {% else %}
+          {{ ('Revision {num}')|f(num=revision_from.id) }}
+        {% endif %}
+      </h3>
+      <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
     </div>
     <div>
-      <h3>{{ ('Revision {num}')|f(num=revision_to.id) }}</h3>
-      <p>{{ _('by {user} on {date}')|f(user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
+      <h3>
+        {% if revision_to_header %}
+          {{ revision_to_header}}
+        {% else %}
+          {{ ('Revision {num}')|f(num=revision_to.id) }}
+        {% endif %}
+      </h3>
+      <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_from.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
     </div>
   </header>
   {{ diff_table(revision_from.content, revision_to.content) }}
