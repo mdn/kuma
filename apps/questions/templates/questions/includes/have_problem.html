@@ -12,4 +12,5 @@
   {{ ngettext('<mark>{count} person</mark> <span>has this problem</span>',
               '<mark>{count} people</mark> <span>have this problem</span>',
               num_votes)|fe(count=num_votes) }}
+  <span class="recent">{{ _('<strong>{count} new</strong> this week')|fe(count=question.num_votes_past_week) }}</span>
 </div>

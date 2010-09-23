@@ -188,6 +188,19 @@ ol.questions div.have-problem span {
     display: block;
 }
 
+div.have-problem span.recent {
+    color: #898378;
+    display: block;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+div.have-problem span.recent strong {
+    color: #4B4740;
+    font-weight: normal;
+}
+
 ol.questions div.title h2 {
     font-size: 17px;
     display: inline;
@@ -510,7 +523,7 @@ div.problem {
 
 div.problem div.have-problem {
     float: left;
-    padding: 17px 0 5px;
+    padding: 9px 0 5px;
 }
 
 div.problem div.have-problem mark {
@@ -519,7 +532,7 @@ div.problem div.have-problem mark {
 }
 
 div.problem div.have-problem.just-one {
-    background: transparent url(../img/questions/icon.one.gif) no-repeat 0 19px;
+    background: transparent url(../img/questions/icon.one.gif) no-repeat 0 12px;
     padding-left: 22px;
 }
 
