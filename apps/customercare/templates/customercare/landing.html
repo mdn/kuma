@@ -5,46 +5,41 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content_area %}
-<div class="feature-contents">
-  <h2>Join our <br />Army of Awesome</h2>
-  <h3>Love Firefox and have a few moments to help? Help other Firefox users on Twitter. Good things will come to those who tweet!</h3>
-</div>
+  <div class="feature-contents">
+    <h2>Join our <br />Army of Awesome</h2>
+    <h3>Love Firefox and have a few moments to help? Help other Firefox users on Twitter. Good things will come to those who tweet!</h3>
+  </div>
 
-<div id="speach-bubbles">
-  <ol>
-    <li class="choose">Choose a tweet below</li>
-    <li class="signin">Sign in with Twitter</li>
-    <li class="respond">Respond to the tweet!</li>
-  </ol>
-  <br style="clear:both; height: 1px" />
-</div>
+  <div id="speach-bubbles">
+    <ol>
+      <li class="choose">Choose a tweet below</li>
+      <li class="signin">Sign in with Twitter</li>
+      <li class="respond">Respond to the tweet!</li>
+    </ol>
+  </div>
 	
   <div id="tweetcontainer">
     <div class="tweets-header">
       <img src="{{ MEDIA_URL }}/img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">Choose a tweet to help</h2>
+      {% if authed %}
+        <a href="?twitter_delete_auth=1" id="twitter-logout">Log out of Twitter</a>
+      {% endif %}
     </div>
     
     <br style="clear:both; height: 1px" />
 
     <ul id="tweets">
       {% for tweet in tweets %}
-      <li class="tweet">
+      <li class="tweet" data-reply_to="{{ tweet.reply_to }}">
         <a href="http://twitter.com/{{ tweet.user }}" class="avatar"><img src="{{ tweet.profile_img }}" /></a>
-        <span><span class="twittername">{{ tweet.user }}</span><span class="time">{{ tweet.date|utctimesince }}</span>
-        <span class="text">{{ tweet.text }}</span>
+        <span class="twittername">{{ tweet.user }}</span><span class="time">{{ tweet.date|utctimesince }}</span>
+        <p class="text">{{ tweet.text }}</p>
       </li>
       {% endfor %}
     </ul>
   </div>
 
-  <div id="reply-modal">
-    {% include 'customercare/reply_modal.html' %}
-  </div>
+  {% include 'customercare/reply_modal.html' %}
 
-  <div id="twitter-modal">
-    <h2>Sign in with your Twitter account</h2>
-    <p>Before you join the Army of Awesome, you need to log in so you can respond to tweets. You will now be redirected to Twitter to log in.</p>
-    <a href="{{ url('customercare.twitter_auth') }}">Sign in</a>
-    <a href="#" class="cancel">Cancel</a>
-  </div>
+  {% include 'customercare/twitter_modal.html' %}
 {% endblock %}

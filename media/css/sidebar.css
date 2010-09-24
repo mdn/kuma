@@ -67,4 +67,18 @@
     text-decoration: underline;
 }
 
+#side-getinvolved {
+    background: transparent url('../img/side-getinvolved-bg.png') no-repeat top left;
+    margin-top: 140px;
+    padding-top: 20px;
+    color: #999186;
+}
 
+#side-getinvolved h3 {
+    color: #1E4262;
+    font-size: 150%;
+}
+#side-getinvolved p {
+    padding-top: 10px;
+    font-size: 115%;
+}

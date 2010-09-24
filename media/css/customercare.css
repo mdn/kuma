@@ -26,6 +26,7 @@ body {
 }
 #speach-bubbles {
 	padding: 60px 0 15px 25px;
+  float: left;
 }
 #speach-bubbles li {
   list-style-type: none;
@@ -46,7 +47,8 @@ body {
 #tweetcontainer {
     border: 1px solid #f5f5f5;
     padding: 2px;
-    clear: both;
+    float: left;
+    clear: left;
 }
 #tweetcontainer h2 {
     margin: 0px;
@@ -93,24 +95,21 @@ body {
     width: 48px;
     height: 48px;
 }
-#tweets li span {
-    display: block;
-}
-#tweets li span {
+#tweets li .twittername {
     color: #307fc1;
     text-decoration: none;
     font-weight: bold;
     font-size: 13px;
     line-height: 1.4em;
 }
-#tweets li span .time {
+#tweets li .time {
     float: right;
     font-weight: normal;
     font-style: italic;
     font-size: 12px;
     color: #afaba3;
 }
-#tweets li span .text {
+#tweets li .text {
     font-weight: normal;
     font-size: 14px;
     color: #69645b;
@@ -281,7 +280,7 @@ body {
 	display: inline;
 }
 
-#reply .submit-message {
+#submit-message {
   display: none;
 	background: url('../img/customercare/reply-check.png') right top no-repeat;
 	font-weight: bold;

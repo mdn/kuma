@@ -1,47 +1,51 @@
-<div id="reply-container">
-  <div id="initial-tweet">
+<div id="reply-modal">
+  <div id="reply-container">
+
+    <div id="initial-tweet">
       <a href="" class="avatar"><img src="" /></a>
       <span class="box">
-          <img src="{{ MEDIA_URL }}img/customercare/initial-tweet-arrow.png" alt="" id="arrow" />
-          <a href="" class="twittername"></a>
-          <span class="text"></span>
+        <img src="{{ MEDIA_URL }}img/customercare/initial-tweet-arrow.png" alt="" id="arrow" />
+        <a href="" class="twittername"></a>
+        <span class="text"></span>
       </span>
-  </div>
-
-  <div id="replies">
-    <h4>What is your reply about?</h4>
-    <div id="accordion">
-      {% for resp in canned_responses %}
-      <h3><a href="#">{{ resp.title }}</a></h3>
-      <div>
-        <ul class="topics">
-          {% for topic in resp.responses.all() %}
-          <li>
-            <a class="reply-topic" href="#">{{ topic.title }}</a>
-            <span class="snippet">{{ topic.response }} #fxhelp</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endfor %}
     </div>
-    
 
-    <div class="hrbreak"></div>
+    <div id="replies">
+      <h4>What is your reply about?</h4>
+      <div id="accordion">
+        {% for resp in canned_responses %}
+        <h3><a href="#">{{ resp.title }}</a></h3>
+        <div>
+          <ul class="topics">
+            {% for topic in resp.responses.all() %}
+            <li>
+              <a class="reply-topic" href="#">{{ topic.title }}</a>
+              <span class="snippet">{{ topic.response }} #fxhelp</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
 
-    <div id="reply">
-      <h4>Get personal</h4>
+      <div class="hrbreak"></div>
+
+      <div id="reply">
+        <h4>Get personal</h4>
         <div class="container">
           <div class="character-counter">140</div>
+          <form action="{{ url('customercare.twitter_post') }}" method="POST">
             <div class="inner-container">
               <img src="{{ MEDIA_URL }}img/customercare/reply-arrow.png" alt="" id="reply-arrow" />
               <textarea class="reply-message" placeholder="Tweak it and make it your own. Personalized messages go a long way in helping others."></textarea>
             </div>
 
-            <span class="submit-message">Your message was sent!</span>
-            <input type="submit" value="Submit" name="" id="submit" class="submitButton" title="Submit">
-          </div>
+            <span id="submit-message">Your message was sent!</span>
+            <input type="hidden" name="reply_to" id="reply_to">
+            <input type="submit" value="Submit" name="submit" id="submit" class="submitButton" title="Submit">
+          </form>
         </div>
       </div>
     </div>
+  </div>
 </div>

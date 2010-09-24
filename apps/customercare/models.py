@@ -8,7 +8,7 @@ from sumo.models import ModelBase
 
 class Tweet(ModelBase):
     """An entry on twitter."""
-    tweet_id = models.BigIntegerField()
+    tweet_id = models.BigIntegerField(unique=True)
     raw_json = models.TextField()
     locale = models.CharField(max_length=20, db_index=True)
     created = models.DateTimeField(default=datetime.now, db_index=True)
