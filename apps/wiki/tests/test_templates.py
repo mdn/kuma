@@ -376,7 +376,6 @@ class ReviewRevisionTests(TestCaseBase):
                         args=[self.document.slug, self.revision.id])
         eq_(200, response.status_code)
         r = Revision.uncached.get(pk=self.revision.id)
-        eq_(comment, r.comment)
         assert r.reviewed
         assert not r.is_approved
 

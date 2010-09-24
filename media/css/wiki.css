@@ -125,9 +125,9 @@ form.pop-in legend {
     font-weight: bold;
 }
 
-#review-modal {
+#approve-modal,
+#reject-modal {
     color: #4B4740;
-    display: block;
     left: 50%;
     margin-left: -220px;
     padding: 20px;
@@ -136,6 +136,11 @@ form.pop-in legend {
     top: 100px;
     width: 400px;
     z-index:10;
+}
+
+#approve-modal.active,
+#reject-modal.active {
+    display: block;
 }
 
 /* Revision diffs */
@@ -286,4 +291,37 @@ div.change-locale.open #change-locale {
     display: inline-block;
     list-style: none;
     width: 60px;
+}
+
+/* Submit commit message modal */
+.js #submit-modal {
+    display: none;
+}
+
+.js #submit-modal.active {
+    display: block;
+}
+
+#submit-modal {
+    color: #4B4740;
+    left: 50%;
+    margin-left: -220px;
+    padding: 20px;
+    position: fixed;
+    text-align: left;
+    top: 150px;
+    width: 400px;
+    z-index:10;
+}
+
+#submit-modal legend {
+    font-weight: bold;
+}
+
+#submit-modal label {
+    display: block;
+}
+
+#submit-modal input[type="text"] {
+    width: 300px;
 }

@@ -7,12 +7,12 @@
     {{ errorlist(form) }}
     <form action="" method="post">
       {{ csrf() }}
-      <input id="btn-approve" type="submit" name="approve" value="{% if document.parent %}{{_('Approve Translation')  }}{% else %}{{ _('Approve Revision') }}{% endif %}">
-      <input id="btn-reject" type="submit" name="reject" value="{% if document.parent %}{{_('Reject Translation')  }}{% else %}{{ _('Reject Revision') }}{% endif %}">
+      <input id="btn-approve" class="activates-modal" data-modal-selector="#approve-modal" type="submit" name="approve" value="{% if document.parent %}{{_('Approve Translation')  }}{% else %}{{ _('Approve Revision') }}{% endif %}">
+      <input id="btn-reject" class="activates-modal" data-modal-selector="#reject-modal" type="submit" name="reject" value="{% if document.parent %}{{_('Reject Translation')  }}{% else %}{{ _('Reject Revision') }}{% endif %}">
       <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel Review') }}</a>
     </form>
 
-    <form class="accept-form pop-in" action="" method="post">
+    <form id="approve-modal" class="accept-form pop-in" action="" method="post">
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Accept this Translation') }}{% else %}{{ _('Accept this Revision') }}{% endif %}</legend>
@@ -29,7 +29,7 @@
       </fieldset>
     </form>
 
-    <form class="reject-form pop-in" action="" method="post">
+    <form id="reject-modal" class="reject-form pop-in" action="" method="post">
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Reject this Translation') }}{% else %}{{ _('Reject this Revision') }}{% endif %}</legend>

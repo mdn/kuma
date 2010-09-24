@@ -126,9 +126,10 @@
       {{ revision_form.significance|safe }}
     </div>
     <div class="submit">
-      <input type="submit" value="{{ _('Submit for Review') }}">
+      <input id="btn-submit" class="activates-modal" data-modal-selector="#submit-modal" type="submit" value="{{ _('Submit for Review') }}">
       {# TODO: save for later #}
       <a href="{{ url('wiki.document', parent.slug) }}">{{ _('Cancel Changes') }}</a>
     </div>
+    {% include 'wiki/includes/submit_revision_modal.html' %}
   </form>
 {% endblock %}

@@ -200,10 +200,12 @@ def review_revision(request, document_slug, revision_id):
             rev.is_approved = 'approve' in request.POST
             rev.reviewer = request.user
             rev.reviewed = datetime.now()
-            rev.comment = form.cleaned_data['comment']
             if form.cleaned_data['significance']:
                 rev.significance = form.cleaned_data['significance']
             rev.save()
+
+            # TODO: Send notification to revision creator.
+            # reviewer_message = form.cleaned_data['comment']
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document_slug]))

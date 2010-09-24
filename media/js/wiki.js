@@ -13,7 +13,7 @@
         $('select.enable-if-js').removeAttr('disabled');
 
         initPrepopulatedSlugs();
-        initReviewModal();
+        initActionModals();
         initForTags();
         initChangeTranslateLocale();
     }
@@ -104,37 +104,37 @@
     }
 
     /*
-     * Initialize the modal that shows when the reviewer goes to Approve
-     * or Reject a revision.
+     * Initialize modals that activate on the click of elements with
+     * class="activates-modal". The activation element is required to
+     * have a data-modal-selector attribute that is a CSS selector
+     * to the modal to activate (by adding CSS class "active").
+     *
+     * TODO: Check if other areas of the site can use this and, if so,
+     * move to the common bundle somewhere.
      */
-    function initReviewModal() {
-        $('#btn-approve').click(function(ev){
+    function initActionModals() {
+        var $modal, $overlay;
+        $('.activates-modal').click(function(ev){
             ev.preventDefault();
-            openModal('form.accept-form');
-        });
-        $('#btn-reject').click(function(ev){
-            ev.preventDefault();
-            openModal('form.reject-form');
-        });
-
-        function openModal(selector) {
-            var $modal = $(selector).clone();
-            $modal.attr('id', 'review-modal')
-                  .append('<a href="#close" class="close">&#x2716;</a>');
-            $modal.find('a.close, a.cancel').click(closeModal);
-
-            var $overlay = $('<div id="modal-overlay"></div>');
-
-            $('body').append($overlay).append($modal);
-
-            function closeModal(ev) {
-                ev.preventDefault();
-                $modal.unbind().remove();
-                $overlay.unbind().remove();
-                delete $modal;
-                delete $overlay;
-                return false;
+            $modal = $($(this).attr('data-modal-selector'));
+            $overlay = $('<div id="modal-overlay"></div>');
+            if (!$modal.data('inited')) {
+                $modal.append('<a href="#close" class="close">&#x2716;</a>')
+                    .data('inited', true);
+                $modal.find('a.close, a.cancel').click(closeModal);
             }
+
+            $modal.addClass('active');
+            $('body').append($overlay);
+
+            return false;
+        });
+
+        function closeModal(ev) {
+            ev.preventDefault();
+            $modal.removeClass('active');
+            $overlay.remove();
+            return false;
         }
     }
 

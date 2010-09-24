@@ -95,9 +95,11 @@ class RevisionForm(forms.ModelForm):
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})
 
+    comment = StrippedCharField(required=False)
+
     class Meta:
         model = Revision
-        fields = ('keywords', 'summary', 'content', 'significance')
+        fields = ('keywords', 'summary', 'content', 'significance', 'comment')
 
 
 class ReviewForm(forms.Form):
