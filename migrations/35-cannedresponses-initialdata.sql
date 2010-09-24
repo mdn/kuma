@@ -6,8 +6,8 @@ INSERT INTO `customercare_cannedcategory` (`id`, `title`, `weight`) VALUES
 (5, "Get Involved", 4);
 
 INSERT INTO `customercare_cannedresponse` (`id`, `title`, `response`) VALUES 
-(1, "Welcome to our community", "Thanks for joining Mozilla! You're now part of our global community. We're here if you need help: http://mzl.la/bMDof6r"),
-(2, "Thanks for using Firefox", "Thanks for using Firefox! You're not just a user to us, but part of a community that's 400M strong: http://mzl.la/9whtWor"),
+(1, "Welcome to our community", "Thanks for joining Mozilla! You're now part of our global community. We're here if you need help: http://mzl.la/bMDof6"),
+(2, "Thanks for using Firefox", "Thanks for using Firefox! You're not just a user to us, but part of a community that's 400M strong: http://mzl.la/9whtWo"),
 (3, "We're a non-profit organization", "Hey, I'm a Mozilla volunteer. Did you know Mozilla is made up of 1000s of us worldwide? More here: http://mzl.la/cvlwvd"),
 (4, "Tip & tricks", "Need help getting started with Firefox? Here are some tips & tricks for getting the most out of it: http://mzl.la/c0B9P2"),
 (5, "Customize Firefox with add-ons", "Have you tried add-ons? Cool apps for shopping, music, news, whatever you do online. Start here: http://mzl.la/blOuoD"),
