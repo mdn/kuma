@@ -66,7 +66,6 @@ class NewDocumentTests(TestCaseBase):
         eq_(data['keywords'], r.keywords)
         eq_(data['summary'], r.summary)
         eq_(data['content'], r.content)
-        eq_(data['significance'], r.significance)
 
     def test_new_document_other_locale(self):
         """Make sure we can create a document in a non-default locale."""
@@ -207,7 +206,7 @@ class NewRevisionTests(TestCaseBase):
 
         """
         r = Revision(document=self.d, keywords='ky1, kw2',
-                     summary='the summary', significance=SIGNIFICANCES[0][0],
+                     summary='the summary',
                      content='<div>The content here</div>', creator_id=118577)
         r.save()
         response = self.client.get(reverse('wiki.new_revision_based_on',
@@ -228,8 +227,7 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.new_revision', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2',
-             'significance': SIGNIFICANCES[0][0]})
+             'keywords': 'keyword1 keyword2'})
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
 
@@ -310,12 +308,10 @@ class DocumentRevisionsTests(TestCaseBase):
         d = _create_document()
         user = User.objects.get(pk=118533)
         r1 = revision(summary="a tweak", content='lorem ipsum dolor',
-                      significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
-                      document=d, creator=user)
+                      keywords='kw1 kw2', document=d, creator=user)
         r1.save()
         r2 = revision(summary="another tweak", content='lorem dimsum dolor',
-                      significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
-                      document=d, creator=user)
+                      keywords='kw1 kw2', document=d, creator=user)
         r2.save()
         response = self.client.get(reverse('wiki.document_revisions',
                                    args=[d.slug]))
@@ -335,7 +331,6 @@ class ReviewRevisionTests(TestCaseBase):
         self.revision = Revision(summary="lipsum",
                                  content='<div>Lorem {for mac}Ipsum{/for} '
                                          'Dolor</div>',
-                                 significance=SIGNIFICANCES[0][0],
                                  keywords='kw1 kw2', document=self.document,
                                  creator=user)
         self.revision.save()
@@ -405,17 +400,14 @@ class ReviewRevisionTests(TestCaseBase):
         # Add a new revision to the parent and set it as the current one
         rev = revision(summary="another tweak", content='lorem dimsum dolor',
                        significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
-                       document=doc, creator=user,
+                       document=doc, creator=user, is_approved=True,
                        based_on=self.revision)
         rev.save()
-        doc.current_revision = rev
-        doc.save()
 
         # Create a new translation based on the new current revision
         rev_es2 = Revision(summary="lipsum",
                           content='<div>Lorem {for mac}Ipsum{/for} '
                                   'Dolor</div>',
-                          significance=SIGNIFICANCES[0][0],
                           keywords='kw1 kw2', document=doc_es,
                           creator=user, based_on=doc.current_revision)
         rev_es2.save()
@@ -454,7 +446,7 @@ class CompareRevisionTests(TestCaseBase):
         user = User.objects.get(pk=118533)
         self.revision2 = Revision(summary="lipsum",
                                  content='<div>Lorem Ipsum Dolor</div>',
-                                 significance=10, keywords='kw1 kw2',
+                                 keywords='kw1 kw2',
                                  document=self.document, creator=user)
         self.revision2.save()
 
@@ -536,7 +528,7 @@ class TranslateTests(TestCaseBase):
         # Create and approve a new en-US revision
         rev_enUS = Revision(summary="lipsum",
                        content='lorem ipsum dolor sit amet new',
-                       significance=10, keywords='kw1 kw2',
+                       significance=SIGNIFICANCES[0][0], keywords='kw1 kw2',
                        document=self.d, creator_id=118577, is_approved=True)
         rev_enUS.save()
 
@@ -566,10 +558,8 @@ def _create_document(title='Test Document', parent=None,
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=118577,
-                 significance=SIGNIFICANCES[0][0])
+                 significance=SIGNIFICANCES[0][0], is_approved=True)
     r.save()
-    d.current_revision = r
-    d.save()
     return d
 
 
@@ -584,7 +574,6 @@ def _new_document_data(tags):
         'keywords': 'key1, key2',
         'summary': 'lipsum',
         'content': 'lorem ipsum dolor sit amet',
-        'significance': SIGNIFICANCES[0][0],
     }
 
 
@@ -595,8 +584,7 @@ def _translation_data():
         'tags': 'tagUno,tagDos,tagTres',
         'keywords': 'keyUno, keyDos, keyTres',
         'summary': 'lipsumo',
-        'content': 'loremo ipsumo doloro sito ameto',
-        'significance': SIGNIFICANCES[0][0]}
+        'content': 'loremo ipsumo doloro sito ameto'}
 
 
 def _verify_doc_and_rev_data(data, doc, rev):

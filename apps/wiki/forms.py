@@ -99,7 +99,7 @@ class RevisionForm(forms.ModelForm):
 
     class Meta:
         model = Revision
-        fields = ('keywords', 'summary', 'content', 'significance', 'comment')
+        fields = ('keywords', 'summary', 'content', 'comment')
 
 
 class ReviewForm(forms.Form):

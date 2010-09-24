@@ -19,8 +19,7 @@ SIGNIFICANCES = (
     (10, _lazy('Minor details like punctuation and spelling errors')),
     (20, _lazy("Content changes that don't require immediate translation")),
     (30, _lazy('Major content changes that will make older translations '
-               'inaccurate')),
-    (40, _lazy('New document')))
+               'inaccurate')))
 
 CATEGORIES = (
     (1, _lazy('Troubleshooting')),)
@@ -170,7 +169,7 @@ class Revision(ModelBase):
 
     created = models.DateTimeField(default=datetime.now)
     reviewed = models.DateTimeField(null=True)
-    significance = models.IntegerField(choices=SIGNIFICANCES)
+    significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
     comment = models.CharField(max_length=255)
     reviewer = models.ForeignKey(User, related_name='reviewed_revisions',
                                  null=True)
