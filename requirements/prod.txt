@@ -22,3 +22,5 @@ pytz
 -e git://github.com/jsocol/commonware.git#egg=commonware
 -e git://github.com/pcraciunoiu/py-wikimarkup.git#egg=py-wikimarkup
 -e hg+http://bitbucket.org/danfairs/django-authority#egg=django_authority
+
+-e git://github.com/joshthecoder/tweepy.git#egg=tweepy

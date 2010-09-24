@@ -291,6 +291,11 @@ MINIFY_BUNDLES = {
         'ie': (
             'css/ie.css',
         ),
+        'customercare': (
+            'css/jqueryui/jquery.ui.core.css',
+            'css/jqueryui/jquery.ui.theme.css',
+            'css/customercare.css',
+        ),
     },
     'js': {
         'common': (
@@ -321,6 +326,12 @@ MINIFY_BUNDLES = {
             'js/wiki.js',
         ),
         'gallery': (
+        ),
+        'customercare': (
+            'js/libs/jqueryui.min.js',
+            'js/libs/jquery.NobleCount.js',
+            'js/libs/jquery.cookie.js',
+            'js/customercare.js',
         ),
     },
 }
@@ -426,3 +437,6 @@ VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes
 # Customare care tweet collection settings
 CC_MAX_TWEETS = 500 # Max. no. of tweets in DB
 CC_TWEETS_PERPAGE = 100 # How many tweets to collect in one go. Max: 100.
+
+TWITTER_CONSUMER_KEY = ''
+TWITTER_CONSUMER_SECRET = ''
