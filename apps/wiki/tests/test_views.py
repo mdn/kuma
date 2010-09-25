@@ -2,6 +2,7 @@ from nose.tools import eq_
 
 from sumo.tests import TestCase
 from wiki.models import VersionMetadata
+from wiki.tests import doc_rev
 from wiki.views import _version_groups
 
 
@@ -14,3 +15,15 @@ class TestVersionGroups(TestCase):
         want = {'fx': [(4.0, '35'), (5.0, '4')],
                 'm': [(2.0, '11')]}
         eq_(want, _version_groups(versions))
+
+
+class TestRedirects(TestCase):
+    fixtures = ['users.json']
+
+    def test_redirect_suppression(self):
+        """The document view shouldn't redirect when passed redirect=no."""
+        redirect, _ = doc_rev('REDIRECT [[http://smoo/]]')
+        response = self.client.get(
+                       redirect.get_absolute_url() + '?redirect=no',
+                       follow=True)
+        self.assertContains(response, 'REDIRECT ')

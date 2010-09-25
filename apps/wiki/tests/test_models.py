@@ -2,8 +2,11 @@ from nose.tools import eq_
 from taggit.models import TaggedItem
 
 from sumo.tests import TestCase
-from wiki.models import FirefoxVersion, OperatingSystem
-from wiki.tests import document, revision
+from wiki.models import (FirefoxVersion, OperatingSystem, Document,
+                         REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
+                         REDIRECT_HTML)
+from wiki.parser import wiki_to_html
+from wiki.tests import document, revision, doc_rev
 
 
 def _objects_eq(manager, list_):
@@ -98,14 +101,127 @@ class DocumentTests(TestCase):
         self._test_int_sets_and_descriptors(OperatingSystem,
                                             'operating_systems')
 
+    def _test_remembering_setter_unsaved(self, field):
+        """A remembering setter shouldn't kick in until the doc is saved."""
+        old_field = 'old_' + field
+        d = document()
+        setattr(d, field, 'Foo')
+        assert not hasattr(d, old_field), "Doc shouldn't have %s until it's" \
+                                          "saved." % old_field
 
-def doc_rev(html, content):
-    """Helper creates a document and revision given html and content."""
-    d = document(html=html)
-    d.save()
-    r = revision(document=d, content=content, is_approved=True)
-    r.save()
-    return (d, r)
+    def test_slug_setter_unsaved(self):
+        self._test_remembering_setter_unsaved('slug')
+
+    def test_title_setter_unsaved(self):
+        self._test_remembering_setter_unsaved('title')
+
+    def _test_remembering_setter(self, field):
+        old_field = 'old_' + field
+        d = document()
+        d.save()
+        old = getattr(d, field)
+
+        # Changing the field makes old_field spring into life:
+        setattr(d, field, 'Foo')
+        eq_(old, getattr(d, old_field))
+
+        # Changing it back makes old_field disappear:
+        setattr(d, field, old)
+        assert not hasattr(d, old_field)
+
+        # Change it again once:
+        setattr(d, field, 'Foo')
+
+        # And twice:
+        setattr(d, field, 'Bar')
+
+        # And old_field should remain as it was, since it hasn't been saved
+        # between the two changes:
+        eq_(old, getattr(d, old_field))
+
+    def test_slug_setter(self):
+        """Make sure changing a slug remembers its old value."""
+        self._test_remembering_setter('slug')
+
+    def test_title_setter(self):
+        """Make sure changing a title remembers its old value."""
+        self._test_remembering_setter('title')
+
+    def test_redirect_prefix(self):
+        """Test accuracy of the prefix that helps us recognize redirects."""
+        assert wiki_to_html(REDIRECT_CONTENT % 'foo').startswith(REDIRECT_HTML)
+
+
+class RedirectTests(TestCase):
+    """Tests for automatic creation of redirects when slug or title changes"""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.d, self.r = doc_rev()
+        self.old_title = self.d.title
+        self.old_slug = self.d.slug
+
+    def test_change_slug(self):
+        """Test proper redirect creation on slug change."""
+        self.d.slug = 'new-slug'
+        self.d.save()
+        redirect = Document.uncached.get(slug=self.old_slug)
+        # "uncached" isn't necessary, but someday a worse caching layer could
+        # make it so.
+        eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
+        eq_(REDIRECT_TITLE % dict(old=self.d.title, number=2), redirect.title)
+
+    def test_change_title(self):
+        """Test proper redirect creation on title change."""
+        self.d.title = 'New Title'
+        self.d.save()
+        redirect = Document.uncached.get(title=self.old_title)
+        eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
+        eq_(REDIRECT_SLUG % dict(old=self.d.slug, number=2), redirect.slug)
+
+    def test_change_slug_and_title(self):
+        """Assert only one redirect is made when both slug and title change."""
+        self.d.title = 'New Title'
+        self.d.slug = 'new-slug'
+        self.d.save()
+        eq_(REDIRECT_CONTENT % self.d.title,
+            Document.uncached.get(
+                slug=self.old_slug,
+                title=self.old_title).current_revision.content)
+
+    def test_no_redirect_on_unsaved_change(self):
+        """No redirect should be made when an unsaved doc's title or slug is
+        changed."""
+        d = document(title='Gerbil')
+        d.title = 'Weasel'
+        d.save()
+        # There should be no redirect from Gerbil -> Weasel:
+        assert not Document.uncached.filter(title='Gerbil').exists()
+
+    def _test_collision_avoidance(self, attr, other_attr, template):
+        """When creating redirects, dodge existing docs' titles and slugs."""
+        # Create a doc called something like Whatever Redirect 2:
+        document(locale=self.d.locale,
+                **{other_attr: template % dict(old=getattr(self.d, other_attr),
+                                               number=2)}).save()
+
+        # Trigger creation of a redirect of a new title or slug:
+        setattr(self.d, attr, 'new')
+        self.d.save()
+
+        # It should be called something like Whatever Redirect 3:
+        redirect = Document.uncached.get(**{attr: getattr(self,
+                                                          'old_' + attr)})
+        eq_(template % dict(old=getattr(self.d, other_attr),
+                            number=3), getattr(redirect, other_attr))
+
+    def test_slug_collision_avoidance(self):
+        """Dodge existing slugs when making redirects due to title changes."""
+        self._test_collision_avoidance('slug', 'title', REDIRECT_TITLE)
+
+    def test_title_collision_avoidance(self):
+        """Dodge existing titles when making redirects due to slug changes."""
+        self._test_collision_avoidance('title', 'slug', REDIRECT_SLUG)
 
 
 class RevisionTests(TestCase):
@@ -114,7 +230,7 @@ class RevisionTests(TestCase):
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
-        d, _ = doc_rev('This goes away', 'Replace document html')
+        d, _ = doc_rev('Replace document html')
 
         assert 'Replace document html' in d.html, \
                '"Replace document html" not in %s' % d.html
@@ -129,7 +245,7 @@ class RevisionTests(TestCase):
 
     def test_unapproved_revision_not_updates_html(self):
         """Creating an unapproved revision does not update document.html"""
-        d, _ = doc_rev('', 'Here to stay')
+        d, _ = doc_rev('Here to stay')
 
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
 
@@ -142,5 +258,5 @@ class RevisionTests(TestCase):
     def test_revision_unicode(self):
         """Revision containing unicode characters is saved successfully."""
         str = u' \r\nFirefox informa\xe7\xf5es \u30d8\u30eb'
-        _, r = doc_rev('', str)
+        _, r = doc_rev(str)
         eq_(str, r.content)

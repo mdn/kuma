@@ -21,10 +21,10 @@ class TestCaseBase(TestCase):
 def document(**kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    auto_title = str(datetime.now())
-    defaults = {'category': CATEGORIES[0][0], 'title': auto_title}
+    defaults = {'category': CATEGORIES[0][0], 'title': str(datetime.now())}
     defaults.update(kwargs)
-    defaults['slug'] = slugify(defaults['title'])
+    if 'slug' not in kwargs:
+        defaults['slug'] = slugify(defaults['title'])
     return Document(**defaults)
 
 
@@ -51,3 +51,12 @@ def revision(**kwargs):
     defaults.update(kwargs)
 
     return Revision(**defaults)
+
+
+def doc_rev(content=''):
+    """Helper creates a document and revision given html and content."""
+    d = document()
+    d.save()
+    r = revision(document=d, content=content, is_approved=True)
+    r.save()
+    return d, r

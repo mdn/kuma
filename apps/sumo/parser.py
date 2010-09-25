@@ -34,9 +34,7 @@ def wiki_to_html(wiki_markup):
 
 
 def _getWikiLink(link):
-    """
-    Checks the page exists, and returns its URL, or the URL to create it.
-    """
+    """Checks the page exists, and returns its URL or the URL to create it."""
     try:
         d = Document.objects.get(title=link, is_template=False)
     except Document.DoesNotExist:
@@ -48,17 +46,14 @@ def _getWikiLink(link):
 
 def _hook_internal_link(parser, space, name):
     """Parses text and returns internal link."""
-    link = name
-    text = name
+    link = text = name
 
     # Split on pipe -- [[href|name]]
-    separator = name.find('|')
-    if separator != -1:
+    if '|' in name:
         link, text = link.split('|', 1)
 
-    hash_pos = link.find('#')
     hash = ''
-    if hash_pos != -1:
+    if '#' in link:
         link, hash = link.split('#', 1)
 
     # Sections use _, page names use +

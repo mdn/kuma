@@ -8,10 +8,12 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
 from django.conf import settings
+from django.views.decorators.http import require_GET
 
 import jingo
 from tower import ugettext_lazy as _lazy
 
+from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
@@ -53,12 +55,36 @@ def _version_groups(versions):
 VERSION_GROUP_JSON = json.dumps(_version_groups(FIREFOX_VERSIONS))
 
 
+@require_GET
 def document(request, document_slug):
     """View a wiki document."""
     # This may change depending on how we decide to structure
     # the url and handle locales.
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
+
+    # Redirect if appropriate:
+    # Don't redirect on redirect=no (like Wikipedia), so we can link from a
+    # redirected-to-page back to a "Redirected from..." link, so you can edit
+    # the redirect.
+    redirect_url = (None if request.GET.get('redirect') == 'no'
+                    else doc.redirect_url())
+    if redirect_url:
+        return HttpResponseRedirect(urlparams(redirect_url,
+                                              redirectslug=doc.slug,
+                                              redirectlocale=doc.locale))
+
+    # Get "redirected from" doc if we were redirected:
+    redirect_slug = request.GET.get('redirectslug')
+    redirect_locale = request.GET.get('redirectlocale')
+    redirected_from = None
+    if redirect_slug and redirect_locale:
+        try:
+            redirected_from = Document.objects.get(locale=redirect_locale,
+                                                   slug=redirect_slug)
+        except Document.DoesNotExist:
+            pass
+
     return jingo.render(request, 'wiki/document.html',
                         {'document': doc,
                          'oses': OPERATING_SYSTEMS,
@@ -66,9 +92,11 @@ def document(request, document_slug):
                          'browsers': GROUPED_FIREFOX_VERSIONS,
                          'browsers_json': BROWSER_ABBR_JSON,
                          'version_group_json': VERSION_GROUP_JSON,
-                         'missing_msg_json': json.dumps(unicode(MISSING_MSG))})
+                         'missing_msg_json': json.dumps(unicode(MISSING_MSG)),
+                         'redirected_from': redirected_from})
 
 
+@require_GET
 def list_documents(request, category=None):
     """List wiki documents."""
     docs = Document.objects.filter(locale=request.locale)
@@ -181,6 +209,7 @@ def new_revision(request, document_slug, revision_id=None):
                          'document': doc})
 
 
+@require_GET
 def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
@@ -226,6 +255,7 @@ def review_revision(request, document_slug, revision_id):
                         {'revision': rev, 'document': doc, 'form': form})
 
 
+@require_GET
 def compare_revisions(request, document_slug):
     """Compare two wiki document revisions.
 

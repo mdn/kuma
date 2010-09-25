@@ -29,6 +29,38 @@ class DocumentTests(TestCaseBase):
         eq_(d.title, doc('#main-content h1').text())
         eq_(pq(d.html)('div').text(), doc('#doc-content div').text())
 
+    def test_redirect(self):
+        """Make sure documents with REDIRECT directives redirect properly.
+
+        Also check the backlink to the redirect page.
+
+        """
+        target = document()
+        target.save()
+        target_url = target.get_absolute_url()
+
+        # Ordinarily, a document with no approved revisions cannot have HTML,
+        # but we shove it in manually here as a shortcut:
+        redirect = document(
+                    html='<p>REDIRECT <a href="%s">Boo</a></p>' % target_url)
+        redirect.save()
+        redirect_url = redirect.get_absolute_url()
+        response = self.client.get(redirect_url, follow=True)
+        self.assertRedirects(response, urlparams(target_url,
+                                                redirectlocale=redirect.locale,
+                                                redirectslug=redirect.slug))
+        self.assertContains(response, redirect_url + '?redirect=no')
+
+    def test_redirect_from_nonexistent(self):
+        """The template shouldn't crash or print a backlink if the "from" page
+        doesn't exist."""
+        d = document()
+        d.save()
+        response = self.client.get(urlparams(d.get_absolute_url(),
+                                             redirectlocale='en-US',
+                                             redirectslug='nonexistent'))
+        self.assertNotContains(response, 'Redirected from ')
+
 
 class NewDocumentTests(TestCaseBase):
     """Tests for the New Document template"""

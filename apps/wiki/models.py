@@ -2,6 +2,7 @@ from collections import namedtuple
 from datetime import datetime
 from itertools import chain
 
+from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy
 
 from django.conf import settings
@@ -60,6 +61,20 @@ OPERATING_SYSTEMS = (
     OsMetaData(5, _lazy('Android'), 'android'))
 
 
+REDIRECT_HTML = '<p>REDIRECT <a '  # how a redirect looks as rendered HTML
+REDIRECT_CONTENT = 'REDIRECT [[%s]]'
+REDIRECT_TITLE = _lazy('%(old)s Redirect %(number)i')
+REDIRECT_SLUG = _lazy('%(old)s-redirect-%(number)i')
+
+
+class TitleCollision(Exception):
+    """An attempt to create two pages of the same title in one locale"""
+
+
+class SlugCollision(Exception):
+    """An attempt to create two pages of the same slug in one locale"""
+
+
 def _inherited(parent_attr, direct_attr):
     """Return a descriptor delegating to an attr of the original document.
 
@@ -97,10 +112,11 @@ class Document(ModelBase, TaggableMixin):
                                          related_name='current_for+')
 
     # The Document I was translated from. NULL iff this doc is in the default
-    # locale. TODO: validate against settings.WIKI_DEFAULT_LANGUAGE.
+    # locale or it is nonlocalizable. TODO: validate against
+    # settings.WIKI_DEFAULT_LANGUAGE.
     parent = models.ForeignKey('self', related_name='translations', null=True)
 
-    # Cached HTML rendering of wiki markup:
+    # Cached HTML rendering of approved revision's wiki markup:
     html = models.TextField(editable=False)
 
     # Uncomment if/when we need a denormalized flag for how significantly
@@ -122,9 +138,98 @@ class Document(ModelBase, TaggableMixin):
         unique_together = (('parent', 'locale'), ('title', 'locale'),
                            ('slug', 'locale'))
 
+    def _collides(self, attr, value):
+        """Return whether there exists a doc in this locale whose `attr` attr
+        is equal to mine."""
+        return Document.uncached.filter(locale=self.locale,
+                                        **{attr: value}).exists()
+
+    def _raise_if_collides(self, attr, exception):
+        """Raise an exception if a page of this title/slug already exists."""
+        if self.id is None or hasattr(self, 'old_' + attr):
+            # If I am new or my title/slug changed...
+            if self._collides(attr, getattr(self, attr)):
+                raise exception
+
+    def _attr_for_redirect(self, attr, template):
+        """Return the slug or title for a new redirect.
+
+        `template` is a Python string template with "old" and "number" tokens
+        used to create the variant.
+
+        """
+        def unique_attr():
+            """Return a variant of getattr(self, attr) such that there is no
+            Document of my locale with string attribute `attr` equal to it.
+
+            Never returns the original attr value.
+
+            """
+            # "My God, it's full of race conditions!"
+            i = 2
+            while True:
+                new_value = template % dict(old=getattr(self, attr), number=i)
+                if not self._collides(attr, new_value):
+                    return new_value
+                i += 1
+
+        old_attr = 'old_' + attr
+        if hasattr(self, old_attr):
+            # My slug (or title) is changing; we can reuse it for the redirect.
+            return getattr(self, old_attr)
+        else:
+            # Come up with a unique slug (or title):
+            return unique_attr()
+
     def save(self, *args, **kwargs):
         self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
+
+        self._raise_if_collides('slug', SlugCollision)
+        self._raise_if_collides('title', TitleCollision)
+
         super(Document, self).save(*args, **kwargs)
+
+        # Make redirects if there's an approved revision and title or slug
+        # changed. Allowing redirects for unapproved docs would (1) be of
+        # limited use and (2) require making Revision.creator nullable.
+        slug_changed = hasattr(self, 'old_slug')
+        title_changed = hasattr(self, 'old_title')
+        if self.current_revision and (slug_changed or title_changed):
+            # TODO: Mark the redirect doc as unlocalizable when there is way to
+            # represent that.
+            doc = Document.objects.create(locale=self.locale,
+                                          title=self._attr_for_redirect(
+                                              'title', REDIRECT_TITLE),
+                                          slug=self._attr_for_redirect(
+                                              'slug', REDIRECT_SLUG),
+                                          category=self.category)
+            Revision.objects.create(document=doc,
+                                    content=REDIRECT_CONTENT % self.title,
+                                    is_approved=True,
+                                    reviewer=self.current_revision.creator,
+                                    creator=self.current_revision.creator)
+
+            if slug_changed:
+                del self.old_slug
+            if title_changed:
+                del self.old_title
+
+    def __setattr__(self, name, value):
+        """Trap setting slug and title, recording initial value."""
+        # Public API: delete the old_title or old_slug attrs after changing
+        # title or slug (respectively) to suppress redirect generation.
+        if getattr(self, 'id', None):
+            # I have been saved and so am worthy of a redirect.
+            if name in ('slug', 'title') and hasattr(self, name):
+                old_name = 'old_' + name
+                if not hasattr(self, old_name):
+                    if getattr(self, name) != value:
+                        # Save original value:
+                        setattr(self, old_name, getattr(self, name))
+                elif value == getattr(self, old_name):
+                    # They changed the attr back to its original value.
+                    delattr(self, old_name)
+        super(Document, self).__setattr__(name, value)
 
     @property
     def content_parsed(self):
@@ -141,6 +246,21 @@ class Document(ModelBase, TaggableMixin):
 
     def get_absolute_url(self):
         return reverse('wiki.document', locale=self.locale, args=[self.slug])
+
+    def redirect_url(self):
+        """If I am a redirect, return the absolute URL to which I redirect.
+
+        Otherwise, return None.
+
+        """
+        # If a document starts with REDIRECT_HTML and contains any <a> tags
+        # with hrefs, return the href of the first one. This trick saves us
+        # from having to parse the HTML every time.
+        if self.html.startswith(REDIRECT_HTML):
+            anchors = PyQuery(self.html)('a[href]')
+            if anchors:
+                return anchors[0].get('href')
+        return None
 
     def __unicode__(self):
         return '[%s] %s' % (self.locale, self.title)
