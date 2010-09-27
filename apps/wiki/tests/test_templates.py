@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.conf import settings
 
+import mock
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -11,6 +13,7 @@ from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 from wiki.tests import TestCaseBase, document, revision
 from wiki.forms import DocumentForm, RevisionForm
 from wiki.views import _process_doc_and_rev_form
+import wiki.tasks
 
 
 class DocumentTests(TestCaseBase):
@@ -349,8 +352,12 @@ class ReviewRevisionTests(TestCaseBase):
         self.assertContains(response,
                             '<span data-for="mac" class="for">Ipsum</span>')
 
-    def test_approve_revision(self):
+    @mock.patch_object(wiki.tasks.send_reviewed_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_approve_revision(self, get_current, delay):
         """Verify revision approval."""
+        get_current.return_value.domain = 'testserver'
+
         significance = SIGNIFICANCES[0][0]
         response = post(self.client, 'wiki.review_revision',
                         {'approve': 'Approve Revision',
@@ -361,9 +368,14 @@ class ReviewRevisionTests(TestCaseBase):
         eq_(significance, r.significance)
         assert r.reviewed
         assert r.is_approved
+        delay.assert_called_with(r, r.document, '')
 
-    def test_reject_revision(self):
+    @mock.patch_object(wiki.tasks.send_reviewed_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_reject_revision(self, get_current, delay):
         """Verify revision rejection."""
+        get_current.return_value.domain = 'testserver'
+
         comment = 'no good'
         response = post(self.client, 'wiki.review_revision',
                         {'reject': 'Reject Revision',
@@ -373,6 +385,7 @@ class ReviewRevisionTests(TestCaseBase):
         r = Revision.uncached.get(pk=self.revision.id)
         assert r.reviewed
         assert not r.is_approved
+        delay.assert_called_with(r, r.document, comment)
 
     def test_review_without_permission(self):
         """Make sure unauthorized users can't review revisions."""

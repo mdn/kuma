@@ -9,7 +9,6 @@ from questions.tasks import (build_answer_notification,
                              build_solution_notification)
 from . import TestCaseBase
 import notifications.tasks
-from questions.models import Question, Answer
 from sumo.tests import post
 
 

@@ -16,6 +16,7 @@ from sumo.urlresolvers import reverse
 from .models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
                      FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
 from .forms import DocumentForm, RevisionForm, ReviewForm
+from .tasks import send_reviewed_notification
 
 
 OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
@@ -204,8 +205,9 @@ def review_revision(request, document_slug, revision_id):
                 rev.significance = form.cleaned_data['significance']
             rev.save()
 
-            # TODO: Send notification to revision creator.
-            # reviewer_message = form.cleaned_data['comment']
+            # Send notification to revision creator.
+            msg = form.cleaned_data['comment']
+            send_reviewed_notification.delay(rev, doc, msg)
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document_slug]))
