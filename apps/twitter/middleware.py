@@ -20,7 +20,8 @@ class SessionMiddleware(object):
 
         auth = tweepy.OAuthHandler(settings.TWITTER_CONSUMER_KEY, 
                                    settings.TWITTER_CONSUMER_SECRET,
-                                   ssl_url(request))
+                                   ssl_url(request),
+                                   secure=True)
 
         if request.GET.get('twitter_delete_auth'):
             request.twitter = Session.factory()
