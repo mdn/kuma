@@ -1,7 +1,7 @@
 BEGIN;
 CREATE TABLE `customercare_tweet` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    `tweet_id` bigint NOT NULL,
+    `tweet_id` bigint NOT NULL UNIQUE,
     `raw_json` longtext NOT NULL,
     `locale` varchar(20) NOT NULL,
     `created` datetime NOT NULL
