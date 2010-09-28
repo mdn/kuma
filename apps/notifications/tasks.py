@@ -2,6 +2,7 @@ import logging
 
 from django.core.mail import send_mass_mail
 from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
 
 from celery.decorators import task
 
@@ -24,8 +25,8 @@ def send_notification(content_type, pk, subject, content, exclude=None,
     if exclude:
         watchers = watchers.exclude(email__in=exclude)
 
-    from_address = 'notifications@support.mozilla.com'
-    emails = [(subject, content, from_address, [w.email]) for w in watchers]
+    emails = [(subject, content, settings.NOTIFICATIONS_FROM_ADDRESS,
+               [w.email]) for w in watchers]
 
     send_mass_mail(emails)
 

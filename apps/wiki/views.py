@@ -16,7 +16,8 @@ from sumo.urlresolvers import reverse
 from .models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
                      FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
 from .forms import DocumentForm, RevisionForm, ReviewForm
-from .tasks import send_reviewed_notification
+from .tasks import (send_reviewed_notification,
+                    send_ready_for_review_notification)
 
 
 OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
@@ -112,6 +113,8 @@ def new_document(request):
         rev.document = doc
         rev.creator = request.user
         rev.save()
+
+        send_ready_for_review_notification.delay(rev, doc)
 
         return HttpResponseRedirect(reverse('wiki.document_revisions',
                                     args=[doc.slug]))
@@ -343,3 +346,5 @@ def _process_doc_and_rev_form(document_form, revision_form, locale, user,
     new_rev.creator = user
     new_rev.based_on = base_revision
     new_rev.save()
+
+    send_ready_for_review_notification.delay(new_rev, doc)

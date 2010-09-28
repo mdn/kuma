@@ -442,3 +442,5 @@ CC_TWEETS_PERPAGE = 100 # How many tweets to collect in one go. Max: 100.
 
 TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''
+
+NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'

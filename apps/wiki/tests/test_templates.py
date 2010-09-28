@@ -48,8 +48,12 @@ class NewDocumentTests(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-form input[name="title"]')))
 
-    def test_new_document_POST(self):
+    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_document_POST(self, get_current, delay):
         """HTTP POST to new document URL creates the document."""
+        get_current.return_value.domain = 'testserver'
+
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2']
         data = _new_document_data(tags)
@@ -69,9 +73,14 @@ class NewDocumentTests(TestCaseBase):
         eq_(data['keywords'], r.keywords)
         eq_(data['summary'], r.summary)
         eq_(data['content'], r.content)
+        delay.assert_called_with(r, d)
 
-    def test_new_document_other_locale(self):
+    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_document_other_locale(self, get_current, delay):
         """Make sure we can create a document in a non-default locale."""
+        get_current.return_value.domain = 'testserver'
+
         self.client.login(username='admin', password='testpass')
         data = _new_document_data(['tag1', 'tag2'])
         locale = 'es'
@@ -79,6 +88,7 @@ class NewDocumentTests(TestCaseBase):
                                     data, follow=True)
         d = Document.objects.get(title=data['title'])
         eq_(locale, d.locale)
+        delay.assert_called_with(d.revisions.all()[0], d)
 
     def test_new_document_POST_empty_title(self):
         """Trigger required field validation for title."""
@@ -220,13 +230,17 @@ class NewRevisionTests(TestCaseBase):
         eq_(doc('#id_summary')[0].value, r.summary)
         eq_(doc('#id_content')[0].value, r.content)
 
-    def test_new_revision_POST_document_with_current(self):
+    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_revision_POST_document_with_current(self, get_current, delay):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case already has a current_revision, therefore
         the document document fields are not editable.
 
         """
+        get_current.return_value.domain = 'testserver'
+
         response = self.client.post(
             reverse('wiki.new_revision', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
@@ -236,14 +250,20 @@ class NewRevisionTests(TestCaseBase):
 
         new_rev = self.d.revisions.order_by('-id')[0]
         eq_(self.d.current_revision, new_rev.based_on)
+        delay.assert_called_with(new_rev, self.d)
 
-    def test_new_revision_POST_document_without_current(self):
+    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_revision_POST_document_without_current(self, get_current,
+                                                        delay):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case doesn't have a current_revision, therefore
         the document fields are open for editing.
 
         """
+        get_current.return_value.domain = 'testserver'
+
         rev = self.d.current_revision
         self.d.current_revision = None
         self.d.save()
@@ -256,6 +276,7 @@ class NewRevisionTests(TestCaseBase):
 
         new_rev = self.d.revisions.order_by('-id')[0]
         eq_(rev, new_rev.based_on)
+        delay.assert_called_with(new_rev, self.d)
 
     def test_new_revision_POST_removes_old_tags(self):
         """Changing the tags on a document removes the old tags from
@@ -514,8 +535,12 @@ class TranslateTests(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('form textarea[name="content"]')))
 
-    def test_first_translation_to_locale(self):
+    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_first_translation_to_locale(self, get_current, delay):
         """Create the first translation of a doc to new locale."""
+        get_current.return_value.domain = 'testserver'
+
         url = reverse('wiki.translate', locale='es', args=[self.d.slug])
         data = _translation_data()
         response = self.client.post(url, data)
@@ -528,9 +553,14 @@ class TranslateTests(TestCaseBase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
+        delay.asset_called_with(rev, rev.document)
 
-    def test_another_translation_to_locale(self):
+    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_another_translation_to_locale(self, get_current, delay):
         """Create the second translation of a doc."""
+        get_current.return_value.domain = 'testserver'
+
         # First create the first one with test above
         self.test_first_translation_to_locale()
         # Approve the translation
@@ -562,6 +592,7 @@ class TranslateTests(TestCaseBase):
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
         assert not rev.is_approved
+        delay.asset_called_with(rev, doc)
 
 
 def _create_document(title='Test Document', parent=None,

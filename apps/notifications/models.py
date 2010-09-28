@@ -15,7 +15,9 @@ class EventWatch(ModelBase):
     """
 
     content_type = models.ForeignKey(ContentType)
-    watch_id = models.IntegerField(db_index=True)
+    # If watch_id is set to null, then the watch is for the model and not
+    # an instance.
+    watch_id = models.IntegerField(db_index=True, null=True)
     event_type = models.CharField(max_length=20, db_index=True)
     email = models.EmailField(db_index=True)
     hash = models.CharField(max_length=40, null=True, db_index=True)

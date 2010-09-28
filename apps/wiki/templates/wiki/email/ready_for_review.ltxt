@@ -1,0 +1,10 @@
+{% load i18n %}
+{# L10n: This is an email. Whitespace matters! #}
+{% blocktrans %}
+{{ creator }} submitted a new revision to the document
+{{ document_title }}.
+
+To review this revision, click the following
+link, or paste it into your browser's location bar:
+{% endblocktrans %}
+https://{{ host }}{{ review_url }}

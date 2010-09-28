@@ -7,8 +7,8 @@ from .models import EventWatch
 def create_watch(kls, id, email, event_type):
     """Start watching an object. If already watching, returns False."""
 
-    # Check that this object exists, or raise DNE.
-    kls.objects.get(pk=id)
+    if id != None and not kls.objects.filter(pk=id).exists():
+        raise kls.DoesNotExist
 
     ct = ContentType.objects.get_for_model(kls)
     try:
