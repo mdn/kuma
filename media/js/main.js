@@ -19,9 +19,6 @@
  *
  */
  jQuery.fn.autoPlaceholderText = function () {
-    // TODO: Make this CSS driven?
-    var colors = ['#9b9b9b',  // default value grayed out
-                  '#333'];    // focus value
 
     // check for html5 placeholder support and fallback to js solution
     if (!Modernizr.input.placeholder) {
@@ -29,14 +26,14 @@
         function onFocus() {
             var $this = $(this);
             if ($this.val() === $this.attr('placeholder')) {
-                $this.val('').css('color',  colors[1]);
+                $this.val('').addClass('placeholder-focused');
             }
         }
 
         function onBlur() {
             var $this = $(this);
             if ($this.val() === '') {
-                $this.val($this.attr('placeholder')).css('color', colors[0]);
+                $this.val($this.attr('placeholder')).removeClass('placeholder-focused');
             }
         }
 
@@ -45,7 +42,7 @@
             var placeholder = $this.attr('placeholder');
             if (placeholder) {
                 if (!$this.val() || $this.val() === placeholder) {
-                    $this.val(placeholder).css('color', colors[0]);
+                    $this.val(placeholder).addClass('input-placeholder');
                 }
                 $this.focus(onFocus).blur(onBlur);
             }

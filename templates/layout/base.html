@@ -46,9 +46,10 @@
 <div id="content">
 
 {% block sidebar %}
-<div id="sidebar">
-{% include 'layout/sidebar.html' %}
-</div>
+  <div id="sidebar">
+    {% include 'layout/sidebar.html' %}
+    {% block extra_sidebar %}{% endblock %}
+  </div>
 {% endblock %}
 
 {% block breadcrumbs %}

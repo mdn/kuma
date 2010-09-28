@@ -615,4 +615,11 @@ a.ui-dialog-titlebar-close {
 div#upload-dialog {
     padding: .5em;
 }
-/* END jQueryUI styles
+/* END jQueryUI styles */
+
+.input-placeholder {
+    color: #9b9b9b;
+}
+.input-placeholder.placeholder-focused {
+    color: #333;
+}

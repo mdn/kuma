@@ -33,7 +33,7 @@
       <li class="tweet" data-reply_to="{{ tweet.reply_to }}">
         <a href="http://twitter.com/{{ tweet.user }}" class="avatar"><img src="{{ tweet.profile_img }}" /></a>
         <span class="twittername">{{ tweet.user }}</span><span class="time">{{ tweet.date|utctimesince }}</span>
-        <p class="text">{{ tweet.text }}</p>
+        <p class="text">{{ tweet.text|safe }}</p>
       </li>
       {% endfor %}
     </ul>
@@ -42,4 +42,13 @@
   {% include 'customercare/reply_modal.html' %}
 
   {% include 'customercare/twitter_modal.html' %}
+{% endblock %}
+
+{% block extra_sidebar %}
+  <div id="side-getinvolved">
+    <h3>Take it to the next level!</h3>
+    <p>Want to go beyond 140 characters? Join the support community and help many more
+       Firefox users in the <a href="{{ url('questions.questions') }}">forum</a>.</p>
+    <p><a href="/"><img src="{{ MEDIA_URL }}img/sumo-logo.png" class="sumo-logo"></a></p>
+  </div>
 {% endblock %}

@@ -63,6 +63,10 @@ body {
     float: left;
     padding: 4px;
 }
+.avatar img {
+    width: 48px;
+    height: 48px;
+}
 .tweets-header {
 	padding-left: 15px;
 }
@@ -173,6 +177,10 @@ body {
 	font-weight: bold;
 }
 
+#initial-tweet a.avatar {
+  display: inline;
+}
+
 #initial-tweet .box a {
 	padding-bottom: 4px;
 }
@@ -213,7 +221,7 @@ body {
 }
 
 #reply-container h3.ui-accordion-header a {
-	color: #afaba3;
+  color: #69645b;
 	display: block;
 }
 
@@ -242,7 +250,7 @@ body {
 
 #reply-container h3.ui-accordion-header.ui-state-default a {
 	font-weight: normal;
-	color: #afaba3;
+  color: #69645b;
 }
 
 #reply-container h3.ui-accordion-header.ui-state-active a {
@@ -268,7 +276,6 @@ body {
 	height: 65px;
 	border: 1px solid #aaa;
 	padding: 10px 15px;
-	color: #afaba3;
 	background: #fff;
   font-size: .9em;
 }
@@ -276,7 +283,7 @@ body {
 #reply #reply-arrow {
 	position: relative;
 	left: 30px;
-	top: 4px;
+	top: 5px;
 	display: inline;
 }
 
@@ -347,4 +354,7 @@ body {
 
 #twitter-modal {
     display: none;
+}
+.input-placeholder {
+  color: #69645b;
 }

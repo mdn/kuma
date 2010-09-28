@@ -6,6 +6,8 @@ $(document).ready(function() {
     $('#accordion').accordion({
         'icons': false,
         'autoHeight': false,
+        'collpsible': true,
+        'active': false,
     });
 
     $('.tweet').click(function() {
@@ -60,9 +62,18 @@ $(document).ready(function() {
             { 'tweet': tweet, 'reply_to': reply_to },
             function() {
                 $('#submit-message').show();
+                setTimeout(function () { 
+                    $('#reply-modal').dialog('close');  
+                    $('#submit-message').hide(); 
+                }, 2000);
             }
         );
         e.preventDefault();
         return false;
+    });
+
+    $(".ui-widget-overlay").live("click", function() {  
+        $("#reply-modal").dialog("close"); 
+        $("#twitter-modal").dialog("close"); 
     });
 });
