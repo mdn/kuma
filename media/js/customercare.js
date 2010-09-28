@@ -1,3 +1,8 @@
+function clear_reply_dialog() {
+    $('.reply-message').val('').trigger('blur');
+    $('#submit-message').hide(); 
+}
+
 $(document).ready(function() {
     $('.reply-message').NobleCount('.character-counter');
 
@@ -41,6 +46,7 @@ $(document).ready(function() {
             'modal': true, 
             'position': 'top',
             'width': 500,
+            'close': clear_reply_dialog
         });
     });
 
@@ -55,16 +61,20 @@ $(document).ready(function() {
 
     $('#reply-modal #submit').click(function(e) {
         var action = $('#reply-modal form').attr('action');
-        var tweet = $('.reply-message').val();
         var reply_to = $('#reply_to').val();
+        var reply_to_name = $('#reply-modal .twittername').text();
+        var tweet = $('.reply-message').val();
         $.post(
             action, 
-            { 'tweet': tweet, 'reply_to': reply_to },
+            { 
+                'tweet': tweet, 
+                'reply_to': reply_to, 
+                'reply_to_name': reply_to_name,
+            },
             function() {
                 $('#submit-message').show();
                 setTimeout(function () { 
                     $('#reply-modal').dialog('close');  
-                    $('#submit-message').hide(); 
                 }, 2000);
             }
         );

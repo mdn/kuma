@@ -48,8 +48,9 @@ def landing(request):
 def twitter_post(request):
     # FIXME ensure post length is under twitter limit
     # do this in JS too
-    tweet = request.POST.get('tweet')
     reply_to = request.POST.get('reply_to')
-    # TODO remove debug line
-    request.twitter.api.update_status(tweet, '25684040574')
+    reply_to_name = request.POST.get('reply_to_name')
+    tweet = request.POST.get('tweet')
+    content = '@{0} {1}'.format(reply_to_name, tweet)
+    request.twitter.api.update_status(content, reply_to)
     return http.HttpResponse()
