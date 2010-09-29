@@ -231,8 +231,10 @@ class NewRevisionTests(TestCaseBase):
         eq_(doc('#id_content')[0].value, r.content)
 
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_new_revision_POST_document_with_current(self, get_current, delay):
+    def test_new_revision_POST_document_with_current(
+            self, get_current, edited_delay, ready_delay):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case already has a current_revision, therefore
@@ -250,12 +252,14 @@ class NewRevisionTests(TestCaseBase):
 
         new_rev = self.d.revisions.order_by('-id')[0]
         eq_(self.d.current_revision, new_rev.based_on)
-        delay.assert_called_with(new_rev, self.d)
+        edited_delay.assert_called_with(new_rev, self.d)
+        ready_delay.assert_called_with(new_rev, self.d)
 
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_new_revision_POST_document_without_current(self, get_current,
-                                                        delay):
+    def test_new_revision_POST_document_without_current(
+            self, get_current, edited_delay, ready_delay):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case doesn't have a current_revision, therefore
@@ -276,7 +280,8 @@ class NewRevisionTests(TestCaseBase):
 
         new_rev = self.d.revisions.order_by('-id')[0]
         eq_(rev, new_rev.based_on)
-        delay.assert_called_with(new_rev, self.d)
+        edited_delay.assert_called_with(new_rev, self.d)
+        ready_delay.assert_called_with(new_rev, self.d)
 
     def test_new_revision_POST_removes_old_tags(self):
         """Changing the tags on a document removes the old tags from
@@ -536,8 +541,10 @@ class TranslateTests(TestCaseBase):
         eq_(1, len(doc('form textarea[name="content"]')))
 
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_first_translation_to_locale(self, get_current, delay):
+    def test_first_translation_to_locale(self, get_current, edited_delay,
+                                         ready_delay):
         """Create the first translation of a doc to new locale."""
         get_current.return_value.domain = 'testserver'
 
@@ -553,11 +560,14 @@ class TranslateTests(TestCaseBase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
-        delay.asset_called_with(rev, rev.document)
+        edited_delay.assert_called_with(rev, new_doc)
+        ready_delay.assert_called_with(rev, new_doc)
 
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_another_translation_to_locale(self, get_current, delay):
+    def test_another_translation_to_locale(self, get_current, edited_delay,
+                                           ready_delay):
         """Create the second translation of a doc."""
         get_current.return_value.domain = 'testserver'
 
@@ -592,7 +602,8 @@ class TranslateTests(TestCaseBase):
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
         assert not rev.is_approved
-        delay.asset_called_with(rev, doc)
+        edited_delay.assert_called_with(rev, doc)
+        ready_delay.assert_called_with(rev, doc)
 
 
 def _create_document(title='Test Document', parent=None,

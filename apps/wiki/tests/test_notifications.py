@@ -11,14 +11,15 @@ from nose.tools import eq_
 from . import TestCaseBase, revision
 import notifications.tasks
 from wiki.tasks import (send_reviewed_notification,
-                        send_ready_for_review_notification)
+                        send_ready_for_review_notification,
+                        send_edited_notification)
 
 
 REVIEWED_EMAIL_CONTENT = """
 
 Your revision has been reviewed.
 
-admin has approved your revision to the document 
+admin has approved your revision to the document
 %s.
 
 Message from the reviewer:
@@ -41,6 +42,18 @@ To review this revision, click the following
 link, or paste it into your browser's location bar:
 
 https://testserver/en-US/kb/%s/review/%s
+"""
+
+DOCUMENT_EDITED_EMAIL_CONTENT = """
+
+
+jsocol created a new revision to the document
+%s.
+
+To view this document's history, click the following
+link, or paste it into your browser's location bar:
+
+https://testserver/en-US/kb/%s/history
 """
 
 
@@ -83,3 +96,19 @@ class NotificationTestCase(TestCaseBase):
             READY_FOR_REVIEW_EMAIL_CONTENT % (doc.title, doc.slug, rev.id),
             (u'user118533@nowhere',),
             'ready_for_review')
+
+    @mock.patch_object(notifications.tasks.send_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_document_edited_notification(self, get_current, delay):
+        get_current.return_value.domain = 'testserver'
+
+        rev = revision()
+        rev.save()
+        doc = rev.document
+        send_edited_notification(rev, doc)
+        delay.assert_called_with(
+            ContentType.objects.get_for_model(doc), doc.id,
+            u'%s was edited by %s' % (doc.title, rev.creator),
+            DOCUMENT_EDITED_EMAIL_CONTENT % (doc.title, doc.slug),
+            (u'user118533@nowhere',),
+            'edited')

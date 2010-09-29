@@ -2,10 +2,10 @@
 {# L10n: This is an email. Whitespace matters! #}
 {% blocktrans %}Your revision has been reviewed.{% endblocktrans %}
 {% if approved %}
-{% blocktrans %}{{ reviewer }} has approved your revision to the document 
+{% blocktrans %}{{ reviewer }} has approved your revision to the document
 {{ document_title }}.{% endblocktrans %}
 {% else %}
-{% blocktrans %}{{ reviewer }} has rejected your revision to the document 
+{% blocktrans %}{{ reviewer }} has rejected your revision to the document
 {{ document_title }}.{% endblocktrans %}
 {% endif %}
 {% blocktrans %}Message from the reviewer:
@@ -15,4 +15,4 @@
 To view the history of this document, click the following
 link, or paste it into your browser's location bar:
 {% endblocktrans %}
-https://{{ host }}{{ history_url }}
+https://{{ host }}{{ url }}
