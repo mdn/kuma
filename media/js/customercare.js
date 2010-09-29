@@ -21,6 +21,7 @@ $(document).ready(function() {
           twitter_modal.dialog({
               'modal': 'true',
               'position': 'top',
+              'width': 500,
           });
           twitter_modal.find('.cancel').click(function(e) {
               twitter_modal.dialog('close');
