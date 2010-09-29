@@ -7,6 +7,7 @@ import rfc822
 import urllib
 
 from django.conf import settings
+from django.db.utils import IntegrityError
 
 import cronjobs
 
@@ -66,8 +67,12 @@ def collect_tweets():
 
         tweet = Tweet(tweet_id=item['id'], raw_json=json.dumps(item),
                       locale=item['iso_language_code'], created=created_date)
-        tweet.save()
-        log.debug('Tweet %d saved.' % item['id'])
+        try:
+            tweet.save()
+        except IntegrityError:
+            continue
+        else:
+            log.debug('Tweet %d saved.' % item['id'])
 
     # When all is done, truncate list of tweets to (approx.) maximum number.
     try:

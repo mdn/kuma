@@ -463,3 +463,6 @@ a.header-button {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
+#refresh-tweets {
+  color: #000;
+}

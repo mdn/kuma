@@ -57,8 +57,9 @@ class SessionMiddleware(object):
 
                         Session(auth.access_token.key, auth.access_token.secret).save(response)
                         return response
- 
-
+                else:
+                    # request tokens didn't validate
+                    log.warning("Twitter Oauth request tokens didn't validate")
 
             elif request.REQUEST.get('twitter_auth_request'):
                 # We are requesting Twitter auth

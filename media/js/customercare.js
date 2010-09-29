@@ -54,7 +54,8 @@ $(document).ready(function() {
         e.preventDefault();
         return false;
     });
-    $('.tweet').click(function() {
+
+    $('.tweet').live('click', function() {
         var $tweet = $(this);
         var reply_to = $tweet.attr('data-reply_to')
         var avatar_href = $tweet.find('.avatar').attr('href');
@@ -88,6 +89,7 @@ $(document).ready(function() {
             'close': clear_reply_dialog
         });
     });
+
     if (authed && memory.id) {
         $('#tweet-'+ memory.id).trigger('click');
         memory.del();
@@ -132,12 +134,9 @@ $(document).ready(function() {
 
     $('#refresh-tweets').click(function(e) {
         $.get(
-            $(this).attr('href'), 
-            { 
-                'since': $('.tweet:first').attr('data-reply_to') 
-            },
+            $(this).attr('href'), {},
             function(data) {
-                $(data).insertBefore('.tweet:first');
+                $('#tweets').html(data);
             }); 
         e.preventDefault();
         return false;

@@ -4,7 +4,9 @@ import json
 import logging
 
 from django import http
+from django.utils.encoding import smart_str
 
+from bleach import Bleach
 import jingo
 
 from .models import CannedCategory, Tweet
@@ -12,13 +14,13 @@ import twitter
 
 log = logging.getLogger('k')
 
+bleach = Bleach()
 
-def _get_tweets(since=False, limit=False):
+MAX_TWEETS = 20
+
+def _get_tweets(limit=MAX_TWEETS):
     tweets = []
     q = Tweet.objects.filter(locale='en')
-    if since:
-        q = q.filter(tweet_id__gt=since)
-
     if limit:
         q = q[:limit]
 
@@ -29,19 +31,15 @@ def _get_tweets(since=False, limit=False):
         tweets.append({
             'profile_img': data['profile_image_url'],
             'user': data['from_user'],
-            'text': tweet,
+            'text': bleach.clean(smart_str(tweet)),
             'reply_to': tweet.tweet_id,
             'date': date,
         })
     return tweets
 
 def more_tweets(request):
-    since = request.GET.get('since', None)
-    if not since:
-        return http.HttpResponse()
-
     return jingo.render(request, 'customercare/tweets.html', 
-                        { 'tweets': _get_tweets(since=since) })
+                        { 'tweets': _get_tweets() })
 
 @twitter.auth_wanted
 def landing(request):
@@ -53,7 +51,7 @@ def landing(request):
 
     resp = jingo.render(request, 'customercare/landing.html', {
         'canned_responses': canned_responses,
-        'tweets': _get_tweets(limit=10),
+        'tweets': _get_tweets(),
         'authed': twitter.authed,
     })
 
