@@ -333,6 +333,7 @@ MINIFY_BUNDLES = {
         'customercare': (
             'js/libs/jqueryui.min.js',
             'js/libs/jquery.NobleCount.js',
+            'js/libs/jquery.cookie.js',
             'js/customercare.js',
         ),
     },

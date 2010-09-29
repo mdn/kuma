@@ -3,6 +3,36 @@ function clear_reply_dialog() {
     $('#submit-message').hide(); 
 }
 
+memory = {
+    _id: null,
+    _name: 'custcare_persist_reply',
+
+    get id() { 
+        if (!this._id) {
+            if (Modernizr.localstorage)
+                this._id = localStorage[this._name];
+            else
+                this._id = $.cookie(this._name);
+        }
+
+        return parseInt(this._id);
+    },
+    set id(val) {
+        this._id = val;
+    
+        if (Modernizr.localstorage)
+            localStorage[this._name] = this._id;
+        else
+            $.cookie(this._name, this._id);
+    },
+    del: function () {
+        if (Modernizr.localstorage)
+            localStorage.removeItem(this._name);
+        else
+            $.cookie(this._name, null);
+    }
+}
+
 $(document).ready(function() {
 
     $('.reply-message').NobleCount('.character-counter');
@@ -17,6 +47,8 @@ $(document).ready(function() {
     });
 
     var $twitter_modal = $('#twitter-modal');
+    var authed = ($twitter_modal.attr('data-authed') == 'True');
+
     $twitter_modal.find('.cancel').click(function(e) {
         $twitter_modal.dialog('close');
         e.preventDefault();
@@ -24,20 +56,24 @@ $(document).ready(function() {
     });
     $('.tweet').click(function() {
         var $tweet = $(this);
-        if ($twitter_modal.attr('data-authed') == 'False') {
-            $twitter_modal.dialog({
-                'modal': 'true',
-                'position': 'top',
-                'width': 500,
-            });
-            return;
-        }
-
         var reply_to = $tweet.attr('data-reply_to')
         var avatar_href = $tweet.find('.avatar').attr('href');
         var avatar_img = $tweet.find('.avatar img').attr('src');
         var twittername = $tweet.find('.twittername').text();
         var text = $tweet.find('.text').text();
+
+        if (!authed) {
+            $twitter_modal.dialog({
+                'modal': 'true',
+                'position': 'top',
+                'width': 500,
+            });
+            $twitter_modal.find('.signin').click(function() {
+                memory.id = reply_to;
+            });
+            
+            return;
+        }
 
         var modal = $('#reply-modal');
         modal.find('#reply_to').val(reply_to);
@@ -52,6 +88,10 @@ $(document).ready(function() {
             'close': clear_reply_dialog
         });
     });
+    if (authed && memory.id) {
+        $('#tweet-'+ memory.id).trigger('click');
+        memory.del();
+    }
 
     $('.reply-topic').click(function(e) {
         snippet = $(this).next('.snippet').text();
