@@ -359,7 +359,7 @@ body {
   color: #69645b;
 }
 
-a.header-button {
+.header-button {
     -moz-border-radius: 3px;
     border-radius: 3px;
     background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0
@@ -374,7 +374,7 @@ a.header-button {
     margin-top: 15px;
 }
 
-a.header-button:hover {
+.header-button:hover {
     color: #307FC1;
 }
 

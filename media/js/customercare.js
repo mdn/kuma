@@ -4,6 +4,7 @@ function clear_reply_dialog() {
 }
 
 $(document).ready(function() {
+
     $('.reply-message').NobleCount('.character-counter');
 
     $('.reply-message').autoPlaceholderText();
@@ -15,27 +16,28 @@ $(document).ready(function() {
         'active': false,
     });
 
+    var $twitter_modal = $('#twitter-modal');
+    $twitter_modal.find('.cancel').click(function(e) {
+        $twitter_modal.dialog('close');
+        e.preventDefault();
+        return false;
+    });
     $('.tweet').click(function() {
-        var twitter_modal = $('#twitter-modal');
-        if (twitter_modal.attr('data-authed') == 'False') {
-          twitter_modal.dialog({
-              'modal': 'true',
-              'position': 'top',
-              'width': 500,
-          });
-          twitter_modal.find('.cancel').click(function(e) {
-              twitter_modal.dialog('close');
-              e.preventDefault();
-              return false;
-          });
-          return;
+        var $tweet = $(this);
+        if ($twitter_modal.attr('data-authed') == 'False') {
+            $twitter_modal.dialog({
+                'modal': 'true',
+                'position': 'top',
+                'width': 500,
+            });
+            return;
         }
 
-        var reply_to = $(this).attr('data-reply_to')
-        var avatar_href = $(this).find('.avatar').attr('href');
-        var avatar_img = $(this).find('.avatar img').attr('src');
-        var twittername = $(this).find('.twittername').text();
-        var text = $(this).find('.text').text();
+        var reply_to = $tweet.attr('data-reply_to')
+        var avatar_href = $tweet.find('.avatar').attr('href');
+        var avatar_img = $tweet.find('.avatar img').attr('src');
+        var twittername = $tweet.find('.twittername').text();
+        var text = $tweet.find('.text').text();
 
         var modal = $('#reply-modal');
         modal.find('#reply_to').val(reply_to);

@@ -18,22 +18,35 @@ REQUEST_SECRET_NAME = PREFIX + 'request_secret'
 MAX_AGE = 3600
 
 
-def ssl_url(request):
-    return 'https://{0}{1}'.format(request.get_host(), request.get_full_path())
+def url(request, override=None):
+    d = {
+        'scheme': 'https' if request.is_secure() else 'http',
+        'host': request.get_host(),
+        'path': request.get_full_path(),
+    }
+    if override:
+        d.update(override)
+    
+    return '{0}://{1}{2}'.format(d['scheme'], d['host'], d['path'])
 
 # Twitter sessions are SSL only, so redirect to SSL if needed
 def auth_wanted(view_func):
     def wrapper(request, *args, **kwargs):
+
         if request.COOKIES.get(REDIRECT_NAME) and not request.is_secure():
-            return http.HttpResponseRedirect(ssl_url(request))
+            ssl_url = url(request, {'scheme': 'https'})
+            return http.HttpResponseRedirect(ssl_url)
+
         return view_func(request, *args, **kwargs)
     return wrapper
 
 # returns a HttpResponseBadRequest in not authed
 def auth_required(view_func):
     def wrapper(request, *args, **kwargs):
+
         if not request.twitter.authed:
             return http.HttpResponseBadRequest()
+
         return view_func(request, *args, **kwargs)
     return wrapper
 
@@ -55,13 +68,10 @@ class Session(object):
     def authed(self):
         return bool(self.id and self.key and self.secret)
 
-    @classmethod
-    def factory(cls, key=None, secret=None):
-        s = cls()
-        s.id = uuid4().hex
-        s.key = key
-        s.secret = secret
-        return s
+    def __init__(self, key=None, secret=None):
+        self.id = uuid4().hex
+        self.key = key
+        self.secret = secret
 
     @classmethod
     def from_request(cls, request):

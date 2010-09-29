@@ -20,7 +20,7 @@
             {% for topic in resp.responses.all() %}
             <li>
               <a class="reply-topic" href="#">{{ topic.title }}</a>
-              <span class="snippet">{{ topic.response }} #fxhelp</span>
+              <span class="snippet">{{ topic.response }}</span>
             </li>
             {% endfor %}
           </ul>

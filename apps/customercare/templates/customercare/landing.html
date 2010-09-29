@@ -22,7 +22,11 @@
     <div class="tweets-header">
       <img src="{{ MEDIA_URL }}/img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">Choose a tweet to help</h2>
       {% if authed %}
-        <a href="?twitter_delete_auth=1" class="header-button" id="twitter-logout">Log out</a>
+        <form  id='twitter-logout' action='' method='post'>
+          {{ csrf() }}
+          <input type='hidden' name='twitter_delete_auth' value='1'>
+          <input type='submit' class="header-button" value='Sign out'>
+        </form>
       {% endif %}
     </div>
     

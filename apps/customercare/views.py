@@ -4,7 +4,6 @@ import json
 import logging
 
 from django import http
-from django.views.decorators.csrf import csrf_exempt
 
 import jingo
 
@@ -42,15 +41,32 @@ def landing(request):
 
     return resp
 
+def is_printable(s, coded='utf-8'):
+    try: s.decode(codec)
+    except UnicodeDecodeError: return False
+    else: return True
 
-@csrf_exempt
+def is_int(x):
+    try: return int(x) == x
+    except ValueError: return False
+
 @twitter.auth_required
 def twitter_post(request):
-    # FIXME ensure post length is under twitter limit
-    # do this in JS too
     reply_to = request.POST.get('reply_to')
     reply_to_name = request.POST.get('reply_to_name')
     tweet = request.POST.get('tweet')
-    content = '@{0} {1}'.format(reply_to_name, tweet)
-    request.twitter.api.update_status(content, reply_to)
-    return http.HttpResponse()
+    content = '@{0} {1} #fxhelp'.format(reply_to_name, tweet)
+
+    if not is_int(reply_to):
+        return http.HttpResponseBadRequest('Malformed data.  reply_to must be an integer.')
+    elif not is_printable(content):
+        return http.HttpResponseBadRequest('Malformed data.  content must be printable.')
+    elif len(content) > 140:
+        return http.HttpResponseBadRequest('Content length exceeds 140 characters.')
+    else:
+        try:
+            request.twitter.api.update_status(content, reply_to)
+        except tweepy.TweepError, e:
+            return http.HttpResponseBadRequest(e)
+        else:
+            return http.HttpResponse()
