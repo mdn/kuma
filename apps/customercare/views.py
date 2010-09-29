@@ -13,15 +13,16 @@ import twitter
 log = logging.getLogger('k')
 
 
-@twitter.auth_wanted
-def landing(request):
-    """Customer Care Landing page."""
-
-    twitter = request.twitter
-
-    canned_responses = CannedCategory.objects.all()
+def _get_tweets(since=False, limit=False):
     tweets = []
-    for tweet in Tweet.objects.filter(locale='en')[:10]:
+    q = Tweet.objects.filter(locale='en')
+    if since:
+        q = q.filter(tweet_id__gt=since)
+
+    if limit:
+        q = q[:limit]
+
+    for tweet in q:
         data = json.loads(tweet.raw_json)
         parsed_date = parsedate(data['created_at'])
         date = datetime(*parsed_date[0:6])
@@ -32,10 +33,27 @@ def landing(request):
             'reply_to': tweet.tweet_id,
             'date': date,
         })
+    return tweets
+
+def more_tweets(request):
+    since = request.GET.get('since', None)
+    if not since:
+        return http.HttpResponse()
+
+    return jingo.render(request, 'customercare/tweets.html', 
+                        { 'tweets': _get_tweets(since=since) })
+
+@twitter.auth_wanted
+def landing(request):
+    """Customer Care Landing page."""
+
+    twitter = request.twitter
+
+    canned_responses = CannedCategory.objects.all()
 
     resp = jingo.render(request, 'customercare/landing.html', {
         'canned_responses': canned_responses,
-        'tweets': tweets,
+        'tweets': _get_tweets(limit=10),
         'authed': twitter.authed,
     })
 

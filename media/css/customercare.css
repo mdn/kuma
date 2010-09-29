@@ -371,11 +371,18 @@ body {
     float: right;
     padding: 3px 8px;
     text-align: center;
-    margin-top: 15px;
+    margin: 15px 5px 0 0;
 }
 
-.header-button:hover {
+.header-button:hover,
+a.header-button:hover {
     color: #307FC1;
+}
+.header-button:visited {
+    color: #000;
+}
+a.header-button {
+    padding: 4px 8px;
 }
 
 #twitter-modal {

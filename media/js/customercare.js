@@ -129,4 +129,17 @@ $(document).ready(function() {
         $("#reply-modal").dialog("close"); 
         $("#twitter-modal").dialog("close"); 
     });
+
+    $('#refresh-tweets').click(function(e) {
+        $.get(
+            $(this).attr('href'), 
+            { 
+                'since': $('.tweet:first').attr('data-reply_to') 
+            },
+            function(data) {
+                $(data).insertBefore('.tweet:first');
+            }); 
+        e.preventDefault();
+        return false;
+    });
 });

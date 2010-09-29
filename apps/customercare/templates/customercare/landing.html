@@ -21,6 +21,7 @@
   <div id="tweetcontainer">
     <div class="tweets-header">
       <img src="{{ MEDIA_URL }}/img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">Choose a tweet to help</h2>
+      <a id="refresh-tweets" href="{{ url('customercare.more_tweets') }}" class="header-button">Refresh</a>
       {% if authed %}
         <form  id='twitter-logout' action='' method='post'>
           {{ csrf() }}
@@ -33,13 +34,7 @@
     <br style="clear:both; height: 1px" />
 
     <ul id="tweets">
-      {% for tweet in tweets %}
-      <li class="tweet {{ loop.cycle('', 'alt') }}" data-reply_to="{{ tweet.reply_to }}" id="tweet-{{ tweet.reply_to }}">
-        <a href="http://twitter.com/{{ tweet.user }}" class="avatar"><img src="{{ tweet.profile_img }}" /></a>
-        <span class="twittername">{{ tweet.user }}</span><span class="time">{{ tweet.date|utctimesince }}</span>
-        <p class="text">{{ tweet.text|safe }}</p>
-      </li>
-      {% endfor %}
+      {% include 'customercare/tweets.html' %}
     </ul>
   </div>
 
