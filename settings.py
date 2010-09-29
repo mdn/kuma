@@ -128,6 +128,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'multidb.middleware.PinningRouterMiddleware',
+
+    # This gives us atomic success or failure on multi-row writes. It does not
+    # give us a consistent per-transaction snapshot for reads; that would need
+    # the serializable isolation level (which InnoDB does support) and code to
+    # retry transactions that roll back due to serialization failures. It's a
+    # possibility for the future. Keep in mind that memcache defeats
+    # snapshotted reads where we don't explicitly use the "uncached" manager.
+    'django.middleware.transaction.TransactionMiddleware',
+
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
     'sumo.middleware.LocaleURLMiddleware',
