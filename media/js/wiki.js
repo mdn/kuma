@@ -4,17 +4,16 @@
  */
 
 (function () {
-    var OSES = $.parseJSON($('select#os').attr('data-oses')),  // {'mac': true, 'win': true, ...}
-        BROWSERS = $.parseJSON($('select#browser').attr('data-browsers')),  // {'fx4': true, ...}
-        VERSIONS = $.parseJSON($('select#browser').attr('data-version-groups')),  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
-        MISSING_MSG = $.parseJSON($('#toc').attr('data-missing-msg'));  // l10nized "missing header" message
+    var OSES, BROWSERS, VERSIONS, MISSING_MSG;
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
         initPrepopulatedSlugs();
         initActionModals();
-        initForTags();
+        if ($('body').is('.document')) { // Document page
+            initForTags();
+        }
         initChangeTranslateLocale();
     }
 
@@ -48,6 +47,12 @@
     // applying to only certain browsers or OSes. Update the table of contents
     // to reflect what was hidden/shown.
     function initForTags() {
+
+        OSES = $.parseJSON($('select#os').attr('data-oses'));  // {'mac': true, 'win': true, ...}
+        BROWSERS = $.parseJSON($('select#browser').attr('data-browsers'));  // {'fx4': true, ...}
+        VERSIONS = $.parseJSON($('select#browser').attr('data-version-groups'));  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
+        MISSING_MSG = $.parseJSON($('#toc').attr('data-missing-msg'));  // l10nized "missing header" message
+
         function updateForsAndToc() {
             // Hide and show document sections accordingly:
             showAndHideFors($('select#os').attr('value'),

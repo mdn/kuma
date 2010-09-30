@@ -4,6 +4,7 @@
 {% set title = _('{t} | {c} | Firefox Support')|f(t=document.title, c=document.get_category_display()) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (None, document.title)] %}
+{% set classes = 'document' %}
 
 {% block content %}
   <div id="breadcrumbs">
