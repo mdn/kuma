@@ -13,7 +13,7 @@ log = logging.getLogger('k.notifications')
 
 @task
 def send_notification(content_type, pk, subject, content, exclude=None,
-                      event_type='reply'):
+                      event_type='reply', locale=''):
     """Given a content type and ID, event type, subject, and content, get
     the list of watchers and send them email."""
 
@@ -21,7 +21,8 @@ def send_notification(content_type, pk, subject, content, exclude=None,
                                                  pk))
 
     watchers = EventWatch.uncached.using('default').filter(
-        content_type=content_type, watch_id=pk, event_type=event_type)
+        content_type=content_type, watch_id=pk, event_type=event_type,
+        locale=locale)
     if exclude:
         watchers = watchers.exclude(email__in=exclude)
 

@@ -19,12 +19,13 @@ class EventWatch(ModelBase):
     # an instance.
     watch_id = models.IntegerField(db_index=True, null=True)
     event_type = models.CharField(max_length=20, db_index=True)
+    locale = models.CharField(default='', max_length=7, db_index=True)
     email = models.EmailField(db_index=True)
     hash = models.CharField(max_length=40, null=True, db_index=True)
 
     class Meta:
         unique_together = (('content_type', 'watch_id', 'email',
-                            'event_type'),)
+                            'event_type', 'locale'),)
 
     @property
     def key(self):

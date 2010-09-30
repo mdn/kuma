@@ -48,7 +48,7 @@ def send_ready_for_review_notification(revision, document):
                   args=[document.slug, revision.id])
     _send_notification(revision, document, subject,
                        'wiki/email/ready_for_review.ltxt', url,
-                       'ready_for_review')
+                       'ready_for_review', document.locale)
 
 
 @task
@@ -63,7 +63,8 @@ def send_edited_notification(revision, document):
                        url, 'edited')
 
 
-def _send_notification(revision, document, subject, template, url, event_type):
+def _send_notification(revision, document, subject, template, url, event_type,
+                       locale=''):
     subject = subject % dict(title=document.title, creator=revision.creator)
     t = loader.get_template(template)
     c = {'document_title': document.title,
@@ -75,4 +76,4 @@ def _send_notification(revision, document, subject, template, url, event_type):
     ct = ContentType.objects.get_for_model(document)
     id = None if event_type == 'ready_for_review' else document.id
     send_notification.delay(ct, id, subject, content, exclude,
-                            event_type)
+                            event_type, locale)

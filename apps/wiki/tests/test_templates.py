@@ -678,6 +678,39 @@ class DocumentWatchTests(TestCaseBase):
                                'edited'), 'Watch was not destroyed'
 
 
+class LocaleWatchTests(TestCaseBase):
+    """Tests for un/subscribing to a locale's ready for review emails."""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(LocaleWatchTests, self).setUp()
+        self.client.login(username='rrosario', password='testpass')
+
+    def test_watch_GET_405(self):
+        """Watch document with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.locale_watch')
+        eq_(405, response.status_code)
+
+    def test_unwatch_GET_405(self):
+        """Unwatch document with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.locale_unwatch')
+        eq_(405, response.status_code)
+
+    def test_watch_unwatch(self):
+        """Watch and unwatch a document."""
+        user = User.objects.get(username='rrosario')
+        # Subscribe
+        response = post(self.client, 'wiki.locale_watch')
+        eq_(200, response.status_code)
+        assert check_watch(Document, None, user.email,
+                           'ready_for_review', 'en-US')
+        # Unsubscribe
+        response = post(self.client, 'wiki.locale_unwatch')
+        eq_(200, response.status_code)
+        assert not check_watch(Document, None, user.email,
+                               'ready_for_review', 'en-US')
+
+
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',

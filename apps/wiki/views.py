@@ -358,6 +358,26 @@ def unwatch_document(request, document_slug):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
+@require_POST
+@login_required
+def watch_locale(request):
+    """Start watching a locale for revisions ready for review."""
+    create_watch(Document, None, request.user.email, 'ready_for_review',
+                 request.locale)
+    # TODO: Redirect to l10n dashboard when there is a URL for it.
+    return HttpResponseRedirect(reverse('wiki.all_documents'))
+
+
+@require_POST
+@login_required
+def unwatch_locale(request):
+    """Stop watching a locale for revisions ready for review."""
+    destroy_watch(Document, None, request.user.email, 'ready_for_review',
+                  request.locale)
+    # TODO: Redirect to l10n dashboard when there is a URL for it.
+    return HttpResponseRedirect(reverse('wiki.all_documents'))
+
+
 def _document_form_initial(document):
     """Return a dict with the document data pertinent for the form."""
     return {'title': document.title,

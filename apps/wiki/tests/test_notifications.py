@@ -95,7 +95,7 @@ class NotificationTestCase(TestCaseBase):
             u'%s is ready for review (%s)' % (doc.title, rev.creator),
             READY_FOR_REVIEW_EMAIL_CONTENT % (doc.title, doc.slug, rev.id),
             (u'user118533@nowhere',),
-            'ready_for_review')
+            'ready_for_review', 'en-US')
 
     @mock.patch_object(notifications.tasks.send_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
@@ -111,4 +111,4 @@ class NotificationTestCase(TestCaseBase):
             u'%s was edited by %s' % (doc.title, rev.creator),
             DOCUMENT_EDITED_EMAIL_CONTENT % (doc.title, doc.slug),
             (u'user118533@nowhere',),
-            'edited')
+            'edited', '')

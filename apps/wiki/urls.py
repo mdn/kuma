@@ -2,6 +2,13 @@ from django.conf.urls.defaults import patterns, url
 
 
 urlpatterns = patterns('wiki.views',
+
+    # Un/Subscribe to locale 'ready for review' notifications.
+    url(r'^/watch-ready-for-review$', 'watch_locale',
+        name='wiki.locale_watch'),
+    url(r'^/unwatch-ready-for-review$', 'unwatch_locale',
+        name='wiki.locale_unwatch'),
+
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
     url(r'^/category/(?P<category>\d+)$', 'list_documents',
@@ -21,7 +28,7 @@ urlpatterns = patterns('wiki.views',
     url(r'^/(?P<document_slug>[^\/]+)/translate$',
         'translate', name='wiki.translate'),
 
-    # Un/Subscribe to document edit notifications
+    # Un/Subscribe to document edit notifications.
     url(r'^/(?P<document_slug>[^\/]+)/watch$', 'watch_document',
         name='wiki.document_watch'),
     url(r'^/(?P<document_slug>[^\/]+)/unwatch$', 'unwatch_document',
