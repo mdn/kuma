@@ -2,17 +2,17 @@ from datetime import datetime
 import json
 from string import ascii_letters
 
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
+from django.conf import settings
+from django.contrib.auth.decorators import permission_required, login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
-from django.conf import settings
-from django.views.decorators.http import require_GET
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET, require_POST
 
 import jingo
 from tower import ugettext_lazy as _lazy
 
+from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
@@ -327,6 +327,26 @@ def translate(request, document_slug):
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
                          'locale': request.locale})
+
+
+@require_POST
+@login_required
+def watch_document(request, document_slug):
+    """Start watching a document for edits."""
+    document = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
+    create_watch(Document, document.id, request.user.email, 'edited')
+    return HttpResponseRedirect(document.get_absolute_url())
+
+
+@require_POST
+@login_required
+def unwatch_document(request, document_slug):
+    """Stop watching a document for edits."""
+    document = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
+    destroy_watch(Document, document.id, request.user.email)
+    return HttpResponseRedirect(document.get_absolute_url())
 
 
 def _document_form_initial(document):

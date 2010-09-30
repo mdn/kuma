@@ -20,4 +20,10 @@ urlpatterns = patterns('wiki.views',
         'compare_revisions', name='wiki.compare_revisions'),
     url(r'^/(?P<document_slug>[^\/]+)/translate$',
         'translate', name='wiki.translate'),
+
+    # Un/Subscribe to document edit notifications
+    url(r'^/(?P<document_slug>[^\/]+)/watch$', 'watch_document',
+        name='wiki.document_watch'),
+    url(r'^/(?P<document_slug>[^\/]+)/unwatch$', 'unwatch_document',
+        name='wiki.document_unwatch'),
 )

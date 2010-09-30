@@ -81,5 +81,20 @@
       <a href="{{ url('wiki.new_revision', document_slug=document.slug) }}">Edit</a>
     </li>
   {% endif %}
+  {% if user.is_authenticated() %}
+    <li class="watch">
+      {% if is_watching(document) %}
+        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <input type="submit" class="submit" value="{{ _('Unsubscribe from edit notifications') }}" />
+        </form>
+      {% else %}
+        <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <input type="submit" class="submit" value="{{ _('Subscribe to edit notifications') }}" />
+        </form>
+      {% endif %}
+    </li>
+  {% endif %}
 </ul>
 {% endblock %}

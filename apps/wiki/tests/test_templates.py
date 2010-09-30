@@ -6,6 +6,7 @@ import mock
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from notifications import check_watch
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
@@ -636,6 +637,44 @@ class TranslateTests(TestCaseBase):
         assert not rev.is_approved
         edited_delay.assert_called_with(rev, doc)
         ready_delay.assert_called_with(rev, doc)
+
+
+class DocumentWatchTests(TestCaseBase):
+    """Tests for un/subscribing to document edit notifications."""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(DocumentWatchTests, self).setUp()
+        self.document = _create_document()
+        self.client.login(username='rrosario', password='testpass')
+
+    def test_watch_GET_405(self):
+        """Watch document with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.document_watch',
+                       args=[self.document.slug])
+        eq_(405, response.status_code)
+
+    def test_unwatch_GET_405(self):
+        """Unwatch document with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.document_unwatch',
+                       args=[self.document.slug])
+        eq_(405, response.status_code)
+
+    def test_watch_unwatch(self):
+        """Watch and unwatch a document."""
+        user = User.objects.get(username='rrosario')
+        # Subscribe
+        response = post(self.client, 'wiki.document_watch',
+                       args=[self.document.slug])
+        eq_(200, response.status_code)
+        assert check_watch(Document, self.document.id, user.email,
+                           'edited'), 'Watch was not created'
+        # Unsubscribe
+        response = post(self.client, 'wiki.document_unwatch',
+                       args=[self.document.slug])
+        eq_(200, response.status_code)
+        assert not check_watch(Document, self.document.id, user.email,
+                               'edited'), 'Watch was not destroyed'
 
 
 def _create_document(title='Test Document', parent=None,
