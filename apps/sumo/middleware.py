@@ -12,9 +12,9 @@ from django.contrib import auth
 
 import tower
 
-from .urlresolvers import Prefixer, set_url_prefixer, split_path
-from .models import Session
 from sumo.helpers import urlparams
+from sumo.models import Session
+from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
 from sumo.views import handle403
 
 
@@ -35,8 +35,8 @@ class LocaleURLMiddleware(object):
             # from the query params so we don't have an infinite loop.
             prefixer.locale = ''
             new_path = prefixer.fix(prefixer.shortened_path)
-            query = dict((smart_str(k), request.GET[k]) for k in request.GET)
-            query.pop('lang')
+            query = dict((smart_str(k), v) for
+                         k, v in request.GET.iteritems() if k != 'lang')
             return HttpResponsePermanentRedirect(urlparams(new_path, **query))
 
         if full_path != request.path:
