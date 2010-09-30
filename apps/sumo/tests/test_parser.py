@@ -1,3 +1,5 @@
+from functools import partial
+
 from django.conf import settings
 
 from nose.tools import eq_
@@ -22,6 +24,10 @@ def doc_rev_parser(content, title='Installing Firefox', parser_cls=WikiParser):
     return (d, r, p)
 
 
+_buildImageParamsDefault = partial(_buildImageParams,
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+
 class TestWikiParser(TestCase):
     fixtures = ['users.json']
 
@@ -42,19 +48,19 @@ class TestWikiParser(TestCase):
     def test_image_params_page(self):
         """_buildImageParams handles wiki pages."""
         items = ['page=Installing Firefox']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
 
     def test_image_params_link(self):
         """_buildImageParams handles external links."""
         items = ['link=http://example.com']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         eq_('http://example.com', params['link'])
 
     def test_image_params_page_link(self):
         """_buildImageParams - wiki page overrides link."""
         items = ['page=Installing Firefox', 'link=http://example.com']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
 
     def test_image_params_align(self):
@@ -62,13 +68,13 @@ class TestWikiParser(TestCase):
         align_vals = ('none', 'left', 'center', 'right')
         for align in align_vals:
             items = ['align=' + align]
-            params = _buildImageParams(items)
+            params = _buildImageParamsDefault(items)
             eq_(align, params['align'])
 
     def test_image_params_align_invalid(self):
         """Align invalid options."""
         items = ['align=zzz']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         assert not 'align' in params, 'Align is present in params'
 
     def test_image_params_valign(self):
@@ -77,38 +83,39 @@ class TestWikiParser(TestCase):
                        'middle', 'bottom', 'text-bottom')
         for valign in valign_vals:
             items = ['valign=' + valign]
-            params = _buildImageParams(items)
+            params = _buildImageParamsDefault(items)
             eq_(valign, params['valign'])
 
     def test_image_params_valign_invalid(self):
         """Vertical align invalid options."""
         items = ['valign=zzz']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         assert not 'valign' in params, 'Vertical align is present in params'
 
     def test_image_params_alt(self):
         """Image alt override."""
         items = ['alt=some alternative text']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         eq_('some alternative text', params['alt'])
 
     def test_image_params_frameless(self):
         """Frameless image."""
         items = ['frameless']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         eq_(True, params['frameless'])
 
     def test_image_params_width_height(self):
         """Image width."""
         items = ['width=10', 'height=20']
-        params = _buildImageParams(items)
+        params = _buildImageParamsDefault(items)
         eq_('10', params['width'])
         eq_('20', params['height'])
 
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
         eq_('/en-US/kb/installing-firefox',
-            _getWikiLink('Installing Firefox'))
+            _getWikiLink('Installing Firefox',
+                         locale=settings.WIKI_DEFAULT_LANGUAGE))
 
     def test_showfor(self):
         """<showfor> tags should be escaped, not obeyed."""

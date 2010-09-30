@@ -24,9 +24,10 @@ class Media(ModelBase):
 
     class Meta:
         abstract = True
+        unique_together = ('locale', 'title')
 
     def __unicode__(self):
-        return self.title + ': ' + self.file.name[30:]
+        return '[%s] %s' % (self.locale, self.title)
 
 
 class Image(Media):

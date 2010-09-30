@@ -1,11 +1,14 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from gallery.models import Video
+from gallery.tests import video
 from sumo.tests import TestCase
 import sumo.tests.test_parser
 from wiki.parser import (WikiParser, ForParser, PATTERNS,
                          _build_template_params as _btp,
                          _format_template_content as _ftc, _key_split)
+from wiki.tests import doc_rev
 
 
 def doc_rev_parser(*args, **kwargs):
@@ -13,8 +16,9 @@ def doc_rev_parser(*args, **kwargs):
                                                  **kwargs)
 
 
-def markup_helper(content, markup, title='Template:test'):
-    p = doc_rev_parser(content, title)[2]
+def doc_parse_markup(content, markup, title='Template:test'):
+    """Create a doc with given content and parse given markup."""
+    _, _, p = doc_rev_parser(content, title)
     doc = pq(p.parse(markup))
     return (doc, p)
 
@@ -71,14 +75,14 @@ class SimpleSyntaxTestCase(TestCase):
 
     def test_template_inline(self):
         """Inline templates are not wrapped in <p>s"""
-        doc, p = markup_helper('<span class="key">{{{1}}}</span>',
-                               '[[T:test|Cmd]] + [[T:test|Shift]]')
+        doc, p = doc_parse_markup('<span class="key">{{{1}}}</span>',
+                                  '[[T:test|Cmd]] + [[T:test|Shift]]')
         eq_(1, len(doc('p')))
 
     def test_template_multiline(self):
         """Multiline templates are wrapped in <p>s"""
-        doc, p = markup_helper('<span class="key">\n{{{1}}}</span>',
-                               '[[T:test|Cmd]]')
+        doc, p = doc_parse_markup('<span class="key">\n{{{1}}}</span>',
+                                  '[[T:test|Cmd]]')
         eq_(3, len(doc('p')))
 
     def test_key_split_callback(self):
@@ -135,7 +139,7 @@ class TestWikiTemplate(TestCase):
 
     def test_template(self):
         """Simple template markup."""
-        doc = markup_helper('Test content', '[[Template:test]]')[0]
+        doc, _ = doc_parse_markup('Test content', '[[Template:test]]')
         eq_('Test content', doc.text())
 
     def test_template_does_not_exist(self):
@@ -144,33 +148,51 @@ class TestWikiTemplate(TestCase):
         doc = pq(p.parse('[[Template:test]]'))
         eq_('The template "test" does not exist.', doc.text())
 
+    def test_template_locale(self):
+        """Localized template is returned."""
+        py_doc, p = doc_parse_markup('English content', '[[Template:test]]')
+        d = doc_rev('French content')[0]
+        d.title = 'Template:test'
+        d.locale = 'fr'
+        d.save()
+        eq_('English content', py_doc.text())
+        py_doc = pq(p.parse('[[T:test]]', locale='fr'))
+        eq_('French content', py_doc.text())
+
+    def test_template_locale_not_exist(self):
+        """If localized template does not exist, say so."""
+        _, p = doc_parse_markup('English content', '[[Template:test]]')
+        doc = pq(p.parse('[[T:test]]', locale='fr'))
+        eq_('The template "test" does not exist.', doc.text())
+
     def test_template_anonymous_params(self):
         """Template markup with anonymous parameters."""
-        doc, p = markup_helper('{{{1}}}:{{{2}}}', '[[Template:test|one|two]]')
+        doc, p = doc_parse_markup('{{{1}}}:{{{2}}}',
+                                  '[[Template:test|one|two]]')
         eq_('one:two', doc.text())
         doc = pq(p.parse('[[T:test|two|one]]'))
         eq_('two:one', doc.text())
 
     def test_template_named_params(self):
         """Template markup with named parameters."""
-        doc, p = markup_helper('{{{a}}}:{{{b}}}',
-                             '[[Template:test|a=one|b=two]]')
+        doc, p = doc_parse_markup('{{{a}}}:{{{b}}}',
+                                  '[[Template:test|a=one|b=two]]')
         eq_('one:two', doc.text())
         doc = pq(p.parse('[[T:test|a=two|b=one]]'))
         eq_('two:one', doc.text())
 
     def test_template_numbered_params(self):
         """Template markup with numbered parameters."""
-        doc, p = markup_helper('{{{1}}}:{{{2}}}',
-                               '[[Template:test|2=one|1=two]]')
+        doc, p = doc_parse_markup('{{{1}}}:{{{2}}}',
+                                  '[[Template:test|2=one|1=two]]')
         eq_('two:one', doc.text())
         doc = pq(p.parse('[[T:test|2=two|1=one]]'))
         eq_('one:two', doc.text())
 
     def test_template_wiki_markup(self):
         """A template with wiki markup"""
-        doc = markup_helper("{{{1}}}:{{{2}}}\n''wiki''\n'''markup'''",
-                            '[[Template:test|2=one|1=two]]')[0]
+        doc, _ = doc_parse_markup("{{{1}}}:{{{2}}}\n''wiki''\n'''markup'''",
+                                  '[[Template:test|2=one|1=two]]')
 
         eq_('two:one', doc('p')[1].text.replace('\n', ''))
         eq_('wiki', doc('em')[0].text)
@@ -178,16 +200,16 @@ class TestWikiTemplate(TestCase):
 
     def test_template_args_inline_wiki_markup(self):
         """Args that contain inline wiki markup are parsed"""
-        doc = markup_helper('{{{1}}}\n\n{{{2}}}',
-                            "[[Template:test|'''one'''|''two'']]")[0]
+        doc, _  = doc_parse_markup('{{{1}}}\n\n{{{2}}}',
+                                   "[[Template:test|'''one'''|''two'']]")
 
         eq_("<p/><p><strong>one</strong></p><p><em>two</em></p><p/>",
             doc.html().replace('\n', ''))
 
     def test_template_args_block_wiki_markup(self):
         """Args that contain block level wiki markup aren't parsed"""
-        doc = markup_helper('{{{1}}}\n\n{{{2}}}',
-                            "[[Template:test|* ordered|# list]]")[0]
+        doc, _ = doc_parse_markup('{{{1}}}\n\n{{{2}}}',
+                                  "[[Template:test|* ordered|# list]]")
 
         eq_("<p/><p>* ordered</p><p># list</p><p/>",
             doc.html().replace('\n', ''))
@@ -232,15 +254,56 @@ class TestWikiInclude(TestCase):
 
     def test_revision_include(self):
         """Simple include markup."""
-        p = doc_rev_parser('Test content', 'Test title')[2]
+        _, _, p = doc_rev_parser('Test content', 'Test title')
 
         # Existing title returns document's content
-        doc = pq(p.parse('[[Include:Test title]]'))
+        doc = pq(p.parse('[[I:Test title]]'))
         eq_('Test content', doc.text())
 
         # Nonexisting title returns 'Document not found'
         doc = pq(p.parse('[[Include:Another title]]'))
         eq_('The document "Another title" does not exist.', doc.text())
+
+    def test_revision_include_locale(self):
+        """Include finds document in the correct locale."""
+        _, _, p = doc_rev_parser('English content', 'Test title')
+        # Parsing in English should find the French article
+        doc = pq(p.parse('[[Include:Test title]]', locale='en-US'))
+        eq_('English content', doc.text())
+        # If the French article does not exist, notify
+        doc = pq(p.parse('[[I:Test title]]', locale='fr'))
+        eq_('The document "Test title" does not exist.', doc.text())
+        # Create the French article, and test again
+        d = doc_rev('French content')[0]
+        d.title = 'Test title'
+        d.locale = 'fr'
+        d.save()
+        # Parsing in French should find the French article
+        doc = pq(p.parse('[[Include:Test title]]', locale='fr'))
+        eq_('French content', doc.text())
+
+
+class TestWikiVideo(TestCase):
+    """Video hook."""
+    fixtures = ['users.json']
+
+    def tearDown(self):
+        Video.objects.all().delete()
+        super(TestWikiVideo, self).tearDown()
+
+    def test_video(self):
+        v = video()
+        d, _, p = doc_rev_parser('[[V:Some title]]')
+        doc = pq(d.html)
+        eq_('video', doc('div.video').attr('class'))
+        eq_(u'<source src="/media/uploads/gallery/videos/test.webm" '
+            u'type="video/webm"><source src="/media/uploads/gallery/'
+            u'videos/test.ogv" type="video/ogg"/></source>',
+            doc('video').html())
+        eq_(1, len(doc('video')))
+        eq_(2, len(doc('source')))
+        data_fallback = doc('video').attr('data-fallback')
+        eq_(v.flv.url, data_fallback)
 
 
 def parsed_eq(want, to_parse):
@@ -322,6 +385,15 @@ class ForWikiTests(TestCase):
         french = u'Vous parl\u00e9 Fran\u00e7ais'
         parsed_eq('<p><span class="for">' + french + '</span></p>',
                   '{for}' + french + '{/for}')
+
+    def test_boolean_attr(self):
+        """Make sure empty attributes don't raise exceptions."""
+        parsed_eq('<p><video controls height="120">'
+                    '<source src="/some/path/file.ogv" type="video/ogv">'
+                  '</video></p>',
+                  '<p><video controls="" height="120">'
+                    '<source src="/some/path/file.ogv" type="video/ogv">'
+                  '</video></p>')
 
     def test_big_swath(self):
         """Enclose a big section containing many tags."""

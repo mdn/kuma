@@ -39,7 +39,7 @@ Settings
 Settings in ``settings.py`` can be overridden in a file named
 ``settings_local.py`` in the same directory. ``settings_local.py`` should
 start with::
-  
+
     from settings import *
 
 and below that line, you can override the defaults.
@@ -86,7 +86,7 @@ Concat and Minify
 
 When running with ``DEBUG=False``, Kitsune will try to use compressed
 JavaScript and CSS. To generate the compressed files, just run::
-    
+
     ./manage.py compress_assests
 
 and new files will be created in the /media/ directory.
@@ -115,3 +115,6 @@ Here are the currently defined upload settings. All paths are relative to
   Maximum size for uploaded images (defaults to 1mb) or videos (16mb).
 ``THUMBNAIL_PROGRESS_URL``
   URL to an image, used to indicate thumbnail generation is in progress.
+``WIKI_VIDEO_HEIGHT``, ``WIKI_VIDEO_WIDTH``
+  Height and width set on the video tag for videos included in Knowledge
+  Base documents.

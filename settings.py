@@ -297,6 +297,7 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'css/wiki.css',
+            'css/screencast.css',
         ),
         'gallery': (
             'css/gallery.css',
@@ -338,6 +339,8 @@ MINIFY_BUNDLES = {
             'js/libs/django/prepopulate.js',
             'js/libs/jquery.cookie.js',
             'js/browserdetect.js',
+            'js/libs/swfobject.js',
+            'js/screencast.js',
             'js/wiki.js',
         ),
         'customercare': (
@@ -399,6 +402,8 @@ REGISTER_URL = '/tiki-register.php'
 WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
 WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
 WIKI_UPLOAD_URL = '/img/wiki_up/'
+WIKI_VIDEO_WIDTH = 640
+WIKI_VIDEO_HEIGHT = 480
 
 IMAGE_MAX_FILESIZE = 1048576  # 1 megabyte, in bytes
 THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels

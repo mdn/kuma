@@ -20,6 +20,8 @@ ALLOWED_ATTRIBUTES = {
     'li': ['class'],
     'span': ['class'],
     'img': ['class', 'src', 'alt', 'title', 'height', 'width', 'style'],
+    'video': ['height', 'width', 'controls', 'data-fallback'],
+    'source': ['src', 'type'],
 }
 IMAGE_PARAMS = {
     'align': ('none', 'left', 'center', 'right'),
@@ -33,10 +35,10 @@ def wiki_to_html(wiki_markup):
     return WikiParser().parse(wiki_markup, show_toc=False)
 
 
-def _getWikiLink(link):
+def _getWikiLink(link, locale):
     """Checks the page exists, and returns its URL or the URL to create it."""
     try:
-        d = Document.objects.get(title=link, is_template=False)
+        d = Document.objects.get(locale=locale, title=link, is_template=False)
     except Document.DoesNotExist:
         # To avoid circular imports, wiki.models imports wiki_to_html
         from sumo.helpers import urlparams
@@ -44,36 +46,12 @@ def _getWikiLink(link):
     return d.get_absolute_url()
 
 
-def _hook_internal_link(parser, space, name):
-    """Parses text and returns internal link."""
-    link = text = name
-
-    # Split on pipe -- [[href|name]]
-    if '|' in name:
-        link, text = link.split('|', 1)
-
-    hash = ''
-    if '#' in link:
-        link, hash = link.split('#', 1)
-
-    # Sections use _, page names use +
-    if hash != '':
-        hash = '#' + hash.replace(' ', '_')
-
-    # Links to this page can just contain href="#hash"
-    if link == '' and hash != '':
-        return u'<a href="%s">%s</a>' % (hash, text)
-
-    link = _getWikiLink(link)
-    return u'<a href="%s%s">%s</a>' % (link, hash, text)
-
-
 def _getImagePath(link):
     """Returns an uploaded image's path for image paths in markup."""
     return settings.WIKI_UPLOAD_URL + urlquote(link)
 
 
-def _buildImageParams(items):
+def _buildImageParams(items, locale):
     """
     Builds a list of items and return image-relevant parameters in a dict.
     """
@@ -90,7 +68,7 @@ def _buildImageParams(items):
             params[item] = True
 
     if 'page' in params and params['page'] is not True:
-        params['link'] = _getWikiLink(params['page'])
+        params['link'] = _getWikiLink(params['page'], locale)
 
     # Validate params with limited # of values
     for param_allowed in IMAGE_PARAMS:
@@ -101,35 +79,6 @@ def _buildImageParams(items):
     return params
 
 
-def _hook_image_tag(parser, space, name):
-    """Adds syntax for inserting images."""
-    link = name
-    caption = name
-    params = {}
-
-    # Parse the inner syntax, e.g. [[Image:src|option=val|caption]]
-    separator = name.find('|')
-    items = []
-    if separator != -1:
-        items = link.split('|')
-        link = items[0]
-        # If the last item contains '=', it's not a caption
-        if items[-1].find('=') == -1:
-            caption = items[-1]
-            items = items[1:-1]
-        else:
-            caption = link
-            items = items[1:]
-
-    # parse the relevant items
-    params = _buildImageParams(items)
-    img_path = _getImagePath(link)
-
-    template = jingo.env.get_template('wikiparser/hook_image.html')
-    r_kwargs = {'img_path': img_path, 'caption': caption, 'params': params}
-    return template.render(**r_kwargs)
-
-
 class WikiParser(Parser):
     """Wrapper for wikimarkup which adds Kitsune-specific callbacks and setup.
     """
@@ -138,11 +87,72 @@ class WikiParser(Parser):
         super(WikiParser, self).__init__(base_url)
 
         # Register default hooks
-        self.registerInternalLinkHook(None, _hook_internal_link)
-        self.registerInternalLinkHook('Image', _hook_image_tag)
+        self.registerInternalLinkHook(None, self._hook_internal_link)
+        self.registerInternalLinkHook('Image', self._hook_image_tag)
 
-    def parse(self, text, show_toc=None, tags=None, attributes=None):
-        """Given wiki markup, return HTML."""
+    def parse(self, text, show_toc=None, tags=None, attributes=None,
+              locale=settings.WIKI_DEFAULT_LANGUAGE):
+        """Given wiki markup, return HTML.
+
+        Pass a locale to get all the hooks to look up Documents or Media
+        (Video, Image) for that locale. We key Documents by title and locale,
+        so both are required to identify it for a e.g. link.
+
+        Since py-wikimarkup's hooks don't offer custom paramters for callbacks,
+        we're using self.locale to keep things simple."""
+        self.locale = locale
+
         parser_kwargs = {'tags': tags} if tags else {}
         return super(WikiParser, self).parse(text, show_toc=show_toc,
             attributes=attributes or ALLOWED_ATTRIBUTES, **parser_kwargs)
+
+    def _hook_internal_link(self, parser, space, name):
+        """Parses text and returns internal link."""
+        link = text = name
+
+        # Split on pipe -- [[href|name]]
+        if '|' in name:
+            link, text = link.split('|', 1)
+
+        hash = ''
+        if '#' in link:
+            link, hash = link.split('#', 1)
+
+        # Sections use _, page names use +
+        if hash != '':
+            hash = '#' + hash.replace(' ', '_')
+
+        # Links to this page can just contain href="#hash"
+        if link == '' and hash != '':
+            return u'<a href="%s">%s</a>' % (hash, text)
+
+        link = _getWikiLink(link, self.locale)
+        return u'<a href="%s%s">%s</a>' % (link, hash, text)
+
+    def _hook_image_tag(self, parser, space, name):
+        """Adds syntax for inserting images."""
+        link = name
+        caption = name
+        params = {}
+
+        # Parse the inner syntax, e.g. [[Image:src|option=val|caption]]
+        separator = name.find('|')
+        items = []
+        if separator != -1:
+            items = link.split('|')
+            link = items[0]
+            # If the last item contains '=', it's not a caption
+            if items[-1].find('=') == -1:
+                caption = items[-1]
+                items = items[1:-1]
+            else:
+                caption = link
+                items = items[1:]
+
+        # parse the relevant items
+        params = _buildImageParams(items, self.locale)
+        img_path = _getImagePath(link)
+
+        template = jingo.env.get_template('wikiparser/hook_image.html')
+        r_kwargs = {'img_path': img_path, 'caption': caption, 'params': params}
+        return template.render(**r_kwargs)

@@ -2,13 +2,17 @@ from itertools import count
 import re
 from xml.sax.saxutils import quoteattr
 
+from django.conf import settings
+
 from html5lib import HTMLParser
 from html5lib.serializer.htmlserializer import HTMLSerializer
 from html5lib.treebuilders import getTreeBuilder
 from html5lib.treewalkers import getTreeWalker
 from lxml.etree import Element
+
 from tower import ugettext_lazy as _lazy
 
+from gallery.models import Video
 import sumo.parser
 from sumo.parser import ALLOWED_ATTRIBUTES
 
@@ -18,51 +22,22 @@ BLOCK_LEVEL_ELEMENTS = ['table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5',
                         'ol', 'center']  # from Parser.doBlockLevels
 
 TEMPLATE_ARG_REGEX = re.compile('{{{([^{]+?)}}}')
+SOURCE_TEMPLATE = '<source src="%(src)s" type="video/%(type)s">'
+VIDEO_TEXT = _lazy('Watch a video of these instructions.')
+VIDEO_TEMPLATE = ('<div class="video">'
+                    '<a href="#">%(text)s</a>'
+                    '<div class="video-wrap">'
+                      '<video%(fallback)s height="%(height)s"'
+                       'width="%(width)s" controls="">'
+                         '%(sources)s'
+                      '</video>'
+                    '</div>'
+                  '</div>')
 
 
-def wiki_to_html(wiki_markup):
+def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
     """Wiki Markup -> HTML with the wiki app's enhanced parser"""
-    return WikiParser().parse(wiki_markup, show_toc=False)
-
-
-def _hook_include(parser, space, title):
-    """Returns the document's parsed content."""
-    from wiki.models import Document
-    try:
-        return Document.objects.get(title=title).content_parsed
-    except Document.DoesNotExist:
-        return _lazy('The document "%s" does not exist.') % title
-
-
-# Wiki templates are documents that receive arguments.
-#
-# They can be useful when including similar content in multiple places,
-# with slight variations. For examples and details see:
-# http://www.mediawiki.org/wiki/Help:Templates
-#
-def _hook_template(parser, space, title):
-    """Handles Template:Template name, formatting the content using given
-    args"""
-    from wiki.models import Document
-    params = title.split('|')
-    short_title = params.pop(0)
-    template_title = 'Template:' + short_title
-
-    try:
-        t = Document.objects.get(title=template_title, is_template=True)
-    except Document.DoesNotExist:
-        return _lazy('The template "%s" does not exist.') % short_title
-
-    c = t.current_revision.content.rstrip()
-    # Note: this completely ignores the allowed attributes passed to the
-    # WikiParser.parse() method, and defaults to ALLOWED_ATTRIBUTES
-    parsed = parser.parse(c, show_toc=False, attributes=ALLOWED_ATTRIBUTES)
-
-    if '\n' not in c:
-        parsed = parsed.replace('<p>', '')
-        parsed = parsed.replace('</p>', '')
-    # Do some string formatting to replace parameters
-    return _format_template_content(parsed, _build_template_params(params))
+    return WikiParser().parse(wiki_markup, show_toc=False, locale=locale)
 
 
 def _format_template_content(content, params):
@@ -308,9 +283,12 @@ class WikiParser(sumo.parser.WikiParser):
         super(WikiParser, self).__init__(base_url)
 
         # The wiki has additional hooks not used elsewhere
-        self.registerInternalLinkHook('Include', _hook_include)
-        self.registerInternalLinkHook('Template', _hook_template)
-        self.registerInternalLinkHook('T', _hook_template)
+        self.registerInternalLinkHook('Include', self._hook_include)
+        self.registerInternalLinkHook('I', self._hook_include)
+        self.registerInternalLinkHook('Template', self._hook_template)
+        self.registerInternalLinkHook('T', self._hook_template)
+        self.registerInternalLinkHook('Video', self._hook_video)
+        self.registerInternalLinkHook('V', self._hook_video)
 
     def parse(self, text, **kwargs):
         """Wrap SUMO's parse() to support additional wiki-only features."""
@@ -333,3 +311,72 @@ class WikiParser(sumo.parser.WikiParser):
         for_parser.expand_fors()
 
         return for_parser.to_unicode()
+
+    def _hook_include(self, parser, space, title):
+        """Returns the document's parsed content."""
+        from wiki.models import Document
+        try:
+            return Document.objects.get(locale=self.locale,
+                                        title=title).content_parsed
+        except Document.DoesNotExist:
+            return _lazy('The document "%s" does not exist.') % title
+
+    # Wiki templates are documents that receive arguments.
+    #
+    # They can be useful when including similar content in multiple places,
+    # with slight variations. For examples and details see:
+    # http://www.mediawiki.org/wiki/Help:Templates
+    #
+    def _hook_template(self, parser, space, title):
+        """Handles Template:Template name, formatting the content using given
+        args"""
+        from wiki.models import Document
+        params = title.split('|')
+        short_title = params.pop(0)
+        template_title = 'Template:' + short_title
+
+        try:
+            t = Document.objects.get(locale=self.locale, title=template_title,
+                                     is_template=True)
+        except Document.DoesNotExist:
+            return _lazy('The template "%s" does not exist.') % short_title
+
+        c = t.current_revision.content.rstrip()
+        # Note: this completely ignores the allowed attributes passed to the
+        # WikiParser.parse() method, and defaults to ALLOWED_ATTRIBUTES
+        parsed = parser.parse(c, show_toc=False, attributes=ALLOWED_ATTRIBUTES)
+
+        # Special case for inline templates
+        if '\n' not in c:
+            parsed = parsed.replace('<p>', '')
+            parsed = parsed.replace('</p>', '')
+        # Do some string formatting to replace parameters
+        return _format_template_content(parsed, _build_template_params(params))
+
+    # Videos are objects that can have one or more files attached to them
+    #
+    # They are keyed by title in the syntax and the locale passed to the
+    # parser.
+    def _hook_video(self, parser, space, title):
+        """Handles [[Video:video title]] with locale from parser."""
+        try:
+            v = Video.objects.get(locale=self.locale, title=title)
+        except Video.DoesNotExist:
+            return _lazy('The video "%s" does not exist.') % title
+
+        sources = []
+        if v.webm:
+            sources.append(SOURCE_TEMPLATE % {'src': v.webm.url,
+                                              'type': 'webm'})
+        if v.ogv:
+            sources.append(SOURCE_TEMPLATE % {'src': v.ogv.url,
+                                              'type': 'ogg'})
+        data_fallback = ''
+        # Flash fallback
+        if v.flv:
+            data_fallback = ' data-fallback="' + v.flv.url + '"'
+        return VIDEO_TEMPLATE % {'fallback': data_fallback,
+                                 'sources': ''.join(sources),
+                                 'text': unicode(VIDEO_TEXT),
+                                 'height': settings.WIKI_VIDEO_HEIGHT,
+                                 'width': settings.WIKI_VIDEO_WIDTH}
