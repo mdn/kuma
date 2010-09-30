@@ -275,6 +275,21 @@ class Document(ModelBase, TaggableMixin):
         # TODO: Add tests for templateness or whatever is required.
         return user.has_perm('wiki.add_revision')
 
+    def translated_to(self, locale):
+        """Return the translation of me to the given locale.
+
+        If there is no such Document, return None.
+
+        """
+        if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
+            raise NotImplementedError('translated_to() is implemented only on'
+                                      'Documents in the default language so'
+                                      'far.')
+        try:
+            return Document.objects.get(locale=locale, parent=self)
+        except Document.DoesNotExist:
+            return None
+
 
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""

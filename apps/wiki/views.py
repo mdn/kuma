@@ -58,12 +58,21 @@ VERSION_GROUP_JSON = json.dumps(_version_groups(FIREFOX_VERSIONS))
 @require_GET
 def document(request, document_slug):
     """View a wiki document."""
-    # This may change depending on how we decide to structure
-    # the url and handle locales.
-    doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+    # If a slug isn't available in the requested locale, fall back to en-US:
+    try:
+        doc = Document.objects.get(locale=request.locale, slug=document_slug)
+    except Document.DoesNotExist:
+        # Look in en-US:
+        doc = get_object_or_404(Document,
+                                locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                slug=document_slug)
+        # If there's a translation to the requested locale, take it:
+        translation = doc.translated_to(request.locale)
+        if translation:
+            doc = translation
+        return HttpResponseRedirect(doc.get_absolute_url())
 
-    # Redirect if appropriate:
+    # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a
     # redirected-to-page back to a "Redirected from..." link, so you can edit
     # the redirect.

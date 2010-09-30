@@ -221,7 +221,7 @@
             shouldHide = (foundAnyOses && !osAttrs.hasOwnProperty(os)) ||
                          (foundAnyBrowsers && !browserAttrs.hasOwnProperty(browser));
             if ((shouldHide && !isInverted) || (!shouldHide && isInverted))
-                $(this).hide();  // saves original visibility, which is nice
+                $(this).hide();  // saves original visibility, which is nice but not necessary
             else
                 $(this).show();  // restores original visibility
         });
