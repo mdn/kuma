@@ -86,10 +86,12 @@ body {
 }
 #tweets li.alt {
     background: -moz-linear-gradient(top, #fff, #f5f5f5);
+    background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#f5f5f5));
 }
 #tweets li:hover {
     border-top: 1px solid #fef1ad;
     background: -moz-linear-gradient(top, #fffffd, #fdefa6);
+    background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#fdefa6));
 }
 #tweets li img {
     float: left;
@@ -202,7 +204,8 @@ body {
 
 #reply-container #replies {
 	background: #8fc1da;
-	background: -moz-linear-gradient(center top , #8fc1da, #e5f1f7) repeat;
+	background: -moz-linear-gradient(center top, #8fc1da, #e5f1f7) repeat;
+    background: -webkit-gradient(linear, center top, center bottom, from(#8fc1da), to(#e5f1f7));
 	margin-top: 20px;
 	padding: 15px 20px;
 }
@@ -305,7 +308,9 @@ body {
 }
 
 #reply .submitButton {
-  background: -moz-linear-gradient(center top, #eed052 15px, #ebb04f 18px, #e79f30, #e0752b); 
+    background: -moz-linear-gradient(center top, #eed052 15px, #ebb04f 18px, #e79f30, #e0752b);
+    /* color-stop percentages according to height */
+    background: -webkit-gradient(linear, center top, center bottom, color-stop(.417, #eed052), color-stop(.5, #ebb04f), color-stop(.75, #e79f30), to(#e0752b));
 	border-left: 1px solid #d4661a;
 	border-right: 1px solid #d4661a;
 	border-top: 1px solid #d19f7c;
@@ -362,9 +367,8 @@ body {
 .header-button {
     -moz-border-radius: 3px;
     border-radius: 3px;
-    background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0
-    0 transparent;
-    /* todo: add webkit gradient property */
+    background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, center top, center bottom, from(#f9f9f9), to(#e3e3e3));
     border: 1px solid #BBBBBB;
     color: #000000;
     cursor: default;
@@ -413,6 +417,7 @@ a.header-button {
 #twitter-modal .cancel,
 #twitter-modal .signin {
   background: -moz-linear-gradient(center top, #f1f1f1 15px, #eee 18px, #ddd, #ccc); 
+    background: -webkit-gradient(linear, center top, center bottom, color-stop(.417, #f1f1f1), color-stop(.5, #eee), color-stop(.75, #ddd), to(#ccc));
 	display: block;
 	width: 140px;
 	height: 36px;
