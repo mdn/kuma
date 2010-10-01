@@ -1,7 +1,7 @@
 {% for tweet in tweets %}
   <li class="tweet {{ loop.cycle('', 'alt') }}" data-reply_to="{{ tweet.reply_to }}" id="tweet-{{ tweet.reply_to }}">
     <a href="http://twitter.com/{{ tweet.user }}" class="avatar"><img src="{{ tweet.profile_img }}" /></a>
-    <span class="twittername">{{ tweet.user }}</span><span class="time">{{ tweet.date|utctimesince }}</span>
+    <span class="twittername">{{ tweet.user }}</span><span class="time">{{ tweet.date|utctimesince }} ago</span>
     <p class="text">{{ tweet.text|safe }}</p>
   </li>
 {% endfor %}
