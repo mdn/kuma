@@ -313,7 +313,7 @@ MINIFY_BUNDLES = {
     'js': {
         'common': (
             'js/libs/jquery.min.js',
-            'js/libs/modernizr-1.1.min.js',
+            'js/libs/modernizr-1.5.min.js',
             'js/menu.js',
             'js/main.js',
         ),
