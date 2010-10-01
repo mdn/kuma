@@ -59,9 +59,15 @@ body {
     font-size: 20px;
     background: none;
 }
-#tweetcontainer img {
+#tweetcontainer #twitter-icon {
     float: left;
     padding: 4px;
+}
+#refresh-busy { 
+    display: none;
+    width: 10px;
+    height: 10px;
+    padding-left: 10px;
 }
 .avatar img {
     width: 48px;

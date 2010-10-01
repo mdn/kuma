@@ -220,11 +220,16 @@ $(document).ready(function() {
     });
 
     $('#refresh-tweets').click(function(e) {
+        $("#refresh-busy").show();
         $.get(
             $(this).attr('href'), {},
             function(data) {
-                $('#tweets').html(data);
-            }); 
+                $('#tweets').fadeOut('fast', function() {
+                    $(this).html(data).fadeIn();
+                    $("#refresh-busy").hide();
+                });
+            }
+        ); 
         e.preventDefault();
         return false;
     });
