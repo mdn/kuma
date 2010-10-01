@@ -32,16 +32,17 @@
 
       <div id="reply">
         <h4>Get personal</h4>
+        <p class="desc">Tweak it and make it your own. Personalized messages go a long way in helping others.</p>
         <div class="container">
           <div class="character-counter">140</div>
           <form action="{{ url('customercare.twitter_post') }}" method="POST">
             <div class="inner-container">
               <img src="{{ MEDIA_URL }}img/customercare/reply-arrow.png" alt="" id="reply-arrow" />
-              <textarea class="reply-message" placeholder="Tweak it and make it your own. Personalized messages go a long way in helping others."></textarea>
+              <textarea id="reply-message"></textarea>
             </div>
 
             <span id="submit-message">Your message was sent!</span>
-            <input type="hidden" name="reply_to" id="reply_to">
+            <span id="error-message"></span>
             <input type="submit" value="Submit" name="submit" id="submit" class="submitButton" title="Submit">
           </form>
         </div>

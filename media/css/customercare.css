@@ -273,8 +273,14 @@ body {
 #reply {
     padding-bottom: 34px;
 }
+#reply .desc {
+    color: #69645B;
+    font-size: 85%;
+    margin-bottom: 10px;
+    width: 340px;
+}
 
-#reply .reply-message {
+#reply-message {
     width: 310px;
     height: 65px;
     border: 1px solid #aaa;
@@ -290,16 +296,23 @@ body {
     display: inline;
 }
 
+#error-message,
 #submit-message {
     display: none;
-    background: url('../img/customercare/reply-check.png') right top no-repeat;
     font-weight: bold;
     color: #4b4740;
     height: 21px;
-    padding-right: 23px;
-    padding-top: 3px;
     float: left;
     margin-top: 14px;
+}
+#submit-message {
+    background: url('../img/customercare/reply-check.png') right top no-repeat;
+    padding-right: 23px;
+    padding-top: 3px;
+}
+#error-message {
+    background: url('../img/customercare/notification-error.png') right 4px no-repeat;
+    padding-right: 20px;
 }
 
 #reply .container {
