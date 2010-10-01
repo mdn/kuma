@@ -386,6 +386,7 @@ a.header-button:hover {
     color: #000;
 }
 a.header-button {
+    color: #000;
     padding: 4px 8px;
 }
 
@@ -467,7 +468,4 @@ a.header-button {
     background-color: white;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-}
-#refresh-tweets {
-    color: #000;
 }
