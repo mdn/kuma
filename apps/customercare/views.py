@@ -8,6 +8,7 @@ from django.utils.encoding import smart_str
 
 from bleach import Bleach
 import jingo
+import tweepy
 
 from .models import CannedCategory, Tweet
 import twitter
@@ -57,26 +58,21 @@ def landing(request):
 
     return resp
 
-def is_printable(s, coded='utf-8'):
+def is_printable(s, codec='utf-8'):
     try: s.decode(codec)
     except UnicodeDecodeError: return False
     else: return True
 
-def is_int(x):
-    try: return int(x) == x
-    except ValueError: return False
-
 @twitter.auth_required
 def twitter_post(request):
-    reply_to = request.POST.get('reply_to')
+    reply_to = int(request.POST.get('reply_to'))
     reply_to_name = request.POST.get('reply_to_name')
     tweet = request.POST.get('tweet')
     content = '@{0} {1} #fxhelp'.format(reply_to_name, tweet)
 
-    if not is_int(reply_to):
-        return http.HttpResponseBadRequest('Malformed data.  reply_to must be an integer.')
-    elif not is_printable(content):
-        return http.HttpResponseBadRequest('Malformed data.  content must be printable.')
+
+    if not is_printable(content):
+        return http.HttpResponseBadRequest('Malformed data.  Content must be printable.')
     elif len(content) > 140:
         return http.HttpResponseBadRequest('Content length exceeds 140 characters.')
     else:
