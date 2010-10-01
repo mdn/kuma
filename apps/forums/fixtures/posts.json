@@ -4,7 +4,8 @@
         "model": "forums.forum",
         "fields": {
             "name": "Test forum",
-            "slug": "test-forum"
+            "slug": "test-forum",
+            "last_post": 25
         }
     },
     {
