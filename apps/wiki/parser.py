@@ -1,9 +1,12 @@
-from HTMLParser import HTMLParser
 from itertools import count
 import re
 from xml.sax.saxutils import quoteattr
 
-from lxml.etree import Element, SubElement, tostring
+from html5lib import HTMLParser
+from html5lib.serializer.htmlserializer import HTMLSerializer
+from html5lib.treebuilders import getTreeBuilder
+from html5lib.treewalkers import getTreeWalker
+from lxml.etree import Element
 from tower import ugettext_lazy as _lazy
 
 import sumo.parser
@@ -133,85 +136,35 @@ def parse_simple_syntax(text):
     return text
 
 
-class ForParser(HTMLParser):
-    """Lightweight HTML parser which finds <for> tags and translates them
-    into spans and divs having the proper data- elements and classes.
+class ForParser(object):
+    """HTML 5 parser which finds <for> tags and translates them into spans and
+    divs having the proper data- elements and classes.
 
-    As a side effect, repairs poorly matched pairings of <for> in favor of the
-    location of the opening tag. Since markup comes well-formed out of the
-    WikiParser, we can assume that everything is properly balanced except for
-    <for> tags.
+    As a side effect, repairs poorly matched pairings of <for> (and other
+    tags), probably in favor of the location of the opening tag.
 
     """
-    # libxml2dom balances tags the same way, but it doesn't look maintained
-    # anymore, and we'd still have to parse the doc again to decide on spans
-    # vs. divs.
+    TREEBUILDER = 'lxml'
+    CONTAINER_TAG = 'div'
 
-    def __init__(self, html=''):
+    def __init__(self, html):
         """Create a parse tree from the given HTML."""
-        HTMLParser.__init__(self)  # HTMLParser is an old-style class.
+        def really_parse_fragment(parser, html):
+            """Parse a possibly multi-rooted HTML fragment, wrapping it in a
+            <div> to make it easy to query later.
 
-        self._root = Element('root')  # dummy root element to avoid branches
-        self._node = self._root  # where the parser currently is in the tree
+            As far as I can tell, this is what parseFragment is supposed to do
+            (but doesn't). See
+            http://code.google.com/p/html5lib/issues/detail?id=161.
 
-        if html:
-            self.feed(html)
-            self.close()
+            """
+            top_level_elements = parser.parseFragment(html)
+            container = Element(self.CONTAINER_TAG)
+            container.extend(top_level_elements)
+            return container
 
-    def _make_descendent(self, tag, attrs):
-        n = SubElement(self._node, tag)
-        for k, v in attrs:
-            n.set(k, v)
-        return n
-
-    def handle_starttag(self, tag, attrs):
-        self._node = self._make_descendent(tag, attrs)
-
-    def handle_endtag(self, tag):
-        """Correct the closing of <for> tags.
-
-        Every other kind of tag is known to be correct, since it was emitted
-        from the WikiParser (which produces valid markup) and then, if that
-        weren't enough, run through Bleach.
-
-        """
-        # If there's nothing on the tag stack, bail out; we discard closers
-        # whose openers don't seem to be around:
-        if self._node is self._root:
-            return
-
-        while self._node.tag != tag and self._node.tag == 'for':
-            # Somebody closed one or more <for>s late: <em><for>We are
-            # here: ^</em>. Close them. Don't force-close non-for tags.
-            # They are known to be right; </for> placement is at fault.
-            self._node = self._node.getparent()
-            if self._node is self._root:
-                return
-
-        # Close the tag we actually encountered if it's the one we expect.
-        # Either self._node matches the closer we're at, or self._node isn't a
-        # <for>. The latter case indicates that the input stream is at fault,
-        # in which case we ignore the closer.
-        if self._node.tag == tag:
-            self._node = self._node.getparent()
-
-    def handle_startendtag(self, tag, attrs):
-        """Slam down a new tag, but don't move the node pointer."""
-        self._make_descendent(tag, attrs)
-
-    def handle_data(self, data):
-        # How I hate lxml's choice of not making text nodes proper nodes.
-        n = self._node
-        if len(n):  # Even some childless nodes are True.
-            if n[-1].tail:
-                n[-1].tail += data
-            else:
-                n[-1].tail = data
-        else:
-            if n.text:
-                n.text += data
-            else:
-                n.text = data
+        p = HTMLParser(tree=getTreeBuilder(self.TREEBUILDER))
+        self._root = really_parse_fragment(p, html)
 
     def expand_fors(self):
         """Turn the for tags into spans and divs, and apply data attrs.
@@ -220,16 +173,23 @@ class ForParser(HTMLParser):
         Otherwise, it turns into a span.
 
         """
-        for for_el in self._root.xpath('//for'):
-            for_el.tag = ('div' if any(for_el.find(tag) is not None
-                                        for tag in BLOCK_LEVEL_ELEMENTS)
+        html_ns = 'http://www.w3.org/1999/xhtml'
+        for for_el in self._root.xpath('//html:for',
+                                       namespaces={'html': html_ns}):
+            for_el.tag = ('div' if any(for_el.find('{' + html_ns + '}' + tag)
+                                       is not None
+                                       for tag in BLOCK_LEVEL_ELEMENTS)
                                  else 'span')
             for_el.attrib['class'] = 'for'
 
     def to_unicode(self):
         """Return the unicode serialization of myself."""
-        r = len('<root>')
-        return tostring(self._root, encoding=unicode)[r:-r - 1]
+        container_len = len(self.CONTAINER_TAG) + 2  # 2 for the <>
+        walker = getTreeWalker(self.TREEBUILDER)
+        stream = walker(self._root)
+        serializer = HTMLSerializer(quote_attr_values=True,
+                                    omit_optional_tags=False)
+        return serializer.render(stream)[container_len:-container_len - 1]
 
     @staticmethod
     def _on_own_line(match, postspace):

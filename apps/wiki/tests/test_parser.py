@@ -274,7 +274,7 @@ class ForWikiTests(TestCase):
 
     def test_nested(self):
         """{for} tags should be nestable."""
-        parsed_eq('<div data-for="mac" class="for"><p>Joe</p>'
+        parsed_eq('<div class="for" data-for="mac"><p>Joe</p>'
                   '<p>Red <span class="for"><span class="for">riding'
                       '</span> hood</span></p>'
                   '<p>Blow</p></div>',
@@ -290,7 +290,7 @@ class ForWikiTests(TestCase):
 
     def test_data_attrs(self):
         """Make sure the correct attributes are set on the for element."""
-        parsed_eq('<p><span data-for="mac,linux,3.6" class="for">'
+        parsed_eq('<p><span class="for" data-for="mac,linux,3.6">'
                   'One</span></p>',
                   '{for mac,linux,3.6}One{/for}')
 
@@ -368,12 +368,12 @@ class ForParserTests(TestCase):
 
     def test_well_formed(self):
         """Make sure the expander works on well-formed fragments."""
-        html = '<ul><li type="1"><br/><for>One</for></li></ul>'
+        html = '<ul><li type="1"><br><for>One</for></li></ul>'
         balanced_eq(html, html)
 
     def test_document_mode(self):
         """Make sure text chunks interspersed with tags are parsed right."""
-        html = '<p>Hello<br/>there, <br/>you.</p>'
+        html = '<p>Hello<br>there, <br>you.</p>'
         balanced_eq(html, html)
 
     def test_early_close(self):
@@ -416,7 +416,7 @@ class ForParserTests(TestCase):
 
     def test_data_attrs(self):
         """Make sure the data- attributes look good."""
-        expanded_eq('<span data-for="mac,linux" class="for">One</span>',
+        expanded_eq('<span class="for" data-for="mac,linux">One</span>',
                     '<for data-for="mac,linux">One</for>')
 
     def test_on_own_line(self):
@@ -449,3 +449,10 @@ class ForParserTests(TestCase):
         # together:
         #strip_eq('\x070\x07\n\n\x071\x07inline\x07/sf\x07\n\n\x07/sf\x07',
         #         '{for}\n{for}inline{/for}\n{/for}')
+
+    def test_self_closers(self):
+        """Make sure self-closing tags aren't balanced as paired ones."""
+        balanced_eq('<img src="smoo"><span>g</span>',
+                    '<img src="smoo"><span>g</span>')
+        balanced_eq('<img src="smoo"><span>g</span>',
+                    '<img src="smoo"/><span>g</span>')

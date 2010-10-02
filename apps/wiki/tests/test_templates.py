@@ -408,8 +408,9 @@ class ReviewRevisionTests(TestCaseBase):
 
         response = get(self.client, 'wiki.review_revision',
                        args=[self.document.slug, self.revision.id])
-        self.assertContains(response,
-                            '<span data-for="mac" class="for">Ipsum</span>')
+
+        # Does the {for} syntax seem to have rendered?
+        assert pq(response.content)('span[class=for]')
 
     @mock.patch_object(wiki.tasks.send_reviewed_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
