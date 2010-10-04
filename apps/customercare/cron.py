@@ -8,6 +8,7 @@ import urllib
 
 from django.conf import settings
 from django.db.utils import IntegrityError
+from django.utils.encoding import smart_str
 
 import cronjobs
 
@@ -56,7 +57,8 @@ def collect_tweets():
 
     # Drop tweets into DB
     for item in raw_data['results']:
-        log.debug('Handling tweet %d: %s...' % (item['id'], item['text'][:50]))
+        log.debug('Handling tweet %d: %s...' % (item['id'],
+                                                smart_str(item['text'][:50])))
         # Apply filters to tweet before saving
         item = _filter_tweet(item)
         if not item:
