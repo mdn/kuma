@@ -1,5 +1,6 @@
 (function($){
-    var memory = new function() {
+
+    function Memory() {
         this._id = null;
         this._name = 'custcare_persist_reply';
 
@@ -31,7 +32,8 @@
                 $.cookie(this._name, null);
             }
         };
-    };
+    }
+    var memory = new Memory();
 
     function Tweet(target) {
         this.$el = $(target);
@@ -77,7 +79,7 @@
             this.username = tweet.username;
             this.content = tweet.content;
         };
-    };
+    }
 
     $(document).ready(function() {
 
@@ -88,7 +90,7 @@
             'active': false,
         });
 
-        var reply = new function() {
+        function Reply() {
 
             this.__defineGetter__('content', function() {
                 return this.$textarea.val();
@@ -173,9 +175,10 @@
                 e.preventDefault();
                 return false;
             });
-        };
+        }
+        var reply = new Reply();
 
-        var signin = new function() {
+        function Signin() {
             this.open = function(tweet) {
                 this.$el.find('.signin').bind('click', {tweet: tweet}, function(e) {
                     memory.id = e.data.tweet.id;
@@ -202,7 +205,8 @@
                 e.preventDefault();
                 return false;
             });
-        };
+        }
+        var signin = new Signin();
 
         $('.tweet').live('click', function() {
             var t = new Tweet(this);
