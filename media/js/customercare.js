@@ -149,6 +149,8 @@ $(document).ready(function() {
             this.tweet = tweet;
             this.content = '';
             this.$el.dialog(this.dialog_options);
+            var pos = this.$textarea.val().length - 8; // == ' #fxhelp'.length
+            this.$textarea.get(0).setSelectionRange(pos, pos);
             this.$textarea.focus();
         },
         close: function() {
