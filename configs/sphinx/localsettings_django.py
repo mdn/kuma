@@ -2,7 +2,7 @@ import os
 import sys
 
 SETTINGS_DIR = os.path.realpath(
-        os.path.join(os.path.dirname(__file__), os.path.sep.join(('..',)*2)))
+        os.path.join(os.path.dirname(__file__), os.path.sep.join(('..',) * 2)))
 
 sys.path.append(SETTINGS_DIR)
 
@@ -20,15 +20,18 @@ MYSQL_NAME = s['NAME']
 if MYSQL_HOST.endswith('.sock'):
     MYSQL_HOST = 'localhost'
 
+LISTEN_PORT     = settings.SPHINX_PORT
+LISTEN_SQL_HOST = settings.SPHINX_HOST
+LISTEN_SQL_PORT = settings.SPHINXQL_PORT
+
 if os.environ.get('DJANGO_ENVIRONMENT') == 'test':
     MYSQL_NAME = 'test_' + MYSQL_NAME
+    LISTEN_PORT = settings.TEST_SPHINX_PORT
+    LISTEN_SQL_PORT = settings.TEST_SPHINXQL_PORT
 
-ROOT_PATH       = '/tmp/k'
+ROOT_PATH       = settings.TEST_SPHINX_PATH
 CATALOG_PATH    = '/data'
 LOG_PATH        = '/log'
 ETC_PATH        = '/etc'
 
-LISTEN_PORT     = settings.SPHINX_PORT
-LISTEN_SQL_HOST = settings.SPHINX_HOST
-LISTEN_SQL_PORT = settings.SPHINX_PORT + 1
 AGE_DIVISOR = 86400

@@ -49,12 +49,13 @@ class SphinxTestCase(test_utils.TransactionTestCase):
 
             os.environ['DJANGO_ENVIRONMENT'] = 'test'
 
-            if os.path.exists('/tmp/k'):
-                shutil.rmtree('/tmp/k')
+            if os.path.exists(settings.TEST_SPHINX_PATH):
+                shutil.rmtree(settings.TEST_SPHINX_PATH)
 
-            os.makedirs('/tmp/k/data')
-            os.makedirs('/tmp/k/log')
-            os.makedirs('/tmp/k/etc')
+            os.makedirs(os.path.join(settings.TEST_SPHINX_PATH, 'data'))
+            os.makedirs(os.path.join(settings.TEST_SPHINX_PATH, 'log'))
+            os.makedirs(os.path.join(settings.TEST_SPHINX_PATH, 'etc'))
+
             reindex()
             start_sphinx()
             time.sleep(1)

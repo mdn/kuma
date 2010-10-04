@@ -11,3 +11,4 @@ build.py
 **-min.js
 media/uploads
 vendor
+tmp

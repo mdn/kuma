@@ -358,10 +358,15 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Connection information for Sphinx search
 SPHINX_HOST = '127.0.0.1'
 SPHINX_PORT = 3381
+SPHINXQL_PORT = 3382
 
 SPHINX_INDEXER = '/usr/bin/indexer'
 SPHINX_SEARCHD = '/usr/bin/searchd'
 SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
+
+TEST_SPHINX_PATH = path('tmp/test/sphinx')
+TEST_SPHINX_PORT = 3416
+TEST_SPHINXQL_PORT = 3418
 
 #
 # Sphinx results tweaking

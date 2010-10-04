@@ -1,5 +1,6 @@
 import logging
 import socket
+import os
 
 from django.conf import settings
 
@@ -25,7 +26,11 @@ class SearchClient(object):
 
     def __init__(self):
         self.sphinx = SphinxClient()
-        self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
+        if os.environ.get('DJANGO_ENVIRONMENT') == 'test':
+            self.sphinx.SetServer(settings.SPHINX_HOST,
+                                  settings.TEST_SPHINX_PORT)
+        else:
+            self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
 
     def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
