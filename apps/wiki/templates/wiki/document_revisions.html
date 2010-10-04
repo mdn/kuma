@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% set title = _('Revision History | {document} | Firefox Support')|fe(document=document.title) %}
+{% set title = _('Revision History | {document}')|fe(document=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Revisions'))] %}
@@ -44,7 +44,7 @@
               {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
             </div>
             <div class="date">
-              {{ datetimeformat(rev.created, format='datetime') }}
+              <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
             </div>
             <div class="status">
               {% if not rev.reviewed %}

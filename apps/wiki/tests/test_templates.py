@@ -63,6 +63,24 @@ class DocumentTests(TestCaseBase):
         self.assertNotContains(response, 'Redirected from ')
 
 
+class RevisionTests(TestCaseBase):
+    """Tests for the Revision template"""
+    fixtures = ['users.json']
+
+    def test_revision_view(self):
+        """Load the revision view page and verify the title and content."""
+        d = _create_document()
+        r = d.current_revision
+        url = reverse('wiki.revision', args=[d.slug, r.id])
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('Revision %s' % r.id, doc('#main-content hgroup h1').text())
+        eq_(d.title, doc('#main-content hgroup h2').text())
+        eq_(pq(r.content_parsed)('div').text(),
+            doc('#doc-content div').text())
+
+
 class NewDocumentTests(TestCaseBase):
     """Tests for the New Document template"""
     fixtures = ['users.json']

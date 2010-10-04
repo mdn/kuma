@@ -105,6 +105,22 @@ def document(request, document_slug):
                          'redirected_from': redirected_from})
 
 
+def revision(request, document_slug, revision_id):
+    """View a wiki document revision."""
+    rev = get_object_or_404(Revision, pk=revision_id,
+                            document__slug=document_slug)
+
+    return jingo.render(request, 'wiki/revision.html',
+                        {'document': rev.document,
+                         'revision': rev,
+                         'oses': OPERATING_SYSTEMS,
+                         'oses_json': OS_ABBR_JSON,
+                         'browsers': GROUPED_FIREFOX_VERSIONS,
+                         'browsers_json': BROWSER_ABBR_JSON,
+                         'missing_msg_json': json.dumps(unicode(MISSING_MSG)),
+                         'version_group_json': VERSION_GROUP_JSON})
+
+
 @require_GET
 def list_documents(request, category=None):
     """List wiki documents."""

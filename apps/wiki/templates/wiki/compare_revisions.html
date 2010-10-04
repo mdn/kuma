@@ -1,7 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% set title = _('Compare Revisions | {document} | Firefox Support')|f(document=document.title) %}
+{% set title = _('Compare Revisions | {document}')|f(document=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Compare Revisions'))] %}

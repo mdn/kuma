@@ -1,7 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
-{% set title = _('{t} | {c} | Firefox Support')|f(t=document.title, c=document.get_category_display()) %}
+{% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (None, document.title)] %}
 {% set classes = 'document' %}

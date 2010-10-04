@@ -1,7 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% set title = _('Edit Article | {document} | Firefox Support')|f(document=document.title) %}
+{% set title = _('Edit Article | {document}')|f(document=document.title) %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
                  (url('wiki.category', document.category), document.get_category_display()),

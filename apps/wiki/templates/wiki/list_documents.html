@@ -1,10 +1,10 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% if category %}
-  {% set title = _('{category} | Firefox Support')|fe(category=category) %}
+  {% set title = _('{category}')|fe(category=category) %}
   {% set crumbs = [(None, category)] %}
 {% else %}
-  {% set title = _('All Articles | Firefox Support') %}
+  {% set title = _('All Articles') %}
   {% set crumbs = [(None, _('All Articles'))] %}
 {% endif %}
 
