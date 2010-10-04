@@ -1,103 +1,130 @@
-memory = {
-    _id: null,
-    _name: 'custcare_persist_reply',
+(function($){
+    var memory = new function() {
+        this._id = null;
+        this._name = 'custcare_persist_reply';
 
-    get id() {
-        if (!this._id) {
-            if (Modernizr.localstorage)
-                this._id = localStorage[this._name];
-            else
-                this._id = $.cookie(this._name);
-        }
+        this.__defineGetter__('id', function() {
+            if (!this._id) {
+                if (Modernizr.localstorage) {
+                    this._id = localStorage[this._name];
+                } else {
+                    this._id = $.cookie(this._name);
+                }
+            }
 
-        return parseInt(this._id);
-    },
-    set id(val) {
-        this._id = val;
+            return parseInt(this._id, 10);
+        });
+        this.__defineSetter__('id', function(val) {
+            this._id = val;
 
-        if (Modernizr.localstorage)
-            localStorage[this._name] = this._id;
-        else
-            $.cookie(this._name, this._id);
-    },
-    del: function () {
-        if (Modernizr.localstorage)
-            localStorage.removeItem(this._name);
-        else
-            $.cookie(this._name, null);
-    }
-}
+            if (Modernizr.localstorage) {
+                localStorage[this._name] = this._id;
+            } else {
+                $.cookie(this._name, this._id);
+            }
+        });
 
-function Tweet(target) {
-    this.$el = $(target);
-    this.$username_el = this.$el.find('.twittername');
-    this.$content_el = this.$el.find('.text');
-    this.$avatar_el = this.$el.find('.avatar');
-}
-Tweet.prototype = {
-    get id() {
-        return this.$el.attr('data-tweet-id');
-    },
-    set id(id) {
-        this.$el.attr('data-tweet-id', id);
-    },
-    get avatar() {
-        return {
-            href: this.$avatar_el.attr('href'),
-            src: this.$avatar_el.find('img').attr('src'),
+        this.del = function() {
+            if (Modernizr.localstorage) {
+                localStorage.removeItem(this._name);
+            } else {
+                $.cookie(this._name, null);
+            }
         };
-    },
-    set avatar(avatar) {
-        this.$avatar_el.attr('href', avatar.href);
-        this.$avatar_el.find('img').attr('src', avatar.src);
-    },
-    get username() {
-        return this.$username_el.text();
-    },
-    set username(name) {
-        this.$username_el.text(name);
-    },
-    get content() {
-        return this.$content_el.text();
-    },
-    set content(content) {
-        this.$content_el.text(content);
-    },
-    set_from_tweet: function(tweet) {
-        this.id = tweet.id;
-        this.avatar = tweet.avatar;
-        this.username = tweet.username;
-        this.content = tweet.content;
-    },
-};
+    };
 
-$(document).ready(function() {
+    function Tweet(target) {
+        this.$el = $(target);
+        this.$username_el = this.$el.find('.twittername');
+        this.$content_el = this.$el.find('.text');
+        this.$avatar_el = this.$el.find('.avatar');
 
-    $('#accordion').accordion({
-        'icons': false,
-        'autoHeight': false,
-        'collpsible': true,
-        'active': false,
-    });
+        this.__defineGetter__('id', function() {
+            return this.$el.attr('data-tweet-id');
+        });
+        this.__defineSetter__('id', function(val) {
+            this.$el.attr('data-tweet-id', val);
+        });
 
-    reply = {
-        $el: $("#reply-modal"),
-        get content() {
-            return this.$textarea.val();
-        },
-        set content(text) {
-            text = '@'+ this._tweet.username +' '+ text +' #fxhelp';
-            this.$textarea.val(text);
-            // trigger keydown so the character counter updates
-            this.$textarea.trigger('keydown');
-        },
-        get tweet() {
-            return this._tweet;
-        },
-        set tweet(tweet) {
-            this._tweet.set_from_tweet(tweet);
-        },
-        init: function() {
+        this.__defineGetter__('avatar', function() {
+            return {
+                href: this.$avatar_el.attr('href'),
+                src: this.$avatar_el.find('img').attr('src'),
+            };
+        });
+        this.__defineSetter__('avatar', function(val) {
+            this.$avatar_el.attr('href', val.href);
+            this.$avatar_el.find('img').attr('src', val.src);
+        });
+
+        this.__defineGetter__('username', function() {
+            return this.$username_el.text();
+        });
+        this.__defineSetter__('username', function(val) {
+            this.$username_el.text(val);
+        });
+
+        this.__defineGetter__('content', function() {
+            return this.$content_el.text();
+        });
+        this.__defineSetter__('content', function(val) {
+            this.$content_el.text(val);
+        });
+
+        this.set_from_tweet = function(tweet) {
+            this.id = tweet.id;
+            this.avatar = tweet.avatar;
+            this.username = tweet.username;
+            this.content = tweet.content;
+        };
+    };
+
+    $(document).ready(function() {
+
+        $('#accordion').accordion({
+            'icons': false,
+            'autoHeight': false,
+            'collpsible': true,
+            'active': false,
+        });
+
+        var reply = new function() {
+
+            this.__defineGetter__('content', function() {
+                return this.$textarea.val();
+            });
+            this.__defineSetter__('content', function(val) {
+                val = '@'+ this._tweet.username +' '+ val +' #fxhelp';
+                this.$textarea.val(val);
+                // trigger keydown so the character counter updates
+                this.$textarea.trigger('keydown');
+            });
+
+            this.__defineGetter__('tweet', function() {
+                return this._tweet;
+            });
+            this.__defineSetter__('tweet', function(val) {
+                this._tweet.set_from_tweet(val);
+            });
+
+            this.open = function(tweet) {
+                this.tweet = tweet;
+                this.content = '';
+                this.$el.dialog(this.dialog_options);
+                var pos = this.$textarea.val().length - 8; // == ' #fxhelp'.length
+                this.$textarea.get(0).setSelectionRange(pos, pos);
+                this.$textarea.focus();
+            };
+            this.close = function() {
+                this.$el.dialog('close');
+            };
+            this.reset = function() {
+                this.content = '';
+                this.$success_msg.hide();
+            };
+
+            this.$el = $("#reply-modal");
+
             this.$tweet_el = this.$el.find("#initial-tweet");
             this._tweet = new Tweet(this.$tweet_el);
 
@@ -113,7 +140,9 @@ $(document).ready(function() {
                 'modal': true,
                 'position': 'top',
                 'width': 500,
-                'close': function() { modal.reset() },
+                'close': function() { 
+                    modal.reset(); 
+                },
             };
 
             this.$el.find('#submit').bind('click', {reply: this}, function(e) {
@@ -130,7 +159,7 @@ $(document).ready(function() {
                     success: function(data) {
                         reply.$success_msg.show();
                         setTimeout(function() {
-                            reply.close()
+                            reply.close();
                         }, 2000);
                     },
                     error: function(data) {
@@ -144,95 +173,77 @@ $(document).ready(function() {
                 e.preventDefault();
                 return false;
             });
-        },
-        open: function(tweet) {
-            this.tweet = tweet;
-            this.content = '';
-            this.$el.dialog(this.dialog_options);
-            var pos = this.$textarea.val().length - 8; // == ' #fxhelp'.length
-            this.$textarea.get(0).setSelectionRange(pos, pos);
-            this.$textarea.focus();
-        },
-        close: function() {
-            this.$el.dialog('close');
-        },
-        reset: function() {
-            this.content = '';
-            this.$success_msg.hide();
-        },
-    };
-    reply.init();
+        };
 
-    var signin = {
-        dialog_options: {
-            'modal': 'true',
-            'position': 'top',
-            'width': 500,
-        },
-        init: function() {
+        var signin = new function() {
+            this.open = function(tweet) {
+                this.$el.find('.signin').bind('click', {tweet: tweet}, function(e) {
+                    memory.id = e.data.tweet.id;
+                });
+                this.$el.dialog(this.dialog_options);
+            };
+
+            this.close = function() {
+                this.$el.dialog('close');
+            };
+
+            this.__defineGetter__('authed', function() {
+                return (this.$el.attr('data-authed') == 'True');
+            });
+
+            this.dialog_options = {
+                'modal': 'true',
+                'position': 'top',
+                'width': 500,
+            };
             this.$el = $("#twitter-modal");
-
             this.$el.find('.cancel').bind('click', {dialog: this.$el}, function(e) {
                 e.data.dialog.dialog('close');
                 e.preventDefault();
                 return false;
             });
+        };
 
-        },
-        open: function(tweet) {
-            this.$el.find('.signin').bind('click', {tweet: tweet}, function(e) {
-                memory.id = e.data.tweet.id;
-            });
-            this.$el.dialog(this.dialog_options);
-        },
-        close: function() {
-            this.$el.dialog('close');
-        },
-        get authed() {
-            return (this.$el.attr('data-authed') == 'True');
-        },
-    }
-    signin.init();
+        $('.tweet').live('click', function() {
+            var t = new Tweet(this);
 
-    $('.tweet').live('click', function() {
-        var t = new Tweet(this);
-
-        if (!signin.authed) {
-            signin.open(t);
-        } else {
-            reply.open(t);
-        }
-    });
-
-    if (signin.authed && memory.id) {
-        $('#tweet-'+ memory.id).trigger('click');
-        memory.del();
-    }
-
-    $('.reply-topic').click(function(e) {
-        reply.content = $(this).next('.snippet').text();
-        e.preventDefault();
-        return false;
-    });
-
-
-    $(".ui-widget-overlay").live("click", function() {
-        reply.close();
-        signin.close();
-    });
-
-    $('#refresh-tweets').click(function(e) {
-        $("#refresh-busy").show();
-        $.get(
-            $(this).attr('href'), {},
-            function(data) {
-                $('#tweets').fadeOut('fast', function() {
-                    $(this).html(data).fadeIn();
-                    $("#refresh-busy").hide();
-                });
+            if (!signin.authed) {
+                signin.open(t);
+            } else {
+                reply.open(t);
             }
-        );
-        e.preventDefault();
-        return false;
+        });
+
+        if (signin.authed && memory.id) {
+            $('#tweet-'+ memory.id).trigger('click');
+            memory.del();
+        }
+
+        $('.reply-topic').click(function(e) {
+            reply.content = $(this).next('.snippet').text();
+            e.preventDefault();
+            return false;
+        });
+
+
+        $(".ui-widget-overlay").live("click", function() {
+            reply.close();
+            signin.close();
+        });
+
+        $('#refresh-tweets').click(function(e) {
+            $("#refresh-busy").show();
+            $.get(
+                $(this).attr('href'), {},
+                function(data) {
+                    $('#tweets').fadeOut('fast', function() {
+                        $(this).html(data).fadeIn();
+                        $("#refresh-busy").hide();
+                    });
+                }
+            );
+            e.preventDefault();
+            return false;
+        });
     });
-});
+}(jQuery));
