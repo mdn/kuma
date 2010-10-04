@@ -63,7 +63,7 @@ body {
     float: left;
     padding: 4px;
 }
-#refresh-busy { 
+#refresh-busy {
     display: none;
     width: 10px;
     height: 10px;

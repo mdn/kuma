@@ -2,7 +2,7 @@ memory = {
     _id: null,
     _name: 'custcare_persist_reply',
 
-    get id() { 
+    get id() {
         if (!this._id) {
             if (Modernizr.localstorage)
                 this._id = localStorage[this._name];
@@ -14,7 +14,7 @@ memory = {
     },
     set id(val) {
         this._id = val;
-    
+
         if (Modernizr.localstorage)
             localStorage[this._name] = this._id;
         else
@@ -45,7 +45,7 @@ Tweet.prototype = {
         return {
             href: this.$avatar_el.attr('href'),
             src: this.$avatar_el.find('img').attr('src'),
-        }; 
+        };
     },
     set avatar(avatar) {
         this.$avatar_el.attr('href', avatar.href);
@@ -118,14 +118,14 @@ $(document).ready(function() {
 
             this.$el.find('#submit').bind('click', {reply: this}, function(e) {
                 var reply = e.data.reply;
-                var data = { 
+                var data = {
                     'content': reply.content,
                     'reply_to': reply.tweet.id,
                 };
 
                 $.ajax({
-                    url: reply.action, 
-                    data: data, 
+                    url: reply.action,
+                    data: data,
                     type: 'POST',
                     success: function(data) {
                         reply.$success_msg.show();
@@ -214,7 +214,7 @@ $(document).ready(function() {
     });
 
 
-    $(".ui-widget-overlay").live("click", function() {  
+    $(".ui-widget-overlay").live("click", function() {
         reply.close();
         signin.close();
     });
@@ -229,7 +229,7 @@ $(document).ready(function() {
                     $("#refresh-busy").hide();
                 });
             }
-        ); 
+        );
         e.preventDefault();
         return false;
     });
