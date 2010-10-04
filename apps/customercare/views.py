@@ -30,10 +30,10 @@ def _get_tweets(limit=MAX_TWEETS):
         parsed_date = parsedate(data['created_at'])
         date = datetime(*parsed_date[0:6])
         tweets.append({
-            'profile_img': data['profile_image_url'],
-            'user': data['from_user'],
+            'profile_img': bleach.clean(data['profile_image_url']),
+            'user': bleach.clean(data['from_user']),
             'text': bleach.clean(smart_str(tweet)),
-            'id': tweet.tweet_id,
+            'id': int(tweet.tweet_id),
             'date': date,
         })
     return tweets
