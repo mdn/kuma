@@ -4,7 +4,6 @@ import json
 import logging
 
 from django import http
-from django.utils.encoding import smart_str
 
 from bleach import Bleach
 import jingo
@@ -32,7 +31,7 @@ def _get_tweets(limit=MAX_TWEETS):
         tweets.append({
             'profile_img': bleach.clean(data['profile_image_url']),
             'user': bleach.clean(data['from_user']),
-            'text': bleach.clean(smart_str(tweet)),
+            'text': bleach.clean(data['text']),
             'id': int(tweet.tweet_id),
             'date': date,
         })
