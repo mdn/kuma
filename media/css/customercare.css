@@ -410,7 +410,6 @@ a.header-button {
 }
 
 #twitter-modal {
-    background: url('images/popup-background.png');
     margin: auto;
     padding: 15px 24px 30px 24px;
     font-family: Verdana, sans-serif;
@@ -487,4 +486,13 @@ a.header-button {
     background-color: white;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
+}
+.ui-dialog-titlebar-close {
+    background-color: #fff;
+}
+.ui-dialog-titlebar-close .ui-icon {
+    background-image: url("jqueryui/images/ui-icons_222222_256x240.png");
+}
+.ui-dialog-titlebar-close.ui-state-hover {
+    background: none;
 }
