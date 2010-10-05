@@ -526,6 +526,14 @@ div.forum-editor-tools img {
     margin: 0 0.3em 0 0;
 }
 
+div.forum-editor-tools span.separator {
+    border-left: solid 1px #ddd;
+    font-size: 14px;
+    margin: 0 0.8em 0 0.6em;
+    position: relative;
+    top: -3px;
+}
+
 img.markup-toolbar-button {
     cursor: pointer;
 }
@@ -579,7 +587,7 @@ div#main div.img a:hover {
 /* End image markup styling */
 
 /*----------------------------------
-    Common "pop-in" styles 
+    Common "pop-in" styles
 ----------------------------------*/
 .js .pop-in {
     background: #fff;

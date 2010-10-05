@@ -330,8 +330,10 @@ MINIFY_BUNDLES = {
         ),
         'forums': (
             'js/markup.js',
+            'js/forums.js',
         ),
         'wiki': (
+            'js/markup.js',
             'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
             'js/libs/jquery.cookie.js',

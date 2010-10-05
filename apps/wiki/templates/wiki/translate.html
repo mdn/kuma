@@ -118,7 +118,10 @@
       </div>
       <div class="localized">
         <h3>{{ _('{locale} Translation')|f(locale=language) }}</h3>
-        {{ revision_form.content|safe }}
+        <div class="forum-editor">
+          <div class="forum-editor-tools"></div>
+          {{ revision_form.content|safe }}
+        </div>
       </div>
     </div>
     <div class="submit">

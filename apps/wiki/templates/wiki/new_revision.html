@@ -65,9 +65,16 @@
         {% if document_form %}
           {{ document_form.as_ul()|safe }}
         {% endif %}
-        {% for field in revision_form if field.name != 'comment' %}
+        {% for field in revision_form if field.name != 'comment' and field.name != 'content' %}
           <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
         {% endfor %}
+        <li>
+          {{ revision_form.content.label_tag()|safe }}
+          <div class="forum-editor">
+            <div class="forum-editor-tools"></div>
+            {{ revision_form.content|safe }}
+          </div>
+        </li>
       </ul>
       {% include 'wiki/includes/submit_revision_for_review.html' %}
     </form>

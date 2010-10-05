@@ -15,6 +15,8 @@
             initForTags();
         }
         initChangeTranslateLocale();
+
+        Marky.createFullToolbar('.forum-editor-tools', '#id_content');
     }
 
     // Return the OS that the cookie indicates or, failing that, that appears

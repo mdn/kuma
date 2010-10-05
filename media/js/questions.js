@@ -18,6 +18,8 @@
             initHaveThisProblemTooAjax();
             initEmailSubscribeAjax();
         }
+
+        Marky.createSimpleToolbar('.forum-editor-tools', '#reply-content, #id_content');
     }
 
     /*

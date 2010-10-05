@@ -32,6 +32,17 @@
     height: 500px;
 }
 
+#document-form .forum-editor {
+    float: left;
+    padding: 0;
+    width: 500px;
+}
+
+#document-form div.submit {
+    clear: both;
+    padding: 25px 0 0 125px;
+}
+
 /* Revision history */
 #locale-list ul {
     display: inline;
@@ -275,6 +286,16 @@ ul.description textarea {
 #content-fields textarea {
     height: 500px;
     padding: 2px;
+    width: 400px;
+}
+
+#content-fields div.approved textarea {
+    margin: 30px 0 0;
+}
+
+#content-fields .forum-editor {
+    margin: 10px 0 0;
+    padding: 0;
     width: 400px;
 }
 
