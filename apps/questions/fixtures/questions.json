@@ -46,10 +46,10 @@
         "model": "questions.question",
         "fields": {
             "status": 1,
-            "updated": "2010-06-17 19:47:34",
+            "updated": "2010-06-17 19:47:35",
             "creator": 47963,
             "is_locked": false,
-            "created": "2010-06-17 19:47:34",
+            "created": "2010-06-17 19:47:35",
             "content": "It's a marvellous night for an audio lolrus foo.",
             "title": "lolrus too?",
             "num_answers": 2

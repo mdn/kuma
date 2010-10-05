@@ -9,6 +9,11 @@ from babel.support import Format
 from tower import ugettext_lazy as _
 
 
+class NoValidateMultipleChoiceField(forms.MultipleChoiceField):
+    def valid_value(self, value):
+        return True
+
+
 # TODO: remove this and use strip kwarg once ticket #6362 is done
 # @see http://code.djangoproject.com/ticket/6362
 class StrippedCharField(forms.CharField):

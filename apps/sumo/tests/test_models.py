@@ -14,10 +14,6 @@ def setup():
 class TestWikiPage(TestCase):
     fixtures = ['pages.json']
 
-    def test_get_url(self):
-        w = WikiPage.objects.create(pk=1, lang='en', title='My Test Page')
-        eq_(w.get_url(), '/en-US/kb/My+Test+Page')
-
     def test_get_create_url(self):
         """Create url for a page that does not exist."""
         eq_('/tiki-editpage.php?page=Article+List',

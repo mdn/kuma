@@ -4,8 +4,9 @@ import json
 from datetime import datetime, timedelta
 
 from django import forms
-from django.forms.util import ValidationError
 from django.conf import settings
+from django.db.models import ObjectDoesNotExist
+from django.forms.util import ValidationError
 from django.http import HttpResponse
 from django.utils.http import urlencode
 
@@ -13,15 +14,16 @@ import jingo
 import jinja2
 from tower import ugettext as _
 
-from forums.models import Forum as DiscussionForum, Thread, Post
-from sumo.models import WikiPage, Category
-from questions.models import Question
-from sumo.utils import paginate
 from .clients import (QuestionsClient, WikiClient,
                       DiscussionClient, SearchError)
 from .utils import crc32, locale_or_default, sphinx_locale
+from forums.models import Forum as DiscussionForum, Thread, Post
+from questions.models import Question
 import search as constants
+from sumo.form_fields import NoValidateMultipleChoiceField
+from sumo.utils import paginate
 from sumo_locales import LOCALES
+from wiki.models import Document, CATEGORIES
 
 
 def jsonp_is_valid(func):
@@ -87,10 +89,6 @@ def search(request):
 
             return cleaned_data
 
-        class NoValidateMultipleChoiceField(forms.MultipleChoiceField):
-            def valid_value(self, value):
-                return True
-
         # Common fields
         q = forms.CharField(required=False)
 
@@ -115,11 +113,9 @@ def search(request):
             choices=[(LOCALES[k].external, LOCALES[k].native) for
                      k in settings.SUMO_LANGUAGES])
 
-        categories = [(cat.categId, cat.name) for
-                      cat in Category.objects.all()]
         category = NoValidateMultipleChoiceField(
             widget=forms.CheckboxSelectMultiple,
-            label=_('Category'), choices=categories, required=False)
+            label=_('Category'), choices=CATEGORIES, required=False)
 
         # Support questions and discussion forums fields
         created = forms.TypedChoiceField(
@@ -436,14 +432,12 @@ def search(request):
     for i in range(offset, offset + settings.SEARCH_RESULTS_PER_PAGE):
         try:
             if documents[i]['attrs'].get('category', False) != False:
-                wiki_page = WikiPage.objects.get(pk=documents[i]['id'])
-
-                excerpt = wc.excerpt(wiki_page.content, cleaned['q'])
-                summary = jinja2.Markup(excerpt)
+                wiki_page = Document.objects.get(pk=documents[i]['id'])
+                summary = wiki_page.current_revision.summary
 
                 result = {'search_summary': summary,
-                          'url': wiki_page.get_url(),
-                          'title': wiki_page.name, }
+                          'url': wiki_page.get_absolute_url(),
+                          'title': wiki_page.title, }
                 results.append(result)
             elif documents[i]['attrs'].get('question_creator', False) != False:
                 question = Question.objects.get(
@@ -470,8 +464,7 @@ def search(request):
                 results.append(result)
         except IndexError:
             break
-        except (WikiPage.DoesNotExist, Question.DoesNotExist,
-                Thread.DoesNotExist):
+        except ObjectDoesNotExist:
             continue
 
     items = [(k, v) for k in search_form.fields for

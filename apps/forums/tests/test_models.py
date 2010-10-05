@@ -55,12 +55,11 @@ class ForumModelTestCase(ForumTestCase):
         """Adding/Deleting the last post in a thread and forum should
         update the last_post field
         """
-        forum = Forum.objects.get(pk=1)
-        last_post = forum.last_post
-        thread = last_post.thread
+        thread = Thread.objects.get(pk=4)
+        user = User.objects.get(pk=118533)
 
         # add a new post, then check that last_post is updated
-        new_post = Post(thread=thread, content="test", author=last_post.author)
+        new_post = Post(thread=thread, content="test", author=user)
         new_post.save()
         forum = Forum.objects.get(pk=1)
         thread = Thread.objects.get(pk=thread.id)
@@ -71,8 +70,8 @@ class ForumModelTestCase(ForumTestCase):
         new_post.delete()
         forum = Forum.objects.get(pk=1)
         thread = Thread.objects.get(pk=thread.id)
-        eq_(forum.last_post.id, last_post.id)
-        eq_(thread.last_post.id, last_post.id)
+        eq_(forum.last_post.id, 25)
+        eq_(thread.last_post.id, 25)
 
     def test_public_access(self):
         """Assert Forums think they're publicly viewable and postable at

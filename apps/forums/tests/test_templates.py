@@ -133,12 +133,11 @@ class ThreadsTemplateTestCase(ForumTestCase):
 
     def test_last_thread_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
-        forum = Forum.objects.filter()[0]
-        response = get(self.client, 'forums.threads', args=[forum.slug])
+        response = get(self.client, 'forums.threads', args=['test-forum'])
         doc = pq(response.content)
         last_post_link = doc('ol.threads div.last-post a:not(.username)')[0]
         href = last_post_link.attrib['href']
-        eq_(href.split('#')[1], 'post-3')
+        eq_(href.split('#')[1], 'post-4')
 
     def test_empty_thread_errors(self):
         """Posting an empty thread shows errors."""

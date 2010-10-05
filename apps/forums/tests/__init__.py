@@ -2,35 +2,9 @@ from django.contrib.auth.models import User
 
 from nose.tools import eq_
 
-from forums.models import Forum, Thread, Post, ThreadLockedError
+from forums.models import Thread, Post, ThreadLockedError
 from forums.views import sort_threads
 from sumo.tests import get, LocalizingClient, TestCase
-
-
-def fixtures_setup():
-    f1 = Forum.objects.filter()[0]
-    f1.last_post = Post.objects.get(pk=25)
-    f1.save()
-
-    t1 = Thread.objects.get(pk=1)
-    t1.last_post = Post.objects.get(pk=24)
-    t1.save()
-
-    t2 = Thread.objects.get(pk=2)
-    t2.last_post = Post.objects.get(pk=3)
-    t2.save()
-
-    t3 = Thread.objects.get(pk=3)
-    t3.last_post = Post.objects.get(pk=5)
-    t3.save()
-
-    t4 = Thread.objects.get(pk=4)
-    t4.last_post = Post.objects.get(pk=25)
-    t4.save()
-
-    t5 = Thread.objects.get(pk=5)
-    t5.last_post = Post.objects.get(pk=27)
-    t5.save()
 
 
 class ForumTestCase(TestCase):
@@ -40,7 +14,6 @@ class ForumTestCase(TestCase):
         """Our fixtures have nulled foreign keys to allow them to be
         installed. This will set them to the correct values."""
 
-        fixtures_setup()
         self.client = LocalizingClient()
 
 
