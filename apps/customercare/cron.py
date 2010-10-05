@@ -67,8 +67,9 @@ def collect_tweets():
         created_date = datetime.utcfromtimestamp(calendar.timegm(
             rfc822.parsedate(item['created_at'])))
 
+        item_lang = item.get('iso_language_code', 'en')
         tweet = Tweet(tweet_id=item['id'], raw_json=json.dumps(item),
-                      locale=item['iso_language_code'], created=created_date)
+                      locale=item_lang, created=created_date)
         try:
             tweet.save()
         except IntegrityError:
