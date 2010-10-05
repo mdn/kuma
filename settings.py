@@ -338,8 +338,6 @@ MINIFY_BUNDLES = {
             'js/browserdetect.js',
             'js/wiki.js',
         ),
-        'gallery': (
-        ),
         'customercare': (
             'js/libs/jqueryui.min.js',
             'js/libs/jquery.NobleCount.js',
