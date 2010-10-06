@@ -3,7 +3,8 @@ from email.Utils import parsedate
 import json
 import logging
 
-from django import http
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.views.decorators.http import require_POST, require_GET
 
 from bleach import Bleach
 import jingo
@@ -12,11 +13,13 @@ import tweepy
 from .models import CannedCategory, Tweet
 import twitter
 
-log = logging.getLogger('k')
+
+log = logging.getLogger('k.customercare')
 
 bleach = Bleach()
 
 MAX_TWEETS = 20
+
 
 def _get_tweets(limit=MAX_TWEETS):
     tweets = []
@@ -37,10 +40,14 @@ def _get_tweets(limit=MAX_TWEETS):
         })
     return tweets
 
+
+@require_GET
 def more_tweets(request):
     return jingo.render(request, 'customercare/tweets.html', 
-                        { 'tweets': _get_tweets() })
+                        {'tweets': _get_tweets()})
 
+
+@require_GET
 @twitter.auth_wanted
 def landing(request):
     """Customer Care Landing page."""
@@ -49,19 +56,14 @@ def landing(request):
 
     canned_responses = CannedCategory.objects.all()
 
-    resp = jingo.render(request, 'customercare/landing.html', {
+    return jingo.render(request, 'customercare/landing.html', {
         'canned_responses': canned_responses,
         'tweets': _get_tweets(),
         'authed': twitter.authed,
     })
 
-    return resp
 
-def is_printable(s, codec='utf-8'):
-    try: s.decode(codec)
-    except UnicodeDecodeError: return False
-    else: return True
-
+@require_POST
 @twitter.auth_required
 def twitter_post(request):
     reply_to = int(request.POST.get('reply_to'))
@@ -70,17 +72,15 @@ def twitter_post(request):
 
     generic_error = 'Sorry, an error occurred'
 
-    if not is_printable(content):
-        return http.HttpResponseBadRequest('{0} ({1})'.format(generic_error, 
-                                                              'content is not printable'))
-    elif len(content) == 0:
-        return http.HttpResponseBadRequest('Message is empty')
-    elif len(content) > 140:
-        return http.HttpResponseBadRequest('Message is too long')
-    else:
-        try:
-            request.twitter.api.update_status(content, reply_to)
-        except tweepy.TweepError, e:
-            return http.HttpResponseBadRequest('{0} ({1})'.format(generic_error, e))
-        else:
-            return http.HttpResponse()
+    if len(content) == 0:
+        return HttpResponseBadRequest('Message is empty')
+
+    if len(content) > 140:
+        return HttpResponseBadRequest('Message is too long')
+
+    try:
+        request.twitter.api.update_status(content, reply_to)
+    except tweepy.TweepError, e:
+        return HttpResponseBadRequest('{0} ({1})'.format(generic_error, e))
+
+    return HttpResponse()
