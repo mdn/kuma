@@ -1,11 +1,15 @@
+import json
+
 from django import forms
+from django.utils.encoding import smart_str
 
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
 from sumo.form_fields import StrippedCharField
-from .models import (Document, Revision, FirefoxVersion, OperatingSystem,
-                     FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES)
+from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
+                     FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
+                     GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS)
 
 
 KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
@@ -89,8 +93,16 @@ class RevisionForm(forms.ModelForm):
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
 
+    showfor_data = {
+        'oses': [(smart_str(c[0]), [(o.slug, smart_str(o.name)) for
+                                    o in c[1]]) for
+                 c in GROUPED_OPERATING_SYSTEMS],
+        'versions': [(smart_str(c[0]), [(v.slug, smart_str(v.name)) for
+                                        v in c[1]]) for
+                     c in GROUPED_FIREFOX_VERSIONS]}
+    widget = forms.Textarea(attrs={'data-showfor': json.dumps(showfor_data)})
     content = StrippedCharField(
-                min_length=5, max_length=10000, widget=forms.Textarea(),
+                min_length=5, max_length=10000, widget=widget,
                 error_messages={'required': CONTENT_REQUIRED,
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})

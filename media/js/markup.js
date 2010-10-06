@@ -72,7 +72,9 @@ var Marky = {
             new SB(gettext('Heading 2'), '/media/img/markup/h2.png', '==',
                    '==', gettext('Heading 2')),
             new SB(gettext('Heading 3'), '/media/img/markup/h3.png', '===',
-                   '===', gettext('Heading 3'))
+                   '===', gettext('Heading 3')),
+            new Marky.Separator(),
+            new Marky.ShowForButton()
         ];
         Marky.createCustomToolbar(toolbarSel, textareaSel, buttons);
     },
@@ -110,21 +112,25 @@ Marky.SimpleButton.prototype = {
         this.textarea = textarea;
         return this;
     },
-    // Gets the DOM node for the button.
-    node: function() {
-        var me = this,
-            $btn = $(this.html);
-        $btn.attr({
+    // Renders the html.
+    render: function() {
+        return $(this.html).attr({
             src: this.imagePath,
             title: this.name,
             alt: this.name
-        }).click(function(e) {
-            me.handleClick();
+        });
+    },
+    // Gets the DOM node for the button.
+    node: function() {
+        var me = this,
+            $btn = this.render();
+        $btn.click(function(e) {
+            me.handleClick(e);
         });
         return $btn[0];
     },
     // Handles the button click.
-    handleClick: function() {
+    handleClick: function(e) {
         var selText, selStart, selEnd, splitText, range,
             textarea = this.textarea;
         textarea.focus();
@@ -183,6 +189,8 @@ Marky.SimpleButton.prototype = {
                                         selText.length;
             }
         }
+        e.preventDefault();
+        return false;
     },
     _applyEveryLine: function(opentag, closetag, block) {
         return $.map(block.split('\n'), function(line) {
@@ -191,6 +199,91 @@ Marky.SimpleButton.prototype = {
         });
     }
 };
+
+/*
+ * The showfor helper link.
+ */
+Marky.ShowForButton = function() {
+    this.name = gettext('Show for...');
+    this.openTag = '{for}';
+    this.closeTag = '{/for}';
+    this.defaultText = 'Show for text.';
+    this.everyline = false;
+
+    this.html = '<a class="markup-toolbar-link" href="#show-for">Show For...</a>';
+};
+
+Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
+    // Renders the html.
+    render: function() {
+        return $(this.html);
+    },
+    // Gets the DOM node for the button.
+    node: function() {
+        var me = this,
+            $btn = this.render();
+        $btn.click(function(e) {
+            me.openModal(e);
+        });
+        return $btn[0];
+    },
+    openModal: function(e) {
+        var me = this,
+            // TODO: look at using a js template solution (jquery-tmpl?)
+            $modal = $('<section id="showfor-modal" class="pop-in">' +
+                       '<a href="#close" class="close">&#x2716;</a><h1/>' +
+                       '<div class="placeholder"/>' +
+                       '<div class="submit"><button type="button"></button>' +
+                       '<a href="#cancel" class="cancel"></a></div>' +
+                       '</section>'),
+            $overlay = $('<div id="modal-overlay"></div>'),
+            $placeholder = $modal.find('div.placeholder'),
+            data = $.parseJSON($(this.textarea).attr('data-showfor'));
+
+        $modal.find('h1').text(this.name);
+        $modal.find('button').text(gettext('Add Rule')).click(function(e){
+            var showfor = ''
+            $('#showfor-modal input:checked').each(function(){
+                showfor += ($(this).val() + ',');
+            });
+            me.openTag = '{for ' + showfor.slice(0,showfor.length-1) + '}';
+            me.handleClick(e);
+            closeModal(e);
+        });
+        $modal.find('a.cancel').text(gettext('Cancel'));
+        appendOptions($placeholder, data.versions);
+        appendOptions($placeholder, data.oses);
+        $modal.find('a.close, a.cancel').click(closeModal);
+
+        $('body').append($overlay).append($modal);
+
+        function appendOptions($ph, options) {
+            $.each(options, function(i, value) {
+                $ph.append($('<h2/>').text(value[0]));
+                $.each(value[1], function(i, value) {
+                    $ph.append(
+                        $('<label/>').text(value[1]).prepend(
+                            $('<input type="checkbox" name="showfor"/>')
+                                .attr('value', value[0])
+                        )
+                    );
+                });
+            });
+        }
+
+        function closeModal(e) {
+            $modal.unbind().remove();
+            $overlay.unbind().remove();
+            delete $modal;
+            delete $overlay;
+            e.preventDefault();
+            return false;
+        }
+
+        e.preventDefault();
+        return false;
+    }
+});
 
 /*
  * A button separator.

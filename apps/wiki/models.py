@@ -52,13 +52,18 @@ FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
 
 # OSes used to filter articles and declare {for} sections:
 OsMetaData = namedtuple('OsMetaData', 'id, name, slug')
-OPERATING_SYSTEMS = (
-    # The first is the default for {for} display.
-    OsMetaData(1, _lazy('Windows'), 'win'),
-    OsMetaData(2, _lazy('Mac OS X'), 'mac'),
-    OsMetaData(3, _lazy('Linux'), 'linux'),
-    OsMetaData(4, _lazy('Maemo'), 'maemo'),
-    OsMetaData(5, _lazy('Android'), 'android'))
+GROUPED_OPERATING_SYSTEMS = (
+    (_lazy('Desktop OS:'), (
+        OsMetaData(1, _lazy('Windows'), 'win'),
+        OsMetaData(2, _lazy('Mac OS X'), 'mac'),
+        OsMetaData(3, _lazy('Linux'), 'linux'))),
+    (_lazy('Mobile OS:'), (
+        OsMetaData(4, _lazy('Maemo'), 'maemo'),
+        OsMetaData(5, _lazy('Android'), 'android'))))
+
+# Flattened
+OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
+                                  GROUPED_OPERATING_SYSTEMS]))
 
 
 REDIRECT_HTML = '<p>REDIRECT <a '  # how a redirect looks as rendered HTML

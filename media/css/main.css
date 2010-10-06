@@ -534,8 +534,47 @@ div.forum-editor-tools span.separator {
     top: -3px;
 }
 
+div.forum-editor-tools a.markup-toolbar-link {
+    position: relative;
+    top: -3px;
+}
+
 img.markup-toolbar-button {
     cursor: pointer;
+}
+
+#showfor-modal {
+    color: #4B4740;
+    display: block;
+    left: 50%;
+    margin-left: -260px;
+    padding: 20px;
+    position: fixed;
+    text-align: left;
+    top: 100px;
+    width: 480px;
+    z-index: 10;
+}
+
+#showfor-modal h1 {
+    font-size: 20px;
+}
+
+#showfor-modal h2 {
+    font-size: 16px;
+    margin: 10px 0 0;
+}
+
+#showfor-modal label {
+    padding: 0 15px 0 0;
+}
+
+#showfor-modal input[type="checkbox"] {
+    margin: 0 5px 0 0;
+}
+
+#showfor-modal div.submit {
+    margin: 20px 0 0;
 }
 
 /* Submit or cancel switches */
