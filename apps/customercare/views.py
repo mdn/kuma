@@ -66,12 +66,12 @@ def landing(request):
 @require_POST
 @twitter.auth_required
 def twitter_post(request):
-    reply_to = int(request.POST.get('reply_to'))
-    reply_to_name = request.POST.get('reply_to_name')
-    content = request.POST.get('content')
+    try:
+        reply_to = int(request.POST.get('reply_to', ''))
+    except ValueError:
+        return HttpResponseBadRequest('Reply-to is empty')
 
-    generic_error = 'Sorry, an error occurred'
-
+    content = request.POST.get('content', '')
     if len(content) == 0:
         return HttpResponseBadRequest('Message is empty')
 
@@ -81,6 +81,6 @@ def twitter_post(request):
     try:
         request.twitter.api.update_status(content, reply_to)
     except tweepy.TweepError, e:
-        return HttpResponseBadRequest('{0} ({1})'.format(generic_error, e))
+        return HttpResponseBadRequest('An error occured: %s' % e)
 
     return HttpResponse()
