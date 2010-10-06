@@ -47,6 +47,11 @@
     margin: 20px 0 0;
 }
 
+/* Headings aren't valid in <summary>s, and it makes me sad. */
+summary.h2 {
+    font-size: 2em;
+}
+
 /* Revision history */
 #locale-list ul {
     display: inline;
@@ -353,4 +358,44 @@ div.change-locale.open #change-locale {
 
 #submit-modal input[type="text"] {
     width: 300px;
+}
+
+/* Graceful fallback for <details> tags */
+/* from http://mathiasbynens.be/notes/html5-details-jquery */
+
+details, summary {
+    display: block;
+}
+
+/* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
+
+/* Add focus styles (for keyboard accessibility) */
+.no-details summary:hover, .no-details summary:focus {
+    background: #ddd;
+}
+
+/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
+/* However, we’re still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
+/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
+
+/* Hide all direct descendants of every <details> element */
+/* Note that IE6 doesn’t support the child selector; we’ll work around that using jQuery later */
+.no-details details > * {
+    display: none;
+}
+
+/* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it’s a clickable element */
+.no-details details summary {
+    display: block;
+    cursor: pointer;
+}
+
+.no-details details summary:before {
+    margin-right: .5em;
+    content: '\25B8';
+}
+
+.no-details details.open summary:before {
+    margin-right: .5em;
+    content: '\25BE';
 }

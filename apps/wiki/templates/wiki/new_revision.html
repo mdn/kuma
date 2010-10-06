@@ -15,8 +15,9 @@
     {{ breadcrumbs(crumbs) }}
   </div>
   <h1>{{ _('Edit Article') }}</h1>
-  {% if not document_form %}
-    <div id="document-info">
+  <div id="document-info">
+    <details>
+      <summary class="h2">Edit Description</summary>
       <ul>
         <li>
           <label>{{ _('Title:') }}</label>
@@ -52,32 +53,39 @@
           {% endfor %}
         </li>
       </ul>
-    </div>
-  {% endif %}
+    </details>
+  </div>
+  <br class="clear" />
   <div id="document-form">
-    <form action="" method="post">
-      {{ csrf() }}
-      {% if document_form %}
-        {{ errorlist(document_form) }}
-      {% endif %}
-      {{ errorlist(revision_form) }}
-      <ul>
+    <details open="open">
+      <summary class="h2">Edit Content</summary>
+      <p>
+        For article-writing guidelines, please read our <a href="#">Best Practices for Support Documents</a> and <a href="#">Manual of Style</a>.
+      </p>
+      <form action="" method="post">
+        {{ csrf() }}
         {% if document_form %}
-          {{ document_form.as_ul()|safe }}
+          {{ errorlist(document_form) }}
         {% endif %}
-        {% for field in revision_form if field.name != 'comment' and field.name != 'content' %}
-          <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
-        {% endfor %}
-        <li>
-          {{ revision_form.content.label_tag()|safe }}
-          <div class="forum-editor">
-            <div class="forum-editor-tools"></div>
-            {{ revision_form.content|safe }}
-          </div>
-        </li>
-      </ul>
-      {% include 'wiki/includes/submit_revision_for_review.html' %}
-      <div id="preview"></div>
-    </form>
+        {{ errorlist(revision_form) }}
+        <ul>
+          {% if document_form %}
+            {{ document_form.as_ul()|safe }}
+          {% endif %}
+          {% for field in revision_form if field.name != 'comment' and field.name != 'content' %}
+            <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
+          {% endfor %}
+          <li>
+            {{ revision_form.content.label_tag()|safe }}
+            <div class="forum-editor">
+              <div class="forum-editor-tools"></div>
+              {{ revision_form.content|safe }}
+            </div>
+          </li>
+        </ul>
+        {% include 'wiki/includes/submit_revision_for_review.html' %}
+        <div id="preview"></div>
+      </form>
+    </details>
   </div>
 {% endblock %}
