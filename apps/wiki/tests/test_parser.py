@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -296,9 +298,10 @@ class TestWikiVideo(TestCase):
         d, _, p = doc_rev_parser('[[V:Some title]]')
         doc = pq(d.html)
         eq_('video', doc('div.video').attr('class'))
-        eq_(u'<source src="/media/uploads/gallery/videos/test.webm" '
-            u'type="video/webm"><source src="/media/uploads/gallery/'
-            u'videos/test.ogv" type="video/ogg"/></source>',
+        eq_(u'<source src="{0}uploads/gallery/videos/test.webm" '
+            u'type="video/webm"><source src="{0}uploads/gallery/'
+            u'videos/test.ogv" type="video/ogg"/>'
+            u'</source>'.format(settings.MEDIA_URL),
             doc('video').html())
         eq_(1, len(doc('video')))
         eq_(2, len(doc('source')))
