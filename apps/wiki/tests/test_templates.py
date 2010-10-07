@@ -729,6 +729,28 @@ class LocaleWatchTests(TestCaseBase):
                                'ready_for_review', 'en-US')
 
 
+class ArticlePreviewTests(TestCaseBase):
+    """Tests for preview view and template."""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(ArticlePreviewTests, self).setUp()
+        self.client.login(username='rrosario', password='testpass')
+
+    def test_preview_GET_405(self):
+        """Preview with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.preview')
+        eq_(405, response.status_code)
+
+    def test_preview(self):
+        """Preview the wiki syntax content."""
+        response = post(self.client, 'wiki.preview',
+                        {'content': '=Test Content='})
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('Test Content', doc('#doc-content h1').text())
+
+
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',

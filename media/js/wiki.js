@@ -14,7 +14,12 @@
         if ($('body').is('.document')) { // Document page
             initForTags();
         }
-        initChangeTranslateLocale();
+        if ($('body').is('.translate')) { // Translate page
+            initChangeTranslateLocale();
+        }
+        if ($('body').is('.edit, .new, .translate')) {
+            initArticlePreview();
+        }
 
         Marky.createFullToolbar('.forum-editor-tools', '#id_content');
     }
@@ -233,11 +238,6 @@
      * Initialize the Change locale link on the translate page
      */
     function initChangeTranslateLocale() {
-        // This only applies to the Translate page
-        if (!$('body').is('.translate')) {
-            return;
-        }
-
         // Add the close button to the modal and handle clicks
         $('#change-locale')
             .append('<a href="#close" class="close">&#x2716;</a>')
@@ -256,6 +256,37 @@
             $('body').one('click', function(ev) {
                 $('div.change-locale').removeClass('open');
             });
+            return false;
+        });
+    }
+
+    /*
+     * Initialize the article preview functionality.
+     */
+    function initArticlePreview() {
+        $('#btn-preview').click(function(e) {
+            var $btn = $(this);
+            $btn.attr('disabled', 'disabled')
+            $.ajax({
+                url: $(this).attr('data-preview-url'),
+                type: 'POST',
+                data: $('#id_content').serialize(),
+                dataType: 'html',
+                success: function(html) {
+                    $('#preview')
+                        .html(html)
+                        .find('select.enable-if-js').removeAttr('disabled');
+                    initForTags();
+                    $btn.removeAttr('disabled')
+                },
+                error: function() {
+                    var msg = gettext("There was an error generating the preview.");
+                    $('#preview').html(msg);
+                    $btn.removeAttr('disabled')
+                }
+            });
+
+            e.preventDefault();
             return false;
         });
     }

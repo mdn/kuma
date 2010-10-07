@@ -18,6 +18,7 @@ from sumo.urlresolvers import reverse
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
+from wiki.parser import wiki_to_html
 from wiki.tasks import (send_reviewed_notification,
                         send_ready_for_review_notification,
                         send_edited_notification)
@@ -53,6 +54,15 @@ def _version_groups(versions):
 
 
 VERSION_GROUP_JSON = json.dumps(_version_groups(FIREFOX_VERSIONS))
+
+SHOWFOR_DATA = {
+    'oses': OPERATING_SYSTEMS,
+    'oses_json': OS_ABBR_JSON,
+    'browsers': GROUPED_FIREFOX_VERSIONS,
+    'browsers_json': BROWSER_ABBR_JSON,
+    'version_group_json': VERSION_GROUP_JSON,
+    'missing_msg_json': json.dumps(unicode(MISSING_MSG)),
+}
 
 
 @require_GET
@@ -94,31 +104,18 @@ def document(request, document_slug):
         except Document.DoesNotExist:
             pass
 
-    return jingo.render(request, 'wiki/document.html',
-                        {'document': doc,
-                         'oses': OPERATING_SYSTEMS,
-                         'oses_json': OS_ABBR_JSON,
-                         'browsers': GROUPED_FIREFOX_VERSIONS,
-                         'browsers_json': BROWSER_ABBR_JSON,
-                         'version_group_json': VERSION_GROUP_JSON,
-                         'missing_msg_json': json.dumps(unicode(MISSING_MSG)),
-                         'redirected_from': redirected_from})
+    data = {'document': doc, 'redirected_from': redirected_from}
+    data.update(SHOWFOR_DATA)
+    return jingo.render(request, 'wiki/document.html', data)
 
 
 def revision(request, document_slug, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
-
-    return jingo.render(request, 'wiki/revision.html',
-                        {'document': rev.document,
-                         'revision': rev,
-                         'oses': OPERATING_SYSTEMS,
-                         'oses_json': OS_ABBR_JSON,
-                         'browsers': GROUPED_FIREFOX_VERSIONS,
-                         'browsers_json': BROWSER_ABBR_JSON,
-                         'missing_msg_json': json.dumps(unicode(MISSING_MSG)),
-                         'version_group_json': VERSION_GROUP_JSON})
+    data = {'document': rev.document, 'revision': rev}
+    data.update(SHOWFOR_DATA)
+    return jingo.render(request, 'wiki/revision.html', data)
 
 
 @require_GET
@@ -232,6 +229,16 @@ def new_revision(request, document_slug, revision_id=None):
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'document': doc})
+
+
+@login_required
+@require_POST
+def preview_revision(request):
+    """Create an HTML fragment preview of the posted wiki syntax."""
+    wiki_content = request.POST.get('content', '')
+    data = {'content': wiki_to_html(wiki_content)}
+    data.update(SHOWFOR_DATA)
+    return jingo.render(request, 'wiki/preview.html', data)
 
 
 @require_GET

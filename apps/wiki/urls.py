@@ -11,6 +11,7 @@ urlpatterns = patterns('wiki.views',
 
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
+    url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
     url(r'^/category/(?P<category>\d+)$', 'list_documents',
         name='wiki.category'),
     url(r'^/(?P<document_slug>[^\/]+)$', 'document',

@@ -43,6 +43,10 @@
     padding: 25px 0 0 125px;
 }
 
+#preview {
+    margin: 20px 0 0;
+}
+
 /* Revision history */
 #locale-list ul {
     display: inline;

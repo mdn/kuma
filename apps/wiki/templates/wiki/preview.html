@@ -1,0 +1,9 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+<div id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
+  <h2>{{ _('Table of Contents') }}</h2>
+  <ol></ol>
+</div>
+{% include 'wiki/includes/support-for-selectors.html' %}
+<div id="doc-content">
+  {{ content|safe }}
+</div>

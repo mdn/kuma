@@ -23,25 +23,7 @@
       <ol></ol>
     </div>
   {% endif %}
-  <div id="support-for">
-    <div>
-      <h2>{{ _("Support for:") }}</h2>
-      <select id="os" data-oses="{{ oses_json }}" class="enable-if-js" disabled="disabled">
-        {% for _, name, slug in oses %}
-          <option value="{{ slug }}">{{ name }}</option>
-        {% endfor %}
-      </select>
-      <select id="browser" data-browsers="{{ browsers_json }}" data-version-groups="{{ version_group_json }}" class="enable-if-js" disabled="disabled">
-        {% for label, options in browsers %}
-          <optgroup label="{{ label }}">
-            {% for option in options %}
-              <option value="{{ option.slug }}">{{ option.name }}</option>
-            {% endfor %}
-          </optgroup>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
+  {% include 'wiki/includes/support-for-selectors.html' %}
   <div id="doc-content">
     {% if document.current_revision %}
       {{ document.html|safe }}
