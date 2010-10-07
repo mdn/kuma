@@ -27,7 +27,7 @@ def url(request, override=None):
     if override:
         d.update(override)
     
-    return '{0}://{1}{2}'.format(d['scheme'], d['host'], d['path'])
+    return u'%s://%s%s' % (d['scheme'], d['host'], d['path'])
 
 # Twitter sessions are SSL only, so redirect to SSL if needed
 def auth_wanted(view_func):
