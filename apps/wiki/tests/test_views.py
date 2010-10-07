@@ -4,14 +4,14 @@ from django.conf import settings
 
 from nose.tools import eq_
 
-from sumo.tests import TestCase
+from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
-from wiki.models import VersionMetadata
-from wiki.tests import doc_rev, document
+from wiki.models import VersionMetadata, Document
+from wiki.tests import doc_rev, document, new_document_data
 from wiki.views import _version_groups
 
 
-class TestVersionGroups(TestCase):
+class VersionGroupTests(TestCase):
     def test_version_groups(self):
         """Make sure we correctly set up browser/version mappings for the JS"""
         versions = [VersionMetadata(1, 'Firefox 4.0', 'fx4', 5.0),
@@ -22,7 +22,7 @@ class TestVersionGroups(TestCase):
         eq_(want, _version_groups(versions))
 
 
-class TestRedirects(TestCase):
+class RedirectTests(TestCase):
     """Tests for the REDIRECT wiki directive"""
 
     fixtures = ['users.json']
@@ -36,7 +36,7 @@ class TestRedirects(TestCase):
         self.assertContains(response, 'REDIRECT ')
 
 
-class TestLocaleRedirects(TestCase):
+class LocaleRedirectTests(TestCase):
     """Tests for fallbacks to en-US and such for slug lookups."""
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
 
@@ -68,7 +68,7 @@ class TestLocaleRedirects(TestCase):
         self.assertRedirects(response, de_doc.get_absolute_url())
 
 
-class TestViews(TestCase):
+class ViewTests(TestCase):
     fixtures = ['users.json', 'search/documents.json']
 
     def test_json_view(self):
@@ -83,3 +83,27 @@ class TestViews(TestCase):
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
+
+
+class DocumentEditingTests(TestCase):
+    """Tests for the document-editing view"""
+
+    fixtures = ['users.json']
+
+    def test_retitling(self):
+        """When the title of an article is edited, a redirect is made."""
+        # Not testing slug changes separately; the model tests cover those plus
+        # slug+title changes. If title changes work in the view, the rest
+        # should also.
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        new_title = 'Some New Title'
+        d, r = doc_rev()
+        old_title = d.title
+        data = new_document_data()
+        data.update({'title': new_title,
+                     'slug': d.slug,
+                     'form': 'doc'})
+        client.post(reverse('wiki.edit_document', args=[d.slug]), data)
+        eq_(new_title, Document.uncached.get(slug=d.slug).title)
+        assert Document.uncached.get(title=old_title).redirect_url()

@@ -25,11 +25,13 @@
   {% endif %}
   {% include 'wiki/includes/support-for-selectors.html' %}
   <div id="doc-content">
-    {% if document.current_revision %}
-      {{ document.html|safe }}
-    {% else %}
-      {{ _("This article doesn't have approved content yet.") }}
-    {% endif %}
+    <article>
+      {% if document.current_revision %}
+        {{ document.html|safe }}
+      {% else %}
+        {{ _("This article doesn't have approved content yet.") }}
+      {% endif %}
+    </article>
   </div>
   <div id="more-help">
     <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
@@ -58,9 +60,9 @@
 {% block sidebar %}
 <ul class="common-actions" />
 <ul class="uncommon-actions">
-  {% if document.allows_editing_by(user) %}
+  {% if document.allows_revision_by(user) or document.allows_editing_by(user) %}
     <li>
-      <a href="{{ url('wiki.new_revision', document_slug=document.slug) }}">Edit</a>
+      <a href="{{ url('wiki.edit_document', document_slug=document.slug) }}">Edit</a>
     </li>
   {% endif %}
   {% if user.is_authenticated() %}

@@ -10,11 +10,10 @@ from notifications import check_watch
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
-from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
-from wiki.tests import TestCaseBase, document, revision
 from wiki.forms import DocumentForm, RevisionForm
-from wiki.views import _process_doc_and_rev_form
+from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 import wiki.tasks
+from wiki.tests import TestCaseBase, document, revision, new_document_data
 
 
 class DocumentTests(TestCaseBase):
@@ -107,7 +106,7 @@ class NewDocumentTests(TestCaseBase):
 
         self.client.login(username='admin', password='testpass')
         tags = ['tag1', 'tag2']
-        data = _new_document_data(tags)
+        data = new_document_data(tags)
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         d = Document.objects.get(title=data['title'])
@@ -133,7 +132,7 @@ class NewDocumentTests(TestCaseBase):
         get_current.return_value.domain = 'testserver'
 
         self.client.login(username='admin', password='testpass')
-        data = _new_document_data(['tag1', 'tag2'])
+        data = new_document_data(['tag1', 'tag2'])
         locale = 'es'
         self.client.post(reverse('wiki.new_document', locale=locale),
                                     data, follow=True)
@@ -144,7 +143,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_empty_title(self):
         """Trigger required field validation for title."""
         self.client.login(username='admin', password='testpass')
-        data = _new_document_data(['tag1', 'tag2'])
+        data = new_document_data(['tag1', 'tag2'])
         data['title'] = ''
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -156,7 +155,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_empty_content(self):
         """Trigger required field validation for content."""
         self.client.login(username='admin', password='testpass')
-        data = _new_document_data(['tag1', 'tag2'])
+        data = new_document_data(['tag1', 'tag2'])
         data['content'] = ''
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -168,7 +167,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_invalid_category(self):
         """Try to create a new document with an invalid category value."""
         self.client.login(username='admin', password='testpass')
-        data = _new_document_data(['tag1', 'tag2'])
+        data = new_document_data(['tag1', 'tag2'])
         data['category'] = 963
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -181,7 +180,7 @@ class NewDocumentTests(TestCaseBase):
     def test_new_document_POST_invalid_ff_version(self):
         """Try to create a new document with an invalid firefox version."""
         self.client.login(username='admin', password='testpass')
-        data = _new_document_data(['tag1', 'tag2'])
+        data = new_document_data(['tag1', 'tag2'])
         data['firefox_versions'] = [1337]
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
@@ -199,12 +198,12 @@ class NewDocumentTests(TestCaseBase):
         # This should create the document and revision.
         locale = settings.WIKI_DEFAULT_LANGUAGE
         tags = ['t1', 't2']
-        data = _new_document_data(tags)
+        data = new_document_data(tags)
         doc_form = DocumentForm(data)
         rev_form = RevisionForm(data)
         assert doc_form.is_valid() and rev_form.is_valid()
-        _process_doc_and_rev_form(doc_form, rev_form, locale, user,
-                                  None, None)
+        document = doc_form.save(locale, None)
+        rev_form.save(user, None, document)
         doc = Document.objects.get(slug=data['slug'], locale=locale)
         rev = doc.revisions.all()[0]
         _verify_doc_and_rev_data(data, doc, rev)
@@ -221,8 +220,8 @@ class NewDocumentTests(TestCaseBase):
         doc_form = DocumentForm(data)
         rev_form = RevisionForm(data)
         assert doc_form.is_valid() and rev_form.is_valid()
-        _process_doc_and_rev_form(doc_form, rev_form, locale, user,
-                                  doc, rev)
+        translation = doc_form.save(locale, doc)
+        rev_form.save(user, rev, translation)
         doc_es = Document.objects.get(slug=data['slug'], locale=locale)
         rev_es = doc_es.revisions.all()[0]
         _verify_doc_and_rev_data(data, doc_es, rev_es)
@@ -243,24 +242,24 @@ class NewRevisionTests(TestCaseBase):
         """Creating a revision without being logged in redirects to login page.
         """
         self.client.logout()
-        response = self.client.get(reverse('wiki.new_revision',
+        response = self.client.get(reverse('wiki.edit_document',
                                            args=[self.d.slug]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_without_perm(self):
-        """Trying to create a revision without permission returns 403."""
+        """Trying to view the edit form without permission returns 403."""
         self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.new_revision',
+        response = self.client.get(reverse('wiki.edit_document',
                                            args=[self.d.slug]))
         eq_(403, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
-        response = self.client.get(reverse('wiki.new_revision',
+        response = self.client.get(reverse('wiki.edit_document',
                                            args=[self.d.slug]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#document-form textarea[name="content"]')))
+        eq_(1, len(doc('#revision-form textarea[name="content"]')))
 
     def test_new_revision_GET_based_on(self):
         """HTTP GET to new revision URL based on another revision.
@@ -295,9 +294,9 @@ class NewRevisionTests(TestCaseBase):
         get_current.return_value.domain = 'testserver'
 
         response = self.client.post(
-            reverse('wiki.new_revision', args=[self.d.slug]),
+            reverse('wiki.edit_document', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2'})
+             'keywords': 'keyword1 keyword2', 'form': 'rev'})
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
 
@@ -323,8 +322,9 @@ class NewRevisionTests(TestCaseBase):
         self.d.current_revision = None
         self.d.save()
         tags = ['tag1', 'tag2', 'tag3']
-        data = _new_document_data(tags)
-        response = self.client.post(reverse('wiki.new_revision',
+        data = new_document_data(tags)
+        data['form'] = 'rev'
+        response = self.client.post(reverse('wiki.edit_document',
                                     args=[self.d.slug]), data)
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
@@ -343,8 +343,9 @@ class NewRevisionTests(TestCaseBase):
         self.d.tags.add(*tags)
         eq_(tags, list(self.d.tags.values_list('name', flat=True)))
         tags = ['tag1', 'tag4']
-        data = _new_document_data(tags)
-        self.client.post(reverse('wiki.new_revision', args=[self.d.slug]),
+        data = new_document_data(tags)
+        data['form'] = 'doc'
+        self.client.post(reverse('wiki.edit_document', args=[self.d.slug]),
                          data)
         eq_(tags, list(self.d.tags.values_list('name', flat=True)))
 
@@ -761,20 +762,6 @@ def _create_document(title='Test Document', parent=None,
                  significance=SIGNIFICANCES[0][0], is_approved=True)
     r.save()
     return d
-
-
-def _new_document_data(tags):
-    return {
-        'title': 'A Test Article',
-        'slug': 'a-test-article',
-        'tags': ','.join(tags),
-        'firefox_versions': [1, 2],
-        'operating_systems': [1, 3],
-        'category': CATEGORIES[0][0],
-        'keywords': 'key1, key2',
-        'summary': 'lipsum',
-        'content': 'lorem ipsum dolor sit amet',
-    }
 
 
 def _translation_data():

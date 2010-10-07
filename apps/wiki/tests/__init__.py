@@ -54,9 +54,25 @@ def revision(**kwargs):
 
 
 def doc_rev(content=''):
-    """Helper creates a document and revision given html and content."""
+    """Save a document and an approved revision with the given content."""
     d = document()
     d.save()
     r = revision(document=d, content=content, is_approved=True)
     r.save()
     return d, r
+
+
+def new_document_data(tags=None):
+    if tags is None:
+        tags = []
+    return {
+        'title': 'A Test Article',
+        'slug': 'a-test-article',
+        'tags': ','.join(tags),
+        'firefox_versions': [1, 2],
+        'operating_systems': [1, 3],
+        'category': CATEGORIES[0][0],
+        'keywords': 'key1, key2',
+        'summary': 'lipsum',
+        'content': 'lorem ipsum dolor sit amet',
+    }

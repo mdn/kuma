@@ -82,6 +82,33 @@ class DocumentForm(forms.ModelForm):
         model = Document
         fields = ('title', 'slug', 'category', 'tags')
 
+    def save(self, locale, parent_doc, **kwargs):
+        """Persist the Document form, and return the saved Document."""
+        doc = super(DocumentForm, self).save(commit=False, **kwargs)
+        doc.locale = locale
+        doc.parent = parent_doc
+        doc.save()
+        self.save_m2m()  # not strictly necessary since we didn't change
+                         # any m2m data since we instantiated the doc
+
+        # TODO: Use the tagging widget instead of this. Right now, anybody who
+        # can edit this field can create new tags; this is supposed to be a
+        # curated vocab.
+        tags = self.cleaned_data['tags']
+        doc.tags.exclude(name__in=tags).delete()
+        doc.tags.add(*tags)
+
+        ffv = self.cleaned_data['firefox_versions']
+        doc.firefox_versions.exclude(
+            item_id__in=[x.item_id for x in ffv]).delete()
+        doc.firefox_versions = ffv
+        os = self.cleaned_data['operating_systems']
+        doc.operating_systems.exclude(
+            item_id__in=[x.item_id for x in os]).delete()
+        doc.operating_systems = os
+
+        return doc
+
 
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
@@ -112,6 +139,22 @@ class RevisionForm(forms.ModelForm):
     class Meta:
         model = Revision
         fields = ('keywords', 'summary', 'content', 'comment')
+
+    def save(self, creator, base_revision, document, **kwargs):
+        """Persist me, and return the saved Revision.
+
+        Take several other necessary pieces of data that aren't from the
+        form.
+
+        """
+        # Throws a TypeError if somebody passes in a commit kwarg:
+        new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
+
+        new_rev.document = document
+        new_rev.creator = creator
+        new_rev.based_on = base_revision
+        new_rev.save()
+        return new_rev
 
 
 class ReviewForm(forms.Form):

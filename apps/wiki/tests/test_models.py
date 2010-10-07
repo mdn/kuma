@@ -169,7 +169,7 @@ class RedirectTests(TestCase):
         # "uncached" isn't necessary, but someday a worse caching layer could
         # make it so.
         eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
-        eq_(REDIRECT_TITLE % dict(old=self.d.title, number=2), redirect.title)
+        eq_(REDIRECT_TITLE % dict(old=self.d.title, number=1), redirect.title)
 
     def test_change_title(self):
         """Test proper redirect creation on title change."""
@@ -177,7 +177,7 @@ class RedirectTests(TestCase):
         self.d.save()
         redirect = Document.uncached.get(title=self.old_title)
         eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
-        eq_(REDIRECT_SLUG % dict(old=self.d.slug, number=2), redirect.slug)
+        eq_(REDIRECT_SLUG % dict(old=self.d.slug, number=1), redirect.slug)
 
     def test_change_slug_and_title(self):
         """Assert only one redirect is made when both slug and title change."""
@@ -200,20 +200,20 @@ class RedirectTests(TestCase):
 
     def _test_collision_avoidance(self, attr, other_attr, template):
         """When creating redirects, dodge existing docs' titles and slugs."""
-        # Create a doc called something like Whatever Redirect 2:
+        # Create a doc called something like Whatever Redirect 1:
         document(locale=self.d.locale,
                 **{other_attr: template % dict(old=getattr(self.d, other_attr),
-                                               number=2)}).save()
+                                               number=1)}).save()
 
         # Trigger creation of a redirect of a new title or slug:
         setattr(self.d, attr, 'new')
         self.d.save()
 
-        # It should be called something like Whatever Redirect 3:
+        # It should be called something like Whatever Redirect 2:
         redirect = Document.uncached.get(**{attr: getattr(self,
                                                           'old_' + attr)})
         eq_(template % dict(old=getattr(self.d, other_attr),
-                            number=3), getattr(redirect, other_attr))
+                            number=2), getattr(redirect, other_attr))
 
     def test_slug_collision_avoidance(self):
         """Dodge existing slugs when making redirects due to title changes."""

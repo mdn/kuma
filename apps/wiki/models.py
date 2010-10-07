@@ -171,7 +171,7 @@ class Document(ModelBase, TaggableMixin):
 
             """
             # "My God, it's full of race conditions!"
-            i = 2
+            i = 1
             while True:
                 new_value = template % dict(old=getattr(self, attr), number=i)
                 if not self._collides(attr, new_value):
@@ -270,7 +270,7 @@ class Document(ModelBase, TaggableMixin):
     def __unicode__(self):
         return '[%s] %s' % (self.locale, self.title)
 
-    def allows_editing_by(self, user):
+    def allows_revision_by(self, user):
         """Return whether `user` is allowed to create new revisions of me.
 
         The motivation behind this method is that templates and other types of
@@ -279,6 +279,17 @@ class Document(ModelBase, TaggableMixin):
         """
         # TODO: Add tests for templateness or whatever is required.
         return user.has_perm('wiki.add_revision')
+
+    def allows_editing_by(self, user):
+        """Return whether `user` is allowed to edit document-level metadata.
+
+        If the Document doesn't have a current_revision (nothing approved) then
+        all the Document fields are still editable. Once there is an approved
+        Revision, the Document fields can only be edited by privileged users.
+
+        """
+        return (not self.current_revision or
+                user.has_perm('wiki.change_document'))
 
     def translated_to(self, locale):
         """Return the translation of me to the given locale.

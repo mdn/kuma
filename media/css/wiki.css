@@ -3,14 +3,14 @@
  */
 
 /* New / Edit Document */
-#document-info li,
+#revision-form li,
 #document-form li {
     clear: both;
     list-style: none;
     padding: 5px 0;
 }
 
-#document-info li label,
+#revision-form li label,
 #document-form li label {
     float: left;
     width: 125px;
@@ -20,14 +20,17 @@
     display: inline;
 }
 
+#revision-form input[type="text"],
 #document-form input[type="text"] {
     width: 300px;
 }
 
+#revision-form textarea,
 #document-form textarea {
     width: 500px;
 }
 
+#revision-form textarea[name="content"],
 #document-form textarea[name="content"] {
     height: 500px;
 }

@@ -8,7 +8,8 @@ from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponse, HttpResponseRedirect,
                          Http404, HttpResponseBadRequest)
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import (require_GET, require_POST,
+                                          require_http_methods)
 
 import jingo
 from tower import ugettext_lazy as _lazy
@@ -153,23 +154,8 @@ def new_document(request):
     rev_form = RevisionForm(request.POST)
 
     if doc_form.is_valid() and rev_form.is_valid():
-        doc = doc_form.save(commit=False)
-        doc.locale = request.locale
-        doc.save()
-        doc_form.save_m2m()
-
-        doc.firefox_versions = doc_form.cleaned_data['firefox_versions']
-        doc.operating_systems = doc_form.cleaned_data['operating_systems']
-
-        rev = rev_form.save(commit=False)
-        rev.document = doc
-        rev.creator = request.user
-        rev.save()
-
-        # Enqueue notifications
-        send_ready_for_review_notification.delay(rev, doc)
-        send_edited_notification.delay(rev, doc)
-
+        doc = doc_form.save(request.locale, None)
+        _save_rev_and_notify(rev_form, request.user, None, doc)
         return HttpResponseRedirect(reverse('wiki.document_revisions',
                                     args=[doc.slug]))
 
@@ -178,57 +164,69 @@ def new_document(request):
                          'revision_form': rev_form})
 
 
+@require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in
                  # Document.allows_editing_by.
-def new_revision(request, document_slug, revision_id=None):
-    """Create a new revision of a wiki document in default locale."""
+def edit_document(request, document_slug, revision_id=None):
+    """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
+    user = request.user
 
-    if not doc.allows_editing_by(request.user):
-        raise PermissionDenied
-
-    # If this document has a parent then the edit is handled by the
-    # translate view, redirect there.
+    # If this document has a parent, then the edit is handled by the
+    # translate view. Redirect there.
     if doc.parent:
         return HttpResponseRedirect(reverse('wiki.translate',
                                             args=[doc.parent.slug]))
 
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
-    elif doc.current_revision:
-        rev = doc.current_revision
     else:
-        rev = doc.revisions.order_by('-created')[0]
+        rev = doc.current_revision or doc.revisions.order_by('-created')[0]
 
-    if request.method == 'GET':
+    doc_form = rev_form = None
+    disclose_description = bool(request.GET.get('opendescription'))
+    if doc.allows_revision_by(user):
         rev_form = RevisionForm(initial=_revision_form_initial(rev))
-
-        # If the Document doesn't have a current_revision (nothing approved)
-        # then all the Document fields are still editable. Once there is an
-        # approved Revision, the Document fields are locked.
-        if not doc.current_revision:
-            doc_form = DocumentForm(initial=_document_form_initial(doc))
-        else:
-            doc_form = None
-
+    if doc.allows_editing_by(user):
+        doc_form = DocumentForm(initial=_document_form_initial(doc))
+    if request.method == 'GET':
+        if not (rev_form or doc_form):
+            # You can't do anything on this page, so get lost.
+            raise PermissionDenied
     else:  # POST
-        rev_form = RevisionForm(request.POST)
-        if not doc.current_revision:
-            doc_form = DocumentForm(request.POST)
-        else:
-            doc_form = None
+        # Comparing against localized names for the Save button bothers me, so
+        # I embedded a hidden input:
+        which_form = request.POST.get('form')
 
-        if rev_form.is_valid() and (not doc_form or doc_form.is_valid()):
-            _process_doc_and_rev_form(doc_form, rev_form, request.locale,
-                                      request.user, None, rev, doc)
+        if which_form == 'doc':
+            if doc.allows_editing_by(user):
+                doc_form = DocumentForm(request.POST, instance=doc)
+                if doc_form.is_valid():
+                    # Get the possibly new slug for the imminent redirection:
+                    doc = doc_form.save(request.locale, None)
+                    return HttpResponseRedirect(
+                        urlparams(reverse('wiki.edit_document',
+                                          args=[doc.slug]),
+                                  opendescription=1))
+                disclose_description = True
+            else:
+                raise PermissionDenied
+        elif which_form == 'rev':
+            if doc.allows_revision_by(user):
+                rev_form = RevisionForm(request.POST)
+                if rev_form.is_valid():
+                    _save_rev_and_notify(rev_form, user, rev, doc)
+                    return HttpResponseRedirect(
+                        reverse('wiki.document_revisions',
+                                args=[document_slug]))
+            else:
+                raise PermissionDenied
 
-            return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                                args=[document_slug]))
-
-    return jingo.render(request, 'wiki/new_revision.html',
+    return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
+                         'disclose_description': disclose_description,
                          'document': doc})
 
 
@@ -345,12 +343,12 @@ def translate(request, document_slug):
         doc_form = DocumentForm(initial=doc_initial)
         rev_form = RevisionForm(initial=rev_initial)
     else:  # POST
-        doc_form = DocumentForm(request.POST)
+        doc_form = DocumentForm(request.POST, instance=doc)
         rev_form = RevisionForm(request.POST)
         if doc_form.is_valid() and rev_form.is_valid():
-            _process_doc_and_rev_form(
-                doc_form, rev_form, request.locale, request.user,
-                parent_doc, parent_doc.current_revision, doc)
+            doc = doc_form.save(request.locale, parent_doc)
+            _save_rev_and_notify(rev_form, request.user,
+                                 parent_doc.current_revision, doc)
 
             url = reverse('wiki.document_revisions',
                           args=[doc_form.cleaned_data['slug']])
@@ -442,39 +440,10 @@ def _revision_form_initial(revision):
             'summary': revision.summary}
 
 
-def _process_doc_and_rev_form(document_form, revision_form, locale, user,
-                              parent_doc, base_revision, document=None):
-    """Persist the Document and Revision forms."""
-    if document_form:
-        doc = document_form.save(commit=False)
-        doc.locale = locale
-        doc.parent = parent_doc
-        if document:
-            doc.id = document.id
-        doc.save()
-
-        # TODO: Use the tagging widget instead of this?
-        tags = document_form.cleaned_data['tags']
-        doc.tags.exclude(name__in=tags).delete()
-        doc.tags.add(*tags)
-
-        ffv = document_form.cleaned_data['firefox_versions']
-        doc.firefox_versions.exclude(
-            item_id__in=[x.item_id for x in ffv]).delete()
-        doc.firefox_versions = ffv
-        os = document_form.cleaned_data['operating_systems']
-        doc.operating_systems.exclude(
-            item_id__in=[x.item_id for x in os]).delete()
-        doc.operating_systems = os
-    else:
-        doc = document
-
-    new_rev = revision_form.save(commit=False)
-    new_rev.document = doc
-    new_rev.creator = user
-    new_rev.based_on = base_revision
-    new_rev.save()
+def _save_rev_and_notify(rev_form, creator, base_revision, document):
+    """Save the given RevisionForm and send notifications."""
+    new_rev = rev_form.save(creator, base_revision, document)
 
     # Enqueue notifications
-    send_ready_for_review_notification.delay(new_rev, doc)
-    send_edited_notification.delay(new_rev, doc)
+    send_ready_for_review_notification.delay(new_rev, document)
+    send_edited_notification.delay(new_rev, document)
