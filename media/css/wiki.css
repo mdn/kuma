@@ -109,6 +109,10 @@ body.review #main-content h3 {
     margin: 10px 0;
 }
 
+#revision-content pre {
+    white-space: pre-wrap;
+}
+
 body.review #actions {
     margin: 20px 0;
 }
