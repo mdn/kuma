@@ -5,7 +5,8 @@ from string import ascii_letters
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required, login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect, Http404
+from django.http import (HttpResponse, HttpResponseRedirect,
+                         Http404, HttpResponseBadRequest)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 
@@ -399,6 +400,28 @@ def unwatch_locale(request):
                   request.locale)
     # TODO: Redirect to l10n dashboard when there is a URL for it.
     return HttpResponseRedirect(reverse('wiki.all_documents'))
+
+
+@require_GET
+def json_view(request):
+    """Return some basic document info in a JSON blob."""
+    kwargs = {'locale': request.locale, 'current_revision__isnull': False}
+    if 'title' in request.GET:
+        kwargs['title'] = request.GET['title']
+    elif 'slug' in request.GET:
+        kwargs['slug'] = request.GET['slug']
+    else:
+        return HttpResponseBadRequest()
+
+    document = get_object_or_404(Document, **kwargs)
+    data = json.dumps({
+        'locale': document.locale,
+        'slug': document.slug,
+        'title': document.title,
+        'summary': document.current_revision.summary,
+        'url': document.get_absolute_url()
+    })
+    return HttpResponse(data, mimetype='application/x-json')
 
 
 def _document_form_initial(document):

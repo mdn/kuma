@@ -1,6 +1,8 @@
-from nose.tools import eq_
+import json
 
 from django.conf import settings
+
+from nose.tools import eq_
 
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
@@ -64,3 +66,20 @@ class TestLocaleRedirects(TestCase):
                                            locale='de'),
                                    follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url())
+
+
+class TestViews(TestCase):
+    fixtures = ['users.json', 'search/documents.json']
+
+    def test_json_view(self):
+        url = reverse('wiki.json', force_locale=True)
+
+        resp = self.client.get(url, {'title': 'an article title'})
+        eq_(200, resp.status_code)
+        data = json.loads(resp.content)
+        eq_('article-title', data['slug'])
+
+        resp = self.client.get(url, {'slug': 'article-title'})
+        eq_(200, resp.status_code)
+        data = json.loads(resp.content)
+        eq_('an article title', data['title'])

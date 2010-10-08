@@ -8,6 +8,7 @@ urlpatterns = patterns('wiki.views',
         name='wiki.locale_watch'),
     url(r'^/unwatch-ready-for-review$', 'unwatch_locale',
         name='wiki.locale_unwatch'),
+    url(r'^/json$', 'json_view', name='wiki.json'),
 
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
