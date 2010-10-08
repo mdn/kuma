@@ -10,6 +10,8 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
 from django.utils.encoding import smart_str
 from django.contrib import auth
 
+import jingo
+import MySQLdb as mysql
 import tower
 
 from sumo.helpers import urlparams
@@ -113,3 +115,14 @@ class NoCacheHttpsMiddleware(object):
             response['Cache-Control'] = 'no-cache, must-revalidate'
             response['Pragma'] = 'no-cache'
         return response
+
+
+class ReadOnlyMiddleware(object):
+
+    def process_request(self, request):
+        if request.method == 'POST':
+            return jingo.render(request, 'sumo/read-only.html', status=503)
+
+    def process_exception(self, request, exception):
+        if isinstance(exception, mysql.OperationalError):
+            return jingo.render(request, 'sumo/read-only.html', status=503)
