@@ -20,13 +20,13 @@ def check_file_size(f, max_allowed_size):
         raise FileTooLargeError(message)
 
 
-def create_imageattachment(files, user, max_allowed_size, obj):
+def create_imageattachment(files, user, obj):
     """
     Given an uploaded file, a user and an object, it creates an ImageAttachment
     owned by `user` and attached to `obj`.
     """
     up_file = files.values()[0]
-    check_file_size(up_file, max_allowed_size)
+    check_file_size(up_file, settings.IMAGE_MAX_FILESIZE)
 
     image = ImageAttachment(content_object=obj, creator=user)
     image.file.save(up_file.name, File(up_file), save=True)
@@ -52,13 +52,11 @@ def upload_imageattachment(request, obj):
     callback.
 
     """
-    return upload_media(
-        request, ImageAttachmentUploadForm, create_imageattachment,
-        settings.IMAGE_MAX_FILESIZE, obj=obj)
+    return upload_media(request, ImageAttachmentUploadForm,
+                        create_imageattachment, obj=obj)
 
 
-def upload_media(request, form_cls, up_file_callback, max_allowed_size,
-                 **kwargs):
+def upload_media(request, form_cls, up_file_callback, **kwargs):
     """
     Uploads media files and returns a list with information about each media:
     name, url, thumbnail_url, width, height.
@@ -67,14 +65,12 @@ def upload_media(request, form_cls, up_file_callback, max_allowed_size,
     * request object
     * form class, used to instantiate and validate form for upload
     * callback to save the file given its content and creator
-    * max upload size per one file
     * extra kwargs will all be passed to the callback
 
     """
     form = form_cls(request.POST, request.FILES)
     if request.method == 'POST' and form.is_valid():
-        return up_file_callback(request.FILES, request.user, max_allowed_size,
-                                **kwargs)
+        return up_file_callback(request.FILES, request.user, **kwargs)
     elif not form.is_valid():
         return form.errors
     return None

@@ -29,8 +29,7 @@ class CreateImageTestCase(TestCase):
         with open('apps/upload/tests/media/test.jpg') as f:
             up_file = File(f)
             file_info = create_image(
-                {'image': up_file}, self.user, settings.IMAGE_MAX_FILESIZE,
-                'Title', 'Description', 'en-US')
+                {'image': up_file}, self.user, 'Title', 'Description', 'en-US')
 
         image = Image.objects.all()[0]
         delete_url = reverse('gallery.del_media_async',
@@ -60,8 +59,8 @@ class CreateVideoTestCase(TestCase):
         """
         with open('apps/gallery/tests/media/test.flv') as f:
             up_file = File(f)
-            file_info = create_video({'flv': up_file}, self.user, 'Title',
-                                     'Description', 'en-US', 'flv')
+            file_info = create_video({'flv': up_file}, self.user,
+                                     'Title', 'Description', 'en-US')
 
         vid = Video.objects.all()[0]
         delete_url = reverse('gallery.del_media_async',

@@ -9,10 +9,10 @@ from upload.utils import upload_media, check_file_size
 from upload.tasks import generate_image_thumbnail, _scale_dimensions
 
 
-def create_image(files, user, max_allowed_size, title, description, locale):
+def create_image(files, user, title, description, locale):
     """Given an uploaded file, a user, and other data, it creates an Image"""
     up_file = files.values()[0]
-    check_file_size(up_file, max_allowed_size)
+    check_file_size(up_file, settings.IMAGE_MAX_FILESIZE)
 
     image = Image(title=title, creator=user, locale=locale,
                   description=description)
@@ -34,17 +34,17 @@ def upload_image(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
     return upload_media(
-        request, ImageUploadForm, create_image, settings.IMAGE_MAX_FILESIZE,
-        title=title, description=description, locale=request.locale)
+        request, ImageUploadForm, create_image, title=title,
+        description=description, locale=request.locale)
 
 
-def create_video(files, user, max_allowed_size, title, description, locale):
+def create_video(files, user, title, description, locale):
     """Given an uploaded file, a user, and other data, it creates a Video"""
     vid = Video(title=title, creator=user, description=description,
                 locale=locale)
     for name in files:
         up_file = files[name]
-        check_file_size(up_file, max_allowed_size)
+        check_file_size(up_file, settings.VIDEO_MAX_FILESIZE)
         # name is in (webm, ogv, flv) sent from upload_video(), below
         getattr(vid, name).save(up_file.name, up_file, save=False)
 
@@ -66,5 +66,5 @@ def upload_video(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
     return upload_media(
-        request, VideoUploadForm, create_video, settings.VIDEO_MAX_FILESIZE,
-        title=title, description=description, locale=request.locale)
+        request, VideoUploadForm, create_video, title=title,
+        description=description, locale=request.locale)

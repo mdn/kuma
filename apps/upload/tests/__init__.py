@@ -2,7 +2,6 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.core.files import File
 
 from nose.tools import eq_
@@ -47,7 +46,6 @@ class CreateImageAttachmentTestCase(TestCase):
         super(CreateImageAttachmentTestCase, self).setUp()
         self.user = User.objects.all()[0]
         self.obj = Question.objects.all()[0]
-        self.ct = ContentType.objects.get_for_model(self.obj)
 
     def tearDown(self):
         ImageAttachment.objects.all().delete()
@@ -62,22 +60,13 @@ class CreateImageAttachmentTestCase(TestCase):
         with open('apps/upload/tests/media/test.jpg') as f:
             up_file = File(f)
             file_info = create_imageattachment(
-                {'image': up_file}, self.user, settings.IMAGE_MAX_FILESIZE,
-                self.obj)
+                {'image': up_file}, self.user, self.obj)
 
         image = ImageAttachment.objects.all()[0]
         check_file_info(
             file_info, name='apps/upload/tests/media/test.jpg',
             width=90, height=120, delete_url=image.get_delete_url(),
             url=image.get_absolute_url(), thumbnail_url=image.thumbnail.url)
-
-    def test_create_imageattachment_too_big(self):
-        """Raise exception if uploaded image is too big."""
-        with open('apps/upload/tests/media/test.jpg') as f:
-            up_file = File(f)
-            fn = lambda: create_imageattachment({'image': up_file}, self.user,
-                                                100, self.obj)
-        self.assertRaises(FileTooLargeError, fn)
 
 
 class UploadImageTestCase(TestCase):
