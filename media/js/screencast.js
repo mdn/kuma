@@ -59,8 +59,8 @@
      * for the SWF player
      */
     function initFallbackSupport() {
-        $('.video a').click(function showhideVideo() {
-            $video_wrap = $(this).parents('.video').find('.video-wrap');
+        $('div.video a').click(function showhideVideo() {
+            $video_wrap = $(this).parents('div.video').find('.video-wrap');
             if ($video_wrap.is(':visible')) {
                 $video_wrap = $video_wrap.slideUp();
             } else {
@@ -68,7 +68,7 @@
             }
             return false;
         });
-        $('.video video').each(function initializeVideo(i) {
+        $('div.video video').each(function initializeVideo(i) {
             initVideoFallback($(this));
         });
     };
