@@ -1,7 +1,35 @@
 from django.conf.urls.defaults import patterns, url, include
 
+from kbforums.feeds import ThreadsFeed, PostsFeed
 
-# These URLs inherit (?P<document_slug>[^\/]).
+
+# These patterns inherit from /discuss
+discuss_patterns = patterns('kbforums.views',
+    url(r'^$', 'threads', name='wiki.discuss.threads'),
+    url(r'^/feed', ThreadsFeed(), name='wiki.discuss.threads.feed'),
+    url(r'^/new', 'new_thread', name='wiki.discuss.new_thread'),
+    url(r'^/watch', 'watch_forum', name='wiki.discuss.watch_forum'),
+    url(r'^/(?P<thread_id>\d+)$', 'posts', name='wiki.discuss.posts'),
+    url(r'^/(?P<thread_id>\d+)/feed$', PostsFeed(),
+        name='wiki.discuss.posts.feed'),
+    url(r'^/(?P<thread_id>\d+)/watch$', 'watch_thread',
+        name='wiki.discuss.watch_thread'),
+    url(r'^/(?P<thread_id>\d+)/reply$', 'reply', name='wiki.discuss.reply'),
+    url(r'^/(?P<thread_id>\d+)/sticky$', 'sticky_thread',
+        name='wiki.discuss.sticky_thread'),
+    url(r'^/(?P<thread_id>\d+)/lock$', 'lock_thread',
+        name='wiki.discuss.lock_thread'),
+    url(r'^/(?P<thread_id>\d+)/edit$', 'edit_thread',
+        name='wiki.discuss.edit_thread'),
+    url(r'^/(?P<thread_id>\d+)/delete$', 'delete_thread',
+        name='wiki.discuss.delete_thread'),
+    url(r'^/(?P<thread_id>\d+)/(?P<post_id>\d+)/edit', 'edit_post',
+        name='wiki.discuss.edit_post'),
+    url(r'^/(?P<thread_id>\d+)/(?P<post_id>\d+)/delete', 'delete_post',
+        name='wiki.discuss.delete_post'),
+)
+
+# These patterns inherit (?P<document_slug>[^\/]).
 document_patterns = patterns('wiki.views',
     url(r'^$', 'document', name='wiki.document'),
     url(r'^/revision/(?P<revision_id>\d+)$', 'revision',
@@ -18,6 +46,9 @@ document_patterns = patterns('wiki.views',
     # Un/Subscribe to document edit notifications.
     url(r'^/watch$', 'watch_document', name='wiki.document_watch'),
     url(r'^/unwatch$', 'unwatch_document', name='wiki.document_unwatch'),
+
+    # KB discussion forums
+    (r'^/discuss', include(discuss_patterns)),
 )
 
 urlpatterns = patterns('wiki.views',

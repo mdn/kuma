@@ -199,6 +199,7 @@ INSTALLED_APPS = (
     'upload',
     'product_details',
     'wiki',
+    'kbforums',
     'gallery',
     'customercare',
     'twitter',
