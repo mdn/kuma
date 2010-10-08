@@ -32,7 +32,8 @@
 <script src="{{ MEDIA_URL }}js/libs/html5-shiv.js"></script>
 <![endif]-->
 </head>
-<body{% if classes %} class="{{ classes }}"{% endif %}>
+<body{% if classes %} class="{{ classes }}"{% endif %}
+      data-readonly="{{ settings.READ_ONLY|json }}">
 
 <ul id="nav-access">
   <li><a href="#navigation">{{ _('skip to navigation') }}</a></li>

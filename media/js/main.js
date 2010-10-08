@@ -5,6 +5,12 @@
                 $($(this).attr('href')).focus();
                 return false;
             });
+
+        if (document.body.getAttribute('data-readonly') == 'true') {
+            $forms = $('form[method=post]');
+            $forms.find('input, button, select, textarea').attr('disabled', 'disabled');
+            $forms.find('input[type=image]').css('opacity', .5);
+        }
     });
 })();
 

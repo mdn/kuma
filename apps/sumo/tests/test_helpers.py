@@ -4,16 +4,17 @@ import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from babel.dates import format_date, format_time, format_datetime
+import jingo
 from nose.tools import eq_
 from nose.tools import assert_raises
-import test_utils
-import jingo
-from babel.dates import format_date, format_time, format_datetime
 from pytz import timezone
 from pyquery import PyQuery as pq
+import test_utils
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
-                          DateTimeFormatError, collapse_linebreaks, url)
+                          DateTimeFormatError, collapse_linebreaks, url,
+                          json)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -149,6 +150,10 @@ class TestDateTimeFormat(TestCase):
     def test_invalid_value(self):
         """Passing invalid value raises ValueError."""
         assert_raises(ValueError, datetimeformat, self.context, 'invalid')
+
+    def test_json_helper(self):
+        eq_('false', json(False))
+        eq_('{"foo": "bar"}', json({'foo': 'bar'}))
 
 
 class TestUrlHelper(TestCase):

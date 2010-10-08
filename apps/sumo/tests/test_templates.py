@@ -59,3 +59,8 @@ class TestBaseTemplate(TestCase):
         eq_(2, len(feeds))
         eq_('First Feed', feeds[0].attrib['title'])
         eq_('Second Feed', feeds[1].attrib['title'])
+
+    def test_readonly_attr(self):
+        html = jingo.render_to_string(self.request, self.template)
+        doc = pq(html)
+        eq_('false', doc('body')[0].attrib['data-readonly'])

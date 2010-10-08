@@ -1,21 +1,22 @@
 import cgi
-import urlparse
 import datetime
+import json as jsonlib
 import re
+import urlparse
 
 from django.conf import settings
 from django.utils.encoding import smart_unicode
 from django.utils.http import urlencode
 
-import jinja2
-from jingo import register, env
-from tower import ugettext_lazy as _lazy
 from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
+from jingo import register, env
+import jinja2
 from pytz import timezone
+from tower import ugettext_lazy as _lazy
 
 import sumo.parser
-from .urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 
 class DateTimeFormatError(Exception):
@@ -222,3 +223,8 @@ def collapse_linebreaks(text):
     # However, about:support in some versions of Firefox does yield some hard-
     # wrapped paragraphs using single linebreaks.
     return _whitespace_then_break.sub('\r\n', text)
+
+
+@register.filter
+def json(s):
+    return jsonlib.dumps(s)
