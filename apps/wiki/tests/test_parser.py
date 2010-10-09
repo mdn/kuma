@@ -528,3 +528,13 @@ class ForParserTests(TestCase):
                     '<img src="smoo"><span>g</span>')
         balanced_eq('<img src="smoo"><span>g</span>',
                     '<img src="smoo"/><span>g</span>')
+
+    def test_leading_text_nodes(self):
+        """Make sure the parser handles a leading naked run of text.
+
+        Test inner runs of text while we're at it.
+
+        """
+        html = 'A<i>hi</i>B<i>there</i>C'
+        p = ForParser(html)
+        eq_(html, p.to_unicode())
