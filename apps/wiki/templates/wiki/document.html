@@ -2,83 +2,140 @@
 {% extends "wiki/base.html" %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (None, document.title)] %}
 {% set classes = 'document' %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <h1>{{ document.title }}</h1>
-  {% if redirected_from %}
-    <div id="redirected-from">
-      {{ _('(Redirected from <a href="{href}?redirect=no">{title}</a>)')|fe(href=redirected_from.get_absolute_url(), title=redirected_from.title) }}
-    </div>
-  {% endif %}
-  {% if document.current_revision %}
-    <div id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
-      <h2>{{ _("Table of Contents") }}</h2>
-      <ol></ol>
-    </div>
-  {% endif %}
-  {% include 'wiki/includes/support-for-selectors.html' %}
-  <div id="doc-content">
-    <article>
+  <article id="wiki-doc" class="main">
+    <section id="related-articles">
+      <h1> {{ _('Related Articles') }}</h1>
+      <ul>
+        {# TODO: implement backend for this list #}
+        <li><a href="#">Lorem ipsum dolor</a></li>
+        <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#">Lorem ipsum dolor</a></li>
+        <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+        <li><a href="#">Lorem ipsum dolor</a></li>
+      </ul>
+    </section>
+    <h1 class="title">{{ document.title }}</h1>
+    {% if redirected_from %}
+      <div id="redirected-from">
+        {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
+      </div>
+    {% endif %}
+    <section id="doc-summary">
+      {{ document.current_revision.summary }}
+    </section>
+    {% if document.current_revision %}
+      <section id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
+        <h1>{{ _("Table of Contents") }}</h1>
+        <ol></ol>
+      </section>
+    {% endif %}
+    <section id="doc-content">
       {% if document.current_revision %}
         {{ document.html|safe }}
       {% else %}
         {{ _("This article doesn't have approved content yet.") }}
       {% endif %}
-    </article>
-  </div>
+    </section>
+  </article>
   <div id="more-help">
     <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
     <ul>
       <li>
-        {{ _('Browse a list of related articles:') }}
-        {# TODO: insert list here #}
+        {{ _('Browse a list of related articles') }}
+        <ul>
+          {# TODO: implement backend for this list #}
+          <li><a href="#">Lorem ipsum dolor</a></li>
+          <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+          <li><a href="#">Lorem ipsum dolor</a></li>
+          <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+          <li><a href="#">Lorem ipsum dolor</a></li>
+        </ul>
       </li>
       <li>
-        {# TODO: insert url below #}
-        {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url='#', category=document.get_category_display()) }}
+        {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
       </li>
       <li>
-        {{ _('Try searching instead:') }}
-        <form action="{{ url('search') }}" method="get">
-          <input type="text" class="text" name="q" placeholder="{{ _('Search Mozilla Support') }}" required="required" />
-          <input type="submit" class="submit" value="{{ _('Search') }}" />
-        </form>
-      </li>
-      <li>
-        {{ _('Ask your question to our helpful <a href="{url}">support community</a>.')|fe(url=url('questions.new_question')) }}
+        {{ _('Ask your question to our helpful<br /> <a href="{url}">Support Community</a>')|fe(url=url('questions.new_question')) }}
       </li>
     </ul>
+    <div class="support-search">
+      {{ _('Try Searching Instead:') }}
+      <form action="{{ url('search') }}" method="get">
+        <span class="wrap">
+          <input type="text" class="text" name="q" placeholder="{{ _('Search Firefox Help') }}" required="required" />
+        </span>
+        <input type="image" class="submit" src="{{ settings.MEDIA_URL }}img/btn.search.png" title="{{ _('Search') }}" />
+      </form>
+    </div>
   </div>
 {% endblock %}
-{% block sidebar %}
-<ul class="common-actions" />
-<ul class="uncommon-actions">
-  {% if document.allows_revision_by(user) or document.allows_editing_by(user) %}
+
+{% block side %}
+<nav id="doc-tabs">
+  <ul>
+    <li class="active">
+      <span>{{ _('Article') }}</span>
+    </li>
     <li>
-      <a href="{{ url('wiki.edit_document', document_slug=document.slug) }}">Edit</a>
+      {# TODO: Insert URL. Show to everybody? #}
+      <a href="#">{{ _('Discussion') }}</a>
     </li>
-  {% endif %}
-  {% if user.is_authenticated() %}
-    <li class="watch">
-      {% if is_watching(document) %}
-        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="submit" value="{{ _('Unsubscribe from edit notifications') }}" />
-        </form>
-      {% else %}
-        <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="submit" value="{{ _('Subscribe to edit notifications') }}" />
-        </form>
+    {% if user.is_authenticated() %}
+      {% if document.allows_revision_by(user) or document.allows_editing_by(user) %}
+        <li class="edit">
+          <a href="{{ url('wiki.edit_document', document_slug=document.slug) }}">{{ _('Edit Article') }}</a>
+        </li>
       {% endif %}
+      <li>
+        {# TODO: Create page to select localization? Show link to all authenticated? #}
+        <a href="#">{{ _('Localize Article') }}</a>
+      </li>
+      <li>
+        {# TODO: Show link to all authenticated? #}
+        <a href="{{ url('wiki.document_revisions', document_slug=document.slug) }}">{{ _('Show History') }}</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% if user.is_authenticated() %}
+  <div id="doc-watch">
+    {% if is_watching(document) %}
+      <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
+        {{ csrf() }}
+        <input type="submit" class="submit" value="{{ _('Unsubscribe from edit notifications') }}" />
+      </form>
+    {% else %}
+      <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
+        {{ csrf() }}
+        <input type="submit" class="submit" value="{{ _('Subscribe to edit notifications') }}" />
+      </form>
+    {% endif %}
+  </div>
+{% endif %}
+<section id="for-contributors" class="sd-module">
+  <h1>{{ _('For Contributors') }}</h1>
+  <ul>
+    {# TODO: Insert URLs below #}
+    <li><a href="#">{{ _('Contributor Home Page') }}</a></li>
+    <li><a href="#">{{ _('Localization Dashboard') }}</a></li>
+    <li><a href="#">{{ _('Media Gallery') }}</a></li>
+    <li><a href="#">{{ _('Creating Articles') }}</a></li>
+    <li><a href="#">{{ _('Helping in the Forum') }}</a></li>
+    <li><a href="#">{{ _('Helping in Live Chat') }}</a></li>
+  </ul>
+</section>
+<nav id="other-links">
+  <ul>
+    <li class="home">
+      <a href="{{ url('wiki.home') }}">{{ _('Firefox Help Home') }}</a>
     </li>
-  {% endif %}
-</ul>
+    <li class="aaq">
+      <a href="{{ url('questions.new_question') }}">{{ _('Ask A Question') }}</a>
+    </li>
+  </ul>
+</nav>
+{% include 'wiki/includes/support-for-selectors.html' %}
 {% endblock %}

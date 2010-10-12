@@ -46,7 +46,7 @@
 
 <div id="content">
 
-{% block sidebar %}
+{% block sidebar %}{# This is the old side bar. It is not used in questions or wiki. #}
   <div id="sidebar">
     {% include 'layout/sidebar.html' %}
     {% block extra_sidebar %}{% endblock %}
@@ -65,11 +65,11 @@
 <br class="clear" />
 </div>{# /#content #}
 
-<div id="footer">
+<footer id="footer">
   <div id="footer-contents" role="contentinfo">
   {% include 'layout/footer.html' %}
   </div>{# /#footer-contents #}
-</div>{# /#footer #}
+</footer>{# /#footer #}
 
 <script src="{{ url('jsi18n') }}/build:{{ BUILD_ID_JS }}"></script>
 {{ js('common') }}

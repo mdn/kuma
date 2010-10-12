@@ -2,6 +2,470 @@
  * Knowledge Base CSS
  */
 
+/* Override some of the main.css styles for new theme
+ * Eventually this should make it up to main.css
+ */
+article, nav, section {
+    display: block;
+}
+
+a:link, a:visited, a:active {
+    color: #447bc4;
+    text-decoration: none;
+}
+
+/* Template Layout */
+#content {
+    font-family: Georgia;
+    width: 978px;
+}
+
+#main-hdr {
+    height: 90px;
+}
+
+#main-content {
+    background: transparent url(../img/wiki/bkg.main.top.png) no-repeat right top;
+    clear: both;
+    float: left;
+    padding: 16px 0 0;
+    width: 754px;
+}
+
+#main-sd {
+    float: left;
+    width: 222px;
+}
+
+#firefox-help {
+    float: left;
+    font-size: 18px;
+    font-style: italic;
+    padding: 10px 0;
+    width: 445px;
+}
+
+#firefox-help a {
+    background: transparent url(../img/ff-logo.png) no-repeat left center;
+    color: #333;
+    float: left;
+    padding: 20px 0 20px 60px;
+}
+
+#support-search {
+    float: left;
+    padding: 15px 0 0;
+    width: 310px;
+}
+
+div.support-search form {
+    background: #1b5898;
+    background: -moz-linear-gradient(top, #2e89ca, #1b5898);
+    background: -webkit-gradient(linear, left top, left bottom, from(#2e89ca), to(#1b5898));
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    padding: 5px;
+}
+
+div.support-search span.wrap {
+    background: #fff url(../img/icon.searchloupe.png) no-repeat 7px center;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+    height: 28px;
+    padding: 2px 0 0 36px;
+    width: 218px;
+}
+
+div.support-search input.text {
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+    height: 26px;
+}
+
+div.support-search input.submit {
+    box-shadow: none;
+    float: left;
+    height: 33px;
+    margin: 0 0 0 5px;
+    width: 37px;
+}
+
+#greeting {
+    color: #666;
+    float: right;
+    font-size: 14px;
+    padding: 20px 0 0;
+    text-align: right;
+    width: 222px;
+}
+
+#greeting span.user {
+    color: #333;
+}
+
+#greeting nav {
+    display: block;
+}
+
+/* Sidebar */
+#doc-tabs {
+    color: #666;
+    font-size: 13px;
+    margin: 16px 0 0;
+}
+
+#doc-tabs li {
+    background: #fff;
+    background: -moz-linear-gradient(left, #cde4f7, #fff);
+    background: -webkit-gradient(linear, left top, right top, from(#cde4f7), to(#fff));
+    border: solid 1px #9accf7;
+    border-left: none;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -moz-border-radius: 10px;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-radius: 10px;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    box-shadow: 2px 2px 3px #9dbbd0;
+    -moz-box-shadow: 2px 2px 3px #9dbbd0;
+    -webkit-box-shadow: 2px 2px 3px #9dbbd0;
+    list-style: none;
+    margin: 7px 0 0;
+}
+
+#doc-tabs li a,
+#doc-tabs li span {
+    display: block;
+    padding: 7px 0 8px 50px;
+}
+
+#doc-tabs li:hover {
+    background: -moz-linear-gradient(left, #e6f1fb, #fff);
+    background: -webkit-gradient(linear, left top, right top, from(#e6f1fb), to(#fff));
+}
+
+#doc-tabs li.active {
+    background: #fff;
+    left: -1px;
+    position: relative;
+    width: 102%;
+    z-index: 2;
+}
+
+#doc-tabs li.active span {
+    border-left: solid 2px #fff;
+    left: -2px;
+    padding-left : 52px;
+    position: relative;
+    z-index: 2;
+}
+
+#doc-tabs li.edit {
+    margin: 25px 0 0;
+}
+
+#doc-watch {
+    margin: 20px 0 0 20px;
+}
+
+#doc-watch input {
+    background: none;
+    border: none;
+    color: #447bc4;
+    cursor: pointer;
+    padding: 0;
+}
+
+#for-contributors h1 {
+    color: #333;
+    font-size: 18px;
+    font-style: italic;
+    margin: 0 0 5px;
+}
+
+#for-contributors li {
+    list-style: none;
+    padding: 3px 0;
+}
+
+#other-links {
+    font-size: 13px;
+    margin: 25px 0 0 20px;
+}
+
+#other-links li {
+    background: #cde6f5;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    list-style: none;
+    margin: 0 0 6px;
+}
+
+#other-links li:hover {
+    background: #e6f1fb;
+}
+
+#other-links li a {
+    display: block;
+    padding: 5px 0 5px 30px;
+}
+
+#other-links li.home a {
+    background: transparent url(../img/wiki/icons.otherlinks.png) no-repeat 6px 6px;
+}
+
+#other-links li.aaq a {
+    background: transparent url(../img/wiki/icons.otherlinks.png) no-repeat 6px -21px;
+}
+
+.sd-module {
+    background: #cde6f5;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    font-size: 13px;
+    margin: 20px 0 0 20px;
+    padding: 20px;
+}
+
+.sd-module.promos {
+    margin-top: 50px;
+    padding: 0;
+}
+
+.sd-module h1 {
+    color: #32559b;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.sd-module h1 mark {
+    color: #32559b;
+    display: block;
+    /* TODO: Need font. font-family: MetaBlack; */
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+.sd-module p {
+    color: #666;
+    margin: 10px 0;
+}
+
+.sd-module section {
+    padding: 20px;
+}
+
+#check-your-plugins {
+    background: -moz-radial-gradient(center -40%, circle, rgba(255,255,255,1), rgba(255,255,255,0) 50%);
+    background: -webkit-gradient(radial, center -40%, 0, center -40%, 175, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
+}
+
+/* Document view */
+#wiki-doc {
+    background: transparent url(../img/wiki/bkg.article.jpg) no-repeat right top;
+    padding: 14px 0 0;
+}
+
+#wiki-doc h1.title {
+    color: #303030;
+    font-size: 26px;
+}
+
+#related-articles {
+    float: right;
+    font-size: 13px;
+    padding: 0 1px 0 0;
+    width: 249px;
+}
+
+#toc {
+    background: transparent url(../img/wiki/document.divider.jpg) no-repeat left bottom;
+    clear: both;
+    font-size: 13px;
+    left: -50px;
+    padding: 0 0 60px;
+    position: relative;
+}
+
+#related-articles h1,
+#toc h1 {
+    color: #333;
+    font-size: 18px;
+    font-style: italic;
+    padding: 0 0 10px 50px;
+}
+
+#related-articles li {
+    background: transparent url(../img/wiki/list.divider.png) no-repeat left bottom;
+    list-style: none;
+    padding: 10px 0 10px 50px;
+}
+
+#related-articles li:last-child {
+    background: none;
+}
+
+#doc-summary {
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 15px 0 30px;
+}
+
+html.no-js .hide-if-no-js {
+    display: none;
+}
+
+#toc ol {
+    list-style-type: decimal;
+}
+
+#toc ol li {
+    background: transparent url(../img/wiki/list.divider.png) no-repeat left bottom;
+    list-style-position: inside;
+    padding: 10px 0 10px 50px;
+}
+
+#toc ol li:last-child {
+    background: none;
+}
+
+#toc ol ol {
+    list-style-type: upper-alpha;
+}
+
+#toc ol ol li {
+    background: none;
+    padding: 0;
+}
+
+#toc ol ol ol {
+    list-style-type: lower-alpha;
+}
+
+#toc ol ol ol ol {
+    list-style-type: decimal;
+}
+
+#toc ol ol ol ol ol {
+    list-style-type: upper-alpha;
+}
+
+#doc-content {
+    color: #666;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 35px 0;
+    padding: 0 20px 0 0;
+}
+
+#doc-content h1 {
+    color: #303030;
+    font-size: 22px;
+    margin: 20px 0 10px;
+}
+
+#doc-content h2 {
+    color: #303030;
+    font-size: 19px;
+    margin: 10px 0;
+}
+
+#doc-content h3 {
+    color: #303030;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+#doc-content p {
+    margin: 0 0 10px;
+}
+
+#doc-content ul li {
+    /* TODO */
+}
+
+#doc-content ol li {
+    /* TODO */
+}
+
+#more-help {
+    background: #deeff8;
+    background: -moz-linear-gradient(top, #deeff8, #ebf8ff);
+    background: -webkit-gradient(linear, left top, left bottom, from(#deeff8), to(#ebf8ff));
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-size: 12px;
+    padding: 25px 20px;
+    position: relative;
+    width: 597px;
+}
+
+#more-help h2 {
+    font-size: 20px;
+    font-style: italic;
+    padding: 0 0 15px;
+}
+
+#more-help ul {
+    border-right: dotted 2px #6292cf;
+    width: 275px;
+}
+
+#more-help ul ul {
+    border: none;
+    width: auto;
+}
+
+#more-help li {
+    list-style: none;
+    padding: 0 0 10px;
+}
+
+#more-help li li {
+    list-style: disc;
+    list-style-position: inside;
+    padding: 2px 0 2px 10px;
+}
+
+#more-help div.support-search {
+    left: 325px;
+    position: absolute;
+    top: 65px;
+    width: 280px;
+}
+
+#more-help div.support-search form {
+    margin: 15px 0 0;
+}
+
+#more-help div.support-search span.wrap {
+    width: 190px;
+}
+
+#support-for {
+    margin: 30px 0 0 50px;
+}
+
+#support-for h1 {
+    color: #333;
+    font-size: 18px;
+    font-style: italic;
+    margin: 0 0 5px;
+}
+
+
 /* New / Edit Document */
 #revision-form li,
 #document-form li {
@@ -211,38 +675,6 @@ td.diff_header {
 
 .diff_sub {
     background-color:#ffaaaa;
-}
-
-/* Document view */
-
-html.no-js .hide-if-no-js {
-    display: none;
-}
-
-#toc, div#support-for {
-    border: 1px gray solid;
-    padding: .5em;
-}
-
-#toc ol {
-    margin-left: 1em;
-    list-style-type: decimal;
-}
-
-#toc ol ol {
-    list-style-type: upper-alpha;
-}
-
-#toc ol ol ol {
-    list-style-type: lower-alpha;
-}
-
-#toc ol ol ol ol {
-    list-style-type: decimal;
-}
-
-#toc ol ol ol ol ol {
-    list-style-type: upper-alpha;
 }
 
 /* Translate article */

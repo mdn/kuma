@@ -44,3 +44,7 @@ div.ans-attachments div.attachment {
 *html div.ans-attachments div.hover input.delete { /* ie6 only */
     display: block;
 }
+
+#check-your-plugins {
+    border-top: solid 1px #f0f0f0;
+}

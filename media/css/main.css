@@ -42,12 +42,12 @@ mark {
     Global
 ----------------------------------*/
 body {
-    text-align: center;
-    margin: 0;
-    padding: 0;
+    background: #fff url(../img/background.png) 0 -700px repeat-x;
     font: 13px/1.231 Georgia, freeserif, serif;
-    background: #fff url(../img/background-feature.jpg) 50% 0 repeat-x;
-    background-position: 50% -225px;
+    margin: 0;
+    min-width: 978px;
+    padding: 0;
+    text-align: center;
 }
 
 body.html-rtl {
@@ -224,16 +224,16 @@ h2 {
 ----------------------------------*/
 
 #footer {
-    background: #fff url(../img/footer-border.png) top center repeat-x;
-    text-align: center;
-    color: #898378;
-    margin-top: 100px;
+    background: #33559b url(../img/background.png) 0 0 repeat-x;
     clear: both;
+    color: #669be1;
+    display: block;
     font-family: Verdana;
     font-size: 90%;
     min-height: 345px;
-    min-width: 950px;
-    clear: both;
+    min-width: 978px;
+    padding: 100px 0 0;
+    text-align: center;
 }
 
 * html #footer {
@@ -242,7 +242,7 @@ h2 {
 
 #footer a:link,
 #footer a:visited {
-    color: #898378;
+    color: #669be1;
     text-decoration: none;
 }
 
@@ -253,7 +253,7 @@ h2 {
 }
 
 #footer-contents {
-    width: 880px;
+    width: 908px;
     text-align: left;
     margin: auto;
     padding: 35px;
@@ -293,6 +293,16 @@ h2 {
     width: auto;
 }
 
+#footer li a:link,
+#footer li a:visited {
+    color: #fff;
+}
+
+#footer li li a:link,
+#footer li li a:visited {
+    color: #669be1;
+}
+
 #footer #cc-license {
     clear: both;
     background: url(../img/cc.png) top left no-repeat;
@@ -310,6 +320,7 @@ h2 {
 }
 
 #footer #cc-license a {
+    color: #669be1;
     font-weight: bold;
     font-size: 100%;
 }

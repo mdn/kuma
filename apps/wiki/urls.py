@@ -3,6 +3,9 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('wiki.views',
 
+    # TODO: update view to the kb landing/home page when we have it
+    url(r'^$', 'list_documents', name='wiki.home'),
+
     # Un/Subscribe to locale 'ready for review' notifications.
     url(r'^/watch-ready-for-review$', 'watch_locale',
         name='wiki.locale_watch'),
