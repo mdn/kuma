@@ -1,45 +1,44 @@
+from datetime import datetime
 from itertools import islice
 import json
 import logging
-from datetime import datetime
 
-from django.contrib.auth.decorators import permission_required
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
+from django.core.cache import cache
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.db.models import Q
 from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST, require_http_methods
-from django.contrib.auth.decorators import login_required
-from django.db.models import Q
-from django.core.cache import cache
-from django.conf import settings
-from django.contrib.sites.models import Site
 
 import jingo
 from taggit.models import Tag
 from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
-from access.decorators import has_perm_or_owns_or_403
-from search.clients import WikiClient, QuestionsClient, SearchError
-from search.utils import locale_or_default, sphinx_locale
-from sumo.models import WikiPage
-from sumo.urlresolvers import reverse
-from sumo.helpers import urlparams
-from sumo.utils import paginate
+from access.decorators import has_perm_or_owns_or_403, permission_required
 from notifications import create_watch, destroy_watch
-from .models import (Question, Answer, QuestionVote, AnswerVote,
-                     CONFIRMED, UNCONFIRMED)
-from .forms import (NewQuestionForm, EditQuestionForm,
+import questions as constants
+from questions.feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
+from questions.forms import (NewQuestionForm, EditQuestionForm,
                     AnswerForm, WatchQuestionForm,
                     FREQUENCY_CHOICES)
-from .feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
-from .tags import add_existing_tag
-from .tasks import (cache_top_contributors, build_solution_notification,
+from questions.models import (Question, Answer, QuestionVote, AnswerVote,
+                     CONFIRMED, UNCONFIRMED)
+from questions.tags import add_existing_tag
+from questions.tasks import (cache_top_contributors, build_solution_notification,
                     send_confirmation_email)
-import questions as constants
-from .question_config import products
+from questions.question_config import products
+from search.clients import WikiClient, QuestionsClient, SearchError
+from search.utils import locale_or_default, sphinx_locale
+from sumo.helpers import urlparams
+from sumo.models import WikiPage
+from sumo.urlresolvers import reverse
+from sumo.utils import paginate
 from upload.models import ImageAttachment
 from upload.views import upload_imageattachment
 

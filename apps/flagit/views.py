@@ -5,13 +5,13 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import permission_required
 
 import jingo
 from tower import ugettext as _
 
+from access.decorators import permission_required
+from flagit.models import FlaggedObject
 from sumo.urlresolvers import reverse
-from .models import FlaggedObject
 
 
 @require_POST

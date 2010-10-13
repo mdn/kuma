@@ -1,9 +1,13 @@
 from functools import wraps
 import inspect
 
+from django.conf import settings
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.db.models import Model, get_model
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import available_attrs
+from django.utils.http import urlquote
 
 import access
 
@@ -66,3 +70,23 @@ def _resolve_lookup((model, lookup, arg_name), view_kwargs):
     if inspect.isclass(model_class) and not issubclass(model_class, Model):
         raise ValueError("The argument '%s' needs to be a model." % model)
     return get_object_or_404(model_class, **{lookup: value})
+
+
+def permission_required(perm, login_url=None, redirect=REDIRECT_FIELD_NAME):
+    """A replacement for django.contrib.auth.decorators.permission_required
+    that doesn't ask authenticated users to log in."""
+
+    if not login_url:
+        login_url = settings.LOGIN_URL
+
+    def decorator(view_fn):
+        def _wrapped_view(request, *args, **kwargs):
+            if request.user.is_authenticated():
+                if request.user.has_perm(perm):
+                    return view_fn(request, *args, **kwargs)
+                return HttpResponseForbidden()
+            path = urlquote(request.get_full_path)
+            tup = login_url, redirect, path
+            return HttpResponseRedirect('%s?%s=%s' % tup)
+        return wraps(view_fn, assigned=available_attrs(view_fn))(_wrapped_view)
+    return decorator

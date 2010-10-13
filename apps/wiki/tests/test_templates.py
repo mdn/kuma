@@ -88,7 +88,13 @@ class NewDocumentTests(TestCaseBase):
         """Trying to create a document without permission redirects to login"""
         self.client.login(username='rrosario', password='testpass')
         response = self.client.get(reverse('wiki.new_document'))
-        eq_(302, response.status_code)
+        eq_(403, response.status_code)
+
+    def test_new_document_GET_without_perm(self):
+        """Trying to create a document without permission redirects to login"""
+        self.client.login(username='rrosario', password='testpass')
+        response = self.client.get(reverse('wiki.new_document'))
+        eq_(403, response.status_code)
 
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
@@ -472,6 +478,14 @@ class ReviewRevisionTests(TestCaseBase):
         response = post(self.client, 'wiki.review_revision',
                         {'reject': 'Reject Revision'},
                         args=[self.document.slug, self.revision.id])
+        eq_(403, response.status_code)
+
+    def test_review_logged_out(self):
+        """Make sure logged out users can't review revisions."""
+        self.client.logout()
+        response = post(self.client, 'wiki.review_revision',
+                        {'reject': 'Reject Revision'},
+                        args=[self.document.slug, self.revision.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
         eq_('http://testserver/tiki-login.php?next=/en-US/kb/'
@@ -581,6 +595,13 @@ class TranslateTests(TestCaseBase):
     def test_translate_GET_without_perm(self):
         """Try to create a translation without permission."""
         self.client.login(username='rrosario', password='testpass')
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        response = self.client.get(url)
+        eq_(403, response.status_code)
+
+    def test_translate_GET_logged_out(self):
+        """Try to create a translation while logged out."""
+        self.client.logout()
         url = reverse('wiki.translate', locale='es', args=[self.d.slug])
         response = self.client.get(url)
         eq_(302, response.status_code)

@@ -257,7 +257,18 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_('0', doc('div.other-helpful span.votes')[0].text)
 
     def test_delete_question_without_permissions(self):
-        """Deleting a question without permissions redirects to login."""
+        """Deleting a question without permissions is a 403."""
+        self.client.login(username='tagger', password='testpass')
+        response = get(self.client, 'questions.delete',
+                       args=[self.question.id])
+        eq_(403, response.status_code)
+        response = post(self.client, 'questions.delete',
+                        args=[self.question.id])
+        eq_(403, response.status_code)
+
+    def test_delete_question_logged_out(self):
+        """Deleting a question while logged out redirects to login."""
+        self.client.logout()
         response = get(self.client, 'questions.delete',
                        args=[self.question.id])
         redirect = response.redirect_chain[0]
@@ -284,7 +295,20 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(0, Question.objects.filter(pk=self.question.id).count())
 
     def test_delete_answer_without_permissions(self):
-        """Deleting an answer without permissions redirects to login."""
+        """Deleting an answer without permissions sends 403."""
+        self.client.login(username='tagger', password='testpass')
+        answer = self.question.last_answer
+        response = get(self.client, 'questions.delete_answer',
+                       args=[self.question.id, answer.id])
+        eq_(403, response.status_code)
+
+        response = post(self.client, 'questions.delete_answer',
+                        args=[self.question.id, answer.id])
+        eq_(403, response.status_code)
+
+    def test_delete_answer_logged_out(self):
+        """Deleting an answer while logged out redirects to login."""
+        self.client.logout()
         answer = self.question.last_answer
         response = get(self.client, 'questions.delete_answer',
                        args=[self.question.id, answer.id])
@@ -392,7 +416,15 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(403, response.status_code)
 
     def test_lock_question_without_permissions(self):
-        """Trying to lock a question without permission redirects to login."""
+        """Trying to lock a question without permission is a 403."""
+        self.client.login(username='tagger', password='testpass')
+        q = self.question
+        response = post(self.client, 'questions.lock', args=[q.id])
+        eq_(403, response.status_code)
+
+    def test_lock_question_logged_out(self):
+        """Trying to lock a question while logged out redirects to login."""
+        self.client.logout()
         q = self.question
         response = post(self.client, 'questions.lock', args=[q.id])
         redirect = response.redirect_chain[0]

@@ -3,7 +3,7 @@ import json
 from string import ascii_letters
 
 from django.conf import settings
-from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponse, HttpResponseRedirect,
                          Http404, HttpResponseBadRequest)
@@ -14,6 +14,7 @@ from django.views.decorators.http import (require_GET, require_POST,
 import jingo
 from tower import ugettext_lazy as _lazy
 
+from access.decorators import permission_required
 from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
