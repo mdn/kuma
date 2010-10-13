@@ -25,9 +25,9 @@ def _create_image_thumbnail(file_path, longest_side=settings.THUMBNAIL_SIZE):
     """
     originalImage = Image.open(file_path)
     originalImage = originalImage.convert("RGB")
-    (file_width, file_height) = originalImage.size
+    file_width, file_height = originalImage.size
 
-    (width, height) = _scale_dimensions(file_width, file_height, longest_side)
+    width, height = _scale_dimensions(file_width, file_height, longest_side)
     resizedImage = originalImage.resize((width, height), Image.ANTIALIAS)
 
     io = StringIO.StringIO()
