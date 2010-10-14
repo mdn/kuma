@@ -1,7 +1,7 @@
 from datetime import datetime
 from glob import iglob
 from optparse import make_option
-from os import stat
+from os import stat, path
 import StringIO
 
 from django.conf import settings
@@ -42,10 +42,6 @@ def get_image_user():
     return User.objects.get(username=ANONYMOUS_USER_NAME)
 
 
-def build_filepath(key, ext):
-    return key + '.' + ext
-
-
 def create_image(file, title, description):
     """Given an uploaded file, a user, and other data, it creates an Image."""
     created = datetime.fromtimestamp(stat(file.name).st_mtime)
@@ -71,7 +67,7 @@ def create_image(file, title, description):
         io = StringIO.StringIO()
         resizedImage.save(io, 'JPEG')
         file = ContentFile(io.getvalue())
-        file_name = title + '.jpg'
+        file_name = title
         print 'Image %s shrunk from %sKB to %sKB.' % (
             file_name, old_size >> 10, file.size >> 10)
 
@@ -87,20 +83,21 @@ def create_image(file, title, description):
 
 
 def files_dict(iglob_path):
-    files = {}
+    files = set()
     for file in iglob(iglob_path):
         if '.' not in file:
             continue
         id, extension = file.rsplit('.', 1)
-        files[id] = extension.lower()  # lowecase extension much pwetty
+        file = '.'.join([id, extension.lower()])
+        files.add(file)
     return files
 
 
-def migrate_image(file_prefix, extension, verbosity=0):
-    image_file = open(build_filepath(file_prefix, extension))
+def migrate_image(filepath, verbosity=0):
+    image_file = open(filepath)
     upload_file = File(image_file)
 
-    _, title = file_prefix.rsplit('/', 1)
+    title = path.basename(filepath)
     if Image.objects.filter(
             title=title,
             locale=settings.WIKI_DEFAULT_LANGUAGE).exists():
@@ -108,14 +105,14 @@ def migrate_image(file_prefix, extension, verbosity=0):
         return False
 
     if verbosity > 1:
-        print 'Processing %s.%s...' % (title, extension)
+        print 'Processing %s...' % title
 
     img = create_image(upload_file,
                        title,              # Title
                        IMAGE_DESCRIPTION)  # Description
     if not img:
-        print 'Not an image or failed to generate thumbnail for %s.%s' % (
-              title, extension)
+        print 'Not an image or failed to generate thumbnail for %s' % (
+              title)
 
     # Close and clean up
     image_file.close()
@@ -156,10 +153,9 @@ class Command(BaseCommand):
         files = files_dict(options['old'] + '*')
 
         count = 0
-        for file_prefix, extension in files.iteritems():
+        for filepath in files:
             try:
-                if not migrate_image(file_prefix, extension,
-                                     options['verbosity']):
+                if not migrate_image(filepath, options['verbosity']):
                     continue
             except FileTooLargeError, e:
                 print e
