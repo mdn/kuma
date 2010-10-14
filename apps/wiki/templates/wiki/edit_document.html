@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Edit Article | {document}')|f(document=document.title) %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
@@ -10,53 +11,59 @@
 {% set classes = 'edit' %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <h1>{{ _('Edit Article') }}</h1>
-  {% if document_form %}
-    <div id="document-form">
-      <details{% if disclose_description %} open="open"{% endif %}>
-        <summary class="h2">{{ _('Description') }}</summary>
-        <form action="" method="post">
-          {{ errorlist(document_form) }}
-          {{ csrf() }}
-          {{ document_form.as_ul()|safe }}
-          <input type="hidden" name="form" value="doc" />
-          <div class="submit">
-            <input type="submit" value="{{ _('Save') }}">
-          </div>
-        </form>
-      </details>
+  <article id="edit-document" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
     </div>
-  {% endif %}
-  {% if revision_form %}
-    <div id="revision-form">
-      <details open="open">
-        <summary class="h2">{{ _('Content') }}</summary>
-        <p>
-          For article-writing guidelines, please read our <a href="#">Best Practices for Support Documents</a> and <a href="#">Manual of Style</a>.
-        </p>
-        <form action="" method="post">
-          {{ errorlist(revision_form) }}
-          {{ csrf() }}
-          <ul>
-            {% for field in revision_form if field.name != 'comment' and field.name != 'content' %}
-              <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
-            {% endfor %}
-            <li>
-              {{ revision_form.content.label_tag()|safe }}
-              <div class="forum-editor">
-                <div class="forum-editor-tools"></div>
-                {{ revision_form.content|safe }}
-              </div>
-            </li>
-          </ul>
-          <input type="hidden" name="form" value="rev" />
-          {% include 'wiki/includes/submit_revision_for_review.html' %}
-        </form>
-      </details>
-    </div>
-  {% endif %}
+    <h1>{{ _('Edit Article') }}</h1>
+    {% if document_form %}
+      <div id="document-form">
+        <details{% if disclose_description %} open="open"{% endif %}>
+          <summary class="h2">{{ _('Description') }}</summary>
+          <form action="" method="post">
+            {{ errorlist(document_form) }}
+            {{ csrf() }}
+            {{ document_form.as_ul()|safe }}
+            <input type="hidden" name="form" value="doc" />
+            <div class="submit">
+              <input type="submit" value="{{ _('Save') }}">
+            </div>
+          </form>
+        </details>
+      </div>
+    {% endif %}
+    {% if revision_form %}
+      <div id="revision-form">
+        <details open="open">
+          <summary class="h2">{{ _('Content') }}</summary>
+          <p>
+            For article-writing guidelines, please read our <a href="#">Best Practices for Support Documents</a> and <a href="#">Manual of Style</a>.
+          </p>
+          <form action="" method="post">
+            {{ errorlist(revision_form) }}
+            {{ csrf() }}
+            <ul>
+              {% for field in revision_form if field.name != 'comment' and field.name != 'content' %}
+                <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
+              {% endfor %}
+              <li>
+                {{ revision_form.content.label_tag()|safe }}
+                <div class="forum-editor">
+                  <div class="forum-editor-tools"></div>
+                  {{ revision_form.content|safe }}
+                </div>
+              </li>
+            </ul>
+            <input type="hidden" name="form" value="rev" />
+            {% include 'wiki/includes/submit_revision_for_review.html' %}
+          </form>
+        </details>
+      </div>
+    {% endif %}
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ document_tabs(document, document.parent, user, 'edit', settings) }}
 {% endblock %}

@@ -1,92 +1,103 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Revision History | {document}')|fe(document=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Revisions'))] %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <h1>{{ _('History of {title}')|fe(title=document.title) }}</h1>
-  <div id="locale-list">
-    <label>{{ _('Revision history for:') }}</label>
-    <ul>
-      {% if document.parent %}
-        <li>
-          <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
-        </li>
-      {% endif %}
-      <li>
-        <span>{{ document.language }}</span>
-      </li>
-    </ul>
-  </div>
-  <div id="revision-list">
-    {% if revisions %}
-      <form action="{{ url('wiki.compare_revisions', document.slug) }}" method="get">
-        {% if revisions.count() > 1 %}
-          <input type="submit" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
-        {% endif %}
-        {% set reached_current = False %}
-        {% for rev in revisions %}
-          {% if document.current_revision == rev %}
-            {% set reached_current = True %}
-          {% endif %}
-          {% if loop.first %}<ul>{% endif %}
-          <li class="{% if document.current_revision == rev %}current{% endif %}{% if rev.reviewed and not rev.is_approved %}rejected{% endif %}">
-            <div class="radio">
-              {% if not loop.first %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
-            </div>
-            <div class="radio">
-              {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
-            </div>
-            <div class="date">
-              <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
-            </div>
-            <div class="status">
-              {% if not rev.reviewed %}
-                {% if not reached_current %}
-                  <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
-                {% else %}
-                  <span class="unreviewed">{{ _('Unreviewed') }}</span>
-                {% endif %}
-              {% else %}
-                {% if document.current_revision == rev %}
-                  <span class="current">{{ _('Current') }}</span>
-                {% elif rev.is_approved %}
-                  <span class="approved">{{ _('Approved') }}</span>
-                {% else %}
-                  <span class="rejected">{{ _('Rejected') }}</span>
-                {% endif %}
-              {% endif %}
-            </div>
-            <div class="significance">
-              {% if rev.significance == 20 %}
-                M
-              {% elif rev.significance == 30 %}
-                MT
-              {% else %}
-                &nbsp;
-              {% endif %}
-            </div>
-            <div class="creator">
-              {{ rev.creator }}
-            </div>
-            <div class="comment">
-              {{ rev.comment }}
-            </div>
+  <article id="revision-history" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1 class="title">{{ _('History of {title}')|fe(title=document.title) }}</h1>
+    <div id="locale-list">
+      <label>{{ _('Revision history for:') }}</label>
+      <ul>
+        {% if document.parent %}
+          <li>
+            <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
           </li>
-          {% if loop.last %}</ul>{% endif %}
-        {% endfor %}
-        {% if revisions.count() > 1 %}
-          <input type="submit" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
         {% endif %}
-      </form>
-    {% else %}
-      {{ _('This document has no revisions.') }}
-    {% endif %}
-  </div>
+        <li>
+          <span>{{ document.language }}</span>
+        </li>
+      </ul>
+    </div>
+    <div id="revision-list">
+      {% if revisions %}
+        <form action="{{ url('wiki.compare_revisions', document.slug) }}" method="get">
+          {% if revisions.count() > 1 %}
+            <div class="compare top">
+              <input type="submit" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
+            </div>
+          {% endif %}
+          {% set reached_current = False %}
+          {% for rev in revisions %}
+            {% if document.current_revision == rev %}
+              {% set reached_current = True %}
+            {% endif %}
+            {% if loop.first %}<ul>{% endif %}
+            <li class="{% if document.current_revision == rev %}current{% endif %}{% if rev.reviewed and not rev.is_approved %}rejected{% endif %}">
+              <div class="radio">
+                {% if not loop.first %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
+              </div>
+              <div class="radio">
+                {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
+              </div>
+              <div class="date">
+                <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='date') }}</a>
+              </div>
+              <div class="status">
+                {% if not rev.reviewed %}
+                  {% if not reached_current %}
+                    <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
+                  {% else %}
+                    <span class="unreviewed">{{ _('Unreviewed') }}</span>
+                  {% endif %}
+                {% else %}
+                  {% if document.current_revision == rev %}
+                    <span class="current">{{ _('Current') }}</span>
+                  {% elif rev.is_approved %}
+                    <span class="approved">{{ _('Approved') }}</span>
+                  {% else %}
+                    <span class="rejected">{{ _('Rejected') }}</span>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <div class="significance">
+                {% if rev.significance == 20 %}
+                  M
+                {% elif rev.significance == 30 %}
+                  MT
+                {% else %}
+                  &nbsp;
+                {% endif %}
+              </div>
+              <div class="creator">
+                {{ rev.creator }}
+              </div>
+              <div class="comment">
+                {{ rev.comment }}
+              </div>
+            </li>
+            {% if loop.last %}</ul>{% endif %}
+          {% endfor %}
+          {% if revisions.count() > 1 %}
+            <div class="compare bottom">
+              <input type="submit" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
+            </div>
+          {% endif %}
+        </form>
+      {% else %}
+        {{ _('This document has no revisions.') }}
+      {% endif %}
+    </div>
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ document_tabs(document, document.parent, user, 'history', settings) }}
 {% endblock %}

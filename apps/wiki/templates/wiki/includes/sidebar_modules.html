@@ -1,0 +1,98 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% macro document_tabs(document, parent, user, active, settings) -%}
+  {% if not parent %}
+    {% set parent = document %}
+  {% endif %}
+  <nav id="doc-tabs">
+    <ul>
+      <li{% if active == 'article' %} class="active"{% endif %}>
+        {% if active == 'article' or not document %}
+          <span>{{ _('Article') }}</span>
+        {% else %}
+          <a href="{{ url('wiki.document', document_slug=document.slug) }}">{{ _('Article') }}</a>
+        {% endif %}
+      </li>
+      <li{% if active == 'discussion' %} class="active"{% endif %}>
+        {% if active == 'discussion' %}
+          <span>{{ _('Discussion') }}</span>
+        {% else %}
+        {# TODO: Insert URL. Show to everybody? #}
+          <a href="#">{{ _('Discussion') }}</a>
+        {% endif %}
+      </li>
+      {% if user.is_authenticated() %}
+        {% if parent.allows_revision_by(user) or parent.allows_editing_by(user) %}
+          <li class="edit{% if active == 'edit' %} active{% endif %}">
+            {% if active == 'edit' %}
+              <span>{{ _('Edit Article') }}</span>
+            {% else %}
+              <a href="{{ url('wiki.edit_document', document_slug=parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}">{{ _('Edit Article') }}</a>
+            {% endif %}
+          </li>
+        {% endif %}
+        <li{% if active == 'localize' %} class="active"{% endif %}>
+          {% if active == 'localize' %}
+            <span>{{ _('Localize Article') }}</span>
+          {% else %}
+            {# TODO: Create page to select localization? Show link to all authenticated? #}
+            <a href="#">{{ _('Localize Article') }}</a>
+          {% endif %}
+        </li>
+        <li{% if active == 'history' %} class="active"{% endif %}>
+          {% if active == 'history' %}
+            <span>{{ _('Show History') }}</span>
+          {% else %}
+            {# TODO: Show link to all authenticated? #}
+            <a href="{% if document %}{{ url('wiki.document_revisions', document_slug=document.slug) }}{% else %}{{ url('wiki.document_revisions', document_slug=parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}{% endif %}">{{ _('Show History') }}</a>
+          {% endif %}
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{%- endmacro %}
+
+{% macro for_contributors() -%}
+  <section id="for-contributors" class="sd-module">
+    <h1>{{ _('For Contributors') }}</h1>
+    <ul>
+      {# TODO: Insert URLs below #}
+      <li><a href="#">{{ _('Contributor Home Page') }}</a></li>
+      <li><a href="#">{{ _('Localization Dashboard') }}</a></li>
+      <li><a href="#">{{ _('Media Gallery') }}</a></li>
+      <li><a href="#">{{ _('Creating Articles') }}</a></li>
+      <li><a href="#">{{ _('Helping in the Forum') }}</a></li>
+      <li><a href="#">{{ _('Helping in Live Chat') }}</a></li>
+    </ul>
+  </section>
+{%- endmacro %}
+
+{% macro document_notifications(document, user) -%}
+  {% if user.is_authenticated() %}
+    <div id="doc-watch">
+      {% if is_watching(document, user) %}
+        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <input type="submit" class="submit" value="{{ _('Unsubscribe from edit notifications') }}" />
+        </form>
+      {% else %}
+        <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <input type="submit" class="submit" value="{{ _('Subscribe to edit notifications') }}" />
+        </form>
+      {% endif %}
+    </div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro other_links() -%}
+  <nav id="other-links">
+    <ul>
+      <li class="home">
+        <a href="{{ url('wiki.home') }}">{{ _('Firefox Help Home') }}</a>
+      </li>
+      <li class="aaq">
+        <a href="{{ url('questions.new_question') }}">{{ _('Ask A Question') }}</a>
+      </li>
+    </ul>
+  </nav>
+{%- endmacro %}

@@ -14,6 +14,14 @@ a:link, a:visited, a:active {
     text-decoration: none;
 }
 
+#breadcrumbs {
+    margin: 0 0 20px;
+}
+
+ol.breadcrumbs {
+    display: inline;
+}
+
 /* Template Layout */
 #content {
     font-family: Georgia;
@@ -30,6 +38,17 @@ a:link, a:visited, a:active {
     float: left;
     padding: 16px 0 0;
     width: 754px;
+}
+
+#main-content article.main h1.title {
+    color: #303030;
+    font-size: 26px;
+}
+
+#main-content article.main {
+    background: transparent url(../img/wiki/bkg.article.jpg) no-repeat right top;
+    font-size: 13px;
+    padding: 14px 20px 0 0;
 }
 
 #main-sd {
@@ -165,7 +184,7 @@ div.support-search input.submit {
     left: -2px;
     padding-left : 52px;
     position: relative;
-    z-index: 2;
+    z-index: 0;
 }
 
 #doc-tabs li.edit {
@@ -271,14 +290,8 @@ div.support-search input.submit {
 }
 
 /* Document view */
-#wiki-doc {
-    background: transparent url(../img/wiki/bkg.article.jpg) no-repeat right top;
-    padding: 14px 0 0;
-}
-
-#wiki-doc h1.title {
-    color: #303030;
-    font-size: 26px;
+#main-content #wiki-doc {
+    padding-right: 0;
 }
 
 #related-articles {
@@ -342,6 +355,7 @@ html.no-js .hide-if-no-js {
 
 #toc ol ol {
     list-style-type: upper-alpha;
+    margin: 0 0 0 20px;
 }
 
 #toc ol ol li {
@@ -520,6 +534,10 @@ summary.h2 {
 }
 
 /* Revision history */
+#revision-history {
+    color: #666;
+}
+
 #locale-list ul {
     display: inline;
 }
@@ -535,21 +553,32 @@ summary.h2 {
 }
 
 #revision-list ul {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 #revision-list li {
     list-style: none;
+    padding: 4px 0;
+}
+
+#revision-list li:nth-child(odd) {
+    background: #f2f2f2;
 }
 
 #revision-list li.current {
-    border-top: solid 1px #999;
-    margin: 5px 0 0;
-    padding: 5px 0 0;
+    background: #daedf6;
+    border-bottom: solid 2px #a3b1b8;
+    border-top: solid 2px #a3b1b8;
 }
 
-#revision-list li.rejected * {
-    color: #ccc;
+#revision-list li.current div.status {
+    color: #223d61;
+    font-weight: bold;
+}
+
+#revision-list li.rejected *,
+#revision-list li.rejected div.creator {
+    color: #999;
     text-decoration: line-through;
 }
 
@@ -562,12 +591,16 @@ summary.h2 {
 #revision-list div.date {
     display: inline-block;
     padding: 0 0 0 10px;
-    width: 150px;
+    width: 115px;
 }
 
 #revision-list div.status {
     display: inline-block;
-    width: 90px;
+    width: 80px;
+}
+
+#revision-list div.status a {
+    font-weight: bold;
 }
 
 #revision-list div.significance {
@@ -576,13 +609,37 @@ summary.h2 {
 }
 
 #revision-list div.creator {
+    color: #333;
     display: inline-block;
-    width: 125px;
+    width: 105px;
 }
 
 #revision-list div.comment {
     display: inline-block;
-    width: 400px;
+    width: 330px;
+}
+
+#revision-list div.compare {
+    height: 20px;
+    padding: 0 0 0 50px;
+}
+
+#revision-list div.compare.top {
+    background: transparent url(../img/wiki/compare.arrows.png) no-repeat 4px 5px;
+    padding-bottom: 5px;
+}
+
+#revision-list div.compare.bottom {
+    background: transparent url(../img/wiki/compare.arrows.png) no-repeat 4px -40px;
+    padding-top: 10px;
+}
+
+#revision-list div.compare input {
+    background: none;
+    border: none;
+    color: #447bc4;
+    cursor: pointer;
+    padding: 0;
 }
 
 /* Review revision */

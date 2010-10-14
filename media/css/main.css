@@ -101,7 +101,7 @@ h2 {
     margin: auto;
     text-align: left;
     position: relative;
-    z-index: 1;
+    z-index: 3;
     background: #1e4262 url(../img/header-background.png) bottom left no-repeat;
     font-family: Verdana;
 }
