@@ -1,5 +1,4 @@
 from django.template.defaultfilters import slugify
-from django.core.cache import cache
 
 from datetime import datetime
 
@@ -11,11 +10,8 @@ class TestCaseBase(TestCase):
     """Base TestCase for the wiki app test cases."""
 
     def setUp(self):
+        super(TestCaseBase, self).setUp()
         self.client = LocalizingClient()
-        cache.clear()
-
-    def tearDown(self):
-        pass
 
 
 def document(**kwargs):
@@ -35,10 +31,6 @@ def revision(**kwargs):
     Requires a users fixture if no creator is provided.
 
     """
-    u = None
-    if 'creator' not in kwargs:
-        u = get_user()
-
     d = None
     if 'document' not in kwargs:
         d = document()
@@ -46,20 +38,21 @@ def revision(**kwargs):
 
     defaults = {'summary': 'Some summary', 'content': 'Some content',
                 'significance': SIGNIFICANCES[0][0], 'comment': 'Some comment',
-                'creator': u, 'document': d}
+                'creator': kwargs.get('creator', get_user()), 'document': d}
 
     defaults.update(kwargs)
 
     return Revision(**defaults)
 
 
+# I don't like this thing. revision() is more flexible. All this adds is
+# is_approved=True, but it doesn't even mention approval in its name.
+# TODO: Remove.
 def doc_rev(content=''):
     """Save a document and an approved revision with the given content."""
-    d = document()
-    d.save()
-    r = revision(document=d, content=content, is_approved=True)
+    r = revision(content=content, is_approved=True)
     r.save()
-    return d, r
+    return r.document, r
 
 
 def new_document_data(tags=None):

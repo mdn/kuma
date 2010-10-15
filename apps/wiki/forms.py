@@ -127,20 +127,25 @@ class RevisionForm(forms.ModelForm):
         'versions': [(smart_str(c[0]), [(v.slug, smart_str(v.name)) for
                                         v in c[1]]) for
                      c in GROUPED_FIREFOX_VERSIONS]}
-    widget = forms.Textarea(attrs={'data-showfor': json.dumps(showfor_data)})
     content = StrippedCharField(
-                min_length=5, max_length=10000, widget=widget,
+                min_length=5, max_length=10000,
+                widget=forms.Textarea(attrs={'data-showfor':
+                                             json.dumps(showfor_data)}),
                 error_messages={'required': CONTENT_REQUIRED,
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})
 
     comment = StrippedCharField(required=False)
 
-    class Meta:
+    class Meta(object):
         model = Revision
-        fields = ('keywords', 'summary', 'content', 'comment')
+        fields = ('keywords', 'summary', 'content', 'comment', 'based_on')
 
-    def save(self, creator, base_revision, document, **kwargs):
+    def __init__(self, *args, **kwargs):
+        super(RevisionForm, self).__init__(*args, **kwargs)
+        self.fields['based_on'].widget = forms.HiddenInput()
+
+    def save(self, creator, document, **kwargs):
         """Persist me, and return the saved Revision.
 
         Take several other necessary pieces of data that aren't from the
@@ -152,7 +157,6 @@ class RevisionForm(forms.ModelForm):
 
         new_rev.document = document
         new_rev.creator = creator
-        new_rev.based_on = base_revision
         new_rev.save()
         return new_rev
 

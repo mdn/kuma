@@ -10,7 +10,7 @@ import sumo.tests.test_parser
 from wiki.parser import (WikiParser, ForParser, PATTERNS,
                          _build_template_params as _btp,
                          _format_template_content as _ftc, _key_split)
-from wiki.tests import doc_rev
+from wiki.tests import document, revision
 
 
 def doc_rev_parser(*args, **kwargs):
@@ -153,10 +153,11 @@ class TestWikiTemplate(TestCase):
     def test_template_locale(self):
         """Localized template is returned."""
         py_doc, p = doc_parse_markup('English content', '[[Template:test]]')
-        d = doc_rev('French content')[0]
-        d.title = 'Template:test'
-        d.locale = 'fr'
+        parent = document()
+        d = document(parent=parent, title='Template:test', locale='fr')
         d.save()
+        r = revision(content='French content', document=d, is_approved=True)
+        r.save()
         eq_('English content', py_doc.text())
         py_doc = pq(p.parse('[[T:test]]', locale='fr'))
         eq_('French content', py_doc.text())
@@ -282,10 +283,12 @@ class TestWikiInclude(TestCase):
         doc = pq(p.parse('[[I:Test title]]', locale='fr'))
         eq_('The document "Test title" does not exist.', doc.text())
         # Create the French article, and test again
-        d = doc_rev('French content')[0]
-        d.title = 'Test title'
-        d.locale = 'fr'
+        parent_rev = revision()
+        d = document(parent=parent_rev.document, title='Test title',
+                     locale='fr')
         d.save()
+        r = revision(document=d, content='French content', is_approved=True)
+        r.save()
         # Parsing in French should find the French article
         doc = pq(p.parse('[[Include:Test title]]', locale='fr'))
         eq_('French content', doc.text())

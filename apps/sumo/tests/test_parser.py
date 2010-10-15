@@ -60,8 +60,14 @@ class TestWikiParser(TestCase):
         eq_(d, obj)
 
     def test_get_object_fallback_french(self):
+        # Create English parent document
+        en_d = document()
+        en_d.save()
+        en_r = revision(document=en_d, is_approved=True)
+        en_r.save()
+
         # Create the French document
-        fr_d = document(title='A doc', locale='fr')
+        fr_d = document(parent=en_d, title='A doc', locale='fr')
         fr_d.save()
         obj = get_object_fallback(Document, 'A doc', 'fr', '!')
         eq_(fr_d, obj)

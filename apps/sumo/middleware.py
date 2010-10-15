@@ -71,6 +71,9 @@ class LocaleURLMiddleware(object):
         set_url_prefixer(None)
         return response
 
+    def process_exception(self, request, exception):
+        set_url_prefixer(None)
+
 
 class TikiCookieMiddleware(object):
     """

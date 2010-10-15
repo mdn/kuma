@@ -156,7 +156,7 @@ def new_document(request):
 
     if doc_form.is_valid() and rev_form.is_valid():
         doc = doc_form.save(request.locale, None)
-        _save_rev_and_notify(rev_form, request.user, None, doc)
+        _save_rev_and_notify(rev_form, request.user, doc)
         return HttpResponseRedirect(reverse('wiki.document_revisions',
                                     args=[doc.slug]))
 
@@ -185,12 +185,13 @@ def edit_document(request, document_slug, revision_id=None):
     else:
         rev = doc.current_revision or doc.revisions.order_by('-created')[0]
 
-    doc_form = rev_form = None
     disclose_description = bool(request.GET.get('opendescription'))
+    doc_form = rev_form = None
     if doc.allows_revision_by(user):
-        rev_form = RevisionForm(initial=_revision_form_initial(rev))
+        rev_form = RevisionForm(instance=rev, initial={'based_on': rev.id})
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc))
+
     if request.method == 'GET':
         if not (rev_form or doc_form):
             # You can't do anything on this page, so get lost.
@@ -216,8 +217,9 @@ def edit_document(request, document_slug, revision_id=None):
         elif which_form == 'rev':
             if doc.allows_revision_by(user):
                 rev_form = RevisionForm(request.POST)
+                rev_form.instance.document = doc  # for rev_form.clean()
                 if rev_form.is_valid():
-                    _save_rev_and_notify(rev_form, user, rev, doc)
+                    _save_rev_and_notify(rev_form, user, doc)
                     return HttpResponseRedirect(
                         reverse('wiki.document_revisions',
                                 args=[document_slug]))
@@ -318,38 +320,42 @@ def translate(request, document_slug):
     * translation is to the request locale
 
     """
-    if settings.WIKI_DEFAULT_LANGUAGE == request.locale:
-        # Don't translate to the default
-        raise Http404
-
     parent_doc = get_object_or_404(
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+
+    if settings.WIKI_DEFAULT_LANGUAGE == request.locale:
+        # Don't translate to the default language.
+        return HttpResponseRedirect(reverse(
+            'wiki.edit_document', locale=settings.WIKI_DEFAULT_LANGUAGE,
+            args=[parent_doc.slug]))
+
+    # Require an approved revision to translate from:
+    based_on_rev = parent_doc.current_revision
+    if not based_on_rev:
+        return jingo.render(request, 'wiki/translate.html',
+                            {'parent': parent_doc})
+
     try:
         doc = parent_doc.translations.get(locale=request.locale)
     except Document.DoesNotExist:
         doc = None
 
     if request.method == 'GET':
-        if doc:
-            doc_initial = _document_form_initial(doc)
-            if doc.current_revision:
-                rev = doc.current_revision
-            else:
-                rev = doc.revisions.order_by('-created')[0]
-            rev_initial = _revision_form_initial(rev)
-        else:
-            doc_initial = None
-            rev_initial = None
-
+        doc_initial = _document_form_initial(doc) if doc else None
         doc_form = DocumentForm(initial=doc_initial)
-        rev_form = RevisionForm(initial=rev_initial)
+        rev_form = RevisionForm(instance=doc and doc.current_revision,
+                                initial={'based_on': based_on_rev.id})
     else:  # POST
         doc_form = DocumentForm(request.POST, instance=doc)
+        doc_form.instance.locale = request.locale
+        doc_form.instance.parent = parent_doc
+
         rev_form = RevisionForm(request.POST)
+        rev_form.instance.document = doc_form.instance  # for rev_form.clean()
+
         if doc_form.is_valid() and rev_form.is_valid():
             doc = doc_form.save(request.locale, parent_doc)
-            _save_rev_and_notify(rev_form, request.user,
-                                 parent_doc.current_revision, doc)
+            _save_rev_and_notify(rev_form, request.user, doc)
 
             url = reverse('wiki.document_revisions',
                           args=[doc_form.cleaned_data['slug']])
@@ -435,15 +441,9 @@ def _document_form_initial(document):
                                   document.operating_systems.all()]}
 
 
-def _revision_form_initial(revision):
-    """Return a dict with the revision data pertinent for the form."""
-    return {'keywords': revision.keywords, 'content': revision.content,
-            'summary': revision.summary}
-
-
-def _save_rev_and_notify(rev_form, creator, base_revision, document):
+def _save_rev_and_notify(rev_form, creator, document):
     """Save the given RevisionForm and send notifications."""
-    new_rev = rev_form.save(creator, base_revision, document)
+    new_rev = rev_form.save(creator, document)
 
     # Enqueue notifications
     send_ready_for_review_notification.delay(new_rev, document)

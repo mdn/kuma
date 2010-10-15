@@ -20,7 +20,7 @@
       {{ errorlist(revision_form) }}
       <ul>
         {{ document_form.as_ul()|safe }}
-        {% for field in revision_form if field.name != 'comment' and field.name != 'content' %}
+        {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
           <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
         {% endfor %}
         <li>
@@ -31,6 +31,7 @@
           </div>
         </li>
       </ul>
+      {{ revision_form.hidden_fields()|join|safe }}
       {% include 'wiki/includes/submit_revision_for_review.html' %}
       <div id="preview"></div>
     </form>

@@ -3,12 +3,15 @@ from datetime import datetime
 from itertools import chain
 
 from pyquery import PyQuery
-from tower import ugettext_lazy as _lazy
+from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 
+from sumo import ProgrammingError
+from sumo_locales import LOCALES
 from sumo.models import ModelBase, TaggableMixin
 from sumo.urlresolvers import reverse
 from wiki import TEMPLATE_TITLE_PREFIX
@@ -192,6 +195,15 @@ class Document(ModelBase, TaggableMixin):
         self._raise_if_collides('slug', SlugCollision)
         self._raise_if_collides('title', TitleCollision)
 
+        # This is too important to leave to a (possibly omitted) is_valid call.
+        # It will probably result in a traceback, which is good.
+        if not self.parent and self.locale != settings.WIKI_DEFAULT_LANGUAGE:
+            # TODO: Don't freak out iff the doc is marked as non-localizable.
+            raise ValidationError('A translation must reference an %s parent '
+                                  'document unless it is marked as non-'
+                                  'localizable.' %
+                                  settings.WIKI_DEFAULT_LANGUAGE)
+
         super(Document, self).save(*args, **kwargs)
 
         # Make redirects if there's an approved revision and title or slug
@@ -306,6 +318,11 @@ class Document(ModelBase, TaggableMixin):
         except Document.DoesNotExist:
             return None
 
+    @property
+    def original(self):
+        """Return the document I was translated from or, if none, myself."""
+        return self.parent or self
+
 
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
@@ -330,10 +347,58 @@ class Revision(ModelBase):
     # The default locale's rev that was current when the Edit button was hit to
     # create this revision. Used to determine whether localizations are out of
     # date.
-    based_on = models.ForeignKey('self', null=True)  # limited_to default
-                                                     # locale's revs
+    based_on = models.ForeignKey('self', null=True, blank=True)
+    # TODO: limit_choices_to={'document__locale':
+    # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
+
+    def _based_on_is_clean(self):
+        """Return a tuple: (the correct value of based_on, whether the old
+        value was correct).
+
+        based_on must be a revision of the English version of the document if
+        there are any such revisions and None otherwise. If based_on is not
+        already set when this is called, the return value defaults to the
+        current_revision of the English document.
+
+        """
+        if self.document.original.current_revision:
+            if (self.based_on and
+                self.based_on.document != self.document.original):
+                # based_on is set and points to the wrong doc.
+                return self.document.original.current_revision, False
+            # else based_on is valid; leave it alone
+        elif self.based_on:
+            return None, False
+        return self.based_on, True
+
+    def clean(self):
+        """Ensure based_on is valid."""
+        # All of the cleaning herein should be unnecessary unless the user
+        # messes with hidden form data.
+        try:
+            self.document and self.document.original
+        except Document.DoesNotExist:
+            # For clean()ing forms that don't have a document instance behind
+            # them yet
+            self.based_on = None
+        else:
+            based_on, is_clean = self._based_on_is_clean()
+            if not is_clean:
+                old = self.based_on
+                self.based_on = based_on  # Be nice and guess a correct value.
+                raise ValidationError(_('A revision must be based on an '
+                    'approved revision of the %(locale)s document. Revision ID'
+                    ' %(id)s does not fit those criteria.') %
+                    dict(locale=LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
+                         id=old.id))
 
     def save(self, *args, **kwargs):
+        _, is_clean = self._based_on_is_clean()
+        if not is_clean:  # No more Mister Nice Guy
+            raise ProgrammingError('Revision.based_on must be None or refer to'
+                                   ' an approved revision of the default-'
+                                   'language document.')
+
         super(Revision, self).save(*args, **kwargs)
 
         # When a revision is approved, re-cache the document's html content
@@ -347,8 +412,9 @@ class Revision(ModelBase):
             self.document.save()
 
     def __unicode__(self):
-        return u'[%s] %s: %s' % (self.document.locale, self.document.title,
-                                 self.content[:50])
+        return u'[%s] %s #%s: %s' % (self.document.locale,
+                                      self.document.title,
+                                      self.id, self.content[:50])
 
     @property
     def content_parsed(self):

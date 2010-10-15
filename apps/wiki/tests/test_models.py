@@ -1,6 +1,9 @@
 from nose.tools import eq_
 from taggit.models import TaggedItem
 
+from django.core.exceptions import ValidationError
+
+from sumo import ProgrammingError
 from sumo.tests import TestCase
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
@@ -260,3 +263,37 @@ class RevisionTests(TestCase):
         str = u' \r\nFirefox informa\xe7\xf5es \u30d8\u30eb'
         _, r = doc_rev(str)
         eq_(str, r.content)
+
+    def test_save_bad_based_on(self):
+        """Saving a Revision with a bad based_on value raises an error."""
+        r = revision()
+        r.based_on = revision()  # Revision of some other unrelated Document
+        self.assertRaises(ProgrammingError, r.save)
+
+    def test_correct_based_on_to_none(self):
+        """Assure Revision.clean() changes a bad based_on value to None when
+        there is no current_revision of the English document."""
+        r = revision()
+        r.based_on = revision()  # Revision of some other unrelated Document
+        self.assertRaises(ValidationError, r.clean)
+        eq_(None, r.based_on)
+
+    def test_correct_based_on_to_current_revision(self):
+        """Assure Revision.clean() changes a bad based_on value to the English
+        doc's current_revision when there is one."""
+        # Make English rev:
+        en_rev = revision(is_approved=True)
+        en_rev.save()
+
+        # Make Deutsch translation:
+        de_doc = document(parent=en_rev.document)
+        de_doc.save()
+        de_rev = revision(document=de_doc)
+
+        # Set based_on to some random, unrelated Document's rev:
+        de_rev.based_on = revision()
+
+        # Try to recover:
+        self.assertRaises(ValidationError, de_rev.clean)
+
+        eq_(en_rev.document.current_revision, de_rev.based_on)

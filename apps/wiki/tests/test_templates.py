@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 
 import mock
+from nose import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -10,7 +11,6 @@ from notifications import check_watch
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
-from wiki.forms import DocumentForm, RevisionForm
 from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
 import wiki.tasks
 from wiki.tests import TestCaseBase, document, revision, new_document_data
@@ -90,12 +90,6 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.get(reverse('wiki.new_document'))
         eq_(403, response.status_code)
 
-    def test_new_document_GET_without_perm(self):
-        """Trying to create a document without permission redirects to login"""
-        self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.new_document'))
-        eq_(403, response.status_code)
-
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
         self.client.login(username='admin', password='testpass')
@@ -135,6 +129,11 @@ class NewDocumentTests(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_document_other_locale(self, get_current, delay):
         """Make sure we can create a document in a non-default locale."""
+        # You shouldn't be able to make a new doc in a non-default locale
+        # without marking it as non-localizable. Unskip this when the non-
+        # localizable bool is implemented.
+        raise SkipTest
+
         get_current.return_value.domain = 'testserver'
 
         self.client.login(username='admin', password='testpass')
@@ -195,44 +194,6 @@ class NewDocumentTests(TestCaseBase):
         eq_(1, len(ul))
         eq_('Select a valid choice. 1337 is not one of the available choices.',
             ul('li').text())
-
-    def test_doc_and_rev_form_processing(self):
-        """Test the helper function that persists the forms."""
-        user = User.objects.get(pk=118533)
-
-        # First we test the helper with a document in the default language.
-        # This should create the document and revision.
-        locale = settings.WIKI_DEFAULT_LANGUAGE
-        tags = ['t1', 't2']
-        data = new_document_data(tags)
-        doc_form = DocumentForm(data)
-        rev_form = RevisionForm(data)
-        assert doc_form.is_valid() and rev_form.is_valid()
-        document = doc_form.save(locale, None)
-        rev_form.save(user, None, document)
-        doc = Document.objects.get(slug=data['slug'], locale=locale)
-        rev = doc.revisions.all()[0]
-        _verify_doc_and_rev_data(data, doc, rev)
-        eq_(tags, list(doc.tags.values_list('name', flat=True)))
-        eq_(user, rev.creator)
-
-        # Now we test the helper translating a document to Spanish. This
-        # should create a new document with parent set to the document
-        # created above and a revision based_on the revision created above.
-        locale = 'es'
-        data.update({'title': 'nuevo titulo', 'slug': 'nuevo-titulo',
-                     'content': 'la traduccion del contenido',
-                     'summary': 'el resumen'})
-        doc_form = DocumentForm(data)
-        rev_form = RevisionForm(data)
-        assert doc_form.is_valid() and rev_form.is_valid()
-        translation = doc_form.save(locale, doc)
-        rev_form.save(user, rev, translation)
-        doc_es = Document.objects.get(slug=data['slug'], locale=locale)
-        rev_es = doc_es.revisions.all()[0]
-        _verify_doc_and_rev_data(data, doc_es, rev_es)
-        eq_(doc, doc_es.parent)
-        eq_(rev, rev_es.based_on)
 
 
 class NewRevisionTests(TestCaseBase):
@@ -302,7 +263,8 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2', 'form': 'rev'})
+             'keywords': 'keyword1 keyword2',
+             'based_on': self.d.current_revision.id, 'form': 'rev'})
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
 
@@ -324,7 +286,6 @@ class NewRevisionTests(TestCaseBase):
         """
         get_current.return_value.domain = 'testserver'
 
-        rev = self.d.current_revision
         self.d.current_revision = None
         self.d.save()
         tags = ['tag1', 'tag2', 'tag3']
@@ -336,7 +297,8 @@ class NewRevisionTests(TestCaseBase):
         eq_(2, self.d.revisions.count())
 
         new_rev = self.d.revisions.order_by('-id')[0]
-        eq_(rev, new_rev.based_on)
+        # There are no approved revisions, so it's based_on nothing:
+        eq_(None, new_rev.based_on)
         edited_delay.assert_called_with(new_rev, self.d)
         ready_delay.assert_called_with(new_rev, self.d)
 
@@ -354,6 +316,15 @@ class NewRevisionTests(TestCaseBase):
         self.client.post(reverse('wiki.edit_document', args=[self.d.slug]),
                          data)
         eq_(tags, list(self.d.tags.values_list('name', flat=True)))
+
+    def test_new_form_maintains_based_on_rev(self):
+        """Revision.based_on should be the rev that was current when the Edit
+        button was clicked, even if other revisions happen while the user is
+        editing."""
+        _test_form_maintains_based_on_rev(
+            self.client, self.d, 'wiki.edit_document',
+            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev'},
+            locale=None)
 
 
 class DocumentListTests(TestCaseBase):
@@ -679,6 +650,39 @@ class TranslateTests(TestCaseBase):
         edited_delay.assert_called_with(rev, doc)
         ready_delay.assert_called_with(rev, doc)
 
+    def test_translate_form_maintains_based_on_rev(self):
+        """Revision.based_on should be the rev that was current when the
+        Translate button was clicked, even if other revisions happen while the
+        user is editing."""
+        _test_form_maintains_based_on_rev(self.client, self.d,
+                                          'wiki.translate',
+                                          _translation_data(), locale='es')
+
+
+def _test_form_maintains_based_on_rev(client, doc, view, post_data,
+                                      locale=None):
+    """Confirm that the based_on value set in the revision created by an edit
+    or translate form is the current_revision of the document as of when the
+    form was first loaded, even if other revisions have been approved in the
+    meantime."""
+    response = client.get(reverse(view, locale=locale, args=[doc.slug]))
+    orig_rev = doc.current_revision
+    eq_(orig_rev.id,
+        int(pq(response.content)('input[name=based_on]').attr('value')))
+
+    # While Fred is editing the above, Martha approves a new rev:
+    martha_rev = revision(document=doc)
+    martha_rev.is_approved = True
+    martha_rev.save()
+
+    # Then Fred saves his edit:
+    post_data_copy = {'based_on': orig_rev.id}
+    post_data_copy.update(post_data)  # Don't mutate arg.
+    response = client.post(reverse(view, locale=locale, args=[doc.slug]),
+                           data=post_data_copy)
+    fred_rev = Revision.objects.all().order_by('-id')[0]
+    eq_(orig_rev, fred_rev.based_on)
+
 
 class DocumentWatchTests(TestCaseBase):
     """Tests for un/subscribing to document edit notifications."""
@@ -773,6 +777,7 @@ class ArticlePreviewTests(TestCaseBase):
         eq_('Test Content', doc('#doc-content h1').text())
 
 
+# TODO: Merge with wiki.tests.doc_rev()?
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
@@ -793,12 +798,3 @@ def _translation_data():
         'keywords': 'keyUno, keyDos, keyTres',
         'summary': 'lipsumo',
         'content': 'loremo ipsumo doloro sito ameto'}
-
-
-def _verify_doc_and_rev_data(data, doc, rev):
-    """Verify that the Document and Revision match the data."""
-    eq_(data['title'], doc.title)
-    eq_(data['category'], doc.category)
-    eq_(data['summary'], rev.summary)
-    eq_(data['keywords'], rev.keywords)
-    eq_(data['content'], rev.content)
