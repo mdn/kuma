@@ -77,6 +77,7 @@ class TestWikiParser(TestCase):
         items = ['page=Installing Firefox']
         params = _buildImageParamsDefault(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
+        assert params['found']
 
     def test_image_params_link(self):
         """_buildImageParams handles external links."""
@@ -129,7 +130,7 @@ class TestWikiParser(TestCase):
         """Frameless image."""
         items = ['frameless']
         params = _buildImageParamsDefault(items)
-        eq_(True, params['frameless'])
+        assert params['frameless']
 
     def test_image_params_width_height(self):
         """Image width."""
@@ -140,7 +141,7 @@ class TestWikiParser(TestCase):
 
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
-        eq_('/en-US/kb/installing-firefox',
+        eq_({'found': True, 'url': '/en-US/kb/installing-firefox'},
             _getWikiLink('Installing Firefox',
                          locale=settings.WIKI_DEFAULT_LANGUAGE))
 
@@ -162,6 +163,7 @@ class TestWikiInternalLinks(TestCase):
         link = pq_link(self.p, '[[Installing Firefox]]')
         eq_('/en-US/kb/installing-firefox', link.attr('href'))
         eq_('Installing Firefox', link.text())
+        assert not link.hasClass('new')
 
     def test_simple_markup(self):
         text = '[[Installing Firefox]]'
@@ -204,6 +206,7 @@ class TestWikiInternalLinks(TestCase):
         link = pq_link(self.p, '[[#section 3|this name]]')
         eq_('#section_3', link.attr('href'))
         eq_('this name', link.text())
+        assert not link.hasClass('new')
 
     def test_link_hash_name(self):
         """Internal link with hash and name."""
@@ -220,13 +223,14 @@ class TestWikiInternalLinks(TestCase):
     def test_simple_create(self):
         """Simple link for inexistent page."""
         link = pq_link(self.p, '[[A new page]]')
-        eq_('/kb/new?title=A+new+page', link.attr('href'))
+        assert link.hasClass('new')
+        eq_('/en-US/kb/new?title=A+new+page', link.attr('href'))
         eq_('A new page', link.text())
 
     def test_link_edit_hash_name(self):
         """Internal link for inexistent page with hash and name."""
         link = pq_link(self.p, '[[A new page#section 3|this name]]')
-        eq_('/kb/new?title=A+new+page#section_3', link.attr('href'))
+        eq_('/en-US/kb/new?title=A+new+page#section_3', link.attr('href'))
         eq_('this name', link.text())
 
 
@@ -323,7 +327,8 @@ class TestWikiImageTags(TestCase):
         eq_('test.jpg', img.attr('alt'))
         eq_('test.jpg', caption)
         eq_(self.img.file.url, img.attr('src'))
-        eq_('/kb/new?title=Article+List', img_a.attr('href'))
+        assert img_a.hasClass('new')
+        eq_('/en-US/kb/new?title=Article+List', img_a.attr('href'))
 
     def test_page_link_caption(self):
         """Link to a wiki page with caption."""
@@ -336,7 +341,8 @@ class TestWikiImageTags(TestCase):
         eq_('my caption', img.attr('alt'))
         eq_('my caption', caption)
         eq_(self.img.file.url, img.attr('src'))
-        eq_('/kb/new?title=Article+List', img_a.attr('href'))
+        assert img_a.hasClass('new')
+        eq_('/en-US/kb/new?title=Article+List', img_a.attr('href'))
 
     def test_link(self):
         """Link to an external page."""

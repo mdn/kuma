@@ -57,15 +57,22 @@ def get_object_fallback(cls, title, locale, default=None, **kwargs):
         return default
 
 
-def _getWikiLink(link, locale):
-    """Checks the page exists, and returns its URL or the URL to create it."""
+def _getWikiLink(title, locale):
+    """Checks the page exists, and returns its URL or the URL to create it.
+
+    Return value is a dict: {'found': boolean, 'url': string}.
+    found is False if the document does not exist.
+
+    """
     try:
-        d = Document.objects.get(locale=locale, title=link, is_template=False)
+        d = Document.objects.get(locale=locale, title=title, is_template=False)
     except Document.DoesNotExist:
         # To avoid circular imports, wiki.models imports wiki_to_html
         from sumo.helpers import urlparams
-        return urlparams(reverse('wiki.new_document'), title=link)
-    return d.get_absolute_url()
+        return {'found': False,
+                'url': urlparams(reverse('wiki.new_document', locale=locale),
+                                 title=title)}
+    return {'found': True, 'url': d.get_absolute_url()}
 
 
 def _buildImageParams(items, locale):
@@ -85,7 +92,9 @@ def _buildImageParams(items, locale):
             params[item] = True
 
     if 'page' in params and params['page'] is not True:
-        params['link'] = _getWikiLink(params['page'], locale)
+        link = _getWikiLink(params['page'], locale)
+        params['link'] = link['url']
+        params['found'] = link['found']
 
     # Validate params with limited # of values
     for param_allowed in IMAGE_PARAMS:
@@ -125,26 +134,29 @@ class WikiParser(Parser):
 
     def _hook_internal_link(self, parser, space, name):
         """Parses text and returns internal link."""
-        link = text = name
+        title = text = name
 
         # Split on pipe -- [[href|name]]
         if '|' in name:
-            link, text = link.split('|', 1)
+            title, text = title.split('|', 1)
 
         hash = ''
-        if '#' in link:
-            link, hash = link.split('#', 1)
+        if '#' in title:
+            title, hash = title.split('#', 1)
 
         # Sections use _, page names use +
         if hash != '':
             hash = '#' + hash.replace(' ', '_')
 
         # Links to this page can just contain href="#hash"
-        if link == '' and hash != '':
+        if title == '' and hash != '':
             return u'<a href="%s">%s</a>' % (hash, text)
 
-        link = _getWikiLink(link, self.locale)
-        return u'<a href="%s%s">%s</a>' % (link, hash, text)
+        link = _getWikiLink(title, self.locale)
+        a_cls = ''
+        if not link['found']:
+            a_cls = ' class="new"'
+        return u'<a href="%s%s"%s>%s</a>' % (link['url'], hash, a_cls, text)
 
     def _hook_image_tag(self, parser, space, name):
         """Adds syntax for inserting images."""
