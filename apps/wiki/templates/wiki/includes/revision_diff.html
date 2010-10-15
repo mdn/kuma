@@ -20,7 +20,7 @@
           {{ ('Revision {num}')|f(num=revision_to.id) }}
         {% endif %}
       </h3>
-      <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_from.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
+      <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
     </div>
   </header>
   {{ diff_table(revision_from.content, revision_to.content) }}
