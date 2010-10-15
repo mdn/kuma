@@ -122,7 +122,7 @@ def migrate_image(filepath, verbosity=0):
 
 class Command(BaseCommand):
     help = ('Migrate images. Optional path to old images [--old].'
-            ' (Trailing slash required.)\n\nPass in an integer (default 1) to '
+            ' (Trailing slash optional.)\n\nPass in an integer (default 1) to '
             'specify how many images to migrate, or use "all". E.g.\n\n'
             'python manage.py migrate_images --old /full/path/to/old all')
     option_list = BaseCommand.option_list + (

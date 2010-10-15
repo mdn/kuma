@@ -1,8 +1,9 @@
 from datetime import datetime
 from fnmatch import fnmatch
 from glob import iglob
+import logging
 from optparse import make_option
-from os import stat
+from os import stat, path
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -20,8 +21,7 @@ VIDEO_DESCRIPTION = 'This video was automatically migrated.'
 OLD_PATH = settings.MEDIA_ROOT + '/uploads/gallery/old/'
 
 
-class MissingFlashException(Exception):
-    """Raised when missing the flash version of a video."""
+log = logging.getLogger('k.migrate_videos')
 
 
 class FileTooLargeError(Exception):
@@ -93,7 +93,9 @@ def migrate_video(file_prefix, extensions, verbosity=0):
     elif 'swf' in extensions:
         flv_ext = 'swf'
     else:  # Flash is required
-        raise MissingFlashException(file_prefix)
+        log.debug('Missing flash for %s [%s]' % (
+                  file_prefix, ', '.join(extensions)))
+        return False
     # then check ogg:
     ogg_ext = ''
     if 'ogv' in extensions:
@@ -109,7 +111,7 @@ def migrate_video(file_prefix, extensions, verbosity=0):
         ogg_f = open(build_filepath(file_prefix, ogg_ext))
         upload_files['ogv'] = File(ogg_f)
 
-    _, title = file_prefix.rsplit('/', 1)
+    title = path.basename(file_prefix)
     if Video.objects.filter(
             title=title,
             locale=settings.WIKI_DEFAULT_LANGUAGE).exists():
@@ -133,7 +135,7 @@ def migrate_video(file_prefix, extensions, verbosity=0):
 
 class Command(BaseCommand):
     help = ('Migrate screencasts. Optional path to old videos [--old].'
-            ' (Trailing slash required.)\n\nPass in an integer (default 1) to '
+            ' (Trailing slash optional.)\n\nPass in an integer (default 1) to '
             'specify how many videos to migrate, or use "all". E.g.\n\n'
             'python manage.py migrate_videos --old /full/path/to/old all')
     option_list = BaseCommand.option_list + (
@@ -161,7 +163,7 @@ class Command(BaseCommand):
         if options['verbosity'] > 0:
             print 'Starting migration of videos...'
 
-        files = files_dict(options['old'] + '*')
+        files = files_dict(path.join(options['old'], '*'))
 
         count = 0
         for file_prefix, extensions in files.iteritems():
