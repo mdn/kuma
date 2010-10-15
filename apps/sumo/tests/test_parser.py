@@ -167,7 +167,7 @@ class TestWikiInternalLinks(TestCase):
 
     def test_simple_markup(self):
         text = '[[Installing Firefox]]'
-        eq_('<p><a href="/en-US/kb/installing-firefox" rel="nofollow">' +
+        eq_('<p><a href="/en-US/kb/installing-firefox">' +
             'Installing Firefox</a></p>',
             self.p.parse(text).replace('\n', ''))
 
@@ -181,7 +181,7 @@ class TestWikiInternalLinks(TestCase):
         """Internal link with hash."""
         text = '[[Installing Firefox#section name]]'
         eq_('<p><a href="/en-US/kb/installing-firefox#section_name"' +
-                ' rel="nofollow">Installing Firefox#section name</a></p>',
+                '>Installing Firefox#section name</a></p>',
             self.p.parse(text).replace('\n', ''))
 
     def test_hash_only(self):
@@ -218,7 +218,7 @@ class TestWikiInternalLinks(TestCase):
         """Internal link with hash and name."""
         text = '[[Installing Firefox#section 3|this name]]'
         eq_('<p><a href="/en-US/kb/installing-firefox#section_3"' +
-            ' rel="nofollow">this name</a>\n</p>', self.p.parse(text))
+            '>this name</a>\n</p>', self.p.parse(text))
 
     def test_simple_create(self):
         """Simple link for inexistent page."""
