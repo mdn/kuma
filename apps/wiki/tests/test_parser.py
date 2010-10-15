@@ -161,11 +161,17 @@ class TestWikiTemplate(TestCase):
         py_doc = pq(p.parse('[[T:test]]', locale='fr'))
         eq_('French content', py_doc.text())
 
-    def test_template_locale_not_exist(self):
-        """If localized template does not exist, say so."""
-        _, p = doc_parse_markup('English content', '[[Template:test]]')
+    def test_template_not_exist(self):
+        """If template does not exist in set locale or English."""
+        p = WikiParser()
         doc = pq(p.parse('[[T:test]]', locale='fr'))
         eq_('The template "test" does not exist.', doc.text())
+
+    def test_template_locale_fallback(self):
+        """If localized template does not exist, fall back to English."""
+        _, p = doc_parse_markup('English content', '[[Template:test]]')
+        doc = pq(p.parse('[[T:test]]', locale='fr'))
+        eq_('English content', doc.text())
 
     def test_template_anonymous_params(self):
         """Template markup with anonymous parameters."""
@@ -202,8 +208,8 @@ class TestWikiTemplate(TestCase):
 
     def test_template_args_inline_wiki_markup(self):
         """Args that contain inline wiki markup are parsed"""
-        doc, _  = doc_parse_markup('{{{1}}}\n\n{{{2}}}',
-                                   "[[Template:test|'''one'''|''two'']]")
+        doc, _ = doc_parse_markup('{{{1}}}\n\n{{{2}}}',
+                                  "[[Template:test|'''one'''|''two'']]")
 
         eq_("<p/><p><strong>one</strong></p><p><em>two</em></p><p/>",
             doc.html().replace('\n', ''))
@@ -293,7 +299,8 @@ class TestWikiVideo(TestCase):
         Video.objects.all().delete()
         super(TestWikiVideo, self).tearDown()
 
-    def test_video(self):
+    def test_video_english(self):
+        """Video is created and found in English."""
         v = video()
         d, _, p = doc_rev_parser('[[V:Some title]]')
         doc = pq(d.html)
@@ -307,6 +314,23 @@ class TestWikiVideo(TestCase):
         eq_(2, len(doc('source')))
         data_fallback = doc('video').attr('data-fallback')
         eq_(v.flv.url, data_fallback)
+
+    def test_video_fallback_french(self):
+        """English video is found in French."""
+        p = WikiParser()
+        self.test_video_english()
+        doc = pq(p.parse('[[V:Some title]]', locale='fr'))
+        eq_('video', doc('div.video').attr('class'))
+        eq_(1, len(doc('video')))
+        eq_(2, len(doc('source')))
+        data_fallback = doc('video').attr('data-fallback')
+        eq_(Video.objects.all()[0].flv.url, data_fallback)
+
+    def test_video_not_exist(self):
+        """Video does not exist."""
+        p = WikiParser()
+        doc = pq(p.parse('[[V:Some title]]', locale='fr'))
+        eq_('The video "Some title" does not exist.', doc.text())
 
 
 def parsed_eq(want, to_parse):

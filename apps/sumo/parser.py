@@ -1,9 +1,10 @@
 from django.conf import settings
-from django.utils.http import urlquote
 
-from wikimarkup.parser import Parser
 import jingo
+from tower import ugettext_lazy as _lazy
+from wikimarkup.parser import Parser
 
+from gallery.models import Image
 from sumo.urlresolvers import reverse
 from wiki.models import Document
 
@@ -30,9 +31,30 @@ IMAGE_PARAMS = {
 }
 
 
-def wiki_to_html(wiki_markup):
+def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
     """Wiki Markup -> HTML"""
-    return WikiParser().parse(wiki_markup, show_toc=False)
+    return WikiParser().parse(wiki_markup, show_toc=False, locale=locale)
+
+
+def get_object_fallback(cls, title, locale, default=None, **kwargs):
+    """Returns an instance of cls matching title, locale, or falls back.
+
+    If the fallback fails, the return value is default.
+    You may pass in additional kwargs which go straight to the query.
+
+    """
+    try:
+        return cls.objects.get(title=title, locale=locale, **kwargs)
+    except cls.DoesNotExist:
+        pass
+
+    # Fallback
+    try:
+        return cls.objects.get(
+            title=title, locale=settings.WIKI_DEFAULT_LANGUAGE, **kwargs)
+    # Okay, all else failed
+    except cls.DoesNotExist:
+        return default
 
 
 def _getWikiLink(link, locale):
@@ -44,11 +66,6 @@ def _getWikiLink(link, locale):
         from sumo.helpers import urlparams
         return urlparams(reverse('wiki.new_document'), title=link)
     return d.get_absolute_url()
-
-
-def _getImagePath(link):
-    """Returns an uploaded image's path for image paths in markup."""
-    return settings.WIKI_UPLOAD_URL + urlquote(link)
 
 
 def _buildImageParams(items, locale):
@@ -131,7 +148,7 @@ class WikiParser(Parser):
 
     def _hook_image_tag(self, parser, space, name):
         """Adds syntax for inserting images."""
-        link = name
+        title = name
         caption = name
         params = {}
 
@@ -139,20 +156,24 @@ class WikiParser(Parser):
         separator = name.find('|')
         items = []
         if separator != -1:
-            items = link.split('|')
-            link = items[0]
+            items = title.split('|')
+            title = items[0]
             # If the last item contains '=', it's not a caption
             if items[-1].find('=') == -1:
                 caption = items[-1]
                 items = items[1:-1]
             else:
-                caption = link
+                caption = title
                 items = items[1:]
+
+        message = _lazy('The image "%s" does not exist.') % title
+        image = get_object_fallback(Image, title, self.locale, message)
+        if isinstance(image, basestring):
+            return image
 
         # parse the relevant items
         params = _buildImageParams(items, self.locale)
-        img_path = _getImagePath(link)
 
         template = jingo.env.get_template('wikiparser/hook_image.html')
-        r_kwargs = {'img_path': img_path, 'caption': caption, 'params': params}
+        r_kwargs = {'image': image, 'caption': caption, 'params': params}
         return template.render(**r_kwargs)

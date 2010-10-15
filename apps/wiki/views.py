@@ -75,7 +75,7 @@ def document(request, document_slug):
     try:
         doc = Document.objects.get(locale=request.locale, slug=document_slug)
     except Document.DoesNotExist:
-        # Look in en-US:
+        # Look in default language:
         doc = get_object_or_404(Document,
                                 locale=settings.WIKI_DEFAULT_LANGUAGE,
                                 slug=document_slug)
@@ -418,7 +418,7 @@ def json_view(request):
         'slug': document.slug,
         'title': document.title,
         'summary': document.current_revision.summary,
-        'url': document.get_absolute_url()
+        'url': document.get_absolute_url(),
     })
     return HttpResponse(data, mimetype='application/x-json')
 

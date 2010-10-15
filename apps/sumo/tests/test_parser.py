@@ -5,9 +5,11 @@ from django.conf import settings
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.parser import (WikiParser, _getImagePath, _buildImageParams,
-                         _getWikiLink)
+from gallery.tests import image
+from sumo.parser import (WikiParser, _buildImageParams, _getWikiLink,
+                         get_object_fallback)
 from sumo.tests import TestCase
+from wiki.models import Document
 from wiki.tests import document, revision
 
 
@@ -35,15 +37,40 @@ class TestWikiParser(TestCase):
         self.d, self.r, self.p = doc_rev_parser(
             'Test content', 'Installing Firefox')
 
-    def test_image_path_sanity(self):
-        """Image URLs are prefixed with the upload path."""
-        eq_(settings.WIKI_UPLOAD_URL + 'file.png',
-            _getImagePath('file.png'))
+    def test_get_object_fallback_empty(self):
+        """get_object_fallback returns message when no objects."""
+        # English does not exist
+        obj = get_object_fallback(Document, 'A doc', 'en-US', '!')
+        eq_('!', obj)
 
-    def test_image_path_special_chars(self):
-        """Image URLs with Unicode are prefixed with the upload path."""
-        eq_(settings.WIKI_UPLOAD_URL + 'parl%C3%A9%20Fran%C3%A7ais.png',
-            _getImagePath(u'parl\u00e9 Fran\u00e7ais.png'))
+    def test_get_object_fallback_english(self):
+        # Create the English document
+        d = document(title='A doc')
+        d.save()
+        # Now it exists
+        obj = get_object_fallback(Document, 'A doc', 'en-US', '!')
+        eq_(d, obj)
+
+    def test_get_object_fallback_from_french(self):
+        # Create the English document
+        d = document(title='A doc')
+        d.save()
+        # Returns English document for French
+        obj = get_object_fallback(Document, 'A doc', 'fr', '!')
+        eq_(d, obj)
+
+    def test_get_object_fallback_french(self):
+        # Create the French document
+        fr_d = document(title='A doc', locale='fr')
+        fr_d.save()
+        obj = get_object_fallback(Document, 'A doc', 'fr', '!')
+        eq_(fr_d, obj)
+
+        # Also works when English exists
+        d = document(title='A doc')
+        d.save()
+        obj = get_object_fallback(Document, 'A doc', 'fr', '!')
+        eq_(fr_d, obj)
 
     def test_image_params_page(self):
         """_buildImageParams handles wiki pages."""
@@ -203,8 +230,8 @@ class TestWikiInternalLinks(TestCase):
         eq_('this name', link.text())
 
 
-def pq_img(p, text, selector='div.img'):
-    doc = pq(p.parse(text))
+def pq_img(p, text, selector='div.img', locale=settings.WIKI_DEFAULT_LANGUAGE):
+    doc = pq(p.parse(text, locale=locale))
     return doc(selector)
 
 
@@ -214,120 +241,157 @@ class TestWikiImageTags(TestCase):
     def setUp(self):
         self.d, self.r, self.p = doc_rev_parser(
             'Test content', 'Installing Firefox')
+        self.img = image(title='test.jpg')
+
+    def tearDown(self):
+        self.img.delete()
 
     def test_empty(self):
         """Empty image tag markup does not change."""
-        img = pq_img(self.p, '[[Image:]]', 'img')
-        eq_('', img.attr('alt'))
-        eq_('/img/wiki_up/', img.attr('src'))
+        img = pq_img(self.p, '[[Image:]]', 'p')
+        eq_('The image "" does not exist.', img.text())
 
     def test_simple(self):
         """Simple image tag markup."""
-        img = pq_img(self.p, '[[Image:file.png]]', 'img')
-        eq_('file.png', img.attr('alt'))
-        eq_('/img/wiki_up/file.png', img.attr('src'))
+        img = pq_img(self.p, '[[Image:test.jpg]]', 'img')
+        eq_('test.jpg', img.attr('alt'))
+        eq_(self.img.file.url, img.attr('src'))
+
+    def test_simple_fallback(self):
+        """Fallback to English if current locale doesn't have the image."""
+        img = pq_img(self.p, '[[Image:test.jpg]]', selector='img', locale='ja')
+        eq_('test.jpg', img.attr('alt'))
+        eq_(self.img.file.url, img.attr('src'))
+
+    def test_full_fallback(self):
+        """Find current locale's image, not the English one."""
+        # first, pretend there is no English version
+        self.img.locale = 'ja'
+        self.img.save()
+        img = pq_img(self.p, '[[Image:test.jpg]]', selector='img', locale='ja')
+        eq_('test.jpg', img.attr('alt'))
+        eq_(self.img.file.url, img.attr('src'))
+
+        # then, create an English version
+        en_img = image(title='test.jpg')
+        # Ensure they're not equal
+        self.assertNotEquals(en_img.file.url, self.img.file.url)
+
+        # make sure there is no fallback
+        img = pq_img(self.p, '[[Image:test.jpg]]', selector='img', locale='ja')
+        eq_('test.jpg', img.attr('alt'))
+        eq_(self.img.file.url, img.attr('src'))
+
+        # now delete the English version
+        self.img.delete()
+        self.img = en_img  # don't break tearDown
+        img = pq_img(self.p, '[[Image:test.jpg]]', selector='img', locale='ja')
+        eq_('test.jpg', img.attr('alt'))
+        eq_(self.img.file.url, img.attr('src'))
 
     def test_caption(self):
         """Give the image a caption."""
-        img_div = pq_img(self.p, '[[Image:img file.png|my caption]]')
+        self.img.title = 'img test.jpg'
+        self.img.save()
+        img_div = pq_img(self.p, '[[Image:img test.jpg|my caption]]')
         img = img_div('img')
         caption = img_div.text()
 
-        eq_('/img/wiki_up/img%20file.png', img.attr('src'))
+        eq_(self.img.file.url, img.attr('src'))
         eq_('my caption', img.attr('alt'))
         eq_('my caption', caption)
 
     def test_page_link(self):
         """Link to a wiki page."""
-        img_div = pq_img(self.p, '[[Image:file.png|page=Installing Firefox]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|page=Installing Firefox]]')
         img_a = img_div('a')
         img = img_a('img')
         caption = img_div.text()
 
-        eq_('file.png', img.attr('alt'))
-        eq_('file.png', caption)
-        eq_('/img/wiki_up/file.png', img.attr('src'))
+        eq_('test.jpg', img.attr('alt'))
+        eq_('test.jpg', caption)
+        eq_(self.img.file.url, img.attr('src'))
         eq_('/en-US/kb/installing-firefox', img_a.attr('href'))
 
     def test_page_link_edit(self):
         """Link to a nonexistent wiki page."""
-        img_div = pq_img(self.p, '[[Image:file.png|page=Article List]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|page=Article List]]')
         img_a = img_div('a')
         img = img_a('img')
         caption = img_div.text()
 
-        eq_('file.png', img.attr('alt'))
-        eq_('file.png', caption)
-        eq_('/img/wiki_up/file.png', img.attr('src'))
+        eq_('test.jpg', img.attr('alt'))
+        eq_('test.jpg', caption)
+        eq_(self.img.file.url, img.attr('src'))
         eq_('/kb/new?title=Article+List', img_a.attr('href'))
 
     def test_page_link_caption(self):
         """Link to a wiki page with caption."""
         img_div = pq_img(self.p,
-                         '[[Image:file.png|page=Article List|my caption]]')
+                         '[[Image:test.jpg|page=Article List|my caption]]')
         img_a = img_div('a')
         img = img_a('img')
         caption = img_div.text()
 
         eq_('my caption', img.attr('alt'))
         eq_('my caption', caption)
-        eq_('/img/wiki_up/file.png', img.attr('src'))
+        eq_(self.img.file.url, img.attr('src'))
         eq_('/kb/new?title=Article+List', img_a.attr('href'))
 
     def test_link(self):
         """Link to an external page."""
-        img_div = pq_img(self.p, '[[Image:file.png|link=http://example.com]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|link=http://example.com]]')
         img_a = img_div('a')
         img = img_a('img')
         caption = img_div.text()
 
-        eq_('file.png', img.attr('alt'))
-        eq_('file.png', caption)
-        eq_('/img/wiki_up/file.png', img.attr('src'))
+        eq_('test.jpg', img.attr('alt'))
+        eq_('test.jpg', caption)
+        eq_(self.img.file.url, img.attr('src'))
         eq_('http://example.com', img_a.attr('href'))
 
     def test_link_caption(self):
         """Link to an external page with caption."""
         img_div = pq_img(self.p,
-                         '[[Image:file.png|link=http://example.com|caption]]')
+                         '[[Image:test.jpg|link=http://example.com|caption]]')
         img_a = img_div('a')
         img = img_div('img')
         caption = img_div.text()
 
         eq_('caption', img.attr('alt'))
         eq_('caption', caption)
-        eq_('/img/wiki_up/file.png', img.attr('src'))
+        eq_(self.img.file.url, img.attr('src'))
         eq_('http://example.com', img_a.attr('href'))
 
     def test_link_align(self):
         """Link with align."""
         img_div = pq_img(self.p,
-                  '[[Image:file.png|link=http://site.com|align=left]]')
+                  '[[Image:test.jpg|link=http://site.com|align=left]]')
         eq_('img align-left', img_div.attr('class'))
 
     def test_link_align_invalid(self):
         """Link with invalid align."""
         img_div = pq_img(self.p,
-                         '[[Image:file.png|link=http://example.ro|align=inv]]')
+                         '[[Image:test.jpg|link=http://example.ro|align=inv]]')
         eq_('img', img_div.attr('class'))
 
     def test_link_valign(self):
         """Link with valign."""
         img = pq_img(
             self.p,
-            '[[Image:file.png|link=http://example.com|valign=top]]', 'img')
+            '[[Image:test.jpg|link=http://example.com|valign=top]]', 'img')
         eq_('vertical-align: top;', img.attr('style'))
 
     def test_link_valign_invalid(self):
         """Link with invalid valign."""
         img = pq_img(
             self.p,
-            '[[Image:file.png|link=http://example.com|valign=off]]', 'img')
+            '[[Image:test.jpg|link=http://example.com|valign=off]]', 'img')
         eq_(None, img.attr('style'))
 
     def test_alt(self):
         """Image alt attribute is overriden but caption is not."""
-        img_div = pq_img(self.p, '[[Image:img.png|alt=my alt|my caption]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|alt=my alt|my caption]]')
         img = img_div('img')
         caption = img_div.text()
 
@@ -336,7 +400,7 @@ class TestWikiImageTags(TestCase):
 
     def test_alt_empty(self):
         """Image alt attribute can be empty."""
-        img = pq_img(self.p, '[[Image:img.png|alt=|my caption]]', 'img')
+        img = pq_img(self.p, '[[Image:test.jpg|alt=|my caption]]', 'img')
 
         eq_('', img.attr('alt'))
 
@@ -351,7 +415,7 @@ class TestWikiImageTags(TestCase):
              "single'&quot;double"),
         )
         for alt_sent, alt_expected in unsafe_vals:
-            img_div = pq_img(self.p, '[[Image:img.png|alt=' + alt_sent + ']]')
+            img_div = pq_img(self.p, '[[Image:test.jpg|alt=' + alt_sent + ']]')
             img = img_div('img')
 
             is_true = str(img).startswith('<img alt="' + alt_expected + '"')
@@ -360,43 +424,44 @@ class TestWikiImageTags(TestCase):
 
     def test_width(self):
         """Image width attribute set."""
-        img_div = pq_img(self.p, '[[Image:img.png|width=10]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|width=10]]')
         img = img_div('img')
 
         eq_('10', img.attr('width'))
 
     def test_width_invalid(self):
         """Invalid image width attribute set to auto."""
-        img_div = pq_img(self.p, '[[Image:img.png|width=invalid]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|width=invalid]]')
         img = img_div('img')
 
         eq_(None, img.attr('width'))
 
     def test_height(self):
         """Image height attribute set."""
-        img_div = pq_img(self.p, '[[Image:img.png|height=10]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|height=10]]')
         img = img_div('img')
 
         eq_('10', img.attr('height'))
 
     def test_height_invalid(self):
         """Invalid image height attribute set to auto."""
-        img_div = pq_img(self.p, '[[Image:img.png|height=invalid]]')
+        img_div = pq_img(self.p, '[[Image:test.jpg|height=invalid]]')
         img = img_div('img')
 
         eq_(None, img.attr('height'))
 
     def test_frameless(self):
         """Image container has frameless class if specified."""
-        img = pq_img(self.p, '[[Image:img.png|frameless|caption]]', 'img')
+        img = pq_img(self.p, '[[Image:test.jpg|frameless|caption]]', 'img')
         eq_('frameless', img.attr('class'))
         eq_('caption', img.attr('alt'))
-        eq_('/img/wiki_up/img.png', img.attr('src'))
+        eq_(self.img.file.url, img.attr('src'))
 
     def test_frameless_link(self):
         """Image container has frameless class and link if specified."""
-        img_a = pq_img(
-            self.p, '[[Image:img.png|frameless|page=Installing Firefox]]', 'a')
+        img_a = pq_img(self.p,
+                       '[[Image:test.jpg|frameless|page=Installing Firefox]]',
+                       'a')
         img = img_a('img')
         eq_('frameless', img.attr('class'))
         eq_('/en-US/kb/installing-firefox', img_a.attr('href'))

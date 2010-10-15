@@ -14,7 +14,7 @@ from tower import ugettext_lazy as _lazy
 
 from gallery.models import Video
 import sumo.parser
-from sumo.parser import ALLOWED_ATTRIBUTES
+from sumo.parser import ALLOWED_ATTRIBUTES, get_object_fallback
 
 
 BLOCK_LEVEL_ELEMENTS = ['table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5',
@@ -343,16 +343,18 @@ class WikiParser(sumo.parser.WikiParser):
         short_title = params.pop(0)
         template_title = 'Template:' + short_title
 
-        try:
-            t = Document.objects.get(locale=self.locale, title=template_title,
-                                     is_template=True)
-        except Document.DoesNotExist:
-            return _lazy('The template "%s" does not exist.') % short_title
+        message = _lazy('The template "%s" does not exist.') % short_title
+        t = get_object_fallback(Document, template_title,
+                                           self.locale, message,
+                                           is_template=True)
+        if isinstance(t, basestring):
+            return t
 
         c = t.current_revision.content.rstrip()
         # Note: this completely ignores the allowed attributes passed to the
         # WikiParser.parse() method, and defaults to ALLOWED_ATTRIBUTES
-        parsed = parser.parse(c, show_toc=False, attributes=ALLOWED_ATTRIBUTES)
+        parsed = parser.parse(c, show_toc=False, attributes=ALLOWED_ATTRIBUTES,
+                              locale=self.locale)
 
         # Special case for inline templates
         if '\n' not in c:
@@ -367,10 +369,10 @@ class WikiParser(sumo.parser.WikiParser):
     # parser.
     def _hook_video(self, parser, space, title):
         """Handles [[Video:video title]] with locale from parser."""
-        try:
-            v = Video.objects.get(locale=self.locale, title=title)
-        except Video.DoesNotExist:
-            return _lazy('The video "%s" does not exist.') % title
+        message = _lazy('The video "%s" does not exist.') % title
+        v = get_object_fallback(Video, title, self.locale, message)
+        if isinstance(v, basestring):
+            return v
 
         sources = []
         if v.webm:

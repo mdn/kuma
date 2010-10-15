@@ -341,7 +341,8 @@ class Revision(ModelBase):
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
             from wiki.parser import wiki_to_html
-            self.document.html = wiki_to_html(self.content)
+            locale = self.document.locale
+            self.document.html = wiki_to_html(self.content, locale)
             self.document.current_revision = self
             self.document.save()
 
@@ -352,7 +353,7 @@ class Revision(ModelBase):
     @property
     def content_parsed(self):
         from wiki.parser import wiki_to_html
-        return wiki_to_html(self.content)
+        return wiki_to_html(self.content, self.document.locale)
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

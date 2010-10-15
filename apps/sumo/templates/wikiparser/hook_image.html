@@ -19,7 +19,7 @@
 {% endif %}
 
 <img {% if not has_frame %}class="frameless"{% endif %}
-  src="{{ img_path }}"
+  src="{{ image.file.url }}"
   alt="{% if 'alt' in params %}{{ params['alt'] }}{% else %}{{ caption }}{% endif %}"
   title="{{ caption }}"
   {% if params['width'] and params['width']|int(None) %}

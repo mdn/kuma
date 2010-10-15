@@ -66,9 +66,9 @@ def urlparams(url_, hash=None, **query):
 
 
 @register.filter
-def wiki_to_html(wiki_markup):
+def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
     """Wiki Markup -> HTML jinja2.Markup object"""
-    return jinja2.Markup(sumo.parser.wiki_to_html(wiki_markup))
+    return jinja2.Markup(sumo.parser.wiki_to_html(wiki_markup, locale=locale))
 
 
 class Paginator(object):
