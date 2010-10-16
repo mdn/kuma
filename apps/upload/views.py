@@ -7,15 +7,17 @@ from django.db.models import get_model
 from django.http import (HttpResponse, HttpResponseNotFound,
                          HttpResponseBadRequest)
 
+from commonware.decorators import xframe_sameorigin
 from tower import ugettext as _
 
 from access.decorators import has_perm_or_owns_or_403
-from .models import ImageAttachment
-from .utils import upload_imageattachment, FileTooLargeError
+from upload.models import ImageAttachment
+from upload.utils import upload_imageattachment, FileTooLargeError
 
 
 @login_required
 @require_POST
+@xframe_sameorigin
 def up_image_async(request, model_name, object_pk):
     """Upload all images in request.FILES."""
 
@@ -52,6 +54,7 @@ def up_image_async(request, model_name, object_pk):
 
 @login_required
 @require_POST
+@xframe_sameorigin
 @has_perm_or_owns_or_403('upload.image_upload', 'creator',
                          (ImageAttachment, 'id__iexact', 'image_id'),
                          (ImageAttachment, 'id__iexact', 'image_id'))

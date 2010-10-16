@@ -32,9 +32,11 @@ class Media(ModelBase):
 
 class Image(Media):
     creator = models.ForeignKey(User, related_name='gallery_images')
-    file = models.ImageField(upload_to=settings.GALLERY_IMAGE_PATH)
+    file = models.ImageField(upload_to=settings.GALLERY_IMAGE_PATH,
+                             max_length=settings.MAX_FILEPATH_LENGTH)
     thumbnail = models.ImageField(
-        upload_to=settings.GALLERY_IMAGE_THUMBNAIL_PATH, null=True)
+        upload_to=settings.GALLERY_IMAGE_THUMBNAIL_PATH, null=True,
+        max_length=settings.MAX_FILEPATH_LENGTH)
 
     def get_absolute_url(self):
         return reverse('gallery.media', args=['image', self.id])
@@ -46,11 +48,15 @@ class Image(Media):
 
 class Video(Media):
     creator = models.ForeignKey(User, related_name='gallery_videos')
-    webm = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True)
-    ogv = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True)
-    flv = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True)
+    webm = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True,
+                            max_length=settings.MAX_FILEPATH_LENGTH)
+    ogv = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True,
+                           max_length=settings.MAX_FILEPATH_LENGTH)
+    flv = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True,
+                           max_length=settings.MAX_FILEPATH_LENGTH)
     thumbnail = models.ImageField(
-        upload_to=settings.GALLERY_VIDEO_THUMBNAIL_PATH, null=True)
+        upload_to=settings.GALLERY_VIDEO_THUMBNAIL_PATH, null=True,
+        max_length=settings.MAX_FILEPATH_LENGTH)
 
     def get_absolute_url(self):
         return reverse('gallery.media', args=['video', self.id])

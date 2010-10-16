@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 
 from tower import ugettext_lazy as _lazy
 
@@ -18,11 +19,25 @@ MSG_DESCRIPTION_LONG = _lazy(
     'Please keep the length of your description to %(limit_value)s '
     'characters or less. It is currently %(show_value)s characters.')
 MSG_IMAGE_REQUIRED = _lazy(u'You have not selected an image to upload.')
+MSG_IMAGE_LONG = _lazy(
+    'Please keep the length of your image filename to %(max)s '
+    'characters or less. It is currently %(length)s characters.')
+MSG_WEBM_LONG = _lazy(
+    'Please keep the length of your webm filename to %(max)s '
+    'characters or less. It is currently %(length)s characters.')
+MSG_OGV_LONG = _lazy(
+    'Please keep the length of your ogv filename to %(max)s '
+    'characters or less. It is currently %(length)s characters.')
+MSG_FLV_LONG = _lazy(
+    'Please keep the length of your flv filename to %(max)s '
+    'characters or less. It is currently %(length)s characters.')
 
 
 class ImageUploadForm(forms.ModelForm):
     """Image upload form."""
-    file = forms.ImageField(error_messages={'required': MSG_IMAGE_REQUIRED})
+    file = forms.ImageField(error_messages={'required': MSG_IMAGE_REQUIRED,
+                                            'max_length': MSG_IMAGE_LONG},
+                            max_length=settings.MAX_FILENAME_LENGTH)
     title = StrippedCharField(
         min_length=5, max_length=255,
         error_messages={'required': MSG_TITLE_REQUIRED,
@@ -40,9 +55,15 @@ class ImageUploadForm(forms.ModelForm):
 
 class VideoUploadForm(forms.ModelForm):
     """Video upload form."""
-    webm = forms.FileField(required=False)
-    ogv = forms.FileField(required=False)
-    flv = forms.FileField(required=False)
+    webm = forms.FileField(required=False,
+                           error_messages={'max_length': MSG_WEBM_LONG},
+                           max_length=settings.MAX_FILENAME_LENGTH)
+    ogv = forms.FileField(required=False,
+                          error_messages={'max_length': MSG_OGV_LONG},
+                          max_length=settings.MAX_FILENAME_LENGTH)
+    flv = forms.FileField(required=False,
+                          error_messages={'max_length': MSG_FLV_LONG},
+                          max_length=settings.MAX_FILENAME_LENGTH)
     title = StrippedCharField(
         min_length=5, max_length=255,
         error_messages={'required': MSG_TITLE_REQUIRED,

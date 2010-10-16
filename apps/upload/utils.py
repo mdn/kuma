@@ -3,9 +3,9 @@ from django.core.files import File
 
 from tower import ugettext_lazy as _lazy
 
-from .forms import ImageAttachmentUploadForm
-from .models import ImageAttachment
-from .tasks import generate_image_thumbnail, _scale_dimensions
+from upload.forms import ImageAttachmentUploadForm
+from upload.models import ImageAttachment
+from upload.tasks import generate_image_thumbnail, _scale_dimensions
 
 
 def check_file_size(f, max_allowed_size):

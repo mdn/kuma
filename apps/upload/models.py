@@ -9,7 +9,8 @@ from sumo.helpers import reverse
 
 class ImageAttachment(models.Model):
     """An image attached to an object using a generic foreign key"""
-    file = models.ImageField(upload_to=settings.IMAGE_UPLOAD_PATH)
+    file = models.ImageField(upload_to=settings.IMAGE_UPLOAD_PATH,
+                             max_length=settings.MAX_FILEPATH_LENGTH)
     thumbnail = models.ImageField(upload_to=settings.THUMBNAIL_UPLOAD_PATH,
                                   null=True)
     creator = models.ForeignKey(User, related_name='image_attachments')

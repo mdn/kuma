@@ -413,6 +413,13 @@ SEARCH_SUMMARY_LENGTH_MULTIPLIER = 1.3
 # results, in minutes.
 SEARCH_CACHE_PERIOD = 15
 
+# Maximum length of the filename. Forms should use this and raise
+# ValidationError if the length is exceeded.
+# @see http://code.djangoproject.com/ticket/9893
+# Columns are 250 but this leaves 50 chars for the upload_to prefix
+MAX_FILENAME_LENGTH = 200
+MAX_FILEPATH_LENGTH = 250
+
 # Auth and permissions related constants
 # TODO: Once we can log in through Kitsune, change this.
 LOGIN_URL = '/tiki-login.php'

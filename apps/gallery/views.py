@@ -8,6 +8,7 @@ from django.http import (HttpResponse, HttpResponseNotFound,
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
+from commonware.decorators import xframe_sameorigin
 import jingo
 from tower import ugettext as _
 
@@ -59,6 +60,7 @@ def media(request, media_id, media_type='image'):
 
 @login_required
 @require_POST
+@xframe_sameorigin
 def up_media_async(request, media_type='image'):
     """Upload images or videos from request.FILES."""
 
@@ -83,6 +85,7 @@ def up_media_async(request, media_type='image'):
 
 @login_required
 @require_POST
+@xframe_sameorigin
 def del_media_async(request, media_id, media_type='image'):
     """Delete a media object given its id."""
     model_class = ContentType.objects.get(model=media_type).model_class()
