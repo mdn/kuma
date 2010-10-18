@@ -25,8 +25,10 @@ urlpatterns = patterns('',
     (r'^admin/', include('kadmin.urls')),
 
     # Javascript translations.
-    url('^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
+    url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
         {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
+
+    url(r'^', include('dashboards.urls')),
 )
 
 # Handle 404 and 500 errors
