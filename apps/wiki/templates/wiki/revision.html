@@ -1,5 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
 {% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
@@ -9,75 +10,62 @@
 {% set classes = 'document' %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <hgroup>
-    <h1>{{ _('Revision {num}')|f(num=revision.id) }}</h1>
-    <h2>{{ document.title }}</h2>
-  </hgroup>
-  <div class="revision-info">
-    <ul>
-      <li>
-        <mark>{{ _('Created:') }}</mark>
-        <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
-      </li>
-      <li>
-        <mark>{{ _('Creator:') }}</mark>
-        <span>{{ revision.creator }}</span>
-      </li>
-      <li>
-        <mark>{{ _('Is reviewed?') }}</mark>
-        <span>{{ revision.reviewed != None }}</span>
-      </li>
-      {% if revision.reviewed %}
+  <article id="wiki-doc" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1 class="title">{{ document.title }}</h1>
+    <div class="revision-info">
+      <h2>{{ _('Revision {num}')|f(num=revision.id) }}</h2>
+      <ul>
         <li>
-          <mark>{{ _('Reviewed:') }}</mark>
+          <mark>{{ _('Created:') }}</mark>
           <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
         </li>
         <li>
-          <mark>{{ _('Reviewed by:') }}</mark>
-          <span>{{ revision.reviewer }}</span>
+          <mark>{{ _('Creator:') }}</mark>
+          <span>{{ revision.creator }}</span>
         </li>
         <li>
-          <mark>{{ _('Is approved?') }}</mark>
-          <span>{{ revision.is_approved }}</span>
+          <mark>{{ _('Is reviewed?') }}</mark>
+          <span>{{ revision.reviewed != None }}</span>
         </li>
-        <li>
-          <mark>{{ _('Is current revision?') }}</mark>
-          <span>{{ revision == document.current_revision }}</span>
-        </li>
-      {% endif %}
-    </ul>
-  </div>
-  <div id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
-    <h2>{{ _("Table of Contents") }}</h2>
-    <ol></ol>
-  </div>
-  <div id="support-for">
-    <div>
-      <h2>{{ _("Support for:") }}</h2>
-      <select id="os" data-oses="{{ oses_json }}" class="enable-if-js" disabled="disabled">
-        {% for _, name, slug in oses %}
-          <option value="{{ slug }}">{{ name }}</option>
-        {% endfor %}
-      </select>
-      <select id="browser" data-browsers="{{ browsers_json }}" data-version-groups="{{ version_group_json }}" class="enable-if-js" disabled="disabled">
-        {% for label, options in browsers %}
-          <optgroup label="{{ label }}">
-            {% for option in options %}
-              <option value="{{ option.slug }}">{{ option.name }}</option>
-            {% endfor %}
-          </optgroup>
-        {% endfor %}
-      </select>
+        {% if revision.reviewed %}
+          <li>
+            <mark>{{ _('Reviewed:') }}</mark>
+            <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Reviewed by:') }}</mark>
+            <span>{{ revision.reviewer }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Is approved?') }}</mark>
+            <span>{{ revision.is_approved }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Is current revision?') }}</mark>
+            <span>{{ revision == document.current_revision }}</span>
+          </li>
+        {% endif %}
+      </ul>
     </div>
-  </div>
-  <div id="doc-content">
-    {{ revision.content_parsed|safe }}
-  </div>
+    <section id="doc-summary">
+      {{ document.current_revision.summary }}
+    </section>
+    <section id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
+      <h1>{{ _("Table of Contents") }}</h1>
+      <ol></ol>
+    </section>
+    <div id="doc-content">
+      {{ revision.content_parsed|safe }}
+    </div>
+  </article>
 {% endblock %}
 
-{% block sidebar %}
+
+{% block side %}
+  {{ document_tabs(document, document.parent, user, '', settings) }}
+  {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}

@@ -16,17 +16,19 @@
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Accept this Translation') }}{% else %}{{ _('Accept this Revision') }}{% endif %}</legend>
-        {# TODO: text for below #}
-        <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        {% if not document.parent %}
-          {{ form.significance|safe }}
-        {% endif %}
-        <div class="message">
-          <label for="id-approve-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
-          <textarea id="id-approve-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
+        <div class="wrap">
+          {# TODO: text for below #}
+          <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          {% if not document.parent %}
+            {{ form.significance|safe }}
+          {% endif %}
+          <div class="message">
+            <label for="id-approve-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
+            <textarea id="id-approve-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
+          </div>
+          <input type="submit" name="approve" value="{{ _('Accept') }}">
+          <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
         </div>
-        <input type="submit" name="approve" value="{{ _('Accept') }}">
-        <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
       </fieldset>
     </form>
 
@@ -34,14 +36,16 @@
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Reject this Translation') }}{% else %}{{ _('Reject this Revision') }}{% endif %}</legend>
-        {# TODO: text for below #}
-        <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <div class="message">
-          <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
-          <textarea id="id-reject-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
+        <div class="wrap">
+          {# TODO: text for below #}
+          <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="message">
+            <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
+            <textarea id="id-reject-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>
+          </div>
+          <input type="submit" name="reject" value="{{ _('Reject') }}">
+          <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
         </div>
-        <input type="submit" name="reject" value="{{ _('Reject') }}">
-        <a class="cancel" href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
       </fieldset>
     </form>
   </div>

@@ -379,7 +379,7 @@ html.no-js .hide-if-no-js {
     display: none;
 }
 
-#toc ol {
+article #toc ol li {
     list-style-type: decimal;
 }
 
@@ -394,24 +394,24 @@ article #toc ol li {
 }
 
 #toc ol ol {
-    list-style-type: upper-alpha;
     margin: 0 0 0 20px;
 }
 
 #toc ol ol li {
     background: none;
+    list-style-type: upper-alpha;
     padding: 0;
 }
 
-#toc ol ol ol {
+#toc ol ol ol li {
     list-style-type: lower-alpha;
 }
 
-#toc ol ol ol ol {
+#toc ol ol ol ol li {
     list-style-type: decimal;
 }
 
-#toc ol ol ol ol ol {
+#toc ol ol ol ol ol li {
     list-style-type: upper-alpha;
 }
 
@@ -570,8 +570,8 @@ article.form-page form li label {
     display: inline;
 }
 
-article.form-page input[type="text"],
-article.form-page textarea {
+article.main input[type="text"],
+article.main textarea {
     background: -moz-linear-gradient(top, #deebf4, #deebf4 2px, #fff 3px, #fff 100%);
     background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(5%, #deebf4), color-stop(10%, #fff));
     border: solid 1px #97cbf7;
@@ -584,23 +584,23 @@ article.form-page textarea {
     width: 325px;
 }
 
-article.form-page textarea {
+article.main textarea {
     background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(0.5%, #deebf4), color-stop(1%, #fff));
     height: 150px;
     width: 700px;
 }
 
-article.form-page textarea[name="content"] {
+article.main textarea[name="content"] {
     height: 500px;
 }
 
-article.form-page .forum-editor {
+article.main .forum-editor {
     float: left;
     padding: 0;
     width: 711px;
 }
 
-article.form-page .forum-editor-tools {
+article.main .forum-editor-tools {
     background: #daedf6;
     background: -moz-linear-gradient(top, #e7f6fd, #daedf6);
     background: -webkit-gradient(linear, center top, center bottom, from(#e7f6fd), to(#daedf6));
@@ -613,13 +613,13 @@ div.forum-editor-tools span.separator {
     top: -6px;
 }
 
-article.form-page div.submit {
+article.main div.submit {
     clear: both;
     padding: 10px 0 0;
 }
 
-article.form-page input[type="button"],
-article.form-page input[type="submit"],
+article.main input[type="button"],
+article.main input[type="submit"],
 #showfor-modal button {
     border: none;
     background: #0063d8;
@@ -658,6 +658,11 @@ div.localized {
     display: inline-block;
     vertical-align: top;
     width: 49%;
+}
+
+div.approved p,
+div.localized p {
+    min-height: 35px;
 }
 
 ul.description h3,
@@ -839,9 +844,28 @@ summary.h2 {
 #revision-list div.compare input {
     background: none;
     border: none;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
     color: #447bc4;
     cursor: pointer;
     padding: 0;
+    text-shadow: none;
+}
+
+/* Revision page */
+div.revision-info {
+    background: #f0f0f0;
+    border: solid 1px #ccc;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    margin: 10px 20px 10px 0;
+    padding: 10px 20px;
+}
+
+div.revision-info li {
+    list-style-position: inside;
 }
 
 /* Review revision */
@@ -867,6 +891,10 @@ body.review #content-fields textarea {
     height: 250px;
 }
 
+body.review #content-fields div.approved textarea {
+    margin: 0;
+}
+
 .js form.pop-in {
     display: none;
 }
@@ -880,7 +908,6 @@ form.pop-in legend {
     color: #4B4740;
     left: 50%;
     margin-left: -220px;
-    padding: 20px;
     position: fixed;
     text-align: left;
     top: 100px;
@@ -891,6 +918,27 @@ form.pop-in legend {
 #approve-modal.active,
 #reject-modal.active {
     display: block;
+}
+
+#approve-modal legend,
+#reject-modal legend {
+    width: 370px;
+}
+
+#approve-modal li {
+    list-style: none;
+    padding: 2px 5px;
+}
+
+#approve-modal div.message,
+#reject-modal div.message {
+    margin: 10px 0;
+}
+
+#approve-modal textarea,
+#reject-modal textarea {
+    height: 100px;
+    width: 350px;
 }
 
 /* Revision diffs */

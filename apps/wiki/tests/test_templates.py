@@ -74,8 +74,8 @@ class RevisionTests(TestCaseBase):
         response = self.client.get(url)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Revision %s' % r.id, doc('#main-content hgroup h1').text())
-        eq_(d.title, doc('#main-content hgroup h2').text())
+        eq_('Revision %s' % r.id, doc('#wiki-doc h2').text())
+        eq_(d.title, doc('#wiki-doc h1.title').text())
         eq_(pq(r.content_parsed)('div').text(),
             doc('#doc-content div').text())
 
