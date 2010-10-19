@@ -1,0 +1,34 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% macro search_box(settings, id=False, prefix=None,
+                    placeholder='Search Firefox Help') %}
+  <div class="support-search"{% if id %} id="{{ id }}"{% endif %} role="search">
+    {% if prefix %}
+      {{ _(prefix) }}
+    {% endif %}
+    <form action="{{ url('search') }}" method="get">
+      <span class="wrap">
+        <input type="text" class="text" name="q" placeholder="{{ _(placeholder) }}" required="required" />
+      </span>
+      <input type="image" class="submit" src="{{ settings.MEDIA_URL }}img/btn.search.png" title="{{ _('Search') }}" />
+    </form>
+  </div>
+{% endmacro %}
+
+{% macro greeting(user, settings) %}
+  <div id="greeting">
+    {% if user.is_authenticated() %}
+      {{ _('Welcome, <span class="user">{user}</span>.')|fe(user=user) }}
+      <nav>
+        <a href="{{ profile_url(user) }}">{{ _('Profile') }}</a>
+        |
+        <a href="{{ settings.LOGOUT_URL }}">{{ _('Sign Out') }}</a>
+      </nav>
+    {% else %}
+      <p>
+        {% trans login_url=settings.LOGIN_URL, register_url=settings.REGISTER_URL %}
+          Want to contribute?<br /> <a href="{{ login_url }}">Sign In</a> or <a href="{{ register_url }}">Register</a>
+        {% endtrans %}
+      </p>
+    {% endif %}
+  </div>
+{% endmacro %}

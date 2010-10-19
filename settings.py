@@ -200,6 +200,7 @@ INSTALLED_APPS = (
     'product_details',
     'wiki',
     'kbforums',
+    'dashboards',
     'gallery',
     'customercare',
     'twitter',
@@ -299,6 +300,9 @@ MINIFY_BUNDLES = {
         'wiki': (
             'css/wiki.css',
             'css/screencast.css',
+        ),
+        'home': (
+            'css/home.css',
         ),
         'gallery': (
             'css/gallery.css',

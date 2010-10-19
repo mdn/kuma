@@ -13,7 +13,7 @@
         initActionModals();
         initDetailsTags();
 
-        if ($('body').is('.document')) { // Document page
+        if ($('body').is('.document') || $('body').is('.home')) { // Document page
             initForTags();
         }
         if ($('body').is('.translate')) { // Translate page

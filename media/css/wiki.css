@@ -273,12 +273,12 @@ div.support-search input.submit {
     padding: 3px 0;
 }
 
-#other-links {
+#quick-links {
     font-size: 13px;
     margin: 25px 0 0 20px;
 }
 
-#other-links li {
+#quick-links li {
     background: #cde6f5;
     border-radius: 10px;
     -moz-border-radius: 10px;
@@ -287,21 +287,41 @@ div.support-search input.submit {
     margin: 0 0 6px;
 }
 
-#other-links li:hover {
+#quick-links li:hover {
     background: #e6f1fb;
 }
 
-#other-links li a {
+#quick-links li.active:hover {
+    background: #4978bc;
+}
+
+#quick-links .active {
+    background: #3862a9;
+}
+
+#quick-links .active a {
+    color: #fff;
+}
+
+#quick-links li a {
     display: block;
     padding: 5px 0 5px 30px;
 }
 
-#other-links li.home a {
-    background: transparent url(../img/wiki/icons.otherlinks.png) no-repeat 6px 6px;
+#quick-links li.home a {
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px 6px;
 }
 
-#other-links li.aaq a {
-    background: transparent url(../img/wiki/icons.otherlinks.png) no-repeat 6px -21px;
+#quick-links li.aaq a {
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -21px;
+}
+
+#quick-links li.home.active a {
+    background: transparent url(../img/wiki/icons.quicklinks-selected.png) no-repeat 6px 6px;
+}
+
+#quick-links li.aaq.active a {
+    background: transparent url(../img/wiki/icons.quicklinks-selected.png) no-repeat 6px -21px;
 }
 
 .sd-module {

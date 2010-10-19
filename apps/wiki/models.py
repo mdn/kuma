@@ -23,10 +23,15 @@ SIGNIFICANCES = (
     (10, _lazy('Minor details like punctuation and spelling errors')),
     (20, _lazy("Content changes that don't require immediate translation")),
     (30, _lazy('Major content changes that will make older translations '
-               'inaccurate')))
+               'inaccurate')),
+)
 
 CATEGORIES = (
-    (1, _lazy('Troubleshooting')),)
+    (1, _lazy('Troubleshooting')),
+    (2, _lazy('How to contribute')),
+    (3, _lazy('Administration')),
+    (4, _lazy('Templates')),
+)
 
 # FF versions used to filter article searches, power {for} tags, etc.:
 #

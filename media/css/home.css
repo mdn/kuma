@@ -1,0 +1,130 @@
+#featured {
+    background: url("../img/fpo.png") no-repeat scroll right top transparent;
+    padding-right: 340px;
+    height: 270px;
+}
+
+#featured-side {
+    height: 210px;
+}
+
+#main-content {
+    background: none;
+}
+
+#featured-wrap {
+    background: url("../img/wiki/document.divider.jpg") no-repeat scroll left bottom transparent;
+    height: 270px;
+}
+
+#featured h1 {
+    font-size: 280%;
+    font-style: italic;
+    letter-spacing: -1px;
+    margin: 0 0 .5em;
+}
+
+#featured h1 mark {
+    font-style: normal;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#support-search {
+    margin: .5em 0 0 .5em;
+    width: 380px;
+}
+
+#support-search input.text {
+    width: 285px;
+}
+
+#support-search span.wrap {
+    width: 288px;
+}
+
+#featured p {
+    font-size: 108%;
+    line-height: 1.5em;
+}
+
+#main-hdr {
+    height: 60px;
+}
+
+#firefox-help {
+    padding-bottom: 0;
+}
+
+#home-content-quick, #home-content-explore {
+    float: left;
+    font-size: 14px;
+}
+
+#home-content-quick {
+    width: 260px;
+}
+
+#home-content-quick h1 {
+    font-size: 160%;
+    margin: 10px 0 .5em;
+}
+
+#home-content h1 {
+    font-size: 160%;
+    font-style: italic;
+}
+
+#home-content-quick section {
+    background: url("../img/home-bar.png") no-repeat scroll left bottom transparent;
+    padding: 25px 0 40px 20px;
+    margin-right: 20px;
+}
+
+#home-content-quick section:last-child {
+    background: none;
+}
+
+#home-content-quick ul {
+    list-style-type: none;
+}
+
+#home-content-explore {
+    border-left: 1.5px dotted #a8c4ef;
+    margin-top: 40px;
+    width: 480px;
+}
+
+#home-content-explore h1 {
+    margin-left: 20px;
+}
+
+#home-content-explore h2 {
+    font-size: 108%;
+    margin: .7em 0 .3em;
+}
+
+#home-content-explore section {
+    float: left;
+    margin-left: 20px;
+    width: 220px;
+}
+
+#home-content-explore ul {
+    margin-bottom: 1em;
+    padding-left: 1em;
+    text-indent: -2px;
+}
+
+#home-content-explore ul li {
+    padding: 3px 0;
+}
+
+#home-content-explore ul a {
+    color: #444;
+}
+
+#home-content-explore ul a:hover {
+    color: #447bc4;
+    text-decoration: underline;
+}

@@ -68,13 +68,31 @@
   </section>
 {%- endmacro %}
 
-{% macro other_links() -%}
-  <nav id="other-links">
+{% macro document_notifications(document, user) -%}
+  {% if user.is_authenticated() %}
+    <div id="doc-watch">
+      {% if is_watching(document, user) %}
+        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <input type="submit" class="submit" value="{{ _('Unsubscribe from edit notifications') }}" />
+        </form>
+      {% else %}
+        <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <input type="submit" class="submit" value="{{ _('Subscribe to edit notifications') }}" />
+        </form>
+      {% endif %}
+    </div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro quick_links(active=0) -%}
+  <nav id="quick-links">
     <ul>
-      <li class="home">
-        <a href="{{ url('wiki.home') }}">{{ _('Firefox Help Home') }}</a>
+      <li class="home {{ 'active' if active == 1 }}">
+        <a href="{{ url('home') }}">{{ _('Firefox Help Home') }}</a>
       </li>
-      <li class="aaq">
+      <li class="aaq {{ 'active' if active == 2 }}">
         <a href="{{ url('questions.new_question') }}">{{ _('Ask A Question') }}</a>
       </li>
     </ul>

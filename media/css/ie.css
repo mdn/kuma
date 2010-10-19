@@ -48,3 +48,31 @@ div.ans-attachments div.attachment {
 #check-your-plugins {
     border-top: solid 1px #f0f0f0;
 }
+
+
+/* Home page */
+#support-search input.text {
+    border: 0; /* IE7 */
+}
+
+
+/* IE6 only */
+#quick-links li {
+    _height: 10px;
+}
+
+#main-sd #quick-links li a {
+    _background: none;
+}
+
+#home-content-quick section {
+    _background: none;
+}
+
+#home-content-explore section {
+    _margin-left: 10px;
+}
+
+#featured-side {
+    _height: 230px;
+}

@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs, for_contributors, document_notifications, other_links %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs, for_contributors, document_notifications, quick_links %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
 {% set classes = 'document' %}
@@ -62,15 +62,7 @@
         {{ _('Ask your question to our helpful<br /> <a href="{url}">Support Community</a>')|fe(url=url('questions.new_question')) }}
       </li>
     </ul>
-    <div class="support-search">
-      {{ _('Try Searching Instead:') }}
-      <form action="{{ url('search') }}" method="get">
-        <span class="wrap">
-          <input type="text" class="text" name="q" placeholder="{{ _('Search Firefox Help') }}" required="required" />
-        </span>
-        <input type="image" class="submit" src="{{ settings.MEDIA_URL }}img/btn.search.png" title="{{ _('Search') }}" />
-      </form>
-    </div>
+    {{ search_box(settings, id=False, prefix='Try Searching Instead:') }}
   </div>
 {% endblock %}
 
@@ -94,6 +86,6 @@
   {% endif %}
 
   {{ for_contributors() }}
-  {{ other_links() }}
+  {{ quick_links() }}
   {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}
