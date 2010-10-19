@@ -22,12 +22,12 @@
         </li>
       {% endif %}
       {% if user.is_authenticated() %}
-        {% if parent.allows_revision_by(user) or parent.allows_editing_by(user) %}
+        {% if document.allows_revision_by(user) or document.allows_editing_by(user) %}
           <li class="edit{% if active == 'edit' %} active{% endif %}">
             {% if active == 'edit' %}
               <span>{{ _('Edit Article') }}</span>
             {% else %}
-              <a href="{{ url('wiki.edit_document', parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}">{{ _('Edit Article') }}</a>
+              <a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Article') }}</a>
             {% endif %}
           </li>
         {% endif %}
