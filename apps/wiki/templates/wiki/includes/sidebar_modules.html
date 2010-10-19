@@ -9,24 +9,25 @@
         {% if active == 'article' or not document %}
           <span>{{ _('Article') }}</span>
         {% else %}
-          <a href="{{ url('wiki.document', document_slug=document.slug) }}">{{ _('Article') }}</a>
+          <a href="{{ url('wiki.document', document.slug) }}">{{ _('Article') }}</a>
         {% endif %}
       </li>
-      <li{% if active == 'discussion' %} class="active"{% endif %}>
-        {% if active == 'discussion' %}
-          <span>{{ _('Discussion') }}</span>
-        {% else %}
-        {# TODO: Insert URL. Show to everybody? #}
-          <a href="#">{{ _('Discussion') }}</a>
-        {% endif %}
-      </li>
+      {% if document %}
+        <li{% if active == 'discussion' %} class="active"{% endif %}>
+          {% if active == 'discussion' %}
+            <span>{{ _('Discussion') }}</span>
+          {% else %}
+            <a href="{{ url('wiki.discuss.threads', document.slug) }}">{{ _('Discussion') }}</a>
+          {% endif %}
+        </li>
+      {% endif %}
       {% if user.is_authenticated() %}
         {% if parent.allows_revision_by(user) or parent.allows_editing_by(user) %}
           <li class="edit{% if active == 'edit' %} active{% endif %}">
             {% if active == 'edit' %}
               <span>{{ _('Edit Article') }}</span>
             {% else %}
-              <a href="{{ url('wiki.edit_document', document_slug=parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}">{{ _('Edit Article') }}</a>
+              <a href="{{ url('wiki.edit_document', parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}">{{ _('Edit Article') }}</a>
             {% endif %}
           </li>
         {% endif %}
@@ -43,7 +44,7 @@
             <span>{{ _('Show History') }}</span>
           {% else %}
             {# TODO: Show link to all authenticated? #}
-            <a href="{% if document %}{{ url('wiki.document_revisions', document_slug=document.slug) }}{% else %}{{ url('wiki.document_revisions', document_slug=parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}{% endif %}">{{ _('Show History') }}</a>
+            <a href="{% if document %}{{ url('wiki.document_revisions', document.slug) }}{% else %}{{ url('wiki.document_revisions', parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}{% endif %}">{{ _('Show History') }}</a>
           {% endif %}
         </li>
       {% endif %}
