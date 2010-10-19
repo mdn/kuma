@@ -49,29 +49,34 @@ var Marky = {
     createFullToolbar: function(toolbarSel, textareaSel) {
         var SB = Marky.SimpleButton;
         var buttons = [
-            new SB(gettext('Bold'), '/media/img/markup/text_bold.png',
+            new SB(gettext('Bold'), '/media/img/markup/new/bold.png',
                    "'''", "'''", gettext('bold text')),
-            new SB(gettext('Italic'), '/media/img/markup/text_italic.png',
+            new SB(gettext('Italic'), '/media/img/markup/new/italic.png',
                    "''", "''", gettext('italic text')),
             new Marky.Separator(),
-            new SB(gettext('Article Link'), '/media/img/markup/page_link.png',
+            // TODO: There will be only one link button that opens a helper
+            new SB(gettext('Article Link'), '/media/img/markup/new/link.png',
                    '[[', ']]', gettext('Knowledge Base Article')),
             new SB(gettext('External Link'),
-                   '/media/img/markup/world_link.png', '[http://example.com ',
+                   '/media/img/markup/new/link.png', '[http://example.com ',
                    ']', gettext('external link')),
+            // TODO: implement media helper
+            new SB(gettext('Insert Media'),
+                  '/media/img/markup/new/image.png', '',
+                  '', gettext('media')),
             new Marky.Separator(),
             new SB(gettext('Numbered List'),
-                   '/media/img/markup/text_list_numbers.png', '# ', '',
+                   '/media/img/markup/new/ol.png', '# ', '',
                    gettext('Numbered list item'), true),
             new SB(gettext('Bulleted List'),
-                   '/media/img/markup/text_list_bullets.png', '* ', '',
+                   '/media/img/markup/new/ul.png', '* ', '',
                    gettext('Bulleted list item'), true),
             new Marky.Separator(),
-            new SB(gettext('Heading 1'), '/media/img/markup/h1.png', '=',
+            new SB(gettext('Heading 1'), '/media/img/markup/new/h1.png', '=',
                    '=', gettext('Heading 1')),
-            new SB(gettext('Heading 2'), '/media/img/markup/h2.png', '==',
+            new SB(gettext('Heading 2'), '/media/img/markup/new/h2.png', '==',
                    '==', gettext('Heading 2')),
-            new SB(gettext('Heading 3'), '/media/img/markup/h3.png', '===',
+            new SB(gettext('Heading 3'), '/media/img/markup/new/h3.png', '===',
                    '===', gettext('Heading 3')),
             new Marky.Separator(),
             new Marky.ShowForButton()
@@ -232,10 +237,10 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             // TODO: look at using a js template solution (jquery-tmpl?)
             $modal = $('<section id="showfor-modal" class="pop-in">' +
                        '<a href="#close" class="close">&#x2716;</a><h1/>' +
-                       '<div class="placeholder"/>' +
+                       '<div class="wrap"><div class="placeholder"/>' +
                        '<div class="submit"><button type="button"></button>' +
                        '<a href="#cancel" class="cancel"></a></div>' +
-                       '</section>'),
+                       '</div></section>'),
             $overlay = $('<div id="modal-overlay"></div>'),
             $placeholder = $modal.find('div.placeholder'),
             data = $.parseJSON($(this.textarea).attr('data-showfor'));

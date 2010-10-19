@@ -78,7 +78,7 @@
                     // Toggle the `open` attribute of the `details` element
                     typeof $details.attr('open') !== 'undefined' ? $details.removeAttr('open') : $details.attr('open', 'open');
                     // Toggle the additional information in the `details` element
-                    $detailsNotSummary.toggle(0);
+                    $detailsNotSummary.slideToggle();
                     $details.toggleClass('open');
                 }).keyup(function(event) {
                     if (13 === event.keyCode || 32 === event.keyCode) {
@@ -315,15 +315,17 @@
                 ev.stopPropagation();
             })
             .find('a.close')
-                .click(function(ev){
+                .click(function(e){
                     $('div.change-locale').removeClass('open');
+                    e.preventDefault();
+                    return false;
                 });
 
         // Open the modal on click of the "change" link
         $('div.change-locale a.change').click(function(ev){
             ev.preventDefault()
             $(this).closest('div.change-locale').addClass('open');
-            $('body').one('click', function(ev) {
+            $('body').one('click', function() {
                 $('div.change-locale').removeClass('open');
             });
             return false;

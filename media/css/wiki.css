@@ -22,6 +22,46 @@ ol.breadcrumbs {
     display: inline;
 }
 
+.js .pop-in {
+    border: solid 4px #1c3054;
+    font-size: 14px;
+    padding: 0;
+    position: absolute;
+    z-index: 8;
+}
+
+.js .pop-in h1,
+.js .pop-in legend {
+    background: #2d488d;
+    border-bottom: solid 2px #22366a;
+    color: #fff;
+    display: block;
+    font-family: Verdana;
+    font-size: 15px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    padding: 5px 15px;
+    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
+}
+
+.js .pop-in div.wrap {
+    padding: 15px;
+}
+
+.pop-in a.close {
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 3px;
+}
+
 /* Template Layout */
 #content {
     font-family: Georgia;
@@ -343,7 +383,7 @@ html.no-js .hide-if-no-js {
     list-style-type: decimal;
 }
 
-#toc ol li {
+article #toc ol li {
     background: transparent url(../img/wiki/list.divider.png) no-repeat left bottom;
     list-style-position: inside;
     padding: 10px 0 10px 50px;
@@ -479,58 +519,220 @@ html.no-js .hide-if-no-js {
     margin: 0 0 5px;
 }
 
+/* New / Edit / Translate Document */
+article.form-page h1 {
+    color: #303030;
+    font-size: 26px;
+}
 
-/* New / Edit Document */
-#revision-form li,
-#document-form li {
+#document-form form ul,
+#document-form div.relevant-to {
+    display: inline-block;
+    vertical-align: top;
+    width: 49%;
+}
+
+#document-form div.relevant-to ul {
+    width: 100%;
+}
+
+#revision-form form li,
+#document-form form li {
     clear: both;
     list-style: none;
     padding: 5px 0;
 }
 
-#revision-form li label,
-#document-form li label {
-    float: left;
-    width: 125px;
+#document-form div.relevant-to h2,
+article.form-page form li label {
+    color: #333;
+    display: block;
+    font-family: Verdana;
+    font-size: 13px;
+    margin: 0 0 5px;
+}
+
+#document-form div.relevant-to h2 {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 0 0;
 }
 
 #document-form li li {
+    display: inline-block;
+    padding: 2px 0;
+    width: 150px;
+}
+
+#document-form li li label {
+    color: #666;
     display: inline;
 }
 
-#revision-form input[type="text"],
-#document-form input[type="text"] {
-    width: 300px;
+article.form-page input[type="text"],
+article.form-page textarea {
+    background: -moz-linear-gradient(top, #deebf4, #deebf4 2px, #fff 3px, #fff 100%);
+    background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(5%, #deebf4), color-stop(10%, #fff));
+    border: solid 1px #97cbf7;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: #666;
+    font-size: 15px;
+    padding: 5px;
+    width: 325px;
 }
 
-#revision-form textarea,
-#document-form textarea {
-    width: 500px;
+article.form-page textarea {
+    background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(0.5%, #deebf4), color-stop(1%, #fff));
+    height: 150px;
+    width: 700px;
 }
 
-#revision-form textarea[name="content"],
-#document-form textarea[name="content"] {
+article.form-page textarea[name="content"] {
     height: 500px;
 }
 
-#document-form .forum-editor {
+article.form-page .forum-editor {
     float: left;
     padding: 0;
-    width: 500px;
+    width: 711px;
 }
 
-#document-form div.submit {
+article.form-page .forum-editor-tools {
+    background: #daedf6;
+    background: -moz-linear-gradient(top, #e7f6fd, #daedf6);
+    background: -webkit-gradient(linear, center top, center bottom, from(#e7f6fd), to(#daedf6));
+    padding: 5px 5px 0;
+}
+
+div.forum-editor-tools span.separator {
+    /* override for new editor style */
+    font-size: 24px;
+    top: -6px;
+}
+
+article.form-page div.submit {
     clear: both;
-    padding: 25px 0 0 125px;
+    padding: 10px 0 0;
+}
+
+article.form-page input[type="button"],
+article.form-page input[type="submit"],
+#showfor-modal button {
+    border: none;
+    background: #0063d8;
+    background: -moz-linear-gradient(top, #4aa9f7, #0063d8);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    color: #fff;
+    cursor: pointer;
+    font-family: Verdana;
+    margin: 0 15px 0 0;
+    padding: 3px 20px 5px;
+    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
 }
 
 #preview {
     margin: 20px 0 0;
 }
 
+/* Translate specific */
+ul.description li {
+    border-top: dotted 1px #999;
+    list-style: none;
+    padding: 5px 0;
+}
+
+ul.description li:first-child {
+    border: none;
+}
+
+div.approved,
+div.localized {
+    display: inline-block;
+    vertical-align: top;
+    width: 49%;
+}
+
+ul.description h3,
+#content-fields h3 {
+    color: #333;
+    font-family: Verdana;
+    font-size: 13px;
+    margin: 0 0 5px;
+}
+
+ul.description div.val {
+    color: #666;
+}
+
+ul.description input[type="text"] {
+    width: 330px;
+}
+
+ul.description textarea {
+    height: 100px;
+    padding: 2px;
+    width: 330px;
+}
+
+#content-fields {
+    padding: 15px 0;
+}
+
+#content-fields div.val {
+    border: solid 1px #999;
+    height: 500px;
+    overflow: auto;
+    padding: 2px;
+    width: 400px;
+}
+
+#content-fields textarea {
+    height: 500px;
+    padding: 2px;
+    width: 340px;
+}
+
+#content-fields div.approved textarea {
+    margin: 96px 0 0;
+}
+
+#content-fields .forum-editor {
+    margin: 10px 0 0;
+    padding: 0;
+    width: 345px;
+}
+
+body.translate div.significance {
+    padding: 15px 0;
+}
+
+#change-locale {
+    display: none;
+    width: 535px;
+}
+
+div.change-locale.open #change-locale {
+    display: block;
+}
+
+#change-locale li {
+    display: inline-block;
+    list-style: none;
+    width: 60px;
+}
+
 /* Headings aren't valid in <summary>s, and it makes me sad. */
 summary.h2 {
-    font-size: 2em;
+    color: #333;
+    font-size: 24px;
 }
 
 /* Revision history */
@@ -694,7 +896,7 @@ form.pop-in legend {
 /* Revision diffs */
 div.revision-diff header div {
     display: inline-block;
-    width: 458px;
+    width: 364px;
 }
 
 div.revision-diff h3 {
@@ -734,91 +936,6 @@ td.diff_header {
     background-color:#ffaaaa;
 }
 
-/* Translate article */
-body.translate #main-content h2 {
-    border-bottom: solid 1px #999;
-    margin: 20px 0 0;
-}
-
-ul.description li {
-    border-top: dotted 1px #999;
-    list-style: none;
-    padding: 5px 0;
-}
-
-ul.description li:first-child {
-    border: none;
-}
-
-div.approved,
-div.localized {
-    display: inline-block;
-    vertical-align: top;
-    width: 49%;
-}
-
-ul.description h3,
-#content-fields h3 {
-    font-weight: bold;
-}
-
-ul.description input[type="text"] {
-    width: 300px;
-}
-
-ul.description textarea {
-    height: 100px;
-    padding: 2px;
-    width: 400px;
-}
-
-#content-fields {
-    padding: 15px 0;
-}
-
-#content-fields div.val {
-    border: solid 1px #999;
-    height: 500px;
-    overflow: auto;
-    padding: 2px;
-    width: 400px;
-}
-
-#content-fields textarea {
-    height: 500px;
-    padding: 2px;
-    width: 400px;
-}
-
-#content-fields div.approved textarea {
-    margin: 30px 0 0;
-}
-
-#content-fields .forum-editor {
-    margin: 10px 0 0;
-    padding: 0;
-    width: 400px;
-}
-
-body.translate div.significance {
-    padding: 15px 0;
-}
-
-#change-locale {
-    display: none;
-    width: 510px;
-}
-
-div.change-locale.open #change-locale {
-    display: block;
-}
-
-#change-locale li {
-    display: inline-block;
-    list-style: none;
-    width: 60px;
-}
-
 /* Submit commit message modal */
 .js #submit-modal {
     display: none;
@@ -832,7 +949,6 @@ div.change-locale.open #change-locale {
     color: #4B4740;
     left: 50%;
     margin-left: -220px;
-    padding: 20px;
     position: fixed;
     text-align: left;
     top: 150px;
@@ -842,6 +958,12 @@ div.change-locale.open #change-locale {
 
 #submit-modal legend {
     font-weight: bold;
+    width: 370px;
+}
+
+#submit-modal div.comment,
+#submit-modal div.notifications {
+    margin: 10px 0;
 }
 
 #submit-modal label {
@@ -862,8 +984,12 @@ details, summary {
 /* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
 
 /* Add focus styles (for keyboard accessibility) */
-.no-details summary:hover, .no-details summary:focus {
-    background: #ddd;
+.no-details summary:focus {
+    outline: dotted 1px;
+}
+
+.no-details summary:hover {
+    background-color: #e6f1fb;
 }
 
 /* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
@@ -878,16 +1004,17 @@ details, summary {
 
 /* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it’s a clickable element */
 .no-details details summary {
-    display: block;
+    border-bottom: solid 1px #cadaeb;
     cursor: pointer;
+    display: block;
+    margin: 10px 0;
 }
 
-.no-details details summary:before {
-    margin-right: .5em;
-    content: '\25B8';
+.no-details details summary {
+    background: transparent url(../img/wiki/bkg.collapsibles.png) no-repeat 5px 5px;
+    padding: 0 0 0 30px;
 }
 
-.no-details details.open summary:before {
-    margin-right: .5em;
-    content: '\25BE';
+.no-details details.open summary {
+    background-position: 5px -45px;
 }

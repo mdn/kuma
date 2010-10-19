@@ -2,18 +2,21 @@
 <div id="submit-modal" class="pop-in">
   <fieldset>
     <legend>{{ _('Submit Your Changes') }}</legend>
-    <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    <div class="comment">
-      <label for="id_comment">{{ _('Briefly describe your changes:') }}</label>
-      {{ revision_form.comment|safe }}
+    <div class="wrap">
+      {# TODO: text for below #}
+      <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div class="comment">
+        <label for="id_comment">{{ _('Briefly describe your changes:') }}</label>
+        {{ revision_form.comment|safe }}
+      </div>
+      <div class="notifications">
+        <label>
+          <input type="checkbox" name="notify-future-changes" value="Yes" />
+          {{ _('Notify me of any future changes to this page') }}
+        </label>
+      </div>
+      <input type="submit" value="{{ _('Submit') }}">
+      <a class="cancel" href="#cancel">{{ _('Cancel') }}</a>
     </div>
-    <div class="notifications">
-      <label>
-        <input type="checkbox" name="notify-future-changes" value="Yes" />
-        {{ _('Notify me of any future changes to this page') }}
-      </label>
-    </div>
-    <input type="submit" name="approve" value="{{ _('Accept') }}">
-    <a class="cancel" href="#cancel">{{ _('Cancel') }}</a>
   </fieldset>
 </div>

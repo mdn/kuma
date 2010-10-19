@@ -540,14 +540,15 @@ div.forum-editor-tools img {
 div.forum-editor-tools span.separator {
     border-left: solid 1px #ddd;
     font-size: 14px;
-    margin: 0 0.8em 0 0.6em;
+    margin: 0 8px 0 6px;
     position: relative;
     top: -3px;
 }
 
 div.forum-editor-tools a.markup-toolbar-link {
+    padding: 0 6px;
     position: relative;
-    top: -3px;
+    top: -10px;
 }
 
 img.markup-toolbar-button {
@@ -559,16 +560,11 @@ img.markup-toolbar-button {
     display: block;
     left: 50%;
     margin-left: -260px;
-    padding: 20px;
     position: fixed;
     text-align: left;
     top: 100px;
     width: 480px;
     z-index: 10;
-}
-
-#showfor-modal h1 {
-    font-size: 20px;
 }
 
 #showfor-modal h2 {

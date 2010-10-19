@@ -16,6 +16,7 @@
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Accept this Translation') }}{% else %}{{ _('Accept this Revision') }}{% endif %}</legend>
+        {# TODO: text for below #}
         <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         {% if not document.parent %}
           {{ form.significance|safe }}
@@ -33,6 +34,7 @@
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Reject this Translation') }}{% else %}{{ _('Reject this Revision') }}{% endif %}</legend>
+        {# TODO: text for below #}
         <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         <div class="message">
           <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>

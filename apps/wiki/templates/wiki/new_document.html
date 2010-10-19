@@ -8,32 +8,45 @@
 {% set classes = 'new' %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <h1>{{ _('Create a New Knowledge Base Article') }}</h1>
-  <div id="document-form">
-    <form action="" method="post">
-      {{ csrf() }}
+  <article id="edit-document" class="main form-page">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1>{{ _('Create a New Knowledge Base Article') }}</h1>
+    <div id="document-form">
       {{ errorlist(document_form) }}
       {{ errorlist(revision_form) }}
-      <ul>
-        {{ document_form.as_ul()|safe }}
-        {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
-          <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
-        {% endfor %}
-        <li>
-          {{ revision_form.content.label_tag()|safe }}
-          <div class="forum-editor">
-            <div class="forum-editor-tools"></div>
-            {{ revision_form.content|safe }}
-          </div>
-        </li>
-      </ul>
-      {{ revision_form.hidden_fields()|join|safe }}
-      {% include 'wiki/includes/submit_revision_for_review.html' %}
-      <div id="preview"></div>
-    </form>
-  </div>
+      <form action="" method="post">
+        {{ csrf() }}
+        <ul>
+          {% for field in document_form if field.name != 'firefox_versions' and field.name != 'operating_systems' %}
+            <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
+          {% endfor %}
+        </ul>
+        <div class="relevant-to">
+          <h2>{{ _('Relevant to:') }}</h2>
+          <ul>
+            <li>{{ document_form.firefox_versions.label_tag()|safe }}{{ document_form.firefox_versions|safe }}</li>
+            <li>{{ document_form.operating_systems.label_tag()|safe }}{{ document_form.operating_systems|safe }}</li>
+          </ul>
+        </div>
+        <ul>
+          {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
+            <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
+          {% endfor %}
+          <li>
+            {{ revision_form.content.label_tag()|safe }}
+            <div class="forum-editor">
+              <div class="forum-editor-tools"></div>
+              {{ revision_form.content|safe }}
+            </div>
+          </li>
+        </ul>
+        {{ revision_form.hidden_fields()|join|safe }}
+        {% include 'wiki/includes/submit_revision_for_review.html' %}
+        <div id="preview"></div>
+      </form>
+    </div>
+  </article>
 {% endblock %}

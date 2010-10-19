@@ -153,7 +153,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > form > ul.errorlist')
+        ul = doc('#document-form > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide a title.', ul('li').text())
 
@@ -165,7 +165,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > form > ul.errorlist')
+        ul = doc('#document-form > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
 
@@ -177,7 +177,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > form > ul.errorlist')
+        ul = doc('#document-form > ul.errorlist')
         eq_(1, len(ul))
         eq_('Select a valid choice. 963 is not one of the available choices.',
             ul('li').text())
@@ -190,7 +190,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > form > ul.errorlist')
+        ul = doc('#document-form > ul.errorlist')
         eq_(1, len(ul))
         eq_('Select a valid choice. 1337 is not one of the available choices.',
             ul('li').text())
