@@ -6,7 +6,6 @@ urlpatterns = patterns('dashboards.views',
     url(r'^$', redirect_to, {'url': 'home'}),
     url(r'^home/$', 'home', name='home'),
     # TODO: mobile home page
-    # TODO: live chat page
     url(r'^contributors$', 'contributors', name='dashboards.contributors'),
     # TODO: more contributor dashboard
     url(r'^localization$', 'localization', name='dashboards.localization'),

@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^kb', include('wiki.urls')),
     (r'^gallery', include('gallery.urls')),
     (r'^army-of-awesome', include('customercare.urls')),
+    (r'^chat', include('chat.urls')),
 
     # Kitsune admin (not Django admin).
     (r'^admin/', include('kadmin.urls')),

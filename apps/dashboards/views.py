@@ -14,6 +14,7 @@ from sumo.urlresolvers import reverse
 from wiki.models import Document
 from wiki.views import SHOWFOR_DATA
 
+
 HOME_DOCS = {'quick': 'Home page - Quick', 'explore': 'Home page - Explore'}
 
 

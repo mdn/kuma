@@ -205,6 +205,7 @@ INSTALLED_APPS = (
     'gallery',
     'customercare',
     'twitter',
+    'chat',
 )
 
 # Extra apps for testing
@@ -249,6 +250,7 @@ DOMAIN_METHODS = {
     'messages': [
         ('apps/forums/**', 'ignore'),
         ('apps/questions/**', 'ignore'),
+        ('apps/chat/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
@@ -319,6 +321,9 @@ MINIFY_BUNDLES = {
             'css/jqueryui/jquery.ui.theme.css',
             'css/customercare.css',
         ),
+        'chat': (
+            'css/chat.css',
+        ),
     },
     'js': {
         'common': (
@@ -358,6 +363,9 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.cookie.js',
             'js/libs/jquery.bullseye-1.0.min.js',
             'js/customercare.js',
+        ),
+        'chat': (
+            'js/chat.js',
         ),
     },
 }
@@ -500,3 +508,7 @@ TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''
 
 NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
+
+# URL of the chat server.
+CHAT_SERVER = 'https://chat-support.mozilla.com:9091'
+CHAT_CACHE_KEY = 'sumo-chat-queue-status'
