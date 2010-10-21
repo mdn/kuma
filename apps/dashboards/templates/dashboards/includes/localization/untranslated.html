@@ -1,0 +1,20 @@
+<tr>
+  <th>Article</th>
+  <th>Visits</th>
+  <th></th>
+  <th>Updated</th>
+</tr>
+{% for row in rows %}
+  <tr>
+    <td><a href="{{ row.url }}">{{ row.title }}</a></td>
+    <td>
+      {{ number(row.visits) }}
+    </td>
+    <td>
+      <div class="absolute-graph" style="width: {{ row.percent }}%"></div>
+    </td>
+    <td>
+      {{ row.updated }}
+    </td>
+  </tr>
+{% endfor %}

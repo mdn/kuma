@@ -1,0 +1,89 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% set title = _('Localizer Dashboard') %}
+
+{% block content %}
+  <article id="localize" class="main dashboards">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs([(None, _(title))]) }}
+    </div>
+
+    <h1>{{ _(title) }}</h1>
+
+    <div class="choice-list">
+      <label>{{ _('Show information for:') }}</label>
+      <ul>
+        <li>
+          <a href="{{ url('dashboards.contributors') }}">{{ default_locale_name }}</a>
+        </li>
+        <li>
+          {{ current_locale_name }}
+        </li>
+      </ul>
+    </div>
+
+    <details class="h2" open="open">
+      <summary>{{ _('Overview') }}</summary>
+      <table class="overview">
+        {% for row in overview_rows() %}
+          <tr>
+            <td><a href="#">{{ row.title }}</a></td>
+            <td>
+              {{ number(row.numerator) }}
+              <div class="denominator">of {{ number(row.denominator) }}</div>
+            </td>
+            <td>
+              {{ row.percent }}%
+              <div class="percent-graph">
+                <div style="width: {{ row.percent }}%"></div>
+              </div>
+            </td>
+            <td>
+              {{ row.description }}
+            </td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td>{{ _('User Interface') }}</td>
+          <td></td>
+          <td></td>
+          <td>
+            {% trans url='https://localize.mozilla.org/' %}
+              A fully translated user interface improves the experience for
+              site visitors in your language. Help
+              <a href="{{ url }}">translate the interface</a>.
+            {% endtrans %}
+          </td>
+        </tr>
+      </table>
+      <div id="overview-options" class="choice-list">
+        <label>{{ _('More options:') }}</label>
+        <ul>
+          <li><a href="#untranslated">{{ _('Untranslated') }}</a></li>
+          <li><a href="#out-of-date">{{ _('Out-of-Date') }}</a></li>
+          <li><a href="#updates-needed">{{ _('Updates Needed') }}</a></li>
+          <li><a href="#unreviewed-changes">{{ _('Unreviewed Changes') }}</a></li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="h2" open="open">
+      {% with readout = readouts['untranslated'] %}
+        <summary><a id="untranslated">{{ readout.title }}</a></summary>
+        <table class="{{ readout.slug }}">
+          {{ readout.render(readout.rows(10))|safe }}
+        </table>
+        <div class="table-footer">
+          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All untranslated articles...') }}</a>
+        </div>
+      {% endwith %}
+    </details>
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ for_contributors() }}
+  {{ quick_links() }}
+{% endblock %}

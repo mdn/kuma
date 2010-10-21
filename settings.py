@@ -299,6 +299,9 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'css/wiki.css',
+            # The dashboard app uses the wiki bundle because only the wiki app
+            # has the new theme at the moment.
+            'css/dashboards.css',
             'css/screencast.css',
         ),
         'home': (

@@ -911,10 +911,15 @@ div.change-locale.open #change-locale {
     width: 60px;
 }
 
+details.h2[open] {
+    margin-bottom: 21px;
+}
+
 /* Headings aren't valid in <summary>s, and it makes me sad. */
-summary.h2 {
+details.h2 > summary {
     color: #333;
     font-size: 24px;
+	margin: 21px 0 8px;
 }
 
 /* Document list pages */
@@ -975,14 +980,23 @@ ol.pagination li.selected a:hover {
     color: #666;
 }
 
-#locale-list ul {
+.choice-list {
+    margin: 2em 0;
+}
+
+.choice-list ul {
     display: inline;
 }
 
-#locale-list li {
+.choice-list li {
     display: inline-block;
     list-style: none;
     padding: 0 5px;
+    font-weight: bold;
+}
+
+.choice-list li a {
+    font-weight: normal;
 }
 
 #revision-list form {
@@ -1251,6 +1265,7 @@ td.diff_header {
 #submit-modal input[type="text"] {
     width: 300px;
 }
+
 
 /* Graceful fallback for <details> tags */
 /* from http://mathiasbynens.be/notes/html5-details-jquery */

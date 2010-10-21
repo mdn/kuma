@@ -19,8 +19,8 @@
     <h1>{{ _('<em>Editing</em> {title}')|f(title=document.title)|safe }}</h1>
     {% if document_form %}
       <div id="document-form">
-        <details{% if disclose_description %} open="open"{% endif %}>
-          <summary class="h2">{{ _('Edit Description') }}</summary>
+        <details class="h2"{% if disclose_description %} open="open"{% endif %}>
+          <summary>{{ _('Edit Description') }}</summary>
           {{ errorlist(document_form) }}
           <form action="" method="post">
             {{ csrf() }}
@@ -46,8 +46,8 @@
     {% endif %}
     {% if revision_form %}
       <div id="revision-form">
-        <details open="open">
-          <summary class="h2">{{ _('Edit Content') }}</summary>
+        <details class="h2" open="open">
+          <summary>{{ _('Edit Content') }}</summary>
           <p>
             {% trans %}For article-writing guidelines, please read our <a href="#">Best Practices for Support Documents</a> and <a href="#">Manual of Style</a>.{% endtrans %}
           </p>

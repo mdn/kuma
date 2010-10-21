@@ -10,6 +10,7 @@ from django.utils.http import urlencode
 
 from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
+from babel.numbers import format_decimal
 from jingo import register, env
 import jinja2
 from pytz import timezone
@@ -161,6 +162,20 @@ def profile_avatar(user):
     return '/tiki-show_user_avatar.php?user=%s' % user.username
 
 
+def _babel_locale(locale):
+    """Return the Babel locale code, given a normal one."""
+    # Babel uses underscore as separator.
+    return locale.replace('-', '_')
+
+
+def _contextual_locale(context):
+    """Return locale from the context, falling back to a default if invalid."""
+    locale = context['request'].locale
+    if not localedata.exists(locale):
+        locale = settings.LANGUAGE_CODE
+    return locale
+
+
 @register.function
 @jinja2.contextfunction
 def datetimeformat(context, value, format='shortdatetime'):
@@ -174,11 +189,7 @@ def datetimeformat(context, value, format='shortdatetime'):
 
     tzinfo = timezone(settings.TIME_ZONE)
     tzvalue = tzinfo.localize(value)
-    # Babel uses underscore as separator.
-    locale = context['request'].locale
-    if not localedata.exists(locale):
-        locale = settings.LANGUAGE_CODE
-    locale = locale.replace('-', '_')
+    locale = _babel_locale(_contextual_locale(context))
 
     # If within a day, 24 * 60 * 60 = 86400s
     if format == 'shortdatetime':
@@ -228,3 +239,10 @@ def collapse_linebreaks(text):
 @register.filter
 def json(s):
     return jsonlib.dumps(s)
+
+
+@register.function
+@jinja2.contextfunction
+def number(context, n):
+    """Return the localized representation of an integer or decimal."""
+    return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))

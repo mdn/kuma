@@ -1,0 +1,90 @@
+/* L10n and Contributor Dashboards */
+
+.dashboards table {
+    border-collapse: collapse;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: left;
+    width: 100%;
+}
+
+.dashboards tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dashboards td,
+.dashboards th {
+    padding: 7px 12px;
+    vertical-align: text-top;
+}
+
+.dashboards th {
+    padding-bottom: 2px;
+}
+
+.dashboards th {
+    font-size: 90%;
+    font-weight: bold;
+}
+
+.dashboards .denominator {
+    font-size: 80%;
+    color: #999;
+    white-space: nowrap;
+}
+
+.dashboards div.percent-graph {
+    background-color: #f3f3f3;
+    height: 10px;
+    width: 70px;
+}
+
+.dashboards div.percent-graph div {
+    background-color: #dfdfdf;
+    height: 10px;
+}
+
+.dashboards div.absolute-graph {
+    background-color: #e5e5e5;
+    height: 12px;
+}
+
+.dashboards #overview-options,
+.dashboards .table-footer {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 7px 12px;
+}
+
+.dashboards #overview-options label {
+    font-weight: bold;
+}
+
+.dashboards .table-footer {
+    font-size: 90%;
+}
+
+.dashboards table.overview td:nth-child(2) {
+    text-align: right;
+}
+
+.dashboards table.overview td:nth-child(4) {
+    width: 50%;
+}
+
+.dashboards table.untranslated td:nth-child(2),
+.dashboards table.untranslated th:nth-child(2) {
+    padding-right: 6px;
+    text-align: right;
+}
+
+.dashboards table.untranslated td:nth-child(3),
+.dashboards table.untranslated th:nth-child(3) {
+    padding-left: 0;
+    vertical-align: middle;
+    width: 140px;
+}
+
+.dashboards table.untranslated td:nth-child(4),
+.dashboards table.untranslated th:nth-child(4) {
+    text-align: right;
+}

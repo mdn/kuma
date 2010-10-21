@@ -1,0 +1,24 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% set title = readout.title %}
+
+{% block content %}
+  <article id="localize" class="main dashboards">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs([(url('dashboards.localization'), _('Localization Dashboard')), (None, readout.title)]) }}
+    </div>
+
+    <h1>{{ readout.title }}</h2>
+
+    <table class="{{ readout.slug }}">
+      {{ readout.render(readout.rows())|safe }}
+    </table>
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ for_contributors() }}
+  {{ quick_links() }}
+{% endblock %}

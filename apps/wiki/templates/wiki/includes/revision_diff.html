@@ -1,5 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{# TODO: This should probably be a macro. To make it so, we need to change datetimeformat to not expect request to be in the context (probably explicitly passing in the locale when using). #}
+{# TODO: Turn this into a macro. Import it "with context" so datetimeformat can access request.locale. #}
 <div class="revision-diff">
   <header>
     <div>
