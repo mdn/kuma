@@ -21,7 +21,7 @@
           {% endif %}
         </li>
       {% endif %}
-      {% if user.is_authenticated() %}
+      {% if user.is_authenticated() and document %}
         {% if document.allows_revision_by(user) or document.allows_editing_by(user) %}
           <li class="edit{% if active == 'edit' %} active{% endif %}">
             {% if active == 'edit' %}
