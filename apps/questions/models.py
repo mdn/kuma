@@ -355,7 +355,7 @@ class Answer(ModelBase):
         else:
             return False
 
-        return qs.count() > 0
+        return qs.exists()
 
 
 class QuestionVote(ModelBase):

@@ -351,6 +351,20 @@ class Document(ModelBase, TaggableMixin):
         """Return the document I was translated from or, if none, myself."""
         return self.parent or self
 
+    def has_voted(self, request):
+        """Did the user already vote for this document?"""
+        if request.user.is_authenticated():
+            qs = HelpfulVote.objects.filter(document=self,
+                                            creator=request.user)
+        elif request.anonymous.has_id:
+            anon_id = request.anonymous.anonymous_id
+            qs = HelpfulVote.objects.filter(document=self,
+                                            anonymous_id=anon_id)
+        else:
+            return False
+
+        return qs.exists()
+
 
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
@@ -467,3 +481,13 @@ class OperatingSystem(ModelBase):
                                            OPERATING_SYSTEMS],
                                   db_index=True)
     document = models.ForeignKey(Document, related_name='operating_system_set')
+
+
+class HelpfulVote(ModelBase):
+    """Helpful or Not Helpful vote on Document."""
+    document = models.ForeignKey(Document, related_name='poll_votes')
+    helpful = models.BooleanField(default=False)
+    created = models.DateTimeField(default=datetime.now, db_index=True)
+    creator = models.ForeignKey(User, related_name='poll_votes', null=True)
+    anonymous_id = models.CharField(max_length=40, db_index=True)
+    user_agent = models.CharField(max_length=1000)

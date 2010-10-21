@@ -3,7 +3,7 @@
  * Scripts for the wiki app.
  */
 
-(function () {
+(function ($) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
 
     function init() {
@@ -15,6 +15,7 @@
 
         if ($('body').is('.document') || $('body').is('.home')) { // Document page
             initForTags();
+            initHelpfulVote();
         }
         if ($('body').is('.translate')) { // Translate page
             initChangeTranslateLocale();
@@ -30,8 +31,9 @@
     // From http://mathiasbynens.be/notes/html5-details-jquery
     function initDetailsTags() {
         // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
-        if (!('open' in document.createElement('details')))
+        if (!('open' in document.createElement('details'))) {
             document.documentElement.className += ' no-details';
+        }
 
         // Execute the fallback only if there's no native `details` support
         if (!('open' in document.createElement('details'))) {
@@ -76,7 +78,12 @@
                     // Focus on the `summary` element
                     $detailsSummary.focus();
                     // Toggle the `open` attribute of the `details` element
-                    typeof $details.attr('open') !== 'undefined' ? $details.removeAttr('open') : $details.attr('open', 'open');
+                    if (typeof $details.attr('open') !== 'undefined') {
+                        $details.removeAttr('open');
+                    }
+                    else {
+                        $details.attr('open', 'open');
+                    }
                     // Toggle the additional information in the `details` element
                     $detailsNotSummary.slideToggle();
                     $details.toggleClass('open');
@@ -157,10 +164,14 @@
         $browserMenu.change(makeMenuChangeHandler('for_browser'));
 
         // Select the sniffed or cookied browser or OS if there is one:
-        if (initial = initialOs())
+        initial = initialOs();
+        if (initial) {
             $osMenu.attr('value', initial);  // does not fire change event
-        if (initial = initialBrowser())
+        }
+        initial = initialBrowser();
+        if (initial) {
             $browserMenu.attr('value', initial);
+        }
 
         // Fire off the change handler for the first time:
         updateForsAndToc();
@@ -174,15 +185,14 @@
                 dependency_list: ['#id_title'],
                 maxLength: 50
             }
-        }, field = null;
-
-        for (i in fields) {
-            field = fields[i];
-            $('#id_slug').addClass('prepopulated_field');
-            $(field.id).data('dependency_list', field['dependency_list'])
-                   .prepopulate($(field['dependency_ids'].join(',')),
-                                field.maxLength);
         };
+
+        $.each(fields, function(i, field) {
+            $(field.id).addClass('prepopulated_field');
+            $(field.id).data('dependency_list', field.dependency_list)
+                   .prepopulate($(field.dependency_ids.join(',')),
+                                field.maxLength);
+        });
     }
 
     /*
@@ -229,7 +239,7 @@
     // directly with an h4) are noted prominently so you can fix them.
     function filteredToc($pageBody) {
         function headerLevel(index, hTag) {
-            return parseInt(hTag.tagName[1]);
+            return parseInt(hTag.tagName[1], 10);
         }
 
         var $headers = $pageBody.find(':header:not(:hidden)'),  // :hidden is a little overkill, but it's short.
@@ -243,16 +253,18 @@
                 $h = $(this);
 
             // If we're too far down the tree, walk up it.
-            for (; ol_level > h_level; ol_level--)
+            for (; ol_level > h_level; ol_level--) {
                 $cur_ol = $cur_ol.parent().closest('ol');
+            }
 
             // If we're too far up the tree, walk down it, create <ol>s until we aren't:
             for (; ol_level < h_level; ol_level++) {
                 var $last_li = $cur_ol.children().last();
-                if ($last_li.length == 0)
+                if ($last_li.length === 0) {
                     $last_li = $('<li />').append($('<em />')
                                                   .text(MISSING_MSG))
                                           .appendTo($cur_ol);
+                }
                 // Now the current <ol> ends in an <li>, one way or another.
                 $cur_ol = $('<ol />').appendTo($last_li);
             }
@@ -281,8 +293,9 @@
             // Catch the "not" operator if it's there:
             forData = $(this).attr('data-for');
             isInverted = forData.substring(0, 4) == 'not ';
-            if (isInverted)
+            if (isInverted) {
                 forData = forData.substring(4);  // strip off "not "
+            }
 
             // Divide {for} attrs into OSes and browsers:
             $(forData.split(',')).each(function(index) {
@@ -297,10 +310,12 @@
 
             shouldHide = (foundAnyOses && !osAttrs.hasOwnProperty(os)) ||
                          (foundAnyBrowsers && !browserAttrs.hasOwnProperty(browser));
-            if ((shouldHide && !isInverted) || (!shouldHide && isInverted))
+            if ((shouldHide && !isInverted) || (!shouldHide && isInverted)) {
                 $(this).hide();  // saves original visibility, which is nice but not necessary
-            else
+            }
+            else {
                 $(this).show();  // restores original visibility
+            }
         });
     }
 
@@ -323,7 +338,7 @@
 
         // Open the modal on click of the "change" link
         $('div.change-locale a.change').click(function(ev){
-            ev.preventDefault()
+            ev.preventDefault();
             $(this).closest('div.change-locale').addClass('open');
             $('body').one('click', function() {
                 $('div.change-locale').removeClass('open');
@@ -338,7 +353,7 @@
     function initArticlePreview() {
         $('#btn-preview').click(function(e) {
             var $btn = $(this);
-            $btn.attr('disabled', 'disabled')
+            $btn.attr('disabled', 'disabled');
             $.ajax({
                 url: $(this).attr('data-preview-url'),
                 type: 'POST',
@@ -349,12 +364,12 @@
                         .html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
                     initForTags();
-                    $btn.removeAttr('disabled')
+                    $btn.removeAttr('disabled');
                 },
                 error: function() {
-                    var msg = gettext("There was an error generating the preview.");
+                    var msg = gettext('There was an error generating the preview.');
                     $('#preview').html(msg);
-                    $btn.removeAttr('disabled')
+                    $btn.removeAttr('disabled');
                 }
             });
 
@@ -363,6 +378,68 @@
         });
     }
 
+    /*
+     * Ajaxify the Helpful/NotHelpful voting form on Document page
+     */
+    var voted = false;
+    function initHelpfulVote() {
+        var $btns = $('#helpful-vote input[type="submit"]');
+        $btns.click(function(e) {
+            if (!voted) {
+                var $btn = $(this),
+                    $form = $btn.closest('form'),
+                    data = {};
+                $btns.attr('disabled', 'disabled');
+                $form.addClass('busy');
+                data[$btn.attr('name')] = $btn.val();
+                $.ajax({
+                    url: $btn.closest('form').attr('action'),
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                        showMessage(data.message, $btn);
+                        $btn.addClass('active');
+                        $btns.removeAttr('disabled');
+                        $form.removeClass('busy');
+                        voted = true;
+                    },
+                    error: function() {
+                        var msg = gettext('There was an error generating the preview.');
+                        showMessage(msg, $btn);
+                        $btns.removeAttr('disabled');
+                        $form.removeClass('busy');
+                    }
+               });
+            }
+
+            $(this).blur();
+            e.preventDefault();
+            return false;
+        });
+    }
+
+    function showMessage(message, $showAbove) {
+        var $html = $('<div class="message-box"><p></p></div>'),
+            offset = $showAbove.offset();
+        $html.find('p').text(message);
+        $('body').append($html);
+        $html.css({
+            top: offset.top - $html.height() - 30,
+            left: offset.left + $showAbove.width()/2 - $html.width()/2
+        });
+        var timer = setTimeout(fadeOut, 10000);
+        $('body').one('click', fadeOut);
+
+        function fadeOut() {
+            $html.fadeOut(function(){
+                $html.remove();
+            });
+            $('body').unbind(fadeOut);
+            clearTimeout(timer);
+        }
+    }
+
     $(document).ready(init);
 
-}());
+}(jQuery));

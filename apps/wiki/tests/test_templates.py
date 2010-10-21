@@ -11,7 +11,8 @@ from notifications import check_watch
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
-from wiki.models import Document, Revision, SIGNIFICANCES, CATEGORIES
+from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
+                         CATEGORIES)
 import wiki.tasks
 from wiki.tests import TestCaseBase, document, revision, new_document_data
 
@@ -818,6 +819,63 @@ class ArticlePreviewTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('Test Content', doc('#doc-content h1').text())
+
+
+class HelpfulVoteTests(TestCaseBase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(HelpfulVoteTests, self).setUp()
+        self.document = _create_document()
+
+    def test_vote_yes(self):
+        """Test voting helpful."""
+        d = self.document
+        user = User.objects.get(username='rrosario')
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'wiki.document_vote',
+                        {'helpful': 'Yes'}, args=[self.document.slug])
+        eq_(200, response.status_code)
+        votes = HelpfulVote.objects.filter(document=d, creator=user)
+        eq_(1, votes.count())
+        assert votes[0].helpful
+
+    def test_vote_no(self):
+        """Test voting not helpful."""
+        d = self.document
+        user = User.objects.get(username='rrosario')
+        self.client.login(username='rrosario', password='testpass')
+        response = post(self.client, 'wiki.document_vote',
+                        {'not-helpful': 'No'}, args=[d.slug])
+        eq_(200, response.status_code)
+        votes = HelpfulVote.objects.filter(document=d, creator=user)
+        eq_(1, votes.count())
+        assert not votes[0].helpful
+
+    def test_vote_anonymous(self):
+        """Test that voting works for anonymous user."""
+        d = self.document
+        response = post(self.client, 'wiki.document_vote',
+                        {'helpful': 'Yes'}, args=[d.slug])
+        eq_(200, response.status_code)
+        votes = HelpfulVote.objects.filter(document=d, creator=None)
+        votes = votes.exclude(anonymous_id=None)
+        eq_(1, votes.count())
+        assert votes[0].helpful
+
+    def test_vote_ajax(self):
+        """Test voting via ajax."""
+        d = self.document
+        url = reverse('wiki.document_vote', args=[d.slug])
+        response = self.client.post(url, data={'helpful': 'Yes'},
+                         HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, response.status_code)
+        eq_('{"message": "Glad to hear it & thanks for the feedback!"}',
+            response.content)
+        votes = HelpfulVote.objects.filter(document=d, creator=None)
+        votes = votes.exclude(anonymous_id=None)
+        eq_(1, votes.count())
+        assert votes[0].helpful
 
 
 # TODO: Merge with wiki.tests.doc_rev()?

@@ -247,7 +247,7 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
 
         $modal.find('h1').text(this.name);
         $modal.find('button').text(gettext('Add Rule')).click(function(e){
-            var showfor = ''
+            var showfor = '';
             $('#showfor-modal input:checked').each(function(){
                 showfor += ($(this).val() + ',');
             });
@@ -279,8 +279,6 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
         function closeModal(e) {
             $modal.unbind().remove();
             $overlay.unbind().remove();
-            delete $modal;
-            delete $overlay;
             e.preventDefault();
             return false;
         }

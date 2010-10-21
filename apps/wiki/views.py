@@ -13,14 +13,16 @@ from django.views.decorators.http import (require_GET, require_POST,
 
 import jingo
 from tower import ugettext_lazy as _lazy
+from tower import ugettext as _
 
 from access.decorators import permission_required
 from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
-from wiki.models import (Document, Revision, CATEGORIES, OPERATING_SYSTEMS,
-                         FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
+from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
+                         OPERATING_SYSTEMS, FIREFOX_VERSIONS,
+                         GROUPED_FIREFOX_VERSIONS)
 from wiki.parser import wiki_to_html
 from wiki.tasks import (send_reviewed_notification,
                         send_ready_for_review_notification,
@@ -432,6 +434,38 @@ def json_view(request):
         'url': document.get_absolute_url(),
     })
     return HttpResponse(data, mimetype='application/x-json')
+
+
+@require_POST
+def helpful_vote(request, document_slug):
+    """Vote for Helpful/Not Helpful document"""
+    document = get_object_or_404(
+        Document, locale=request.locale, slug=document_slug)
+
+    if not document.has_voted(request):
+        ua = request.META.get('HTTP_USER_AGENT', '')[:1000]  # 1000 max_length
+        vote = HelpfulVote(document=document, user_agent=ua)
+
+        if 'helpful' in request.POST:
+            vote.helpful = True
+            message = _('Glad to hear it & thanks for the feedback!')
+        else:
+            message = _('Sorry to hear that. Perhaps one of the solutions '
+                        'below can help.')
+
+        if request.user.is_authenticated():
+            vote.creator = request.user
+        else:
+            vote.anonymous_id = request.anonymous.anonymous_id
+
+        vote.save()
+    else:
+        message = _('You already voted on this Article.')
+
+    if request.is_ajax():
+        return HttpResponse(json.dumps({'message': message}))
+
+    return HttpResponseRedirect(document.get_absolute_url())
 
 
 def _document_form_initial(document):

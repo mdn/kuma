@@ -47,6 +47,9 @@ document_patterns = patterns('wiki.views',
     url(r'^/watch$', 'watch_document', name='wiki.document_watch'),
     url(r'^/unwatch$', 'unwatch_document', name='wiki.document_unwatch'),
 
+    # Vote helpful/not helpful
+    url(r'^/vote', 'helpful_vote', name="wiki.document_vote"),
+
     # KB discussion forums
     (r'^/discuss', include(discuss_patterns)),
 )
