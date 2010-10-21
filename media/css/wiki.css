@@ -14,6 +14,12 @@ a:link, a:visited, a:active {
     text-decoration: none;
 }
 
+
+h1, h2, h3, h4, h5, h6 {
+	color: #303030;
+	font-weight: normal;
+}
+
 #breadcrumbs {
     margin: 0 0 20px;
 }
@@ -81,7 +87,6 @@ ol.breadcrumbs {
 }
 
 #main-content article.main h1.title {
-    color: #303030;
     font-size: 26px;
 }
 
@@ -417,40 +422,8 @@ article #toc ol li {
 
 #doc-content {
     color: #666;
-    font-size: 14px;
-    line-height: 20px;
     margin: 35px 0;
     padding: 0 20px 0 0;
-}
-
-#doc-content h1 {
-    color: #303030;
-    font-size: 22px;
-    margin: 20px 0 10px;
-}
-
-#doc-content h2 {
-    color: #303030;
-    font-size: 19px;
-    margin: 10px 0;
-}
-
-#doc-content h3 {
-    color: #303030;
-    font-size: 16px;
-    margin: 10px 0;
-}
-
-#doc-content p {
-    margin: 0 0 10px;
-}
-
-#doc-content ul li {
-    /* TODO */
-}
-
-#doc-content ol li {
-    /* TODO */
 }
 
 #more-help {
@@ -519,9 +492,86 @@ article #toc ol li {
     margin: 0 0 5px;
 }
 
+/* Wiki Document content */
+#doc-content {
+	font-size: 14px;
+	line-height: 1.5em;
+}
+
+#doc-content p {
+	margin: 0 0 1.5em;
+}
+
+/* NOTE:
+`#doc-content h1-6` -> These inherit color from `h1-6` above
+*/
+
+#doc-content h1 {
+	font-size: 22px;
+	margin: 21px 0 8px;
+}
+
+#doc-content h2 {
+	font-size: 19px;
+	margin: 21px 0 8px;
+}
+
+#doc-content h3 {
+	font-size: 16px;
+	margin: 21px 0 8px;
+}
+
+#doc-content h4,
+#doc-content h5,
+#doc-content h6 {
+	font-size: 14px;
+	margin: 21px 0 8px;
+}
+
+#doc-content ol,
+#doc-content ul,
+#doc-content dd {
+	margin-left: 21px;
+}
+
+#doc-content .code {
+}
+
+#doc-content .filepath {
+	font-style: italic;
+	white-space: nowrap;
+}
+
+#doc-content .key,
+#doc-content .button {
+	background: #f0f0f0;
+	background: -moz-linear-gradient(top, #f0f0f0, #fcfcfc);
+	background: -webkit-gradient(linear, center top, center bottom, from(#f0f0f0), to(#fcfcfc));
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	color: #303030;
+	border: 1px solid #e0e0e0;
+	border-bottom-width: 2px;
+}
+
+#doc-content .key {
+	font-family: monospace;
+	padding: 2px 6px;
+}
+
+#doc-content .button {
+	padding: 2px 10px;
+}
+
+#doc-content .menu {
+	background: #e8e8e8;
+	color: #303030;
+	padding: 2px 4px;
+}
+
 /* New / Edit / Translate Document */
 article.form-page h1 {
-    color: #303030;
     font-size: 26px;
 }
 
