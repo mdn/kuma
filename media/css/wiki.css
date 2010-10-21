@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 }
 
+h1 {
+    font-size: 26px;
+}
+
 #breadcrumbs {
     margin: 0 0 20px;
 }
@@ -84,10 +88,6 @@ ol.breadcrumbs {
     float: left;
     padding: 16px 0 0;
     width: 754px;
-}
-
-#main-content article.main h1.title {
-    font-size: 26px;
 }
 
 #main-content article.main {
@@ -571,10 +571,6 @@ article #toc ol li {
 }
 
 /* New / Edit / Translate Document */
-article.form-page h1 {
-    font-size: 26px;
-}
-
 #document-form form ul,
 #document-form div.relevant-to {
     display: inline-block;
@@ -1091,16 +1087,16 @@ details, summary {
 }
 
 /* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
-/* However, we’re still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
+/* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
 /* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
 
 /* Hide all direct descendants of every <details> element */
-/* Note that IE6 doesn’t support the child selector; we’ll work around that using jQuery later */
+/* Note that IE6 doesn't support the child selector; we'll work around that using jQuery later */
 .no-details details > * {
     display: none;
 }
 
-/* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it’s a clickable element */
+/* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it's a clickable element */
 .no-details details summary {
     border-bottom: solid 1px #cadaeb;
     cursor: pointer;
