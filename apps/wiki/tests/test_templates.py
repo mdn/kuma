@@ -61,6 +61,15 @@ class DocumentTests(TestCaseBase):
                                              redirectslug='nonexistent'))
         self.assertNotContains(response, 'Redirected from ')
 
+    def test_watch_includes_csrf(self):
+        """The watch/unwatch forms should include the csrf tag."""
+        self.client.login(username='jsocol', password='testpass')
+        d = document()
+        d.save()
+        resp = self.client.get(d.get_absolute_url())
+        doc = pq(resp.content)
+        assert doc('#doc-watch input[type=hidden]')
+
 
 class RevisionTests(TestCaseBase):
     """Tests for the Revision template"""

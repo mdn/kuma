@@ -67,24 +67,6 @@
   </section>
 {%- endmacro %}
 
-{% macro document_notifications(document, user) -%}
-  {% if user.is_authenticated() %}
-    <div id="doc-watch">
-      {% if is_watching(document, user) %}
-        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="submit" value="{{ _('Unsubscribe from edit notifications') }}" />
-        </form>
-      {% else %}
-        <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="submit" value="{{ _('Subscribe to edit notifications') }}" />
-        </form>
-      {% endif %}
-    </div>
-  {% endif %}
-{%- endmacro %}
-
 {% macro other_links() -%}
   <nav id="other-links">
     <ul>
