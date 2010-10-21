@@ -107,6 +107,14 @@ class NewDocumentTests(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('#document-form input[name="title"]')))
 
+    def test_new_document_form_defaults(self):
+        """The new document form should have all all 'Relevant to' options
+        checked by default."""
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(reverse('wiki.new_document'))
+        doc = pq(response.content)
+        eq_(10, len(doc('input[checked=checked]')))
+
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_document_POST(self, get_current, delay):
