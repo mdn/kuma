@@ -72,6 +72,11 @@ class DocumentForm(forms.ModelForm):
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
+    is_localizable = forms.BooleanField(
+                                initial=True,
+                                label=_('Allow translations'),
+                                required=False)
+
     def clean_firefox_versions(self):
         data = self.cleaned_data['firefox_versions']
         return [FirefoxVersion(item_id=int(x)) for x in data]
@@ -82,7 +87,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'category', 'tags')
+        fields = ('title', 'slug', 'category', 'is_localizable', 'tags')
 
     def save(self, locale, parent_doc, **kwargs):
         """Persist the Document form, and return the saved Document."""

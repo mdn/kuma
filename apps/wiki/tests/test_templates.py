@@ -70,6 +70,22 @@ class DocumentTests(TestCaseBase):
         doc = pq(resp.content)
         assert doc('#doc-watch input[type=hidden]')
 
+    def test_non_localizable_translate_disabled(self):
+        """Non localizable document shows disabled tab for 'Localize'."""
+        self.client.login(username='jsocol', password='testpass')
+        d = document(is_localizable=True)
+        d.save()
+        resp = self.client.get(d.get_absolute_url())
+        doc = pq(resp.content)
+        assert 'Localize' not in (doc('#doc-tabs li.disabled').text() or '')
+
+        # Make it non-localizable
+        d.is_localizable = False
+        d.save()
+        resp = self.client.get(d.get_absolute_url())
+        doc = pq(resp.content)
+        assert 'Localize' in doc('#doc-tabs li.disabled').text()
+
 
 class RevisionTests(TestCaseBase):
     """Tests for the Revision template"""
@@ -113,7 +129,7 @@ class NewDocumentTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.new_document'))
         doc = pq(response.content)
-        eq_(10, len(doc('input[checked=checked]')))
+        eq_(11, len(doc('input[checked=checked]')))
 
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
@@ -602,6 +618,16 @@ class TranslateTests(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('form textarea[name="content"]')))
 
+    def test_translate_disallow(self):
+        """HTTP GET to translate URL returns 400 when not localizable."""
+        self.d.is_localizable = False
+        self.d.save()
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        response = self.client.get(url)
+        eq_(400, response.status_code)
+        doc = pq(response.content)
+        eq_('You cannot translate this document.', doc('#content p').html())
+
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
@@ -798,7 +824,7 @@ class ArticlePreviewTests(TestCaseBase):
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
-                 category=1, locale=locale, parent=parent)
+                 category=1, locale=locale, parent=parent, is_localizable=True)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=118577,

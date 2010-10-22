@@ -31,11 +31,12 @@
             {% endif %}
           </li>
         {% endif %}
-        <li{% if active == 'localize' %} class="active"{% endif %}>
+        <li{% if active == 'localize' %} class="active"{% elif not document.is_localizable %} class="disabled"{% endif %}>
           {% if active == 'localize' %}
             <span>{{ _('Localize Article') }}</span>
           {% else %}
             {# TODO: Create page to select localization? Show link to all authenticated? #}
+            {# TODO: Remember to take into account non-localizable documents #}
             <a href="#">{{ _('Localize Article') }}</a>
           {% endif %}
         </li>

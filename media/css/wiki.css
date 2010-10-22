@@ -205,6 +205,19 @@ div.support-search input.submit {
     margin: 7px 0 0;
 }
 
+#doc-tabs li.disabled, #doc-tabs li.disabled:hover {
+    background: -moz-linear-gradient(left, #dedede, #fff);
+    background: -webkit-gradient(linear, left top, right top, from(#dedede), to(#fff));
+    border: solid 1px #ccc;
+    box-shadow: 2px 2px 3px #cecece;
+    -moz-box-shadow: 2px 2px 3px #cecece;
+    -webkit-box-shadow: 2px 2px 3px #cecece;
+}
+
+#doc-tabs li.disabled a {
+    color: #999;
+}
+
 #doc-tabs li a,
 #doc-tabs li span {
     display: block;
@@ -614,6 +627,14 @@ article.form-page form li label {
 #document-form li li label {
     color: #666;
     display: inline;
+}
+
+#document-form label[for="id_is_localizable"] {
+    display: inline;
+}
+
+#document-form #id_is_localizable {
+    margin: 0 .5em;
 }
 
 article.main input[type="text"],

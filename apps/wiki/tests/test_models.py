@@ -286,7 +286,7 @@ class RevisionTests(TestCase):
         en_rev.save()
 
         # Make Deutsch translation:
-        de_doc = document(parent=en_rev.document)
+        de_doc = document(parent=en_rev.document, locale='de')
         de_doc.save()
         de_rev = revision(document=de_doc)
 
@@ -297,3 +297,25 @@ class RevisionTests(TestCase):
         self.assertRaises(ValidationError, de_rev.clean)
 
         eq_(en_rev.document.current_revision, de_rev.based_on)
+
+    def test_only_localizable_allowed_children(self):
+        """You can't have children for a non-localizable document."""
+        # Make English rev:
+        en_doc = document(is_localizable=False)
+        en_doc.save()
+
+        # Make Deutsch translation:
+        de_doc = document(parent=en_doc, locale='de')
+        self.assertRaises(ValidationError, de_doc.save)
+
+    def test_cannot_make_non_localizable_if_children(self):
+        """You can't make a document non-localizable if it has children."""
+        # Make English rev:
+        en_doc = document(is_localizable=True)
+        en_doc.save()
+
+        # Make Deutsch translation:
+        de_doc = document(parent=en_doc, locale='de')
+        de_doc.save()
+        en_doc.is_localizable = False
+        self.assertRaises(ValidationError, en_doc.save)

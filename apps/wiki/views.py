@@ -329,6 +329,11 @@ def translate(request, document_slug):
             'wiki.edit_document', locale=settings.WIKI_DEFAULT_LANGUAGE,
             args=[parent_doc.slug]))
 
+    if not parent_doc.is_localizable:
+        message = _lazy('You cannot translate this document.')
+        return jingo.render(request, 'handlers/400.html',
+                            {'message': message}, status=400)
+
     # Require an approved revision to translate from:
     based_on_rev = parent_doc.current_revision
     if not based_on_rev:
@@ -434,6 +439,7 @@ def _document_form_initial(document):
     return {'title': document.title,
             'slug': document.slug,
             'category': document.category,
+            'is_localizable': document.is_localizable,
             'tags': ','.join([t.name for t in document.tags.all()]),
             'firefox_versions': [x.item_id for x in
                                  document.firefox_versions.all()],

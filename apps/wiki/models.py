@@ -109,6 +109,8 @@ class Document(ModelBase, TaggableMixin):
     # TODO: Localizing templates does not allow changing titles
     is_template = models.BooleanField(default=False, editable=False,
                                       db_index=True)
+    # Is this document localizable or not?
+    is_localizable = models.BooleanField(default=True, db_index=True)
 
     # TODO: validate (against settings.SUMO_LANGUAGES?)
     locale = models.CharField(max_length=7, db_index=True,
@@ -159,6 +161,33 @@ class Document(ModelBase, TaggableMixin):
             if self._collides(attr, getattr(self, attr)):
                 raise exception
 
+    def clean(self):
+        """Translations can't be localizable."""
+        if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
+            self.is_localizable = False
+
+    def _validate_is_localizable(self):
+        """is_localizable == having translations. Make sure that stays true.
+
+        For default language (en-US), is_localizable means it can have
+        translations, enforce:
+            * is_localizable=True if it has translations
+            * if has translations, unable to make is_localizable=False
+
+        """
+        # Can't translate if parent not localizable
+        if self.parent and not self.parent.is_localizable:
+            raise ValidationError('"%s": parent "%s" is not localizable.' % (
+                                  unicode(self), unicode(self.parent)))
+
+        # Can't make not localizable if it has translations
+        # This only applies to documents that already exist, hence self.pk
+        # TODO: Use uncached manager here, if we notice problems
+        if self.pk and not self.is_localizable and self.translations.exists():
+            raise ValidationError('"%s": parent "%s" has translations but is '
+                                  'not localizable.' % (
+                                  unicode(self), unicode(self.parent)))
+
     def _attr_for_redirect(self, attr, template):
         """Return the slug or title for a new redirect.
 
@@ -196,13 +225,7 @@ class Document(ModelBase, TaggableMixin):
         self._raise_if_collides('title', TitleCollision)
 
         # This is too important to leave to a (possibly omitted) is_valid call.
-        # It will probably result in a traceback, which is good.
-        if not self.parent and self.locale != settings.WIKI_DEFAULT_LANGUAGE:
-            # TODO: Don't freak out iff the doc is marked as non-localizable.
-            raise ValidationError('A translation must reference an %s parent '
-                                  'document unless it is marked as non-'
-                                  'localizable.' %
-                                  settings.WIKI_DEFAULT_LANGUAGE)
+        self._validate_is_localizable()
 
         super(Document, self).save(*args, **kwargs)
 

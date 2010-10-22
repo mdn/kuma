@@ -1,0 +1,17 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "common/base.html" %}
+{% set styles = ('search',) %}
+{% if not title %}
+  {% set title = _('Oops, your request was unsuccessful') %}
+{% endif %}
+{% if message == None %}
+  {% set message = _("We couldn't perform your request. Perhaps because the action is no longer applicable or you tried to perform an invalid action.") %}
+{% endif %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<p>{{ message }}</p>
+
+{% endblock %}
