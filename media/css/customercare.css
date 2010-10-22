@@ -1,11 +1,11 @@
-body {
-    background-position: 50% 0;
-}
+/*
+ * Customer Care CSS
+ */
 
 .feature-contents {
-    width: 640px;
     background: url("../img/customercare/nurse.png") no-repeat scroll right 20px transparent;
     padding: 30px 0 0 25px;
+    width: 640px;
 }
 
 .feature-contents h2, .feature-contents h3 {
@@ -14,128 +14,151 @@ body {
 }
 
 .feature-contents h2 {
-    color: #FFF;
+    color: #303030;
     font-size: 46px;
 }
 
 .feature-contents h3 {
     color: #68645b;
-    line-height: 1.5em;
     font-size: 150%;
+    line-height: 1.5em;
     margin-top: 15px;
 }
+
 #speach-bubbles {
+    float: left;
     padding: 60px 0 15px 25px;
-    float: left;
 }
+
 #speach-bubbles li {
-    list-style-type: none;
     float: left;
+    height: 97px;
+    list-style-type: none;
     text-indent: -99999px;
     width: 177px;
-    height: 97px;
 }
+
 #speach-bubbles li.choose {
     background: url("../img/customercare/bubble-choose.png") no-repeat scroll top left transparent;
 }
+
 #speach-bubbles li.signin {
     background: url("../img/customercare/bubble-signin.png") no-repeat scroll top left transparent;
 }
+
 #speach-bubbles li.respond {
     background: url("../img/customercare/bubble-respond.png") no-repeat scroll top left transparent;
 }
+
 #tweetcontainer {
     border: 1px solid #f5f5f5;
-    padding: 2px;
-    float: left;
     clear: left;
+    float: left;
+    padding: 2px;
 }
+
 #tweetcontainer h2 {
+    background: none;
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 3em;
     margin: 0px;
     padding: 0px;
-    float: left;
-    line-height: 3em;
-    font-weight: bold;
-    font-size: 20px;
-    background: none;
 }
+
 #tweetcontainer #twitter-icon {
     float: left;
     padding: 4px;
 }
+
 #refresh-busy {
     display: none;
-    width: 10px;
     height: 10px;
     padding-left: 10px;
+    width: 10px;
 }
+
 .avatar img {
-    width: 48px;
     height: 48px;
+    width: 48px;
 }
+
 .tweets-header {
     padding: 0 15px;
 }
+
 #tweets {
     margin: 0 10px;
 }
+
 #tweets ul {
     margin: 0px;
 }
+
 #tweets li {
-    width: 630px;
     border-top: 1px solid #ccc;
-    overflow: auto;
-    margin-bottom: 0px;
-    padding: 10px;
     cursor: pointer;
+    margin-bottom: 0px;
+    overflow: auto;
+    padding: 10px;
+    width: 630px;
 }
+
 #tweets li.alt {
     background: -moz-linear-gradient(top, #fff, #f5f5f5);
     background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#f5f5f5));
 }
+
 #tweets li:hover {
-    border-top: 1px solid #fef1ad;
     background: -moz-linear-gradient(top, #fffffd, #fdefa6);
     background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#fdefa6));
+    border-top: 1px solid #fef1ad;
 }
+
 #tweets li img {
-    float: left;
-    margin-right: 1em;
     border: solid 1px #cacccb;
+    float: left;
+    height: 48px;
+    margin-right: 1em;
     padding: 0px;
     width: 48px;
-    height: 48px;
 }
+
 #tweets li .twittername {
     color: #307fc1;
-    text-decoration: none;
-    font-weight: bold;
     font-size: 13px;
+    font-weight: bold;
     line-height: 1.4em;
+    text-decoration: none;
 }
+
 #tweets li .time {
-    float: right;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 12px;
     color: #afaba3;
-}
-#tweets li .text {
+    float: right;
+    font-size: 12px;
+    font-style: italic;
     font-weight: normal;
-    font-size: 14px;
+}
+
+#tweets li .text {
     color: #69645b;
+    font-size: 14px;
+    font-weight: normal;
     width: 550px;
 }
+
 .tweets-buttons {
     float: right;
     line-height: 4em;
     padding-right: 15px;
 }
+
 .tweet a, .tweet a:hover {
     color: #69645b;
     text-decoration: none;
 }
+
 .hidden {
     display: none;
 }
@@ -147,19 +170,18 @@ body {
 
 #reply-container {
     background-color: #fff;
+    font-family: Verdana, sans-serif;
     margin: 0 auto;
     padding: 30px 24px;
-    top: 86px;
-    font-family: Verdana, sans-serif;
     text-align: left;
-
+    top: 86px;
 }
 
 #reply-container,
 #reply-container #replies {
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 
 #initial-tweet img {
@@ -168,21 +190,21 @@ body {
 }
 
 #initial-tweet .box {
-    border: 1px solid #aaa;
-    display: block;
-    margin-left: 70px;
-    text-align: left;
-    padding: 6px 9px 10px 9px;
-    color: #69645b;
-    font-size: 80%;
     background: #fff;
+    border: 1px solid #aaa;
+    color: #69645b;
+    display: block;
+    font-size: 80%;
+    margin-left: 70px;
+    padding: 6px 9px 10px 9px;
+    text-align: left;
 }
 
 #initial-tweet a {
     color: #2276bb;
     display: block;
-    text-decoration: none;
     font-weight: bold;
+    text-decoration: none;
 }
 
 #initial-tweet a.avatar {
@@ -195,14 +217,14 @@ body {
 
 #initial-tweet #arrow {
     border: 0;
-    position: absolute;
     left: 84px;
+    position: absolute;
     top: 60px;
 }
 
 #reply-container h4 {
-    font-family: Verdana, sans-serif;
     color: #4b4740;
+    font-family: Verdana, sans-serif;
     font-size: 125%;
     font-weight: normal;
     margin-bottom: 15px;
@@ -219,14 +241,13 @@ body {
 #reply-container h3.ui-accordion-header {
     background: #f0f0f0 url('../img/customercare/expander-closed.png') 8px 50% no-repeat;
     border: 1px solid #b2b2b2;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     font-family: Verdana, sans-serif;
     font-size: 12px;
-    padding: 4px 0 5px 24px;
     margin: 0 0 9px 0;
-
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    padding: 4px 0 5px 24px;
 }
 
 #reply-container h3.ui-accordion-header a {
@@ -239,13 +260,13 @@ body {
 }
 
 #reply-container #replies ul {
-    margin: 0 0 10px 24px;
     list-style-type: none;
+    margin: 0 0 10px 24px;
 }
 
 #reply-container #replies li a {
-    display: block;
     color: #0489b7;
+    display: block;
     padding-bottom: 2px;
 }
 
@@ -258,13 +279,13 @@ body {
 }
 
 #reply-container h3.ui-accordion-header.ui-state-default a {
-    font-weight: normal;
     color: #69645b;
+    font-weight: normal;
 }
 
 #reply-container h3.ui-accordion-header.ui-state-active a {
-    font-weight: bold;
     color: #69645b;
+    font-weight: bold;
 }
 
 #accordion .ui-widget-content {
@@ -287,35 +308,37 @@ body {
 }
 
 #reply-message {
-    width: 310px;
-    height: 65px;
-    border: 1px solid #aaa;
-    padding: 10px 15px;
     background: #fff;
+    border: 1px solid #aaa;
+    height: 65px;
     font-size: .9em;
+    padding: 10px 15px;
+    width: 310px;
 }
 
 #reply #reply-arrow {
-    position: relative;
-    left: 30px;
-    top: 5px;
     display: inline;
+    left: 30px;
+    position: relative;
+    top: 5px;
 }
 
 #error-message,
 #submit-message {
-    display: none;
-    font-weight: bold;
     color: #4b4740;
-    height: 21px;
+    display: none;
     float: left;
+    font-weight: bold;
+    height: 21px;
     margin-top: 14px;
 }
+
 #submit-message {
     background: url('../img/customercare/reply-check.png') right top no-repeat;
     padding-right: 23px;
     padding-top: 3px;
 }
+
 #error-message {
     background: url('../img/customercare/notification-error.png') right 4px no-repeat;
     padding-right: 20px;
@@ -334,31 +357,28 @@ body {
     border-right: 1px solid #d4661a;
     border-top: 1px solid #d19f7c;
     border-bottom: 1px solid #ba5c1c;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    box-shadow: 0 0 5px #777;
+    -moz-box-shadow: 0 0 5px #777;
     color: #b01a04;
-    width: 140px;
+    cursor: pointer;
+    float: right;
     height: 36px;
     margin-top: 10px;
-    float: right;
-
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
-    -moz-box-shadow: 0 0 5px #777;
-    box-shadow: 0 0 5px #777;
-
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-
-    cursor: pointer;
+    width: 140px;
 }
 
 #reply .character-counter {
-    width: 50px;
     color: #fff;
+    float: right;
     font-weight: bold;
     font-size: 24px;
-    float: right;
     position: relative;
     top: 33px;
+    width: 50px;
 }
 
 .hrbreak {
@@ -370,10 +390,10 @@ body {
 .notice {
     background-color:#FFFFCC;
     border:2px solid orange;
+    float: left;
     margin:1em 0;
     padding:1em;
     text-align:center;
-    float: left;
 }
 
 #twitter-modal {
@@ -384,17 +404,18 @@ body {
 }
 
 .header-button {
-    -moz-border-radius: 3px;
-    border-radius: 3px;
     background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 transparent;
     background: -webkit-gradient(linear, center top, center bottom, from(#f9f9f9), to(#e3e3e3));
     border: 1px solid #BBBBBB;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     color: #000000;
     cursor: default;
     float: right;
+    margin: 15px 5px 0 0;
     padding: 3px 8px;
     text-align: center;
-    margin: 15px 5px 0 0;
 }
 
 .header-button:hover,
@@ -410,47 +431,45 @@ a.header-button {
 }
 
 #twitter-modal {
-    margin: auto;
-    padding: 15px 24px 30px 24px;
-    font-family: Verdana, sans-serif;
-    text-align: left;
     color: #69645b;
+    font-family: Verdana, sans-serif;
+    margin: auto;
     opacity: 1;
+    padding: 15px 24px 30px 24px;
+    text-align: left;
 }
 
 #twitter-modal .inner-container {
     background: #fff;
     border: 10px solid #9fcce1;
-    padding: 20px 18px;
     font-size: 90%;
+    padding: 20px 18px;
 }
 
 #twitter-modal h4 {
-    font-family: Verdana, sans-serif;
     color: #4b4740;
+    font-family: Verdana, sans-serif;
     font-size: 135%;
-    margin-bottom: 5px;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 #twitter-modal .cancel,
 #twitter-modal .signin {
     background: -moz-linear-gradient(center top, #f1f1f1 15px, #eee 18px, #ddd, #ccc);
     background: -webkit-gradient(linear, center top, center bottom, color-stop(.417, #f1f1f1), color-stop(.5, #eee), color-stop(.75, #ddd), to(#ccc));
-    display: block;
-    width: 140px;
-    height: 36px;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
     color: #5a5a5a;
+    display: block;
+    float: left;
+    height: 36px;
     line-height: 35px;
     text-align: center;
-    float: left;
     text-decoration: none;
-
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
-
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+    width: 140px;
 }
 
 #twitter-modal .cancel {
@@ -458,8 +477,8 @@ a.header-button {
 }
 
 #twitter-modal .signin {
-    margin: 15px 0px 0px 0;
     color: #10a2c6;
+    margin: 15px 0px 0px 0;
 }
 
 #twitter-modal .inner-container div {
@@ -467,25 +486,27 @@ a.header-button {
 }
 
 .ui-corner-all {
+    border-radius: 0px;
     -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
 }
 
 .ui-widget-header {
-  background: none;
-  border: none;
+    background: none;
+    border: none;
 }
 
 .ui-dialog {
-    -moz-box-shadow: 0 0 10px #aaa;
     box-shadow: 0 0 10px #aaa;
+    -moz-box-shadow: 0 0 10px #aaa;
 }
 
 .ui-widget-content {
+    background: #fff;
     border: none;
-    background-image: none;
-    background-color: white;
-    -webkit-border-radius: 4px;
+    border-radius: 4px;
     -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 .ui-dialog-titlebar-close {
     background-color: #fff;
