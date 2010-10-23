@@ -471,18 +471,21 @@ class Revision(ModelBase):
 class FirefoxVersion(ModelBase):
     """A Firefox version, version range, etc. used to categorize documents"""
     item_id = models.IntegerField(choices=[(v.id, v.name) for v in
-                                           FIREFOX_VERSIONS],
-                                  db_index=True)
+                                           FIREFOX_VERSIONS])
     document = models.ForeignKey(Document, related_name='firefox_version_set')
+
+    class Meta(object):
+        unique_together = ('item_id', 'document')
 
 
 class OperatingSystem(ModelBase):
     """An operating system used to categorize documents"""
     item_id = models.IntegerField(choices=[(o.id, o.name) for o in
-                                           OPERATING_SYSTEMS],
-                                  db_index=True)
+                                           OPERATING_SYSTEMS])
     document = models.ForeignKey(Document, related_name='operating_system_set')
 
+    class Meta(object):
+        unique_together = ('item_id', 'document')
 
 class HelpfulVote(ModelBase):
     """Helpful or Not Helpful vote on Document."""
