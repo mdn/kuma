@@ -110,4 +110,10 @@ def _filter_tweet(item):
         log.debug('Tweet %d discarded (link).' % item['id'])
         return None
 
+    # Exclude fx4status user (bug 606397)
+    if item['from_user'] == 'fx4status':
+        log.debug('Tweet %d discarded (user %s).' % (
+            item['id'], item['from_user']))
+        return None
+
     return item
