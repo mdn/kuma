@@ -2,11 +2,6 @@
  * Questions forums CSS
  */
 
-/* base style overrides */
-body {
-    background: #fff url(../img/background-feature.jpg) repeat-x center -65px;
-}
-
 /* main header */
 #main-hdr {
     height: 200px;
@@ -19,13 +14,12 @@ body {
 }
 
 #main-hdr h1 {
-    color: #fff;
     font-size: 46px;
     line-height: 46px;
 }
 
 #main-hdr h1 a {
-    color: #fff;
+    color: #303030;
 }
 
 #main-hdr h2 {
