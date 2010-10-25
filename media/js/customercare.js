@@ -217,6 +217,9 @@
                 reply.open(t);
             }
         });
+        $('.tweet a').live('click', function(e) {
+            e.preventPropagation();
+        });
 
         if (signin.authed && memory.id) {
             $('#tweet-'+ memory.id).trigger('click');

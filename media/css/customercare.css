@@ -133,12 +133,16 @@
     text-decoration: none;
 }
 
-#tweets li .time {
+#tweets li time {
     color: #afaba3;
     float: right;
     font-size: 12px;
     font-style: italic;
     font-weight: normal;
+}
+
+#tweets li time:hover {
+    text-decoration: underline;
 }
 
 #tweets li .text {
