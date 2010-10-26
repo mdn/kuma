@@ -381,14 +381,14 @@ class DocumentListTests(TestCaseBase):
         doc = pq(response.content)
         cat = self.doc.category
         eq_(Document.objects.filter(category=cat, locale=self.locale).count(),
-            len(doc('#document-list li')))
+            len(doc('#document-list ul.documents li')))
 
     def test_all_list(self):
         """Verify the all documents list view."""
         response = self.client.get(reverse('wiki.all_documents'))
         doc = pq(response.content)
         eq_(Document.objects.filter(locale=self.locale).count(),
-            len(doc('#document-list li')))
+            len(doc('#document-list ul.documents li')))
 
 
 class DocumentRevisionsTests(TestCaseBase):

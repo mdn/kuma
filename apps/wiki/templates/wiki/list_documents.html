@@ -9,16 +9,21 @@
 {% endif %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <h1>{% if category %}{{ category }}{% else %}{{ _('All Articles') }}{% endif %}</h1>
-  <div id="document-list">
-    <ul>
-      {% for doc in documents %}
-        <li><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
+  <article id="document-list" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1>{% if category %}{{ category }}{% else %}{{ _('All Articles') }}{% endif %}</h1>
+    {% if documents.object_list %}
+      <ul class="documents">
+        {% for doc in documents.object_list %}
+          <li><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {{ documents|paginator }}
+    {% else %}
+      <p>{{ _('There are no articles.') }}</p>
+    {% endif %}
+  </article>
 {% endblock %}

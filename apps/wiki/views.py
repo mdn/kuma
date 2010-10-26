@@ -19,6 +19,8 @@ from access.decorators import permission_required
 from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
+from sumo.utils import paginate
+from wiki import DOCUMENTS_PER_PAGE
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
                          OPERATING_SYSTEMS, FIREFOX_VERSIONS,
@@ -137,6 +139,8 @@ def list_documents(request, category=None):
             category = unicode(dict(CATEGORIES)[category_id])
         except KeyError:
             raise Http404
+
+    docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
                         {'documents': docs,
                          'category': category})
