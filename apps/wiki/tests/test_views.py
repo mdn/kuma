@@ -35,6 +35,12 @@ class RedirectTests(TestCase):
                        follow=True)
         self.assertContains(response, 'REDIRECT ')
 
+    def test_home_redirect(self):
+        """Going to /kb/ should redirect to /home/."""
+        resp = self.client.get(reverse('wiki.home', locale='en-US'))
+        self.assertRedirects(resp, reverse('home', locale='en-US'),
+                             status_code=301)
+
 
 class LocaleRedirectTests(TestCase):
     """Tests for fallbacks to en-US and such for slug lookups."""

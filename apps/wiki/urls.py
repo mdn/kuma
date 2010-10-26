@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, url, include
 
 from kbforums.feeds import ThreadsFeed, PostsFeed
+from sumo.views import redirect_to
 
 
 # These patterns inherit from /discuss
@@ -55,9 +56,7 @@ document_patterns = patterns('wiki.views',
 )
 
 urlpatterns = patterns('wiki.views',
-
-    # TODO: update view to the kb landing/home page when we have it
-    url(r'^$', 'list_documents', name='wiki.home'),
+    url(r'^/$', redirect_to, {'url': 'home'}, name='wiki.home'),
 
     # Un/Subscribe to locale 'ready for review' notifications.
     url(r'^/watch-ready-for-review$', 'watch_locale',
