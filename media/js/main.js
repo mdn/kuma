@@ -11,7 +11,20 @@
             $forms.find('input, button, select, textarea').attr('disabled', 'disabled');
             $forms.find('input[type=image]').css('opacity', .5);
         }
+
+        initLocaleSwitcher();
+
     });
+
+    /*
+     * Initialize the locale form in the footer so that it auto-submits
+     * when the select changes.
+     */
+    function initLocaleSwitcher() {
+        $('#flang').change(function() {
+            $(this).closest('form').submit();
+        });
+    }
 })();
 
 

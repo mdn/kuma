@@ -5,37 +5,47 @@ http://developer.yahoo.net/yui/license.txt
 version: 2.5.1 (concatenated manually)
 */
 /*** RESET-FONTS-GRIDS ***/
-html
-{
+html {
     color: #4b4742;
     background:#FFF;
 }
 
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
-{
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td {
     margin:0;
     padding:0;
 }
 
-fieldset,img
-{
+fieldset,img {
     border:0;
 }
 
-input,textarea,select
-{
+input,textarea,select {
     font-family:inherit;
     font-size:inherit;
     font-weight:inherit;
 }
 
-input,textarea,select
-{
+input,textarea,select {
     font-size:100%;
 }
 
 mark {
     background: none;
+}
+
+/* Some Extra Fonts */
+/* first for IE 6/7/8 */
+@font-face {
+    font-family: 'MetaBlack';
+    font-weight: bold;
+    src: url('http://www.mozilla.com/img/fonts/MetaWebPro-Black.eot');
+}
+
+/* then for Mozilla browsers -> Firefox */
+@font-face {
+    font-family: 'MetaBlack';
+    font-weight: bold;
+    src: url('http://www.mozilla.com/img/fonts/MetaWebPro-Black.woff') format('woff');
 }
 
 /*----------------------------------
@@ -226,127 +236,170 @@ h2 {
 #footer {
     background: #33559b url(../img/background.png) 0 0 repeat-x;
     clear: both;
-    color: #669be1;
+    color: #476FBE;
     display: block;
-    font-family: Verdana;
-    font-size: 90%;
-    min-height: 345px;
+    font-family: Georgia, serif;
     min-width: 978px;
-    padding: 100px 0 0;
+    padding: 115px 0 5px 0;
     text-align: center;
 }
 
-* html #footer {
-    height: 345px;
+#footer-logo a,
+#footer-logo a:link,
+#footer-logo a:visited {
+    display: block;
+    height: 47px;
+    width: 110px;
+    background: url(..//img/header-logos.png) 15px 0 no-repeat;
+    text-indent: -200px;
+    overflow: hidden;
+    -moz-transition: background 0.2s ease-in-out;
+}
+
+#footer-logo a:hover,
+#footer-logo a:active {
+    background: -moz-radial-gradient(center 45deg, ellipse closest-side, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%),
+url(../img/header-logos.png) 15px 0 no-repeat;
+    -moz-transition: background 0.2s ease-in-out;
 }
 
 #footer a:link,
 #footer a:visited {
-    color: #669be1;
+    color: #669BE1;
     text-decoration: none;
 }
 
 #footer a:hover,
 #footer a:active {
-    color: #69645c;
+    color: #fff;
     text-decoration: underline;
 }
 
 #footer-contents {
-    width: 908px;
-    text-align: left;
     margin: auto;
-    padding: 35px;
+    text-align: left;
+    width: 980px;
+}
+
+#footer-contents[dir="rtl"] {
+    text-align: right;
+}
+
+#footer-logo {
+    display: inline;
+    float: left;
+    margin: 0 50px 0 10px;
+}
+
+#footer-logo a,
+#footer-logo a:link,
+#footer-logo a:visited {
+    font-size: 28px;
+    padding: 0;
 }
 
 #footer-menu,
 #footer-menu ul {
+    left: auto;
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style-type: none;
-    left: auto;
 }
 
 #footer-menu li {
-    margin: 0 15px 0 0;
-    padding: 0;
-    list-style-type: none;
-    float: left;
-    display: inline;
-    font-weight: bold;
     background: none;
+    display: inline;
+    float: left;
+    font-weight: bold;
+    list-style-type: none;
+    margin: 15px 10px 0 0;
+    padding: 0;
     position: relative;
-    width: 105px;
+    width: 115px;
 }
 
-#footer-menu li ul {
-    margin: 0.5em 0 2em 0;
-}
-
-#footer-menu ul li {
-    float: none;
-    font-size: 85%;
-    padding: 0 0 0.4em 0;
-    margin: 0;
-    font-weight: normal;
-    display: block;
-    width: auto;
-}
-
-#footer li a:link,
-#footer li a:visited {
+#footer-menu li a,
+#footer-menu li a:link,
+#footer-menu li a:visited,
+#footer #lang_form label {
     color: #fff;
+    font-family: MetaBlack, "Trebuchet MS", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 #footer li li a:link,
 #footer li li a:visited {
-    color: #669be1;
+    color: #669BE1;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    font-weight: normal;
+    text-transform: none;
 }
 
-#footer #cc-license {
-    clear: both;
-    background: url(../img/cc.png) top left no-repeat;
-    padding-top: 40px;
-    font-size: 85%;
+#footer li li a:hover,
+#footer li li a:active {
+    color: #fff;
 }
 
-#footer #cc-license p {
-    padding-top: 20px;
-    margin-bottom: 3px;
+#footer-menu ul li ul {
+    margin: 4px 0 15px;
 }
 
-#footer #cc-license p:first-child {
-    padding-top: 0;
+#footer-menu li.last {
+    margin-right: 0;
 }
 
-#footer #cc-license a {
-    color: #669be1;
-    font-weight: bold;
-    font-size: 100%;
+#footer-menu ul ul li {
+    display: block;
+    float: none;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 0.3em;
+    width: auto;
 }
 
-#cc-license ul li {
-    display: inline;
-    margin-right: 1em;
-}
-
-/*----------------------------------
-    Footer language form
-----------------------------------*/
-
-#footer form, #footer #lang_form {
+#footer #footer-right {
     float: right;
+    width: 180px;
+}
+
+#footer #lang_form {
+    margin: 0 0 15px 27px;
 }
 
 #footer #lang_form label {
-    color: #898378;
     display: block;
-    font-weight: bold;
-    padding-bottom: 5px;
+    margin: 10px 0 4px;
+}
+
+#footer #lang_form select {
+    font-family: sans-serif;
+    font-size: 11px;
+    width: 140px;
 }
 
 #footer #lang_form div {
     display: inline;
+}
+
+#footer #copyright {
+    clear: both;
+}
+
+#footer #copyright p {
+    font-size: 85%;
+    margin-bottom: 0.5em;
+}
+
+#footer #copyright a:hover,
+#footer #copyright a:active {
+    text-decoration: underline;
+}
+
+#footer #footer-links {
+    font-size: 85%;
 }
 
 
