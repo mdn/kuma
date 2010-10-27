@@ -154,6 +154,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.TikiCookieMiddleware',
 
     'twitter.middleware.SessionMiddleware',
+    'sumo.middleware.PlusToSpaceMiddleware',
 )
 
 # Auth

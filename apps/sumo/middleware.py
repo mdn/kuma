@@ -4,6 +4,7 @@ Taken from zamboni.amo.middleware.
 Tried to use localeurl but it choked on 'en-US' with capital letters.
 """
 
+import re
 import urllib
 
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
@@ -118,6 +119,17 @@ class NoCacheHttpsMiddleware(object):
             response['Cache-Control'] = 'no-cache, must-revalidate'
             response['Pragma'] = 'no-cache'
         return response
+
+
+class PlusToSpaceMiddleware(object):
+    """Replace old-style + with %20 in URLs."""
+    def process_request(self, request):
+        p = re.compile(r'\+')
+        if p.search(request.path_info):
+            new = p.sub(' ', request.path_info)
+            if request.META['QUERY_STRING']:
+                new = u'%s?%s' % (new, request.META['QUERY_STRING'])
+            return HttpResponsePermanentRedirect(new)
 
 
 class ReadOnlyMiddleware(object):
