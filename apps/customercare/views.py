@@ -21,9 +21,17 @@ bleach = Bleach()
 MAX_TWEETS = 20
 
 
-def _get_tweets(limit=MAX_TWEETS):
+def _get_tweets(limit=MAX_TWEETS, max_id=None):
+    """
+    Fetch a list of tweets.
+
+    limit is the maximum number of tweets returned.
+    max_id will only return tweets with the status ids less than the given id.
+    """
     tweets = []
     q = Tweet.objects.filter(locale='en')
+    if max_id:
+        q = q.filter(tweet_id__lt=max_id)
     if limit:
         q = q[:limit]
 
@@ -43,8 +51,10 @@ def _get_tweets(limit=MAX_TWEETS):
 
 @require_GET
 def more_tweets(request):
-    return jingo.render(request, 'customercare/tweets.html', 
-                        {'tweets': _get_tweets()})
+    """AJAX view returning a list of tweets."""
+    max_id = request.GET.get('max_id')
+    return jingo.render(request, 'customercare/tweets.html',
+                        {'tweets': _get_tweets(max_id=max_id)})
 
 
 @require_GET

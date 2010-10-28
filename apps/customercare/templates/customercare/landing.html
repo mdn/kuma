@@ -37,6 +37,10 @@
     <ul id="tweets">
       {% include 'customercare/tweets.html' %}
     </ul>
+
+    <div id="infinite-scroll">
+      <img id="scroll-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/>
+    </div>
   </div>
 
   {% include 'customercare/reply_modal.html' %}

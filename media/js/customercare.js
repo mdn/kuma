@@ -253,6 +253,28 @@
             return false;
         });
 
+        /* Search box */
         $('#side-search input[name="q"]').autoPlaceholderText();
+
+        /* Infinite scrolling */
+        $('#infinite-scroll').bind('enterviewport', function() {
+            $('#scroll-busy').show();
+
+            var max_id = $('#tweets li:last').attr('data-tweet-id');
+            if (!max_id) return;
+
+            $.get(
+                $('#refresh-tweets').attr('href'), {max_id: max_id},
+                function(data) {
+                    if (data) {
+                        $('#tweets').append(data);
+                    } else {
+                        // No data left, remove infinite scrolling.
+                        $('#infinite-scroll').unbind('enterviewport');
+                    }
+                    $('#scroll-busy').hide();
+                }
+            );
+        }).bullseye();
     });
 }(jQuery));

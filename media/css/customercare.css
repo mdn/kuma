@@ -79,6 +79,14 @@
     width: 10px;
 }
 
+#infinite-scroll {
+    text-align: center;
+}
+#scroll-busy {
+    display: none;
+    margin: 10px 0;
+}
+
 .avatar img {
     height: 48px;
     width: 48px;
