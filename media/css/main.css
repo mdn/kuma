@@ -38,14 +38,14 @@ mark {
 @font-face {
     font-family: 'MetaBlack';
     font-weight: bold;
-    src: url('http://www.mozilla.com/img/fonts/MetaWebPro-Black.eot');
+    src: url('../fonts/MetaWebPro-Black.eot');
 }
 
 /* then for Mozilla browsers -> Firefox */
 @font-face {
     font-family: 'MetaBlack';
     font-weight: bold;
-    src: url('http://www.mozilla.com/img/fonts/MetaWebPro-Black.woff') format('woff');
+    src: url('../fonts/MetaWebPro-Black.woff') format('woff');
 }
 
 /*----------------------------------
