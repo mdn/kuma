@@ -521,3 +521,42 @@ a.header-button {
 .ui-dialog-titlebar-close.ui-state-hover {
     background: none;
 }
+
+/** Sidebar search box */
+div.support-search form {
+    background: #1b5898;
+    background: -moz-linear-gradient(top, #2e89ca, #1b5898);
+    background: -webkit-gradient(linear, left top, left bottom, from(#2e89ca), to(#1b5898));
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    padding: 5px;
+}
+
+div.support-search span.wrap {
+    background: #fff url(../img/icon.searchloupe.png) no-repeat 7px center;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+    height: 28px;
+    padding: 2px 0 0 36px;
+    width: 102px;
+}
+
+div.support-search input.text {
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+    height: 26px;
+    width: 99%;
+}
+
+div.support-search input.submit {
+    box-shadow: none;
+    float: left;
+    height: 33px;
+    margin: 0 0 0 5px;
+    width: 37px;
+}

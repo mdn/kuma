@@ -1,11 +1,11 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% macro search_box(settings, id=False, prefix=None,
+{% macro search_box(settings, id=False, prefix=None, target=None,
                     placeholder='Search Firefox Help') %}
   <div class="support-search"{% if id %} id="{{ id }}"{% endif %} role="search">
     {% if prefix %}
       {{ _(prefix) }}
     {% endif %}
-    <form action="{{ url('search') }}" method="get">
+    <form action="{{ url('search') }}" method="get" {% if target %} target="{{ target }}"{% endif %}>
       <span class="wrap">
         <input type="text" class="text" name="q" placeholder="{{ _(placeholder) }}" required="required" />
       </span>

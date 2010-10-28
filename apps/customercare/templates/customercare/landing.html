@@ -1,5 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "customercare/base.html" %}
+{% from 'wiki/includes/common_macros.html' import search_box %}
 {% set title = _('Join our Army of Awesome') %}
 
 {% block breadcrumbs %}{% endblock %}
@@ -50,4 +51,6 @@
        Firefox users in the <a href="{{ url('questions.questions') }}">forum</a>.</p>
     <p><a href="/"><img src="{{ MEDIA_URL }}img/sumo-logo.png" class="sumo-logo"></a></p>
   </div>
+
+  {{ search_box(settings, id='side-search', target='_blank', placeholder=_('Search')) }}
 {% endblock %}

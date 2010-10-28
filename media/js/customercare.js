@@ -252,5 +252,7 @@
             e.preventDefault();
             return false;
         });
+
+        $('#side-search input[name="q"]').autoPlaceholderText();
     });
 }(jQuery));
