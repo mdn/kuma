@@ -172,10 +172,11 @@ class Document(ModelBase, TaggableMixin):
             self.is_localizable = False
 
     def _validate_is_localizable(self):
-        """is_localizable == having translations. Make sure that stays true.
+        """is_localizable == allowed to have translations. Make sure that isn't
+        violated.
 
         For default language (en-US), is_localizable means it can have
-        translations, enforce:
+        translations. Enforce:
             * is_localizable=True if it has translations
             * if has translations, unable to make is_localizable=False
 
