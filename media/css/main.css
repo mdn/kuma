@@ -608,7 +608,8 @@ img.markup-toolbar-button {
     cursor: pointer;
 }
 
-#showfor-modal {
+#showfor-modal,
+#link-modal {
     color: #4B4740;
     display: block;
     left: 50%;
@@ -620,7 +621,8 @@ img.markup-toolbar-button {
     z-index: 10;
 }
 
-#showfor-modal h2 {
+#showfor-modal h2,
+#link-modal h2 {
     font-size: 16px;
     margin: 10px 0 0;
 }
@@ -633,8 +635,38 @@ img.markup-toolbar-button {
     margin: 0 5px 0 0;
 }
 
-#showfor-modal div.submit {
-    margin: 20px 0 0;
+section.marky div.submit {
+    clear: both;
+    padding: 20px 0 0;
+}
+
+#link-modal {
+    margin-left: -320px;
+    width: 600px;
+}
+
+#link-modal label {
+    clear: both;
+    float: left;
+    padding: 5px 15px 20px 0;
+    text-align: right;
+    width: 75px;
+}
+
+#link-modal ol {
+    float: left;
+}
+
+#link-modal li {
+    list-style: none;
+    padding: 0 0 10px;
+}
+
+#link-modal li label {
+    float: none;
+    padding: 0;
+    text-align: left;
+    width: auto;
 }
 
 /* Submit or cancel switches */

@@ -54,12 +54,7 @@ var Marky = {
             new SB(gettext('Italic'), '/media/img/markup/new/italic.png',
                    "''", "''", gettext('italic text')),
             new Marky.Separator(),
-            // TODO: There will be only one link button that opens a helper
-            new SB(gettext('Article Link'), '/media/img/markup/new/link.png',
-                   '[[', ']]', gettext('Knowledge Base Article')),
-            new SB(gettext('External Link'),
-                   '/media/img/markup/new/link.png', '[http://example.com ',
-                   ']', gettext('external link')),
+            new Marky.LinkButton(),
             // TODO: implement media helper
             new SB(gettext('Insert Media'),
                   '/media/img/markup/new/image.png', '',
@@ -133,6 +128,20 @@ Marky.SimpleButton.prototype = {
             me.handleClick(e);
         });
         return $btn[0];
+    },
+    // Get selected text
+    getSelectedText: function() {
+        var selText = '';
+        if(document.selection && document.selection.createRange) {
+            // IE/Opera
+            selText = document.selection.createRange().text;
+        } else if(this.textarea.selectionStart ||
+                  this.textarea.selectionStart == '0') {
+            // Firefox/Safari/Chrome/etc.
+            selText = this.textarea.value.substring(
+                this.textarea.selectionStart, this.textarea.selectionEnd);
+        }
+        return selText;
     },
     // Handles the button click.
     handleClick: function(e) {
@@ -235,7 +244,7 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     openModal: function(e) {
         var me = this,
             // TODO: look at using a js template solution (jquery-tmpl?)
-            $modal = $('<section id="showfor-modal" class="pop-in">' +
+            $modal = $('<section id="showfor-modal" class="pop-in marky">' +
                        '<a href="#close" class="close">&#x2716;</a><h1/>' +
                        '<div class="wrap"><div class="placeholder"/>' +
                        '<div class="submit"><button type="button"></button>' +
@@ -303,6 +312,147 @@ Marky.Separator.prototype = {
         return this;
     }
 };
+
+/*
+ * The link helper.
+ */
+Marky.LinkButton = function() {
+    this.name = gettext('Insert a link...');
+    this.imagePath = '/media/img/markup/new/link.png';
+    this.openTag = '[http://example.com ';
+    this.closeTag = ']';
+    this.defaultText = gettext('link text');
+    this.everyline = false;
+
+    this.origOpenTag = this.openTag;
+    this.origCloseTag = this.closeTag;
+    this.origDefaultText = this.defaultText;
+
+    this.html = '<img class="markup-toolbar-button" />';
+};
+
+Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
+    // Gets the DOM node for the button.
+    node: function() {
+        var me = this,
+            $btn = this.render();
+        $btn.click(function(e) {
+            me.openModal(e);
+        });
+        return $btn[0];
+    },
+    reset: function() {
+        this.openTag = this.origOpenTag;
+        this.closeTag = this.origCloseTag;
+        this.defaultText = this.origDefaultText;
+    },
+    openModal: function(e) {
+        var me = this,
+            // TODO: look at using a js template solution (jquery-tmpl?)
+            $modal = $(
+                '<section id="link-modal" class="pop-in marky">' +
+                '<a href="#close" class="close">&#x2716;</a>' +
+                '<h1>' + this.name + '</h1><div class="wrap">' +
+                '<label>' + gettext('Link text:') + '</label>' +
+                '<input type="text" name="link-text" />' +
+                '<label>' + gettext('Link target:') + '</label>' +
+                '<ol><li><label><input type="radio" name="link-type" value="internal" /> ' +
+                gettext('Support article:') + '</label> ' +
+                '<input type="text" name="internal" placeholder="' +
+                gettext('Enter the name of the article') + '" /></li>' +
+                '<li><label><input type="radio" name="link-type" value="external" /> ' +
+                gettext('External link:') + '</label> ' +
+                '<input type="text" name="external" placeholder="' +
+                gettext('Enter the URL of the external link') + '" /></li>' +
+                '</ol><div class="submit"><button type="button"></button>' +
+                '<a href="#cancel" class="cancel">' + gettext('Cancel') + '</a></div>' +
+                '</div></section>' // whew, yuck!?
+            ),
+            $overlay = $('<div id="modal-overlay"></div>'),
+            selectedText = me.getSelectedText();
+
+        $modal.find('li input[type="text"]').focus(function() {
+            $(this).closest('li').find('input[type="radio"]').click();
+        });
+
+        $modal.find('button').text(gettext('Insert Link')).click(function(e){
+            // Generate the wiki markup based on what the user has selected
+            // (interval vs external links) and entered into the textboxes,
+            // if anything.
+            var val = $modal.find('input[type="radio"]:checked').val(),
+                text = $modal.find('input[name=link-text]').val(),
+                $internal = $modal.find('input[name="internal"]'),
+                $external = $modal.find('input[name="external"]');
+            me.reset();
+            if (val === 'internal') {
+                var title = $internal.val();
+                if(title) {
+                    if(title === selectedText) {
+                        // The title wasn't changed, so lets keep it selected.
+                        me.openTag = '[[';
+                        me.closeTag = ']]';
+                        if (text) {
+                            me.closeTag = '|' + text + me.closeTag;
+                        }
+                    } else {
+                        // The title changed, so lets insert link before the cursor.
+                        me.openTag = '[[' + title;
+                        if (text) {
+                            me.openTag += '|' + text;
+                        }
+                        me.openTag += ']] ';
+                        me.closeTag = '';
+                        me.defaultText = '';
+                    }
+                } else {
+                    me.openTag = '[[';
+                    me.closeTag = ']]';
+                    if(text) {
+                        me.closeTag = '|' + text + ']]';
+                    }
+                    me.defaultText = gettext('Knowledge Base Article');
+                }
+            } else {
+                var link = $external.val();
+                if (link) {
+                    if (link.indexOf('http') != 0) {
+                        link = 'http://' + link;
+                    }
+                    me.openTag = '[' + link + ' ';
+                    if (text) {
+                        me.openTag += text + '] ';
+                        me.closeTag = '';
+                        me.defaultText = '';
+                    }
+                } else if (text) {
+                    me.defaultText = text;
+                }
+            }
+
+            me.handleClick(e);
+            closeModal(e);
+        });
+        $modal.find('a.close, a.cancel').click(closeModal);
+
+        $('body').append($overlay).append($modal);
+
+        if (selectedText) {
+            // If there user has selected text, lets default to it being
+            // the Article Title.
+            $modal.find('input[name="internal"]').val(selectedText).focus();
+        }
+
+        function closeModal(e) {
+            $modal.unbind().remove();
+            $overlay.unbind().remove();
+            e.preventDefault();
+            return false;
+        }
+
+        e.preventDefault();
+        return false;
+    }
+});
 
 window.Marky = Marky;
 
