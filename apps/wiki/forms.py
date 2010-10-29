@@ -135,7 +135,7 @@ class RevisionForm(forms.ModelForm):
                                         v in c[1]]) for
                      c in GROUPED_FIREFOX_VERSIONS]}
     content = StrippedCharField(
-                min_length=5, max_length=10000,
+                min_length=5, max_length=100000,
                 widget=forms.Textarea(attrs={'data-showfor':
                                              json.dumps(showfor_data)}),
                 error_messages={'required': CONTENT_REQUIRED,
