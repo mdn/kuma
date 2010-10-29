@@ -194,7 +194,8 @@ def edit_document(request, document_slug, revision_id=None):
     disclose_description = bool(request.GET.get('opendescription'))
     doc_form = rev_form = None
     if doc.allows_revision_by(user):
-        rev_form = RevisionForm(instance=rev, initial={'based_on': rev.id})
+        rev_form = RevisionForm(instance=rev, initial={'based_on': rev.id,
+                                                       'comment': ''})
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc))
 
@@ -355,7 +356,8 @@ def translate(request, document_slug):
         doc_initial = _document_form_initial(doc) if doc else None
         doc_form = DocumentForm(initial=doc_initial)
         rev_form = RevisionForm(instance=doc and doc.current_revision,
-                                initial={'based_on': based_on_rev.id})
+                                initial={'based_on': based_on_rev.id,
+                                         'comment': ''})
     else:  # POST
         doc_form = DocumentForm(request.POST, instance=doc)
         doc_form.instance.locale = request.locale

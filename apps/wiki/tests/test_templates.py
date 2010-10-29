@@ -261,6 +261,7 @@ class NewRevisionTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('#revision-form textarea[name="content"]')))
+        assert 'value' not in doc('#id_comment')[0].attrib
 
     def test_new_revision_GET_based_on(self):
         """HTTP GET to new revision URL based on another revision.
@@ -618,6 +619,7 @@ class TranslateTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('form textarea[name="content"]')))
+        assert 'value' not in doc('#id_comment')[0].attrib
 
     def test_translate_disallow(self):
         """HTTP GET to translate URL returns 400 when not localizable."""
@@ -886,7 +888,8 @@ def _create_document(title='Test Document', parent=None,
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=118577,
-                 significance=SIGNIFICANCES[0][0], is_approved=True)
+                 significance=SIGNIFICANCES[0][0], is_approved=True,
+                 comment="Good job!")
     r.save()
     return d
 
