@@ -17,12 +17,15 @@ from sumo.urlresolvers import reverse
 from wiki import TEMPLATE_TITLE_PREFIX
 
 
-# Disruptiveness of edits to translated versions. Keys indicate the relative
-# severity.
+# Disruptiveness of edits to translated versions. Numerical magnitude indicate
+# the relative severity.
+TYPO_SIGNIFICANCE = 10
+MEDIUM_SIGNIFICANCE = 20
+MAJOR_SIGNIFICANCE = 30
 SIGNIFICANCES = (
-    (10, _lazy('Minor details like punctuation and spelling errors')),
-    (20, _lazy("Content changes that don't require immediate translation")),
-    (30, _lazy('Major content changes that will make older translations '
+    (TYPO_SIGNIFICANCE, _lazy('Minor details like punctuation and spelling errors')),
+    (MEDIUM_SIGNIFICANCE, _lazy("Content changes that don't require immediate translation")),
+    (MAJOR_SIGNIFICANCE, _lazy('Major content changes that will make older translations '
                'inaccurate')),
 )
 
@@ -122,7 +125,9 @@ class Document(ModelBase, TaggableMixin):
                               default=settings.WIKI_DEFAULT_LANGUAGE,
                               choices=settings.LANGUAGE_CHOICES)
 
-    # Latest approved revision. (Remove "+" to enable reverse link.)
+    # Latest approved revision. L10n dashboard depends on this being so (rather
+    # than being able to set it to earlier approved revisions). (Remove "+" to
+    # enable reverse link.)
     current_revision = models.ForeignKey('Revision', null=True,
                                          related_name='current_for+')
 

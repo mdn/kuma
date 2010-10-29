@@ -1,12 +1,51 @@
 """Data aggregators for dashboards"""
 
 from django.conf import settings
+from django.db import connection
 from django.utils.timesince import timesince
 
 import jingo
 from tower import ugettext as _, ugettext_lazy as _lazy
 
-from wiki.models import Document
+from sumo.urlresolvers import reverse
+from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
+
+
+OUT_OF_DATE_QUERY = ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
+    'FROM wiki_document transdoc '
+    'INNER JOIN wiki_revision engrev ON engrev.id='
+    # The oldest english rev to have an approved level-30 change since the
+    # translated doc had an approved rev based on it. NULL if there is none:
+        '(SELECT min(id) from wiki_revision '
+        # Narrow engrev rows to those representing revision of parent doc:
+        'WHERE wiki_revision.document_id=transdoc.parent_id '
+        # For the purposes of computing the "Out of Date Since" column, the
+        # revision that threw the translation out of date had better be more
+        # recent than the one the current translation is based on:
+        'AND wiki_revision.id>'
+            '(select based_on_id from wiki_revision basedonrev '
+            'where basedonrev.id=transdoc.current_revision_id) '
+        'AND wiki_revision.significance>=%s '
+        'AND %s='
+        # Completely filter out outer selections where 30 is not the max signif
+        # of english revisions since trans was last approved. Other maxes will
+        # be shown by other readouts. Optimize: try "30 IN"; maybe the inner
+        # query can bail out early. [Ed: No effect on EXPLAIN on test corpus.]
+            '(select max(engsince.significance) '
+            'from wiki_revision engsince '
+            'where engsince.document_id=transdoc.parent_id '
+            # Assumes that any approved revision became the current revision at
+            # some point: we don't let the user go back and approve revisions
+            # older than the latest approved one.
+            'and engsince.is_approved '
+            'and engsince.id>'
+            # The English revision the current translation's based on:
+                '(select based_on_id from wiki_revision '
+                'where wiki_revision.id=transdoc.current_revision_id)'
+            ')'
+        ') '
+    'WHERE transdoc.locale=%s '
+    'ORDER BY engrev.reviewed DESC')
 
 
 def localizable_docs():
@@ -57,7 +96,18 @@ class Readout(object):
 
     """
     #title = _lazy(u'Localized Title of Readout')
-    #slug = 'URL slug for detail page and CSS class for table'
+    #slug = 'URL slug for detail page'
+    #template = 'name of template to render rows with'
+    template = 'article-views-date'
+    column4_label = _lazy(u'Status')
+
+    def __init__(self, request):
+        """Take request so the template can use contextual macros that need it.
+
+        `request.locale` must not be the default locale.
+
+        """
+        self.request = request
 
     def rows(self, max=None):
         """Return an iterable of dicts containing the data for the table.
@@ -76,40 +126,87 @@ class Readout(object):
         """
         return jingo.render_to_string(
             self.request,
-            'dashboards/includes/localization/%s.html' % self.slug,
-            {'rows': rows})
+            'dashboards/includes/localization/%s.html' % self.template,
+            {'rows': rows, 'column4_label': self.column4_label})
+
+    # Convenience methods:
+
+    @staticmethod
+    def limit_clause(max):
+        """Return a SQL LIMIT clause limiting returned rows to `max`.
+
+        Return '' if max is None.
+
+        """
+        return ' LIMIT %i' % max if max else ''
 
 
 class UntranslatedReadout(Readout):
     title = _lazy(u'Untranslated Articles')
     slug = 'untranslated'
-
-    def __init__(self, request):
-        """`request.locale` must not be the default locale."""
-        self.request = request
+    column4_label = _lazy(u'Updated')
 
     def rows(self, max=None):
-        # TODO: Optimize so there isn't another query per doc to get the
-        # current_revision. Use the method from
-        # http://www.caktusgroup.com/blog/2009/09/28/custom-joins-with-djangos-
-        # queryjoin/.
-        rows = Document.objects.raw('SELECT english.* FROM wiki_document '
-            'english RIGHT OUTER JOIN wiki_revision ON '
-            'english.current_revision_id=wiki_revision.id LEFT OUTER JOIN '
-            'wiki_document translated ON english.id=translated.parent_id AND '
-            'translated.locale=%s WHERE translated.id IS NULL AND '
-            'english.current_revision_id IS NOT NULL AND '
-            'english.is_localizable AND english.locale=%s ORDER BY '
-            'wiki_revision.reviewed DESC',
-            params=[self.request.locale, settings.WIKI_DEFAULT_LANGUAGE])
-        for d in rows[:max] if max else rows:
+        # Incidentally, we tried this both as a left join and as a search
+        # against an inner query returning translated docs, and the left join
+        # yielded a faster-looking plan (on a production corpus).
+        cursor = connection.cursor()
+        cursor.execute('SELECT parent.slug, parent.title, wiki_revision.reviewed FROM wiki_document parent INNER JOIN wiki_revision ON parent.current_revision_id=wiki_revision.id LEFT OUTER JOIN wiki_document translated ON parent.id=translated.parent_id AND translated.locale=%s WHERE translated.id IS NULL AND parent.is_localizable AND parent.locale=%s ORDER BY wiki_revision.reviewed DESC' + self.limit_clause(max),
+            [self.request.locale, settings.WIKI_DEFAULT_LANGUAGE])
+
+        for r in cursor.fetchall():
+            # Run the data through the model to (potentially) format it and
+            # take advantage of SPOTs (like for get_absolute_url()):
+            d = Document(slug=r[0], title=r[1],
+                         locale=settings.WIKI_DEFAULT_LANGUAGE)
+            reviewed = r[2]
+
             # TODO: i18nize better. Show only 1 unit of time: for example,
             # weeks instead of weeks+days or months instead of months+weeks.
             #
             # Not ideal but free:
-            ago = (d.current_revision.reviewed and
-                   _('%s ago') % timesince(d.current_revision.reviewed))
+            ago = (reviewed and _('%s ago') % timesince(reviewed))
             yield (dict(title=d.title,
                         url=d.get_absolute_url(),
+                        visits=0, percent=100,
+                        updated=ago))
+
+
+class OutOfDateReadout(Readout):
+    title = _lazy(u'Out-of-Date Translations')
+    slug = 'out-of-date'
+    column4_label = _lazy(u'Out of date since')
+
+    # To show up in this readout, an article's revision since the last
+    # approved translation must have a maximum significance equal to this
+    # value:
+    _max_significance = MAJOR_SIGNIFICANCE
+
+    def rows(self, max=None):
+        # At the moment, the "Out of Date Since" column shows the time since
+        # the translation was out of date at a MEDIUM level of severity or
+        # higher. We could arguably knock this up to MAJOR, but technically it
+        # is out of date when the original gets anything more than typo
+        # corrections.
+        cursor = connection.cursor()
+        cursor.execute(OUT_OF_DATE_QUERY + self.limit_clause(max),
+            [MEDIUM_SIGNIFICANCE, self._max_significance, self.request.locale])
+
+        for slug, title, reviewed in cursor.fetchall():
+            ago = (reviewed and _('%s ago') % timesince(reviewed))
+            yield (dict(title=title,
+                        url=reverse('wiki.edit_document', args=[slug]),
                         visits=0, percent=0,
                         updated=ago))
+
+
+class NeedingUpdatesReadout(OutOfDateReadout):
+    title = _lazy(u'Translations Needing Updates')
+    slug = 'needing-updates'
+
+    _max_significance = MEDIUM_SIGNIFICANCE
+
+
+# L10n Dashboard tables that have their own whole-page views
+L10N_READOUTS = dict((t.slug, t) for t in [
+    UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout])

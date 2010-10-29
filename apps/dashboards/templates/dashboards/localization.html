@@ -72,11 +72,35 @@
     <details class="h2" open="open">
       {% with readout = readouts['untranslated'] %}
         <summary><a id="untranslated">{{ readout.title }}</a></summary>
-        <table class="{{ readout.slug }}">
+        <table class="documents">
           {{ readout.render(readout.rows(10))|safe }}
         </table>
         <div class="table-footer">
           <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All untranslated articles...') }}</a>
+        </div>
+      {% endwith %}
+    </details>
+
+    <details class="h2" open="open">
+      {% with readout = readouts['out-of-date'] %}
+        <summary><a id="out-of-date">{{ readout.title }}</a></summary>
+        <table class="documents">
+          {{ readout.render(readout.rows(10))|safe }}
+        </table>
+        <div class="table-footer">
+          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All out-of-date translations...') }}</a>
+        </div>
+      {% endwith %}
+    </details>
+
+    <details class="h2" open="open">
+      {% with readout = readouts['needing-updates'] %}
+        <summary><a id="needing-updates">{{ readout.title }}</a></summary>
+        <table class="documents">
+          {{ readout.render(readout.rows(10))|safe }}
+        </table>
+        <div class="table-footer">
+          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All translations needing updates...') }}</a>
         </div>
       {% endwith %}
     </details>

@@ -7,7 +7,7 @@ from django.views.decorators.http import require_GET
 import jingo
 from tower import ugettext_lazy as _lazy
 
-from dashboards.readouts import overview_rows, UntranslatedReadout
+from dashboards.readouts import overview_rows, L10N_READOUTS
 from sumo_locales import LOCALES
 from sumo.parser import get_object_fallback
 from sumo.urlresolvers import reverse
@@ -38,26 +38,22 @@ def localization(request):
 
     return jingo.render(request, 'dashboards/localization.html',
         {'overview_rows': partial(overview_rows, request.locale),
-         'readouts':
-             {'untranslated': UntranslatedReadout(request)},
+         'readouts': dict((slug, class_(request)) for
+                          slug, class_ in L10N_READOUTS.iteritems()),
          'default_locale_name': LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
          'default_locale': settings.WIKI_DEFAULT_LANGUAGE,
          'current_locale_name': LOCALES[request.locale].native,
         })
 
 
-# Tables that have their own whole-page views
-READOUTS_WITH_DETAILS = dict((t.slug, t) for t in [UntranslatedReadout])
-
-
 @require_GET
 def localization_detail(request, readout):
     """Show all the rows for the given localizer dashboard table."""
-    if readout not in READOUTS_WITH_DETAILS:
+    if readout not in L10N_READOUTS:
         raise Http404
 
     return jingo.render(request, 'dashboards/localization_detail.html',
-        {'readout': READOUTS_WITH_DETAILS[readout](request)})
+        {'readout': L10N_READOUTS[readout](request)})
 
 
 def contributors(request):
