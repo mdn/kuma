@@ -101,19 +101,39 @@ h2 {
     Header
 ----------------------------------*/
 
-#nav-access {
-    display: none;
-}
-
 #header {
-    width: 920px;
-    height: 56px;
-    margin: auto;
-    text-align: left;
-    position: relative;
-    z-index: 3;
-    background: #1e4262 url(../img/header-background.png) bottom left no-repeat;
-    font-family: Verdana;
+    background: #33589f;
+    background: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(42,65,135)),
+        color-stop(1, rgb(59,105,177))
+    );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(42,65,135) 0%,
+        rgb(59,105,177) 100%
+    );
+    background: linear-gradient(
+        center bottom,
+        rgb(42,65,135) 0%,
+        rgb(59,105,177) 100%
+    );
+    height: 47px;
+    margin: 0 auto;
+    font-family: verdana;
+    -moz-box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1);
+    box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1);
+    -webkit-border-bottom-right-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3B69B1', endColorstr='#2D488D',GradientType=0 ); /* ie */
+    width: 980px;
 }
 
 #header h1 {
@@ -121,113 +141,257 @@ h2 {
     float: left;
 }
 
+#header h1 a,
 #header h1 a:link,
 #header h1 a:visited {
-    color: #fff;
+    display: block;
+    height: 47px;
+    width: 110px;
+    background: url(../img/header-logos.png) 15px 0 no-repeat;
+    text-indent: -9999px;
+    overflow: hidden;
+    -moz-transition: background 0.2s ease-in-out;
 }
 
-
-/*----------------------------------
-    Header navigation
-----------------------------------*/
-
-#nav-main ul,
-#nav-main li {
-    list-style: none;
+#header h1 a:hover,
+#header h1 a:active {
+    background: -moz-radial-gradient(center 45deg, ellipse closest-side, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%),
+        url(../img/header-logos.png) 15px 0 no-repeat;
+    -moz-transition: background 0.2s ease-in-out;
 }
 
 #nav-main {
-    float: right;
-    padding-right: 200px;
+    float: left;
+    padding-left: 140px;
+    text-align: left;
+}
+
+#nav-main, #nav-main ul, #nav-main li {
+    list-style: none;
 }
 
 #nav-main ul {
     float: left;
     z-index: 99;
     left: auto;
-    background: transparent url(../img/header-nav-divider.png) top left no-repeat;
-    padding-left: 2px;
-}
-
-#nav-main a:link,
-#nav-main a:visited {
-    color: #fff;
-    text-decoration: none;
-}
-
-#nav-main li:hover,
-#nav-main a:hover,
-#nav-main a:active,
-#nav-main .current-main,
-#nav-main .sfhover {
-    color: #fff;
-    background: #31526f url(../img/header-nav-menu-backgrounds.png) top right no-repeat;
-}
-
-#nav-main ul ul {
-    border-top: 0;
-    background: url(../img/header-nav-menu-backgrounds.png) bottom left no-repeat;
-    padding: 8px 0;
-    width: 190px;
-}
-
-#nav-main li ul {
-    position: absolute;
-    left: -999em;
-}
-
-#nav-main ul ul a {
-    padding: 4px 20px;
-    margin: 0 1px 1px 1px;
-    height: auto;
-    float: none;
-    display: block;
-    font-size: 85%;
-    font-weight: normal;
-    border: 0;
-    background-image: none;
-    position: relative;
-}
-
-#nav-main ul ul a:hover,
-#nav-main ul ul a:active {
-    background: #3d5b74;
-}
-
-#nav-main ul ul .current {
-    color: #fff;
-    background: #31526f;
-}
-
-#nav-main ul ul li {
-    float: none;
-}
-
-#nav-main ul ul li a {
-    _height: 100%; /* IE6 hack to allow whitespace in header */
+    margin: 0;
+    padding: 0;
 }
 
 #nav-main li {
     float: left;
     background: none;
+    margin: 0;
+    padding: 0;
     position: relative;
 }
 
-#nav-main a {
+#nav-main a,
+#nav-main span {
     display: block;
     color: #fff;
+    font-family: "Trebuchet MS", sans-serif;
     font-weight: bold;
-    font-size: 95%;
-    padding: 20px 20px 0 20px;
-    height: 35px;
+    font-size: 13px;
+}
+
+#nav-main ul {
+    border-right: 1px solid rgb(83,115,176);
+    border-left: 1px solid rgb(47,80,140);
+}
+
+#nav-main ul {
+    border-right-color: rgba(255,255,255,0.15);
+    border-right-color: rgba(255,255,255,0.15);
+    border-left-color: rgba(0,0,0,0.2);
+}
+
+#nav-main ul li a,
+#nav-main ul li span {
+    padding: 15px 15px 0 15px;
+    height: 32px;
+    display: block;
     float: left;
+    text-transform: uppercase;
+    border-left: 1px solid rgb(83,115,176);
+    border-right: 1px solid rgb(47,80,140);
+}
+
+#nav-main ul li a {
+    border-left-color: rgba(255,255,255,0.15);
+    border-right-color: rgba(0,0,0,0.2);
+}
+
+#nav-main li ul {
+    position: absolute;
+    left: -999em;
+    opacity: 0;
 }
 
 #nav-main li:hover ul,
 #nav-main li.sfhover ul {
-    margin-top: 55px;
+    margin-top: 46px;
     left: 0;
+    opacity: 1;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -webkit-transition: opacity 0.2s ease-in-out;
 }
+
+#nav-main ul li ul li {
+  float: none;
+}
+
+#nav-main ul li a,
+#nav-main ul li a:link,
+#nav-main ul li a:visited {
+    color: #fff;
+    text-decoration: none;
+    -moz-transition: background 0.2s linear;
+    -webkit-transition: background 0.2s linear;
+}
+
+#nav-main ul li.current a,
+#nav-main ul li.current a:link
+#nav-main ul li.current a:visited {
+    -webkit-transition: none;
+}
+
+#nav-main ul li a:hover,
+#nav-main ul li a:active {
+    color: #fff;
+    background: #263c7b;
+    background: rgba(38,60,123,0.9); 
+    -moz-transition: background 0.1s ease-in;
+    -webkit-transition: background 0.1s ease-in;
+}
+
+#nav-main ul li.current span,
+#nav-main ul li.current a,
+#nav-main ul li.current a:link,
+#nav-main ul li.current a:visited {
+    height: 28px;
+}
+
+#nav-main ul li li.current span,
+#nav-main ul li li.current a,
+#nav-main ul li li.current a:link,
+#nav-main ul li li.current a:visited, 
+#nav-main ul li.current li a,
+#nav-main ul li.current li a:link,
+#nav-main ul li.current li a:visited {
+    height: auto;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#nav-main ul li.current a:hover,
+#nav-main ul li.current a:active {
+    -moz-box-shadow: inset 0 -5px rgba(102,155,225,0.8);
+    -webkit-box-shadow: inset 0 -5px rgba(102,155,225,0.8);
+    box-shadow: inset 0 -5px rgba(102,155,225,0.8);
+}
+
+#nav-main ul li.current {
+    border-bottom: 4px solid #5784bf;
+    -moz-box-shadow: inset 0 -5px #669be1;
+    -webkit-box-shadow: inset 0 -5px #669be1;
+    box-shadow: inset 0 -5px #669be1;
+}
+
+#nav-main ul ul li.current {
+    border-bottom: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#nav-main ul ul,
+#nav-main ul ul li {
+    height: auto;
+    border: 0;
+}
+
+#nav-main ul ul {
+    border-top: 0;
+    padding: 0 0 4px 0;
+    width: 190px;
+    background: #263c7b;
+    background: rgba(38,60,123,0.9); 
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -moz-box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 3px rgba(0,0,0,0.1), inset 0 -4px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 0 #1b3b6a, 0 0 5px #1b3b6a;
+}
+
+#nav-main ul li ul li a,
+#nav-main ul li ul li a:link,
+#nav-main ul li ul li a:visited,
+#nav-main ul li ul li span {
+    padding: 5px 15px;
+    margin: 0;
+    height: auto;
+    float: none;
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    border: 0;
+    background-image: none;
+    position: relative;
+    text-transform: none;
+    -moz-transition: background 0.1s ease-in;
+    -webkit-transition: background 0.1s ease-in;
+}
+
+#nav-main ul li ul li a:hover,
+#nav-main ul li ul li a:active {
+    background: #263c7b;
+    background: rgba(38,60,123,0.9); 
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #496288;
+    border-top: 1px solid #162f55;
+    -moz-transition: background 0.1s ease-out;
+    -webkit-transition: background 0.1s ease-out;
+}
+
+#header a.mozilla {
+    float: right;
+    display: block;
+    height: 47px;
+    width: 133px;
+    background: url(../img/header-logos.png) 15px -46px no-repeat;
+    text-indent: -9999px;
+    overflow: hidden;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -webkit-transition: opacity 0.2s ease-in-out;
+}
+
+#header a.mozilla:hover,
+#header a.mozilla:active {
+    background: -moz-radial-gradient(center 45deg, ellipse closest-side, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%),
+        url(../img/header-logos.png) 15px -46px no-repeat;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -webkit-transition: opacity 0.2s ease-in-out;
+}
+
+#header a.mozilla span {
+    color: #a0c8da;
+    font-family: georgia, serif;
+    font-weight: normal;
+    font-style: italic;
+}
+
+#nav-access {
+    display: none;
+}
+
 
 /*----------------------------------
     Footer

@@ -1,4 +1,8 @@
 /* IE stylesheet */
+#nav-main .sfhover ul li {
+    height: 24px !important;
+}
+
 .breadcrumbs li {
     background-image: url(../img/crumb.gif);
     background-repeat: no-repeat;

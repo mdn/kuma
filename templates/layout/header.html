@@ -1,119 +1,72 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-<h1><a href="http://www.mozilla.com/" title="{{ _('Back to Mozilla.com') }}"><img src="//support.mozilla.com/styles/mozcommon/mozilla-logo.png" height="56" width="145" alt="{{ _('Mozilla') }}" /></a></h1>
+<div id="nav-access">
+  <a href="#nav-main">{{ _('skip to navigation') }}</a>
+  <a href="#lang_form">{{ _('switch language') }}</a>
+</div>
+
+<h1><a href="http://mozilla.com/" title="Back to Mozilla.com">{{ _('Firefox') }}</a></h1>
+<a href="http://www.mozilla.org/" class="mozilla">{{ _('visit mozilla') }}</a>
+
 <div id="nav-main" role="navigation">
   <ul>
-    <li id="menu_products">
-        <a href="http://www.mozilla.com/products/">{{ _('Products') }}</a>
-        <ul>
-          <li id="submenu_firefox">
-            <a href="http://www.mozilla.com/products/firefox/">{{ _('Firefox') }}</a>
-          </li>
-          <li id="submenu_thunderbird"><a href="http://www.mozilla.com/products/thunderbird/">{{ _('Thunderbird') }}</a>
-          </li>
-        </ul>
-    </li>
-    <li id="menu_addons">
-      <a href="https://addons.mozilla.org/">{{ _('Add-ons') }}</a>
+    <li class="first"><a href="http://mozilla.com/firefox/features/">{{ _('Features') }}</a>
       <ul>
-        <li id="submenu_addons_all">
-          <a href="https://addons.mozilla.org/firefox/">{{ _('All Add-ons') }}</a>
-        </li>
-        <li id="submenu_addons_recommended">
-          <a href="https://addons.mozilla.org/firefox/recommended">{{ _('Recommended') }}</a>
-        </li>
-        <li id="submenu_addons_popular">
-          <a href="https://addons.mozilla.org/firefox/browse/type:1/cat:all?sort=popular">{{ _('Popular') }}</a>
-        </li>
-        <li id="submenu_addons_themes">
-          <a href="https://addons.mozilla.org/firefox/browse/type:2">{{ _('Themes') }}</a>
-        </li>
-        <li id="submenu_addons_search">
-          <a href="https://addons.mozilla.org/firefox/browse/type:4">{{ _('Search Engines') }}</a>
-        </li>
-        <li id="submenu_addons_plugins">
-          <a href="https://addons.mozilla.org/firefox/browse/type:7">{{ _('Plugins') }}</a>
-        </li>
+        <li class="first"><a href="http://mozilla.com/firefox/features/">{{ _('Features') }}</a></li>
+        <li><a href="http://mozilla.com/firefox/security/">{{ _('Security') }}</a></li>
+        <li><a href="http://mozilla.com/firefox/performance/">{{ _('Performance') }}</a></li>
+        <li><a href="http://mozilla.com/firefox/customization/">{{ _('Customization') }}</a></li>
+        <li><a href="http://mozilla.com/firefox/stats/">{{ _('Download Stats') }}</a></li>
+        <li><a href="http://mozilla.com/firefox/video/">{{ _('Videos') }}</a></li>
+        <li class="last"><a href="http://mozilla.com/firefox/central/">{{ _('Tour') }}</a></li>
+      </ul>
+
+    </li>
+    <li><a href="http://mozilla.com/mobile/">{{ _('Mobile') }}</a>
+      <ul>
+        <li class="first"><a href="http://mozilla.com/mobile/download/">{{ _('Mobile Overview') }}</a></li>
+        <li><a href="http://mozilla.com/mobile/download/">{{ _('Download') }}</a></li>
+        <li><a href="http://mozilla.com/mobile/features/">{{ _('Features') }}</a></li>
+        <li><a href="https://addons.mozilla.org/mobile/?browse=featured">{{ _('Customize') }}</a></li>
+        <li><a href="http://mozilla.com/mobile/Sync/">{{ _('Sync') }}</a></li>
+        <li><a href="https://developer.mozilla.org/mobile">{{ _('Develop') }}</a></li>
+        <li><a href="http://mozilla.com/mobile/getinvolved/">{{ _('Get Involved') }}</a></li>
+        <li><a href="http://mozilla.com/mobile/faq/">{{ _('FAQ') }}</a></li>
+        <li class="last"><a href="https://blog.mozilla.com/mobile/">{{ _('Blog') }}</a></li>
       </ul>
     </li>
-    <li id="menu_support">
-      <a href="http://support.mozilla.com" class="current-main">{{ _('Support') }}</a>
+    <li><a href="https://addons.mozilla.org/">{{ _('Add-ons') }}</a>
+
       <ul>
-        <li id="submenu_support_kb">
-          <a href="http://support.mozilla.com/{{ request.locale }}/kb/">{{ _('Firefox Support') }}</a>
-        </li>
-        <li id="submenu_support_mobile">
-          <a href="http://mobile.support.mozilla.com/{{ request.locale }}/kb/">{{ _('Mobile Support') }}</a>
-        </li>
-        <li id="submenu_support_thunderbird">
-          <a href="http://www.mozilla.org/support/thunderbird/">{{ _('Thunderbird Support') }}</a>
-        </li>
+        <li class="first"><a href="https://addons.mozilla.org/firefox/">{{ _('Firefox Add-ons') }}</a></li>
+        <li><a href="https://addons.mozilla.org/firefox/featured/">{{ _('Featured Add-ons') }}</a></li>
+        <li><a href="https://addons.mozilla.org/firefox/extensions/">{{ _('Extensions') }}</a></li>
+        <li><a href="https://addons.mozilla.org/firefox/themes/">{{ _('Themes') }}</a></li>
+        <li><a href="http://www.getpersonas.com/">{{ _('Personas') }}</a></li>
+        <li><a href="https://addons.mozilla.org/firefox/search-tools/">{{ _('Search Tools') }}</a></li>
+        <li><a href="https://addons.mozilla.org/firefox/language-tools/">{{ _('Language Support') }}</a></li>
+        <li><a href="https://addons.mozilla.org/firefox/collections/">{{ _('Collections') }}</a></li>
+        <li><a href="https://addons.mozilla.org/mobile/">{{ _('Mobile Add-ons') }}</a></li>
+        <li class="last"><a href="https://addons.mozilla.org/firefox/developers/">{{ _('Developer Hub') }}</a></li>
       </ul>
     </li>
-    <li id="menu_community">
-      <a href="http://www.mozilla.com/manyfaces/">{{ _('Community') }}</a>
+    <li class="current"><a href="http://support.mozilla.com/">{{ _('Support') }}</a>
       <ul>
-        <li id="submenu_community_addons">
-          <a href="https://addons.mozilla.org/">{{ _('Add-ons') }}</a>
-        </li>
-        <li id="submenu_community_bugzilla">
-          <a href="https://bugzilla.mozilla.org/">{{ _('Bugzilla') }}</a>
-        </li>
-        <li id="submenu_community_devmo">
-          <a href="http://developer.mozilla.org/">{{ _('Mozilla Developer Center') }}</a>
-        </li>
-        <li id="submenu_community_labs">
-          <a href="http://labs.mozilla.com/">{{ _('Mozilla Labs') }}</a>
-        </li>
-        <li id="submenu_community_mozillaorg">
-          <a href="http://www.mozilla.org/">{{ _('Mozilla.org') }}</a>
-        </li>
-        <li id="submenu_community_mozillazine">
-          <a href="http://www.mozillazine.org/">{{ _('MozillaZine') }}</a>
-        </li>
-        <li id="submenu_community_planet">
-          <a href="http://planet.mozilla.org/">{{ _('Planet Mozilla') }}</a>
-        </li>
-        <li id="submenu_community_qmo">
-          <a href="http://quality.mozilla.org/">{{ _('QMO') }}</a>
-        </li>
-        <li id="submenu_community_spreadfirefox">
-          <a href="http://www.spreadfirefox.com/">{{ _('SpreadFirefox') }}</a>
-        </li>
-        <li id="submenu_community_support">
-          <a href="http://support.mozilla.com" class="current">{{ _('Support') }}</a>
-        </li>
+        <li class="first"><a href="http://support.mozilla.com/">{{ _('Firefox Support') }}</a></li>
+        <li><a href="http://mobile.support.mozilla.com/">{{ _('Mobile Support') }}</a></li>
+        <li class="last"><a href="http://www.mozilla.org/support/thunderbird/">{{ _('Thunderbird Support') }}</a></li>
       </ul>
+
     </li>
-    <li id="menu_aboutus">
-      <a href="http://www.mozilla.com/about/">{{ _('About') }}</a>
+    <li class="last"><a href="http://mozilla.com/about/">{{ _('About') }}</a>
       <ul>
-        <li id="submenu_about">
-          <a href="http://www.mozilla.com/about/whatismozilla.html">{{ _('What is Mozilla?') }}</a>
-        </li>
-        <li id="submenu_getinvolved">
-          <a href="http://www.mozilla.com/about/get-involved.html">{{ _('Get Involved') }}</a>
-        </li>
-        <li id="submenu_press">
-          <a href="http://www.mozilla.com/press/">{{ _('Press Center') }}</a>
-        </li>
-        <li id="submenu_careers">
-          <a href="http://www.mozilla.com/about/careers.html">{{ _('Careers') }}</a>
-        </li>
-        <li id="submenu_partnerships">
-          <a href="http://www.mozilla.com/about/partnerships.html">{{ _('Partnerships') }}</a>
-        </li>
-        <li id="submenu_licensing">
-          <a href="http://www.mozilla.com/about/licensing.html">{{ _('Licensing') }}</a>
-        </li>
-        <li id="submenu_blog">
-          <a href="http://blog.mozilla.com/">{{ _('Blog') }}</a>
-        </li>
-        <li id="submenu_store">
-          <a href="http://store.mozilla.org/">{{ _('Store') }}</a>
-        </li>
-        <li id="submenu_contact">
-          <a href="http://www.mozilla.com/about/contact.html">{{ _('Contact Us') }}</a>
-        </li>
+        <li class="first"><a href="http://mozilla.com/about/">{{ _('About Firefox') }}</a></li>
+        <li><a href="http://mozilla.com/participate/">{{ _('Participate') }}</a></li>
+        <li><a href="http://mozilla.com/press/">{{ _('Communications') }}</a></li>
+        <li><a href="http://mozilla.com/about/careers.html">{{ _('Careers') }}</a></li>
+        <li><a href="http://mozilla.com/about/partnerships.html">{{ _('Partnerships') }}</a></li>
+        <li><a href="http://mozilla.com/about/legal.html">{{ _('Legal') }}</a></li>
+        <li><a href="http://mozilla.com/about/contact.html">{{ _('Contact Us') }}</a></li>
+        <li class="last"><a href="http://blog.mozilla.com/">{{ _('Blog') }}</a></li>
       </ul>
     </li>
   </ul>
