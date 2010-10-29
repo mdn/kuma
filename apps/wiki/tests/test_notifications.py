@@ -61,18 +61,21 @@ class NotificationTestCase(TestCaseBase):
     """Test that notifications get sent."""
     fixtures = ['users.json']
 
+    def _approve_and_send(self, revision, reviewer, message):
+        revision.reviewer = reviewer
+        revision.reviewed = datetime.now()
+        revision.is_approved = True
+        revision.save()
+        send_reviewed_notification(revision, revision.document, message)
+
     @mock.patch_object(Site.objects, 'get_current')
     def test_reviewed_notification(self, get_current):
         get_current.return_value.domain = 'testserver'
 
         rev = revision()
         doc = rev.document
-        rev.reviewer = User.objects.get(username='admin')
-        rev.reviewed = datetime.now()
-        rev.is_approved = True
-        rev.save()
         msg = "great work!"
-        send_reviewed_notification(rev, doc, msg)
+        self._approve_and_send(rev, User.objects.get(username='admin'), msg)
 
         eq_(1, len(mail.outbox))
         eq_('Your revision has been approved: %s' % doc.title,
@@ -80,6 +83,17 @@ class NotificationTestCase(TestCaseBase):
         eq_([rev.creator.email], mail.outbox[0].to)
         eq_(REVIEWED_EMAIL_CONTENT % (doc.title, msg, doc.slug),
             mail.outbox[0].body)
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_reviewed_by_creator_no_notification(self, get_current):
+        get_current.return_value.domain = 'testserver'
+
+        rev = revision()
+        msg = "great work!"
+        self._approve_and_send(rev, rev.creator, msg)
+
+        # Verify no email was sent
+        eq_(0, len(mail.outbox))
 
     @mock.patch_object(notifications.tasks.send_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
