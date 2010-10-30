@@ -11,43 +11,6 @@ from sumo.urlresolvers import reverse
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
 
 
-OUT_OF_DATE_QUERY = ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
-    'FROM wiki_document transdoc '
-    'INNER JOIN wiki_revision engrev ON engrev.id='
-    # The oldest english rev to have an approved level-30 change since the
-    # translated doc had an approved rev based on it. NULL if there is none:
-        '(SELECT min(id) from wiki_revision '
-        # Narrow engrev rows to those representing revision of parent doc:
-        'WHERE wiki_revision.document_id=transdoc.parent_id '
-        # For the purposes of computing the "Out of Date Since" column, the
-        # revision that threw the translation out of date had better be more
-        # recent than the one the current translation is based on:
-        'AND wiki_revision.id>'
-            '(select based_on_id from wiki_revision basedonrev '
-            'where basedonrev.id=transdoc.current_revision_id) '
-        'AND wiki_revision.significance>=%s '
-        'AND %s='
-        # Completely filter out outer selections where 30 is not the max signif
-        # of english revisions since trans was last approved. Other maxes will
-        # be shown by other readouts. Optimize: try "30 IN"; maybe the inner
-        # query can bail out early. [Ed: No effect on EXPLAIN on test corpus.]
-            '(select max(engsince.significance) '
-            'from wiki_revision engsince '
-            'where engsince.document_id=transdoc.parent_id '
-            # Assumes that any approved revision became the current revision at
-            # some point: we don't let the user go back and approve revisions
-            # older than the latest approved one.
-            'and engsince.is_approved '
-            'and engsince.id>'
-            # The English revision the current translation's based on:
-                '(select based_on_id from wiki_revision '
-                'where wiki_revision.id=transdoc.current_revision_id)'
-            ')'
-        ') '
-    'WHERE transdoc.locale=%s '
-    'ORDER BY engrev.reviewed DESC')
-
-
 def localizable_docs():
     """Return a Queryset of the Documents which are in the default locale,
     approved, and allow translations."""
@@ -168,8 +131,45 @@ class UntranslatedReadout(Readout):
             ago = (reviewed and _('%s ago') % timesince(reviewed))
             yield (dict(title=d.title,
                         url=d.get_absolute_url(),
-                        visits=0, percent=100,
+                        visits=0, percent=0,
                         updated=ago))
+
+
+OUT_OF_DATE_QUERY = ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
+    'FROM wiki_document transdoc '
+    'INNER JOIN wiki_revision engrev ON engrev.id='
+    # The oldest english rev to have an approved level-30 change since the
+    # translated doc had an approved rev based on it. NULL if there is none:
+        '(SELECT min(id) FROM wiki_revision '
+        # Narrow engrev rows to those representing revision of parent doc:
+        'WHERE wiki_revision.document_id=transdoc.parent_id '
+        # For the purposes of computing the "Out of Date Since" column, the
+        # revision that threw the translation out of date had better be more
+        # recent than the one the current translation is based on:
+        'AND wiki_revision.id>'
+            '(SELECT based_on_id from wiki_revision basedonrev '
+            'WHERE basedonrev.id=transdoc.current_revision_id) '
+        'AND wiki_revision.significance>=%s '
+        'AND %s='
+        # Completely filter out outer selections where 30 is not the max signif
+        # of english revisions since trans was last approved. Other maxes will
+        # be shown by other readouts. Optimize: try "30 IN"; maybe the inner
+        # query can bail out early. [Ed: No effect on EXPLAIN on test corpus.]
+            '(SELECT MAX(engsince.significance) '
+            'FROM wiki_revision engsince '
+            'WHERE engsince.document_id=transdoc.parent_id '
+            # Assumes that any approved revision became the current revision at
+            # some point: we don't let the user go back and approve revisions
+            # older than the latest approved one.
+            'AND engsince.is_approved '
+            'AND engsince.id>'
+            # The English revision the current translation's based on:
+                '(SELECT based_on_id FROM wiki_revision '
+                'WHERE wiki_revision.id=transdoc.current_revision_id)'
+            ')'
+        ') '
+    'WHERE transdoc.locale=%s '
+    'ORDER BY engrev.reviewed DESC')
 
 
 class OutOfDateReadout(Readout):
@@ -188,6 +188,8 @@ class OutOfDateReadout(Readout):
         # higher. We could arguably knock this up to MAJOR, but technically it
         # is out of date when the original gets anything more than typo
         # corrections.
+        
+        # TODO: This probably always grabs the master. Stop doing that.
         cursor = connection.cursor()
         cursor.execute(OUT_OF_DATE_QUERY + self.limit_clause(max),
             [MEDIUM_SIGNIFICANCE, self._max_significance, self.request.locale])
@@ -207,6 +209,47 @@ class NeedingUpdatesReadout(OutOfDateReadout):
     _max_significance = MEDIUM_SIGNIFICANCE
 
 
+# Do we need to exclude from this readout any article that appears in the above
+# out-of-date type readouts?
+class UnreviewedReadout(Readout):
+    title = _lazy(u'Unreviewed Changes')
+    # ^ Not just changes to translations but also unreviewed chanages to docs
+    # in this locale that are not translations
+    
+    slug = 'unreviewed'
+    column4_label = _lazy(u'Changed')
+
+    def rows(self, max=None):
+        cursor = connection.cursor()
+        cursor.execute('SELECT wiki_document.slug, wiki_document.title, '
+            'MAX(wiki_revision.created) maxcreated, '
+            'GROUP_CONCAT(DISTINCT auth_user.username '
+                         "ORDER BY wiki_revision.id SEPARATOR ', ') "
+            'FROM wiki_document '
+            'INNER JOIN wiki_revision ON '
+                        'wiki_document.id=wiki_revision.document_id '
+            'INNER JOIN auth_user ON wiki_revision.creator_id=auth_user.id '
+            'WHERE wiki_revision.reviewed IS NULL '
+            'AND (wiki_document.current_revision_id IS NULL OR '
+                 'wiki_revision.id>wiki_document.current_revision_id) '
+            'AND wiki_document.locale=%s '
+            'GROUP BY wiki_document.id '
+            'ORDER BY maxcreated DESC' + self.limit_clause(max),
+            [self.request.locale])
+        
+        for slug, title, changed, users in cursor.fetchall():
+            ago = (changed and _('%s ago') % timesince(changed))
+            yield (dict(title=title,
+                        url=reverse('wiki.document_revisions', args=[slug]),
+                        visits=0, percent=0,
+                        updated=ago,
+                        users=users))
+
+
 # L10n Dashboard tables that have their own whole-page views
 L10N_READOUTS = dict((t.slug, t) for t in [
-    UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout])
+    UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
+    UnreviewedReadout])
+
+
+# TODO: Show something intelligent when a readout is empty.

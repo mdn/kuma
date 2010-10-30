@@ -63,6 +63,11 @@
     font-size: 90%;
 }
 
+.dashboards table.documents .users {
+    font-size: 90%;
+    color: #999;
+}
+
 .dashboards table.overview td:nth-child(2) {
     text-align: right;
 }

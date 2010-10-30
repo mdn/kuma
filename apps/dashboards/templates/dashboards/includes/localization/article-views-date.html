@@ -6,7 +6,14 @@
 </tr>
 {% for row in rows %}
   <tr>
-    <td><a href="{{ row.url }}">{{ row.title }}</a></td>
+    <td>
+      <a href="{{ row.url }}">{{ row.title }}</a>
+      {% if row.users %}
+        <div class="users">
+          {{ _('changed by {users}')|f(users=row.users) }}
+        </div>
+      {% endif %}
+    </td>
     <td>
       {{ number(row.visits) }}
     </td>

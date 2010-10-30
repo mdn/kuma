@@ -104,6 +104,18 @@
         </div>
       {% endwith %}
     </details>
+
+    <details class="h2" open="open">
+      {% with readout = readouts['unreviewed'] %}
+        <summary><a id="needing-updates">{{ readout.title }}</a></summary>
+        <table class="documents">
+          {{ readout.render(readout.rows(10))|safe }}
+        </table>
+        <div class="table-footer">
+          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All articles requiring review...') }}</a>
+        </div>
+      {% endwith %}
+    </details>
   </article>
 {% endblock %}
 
