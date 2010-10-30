@@ -190,7 +190,8 @@ def edit_document(request, document_slug, revision_id=None):
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
     else:
-        rev = doc.current_revision or doc.revisions.order_by('-created')[0]
+        rev = doc.current_revision or doc.revisions.order_by('-created',
+                                                             '-id')[0]
 
     disclose_description = bool(request.GET.get('opendescription'))
     doc_form = rev_form = None
@@ -256,7 +257,7 @@ def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
-    revs = Revision.objects.filter(document=doc).order_by('-created')
+    revs = Revision.objects.filter(document=doc).order_by('-created', '-id')
 
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs, 'document': doc})

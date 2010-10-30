@@ -2,20 +2,13 @@
 
 from django.conf import settings
 from django.db import connection
-from django.utils.timesince import timesince
 
 import jingo
 from tower import ugettext as _, ugettext_lazy as _lazy
 
 from sumo.urlresolvers import reverse
+from sumo.utils import timesince
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
-
-
-def localizable_docs():
-    """Return a Queryset of the Documents which are in the default locale,
-    approved, and allow translations."""
-    return Document.objects.exclude(current_revision=None).filter(
-               locale=settings.WIKI_DEFAULT_LANGUAGE, is_localizable=True)
 
 
 def overview_rows(locale):
@@ -24,31 +17,29 @@ def overview_rows(locale):
     # rows, so it has no expanded, all-rows view, and thus needs no slug, no
     # "max" kwarg on rows(), etc. It doesn't fit the Readout signature, so we
     # don't shoehorn it in.
+    total = Document.uncached.exclude(current_revision=None).filter(
+                locale=settings.WIKI_DEFAULT_LANGUAGE,
+                is_localizable=True).count()
 
-    total = localizable_docs().count()
-    if locale == settings.WIKI_DEFAULT_LANGUAGE:
-        translated = total
-    else:
-        # How many approved documents are there in German that have parents?
-        # TODO: Make sure caching doesn't foil this.
-        translated = Document.objects.filter(locale=locale).exclude(
-            current_revision=None).exclude(parent=None).count()
+    # How many approved documents are there in German that have parents?
+    translated = Document.uncached.filter(locale=locale).exclude(
+        current_revision=None).exclude(parent=None).count()
+
     return [dict(title=_('All Knowledge Base Articles'),
                  numerator=translated, denominator=total,
                  percent=(int(round(translated / float(total) * 100)) if total
                           else 100),
-                 description=_('How many of the approved English '
-                               'articles which allow translations '
-                               'have an approved translation into this '
-                               'language')),
+                 description=_('How many of the approved English articles '
+                               'which allow translations have an approved '
+                               'translation into this language')),
             # TODO: Enable after we integrate WebTrends stats:
-#             dict(title=_('Most Viewed Articles'),
+#             dict(title='Most Viewed Articles',
 #                  numerator=0, denominator=1,
 #                  percent=0,
-#                  description=_('These are the top 15-20 most visited English'
-#                                ' articles, which in sum account for over 50%'
-#                                ' of the total traffic to the English '
-#                                'Knowledge Base.'))
+#                  description='These are the top 15-20 most visited English'
+#                              ' articles, which in sum account for over 50%'
+#                              ' of the total traffic to the English '
+#                              'Knowledge Base.')
            ]
 
 
@@ -58,7 +49,7 @@ class Readout(object):
     Describing these as atoms gives us the whole-page details views for free.
 
     """
-    #title = _lazy(u'Localized Title of Readout')
+    #title = _lazy(u'Title of Readout')
     #slug = 'URL slug for detail page'
     column4_label = _lazy(u'Status')
 
@@ -107,7 +98,17 @@ class UntranslatedReadout(Readout):
         # against an inner query returning translated docs, and the left join
         # yielded a faster-looking plan (on a production corpus).
         cursor = connection.cursor()
-        cursor.execute('SELECT parent.slug, parent.title, wiki_revision.reviewed FROM wiki_document parent INNER JOIN wiki_revision ON parent.current_revision_id=wiki_revision.id LEFT OUTER JOIN wiki_document translated ON parent.id=translated.parent_id AND translated.locale=%s WHERE translated.id IS NULL AND parent.is_localizable AND parent.locale=%s ORDER BY wiki_revision.reviewed DESC' + self.limit_clause(max),
+        cursor.execute('SELECT parent.slug, parent.title, '
+            'wiki_revision.reviewed '
+            'FROM wiki_document parent '
+            'INNER JOIN wiki_revision ON '
+                'parent.current_revision_id=wiki_revision.id '
+            'LEFT OUTER JOIN wiki_document translated ON '
+                'parent.id=translated.parent_id AND translated.locale=%s '
+            'WHERE '
+            'translated.id IS NULL AND parent.is_localizable AND '
+            'parent.locale=%s '
+            'ORDER BY wiki_revision.reviewed DESC' + self.limit_clause(max),
             [self.request.locale, settings.WIKI_DEFAULT_LANGUAGE])
 
         for r in cursor.fetchall():
@@ -117,15 +118,10 @@ class UntranslatedReadout(Readout):
                          locale=settings.WIKI_DEFAULT_LANGUAGE)
             reviewed = r[2]
 
-            # TODO: i18nize better. Show only 1 unit of time: for example,
-            # weeks instead of weeks+days or months instead of months+weeks.
-            #
-            # Not ideal but free:
-            ago = (reviewed and _('%s ago') % timesince(reviewed))
             yield (dict(title=d.title,
                         url=d.get_absolute_url(),
                         visits=0, percent=0,
-                        updated=ago))
+                        updated=reviewed and timesince(reviewed)))
 
 
 OUT_OF_DATE_QUERY = ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
@@ -188,11 +184,10 @@ class OutOfDateReadout(Readout):
             [MEDIUM_SIGNIFICANCE, self._max_significance, self.request.locale])
 
         for slug, title, reviewed in cursor.fetchall():
-            ago = (reviewed and _('%s ago') % timesince(reviewed))
             yield (dict(title=title,
                         url=reverse('wiki.edit_document', args=[slug]),
                         visits=0, percent=0,
-                        updated=ago))
+                        updated=reviewed and timesince(reviewed)))
 
 
 class NeedingUpdatesReadout(OutOfDateReadout):
@@ -202,8 +197,6 @@ class NeedingUpdatesReadout(OutOfDateReadout):
     _max_significance = MEDIUM_SIGNIFICANCE
 
 
-# Do we need to exclude from this readout any article that appears in the above
-# out-of-date type readouts?
 class UnreviewedReadout(Readout):
     title = _lazy(u'Unreviewed Changes')
     # ^ Not just changes to translations but also unreviewed chanages to docs
@@ -231,11 +224,10 @@ class UnreviewedReadout(Readout):
             [self.request.locale])
 
         for slug, title, changed, users in cursor.fetchall():
-            ago = (changed and _('%s ago') % timesince(changed))
             yield (dict(title=title,
                         url=reverse('wiki.document_revisions', args=[slug]),
                         visits=0, percent=0,
-                        updated=ago,
+                        updated=changed and timesince(changed),
                         users=users))
 
 
@@ -243,6 +235,3 @@ class UnreviewedReadout(Readout):
 L10N_READOUTS = dict((t.slug, t) for t in [
     UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
     UnreviewedReadout])
-
-
-# TODO: Show something intelligent when a readout is empty.

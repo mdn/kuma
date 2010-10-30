@@ -1,10 +1,12 @@
-<tr>
-  <th>{{ _('Article') }}</th>
-  <th>{{ _('Visits') }}</th>
-  <th></th>
-  <th>{{ column4_label }}</th>
-</tr>
 {% for row in rows %}
+  {% if loop.first %}
+    <tr>
+      <th>{{ _('Article') }}</th>
+      <th>{{ _('Visits') }}</th>
+      <th></th>
+      <th>{{ column4_label }}</th>
+    </tr>
+  {% endif %}
   <tr>
     <td>
       <a href="{{ row.url }}">{{ row.title }}</a>

@@ -23,10 +23,13 @@ TYPO_SIGNIFICANCE = 10
 MEDIUM_SIGNIFICANCE = 20
 MAJOR_SIGNIFICANCE = 30
 SIGNIFICANCES = (
-    (TYPO_SIGNIFICANCE, _lazy('Minor details like punctuation and spelling errors')),
-    (MEDIUM_SIGNIFICANCE, _lazy("Content changes that don't require immediate translation")),
-    (MAJOR_SIGNIFICANCE, _lazy('Major content changes that will make older translations '
-               'inaccurate')),
+    (TYPO_SIGNIFICANCE,
+     _lazy('Minor details like punctuation and spelling errors')),
+    (MEDIUM_SIGNIFICANCE,
+     _lazy("Content changes that don't require immediate translation")),
+    (MAJOR_SIGNIFICANCE,
+     _lazy('Major content changes that will make older translations '
+           'inaccurate')),
 )
 
 CATEGORIES = (

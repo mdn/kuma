@@ -10,7 +10,7 @@
       {{ breadcrumbs([(None, _(title))]) }}
     </div>
 
-    <h1>{{ _(title) }}</h1>
+    <h1>{{ title }}</h1>
 
     <div class="choice-list">
       <label>{{ _('Show information for:') }}</label>
@@ -69,53 +69,24 @@
       </div>
     </details>
 
-    <details class="h2" open="open">
-      {% with readout = readouts['untranslated'] %}
-        <summary><a id="untranslated">{{ readout.title }}</a></summary>
-        <table class="documents">
-          {{ readout.render(readout.rows(10))|safe }}
-        </table>
-        <div class="table-footer">
-          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All untranslated articles...') }}</a>
-        </div>
-      {% endwith %}
-    </details>
+    {% macro print_readout(slug, details_link_text) %}
+      <details class="h2" open="open">
+        {% with readout = readouts[slug] %}
+          <summary><a id="{{ slug }}">{{ readout.title }}</a></summary>
+          <table class="documents">
+            {{ readout.render(readout.rows(10))|safe }}
+          </table>
+          <div class="table-footer">
+            <a href="{{ url('dashboards.localization_detail', slug) }}">{{ details_link_text }}</a>
+          </div>
+        {% endwith %}
+      </details>
+    {% endmacro %}
 
-    <details class="h2" open="open">
-      {% with readout = readouts['out-of-date'] %}
-        <summary><a id="out-of-date">{{ readout.title }}</a></summary>
-        <table class="documents">
-          {{ readout.render(readout.rows(10))|safe }}
-        </table>
-        <div class="table-footer">
-          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All out-of-date translations...') }}</a>
-        </div>
-      {% endwith %}
-    </details>
-
-    <details class="h2" open="open">
-      {% with readout = readouts['needing-updates'] %}
-        <summary><a id="needing-updates">{{ readout.title }}</a></summary>
-        <table class="documents">
-          {{ readout.render(readout.rows(10))|safe }}
-        </table>
-        <div class="table-footer">
-          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All translations needing updates...') }}</a>
-        </div>
-      {% endwith %}
-    </details>
-
-    <details class="h2" open="open">
-      {% with readout = readouts['unreviewed'] %}
-        <summary><a id="needing-updates">{{ readout.title }}</a></summary>
-        <table class="documents">
-          {{ readout.render(readout.rows(10))|safe }}
-        </table>
-        <div class="table-footer">
-          <a href="{{ url('dashboards.localization_detail', readout.slug) }}">{{ _('All articles requiring review...') }}</a>
-        </div>
-      {% endwith %}
-    </details>
+    {{ print_readout('untranslated', _('All untranslated articles...')) }}
+    {{ print_readout('out-of-date', _('All out-of-date translations...')) }}
+    {{ print_readout('needing-updates', _('All translations needing updates...')) }}
+    {{ print_readout('unreviewed', _('All articles requiring review...')) }}
   </article>
 {% endblock %}
 
