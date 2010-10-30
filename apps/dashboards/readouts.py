@@ -60,8 +60,6 @@ class Readout(object):
     """
     #title = _lazy(u'Localized Title of Readout')
     #slug = 'URL slug for detail page'
-    #template = 'name of template to render rows with'
-    template = 'article-views-date'
     column4_label = _lazy(u'Status')
 
     def __init__(self, request):
@@ -81,15 +79,10 @@ class Readout(object):
         raise NotImplementedError
 
     def render(self, rows):
-        """Return HTML table rows for the given data.
-
-        Default implementation renders a template named after the value of
-        self.slug in the dashboards/includes/localization directory.
-
-        """
+        """Return HTML table rows for the given data."""
         return jingo.render_to_string(
             self.request,
-            'dashboards/includes/localization/%s.html' % self.template,
+            'dashboards/includes/localization_readout.html',
             {'rows': rows, 'column4_label': self.column4_label})
 
     # Convenience methods:
@@ -188,7 +181,7 @@ class OutOfDateReadout(Readout):
         # higher. We could arguably knock this up to MAJOR, but technically it
         # is out of date when the original gets anything more than typo
         # corrections.
-        
+
         # TODO: This probably always grabs the master. Stop doing that.
         cursor = connection.cursor()
         cursor.execute(OUT_OF_DATE_QUERY + self.limit_clause(max),
@@ -215,7 +208,7 @@ class UnreviewedReadout(Readout):
     title = _lazy(u'Unreviewed Changes')
     # ^ Not just changes to translations but also unreviewed chanages to docs
     # in this locale that are not translations
-    
+
     slug = 'unreviewed'
     column4_label = _lazy(u'Changed')
 
@@ -236,7 +229,7 @@ class UnreviewedReadout(Readout):
             'GROUP BY wiki_document.id '
             'ORDER BY maxcreated DESC' + self.limit_clause(max),
             [self.request.locale])
-        
+
         for slug, title, changed, users in cursor.fetchall():
             ago = (changed and _('%s ago') % timesince(changed))
             yield (dict(title=title,
