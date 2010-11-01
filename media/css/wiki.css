@@ -380,16 +380,15 @@ div.support-search input.submit {
 }
 
 #toc {
-    background: transparent url(../img/wiki/document.divider.jpg) no-repeat left bottom;
-    clear: both;
     font-size: 13px;
     left: -50px;
-    padding: 0 0 60px;
+    padding: 0 0 25px;
     position: relative;
 }
 
 #related-articles h1,
-#toc h1 {
+#toc h1,
+#toc h2 {
     color: #333;
     font-size: 18px;
     font-style: italic;
@@ -406,13 +405,6 @@ div.support-search input.submit {
     background: none;
 }
 
-#doc-summary {
-    color: #666;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 15px 0 30px;
-}
-
 html.no-js .hide-if-no-js {
     display: none;
 }
@@ -421,23 +413,34 @@ article #toc ol li {
     list-style-type: decimal;
 }
 
-article #toc ol li {
+article #toc ol li,
+article #toc ul li {
     background: transparent url(../img/wiki/list.divider.png) no-repeat left bottom;
     list-style-position: inside;
     padding: 10px 0 10px 50px;
 }
 
-#toc ol li:last-child {
-    background: none;
+article #toc ol,
+article #toc ul {
+    margin: 0;
 }
 
-#toc ol ol {
+article #toc ul li {
+    list-style: none;
+}
+
+#toc ol ol,
+#toc ul ul {
     margin: 0 0 0 20px;
 }
 
 #toc ol ol li {
-    background: none;
     list-style-type: upper-alpha;
+}
+
+#toc ol ol li,
+#toc ul ul li {
+    background: none;
     padding: 0;
 }
 

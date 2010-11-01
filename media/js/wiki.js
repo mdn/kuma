@@ -135,7 +135,7 @@
         OSES = $.parseJSON($('select#os').attr('data-oses'));  // {'mac': true, 'win': true, ...}
         BROWSERS = $.parseJSON($('select#browser').attr('data-browsers'));  // {'fx4': true, ...}
         VERSIONS = $.parseJSON($('select#browser').attr('data-version-groups'));  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
-        MISSING_MSG = $.parseJSON($('#toc').attr('data-missing-msg'));  // l10nized "missing header" message
+        MISSING_MSG = gettext('[missing header]');  // l10nized "missing header" message
 
         function updateForsAndToc() {
             // Hide and show document sections accordingly:
@@ -143,7 +143,8 @@
                             $('select#browser').attr('value'));
 
             // Update the table of contents in case headers were hidden or shown:
-            $('#toc ol').empty().append(filteredToc($('#doc-content')).children());
+            $('#toc > :not(h2)').remove(); // __TOC__ generates <ul/>'s.
+            $('#toc').append(filteredToc($('#doc-content'), '#toc h2'));
 
             return false;
         }
@@ -237,7 +238,10 @@
     // top of the TOC: if $pageBody has h2s but no h1s, h2s will be used as the
     // first level of the TOC. Missing headers (such as if you follow an h2
     // directly with an h4) are noted prominently so you can fix them.
-    function filteredToc($pageBody) {
+    //
+    // excludesSelector is an optional jQuery selector for excluding certain
+    // headings from the table of contents.
+    function filteredToc($pageBody, excludesSelector) {
         function headerLevel(index, hTag) {
             return parseInt(hTag.tagName[1], 10);
         }
@@ -251,6 +255,11 @@
         $headers.each(function addIfShown(index) {
             var h_level = headerLevel(0, this),
                 $h = $(this);
+
+            if (excludesSelector && $h.is(excludesSelector)) {
+                // Skip excluded headers.
+                return;
+            }
 
             // If we're too far down the tree, walk up it.
             for (; ol_level > h_level; ol_level--) {
@@ -292,6 +301,11 @@
 
             // Catch the "not" operator if it's there:
             forData = $(this).attr('data-for');
+            if (!forData) {
+                // If the data-for attribute is missing, move on.
+                return;
+            }
+
             isInverted = forData.substring(0, 4) == 'not ';
             if (isInverted) {
                 forData = forData.substring(4);  // strip off "not "

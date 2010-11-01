@@ -24,15 +24,6 @@
         {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
       </div>
     {% endif %}
-    <section id="doc-summary">
-      {{ document.current_revision.summary }}
-    </section>
-    {% if document.current_revision %}
-      <section id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
-        <h1>{{ _("Table of Contents") }}</h1>
-        <ol></ol>
-      </section>
-    {% endif %}
     <section id="doc-content">
       {% if document.current_revision %}
         {{ document.html|safe }}

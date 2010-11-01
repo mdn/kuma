@@ -35,7 +35,6 @@ OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
                                 for o in OPERATING_SYSTEMS]))
 BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, True)
                                      for v in FIREFOX_VERSIONS]))
-MISSING_MSG = _lazy('[missing header]')
 
 
 def _version_groups(versions):
@@ -68,7 +67,6 @@ SHOWFOR_DATA = {
     'browsers': GROUPED_FIREFOX_VERSIONS,
     'browsers_json': BROWSER_ABBR_JSON,
     'version_group_json': VERSION_GROUP_JSON,
-    'missing_msg_json': json.dumps(unicode(MISSING_MSG)),
 }
 
 

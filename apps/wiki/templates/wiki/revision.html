@@ -51,13 +51,6 @@
         {% endif %}
       </ul>
     </div>
-    <section id="doc-summary">
-      {{ document.current_revision.summary }}
-    </section>
-    <section id="toc" class="hide-if-no-js" data-missing-msg="{{ missing_msg_json }}">
-      <h1>{{ _("Table of Contents") }}</h1>
-      <ol></ol>
-    </section>
     <div id="doc-content">
       {{ revision.content_parsed|safe }}
     </div>
