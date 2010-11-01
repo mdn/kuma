@@ -17,6 +17,11 @@ def pq_link(p, text):
     return pq(p.parse(text))('a')
 
 
+def pq_img(p, text, selector='div.img', locale=settings.WIKI_DEFAULT_LANGUAGE):
+    doc = pq(p.parse(text, locale=locale))
+    return doc(selector)
+
+
 def doc_rev_parser(content, title='Installing Firefox', parser_cls=WikiParser):
     p = parser_cls()
     d = document(title=title)
@@ -76,6 +81,20 @@ class TestWikiParser(TestCase):
         d = document(title='A doc')
         d.save()
         obj = get_object_fallback(Document, 'A doc', 'fr', '!')
+        eq_(fr_d, obj)
+
+    def test_get_object_fallback_translated(self):
+        """If a localization of the English fallback exists, use it."""
+
+        en_d = document(title='A doc')
+        en_d.save()
+        en_r = revision(document=en_d, is_approved=True)
+        en_r.save()
+
+        fr_d = document(parent=en_d, title='Une doc', locale='fr')
+        fr_d.save()
+
+        obj = get_object_fallback(Document, 'A doc', 'fr')
         eq_(fr_d, obj)
 
     def test_image_params_page(self):
@@ -147,7 +166,8 @@ class TestWikiParser(TestCase):
 
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
-        eq_({'found': True, 'url': '/en-US/kb/installing-firefox'},
+        eq_({'found': True, 'url': '/en-US/kb/installing-firefox',
+             'text': 'Installing Firefox'},
             _get_wiki_link('Installing Firefox',
                          locale=settings.WIKI_DEFAULT_LANGUAGE))
 
@@ -181,14 +201,13 @@ class TestWikiInternalLinks(TestCase):
         """Internal link with hash."""
         link = pq_link(self.p, '[[Installing Firefox#section name]]')
         eq_('/en-US/kb/installing-firefox#section_name', link.attr('href'))
-        eq_('Installing Firefox#section name', link.text())
+        eq_('Installing Firefox', link.text())
 
-    def test_link_hash_markup(self):
-        """Internal link with hash."""
-        text = '[[Installing Firefox#section name]]'
-        eq_('<p><a href="/en-US/kb/installing-firefox#section_name"' +
-                '>Installing Firefox#section name</a></p>',
-            self.p.parse(text).replace('\n', ''))
+    def test_link_hash_text(self):
+        """Internal link with hash and text."""
+        link = pq_link(self.p, '[[Installing Firefox#section name|section]]')
+        eq_('/en-US/kb/installing-firefox#section_name', link.attr('href'))
+        eq_('section', link.text())
 
     def test_hash_only(self):
         """Internal hash only."""
@@ -239,10 +258,19 @@ class TestWikiInternalLinks(TestCase):
         eq_('/en-US/kb/new?title=A+new+page#section_3', link.attr('href'))
         eq_('this name', link.text())
 
+    def test_link_with_localization(self):
+        """A link to an English doc with a local translation."""
+        en_d = document(title='A doc')
+        en_d.save()
+        en_r = revision(document=en_d, is_approved=True)
+        en_r.save()
 
-def pq_img(p, text, selector='div.img', locale=settings.WIKI_DEFAULT_LANGUAGE):
-    doc = pq(p.parse(text, locale=locale))
-    return doc(selector)
+        fr_d = document(parent=en_d, title='Une doc', locale='fr')
+        fr_d.save()
+
+        link = pq(self.p.parse('[[A doc]]', locale='fr'))
+        eq_('/fr/kb/une-doc', link.find('a').attr('href'))
+        eq_('Une doc', link.find('a').text())
 
 
 class TestWikiImageTags(TestCase):

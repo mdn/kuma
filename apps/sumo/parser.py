@@ -50,8 +50,13 @@ def get_object_fallback(cls, title, locale, default=None, **kwargs):
 
     # Fallback
     try:
-        return cls.objects.get(
+        fallback = cls.objects.get(
             title=title, locale=settings.WIKI_DEFAULT_LANGUAGE, **kwargs)
+        if hasattr(fallback, 'translated_to'):
+            trans = fallback.translated_to(locale)
+            if trans:
+                return trans
+        return fallback
     # Okay, all else failed
     except cls.DoesNotExist:
         return default
@@ -64,15 +69,17 @@ def _get_wiki_link(title, locale):
     found is False if the document does not exist.
 
     """
-    try:
-        d = Document.objects.get(locale=locale, title=title, is_template=False)
-    except Document.DoesNotExist:
-        # To avoid circular imports, wiki.models imports wiki_to_html
-        from sumo.helpers import urlparams
-        return {'found': False,
-                'url': urlparams(reverse('wiki.new_document', locale=locale),
-                                 title=title)}
-    return {'found': True, 'url': d.get_absolute_url()}
+    d = get_object_fallback(Document, locale=locale, title=title,
+                            is_template=False)
+    if d:
+        return {'found': True, 'url': d.get_absolute_url(), 'text': d.title}
+
+    # To avoid circular imports, wiki.models imports wiki_to_html
+    from sumo.helpers import urlparams
+    return {'found': False,
+            'text': title,
+            'url': urlparams(reverse('wiki.new_document', locale=locale),
+                             title=title)}
 
 
 def _build_image_params(items, locale):
@@ -134,7 +141,8 @@ class WikiParser(Parser):
 
     def _hook_internal_link(self, parser, space, name):
         """Parses text and returns internal link."""
-        title = text = name
+        text = False
+        title = name
 
         # Split on pipe -- [[href|name]]
         if '|' in name:
@@ -150,12 +158,16 @@ class WikiParser(Parser):
 
         # Links to this page can just contain href="#hash"
         if title == '' and hash != '':
+            if not text:
+                text = hash.replace('_', ' ')
             return u'<a href="%s">%s</a>' % (hash, text)
 
         link = _get_wiki_link(title, self.locale)
         a_cls = ''
         if not link['found']:
             a_cls = ' class="new"'
+        if not text:
+            text = link['text']
         return u'<a href="%s%s"%s>%s</a>' % (link['url'], hash, a_cls, text)
 
     def _hook_image_tag(self, parser, space, name):
