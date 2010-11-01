@@ -1,18 +1,22 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 <section id="support-for">
   <h1>{{ _("Help with:") }}</h1>
-  <select id="os" data-oses="{{ oses_json }}" class="enable-if-js" disabled="disabled">
-    {% for _, name, slug in oses %}
-      <option value="{{ slug }}">{{ name }}</option>
-    {% endfor %}
-  </select>
-  <select id="browser" data-browsers="{{ browsers_json }}" data-version-groups="{{ version_group_json }}" class="enable-if-js" disabled="disabled">
-    {% for label, options in browsers %}
-      <optgroup label="{{ label }}">
-        {% for option in options %}
-          <option value="{{ option.slug }}">{{ option.name }}</option>
-        {% endfor %}
-      </optgroup>
-    {% endfor %}
-  </select>
+  <div>
+    <select id="os" data-oses="{{ oses_json }}" class="enable-if-js" disabled="disabled">
+      {% for _, name, slug in oses %}
+        <option value="{{ slug }}">{{ name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <select id="browser" data-browsers="{{ browsers_json }}" data-version-groups="{{ version_group_json }}" class="enable-if-js" disabled="disabled">
+      {% for label, options in browsers %}
+        <optgroup label="{{ label }}">
+          {% for option in options %}
+            <option value="{{ option.slug }}">{{ option.name }}</option>
+          {% endfor %}
+        </optgroup>
+      {% endfor %}
+    </select>
+  </div>
 </section>

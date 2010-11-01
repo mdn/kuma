@@ -9,6 +9,7 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
+        initShowforSelectors();
         initPrepopulatedSlugs();
         initActionModals();
         initDetailsTags();
@@ -377,6 +378,7 @@
                     $('#preview')
                         .html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
+                    initShowforSelectors();
                     initForTags();
                     $btn.removeAttr('disabled');
                 },
@@ -452,6 +454,10 @@
             $('body').unbind(fadeOut);
             clearTimeout(timer);
         }
+    }
+
+    function initShowforSelectors() {
+        $('#support-for select').selectbox();
     }
 
     $(document).ready(init);

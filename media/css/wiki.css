@@ -521,11 +521,81 @@ article #toc ul li {
     margin: 30px 0 0 50px;
 }
 
+.js #support-for select {
+    visibility: hidden;
+}
+
 #support-for h1 {
     color: #333;
     font-size: 18px;
     font-style: italic;
     margin: 0 0 5px;
+    padding: 0 0 0 5px;
+}
+
+#support-for input {
+    background: transparent url(../img/wiki//bkg.showfor.selector.png) no-repeat 6px center;
+    border: none;
+    color: #32559b;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 0 2px 20px;
+}
+
+#support-for div.selectbox-wrapper {
+    position: relative;
+}
+
+#support-for div.selectbox-wrapper ul {
+    background: #32559b;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-top-left-radius: 0;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    left: 0;
+    list-style: none;
+    padding: 10px;
+    position: absolute;
+    top: 5px;
+    width: 130px;
+}
+
+#support-for div.selectbox-wrapper ul:after {
+    background: #32559b;
+    content: '';
+    display: block;
+    height: 15px;
+    left: 3px;
+    position: absolute;
+    -moz-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    top: -6px;
+    width: 15px;
+    z-index: 1;
+}
+
+#support-for div.selectbox-wrapper li {
+    color: #6fbcff;
+    cursor: pointer;
+    padding: 2px 0 2px 10px;
+    position: relative;
+}
+
+#support-for div.selectbox-wrapper li.selected {
+    color: #fff;
+}
+
+#support-for li.selected:before {
+    color: #fff;
+    content: '•';
+    left: 0;
+    position: absolute;
+}
+
+#support-for div.selectbox-wrapper li.current {
+    color: #fff;
 }
 
 /* Wiki Document content */

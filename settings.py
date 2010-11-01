@@ -354,6 +354,7 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.cookie.js',
             'js/browserdetect.js',
             'js/libs/swfobject.js',
+            'js/libs/jquery.selectbox-1.2.js',
             'js/screencast.js',
             'js/wiki.js',
         ),
