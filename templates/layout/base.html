@@ -35,11 +35,6 @@
 <body{% if classes %} class="{{ classes }}"{% endif %}
       data-readonly="{{ settings.READ_ONLY|json }}">
 
-<ul id="nav-access">
-  <li><a href="#navigation">{{ _('skip to navigation') }}</a></li>
-  <li><a href="#switch">{{ _('switch language') }}</a></li>
-</ul>
-
 <div id="header" role="banner">
 {% include 'layout/header.html' %}
 </div>
