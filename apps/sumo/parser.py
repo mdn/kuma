@@ -57,7 +57,7 @@ def get_object_fallback(cls, title, locale, default=None, **kwargs):
         return default
 
 
-def _getWikiLink(title, locale):
+def _get_wiki_link(title, locale):
     """Checks the page exists, and returns its URL or the URL to create it.
 
     Return value is a dict: {'found': boolean, 'url': string}.
@@ -75,7 +75,7 @@ def _getWikiLink(title, locale):
     return {'found': True, 'url': d.get_absolute_url()}
 
 
-def _buildImageParams(items, locale):
+def _build_image_params(items, locale):
     """
     Builds a list of items and return image-relevant parameters in a dict.
     """
@@ -92,7 +92,7 @@ def _buildImageParams(items, locale):
             params[item] = True
 
     if 'page' in params and params['page'] is not True:
-        link = _getWikiLink(params['page'], locale)
+        link = _get_wiki_link(params['page'], locale)
         params['link'] = link['url']
         params['found'] = link['found']
 
@@ -152,7 +152,7 @@ class WikiParser(Parser):
         if title == '' and hash != '':
             return u'<a href="%s">%s</a>' % (hash, text)
 
-        link = _getWikiLink(title, self.locale)
+        link = _get_wiki_link(title, self.locale)
         a_cls = ''
         if not link['found']:
             a_cls = ' class="new"'
@@ -184,7 +184,7 @@ class WikiParser(Parser):
             return image
 
         # parse the relevant items
-        params = _buildImageParams(items, self.locale)
+        params = _build_image_params(items, self.locale)
 
         template = jingo.env.get_template('wikiparser/hook_image.html')
         r_kwargs = {'image': image, 'caption': caption, 'params': params}

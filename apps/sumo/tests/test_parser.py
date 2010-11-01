@@ -6,7 +6,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from gallery.tests import image
-from sumo.parser import (WikiParser, _buildImageParams, _getWikiLink,
+from sumo.parser import (WikiParser, _build_image_params, _get_wiki_link,
                          get_object_fallback)
 from sumo.tests import TestCase
 from wiki.models import Document
@@ -26,7 +26,7 @@ def doc_rev_parser(content, title='Installing Firefox', parser_cls=WikiParser):
     return (d, r, p)
 
 
-_buildImageParamsDefault = partial(_buildImageParams,
+_build_image_params_default = partial(_build_image_params,
                                    locale=settings.WIKI_DEFAULT_LANGUAGE)
 
 
@@ -79,22 +79,22 @@ class TestWikiParser(TestCase):
         eq_(fr_d, obj)
 
     def test_image_params_page(self):
-        """_buildImageParams handles wiki pages."""
+        """_build_image_params handles wiki pages."""
         items = ['page=Installing Firefox']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
         assert params['found']
 
     def test_image_params_link(self):
-        """_buildImageParams handles external links."""
+        """_build_image_params handles external links."""
         items = ['link=http://example.com']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         eq_('http://example.com', params['link'])
 
     def test_image_params_page_link(self):
-        """_buildImageParams - wiki page overrides link."""
+        """_build_image_params - wiki page overrides link."""
         items = ['page=Installing Firefox', 'link=http://example.com']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         eq_('/en-US/kb/installing-firefox', params['link'])
 
     def test_image_params_align(self):
@@ -102,13 +102,13 @@ class TestWikiParser(TestCase):
         align_vals = ('none', 'left', 'center', 'right')
         for align in align_vals:
             items = ['align=' + align]
-            params = _buildImageParamsDefault(items)
+            params = _build_image_params_default(items)
             eq_(align, params['align'])
 
     def test_image_params_align_invalid(self):
         """Align invalid options."""
         items = ['align=zzz']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         assert not 'align' in params, 'Align is present in params'
 
     def test_image_params_valign(self):
@@ -117,38 +117,38 @@ class TestWikiParser(TestCase):
                        'middle', 'bottom', 'text-bottom')
         for valign in valign_vals:
             items = ['valign=' + valign]
-            params = _buildImageParamsDefault(items)
+            params = _build_image_params_default(items)
             eq_(valign, params['valign'])
 
     def test_image_params_valign_invalid(self):
         """Vertical align invalid options."""
         items = ['valign=zzz']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         assert not 'valign' in params, 'Vertical align is present in params'
 
     def test_image_params_alt(self):
         """Image alt override."""
         items = ['alt=some alternative text']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         eq_('some alternative text', params['alt'])
 
     def test_image_params_frameless(self):
         """Frameless image."""
         items = ['frameless']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         assert params['frameless']
 
     def test_image_params_width_height(self):
         """Image width."""
         items = ['width=10', 'height=20']
-        params = _buildImageParamsDefault(items)
+        params = _build_image_params_default(items)
         eq_('10', params['width'])
         eq_('20', params['height'])
 
     def test_get_wiki_link(self):
         """Wiki links are properly built for existing pages."""
         eq_({'found': True, 'url': '/en-US/kb/installing-firefox'},
-            _getWikiLink('Installing Firefox',
+            _get_wiki_link('Installing Firefox',
                          locale=settings.WIKI_DEFAULT_LANGUAGE))
 
     def test_showfor(self):
