@@ -23,7 +23,8 @@ import search as constants
 from sumo.form_fields import NoValidateMultipleChoiceField
 from sumo.utils import paginate
 from sumo_locales import LOCALES
-from wiki.models import Document, CATEGORIES
+from wiki.models import (Document, CATEGORIES, FIREFOX_VERSIONS,
+                         OPERATING_SYSTEMS)
 
 
 def jsonp_is_valid(func):
@@ -76,6 +77,17 @@ def search(request):
                                                    cleaned_data['category'])
                 except ValueError:
                     cleaned_data['category'] = None
+
+            try:
+                cleaned_data['fx'] = map(int, cleaned_data['fx'])
+            except ValueError:
+                cleaned_data['fx'] = None
+
+            try:
+                cleaned_data['os'] = map(int, cleaned_data['os'])
+            except ValueError:
+                cleaned_data['os'] = None
+
             try:
                 cleaned_data['forum'] = map(int, cleaned_data.get('forum'))
             except ValueError:
@@ -116,6 +128,18 @@ def search(request):
         category = NoValidateMultipleChoiceField(
             widget=forms.CheckboxSelectMultiple,
             label=_('Category'), choices=CATEGORIES, required=False)
+
+        fx = NoValidateMultipleChoiceField(
+            widget=forms.CheckboxSelectMultiple,
+            label=_('Firefox version'),
+            choices=[(v.id, v.name) for v in FIREFOX_VERSIONS],
+            initial=[v.id for v in FIREFOX_VERSIONS])
+
+        os = NoValidateMultipleChoiceField(
+            widget=forms.CheckboxSelectMultiple,
+            label=_('Operating System'),
+            choices=[(o.id, o.name) for o in OPERATING_SYSTEMS],
+            initial=[o.id for o in OPERATING_SYSTEMS])
 
         # Support questions and discussion forums fields
         created = forms.TypedChoiceField(
@@ -209,6 +233,19 @@ def search(request):
         category = settings.SEARCH_DEFAULT_CATEGORIES
     r.setlist('category', [x for x in category if x > 0])
     exclude_category = [abs(x) for x in category if x < 0]
+
+    try:
+        fx = map(int, r.getlist('fx')) or [v.id for v in FIREFOX_VERSIONS]
+    except ValueError:
+        fx = [v.id for v in FIREFOX_VERSIONS]
+    r.setlist('fx', fx)
+
+    try:
+        os = map(int, r.getlist('os')) or [o.id for o in OPERATING_SYSTEMS]
+    except ValueError:
+        os = [o.id for o in OPERATING_SYSTEMS]
+    r.setlist('os', os)
+
     # Basic form
     if a == '0':
         r['w'] = r.get('w', constants.WHERE_BASIC)
@@ -260,6 +297,19 @@ def search(request):
     filters_f = []
 
     # wiki filters
+    # Version and OS filters
+    if cleaned['fx']:
+        filters_w.append({
+            'filter': 'fx',
+            'value': cleaned['fx'],
+        })
+
+    if cleaned['os']:
+        filters_w.append({
+            'filter': 'os',
+            'value': cleaned['os'],
+        })
+
     # Category filter
     if cleaned['category']:
         filters_w.append({

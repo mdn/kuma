@@ -199,5 +199,85 @@
             "content_type": ["wiki", "document"],
             "object_id": 1
         }
+    },
+    {
+        "pk": 994,
+        "model": "wiki.firefoxversion",
+        "fields": {
+            "item_id": 1,
+            "document": 1
+        }
+    },
+    {
+        "pk": 995,
+        "model": "wiki.firefoxversion",
+        "fields": {
+            "item_id": 2,
+            "document": 2
+        }
+    },
+    {
+        "pk": 996,
+        "model": "wiki.firefoxversion",
+        "fields": {
+            "item_id": 3,
+            "document": 3
+        }
+    },
+    {
+        "pk": 997,
+        "model": "wiki.firefoxversion",
+        "fields": {
+            "item_id": 4,
+            "document": 4
+        }
+    },
+    {
+        "pk": 998,
+        "model": "wiki.firefoxversion",
+        "fields": {
+            "item_id": 5,
+            "document": 5
+        }
+    },
+    {
+        "pk": 2881,
+        "model": "wiki.operatingsystem",
+        "fields": {
+            "item_id": 1,
+            "document": 1
+        }
+    },
+    {
+        "pk": 2882,
+        "model": "wiki.operatingsystem",
+        "fields": {
+            "item_id": 2,
+            "document": 2
+        }
+    },
+    {
+        "pk": 2883,
+        "model": "wiki.operatingsystem",
+        "fields": {
+            "item_id": 3,
+            "document": 3
+        }
+    },
+    {
+        "pk": 2884,
+        "model": "wiki.operatingsystem",
+        "fields": {
+            "item_id": 4,
+            "document": 4
+        }
+    },
+    {
+        "pk": 2885,
+        "model": "wiki.operatingsystem",
+        "fields": {
+            "item_id": 5,
+            "document": 5
+        }
     }
 ]

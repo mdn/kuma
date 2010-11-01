@@ -157,6 +157,30 @@ class SearchTest(SphinxTestCase):
         results = wc.query('')
         eq_(5, len(results))
 
+    def test_firefox_filter(self):
+        """Filtering by Firefox version."""
+        qs = {'a': 1, 'w': 1, 'format': 'json'}
+
+        qs.update({'fx': [1]})
+        response = self.client.get(reverse('search'), qs)
+        eq_(1, json.loads(response.content)['total'])
+
+        qs.update({'fx': [1, 5]})
+        response = self.client.get(reverse('search'), qs)
+        eq_(2, json.loads(response.content)['total'])
+
+    def test_os_filter(self):
+        """Filtering by operating system."""
+        qs = {'a': 1, 'w': 1, 'format': 'json'}
+
+        qs.update({'os': [1]})
+        response = self.client.get(reverse('search'), qs)
+        eq_(1, json.loads(response.content)['total'])
+
+        qs.update({'os': [1, 5]})
+        response = self.client.get(reverse('search'), qs)
+        eq_(2, json.loads(response.content)['total'])
+
     def test_range_filter(self):
         """Test filtering on a range."""
         wc = WikiClient()

@@ -37,6 +37,20 @@
       </div>
 
       <div class="container">
+        {{ search_form.fx.label_tag()|safe }}
+        <div class="checkboxes">
+          {{ search_form.fx|safe }}
+        </div>
+      </div>
+
+      <div class="container">
+        {{ search_form.os.label_tag()|safe }}
+        <div class="checkboxes">
+          {{ search_form.os|safe }}
+        </div>
+      </div>
+
+      <div class="container">
         {{ search_form.tags.label_tag()|safe }}
         {{ search_form.tags|safe }}
         <div class="search-tips-small">
