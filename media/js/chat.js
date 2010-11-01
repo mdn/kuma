@@ -93,7 +93,7 @@
         }
         checkQueueStatus();
 
-        setInterval(checkQueueStatus, 10000);
+        setInterval(checkQueueStatus, 60000);
     });
 
     function getTimeDisplay(time) {
