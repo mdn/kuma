@@ -49,5 +49,5 @@
 
   </div>
 
-  <p>{{ _("Can't find what you're looking for? <a href='{0}'>Ask a support question instead!</a>")|fe('/kb/Ask+a+question') }}</p>
+  <p>{{ _("Can't find what you're looking for? <a href='{0}'>Ask a support question instead!</a>")|fe(url('wiki.document', 'Ask a question')) }}</p>
 {% endblock %}
