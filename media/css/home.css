@@ -1,7 +1,15 @@
+#main-hdr {
+    position: relative;
+    z-index: 2;
+}
+
 #featured {
-    background: url("../img/fpo.png") no-repeat scroll right top transparent;
-    padding-right: 340px;
-    height: 270px;
+    background: url("../img/nurse.png") no-repeat scroll right top transparent;
+    height: 279px;
+    padding: 75px 330px 0 0;
+    position: relative;
+    top: -75px; /* the background image needs to slide under #main-hdr */
+    z-index: 1;
 }
 
 #featured-side {
@@ -14,7 +22,7 @@
 
 #featured-wrap {
     background: url("../img/wiki/document.divider.jpg") no-repeat scroll left bottom transparent;
-    height: 270px;
+    height: 279px;
 }
 
 #featured h1 {
@@ -46,6 +54,7 @@
 #featured p {
     font-size: 108%;
     line-height: 1.5em;
+    width: 414px;
 }
 
 #main-hdr {
