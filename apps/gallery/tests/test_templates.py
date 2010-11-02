@@ -1,7 +1,6 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.helpers import urlparams
 from sumo.tests import TestCase, get
 from sumo.urlresolvers import reverse
 from gallery.models import Image
@@ -26,7 +25,7 @@ class GalleryPageCase(TestCase):
                        args=['image'])
         eq_(200, response.status_code)
         doc = pq(response.content)
-        imgs = doc('section.gallery li img')
+        imgs = doc('#media-list li img')
         eq_(1, len(imgs))
         eq_(img.thumbnail_url_if_set(), imgs[0].attrib['src'])
 
@@ -37,14 +36,15 @@ class GalleryPageCase(TestCase):
         response = self.client.get(url, follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        imgs = doc('section.gallery li img')
+        imgs = doc('#media-list li img')
         eq_(0, len(imgs))
 
-        locale_url = urlparams(url, locale='es')
+        locale_url = reverse('gallery.gallery_media', locale='es',
+                             args=['image'])
         response = self.client.get(locale_url, follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        imgs = doc('section.gallery li img')
+        imgs = doc('#media-list li img')
         eq_(1, len(imgs))
 
 
@@ -61,6 +61,6 @@ class MediaPageCase(TestCase):
         response = self.client.get(img.get_absolute_url(), follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(img.title, doc('section.media h1').text())
-        eq_(img.description, doc('section.media div.description').text())
-        eq_(img.file.url, doc('section.media div.media img')[0].attrib['src'])
+        eq_(img.title, doc('#media-object h1').text())
+        eq_(img.description, doc('#media-object div.description').text())
+        eq_(img.file.url, doc('#media-view img')[0].attrib['src'])

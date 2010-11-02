@@ -12,16 +12,15 @@
             $forms.find('input[type=image]').css('opacity', .5);
         }
 
-        initLocaleSwitcher();
+        initAutoSubmitSelects();
 
     });
 
     /*
-     * Initialize the locale form in the footer so that it auto-submits
-     * when the select changes.
+     * Initialize some selects so that they auto-submit on change.
      */
-    function initLocaleSwitcher() {
-        $('#flang').change(function() {
+    function initAutoSubmitSelects() {
+        $('select.autosubmit').change(function() {
             $(this).closest('form').submit();
         });
     }

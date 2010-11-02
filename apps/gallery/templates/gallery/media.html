@@ -1,51 +1,68 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "gallery/base.html" %}
-{% set title = _('{title} | Media Gallery | Firefox Support')|f(title=media.title) %}
-{% set crumbs = [(url('gallery.gallery'), _('Media Gallery')),
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% set title = _('{title} | Media Gallery')|f(title=media.title) %}
+{% set styles = ('wiki', 'gallery') %}
+{% set crumbs = [(url('gallery.gallery_media', media_type=media_type), _('Media Gallery')),
                  (None, media.title)] %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <section class="media">
-    <header>
-      <h1>{{ media.title }}</h1>
-      <div class="creator">
-        {{ _('by {user}')|f(user=media.creator) }}
-      </div>
-      <div class="created">
-        {{ _('Uploaded {date}')|f(date=datetimeformat(media.created, format='longdatetime'))|safe }}
-      </div>
-      <div class="locale">
-        {{ media.locale }}
-      </div>
-      {% if media_type =='image' %}
-        <div class="dimensions">
-          {{ media.file.width }} x {{ media.file.height }}px
-        </div>
-      {% endif %}
-      <div class="size">
-        {{ media.file.size // 1024 }}KB
-      </div>
-    </header>
-    <div class="media">
+  <article id="media-object" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1>{{ media.title|truncate(length=55, killwords=True) }}</h1>
+    <div id="media-metainfo">
+      <ul id="media-info">
+        {% if media_type =='image' %}
+          <li class="dimensions">
+            {{ media.file.width }} x {{ media.file.height }} px
+          </li>
+          <li class="size">
+            {{ media.file.size // 1024 }} KB
+          </li>
+        {% else %}{# video #}
+          {% if media.flv %}
+            <li class="format-flv">
+              FLV ({{ media.flv.size // 1024 }} KB)
+            </li>
+          {% endif %}
+          {% if media.ogv %}
+            <li class="format-ogv">
+              OGV ({{ media.ogv.size // 1024 }} KB)
+            </li>
+          {% endif %}
+          {% if media.webm %}
+            <li class="format-webm">
+              WEBM ({{ media.webm.size // 1024 }})
+            </li>
+          {% endif %}
+        {% endif %}
+        {% if media_format %}
+          <li class="format">{{ media_format|upper }}</li>
+        {% endif %}
+      </ul>
+      <ul id="media-meta">
+        <li class="creator">{{ _('by {user}')|f(user=media.creator) }}</li>
+        <li class="created">{{ _('Uploaded {date}')|f(date=datetimeformat(media.created, format='datetime'))|safe }}</li>
+        <li class="locale">{{ settings.LANGUAGES[media.locale.lower()] }}</li>
+      </ul>
+    </div>
+    <div id="media-view">
       {% if media_type == 'image' %}
         <img src="{{ media.file.url }}" alt="{{ media.title }}" />
       {% else %}
-        <video src="{{ media.file.url }}" controls="controls"></video>
+        {{ generate_video(media) }}
       {% endif %}
     </div>
     <div class="description">{{ media.description }}</div>
-    <footer>
-      <form action="{# TODO delete view #}" method="post">
-        {% if media_type == 'image' %}
-          <input type="submit" value="{{ _('Delete this Image') }}" />
-        {% else %}
-          <input type="submit" value="{{ _('Delete this Video') }}" />
-        {% endif %}
-      </form>
-    </footer>
-  </section>
+    <form id="media-actions" action="{# TODO delete view #}" method="post">
+      {% if media_type == 'image' %}
+        <input type="submit" value="{{ _('Delete this Image') }}" />
+      {% else %}
+        <input type="submit" value="{{ _('Delete this Video') }}" />
+      {% endif %}
+    </form>
+  </article>
 {% endblock %}

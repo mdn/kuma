@@ -1,51 +1,60 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "gallery/base.html" %}
-{% set title = _('Media Gallery | Firefox Support') %}
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% set title = _('Media Gallery') %}
+{% set styles= ('wiki', 'gallery') %}
 {% set crumbs = [(None, _('Media Gallery'))] %}
 
 {% block content %}
-  <div id="breadcrumbs">
-    {{ _('You are here:') }}
-    {{ breadcrumbs(crumbs) }}
-  </div>
-  <section class="gallery">
-    <header>
-      <h1>{{ _('Media Gallery') }}</h1>
-      <div id="locale-filter">
-        <form action="" method="get">
-          <label for="select-locale">{{ _('Show media for:') }}</label>
-          <select id="select-locale" name="locale">
-            {% for lang in settings.LANGUAGE_CHOICES %}
-              <option value="{{ lang[0] }}" {% if lang[0] == locale %}selected="selected"{% endif %}>{{ lang[1] }} ({{ lang[0] }})</option>
-            {% endfor %}
-          </select>
+  <article id="gallery-list" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1>{{ _('Media Gallery') }}</h1>
+    <div id="locale-filter">
+      <a class="btn-upload" href="#">{{ _('Upload a New Media File') }}</a>
+      <form action="" method="get">
+        <label for="select-locale">{{ _('Show media for:') }}</label>
+        <select id="select-locale" name="lang" class="autosubmit">
+          {% for lang in settings.LANGUAGE_CHOICES %}
+            <option value="{{ lang[0] }}" {% if lang[0] == request.locale %}selected="selected"{% endif %}>{{ lang[1] }} ({{ lang[0] }})</option>
+          {% endfor %}
+        </select>
+        <noscript>
           <input type="submit" value="{{ _('Go') }}">
-        </form>
-      </div>
-      <div class="wrap">
-        <div id="gallery-search">
-          <form action="" method="get">
-            <input type="text" name="q" required="required" />
-            <input type="submit" value="{{ _('Search Gallery') }}">
-          </form>
-        </div>
-        <div id="media-type-filter">
-          {{ _("Show:") }}
-          {% if filter == 'images' %}
+        </noscript>
+      </form>
+    </div>
+    <div id="search-filter">
+      <div id="media-type-filter">
+        <span>{{ _("Show:") }}</span>
+        <ol>
+        <li>
+          {% if media_type == 'image' %}
             <span>{{ _('Images') }}</span>
           {% else %}
             <a href="{{ url('gallery.gallery_media', 'image') }}">{{ _('Images') }}</a>
           {% endif %}
-          {% if filter == 'videos' %}
+        </li>
+        <li>
+          {% if media_type == 'video' %}
             <span>{{ _('Videos') }}</span>
           {% else %}
             <a href="{{ url('gallery.gallery_media', 'video') }}">{{ _('Videos') }}</a>
           {% endif %}
-        </div>
+        </li>
+        </ol>
       </div>
-    </header>
+      <div id="gallery-search">
+        <form action="" method="get">
+          <input type="text" name="q" required="required" />
+          <input type="submit" value="{{ _('Search Gallery') }}">
+        </form>
+      </div>
+    </div>
     {% if media.object_list %}
-      <ol>
+      <ol id="media-list">
         {% for m in media.object_list %}
           <li>
             <a href="{{ m.get_absolute_url() }}" title="{{ m.title }}">
@@ -54,11 +63,14 @@
           </li>
         {% endfor %}
       </ol>
-    {% else %}
-      <p>{{ _('Nothing to show.') }}</p>
-    {% endif %}
-    <footer>
       {{ media|paginator }}
-    </footer>
-  </section>
+    {% else %}
+      <p>{{ _('No media files available.') }}</p>
+    {% endif %}
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ for_contributors() }}
+  {{ quick_links() }}
 {% endblock %}

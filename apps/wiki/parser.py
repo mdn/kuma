@@ -374,19 +374,24 @@ class WikiParser(sumo.parser.WikiParser):
         if isinstance(v, basestring):
             return v
 
-        sources = []
-        if v.webm:
-            sources.append(SOURCE_TEMPLATE % {'src': v.webm.url,
-                                              'type': 'webm'})
-        if v.ogv:
-            sources.append(SOURCE_TEMPLATE % {'src': v.ogv.url,
-                                              'type': 'ogg'})
-        data_fallback = ''
-        # Flash fallback
-        if v.flv:
-            data_fallback = ' data-fallback="' + v.flv.url + '"'
-        return VIDEO_TEMPLATE % {'fallback': data_fallback,
-                                 'sources': ''.join(sources),
-                                 'text': unicode(VIDEO_TEXT),
-                                 'height': settings.WIKI_VIDEO_HEIGHT,
-                                 'width': settings.WIKI_VIDEO_WIDTH}
+        return generate_video(v)
+
+
+def generate_video(v):
+    """Takes a video object and returns HTML markup for embedding it."""
+    sources = []
+    if v.webm:
+        sources.append(SOURCE_TEMPLATE % {'src': v.webm.url,
+                                          'type': 'webm'})
+    if v.ogv:
+        sources.append(SOURCE_TEMPLATE % {'src': v.ogv.url,
+                                          'type': 'ogg'})
+    data_fallback = ''
+    # Flash fallback
+    if v.flv:
+        data_fallback = ' data-fallback="' + v.flv.url + '"'
+    return VIDEO_TEMPLATE % {'fallback': data_fallback,
+                             'sources': ''.join(sources),
+                             'text': unicode(VIDEO_TEXT),
+                             'height': settings.WIKI_VIDEO_HEIGHT,
+                             'width': settings.WIKI_VIDEO_WIDTH}

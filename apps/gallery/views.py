@@ -1,3 +1,4 @@
+import imghdr
 import json
 
 from django.contrib.auth.decorators import login_required
@@ -28,24 +29,23 @@ def gallery(request, media_type='image'):
     Filter can be set to 'images' or 'videos'.
 
     """
-    locale = request.GET.get('locale', request.locale)
-
     if media_type == 'image':
-        media_qs = Image.objects.filter(locale=locale)
+        media_qs = Image.objects.filter(locale=request.locale)
     else:
-        media_qs = Video.objects.filter(locale=locale)
+        media_qs = Video.objects.filter(locale=request.locale)
     media = paginate(request, media_qs, per_page=constants.ITEMS_PER_PAGE)
 
     return jingo.render(request, 'gallery/gallery.html',
                         {'media': media,
-                         'filter': filter,
-                         'locale': locale})
+                         'media_type': media_type})
 
 
 def media(request, media_id, media_type='image'):
     """The media page."""
+    media_format = None
     if media_type == 'image':
         media = get_object_or_404(Image, pk=media_id)
+        media_format = imghdr.what(media.file.path)
     elif media_type == 'video':
         media = get_object_or_404(Video, pk=media_id)
     else:
@@ -53,6 +53,7 @@ def media(request, media_id, media_type='image'):
 
     return jingo.render(request, 'gallery/media.html',
                         {'media': media,
+                         'media_format': media_format,
                          'media_type': media_type})
 
 
