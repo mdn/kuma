@@ -123,6 +123,7 @@ class RevisionForm(forms.ModelForm):
 
     summary = StrippedCharField(
                 min_length=5, max_length=1000, widget=forms.Textarea(),
+                label=_lazy('Search result summary'),
                 error_messages={'required': SUMMARY_REQUIRED,
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
