@@ -66,3 +66,8 @@
     </form>
   </article>
 {% endblock %}
+
+{% block side %}
+  {{ for_contributors(user) }}
+  {{ quick_links() }}
+{% endblock %}

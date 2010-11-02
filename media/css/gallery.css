@@ -124,7 +124,7 @@ a.btn-upload {
 
 #media-meta li:before,
 #media-info li:before {
-    content: '·';
+    content: '\00B7';
     margin-right: .5em;
 }
 
