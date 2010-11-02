@@ -28,11 +28,10 @@ class CreateImageTestCase(TestCase):
         """
         with open('apps/upload/tests/media/test.jpg') as f:
             up_file = File(f)
-            file_info = create_image(
-                {'image': up_file}, self.user, 'Title', 'Description', 'en-US')
+            file_info = create_image({'image': up_file}, self.user)
 
         image = Image.objects.all()[0]
-        delete_url = reverse('gallery.del_media_async',
+        delete_url = reverse('gallery.delete_media',
                              args=['image', image.id])
         check_file_info(
             file_info, name='apps/upload/tests/media/test.jpg',
@@ -59,14 +58,13 @@ class CreateVideoTestCase(TestCase):
         """
         with open('apps/gallery/tests/media/test.flv') as f:
             up_file = File(f)
-            file_info = create_video({'flv': up_file}, self.user,
-                                     'Title', 'Description', 'en-US')
+            file_info = create_video({'flv': up_file}, self.user)
 
         vid = Video.objects.all()[0]
-        delete_url = reverse('gallery.del_media_async',
+        delete_url = reverse('gallery.delete_media',
                              args=['video', vid.id])
         check_file_info(
             file_info, name='apps/gallery/tests/media/test.flv',
-            width=120, height=120, delete_url=delete_url,
+            width=32, height=32, delete_url=delete_url,
             url=vid.get_absolute_url(),
             thumbnail_url=settings.THUMBNAIL_PROGRESS_URL)

@@ -3,7 +3,7 @@
 {% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
 {% set title = _('Media Gallery Search') %}
 {% set styles= ('wiki', 'gallery') %}
-{% set crumbs = [(url('gallery.gallery_media', media_type), _('Media Gallery')),
+{% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
                  (None, _('Search'))] %}
 
 {% block content %}

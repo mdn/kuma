@@ -336,6 +336,7 @@ MINIFY_BUNDLES = {
         'questions': (
             'js/libs/jqueryui.min.js',
             'js/markup.js',
+            'js/libs/jquery.ajaxupload.js',
             'js/upload.js',
             'js/questions.js',
             'js/tags.js',
@@ -347,6 +348,10 @@ MINIFY_BUNDLES = {
         'forums': (
             'js/markup.js',
             'js/forums.js',
+        ),
+        'gallery': (
+            'js/libs/jquery.ajaxupload.js',
+            'js/gallery.js',
         ),
         'wiki': (
             'js/markup.js',
@@ -511,6 +516,8 @@ GALLERY_IMAGE_THUMBNAIL_PATH = 'uploads/gallery/images/thumbnails/'
 GALLERY_VIDEO_PATH = 'uploads/gallery/videos/'
 GALLERY_VIDEO_THUMBNAIL_PATH = 'uploads/gallery/videos/thumbnails/'
 THUMBNAIL_PROGRESS_URL = MEDIA_URL + 'img/wait-trans.gif'
+THUMBNAIL_PROGRESS_WIDTH = 32  # width of the above image
+THUMBNAIL_PROGRESS_HEIGHT = 32  # height of the above image
 VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes
 
 # Customare care tweet collection settings

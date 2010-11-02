@@ -3,7 +3,7 @@
 {% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
 {% set title = _('{title} | Media Gallery')|f(title=media.title) %}
 {% set styles = ('wiki', 'gallery') %}
-{% set crumbs = [(url('gallery.gallery_media', media_type=media_type), _('Media Gallery')),
+{% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
                  (None, media.title)] %}
 
 {% block content %}
@@ -35,7 +35,7 @@
           {% endif %}
           {% if media.webm %}
             <li class="format-webm">
-              WEBM ({{ media.webm.size // 1024 }})
+              WEBM ({{ media.webm.size // 1024 }} KB)
             </li>
           {% endif %}
         {% endif %}

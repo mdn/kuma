@@ -8,6 +8,8 @@ from pyquery import PyQuery as pq
 
 from gallery import forms
 from gallery.models import Image, Video
+from gallery.tests import image, video
+from gallery.views import _get_media_info
 from sumo.tests import post, LocalizingClient, TestCase
 from sumo.urlresolvers import reverse
 
@@ -33,7 +35,7 @@ class UploadImageTestCase(TestCase):
 
     def test_empty_image(self):
         """Specifying an invalid model returns 400."""
-        r = post(self.client, 'gallery.up_media_async', {'file': ''},
+        r = post(self.client, 'gallery.upload_async', {'file': ''},
                  args=['image'])
 
         eq_(400, r.status_code)
@@ -43,38 +45,12 @@ class UploadImageTestCase(TestCase):
         eq_('You have not selected an image to upload.',
             json_r['errors']['file'][0])
 
-    def test_empty_title(self):
-        """Title is required when uploading."""
-        with open(TEST_IMG) as f:
-            r = post(self.client, 'gallery.up_media_async', {'file': f},
-                     args=['image'])
-
-        eq_(400, r.status_code)
-        json_r = json.loads(r.content)
-        eq_('error', json_r['status'])
-        eq_('Could not upload your image.', json_r['message'])
-        eq_('Please provide a title.', json_r['errors']['title'][0])
-
-    def test_empty_description(self):
-        """Description is required when uploading."""
-        with open(TEST_IMG) as f:
-            r = post(self.client, 'gallery.up_media_async',
-                     {'file': f, 'title': 'Title'}, args=['image'])
-
-        eq_(400, r.status_code)
-        json_r = json.loads(r.content)
-        eq_('error', json_r['status'])
-        eq_('Could not upload your image.', json_r['message'])
-        eq_('Please provide a description.',
-            json_r['errors']['description'][0])
-
     def test_upload_image(self):
         """Uploading an image works."""
         with open(TEST_IMG) as f:
-            r = post(self.client, 'gallery.up_media_async',
-                     {'file': f, 'title': 'Title', 'description': 'Test'},
+            r = post(self.client, 'gallery.upload_async', {'file': f},
                      args=['image'])
-        image = Image.objects.all()[0]
+        img = Image.objects.all()[0]
 
         eq_(1, Image.objects.count())
         eq_(200, r.status_code)
@@ -84,30 +60,28 @@ class UploadImageTestCase(TestCase):
         eq_('test.jpg', file['name'])
         eq_(90, file['width'])
         eq_(120, file['height'])
-        assert file['url'].endswith(image.get_absolute_url())
-        eq_('pcraciunoiu', image.creator.username)
-        eq_(150, image.file.width)
-        eq_(200, image.file.height)
-        eq_('Title', image.title)
-        eq_('Test', image.description)
-        eq_('en-US', image.locale)
+        assert file['url'].endswith(img.get_absolute_url())
+        eq_('pcraciunoiu', img.creator.username)
+        eq_(150, img.file.width)
+        eq_(200, img.file.height)
+        eq_('draft %s' % img.creator.pk, img.title)
+        eq_('Autosaved draft.', img.description)
+        eq_('en-US', img.locale)
 
     def test_delete_image(self):
         """Deleting an uploaded image works."""
         # Upload the image first
         self.test_upload_image()
         im = Image.objects.all()[0]
-        r = post(self.client, 'gallery.del_media_async', args=['image', im.id])
+        r = post(self.client, 'gallery.delete_media', args=['image', im.id])
 
         eq_(200, r.status_code)
-        json_r = json.loads(r.content)
-        eq_('success', json_r['status'])
         eq_(0, Image.objects.count())
 
     def test_invalid_image(self):
         """Make sure invalid files are not accepted as images."""
         with open('apps/gallery/__init__.py', 'rb') as f:
-            r = post(self.client, 'gallery.up_media_async', {'file': f},
+            r = post(self.client, 'gallery.upload_async', {'file': f},
                      args=['image'])
 
         eq_(400, r.status_code)
@@ -125,8 +99,7 @@ class UploadImageTestCase(TestCase):
                   'more_than_250_characters__a_really_long_filename_worth_'
                   'more_than_250_characters__a_really_long_filename_yes_.jpg')\
             as f:
-            r = post(self.client, 'gallery.up_media_async', {'file': f,
-                     'title': 'Title', 'description': 'Some description.'},
+            r = post(self.client, 'gallery.upload_async', {'file': f},
                      args=['image'])
 
         eq_(400, r.status_code)
@@ -136,6 +109,29 @@ class UploadImageTestCase(TestCase):
         eq_(forms.MSG_IMAGE_LONG % {'length': 251,
                                     'max': settings.MAX_FILENAME_LENGTH},
             json_r['errors']['file'][0])
+
+
+class ViewHelpersTestCase(TestCase):
+    fixtures = ['users.json']
+
+    def tearDown(self):
+        Image.objects.all().delete()
+        Video.objects.all().delete()
+        super(ViewHelpersTestCase, self).setUp()
+
+    def test_get_media_info_video(self):
+        """Gets video and format info."""
+        vid = video()
+        info_vid, info_format = _get_media_info(vid.pk, 'video')
+        eq_(vid.pk, info_vid.pk)
+        eq_(None, info_format)
+
+    def test_get_media_info_image(self):
+        """Gets image and format info."""
+        img = image()
+        info_img, info_format = _get_media_info(img.pk, 'image')
+        eq_(img.pk, info_img.pk)
+        eq_('jpeg', info_format)
 
 
 class UploadVideoTestCase(TestCase):
@@ -150,35 +146,9 @@ class UploadVideoTestCase(TestCase):
         Video.objects.all().delete()
         super(UploadVideoTestCase, self).tearDown()
 
-    def test_empty_title(self):
-        """Title is required when uploading."""
-        with open(TEST_VID['ogv']) as f:
-            r = post(self.client, 'gallery.up_media_async', {'ogv': f},
-                     args=['video'])
-
-        eq_(400, r.status_code)
-        json_r = json.loads(r.content)
-        eq_('error', json_r['status'])
-        eq_('Could not upload your video.', json_r['message'])
-        eq_('Please provide a title.', json_r['errors']['title'][0])
-
-    def test_empty_description(self):
-        """Description is required when uploading."""
-        with open(TEST_VID['flv']) as f:
-            r = post(self.client, 'gallery.up_media_async',
-                     {'flv': f, 'title': 'Title'}, args=['video'])
-
-        eq_(400, r.status_code)
-        json_r = json.loads(r.content)
-        eq_('error', json_r['status'])
-        eq_('Could not upload your video.', json_r['message'])
-        eq_('Please provide a description.',
-            json_r['errors']['description'][0])
-
     def _upload_extension(self, ext):
         with open(TEST_VID[ext]) as f:
-            r = post(self.client, 'gallery.up_media_async',
-                     {ext: f, 'title': 'Title', 'description': 'Test'},
+            r = post(self.client, 'gallery.upload_async', {ext: f},
                      args=['video'])
         return r
 
@@ -193,12 +163,12 @@ class UploadVideoTestCase(TestCase):
         eq_('success', json_r['status'])
         file = json_r['file']
         eq_('test.ogv', file['name'])
-        eq_(120, file['width'])
-        eq_(120, file['height'])
+        eq_(32, file['width'])
+        eq_(32, file['height'])
         assert file['url'].endswith(vid.get_absolute_url())
         eq_('pcraciunoiu', vid.creator.username)
-        eq_('Title', vid.title)
-        eq_('Test', vid.description)
+        eq_('draft %s' % vid.creator.pk, vid.title)
+        eq_('Autosaved draft.', vid.description)
         eq_('en-US', vid.locale)
         with open(TEST_VID['ogv']) as f:
             eq_(f.read(), vid.ogv.read())
@@ -208,20 +178,17 @@ class UploadVideoTestCase(TestCase):
         # Upload the video first
         self._upload_extension('ogv')
         vid = Video.objects.all()[0]
-        r = post(self.client, 'gallery.del_media_async',
+        r = post(self.client, 'gallery.delete_media',
                  args=['video', vid.id])
 
         eq_(200, r.status_code)
-        json_r = json.loads(r.content)
-        eq_('success', json_r['status'])
         eq_(0, Video.objects.count())
 
     def test_upload_video_ogv_flv(self):
         """Upload the same video, in ogv and flv formats"""
         ogv = open(TEST_VID['ogv'])
         flv = open(TEST_VID['flv'])
-        post(self.client, 'gallery.up_media_async',
-             {'ogv': ogv, 'flv': flv, 'title': 'Title', 'description': 'Test'},
+        post(self.client, 'gallery.upload_async', {'ogv': ogv, 'flv': flv},
              args=['video'])
         ogv.close()
         flv.close()
@@ -234,9 +201,8 @@ class UploadVideoTestCase(TestCase):
         webm = open(TEST_VID['webm'])
         ogv = open(TEST_VID['ogv'])
         flv = open(TEST_VID['flv'])
-        post(self.client, 'gallery.up_media_async',
-             {'webm': webm, 'ogv': ogv, 'flv': flv,
-              'title': 'Title', 'description': 'Test'}, args=['video'])
+        post(self.client, 'gallery.upload_async',
+             {'webm': webm, 'ogv': ogv, 'flv': flv}, args=['video'])
         webm.close()
         ogv.close()
         flv.close()
@@ -247,8 +213,7 @@ class UploadVideoTestCase(TestCase):
 
     def test_video_required(self):
         """At least one video format is required to upload."""
-        r = post(self.client, 'gallery.up_media_async',
-                 {'title': 'Title', 'description': 'Test'}, args=['video'])
+        r = post(self.client, 'gallery.upload_async', args=['video'])
         eq_(400, r.status_code)
         json_r = json.loads(r.content)
         eq_('error', json_r['status'])
@@ -267,8 +232,7 @@ class UploadVideoTestCase(TestCase):
                       'more_than_250_characters__a_really_long_filename_yes_'
                       '.jpg')\
                 as f:
-                r = post(self.client, 'gallery.up_media_async',
-                         {k: f, 'title': 'Title', 'description': 'Test'},
+                r = post(self.client, 'gallery.upload_async', {k: f},
                          args=['video'])
 
             eq_(400, r.status_code)
@@ -328,6 +292,6 @@ class SearchTestCase(TestCase):
 
 class GalleryTestCase(TestCase):
     def test_gallery_invalid_type(self):
-        url = reverse('gallery.gallery_media', args=['foo'])
+        url = reverse('gallery.gallery', args=['foo'])
         response = self.client.get(url, follow=True)
         eq_(404, response.status_code)

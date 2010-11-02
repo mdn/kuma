@@ -1,14 +1,18 @@
 from django.conf.urls.defaults import patterns, url
+from django.views.generic.simple import redirect_to
 
 urlpatterns = patterns('gallery.views',
-    url(r'^$', 'gallery', name='gallery.gallery'),
+    url(r'^/$', redirect_to, {'url': 'images'}, name='gallery.home'),
     url(r'^/async$', 'gallery_async', name='gallery.async'),
-    url(r'^/(?P<media_type>\w+)s$', 'gallery', name='gallery.gallery_media'),
+    url(r'^/(?P<media_type>\w+)s$', 'gallery', name='gallery.gallery'),
     url(r'^/(?P<media_type>\w+)s/search$', 'search', name='gallery.search'),
-    url(r'^/(?P<media_type>\w+)/upload_async$', 'up_media_async',
-        name='gallery.up_media_async'),
-    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)/delete_async$',
-        'del_media_async', name='gallery.del_media_async'),
-    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)$',
-        'media', name='gallery.media'),
+    url(r'^/(?P<media_type>\w+)s/upload$', 'upload', name='gallery.upload'),
+    url(r'^/(?P<media_type>\w+)s/cancel_draft$', 'cancel_draft',
+        name='gallery.cancel_draft'),
+    url(r'^/(?P<media_type>\w+)/upload_async$', 'upload_async',
+        name='gallery.upload_async'),
+    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)/delete$', 'delete_media',
+        name='gallery.delete_media'),
+    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)$', 'media',
+        name='gallery.media'),
 )

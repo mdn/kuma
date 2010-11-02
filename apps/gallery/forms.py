@@ -1,12 +1,15 @@
 from django import forms
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 from tower import ugettext_lazy as _lazy
 
 from gallery.models import Image, Video
 from sumo.form_fields import StrippedCharField
+from sumo_locales import LOCALES
 
 # Error messages
+# XXX: use these MSG strings or remove them
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a title.')
 MSG_TITLE_SHORT = _lazy(
     'The title is too short (%(show_value)s characters). It must be at '
@@ -31,13 +34,27 @@ MSG_OGV_LONG = _lazy(
 MSG_FLV_LONG = _lazy(
     'Please keep the length of your flv filename to %(max)s '
     'characters or less. It is currently %(length)s characters.')
+MSG_VID_REQUIRED = _lazy('The video has no files associated with it. You must '
+                         'upload one of the following extensions: webm, ogv, '
+                         'flv.')
 
 
-class ImageUploadForm(forms.ModelForm):
-    """Image upload form."""
+class ImageUploadFormAsync(forms.Form):
+    """Image upload form for async requests."""
     file = forms.ImageField(error_messages={'required': MSG_IMAGE_REQUIRED,
                                             'max_length': MSG_IMAGE_LONG},
                             max_length=settings.MAX_FILENAME_LENGTH)
+
+
+class ImageForm(forms.ModelForm):
+    """Image form."""
+    file = forms.ImageField(error_messages={'required': MSG_IMAGE_REQUIRED,
+                                            'max_length': MSG_IMAGE_LONG},
+                            max_length=settings.MAX_FILENAME_LENGTH)
+    locale = forms.ChoiceField(
+                    choices=[(LOCALES[k].external, LOCALES[k].native) for
+                             k in settings.SUMO_LANGUAGES],
+                    initial=settings.WIKI_DEFAULT_LANGUAGE)
     title = StrippedCharField(
         min_length=5, max_length=255,
         error_messages={'required': MSG_TITLE_REQUIRED,
@@ -50,20 +67,50 @@ class ImageUploadForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = ('file', 'title', 'description')
+        fields = ('file', 'locale', 'title', 'description')
 
 
-class VideoUploadForm(forms.ModelForm):
-    """Video upload form."""
-    webm = forms.FileField(required=False,
-                           error_messages={'max_length': MSG_WEBM_LONG},
-                           max_length=settings.MAX_FILENAME_LENGTH)
-    ogv = forms.FileField(required=False,
-                          error_messages={'max_length': MSG_OGV_LONG},
-                          max_length=settings.MAX_FILENAME_LENGTH)
+def clean_video(video_form):
+    """Ensure one of the supported file formats has been uploaded"""
+    c = video_form.cleaned_data
+    if not ('webm' in c and c['webm'] or
+            'ogv' in c and c['ogv'] or
+            'flv' in c and c['flv']):
+        raise ValidationError(MSG_VID_REQUIRED)
+    return video_form.cleaned_data
+
+
+class VideoUploadFormAsync(forms.Form):
+    """Video upload form for async requests."""
     flv = forms.FileField(required=False,
                           error_messages={'max_length': MSG_FLV_LONG},
                           max_length=settings.MAX_FILENAME_LENGTH)
+    ogv = forms.FileField(required=False,
+                          error_messages={'max_length': MSG_OGV_LONG},
+                          max_length=settings.MAX_FILENAME_LENGTH)
+    webm = forms.FileField(required=False,
+                           error_messages={'max_length': MSG_WEBM_LONG},
+                           max_length=settings.MAX_FILENAME_LENGTH)
+
+    def clean(self):
+        return clean_video(self)
+
+
+class VideoForm(forms.ModelForm):
+    """Video form."""
+    flv = forms.FileField(required=False,
+                          error_messages={'max_length': MSG_FLV_LONG},
+                          max_length=settings.MAX_FILENAME_LENGTH)
+    ogv = forms.FileField(required=False,
+                          error_messages={'max_length': MSG_OGV_LONG},
+                          max_length=settings.MAX_FILENAME_LENGTH)
+    webm = forms.FileField(required=False,
+                           error_messages={'max_length': MSG_WEBM_LONG},
+                           max_length=settings.MAX_FILENAME_LENGTH)
+    locale = forms.ChoiceField(
+                    choices=[(LOCALES[k].external, LOCALES[k].native) for
+                             k in settings.SUMO_LANGUAGES],
+                    initial=settings.WIKI_DEFAULT_LANGUAGE)
     title = StrippedCharField(
         min_length=5, max_length=255,
         error_messages={'required': MSG_TITLE_REQUIRED,
@@ -74,6 +121,9 @@ class VideoUploadForm(forms.ModelForm):
         error_messages={'required': MSG_DESCRIPTION_REQUIRED,
                         'max_length': MSG_DESCRIPTION_LONG})
 
+    def clean(self):
+        return clean_video(self)
+
     class Meta:
         model = Video
-        fields = ('webm', 'ogv', 'flv', 'title', 'description')
+        fields = ('webm', 'ogv', 'flv', 'locale', 'title', 'description')
