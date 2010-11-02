@@ -23,7 +23,7 @@
       <div class="absolute-graph" style="width: {{ row.percent }}%"></div>
     </td>
     <td>
-      {{ row.updated }}
+      {{ row.updated|timesince }}
     </td>
   </tr>
 {% endfor %}

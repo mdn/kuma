@@ -1,13 +1,12 @@
 """Data aggregators for dashboards"""
 
 from django.conf import settings
-from django.db import connection
+from django.db import connections, router
 
 import jingo
 from tower import ugettext as _, ugettext_lazy as _lazy
 
 from sumo.urlresolvers import reverse
-from sumo.utils import timesince
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
 
 
@@ -64,10 +63,16 @@ class Readout(object):
     def rows(self, max=None):
         """Return an iterable of dicts containing the data for the table.
 
+        This default implementation does calls _query_and_params and
+        _format_row. You can either implement those or, if you need more
+        flexibility, override this.
+
         Limit to `max` rows.
 
         """
-        raise NotImplementedError
+        cursor = connections[router.db_for_read(Document)].cursor()
+        cursor.execute(*self._query_and_params(max))
+        return (self._format_row(r) for r in cursor.fetchall())
 
     def render(self, rows):
         """Return HTML table rows for the given data."""
@@ -75,6 +80,16 @@ class Readout(object):
             self.request,
             'dashboards/includes/localization_readout.html',
             {'rows': rows, 'column4_label': self.column4_label})
+
+    # To override:
+
+    def _query_and_params(self, max):
+        """Return a tuple: (query, params to bind it to)."""
+        raise NotImplementedError
+
+    def _format_row(self, row):
+        """Turn a DB row tuple into a dict for the template."""
+        raise NotImplementedError
 
     # Convenience methods:
 
@@ -93,12 +108,11 @@ class UntranslatedReadout(Readout):
     slug = 'untranslated'
     column4_label = _lazy(u'Updated')
 
-    def rows(self, max=None):
+    def _query_and_params(self, max):
         # Incidentally, we tried this both as a left join and as a search
         # against an inner query returning translated docs, and the left join
         # yielded a faster-looking plan (on a production corpus).
-        cursor = connection.cursor()
-        cursor.execute('SELECT parent.slug, parent.title, '
+        return ('SELECT parent.slug, parent.title, '
             'wiki_revision.reviewed '
             'FROM wiki_document parent '
             'INNER JOIN wiki_revision ON '
@@ -111,54 +125,15 @@ class UntranslatedReadout(Readout):
             'ORDER BY wiki_revision.reviewed DESC' + self.limit_clause(max),
             [self.request.locale, settings.WIKI_DEFAULT_LANGUAGE])
 
-        for r in cursor.fetchall():
-            # Run the data through the model to (potentially) format it and
-            # take advantage of SPOTs (like for get_absolute_url()):
-            d = Document(slug=r[0], title=r[1],
-                         locale=settings.WIKI_DEFAULT_LANGUAGE)
-            reviewed = r[2]
-
-            yield (dict(title=d.title,
-                        url=d.get_absolute_url(),
-                        visits=0, percent=0,
-                        updated=reviewed and timesince(reviewed)))
-
-
-OUT_OF_DATE_QUERY = ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
-    'FROM wiki_document transdoc '
-    'INNER JOIN wiki_revision engrev ON engrev.id='
-    # The oldest english rev to have an approved level-30 change since the
-    # translated doc had an approved rev based on it. NULL if there is none:
-        '(SELECT min(id) FROM wiki_revision '
-        # Narrow engrev rows to those representing revision of parent doc:
-        'WHERE wiki_revision.document_id=transdoc.parent_id '
-        # For the purposes of computing the "Out of Date Since" column, the
-        # revision that threw the translation out of date had better be more
-        # recent than the one the current translation is based on:
-        'AND wiki_revision.id>'
-            '(SELECT based_on_id from wiki_revision basedonrev '
-            'WHERE basedonrev.id=transdoc.current_revision_id) '
-        'AND wiki_revision.significance>=%s '
-        'AND %s='
-        # Completely filter out outer selections where 30 is not the max signif
-        # of english revisions since trans was last approved. Other maxes will
-        # be shown by other readouts. Optimize: try "30 IN"; maybe the inner
-        # query can bail out early. [Ed: No effect on EXPLAIN on test corpus.]
-            '(SELECT MAX(engsince.significance) '
-            'FROM wiki_revision engsince '
-            'WHERE engsince.document_id=transdoc.parent_id '
-            # Assumes that any approved revision became the current revision at
-            # some point: we don't let the user go back and approve revisions
-            # older than the latest approved one.
-            'AND engsince.is_approved '
-            'AND engsince.id>'
-            # The English revision the current translation's based on:
-                '(SELECT based_on_id FROM wiki_revision '
-                'WHERE wiki_revision.id=transdoc.current_revision_id)'
-            ')'
-        ') '
-    'WHERE transdoc.locale=%s '
-    'ORDER BY engrev.reviewed DESC')
+    def _format_row(self, (slug, title, reviewed)):
+        # Run the data through the model to (potentially) format it and
+        # take advantage of SPOTs (like for get_absolute_url()):
+        d = Document(slug=slug, title=title,
+                     locale=settings.WIKI_DEFAULT_LANGUAGE)
+        return (dict(title=d.title,
+                     url=d.get_absolute_url(),
+                     visits=0, percent=0,
+                     updated=reviewed))
 
 
 class OutOfDateReadout(Readout):
@@ -171,23 +146,58 @@ class OutOfDateReadout(Readout):
     # value:
     _max_significance = MAJOR_SIGNIFICANCE
 
-    def rows(self, max=None):
+    def _query_and_params(self, max):
         # At the moment, the "Out of Date Since" column shows the time since
         # the translation was out of date at a MEDIUM level of severity or
         # higher. We could arguably knock this up to MAJOR, but technically it
         # is out of date when the original gets anything more than typo
         # corrections.
-
-        # TODO: This probably always grabs the master. Stop doing that.
-        cursor = connection.cursor()
-        cursor.execute(OUT_OF_DATE_QUERY + self.limit_clause(max),
+        return ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
+            'FROM wiki_document transdoc '
+            'INNER JOIN wiki_revision engrev ON engrev.id='
+            # The oldest english rev to have an approved level-30 change since
+            # the translated doc had an approved rev based on it. NULL if there
+            # is none:
+                '(SELECT min(id) FROM wiki_revision '
+                # Narrow engrev rows to those representing revision of parent
+                # doc:
+                'WHERE wiki_revision.document_id=transdoc.parent_id '
+                # For the purposes of computing the "Out of Date Since" column,
+                # the revision that threw the translation out of date had
+                # better be more recent than the one the current translation is
+                # based on:
+                'AND wiki_revision.id>'
+                    '(SELECT based_on_id from wiki_revision basedonrev '
+                    'WHERE basedonrev.id=transdoc.current_revision_id) '
+                'AND wiki_revision.significance>=%s '
+                'AND %s='
+                # Completely filter out outer selections where 30 is not the
+                # max signif of english revisions since trans was last
+                # approved. Other maxes will be shown by other readouts.
+                # Optimize: try "30 IN"; maybe the inner query can bail out
+                # early. [Ed: No effect on EXPLAIN on test corpus.]
+                    '(SELECT MAX(engsince.significance) '
+                    'FROM wiki_revision engsince '
+                    'WHERE engsince.document_id=transdoc.parent_id '
+                    # Assumes that any approved revision became the current
+                    # revision at some point: we don't let the user go back and
+                    # approve revisions older than the latest approved one.
+                    'AND engsince.is_approved '
+                    'AND engsince.id>'
+                    # The English revision the current translation's based on:
+                        '(SELECT based_on_id FROM wiki_revision '
+                        'WHERE wiki_revision.id=transdoc.current_revision_id)'
+                    ')'
+                ') '
+            'WHERE transdoc.locale=%s '
+            'ORDER BY engrev.reviewed DESC' + self.limit_clause(max),
             [MEDIUM_SIGNIFICANCE, self._max_significance, self.request.locale])
 
-        for slug, title, reviewed in cursor.fetchall():
-            yield (dict(title=title,
-                        url=reverse('wiki.edit_document', args=[slug]),
-                        visits=0, percent=0,
-                        updated=reviewed and timesince(reviewed)))
+    def _format_row(self, (slug, title, reviewed)):
+        return (dict(title=title,
+                     url=reverse('wiki.edit_document', args=[slug]),
+                     visits=0, percent=0,
+                     updated=reviewed))
 
 
 class NeedingUpdatesReadout(OutOfDateReadout):
@@ -205,9 +215,8 @@ class UnreviewedReadout(Readout):
     slug = 'unreviewed'
     column4_label = _lazy(u'Changed')
 
-    def rows(self, max=None):
-        cursor = connection.cursor()
-        cursor.execute('SELECT wiki_document.slug, wiki_document.title, '
+    def _query_and_params(self, max):
+        return ('SELECT wiki_document.slug, wiki_document.title, '
             'MAX(wiki_revision.created) maxcreated, '
             'GROUP_CONCAT(DISTINCT auth_user.username '
                          "ORDER BY wiki_revision.id SEPARATOR ', ') "
@@ -223,12 +232,12 @@ class UnreviewedReadout(Readout):
             'ORDER BY maxcreated DESC' + self.limit_clause(max),
             [self.request.locale])
 
-        for slug, title, changed, users in cursor.fetchall():
-            yield (dict(title=title,
-                        url=reverse('wiki.document_revisions', args=[slug]),
-                        visits=0, percent=0,
-                        updated=changed and timesince(changed),
-                        users=users))
+    def _format_row(self, (slug, title, changed, users)):
+        return (dict(title=title,
+                     url=reverse('wiki.document_revisions', args=[slug]),
+                     visits=0, percent=0,
+                     updated=changed,
+                     users=users))
 
 
 # L10n Dashboard tables that have their own whole-page views

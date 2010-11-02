@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -14,7 +14,7 @@ import test_utils
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
                           DateTimeFormatError, collapse_linebreaks, url,
-                          json)
+                          json, timesince)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -83,7 +83,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_today(self):
         """Expects shortdatetime, format: Today at {time}."""
-        date_today = datetime.datetime.today()
+        date_today = datetime.today()
         value_returned = unicode(datetimeformat(self.context, date_today))
         value_expected = 'Today at %s' % format_time(date_today,
                                                      format='short',
@@ -93,7 +93,7 @@ class TestDateTimeFormat(TestCase):
     def test_locale(self):
         """Expects shortdatetime in French."""
         self.context['request'].locale = u'fr'
-        value_test = datetime.datetime.fromordinal(733900)
+        value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'fr')
         value_returned = datetimeformat(self.context, value_test)
@@ -101,7 +101,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_default(self):
         """Expects shortdatetime."""
-        value_test = datetime.datetime.fromordinal(733900)
+        value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, format='short',
                                          locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test)
@@ -109,7 +109,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_longdatetime(self):
         """Expects long format."""
-        value_test = datetime.datetime.fromordinal(733900)
+        value_test = datetime.fromordinal(733900)
         tzvalue = timezone(settings.TIME_ZONE).localize(value_test)
         value_expected = format_datetime(tzvalue, format='long',
                                          locale=u'en_US')
@@ -119,7 +119,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_date(self):
         """Expects date format."""
-        value_test = datetime.datetime.fromordinal(733900)
+        value_test = datetime.fromordinal(733900)
         value_expected = format_date(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='date')
@@ -127,7 +127,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_time(self):
         """Expects time format."""
-        value_test = datetime.datetime.fromordinal(733900)
+        value_test = datetime.fromordinal(733900)
         value_expected = format_time(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='time')
@@ -135,7 +135,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_datetime(self):
         """Expects datetime format."""
-        value_test = datetime.datetime.fromordinal(733900)
+        value_test = datetime.fromordinal(733900)
         value_expected = format_datetime(value_test, locale=u'en_US')
         value_returned = datetimeformat(self.context, value_test,
                                         format='datetime')
@@ -143,7 +143,7 @@ class TestDateTimeFormat(TestCase):
 
     def test_unknown_format(self):
         """Unknown format raises DateTimeFormatError."""
-        date_today = datetime.datetime.today()
+        date_today = datetime.today()
         assert_raises(DateTimeFormatError, datetimeformat, self.context,
                       date_today, format='unknown')
 
@@ -163,3 +163,21 @@ class TestUrlHelper(TestCase):
         """Passing a locale to url creates a URL for that locale."""
         u = url('jsi18n', locale='es')
         eq_(u'/es/jsi18n/', u)
+
+
+class TimesinceTests(TestCase):
+    """Tests for the timesince filter"""
+
+    def test_none(self):
+        """If None is passed in, timesince returns ''."""
+        eq_('', timesince(None))
+
+    def test_trunc(self):
+        """Assert it returns only the most significant time division."""
+        eq_('1 year ago',
+            timesince(datetime(2000, 1, 2), now=datetime(2001, 2, 3)))
+
+    def test_future(self):
+        """Test behavior when date is in the future and also when omitting the
+        `now` kwarg."""
+        eq_('', timesince(datetime(9999, 1, 2)))
