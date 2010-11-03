@@ -72,20 +72,20 @@ class DocumentTests(TestCaseBase):
         assert doc('#doc-watch input[type=hidden]')
 
     def test_non_localizable_translate_disabled(self):
-        """Non localizable document shows disabled tab for 'Localize'."""
+        """Non localizable document doesn't show tab for 'Localize'."""
         self.client.login(username='jsocol', password='testpass')
         d = document(is_localizable=True)
         d.save()
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert 'Localize' not in (doc('#doc-tabs li.disabled').text() or '')
+        assert 'Localize' in doc('#doc-tabs li').text()
 
         # Make it non-localizable
         d.is_localizable = False
         d.save()
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert 'Localize' in doc('#doc-tabs li.disabled').text()
+        assert 'Localize' not in doc('#doc-tabs li').text()
 
 
 class RevisionTests(TestCaseBase):
