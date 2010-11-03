@@ -654,6 +654,16 @@ class TranslateTests(TestCaseBase):
         edited_delay.assert_called_with(rev, new_doc)
         ready_delay.assert_called_with(rev, new_doc)
 
+    def _create_and_approve_first_translation(self):
+        """Returns the revision."""
+        # First create the first one with test above
+        self.test_first_translation_to_locale()
+        # Approve the translation
+        rev_es = Revision.objects.filter(document__locale='es')[0]
+        rev_es.is_approved = True
+        rev_es.save()
+        return rev_es
+
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
@@ -662,12 +672,7 @@ class TranslateTests(TestCaseBase):
         """Create the second translation of a doc."""
         get_current.return_value.domain = 'testserver'
 
-        # First create the first one with test above
-        self.test_first_translation_to_locale()
-        # Approve the translation
-        rev_es = Revision.objects.filter(document__locale='es')[0]
-        rev_es.is_approved = True
-        rev_es.save()
+        rev_es = self._create_and_approve_first_translation()
 
         # Create and approve a new en-US revision
         rev_enUS = Revision(summary="lipsum",
@@ -703,6 +708,39 @@ class TranslateTests(TestCaseBase):
         _test_form_maintains_based_on_rev(self.client, self.d,
                                           'wiki.translate',
                                           _translation_data(), locale='es')
+
+    def test_translate_update_doc_only(self):
+        """Submitting the document form should update document. No new
+        revisions should be created."""
+        rev_es = self._create_and_approve_first_translation()
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        data = _translation_data()
+        new_title = 'Un nuevo titulo'
+        data['title'] = new_title
+        data['form'] = 'doc'
+        response = self.client.post(url, data)
+        eq_(302, response.status_code)
+        revisions = rev_es.document.revisions.all()
+        eq_(1, revisions.count())  # No new revisions
+        d = Document.objects.get(id=rev_es.document.id)
+        eq_(new_title, d.title)  # Title is updated
+
+    def test_translate_update_rev_only(self):
+        """Submitting the revision form should create a new revision.
+        No document fields should be updated."""
+        rev_es = self._create_and_approve_first_translation()
+        orig_title = rev_es.document.title
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        data = _translation_data()
+        new_title = 'Un nuevo titulo'
+        data['title'] = new_title
+        data['form'] = 'rev'
+        response = self.client.post(url, data)
+        eq_(302, response.status_code)
+        revisions = rev_es.document.revisions.all()
+        eq_(2, revisions.count())  # New revision is created
+        d = Document.objects.get(id=rev_es.document.id)
+        eq_(orig_title, d.title)  # Title isn't updated
 
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,

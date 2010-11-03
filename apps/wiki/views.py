@@ -316,8 +316,8 @@ def compare_revisions(request, document_slug):
                          'revision_to': revision_to})
 
 
+@require_http_methods(['GET', 'POST'])
 @login_required
-@permission_required('wiki.add_revision')
 def translate(request, document_slug):
     """Create a new translation of a wiki document.
 
@@ -327,6 +327,7 @@ def translate(request, document_slug):
     """
     parent_doc = get_object_or_404(
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+    user = request.user
 
     if settings.WIKI_DEFAULT_LANGUAGE == request.locale:
         # Don't translate to the default language.
@@ -345,37 +346,68 @@ def translate(request, document_slug):
         return jingo.render(request, 'wiki/translate.html',
                             {'parent': parent_doc})
 
+    disclose_description = bool(request.GET.get('opendescription'))
+
     try:
         doc = parent_doc.translations.get(locale=request.locale)
     except Document.DoesNotExist:
         doc = None
+        disclose_description = True
 
-    if request.method == 'GET':
+    user_has_doc_perm = ((not doc and user.has_perm('wiki.add_document')) or
+                         (doc and doc.allows_editing_by(user)))
+    user_has_rev_perm = ((not doc and user.has_perm('wiki.add_revision')) or
+                         (doc and doc.allows_revision_by(user)))
+    if not user_has_doc_perm and not user_has_rev_perm:
+        # User has no perms, bye.
+        raise PermissionDenied
+
+    doc_form = rev_form = None
+
+    if user_has_doc_perm:
         doc_initial = _document_form_initial(doc) if doc else None
         doc_form = DocumentForm(initial=doc_initial)
+    if user_has_rev_perm:
         rev_form = RevisionForm(instance=doc and doc.current_revision,
                                 initial={'based_on': based_on_rev.id,
                                          'comment': ''})
-    else:  # POST
-        doc_form = DocumentForm(request.POST, instance=doc)
-        doc_form.instance.locale = request.locale
-        doc_form.instance.parent = parent_doc
 
-        rev_form = RevisionForm(request.POST)
-        rev_form.instance.document = doc_form.instance  # for rev_form.clean()
+    if request.method == 'POST':
+        which_form = request.POST.get('form', 'both')
+        doc_form_invalid = False
 
-        if doc_form.is_valid() and rev_form.is_valid():
-            doc = doc_form.save(request.locale, parent_doc)
-            _save_rev_and_notify(rev_form, request.user, doc)
+        if user_has_doc_perm and which_form in ['doc', 'both']:
+            disclose_description = True
+            doc_form = DocumentForm(request.POST, instance=doc)
+            doc_form.instance.locale = request.locale
+            doc_form.instance.parent = parent_doc
+            if doc_form.is_valid():
+                doc = doc_form.save(request.locale, parent_doc)
+                if which_form == 'doc':
+                    url = urlparams(reverse('wiki.translate',
+                                            args=[doc.slug]),
+                                    opendescription=1)
+                    return HttpResponseRedirect(url)
+            else:
+                doc_form_invalid = True
+            doc_slug = doc_form.cleaned_data['slug']
+        else:
+            doc_slug = document_slug
 
-            url = reverse('wiki.document_revisions',
-                          args=[doc_form.cleaned_data['slug']])
-            return HttpResponseRedirect(url)
+        if user_has_rev_perm and which_form in ['rev', 'both']:
+            rev_form = RevisionForm(request.POST)
+            rev_form.instance.document = doc  # for rev_form.clean()
+            if rev_form.is_valid() and not doc_form_invalid:
+                _save_rev_and_notify(rev_form, request.user, doc)
+                url = reverse('wiki.document_revisions',
+                              args=[doc_slug])
+                return HttpResponseRedirect(url)
 
     return jingo.render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
-                         'locale': request.locale})
+                         'locale': request.locale,
+                         'disclose_description': disclose_description})
 
 
 @require_POST

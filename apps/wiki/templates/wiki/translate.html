@@ -39,12 +39,22 @@
           </div>
         </section>
       </div>
-      {{ errorlist(document_form) }}
-      {{ errorlist(revision_form) }}
-      <form action="" method="post">
-        {{ csrf() }}
-        <details open="open">
-          <summary class="h2">{{ _('Translate Description') }}</summary>
+      {% if not document %}
+        {# If this is the first translation to this locale, we use 1 big form. #}
+        <form action="" method="post">
+          {{ csrf() }}
+          <input type="hidden" name="form" value="both" />
+      {% endif %}
+      {% if document_form %}
+        <details class="h2"{% if disclose_description %} open="open"{% endif %}>
+          <summary>{{ _('Translate Description') }}</summary>
+          {{ errorlist(document_form) }}
+          {% if document %}
+            {# If there are existing translations in this locale, we use 2 separate forms. #}
+            <form action="" method="post">
+              {{ csrf() }}
+              <input type="hidden" name="form" value="doc" />
+          {% endif %}
           <ul class="description">
             <li>
               <div class="approved">
@@ -91,6 +101,27 @@
                 {{ document_form.tags|safe }}
               </div>
             </li>
+          </ul>
+          {% if document %}
+              <div class="submit">
+                <input type="submit" value="{{ _('Save') }}">
+              </div>
+            </form>
+          {% endif %}
+        </details>
+      {% endif %}
+
+      {% if revision_form %}
+        <details class="h2" open="open">
+          <summary>{{ _('Translate Content') }}</summary>
+          {{ errorlist(revision_form) }}
+          {% if document %}
+            {# If there are existing translations in this locale, we use 2 separate forms. #}
+            <form action="" method="post">
+              {{ csrf() }}
+              <input type="hidden" name="form" value="rev" />
+          {% endif %}
+          <ul class="description">
             <li>
               <div class="approved">
                 <h3>{{ _('Approved Keywords:') }}</h3>
@@ -112,9 +143,6 @@
               </div>
             </li>
           </ul>
-        </details>
-        <details open="open">
-          <summary class="h2">{{ _('Translate Content') }}</summary>
           {% if document.current_revision and document.current_revision.based_on %}
             {# Diff between the English version the current translation is based on and the current English version. #}
             {% set revision_from = document.current_revision.based_on %}
@@ -125,6 +153,7 @@
             <p>{{ _('Note: There are no approved translations for this article.') }}
           {% endif %}
           <div id="content-fields">
+            <ul>
             <div class="approved">
               <h3>{{ _('Approved {default_locale} Version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
               <textarea readonly="readonly">{{ parent.current_revision.content }}</textarea>
@@ -137,17 +166,23 @@
               </div>
             </div>
           </div>
+          <div class="submit">
+            <input id="btn-preview" data-preview-url="{{ url('wiki.preview') }}" type="button" value="{{ _('Preview Content') }}" />
+            <input id="btn-submit" class="activates-modal" data-modal-selector="#submit-modal" type="submit" value="{{ _('Submit for Review') }}">
+            {# TODO: save for later #}
+            <a href="{{ url('wiki.document', parent.slug) }}">{{ _('Cancel Changes') }}</a>
+          </div>
+          {{ revision_form.hidden_fields()|join|safe }}
+          {% include 'wiki/includes/submit_revision_modal.html' %}
+          {% if document %}
+            </form>
+          {% endif %}
+          <div id="preview"></div>
         </details>
-        <div class="submit">
-          <input id="btn-preview" data-preview-url="{{ url('wiki.preview') }}" type="button" value="{{ _('Preview Content') }}" />
-          <input id="btn-submit" class="activates-modal" data-modal-selector="#submit-modal" type="submit" value="{{ _('Submit for Review') }}">
-          {# TODO: save for later #}
-          <a href="{{ url('wiki.document', parent.slug) }}">{{ _('Cancel Changes') }}</a>
-        </div>
-        {{ revision_form.hidden_fields()|join|safe }}
-        {% include 'wiki/includes/submit_revision_modal.html' %}
-        <div id="preview"></div>
-      </form>
+      {% endif %}
+      {% if not document %}
+        </form>
+      {% endif %}
     {% endif %}
   </article>
 {% endblock %}
