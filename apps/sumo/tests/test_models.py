@@ -1,7 +1,11 @@
-from nose.tools import eq_
+from os import listdir
+from os.path import join, dirname
+import re
 
 import jingo
+from nose.tools import eq_
 
+import sumo
 from sumo import backends
 from sumo.models import WikiPage, TikiUser
 from sumo.tests import TestCase
@@ -33,3 +37,19 @@ class TestTikiUserModel(TestCase):
                                             registrationDate=1207303253)
         user = backends.create_django_user(tiki_user)
         eq_(tiki_user.userId, user.id)
+
+
+class MigrationNumberTests(TestCase):
+    def test_unique(self):
+        """Assert that the numeric prefixes of the DB migrations are unique."""
+        leading_digits = re.compile(r'^\d+')
+        path = join(dirname(dirname(dirname(sumo.__file__))), 'migrations')
+        seen_numbers = set()
+        for node in listdir(path):
+            match = leading_digits.match(node)
+            if match:
+                number = match.group()
+                if number in seen_numbers:
+                    self.fail('There is more than one migration #%s in %s.' %
+                              (number, path))
+                seen_numbers.add(number)
