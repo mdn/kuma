@@ -71,9 +71,6 @@ div.search-empty form {
 /* END Bug 501880 */
 
 /* advanced search styling */
-body.advanced_search {
-    background-position: 50% 0px;
-}
 body.advanced_search .botbar
 , body.advanced_search .topbar
 {
