@@ -5,7 +5,8 @@
 
 (function () {
     var VIDEO_ID_PREFIX = 'video-flash-', id_counter = 0,
-        MEDIA_URL = '/media/'  // same value as settings.py
+        MEDIA_URL = '/media/',  // same value as settings.py
+        FLASH_VERSION = '9.0.0',
         params = {allowfullscreen: 'true'},
         flashvars = {
             autoload: 1,
@@ -19,10 +20,11 @@
         if ($video[0].tagName !== 'VIDEO') return;
 
         var formats = {ogg: false, webm: false}, i,
-            width = Number($video.attr('width'))
+            width = Number($video.attr('width')),
             height = Number($video.attr('height')),
             // Build a unique ID for the object container
-            unique_id = VIDEO_ID_PREFIX + id_counter;
+            unique_id = VIDEO_ID_PREFIX + id_counter,
+            flash_file;
         id_counter++;
 
         $video.attr('id', unique_id);
@@ -46,12 +48,18 @@
         }
 
         // Get the video fallback URL
-        flashvars.flv = $video.attr('data-fallback');
-
-        swfobject.embedSWF(
-            MEDIA_URL + 'swf/screencast.swf', unique_id, width, height,
-            '9.0.0', MEDIA_URL + '/media/swf/expressInstall.swf', flashvars,
-            params);
+        flash_file = $video.attr('data-fallback');
+        if (flash_file.substr(-4) === '.swf') {
+            swfobject.embedSWF(
+                flash_file, unique_id, width, height, FLASH_VERSION,
+                MEDIA_URL + '/media/swf/expressInstall.swf', flashvars, params);
+        } else {
+            flashvars.flv = flash_file;
+            swfobject.embedSWF(
+                MEDIA_URL + 'swf/screencast.swf', unique_id, width, height,
+                FLASH_VERSION, MEDIA_URL + '/media/swf/expressInstall.swf',
+                flashvars, params);
+        }
     };
 
     /*
