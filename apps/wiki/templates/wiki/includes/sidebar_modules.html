@@ -53,19 +53,21 @@
   </nav>
 {%- endmacro %}
 
-{% macro for_contributors() -%}
-  <section id="for-contributors" class="sd-module">
-    <h1>{{ _('For Contributors') }}</h1>
-    <ul>
-      {# TODO: Insert URLs below #}
-      <li><a href="#">{{ _('Contributor Home Page') }}</a></li>
-      <li><a href="{{ url('dashboards.localization') }}">{{ _('Localization Dashboard') }}</a></li>
-      <li><a href="#">{{ _('Media Gallery') }}</a></li>
-      <li><a href="#">{{ _('Creating Articles') }}</a></li>
-      <li><a href="#">{{ _('Helping in the Forum') }}</a></li>
-      <li><a href="#">{{ _('Helping in Live Chat') }}</a></li>
-    </ul>
-  </section>
+{% macro for_contributors(user) -%}
+  {% if user.is_authenticated() %}
+    <section id="for-contributors" class="sd-module">
+      <h1>{{ _('For Contributors') }}</h1>
+      <ul>
+        {# TODO: Insert URLs below #}
+        <li><a href="#">{{ _('Contributor Home Page') }}</a></li>
+        <li><a href="{{ url('dashboards.localization') }}">{{ _('Localization Dashboard') }}</a></li>
+        <li><a href="#">{{ _('Media Gallery') }}</a></li>
+        <li><a href="#">{{ _('Creating Articles') }}</a></li>
+        <li><a href="#">{{ _('Helping in the Forum') }}</a></li>
+        <li><a href="#">{{ _('Helping in Live Chat') }}</a></li>
+      </ul>
+    </section>
+  {% endif %}
 {%- endmacro %}
 
 {% macro document_notifications(document, user) -%}

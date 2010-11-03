@@ -89,7 +89,7 @@
     </div>
   {% endif %}
 
-  {{ for_contributors() }}
+  {{ for_contributors(user) }}
   {{ quick_links() }}
   {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}
