@@ -113,3 +113,22 @@ class DocumentEditingTests(TestCase):
         client.post(reverse('wiki.edit_document', args=[d.slug]), data)
         eq_(new_title, Document.uncached.get(slug=d.slug).title)
         assert Document.uncached.get(title=old_title).redirect_url()
+
+    def test_changing_metadata(self):
+        """Changing metadata works as expected."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev()
+        data = new_document_data()
+        data.update({'firefox_versions': [1, 2, 3],
+                     'operating_systems': [1, 3],
+                     'form': 'doc'})
+        client.post(reverse('wiki.edit_document', args=[d.slug]), data)
+        eq_(3, d.firefox_versions.count())
+        eq_(2, d.operating_systems.count())
+        data.update({'firefox_versions': [1, 2],
+                     'operating_systems': [2],
+                     'form': 'doc'})
+        client.post(reverse('wiki.edit_document', args=[data['slug']]), data)
+        eq_(2, d.firefox_versions.count())
+        eq_(1, d.operating_systems.count())

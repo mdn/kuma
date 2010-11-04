@@ -106,12 +106,10 @@ class DocumentForm(forms.ModelForm):
         doc.tags.add(*tags)
 
         ffv = self.cleaned_data['firefox_versions']
-        doc.firefox_versions.exclude(
-            item_id__in=[x.item_id for x in ffv]).delete()
+        doc.firefox_versions.all().delete()
         doc.firefox_versions = ffv
         os = self.cleaned_data['operating_systems']
-        doc.operating_systems.exclude(
-            item_id__in=[x.item_id for x in os]).delete()
+        doc.operating_systems.all().delete()
         doc.operating_systems = os
 
         return doc
