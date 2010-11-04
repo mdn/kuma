@@ -29,6 +29,9 @@
                 <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
               {% endfor %}
             </ul>
+            {% if document.translations.exists() %}
+              {{ document_form.is_localizable.as_hidden()|safe }}
+            {% endif %}
             <div class="relevant-to">
               <h2>{{ _('Relevant to:') }}</h2>
               <ul>

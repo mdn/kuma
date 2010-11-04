@@ -362,6 +362,40 @@ class NewRevisionTests(TestCaseBase):
             locale=None)
 
 
+class DocumentEditTests(TestCaseBase):
+    """Test the editing of document level fields."""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(DocumentEditTests, self).setUp()
+        self.d = _create_document()
+        self.client.login(username='admin', password='testpass')
+
+    def test_can_save_document_with_translations(self):
+        """Make sure we can save a document with translations."""
+        # Create a translation
+        _create_document(title='Document Prueba', parent=self.d,
+                             locale='es')
+        # Make sure is_localizable hidden field is rendered
+        response = get(self.client, 'wiki.edit_document', args=[self.d.slug])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        is_localizable = doc('input[name="is_localizable"]')
+        eq_(1, len(is_localizable))
+        eq_('True', is_localizable[0].attrib['value'])
+        # And make sure we can update the document
+        data = new_document_data()
+        new_title = 'A brand new title'
+        data.update(title=new_title)
+        data.update(form='doc')
+        data.update(is_localizable='True')
+        response = post(self.client, 'wiki.edit_document', data,
+                        args=[self.d.slug])
+        eq_(200, response.status_code)
+        doc = Document.uncached.get(pk=self.d.pk)
+        eq_(new_title, doc.title)
+
+
 class DocumentListTests(TestCaseBase):
     """Tests for the All and Category template"""
     fixtures = ['users.json']
