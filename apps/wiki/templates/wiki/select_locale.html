@@ -1,0 +1,28 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
+{% set title = _('Select Locale | {document}')|f(document=document.title) %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (document.get_absolute_url(), document.title),
+                 (None, _('Select Locale'))] %}
+
+{% block content %}
+  <article id="select-locale" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1>{{ _('Select a locale to translate to:') }}</h1>
+    <ul class="locales">
+      {% for locale in settings.LANGUAGE_CHOICES %}
+        {% if locale[0] != settings.WIKI_DEFAULT_LANGUAGE %}
+          <li><a href="{{ url('wiki.translate', locale=locale[0], document_slug=document.slug) }}">{{ locale[1] }} ({{ locale[0] }})</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ document_tabs(document, document.parent, user, 'localize', settings) }}
+{% endblock %}

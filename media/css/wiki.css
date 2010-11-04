@@ -1340,6 +1340,12 @@ td.diff_header {
     width: 300px;
 }
 
+/* Select locale for l10n page */
+#select-locale ul.locales {
+    font-size: 14px;
+    margin: 15px;
+}
+
 
 /* Graceful fallback for <details> tags */
 /* from http://mathiasbynens.be/notes/html5-details-jquery */

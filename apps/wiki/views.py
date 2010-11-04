@@ -316,6 +316,14 @@ def compare_revisions(request, document_slug):
                          'revision_to': revision_to})
 
 
+@login_required
+def select_locale(request, document_slug):
+    """Select a locale to translate the document to."""
+    doc = get_object_or_404(
+        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+    return jingo.render(request, 'wiki/select_locale.html', {'document': doc})
+
+
 @require_http_methods(['GET', 'POST'])
 @login_required
 def translate(request, document_slug):

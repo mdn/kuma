@@ -966,6 +966,24 @@ class HelpfulVoteTests(TestCaseBase):
         assert votes[0].helpful
 
 
+class SelectLocaleTests(TestCaseBase):
+    """Test the locale selection page"""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(SelectLocaleTests, self).setUp()
+        self.d = _create_document()
+        self.client.login(username='admin', password='testpass')
+
+    def test_page_renders_locales(self):
+        """Load the page and verify it contains all the locales for l10n."""
+        response = get(self.client, 'wiki.select_locale', args=[self.d.slug])
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(len(settings.LANGUAGE_CHOICES) - 1,  # All except for 1 (en-US)
+            len(doc('#select-locale ul.locales li')))
+
+
 # TODO: Merge with wiki.tests.doc_rev()?
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):

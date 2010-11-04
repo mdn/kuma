@@ -43,6 +43,7 @@ document_patterns = patterns('wiki.views',
         name='wiki.review_revision'),
     url(r'^/compare$', 'compare_revisions', name='wiki.compare_revisions'),
     url(r'^/translate$', 'translate', name='wiki.translate'),
+    url(r'^/locales$', 'select_locale', name='wiki.select_locale'),
 
     # Un/Subscribe to document edit notifications.
     url(r'^/watch$', 'watch_document', name='wiki.document_watch'),

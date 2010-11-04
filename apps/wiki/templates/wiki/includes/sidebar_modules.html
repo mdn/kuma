@@ -37,7 +37,7 @@
               <span>{{ _('Localize Article') }}</span>
             {% else %}
               {# TODO: Create page to select localization? Show link to all authenticated? #}
-              <a href="#">{{ _('Localize Article') }}</a>
+              <a href="{{ url('wiki.select_locale', document.slug) }}">{{ _('Localize Article') }}</a>
             {% endif %}
           </li>
         {% endif %}
