@@ -243,7 +243,7 @@ def edit_document(request, document_slug, revision_id=None):
 def preview_revision(request):
     """Create an HTML fragment preview of the posted wiki syntax."""
     wiki_content = request.POST.get('content', '')
-    data = {'content': wiki_to_html(wiki_content)}
+    data = {'content': wiki_to_html(wiki_content, request.locale)}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 

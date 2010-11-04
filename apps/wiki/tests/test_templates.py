@@ -894,6 +894,20 @@ class ArticlePreviewTests(TestCaseBase):
         doc = pq(response.content)
         eq_('Test Content', doc('#doc-content h1').text())
 
+    def test_preview_locale(self):
+        """Preview the wiki syntax content."""
+        # Create a test document and translation.
+        d = _create_document()
+        _create_document(title='Prueba', parent=d, locale='es')
+        # Preview content that links to it and verify link is in locale.
+        url = reverse('wiki.preview', locale='es')
+        response = self.client.post(url, {'content': '[[Test Document]]'})
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        link = doc('#doc-content a')
+        eq_('Prueba', link.text())
+        eq_('/es/kb/prueba', link[0].attrib['href'])
+
 
 class HelpfulVoteTests(TestCaseBase):
     fixtures = ['users.json']
