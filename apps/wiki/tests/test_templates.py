@@ -11,6 +11,7 @@ from notifications import check_watch
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
+from wiki.cron import calculate_related_documents
 from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
                          CATEGORIES)
 import wiki.tasks
@@ -982,6 +983,22 @@ class SelectLocaleTests(TestCaseBase):
         doc = pq(response.content)
         eq_(len(settings.LANGUAGE_CHOICES) - 1,  # All except for 1 (en-US)
             len(doc('#select-locale ul.locales li')))
+
+
+class RelatedDocumentTestCase(TestCaseBase):
+    fixtures = ['users.json', 'wiki/documents.json']
+
+    def test_related_order(self):
+        calculate_related_documents()
+        d = Document.uncached.get(pk=1)
+        response = self.client.get(d.get_absolute_url())
+
+        doc = pq(response.content)
+        related = doc('section#related-articles li a')
+        eq_(2, len(related))
+
+        # If 'an article title 2' is first, the other must be second.
+        eq_('an article title 2', related[0].text)
 
 
 # TODO: Merge with wiki.tests.doc_rev()?

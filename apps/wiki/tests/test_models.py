@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 
 from sumo import ProgrammingError
 from sumo.tests import TestCase
+from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
                          REDIRECT_HTML)
@@ -319,3 +320,33 @@ class RevisionTests(TestCase):
         de_doc.save()
         en_doc.is_localizable = False
         self.assertRaises(ValidationError, en_doc.save)
+
+
+class RelatedDocumentTestCase(TestCase):
+    fixtures = ['users.json', 'wiki/documents.json']
+
+    def test_related_documents_calculated(self):
+        d = Document.uncached.get(pk=1)
+        eq_(0, d.related_documents.count())
+
+        calculate_related_documents()
+
+        d = Document.uncached.get(pk=1)
+        eq_(2, d.related_documents.count())
+
+    def test_related_only_locale(self):
+        calculate_related_documents()
+        d = Document.uncached.get(pk=1)
+        for rd in d.related_documents.all():
+            eq_('en-US', rd.locale)
+
+    def test_only_approved_revisions(self):
+        calculate_related_documents()
+        d = Document.uncached.get(pk=1)
+        for rd in d.related_documents.all():
+            assert rd.current_revision
+
+    def test_only_approved_have_related(self):
+        calculate_related_documents()
+        d = Document.uncached.get(pk=3)
+        eq_(0, d.related_documents.count())

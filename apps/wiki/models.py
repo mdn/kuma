@@ -131,6 +131,13 @@ class Document(ModelBase, TaggableMixin):
     # settings.WIKI_DEFAULT_LANGUAGE.
     parent = models.ForeignKey('self', related_name='translations', null=True)
 
+    # Related documents, based on tags in common.
+    # The RelatedDocument table is populated by
+    # wiki.cron.calculate_related_documents.
+    related_documents = models.ManyToManyField('self',
+                                               through='RelatedDocument',
+                                               symmetrical=False)
+
     # Cached HTML rendering of approved revision's wiki markup:
     html = models.TextField(editable=False)
 
@@ -140,7 +147,7 @@ class Document(ModelBase, TaggableMixin):
     #
     # outdated = IntegerField(choices=SIGNIFICANCES, editable=False)
 
-    category = models.IntegerField(choices=CATEGORIES)
+    category = models.IntegerField(choices=CATEGORIES, db_index=True)
     # firefox_versions,
     # operating_systems:
     #    defined in the respective classes below. Use them as in
@@ -487,6 +494,7 @@ class OperatingSystem(ModelBase):
     class Meta(object):
         unique_together = ('item_id', 'document')
 
+
 class HelpfulVote(ModelBase):
     """Helpful or Not Helpful vote on Document."""
     document = models.ForeignKey(Document, related_name='poll_votes')
@@ -495,3 +503,12 @@ class HelpfulVote(ModelBase):
     creator = models.ForeignKey(User, related_name='poll_votes', null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
     user_agent = models.CharField(max_length=1000)
+
+
+class RelatedDocument(ModelBase):
+    document = models.ForeignKey(Document, related_name='related_from')
+    related = models.ForeignKey(Document, related_name='related_to')
+    in_common = models.IntegerField()
+
+    class Meta(object):
+        ordering = ['-in_common']

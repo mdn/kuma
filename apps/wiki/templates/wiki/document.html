@@ -7,17 +7,16 @@
 
 {% block content %}
   <article id="wiki-doc" class="main">
-    <section id="related-articles">
-      <h1> {{ _('Related Articles') }}</h1>
-      <ul>
-        {# TODO: implement backend for this list #}
-        <li><a href="#">Lorem ipsum dolor</a></li>
-        <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-        <li><a href="#">Lorem ipsum dolor</a></li>
-        <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-        <li><a href="#">Lorem ipsum dolor</a></li>
-      </ul>
-    </section>
+    {% if related %}
+      <section id="related-articles">
+        <h1> {{ _('Related Articles') }}</h1>
+        <ul>
+          {% for art in document.related_documents.all()[0:5] %}
+            <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
     <h1 class="title">{{ document.title }}</h1>
     {% if redirected_from %}
       <div id="redirected-from">
@@ -48,17 +47,16 @@
   <div id="more-help">
     <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
     <ul>
-      <li>
-        {{ _('Browse a list of related articles') }}
-        <ul>
-          {# TODO: implement backend for this list #}
-          <li><a href="#">Lorem ipsum dolor</a></li>
-          <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-          <li><a href="#">Lorem ipsum dolor</a></li>
-          <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-          <li><a href="#">Lorem ipsum dolor</a></li>
-        </ul>
-      </li>
+      {% if related %}
+        <li>
+          {{ _('Browse a list of related articles') }}
+          <ul>
+            {% for art in related %}
+              <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endif %}
       <li>
         {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
       </li>

@@ -109,7 +109,10 @@ def document(request, document_slug):
         except Document.DoesNotExist:
             pass
 
-    data = {'document': doc, 'redirected_from': redirected_from}
+    related = doc.related_documents.order_by('-related_to__in_common')[0:5]
+
+    data = {'document': doc, 'redirected_from': redirected_from,
+            'related': related}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/document.html', data)
 
