@@ -1,9 +1,10 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
-{% set title = _('Media Gallery') %}
+{% set title = _('Media Gallery Search') %}
 {% set styles= ('wiki', 'gallery') %}
-{% set crumbs = [(None, _('Media Gallery'))] %}
+{% set crumbs = [(url('gallery.gallery_media', media_type), _('Media Gallery')),
+                 (None, _('Search'))] %}
 
 {% block content %}
   <article id="gallery-list" class="main">
@@ -13,7 +14,6 @@
     </div>
     <h1>{{ _('Media Gallery') }}</h1>
     <div id="locale-filter">
-      <a class="btn-upload" href="#">{{ _('Upload a New Media File') }}</a>
       <form action="" method="get">
         <label for="select-locale">{{ _('Show media for:') }}</label>
         <select id="select-locale" name="lang" class="autosubmit">
@@ -34,21 +34,21 @@
           {% if media_type == 'image' %}
             <span>{{ _('Images') }}</span>
           {% else %}
-            <a href="{{ url('gallery.gallery_media', 'image') }}">{{ _('Images') }}</a>
+            <a href="{{ url('gallery.search', 'image')|urlparams(q=q) }}">{{ _('Images') }}</a>
           {% endif %}
         </li>
         <li>
           {% if media_type == 'video' %}
             <span>{{ _('Videos') }}</span>
           {% else %}
-            <a href="{{ url('gallery.gallery_media', 'video') }}">{{ _('Videos') }}</a>
+            <a href="{{ url('gallery.search', 'video')|urlparams(q=q) }}">{{ _('Videos') }}</a>
           {% endif %}
         </li>
         </ol>
       </div>
       <div id="gallery-search">
         <form action="{{ url('gallery.search', media_type) }}" method="get">
-          <input type="text" name="q" required="required" />
+          <input type="text" name="q" value="{{ q }}" required="required" />
           <input type="submit" value="{{ _('Search Gallery') }}">
         </form>
       </div>
@@ -65,7 +65,7 @@
       </ol>
       {{ media|paginator }}
     {% else %}
-      <p>{{ _('No media files available.') }}</p>
+      <p>{{ _('No media found.') }}</p>
     {% endif %}
   </article>
 {% endblock %}

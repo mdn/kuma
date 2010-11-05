@@ -2,12 +2,14 @@ import json
 
 from django.conf import settings
 
-from nose.tools import eq_
 from nose import SkipTest
+from nose.tools import eq_
+from pyquery import PyQuery as pq
 
-from sumo.tests import post, LocalizingClient, TestCase
 from gallery import forms
 from gallery.models import Image, Video
+from sumo.tests import post, LocalizingClient, TestCase
+from sumo.urlresolvers import reverse
 
 
 TEST_IMG = 'apps/upload/tests/media/test.jpg'
@@ -288,3 +290,44 @@ class UploadVideoTestCase(TestCase):
     def test_invalid_video_flv(self):
         """Make sure invalid flv videos are not accepted."""
         raise SkipTest
+
+
+class SearchTestCase(TestCase):
+    client = LocalizingClient()
+    fixtures = ['users.json', 'gallery/media.json']
+
+    def test_search_results(self):
+        url = reverse('gallery.search', args=['image'])
+        response = self.client.get(url, {'q': 'quicktime'}, follow=True)
+        doc = pq(response.content)
+        eq_(1, len(doc('#media-list li')))
+
+    def test_image_search(self):
+        url = reverse('gallery.search', args=['image'])
+        response = self.client.get(url, {'q': 'quicktime'}, follow=True)
+        doc = pq(response.content)
+        eq_(1, len(doc('#media-list li')))
+
+    def test_video_search(self):
+        url = reverse('gallery.search', args=['video'])
+        response = self.client.get(url, {'q': '1802'}, follow=True)
+        doc = pq(response.content)
+        eq_(1, len(doc('#media-list li')))
+
+    def test_search_description(self):
+        url = reverse('gallery.search', args=['image'])
+        response = self.client.get(url, {'q': 'migrated'}, follow=True)
+        doc = pq(response.content)
+        eq_(5, len(doc('#media-list li')))
+
+    def test_search_nonexistent(self):
+        url = reverse('gallery.search', args=['foo'])
+        response = self.client.get(url, {'q': 'foo'}, follow=True)
+        eq_(404, response.status_code)
+
+
+class GalleryTestCase(TestCase):
+    def test_gallery_invalid_type(self):
+        url = reverse('gallery.gallery_media', args=['foo'])
+        response = self.client.get(url, follow=True)
+        eq_(404, response.status_code)

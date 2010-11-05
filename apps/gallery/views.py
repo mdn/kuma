@@ -3,8 +3,10 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseNotFound,
-                         HttpResponseBadRequest, Http404)
+                         HttpResponseBadRequest, Http404,
+                         HttpResponseRedirect)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
@@ -12,8 +14,9 @@ from commonware.decorators import xframe_sameorigin
 import jingo
 from tower import ugettext as _
 
-import gallery as constants
+from gallery import ITEMS_PER_PAGE
 from sumo.utils import paginate
+from sumo.urlresolvers import reverse
 from upload.utils import FileTooLargeError
 from .models import Image, Video
 from .utils import upload_image, upload_video
@@ -32,13 +35,41 @@ def gallery(request, media_type='image'):
     """
     if media_type == 'image':
         media_qs = Image.objects.filter(locale=request.locale)
-    else:
+    elif media_type == 'video':
         media_qs = Video.objects.filter(locale=request.locale)
-    media = paginate(request, media_qs, per_page=constants.ITEMS_PER_PAGE)
+    else:
+        raise Http404
+
+    media = paginate(request, media_qs, per_page=ITEMS_PER_PAGE)
 
     return jingo.render(request, 'gallery/gallery.html',
                         {'media': media,
                          'media_type': media_type})
+
+
+def search(request, media_type):
+    """Search the media gallery."""
+
+    term = request.GET.get('q')
+    if not term:
+        url = reverse('gallery.gallery_media', args=[media_type])
+        return HttpResponseRedirect(url)
+
+    filter = Q(title__icontains=term) | Q(description__icontains=term)
+
+    if media_type == 'image':
+        media_qs = Image.objects.filter(filter, locale=request.locale)
+    elif media_type == 'video':
+        media_qs = Video.objects.filter(filter, locale=request.locale)
+    else:
+        raise Http404
+
+    media = paginate(request, media_qs, per_page=ITEMS_PER_PAGE)
+
+    return jingo.render(request, 'gallery/search.html',
+                        {'media': media,
+                         'media_type': media_type,
+                         'q': term})
 
 
 def media(request, media_id, media_type='image'):
