@@ -1,12 +1,13 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% if category %}
-  {% set title = _('{category}')|fe(category=category) %}
-  {% set crumbs = [(None, category)] %}
+  {% set title = category %}
+{% elif tag %}
+  {% set title = _('Articles tagged: {tag}')|f(tag=tag) %}
 {% else %}
   {% set title = _('All Articles') %}
-  {% set crumbs = [(None, _('All Articles'))] %}
 {% endif %}
+{% set crumbs = [(None, title)] %}
 
 {% block content %}
   <article id="document-list" class="main">
@@ -14,7 +15,7 @@
       {{ _('You are here:') }}
       {{ breadcrumbs(crumbs) }}
     </div>
-    <h1>{% if category %}{{ category }}{% else %}{{ _('All Articles') }}{% endif %}</h1>
+    <h1>{{ title }}</h1>
     {% if documents.object_list %}
       <ul class="documents">
         {% for doc in documents.object_list %}

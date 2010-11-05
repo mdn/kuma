@@ -6,6 +6,7 @@ import mock
 from nose import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
+from taggit.models import Tag
 
 from notifications import check_watch
 from sumo.urlresolvers import reverse
@@ -425,6 +426,17 @@ class DocumentListTests(TestCaseBase):
         doc = pq(response.content)
         eq_(Document.objects.filter(locale=self.locale).count(),
             len(doc('#document-list ul.documents li')))
+
+    def test_tag_list(self):
+        """Verify the tagged documents list view."""
+        tag = Tag(name='Test Tag', slug='test-tag')
+        tag.save()
+        self.doc.tags.add(tag)
+        response = self.client.get(reverse('wiki.tag',
+                                   args=[tag.slug]))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(1, len(doc('#document-list ul.documents li')))
 
 
 class DocumentRevisionsTests(TestCaseBase):

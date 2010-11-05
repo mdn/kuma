@@ -12,6 +12,7 @@ from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods)
 
 import jingo
+from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
@@ -127,7 +128,7 @@ def revision(request, document_slug, revision_id):
 
 
 @require_GET
-def list_documents(request, category=None):
+def list_documents(request, category=None, tag=None):
     """List wiki documents."""
     docs = Document.objects.filter(locale=request.locale)
     if category:
@@ -141,10 +142,15 @@ def list_documents(request, category=None):
         except KeyError:
             raise Http404
 
+    if tag:
+        tagobj = get_object_or_404(Tag, slug=tag)
+        docs = docs.filter(tags__in=[tagobj.name])
+
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
                         {'documents': docs,
-                         'category': category})
+                         'category': category,
+                         'tag': tag})
 
 
 @login_required
