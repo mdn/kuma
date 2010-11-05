@@ -27,3 +27,18 @@ def paginate(request, queryset, per_page=20):
 
     paginated.url = u'%s?%s' % (base, qsa)
     return paginated
+
+
+# By Ned Batchelder.
+def chunked(seq, n):
+    """
+    Yield successive n-sized chunks from seq.
+
+    >>> for group in chunked(range(8), 3):
+    ...     print group
+    [0, 1, 2]
+    [3, 4, 5]
+    [6, 7]
+    """
+    for i in xrange(0, len(seq), n):
+        yield seq[i:i + n]

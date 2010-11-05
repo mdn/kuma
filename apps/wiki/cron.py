@@ -2,6 +2,13 @@ from django.db import connection, transaction
 
 import cronjobs
 
+from wiki.tasks import rebuild_kb
+
+
+# The @celery.task decorator doesn't use functools.wraps, apparently.
+rebuild_kb.__name__ = 'rebuild_kb'
+cronjobs.register(rebuild_kb)
+
 
 @cronjobs.register
 def calculate_related_documents():

@@ -294,7 +294,10 @@ class Document(ModelBase, TaggableMixin):
 
     @property
     def content_parsed(self):
-        return self.html
+        if not self.current_revision:
+            return None
+
+        return self.current_revision.content_parsed
 
     @property
     def language(self):
@@ -465,9 +468,7 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            from wiki.parser import wiki_to_html
-            locale = self.document.locale
-            self.document.html = wiki_to_html(self.content, locale)
+            self.document.html = self.content_parsed
             self.document.current_revision = self
             self.document.save()
 

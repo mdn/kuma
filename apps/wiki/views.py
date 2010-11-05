@@ -29,7 +29,8 @@ from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
 from wiki.parser import wiki_to_html
 from wiki.tasks import (send_reviewed_notification,
                         send_ready_for_review_notification,
-                        send_edited_notification)
+                        send_edited_notification,
+                        schedule_rebuild_kb)
 
 
 OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
@@ -222,6 +223,10 @@ def edit_document(request, document_slug, revision_id=None):
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(request.locale, None)
+
+                    # Do we need to rebuild the KB?
+                    _maybe_schedule_rebuild(doc_form)
+
                     return HttpResponseRedirect(
                         urlparams(reverse('wiki.edit_document',
                                           args=[doc.slug]),
@@ -292,6 +297,9 @@ def review_revision(request, document_slug, revision_id):
             # Send notification to revision creator.
             msg = form.cleaned_data['comment']
             send_reviewed_notification.delay(rev, doc, msg)
+
+            # Schedule KB rebuild?
+            schedule_rebuild_kb()
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document_slug]))
@@ -401,6 +409,10 @@ def translate(request, document_slug):
             doc_form.instance.parent = parent_doc
             if doc_form.is_valid():
                 doc = doc_form.save(request.locale, parent_doc)
+
+                # Possibly schedule a rebuild.
+                _maybe_schedule_rebuild(doc_form)
+
                 if which_form == 'doc':
                     url = urlparams(reverse('wiki.translate',
                                             args=[doc.slug]),
@@ -542,3 +554,9 @@ def _save_rev_and_notify(rev_form, creator, document):
     # Enqueue notifications
     send_ready_for_review_notification.delay(new_rev, document)
     send_edited_notification.delay(new_rev, document)
+
+
+def _maybe_schedule_rebuild(form):
+    """Try to schedule a KB rebuild if a title or slug has changed."""
+    if 'title' in form.changed_data or 'slug' in form.changed_data:
+        schedule_rebuild_kb()

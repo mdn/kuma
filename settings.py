@@ -488,6 +488,10 @@ CELERY_RESULT_BACKEND = 'amqp'
 CELERY_IGNORE_RESULT = True
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 
+# Wiki rebuild settings
+WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
+WIKI_REBUILD_ON_DEMAND = False
+
 # Anonymous user cookie
 ANONYMOUS_COOKIE_NAME = 'SUMO_ANONID'
 ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
