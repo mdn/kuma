@@ -438,7 +438,7 @@
     function showMessage(message, $showAbove) {
         var $html = $('<div class="message-box"><p></p></div>'),
             offset = $showAbove.offset();
-        $html.find('p').text(message);
+        $html.find('p').html(message);
         $('body').append($html);
         $html.css({
             top: offset.top - $html.height() - 30,

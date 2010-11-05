@@ -470,6 +470,7 @@ article #toc ul li {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     font-size: 12px;
+    min-height: 110px;
     padding: 25px 20px;
     position: relative;
     width: 597px;
