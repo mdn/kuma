@@ -451,7 +451,7 @@
             $html.fadeOut(function(){
                 $html.remove();
             });
-            $('body').unbind(fadeOut);
+            $('body').unbind('click', fadeOut);
             clearTimeout(timer);
         }
     }
