@@ -959,7 +959,7 @@ class HelpfulVoteTests(TestCaseBase):
         response = self.client.post(url, data={'helpful': 'Yes'},
                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
-        eq_('{"message": "Glad to hear it & thanks for the feedback!"}',
+        eq_('{"message": "Glad to hear it &mdash; thanks for the feedback!"}',
             response.content)
         votes = HelpfulVote.objects.filter(document=d, creator=None)
         votes = votes.exclude(anonymous_id=None)
