@@ -267,22 +267,21 @@ def timesince(d, now=None):
     """
     if d is None:
         return u''
-    chunks = (
-      (60 * 60 * 24 * 365, lambda n: ungettext('%(number)d year ago',
-                                               '%(number)d years ago', n)),
-      (60 * 60 * 24 * 30, lambda n: ungettext('%(number)d month ago',
-                                              '%(number)d months ago', n)),
-      (60 * 60 * 24 * 7, lambda n: ungettext('%(number)d week ago',
-                                             '%(number)d weeks ago', n)),
-      (60 * 60 * 24, lambda n: ungettext('%(number)d day ago',
-                                         '%(number)d days ago', n)),
-      (60 * 60, lambda n: ungettext('%(number)d hour ago',
-                                    '%(number)d hours ago', n)),
-      (60, lambda n: ungettext('%(number)d minute ago',
-                               '%(number)d minutes ago', n)),
-      (1, lambda n: ungettext('%(number)d second ago',
-                               '%(number)d seconds ago', n))
-    )
+    chunks = [
+        (60 * 60 * 24 * 365, lambda n: ungettext('%(number)d year ago',
+                                                 '%(number)d years ago', n)),
+        (60 * 60 * 24 * 30, lambda n: ungettext('%(number)d month ago',
+                                                '%(number)d months ago', n)),
+        (60 * 60 * 24 * 7, lambda n: ungettext('%(number)d week ago',
+                                               '%(number)d weeks ago', n)),
+        (60 * 60 * 24, lambda n: ungettext('%(number)d day ago',
+                                           '%(number)d days ago', n)),
+        (60 * 60, lambda n: ungettext('%(number)d hour ago',
+                                      '%(number)d hours ago', n)),
+        (60, lambda n: ungettext('%(number)d minute ago',
+                                 '%(number)d minutes ago', n)),
+        (1, lambda n: ungettext('%(number)d second ago',
+                                 '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
             now = datetime.datetime.now(LocalTimezone(d))

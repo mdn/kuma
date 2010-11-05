@@ -14,6 +14,11 @@ class TestCaseBase(TestCase):
         self.client = LocalizingClient()
 
 
+# Model makers. These make it clearer and more concise to create objects in
+# test cases. They allow the significant attribute values to stand out rather
+# than being hidden amongst the values needed merely to get the model to
+# validate.
+
 def document(**kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
@@ -27,6 +32,8 @@ def document(**kwargs):
 def revision(**kwargs):
     """Return an empty revision with enough stuff filled out that it can be
     saved.
+
+    Revision's is_approved=False unless you specify otherwise.
 
     Requires a users fixture if no creator is provided.
 
@@ -45,6 +52,18 @@ def revision(**kwargs):
     return Revision(**defaults)
 
 
+def translated_revision(locale='de', **kwargs):
+    """Return a revision that is the translation of a default-language one."""
+    parent_rev = revision(is_approved=True)
+    parent_rev.save()
+    translation = document(parent=parent_rev.document,
+                           locale=locale)
+    translation.save()
+    new_kwargs = {'document': translation, 'based_on': parent_rev}
+    new_kwargs.update(kwargs)
+    return revision(**new_kwargs)
+
+
 # I don't like this thing. revision() is more flexible. All this adds is
 # is_approved=True, but it doesn't even mention approval in its name.
 # TODO: Remove.
@@ -53,6 +72,8 @@ def doc_rev(content=''):
     r = revision(content=content, is_approved=True)
     r.save()
     return r.document, r
+
+# End model makers.
 
 
 def new_document_data(tags=None):

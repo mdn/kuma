@@ -167,27 +167,29 @@ class OutOfDateReadout(Readout):
                 # better be more recent than the one the current translation is
                 # based on:
                 'AND wiki_revision.id>'
-                    '(SELECT based_on_id from wiki_revision basedonrev '
+                    '(SELECT based_on_id FROM wiki_revision basedonrev '
                     'WHERE basedonrev.id=transdoc.current_revision_id) '
                 'AND wiki_revision.significance>=%s '
                 'AND %s='
                 # Completely filter out outer selections where 30 is not the
                 # max signif of english revisions since trans was last
                 # approved. Other maxes will be shown by other readouts.
-                # Optimize: try "30 IN"; maybe the inner query can bail out
-                # early. [Ed: No effect on EXPLAIN on test corpus.]
-                    '(SELECT MAX(engsince.significance) '
-                    'FROM wiki_revision engsince '
-                    'WHERE engsince.document_id=transdoc.parent_id '
-                    # Assumes that any approved revision became the current
-                    # revision at some point: we don't let the user go back and
-                    # approve revisions older than the latest approved one.
-                    'AND engsince.is_approved '
-                    'AND engsince.id>'
-                    # The English revision the current translation's based on:
-                        '(SELECT based_on_id FROM wiki_revision '
-                        'WHERE wiki_revision.id=transdoc.current_revision_id)'
-                    ')'
+                # Optimize: try "30 IN" if MySQL's statistics gatherer is
+                # stupid/nonexistent; the inner query should be able to bail
+                # out early. [Ed: No effect on EXPLAIN on admittedly light test
+                # corpus.]
+                  '(SELECT MAX(engsince.significance) '
+                  'FROM wiki_revision engsince '
+                  'WHERE engsince.document_id=transdoc.parent_id '
+                  # Assumes that any approved revision became the current
+                  # revision at some point: we don't let the user go back and
+                  # approve revisions older than the latest approved one.
+                  'AND engsince.is_approved '
+                  'AND engsince.id>'
+                  # The English revision the current translation's based on:
+                    '(SELECT based_on_id FROM wiki_revision basedonrev '
+                    'WHERE basedonrev.id=transdoc.current_revision_id) '
+                  ')'
                 ') '
             'WHERE transdoc.locale=%s '
             'ORDER BY engrev.reviewed DESC' + self.limit_clause(max),
@@ -241,6 +243,6 @@ class UnreviewedReadout(Readout):
 
 
 # L10n Dashboard tables that have their own whole-page views
-L10N_READOUTS = dict((t.slug, t) for t in [
-    UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
+L10N_READOUTS = dict((t.slug, t) for t in
+    [UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
     UnreviewedReadout])

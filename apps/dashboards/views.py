@@ -56,6 +56,7 @@ def localization_detail(request, readout):
         {'readout': L10N_READOUTS[readout](request)})
 
 
+@require_GET
 def contributors(request):
     return HttpResponse('<html><head><title>Hello</title></head>'
                         '<body>World</body></html>')
