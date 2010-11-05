@@ -1,7 +1,7 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.tests import TestCase
+from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from wiki.models import MAJOR_SIGNIFICANCE, MEDIUM_SIGNIFICANCE
 from wiki.tests import revision, translated_revision
@@ -72,3 +72,13 @@ class LocalizationDashTests(TestCase):
                                            args=['untranslated'],
                                            locale='de'))
         self.assertContains(response, untranslated.document.title)
+
+
+class MobileHomeTestCase(TestCase):
+    def test_top_text(self):
+        response = self.client.get(reverse('home.mobile'), follow=True)
+        self.assertContains(response, 'Firefox Help for Mobile')
+
+    def test_no_plugin_check(self):
+        response = self.client.get(reverse('home.mobile'), follow=True)
+        self.assertNotContains(response, 'run an instant check')

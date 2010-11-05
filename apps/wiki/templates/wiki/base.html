@@ -8,13 +8,20 @@
 {% if not scripts %}
   {% set scripts = ('wiki',) %}
 {% endif %}
+{% if not top_link %}
+  {% set top_link = url('home') %}
+{% endif %}
+{% if not top_text %}
+  {% set top_text = _('Firefox Help') %}
+{% endif %}
+
 
 {% block content_area %}
 
 {% block main_header %}
   <div id="main-hdr">
     <div id="firefox-help">
-      <a href="{{ url('home') }}">{{ _('Firefox Help') }}</a>
+      <a href="{{ top_link }}">{{ top_text }}</a>
     </div>
     {% if not hide_header_search %}
       {{ search_box(settings, id='support-search') }}
@@ -46,20 +53,22 @@
       {# TODO: insert URL below #}
       <a href="#">{{ _('Find Out How to<br /> Contribute &raquo;')|safe }}</a>
     </section>
-    <section id="check-your-plugins">
-      <h1>{{ _('Check your <mark>plugins</mark>')|safe }}</h1>
-      <div class="img">
-        <img src="{{ settings.MEDIA_URL }}img/promo.plugins.png" alt="" />
-      </div>
-      <p>
-        {% trans %}
-          What is a plugin? Why should I keep them updated? Answer these
-          questions and run an instant check to see if you're up to date.
-        {% endtrans %}
-      </p>
-      {# TODO: insert URL below #}
-      <a href="#">{{ _('Find Out More &raquo;')|safe }}</a>
-    </section>
+    {% if not hide_plugin_check %}
+      <section id="check-your-plugins">
+        <h1>{{ _('Check your <mark>plugins</mark>')|safe }}</h1>
+        <div class="img">
+          <img src="{{ settings.MEDIA_URL }}img/promo.plugins.png" alt="" />
+        </div>
+        <p>
+          {% trans %}
+            What is a plugin? Why should I keep them updated? Answer these
+            questions and run an instant check to see if you're up to date.
+          {% endtrans %}
+        </p>
+        {# TODO: insert URL below #}
+        <a href="#">{{ _('Find Out More &raquo;')|safe }}</a>
+      </section>
+    {% endif %}
   </div>
 </div>
 
