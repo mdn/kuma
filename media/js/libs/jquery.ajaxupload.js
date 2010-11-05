@@ -1,4 +1,16 @@
 /**
+ * JavaScript library written for Kitsune by Mozilla.
+ * License: MPL
+ * License URL: http://www.mozilla.org/MPL/
+ *
+ * Contains two jQuery functions: wrapDeleteInput and ajaxSubmitInput.
+ * These are helpers for posting data from a <form> to an <iframe> in Django.
+ * They use and require the csrfmiddlewaretoken (you may remove those lines
+ * if you want to avoid that).
+ */
+
+
+/**
  * Wrap an input in its own form and bind delete handlers.
  *
  * Depends on ajaxSubmitInput, which it binds to the click event on the delete
