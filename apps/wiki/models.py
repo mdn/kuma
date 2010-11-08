@@ -334,7 +334,9 @@ class Document(ModelBase, TaggableMixin):
 
         """
         # TODO: Add tests for templateness or whatever is required.
-        return user.has_perm('wiki.add_revision')
+        # Leaving this method signature untouched for now in case we do need
+        # to use it in the future. ~james
+        return True
 
     def allows_editing_by(self, user):
         """Return whether `user` is allowed to edit document-level metadata.

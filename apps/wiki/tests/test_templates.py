@@ -249,13 +249,6 @@ class NewRevisionTests(TestCaseBase):
                                            args=[self.d.slug]))
         eq_(302, response.status_code)
 
-    def test_new_revision_GET_without_perm(self):
-        """Trying to view the edit form without permission returns 403."""
-        self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.edit_document',
-                                           args=[self.d.slug]))
-        eq_(403, response.status_code)
-
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
         response = self.client.get(reverse('wiki.edit_document',
