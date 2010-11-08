@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% from "dashboards/includes/macros.html" import print_readout %}
 {% set title = _('Localizer Dashboard') %}
 
 {% block content %}
@@ -61,32 +62,16 @@
       <div id="overview-options" class="choice-list">
         <label>{{ _('More options:') }}</label>
         <ul>
-          <li><a href="#untranslated">{{ _('Untranslated') }}</a></li>
-          <li><a href="#out-of-date">{{ _('Out-of-Date') }}</a></li>
-          <li><a href="#updates-needed">{{ _('Updates Needed') }}</a></li>
-          <li><a href="#unreviewed-changes">{{ _('Unreviewed Changes') }}</a></li>
+          {% for slug, readout in readouts.iteritems() %}
+            <li><a href="#{{ slug }}">{{ readout.short_title }}</a></li>
+          {% endfor %}
         </ul>
       </div>
     </details>
 
-    {% macro print_readout(slug, details_link_text) %}
-      <details class="h2" open="open">
-        {% with readout = readouts[slug] %}
-          <summary><a id="{{ slug }}">{{ readout.title }}</a></summary>
-          <table class="documents">
-            {{ readout.render(readout.rows(10))|safe }}
-          </table>
-          <div class="table-footer">
-            <a href="{{ url('dashboards.localization_detail', slug) }}">{{ details_link_text }}</a>
-          </div>
-        {% endwith %}
-      </details>
-    {% endmacro %}
-
-    {{ print_readout('untranslated', _('All untranslated articles...')) }}
-    {{ print_readout('out-of-date', _('All out-of-date translations...')) }}
-    {{ print_readout('needing-updates', _('All translations needing updates...')) }}
-    {{ print_readout('unreviewed', _('All articles requiring review...')) }}
+    {% for readout in readouts.itervalues() %}
+      {{ print_readout(readout, 'dashboards.localization_detail') }}
+    {% endfor %}
   </article>
 {% endblock %}
 

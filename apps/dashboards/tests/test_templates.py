@@ -8,6 +8,14 @@ from wiki.tests import revision, translated_revision
 
 
 class LocalizationDashTests(TestCase):
+    """Tests for the Localization Dashboard.
+
+    The L10n Dash shares a lot of code with the Contributor Dash, so this also
+    covers much of the latter, such as the readout template, most of the view
+    mechanics, and the Unreviewed Changes readout itself.
+
+    """
+
     fixtures = ['users.json']
 
     @staticmethod

@@ -1,0 +1,37 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% from "dashboards/includes/macros.html" import print_readout %}
+{% set title = _('Contributor Dashboard') %}
+
+{% block content %}
+  <article id="localize" class="main dashboards">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs([(None, _(title))]) }}
+    </div>
+
+    <h1>{{ title }}</h1>
+
+    {% if default_locale_name != current_locale_name %}
+      <div class="choice-list">
+        <label>{{ _('Show information for:') }}</label>
+        <ul>
+          <li>
+            {{ default_locale_name }}
+          </li>
+          <li>
+            <a href="{{ url('dashboards.localization') }}">{{ current_locale_name }}</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
+
+    {{ print_readout(readouts['unreviewed'], 'dashboards.contributors_detail') }}
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ for_contributors(user) }}
+  {{ quick_links() }}
+{% endblock %}

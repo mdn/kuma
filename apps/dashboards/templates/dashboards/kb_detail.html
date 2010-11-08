@@ -4,10 +4,10 @@
 {% set title = readout.title %}
 
 {% block content %}
-  <article id="localize" class="main dashboards">
+  <article class="main dashboards">
     <div id="breadcrumbs">
       {{ _('You are here:') }}
-      {{ breadcrumbs([(url('dashboards.localization'), _('Localization Dashboard')), (None, readout.title)]) }}
+      {{ breadcrumbs([(url(main_dash_view), main_dash_title), (None, readout.title)]) }}
     </div>
 
     <h1>{{ readout.title }}</h2>

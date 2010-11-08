@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.db import connections, router
+from django.utils.datastructures import SortedDict
 
 import jingo
 from tower import ugettext as _, ugettext_lazy as _lazy
@@ -49,16 +50,20 @@ class Readout(object):
 
     """
     #title = _lazy(u'Title of Readout')
+    #short_title= = _lazy(u'Short Title of Readout for In-Page Links')
     #slug = 'URL slug for detail page'
+    #details_link_text = _lazy(u'All articles from this readout...')
     column4_label = _lazy(u'Status')
 
-    def __init__(self, request):
+    def __init__(self, request, locale=None):
         """Take request so the template can use contextual macros that need it.
 
-        `request.locale` must not be the default locale.
+        Renders the data for the locale specified by the request, but you can
+        override it by passing another in `locale`.
 
         """
         self.request = request
+        self.locale = locale or request.locale
 
     def rows(self, max=None):
         """Return an iterable of dicts containing the data for the table.
@@ -78,7 +83,7 @@ class Readout(object):
         """Return HTML table rows for the given data."""
         return jingo.render_to_string(
             self.request,
-            'dashboards/includes/localization_readout.html',
+            'dashboards/includes/kb_readout.html',
             {'rows': rows, 'column4_label': self.column4_label})
 
     # To override:
@@ -105,6 +110,8 @@ class Readout(object):
 
 class UntranslatedReadout(Readout):
     title = _lazy(u'Untranslated Articles')
+    short_title = _lazy('Untranslated')
+    details_link_text = _lazy(u'All untranslated articles...')
     slug = 'untranslated'
     column4_label = _lazy(u'Updated')
 
@@ -123,7 +130,7 @@ class UntranslatedReadout(Readout):
             'translated.id IS NULL AND parent.is_localizable AND '
             'parent.locale=%s '
             'ORDER BY wiki_revision.reviewed DESC' + self.limit_clause(max),
-            [self.request.locale, settings.WIKI_DEFAULT_LANGUAGE])
+            [self.locale, settings.WIKI_DEFAULT_LANGUAGE])
 
     def _format_row(self, (slug, title, reviewed)):
         # Run the data through the model to (potentially) format it and
@@ -138,6 +145,8 @@ class UntranslatedReadout(Readout):
 
 class OutOfDateReadout(Readout):
     title = _lazy(u'Out-of-Date Translations')
+    short_title = _lazy('Out-of-Date')
+    details_link_text = _lazy(u'All out-of-date translations...')
     slug = 'out-of-date'
     column4_label = _lazy(u'Out of date since')
 
@@ -193,7 +202,7 @@ class OutOfDateReadout(Readout):
                 ') '
             'WHERE transdoc.locale=%s '
             'ORDER BY engrev.reviewed DESC' + self.limit_clause(max),
-            [MEDIUM_SIGNIFICANCE, self._max_significance, self.request.locale])
+            [MEDIUM_SIGNIFICANCE, self._max_significance, self.locale])
 
     def _format_row(self, (slug, title, reviewed)):
         return (dict(title=title,
@@ -204,6 +213,8 @@ class OutOfDateReadout(Readout):
 
 class NeedingUpdatesReadout(OutOfDateReadout):
     title = _lazy(u'Translations Needing Updates')
+    short_title = _lazy('Needing Updates')
+    details_link_text = _lazy(u'All translations needing updates...')
     slug = 'needing-updates'
 
     _max_significance = MEDIUM_SIGNIFICANCE
@@ -214,6 +225,8 @@ class UnreviewedReadout(Readout):
     # ^ Not just changes to translations but also unreviewed chanages to docs
     # in this locale that are not translations
 
+    short_title = _lazy('Unreviewed')
+    details_link_text = _lazy(u'All articles requiring review...')
     slug = 'unreviewed'
     column4_label = _lazy(u'Changed')
 
@@ -232,7 +245,7 @@ class UnreviewedReadout(Readout):
             'AND wiki_document.locale=%s '
             'GROUP BY wiki_document.id '
             'ORDER BY maxcreated DESC' + self.limit_clause(max),
-            [self.request.locale])
+            [self.locale])
 
     def _format_row(self, (slug, title, changed, users)):
         return (dict(title=title,
@@ -242,7 +255,10 @@ class UnreviewedReadout(Readout):
                      users=users))
 
 
-# L10n Dashboard tables that have their own whole-page views
-L10N_READOUTS = dict((t.slug, t) for t in
+# L10n Dashboard tables that have their own whole-page views:
+L10N_READOUTS = SortedDict((t.slug, t) for t in
     [UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
     UnreviewedReadout])
+
+# Contributors ones:
+CONTRIBUTOR_READOUTS = dict((t.slug, t) for t in [UnreviewedReadout])

@@ -14,8 +14,8 @@ class MockRequest(object):
     locale = NON_DEFAULT_LOCALE
 
 
-class UnreviewedTranslationsTests(TestCase):
-    """Tests for the Unreviewed Translations readout
+class UnreviewedChangesTests(TestCase):
+    """Tests for the Unreviewed Changes readout
 
     I'm not trying to cover every slice of the Venn diagram--just the tricky
     bits.
@@ -26,7 +26,7 @@ class UnreviewedTranslationsTests(TestCase):
 
     @staticmethod
     def titles():
-        """Return the titles shown by the Unreviewed Translations readout."""
+        """Return the titles shown by the Unreviewed Changes readout."""
         return [row['title'] for row in
             UnreviewedReadout(MockRequest()).rows()]
 
