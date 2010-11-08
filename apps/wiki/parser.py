@@ -10,7 +10,7 @@ from html5lib.treebuilders import getTreeBuilder
 from html5lib.treewalkers import getTreeWalker
 from lxml.etree import Element
 
-from tower import ugettext_lazy as _lazy
+from tower import ugettext as _, ugettext_lazy as _lazy
 
 from gallery.models import Video
 import sumo.parser
@@ -65,7 +65,7 @@ def _build_template_params(params_str):
     i = 0
     params = {}
     for item in params_str:
-        param, _, value = item.partition('=')
+        param, __, value = item.partition('=')
         if value:
             params[param] = value
         else:
@@ -343,12 +343,13 @@ class WikiParser(sumo.parser.WikiParser):
         short_title = params.pop(0)
         template_title = 'Template:' + short_title
 
-        message = _lazy('The template "%s" does not exist.') % short_title
+        message = _('The template "%s" does not exist or has no approved '
+                    'revision.') % short_title
         t = get_object_fallback(Document, template_title,
-                                           self.locale, message,
-                                           is_template=True)
-        if isinstance(t, basestring):
-            return t
+                                locale=self.locale, is_template=True)
+
+        if not t or not t.current_revision:
+            return message
 
         c = t.current_revision.content.rstrip()
         # Note: this completely ignores the allowed attributes passed to the

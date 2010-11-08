@@ -148,7 +148,8 @@ class TestWikiTemplate(TestCase):
         """Return a message if template does not exist"""
         p = WikiParser()
         doc = pq(p.parse('[[Template:test]]'))
-        eq_('The template "test" does not exist.', doc.text())
+        eq_('The template "test" does not exist or has no approved revision.',
+            doc.text())
 
     def test_template_locale(self):
         """Localized template is returned."""
@@ -166,7 +167,8 @@ class TestWikiTemplate(TestCase):
         """If template does not exist in set locale or English."""
         p = WikiParser()
         doc = pq(p.parse('[[T:test]]', locale='fr'))
-        eq_('The template "test" does not exist.', doc.text())
+        eq_('The template "test" does not exist or has no approved revision.',
+            doc.text())
 
     def test_template_locale_fallback(self):
         """If localized template does not exist, fall back to English."""
@@ -256,6 +258,13 @@ class TestWikiTemplate(TestCase):
     def test_build_template_params_named_anonymous_numbered(self):
         """_btp handles mixed named, anonymous and numbered arguments"""
         eq_({'1': 'a', 'hi': 'test', '3': 'z'}, _btp(['hi=test', 'a', '3=z']))
+
+    def test_unapproved_template(self):
+        document(title='Template:new').save()
+        p = WikiParser()
+        doc = pq(p.parse('[[T:new]]'))
+        eq_('The template "new" does not exist or has no approved revision.',
+            doc.text())
 
 
 class TestWikiInclude(TestCase):
