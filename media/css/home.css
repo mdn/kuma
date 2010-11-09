@@ -33,6 +33,7 @@
 }
 
 #featured h1 mark {
+    font-family: MetaBlack, "Trebuchet MS", sans-serif;
     font-style: normal;
     font-weight: bold;
     text-transform: uppercase;
@@ -71,6 +72,7 @@
 }
 
 #home-content-quick {
+    clear: left;
     width: 260px;
 }
 
@@ -99,7 +101,7 @@
 }
 
 #home-content-explore {
-    border-left: 1.5px dotted #a8c4ef;
+    border-left: 2px dotted #a8c4ef;
     margin-top: 40px;
     width: 480px;
 }

@@ -149,6 +149,7 @@ div.support-search input.text {
     box-shadow: none;
     font-size: 16px;
     height: 26px;
+    width: 98%;
 }
 
 div.support-search input.submit {
@@ -243,6 +244,10 @@ div.support-search input.submit {
     padding-left : 52px;
     position: relative;
     z-index: 0;
+}
+
+#doc-tabs li.active a {
+    color: #666;
 }
 
 #doc-tabs li.edit {
@@ -348,7 +353,7 @@ div.support-search input.submit {
 .sd-module h1 mark {
     color: #32559b;
     display: block;
-    /* TODO: Need font. font-family: MetaBlack; */
+    font-family: MetaBlack, "Trebuchet MS", sans-serif;
     font-style: normal;
     text-transform: uppercase;
 }

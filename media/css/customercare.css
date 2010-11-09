@@ -1,6 +1,9 @@
 /*
  * Customer Care CSS
  */
+#sidebar {
+    margin-top: 20px;
+}
 
 .feature-contents {
     background: url("../img/customercare/nurse.png") no-repeat scroll right 20px transparent;

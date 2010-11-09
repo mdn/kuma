@@ -36,18 +36,12 @@
             {% if active == 'localize' %}
               <span>{{ _('Localize Article') }}</span>
             {% else %}
-              {# TODO: Create page to select localization? Show link to all authenticated? #}
               <a href="{{ url('wiki.select_locale', document.slug) }}">{{ _('Localize Article') }}</a>
             {% endif %}
           </li>
         {% endif %}
         <li{% if active == 'history' %} class="active"{% endif %}>
-          {% if active == 'history' %}
-            <span>{{ _('Show History') }}</span>
-          {% else %}
-            {# TODO: Show link to all authenticated? #}
-            <a href="{% if document %}{{ url('wiki.document_revisions', document.slug) }}{% else %}{{ url('wiki.document_revisions', parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}{% endif %}">{{ _('Show History') }}</a>
-          {% endif %}
+          <a href="{% if document %}{{ url('wiki.document_revisions', document.slug) }}{% else %}{{ url('wiki.document_revisions', parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) }}{% endif %}">{{ _('Show History') }}</a>
         </li>
       {% endif %}
     </ul>
@@ -62,7 +56,7 @@
         {# TODO: Insert URLs below #}
         <li><a href="{{ url('dashboards.contributors') }}">{{ _('Contributor Home Page') }}</a></li>
         <li><a href="{{ url('dashboards.localization') }}">{{ _('Localization Dashboard') }}</a></li>
-        <li><a href="#">{{ _('Media Gallery') }}</a></li>
+        <li><a href="{{ url('gallery.gallery') }}">{{ _('Media Gallery') }}</a></li>
         <li><a href="#">{{ _('Creating Articles') }}</a></li>
         <li><a href="#">{{ _('Helping in the Forum') }}</a></li>
         <li><a href="#">{{ _('Helping in Live Chat') }}</a></li>
