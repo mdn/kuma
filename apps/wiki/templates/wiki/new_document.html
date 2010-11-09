@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "wiki/includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New Article | Knowledge Base') %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
@@ -37,10 +38,7 @@
           {% endfor %}
           <li>
             {{ revision_form.content.label_tag()|safe }}
-            <div class="forum-editor">
-              <div class="forum-editor-tools"></div>
-              {{ revision_form.content|safe }}
-            </div>
+            {{ content_editor(revision_form.content) }}
           </li>
         </ul>
         {{ revision_form.hidden_fields()|join|safe }}

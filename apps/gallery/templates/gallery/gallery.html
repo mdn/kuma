@@ -53,20 +53,9 @@
         </form>
       </div>
     </div>
-    {% if media.object_list %}
-      <ol id="media-list">
-        {% for m in media.object_list %}
-          <li>
-            <a href="{{ m.get_absolute_url() }}" title="{{ m.title }}">
-              <img src="{{ m.thumbnail_url_if_set() }}" alt="{{ m.title }}" />
-            </a>
-          </li>
-        {% endfor %}
-      </ol>
-      {{ media|paginator }}
-    {% else %}
-      <p>{{ _('No media files available.') }}</p>
-    {% endif %}
+    {% with media_list=media %}
+      {% include 'gallery/includes/media_list.html' %}
+    {% endwith %}
   </article>
 {% endblock %}
 

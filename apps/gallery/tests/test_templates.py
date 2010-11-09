@@ -1,6 +1,7 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from sumo.helpers import urlparams
 from sumo.tests import TestCase, get
 from sumo.urlresolvers import reverse
 from gallery.models import Image
@@ -46,6 +47,43 @@ class GalleryPageCase(TestCase):
         doc = pq(response.content)
         imgs = doc('#media-list li img')
         eq_(1, len(imgs))
+
+
+class GalleryAsyncCase(TestCase):
+    fixtures = ['users.json']
+
+    def tearDown(self):
+        Image.objects.all().delete()
+        super(GalleryAsyncCase, self).tearDown()
+
+    def test_gallery_image_list(self):
+        """Test for ajax endpoint without search parameter."""
+        img = image()
+        url = urlparams(reverse('gallery.async'), type='image')
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        imgs = doc('#media-list li img')
+        eq_(1, len(imgs))
+        eq_(img.thumbnail_url_if_set(), imgs[0].attrib['src'])
+
+    def test_gallery_image_search(self):
+        """Test for ajax endpoint with search parameter."""
+        img = image()
+        url = urlparams(reverse('gallery.async'), type='image', q='foobar')
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        imgs = doc('#media-list li img')
+        eq_(0, len(imgs))
+
+        url = urlparams(reverse('gallery.async'), type='image', q=img.title)
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        imgs = doc('#media-list li img')
+        eq_(1, len(imgs))
+        eq_(img.thumbnail_url_if_set(), imgs[0].attrib['src'])
 
 
 class MediaPageCase(TestCase):

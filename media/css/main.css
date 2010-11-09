@@ -260,7 +260,7 @@ h2 {
 #nav-main ul li a:active {
     color: #fff;
     background: #263c7b;
-    background: rgba(38,60,123,0.9); 
+    background: rgba(38,60,123,0.9);
     -moz-transition: background 0.1s ease-in;
     -webkit-transition: background 0.1s ease-in;
 }
@@ -275,7 +275,7 @@ h2 {
 #nav-main ul li li.current span,
 #nav-main ul li li.current a,
 #nav-main ul li li.current a:link,
-#nav-main ul li li.current a:visited, 
+#nav-main ul li li.current a:visited,
 #nav-main ul li.current li a,
 #nav-main ul li.current li a:link,
 #nav-main ul li.current li a:visited {
@@ -317,7 +317,7 @@ h2 {
     padding: 0 0 4px 0;
     width: 190px;
     background: #263c7b;
-    background: rgba(38,60,123,0.9); 
+    background: rgba(38,60,123,0.9);
     -webkit-border-bottom-right-radius: 4px;
     -webkit-border-bottom-left-radius: 4px;
     -moz-border-radius-bottomright: 4px;
@@ -352,7 +352,7 @@ h2 {
 #nav-main ul li ul li a:hover,
 #nav-main ul li ul li a:active {
     background: #263c7b;
-    background: rgba(38,60,123,0.9); 
+    background: rgba(38,60,123,0.9);
     padding-top: 4px;
     padding-bottom: 4px;
     border-bottom: 1px solid #496288;
@@ -773,7 +773,8 @@ img.markup-toolbar-button {
 }
 
 #showfor-modal,
-#link-modal {
+#link-modal,
+#media-modal {
     color: #4B4740;
     display: block;
     left: 50%;
@@ -786,7 +787,8 @@ img.markup-toolbar-button {
 }
 
 #showfor-modal h2,
-#link-modal h2 {
+#link-modal h2,
+#media-modal h2 {
     font-size: 16px;
     margin: 10px 0 0;
 }
@@ -831,6 +833,104 @@ section.marky div.submit {
     padding: 0;
     text-align: left;
     width: auto;
+}
+
+#media-modal {
+    margin-left: -400px;
+    width: 760px;
+}
+
+#media-modal div.placeholder {
+    height: 305px;
+}
+
+#media-modal.processing div.placeholder {
+    background: transparent url(../img/customercare/spinner.gif) no-repeat center center;
+}
+
+#media-modal.processing #media-list {
+    visibility: hidden;
+}
+
+#media-modal #media-list {
+    height: 260px;
+    overflow: auto;
+}
+
+#media-modal #media-list li {
+    border: solid 1px #fff;
+    cursor: pointer;
+    list-style: none;
+    display: inline-block;
+    height: 120px;
+    overflow: hidden;
+    padding: 5px;
+    text-align: center;
+    vertical-align: top;
+    width: 120px;
+}
+
+#media-modal #media-list li:hover {
+    background: #f0f0f0;
+    border: solid 1px #9ACCF7;
+}
+
+#media-modal #media-list li.selected {
+    background: #DAEDF6;
+    border: solid 1px #9ACCF7;
+}
+
+#media-modal div.filter {
+    border-bottom: 1px solid #9ACCF7;
+    border-top: 1px solid #9ACCF7;
+    display: block;
+    margin: 0 0 7px;
+    padding: 7px 0;
+}
+
+#media-modal div.filter input[type="text"] {
+    background: url("../img/icon.searchloupe.png") no-repeat scroll 7px center #FFFFFF;
+    margin: 0 7px 0 0;
+    padding-left: 33px;
+    width: 300px;
+}
+
+#media-modal div.type {
+    color: #929292;
+    float: right;
+    margin-top: .5em;
+}
+
+#media-modal div.type ol {
+    float: left;
+    list-style-type: none;
+}
+
+#media-modal div.type span {
+    float: left;
+}
+
+#media-modal div.type ol li {
+    border-left: 2px solid #929292;
+    color: #447BC4;
+    cursor: pointer;
+    float: left;
+    font-weight: bold;
+    padding: 0 .5em;
+}
+
+#media-modal div.type ol li.selected {
+    color: #565656;
+    cursor: default;
+}
+
+#media-modal div.type ol li:first-child {
+    border-left: 0;
+}
+
+#media-modal ol.pagination {
+    margin: 7px 0;
+    padding: 7px 0;
 }
 
 /* Submit or cancel switches */

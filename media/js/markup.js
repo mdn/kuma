@@ -55,10 +55,7 @@ var Marky = {
                    "''", "''", gettext('italic text')),
             new Marky.Separator(),
             new Marky.LinkButton(),
-            // TODO: implement media helper
-            new SB(gettext('Insert Media'),
-                  '/media/img/markup/new/image.png', '',
-                  '', gettext('media')),
+            new Marky.MediaButton(),
             new Marky.Separator(),
             new SB(gettext('Numbered List'),
                    '/media/img/markup/new/ol.png', '# ', '',
@@ -447,6 +444,158 @@ Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             $overlay.unbind().remove();
             e.preventDefault();
             return false;
+        }
+
+        e.preventDefault();
+        return false;
+    }
+});
+
+/*
+ * The media helper.
+ */
+Marky.MediaButton = function() {
+    this.name = gettext('Insert media...');
+    this.imagePath = '/media/img/markup/new/image.png';
+    this.openTag = '';
+    this.closeTag = '';
+    this.defaultText = gettext('media');
+    this.everyline = false;
+
+    this.html = '<img class="markup-toolbar-button" />';
+};
+
+Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
+    // Gets the DOM node for the button.
+    node: function() {
+        var me = this,
+            $btn = this.render();
+        $btn.click(function(e) {
+            me.openModal(e);
+        });
+        return $btn[0];
+    },
+    reset: function() {
+        this.openTag = '';
+        this.closeTag = '';
+        this.defaultText = '';
+    },
+    openModal: function(e) {
+        var me = this,
+            // TODO: look at using a js template solution (jquery-tmpl?)
+            $modal = $(
+                '<section id="media-modal" class="pop-in marky">' +
+                '<a href="#close" class="close">&#x2716;</a>' +
+                '<h1>' + this.name + '</h1><div class="wrap">' +
+                '<div class="filter"><div class="type">' +
+                '<span>' + gettext('Show:') + '</span>' +
+                '<ol><li data-type="image" class="selected">' + gettext('Images') + '</li>' +
+                '<li data-type="video">' + gettext('Videos') + '</li></ol></div>' +
+                '<div class="search"><input type="text" name="q" />' +
+                '<button>' + gettext('Search Gallery') + '</button></div></div>' +
+                '<div class="placeholder" /><div class="submit">' +
+                '<button>' + gettext('Insert Media') + '</button>' +
+                '<a href="#cancel" class="cancel">' + gettext('Cancel') + '</a></div>' +
+                '</div></section>'
+            ),
+            $overlay = $('<div id="modal-overlay"></div>'),
+            selectedText = me.getSelectedText(),
+            galleryUrl = $(me.textarea).closest('div.forum-editor')
+                                       .attr('data-media-search-url'),
+            mediaType = $modal.find('div.type li.selected').attr('data-type'),
+            mediaQ = '',
+            mediaPage = 1;
+
+        // Handle Images/Videos filter
+        $modal.find('div.type li').click(function(e) {
+            var $this = $(this);
+            if(!$this.is('.selected')) {
+                $modal.find('div.type li.selected').removeClass('selected');
+                $this.addClass('selected');
+                mediaType = $this.attr('data-type');
+                mediaPage = 1;
+                updateResults();
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        // Handle Search button
+        $modal.find('div.search button').click(function(e) {
+            mediaQ = $modal.find('input[name="q"]').val();
+            mediaPage = 1;
+            updateResults();
+            e.preventDefault();
+            return false;
+        });
+
+        //Handle pagination
+        $modal.delegate('ol.pagination a', 'click', function(e) {
+            mediaPage = parseInt($(this).attr('href').split('&page=')[1], 10);
+            updateResults();
+            e.preventDefault();
+            return false;
+        });
+
+        // Handle 'Insert Media' button click
+        $modal.find('div.submit button').click(function(e) {
+            // Generate the wiki markup based on what the user has selected.
+            me.reset();
+
+            var $selected = $modal.find('#media-list > li.selected');
+            if ($selected.length < 1) {
+                alert(gettext('Please select an image or video to insert.'));
+                return false;
+            }
+
+            me.openTag = '[[';
+            me.openTag += (mediaType == 'image') ? 'Image' : 'Video';
+            me.openTag += ':' + $selected.find('a').attr('title') + ']] ';
+
+            me.handleClick(e);
+            closeModal(e);
+        });
+
+        $modal.find('a.close, a.cancel').click(closeModal);
+        $('body').append($overlay).append($modal);
+
+        updateResults();
+
+        function closeModal(e) {
+            $modal.unbind().remove();
+            $overlay.unbind().remove();
+            e.preventDefault();
+            return false;
+        }
+
+        // Update the media list via ajax call.
+        function updateResults(type, q) {
+            $modal.addClass('processing');
+            $.ajax({
+                url: galleryUrl,
+                type: 'GET',
+                data: {type: mediaType, q: mediaQ, page: mediaPage},
+                dataType: 'html',
+                success: function(html) {
+                    $modal.find('div.placeholder').html(html);
+                    $modal.find('#media-list > li').click(function(e) {
+                        var $this = $(this),
+                            $mediaList = $(this).parent();
+                        $mediaList.find('li.selected').removeClass('selected');
+                        $this.addClass('selected');
+                        e.preventDefault();
+                        return false;
+                    });
+                },
+                error: function() {
+                    var message = gettext("Oops, there was an error.");
+                    $modal.find('div.placeholder').html('<div class="msg">' +
+                                                  message + '</div>');
+                },
+                complete: function() {
+                    $modal.removeClass('processing');
+                }
+            });
         }
 
         e.preventDefault();

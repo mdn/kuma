@@ -1,6 +1,7 @@
 import imghdr
 import json
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
@@ -45,6 +46,38 @@ def gallery(request, media_type='image'):
     return jingo.render(request, 'gallery/gallery.html',
                         {'media': media,
                          'media_type': media_type})
+
+
+def gallery_async(request):
+    """AJAX endpoint to media gallery.
+
+    Returns an HTML list representation of the media.
+
+    """
+    # Maybe refactor this into existing views and check request.is_ajax?
+    media_type = request.GET.get('type', 'image')
+    term = request.GET.get('q')
+    if media_type == 'image':
+        media_qs = Image.objects
+    elif media_type == 'video':
+        media_qs = Video.objects
+    else:
+        raise Http404
+
+    if request.locale == settings.WIKI_DEFAULT_LANGUAGE:
+        media_qs = media_qs.filter(locale=request.locale)
+    else:
+        locales = [request.locale, settings.WIKI_DEFAULT_LANGUAGE]
+        media_qs = media_qs.filter(locale__in=locales)
+
+    if term:
+        media_qs = media_qs.filter(Q(title__icontains=term) |
+                                   Q(description__icontains=term))
+
+    media = paginate(request, media_qs, per_page=ITEMS_PER_PAGE)
+
+    return jingo.render(request, 'gallery/includes/media_list.html',
+                        {'media_list': media})
 
 
 def search(request, media_type):
