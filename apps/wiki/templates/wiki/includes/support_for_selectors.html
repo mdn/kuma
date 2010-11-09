@@ -3,17 +3,19 @@
   <h1>{{ _("Help with:") }}</h1>
   <div>
     <select id="os" data-oses="{{ oses_json }}" class="enable-if-js" disabled="disabled">
-      {% for _, name, slug in oses %}
-        <option value="{{ slug }}">{{ name }}</option>
+      {% for label, options in oses %}
+        {% for _, name, slug in options %}
+          <option value="{{ slug }}" data-dependency="{{ label[1] }}">{{ name }}</option>
+        {% endfor %}
       {% endfor %}
     </select>
   </div>
   <div>
     <select id="browser" data-browsers="{{ browsers_json }}" data-version-groups="{{ version_group_json }}" class="enable-if-js" disabled="disabled">
       {% for label, options in browsers %}
-        <optgroup label="{{ label }}">
-          {% for option in options %}
-            <option value="{{ option.slug }}">{{ option.name }}</option>
+        <optgroup label="{{ label[0] }}">
+          {% for option in options if option.show_in_ui %}
+            <option value="{{ option.slug }}" data-dependency="{{ label[1] }}">{{ option.name }}</option>
           {% endfor %}
         </optgroup>
       {% endfor %}

@@ -165,7 +165,7 @@ class SearchTest(SphinxTestCase):
         response = self.client.get(reverse('search'), qs)
         eq_(1, json.loads(response.content)['total'])
 
-        qs.update({'fx': [1, 5]})
+        qs.update({'fx': [1, 4]})
         response = self.client.get(reverse('search'), qs)
         eq_(2, json.loads(response.content)['total'])
 

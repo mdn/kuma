@@ -9,15 +9,16 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
-        initShowforSelectors();
         initPrepopulatedSlugs();
         initActionModals();
         initDetailsTags();
 
         if ($('body').is('.document') || $('body').is('.home')) { // Document page
             initForTags();
+            initShowforSelectors();
             initHelpfulVote();
         }
+
         if ($('body').is('.translate')) { // Translate page
             initChangeTranslateLocale();
         }
@@ -140,8 +141,8 @@
 
         function updateForsAndToc() {
             // Hide and show document sections accordingly:
-            showAndHideFors($('select#os').attr('value'),
-                            $('select#browser').attr('value'));
+            showAndHideFors($('select#os').val(),
+                            $('select#browser').val());
 
             // Update the table of contents in case headers were hidden or shown:
             $('#toc > :not(h2)').remove(); // __TOC__ generates <ul/>'s.
@@ -160,7 +161,10 @@
 
         var $osMenu = $('select#os'),
             $browserMenu = $('select#browser'),
-            initial;
+            $origBrowserOptions = $browserMenu.find('option').clone(),
+            $body = $('body'),
+            initial, currentOS, currentBrowser, currentDependency, newBrowser,
+            availableBrowsers;
 
         $osMenu.change(makeMenuChangeHandler('for_os'));
         $browserMenu.change(makeMenuChangeHandler('for_browser'));
@@ -177,6 +181,53 @@
 
         // Fire off the change handler for the first time:
         updateForsAndToc();
+
+        // If we are on home page, make sure appropriate OS is selected
+        if ($body.is('.home')) {
+            currentOS = $osMenu.val();
+            currentDependency = $osMenu.find('[value="' + currentOS + '"]')
+                                       .attr('data-dependency');
+            if (!$body.is('.' + currentDependency)) {
+                $osMenu.val(
+                    $osMenu.find(':not([data-dependency="' +
+                                 currentDependency + '"]):first')
+                           .attr('value'));
+            }
+        }
+
+        //Handle OS->Browser dependencies
+        function handleDependencies(){
+            currentOS = $osMenu.val();
+            currentDependency = $osMenu.find('[value="' + currentOS + '"]')
+                                       .attr('data-dependency');
+
+            if ($body.is('.home') && !$body.is('.' + currentDependency)) {
+                // If we are on the mobile page and select a desktop OS,
+                // redirect to the desktop home page. And vice-versa.
+                // TODO: maybe use data-* attrs for the URLs?
+                var url = document.location.href;
+                if ($body.is('.mobile')) {
+                    document.location = url.replace('/mobile/', '/home/');
+                } else {
+                    document.location = url.replace('/home/', '/mobile/');
+                }
+            }
+
+            currentBrowser = $browserMenu.val();
+            availableBrowsers = $origBrowserOptions.filter(
+                '[data-dependency="' + currentDependency + '"]');
+            $browserMenu.empty().append(availableBrowsers);
+            $browserMenu.val(currentBrowser);
+            initShowforSelectors();
+
+            newBrowser = $browserMenu.val();
+            if (newBrowser !== currentBrowser) {
+                $browserMenu.change();
+                currentBrowser = newBrowser;
+            }
+        }
+        $osMenu.change(handleDependencies);
+        handleDependencies();
     }
 
     function initPrepopulatedSlugs() {
@@ -378,8 +429,8 @@
                     $('#preview')
                         .html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
-                    initShowforSelectors();
                     initForTags();
+                    initShowforSelectors();
                     $btn.removeAttr('disabled');
                 },
                 error: function() {
@@ -457,6 +508,7 @@
     }
 
     function initShowforSelectors() {
+        $('#support-for input.selectbox, #support-for div.selectbox-wrapper').remove();
         $('#support-for select').selectbox();
     }
 

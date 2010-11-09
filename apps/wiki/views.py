@@ -24,8 +24,8 @@ from sumo.utils import paginate
 from wiki import DOCUMENTS_PER_PAGE
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
-                         OPERATING_SYSTEMS, FIREFOX_VERSIONS,
-                         GROUPED_FIREFOX_VERSIONS)
+                         OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
+                         FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
 from wiki.parser import wiki_to_html
 from wiki.tasks import (send_reviewed_notification,
                         send_ready_for_review_notification,
@@ -35,7 +35,7 @@ from wiki.tasks import (send_reviewed_notification,
 
 OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
                                 for o in OPERATING_SYSTEMS]))
-BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, True)
+BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, v.show_in_ui)
                                      for v in FIREFOX_VERSIONS]))
 
 
@@ -64,7 +64,7 @@ def _version_groups(versions):
 VERSION_GROUP_JSON = json.dumps(_version_groups(FIREFOX_VERSIONS))
 
 SHOWFOR_DATA = {
-    'oses': OPERATING_SYSTEMS,
+    'oses': GROUPED_OPERATING_SYSTEMS,
     'oses_json': OS_ABBR_JSON,
     'browsers': GROUPED_FIREFOX_VERSIONS,
     'browsers_json': BROWSER_ABBR_JSON,

@@ -236,7 +236,7 @@
         "pk": 998,
         "model": "wiki.firefoxversion",
         "fields": {
-            "item_id": 5,
+            "item_id": 4,
             "document": 5
         }
     },
