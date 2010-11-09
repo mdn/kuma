@@ -9,10 +9,10 @@ from taggit.models import Tag
 from flagit.models import FlaggedObject
 from questions.models import (Question, QuestionMetaData, Answer,
                               _tenths_version)
-from questions.tags import add_existing_tag
 from questions.tasks import update_answer_pages
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.question_config import products
+from tags.utils import add_existing_tag
 
 
 class TestAnswer(TestCaseBase):

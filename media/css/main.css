@@ -1018,6 +1018,10 @@ a.ui-dialog-titlebar-close {
 div#upload-dialog {
     padding: .5em;
 }
+ul.ui-autocomplete {
+    /* jQuery sticks the menu right in the body, where it inherits text-align: center from the body. */
+    text-align: left;
+}
 /* END jQueryUI styles */
 
 .input-placeholder {

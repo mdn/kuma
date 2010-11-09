@@ -396,11 +396,6 @@ body.answers #main-content {
     width: auto;
 }
 
-body.answers ul.ui-autocomplete {
-    /* jQuery sticks the menu right in the body, where it inherits text-align: center from the body. */
-    text-align: left;
-}
-
 #back-link {
     font-family: verdana, helvetica, arial, sans-serif;
     font-size: 11px;

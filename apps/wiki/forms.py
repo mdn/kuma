@@ -46,6 +46,19 @@ COMMENT_LONG = _lazy(u'Please keep the length of the comment to '
 
 class DocumentForm(forms.ModelForm):
     """Form to create/edit a document."""
+    def __init__(self, *args, **kwargs):
+        can_create_tags = kwargs.pop('can_create_tags', False)
+
+        super(DocumentForm, self).__init__(*args, **kwargs)
+
+        # Set up tags field, which is instantiated deep within taggit:
+        tags_field = self.fields['tags']
+        tags_field.label = _('Topics')
+        tags_field.help_text = (
+          _('Popular articles in each topic are displayed on the front page.'))
+        tags_field.widget.can_create_tags = can_create_tags
+        tags_field.required = False
+
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(),
                               label=_('Title of article:'),
@@ -105,13 +118,6 @@ class DocumentForm(forms.ModelForm):
         doc.save()
         self.save_m2m()  # not strictly necessary since we didn't change
                          # any m2m data since we instantiated the doc
-
-        # TODO: Use the tagging widget instead of this. Right now, anybody who
-        # can edit this field can create new tags; this is supposed to be a
-        # curated vocab.
-        tags = self.cleaned_data['tags']
-        doc.tags.exclude(name__in=tags).delete()
-        doc.tags.add(*tags)
 
         ffv = self.cleaned_data['firefox_versions']
         doc.firefox_versions.all().delete()

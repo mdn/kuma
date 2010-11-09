@@ -158,7 +158,8 @@ def list_documents(request, category=None, tag=None):
 def new_document(request):
     """Create a new wiki document."""
     if request.method == 'GET':
-        doc_form = DocumentForm()
+        doc_form = DocumentForm(
+            can_create_tags=request.user.has_perm('taggit.add_tag'))
         rev_form = RevisionForm()
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
@@ -166,7 +167,8 @@ def new_document(request):
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
-    doc_form = DocumentForm(post_data)
+    doc_form = DocumentForm(post_data,
+        can_create_tags=request.user.has_perm('taggit.add_tag'))
     rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
@@ -206,7 +208,8 @@ def edit_document(request, document_slug, revision_id=None):
         rev_form = RevisionForm(instance=rev, initial={'based_on': rev.id,
                                                        'comment': ''})
     if doc.allows_editing_by(user):
-        doc_form = DocumentForm(initial=_document_form_initial(doc))
+        doc_form = DocumentForm(initial=_document_form_initial(doc),
+            can_create_tags=user.has_perm('taggit.add_tag'))
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
@@ -221,7 +224,8 @@ def edit_document(request, document_slug, revision_id=None):
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
                 post_data.update({'locale': request.locale})
-                doc_form = DocumentForm(post_data, instance=doc)
+                doc_form = DocumentForm(post_data, instance=doc,
+                    can_create_tags=user.has_perm('taggit.add_tag'))
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
@@ -392,7 +396,8 @@ def translate(request, document_slug):
 
     if user_has_doc_perm:
         doc_initial = _document_form_initial(doc) if doc else None
-        doc_form = DocumentForm(initial=doc_initial)
+        doc_form = DocumentForm(initial=doc_initial,
+            can_create_tags=user.has_perm('taggit.add_tag'))
     if user_has_rev_perm:
         rev_form = RevisionForm(instance=doc and doc.current_revision,
                                 initial={'based_on': based_on_rev.id,
@@ -406,7 +411,8 @@ def translate(request, document_slug):
             disclose_description = True
             post_data = request.POST.copy()
             post_data.update({'locale': request.locale})
-            doc_form = DocumentForm(post_data, instance=doc)
+            doc_form = DocumentForm(post_data, instance=doc,
+                can_create_tags=user.has_perm('taggit.add_tag'))
             doc_form.instance.locale = request.locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
@@ -550,7 +556,7 @@ def _document_form_initial(document):
             'slug': document.slug,
             'category': document.category,
             'is_localizable': document.is_localizable,
-            'tags': ','.join([t.name for t in document.tags.all()]),
+            'tags': [t.name for t in document.tags.all()],
             'firefox_versions': [x.item_id for x in
                                  document.firefox_versions.all()],
             'operating_systems': [x.item_id for x in

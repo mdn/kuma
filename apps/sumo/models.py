@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 
 import caching.base
-from taggit.managers import TaggableManager
 
 from sumo_locales import INTERNAL_MAP
 
@@ -20,19 +19,6 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
     objects = ManagerBase()
     uncached = models.Manager()
-
-    class Meta:
-        abstract = True
-
-
-class TaggableMixin(models.Model):
-    """Mixin for taggable models that still allows caching manager to be the
-    default manager
-
-    Mix this in after ModelBase.
-
-    """
-    tags = TaggableManager()
 
     class Meta:
         abstract = True

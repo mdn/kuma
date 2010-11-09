@@ -17,7 +17,7 @@
     // the .tags block surrounding each set of add and remove forms.
     function initVocab() {
         $("div.tags[data-tag-vocab-json]").each(
-            function(index) {
+            function() {
                 var $tagContainer = $(this);
                 var parsedVocab = $.parseJSON($tagContainer.attr("data-tag-vocab-json"));
                 $tagContainer.data("tagVocab", parsedVocab);
@@ -32,10 +32,11 @@
         // Return a function() that sets the enabledness of the Add button appropriately.
         function makeButtonTender($addForm) {
             var $adder = $addForm.find("input.adder"),
-                canCreateTags = $addForm.attr("data-can-create-tags") !== undefined,
-                $input = $addForm.find("input[name=tag-name]"),
-                vocab = $addForm.closest("div.tags").data("tagVocab"),
-                $tagList = formToTagList($addForm);
+                $input = $addForm.find("input.autocomplete-tags"),
+                $tagsDiv = $input.closest("div.tags"),
+                canCreateTags = $tagsDiv.attr("data-can-create-tags") !== undefined,
+                vocab = $tagsDiv.data("tagVocab"),
+                $tagList = inputToTagList($input);
 
             // Enable Add button if the entered tag is in the vocabulary. Else,
             // disable it. If the user has the can_add_tag permission, let him
@@ -76,7 +77,7 @@
         }
 
         $("input.autocomplete-tags").each(
-            function(index) {
+            function() {
                 var $input = $(this);
                 $input.autocomplete({
                     source: makeVocabCallback($input.closest("div.tags")),
@@ -95,101 +96,149 @@
     }
 
     function initTagRemoval() {
-        // Attach an async tag-removal function to each clickable "x":
-        $(".tag").each(
-            function(index) {
-                attachRemoverHandlerTo($(this));
+        // Attach a tag-removal function to each clickable "x":
+        $("div.tags").each(
+            function() {
+                var $div = $(this),
+                    async = !$div.hasClass("tag-deferred");
+                $div.find(".tag").each(
+                    function() {
+                        attachRemoverHandlerTo($(this), async);
+                    }
+                );
             }
         );
 
-        // Prevent the form from submitting so our AJAX handler is always called:
+        // Prevent the form, if it exists, from submitting so our AJAX handler
+        // is always called:
         $("form.remove-tag-form").submit(function() { return false; });
     }
 
     // Attach onclick removal handlers to every .remove element in $tag.
-    function attachRemoverHandlerTo($tag) {
+    function attachRemoverHandlerTo($tag, async) {
         $tag.find(".remover").click(
             function() {
                 var $remover = $(this),
                     $tag = $remover.closest(".tag"),
                     tagName = $tag.find(".tag-name").text();
-                $tag.addClass("in-progress");  // Dim for immediate feedback.
-                $.ajax({
-                    type: "POST",
-                    url: $remover.closest("form.remove-tag-form").attr("data-action-async"),
-                    data: {name: tagName},
-                    success: function makeTagDisappear() {
-                           $tag.remove();
-                           // TODO: Update Add button state in case a tag is
-                           // removed whose name is presently in the Add field.
-                        },
-                    error: function makeTagReappear() {
-                           $tag.removeClass("in-progress");
-                        }
-                });
+
+                function makeTagDisappear() {
+                   $tag.remove();
+                   // TODO: Update Add button state in case a tag is
+                   // removed whose name is presently in the Add field.
+                }
+
+                if (async) {
+                    $tag.addClass("in-progress");  // Dim for immediate feedback.
+                    $.ajax({
+                        type: "POST",
+                        url: $remover.closest("form.remove-tag-form").attr("data-action-async"),
+                        data: {name: tagName},
+                        success: makeTagDisappear,
+                        error: function makeTagReappear() {
+                               $tag.removeClass("in-progress");
+                            }
+                    });
+                } else
+                    makeTagDisappear();
                 return false;
             }
         );
     }
 
+    // $container is either a form or a div.tags.
+    function addTag($container, async) {
+        var $input = $container.find("input.autocomplete-tags"),
+            tagName = $input.val(),
+            vocab = $input.closest("div.tags").data("tagVocab"),
+            tagIndex = inArrayCaseInsensitive(tagName, vocab),
+            $tag;
+
+        // Add a (ghostly, if async) tag to the onscreen
+        // list and return the tag element. If the tag was
+        // already onscreen, do nothing and return null.
+        function putTagOnscreen(tagName) {
+            var $tagList = inputToTagList($input);
+            if (!(tagIsOnscreen(tagName, $tagList))) {
+                var $li = $("<li class='tag'><span class='tag-name' /><input type='submit' value='&#x2716;' class='remover' /></li> ");
+                if (async)
+                    $li.addClass("in-progress");
+                else {
+                    // Add hidden input to persist form state, and make the removal X work.
+                    var $hidden = $("<input type='hidden' />");
+                    $hidden.attr("value", tagName);
+                    $hidden.attr("name", $input.attr("name"));
+                    $li.prepend($hidden);
+                    attachRemoverHandlerTo($li, false);
+                }
+                $li.find(".tag-name").text(tagName);
+                $li.find("input.remover").attr("name", "remove-tag-" + tagName);
+                $tagList.append($li);
+                return $li;
+            }
+        }
+
+        if (tagIndex == -1) {
+            if (async)  // If we're operating wholly client side until Submit is clicked, it would be weird to pretend you've added to the server-side vocab.
+                vocab.push(tagName);
+        } else  // Canonicalize case.
+            tagName = vocab[tagIndex];  // Canonicalize case.
+
+        $tag = putTagOnscreen(tagName);
+
+        if ($tag && async) {
+            $.ajax({
+                type: "POST",
+                url: $container.attr("data-action-async"),
+                data: {"tag-name": tagName},
+                success: function solidifyTag(data) {
+                             // Make an onscreen tag non-ghostly,
+                             // canonicalize its name,
+                             // activate its remover button, and
+                             // add it to the local vocab.
+                             var url = data.tagUrl,
+                                 tagNameSpan = $tag.find(".tag-name");
+                             tagNameSpan.replaceWith($("<a class='tag-name' />")
+                                .attr("href", url)
+                                .text(tagNameSpan.text()));
+                             $tag.removeClass("in-progress");
+                             attachRemoverHandlerTo($tag, true);
+                         },
+                error: function disintegrateTag(data) {
+                           $tag.remove();
+                       }
+            });
+        }
+
+        // Clear the input field.
+        $input.val("");
+        $container.find("input.adder").attr("disabled", true);
+        return false;
+    }
+
     function initTagAdding() {
         // Dim all Add buttons. We'll undim them upon valid input.
-        $("form.add-tag-form input.adder:enabled").attr("disabled", true);
+        $("div.tags input.adder:enabled").attr("disabled", true);
 
-        // Attach an async submit handler to all form.add-tag-form.
-        $("form.add-tag-form").each(
-            function initOneForm(index) {
+        // Attach an async submit handler to all form.add-tag-immediately.
+        $("form.add-tag-immediately").each(
+            function initOneForm() {
                 var $form = $(this);
                 $form.submit(
                     function() {
-                        var $input = $form.find("input[name=tag-name]"),
-                            tagName = $input.val(),
-                            vocab = $form.closest("div.tags").data("tagVocab"),
-                            tagIndex = inArrayCaseInsensitive(tagName, vocab),
-                            $tag;
+                        return addTag($form, true);
+                    }
+                );
+            }
+        );
 
-                        if (tagIndex != -1)
-                            tagName = vocab[tagIndex];  // Canonicalize case.
-                        $tag = putTagOnscreen(tagName);
-
-                        // Add a ghostly tag to the onscreen list and return the tag element.
-                        // If the tag was already onscreen, do nothing and return null.
-                        function putTagOnscreen(tagName) {
-                            var $tagList = formToTagList($form);
-
-                            if (!(tagIsOnscreen(tagName, $tagList))) {
-                                var $tag = $("<li class='tag in-progress'><a class='tag-name' href='#'></a><input type='submit' value='&#x2716;' class='remover' /></li> ");
-                                $tag.find(".tag-name").text(tagName);
-                                $tag.find("input").attr("name", "remove-tag-" + tagName);
-                                $tagList.append($tag);
-                                return $tag;
-                            }
-                        }
-                        
-                        $.ajax({
-                            type: "POST",
-                            url: $form.attr("data-action-async"),
-                            data: {"tag-name": tagName},
-                            success: function solidifyTag(data) {
-                                         // Make an onscreen tag non-ghostly,
-                                         // canonicalize its name,
-                                         // activate its remover button, and
-                                         // add it to the local vocab.
-                                         var canonicalName = data.canonicalName,
-                                             url = data.tagUrl;
-                                         if (inArrayCaseInsensitive(canonicalName, vocab) == -1)
-                                             vocab.push(canonicalName);
-                                         $tag.find(".tag-name").text(canonicalName).attr("href", url);
-                                         $tag.removeClass("in-progress");
-                                         attachRemoverHandlerTo($tag);
-                                     },
-                            error: function disintegrateTag(data) {
-                                       $tag.remove();
-                                   }
-                        });
-                        $input.val("");
-                        $form.find("input.adder").attr("disabled", true);
-                        return false;
+        // Attach a tag-appearing handler to all div.tag-deferred.
+        $("div.tag-deferred").each(
+            function initOneDiv() {
+                var $div = $(this);
+                $div.find("input.adder").click(
+                    function() {
+                        return addTag($div, false);
                     }
                 );
             }
@@ -198,8 +247,8 @@
 
     // Given the tag-adding form, return the tag list in the corresponding
     // tag-removing form.
-    function formToTagList($addForm) {
-        return $addForm.closest("div.tags").find("ul.tag-list");
+    function inputToTagList($input) {
+        return $input.closest("div.tags").find("ul.tag-list");
     }
 
 

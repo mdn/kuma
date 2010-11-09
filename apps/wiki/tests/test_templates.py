@@ -144,7 +144,7 @@ class NewDocumentTests(TestCaseBase):
             response.redirect_chain)
         eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
         eq_(data['category'], d.category)
-        eq_(tags, list(d.tags.values_list('name', flat=True)))
+        eq_(tags, sorted(t.name for t in d.tags.all()))
         eq_(data['firefox_versions'],
             list(d.firefox_versions.values_list('item_id', flat=True)))
         eq_(data['operating_systems'],

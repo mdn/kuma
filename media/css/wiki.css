@@ -767,7 +767,7 @@ div.message-box:after {
 }
 
 /* New / Edit / Translate Document */
-#document-form form ul,
+#document-form form > ul,
 #document-form div.relevant-to {
     display: inline-block;
     vertical-align: top;
@@ -783,6 +783,11 @@ div.message-box:after {
     clear: both;
     list-style: none;
     padding: 5px 0;
+}
+
+#document-form div.tags li {
+    /* Keep the padding between the tag widgets less than that between the fields. */
+    padding: 0;
 }
 
 #document-form div.relevant-to h2,
@@ -801,7 +806,7 @@ article.form-page form li label {
     padding: 5px 0 0;
 }
 
-#document-form li li {
+#document-form div.relevant-to li li {
     display: inline-block;
     padding: 2px 0;
     width: 150px;
@@ -855,6 +860,10 @@ article.main input[type="text"].error {
     border-color: #ff0000;
 }
 
+article.main input[type="text"].autocomplete-tags {
+    width: 230px;
+}
+
 article.main textarea {
     background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(0.5%, #deebf4), color-stop(1%, #fff));
     height: 150px;
@@ -890,7 +899,7 @@ article.main div.submit {
 }
 
 article.main input[type="button"],
-article.main input[type="submit"],
+article.main input[type="submit"]:not(.remover),  /* Exclude tag remover button. */
 section.marky button {
     border: none;
     background: #0063d8;
@@ -909,10 +918,17 @@ section.marky button {
     text-shadow: rgba(0,0,0,.25) 0 -1px 0;
 }
 
-article.main input[disabled] {
+article.main input[disabled]:not(.remover) {
     background: #ddd;
     color: #888;
     cursor: default;
+}
+
+article.main div.tags input.adder {
+    /* Make the Add button look subordinate to the form's larger Save button. */
+    font-size: 80%;
+    padding: 2px 18px 3px;
+    margin: 0 0 0 5px;
 }
 
 #preview {

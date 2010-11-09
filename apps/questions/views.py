@@ -24,14 +24,12 @@ from access.decorators import has_perm_or_owns_or_403, permission_required
 from notifications import create_watch, destroy_watch
 import questions as constants
 from questions.feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
-from questions.forms import (NewQuestionForm, EditQuestionForm,
-                    AnswerForm, WatchQuestionForm,
-                    FREQUENCY_CHOICES)
+from questions.forms import (NewQuestionForm, EditQuestionForm, AnswerForm,
+                             WatchQuestionForm, FREQUENCY_CHOICES)
 from questions.models import (Question, Answer, QuestionVote, AnswerVote,
-                     CONFIRMED, UNCONFIRMED)
-from questions.tags import add_existing_tag
-from questions.tasks import (cache_top_contributors, build_solution_notification,
-                    send_confirmation_email)
+                              CONFIRMED, UNCONFIRMED)
+from questions.tasks import (cache_top_contributors, send_confirmation_email,
+                             build_solution_notification)
 from questions.question_config import products
 from search.clients import WikiClient, QuestionsClient, SearchError
 from search.utils import locale_or_default, sphinx_locale
@@ -39,6 +37,7 @@ from sumo.helpers import urlparams
 from sumo.models import WikiPage
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
+from tags.utils import add_existing_tag
 from upload.models import ImageAttachment
 from upload.views import upload_imageattachment
 

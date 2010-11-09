@@ -12,8 +12,9 @@ from django.db import models
 
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
-from sumo.models import ModelBase, TaggableMixin
+from sumo.models import ModelBase
 from sumo.urlresolvers import reverse
+from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 
 
@@ -115,7 +116,7 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
-class Document(ModelBase, TaggableMixin):
+class Document(ModelBase, BigVocabTaggableMixin):
     """A localized knowledgebase document, not revision-specific."""
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)

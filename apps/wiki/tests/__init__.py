@@ -77,12 +77,10 @@ def doc_rev(content=''):
 
 
 def new_document_data(tags=None):
-    if tags is None:
-        tags = []
     return {
         'title': 'A Test Article',
         'slug': 'a-test-article',
-        'tags': ','.join(tags),
+        'tags': tags or [],
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],
         'category': CATEGORIES[0][0],

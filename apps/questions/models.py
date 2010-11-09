@@ -15,12 +15,13 @@ from flagit.models import FlaggedObject
 from notifications import create_watch
 from notifications.tasks import delete_watches
 from sumo.helpers import urlparams
-from sumo.models import ModelBase, TaggableMixin
+from sumo.models import ModelBase
 from sumo.parser import wiki_to_html
 from sumo.urlresolvers import reverse
 import questions as constants
-from questions.tags import add_existing_tag
 from .question_config import products
+from tags.models import BigVocabTaggableMixin
+from tags.utils import add_existing_tag
 from .tasks import (update_question_votes, build_answer_notification,
                     update_answer_pages)
 from upload.models import ImageAttachment
@@ -34,7 +35,7 @@ QUESTION_STATUS_CHOICES = (
 )
 
 
-class Question(ModelBase, TaggableMixin):
+class Question(ModelBase, BigVocabTaggableMixin):
     """A support question."""
     title = models.CharField(max_length=255)
     creator = models.ForeignKey(User, related_name='questions')

@@ -48,3 +48,7 @@ ul.tag-list {
     border-color: red;
     border-style: solid;
 }
+
+input.hidden-submitter {
+    display: none;
+}

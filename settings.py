@@ -307,6 +307,10 @@ MINIFY_BUNDLES = {
             # has the new theme at the moment.
             'css/dashboards.css',
             'css/screencast.css',
+            'css/tags.css',
+            'css/jqueryui/jquery.ui.core.css',
+            'css/jqueryui/jquery.ui.autocomplete.css',
+            'css/jqueryui/jquery.ui.theme.css',
         ),
         'home': (
             'css/home.css',
@@ -363,6 +367,8 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.selectbox-1.2.js',
             'js/screencast.js',
             'js/wiki.js',
+            'js/libs/jqueryui.min.js',
+            'js/tags.js',
         ),
         'customercare': (
             'js/libs/jqueryui.min.js',
