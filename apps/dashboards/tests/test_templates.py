@@ -1,7 +1,7 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.tests import TestCase, LocalizingClient
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from wiki.models import MAJOR_SIGNIFICANCE, MEDIUM_SIGNIFICANCE
 from wiki.tests import revision, translated_revision
