@@ -18,9 +18,7 @@
       <input type="text" class="search-query search-refine-query" value="{{ q }}" name="q">
       <input type="submit" class="search-refine-submit btn-large" value="{{ _('Search') }}">
     </form>
-    {% if user.is_authenticated() %}
-      <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _("Refine your search") }}</a>
-    {% endif %}
+    <a class="show-search-tabs" href="{{ url('search') }}{{ refine_query }}">{{ _('Refine your search') }}</a>
   </div>
 
   <div class="search-count">
