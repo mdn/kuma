@@ -189,10 +189,9 @@ def edit_document(request, document_slug, revision_id=None):
     user = request.user
 
     # If this document has a parent, then the edit is handled by the
-    # translate view. Redirect there.
+    # translate view. Pass it on.
     if doc.parent:
-        return HttpResponseRedirect(reverse('wiki.translate',
-                                            args=[doc.parent.slug]))
+        return translate(request, doc.parent.slug)
 
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
@@ -422,7 +421,7 @@ def translate(request, document_slug):
                 doc_form_invalid = True
             doc_slug = doc_form.cleaned_data['slug']
         else:
-            doc_slug = document_slug
+            doc_slug = doc.slug
 
         if user_has_rev_perm and which_form in ['rev', 'both']:
             rev_form = RevisionForm(request.POST)

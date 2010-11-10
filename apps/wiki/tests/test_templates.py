@@ -732,6 +732,9 @@ class TranslateTests(TestCaseBase):
         data = _translation_data()
         data['content'] = 'loremo ipsumo doloro sito ameto nuevo'
         response = self.client.post(url, data)
+        eq_(302, response.status_code)
+        eq_('http://testserver/es/kb/un-test-articulo/history',
+            response['location'])
         doc = Document.objects.get(slug=data['slug'])
         rev = doc.revisions.filter(content=data['content'])[0]
         eq_(data['keywords'], rev.keywords)
@@ -777,6 +780,8 @@ class TranslateTests(TestCaseBase):
         data['form'] = 'rev'
         response = self.client.post(url, data)
         eq_(302, response.status_code)
+        eq_('http://testserver/es/kb/un-test-articulo/history',
+            response['location'])
         revisions = rev_es.document.revisions.all()
         eq_(2, revisions.count())  # New revision is created
         d = Document.objects.get(id=rev_es.document.id)
