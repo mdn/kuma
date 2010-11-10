@@ -23,10 +23,10 @@
         <details class="h2"{% if disclose_description %} open="open"{% endif %}>
           <summary>{{ _('Edit Description') }}</summary>
           {{ errorlist(document_form) }}
-          <form action="" method="post">
+          <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
             {{ csrf() }}
             <ul>
-              {% for field in document_form if field.name != 'firefox_versions' and field.name != 'operating_systems' and (field.name != 'is_localizable' or not document.translations.exists()) %}
+              {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' and (field.name != 'is_localizable' or not document.translations.exists()) %}
                 <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
               {% endfor %}
             </ul>

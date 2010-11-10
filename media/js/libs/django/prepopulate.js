@@ -2,7 +2,8 @@
  * Taken from Django's contrib/admin/media/js folder, thanks Django!
  * Copyright Django and licensed under BSD, please see django/LICENSE for
  * license details.
- * Modified slightly to handle fallback to full title if slug is empty
+ * Modified slightly to handle fallback to full title if slug is empty.
+ * Also modified to only trigger onchange.
  */
 (function($) {
     $.fn.prepopulate = function(dependencies, maxLength) {
@@ -37,7 +38,8 @@
                 field.val(field_val);
             };
 
-            dependencies.keyup(populate).change(populate).focus(populate);
+            //rlr: Changed behavior to only run populate on the change event
+            dependencies/*.keyup(populate)*/.change(populate)/*.focus(populate)*/;
         });
     };
 })(jQuery);

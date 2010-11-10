@@ -42,7 +42,7 @@
       </div>
       {% if not document %}
         {# If this is the first translation to this locale, we use 1 big form. #}
-        <form action="" method="post">
+        <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
           {{ csrf() }}
           <input type="hidden" name="form" value="both" />
       {% endif %}
@@ -52,7 +52,7 @@
           {{ errorlist(document_form) }}
           {% if document %}
             {# If there are existing translations in this locale, we use 2 separate forms. #}
-            <form action="" method="post">
+            <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
               {{ csrf() }}
               <input type="hidden" name="form" value="doc" />
           {% endif %}

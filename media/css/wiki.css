@@ -820,6 +820,22 @@ article.form-page form li label {
     margin: 0 .5em;
 }
 
+#document-form li ul.errorlist,
+ul.description li ul.errorlist {
+    display: block;
+    padding: 2px 0;
+    margin: 0;
+    width: auto;
+}
+
+#document-form li ul.errorlist li,
+ul.description li ul.errorlist li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
 article.main input[type="text"],
 article.main textarea,
 section.marky input[type="text"] {
@@ -833,6 +849,10 @@ section.marky input[type="text"] {
     font-size: 15px;
     padding: 5px;
     width: 325px;
+}
+
+article.main input[type="text"].error {
+    border-color: #ff0000;
 }
 
 article.main textarea {

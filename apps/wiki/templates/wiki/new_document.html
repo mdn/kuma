@@ -18,10 +18,10 @@
     <div id="document-form">
       {{ errorlist(document_form) }}
       {{ errorlist(revision_form) }}
-      <form action="" method="post">
+      <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
         {{ csrf() }}
         <ul>
-          {% for field in document_form if field.name != 'firefox_versions' and field.name != 'operating_systems' %}
+          {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' %}
             <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
           {% endfor %}
         </ul>

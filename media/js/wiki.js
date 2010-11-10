@@ -24,6 +24,7 @@
         }
         if ($('body').is('.edit, .new, .translate')) {
             initArticlePreview();
+            initTitleAndSlugCheck();
         }
 
         Marky.createFullToolbar('.forum-editor-tools', '#id_content');
@@ -510,6 +511,68 @@
     function initShowforSelectors() {
         $('#support-for input.selectbox, #support-for div.selectbox-wrapper').remove();
         $('#support-for select').selectbox();
+    }
+
+    function initTitleAndSlugCheck() {
+        $('#id_title').change(function() {
+            var $this = $(this),
+                $form = $this.closest('form'),
+                title = $this.val(),
+                slug = $('#id_slug').val();
+            verifyTitleUnique(title, $form);
+            // Check slug too, since it auto-updates and doesn't seem to fire
+            // off change event.
+            verifySlugUnique(slug, $form);
+        });
+        $('#id_slug').change(function() {
+            var $this = $(this),
+                $form = $this.closest('form'),
+                slug = $('#id_slug').val();
+            verifySlugUnique(slug, $form);
+        });
+
+        function verifyTitleUnique(title, $form) {
+            var errorMsg = gettext('A document with this title already exists in this locale.');
+            verifyUnique('title', title, $('#id_title'), $form, errorMsg);
+        }
+
+        function verifySlugUnique(slug, $form) {
+            var errorMsg = gettext('A document with this slug already exists in this locale.');
+            verifyUnique('slug', slug, $('#id_slug'), $form, errorMsg);
+        }
+
+        function verifyUnique(fieldname, value, $field, $form, errorMsg) {
+            $field.removeClass('error');
+            $field.parent().find('ul.errorlist').remove();
+            var data = {};
+            data[fieldname] = value;
+            $.ajax({
+                url: $form.attr('data-json-url'),
+                type: 'GET',
+                data: data,
+                dataType: 'json',
+                success: function(json) {
+                    // Success means we found an existing doc
+                    var docId = $form.attr('data-document-id');
+                    if (!docId || (json.id && json.id !== parseInt(docId))) {
+                        // Collision !!
+                        $field.addClass('error');
+                        $field.before(
+                            $('<ul class="errorlist"><li/></ul>')
+                                .find('li').text(errorMsg).end()
+                        );
+                    }
+                },
+                error: function(xhr, error) {
+                    if(xhr.status === 404) {
+                        // We are good!!
+                    } else {
+                        // Something went wrong, just fallback to server-side
+                        // validation.
+                    }
+                }
+            });
+        }
     }
 
     $(document).ready(init);

@@ -231,6 +231,36 @@ class NewDocumentTests(TestCaseBase):
         eq_('Select a valid choice. 1337 is not one of the available choices.',
             ul('li').text())
 
+    def test_slug_collision_validation(self):
+        """Trying to create document with existing locale/slug should
+        show validation error."""
+        d = _create_document()
+        self.client.login(username='admin', password='testpass')
+        data = new_document_data()
+        data['slug'] = d.slug
+        response = self.client.post(reverse('wiki.new_document'), data)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        ul = doc('#document-form > ul.errorlist')
+        eq_(1, len(ul))
+        eq_('Document with this Slug and Locale already exists.',
+            ul('li').text())
+
+    def test_title_collision_validation(self):
+        """Trying to create document with existing locale/slug should
+        show validation error."""
+        d = _create_document()
+        self.client.login(username='admin', password='testpass')
+        data = new_document_data()
+        data['title'] = d.title
+        response = self.client.post(reverse('wiki.new_document'), data)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        ul = doc('#document-form > ul.errorlist')
+        eq_(1, len(ul))
+        eq_('Document with this Title and Locale already exists.',
+            ul('li').text())
+
 
 class NewRevisionTests(TestCaseBase):
     """Tests for the New Revision template"""

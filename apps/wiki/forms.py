@@ -77,6 +77,8 @@ class DocumentForm(forms.ModelForm):
                                 label=_('Allow translations'),
                                 required=False)
 
+    locale = forms.CharField(widget=forms.HiddenInput())
+
     def clean_firefox_versions(self):
         data = self.cleaned_data['firefox_versions']
         return [FirefoxVersion(item_id=int(x)) for x in data]
@@ -87,12 +89,12 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'category', 'is_localizable', 'tags')
+        fields = ('title', 'slug', 'category', 'is_localizable', 'tags',
+                  'locale')
 
-    def save(self, locale, parent_doc, **kwargs):
+    def save(self, parent_doc, **kwargs):
         """Persist the Document form, and return the saved Document."""
         doc = super(DocumentForm, self).save(commit=False, **kwargs)
-        doc.locale = locale
         doc.parent = parent_doc
         doc.save()
         self.save_m2m()  # not strictly necessary since we didn't change

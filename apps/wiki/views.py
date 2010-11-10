@@ -165,11 +165,13 @@ def new_document(request):
                             {'document_form': doc_form,
                              'revision_form': rev_form})
 
-    doc_form = DocumentForm(request.POST)
-    rev_form = RevisionForm(request.POST)
+    post_data = request.POST.copy()
+    post_data.update({'locale': request.locale})
+    doc_form = DocumentForm(post_data)
+    rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
-        doc = doc_form.save(request.locale, None)
+        doc = doc_form.save(None)
         _save_rev_and_notify(rev_form, request.user, doc)
         return HttpResponseRedirect(reverse('wiki.document_revisions',
                                     args=[doc.slug]))
@@ -218,10 +220,12 @@ def edit_document(request, document_slug, revision_id=None):
 
         if which_form == 'doc':
             if doc.allows_editing_by(user):
-                doc_form = DocumentForm(request.POST, instance=doc)
+                post_data = request.POST.copy()
+                post_data.update({'locale': request.locale})
+                doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
-                    doc = doc_form.save(request.locale, None)
+                    doc = doc_form.save(None)
 
                     # Do we need to rebuild the KB?
                     _maybe_schedule_rebuild(doc_form)
@@ -403,11 +407,13 @@ def translate(request, document_slug):
 
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
-            doc_form = DocumentForm(request.POST, instance=doc)
+            post_data = request.POST.copy()
+            post_data.update({'locale': request.locale})
+            doc_form = DocumentForm(post_data, instance=doc)
             doc_form.instance.locale = request.locale
             doc_form.instance.parent = parent_doc
             if doc_form.is_valid():
-                doc = doc_form.save(request.locale, parent_doc)
+                doc = doc_form.save(parent_doc)
 
                 # Possibly schedule a rebuild.
                 _maybe_schedule_rebuild(doc_form)
@@ -493,6 +499,7 @@ def json_view(request):
 
     document = get_object_or_404(Document, **kwargs)
     data = json.dumps({
+        'id': document.id,
         'locale': document.locale,
         'slug': document.slug,
         'title': document.title,
