@@ -671,6 +671,14 @@ class TranslateTests(TestCaseBase):
         doc = pq(response.content)
         eq_('You cannot translate this document.', doc('#content p').html())
 
+    def test_invalid_document_form(self):
+        """Make sure we handle invalid document form without a 500."""
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        data = _translation_data()
+        data['slug'] = ''  # Invalid slug
+        response = self.client.post(url, data)
+        eq_(200, response.status_code)
+
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')

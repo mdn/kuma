@@ -417,13 +417,14 @@ def translate(request, document_slug):
                                             args=[doc.slug]),
                                     opendescription=1)
                     return HttpResponseRedirect(url)
+
+                doc_slug = doc_form.cleaned_data['slug']
             else:
                 doc_form_invalid = True
-            doc_slug = doc_form.cleaned_data['slug']
         else:
             doc_slug = doc.slug
 
-        if user_has_rev_perm and which_form in ['rev', 'both']:
+        if doc and user_has_rev_perm and which_form in ['rev', 'both']:
             rev_form = RevisionForm(request.POST)
             rev_form.instance.document = doc  # for rev_form.clean()
             if rev_form.is_valid() and not doc_form_invalid:
