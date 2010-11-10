@@ -3,7 +3,7 @@
         "pk": 1,
         "model": "wiki.document",
         "fields": {
-            "category": 1,
+            "category": 10,
             "title": "an article title",
             "locale": "en-US",
             "current_revision": 21,
@@ -16,7 +16,7 @@
         "pk": 2,
         "model": "wiki.document",
         "fields": {
-            "category": 1,
+            "category": 10,
             "title": "an article title 2",
             "locale": "en-US",
             "current_revision": 23,
@@ -29,7 +29,7 @@
         "pk": 3,
         "model": "wiki.document",
         "fields": {
-            "category": 1,
+            "category": 10,
             "title": "an article title 3",
             "locale": "en-US",
             "is_template": false,
@@ -41,7 +41,7 @@
         "pk": 4,
         "model": "wiki.document",
         "fields": {
-            "category": 1,
+            "category": 10,
             "parent": 1,
             "title": "le title",
             "locale": "fr",
@@ -55,7 +55,7 @@
         "pk": 5,
         "model": "wiki.document",
         "fields": {
-            "category": 1,
+            "category": 10,
             "parent": null,
             "title": "lorem ipsum",
             "locale": "en-US",

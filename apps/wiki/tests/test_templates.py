@@ -1149,7 +1149,8 @@ class RevisionDeleteTestCase(TestCaseBase):
 def _create_document(title='Test Document', parent=None,
                      locale=settings.WIKI_DEFAULT_LANGUAGE):
     d = document(title=title, html='<div>Lorem Ipsum</div>',
-                 category=1, locale=locale, parent=parent, is_localizable=True)
+                 category=10, locale=locale, parent=parent,
+                 is_localizable=True)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
                  content='<div>Lorem Ipsum</div>', creator_id=118577,

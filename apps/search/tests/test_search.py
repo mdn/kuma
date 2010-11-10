@@ -131,9 +131,9 @@ class SearchTest(SphinxTestCase):
 
     def test_category(self):
         wc = WikiClient()
-        results = wc.query('', ({'filter': 'category', 'value': [1]},))
+        results = wc.query('', ({'filter': 'category', 'value': [10]},))
         eq_(4, len(results))
-        results = wc.query('', ({'filter': 'category', 'value': [2]},))
+        results = wc.query('', ({'filter': 'category', 'value': [30]},))
         eq_(1, len(results))
 
     def test_category_exclude(self):
@@ -141,7 +141,7 @@ class SearchTest(SphinxTestCase):
         response = self.client.get(reverse('search'), q)
         eq_(2, json.loads(response.content)['total'])
 
-        q = {'q': 'audio', 'category': -1, 'format': 'json', 'w': 1}
+        q = {'q': 'audio', 'category': -10, 'format': 'json', 'w': 1}
         response = self.client.get(reverse('search'), q)
         eq_(0, json.loads(response.content)['total'])
 
