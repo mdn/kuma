@@ -3,7 +3,38 @@
 }
 
 .search-results .title {
+    background: transparent url(../img/search/icons.png) no-repeat left -45px;
+    display: block;
     font-size: 130%;
+    padding: 0 0 5px 50px;
+}
+
+.document .title {
+    background-position: 5px -97px;
+}
+
+.document:hover .title {
+    background-position: 5px -397px;
+}
+
+.question .title {
+    background-position: 5px 3px;
+}
+
+.question:hover .title {
+    background-position: 5px -297px;
+}
+
+.thread .title {
+    background-position: 5px -197px;
+}
+
+.thread:hover .title {
+    background-position: 5px -497px;
+}
+
+.search-results p {
+    padding: 0 0 0 50px;
 }
 
 .search-results p a {

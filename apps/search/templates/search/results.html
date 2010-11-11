@@ -33,14 +33,14 @@
     {{ pages|paginator }}
 
     {% for doc in results %}
-    <div class="result">
-      <a class="title" href="{{ doc.url|urlparams(s=q,as='s') }}">{{ doc.title }}</a>
-      <p>
-        <a href="{{ doc.url|urlparams(s=q,as='s') }}">
-          {{ doc.search_summary|safe }}
-        </a>
-      </p>
-    </div>
+      <div class="result {{ doc.type }}">
+        <a class="title" href="{{ doc.url|urlparams(s=q,as='s') }}">{{ doc.title }}</a>
+        <p>
+          <a href="{{ doc.url|urlparams(s=q,as='s') }}">
+            {{ doc.search_summary|safe }}
+          </a>
+        </p>
+      </div>
     {% endfor %}
 
     {{ pages|paginator }}
