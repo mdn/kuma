@@ -59,6 +59,10 @@ div.ans-attachments div.attachment {
     border: 0; /* IE7 */
 }
 
+#featured {
+    /* nurse .gif for IE6 */ 
+    _background: url(../img/nurse.gif) no-repeat scroll right top transparent;
+}
 
 /* IE6 only */
 #quick-links li {
