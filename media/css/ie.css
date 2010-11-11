@@ -84,3 +84,9 @@ div.ans-attachments div.attachment {
 #featured-side {
     _height: 230px;
 }
+
+/* Fix z-index issue with header drop downs */
+#nav-main {
+    position: relative;
+    z-index: 2;
+}
