@@ -420,6 +420,30 @@ class DocumentEditTests(TestCaseBase):
         doc = Document.uncached.get(pk=self.d.pk)
         eq_(new_title, doc.title)
 
+    def test_change_slug_case(self):
+        """Changing the case of some letters in the slug should work."""
+        data = new_document_data()
+        new_slug = 'Test-Document'
+        data.update(slug=new_slug)
+        data.update(form='doc')
+        response = post(self.client, 'wiki.edit_document', data,
+                        args=[self.d.slug])
+        eq_(200, response.status_code)
+        doc = Document.uncached.get(pk=self.d.pk)
+        eq_(new_slug, doc.slug)
+
+    def test_change_title_case(self):
+        """Changing the case of some letters in the title should work."""
+        data = new_document_data()
+        new_title = 'TeST DoCuMent'
+        data.update(title=new_title)
+        data.update(form='doc')
+        response = post(self.client, 'wiki.edit_document', data,
+                        args=[self.d.slug])
+        eq_(200, response.status_code)
+        doc = Document.uncached.get(pk=self.d.pk)
+        eq_(new_title, doc.title)
+
 
 class DocumentListTests(TestCaseBase):
     """Tests for the All and Category template"""

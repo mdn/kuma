@@ -284,7 +284,8 @@ class Document(ModelBase, TaggableMixin):
             if name in ('slug', 'title') and hasattr(self, name):
                 old_name = 'old_' + name
                 if not hasattr(self, old_name):
-                    if getattr(self, name) != value:
+                    # Case insensitive comparison:
+                    if getattr(self, name).lower() != value.lower():
                         # Save original value:
                         setattr(self, old_name, getattr(self, name))
                 elif value == getattr(self, old_name):
