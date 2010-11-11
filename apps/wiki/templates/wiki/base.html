@@ -40,18 +40,16 @@
   {% endblock %}
   <div class="sd-module promos">
     <section id="want-to-get-involved">
-      <h1>{{ _('Want to <mark>get involved?</mark>')|safe }}</h1>
+      <h1>{{ _('Be <mark>Awesome</mark>')|safe }}</h1>
       <div class="img">
         <img src="{{ settings.MEDIA_URL }}img/promo.sumo.png" alt="" />
       </div>
       <p>
-        {% trans %}
-          Did you know that most of the content on Firefox Help was written
-          by volunteers?
-        {% endtrans %}
+        {% trans %}Did you know that Firefox Help is powered by volunteer
+          superheroes all around the world?{% endtrans %}
       </p>
       {# TODO: insert URL below #}
-      <a href="#">{{ _('Find Out How to<br /> Contribute &raquo;')|safe }}</a>
+      <a href="#">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
     </section>
     {% if not hide_plugin_check %}
       <section id="check-your-plugins">
@@ -66,7 +64,7 @@
           {% endtrans %}
         </p>
         {# TODO: insert URL below #}
-        <a href="#">{{ _('Find Out More &raquo;')|safe }}</a>
+        <a href="#">{{ _('Find out more &raquo;')|safe }}</a>
       </section>
     {% endif %}
   </div>

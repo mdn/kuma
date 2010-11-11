@@ -59,7 +59,7 @@
           <ul class="description">
             <li>
               <div class="approved">
-                <h3>{{ _('Title:') }}</h3>
+                <h3>{{ _('Title of article:') }}</h3>
                 <div class="val">{{ parent.title }}</div>
               </div>
               <div class="localized">
@@ -69,21 +69,21 @@
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Slug:') }}</h3>
+                <h3>{{ _('Article URL:') }}</h3>
                 <div class="val">{{ parent.slug }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Slug in {locale}:')|f(locale=language) }}</h3>
+                <h3>{{ _('Article URL in {locale}:')|f(locale=language) }}</h3>
                 {{ document_form.slug|safe }}
               </div>
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Category:') }}</h3>
+                <h3>{{ _('Type of article:') }}</h3>
                 <div class="val">{{ parent.get_category_display() }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Category in {locale}:')|f(locale=language) }}</h3>
+                <h3>{{ _('Type of article in {locale}:')|f(locale=language) }}</h3>
                 {{ document_form.category|safe }}
               </div>
             </li>
@@ -125,21 +125,21 @@
           <ul class="description">
             <li>
               <div class="approved">
-                <h3>{{ _('Approved Keywords:') }}</h3>
+                <h3>{{ _('Affects search results:') }}</h3>
                 <div class="val">{{ parent.current_revision.keywords }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Keywords in {locale}:')|f(locale=language) }}</h3>
+                <h3>{{ _('Affects search results in {locale}:')|f(locale=language) }}</h3>
                 {{ revision_form.keywords|safe }}
               </div>
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Search result summary:') }}</h3>
+                <h3>{{ _('Only displayed on search results page:') }}</h3>
                 <div class="val">{{ parent.current_revision.summary }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Summary in {locale}:')|f(locale=language) }}</h3>
+                <h3>{{ _('Only displayed on search results page in {locale}:')|f(locale=language) }}</h3>
                 {{ revision_form.summary|safe }}
               </div>
             </li>
@@ -156,11 +156,11 @@
           <div id="content-fields">
             <ul>
             <div class="approved">
-              <h3>{{ _('Approved {default_locale} Version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
+              <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
               <textarea readonly="readonly">{{ parent.current_revision.content }}</textarea>
             </div>
             <div class="localized">
-              <h3>{{ _('{locale} Translation:')|f(locale=language) }}</h3>
+              <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
               {{ content_editor(revision_form.content) }}
             </div>
           </div>

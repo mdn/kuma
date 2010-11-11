@@ -34,9 +34,9 @@
         {% if document.is_localizable %}
           <li{% if active == 'localize' %} class="active"{% endif %}>
             {% if active == 'localize' %}
-              <span>{{ _('Localize Article') }}</span>
+              <span>{{ _('Translate Article') }}</span>
             {% else %}
-              <a href="{{ url('wiki.select_locale', document.slug) }}">{{ _('Localize Article') }}</a>
+              <a href="{{ url('wiki.select_locale', document.slug) }}">{{ _('Translate Article') }}</a>
             {% endif %}
           </li>
         {% endif %}
@@ -90,7 +90,7 @@
         <a href="{{ url('home') }}">{{ _('Firefox Help Home') }}</a>
       </li>
       <li class="aaq {{ 'active' if active == 2 }}">
-        <a href="{{ url('questions.new_question') }}">{{ _('Ask A Question') }}</a>
+        <a href="{{ url('questions.new_question') }}">{{ _('Ask a Question') }}</a>
       </li>
     </ul>
   </nav>

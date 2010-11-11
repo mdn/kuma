@@ -220,8 +220,10 @@ Marky.ShowForButton = function() {
     this.closeTag = '{/for}';
     this.defaultText = 'Show for text.';
     this.everyline = false;
+    this.tooltip = gettext('Show content only for specific versions of Firefox or operating systems.');
 
-    this.html = '<a class="markup-toolbar-link" href="#show-for">Show For...</a>';
+    this.html = interpolate('<a class="markup-toolbar-link" href="#show-for" title="%s">%s</a>',
+                            [this.tooltip, this.name]);
 };
 
 Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {

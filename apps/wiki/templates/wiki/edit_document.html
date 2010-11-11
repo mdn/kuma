@@ -34,7 +34,6 @@
               {{ document_form.is_localizable.as_hidden()|safe }}
             {% endif %}
             <div class="relevant-to">
-              <h2>{{ _('Relevant to:') }}</h2>
               <ul>
                 <li>{{ document_form.firefox_versions.label_tag()|safe }}{{ document_form.firefox_versions|safe }}</li>
                 <li>{{ document_form.operating_systems.label_tag()|safe }}{{ document_form.operating_systems|safe }}</li>
@@ -53,7 +52,8 @@
         <details class="h2" open="open">
           <summary>{{ _('Edit Content') }}</summary>
           <p>
-            {% trans %}For article-writing guidelines, please read our <a href="#">Best Practices for Support Documents</a> and <a href="#">Manual of Style</a>.{% endtrans %}
+            {% trans url='#' %}For help with writing articles, check out the
+              <a href="{url}">Support Document Guide</a>.{% endtrans %}
           </p>
           {{ errorlist(revision_form) }}
           <form action="" method="post">

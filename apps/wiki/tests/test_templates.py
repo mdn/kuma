@@ -80,7 +80,7 @@ class DocumentTests(TestCaseBase):
         d.save()
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert 'Localize' in doc('#doc-tabs li').text()
+        assert 'Translate' in doc('#doc-tabs li').text()
 
         # Make it non-localizable
         d.is_localizable = False

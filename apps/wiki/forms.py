@@ -9,7 +9,8 @@ from tower import ugettext as _
 from sumo.form_fields import StrippedCharField
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
-                     GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS)
+                     GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
+                     CATEGORIES)
 
 
 KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
@@ -47,17 +48,19 @@ class DocumentForm(forms.ModelForm):
     """Form to create/edit a document."""
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(),
+                              label=_('Title of article:'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=5, max_length=255,
                              widget=forms.TextInput(),
+                             label=_('Article URL:'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
 
     firefox_versions = forms.MultipleChoiceField(
-                                label=_('Firefox Version'),
+                                label=_('Firefox version:'),
                                 choices=[(v.id, v.name) for v in
                                          FIREFOX_VERSIONS],
                                 initial=[v.id for v in FIREFOX_VERSIONS],
@@ -65,7 +68,7 @@ class DocumentForm(forms.ModelForm):
                                 widget=forms.CheckboxSelectMultiple())
 
     operating_systems = forms.MultipleChoiceField(
-                                label=_('Operating Systems'),
+                                label=_('Operating systems:'),
                                 choices=[(o.id, o.name) for o in
                                          OPERATING_SYSTEMS],
                                 initial=[o.id for o in OPERATING_SYSTEMS],
@@ -74,8 +77,11 @@ class DocumentForm(forms.ModelForm):
 
     is_localizable = forms.BooleanField(
                                 initial=True,
-                                label=_('Allow translations'),
+                                label=_('Allow translations:'),
                                 required=False)
+
+    category = forms.ChoiceField(choices=CATEGORIES,
+                                 label=_('Type of article:'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -119,11 +125,13 @@ class DocumentForm(forms.ModelForm):
 
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
-    keywords = StrippedCharField(required=False, help_text=KEYWORDS_HELP_TEXT)
+    keywords = StrippedCharField(required=False,
+                                 label=_('Affects search results'),
+                                 help_text=KEYWORDS_HELP_TEXT)
 
     summary = StrippedCharField(
                 min_length=5, max_length=1000, widget=forms.Textarea(),
-                label=_lazy('Search result summary'),
+                label=_lazy('Only displayed on search results page'),
                 error_messages={'required': SUMMARY_REQUIRED,
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
