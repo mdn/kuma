@@ -112,12 +112,6 @@ class NewDocumentTests(TestCaseBase):
     """Tests for the New Document template"""
     fixtures = ['users.json']
 
-    def test_new_document_GET_without_perm(self):
-        """Trying to create a document without permission redirects to login"""
-        self.client.login(username='rrosario', password='testpass')
-        response = self.client.get(reverse('wiki.new_document'))
-        eq_(403, response.status_code)
-
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
         self.client.login(username='admin', password='testpass')
@@ -691,13 +685,6 @@ class TranslateTests(TestCaseBase):
         super(TranslateTests, self).setUp()
         self.d = _create_document()
         self.client.login(username='admin', password='testpass')
-
-    def test_translate_GET_without_perm(self):
-        """Try to create a translation without permission."""
-        self.client.login(username='rrosario', password='testpass')
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
-        response = self.client.get(url)
-        eq_(403, response.status_code)
 
     def test_translate_GET_logged_out(self):
         """Try to create a translation while logged out."""

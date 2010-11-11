@@ -155,7 +155,6 @@ def list_documents(request, category=None, tag=None):
 
 
 @login_required
-@permission_required('wiki.add_document')
 def new_document(request):
     """Create a new wiki document."""
     if request.method == 'GET':
@@ -383,10 +382,8 @@ def translate(request, document_slug):
         doc = None
         disclose_description = True
 
-    user_has_doc_perm = ((not doc and user.has_perm('wiki.add_document')) or
-                         (doc and doc.allows_editing_by(user)))
-    user_has_rev_perm = ((not doc and user.has_perm('wiki.add_revision')) or
-                         (doc and doc.allows_revision_by(user)))
+    user_has_doc_perm = ((not doc) or (doc and doc.allows_editing_by(user)))
+    user_has_rev_perm = ((not doc) or (doc and doc.allows_revision_by(user)))
     if not user_has_doc_perm and not user_has_rev_perm:
         # User has no perms, bye.
         raise PermissionDenied
