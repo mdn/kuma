@@ -709,6 +709,16 @@ class TranslateTests(TestCaseBase):
         response = self.client.post(url, data)
         eq_(200, response.status_code)
 
+    def test_invalid_revision_form(self):
+        """When creating a new translation, an invalid revision form shouldn't
+        result in a new Document being created."""
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        data = _translation_data()
+        data['content'] = ''  # Content is required
+        response = self.client.post(url, data)
+        eq_(200, response.status_code)
+        eq_(0, self.d.translations.count())
+
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')

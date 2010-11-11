@@ -412,7 +412,13 @@ def translate(request, document_slug):
             doc_form = DocumentForm(post_data, instance=doc)
             doc_form.instance.locale = request.locale
             doc_form.instance.parent = parent_doc
-            if doc_form.is_valid():
+            if which_form == 'both':
+                rev_form = RevisionForm(request.POST)
+
+            # If we are submitting the whole form, we need to check that
+            # the Revision is valid before saving the Document.
+            if doc_form.is_valid() and (which_form == 'doc' or
+                                        rev_form.is_valid()):
                 doc = doc_form.save(parent_doc)
 
                 # Possibly schedule a rebuild.
