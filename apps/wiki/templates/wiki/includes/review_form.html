@@ -17,8 +17,16 @@
       <fieldset>
         <legend>{% if document.parent %}{{ _('Accept this Translation') }}{% else %}{{ _('Accept this Revision') }}{% endif %}</legend>
         <div class="wrap">
-          {# TODO: text for below #}
-          <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>
+            {% if document.parent %}
+              {% trans %}Thanks for taking the time to review these changes.
+              Please consider sending a thank you to the person who submitted them.{% endtrans %}
+            {% else %}
+              {% trans %}Clicking Accept will make this version of the article live!
+              Please pick the appropriate revision level below and consider sending
+              a thank you to the person who submitted this.{% endtrans %}
+            {% endif %}
+          </p>
           {% if not document.parent %}
             {{ form.significance|safe }}
           {% endif %}
@@ -37,8 +45,10 @@
       <fieldset>
         <legend>{% if document.parent %}{{ _('Reject this Translation') }}{% else %}{{ _('Reject this Revision') }}{% endif %}</legend>
         <div class="wrap">
-          {# TODO: text for below #}
-          <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>
+            {% trans %}Thanks for taking the time to review these changes. Please consider leaving a
+            message for the person who submitted them explaining why they were rejected.{% endtrans %}
+          </p>
           <div class="message">
             <label for="id-reject-comment">{{ _('Leave a message for the contributor: <span class="optional">(optional)</span>')|safe }}</label>
             <textarea id="id-reject-comment" name="comment">{% if form.initial %}{{ form.initial.comment }}{% else %}{{ form.comment.data }}{% endif %}</textarea>

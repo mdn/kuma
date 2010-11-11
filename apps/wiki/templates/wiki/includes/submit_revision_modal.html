@@ -4,8 +4,10 @@
     <fieldset>
       <legend>{{ _('Submit Your Changes') }}</legend>
       <div class="wrap">
-        {# TODO: text for below #}
-        <p>Lorem ipsum dolor sit amet, consectur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>
+          {% trans %}You rock! We'll send an email to let you know if your changes get approved. You
+          can follow the discussion about this article by clicking the Discussion tab.{% endtrans %}
+        </p>
         <div class="comment">
           <label for="id_comment">{{ _('Briefly describe your changes:') }}</label>
           {{ revision_form.comment|safe }}
