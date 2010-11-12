@@ -181,6 +181,30 @@ class SearchTest(SphinxTestCase):
         response = self.client.get(reverse('search'), qs)
         eq_(2, json.loads(response.content)['total'])
 
+    def test_translations_inherit_fx_values(self):
+        wc = WikiClient()
+        filters = [{'filter': 'locale', 'value': (crc32('fr'),)},
+                   {'filter': 'fx', 'value': (1,)}]
+        results = wc.query('', filters)
+        eq_(1, len(results))
+        eq_(4, results[0]['id'])
+
+        filters[1]['value'] = (4,)
+        results = wc.query('', filters)
+        eq_(0, len(results))
+
+    def test_translations_inherit_os_values(self):
+        wc = WikiClient()
+        filters = [{'filter': 'locale', 'value': (crc32('fr'),)},
+                   {'filter': 'os', 'value': (1,)}]
+        results = wc.query('', filters)
+        eq_(1, len(results))
+        eq_(4, results[0]['id'])
+
+        filters[1]['value'] = (4,)
+        results = wc.query('', filters)
+        eq_(0, len(results))
+
     def test_range_filter(self):
         """Test filtering on a range."""
         wc = WikiClient()
