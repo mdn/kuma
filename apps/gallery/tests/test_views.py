@@ -172,6 +172,22 @@ class UploadImageTestCase(TestCase):
                                     'max': settings.MAX_FILENAME_LENGTH},
             json_r['errors']['file'][0])
 
+    def test_upload_draft(self):
+        """Uploading draft works, sets locale too."""
+        u = User.objects.get(username='pcraciunoiu')
+        image(creator=u, title=get_draft_title(u))
+
+        r = post(self.client, 'gallery.upload',
+                 {'locale': 'de', 'title': 'Hasta la vista',
+                  'description': 'Auf wiedersehen!'},
+                 args=['image'])
+
+        eq_(200, r.status_code)
+        img = Image.objects.all()[0]
+        eq_('de', img.locale)
+        eq_('Hasta la vista', img.title)
+        eq_('Auf wiedersehen!', img.description)
+
 
 class ViewHelpersTestCase(TestCase):
     fixtures = ['users.json']

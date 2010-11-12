@@ -13,6 +13,8 @@
     <div class="to-delete">
       <label>{{ _('Title') }}</label>
       <div>{{ media.title }}</div>
+      <label>{{ _('Locale') }}</label>
+      <div>{{ settings.LOCALES[media.locale].native }}</div>
       <label>{{ _('Description') }}</label>
       <div>{{ media.description|wiki_to_html }}</div>
       <label>{{ _('Creator') }}</label>

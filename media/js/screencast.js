@@ -53,12 +53,14 @@
             swfobject.embedSWF(
                 flash_file, unique_id, width, height, FLASH_VERSION,
                 MEDIA_URL + '/media/swf/expressInstall.swf', flashvars, params);
-        } else {
+        } else if (flash_file) {
             flashvars.flv = flash_file;
             swfobject.embedSWF(
                 MEDIA_URL + 'swf/screencast.swf', unique_id, width, height,
                 FLASH_VERSION, MEDIA_URL + '/media/swf/expressInstall.swf',
                 flashvars, params);
+        } else {
+            $video.hide();
         }
     };
 
@@ -67,15 +69,6 @@
      * for the SWF player
      */
     function initFallbackSupport() {
-        $('div.video a').click(function showhideVideo() {
-            $video_wrap = $(this).parents('div.video').find('.video-wrap');
-            if ($video_wrap.is(':visible')) {
-                $video_wrap = $video_wrap.slideUp();
-            } else {
-                $video_wrap = $video_wrap.slideDown();
-            }
-            return false;
-        });
         $('div.video video').each(function initializeVideo(i) {
             initVideoFallback($(this));
         });
@@ -84,4 +77,7 @@
     $(document).ready(function () {
         initFallbackSupport();
     });
+
+    // add this to window.k
+    k.initVideo = initFallbackSupport;
 }());

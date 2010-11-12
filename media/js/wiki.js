@@ -428,6 +428,7 @@
                         .find('select.enable-if-js').removeAttr('disabled');
                     initForTags();
                     initShowforSelectors();
+                    k.initVideo();
                     $btn.removeAttr('disabled');
                 },
                 error: function() {

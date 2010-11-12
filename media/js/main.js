@@ -1,3 +1,6 @@
+// Use a global k to share data accross JS files
+k = {};
+
 (function () {
     $(document).ready(function() {
         /* Focus form field when clicking on error message. */

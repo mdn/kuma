@@ -57,6 +57,12 @@ def gallery(request, media_type='image'):
 @login_required
 @require_POST
 def upload(request, media_type='image'):
+    """Finalizes an uploaded draft.
+
+    We could probably use this same form to handle no-JS fallback, if
+    we ever need to support that.
+
+    """
     draft = _get_draft_info(request.user)
     if media_type == 'image' and draft['image']:
         # We're publishing an image draft!
@@ -219,6 +225,8 @@ def media(request, media_id, media_type='image'):
 @xframe_sameorigin
 def upload_async(request, media_type='image'):
     """Upload images or videos from request.FILES."""
+    # TODO(paul): validate the Submit File on upload modal async
+    #             even better, use JS validation for title length.
     try:
         if media_type == 'image':
             file_info = upload_image(request)
@@ -276,6 +284,9 @@ def _init_media_form(form_cls, request=None, obj=None,
 
     """
     post_data = None
+    initial = None
+    if request:
+        initial = {'locale': request.locale}
     file_data = None
     if request.method == 'POST':
         file_data = request.FILES
@@ -291,7 +302,7 @@ def _init_media_form(form_cls, request=None, obj=None,
     if obj and obj.title.startswith(DRAFT_TITLE_PREFIX):
         obj.title = ''
 
-    return form_cls(post_data, file_data, instance=obj)
+    return form_cls(post_data, file_data, instance=obj, initial=initial)
 
 
 def _init_upload_forms(request, draft):

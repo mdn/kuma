@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from nose import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -51,6 +52,11 @@ class GalleryPageCase(TestCase):
         imgs = doc('#media-list li img')
         eq_(1, len(imgs))
 
+    def test_gallery_upload_modal(self):
+        # TODO(paul) this will probably be broken up into separate tests:
+        # * Upload modal has the URL's locale selected
+        # * POSTing invalid data shows error messages and pre-fills that data
+        raise SkipTest
 
 class GalleryAsyncCase(TestCase):
     fixtures = ['users.json']

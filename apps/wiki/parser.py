@@ -23,15 +23,11 @@ BLOCK_LEVEL_ELEMENTS = ['table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5',
 
 TEMPLATE_ARG_REGEX = re.compile('{{{([^{]+?)}}}')
 SOURCE_TEMPLATE = '<source src="%(src)s" type="video/%(type)s">'
-VIDEO_TEXT = _lazy('Watch a video of these instructions.')
 VIDEO_TEMPLATE = ('<div class="video">'
-                    '<a href="#">%(text)s</a>'
-                    '<div class="video-wrap">'
-                      '<video%(fallback)s height="%(height)s"'
-                       'width="%(width)s" controls="">'
-                         '%(sources)s'
-                      '</video>'
-                    '</div>'
+                    '<video%(fallback)s height="%(height)s"'
+                      'width="%(width)s" controls="">'
+                      '%(sources)s'
+                    '</video>'
                   '</div>')
 
 
@@ -393,6 +389,5 @@ def generate_video(v):
         data_fallback = ' data-fallback="' + v.flv.url + '"'
     return VIDEO_TEMPLATE % {'fallback': data_fallback,
                              'sources': ''.join(sources),
-                             'text': unicode(VIDEO_TEXT),
                              'height': settings.WIKI_VIDEO_HEIGHT,
                              'width': settings.WIKI_VIDEO_WIDTH}
