@@ -481,8 +481,7 @@ def watch_locale(request):
     """Start watching a locale for revisions ready for review."""
     create_watch(Document, None, request.user.email, 'ready_for_review',
                  request.locale)
-    # TODO: Redirect to l10n dashboard when there is a URL for it.
-    return HttpResponseRedirect(reverse('wiki.all_documents'))
+    return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
 @require_POST
@@ -491,8 +490,7 @@ def unwatch_locale(request):
     """Stop watching a locale for revisions ready for review."""
     destroy_watch(Document, None, request.user.email, 'ready_for_review',
                   request.locale)
-    # TODO: Redirect to l10n dashboard when there is a URL for it.
-    return HttpResponseRedirect(reverse('wiki.all_documents'))
+    return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
 @require_GET

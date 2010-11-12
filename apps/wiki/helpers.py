@@ -1,10 +1,12 @@
 from difflib import HtmlDiff
 
-import jinja2
 from jingo import register
+import jinja2
 
+from notifications import check_watch
 from wiki import DIFF_WRAP_COLUMN
 from wiki import parser
+from wiki.models import Document
 
 
 @register.function
@@ -19,3 +21,9 @@ def diff_table(content_from, content_to):
 @register.function
 def generate_video(v):
     return jinja2.Markup(parser.generate_video(v))
+
+
+@register.function
+def is_watching_locale(user, locale):
+    """Check if the user is watching documents in the locale."""
+    return check_watch(Document, None, user.email, 'ready_for_review', locale)

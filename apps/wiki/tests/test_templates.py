@@ -13,6 +13,7 @@ from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
 from wiki.cron import calculate_related_documents
+from wiki.helpers import is_watching_locale
 from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
                          CATEGORIES)
 import wiki.tasks
@@ -938,11 +939,13 @@ class LocaleWatchTests(TestCaseBase):
         eq_(200, response.status_code)
         assert check_watch(Document, None, user.email,
                            'ready_for_review', 'en-US')
+        assert is_watching_locale(user, 'en-US')
         # Unsubscribe
         response = post(self.client, 'wiki.locale_unwatch')
         eq_(200, response.status_code)
         assert not check_watch(Document, None, user.email,
                                'ready_for_review', 'en-US')
+        assert not is_watching_locale(user, 'en-US')
 
 
 class ArticlePreviewTests(TestCaseBase):
