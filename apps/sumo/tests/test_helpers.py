@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.forms.fields import CharField
 
 from babel.dates import format_date, format_time, format_datetime
 import jingo
@@ -14,7 +15,7 @@ import test_utils
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
                           DateTimeFormatError, collapse_linebreaks, url,
-                          json, timesince)
+                          json, timesince, label_with_help)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -72,6 +73,12 @@ class TestHelpers(TestCase):
                                 '\n\n\n        \n          \n            \n   '
                                 '           Name'),
                                 'Application Basics\r\n              Name')
+
+    def test_label_with_help(self):
+        field = CharField(label='Foo', help_text='Foo bar')
+        field.auto_id = 'foo'
+        expect = '<label for="foo" title="Foo bar">Foo</label>'
+        eq_(expect, label_with_help(field))
 
 
 class TestDateTimeFormat(TestCase):

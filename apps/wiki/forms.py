@@ -13,8 +13,6 @@ from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      CATEGORIES)
 
 
-KEYWORDS_HELP_TEXT = _lazy(u'Keywords are used to improve searches.')
-
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
 TITLE_SHORT = _lazy(u'The title is too short (%(show_value)s characters). '
                     u'It must be at least %(limit_value)s characters.')
@@ -53,7 +51,7 @@ class DocumentForm(forms.ModelForm):
 
         # Set up tags field, which is instantiated deep within taggit:
         tags_field = self.fields['tags']
-        tags_field.label = _('Topics')
+        tags_field.label = _('Topics:')
         tags_field.help_text = (
           _('Popular articles in each topic are displayed on the front page.'))
         tags_field.widget.can_create_tags = can_create_tags
@@ -61,13 +59,15 @@ class DocumentForm(forms.ModelForm):
 
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(),
-                              label=_('Title of article:'),
+                              label=_('Title:'),
+                              help_text=_('Title of article.'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=5, max_length=255,
                              widget=forms.TextInput(),
-                             label=_('Article URL:'),
+                             label=_('Slug:'),
+                             help_text=_('Article URL.'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
@@ -94,7 +94,8 @@ class DocumentForm(forms.ModelForm):
                                 required=False)
 
     category = forms.ChoiceField(choices=CATEGORIES,
-                                 label=_('Type of article:'))
+                                 label=_('Category:'),
+                                 help_text=_('Type of article.'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -132,12 +133,13 @@ class DocumentForm(forms.ModelForm):
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
     keywords = StrippedCharField(required=False,
-                                 label=_('Affects search results'),
-                                 help_text=KEYWORDS_HELP_TEXT)
+                                 label=_('Keywords:'),
+                                 help_text=_('Affects search results.'))
 
     summary = StrippedCharField(
                 min_length=5, max_length=1000, widget=forms.Textarea(),
-                label=_lazy('Only displayed on search results page'),
+                label=_('Search result summary:'),
+                help_text=_('Only displayed on search results page.'),
                 error_messages={'required': SUMMARY_REQUIRED,
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
@@ -151,6 +153,7 @@ class RevisionForm(forms.ModelForm):
                      c in GROUPED_FIREFOX_VERSIONS]}
     content = StrippedCharField(
                 min_length=5, max_length=100000,
+                label=_('Content:'),
                 widget=forms.Textarea(attrs={'data-showfor':
                                              json.dumps(showfor_data)}),
                 error_messages={'required': CONTENT_REQUIRED,

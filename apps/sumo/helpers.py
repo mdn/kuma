@@ -299,3 +299,11 @@ def timesince(d, now=None):
         if count != 0:
             break
     return name(count) % {'number': count}
+
+
+@register.filter
+def label_with_help(f):
+    """Print the label tag for a form field, including the help_text
+    value as a title attribute."""
+    label = u'<label for="%s" title="%s">%s</label>'
+    return jinja2.Markup(label % (f.auto_id, f.help_text, f.label))

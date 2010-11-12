@@ -22,7 +22,7 @@
         {{ csrf() }}
         <ul>
           {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' %}
-            <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
+            <li>{{ field|label_with_help }}{{ field|safe }}</li>
           {% endfor %}
         </ul>
         <div class="relevant-to">
@@ -34,7 +34,7 @@
         </div>
         <ul>
           {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
-            <li>{{ field.label_tag()|safe }}{{ field|safe }}</li>
+            <li>{{ field|label_with_help }}{{ field|safe }}</li>
           {% endfor %}
           <li>
             {{ revision_form.content.label_tag()|safe }}

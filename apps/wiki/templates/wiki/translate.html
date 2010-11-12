@@ -59,31 +59,31 @@
           <ul class="description">
             <li>
               <div class="approved">
-                <h3>{{ _('Title of article:') }}</h3>
+                <h3>{{ _('Title:') }}</h3>
                 <div class="val">{{ parent.title }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Title in {locale}:')|f(locale=language) }}</h3>
+                <h3><label for="{{ document_form.title.auto_id }}" title="{{ document_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></h3>
                 {{ document_form.title|safe }}
               </div>
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Article URL:') }}</h3>
+                <h3>{{ _('Slug:') }}</h3>
                 <div class="val">{{ parent.slug }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Article URL in {locale}:')|f(locale=language) }}</h3>
+                <h3><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></h3>
                 {{ document_form.slug|safe }}
               </div>
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Type of article:') }}</h3>
+                <h3>{{ _('Category:') }}</h3>
                 <div class="val">{{ parent.get_category_display() }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Type of article in {locale}:')|f(locale=language) }}</h3>
+                <h3><label for="{{ document_form.category.auto_id }}" title="{{ document_form.category.help_text }}">{{ _('Category in {locale}:')|f(locale=language) }}</label></h3>
                 {{ document_form.category|safe }}
               </div>
             </li>
@@ -98,7 +98,7 @@
                 </div>
               </div>
               <div class="localized">
-                <h3>{{ _('Topics in {locale}:')|f(locale=language) }}</h3>
+                <h3><label for="{{ document_form.tags.auto_id }}" title="{{ document_form.tags.help_text }}">{{ _('Topics in {locale}:')|f(locale=language) }}</label></h3>
                 {{ document_form.tags|safe }}
               </div>
             </li>
@@ -125,21 +125,21 @@
           <ul class="description">
             <li>
               <div class="approved">
-                <h3>{{ _('Affects search results:') }}</h3>
+                <h3>{{ _('Keywords:') }}</h3>
                 <div class="val">{{ parent.current_revision.keywords }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Affects search results in {locale}:')|f(locale=language) }}</h3>
+                <h3><label for="{{ revision_form.keywords.auto_id }}" title="{{ revision_form.keywords.help_text }}">{{ _('Keywords in {locale}:')|f(locale=language) }}</label></h3>
                 {{ revision_form.keywords|safe }}
               </div>
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Only displayed on search results page:') }}</h3>
+                <h3>{{ _('Search result summary:') }}</h3>
                 <div class="val">{{ parent.current_revision.summary }}</div>
               </div>
               <div class="localized">
-                <h3>{{ _('Only displayed on search results page in {locale}:')|f(locale=language) }}</h3>
+                <h3><label for="{{ revision_form.summary.auto_id }}" title="{{ revision_form.summary.help_text }}">{{ _('Search result summary in {locale}:')|f(locale=language) }}</label></h3>
                 {{ revision_form.summary|safe }}
               </div>
             </li>
