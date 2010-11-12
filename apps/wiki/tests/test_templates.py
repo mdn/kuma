@@ -619,9 +619,9 @@ class ReviewRevisionTests(TestCaseBase):
         response = self.client.get(url, follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(u'Revision %s Revision %s Current Public Translation Submitted'
-            u' Translation Approved English Version: Submitted Espa\xf1ol '
-            u'Translation' % (rev_es1.based_on.id, rev.id),
+        eq_(u'Revision %s: Revision %s: Current public translation: Submitted'
+            u' translation: Approved English version: Submitted Espa\xf1ol '
+            u'translation:' % (rev_es1.based_on.id, rev.id),
             doc('div.revision-diff h3').text())
 
         # And finally, approve the translation

@@ -1250,8 +1250,8 @@ body.review #content-fields textarea {
     height: 250px;
 }
 
-body.review #content-fields div.approved textarea {
-    margin: 0;
+body.review #content-fields textarea {
+    margin: 5px 0 0;
 }
 
 .js form.pop-in {
@@ -1301,7 +1301,7 @@ form.pop-in legend {
 }
 
 /* Revision diffs */
-div.revision-diff header div {
+div.revision-diff div {
     display: inline-block;
     width: 364px;
 }
@@ -1311,11 +1311,16 @@ div.revision-diff h3 {
     margin: 20px 0 0;
 }
 
+div.revision-diff h4 {
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+
 table.diff {
     border: solid 1px #999;
     clear: both;
     font-family:Courier;
-    margin: 15px 0;
+    margin: 5px 0 15px;
     width: 100%;
 }
 

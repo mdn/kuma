@@ -22,11 +22,19 @@
         {{ _('This revision was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}
       </p>
     {% elif document.current_revision %}
-      {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current Public Revision'), revision_to_header = _('Submitted Revision') %}
+      {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current public revision:'), revision_to_header = _('Submitted revision:') %}
         {% include 'wiki/includes/revision_diff.html' %}
       {% endwith %}
     {% else %}
       <p>{{ _('This document does not have a current revision.') }}</p>
+      <h3>{{ _('Keywords:') }}</h3>
+      <div id="revision-keywords">
+        {{ revision.keywords }}
+      </div>
+      <h3>{{ _('Search results summary:') }}</h3>
+      <div id="revision-summary">
+        {{ revision.summary }}
+      </div>
       <h3>{{ _('Revision source:') }}</h3>
       <div id="revision-content">
         <pre>{{ revision.content }}</pre>
