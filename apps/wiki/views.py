@@ -422,7 +422,7 @@ def translate(request, document_slug):
                 _maybe_schedule_rebuild(doc_form)
 
                 if which_form == 'doc':
-                    url = urlparams(reverse('wiki.translate',
+                    url = urlparams(reverse('wiki.edit_document',
                                             args=[doc.slug]),
                                     opendescription=1)
                     return HttpResponseRedirect(url)

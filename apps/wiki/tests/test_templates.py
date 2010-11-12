@@ -822,6 +822,8 @@ class TranslateTests(TestCaseBase):
         data['form'] = 'doc'
         response = self.client.post(url, data)
         eq_(302, response.status_code)
+        eq_('http://testserver/es/kb/un-test-articulo/edit?opendescription=1',
+            response['location'])
         revisions = rev_es.document.revisions.all()
         eq_(1, revisions.count())  # No new revisions
         d = Document.objects.get(id=rev_es.document.id)
