@@ -60,7 +60,7 @@ div.ans-attachments div.attachment {
 }
 
 #featured {
-    /* nurse .gif for IE6 */ 
+    /* nurse .gif for IE6 */
     _background: url(../img/nurse.gif) no-repeat scroll right top transparent;
 }
 
@@ -89,4 +89,9 @@ div.ans-attachments div.attachment {
 #nav-main {
     position: relative;
     z-index: 2;
+}
+
+/* Article page - more help .gif fallback */
+#more-help {
+    _background: transparent url(../img/wiki/morehelp.nurse.gif) no-repeat left top;
 }

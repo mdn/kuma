@@ -45,26 +45,28 @@
     </div>
   {% endif %}
   <div id="more-help">
-    <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
-    <ul>
-      {% if related %}
+    <div class="wrap">
+      <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
+      <ul>
+        {% if related %}
+          <li>
+            {{ _("Here's a list of related articles that might help:") }}
+            <ul>
+              {% for art in related %}
+                <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
         <li>
-          {{ _("Here's a list of related articles that might help:") }}
-          <ul>
-            {% for art in related %}
-              <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
-            {% endfor %}
-          </ul>
+          {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
         </li>
-      {% endif %}
-      <li>
-        {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
-      </li>
-      <li>
-        <a href="{{ url('questions.new_question') }}">{{ _('Ask our awesome support community for help') }}</a>
-      </li>
-    </ul>
-    {{ search_box(settings, id=False, prefix='Or try searching:') }}
+        <li>
+          <a href="{{ url('questions.new_question') }}">{{ _('Ask our awesome support community for help') }}</a>
+        </li>
+      </ul>
+      {{ search_box(settings, id=False, prefix='Or try searching:') }}
+    </div>
   </div>
 {% endblock %}
 

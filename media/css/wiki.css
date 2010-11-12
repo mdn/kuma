@@ -468,6 +468,12 @@ article #toc ul li {
 }
 
 #more-help {
+    background: transparent url(../img/wiki/morehelp.nurse.png) no-repeat left top;
+    min-height: 220px;
+    padding: 25px 0 0 175px;
+}
+
+#more-help div.wrap {
     background: #deeff8;
     background: -moz-linear-gradient(top, #deeff8, #ebf8ff);
     background: -webkit-gradient(linear, left top, left bottom, from(#deeff8), to(#ebf8ff));
@@ -478,7 +484,6 @@ article #toc ul li {
     min-height: 110px;
     padding: 25px 20px;
     position: relative;
-    width: 597px;
 }
 
 #more-help h2 {
@@ -512,7 +517,7 @@ article #toc ul li {
     left: 325px;
     position: absolute;
     top: 65px;
-    width: 280px;
+    width: 235px;
 }
 
 #more-help div.support-search form {
@@ -520,7 +525,7 @@ article #toc ul li {
 }
 
 #more-help div.support-search span.wrap {
-    width: 190px;
+    width: 145px;
 }
 
 #support-for {
