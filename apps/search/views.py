@@ -132,7 +132,7 @@ def search(request):
         fx = NoValidateMultipleChoiceField(
             widget=forms.CheckboxSelectMultiple,
             label=_('Firefox version'),
-            choices=[(v.id, v.name) for v in FIREFOX_VERSIONS],
+            choices=[(v.id, v.long) for v in FIREFOX_VERSIONS],
             initial=[v.id for v in FIREFOX_VERSIONS])
 
         os = NoValidateMultipleChoiceField(

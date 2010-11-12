@@ -49,16 +49,20 @@ CATEGORIES = (
 # max_version, which should be read as "From the next smaller max_version up to
 # but not including version x.y".
 VersionMetadata = namedtuple('VersionMetadata',
-                             'id, name, slug, max_version, show_in_ui')
+                             'id, name, long, slug, max_version, show_in_ui')
 GROUPED_FIREFOX_VERSIONS = (
     ((_lazy('Desktop:'), 'desktop'), (
         # The first option is the default for {for} display. This should be the
         # newest version.
-        VersionMetadata(2, _lazy('Firefox 3.5-3.6'), 'fx35', 3.9999, True),
-        VersionMetadata(1, _lazy('Firefox 4'), 'fx4', 4.9999, True),
-        VersionMetadata(3, _lazy('Firefox 3.0'), 'fx3', 3.4999, False))),
+        VersionMetadata(2, _lazy('Firefox 3.5-3.6'), _lazy('Firefox 3.5-3.6'),
+                        'fx35', 3.9999, True),
+        VersionMetadata(1, _lazy('Firefox 4'), _lazy('Firefox 4'), 'fx4',
+                        4.9999, True),
+        VersionMetadata(3, _lazy('Firefox 3.0'), _lazy('Firefox 3.0'), 'fx3',
+                        3.4999, False))),
     ((_lazy('Mobile:'), 'mobile'), (
-        VersionMetadata(4, _lazy('Firefox 4'), 'm4', 4.9999, True),)))
+        VersionMetadata(4, _lazy('Firefox 4'), _lazy('Firefox 4 for Mobile'),
+                        'm4', 4.9999, True),)))
 
 # Flattened:  # TODO: perhaps use optgroups everywhere instead
 FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
