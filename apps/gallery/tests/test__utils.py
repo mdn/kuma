@@ -1,12 +1,44 @@
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.core.files import File
 
 from gallery.models import Image, Video
-from gallery.utils import create_image, create_video
+from gallery.tests import image, video
+from gallery.utils import create_image, create_video, check_media_permissions
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from upload.tests import check_file_info
+
+
+class CheckPermissionsTestCase(TestCase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(CheckPermissionsTestCase, self).setUp()
+        self.user = User.objects.get(username='tagger')
+
+    def tearDown(self):
+        Image.objects.all().delete()
+        Video.objects.all().delete()
+        super(CheckPermissionsTestCase, self).tearDown()
+
+    def test_check_own_object(self):
+        """tagger can edit a video s/he doesn't own."""
+        vid = video(creator=self.user)
+        check_media_permissions(vid, self.user, 'change')
+
+    def test_check_not_own_object(self):
+        """tagger cannot delete an image s/he doesn't own."""
+        img = image()
+        fn = lambda: check_media_permissions(img, self.user, 'delete')
+        self.assertRaises(PermissionDenied, fn)
+
+    def test_check_has_perm(self):
+        """Admin has perm to change video."""
+        u = User.objects.get(username='admin')
+        vid = video(creator=u)
+        check_media_permissions(vid, u, 'change')
 
 
 class CreateImageTestCase(TestCase):

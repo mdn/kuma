@@ -387,6 +387,7 @@ form div.form-widget.submit {
 }
 
 /* Delete Thread/Post Confirmation */
+/* TODO: refactor this to share with questions.css */
 div.thread-to-delete label,
 div.post-to-delete label {
     display:block;

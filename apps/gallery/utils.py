@@ -1,9 +1,11 @@
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.core.files import File
 
+from gallery import DRAFT_TITLE_PREFIX
+from gallery.forms import ImageUploadFormAsync, VideoUploadFormAsync
+from gallery.models import Image, Video
 from sumo.urlresolvers import reverse
-from .forms import ImageUploadFormAsync, VideoUploadFormAsync
-from .models import Image, Video
 from upload.utils import upload_media, check_file_size
 from upload.tasks import generate_image_thumbnail, _scale_dimensions
 
@@ -14,7 +16,7 @@ def create_image(files, user):
     check_file_size(up_file, settings.IMAGE_MAX_FILESIZE)
 
     # Async uploads fallback to these defaults.
-    title = u'draft %s' % user.pk
+    title = get_draft_title(user)
     description = u'Autosaved draft.'
     # Use default locale to make sure a user can only have one draft
     locale = settings.WIKI_DEFAULT_LANGUAGE
@@ -42,7 +44,7 @@ def upload_image(request):
 def create_video(files, user):
     """Given an uploaded file, a user, and other data, it creates a Video"""
     # Async uploads fallback to these defaults.
-    title = u'draft %s' % user.pk
+    title = get_draft_title(user)
     description = u'Autosaved draft.'
     # Use default locale to make sure a user can only have one draft
     locale = settings.WIKI_DEFAULT_LANGUAGE
@@ -69,3 +71,22 @@ def create_video(files, user):
 def upload_video(request):
     """Uploads a video from the request; accepts multiple submitted formats"""
     return upload_media(request, VideoUploadFormAsync, create_video)
+
+
+def check_media_permissions(media, user, perm_type):
+    """Checks the permissions for user on media (image or video).
+
+    Pass in: * media object (Image or Video)
+             * (logged in) user
+             * perm_type = 'delete', 'change', 'add'
+    Raises PermissionDenied if not allowed. Owner is always allowed.
+
+    """
+    media_type = media.__class__.__name__.lower()
+    perm_name = 'gallery.%s_%s' % (perm_type, media_type)
+    if user != media.creator and not user.has_perm(perm_name):
+        raise PermissionDenied
+
+
+def get_draft_title(user):
+    return DRAFT_TITLE_PREFIX + str(user.pk)

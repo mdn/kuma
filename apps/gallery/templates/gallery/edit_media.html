@@ -1,0 +1,30 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "gallery/media.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{# L10n: {t} is the title of the media, {type} is image or video. #}
+{% set title = _('Edit {type} | {t} | Media Gallery')|f(type=media_type, t=media.title) %}
+{% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
+                 (url('gallery.media', media_type, media.id), media.title),
+                 (None, _('Edit {type}')|f(type=media_type))] %}
+
+{% block content %}
+  <article id="media-object-edit" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1>{{ media.title }}</h1>
+    <form action="{{ url('gallery.edit_media', media_type, media.id) }}" method="post">
+      {{ csrf() }}
+      {{ errorlist(form) }}
+      <div class="form-item description">
+        {{ form.description.label_tag()|safe }}
+        {{ form.description|safe }}
+      </div>
+      <div class="form-actions form-item">
+        <a href="{{ url('gallery.media', media_type, media.id) }}">{{ _('Cancel') }}</a>
+        <input type="submit" class="btn g-btn" value="{{ _('Save {type}')|f(type=media_type) }}" />
+      </div>
+    </form>
+  </article>
+{% endblock %}

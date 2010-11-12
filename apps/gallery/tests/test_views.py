@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from nose import SkipTest
 from nose.tools import eq_
@@ -9,6 +10,7 @@ from pyquery import PyQuery as pq
 from gallery import forms
 from gallery.models import Image, Video
 from gallery.tests import image, video
+from gallery.utils import get_draft_title
 from gallery.views import _get_media_info
 from sumo.tests import post, LocalizingClient, TestCase
 from sumo.urlresolvers import reverse
@@ -19,6 +21,76 @@ TEST_VID = {'webm': 'apps/gallery/tests/media/test.webm',
             'ogv': 'apps/gallery/tests/media/test.ogv',
             'flv': 'apps/gallery/tests/media/test.flv'}
 VIDEO_PATH = settings.MEDIA_URL + settings.GALLERY_VIDEO_PATH
+
+
+class DeleteEditImageTestCase(TestCase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(DeleteEditImageTestCase, self).setUp()
+        self.client = LocalizingClient()
+        self.client.login(username='jsocol', password='testpass')
+
+    def tearDown(self):
+        Image.objects.all().delete()
+        super(DeleteEditImageTestCase, self).tearDown()
+
+    def test_delete_image(self):
+        """Deleting an uploaded image works."""
+        # Upload the image first
+        im = image()
+        r = post(self.client, 'gallery.delete_media', args=['image', im.id])
+
+        eq_(200, r.status_code)
+        eq_(0, Image.objects.count())
+
+    def test_delete_image_without_permissions(self):
+        """Can't delete an image I didn't create."""
+        self.client.login(username='tagger', password='testpass')
+        img = image()
+        r = post(self.client, 'gallery.delete_media', args=['image', img.id])
+
+        eq_(403, r.status_code)
+        eq_(1, Image.objects.count())
+
+    def test_delete_own_image(self):
+        """Can delete an image I created."""
+        self.client.login(username='tagger', password='testpass')
+        u = User.objects.get(username='tagger')
+        img = image(creator=u)
+        r = post(self.client, 'gallery.delete_media', args=['image', img.id])
+
+        eq_(200, r.status_code)
+        eq_(0, Image.objects.count())
+
+    def test_edit_own_image(self):
+        """Can edit an image I created."""
+        u = User.objects.get(username='jsocol')
+        img = image(creator=u)
+        r = post(self.client, 'gallery.edit_media', {'description': 'arrr'},
+                 args=['image', img.id])
+
+        eq_(200, r.status_code)
+        eq_('arrr', Image.uncached.get().description)
+
+    def test_edit_image_without_permissions(self):
+        """Can't edit an image I didn't create."""
+        u = User.objects.get(username='pcraciunoiu')
+        img = image(creator=u)
+        r = post(self.client, 'gallery.edit_media', {'description': 'arrr'},
+                 args=['image', img.id])
+
+        eq_(403, r.status_code)
+
+    def test_edit_image_with_permissions(self):
+        """Editing image sets the updated_by field."""
+        self.client.login(username='admin', password='testpass')
+        img = image()
+        r = post(self.client, 'gallery.edit_media', {'description': 'arrr'},
+                 args=['image', img.id])
+
+        eq_(200, r.status_code)
+        eq_('admin', Image.objects.get().updated_by.username)
 
 
 class UploadImageTestCase(TestCase):
@@ -64,19 +136,9 @@ class UploadImageTestCase(TestCase):
         eq_('pcraciunoiu', img.creator.username)
         eq_(150, img.file.width)
         eq_(200, img.file.height)
-        eq_('draft %s' % img.creator.pk, img.title)
+        eq_(get_draft_title(img.creator), img.title)
         eq_('Autosaved draft.', img.description)
         eq_('en-US', img.locale)
-
-    def test_delete_image(self):
-        """Deleting an uploaded image works."""
-        # Upload the image first
-        self.test_upload_image()
-        im = Image.objects.all()[0]
-        r = post(self.client, 'gallery.delete_media', args=['image', im.id])
-
-        eq_(200, r.status_code)
-        eq_(0, Image.objects.count())
 
     def test_invalid_image(self):
         """Make sure invalid files are not accepted as images."""
@@ -167,7 +229,7 @@ class UploadVideoTestCase(TestCase):
         eq_(32, file['height'])
         assert file['url'].endswith(vid.get_absolute_url())
         eq_('pcraciunoiu', vid.creator.username)
-        eq_('draft %s' % vid.creator.pk, vid.title)
+        eq_(get_draft_title(vid.creator), vid.title)
         eq_('Autosaved draft.', vid.description)
         eq_('en-US', vid.locale)
         with open(TEST_VID['ogv']) as f:

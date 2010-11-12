@@ -13,6 +13,8 @@ urlpatterns = patterns('gallery.views',
         name='gallery.upload_async'),
     url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)/delete$', 'delete_media',
         name='gallery.delete_media'),
+    url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)/edit$', 'edit_media',
+        name='gallery.edit_media'),
     url(r'^/(?P<media_type>\w+)/(?P<media_id>\d+)$', 'media',
         name='gallery.media'),
 )

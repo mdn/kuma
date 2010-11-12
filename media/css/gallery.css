@@ -2,6 +2,51 @@
  * Media Gallery CSS
  */
 
+/* Delete form */
+div.to-delete {
+    padding: 1em 0;
+}
+
+div.to-delete ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+div.to-delete ul li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+div.to-delete ul li:before {
+    content: '\00B7';
+    margin: 0 .25em;
+}
+
+div.to-delete ul li:first-child:before {
+    content: '';
+    margin: 0;
+}
+
+#media-object-delete label.clear {
+    padding-top: .5em;
+}
+
+/* Edit form */
+#media-object-edit div.form-actions a,
+#media-object-delete div.form-actions a {
+    margin-right: .5em;
+}
+
+#media-object-edit div.form-item {
+    padding: 10px;
+}
+
+#media-object-edit h1 {
+    padding-bottom: 20px;
+}
+
 /* media gallery grid view */
 #gallery-list {
     color: #565656;

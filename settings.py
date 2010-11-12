@@ -292,6 +292,7 @@ MINIFY_BUNDLES = {
             'css/forums.css',
         ),
         'questions': (
+            'css/to-delete.css',
             'css/questions.css',
             'css/tags.css',
             'css/jqueryui/jquery.ui.core.css',
@@ -316,6 +317,7 @@ MINIFY_BUNDLES = {
             'css/home.css',
         ),
         'gallery': (
+            'css/to-delete.css',
             'css/gallery.css',
         ),
         'ie': (

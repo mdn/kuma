@@ -4,12 +4,12 @@ from django.core.exceptions import ValidationError
 
 from tower import ugettext_lazy as _lazy
 
+from gallery import DRAFT_TITLE_PREFIX
 from gallery.models import Image, Video
 from sumo.form_fields import StrippedCharField
 from sumo_locales import LOCALES
 
 # Error messages
-# XXX: use these MSG strings or remove them
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a title.')
 MSG_TITLE_SHORT = _lazy(
     'The title is too short (%(show_value)s characters). It must be at '
@@ -37,6 +37,7 @@ MSG_FLV_LONG = _lazy(
 MSG_VID_REQUIRED = _lazy('The video has no files associated with it. You must '
                          'upload one of the following extensions: webm, ogv, '
                          'flv.')
+MSG_TITLE_DRAFT = _lazy('Please select a different title.')
 
 
 class ImageUploadFormAsync(forms.Form):
@@ -65,19 +66,15 @@ class ImageForm(forms.ModelForm):
         error_messages={'required': MSG_DESCRIPTION_REQUIRED,
                         'max_length': MSG_DESCRIPTION_LONG})
 
+    def clean(self):
+        return clean_draft(self)
+
+    def save(self, update_user=None, **kwargs):
+        return save_form(self, update_user, **kwargs)
+
     class Meta:
         model = Image
         fields = ('file', 'locale', 'title', 'description')
-
-
-def clean_video(video_form):
-    """Ensure one of the supported file formats has been uploaded"""
-    c = video_form.cleaned_data
-    if not ('webm' in c and c['webm'] or
-            'ogv' in c and c['ogv'] or
-            'flv' in c and c['flv']):
-        raise ValidationError(MSG_VID_REQUIRED)
-    return video_form.cleaned_data
 
 
 class VideoUploadFormAsync(forms.Form):
@@ -124,6 +121,37 @@ class VideoForm(forms.ModelForm):
     def clean(self):
         return clean_video(self)
 
+    def save(self, update_user=None, **kwargs):
+        return save_form(self, update_user, **kwargs)
+
     class Meta:
         model = Video
         fields = ('webm', 'ogv', 'flv', 'locale', 'title', 'description')
+
+
+def clean_video(video_form):
+    """Ensure one of the supported file formats has been uploaded"""
+    c = video_form.cleaned_data
+    if not ('webm' in c and c['webm'] or
+            'ogv' in c and c['ogv'] or
+            'flv' in c and c['flv']):
+        raise ValidationError(MSG_VID_REQUIRED)
+    clean_draft(video_form)
+    return video_form.cleaned_data
+
+
+def clean_draft(form):
+    """Drafts reserve a special title."""
+    c = form.cleaned_data
+    if 'title' in c and c['title'].startswith(DRAFT_TITLE_PREFIX):
+        raise ValidationError(MSG_TITLE_DRAFT)
+    return c
+
+
+def save_form(form, update_user=None, **kwargs):
+    """Save a media form, add user to updated_by."""
+    obj = super(form.__class__, form).save(commit=False, **kwargs)
+    if update_user:
+        obj.updated_by = update_user
+    obj.save()
+    return obj

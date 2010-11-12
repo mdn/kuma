@@ -1,10 +1,14 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
-{% set title = _('{title} | Media Gallery')|f(title=media.title) %}
+{% if not title %}
+  {% set title = _('{title} | Media Gallery')|f(title=media.title) %}
+{% endif %}
 {% set styles = ('wiki', 'gallery') %}
-{% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
-                 (None, media.title)] %}
+{% if not crumbs %}
+  {% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
+                   (None, media.title)] %}
+{% endif %}
 
 {% block content %}
   <article id="media-object" class="main">
@@ -56,14 +60,15 @@
         {{ generate_video(media) }}
       {% endif %}
     </div>
-    <div class="description">{{ media.description }}</div>
-    <form id="media-actions" action="{# TODO delete view #}" method="post">
-      {% if media_type == 'image' %}
-        <input type="submit" value="{{ _('Delete this Image') }}" />
-      {% else %}
-        <input type="submit" value="{{ _('Delete this Video') }}" />
-      {% endif %}
-    </form>
+    <div class="description">{{ media.description|wiki_to_html }}</div>
+    {% if user == media.creator or
+          (media_type == 'image' and user.has_perm('gallery.delete_image')) or
+          (media_type == 'video' and user.has_perm('gallery.delete_video')) %}
+      <form id="media-actions" action="{{ url('gallery.delete_media', media_type, media.pk) }}" method="GET">
+        <input type="submit" value="{{ _('Delete this {type}')|f(type=media_type) }}" />
+        <a href="{{ url('gallery.edit_media', media_type, media.id) }}">{{ _('Edit this {type}')|f(type=media_type) }}</a>
+      </form>
+    {% endif %}
   </article>
 {% endblock %}
 

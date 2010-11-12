@@ -1,5 +1,6 @@
 import imghdr
 import json
+import logging
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -13,16 +14,19 @@ from commonware.decorators import xframe_sameorigin
 import jingo
 from tower import ugettext as _
 
-from gallery import ITEMS_PER_PAGE
+from gallery import ITEMS_PER_PAGE, DRAFT_TITLE_PREFIX
 from gallery.forms import ImageForm, VideoForm
 from gallery.models import Image, Video
-from gallery.utils import upload_image, upload_video
+from gallery.utils import upload_image, upload_video, check_media_permissions
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from upload.utils import FileTooLargeError
 
 MSG_FAIL_UPLOAD = {'image': _('Could not upload your image.'),
                    'video': _('Could not upload your video.')}
+
+
+log = logging.getLogger('k.gallery')
 
 
 def gallery(request, media_type='image'):
@@ -50,71 +54,24 @@ def gallery(request, media_type='image'):
                          'video_form': video_form})
 
 
-def _get_draft_info(user):
-    """Get video and image drafts for a given user."""
-    draft = {'image': None, 'video': None}
-    if user.is_authenticated():
-        title = u'draft %s' % user.pk
-        draft['image'] = Image.objects.filter(
-            creator=user, title=title, locale=settings.WIKI_DEFAULT_LANGUAGE)
-        draft['image'] = draft['image'][0] if draft['image'] else None
-        draft['video'] = Video.objects.filter(
-            creator=user, title=title, locale=settings.WIKI_DEFAULT_LANGUAGE)
-        draft['video'] = draft['video'][0] if draft['video'] else None
-    return draft
-
-
-def _init_upload_forms(request, draft):
-    """Initialize video and image upload forms given the request and drafts."""
-    if draft['image']:
-        file = (draft['image'].thumbnail if draft['image'].thumbnail
-                                         else draft['image'].file)
-        form_data = request.POST.copy()
-        form_data['locale'] = draft['image'].locale
-        image_form = ImageForm(form_data, {'file': file})
-    else:
-        image_form = ImageForm()
-
-    if draft['video']:
-        file_data = {'flv': draft['video'].flv, 'ogv': draft['video'].ogv,
-                     'webm': draft['video'].webm}
-        form_data = request.POST.copy()
-        form_data['locale'] = draft['video'].locale
-        video_form = VideoForm(form_data, file_data)
-    else:
-        video_form = VideoForm()
-
-    return (image_form, video_form)
-
-
 @login_required
 @require_POST
 def upload(request, media_type='image'):
     draft = _get_draft_info(request.user)
     if media_type == 'image' and draft['image']:
         # We're publishing an image draft!
-        image_form = ImageForm(request.POST, request.FILES,
-                               initial={'file': draft['image'].file})
+        image_form = _init_media_form(ImageForm, request, draft['image'])
         if image_form.is_valid():
-            draft['image'].title = request.POST.get('title')
-            draft['image'].description = request.POST.get('description')
-            draft['image'].locale = request.POST.get('locale')
-            draft['image'].save()
-            return HttpResponseRedirect(draft['image'].get_absolute_url())
+            img = image_form.save()
+            return HttpResponseRedirect(img.get_absolute_url())
         else:
             return gallery(request, media_type='image')
     elif media_type == 'video' and draft['video']:
         # We're publishing a video draft!
-        video_form = VideoForm(request.POST, request.FILES,
-                               initial={'flv': draft['video'].flv,
-                                        'ogv': draft['video'].ogv,
-                                        'webm': draft['video'].webm})
+        video_form = _init_media_form(VideoForm, request, draft['video'])
         if video_form.is_valid():
-            draft['video'].title = request.POST.get('title')
-            draft['video'].description = request.POST.get('description')
-            draft['video'].locale = request.POST.get('locale')
-            draft['video'].save()
-            return HttpResponseRedirect(draft['video'].get_absolute_url())
+            vid = video_form.save()
+            return HttpResponseRedirect(vid.get_absolute_url())
         else:
             return gallery(request, media_type='video')
 
@@ -203,12 +160,49 @@ def search(request, media_type):
 
 
 @login_required
-@require_POST
 def delete_media(request, media_id, media_type='image'):
     """Delete media and redirect to gallery view."""
-    media, _ = _get_media_info(media_id, media_type)
+    media, media_format = _get_media_info(media_id, media_type)
+
+    check_media_permissions(media, request.user, 'delete')
+
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'gallery/confirm_media_delete.html',
+                            {'media': media, 'media_type': media_type,
+                             'media_format': media_format})
+
+    # Handle confirm delete form POST
+    log.warning('User %s is deleting %s with id=%s' %
+                (request.user, media_type, media.id))
     media.delete()
     return HttpResponseRedirect(reverse('gallery.gallery', args=[media_type]))
+
+
+@login_required
+def edit_media(request, media_id, media_type='image'):
+    """Edit media means only changing the description, for now."""
+    media, media_format = _get_media_info(media_id, media_type)
+
+    check_media_permissions(media, request.user, 'change')
+
+    if media_type == 'image':
+        media_form = _init_media_form(ImageForm, request, media,
+                                      ('locale', 'title'))
+    else:
+        media_form = _init_media_form(VideoForm, request, media,
+                                      ('locale', 'title'))
+
+    if request.method == 'POST' and media_form.is_valid():
+        media = media_form.save(update_user=request.user)
+        return HttpResponseRedirect(
+            reverse('gallery.media', args=[media_type, media_id]))
+
+    return jingo.render(request, 'gallery/edit_media.html',
+                        {'media': media,
+                         'media_format': media_format,
+                         'form': media_form,
+                         'media_type': media_type})
 
 
 def media(request, media_id, media_type='image'):
@@ -220,25 +214,11 @@ def media(request, media_id, media_type='image'):
                          'media_type': media_type})
 
 
-def _get_media_info(media_id, media_type):
-    """Returns an image or video along with media format for the image."""
-    media_format = None
-    if media_type == 'image':
-        media = get_object_or_404(Image, pk=media_id)
-        media_format = imghdr.what(media.file.path)
-    elif media_type == 'video':
-        media = get_object_or_404(Video, pk=media_id)
-    else:
-        raise Http404
-    return (media, media_format)
-
-
 @login_required
 @require_POST
 @xframe_sameorigin
 def upload_async(request, media_type='image'):
     """Upload images or videos from request.FILES."""
-
     try:
         if media_type == 'image':
             file_info = upload_image(request)
@@ -256,3 +236,70 @@ def upload_async(request, media_type='image'):
     return HttpResponseBadRequest(
         json.dumps({'status': 'error', 'message': message,
                     'errors': file_info}))
+
+
+def _get_media_info(media_id, media_type):
+    """Returns an image or video along with media format for the image."""
+    media_format = None
+    if media_type == 'image':
+        media = get_object_or_404(Image, pk=media_id)
+        media_format = imghdr.what(media.file.path)
+    elif media_type == 'video':
+        media = get_object_or_404(Video, pk=media_id)
+    else:
+        raise Http404
+    return (media, media_format)
+
+
+def _get_draft_info(user):
+    """Get video and image drafts for a given user."""
+    draft = {'image': None, 'video': None}
+    if user.is_authenticated():
+        title = DRAFT_TITLE_PREFIX + str(user.pk)
+        draft['image'] = Image.objects.filter(
+            creator=user, title=title, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        draft['image'] = draft['image'][0] if draft['image'] else None
+        draft['video'] = Video.objects.filter(
+            creator=user, title=title, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        draft['video'] = draft['video'][0] if draft['video'] else None
+    return draft
+
+
+def _init_media_form(form_cls, request=None, obj=None,
+                     ignore_fields=()):
+    """Initializes the media form with an Image/Video instance and POSTed data.
+
+    form_cls is a django ModelForm
+    Request method must be POST for POST data to be bound.
+    exclude_fields contains the list of fields to default to their current
+    value from the Image/Video object.
+
+    """
+    post_data = None
+    file_data = None
+    if request.method == 'POST':
+        file_data = request.FILES
+        post_data = request.POST.copy()
+        if obj and ignore_fields:
+            for f in ignore_fields:
+                post_data[f] = getattr(obj, f)
+
+        if ('title' in post_data and
+            post_data['title'].startswith(DRAFT_TITLE_PREFIX)):
+            post_data['title'] = ''
+
+    if obj and obj.title.startswith(DRAFT_TITLE_PREFIX):
+        obj.title = ''
+
+    return form_cls(post_data, file_data, instance=obj)
+
+
+def _init_upload_forms(request, draft):
+    """Initialize video and image upload forms given the request and drafts."""
+    image_form = _init_media_form(ImageForm, request, draft['image'])
+    video_form = _init_media_form(VideoForm, request, draft['video'])
+    if request.method == 'POST':
+        image_form.is_valid()
+        video_form.is_valid()
+
+    return (image_form, video_form)

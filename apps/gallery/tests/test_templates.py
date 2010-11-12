@@ -9,6 +9,7 @@ from sumo.tests import TestCase, get, LocalizingClient, post
 from sumo.urlresolvers import reverse
 from gallery.models import Image, Video
 from gallery.tests import image, video
+from gallery.utils import get_draft_title
 
 
 class GalleryPageCase(TestCase):
@@ -104,7 +105,7 @@ class GalleryUploadTestCase(TestCase):
 
     def test_image_draft_shows(self):
         """The image draft is loaded for this user."""
-        image(title='draft 47963', creator=self.u)
+        image(title=get_draft_title(self.u), creator=self.u)
         response = get(self.client, 'gallery.gallery', args=['image'])
         eq_(200, response.status_code)
         doc = pq(response.content)
@@ -113,7 +114,7 @@ class GalleryUploadTestCase(TestCase):
 
     def test_video_draft_shows(self):
         """The video draft is loaded for this user."""
-        video(title='draft 47963', creator=self.u)
+        video(title=get_draft_title(self.u), creator=self.u)
         response = get(self.client, 'gallery.gallery', args=['image'])
         eq_(200, response.status_code)
         doc = pq(response.content)
@@ -124,7 +125,7 @@ class GalleryUploadTestCase(TestCase):
 
     def test_image_draft_post(self):
         """Posting to the page saves the field values for the image draft."""
-        image(title='draft 47963', creator=self.u)
+        image(title=get_draft_title(self.u), creator=self.u)
         response = post(self.client, 'gallery.gallery',
                         {'description': '??', 'title': 'test'}, args=['image'])
         eq_(200, response.status_code)
@@ -135,7 +136,7 @@ class GalleryUploadTestCase(TestCase):
 
     def test_video_draft_post(self):
         """Posting to the page saves the field values for the video draft."""
-        video(title='draft 47963', creator=self.u)
+        video(title=get_draft_title(self.u), creator=self.u)
         response = post(self.client, 'gallery.gallery',
                         {'title': 'zTestz'}, args=['image'])
         eq_(200, response.status_code)
