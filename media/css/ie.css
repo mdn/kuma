@@ -64,6 +64,11 @@ div.ans-attachments div.attachment {
     _background: url(../img/nurse.gif) no-repeat scroll right top transparent;
 }
 
+body.mobile #featured {
+    /* nurse .gif for IE6 */
+    _background: url("../img/nurse.mobile.gif") no-repeat scroll right top transparent;
+}
+
 /* IE6 only */
 #quick-links li {
     _height: 10px;
