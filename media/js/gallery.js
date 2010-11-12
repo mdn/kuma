@@ -10,10 +10,10 @@ $(document).ready(function () {
     CONSTANTS.messages = [
             {'invalid': gettext('Invalid image. Please select a valid image file.'),
              'cancelled': gettext('Upload cancelled. Please select an image file.'),
-             'delete': gettext('Delete this image')},
+             'del': gettext('Delete this image')},
             {'invalid': gettext('Invalid video. Please select a valid video file (%s).'),
              'cancelled': gettext('Upload cancelled. Please select a video file (%s).'),
-             'delete': gettext('Delete this video (%s)')}];
+             'del': gettext('Delete this video (%s)')}];
 
     jQuery.fn.makeCancelUpload = function (options) {
         if (!this.is('input')) {
@@ -190,7 +190,7 @@ $(document).ready(function () {
 
                 // Make cancel buttons delete the draft
                 $cancel_btn.addClass('draft');
-                message = CONSTANTS.messages[current].delete;
+                message = CONSTANTS.messages[current].del;
                 if (upName !== 'file') {
                     message = interpolate(message, [upName.toUpperCase()]);
                 }
