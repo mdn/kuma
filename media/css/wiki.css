@@ -545,7 +545,7 @@ article #toc ul li {
 }
 
 #support-for input {
-    background: transparent url(../img/wiki//bkg.showfor.selector.png) no-repeat 6px center;
+    background: transparent url(../img/wiki/bkg.showfor.selector.gif) no-repeat 6px 5px;
     border: none;
     color: #32559b;
     cursor: pointer;
@@ -567,7 +567,7 @@ article #toc ul li {
     -webkit-border-top-left-radius: 0;
     left: 0;
     list-style: none;
-    padding: 10px;
+    padding: 10px 5px;
     position: absolute;
     top: 5px;
     width: 130px;
@@ -590,19 +590,13 @@ article #toc ul li {
 #support-for div.selectbox-wrapper li {
     color: #6fbcff;
     cursor: pointer;
-    padding: 2px 0 2px 10px;
+    padding: 2px 0 2px 15px;
     position: relative;
 }
 
 #support-for div.selectbox-wrapper li.selected {
+    background: transparent url(../img/wiki/bkg.showfor.selector.gif) no-repeat 2px -44px;
     color: #fff;
-}
-
-#support-for li.selected:before {
-    color: #fff;
-    content: '•';
-    left: 0;
-    position: absolute;
 }
 
 #support-for div.selectbox-wrapper li.current {
