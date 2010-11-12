@@ -173,36 +173,24 @@
         // Select the sniffed or cookied browser or OS if there is one:
         initial = initialOs();
         if (initial) {
-            $osMenu.attr('value', initial);  // does not fire change event
+            $osMenu.val(initial);  // does not fire change event
         }
         initial = initialBrowser();
         if (initial) {
-            $browserMenu.attr('value', initial);
+            $browserMenu.val(initial);
         }
 
         // Fire off the change handler for the first time:
         updateForsAndToc();
 
-        // If we are on home page, make sure appropriate OS is selected
-        if ($body.is('.home')) {
-            currentOS = $osMenu.val();
-            currentDependency = $osMenu.find('[value="' + currentOS + '"]')
-                                       .attr('data-dependency');
-            if (!$body.is('.' + currentDependency)) {
-                $osMenu.val(
-                    $osMenu.find(':not([data-dependency="' +
-                                 currentDependency + '"]):first')
-                           .attr('value'));
-            }
-        }
-
         //Handle OS->Browser dependencies
-        function handleDependencies(){
+        function handleDependencies(evt, noRedirect){
             currentOS = $osMenu.val();
             currentDependency = $osMenu.find('[value="' + currentOS + '"]')
                                        .attr('data-dependency');
 
-            if ($body.is('.home') && !$body.is('.' + currentDependency)) {
+            if (!noRedirect && $body.is('.home') &&
+                !$body.is('.' + currentDependency)) {
                 // If we are on the mobile page and select a desktop OS,
                 // redirect to the desktop home page. And vice-versa.
                 // TODO: maybe use data-* attrs for the URLs?
@@ -218,7 +206,15 @@
             availableBrowsers = $origBrowserOptions.filter(
                 '[data-dependency="' + currentDependency + '"]');
             $browserMenu.empty().append(availableBrowsers);
-            $browserMenu.val(currentBrowser);
+
+            // Set browser to same version (frex, m4->fx4), if possible.
+            var version = currentBrowser.replace(/^\D+/,'');
+            $browserMenu.find('option').each(function() {
+                var $this = $(this);
+                if ($this.val().replace(/^\D+/,'') == version) {
+                    $browserMenu.val($this.val());
+                }
+            });
             initShowforSelectors();
 
             newBrowser = $browserMenu.val();
@@ -228,7 +224,7 @@
             }
         }
         $osMenu.change(handleDependencies);
-        handleDependencies();
+        handleDependencies(null, true);
     }
 
     function initPrepopulatedSlugs() {
