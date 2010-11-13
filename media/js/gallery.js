@@ -29,7 +29,8 @@ $(document).ready(function () {
 
         // now bind to the click event
         $(this).click(function (ev) {
-            if ($(this).hasClass('draft')) {
+            if ($(this).hasClass('draft') ||
+                $(this).closest('.upload-form').hasClass('uploading')) {
                 $(this).closest('form').submit();
             }
             $('a.close', $uploadModal).click();
@@ -112,7 +113,8 @@ $(document).ready(function () {
                         filename: $input.val().split(/[\/\\]/).pop(),
                         progress: $('.progress', $form).filter('.' + upName)
                     };
-                $form.find('input[type="submit"]').attr('disabled', 'disabled');
+                $form.find('input[type="submit"]').not('[name="cancel"]')
+                    .attr('disabled', 'disabled');
                 $options.remaining = $('.upload-media:visible', $form);
                 // if there are other inputs remaining to upload
                 // don't hide the Video label
@@ -149,6 +151,7 @@ $(document).ready(function () {
                         $options.metadata.fadeIn('fast');
                     }
                 }).addClass('uploading');
+                $form.addClass('uploading');
 
                 return $options;
             },
@@ -226,6 +229,7 @@ $(document).ready(function () {
         }
         $progress.fadeOut('fast', function chooseAgain() {
             $options.add.fadeIn('fast').removeClass('uploading');
+            $options.form.removeClass('uploading');
             $('label.upload-media', $options.form).fadeIn('fast');
             // check if other uploads are still in progress before showing this
             if (in_progress <= 1) {
