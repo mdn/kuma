@@ -249,6 +249,7 @@ TOWER_KEYWORDS = {
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
     'messages': [
+        ('vendor/**', 'ignore'),
         ('apps/forums/**', 'ignore'),
         ('apps/questions/**', 'ignore'),
         ('apps/chat/**', 'ignore'),
