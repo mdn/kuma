@@ -604,9 +604,9 @@ article #toc ul li {
 
 div.warning-box {
     border: 1px #f2d273 solid;
-    background-color: #fffaed;
-    background: -moz-linear-gradient(top, #fffaed, #fff2cb);
-    background: -webkit-gradient(linear, center top, center bottom, from(#fffaed), to(#fff2cb));
+    background: #fffaed url(../img/wiki/bkg.warning.png) repeat-y left top;
+    background: url(../img/wiki/bkg.warning.png) repeat-y left top, -moz-linear-gradient(top, #fffaed, #fff2cb);
+    background: url(../img/wiki/bkg.warning.png) repeat-y left top, -webkit-gradient(linear, center top, center bottom, from(#fffaed), to(#fff2cb));
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -696,6 +696,19 @@ div.warning-box p {
 	background: #e8e8e8;
 	color: #303030;
 	padding: 2px 4px;
+}
+
+#doc-content .note {
+   background: #F5F5FF;
+   color: #626266;
+   padding: .5em 1em;
+}
+
+#doc-content .warning {
+   background: #FFF9DB url(../img/wiki/bkg.warning.png) repeat-y left top;
+   color: #666458;
+   padding: .5em 1em;
+   padding-left: 2em;
 }
 
 /* helpful vote form */
