@@ -22,51 +22,56 @@
         {{ _('This translation was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}
       </p>
     {% elif document.current_revision %}
-
-      {# Default locale diff #}
-      {% with revision_from = document.current_revision.based_on, revision_to = document.parent.current_revision %}
-        {% include 'wiki/includes/revision_diff.html' %}
-        {# TODO: 'change revisions' link and modal selector #}
-      {% endwith %}
-
-      {# Current locale diff #}
-      {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current public translation:'), revision_to_header = _('Submitted translation:') %}
-        {% include 'wiki/includes/revision_diff.html' %}
-      {% endwith %}
-
-      {# Default vs. current locale #}
-      <div id="content-fields" class="revision-diff">
-        <div class="approved">
-          <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
-          <p>{{ _('Revision {id} by {user} on {date}')|f(id=document.parent.current_revision.id, user=document.parent.current_revision.creator, date=datetimeformat(document.parent.current_revision.created, format='longdatetime'))|safe }}</p>
+      <details class="h2" open="open">
+        <summary>{{ _('Recent English Changes') }}</summary>
+        {# Default locale diff #}
+        {% with revision_from = document.current_revision.based_on, revision_to = document.parent.current_revision %}
+          {% include 'wiki/includes/revision_diff.html' %}
+          {# TODO: 'change revisions' link and modal selector #}
+        {% endwith %}
+      </details>
+      <details class="h2" open="open">
+        <summary>{{ _('Submitted Translation Changes') }}</summary>
+        {# Current locale diff #}
+        {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current public translation:'), revision_to_header = _('Submitted translation:') %}
+          {% include 'wiki/includes/revision_diff.html' %}
+        {% endwith %}
+      </details>
+      <details class="h2">
+        <summary>{{ _('Full Article Sources') }}</summary>
+        {# Default vs. current locale #}
+        <div id="content-fields" class="revision-diff">
+          <div class="approved">
+            <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
+            <p>{{ _('Revision {id} by {user} on {date}')|f(id=document.parent.current_revision.id, user=document.parent.current_revision.creator, date=datetimeformat(document.parent.current_revision.created, format='longdatetime'))|safe }}</p>
+          </div>
+          <div class="localized">
+            <h3>{{ _('Submitted {locale} translation:')|f(locale=settings.LANGUAGES[document.locale.lower()]) }}</h3>
+            <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision.id, user=revision.creator, date=datetimeformat(revision.created, format='longdatetime'))|safe }}</p>
+          </div>
+          <h4>{{ ('Keywords:') }}</h4>
+          <div class="approved">
+            <p>{{ document.parent.current_revision.keywords }}</p>
+          </div>
+          <div class="localized">
+            <p>{{ revision.keywords }}</p>
+          </div>
+          <h4>{{ ('Search results summary:') }}</h4>
+          <div class="approved">
+            <p>{{ document.parent.current_revision.summary }}</p>
+          </div>
+          <div class="localized">
+            <p>{{ revision.summary }}</p>
+          </div>
+          <h4>{{ ('Content:') }}</h4>
+          <div class="approved">
+            <textarea readonly="readonly">{{ document.parent.current_revision.content }}</textarea>
+          </div>
+          <div class="localized">
+            <textarea readonly="readonly">{{ revision.content }}</textarea>
+          </div>
         </div>
-        <div class="localized">
-          <h3>{{ _('Submitted {locale} translation:')|f(locale=settings.LANGUAGES[document.locale.lower()]) }}</h3>
-          <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision.id, user=revision.creator, date=datetimeformat(revision.created, format='longdatetime'))|safe }}</p>
-        </div>
-        <h4>{{ ('Keywords:') }}</h4>
-        <div class="approved">
-          <p>{{ document.parent.current_revision.keywords }}</p>
-        </div>
-        <div class="localized">
-          <p>{{ revision.keywords }}</p>
-        </div>
-        <h4>{{ ('Search results summary:') }}</h4>
-        <div class="approved">
-          <p>{{ document.parent.current_revision.summary }}</p>
-        </div>
-        <div class="localized">
-          <p>{{ revision.summary }}</p>
-        </div>
-        <h4>{{ ('Content:') }}</h4>
-        <div class="approved">
-          <textarea readonly="readonly">{{ document.parent.current_revision.content }}</textarea>
-        </div>
-        <div class="localized">
-          <textarea readonly="readonly">{{ revision.content }}</textarea>
-        </div>
-      </div>
-
+      </details>
     {% else %}
       <p>{{ _('This document does not have a current translation.') }}</p>
       <h3>{{ _('Translation keywords:') }}</h3>
@@ -86,8 +91,6 @@
         {{ revision.content_parsed|safe }}
       </div>
     {% endif %}
-
-    {# TODO: diff? the summary and keywords #}
 
     {% include 'wiki/includes/review_form.html' %}
   </article>
