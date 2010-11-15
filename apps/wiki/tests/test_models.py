@@ -8,9 +8,9 @@ from sumo.tests import TestCase
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
-                         REDIRECT_HTML)
+                         REDIRECT_HTML, MAJOR_SIGNIFICANCE)
 from wiki.parser import wiki_to_html
-from wiki.tests import document, revision, doc_rev
+from wiki.tests import document, revision, doc_rev, translated_revision
 
 
 def _objects_eq(manager, list_):
@@ -154,6 +154,35 @@ class DocumentTests(TestCase):
     def test_redirect_prefix(self):
         """Test accuracy of the prefix that helps us recognize redirects."""
         assert wiki_to_html(REDIRECT_CONTENT % 'foo').startswith(REDIRECT_HTML)
+
+
+class DocumentTestsWithFixture(TestCase):
+    """Document tests which need the users fixture"""
+
+    fixtures = ['users.json']
+
+    def test_majorly_outdated(self):
+        """Test the is_majorly_outdated method."""
+        trans = translated_revision(is_approved=True)
+        trans.save()
+        trans_doc = trans.document
+
+        # Make sure a doc returns False if it has no parent:
+        assert not trans_doc.parent.is_majorly_outdated()
+
+        assert not trans_doc.is_majorly_outdated()
+
+        # Add a parent revision of MAJOR significance:
+        r = revision(document=trans_doc.parent,
+                     significance=MAJOR_SIGNIFICANCE)
+        r.save()
+        assert not trans_doc.is_majorly_outdated()
+
+        # Approve it:
+        r.is_approved = True
+        r.save()
+
+        assert trans_doc.is_majorly_outdated()
 
 
 class RedirectTests(TestCase):

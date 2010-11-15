@@ -23,6 +23,18 @@
         {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
       </div>
     {% endif %}
+    {% if document.is_majorly_outdated() %}
+      <div class="warning-box">
+        {% trans url=document.parent.get_absolute_url(), title=document.parent.title %}
+          <p>This article may be out of date.</p>
+          <p>
+            An important change has been made to the English article on which
+            this is based. Until this page is updated, you might find this
+            helpful: <a href="{{ url }}">{{ title }}</a>
+          </p>
+        {% endtrans %}
+      </div>
+    {% endif %}
     <section id="doc-content">
       {% if document.current_revision %}
         {{ document.html|safe }}

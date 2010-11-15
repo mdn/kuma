@@ -392,6 +392,20 @@ class Document(ModelBase, BigVocabTaggableMixin):
 
         return qs.exists()
 
+    def is_majorly_outdated(self):
+        """Return whether a MAJOR_SIGNIFICANCE-level update has occurred to the
+        parent document since this translation had an approved update.
+
+        If this is not a translation or has never been approved, return False.
+
+        """
+        if not (self.parent and self.current_revision):
+            return False
+        return self.parent.revisions.filter(
+            id__gt=self.current_revision.based_on_id,
+            is_approved=True,
+            significance__gte=MAJOR_SIGNIFICANCE).exists()
+
 
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
