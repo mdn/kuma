@@ -60,7 +60,7 @@
             <div class="answer">
               <span class="user" title="{{question.solution.creator}}">{{ question.solution.creator.username|truncate(10, True) }}</span>
               <span class="votes">{{ 2 * question.solution.num_helpful_votes - question.solution.num_votes }}</span>
-              {{ question.solution.content_parsed }}
+              {{ question.solution.content_parsed|safe }}
             </div>
           </div>
         </div>
