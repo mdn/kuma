@@ -15,7 +15,7 @@ import test_utils
 
 from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
                           DateTimeFormatError, collapse_linebreaks, url,
-                          json, timesince, label_with_help)
+                          json, timesince, label_with_help, urlparams)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -46,14 +46,17 @@ class TestHelpers(TestCase):
         eq_(u'Speak Français', render(template, context))
 
     def test_urlparams_unicode(self):
-        context = {'var': u'Fran\xc3\xa7ais'}
-        template = '{{ url("search")|urlparams(q=var) }}'
-        eq_(u'/search?q=Fran%C3%A7ais', render(template, context))
+        context = {'q': u'Français'}
+        eq_(u'/foo?q=Fran%C3%A7ais', urlparams('/foo', **context))
+        context['q'] = u'\u0125help'
+        eq_(u'/foo?q=%C4%A5help', urlparams('/foo', **context))
 
     def test_urlparams_valid(self):
         context = {'a': 'foo', 'b': 'bar'}
-        template = '{{ "/search"|urlparams(a=a, b=b) }}'
-        eq_(u'/search?a=foo&amp;b=bar', render(template, context))
+        eq_(u'/foo?a=foo&b=bar', urlparams('/foo', **context))
+
+    def test_urlparams_query_string(self):
+        eq_(u'/foo?a=foo&b=bar', urlparams('/foo?a=foo', b='bar'))
 
     def test_profile_url(self):
         user = User.objects.create(pk=500000, username=u'testuser')

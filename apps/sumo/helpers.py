@@ -5,7 +5,7 @@ import re
 import urlparse
 
 from django.conf import settings
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_unicode, smart_str
 from django.utils.http import urlencode
 from django.utils.tzinfo import LocalTimezone
 
@@ -50,18 +50,12 @@ def urlparams(url_, hash=None, **query):
     url_ = urlparse.urlparse(url_)
     fragment = hash if hash is not None else url_.fragment
 
-    items = []
-    if url_.query:
-        for k, v in cgi.parse_qsl(url_.query):
-            items.append((k, v))
-    for k, v in query.items():
-        items.append((k, v))
+    q = url_.query
+    query_dict = dict(urlparse.parse_qsl(smart_str(q))) if q else {}
+    query_dict.update(query.items())
 
-    items = [(k, unicode(v).encode('raw_unicode_escape')) for
-             k, v in items if v is not None]
-
-    query_string = urlencode(items)
-
+    query_string = urlencode([(k, v) for k, v in query_dict.items() if
+                             v is not None])
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)
     return new.geturl()
