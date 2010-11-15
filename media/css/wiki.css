@@ -950,6 +950,15 @@ article.main div.tags input.adder {
 
 #preview {
     margin: 20px 0 0;
+    position: relative;
+}
+
+#preview #support-for {
+    margin: 0;
+    position: absolute;
+    right: -165px;
+    top: 0;
+    width: 165px;
 }
 
 /* Translate specific */
@@ -1246,7 +1255,7 @@ div.revision-info li {
 }
 
 /* Review revision */
-body.review #main-content h3 {
+#review-revision > h3 {
     font-weight: bold;
     margin: 20px 0 0;
 }

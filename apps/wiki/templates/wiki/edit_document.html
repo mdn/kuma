@@ -71,11 +71,11 @@
             {{ revision_form.hidden_fields()|join|safe }}
             <input type="hidden" name="form" value="rev" />
             {% include 'wiki/includes/submit_revision_for_review.html' %}
-            <div id="preview"></div>
           </form>
         </details>
       </div>
     {% endif %}
+    <div id="preview"></div>
   </article>
 {% endblock %}
 
