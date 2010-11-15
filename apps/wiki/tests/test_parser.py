@@ -266,6 +266,20 @@ class TestWikiTemplate(TestCase):
         eq_('The template "new" does not exist or has no approved revision.',
             doc.text())
 
+    def test_for_in_template(self):
+        """Verify that {for}'s render correctly in template."""
+        d = document(title='Template:for')
+        d.save()
+        r = revision(document=d,
+                     content='{for win}windows{/for}{for mac}mac{/for}')
+        r.is_approved = True
+        r.save()
+        p = WikiParser()
+        content = p.parse('[[Template:for]]')
+        eq_('<p><span class="for" data-for="win">windows</span>'
+            '<span class="for" data-for="mac">mac</span>\n\n</p>',
+            content)
+
 
 class TestWikiInclude(TestCase):
     fixtures = ['users.json']

@@ -11,7 +11,7 @@ from wiki.models import Document
 
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title', 'class', 'rel'],
-    'div': ['id', 'class', 'style'],
+    'div': ['id', 'class', 'style', 'data-for'],
     'h1': ['id'],
     'h2': ['id'],
     'h3': ['id'],
@@ -19,7 +19,7 @@ ALLOWED_ATTRIBUTES = {
     'h5': ['id'],
     'h6': ['id'],
     'li': ['class'],
-    'span': ['class'],
+    'span': ['class', 'data-for'],
     'img': ['class', 'src', 'alt', 'title', 'height', 'width', 'style'],
     'video': ['height', 'width', 'controls', 'data-fallback'],
     'source': ['src', 'type'],
