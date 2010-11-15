@@ -188,10 +188,9 @@ class Document(ModelBase, BigVocabTaggableMixin):
 
     def clean(self):
         """Translations can't be localizable."""
-        if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
-            self.is_localizable = False
+        self._clean_is_localizable()
 
-    def _validate_is_localizable(self):
+    def _clean_is_localizable(self):
         """is_localizable == allowed to have translations. Make sure that isn't
         violated.
 
@@ -200,8 +199,13 @@ class Document(ModelBase, BigVocabTaggableMixin):
             * is_localizable=True if it has translations
             * if has translations, unable to make is_localizable=False
 
+        For non-default langauges, is_localizable must be False.
+
         """
-        # Can't translate if parent not localizable
+        if self.locale != settings.WIKI_DEFAULT_LANGUAGE:
+            self.is_localizable = False
+
+        # Can't save this translation if parent not localizable
         if self.parent and not self.parent.is_localizable:
             raise ValidationError('"%s": parent "%s" is not localizable.' % (
                                   unicode(self), unicode(self.parent)))
@@ -251,7 +255,7 @@ class Document(ModelBase, BigVocabTaggableMixin):
         self._raise_if_collides('title', TitleCollision)
 
         # This is too important to leave to a (possibly omitted) is_valid call.
-        self._validate_is_localizable()
+        self._clean_is_localizable()
 
         super(Document, self).save(*args, **kwargs)
 

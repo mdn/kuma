@@ -155,6 +155,33 @@ class DocumentTests(TestCase):
         """Test accuracy of the prefix that helps us recognize redirects."""
         assert wiki_to_html(REDIRECT_CONTENT % 'foo').startswith(REDIRECT_HTML)
 
+    def test_only_localizable_allowed_children(self):
+        """You can't have children for a non-localizable document."""
+        # Make English rev:
+        en_doc = document(is_localizable=False)
+        en_doc.save()
+
+        # Make Deutsch translation:
+        de_doc = document(parent=en_doc, locale='de')
+        self.assertRaises(ValidationError, de_doc.save)
+
+    def test_cannot_make_non_localizable_if_children(self):
+        """You can't make a document non-localizable if it has children."""
+        # Make English rev:
+        en_doc = document(is_localizable=True)
+        en_doc.save()
+
+        # Make Deutsch translation:
+        de_doc = document(parent=en_doc, locale='de')
+        de_doc.save()
+        en_doc.is_localizable = False
+        self.assertRaises(ValidationError, en_doc.save)
+
+    def test_non_english_implies_nonlocalizable(self):
+        d = document(is_localizable=True, locale='de')
+        d.save()
+        assert not d.is_localizable
+
 
 class DocumentTestsWithFixture(TestCase):
     """Document tests which need the users fixture"""
@@ -327,28 +354,6 @@ class RevisionTests(TestCase):
         self.assertRaises(ValidationError, de_rev.clean)
 
         eq_(en_rev.document.current_revision, de_rev.based_on)
-
-    def test_only_localizable_allowed_children(self):
-        """You can't have children for a non-localizable document."""
-        # Make English rev:
-        en_doc = document(is_localizable=False)
-        en_doc.save()
-
-        # Make Deutsch translation:
-        de_doc = document(parent=en_doc, locale='de')
-        self.assertRaises(ValidationError, de_doc.save)
-
-    def test_cannot_make_non_localizable_if_children(self):
-        """You can't make a document non-localizable if it has children."""
-        # Make English rev:
-        en_doc = document(is_localizable=True)
-        en_doc.save()
-
-        # Make Deutsch translation:
-        de_doc = document(parent=en_doc, locale='de')
-        de_doc.save()
-        en_doc.is_localizable = False
-        self.assertRaises(ValidationError, en_doc.save)
 
 
 class RelatedDocumentTestCase(TestCase):
