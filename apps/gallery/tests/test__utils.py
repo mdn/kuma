@@ -99,4 +99,4 @@ class CreateVideoTestCase(TestCase):
             file_info, name='apps/gallery/tests/media/test.flv',
             width=32, height=32, delete_url=delete_url,
             url=vid.get_absolute_url(),
-            thumbnail_url=settings.THUMBNAIL_PROGRESS_URL)
+            thumbnail_url=settings.GALLERY_VIDEO_THUMBNAIL_PROGRESS_URL)

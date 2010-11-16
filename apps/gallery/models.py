@@ -60,5 +60,5 @@ class Video(Media):
 
     def thumbnail_url_if_set(self):
         """Returns self.thumbnail.url, if set, else default thumbnail URL"""
-        return self.thumbnail.url if self.thumbnail \
-                                  else settings.THUMBNAIL_PROGRESS_URL
+        progress_url = settings.GALLERY_VIDEO_THUMBNAIL_PROGRESS_URL
+        return self.thumbnail.url if self.thumbnail else progress_url
