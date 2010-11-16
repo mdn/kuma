@@ -414,7 +414,7 @@ html.no-js .hide-if-no-js {
 }
 
 article #toc ol li {
-    list-style-type: decimal;
+    list-style-type: none;
 }
 
 article #toc ol li,
@@ -438,26 +438,10 @@ article #toc ul li {
     margin: 0 0 0 20px;
 }
 
-#toc ol ol li {
-    list-style-type: upper-alpha;
-}
-
 #toc ol ol li,
 #toc ul ul li {
     background: none;
     padding: 0;
-}
-
-#toc ol ol ol li {
-    list-style-type: lower-alpha;
-}
-
-#toc ol ol ol ol li {
-    list-style-type: decimal;
-}
-
-#toc ol ol ol ol ol li {
-    list-style-type: upper-alpha;
 }
 
 #doc-content {
