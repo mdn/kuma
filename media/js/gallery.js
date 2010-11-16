@@ -13,7 +13,7 @@ $(document).ready(function () {
              'del': gettext('Delete this image')},
             {'invalid': gettext('Invalid video. Please select a valid video file (%s).'),
              'cancelled': gettext('Upload cancelled. Please select a video file (%s).'),
-             'del': gettext('Delete this video (%s)')}];
+             'del': gettext('Delete %s file')}];
 
     jQuery.fn.makeCancelUpload = function (options) {
         if (!this.is('input')) {
@@ -49,7 +49,7 @@ $(document).ready(function () {
     function showEmptyMediaFields($form) {
         $('.upload-media', $form).each(function () {
             // if there's a preview with the class of the input name
-            if ($('.image-preview', $form).filter('.' +
+            if ($('.image-preview,.video-preview', $form).filter('.' +
                 $(this).find('input').attr('name')).length) {
                 $(this).hide();
             } else {
@@ -79,7 +79,7 @@ $(document).ready(function () {
             $('.metadata', $uploadModal).insertBefore(
                 $('.upload-action', $toShow));
         }
-        if ($preview.find('img').length > 0) {
+        if ($preview.find('.image-preview,.video-preview').length > 0) {
             showEmptyMediaFields($toShow);
             $preview.show();
             // move metadata from one form to another
@@ -100,7 +100,8 @@ $(document).ready(function () {
 
     // Upload a file on input value change
     $('input[type="file"]', $uploadModal).each(function() {
-        var $form = $(this).closest('.upload-form');
+        var $form = $(this).closest('.upload-form'),
+            type = 'image';
         $form.removeAttr('enctype');
         $(this).ajaxSubmitInput({
             url: $(this).closest('.upload-form').attr('data-post-url'),
@@ -118,8 +119,11 @@ $(document).ready(function () {
                 $options.remaining = $('.upload-media:visible', $form);
                 // if there are other inputs remaining to upload
                 // don't hide the Video label
-                if ($options.remaining.length > 2) {
+                if ($options.remaining.length > 2 && upName !== 'thumbnail') {
                     $options.remaining = $();  // empty
+                } else if (upName === 'thumbnail') {
+                    $options.remaining = $('.upload-media.thumbnail', $form)
+                        .not($options.add);
                 } else {
                     $options.remaining = $options.remaining.not($options.add);
                 }
@@ -136,7 +140,7 @@ $(document).ready(function () {
                     $('iframe[name="' + $input.closest('form').attr('target') +
                       '"]')[0].src = null;
                     var message = CONSTANTS.messages[current].cancelled;
-                    message = interpolate(message, [upName.toUpperCase()]);
+                    message = interpolate(message, [upName]);
                     reUploadWithMessage($options, message);
                     $options.remaining.fadeIn('fast');
                     return false;
@@ -170,41 +174,67 @@ $(document).ready(function () {
                         return false;
                     }
                 }
+
                 var upName = $input.attr('name'),
                     upStatus = iframeJSON.status, upFile, $thumbnail,
                     $cancel_btn = $('.upload-action input[name="cancel"]',
                                     $options.form),
-                    message;
+                    message, message_index,
+                    $appendCancelTo = $('.row-right.preview', $options.form);
 
+                message_index = current;
+                if (upName === 'thumbnail') {
+                    // treat thumbnails like images
+                    message_index = 0;  // image index
+                }
                 if (upStatus !== 'success') {
-                    message = CONSTANTS.messages[current].invalid;
-                    message = interpolate(message, [upName.toUpperCase()]);
+                    message = CONSTANTS.messages[message_index].invalid;
+                    message = interpolate(message, [upName]);
                     reUploadWithMessage($options, message, true);
                     return false;
                 }
                 upFile = iframeJSON.file;
-                // create thumbnail
-                $thumbnail = $('<img/>')
-                    .attr({alt: upFile.name, title: upFile.name,
-                           width: upFile.width, height: upFile.height,
-                           src: upFile.thumbnail_url})
-                    .wrap('<div class="image-preview"/>').closest('div')
-                    .appendTo($('.row-right.preview', $options.form));
 
                 // Make cancel buttons delete the draft
                 $cancel_btn.addClass('draft');
-                message = CONSTANTS.messages[current].del;
-                if (upName !== 'file') {
-                    message = interpolate(message, [upName.toUpperCase()]);
+                message = CONSTANTS.messages[message_index].del;
+                if (upName === 'file') {
+                    // create thumbnail
+                    $thumbnail = $('<img/>')
+                        .attr({alt: upFile.name, title: upFile.name,
+                               width: upFile.width, height: upFile.height,
+                               src: upFile.thumbnail_url})
+                        .wrap('<div class="image-preview"/>').closest('div')
+                        .appendTo($('.row-right.preview', $options.form));
+                } else if (upName === 'thumbnail') {
+                    $('.row-right.thumbnail', $options.form)
+                        .children().hide();
+                    $thumbnail = $('<img/>')
+                        .attr({alt: upFile.name, title: upFile.name,
+                               width: upFile.width, height: upFile.height,
+                               src: upFile.thumbnail_url})
+                        .wrap('<div class="image-preview"/>').closest('div')
+                        .appendTo($('.row-right.uploading.thumbnail',
+                                    $options.form));
+                    $('.row-right.thumbnail,.row-left.thumbnail',
+                      $options.form).show();
+                    $appendCancelTo = $('.row-right.thumbnail', $options.form);
+                } else {
+                    $appendCancelTo = $('<li class="video-preview"/>');
+                    $appendCancelTo.html($options.filename)
+                        .appendTo($('.row-right.preview ul', $options.form));
+                    message = interpolate(message, [upName]);
                 }
                 $cancel_btn.clone().val(message)
                            .attr('data-action',
                                  $cancel_btn.attr('data-action') +
                                  '?field=' + upName.toLowerCase())
-                           .appendTo($('.row-right.preview', $options.form))
+                           .appendTo($appendCancelTo)
                            .makeCancelUpload();
                 $options.progress.fadeOut('fast', function () {
-                    $('.preview', $options.form).fadeIn('fast');
+                    if (!$options.progress.hasClass('thumbnail')) {
+                        $('.preview', $options.form).fadeIn('fast');
+                    }
                 });
             }
         });
@@ -222,8 +252,10 @@ $(document).ready(function () {
         } else {
             $msgContainer.removeClass('invalid');
         }
-        if (in_progress <= 1) {
+        if (in_progress <= 1 && !$options.add.hasClass('thumbnail')) {
             $options.metadata.fadeOut('fast');
+        } else if ($options.add.hasClass('thumbnail')) {
+            in_progress = 2;
         } else {  // if (in_progress > 2) {
             $progress = $progress.not('label');
         }

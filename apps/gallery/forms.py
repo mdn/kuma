@@ -77,7 +77,7 @@ class ImageForm(forms.ModelForm):
         fields = ('file', 'locale', 'title', 'description')
 
 
-class VideoUploadFormAsync(forms.Form):
+class VideoUploadFormAsync(forms.ModelForm):
     """Video upload form for async requests."""
     flv = forms.FileField(required=False,
                           error_messages={'max_length': MSG_FLV_LONG},
@@ -88,9 +88,22 @@ class VideoUploadFormAsync(forms.Form):
     webm = forms.FileField(required=False,
                            error_messages={'max_length': MSG_WEBM_LONG},
                            max_length=settings.MAX_FILENAME_LENGTH)
+    thumbnail = forms.ImageField(required=False,
+                                 error_messages={'max_length': MSG_IMAGE_LONG},
+                                 max_length=settings.MAX_FILENAME_LENGTH)
 
     def clean(self):
-        return clean_video(self)
+        c = self.cleaned_data
+        if not ('webm' in c and c['webm'] or
+                'ogv' in c and c['ogv'] or
+                'flv' in c and c['flv'] or
+                'thumbnail' in c and c['thumbnail']):
+            raise ValidationError(MSG_VID_REQUIRED)
+        return c
+
+    class Meta:
+        model = Video
+        fields = ('webm', 'ogv', 'flv', 'thumbnail')
 
 
 class VideoForm(forms.ModelForm):
@@ -104,6 +117,9 @@ class VideoForm(forms.ModelForm):
     webm = forms.FileField(required=False,
                            error_messages={'max_length': MSG_WEBM_LONG},
                            max_length=settings.MAX_FILENAME_LENGTH)
+    thumbnail = forms.ImageField(required=False,
+                                 error_messages={'max_length': MSG_IMAGE_LONG},
+                                 max_length=settings.MAX_FILENAME_LENGTH)
     locale = forms.ChoiceField(
                     choices=[(LOCALES[k].external, LOCALES[k].native) for
                              k in settings.SUMO_LANGUAGES],
@@ -119,25 +135,22 @@ class VideoForm(forms.ModelForm):
                         'max_length': MSG_DESCRIPTION_LONG})
 
     def clean(self):
-        return clean_video(self)
+        """Ensure one of the supported file formats has been uploaded"""
+        c = self.cleaned_data
+        if not ('webm' in c and c['webm'] or
+                'ogv' in c and c['ogv'] or
+                'flv' in c and c['flv']):
+            raise ValidationError(MSG_VID_REQUIRED)
+        clean_draft(self)
+        return self.cleaned_data
 
     def save(self, update_user=None, **kwargs):
         return save_form(self, update_user, **kwargs)
 
     class Meta:
         model = Video
-        fields = ('webm', 'ogv', 'flv', 'locale', 'title', 'description')
-
-
-def clean_video(video_form):
-    """Ensure one of the supported file formats has been uploaded"""
-    c = video_form.cleaned_data
-    if not ('webm' in c and c['webm'] or
-            'ogv' in c and c['ogv'] or
-            'flv' in c and c['flv']):
-        raise ValidationError(MSG_VID_REQUIRED)
-    clean_draft(video_form)
-    return video_form.cleaned_data
+        fields = ('webm', 'ogv', 'flv', 'thumbnail', 'locale',
+                  'title', 'description')
 
 
 def clean_draft(form):

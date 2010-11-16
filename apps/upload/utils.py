@@ -32,7 +32,7 @@ def create_imageattachment(files, user, obj):
     image.file.save(up_file.name, File(up_file), save=True)
 
     # Generate thumbnail off thread
-    generate_image_thumbnail.delay(image, up_file.name)
+    generate_image_thumbnail.delay(image, image.file, up_file.name)
 
     (width, height) = _scale_dimensions(image.file.width, image.file.height)
     return {'name': up_file.name, 'url': image.file.url,
@@ -56,7 +56,7 @@ def upload_imageattachment(request, obj):
                         create_imageattachment, obj=obj)
 
 
-def upload_media(request, form_cls, up_file_callback, **kwargs):
+def upload_media(request, form_cls, up_file_callback, instance=None, **kwargs):
     """
     Uploads media files and returns a list with information about each media:
     name, url, thumbnail_url, width, height.

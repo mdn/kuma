@@ -94,7 +94,7 @@ def cancel_draft(request, media_type='image'):
         draft['image'] = None
     elif media_type == 'video' and draft['video']:
         delete_file = request.GET.get('field')
-        if delete_file not in ('flv', 'ogv', 'webm'):
+        if delete_file not in ('flv', 'ogv', 'webm', 'thumbnail'):
             delete_file = None
 
         if delete_file and getattr(draft['video'], delete_file):

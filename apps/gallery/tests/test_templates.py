@@ -124,10 +124,8 @@ class GalleryUploadTestCase(TestCase):
         response = get(self.client, 'gallery.gallery', args=['image'])
         eq_(200, response.status_code)
         doc = pq(response.content)
-        assert (settings.THUMBNAIL_PROGRESS_URL in
-                doc('.image-preview img').attr('src'))
         # Preview for all 3 video formats: flv, ogv, webm
-        eq_(3, doc('.image-preview img').length)
+        eq_(3, doc('ul li.video-preview').length)
 
     def test_image_draft_post(self):
         """Posting to the page saves the field values for the image draft."""

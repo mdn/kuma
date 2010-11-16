@@ -160,25 +160,44 @@
           </div>
           <label class="row-left preview">{{ _('Preview') }}</label>
           <div class="row-right preview">
-            {% if video_form.instance.pk %}
-              {% if video_form.instance.flv %}
-                <div class="image-preview flv">
-                  <img src="{{ video_form.instance.thumbnail_url_if_set() }}">
-                </div>
-                <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='flv') }}" value="{{ _('Delete this {type} ({format})')|fe(type='video', format='FLV') }}">
+            <ul>
+              {% if video_form.instance.pk %}
+                {% if video_form.instance.flv %}
+                  <li class="video-preview flv">
+                    {{ video_form.instance.flv.name.rsplit('/', 1)[-1] }}
+                    <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='flv') }}" value="{{ _('Delete {format} file')|fe(format='flv') }}">
+                  </li>
+                {% endif %}
+                {% if video_form.instance.ogv %}
+                  <li class="video-preview ogv">
+                    {{ video_form.instance.ogv.name.rsplit('/', 1)[-1] }}
+                    <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='ogv') }}" value="{{ _('Delete {format} file')|fe(format='ogv') }}">
+                  </li>
+                {% endif %}
+                {% if video_form.instance.webm %}
+                  <li class="video-preview webm">
+                    {{ video_form.instance.webm.name.rsplit('/', 1)[-1] }}
+                    <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='webm') }}" value="{{ _('Delete {format} file')|fe(format='webm') }}">
+                  </li>
+                {% endif %}
               {% endif %}
-              {% if video_form.instance.ogv %}
-                <div class="image-preview ogv">
-                  <img src="{{ video_form.instance.thumbnail_url_if_set() }}">
-                </div>
-                <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='ogv') }}" value="{{ _('Delete this video {type} ({format})')|fe(type='video', format='OGV') }}">
-              {% endif %}
-              {% if video_form.instance.webm %}
-                <div class="image-preview webm">
-                  <img src="{{ video_form.instance.thumbnail_url_if_set() }}">
-                </div>
-                <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='webm') }}" value="{{ _('Delete this video {type} ({format})')|fe(type='video', format='WEBM') }}">
-              {% endif %}
+            </ul>
+          </div>
+          <label class="row-left progress thumbnail">{{ _('Progress') }}</label>
+          <div class="row-right progress thumbnail">
+            <span></span>
+            <a href="{{ url('gallery.gallery', media_type=media_type) }}">{{ _('Cancel') }}</a>
+          </div>
+          <label class="row-left upload-media thumbnail">{{ _('Thumbnail') }}</label>
+          <div class="row-right upload-media thumbnail">
+            {% if video_form.instance.thumbnail %}
+              <div class="image-preview">
+                <img src="{{ video_form.instance.thumbnail.url }}"/>
+              </div>
+              <input type="submit" name="cancel" class="draft" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='thumbnail') }}" value="{{ _('Delete {format} file')|fe(format='thumbnail') }}">
+            {% else %}
+              <label for="id_thumbnail">{{ _('Upload a thumbnail for your video. Suggested size: {width}x{height}px')|f(width=settings.THUMBNAIL_SIZE, height=settings.THUMBNAIL_SIZE) }}</label>
+              {{ video_form['thumbnail']|safe }}
             {% endif %}
           </div>
           <div class="upload-action">

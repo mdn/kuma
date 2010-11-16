@@ -26,7 +26,7 @@ def create_image(files, user):
     image.file.save(up_file.name, File(up_file), save=True)
 
     # Generate thumbnail off thread
-    generate_image_thumbnail.delay(image, up_file.name)
+    generate_image_thumbnail.delay(image, image.file, up_file.name)
 
     (width, height) = _scale_dimensions(image.file.width, image.file.height)
     delete_url = reverse('gallery.delete_media', args=['image', image.id])
@@ -59,12 +59,22 @@ def create_video(files, user):
         # name is in (webm, ogv, flv) sent from upload_video(), below
         getattr(vid, name).save(up_file.name, up_file, save=False)
 
+        # Generate thumbnail off thread
+        if 'thumbnail' == name:
+            generate_image_thumbnail.delay(vid, vid.thumbnail, up_file.name)
+
     vid.save()
+    if 'thumbnail' in files:
+        thumb = vid.thumbnail
+        (width, height) = _scale_dimensions(thumb.width, thumb.height)
+    else:
+        width = settings.THUMBNAIL_PROGRESS_WIDTH
+        height = settings.THUMBNAIL_PROGRESS_HEIGHT
     delete_url = reverse('gallery.delete_media', args=['video', vid.id])
     return {'name': up_file.name, 'url': vid.get_absolute_url(),
             'thumbnail_url': vid.thumbnail_url_if_set(),
-            'width': settings.THUMBNAIL_PROGRESS_WIDTH,
-            'height': settings.THUMBNAIL_PROGRESS_HEIGHT,
+            'width': width,
+            'height': height,
             'delete_url': delete_url}
 
 
