@@ -1,7 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs, for_contributors %}
 {% from "wiki/includes/common_macros.html" import content_editor %}
 {% set title = _('Edit Article | {document}')|f(document=document.title) %}
 {# TODO: Change KB url to landing page when we have one #}
@@ -81,4 +81,5 @@
 
 {% block side %}
   {{ document_tabs(document, document.parent, user, 'edit', settings) }}
+  {{ for_contributors(user) }}
 {% endblock %}

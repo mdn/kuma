@@ -2,6 +2,7 @@
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% from "wiki/includes/common_macros.html" import content_editor %}
+{% from "wiki/includes/sidebar_modules.html" import for_contributors %}
 {% set title = _('Create a New Article | Knowledge Base') %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
@@ -47,4 +48,8 @@
     </div>
     <div id="preview"></div>
   </article>
+{% endblock %}
+
+{% block side %}
+  {{ for_contributors(user) }}
 {% endblock %}

@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs, for_contributors %}
 {# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
 {% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
@@ -60,5 +60,6 @@
 
 {% block side %}
   {{ document_tabs(document, document.parent, user, '', settings) }}
+  {{ for_contributors(user) }}
   {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}
