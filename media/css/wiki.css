@@ -780,6 +780,10 @@ div.message-box:after {
 }
 
 /* New / Edit / Translate Document */
+#document-form form {
+    padding: 0 0 20px;
+}
+
 #document-form form > ul,
 #document-form div.relevant-to {
     display: inline-block;
@@ -795,7 +799,7 @@ div.message-box:after {
 #document-form form li {
     clear: both;
     list-style: none;
-    padding: 5px 0;
+    padding: 15px 0;
 }
 
 #document-form div.tags li {
@@ -959,9 +963,8 @@ article.main div.tags input.adder {
 
 /* Translate specific */
 ul.description li {
-    border-top: dotted 1px #999;
     list-style: none;
-    padding: 5px 0;
+    padding: 15px 0;
 }
 
 ul.description li:first-child {
@@ -1423,6 +1426,10 @@ details, summary {
     display: block;
 }
 
+details {
+    margin: 25px 0 0;
+}
+
 /* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
 
 /* Add focus styles (for keyboard accessibility) */
@@ -1449,7 +1456,7 @@ details, summary {
     border-bottom: solid 1px #cadaeb;
     cursor: pointer;
     display: block;
-    margin: 10px 0;
+    margin: 10px 0 30px;
 }
 
 .no-details details summary {
