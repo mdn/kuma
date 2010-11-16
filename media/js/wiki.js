@@ -292,7 +292,7 @@
     // headings from the table of contents.
     function filteredToc($pageBody, excludesSelector) {
         function headerLevel(index, hTag) {
-            return parseInt(hTag.tagName[1], 10);
+            return parseInt(hTag.tagName.charAt(1), 10);
         }
 
         var $headers = $pageBody.find(':header:not(:hidden)'),  // :hidden is a little overkill, but it's short.
