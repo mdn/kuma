@@ -82,6 +82,11 @@
               <div class="comment">
                 {{ rev.comment }}
               </div>
+              {% if document.current_revision != rev and user.has_perm('wiki.delete_revision') %}
+                <div class="delete">
+                  <a href="{{ url('wiki.delete_revision', document.slug, rev.id) }}">{{ _('Delete') }}</a>
+                </div>
+              {% endif %}
             </li>
             {% if loop.last %}</ul>{% endif %}
           {% endfor %}

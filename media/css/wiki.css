@@ -1208,7 +1208,13 @@ ol.pagination li.selected a:hover {
 
 #revision-list div.comment {
     display: inline-block;
-    width: 330px;
+    width: 280px;
+}
+
+#revision-list div.delete {
+    display: inline-block;
+    text-align: center;
+    width: 50px;
 }
 
 #revision-list div.compare {
@@ -1372,6 +1378,17 @@ td.diff_header {
 
 .diff_sub {
     background-color:#ffaaaa;
+}
+
+/* Delete Revision */
+#delete-revision label {
+    display: block;
+    font-size: 16px;
+    margin: 15px 0 0;
+}
+
+#delete-revision form {
+    margin: 20px 0 0;
 }
 
 /* Submit commit message modal */

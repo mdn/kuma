@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.conf import settings
@@ -1073,6 +1075,74 @@ class RelatedDocumentTestCase(TestCaseBase):
 
         # If 'an article title 2' is first, the other must be second.
         eq_('an article title 2', related[0].text)
+
+
+class RevisionDeleteTestCase(TestCaseBase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(RevisionDeleteTestCase, self).setUp()
+        self.d = _create_document()
+        self.r = revision(document=self.d)
+        self.r.save()
+
+    def test_delete_revision_without_permissions(self):
+        """Deleting a revision without permissions sends 403."""
+        self.client.login(username='rrosario', password='testpass')
+        response = get(self.client, 'wiki.delete_revision',
+                       args=[self.d.slug, self.r.id])
+        eq_(403, response.status_code)
+
+        response = post(self.client, 'wiki.delete_revision',
+                        args=[self.d.slug, self.r.id])
+        eq_(403, response.status_code)
+
+    def test_delete_revision_logged_out(self):
+        """Deleting a revision while logged out redirects to login."""
+        response = get(self.client, 'wiki.delete_revision',
+                       args=[self.d.slug, self.r.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/kb/'
+            '%s/revision/%s/delete' % (self.d.slug, self.r.id),
+            redirect[0])
+
+        response = post(self.client, 'wiki.delete_revision',
+                        args=[self.d.slug, self.r.id])
+        redirect = response.redirect_chain[0]
+        eq_(302, redirect[1])
+        eq_('http://testserver/tiki-login.php?next=/en-US/kb/'
+            '%s/revision/%s/delete' % (self.d.slug, self.r.id),
+            redirect[0])
+
+    def test_delete_revision_with_permissions(self):
+        """Deleting a revision with permissions should work."""
+        self.client.login(username='admin', password='testpass')
+        response = get(self.client, 'wiki.delete_revision',
+                       args=[self.d.slug, self.r.id])
+        eq_(200, response.status_code)
+
+        response = post(self.client, 'wiki.delete_revision',
+                        args=[self.d.slug, self.r.id])
+        eq_(0, Revision.objects.filter(pk=self.r.id).count())
+
+    def test_delete_current_revision(self):
+        """Deleting a the current_revision of a document, should update
+        the current_revision to previous version."""
+        self.client.login(username='admin', password='testpass')
+        prev_revision = self.d.current_revision
+        prev_revision.reviewed = datetime.now() - timedelta(days=1)
+        prev_revision.save()
+        self.r.is_approved = True
+        self.r.reviewed = datetime.now()
+        self.r.save()
+        d = Document.objects.get(pk=self.d.pk)
+        eq_(self.r, d.current_revision)
+
+        post(self.client, 'wiki.delete_revision',
+             args=[self.d.slug, self.r.id])
+        d = Document.objects.get(pk=d.pk)
+        eq_(prev_revision, d.current_revision)
 
 
 # TODO: Merge with wiki.tests.doc_rev()?

@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import logging
 from string import ascii_letters
 
 from django.conf import settings
@@ -31,6 +32,9 @@ from wiki.tasks import (send_reviewed_notification,
                         send_ready_for_review_notification,
                         send_edited_notification,
                         schedule_rebuild_kb)
+
+
+log = logging.getLogger('k.wiki')
 
 
 OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
@@ -546,6 +550,42 @@ def helpful_vote(request, document_slug):
         return HttpResponse(json.dumps({'message': message}))
 
     return HttpResponseRedirect(document.get_absolute_url())
+
+
+@login_required
+@permission_required('wiki.delete_revision')
+def delete_revision(request, document_slug, revision_id):
+    """Delete a revision."""
+    revision = get_object_or_404(Revision, pk=revision_id,
+                                 document__slug=document_slug)
+    document = revision.document
+
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'wiki/confirm_revision_delete.html',
+                            {'revision': revision, 'document': document})
+
+    # Handle confirm delete form POST
+    log.warning('User %s is deleting revision with id=%s' %
+                (request.user, revision.id))
+    Revision.objects.filter(based_on=revision).update(based_on=None)
+
+    if document.current_revision == revision:
+        # If the current_revision is being deleted, lets try to update it to
+        # the previous approved revision.
+        revs = document.revisions.filter(
+            is_approved=True).order_by('-reviewed')
+        if revs.count() > 1:
+            document.current_revision = revs[1]
+        else:
+            document.current_revision = None
+        document.html = document.content_parsed or ''
+        document.save()
+
+    revision.delete()
+
+    return HttpResponseRedirect(reverse('wiki.document_revisions',
+                                        args=[document.slug]))
 
 
 def _document_form_initial(document):

@@ -1,0 +1,38 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs, for_contributors %}
+{% set title = _('Delete Revision | {document}')|f(document=document.title) %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (document.get_absolute_url(), document.title),
+                 (None, _('Delete Revision'))] %}
+
+{% block content %}
+  <article id="delete-revision" class="main">
+    <div id="breadcrumbs">
+      {{ _('You are here:') }}
+      {{ breadcrumbs(crumbs) }}
+    </div>
+    <h1 class="title">{{ _('Are you sure you want to delete this revision?') }}</h1>
+    <label>{{ _('Creator') }}</label>
+    <div>{{ revision.creator }}</div>
+    <label>{{ _('Date') }}</label>
+    <div>{{ datetimeformat(revision.created, format='longdatetime') }}</div>
+    <label>{{ _('Content') }}</label>
+    <pre>{{ revision.content }}</pre>
+    <form action="" method="post">
+      {{ csrf() }}
+      <p>
+        {{ _('You are about to permanently delete this revision. <strong>This cannot be undone!</strong> Are you sure you want to continue?')|safe }}
+      </p>
+      <div class="submit">
+        <input type="submit" value="{{ _('Delete') }}" />
+        <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
+      </div>
+    </form>
+  </article>
+{% endblock %}
+
+{% block side %}
+  {{ document_tabs(document, document.parent, user, '', settings) }}
+  {{ for_contributors(user) }}
+{% endblock %}

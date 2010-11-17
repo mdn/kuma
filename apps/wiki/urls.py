@@ -54,6 +54,10 @@ document_patterns = patterns('wiki.views',
 
     # KB discussion forums
     (r'^/discuss', include(discuss_patterns)),
+
+    # Delete a revision
+    url(r'^/revision/(?P<revision_id>\d+)/delete$', 'delete_revision',
+        name='wiki.delete_revision'),
 )
 
 urlpatterns = patterns('wiki.views',
