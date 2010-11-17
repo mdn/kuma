@@ -3,7 +3,9 @@
 {% if params['align'] %}
   {% set classes = classes + ' align-' + params['align'] %}
 {% endif %}
-{% if params['frameless'] or params['valign'] %}
+{% if params['align'] %}
+  {% set has_frame = True %}
+{% elif not params['frame'] or params['valign'] %}
   {% set has_frame = False %}
 {% else %}
   {% set has_frame = True %}

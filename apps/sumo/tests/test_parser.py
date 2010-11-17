@@ -17,7 +17,7 @@ def pq_link(p, text):
     return pq(p.parse(text))('a')
 
 
-def pq_img(p, text, selector='div.img', locale=settings.WIKI_DEFAULT_LANGUAGE):
+def pq_img(p, text, selector='img', locale=settings.WIKI_DEFAULT_LANGUAGE):
     doc = pq(p.parse(text, locale=locale))
     return doc(selector)
 
@@ -331,7 +331,8 @@ class TestWikiImageTags(TestCase):
         """Give the image a caption."""
         self.img.title = 'img test.jpg'
         self.img.save()
-        img_div = pq_img(self.p, '[[Image:img test.jpg|my caption]]')
+        img_div = pq_img(self.p, '[[Image:img test.jpg|frame|my caption]]',
+                         'div.img')
         img = img_div('img')
         caption = img_div.text()
 
@@ -341,33 +342,29 @@ class TestWikiImageTags(TestCase):
 
     def test_page_link(self):
         """Link to a wiki page."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|page=Installing Firefox]]')
-        img_a = img_div('a')
+        img_a = pq_img(self.p, '[[Image:test.jpg|page=Installing Firefox]]',
+                       'a')
         img = img_a('img')
-        caption = img_div.text()
 
         eq_('test.jpg', img.attr('alt'))
-        eq_('test.jpg', caption)
         eq_(self.img.file.url, img.attr('src'))
         eq_('/en-US/kb/installing-firefox', img_a.attr('href'))
 
     def test_page_link_edit(self):
         """Link to a nonexistent wiki page."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|page=Article List]]')
-        img_a = img_div('a')
+        img_a = pq_img(self.p, '[[Image:test.jpg|page=Article List]]', 'a')
         img = img_a('img')
-        caption = img_div.text()
 
         eq_('test.jpg', img.attr('alt'))
-        eq_('test.jpg', caption)
         eq_(self.img.file.url, img.attr('src'))
         assert img_a.hasClass('new')
         eq_('/en-US/kb/new?title=Article+List', img_a.attr('href'))
 
     def test_page_link_caption(self):
-        """Link to a wiki page with caption."""
+        """Link to a wiki page with caption and frame."""
         img_div = pq_img(self.p,
-                         '[[Image:test.jpg|page=Article List|my caption]]')
+                         '[[Image:test.jpg|frame|page=A page|my caption]]',
+                         'div.img')
         img_a = img_div('a')
         img = img_a('img')
         caption = img_div.text()
@@ -376,62 +373,58 @@ class TestWikiImageTags(TestCase):
         eq_('my caption', caption)
         eq_(self.img.file.url, img.attr('src'))
         assert img_a.hasClass('new')
-        eq_('/en-US/kb/new?title=Article+List', img_a.attr('href'))
+        eq_('/en-US/kb/new?title=A+page', img_a.attr('href'))
 
     def test_link(self):
         """Link to an external page."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|link=http://example.com]]')
-        img_a = img_div('a')
+        img_a = pq_img(self.p, '[[Image:test.jpg|link=http://test.com]]', 'a')
         img = img_a('img')
-        caption = img_div.text()
 
         eq_('test.jpg', img.attr('alt'))
-        eq_('test.jpg', caption)
         eq_(self.img.file.url, img.attr('src'))
-        eq_('http://example.com', img_a.attr('href'))
+        eq_('http://test.com', img_a.attr('href'))
 
     def test_link_caption(self):
         """Link to an external page with caption."""
         img_div = pq_img(self.p,
-                         '[[Image:test.jpg|link=http://example.com|caption]]')
-        img_a = img_div('a')
+                         '[[Image:test.jpg|link=http://ab.us|frame|caption]]',
+                         'div.img')
         img = img_div('img')
-        caption = img_div.text()
+        img_a = img_div('a')
 
-        eq_('caption', img.attr('alt'))
-        eq_('caption', caption)
         eq_(self.img.file.url, img.attr('src'))
-        eq_('http://example.com', img_a.attr('href'))
+        eq_('http://ab.us', img_a.attr('href'))
 
     def test_link_align(self):
         """Link with align."""
         img_div = pq_img(self.p,
-                  '[[Image:test.jpg|link=http://site.com|align=left]]')
+                         '[[Image:test.jpg|link=http://site.com|align=left]]',
+                         'div.img')
         eq_('img align-left', img_div.attr('class'))
 
     def test_link_align_invalid(self):
         """Link with invalid align."""
-        img_div = pq_img(self.p,
-                         '[[Image:test.jpg|link=http://example.ro|align=inv]]')
-        eq_('img', img_div.attr('class'))
+        img = pq_img(self.p,
+                     '[[Image:test.jpg|link=http://example.ro|align=inv]]')
+        eq_('frameless', img.attr('class'))
 
     def test_link_valign(self):
         """Link with valign."""
-        img = pq_img(
-            self.p,
-            '[[Image:test.jpg|link=http://example.com|valign=top]]', 'img')
+        img = pq_img(self.p,
+                     '[[Image:test.jpg|link=http://example.com|valign=top]]')
         eq_('vertical-align: top;', img.attr('style'))
 
     def test_link_valign_invalid(self):
         """Link with invalid valign."""
-        img = pq_img(
-            self.p,
-            '[[Image:test.jpg|link=http://example.com|valign=off]]', 'img')
+        img = pq_img(self.p,
+                     '[[Image:test.jpg|link=http://example.com|valign=off]]')
         eq_(None, img.attr('style'))
 
     def test_alt(self):
         """Image alt attribute is overriden but caption is not."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|alt=my alt|my caption]]')
+        img_div = pq_img(self.p,
+                         '[[Image:test.jpg|alt=my alt|frame|my caption]]',
+                         'div.img')
         img = img_div('img')
         caption = img_div.text()
 
@@ -440,7 +433,7 @@ class TestWikiImageTags(TestCase):
 
     def test_alt_empty(self):
         """Image alt attribute can be empty."""
-        img = pq_img(self.p, '[[Image:test.jpg|alt=|my caption]]', 'img')
+        img = pq_img(self.p, '[[Image:test.jpg|alt=|my caption]]')
 
         eq_('', img.attr('alt'))
 
@@ -455,8 +448,7 @@ class TestWikiImageTags(TestCase):
              "single'&quot;double"),
         )
         for alt_sent, alt_expected in unsafe_vals:
-            img_div = pq_img(self.p, '[[Image:test.jpg|alt=' + alt_sent + ']]')
-            img = img_div('img')
+            img = pq_img(self.p, '[[Image:test.jpg|alt=' + alt_sent + ']]')
 
             is_true = str(img).startswith('<img alt="' + alt_expected + '"')
             assert is_true, ('Expected "%s", sent "%s"' %
@@ -464,44 +456,40 @@ class TestWikiImageTags(TestCase):
 
     def test_width(self):
         """Image width attribute set."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|width=10]]')
-        img = img_div('img')
+        img = pq_img(self.p, '[[Image:test.jpg|width=10]]')
 
         eq_('10', img.attr('width'))
 
     def test_width_invalid(self):
         """Invalid image width attribute set to auto."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|width=invalid]]')
-        img = img_div('img')
+        img = pq_img(self.p, '[[Image:test.jpg|width=invalid]]')
 
         eq_(None, img.attr('width'))
 
     def test_height(self):
         """Image height attribute set."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|height=10]]')
-        img = img_div('img')
+        img = pq_img(self.p, '[[Image:test.jpg|height=10]]')
 
         eq_('10', img.attr('height'))
 
     def test_height_invalid(self):
         """Invalid image height attribute set to auto."""
-        img_div = pq_img(self.p, '[[Image:test.jpg|height=invalid]]')
-        img = img_div('img')
+        img = pq_img(self.p, '[[Image:test.jpg|height=invalid]]')
 
         eq_(None, img.attr('height'))
 
     def test_frameless(self):
-        """Image container has frameless class if specified."""
-        img = pq_img(self.p, '[[Image:test.jpg|frameless|caption]]', 'img')
-        eq_('frameless', img.attr('class'))
-        eq_('caption', img.attr('alt'))
-        eq_(self.img.file.url, img.attr('src'))
+        """Image has frame if specified."""
+        img_div = pq_img(self.p, '[[Image:test.jpg|frame|caption]]', 'div.img')
+        assert not img_div('img').hasClass('frameless')
+        eq_('caption', img_div('img').attr('alt'))
+        eq_('caption', img_div.text())
+        eq_(self.img.file.url, img_div('img').attr('src'))
 
     def test_frameless_link(self):
-        """Image container has frameless class and link if specified."""
+        """Image has frameless class and link if specified."""
         img_a = pq_img(self.p,
-                       '[[Image:test.jpg|frameless|page=Installing Firefox]]',
-                       'a')
+                       '[[Image:test.jpg|page=Installing Firefox]]', 'a')
         img = img_a('img')
         eq_('frameless', img.attr('class'))
         eq_('/en-US/kb/installing-firefox', img_a.attr('href'))

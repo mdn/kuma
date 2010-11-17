@@ -4,7 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from gallery.models import Video
-from gallery.tests import video
+from gallery.tests import image, video
 from sumo.tests import TestCase
 import sumo.tests.test_parser
 from wiki.parser import (WikiParser, ForParser, PATTERNS,
@@ -279,6 +279,26 @@ class TestWikiTemplate(TestCase):
         eq_('<p><span class="for" data-for="win">windows</span>'
             '<span class="for" data-for="mac">mac</span>\n\n</p>',
             content)
+
+    def test_button_for_nesting(self):
+        """You can nest {for}s inside {button}."""
+        text = '{button start {for mac}mac{/for}{for win}win{/for} rest}'
+        p = WikiParser()
+        content = p.parse(text)
+        eq_(u'<p><span class="button">start '
+            u'<span class="for" data-for="mac">mac</span>'
+            u'<span class="for" data-for="win">win</span> '
+            u'rest</span>\n</p>', content)
+
+    def test_button_image_for_nesting(self):
+        """You can nest [[Image:]] inside {for} inside {button}."""
+        image(title='image-file.png')
+        text = '{button {for mac}[[Image:image-file.png]]{/for} text}'
+        p = WikiParser()
+        doc = pq(p.parse(text))
+        eq_('frameless', doc('img').attr('class'))
+        eq_(0, doc('div.caption').length)
+        eq_(0, doc('div.img').length)
 
 
 class TestWikiInclude(TestCase):

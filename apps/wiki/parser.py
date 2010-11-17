@@ -296,11 +296,11 @@ class WikiParser(sumo.parser.WikiParser):
 
     def parse(self, text, **kwargs):
         """Wrap SUMO's parse() to support additional wiki-only features."""
-        # Do simple substitutions:
-        text = parse_simple_syntax(text)
-
         # Replace fors with inline tokens the wiki formatter will tolerate:
         text, data = ForParser.strip_fors(text)
+
+        # Do simple substitutions:
+        text = parse_simple_syntax(text)
 
         # Run the formatter:
         html = super(WikiParser, self).parse(text, **kwargs)
