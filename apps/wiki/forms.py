@@ -96,6 +96,9 @@ class DocumentForm(forms.ModelForm):
                                 required=False)
 
     category = forms.ChoiceField(choices=CATEGORIES,
+                                 # Required for non-translations, which is
+                                 # enforced in Document.clean().
+                                 required=False,
                                  label=_('Category:'),
                                  help_text=_('Type of article'))
 

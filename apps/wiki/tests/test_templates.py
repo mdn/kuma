@@ -16,8 +16,7 @@ from sumo.helpers import urlparams
 from sumo.tests import post, get
 from wiki.cron import calculate_related_documents
 from wiki.helpers import is_watching_locale
-from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
-                         CATEGORIES)
+from wiki.models import Document, Revision, HelpfulVote, SIGNIFICANCES
 import wiki.tasks
 from wiki.tests import TestCaseBase, document, revision, new_document_data
 
@@ -212,8 +211,23 @@ class NewDocumentTests(TestCaseBase):
         doc = pq(response.content)
         ul = doc('#document-form > ul.errorlist')
         eq_(1, len(ul))
-        eq_('Select a valid choice. 963 is not one of the available choices.',
-            ul('li').text())
+        assert ('Select a valid choice. 963 is not one of the available '
+                'choices.' in ul('li').text())
+
+    def test_new_document_missing_category(self):
+        """Test the DocumentForm's category validation.
+
+        Submit the form without a category set, and it should complain, even
+        though it's not a strictly required field (because it cannot be set for
+        translations).
+
+        """
+        self.client.login(username='admin', password='testpass')
+        data = new_document_data()
+        del data['category']
+        response = self.client.post(reverse('wiki.new_document'), data,
+                                    follow=True)
+        self.assertContains(response, 'Please choose a category.')
 
     def test_new_document_POST_invalid_ff_version(self):
         """Try to create a new document with an invalid firefox version."""
@@ -873,6 +887,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     post_data_copy.update(post_data)  # Don't mutate arg.
     response = client.post(reverse(view, locale=locale, args=[doc.slug]),
                            data=post_data_copy)
+    eq_(302, response.status_code)
     fred_rev = Revision.objects.all().order_by('-id')[0]
     eq_(orig_rev, fred_rev.based_on)
 
@@ -1163,7 +1178,6 @@ def _create_document(title='Test Document', parent=None,
 def _translation_data():
     return {
         'title': 'Un Test Articulo', 'slug': 'un-test-articulo',
-        'category': CATEGORIES[0][0],
         'tags': 'tagUno,tagDos,tagTres',
         'keywords': 'keyUno, keyDos, keyTres',
         'summary': 'lipsumo',

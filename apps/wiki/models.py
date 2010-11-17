@@ -108,6 +108,11 @@ def _inherited(parent_attr, direct_attr):
     `parent_attr` from the original document. Otherwise, it delegates to the
     attribute `direct_attr` from `self`.
 
+    Use this only on a reference to another object, like a ManyToMany or a
+    ForeignKey. Using it on a normal field won't work well, as it'll preclude
+    the use of that field in QuerySet field lookups. Also, ModelForms that are
+    passed instance=this_obj won't see the inherited value.
+
     """
     getter = lambda self: (getattr(self.parent, parent_attr)
                                if self.parent
@@ -156,13 +161,10 @@ class Document(ModelBase, BigVocabTaggableMixin):
     # Cached HTML rendering of approved revision's wiki markup:
     html = models.TextField(editable=False)
 
-    # Uncomment if/when we need a denormalized flag for how significantly
-    # outdated this translation is. We probably will to support the dashboard.
-    # If you do this, also make a periodic task to audit it occasionally.
-    #
-    # outdated = IntegerField(choices=SIGNIFICANCES, editable=False)
-
+    # A document's category much always be that of its parent. If it has no
+    # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
+
     # firefox_versions,
     # operating_systems:
     #    defined in the respective classes below. Use them as in
@@ -191,6 +193,7 @@ class Document(ModelBase, BigVocabTaggableMixin):
     def clean(self):
         """Translations can't be localizable."""
         self._clean_is_localizable()
+        self._clean_category()
 
     def _clean_is_localizable(self):
         """is_localizable == allowed to have translations. Make sure that isn't
@@ -219,6 +222,20 @@ class Document(ModelBase, BigVocabTaggableMixin):
             raise ValidationError('"%s": parent "%s" has translations but is '
                                   'not localizable.' % (
                                   unicode(self), unicode(self.parent)))
+
+    def _clean_category(self):
+        """Make sure a doc's category is the same as its parent's."""
+        parent = self.parent
+        if parent:
+            self.category = parent.category
+        elif self.category not in (id for id, name in CATEGORIES):
+            # All we really need to do here is make sure category != '' (which
+            # is what it is when it's missing from the DocumentForm). The extra
+            # validation is just a nicety.
+            raise ValidationError(_('Please choose a category.'))
+        else:  # An article cannot have both a parent and children.
+            # Make my children the same as me:
+            self.translations.all().update(category=self.category)
 
     def _attr_for_redirect(self, attr, template):
         """Return the slug or title for a new redirect.
@@ -256,8 +273,14 @@ class Document(ModelBase, BigVocabTaggableMixin):
         self._raise_if_collides('slug', SlugCollision)
         self._raise_if_collides('title', TitleCollision)
 
-        # This is too important to leave to a (possibly omitted) is_valid call.
+        # These are too important to leave to a (possibly omitted) is_valid
+        # call:
         self._clean_is_localizable()
+        # Everything is validated before save() is called, so the only thing
+        # that could cause save() to exit prematurely would be an exception,
+        # which would cause a rollback, which would negate any category changes
+        # we make here, so don't worry:
+        self._clean_category()
 
         super(Document, self).save(*args, **kwargs)
 

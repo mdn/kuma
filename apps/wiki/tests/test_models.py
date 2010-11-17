@@ -8,7 +8,7 @@ from sumo.tests import TestCase
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
-                         REDIRECT_HTML, MAJOR_SIGNIFICANCE)
+                         REDIRECT_HTML, MAJOR_SIGNIFICANCE, CATEGORIES)
 from wiki.parser import wiki_to_html
 from wiki.tests import document, revision, doc_rev, translated_revision
 
@@ -51,7 +51,7 @@ class DocumentTests(TestCase):
         d.delete()
         eq_(0, TaggedItem.objects.count())
 
-    def _test_inheritance(self, enum_class, attr, direct_attr):
+    def _test_m2m_inheritance(self, enum_class, attr, direct_attr):
         """Test a descriptor's handling of parent delegation."""
         parent = document()
         child = document(parent=parent, title='Some Other Title')
@@ -74,13 +74,42 @@ class DocumentTests(TestCase):
 
     def test_firefox_version_inheritance(self):
         """Assert the parent delegation of firefox_version works."""
-        self._test_inheritance(FirefoxVersion, 'firefox_versions',
-                               'firefox_version_set')
+        self._test_m2m_inheritance(FirefoxVersion, 'firefox_versions',
+                                   'firefox_version_set')
 
     def test_operating_system_inheritance(self):
         """Assert the parent delegation of operating_system works."""
-        self._test_inheritance(OperatingSystem, 'operating_systems',
-                               'operating_system_set')
+        self._test_m2m_inheritance(OperatingSystem, 'operating_systems',
+                                   'operating_system_set')
+
+    def test_category_inheritance(self):
+        """A document's categories must always be those of its parent."""
+        some_category = CATEGORIES[1][0]
+        other_category = CATEGORIES[2][0]
+
+        # Notice if somebody ever changes the default on the category field,
+        # which would invalidate our test:
+        assert some_category != document().category
+
+        parent = document(category=some_category)
+        parent.save()
+        child = document(parent=parent, locale='de')
+        child.save()
+
+        # Make sure child sees stuff set on parent:
+        eq_(some_category, child.category)
+
+        # Child'd category should revert to parent's on save:
+        child.category = other_category
+        child.save()
+        eq_(some_category, child.category)
+
+        # Changing the parent category should change the child's:
+        parent.category = other_category
+
+        parent.save()
+        eq_(other_category,
+            parent.translations.get(locale=child.locale).category)
 
     def _test_int_sets_and_descriptors(self, enum_class, attr):
         """Test our lightweight int sets & descriptors' getting and setting."""
@@ -181,6 +210,15 @@ class DocumentTests(TestCase):
         d = document(is_localizable=True, locale='de')
         d.save()
         assert not d.is_localizable
+
+    def test_validate_category_on_save(self):
+        """Make sure invalid categories can't be saved.
+
+        Invalid categories cause errors when viewing documents.
+
+        """
+        d = document(category=9999)
+        self.assertRaises(ValidationError, d.save)
 
 
 class DocumentTestsWithFixture(TestCase):

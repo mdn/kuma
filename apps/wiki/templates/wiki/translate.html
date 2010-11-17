@@ -79,16 +79,6 @@
             </li>
             <li>
               <div class="approved">
-                <h3>{{ _('Category:') }}</h3>
-                <div class="val">{{ parent.get_category_display() }}</div>
-              </div>
-              <div class="localized">
-                <h3><label for="{{ document_form.category.auto_id }}" title="{{ document_form.category.help_text }}">{{ _('Category in {locale}:')|f(locale=language) }}</label></h3>
-                {{ document_form.category|safe }}
-              </div>
-            </li>
-            <li>
-              <div class="approved">
                 <h3>{{ _('Topics:') }}</h3>
                 <div class="val">
                   {% for tag in parent.tags.all() %}
