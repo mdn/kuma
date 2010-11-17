@@ -263,7 +263,7 @@
             if (!$modal.data('inited')) {
                 $modal.append('<a href="#close" class="close">&#x2716;</a>')
                     .data('inited', true);
-                $modal.find('a.close, a.cancel').click(closeModal);
+                $modal.find('a.close, a.cancel, input[name="cancel"]').click(closeModal);
             }
 
             $modal.addClass('active');
@@ -276,7 +276,6 @@
             ev.preventDefault();
             $modal.removeClass('active');
             $overlay.remove();
-            return false;
         }
     }
 

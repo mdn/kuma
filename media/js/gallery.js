@@ -16,28 +16,47 @@ $(document).ready(function () {
              'del': gettext('Delete %s file')}];
 
     jQuery.fn.makeCancelUpload = function (options) {
-        if (!this.is('input')) {
-            return this;
+        var $this = this;
+        if (!$this.is('input')) {
+            return $this;
         }
 
         // drafts: delete, regular cancel: just close the modal
-        $(this).wrap('<form class="inline" method="POST" action="' +
+        $this.wrap('<form class="inline" method="POST" action="' +
                      $(this).attr('data-action') + '"/>')
                .closest('form')
                .append($('input[name="csrfmiddlewaretoken"]').first()
                        .clone());
 
         // now bind to the click event
-        $(this).click(function (ev) {
-            if ($(this).hasClass('draft') ||
-                $(this).closest('.upload-form').hasClass('uploading')) {
-                $(this).closest('form').submit();
+        $this.click(function (ev) {
+            var $this = $(this);
+            if ($this.hasClass('draft') ||
+                $this.closest('.upload-form').hasClass('uploading')) {
+
+                // Delete draft asynchronously
+                var $cancelForm = $this.closest('form'),
+                    $uploadForm = $this.closest('.upload-form');
+                $.ajax({
+                    url: $cancelForm.attr('action'),
+                    type: 'POST',
+                    data: $cancelForm.serialize(),
+                    dataType: 'json'
+                    // Ignore the response, nothing to do.
+                });
+
+                // Clean up
+                $this.removeClass('draft');
+                $uploadForm.removeClass('uploading')
+                    .find('div.row-right.preview').html('');
+                $('#gallery-upload-type').show();
+                $uploadForm.find('.upload-media').show();
+                $uploadForm.find('.progress, .preview, .metadata').hide();
             }
-            $('a.close', $uploadModal).click();
             return false;
         });
 
-        return this;
+        return $this;
     }
 
     init();
@@ -277,8 +296,12 @@ $(document).ready(function () {
             $('.btn-upload').click();
         }
         // auto-open the modal window when drafts are present
-        $('input[name="cancel"]', $uploadModal).each(function () {
+        $uploadModal.find('input[name="cancel"]').each(function () {
             $(this).makeCancelUpload();
+        });
+        // Closing the modal with top-right X cancels upload drafts
+        $uploadModal.delegate('a.close', 'click', function(e) {
+            $uploadModal.find('input.draft[name="cancel"]:last').click();
         });
     }
 });
