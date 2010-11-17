@@ -53,13 +53,12 @@
     <section id="for-contributors" class="sd-module">
       <h1>{{ _('For Contributors') }}</h1>
       <ul>
-        {# TODO: Insert URLs below #}
         <li><a href="{{ url('dashboards.contributors') }}">{{ _('Contributor Home Page') }}</a></li>
         <li><a href="{{ url('dashboards.localization') }}">{{ _('Localization Dashboard') }}</a></li>
         <li><a href="{{ url('gallery.home') }}">{{ _('Media Gallery') }}</a></li>
-        <li><a href="#">{{ _('Creating Articles') }}</a></li>
-        <li><a href="#">{{ _('Helping in the Forum') }}</a></li>
-        <li><a href="#">{{ _('Helping in Live Chat') }}</a></li>
+        <li><a href="{{ url('wiki.document', 'Creating Articles') }}">{{ _('Creating Articles') }}</a></li>
+        <li><a href="{{ url('wiki.document', 'Helping in the Forum') }}">{{ _('Helping in the Forum') }}</a></li>
+        <li><a href="{{ url('wiki.document', 'Helping in Live Chat') }}">{{ _('Helping in Live Chat') }}</a></li>
       </ul>
     </section>
   {% endif %}
@@ -90,7 +89,7 @@
         <a href="{{ url('home') }}">{{ _('Firefox Help Home') }}</a>
       </li>
       <li class="aaq {{ 'active' if active == 2 }}">
-        <a href="{{ url('questions.new_question') }}">{{ _('Ask a Question') }}</a>
+        <a href="{{ url('wiki.document', 'ask') }}">{{ _('Ask a Question') }}</a>
       </li>
     </ul>
   </nav>

@@ -74,7 +74,7 @@
           {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
         </li>
         <li>
-          <a href="{{ url('questions.new_question') }}">{{ _('Ask our awesome support community for help') }}</a>
+          <a href="{{ url('wiki.document', 'ask') }}">{{ _('Ask our awesome support community for help') }}</a>
         </li>
       </ul>
       {{ search_box(settings, id=False, prefix='Or try searching:') }}

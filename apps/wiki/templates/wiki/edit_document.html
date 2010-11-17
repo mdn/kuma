@@ -53,8 +53,8 @@
         <details class="h2" open="open">
           <summary>{{ _('Edit Content') }}</summary>
           <p>
-            {% trans url='#' %}For help with writing articles, check out the
-              <a href="{url}">Support Document Guide</a>.{% endtrans %}
+            {% trans url=url('wiki.document', 'support-document-guide') %}For help with writing articles, check out the
+              <a href="{{ url }}">Support Document Guide</a>.{% endtrans %}
           </p>
           {{ errorlist(revision_form) }}
           <form action="" method="post">
