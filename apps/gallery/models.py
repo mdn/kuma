@@ -21,6 +21,7 @@ class Media(ModelBase):
 
     class Meta:
         abstract = True
+        ordering = ['-created']
         unique_together = ('locale', 'title')
 
     def __unicode__(self):
