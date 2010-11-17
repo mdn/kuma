@@ -517,7 +517,7 @@ def json_view(request):
         'summary': document.current_revision.summary,
         'url': document.get_absolute_url(),
     })
-    return HttpResponse(data, mimetype='application/x-json')
+    return HttpResponse(data, mimetype='application/json')
 
 
 @require_POST

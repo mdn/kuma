@@ -107,12 +107,12 @@ def cancel_draft(request, media_type='image'):
         mimetype = None
         if request.is_ajax():
             msg = json.dumps({'status': 'error', 'message': msg})
-            mimetype = 'application/x-json'
+            mimetype = 'application/json'
         return HttpResponseBadRequest(msg, mimetype=mimetype)
 
     if request.is_ajax():
         return HttpResponse(json.dumps({'status': 'success'}),
-                            mimetype='application/x-json')
+                            mimetype='application/json')
 
     return HttpResponseRedirect(reverse('gallery.gallery', args=[media_type]))
 
@@ -243,18 +243,16 @@ def upload_async(request, media_type='image'):
             file_info = upload_video(request)
     except FileTooLargeError as e:
         return HttpResponseBadRequest(
-            json.dumps({'status': 'error', 'message': e.args[0]}),
-            mimetype='application/x-json')
+            json.dumps({'status': 'error', 'message': e.args[0]}))
 
     if isinstance(file_info, dict) and 'thumbnail_url' in file_info:
         return HttpResponse(
-            json.dumps({'status': 'success', 'file': file_info}),
-            mimetype='application/x-json')
+            json.dumps({'status': 'success', 'file': file_info}))
 
     message = MSG_FAIL_UPLOAD[media_type]
     return HttpResponseBadRequest(
         json.dumps({'status': 'error', 'message': message,
-                    'errors': file_info}), mimetype='application/x-json')
+                    'errors': file_info}))
 
 
 def _get_media_info(media_id, media_type):

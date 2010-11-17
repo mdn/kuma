@@ -422,7 +422,7 @@ def add_tag_async(request, question_id):
         canonical_name = _add_tag(request, question_id)
     except Tag.DoesNotExist:
         return HttpResponse(json.dumps({'error': unicode(UNAPPROVED_TAG)}),
-                            mimetype='application/x-json',
+                            mimetype='application/json',
                             status=400)
 
     if canonical_name:
@@ -431,10 +431,10 @@ def add_tag_async(request, question_id):
         data = {'canonicalName': canonical_name,
                 'tagUrl': tag_url}
         return HttpResponse(json.dumps(data),
-                            mimetype='application/x-json')
+                            mimetype='application/json')
 
     return HttpResponse(json.dumps({'error': unicode(NO_TAG)}),
-                        mimetype='application/x-json',
+                        mimetype='application/json',
                         status=400)
 
 
@@ -470,10 +470,10 @@ def remove_tag_async(request, question_id):
     if name:
         question = get_object_or_404(Question, pk=question_id)
         question.tags.remove(name)
-        return HttpResponse('{}', mimetype='application/x-json')
+        return HttpResponse('{}', mimetype='application/json')
 
     return HttpResponseBadRequest(json.dumps({'error': unicode(NO_TAG)}),
-                                  mimetype='application/x-json')
+                                  mimetype='application/json')
 
 
 @login_required
