@@ -211,6 +211,42 @@ class DocumentTestsWithFixture(TestCase):
 
         assert trans_doc.is_majorly_outdated()
 
+    def test_majorly_outdated_with_unapproved_parents(self):
+        """Migrations might introduce translated revisions without based_on
+        set. Tolerate these.
+
+        If based_on of a translation's current_revision is None, the
+        translation should be considered out of date iff any
+        major-significance, approved revision to the English article exists.
+
+        """
+        # Create a parent doc with only an unapproved revision...
+        parent_rev = revision()
+        parent_rev.save()
+        # ...and a translation with a revision based on nothing.
+        trans = document(parent=parent_rev.document, locale='de')
+        trans.save()
+        trans_rev = revision(document=trans, is_approved=True)
+        trans_rev.save()
+
+        assert trans_rev.based_on is None, \
+            ('based_on defaulted to something non-None, which this test '
+             "wasn't expecting.")
+
+        assert not trans.is_majorly_outdated(), \
+            ('A translation was considered majorly out of date even though '
+             'the English document has never had an approved revision of '
+             'major significance.')
+
+        major_parent_rev = revision(document=parent_rev.document,
+                                    significance=MAJOR_SIGNIFICANCE,
+                                    is_approved=True)
+        major_parent_rev.save()
+
+        assert trans.is_majorly_outdated(), \
+            ('A translation was not considered majorly outdated when its '
+             "current revision's based_on value was None.")
+
 
 class RedirectTests(TestCase):
     """Tests for automatic creation of redirects when slug or title changes"""
