@@ -425,6 +425,7 @@
                     $('#preview')
                         .html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
+                    document.location.hash = 'preview';
                     initForTags();
                     initShowforSelectors();
                     k.initVideo();
