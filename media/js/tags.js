@@ -78,15 +78,17 @@
 
         $("input.autocomplete-tags").each(
             function() {
-                var $input = $(this);
+                var $input = $(this),
+                    tender = makeButtonTender($input.closest("form"));
+
                 $input.autocomplete({
                     source: makeVocabCallback($input.closest("div.tags")),
                     delay: 0,
-                    minLength: 1  // Adjust with size of vocab.
-                                  // Starting small for discoverability.
+                    minLength: 1,  // Adjust with size of vocab.
+                                   // Starting small for discoverability.
+                    close: tender
                 });
-
-                tender = makeButtonTender($input.closest("form"));
+                
                 // keyup isn't triggered by pasting into the field. FWIW,
                 // Google Suggest also punts on this.
                 $input.keyup(tender);
