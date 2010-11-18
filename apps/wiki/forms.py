@@ -76,7 +76,8 @@ class DocumentForm(forms.ModelForm):
                                 label=_('Firefox version:'),
                                 choices=[(v.id, v.long) for v in
                                          FIREFOX_VERSIONS],
-                                initial=[v.id for v in FIREFOX_VERSIONS],
+                                initial=[v.id for v in
+                                         GROUPED_FIREFOX_VERSIONS[0][1]],
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
@@ -84,7 +85,8 @@ class DocumentForm(forms.ModelForm):
                                 label=_('Operating systems:'),
                                 choices=[(o.id, o.name) for o in
                                          OPERATING_SYSTEMS],
-                                initial=[o.id for o in OPERATING_SYSTEMS],
+                                initial=[o.id for o in
+                                         GROUPED_OPERATING_SYSTEMS[0][1]],
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
