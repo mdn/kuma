@@ -26,7 +26,8 @@ from wiki import DOCUMENTS_PER_PAGE
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
-                         FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS)
+                         FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
+                         get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tasks import (send_reviewed_notification,
                         send_ready_for_review_notification,
@@ -383,7 +384,7 @@ def translate(request, document_slug):
         return jingo.render(request, 'handlers/400.html',
                             {'message': message}, status=400)
 
-    based_on_rev = _get_current_or_latest_revision(parent_doc)
+    based_on_rev = get_current_or_latest_revision(parent_doc)
     disclose_description = bool(request.GET.get('opendescription'))
 
     try:
@@ -459,7 +460,7 @@ def translate(request, document_slug):
     return jingo.render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
-                         'locale': request.locale,
+                         'locale': request.locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description})
 
 
@@ -618,16 +619,3 @@ def _maybe_schedule_rebuild(form):
     """Try to schedule a KB rebuild if a title or slug has changed."""
     if 'title' in form.changed_data or 'slug' in form.changed_data:
         schedule_rebuild_kb()
-
-
-def _get_current_or_latest_revision(document):
-    """Returns current revision if there is one, else the last created
-    revision."""
-    rev = document.current_revision
-    if not rev:
-        revs = document.revisions.exclude(
-            is_approved=False, reviewed__isnull=False).order_by('-created')
-        if revs.exists():
-            rev = revs[0]
-
-    return rev

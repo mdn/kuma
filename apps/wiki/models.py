@@ -470,17 +470,23 @@ class Revision(ModelBase):
         value was correct).
 
         based_on must be an approved revision of the English version of the
-        document if there are any such revisions and None otherwise. If
-        based_on is not already set when this is called, the return value
-        defaults to the current_revision of the English document.
+        document if there are any such revisions, any revision if no
+        approved revision exists, and None otherwise. If based_on is not
+        already set when this is called, the return value defaults to the
+        current_revision of the English document.
 
         """
-        if self.document.original.current_revision:
+        # TODO(james): This could probably be simplified down to "if
+        # based_on is set, it must be a revision of the original document."
+        original = self.document.original
+        base = get_current_or_latest_revision(original)
+        has_approved = original.revisions.filter(is_approved=True).exists()
+        if (original.current_revision or not has_approved):
             if (self.based_on and
-                self.based_on.document != self.document.original):
+                self.based_on.document != original):
                 # based_on is set and points to the wrong doc.
-                return self.document.original.current_revision, False
-            # else based_on is valid; leave it alone
+                return base, False
+            # Else based_on is valid; leave it alone.
         elif self.based_on:
             return None, False
         return self.based_on, True
@@ -500,8 +506,9 @@ class Revision(ModelBase):
             if not is_clean:
                 old = self.based_on
                 self.based_on = based_on  # Be nice and guess a correct value.
-                raise ValidationError(_('A revision must be based on an '
-                    'approved revision of the %(locale)s document. Revision ID'
+                # TODO(erik): This error message ignores non-translations.
+                raise ValidationError(_('A revision must be based on a '
+                    'revision of the %(locale)s document. Revision ID'
                     ' %(id)s does not fit those criteria.') %
                     dict(locale=LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
                          id=old.id))
@@ -509,8 +516,9 @@ class Revision(ModelBase):
     def save(self, *args, **kwargs):
         _, is_clean = self._based_on_is_clean()
         if not is_clean:  # No more Mister Nice Guy
-            raise ProgrammingError('Revision.based_on must be None or refer to'
-                                   ' an approved revision of the default-'
+            # TODO(erik): This error message ignores non-translations.
+            raise ProgrammingError('Revision.based_on must be None or refer '
+                                   'to a revision of the default-'
                                    'language document.')
 
         super(Revision, self).save(*args, **kwargs)
@@ -574,3 +582,16 @@ class RelatedDocument(ModelBase):
 
     class Meta(object):
         ordering = ['-in_common']
+
+
+def get_current_or_latest_revision(document):
+    """Returns current revision if there is one, else the last created
+    revision."""
+    rev = document.current_revision
+    if not rev:
+        revs = document.revisions.exclude(
+            is_approved=False, reviewed__isnull=False).order_by('-created')
+        if revs.exists():
+            rev = revs[0]
+
+    return rev

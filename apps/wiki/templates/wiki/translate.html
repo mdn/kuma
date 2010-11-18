@@ -17,159 +17,153 @@
       {{ breadcrumbs(crumbs) }}
     </div>
     <h1>{{ _('Translating {title}')|f(title=parent.title) }}</h1>
-    {% if not parent.current_revision %}
+    <div class="change-locale">
       <p>
-        {{ _('There is no approved revision to translate from.') }}
+        {{ _('Translating article to {locale}' )|f(locale=language) }}.
+        <a class="change" href="#change-locale">Change</a>
       </p>
-    {% else %}
-      <div class="change-locale">
-        <p>
-          {{ _('Translating article to {locale}' )|f(locale=language) }}.
-          <a class="change" href="#change-locale">Change</a>
-        </p>
-        <section id="change-locale" class="pop-in">
-          <h1>{{ _('Choose a locale:') }}</h1>
-          <div class="wrap">
-            <ul>
-              {% for lcl in settings.LANGUAGE_CHOICES %}
-                {% if lcl[0] not in [settings.WIKI_DEFAULT_LANGUAGE, locale] %}
-                  <li><a href="{{ url('wiki.translate', locale=lcl[0], document_slug=parent.slug) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          </div>
-        </section>
-      </div>
-      {% if not document %}
-        {# If this is the first translation to this locale, we use 1 big form. #}
-        <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
-          {{ csrf() }}
-          <input type="hidden" name="form" value="both" />
-      {% endif %}
-      {% if document_form %}
-        <details class="h2"{% if disclose_description %} open="open"{% endif %}>
-          <summary>{{ _('Translate Description') }}</summary>
-          {{ errorlist(document_form) }}
-          {% if document %}
-            {# If there are existing translations in this locale, we use 2 separate forms. #}
-            <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
-              {{ csrf() }}
-              <input type="hidden" name="form" value="doc" />
-          {% endif %}
-          <ul class="description">
-            <li>
-              <div class="approved">
-                <h3>{{ _('Title:') }}</h3>
-                <div class="val">{{ parent.title }}</div>
-              </div>
-              <div class="localized">
-                <h3><label for="{{ document_form.title.auto_id }}" title="{{ document_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></h3>
-                {{ document_form.title|safe }}
-              </div>
-            </li>
-            <li>
-              <div class="approved">
-                <h3>{{ _('Slug:') }}</h3>
-                <div class="val">{{ parent.slug }}</div>
-              </div>
-              <div class="localized">
-                <h3><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></h3>
-                {{ document_form.slug|safe }}
-              </div>
-            </li>
-            <li>
-              <div class="approved">
-                <h3>{{ _('Topics:') }}</h3>
-                <div class="val">
-                  {% for tag in parent.tags.all() %}
-                    {{ tag.name }}
-                    {% if not loop.last %}, {% endif %}
-                  {% endfor %}
-                </div>
-              </div>
-              <div class="localized">
-                <h3><label for="{{ document_form.tags.auto_id }}" title="{{ document_form.tags.help_text }}">{{ _('Topics in {locale}:')|f(locale=language) }}</label></h3>
-                {{ document_form.tags|safe }}
-              </div>
-            </li>
+      <section id="change-locale" class="pop-in">
+        <h1>{{ _('Choose a locale:') }}</h1>
+        <div class="wrap">
+          <ul>
+            {% for lcl in settings.LANGUAGE_CHOICES %}
+              {% if lcl[0] not in [settings.WIKI_DEFAULT_LANGUAGE, locale] %}
+                <li><a href="{{ url('wiki.translate', locale=lcl[0], document_slug=parent.slug) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
+              {% endif %}
+            {% endfor %}
           </ul>
-          {% if document %}
-              <div class="submit">
-                <input type="submit" value="{{ _('Save') }}">
-              </div>
-            </form>
-          {% endif %}
-        </details>
-      {% endif %}
-
-      {% if revision_form %}
-        <details class="h2" open="open">
-          <summary>{{ _('Translate Content') }}</summary>
-          {{ errorlist(revision_form) }}
-          {% if document %}
-            {# If there are existing translations in this locale, we use 2 separate forms. #}
-            <form action="" method="post">
-              {{ csrf() }}
-              <input type="hidden" name="form" value="rev" />
-          {% endif %}
-          <ul class="description">
-            <li>
-              <div class="approved">
-                <h3>{{ _('Keywords:') }}</h3>
-                <div class="val">{{ parent.current_revision.keywords }}</div>
-              </div>
-              <div class="localized">
-                <h3><label for="{{ revision_form.keywords.auto_id }}" title="{{ revision_form.keywords.help_text }}">{{ _('Keywords in {locale}:')|f(locale=language) }}</label></h3>
-                {{ revision_form.keywords|safe }}
-              </div>
-            </li>
-            <li>
-              <div class="approved">
-                <h3>{{ _('Search result summary:') }}</h3>
-                <div class="val">{{ parent.current_revision.summary }}</div>
-              </div>
-              <div class="localized">
-                <h3><label for="{{ revision_form.summary.auto_id }}" title="{{ revision_form.summary.help_text }}">{{ _('Search result summary in {locale}:')|f(locale=language) }}</label></h3>
-                {{ revision_form.summary|safe }}
-              </div>
-            </li>
-          </ul>
-          {% if document.current_revision and document.current_revision.based_on %}
-            {# Diff between the English version the current translation is based on and the current English version. #}
-            {% set revision_from = document.current_revision.based_on %}
-            {% set revision_to = parent.current_revision %}
-            {% include 'wiki/includes/revision_diff.html' %}
-            {# TODO: 'change revisions' link and modal selector #}
-          {% else %}
-            <p>{{ _('Note: There are no approved translations for this article.') }}
-          {% endif %}
-          <div id="content-fields">
-            <ul>
+        </div>
+      </section>
+    </div>
+    {% if not document %}
+      {# If this is the first translation to this locale, we use 1 big form. #}
+      <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
+        {{ csrf() }}
+        <input type="hidden" name="form" value="both" />
+    {% endif %}
+    {% if document_form %}
+      <details class="h2"{% if disclose_description %} open="open"{% endif %}>
+        <summary>{{ _('Translate Description') }}</summary>
+        {{ errorlist(document_form) }}
+        {% if document %}
+          {# If there are existing translations in this locale, we use 2 separate forms. #}
+          <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
+            {{ csrf() }}
+            <input type="hidden" name="form" value="doc" />
+        {% endif %}
+        <ul class="description">
+          <li>
             <div class="approved">
-              <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
-              <textarea readonly="readonly">{{ parent.current_revision.content }}</textarea>
+              <h3>{{ _('Title:') }}</h3>
+              <div class="val">{{ parent.title }}</div>
             </div>
             <div class="localized">
-              <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
-              {{ content_editor(revision_form.content) }}
+              <h3><label for="{{ document_form.title.auto_id }}" title="{{ document_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></h3>
+              {{ document_form.title|safe }}
             </div>
+          </li>
+          <li>
+            <div class="approved">
+              <h3>{{ _('Slug:') }}</h3>
+              <div class="val">{{ parent.slug }}</div>
+            </div>
+            <div class="localized">
+              <h3><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></h3>
+              {{ document_form.slug|safe }}
+            </div>
+          </li>
+          <li>
+            <div class="approved">
+              <h3>{{ _('Topics:') }}</h3>
+              <div class="val">
+                {% for tag in parent.tags.all() %}
+                  {{ tag.name }}
+                  {% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="localized">
+              <h3><label for="{{ document_form.tags.auto_id }}" title="{{ document_form.tags.help_text }}">{{ _('Topics in {locale}:')|f(locale=language) }}</label></h3>
+              {{ document_form.tags|safe }}
+            </div>
+          </li>
+        </ul>
+        {% if document %}
+            <div class="submit">
+              <input type="submit" value="{{ _('Save') }}">
+            </div>
+          </form>
+        {% endif %}
+      </details>
+    {% endif %}
+
+    {% if revision_form %}
+      <details class="h2" open="open">
+        <summary>{{ _('Translate Content') }}</summary>
+        {{ errorlist(revision_form) }}
+        {% if document %}
+          {# If there are existing translations in this locale, we use 2 separate forms. #}
+          <form action="" method="post">
+            {{ csrf() }}
+            <input type="hidden" name="form" value="rev" />
+        {% endif %}
+        <ul class="description">
+          <li>
+            <div class="approved">
+              <h3>{{ _('Keywords:') }}</h3>
+              <div class="val">{{ based_on.keywords }}</div>
+            </div>
+            <div class="localized">
+              <h3><label for="{{ revision_form.keywords.auto_id }}" title="{{ revision_form.keywords.help_text }}">{{ _('Keywords in {locale}:')|f(locale=language) }}</label></h3>
+              {{ revision_form.keywords|safe }}
+            </div>
+          </li>
+          <li>
+            <div class="approved">
+              <h3>{{ _('Search result summary:') }}</h3>
+              <div class="val">{{ based_on.summary }}</div>
+            </div>
+            <div class="localized">
+              <h3><label for="{{ revision_form.summary.auto_id }}" title="{{ revision_form.summary.help_text }}">{{ _('Search result summary in {locale}:')|f(locale=language) }}</label></h3>
+              {{ revision_form.summary|safe }}
+            </div>
+          </li>
+        </ul>
+        {% if document.current_revision and document.current_revision.based_on %}
+          {# Diff between the English version the current translation is based on and the current English version. #}
+          {% set revision_from = document.current_revision.based_on %}
+          {% set revision_to = parent.current_revision %}
+          {% include 'wiki/includes/revision_diff.html' %}
+          {# TODO: 'change revisions' link and modal selector #}
+        {% else %}
+          <p>{{ _('Note: There are no approved translations for this article.') }}
+        {% endif %}
+        <div id="content-fields">
+          <ul>
+          <div class="approved">
+            <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
+            <textarea readonly="readonly">{{ based_on.content }}</textarea>
           </div>
-          <div class="submit">
-            <input id="btn-preview" data-preview-url="{{ url('wiki.preview') }}" type="button" value="{{ _('Preview Content') }}" />
-            <input id="btn-submit" class="activates-modal" data-modal-selector="#submit-modal" type="submit" value="{{ _('Submit for Review') }}">
-            {# TODO: save for later #}
-            <a href="{{ url('wiki.document', parent.slug) }}">{{ _('Cancel Changes') }}</a>
+          <div class="localized">
+            <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
+            {{ content_editor(revision_form.content) }}
           </div>
-          {{ revision_form.hidden_fields()|join|safe }}
-          {% include 'wiki/includes/submit_revision_modal.html' %}
-          {% if document %}
-            </form>
-          {% endif %}
-        </details>
-      {% endif %}
-      {% if not document %}
-        </form>
-      {% endif %}
+        </div>
+        <div class="submit">
+          <input id="btn-preview" data-preview-url="{{ url('wiki.preview') }}" type="button" value="{{ _('Preview Content') }}" />
+          <input id="btn-submit" class="activates-modal" data-modal-selector="#submit-modal" type="submit" value="{{ _('Submit for Review') }}">
+          {# TODO: save for later #}
+          <a href="{{ url('wiki.document', parent.slug) }}">{{ _('Cancel Changes') }}</a>
+        </div>
+        {{ revision_form.hidden_fields()|join|safe }}
+        {% include 'wiki/includes/submit_revision_modal.html' %}
+        {% if document %}
+          </form>
+        {% endif %}
+      </details>
+    {% endif %}
+    {% if not document %}
+      </form>
     {% endif %}
     <div id="preview"></div>
   </article>
