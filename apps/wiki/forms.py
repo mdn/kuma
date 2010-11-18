@@ -1,4 +1,5 @@
 import json
+import re
 
 from django import forms
 from django.utils.encoding import smart_str
@@ -20,6 +21,7 @@ TITLE_LONG = _lazy(u'Please keep the length of the title to %(limit_value)s '
                    u'characters or less. It is currently %(show_value)s '
                    u'characters.')
 SLUG_REQUIRED = _lazy('Please provide a slug.')
+SLUG_INVALID = _lazy('The slug provided is not valid.')
 SLUG_SHORT = _lazy(u'The slug is too short (%(show_value)s characters). '
                    u'It must be at least %(limit_value)s characters.')
 SLUG_LONG = _lazy(u'Please keep the length of the slug to %(limit_value)s '
@@ -103,6 +105,12 @@ class DocumentForm(forms.ModelForm):
                                  help_text=_('Type of article'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
+
+    def clean_slug(self):
+        slug = self.cleaned_data['slug']
+        if not re.compile(r'^[^/]+$').match(slug):
+            raise forms.ValidationError(SLUG_INVALID)
+        return slug
 
     def clean_firefox_versions(self):
         data = self.cleaned_data['firefox_versions']

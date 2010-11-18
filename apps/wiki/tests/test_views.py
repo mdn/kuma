@@ -135,3 +135,18 @@ class DocumentEditingTests(TestCase):
         client.post(reverse('wiki.edit_document', args=[data['slug']]), data)
         eq_(2, d.firefox_versions.count())
         eq_(1, d.operating_systems.count())
+
+    def test_invalid_slug(self):
+        """Slugs cannot contain /."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        data = new_document_data()
+        data['slug'] = 'inva/lid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertContains(response, 'The slug provided is not valid.')
+
+        data['slug'] = 'valid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertRedirects(response, reverse('wiki.document_revisions',
+                                               args=[data['slug']],
+                                               locale='en-US'))
