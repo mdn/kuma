@@ -53,21 +53,21 @@ class DocumentForm(forms.ModelForm):
         tags_field = self.fields['tags']
         tags_field.label = _('Topics:')
         tags_field.help_text = (
-          _('Popular articles in each topic are displayed on the front page.'))
+          _('Popular articles in each topic are displayed on the front page'))
         tags_field.widget.can_create_tags = can_create_tags
         tags_field.required = False
 
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(),
                               label=_('Title:'),
-                              help_text=_('Title of article.'),
+                              help_text=_('Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=5, max_length=255,
                              widget=forms.TextInput(),
                              label=_('Slug:'),
-                             help_text=_('Article URL.'),
+                             help_text=_('Article URL'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
@@ -95,7 +95,7 @@ class DocumentForm(forms.ModelForm):
 
     category = forms.ChoiceField(choices=CATEGORIES,
                                  label=_('Category:'),
-                                 help_text=_('Type of article.'))
+                                 help_text=_('Type of article'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -134,12 +134,12 @@ class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
     keywords = StrippedCharField(required=False,
                                  label=_('Keywords:'),
-                                 help_text=_('Affects search results.'))
+                                 help_text=_('Affects search results'))
 
     summary = StrippedCharField(
                 min_length=5, max_length=1000, widget=forms.Textarea(),
                 label=_('Search result summary:'),
-                help_text=_('Only displayed on search results page.'),
+                help_text=_('Only displayed on search results page'),
                 error_messages={'required': SUMMARY_REQUIRED,
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
