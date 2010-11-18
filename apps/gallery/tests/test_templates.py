@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.models import User
 
 from nose import SkipTest
@@ -57,6 +56,7 @@ class GalleryPageCase(TestCase):
         # * Upload modal has the URL's locale selected
         # * POSTing invalid data shows error messages and pre-fills that data
         raise SkipTest
+
 
 class GalleryAsyncCase(TestCase):
     fixtures = ['users.json']

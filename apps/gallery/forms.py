@@ -94,9 +94,12 @@ class VideoUploadFormAsync(forms.ModelForm):
 
     def clean(self):
         c = self.cleaned_data
-        if not ('webm' in c and c['webm'] or
-                'ogv' in c and c['ogv'] or
-                'flv' in c and c['flv'] or
+        if not ('webm' in c and c['webm'] and
+                    c['webm'].name.endswith('.webm') or
+                'ogv' in c and c['ogv'] and
+                    (c['ogv'].name.endswith('.ogv') or
+                     c['ogv'].name.endswith('.ogg')) or
+                'flv' in c and c['flv'] and c['flv'].name.endswith('.flv') or
                 'thumbnail' in c and c['thumbnail']):
             raise ValidationError(MSG_VID_REQUIRED)
         return c

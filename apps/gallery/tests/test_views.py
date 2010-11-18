@@ -3,7 +3,6 @@ import json
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from nose import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -20,6 +19,7 @@ TEST_IMG = 'apps/upload/tests/media/test.jpg'
 TEST_VID = {'webm': 'apps/gallery/tests/media/test.webm',
             'ogv': 'apps/gallery/tests/media/test.ogv',
             'flv': 'apps/gallery/tests/media/test.flv'}
+INVALID_VID = 'apps/gallery/tests/media/test.rtf'
 VIDEO_PATH = settings.MEDIA_URL + settings.GALLERY_VIDEO_PATH
 
 
@@ -321,17 +321,16 @@ class UploadVideoTestCase(TestCase):
             eq_(message % {'length': 251, 'max': settings.MAX_FILENAME_LENGTH},
                 json_r['errors'][k][0])
 
-    def test_invalid_video_webm(self):
-        """Make sure invalid webm videos are not accepted."""
-        raise SkipTest
-
-    def test_invalid_video_ogv(self):
-        """Make sure invalid ogv videos are not accepted."""
-        raise SkipTest
-
-    def test_invalid_video_flv(self):
-        """Make sure invalid flv videos are not accepted."""
-        raise SkipTest
+    def test_invalid_video_extension(self):
+        """Make sure invalid video extensions are not accepted."""
+        with open(INVALID_VID) as f:
+            r = post(self.client, 'gallery.upload_async', {'webm': f},
+                     args=['video'])
+        eq_(400, r.status_code)
+        json_r = json.loads(r.content)
+        eq_('error', json_r['status'])
+        eq_('Could not upload your video.', json_r['message'])
+        eq_(forms.MSG_VID_REQUIRED, json_r['errors']['__all__'][0])
 
 
 class SearchTestCase(TestCase):
