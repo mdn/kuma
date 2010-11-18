@@ -366,6 +366,8 @@ def translate(request, document_slug):
     * translation is to the request locale
 
     """
+    # TODO: Refactor this view into two views? (new, edit)
+    # That might help reduce the headache-inducing branchiness.
     parent_doc = get_object_or_404(
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
     user = request.user
@@ -381,12 +383,7 @@ def translate(request, document_slug):
         return jingo.render(request, 'handlers/400.html',
                             {'message': message}, status=400)
 
-    # Require an approved revision to translate from:
-    based_on_rev = parent_doc.current_revision
-    if not based_on_rev:
-        return jingo.render(request, 'wiki/translate.html',
-                            {'parent': parent_doc})
-
+    based_on_rev = _get_current_or_latest_revision(parent_doc)
     disclose_description = bool(request.GET.get('opendescription'))
 
     try:
@@ -408,9 +405,11 @@ def translate(request, document_slug):
         doc_form = DocumentForm(initial=doc_initial,
             can_create_tags=user.has_perm('taggit.add_tag'))
     if user_has_rev_perm:
+        initial = {'based_on': based_on_rev.id, 'comment': ''}
+        if not doc:
+            initial.update(content=based_on_rev.content)
         rev_form = RevisionForm(instance=doc and doc.current_revision,
-                                initial={'based_on': based_on_rev.id,
-                                         'comment': ''})
+                                initial=initial)
 
     if request.method == 'POST':
         which_form = request.POST.get('form', 'both')
@@ -619,3 +618,16 @@ def _maybe_schedule_rebuild(form):
     """Try to schedule a KB rebuild if a title or slug has changed."""
     if 'title' in form.changed_data or 'slug' in form.changed_data:
         schedule_rebuild_kb()
+
+
+def _get_current_or_latest_revision(document):
+    """Returns current revision if there is one, else the last created
+    revision."""
+    rev = document.current_revision
+    if not rev:
+        revs = document.revisions.exclude(
+            is_approved=False, reviewed__isnull=False).order_by('-created')
+        if revs.exists():
+            rev = revs[0]
+
+    return rev
