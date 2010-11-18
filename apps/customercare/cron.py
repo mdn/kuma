@@ -79,7 +79,8 @@ def collect_tweets():
 
     # When all is done, truncate list of tweets to (approx.) maximum number.
     try:
-        keep_tweet = Tweet.objects.all()[settings.CC_MAX_TWEETS]
+        keep_tweet = Tweet.objects.filter(
+            reply_to=None)[settings.CC_MAX_TWEETS]
     except IndexError:
         pass
     else:

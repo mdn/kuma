@@ -1,7 +1,8 @@
 from datetime import datetime
-from email.Utils import parsedate
+from email.utils import parsedate, formatdate
 import json
 import logging
+import time
 
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST, require_GET
@@ -29,7 +30,7 @@ def _get_tweets(limit=MAX_TWEETS, max_id=None):
     max_id will only return tweets with the status ids less than the given id.
     """
     tweets = []
-    q = Tweet.objects.filter(locale='en')
+    q = Tweet.objects.filter(locale='en', reply_to=None)
     if max_id:
         q = q.filter(tweet_id__lt=max_id)
     if limit:
@@ -89,8 +90,36 @@ def twitter_post(request):
         return HttpResponseBadRequest('Message is too long')
 
     try:
-        request.twitter.api.update_status(content, reply_to)
+        result = request.twitter.api.update_status(content, reply_to)
     except tweepy.TweepError, e:
         return HttpResponseBadRequest('An error occured: %s' % e)
+
+    # Store reply in database.
+
+    # If tweepy's status models actually implemented a dictionary, it would
+    # be too boring.
+    status = dict(result.__dict__)
+    author = dict(result.author.__dict__)
+
+    # Raw JSON blob data
+    raw_tweet_data = {
+        'id': status['id'],
+        'text': status['text'],
+        'created_at': formatdate(time.mktime(status['created_at'].timetuple())),
+        'iso_language_code': author['lang'],
+        'from_user_id': author['id'],
+        'from_user': author['screen_name'],
+        'profile_image_url': author['profile_image_url'],
+    }
+    # Tweet metadata
+    tweet_model_data = {
+        'tweet_id': status['id'],
+        'raw_json': json.dumps(raw_tweet_data),
+        'locale': author['lang'],
+        'created': status['created_at'],
+        'reply_to': reply_to,
+    }
+    tweet = Tweet(**tweet_model_data)
+    tweet.save()
 
     return HttpResponse()
