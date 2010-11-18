@@ -5,6 +5,11 @@
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
 {% set classes = 'document' %}
 
+{% if document.parent %}
+  {# If there is a parent doc, use it's URL for switching locales. #}
+  {% set localizable_url = url('wiki.document', document.parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) %}
+{% endif %}
+
 {% block content %}
   <article id="wiki-doc" class="main">
     {% if related %}

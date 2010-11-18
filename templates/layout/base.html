@@ -64,7 +64,9 @@
 
 <footer id="footer">
   <div id="footer-contents" role="contentinfo">
-    {% include 'layout/footer.html' %}
+    {% with localizable_url=localizable_url %}
+      {% include 'layout/footer.html' %}
+    {% endwith %}
   </div>{# /#footer-contents #}
 </footer>{# /#footer #}
 
