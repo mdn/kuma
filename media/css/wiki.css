@@ -604,6 +604,11 @@ div.warning-box p {
     color: #444;
 }
 
+#doc-contributors {
+    color: #aaa;
+    margin: 0 0 25px;
+}
+
 /* Wiki Document content */
 #doc-content {
 	font-size: 14px;

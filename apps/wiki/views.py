@@ -117,8 +117,13 @@ def document(request, document_slug):
 
     related = doc.related_documents.order_by('-related_to__in_common')[0:5]
 
+    # Get the contributors. (To avoid this query, we could render the
+    # the contributors right into the Document's html field.)
+    contributors = doc.revisions.filter(
+        is_approved=True).values_list('creator__username', flat=True)
+
     data = {'document': doc, 'redirected_from': redirected_from,
-            'related': related}
+            'related': related, 'contributors': contributors.distinct()}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/document.html', data)
 

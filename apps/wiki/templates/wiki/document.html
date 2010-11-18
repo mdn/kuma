@@ -42,6 +42,12 @@
         {{ _("This article doesn't have approved content yet.") }}
       {% endif %}
     </section>
+    <section id="doc-contributors">
+      {{ _('Contributors to this page:') }}
+      {% for name in contributors %}
+        {{ name }}{% if not loop.last %},{% endif %}
+      {% endfor %}
+    </section>
   </article>
   {% if not document.has_voted(request) %}
     <div id="helpful-vote">
