@@ -105,7 +105,8 @@ def twitter_post(request):
     raw_tweet_data = {
         'id': status['id'],
         'text': status['text'],
-        'created_at': formatdate(time.mktime(status['created_at'].timetuple())),
+        'created_at': formatdate(time.mktime(
+            status['created_at'].timetuple())),
         'iso_language_code': author['lang'],
         'from_user_id': author['id'],
         'from_user': author['screen_name'],

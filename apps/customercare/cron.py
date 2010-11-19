@@ -29,8 +29,8 @@ def collect_tweets():
     """Collect new tweets about Firefox."""
     search_options = {
         'q': 'firefox',
-        'rpp': settings.CC_TWEETS_PERPAGE, # Items per page.
-        'result_type': 'recent', # Retrieve tweets by date.
+        'rpp': settings.CC_TWEETS_PERPAGE,  # Items per page.
+        'result_type': 'recent',  # Retrieve tweets by date.
     }
 
     # If we already have some tweets, collect nothing older than what we have.

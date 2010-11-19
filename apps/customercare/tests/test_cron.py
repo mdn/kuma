@@ -1,28 +1,32 @@
-from datetime import datetime
-import json
+import copy
 
 from nose.tools import eq_
 
 from customercare.cron import _filter_tweet
 from sumo.tests import TestCase
 
+
 class TwitterCronTestCase(TestCase):
-    tweet_json = """{
-        "profile_image_url":"http://a3.twimg.com/profile_images/688562959/jspeis_gmail.com_852af0c8__1__normal.jpg",
-        "created_at":"Mon, 25 Oct 2010 18:12:20 +0000",
-        "from_user":"jspeis",
-        "metadata": {"result_type":"recent"},
-        "to_user_id":null,
-        "text":"giving the Firefox 4 beta a whirl",
-        "id":28713868836,
-        "from_user_id":2385258,
-        "geo":null,
-        "iso_language_code":"en",
-        "source":"&lt;a href=&quot;http://twitter.com/&quot;&gt;web&lt;/a&gt;"}
-        """
+    tweet_template = {
+        "profile_image_url": (
+            "http://a3.twimg.com/profile_images/688562959/"
+            "jspeis_gmail.com_852af0c8__1__normal.jpg"),
+        "created_at": "Mon, 25 Oct 2010 18:12:20 +0000",
+        "from_user": "jspeis",
+        "metadata": {
+            "result_type": "recent",
+        },
+        "to_user_id": None,
+        "text": "giving the Firefox 4 beta a whirl",
+        "id": 28713868836,
+        "from_user_id": 2385258,
+        "geo": None,
+        "iso_language_code": "en",
+        "source": "&lt;a href=&quot;http://twitter.com/&quot;&gt;web&lt;/a&gt;"
+    }
 
     def setUp(self):
-        self.tweet = json.loads(self.tweet_json)
+        self.tweet = copy.deepcopy(self.tweet_template)
 
     def test_unfiltered(self):
         """Do not filter tweets without a reason."""
