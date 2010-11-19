@@ -133,12 +133,13 @@ class DocumentForm(forms.ModelForm):
         self.save_m2m()  # not strictly necessary since we didn't change
                          # any m2m data since we instantiated the doc
 
-        ffv = self.cleaned_data['firefox_versions']
-        doc.firefox_versions.all().delete()
-        doc.firefox_versions = ffv
-        os = self.cleaned_data['operating_systems']
-        doc.operating_systems.all().delete()
-        doc.operating_systems = os
+        if not parent_doc:
+            ffv = self.cleaned_data['firefox_versions']
+            doc.firefox_versions.all().delete()
+            doc.firefox_versions = ffv
+            os = self.cleaned_data['operating_systems']
+            doc.operating_systems.all().delete()
+            doc.operating_systems = os
 
         return doc
 
