@@ -1,7 +1,7 @@
 from nose.tools import eq_, raises
 from pyquery import PyQuery as pq
 import jingo
-import test_utils
+from test_utils import RequestFactory
 
 from sumo.tests import LocalizingClient, TestCase
 from sumo.urlresolvers import reverse
@@ -21,15 +21,21 @@ def test_breadcrumb():
     eq_('/', href.attrib['href'][0])
 
 
-class TestBaseTemplate(TestCase):
+class MockRequestTests(TestCase):
+    """Base class for tests that need a mock request"""
+
+    def setUp(self):
+        super(MockRequestTests, self).setUp()
+        request = RequestFactory()
+        request.locale = 'en-US'
+        self.request = request
+
+
+class BaseTemplateTests(MockRequestTests):
     """Tests for layout/base.html"""
 
     def setUp(self):
-        super(TestBaseTemplate, self).setUp()
-
-        request = test_utils.RequestFactory()
-        request.locale = 'en-US'
-        self.request = request
+        super(BaseTemplateTests, self).setUp()
         self.template = 'layout/base.html'
 
     @raises(KeyError)
@@ -64,3 +70,27 @@ class TestBaseTemplate(TestCase):
         html = jingo.render_to_string(self.request, self.template)
         doc = pq(html)
         eq_('false', doc('body')[0].attrib['data-readonly'])
+
+
+class ErrorListTests(MockRequestTests):
+    """Tests for errorlist.html, which renders form validation errors."""
+
+    def test_escaping(self):
+        """Make sure we escape HTML entities, lest we court XSS errors."""
+        class MockForm(object):
+            errors = True
+
+            def visible_fields(self):
+                return [{'errors': ['<"evil&ness-field">']}]
+
+            def non_field_errors(self):
+                return ['<"evil&ness-non-field">']
+
+        source = ("""{% from "layout/errorlist.html" import errorlist %}"""
+                  """{{ errorlist(form) }}""")
+        html = jingo.render_to_string(self.request,
+                                      jingo.env.from_string(source),
+                                      {'form': MockForm()})
+        assert '<"evil&ness' not in html
+        assert '&lt;&#34;evil&amp;ness-field&#34;&gt;' in html
+        assert '&lt;&#34;evil&amp;ness-non-field&#34;&gt;' in html

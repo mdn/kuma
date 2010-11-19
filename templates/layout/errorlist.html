@@ -4,11 +4,11 @@
     <ul class="errorlist">
       {% for field in form.visible_fields() %}
         {% for error in field.errors %}
-          <li><a href="#id_{{ field.name }}">{{ error|safe }}</a></li>
+          <li><a href="#id_{{ field.name }}">{{ error }}</a></li>
         {% endfor %}
       {% endfor %}
       {% for error in form.non_field_errors() %}
-        <li>{{ error|safe }}</li>
+        <li>{{ error }}</li>
       {% endfor %}
     </ul>
   {% endif %}
