@@ -54,6 +54,7 @@ DATABASES['default']['TEST_NAME'] = 'test_kitsune_$1'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
 TEST_SPHINX_PORT = $SPHINX_PORT
+TEST_SPHINXQL_PORT = TEST_SPHINX_PORT + 1
 SETTINGS
 
 echo "Starting tests..."
