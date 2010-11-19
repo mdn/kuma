@@ -4,7 +4,7 @@ import re
 from django import http
 from django.conf import settings
 
-from . import *
+from twitter import *
 import tweepy
 
 
@@ -14,6 +14,7 @@ log = logging.getLogger('k')
 def validate_token(token):
     return bool(token and (len(token) < 100) and re.search('\w+', token))
 
+
 class SessionMiddleware(object):
 
     def process_request(self, request):
@@ -21,7 +22,7 @@ class SessionMiddleware(object):
         request.twitter = Session.from_request(request)
 
         ssl_url = url(request, {'scheme': 'https'})
-        auth = tweepy.OAuthHandler(settings.TWITTER_CONSUMER_KEY, 
+        auth = tweepy.OAuthHandler(settings.TWITTER_CONSUMER_KEY,
                                    settings.TWITTER_CONSUMER_SECRET,
                                    ssl_url,
                                    secure=True)
@@ -34,7 +35,7 @@ class SessionMiddleware(object):
             request.twitter.api = tweepy.API(auth)
 
         else:
-        
+
             verifier = request.GET.get('oauth_verifier')
             if verifier:
                 # We are completing an OAuth login
@@ -42,7 +43,8 @@ class SessionMiddleware(object):
                 request_key = request.COOKIES.get(REQUEST_KEY_NAME)
                 request_secret = request.COOKIES.get(REQUEST_SECRET_NAME)
 
-                if validate_token(request_key) and validate_token(request_secret):
+                if (validate_token(request_key) and
+                    validate_token(request_secret)):
                     auth.set_request_token(request_key, request_secret)
 
                     try:
@@ -51,11 +53,13 @@ class SessionMiddleware(object):
                         log.warning('Tweepy Error with verifier token')
                         pass
                     else:
-                        # override path to drop query string
-                        ssl_url = url(request, {'scheme': 'https', 'path': request.path})
+                        # Override path to drop query string.
+                        ssl_url = url(request, {'scheme': 'https',
+                                                'path': request.path})
                         response = http.HttpResponseRedirect(ssl_url)
 
-                        Session(auth.access_token.key, auth.access_token.secret).save(response)
+                        Session(auth.access_token.key,
+                                auth.access_token.secret).save(response)
                         return response
                 else:
                     # request tokens didn't validate
@@ -70,10 +74,11 @@ class SessionMiddleware(object):
                     log.warning('Tweepy error while getting authorization url')
                 else:
                     response = http.HttpResponseRedirect(redirect_url)
-                    response.set_cookie(REQUEST_KEY_NAME, auth.request_token.key, secure=True)
-                    response.set_cookie(REQUEST_SECRET_NAME, auth.request_token.secret, secure=True)
+                    response.set_cookie(REQUEST_KEY_NAME,
+                                        auth.request_token.key, secure=True)
+                    response.set_cookie(REQUEST_SECRET_NAME,
+                                        auth.request_token.secret, secure=True)
                     return response
-
 
     def process_response(self, request, response):
         if getattr(request, 'twitter', False):

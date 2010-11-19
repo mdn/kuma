@@ -4,8 +4,6 @@ from uuid import uuid4
 from django import http
 from django.core.cache import cache
 
-import tweepy
-
 
 log = logging.getLogger('k')
 
@@ -26,11 +24,12 @@ def url(request, override=None):
     }
     if override:
         d.update(override)
-    
+
     return u'%s://%s%s' % (d['scheme'], d['host'], d['path'])
 
-# Twitter sessions are SSL only, so redirect to SSL if needed
+
 def auth_wanted(view_func):
+    """Twitter sessions are SSL only, so redirect to SSL if needed."""
     def wrapper(request, *args, **kwargs):
 
         if request.COOKIES.get(REDIRECT_NAME) and not request.is_secure():
@@ -40,8 +39,9 @@ def auth_wanted(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
-# returns a HttpResponseBadRequest in not authed
+
 def auth_required(view_func):
+    """Return a HttpResponseBadRequest if not authed."""
     def wrapper(request, *args, **kwargs):
 
         if not request.twitter.authed:
@@ -95,5 +95,3 @@ class Session(object):
         cache.set(self.cachekey_secret, self.secret, MAX_AGE)
         response.set_cookie(REDIRECT_NAME, '1', max_age=MAX_AGE)
         response.set_cookie(ACCESS_NAME, self.id, max_age=MAX_AGE, secure=True)
-
-
