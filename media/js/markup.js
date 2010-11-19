@@ -143,10 +143,11 @@ Marky.SimpleButton.prototype = {
     // Handles the button click.
     handleClick: function(e) {
         var selText, selStart, selEnd, splitText, range,
-            textarea = this.textarea;
+            textarea = this.textarea,
+            scrollTop = $(textarea).scrollTop();
         textarea.focus();
 
-        if(document.selection && document.selection.createRange) {
+        if (document.selection && document.selection.createRange) {
             // IE/Opera
             range = document.selection.createRange();
             selText = range.text;
@@ -169,7 +170,7 @@ Marky.SimpleButton.prototype = {
             }
 
             range.select();
-        } else if(textarea.selectionStart || textarea.selectionStart == '0') {
+        } else if (textarea.selectionStart || textarea.selectionStart == '0') {
             // Firefox/Safari/Chrome/etc.
             selStart = textarea.selectionStart;
             selEnd = textarea.selectionEnd;
@@ -200,6 +201,7 @@ Marky.SimpleButton.prototype = {
                                         selText.length;
             }
         }
+        $(textarea).scrollTop(scrollTop);
         e.preventDefault();
         return false;
     },
