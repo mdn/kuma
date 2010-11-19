@@ -883,7 +883,7 @@ article.main input[type="text"].error {
 }
 
 article.main input[type="text"].autocomplete-tags {
-    width: 230px;
+    width: 100px;
 }
 
 article.main textarea {
