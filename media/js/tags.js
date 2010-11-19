@@ -287,7 +287,7 @@
         var tagNames = [];
         $tagList.find(".tag .tag-name").each(
             function(i, e) {
-                tagNames.push(e.text);
+                tagNames.push($(e).text());
             }
         );
         return tagNames;
