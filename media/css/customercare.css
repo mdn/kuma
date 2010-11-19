@@ -120,6 +120,13 @@
     background: -moz-linear-gradient(top, #fff, #f5f5f5);
     background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#f5f5f5));
 }
+#tweets li.reply {
+    padding-left: 70px;
+    width: 570px;
+}
+#tweets div.replies {
+    display: none;
+}
 
 #tweets li:hover {
     background: -moz-linear-gradient(top, #fffffd, #fdefa6);
@@ -161,6 +168,28 @@
     font-size: 14px;
     font-weight: normal;
     width: 550px;
+}
+
+#tweets li .reply_count {
+    clear: right;
+    float: right;
+    font-family: Verdana, sans-serif;
+    font-size: 11px;
+}
+#tweets li .reply_count.you {
+    font-weight: bold;
+}
+#tweets li a.reply_count {
+    color: #0ba643;
+}
+#tweets li a.reply_count:before {
+    content: '\25B6\A0';
+}
+#tweets li a.reply_count.opened:before {
+    content: '\25BC\A0';
+}
+#tweets li a.reply_count:hover {
+    text-decoration: underline;
 }
 
 .tweets-buttons {

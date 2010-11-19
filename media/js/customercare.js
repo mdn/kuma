@@ -208,7 +208,12 @@
         }
         var signin = new Signin();
 
-        $('.tweet').live('click', function() {
+        $('.tweet').live('click', function(e) {
+            // Do not open tweet window if clicked on link.
+            if ($(e.target).is('a') || $(e.target).parentsUntil('li.tweet').is('a')) {
+                return;
+            }
+
             var t = new Tweet(this);
 
             if (!signin.authed) {
@@ -216,9 +221,6 @@
             } else {
                 reply.open(t);
             }
-        });
-        $('.tweet a').live('click', function(e) {
-            e.preventPropagation();
         });
 
         if (signin.authed && memory.id) {
@@ -251,6 +253,21 @@
             );
             e.preventDefault();
             return false;
+        });
+
+        /* Show/hide replies */
+        $('#tweets a.reply_count').live('click', function(e) {
+            var to_show = (!$(this).hasClass('opened')),
+                tweet_id = $(this).parent().attr('data-tweet-id'),
+                replies = $('#replies_'+tweet_id);
+            if (to_show) {
+                replies.slideDown();
+            } else {
+                replies.slideUp();
+            }
+            $(this).toggleClass('opened');
+
+            e.preventDefault();
         });
 
         /* Search box */
