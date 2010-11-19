@@ -16,7 +16,7 @@
     <h1>{{ _('Media Gallery') }}</h1>
     <div id="locale-filter">
       {% if user.is_authenticated() %}
-        <a class="btn-upload activates-modal" data-modal-selector="#gallery-upload-modal" href="#">{{ _('Upload a New Media File') }}</a>
+        <a id="btn-upload" class="btn-upload activates-modal" data-modal-selector="#gallery-upload-modal" href="#">{{ _('Upload a New Media File') }}</a>
       {% endif %}
       <form action="" method="get">
         <label for="select-locale">{{ _('Show media for:') }}</label>

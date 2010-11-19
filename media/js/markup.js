@@ -486,6 +486,9 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     },
     openModal: function(e) {
         var me = this,
+            $editor = $(me.textarea).closest('div.forum-editor'),
+            mediaSearchUrl = $editor.attr('data-media-search-url'),
+            galleryUrl = $editor.attr('data-media-gallery-url'),
             // TODO: look at using a js template solution (jquery-tmpl?)
             $modal = $(
                 '<section id="media-modal" class="pop-in marky">' +
@@ -499,13 +502,13 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
                 '<button>' + gettext('Search Gallery') + '</button></div></div>' +
                 '<div class="placeholder" /><div class="submit">' +
                 '<button>' + gettext('Insert Media') + '</button>' +
+                '<a href="' + galleryUrl + '#upload" class="upload" target="_blank">' +
+                gettext('Upload Media') + '</a>' +
                 '<a href="#cancel" class="cancel">' + gettext('Cancel') + '</a></div>' +
                 '</section>'
             ),
             $overlay = $('<div id="modal-overlay"></div>'),
             selectedText = me.getSelectedText(),
-            galleryUrl = $(me.textarea).closest('div.forum-editor')
-                                       .attr('data-media-search-url'),
             mediaType = $modal.find('div.type li.selected').attr('data-type'),
             mediaQ = '',
             mediaPage = 1;
@@ -531,6 +534,12 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             updateResults();
             e.preventDefault();
             return false;
+        });
+
+        // Handle Upload link
+        $modal.find('a.upload').click(function(e) {
+            // Close the modal. The link itself will open gallery in new tab/window.
+            $modal.find('a.close').click();
         });
 
         //Handle pagination
@@ -576,7 +585,7 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
         function updateResults(type, q) {
             $modal.addClass('processing');
             $.ajax({
-                url: galleryUrl,
+                url: mediaSearchUrl,
                 type: 'GET',
                 data: {type: mediaType, q: mediaQ, page: mediaPage},
                 dataType: 'html',

@@ -34,7 +34,7 @@
 {% endmacro %}
 
 {% macro content_editor(field) %}
-  <div class="forum-editor" data-media-search-url="{{ url('gallery.async') }}">
+  <div class="forum-editor" data-media-search-url="{{ url('gallery.async') }}" data-media-gallery-url="{{ url('gallery.home') }}">
     <div class="forum-editor-tools"></div>
     {{ field|safe }}
   </div>

@@ -290,10 +290,14 @@ $(document).ready(function () {
     }
 
     function init() {
+        // If fragment identifier is #upload, open the modal
+        if (document.location.hash === '#upload') {
+            $('#btn-upload').click();
+        }
         // if there are drafts, open the modal
         if ($forms.hasClass('draft')) {
             $radios.eq($forms.index($forms.filter('.draft'))).click();
-            $('.btn-upload').click();
+            $('#btn-upload').click();
         }
         // auto-open the modal window when drafts are present
         $uploadModal.find('input[name="cancel"]').each(function () {

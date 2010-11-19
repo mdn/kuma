@@ -806,6 +806,11 @@ section.marky div.submit {
     padding: 20px 0 0;
 }
 
+section.marky div.submit a,
+section.marky div.submit button {
+    margin: 0 15px 0 0;
+}
+
 #link-modal {
     margin-left: -320px;
     width: 600px;
