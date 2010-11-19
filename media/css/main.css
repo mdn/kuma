@@ -837,11 +837,21 @@ section.marky div.submit {
 
 #media-modal {
     margin-left: -400px;
+    height: 80%;
+    max-height: 510px;
+    max-height: -moz-calc(100%); /* let it continue to grow in FF4 */
+    min-height: 400px;
+    min-height: -moz-calc(0%); /* let it continue to shrink in FF4 */
+    top: 7%;
     width: 760px;
 }
 
 #media-modal div.placeholder {
-    height: 305px;
+    height: 65%;
+    height: -moz-calc(100% - 150px);
+    left: 15px;
+    position: absolute;
+    top: 100px;
 }
 
 #media-modal.processing div.placeholder {
@@ -853,7 +863,8 @@ section.marky div.submit {
 }
 
 #media-modal #media-list {
-    height: 260px;
+    height: 80%;
+    height: -moz-calc(100% - 50px);
     overflow: auto;
 }
 
@@ -884,8 +895,8 @@ section.marky div.submit {
     border-bottom: 1px solid #9ACCF7;
     border-top: 1px solid #9ACCF7;
     display: block;
-    margin: 0 0 7px;
-    padding: 7px 0;
+    margin: 15px;
+    padding: 7px 15px;
 }
 
 #media-modal div.filter input[type="text"] {
@@ -931,6 +942,12 @@ section.marky div.submit {
 #media-modal ol.pagination {
     margin: 7px 0;
     padding: 7px 0;
+}
+
+#media-modal div.submit {
+    bottom: 15px;
+    left: 15px;
+    position: absolute;
 }
 
 /* Submit or cancel switches */

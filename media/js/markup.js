@@ -490,7 +490,7 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             $modal = $(
                 '<section id="media-modal" class="pop-in marky">' +
                 '<a href="#close" class="close">&#x2716;</a>' +
-                '<h1>' + this.name + '</h1><div class="wrap">' +
+                '<h1>' + this.name + '</h1>' +
                 '<div class="filter"><div class="type">' +
                 '<span>' + gettext('Show:') + '</span>' +
                 '<ol><li data-type="image" class="selected">' + gettext('Images') + '</li>' +
@@ -500,7 +500,7 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
                 '<div class="placeholder" /><div class="submit">' +
                 '<button>' + gettext('Insert Media') + '</button>' +
                 '<a href="#cancel" class="cancel">' + gettext('Cancel') + '</a></div>' +
-                '</div></section>'
+                '</section>'
             ),
             $overlay = $('<div id="modal-overlay"></div>'),
             selectedText = me.getSelectedText(),
