@@ -24,7 +24,9 @@ ALLOWED_ATTRIBUTES = {
     'video': ['height', 'width', 'controls', 'data-fallback'],
     'source': ['src', 'type'],
 }
-IMAGE_PARAMS = {
+IMAGE_PARAMS = ['alt', 'align', 'caption', 'valign', 'frame', 'page', 'link',
+                'width', 'height']
+IMAGE_PARAM_VALUES = {
     'align': ('none', 'left', 'center', 'right'),
     'valign': ('baseline', 'sub', 'super', 'top', 'text-top', 'middle',
               'bottom', 'text-bottom'),
@@ -82,34 +84,56 @@ def _get_wiki_link(title, locale):
                              title=title)}
 
 
-def _build_image_params(items, locale):
-    """
-    Builds a list of items and return image-relevant parameters in a dict.
-    """
-    params = {}
-    # Empty items returns empty params
-    if not items:
-        return params
+def build_hook_params(string, locale, allowed_params=[],
+                      allowed_param_values={}):
+    """Parses a string of the form 'some-title|opt1|opt2=arg2|opt3...'
 
-    for item in items:
-        if item.find('=') != -1:
+    Builds a list of items and returns relevant parameters in a dict.
+
+    """
+    if not '|' in string:  # No params? Simple and easy.
+        string = string.strip()
+        return (string, {'alt': string})
+
+    items = [i.strip() for i in string.split('|')]
+    title = items.pop(0)
+    params = {}
+
+    last_item = ''
+    for item in items:  # this splits by = or assigns the dict key to True
+        if '=' in item:
             param, value = item.split('=', 1)
             params[param] = value
         else:
             params[item] = True
+            last_item = item
 
+    if 'caption' in allowed_params:
+        params['caption'] = title
+        # Allowed parameters are not caption. All else is.
+        if last_item and last_item not in allowed_params:
+            params['caption'] = items.pop()
+            del params[last_item]
+        elif last_item == 'caption':
+            params['caption'] = last_item
+
+    # Validate params allowed
+    for p in params.keys():
+        if p not in allowed_params:
+            del params[p]
+
+    # Validate params with limited # of values
+    for p in allowed_param_values:
+        if p in params and params[p] not in allowed_param_values[p]:
+            del params[p]
+
+    # Handle page as a special case
     if 'page' in params and params['page'] is not True:
         link = _get_wiki_link(params['page'], locale)
         params['link'] = link['url']
         params['found'] = link['found']
 
-    # Validate params with limited # of values
-    for param_allowed in IMAGE_PARAMS:
-        if (param_allowed in params and
-            not (params[param_allowed] in IMAGE_PARAMS[param_allowed])):
-            del params[param_allowed]
-
-    return params
+    return (title, params)
 
 
 class WikiParser(Parser):
@@ -172,32 +196,14 @@ class WikiParser(Parser):
 
     def _hook_image_tag(self, parser, space, name):
         """Adds syntax for inserting images."""
-        title = name
-        caption = name
-        params = {}
-
-        # Parse the inner syntax, e.g. [[Image:src|option=val|caption]]
-        separator = name.find('|')
-        items = []
-        if separator != -1:
-            items = title.split('|')
-            title = items[0]
-            # If the last item contains '=', it's not a caption
-            if items[-1].find('=') == -1:
-                caption = items[-1]
-                items = items[1:-1]
-            else:
-                caption = title
-                items = items[1:]
+        title, params = build_hook_params(name, self.locale, IMAGE_PARAMS,
+                                          IMAGE_PARAM_VALUES)
 
         message = _lazy('The image "%s" does not exist.') % title
         image = get_object_fallback(Image, title, self.locale, message)
         if isinstance(image, basestring):
             return image
 
-        # parse the relevant items
-        params = _build_image_params(items, self.locale)
-
         template = jingo.env.get_template('wikiparser/hook_image.html')
-        r_kwargs = {'image': image, 'caption': caption, 'params': params}
+        r_kwargs = {'image': image, 'params': params}
         return template.render(**r_kwargs)

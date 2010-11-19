@@ -6,8 +6,8 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from gallery.tests import image
-from sumo.parser import (WikiParser, _build_image_params, _get_wiki_link,
-                         get_object_fallback)
+from sumo.parser import (WikiParser, build_hook_params, _get_wiki_link,
+                         get_object_fallback, IMAGE_PARAMS, IMAGE_PARAM_VALUES)
 from sumo.tests import TestCase
 from wiki.models import Document
 from wiki.tests import document, revision
@@ -31,8 +31,10 @@ def doc_rev_parser(content, title='Installing Firefox', parser_cls=WikiParser):
     return (d, r, p)
 
 
-_build_image_params_default = partial(_build_image_params,
-                                   locale=settings.WIKI_DEFAULT_LANGUAGE)
+build_hook_params_default = partial(build_hook_params,
+                                    locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                    allowed_params=IMAGE_PARAMS,
+                                    allowed_param_values=IMAGE_PARAM_VALUES)
 
 
 class TestWikiParser(TestCase):
@@ -98,36 +100,32 @@ class TestWikiParser(TestCase):
         eq_(fr_d, obj)
 
     def test_image_params_page(self):
-        """_build_image_params handles wiki pages."""
-        items = ['page=Installing Firefox']
-        params = _build_image_params_default(items)
+        """build_hook_params handles wiki pages."""
+        _, params = build_hook_params_default('t|page=Installing Firefox')
         eq_('/en-US/kb/installing-firefox', params['link'])
         assert params['found']
 
     def test_image_params_link(self):
         """_build_image_params handles external links."""
-        items = ['link=http://example.com']
-        params = _build_image_params_default(items)
+        _, params = build_hook_params_default('t|link=http://example.com')
         eq_('http://example.com', params['link'])
 
     def test_image_params_page_link(self):
         """_build_image_params - wiki page overrides link."""
-        items = ['page=Installing Firefox', 'link=http://example.com']
-        params = _build_image_params_default(items)
+        text = 't|page=Installing Firefox|link=http://example.com'
+        _, params = build_hook_params_default(text)
         eq_('/en-US/kb/installing-firefox', params['link'])
 
     def test_image_params_align(self):
         """Align valid options."""
         align_vals = ('none', 'left', 'center', 'right')
         for align in align_vals:
-            items = ['align=' + align]
-            params = _build_image_params_default(items)
+            _, params = build_hook_params_default('test.jpg|align=' + align)
             eq_(align, params['align'])
 
     def test_image_params_align_invalid(self):
         """Align invalid options."""
-        items = ['align=zzz']
-        params = _build_image_params_default(items)
+        _, params = build_hook_params_default('align=zzz')
         assert not 'align' in params, 'Align is present in params'
 
     def test_image_params_valign(self):
@@ -135,32 +133,27 @@ class TestWikiParser(TestCase):
         valign_vals = ('baseline', 'sub', 'super', 'top', 'text-top',
                        'middle', 'bottom', 'text-bottom')
         for valign in valign_vals:
-            items = ['valign=' + valign]
-            params = _build_image_params_default(items)
+            _, params = build_hook_params_default('title|valign=' + valign)
             eq_(valign, params['valign'])
 
     def test_image_params_valign_invalid(self):
         """Vertical align invalid options."""
-        items = ['valign=zzz']
-        params = _build_image_params_default(items)
+        _, params = build_hook_params_default('valign=zzz')
         assert not 'valign' in params, 'Vertical align is present in params'
 
     def test_image_params_alt(self):
         """Image alt override."""
-        items = ['alt=some alternative text']
-        params = _build_image_params_default(items)
+        _, params = build_hook_params_default('t|alt=some alternative text')
         eq_('some alternative text', params['alt'])
 
-    def test_image_params_frameless(self):
-        """Frameless image."""
-        items = ['frameless']
-        params = _build_image_params_default(items)
-        assert params['frameless']
+    def test_image_params_frame(self):
+        """Framed image."""
+        _, params = build_hook_params_default('title|frame')
+        assert params['frame']
 
     def test_image_params_width_height(self):
         """Image width."""
-        items = ['width=10', 'height=20']
-        params = _build_image_params_default(items)
+        _, params = build_hook_params_default('t|width=10|height=20')
         eq_('10', params['width'])
         eq_('20', params['height'])
 
@@ -478,7 +471,7 @@ class TestWikiImageTags(TestCase):
 
         eq_(None, img.attr('height'))
 
-    def test_frameless(self):
+    def test_frame(self):
         """Image has frame if specified."""
         img_div = pq_img(self.p, '[[Image:test.jpg|frame|caption]]', 'div.img')
         assert not img_div('img').hasClass('frameless')

@@ -8,27 +8,22 @@ from html5lib import HTMLParser
 from html5lib.serializer.htmlserializer import HTMLSerializer
 from html5lib.treebuilders import getTreeBuilder
 from html5lib.treewalkers import getTreeWalker
+import jingo
 from lxml.etree import Element
 
 from tower import ugettext as _, ugettext_lazy as _lazy
 
 from gallery.models import Video
 import sumo.parser
-from sumo.parser import ALLOWED_ATTRIBUTES, get_object_fallback
+from sumo.parser import (ALLOWED_ATTRIBUTES, get_object_fallback,
+                         build_hook_params)
 
 
 BLOCK_LEVEL_ELEMENTS = ['table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5',
                         'h6', 'td', 'th', 'div', 'hr', 'pre', 'p', 'li', 'ul',
                         'ol', 'center']  # from Parser.doBlockLevels
-
+VIDEO_PARAMS = ['height', 'width', 'modal', 'title', 'placeholder']
 TEMPLATE_ARG_REGEX = re.compile('{{{([^{]+?)}}}')
-SOURCE_TEMPLATE = '<source src="%(src)s" type="video/%(type)s">'
-VIDEO_TEMPLATE = ('<div class="video">'
-                    '<video%(fallback)s height="%(height)s"'
-                      'width="%(width)s" controls="">'
-                      '%(sources)s'
-                    '</video>'
-                  '</div>')
 
 
 def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
@@ -367,27 +362,30 @@ class WikiParser(sumo.parser.WikiParser):
     def _hook_video(self, parser, space, title):
         """Handles [[Video:video title]] with locale from parser."""
         message = _lazy('The video "%s" does not exist.') % title
+
+        # params, only modal supported for now
+        title, params = build_hook_params(title, self.locale, VIDEO_PARAMS)
+
         v = get_object_fallback(Video, title, self.locale, message)
         if isinstance(v, basestring):
             return v
 
-        return generate_video(v)
+        return generate_video(v, params)
 
 
-def generate_video(v):
+def generate_video(v, params=[]):
     """Takes a video object and returns HTML markup for embedding it."""
     sources = []
     if v.webm:
-        sources.append(SOURCE_TEMPLATE % {'src': v.webm.url,
-                                          'type': 'webm'})
+        sources.append({'src': v.webm.url, 'type': 'webm'})
     if v.ogv:
-        sources.append(SOURCE_TEMPLATE % {'src': v.ogv.url,
-                                          'type': 'ogg'})
+        sources.append({'src': v.ogv.url, 'type': 'ogg'})
     data_fallback = ''
     # Flash fallback
     if v.flv:
-        data_fallback = ' data-fallback="' + v.flv.url + '"'
-    return VIDEO_TEMPLATE % {'fallback': data_fallback,
-                             'sources': ''.join(sources),
-                             'height': settings.WIKI_VIDEO_HEIGHT,
-                             'width': settings.WIKI_VIDEO_WIDTH}
+        data_fallback = v.flv.url
+    return jingo.env.get_template('wikiparser/hook_video.html').render(
+        {'fallback': data_fallback, 'sources': sources, 'params': params,
+         'video': v,
+         'height': settings.WIKI_VIDEO_HEIGHT,
+         'width': settings.WIKI_VIDEO_WIDTH})

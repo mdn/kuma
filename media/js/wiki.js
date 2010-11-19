@@ -246,37 +246,11 @@
     }
 
     /*
-     * Initialize modals that activate on the click of elements with
-     * class="activates-modal". The activation element is required to
-     * have a data-modal-selector attribute that is a CSS selector
-     * to the modal to activate (by adding CSS class "active").
-     *
-     * TODO: Check if other areas of the site can use this and, if so,
-     * move to the common bundle somewhere.
+     * Initialize wiki action modals.
+     * @see libs/jquery.modal.js
      */
     function initActionModals() {
-        var $modal, $overlay;
-        $('.activates-modal').click(function(ev){
-            ev.preventDefault();
-            $modal = $($(this).attr('data-modal-selector'));
-            $overlay = $('<div id="modal-overlay"></div>');
-            if (!$modal.data('inited')) {
-                $modal.append('<a href="#close" class="close">&#x2716;</a>')
-                    .data('inited', true);
-                $modal.find('a.close, a.cancel, input[name="cancel"]').click(closeModal);
-            }
-
-            $modal.addClass('active');
-            $('body').append($overlay);
-
-            return false;
-        });
-
-        function closeModal(ev) {
-            ev.preventDefault();
-            $modal.removeClass('active');
-            $overlay.remove();
-        }
+        $('.activates-modal').initClickModal();
     }
 
     // Return a table of contents (an <ol>) listing the visible headers within

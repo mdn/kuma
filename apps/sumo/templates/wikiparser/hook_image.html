@@ -22,8 +22,8 @@
 
 <img {% if not has_frame %}class="frameless"{% endif %}
   src="{{ image.file.url }}"
-  alt="{% if 'alt' in params %}{{ params['alt'] }}{% else %}{{ caption }}{% endif %}"
-  title="{{ caption }}"
+  alt="{% if 'alt' in params %}{{ params['alt'] }}{% else %}{{ params['caption'] }}{% endif %}"
+  title="{{ params['caption'] }}"
   {% if params['width'] and params['width']|int(None) %}
     width="{{ params['width']|int('') }}"
   {% endif %}
@@ -41,12 +41,12 @@
 
 {% if has_frame %}
 
-  {% if caption %}
+  {% if params['caption'] %}
     <div class="caption"
       {% if params['width'] %}
         style="width:{{ params['width']|int('') }}px"
       {% endif %}
-    >{{ caption }}</div>
+    >{{ params['caption'] }}</div>
   {% endif %}
   </div>
   </div>{# /classes #}

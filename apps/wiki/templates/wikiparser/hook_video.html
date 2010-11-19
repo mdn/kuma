@@ -1,0 +1,37 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+
+<div class="video{% if params['modal'] %} modal-trigger{% endif %}">
+  {% if params['modal'] %}
+    <a href="{% if sources %}{{ sources[0].src }}{% else %}{{ fallback }}{% endif %}" class="video-modal-trigger" data-modal-selector="">
+      <span class="video-placeholder">
+        {% if params['placeholder'] %}
+          {{ params['placeholder']|safe }}
+        {% else %}
+          <img class="video-thumbnail" src="{{ video.thumbnail_url_if_set() }}"/>
+        {% endif %}
+      </span>
+    </a>{# /video-modal#}
+    <div class="video-modal fixed-modal pop-in">
+      <h1>
+        {% if params['title'] %}
+          {{ params['title'] }}
+        {% else %}
+          {{ video.title }}
+        {% endif %}
+      </h1>
+      <div class="wrap">
+  {% endif %}
+
+  <video data-fallback="{{ fallback }}" height="{{ height }}" width="{{ width }}" controls="">
+    {% for s in sources %}
+      <source src="{{ s.src }}" type="video/{{ s.type }}">
+    {% endfor %}
+  </video>
+
+  {% if params['modal'] %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+

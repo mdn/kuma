@@ -64,6 +64,11 @@ ol.breadcrumbs {
     padding: 15px;
 }
 
+#doc-content .fixed-modal h1,
+.fixed-modal h1 {
+    margin-top: 0;
+}
+
 .pop-in a.close {
     font-size: 18px;
     position: absolute;
@@ -1304,7 +1309,8 @@ form.pop-in legend {
 }
 
 #approve-modal,
-#reject-modal {
+#reject-modal,
+.fixed-modal {
     color: #4B4740;
     left: 50%;
     margin-left: -220px;
@@ -1316,7 +1322,8 @@ form.pop-in legend {
 }
 
 #approve-modal.active,
-#reject-modal.active {
+#reject-modal.active,
+.fixed-modal.active {
     display: block;
 }
 
@@ -1492,4 +1499,19 @@ details {
 
 .no-details details.open summary {
     background-position: 5px -45px;
+}
+
+/* Style video modal */
+div.video-modal.pop-in {
+    width: 680px;
+    height: 550px;
+    margin-left: -340px;
+    position: fixed;
+    text-align: left;
+    top: 20px;
+    z-index: 20;
+}
+
+div.video-modal {
+    display: none;
 }

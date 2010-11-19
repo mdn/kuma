@@ -369,6 +369,7 @@ MINIFY_BUNDLES = {
             'js/libs/swfobject.js',
             'js/libs/jquery.selectbox-1.2.js',
             'js/screencast.js',
+            'js/libs/jquery.modal.js',
             'js/wiki.js',
             'js/libs/jqueryui.min.js',
             'js/tags.js',

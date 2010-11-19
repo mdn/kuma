@@ -378,6 +378,28 @@ class TestWikiVideo(TestCase):
         doc = pq(p.parse('[[V:Some title]]', locale='fr'))
         eq_('The video "Some title" does not exist.', doc.text())
 
+    def test_video_modal(self):
+        """Video modal defaults for plcaeholder and text."""
+        v = video()
+        replacement = ('<img class="video-thumbnail" src="%s"/>' %
+                       v.thumbnail_url_if_set())
+        d, _, p = doc_rev_parser(
+            '[[V:Some title|modal]]')
+        doc = pq(d.html)
+        eq_('Some title', doc('.video-modal h1').text())
+        eq_(1, doc('.video video').length)
+        eq_(replacement, doc('.video-placeholder').html().strip())
+        eq_('video modal-trigger', doc('div.video').attr('class'))
+
+    def test_video_modal_caption_text(self):
+        """Video modal can change title and placeholder text."""
+        video()
+        d, _, p = doc_rev_parser(
+            '[[V:Some title|modal|placeholder=Place<b>holder</b>|title=WOOT]]')
+        doc = pq(d.html)
+        eq_('WOOT', doc('.video-modal h1').text())
+        eq_('Place<b>holder</b>', doc('.video-placeholder').html().strip())
+
 
 def parsed_eq(want, to_parse):
     p = WikiParser()

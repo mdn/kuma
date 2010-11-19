@@ -24,7 +24,10 @@
             height = Number($video.attr('height')),
             // Build a unique ID for the object container
             unique_id = VIDEO_ID_PREFIX + id_counter,
-            flash_file;
+            flash_file,
+            $video_modal = $video.closest('.video').find('.video-modal'),
+            $video_modal_trigger = $video.closest('.video')
+                .find('.video-modal-trigger');
         id_counter++;
 
         $video.attr('id', unique_id);
@@ -37,6 +40,14 @@
                 }
             }
         });
+
+        if ($video_modal.length > 0) {
+            $video_modal_trigger.initClickModal({
+                    modal: $video_modal,
+                    overlay_close: true,
+                    escape_close: true
+                });
+        }
 
         if (Modernizr.video &&  // can the browser play video?
             // do we have a webm it can play?
