@@ -77,4 +77,4 @@ jQuery.fn.initClickModal = function (options) {
     }
 
     return this;
-}
+};
