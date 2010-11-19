@@ -188,6 +188,24 @@ class UploadImageTestCase(TestCase):
         eq_('Hasta la vista', img.title)
         eq_('Auf wiedersehen!', img.description)
 
+    def test_image_title_locale_unique_validation(self):
+        """Posting an existing locale/title combination shows a validation
+        error."""
+        u = User.objects.get(username='pcraciunoiu')
+        image(creator=u, title=get_draft_title(u))
+        post(self.client, 'gallery.upload',
+             {'locale': 'de', 'title': 'Hasta la vista',
+              'description': 'Auf wiedersehen!'}, args=['image'])
+        image(creator=u, title=get_draft_title(u))
+        r = post(self.client, 'gallery.upload',
+                 {'locale': 'de', 'title': 'Hasta la vista',
+                  'description': 'Auf wiedersehen!'},
+                 args=['image'])
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        msg = 'Image with this Locale and Title already exists.'
+        assert doc('ul.errorlist li').text().startswith(msg)
+
 
 class ViewHelpersTestCase(TestCase):
     fixtures = ['users.json']

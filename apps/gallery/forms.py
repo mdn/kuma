@@ -67,7 +67,8 @@ class ImageForm(forms.ModelForm):
                         'max_length': MSG_DESCRIPTION_LONG})
 
     def clean(self):
-        return clean_draft(self)
+        c = super(ImageForm, self).clean()
+        return clean_draft(self, c)
 
     def save(self, update_user=None, **kwargs):
         return save_form(self, update_user, **kwargs)
@@ -93,7 +94,7 @@ class VideoUploadFormAsync(forms.ModelForm):
                                  max_length=settings.MAX_FILENAME_LENGTH)
 
     def clean(self):
-        c = self.cleaned_data
+        c = super(VideoUploadFormAsync, self).clean()
         if not ('webm' in c and c['webm'] and
                     c['webm'].name.endswith('.webm') or
                 'ogv' in c and c['ogv'] and
@@ -139,12 +140,12 @@ class VideoForm(forms.ModelForm):
 
     def clean(self):
         """Ensure one of the supported file formats has been uploaded"""
-        c = self.cleaned_data
+        c = super(VideoForm, self).clean()
         if not ('webm' in c and c['webm'] or
                 'ogv' in c and c['ogv'] or
                 'flv' in c and c['flv']):
             raise ValidationError(MSG_VID_REQUIRED)
-        clean_draft(self)
+        clean_draft(self, c)
         return self.cleaned_data
 
     def save(self, update_user=None, **kwargs):
@@ -156,9 +157,9 @@ class VideoForm(forms.ModelForm):
                   'title', 'description')
 
 
-def clean_draft(form):
+def clean_draft(form, cleaned_data):
     """Drafts reserve a special title."""
-    c = form.cleaned_data
+    c = cleaned_data
     if 'title' in c and c['title'].startswith(DRAFT_TITLE_PREFIX):
         raise ValidationError(MSG_TITLE_DRAFT)
     return c
