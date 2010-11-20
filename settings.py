@@ -531,9 +531,12 @@ THUMBNAIL_PROGRESS_WIDTH = 32  # width of the above image
 THUMBNAIL_PROGRESS_HEIGHT = 32  # height of the above image
 VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes
 
-# Customare care tweet collection settings
+# Customer Care tweet collection settings
 CC_MAX_TWEETS = 500 # Max. no. of tweets in DB
 CC_TWEETS_PERPAGE = 100 # How many tweets to collect in one go. Max: 100.
+
+# Show replies to tweets?
+CC_SHOW_REPLIES = True
 
 TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''

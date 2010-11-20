@@ -9,7 +9,7 @@
     {% if tweet.replies %}
       <a href="#" class="reply_count" data-count="{{ tweet.reply_count }}">{{
         ngettext('{0} reply', '{0} replies', tweet.reply_count)|f(tweet.reply_count) }}</a>
-    {% else %}
+    {% elif settings.CC_SHOW_REPLIES %}
       <span class="reply_count">0 replies</span>
     {% endif %}
     <p class="text">{{ tweet.text|safe }}</p>
