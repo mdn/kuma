@@ -107,11 +107,8 @@ body.mobile #featured {
 #home-content-explore {
     border-left: 2px dotted #a8c4ef;
     margin-top: 40px;
-    width: 480px;
-}
-
-#home-content-explore h1 {
-    margin-left: 20px;
+    padding-left: 20px;
+    width: 460px;
 }
 
 #home-content-explore h2 {
@@ -121,7 +118,6 @@ body.mobile #featured {
 
 #home-content-explore section {
     float: left;
-    margin-left: 20px;
     width: 220px;
 }
 
