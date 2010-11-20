@@ -1,4 +1,5 @@
 from itertools import count
+from os.path import basename
 import re
 from xml.sax.saxutils import quoteattr
 
@@ -377,15 +378,21 @@ def generate_video(v, params=[]):
     """Takes a video object and returns HTML markup for embedding it."""
     sources = []
     if v.webm:
-        sources.append({'src': v.webm.url, 'type': 'webm'})
+        sources.append({'src': _get_video_url(v.webm), 'type': 'webm'})
     if v.ogv:
-        sources.append({'src': v.ogv.url, 'type': 'ogg'})
+        sources.append({'src': _get_video_url(v.ogv), 'type': 'ogg'})
     data_fallback = ''
     # Flash fallback
     if v.flv:
-        data_fallback = v.flv.url
+        data_fallback = _get_video_url(v.flv)
     return jingo.env.get_template('wikiparser/hook_video.html').render(
         {'fallback': data_fallback, 'sources': sources, 'params': params,
          'video': v,
          'height': settings.WIKI_VIDEO_HEIGHT,
          'width': settings.WIKI_VIDEO_WIDTH})
+
+
+def _get_video_url(video_file):
+    if settings.GALLERY_VIDEO_URL:
+        return settings.GALLERY_VIDEO_URL + basename(video_file.name)
+    return video_file.url

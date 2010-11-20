@@ -524,6 +524,7 @@ GALLERY_DEFAULT_LANGUAGE = WIKI_DEFAULT_LANGUAGE
 GALLERY_IMAGE_PATH = 'uploads/gallery/images/'
 GALLERY_IMAGE_THUMBNAIL_PATH = 'uploads/gallery/images/thumbnails/'
 GALLERY_VIDEO_PATH = 'uploads/gallery/videos/'
+GALLERY_VIDEO_URL = None
 GALLERY_VIDEO_THUMBNAIL_PATH = 'uploads/gallery/videos/thumbnails/'
 GALLERY_VIDEO_THUMBNAIL_PROGRESS_URL = MEDIA_URL + 'img/video-thumb.png'
 THUMBNAIL_PROGRESS_WIDTH = 32  # width of the above image

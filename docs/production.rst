@@ -106,6 +106,9 @@ Here are the currently defined upload settings. All paths are relative to
   ``uploads/images/thumbnails/``.
 ``IMAGE_UPLOAD_PATH``
   Images for questions, defaults to ``uploads/images/``.
+``GALLERY_VIDEO_URL``
+  Prefix for video URLs, which can point to the CDN. E.g.
+  ``http://videos.mozilla.org/serv/sumo/``
 ``GALLERY_IMAGE_THUMBNAIL_PATH``, ``GALLERY_VIDEO_THUMBNAIL_PATH``
   Thumbnails of video/images for the media gallery, defaults to
   ``uploads/gallery/thumbnails/``.

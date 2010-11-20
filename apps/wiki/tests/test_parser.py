@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from django.conf import settings
 
 from nose.tools import eq_
@@ -399,6 +401,21 @@ class TestWikiVideo(TestCase):
         doc = pq(d.html)
         eq_('WOOT', doc('.video-modal h1').text())
         eq_('Place<b>holder</b>', doc('.video-placeholder').html().strip())
+
+    def test_video_cdn(self):
+        """Video URLs can link to the CDN if a CDN setting is set."""
+        video()
+        cdn_url = 'http://videos.mozilla.org/serv/sumo/'
+
+        self.old_settings = deepcopy(settings._wrapped.__dict__)
+        settings.GALLERY_VIDEO_URL = cdn_url
+        d, _, p = doc_rev_parser('[[V:Some title]]')
+        settings._wrapped.__dict__ = self.old_settings
+
+        doc = pq(d.html)
+        eq_(cdn_url + 'test.flv', doc('video').attr('data-fallback'))
+        eq_(cdn_url + 'test.webm', doc('source').eq(0).attr('src'))
+        eq_(cdn_url + 'test.ogv', doc('source').eq(1).attr('src'))
 
 
 def parsed_eq(want, to_parse):
