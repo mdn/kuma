@@ -1,10 +1,10 @@
-import cgi
 import datetime
 import json as jsonlib
 import re
 import urlparse
 
 from django.conf import settings
+from django.http import QueryDict
 from django.utils.encoding import smart_unicode, smart_str
 from django.utils.http import urlencode
 from django.utils.tzinfo import LocalTimezone
@@ -51,11 +51,13 @@ def urlparams(url_, hash=None, **query):
     fragment = hash if hash is not None else url_.fragment
 
     q = url_.query
-    query_dict = dict(urlparse.parse_qsl(smart_str(q))) if q else {}
-    query_dict.update(query.items())
+    query_dict = (QueryDict(smart_str(q), mutable=True) if
+                  q else QueryDict('', mutable=True))
+    for k, v in query.items():
+        query_dict[k] = v  # Replace, don't append.
 
-    query_string = urlencode([(k, v) for k, v in query_dict.items() if
-                             v is not None])
+    query_string = urlencode([(k, v) for k, l in query_dict.lists() for
+                              v in l if v is not None])
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)
     return new.geturl()

@@ -58,6 +58,10 @@ class TestHelpers(TestCase):
     def test_urlparams_query_string(self):
         eq_(u'/foo?a=foo&b=bar', urlparams('/foo?a=foo', b='bar'))
 
+    def test_urlparams_multivalue(self):
+        eq_(u'/foo?a=foo&a=bar', urlparams('/foo?a=foo&a=bar'))
+        eq_(u'/foo?a=bar', urlparams('/foo?a=foo', a='bar'))
+
     def test_profile_url(self):
         user = User.objects.create(pk=500000, username=u'testuser')
         eq_(u'/tiki-user_information.php?locale=en-US&userId=500000',
@@ -87,8 +91,8 @@ class TestHelpers(TestCase):
 class TestDateTimeFormat(TestCase):
 
     def setUp(self):
-        url = reverse('forums.threads', args=[u'testslug'])
-        self.context = {'request': test_utils.RequestFactory().get(url)}
+        url_ = reverse('forums.threads', args=[u'testslug'])
+        self.context = {'request': test_utils.RequestFactory().get(url_)}
         self.context['request'].locale = u'en-US'
 
     def test_today(self):
