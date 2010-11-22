@@ -706,6 +706,13 @@
         "dictionary":"ilo",
         "native":"Iloko"
     },
+    "mai":{
+        "English":"Maithili",
+        "internal":"mai",
+        "external":"mai",
+        "dictionary":"mai",
+        "native":"\u092E\u0948\u0925\u093F\u0932\u0940"
+    },
     "bs":{
         "English":"Bosnian",
         "internal":"bs",
