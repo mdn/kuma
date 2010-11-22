@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from nose.tools import eq_
@@ -125,7 +126,7 @@ class PostTestCase(ForumTestCase):
     def test_post_no_session(self):
         r = get(self.client, 'forums.new_thread',
                 kwargs={'forum_slug': 'test-forum'})
-        assert('http://testserver/tiki-login.php' in
+        assert('http://testserver' + settings.LOGIN_URL in
                 r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])
 
@@ -136,5 +137,6 @@ class ThreadTestCase(ForumTestCase):
         """Delete a thread while logged out redirects."""
         r = get(self.client, 'forums.delete_thread',
                 kwargs={'forum_slug': 'test-forum', 'thread_id': 1})
-        assert('http://testserver/tiki-login.php' in r.redirect_chain[0][0])
+        assert('http://testserver' + settings.LOGIN_URL in
+               r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])

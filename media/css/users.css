@@ -1,0 +1,30 @@
+/*
+ * Users app CSS
+ */
+
+#login form {
+    margin: 25px 0;
+}
+
+#login form li {
+    list-style: none;
+    padding: 5px 0;
+}
+
+#login form label {
+    display: inline-block;
+    width: 100px;
+}
+
+#login form li input {
+    width: 200px;
+}
+
+#login div.submit {
+    padding: 10px 0 0 103px;
+}
+
+#login-help li {
+    list-style: none;
+    padding: 2px 0;
+}

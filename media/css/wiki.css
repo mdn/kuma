@@ -869,6 +869,7 @@ ul.description li ul.errorlist li {
 }
 
 article.main input[type="text"],
+article.main input[type="password"],
 article.main textarea,
 section.marky input[type="text"] {
     background: -moz-linear-gradient(top, #deebf4, #deebf4 2px, #fff 3px, #fff 100%);

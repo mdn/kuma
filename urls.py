@@ -30,6 +30,9 @@ urlpatterns = patterns('',
         {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
 
     url(r'^', include('dashboards.urls')),
+
+    # Users
+    ('', include('users.urls')),
 )
 
 # Handle 404 and 500 errors

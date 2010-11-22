@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timedelta
 
+from django.conf import settings
 from django.contrib.auth.models import User, Permission
 
 from nose.plugins.skip import SkipTest
@@ -273,15 +274,15 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/questions/1/delete',
-            redirect[0])
+        eq_('http://testserver%s?next=/en-US/questions/1/delete' %
+            settings.LOGIN_URL, redirect[0])
 
         response = post(self.client, 'questions.delete',
                         args=[self.question.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/questions/1/delete',
-            redirect[0])
+        eq_('http://testserver%s?next=/en-US/questions/1/delete' %
+            settings.LOGIN_URL, redirect[0])
 
     def test_delete_question_with_permissions(self):
         """Deleting a question with permissions."""
@@ -314,17 +315,15 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id, answer.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/' + \
-            'questions/1/delete/1',
-            redirect[0])
+        eq_('http://testserver%s?next=/en-US/questions/1/delete/1' %
+            settings.LOGIN_URL, redirect[0])
 
         response = post(self.client, 'questions.delete_answer',
                         args=[self.question.id, answer.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/' + \
-            'questions/1/delete/1',
-            redirect[0])
+        eq_('http://testserver%s?next=/en-US/questions/1/delete/1' %
+            settings.LOGIN_URL, redirect[0])
 
     def test_delete_answer_with_permissions(self):
         """Deleting an answer with permissions."""
@@ -429,9 +428,8 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = post(self.client, 'questions.lock', args=[q.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver/tiki-login.php?next=/en-US/' + \
-            'questions/1/lock',
-            redirect[0])
+        eq_('http://testserver%s?next=/en-US/questions/1/lock' %
+            settings.LOGIN_URL, redirect[0])
 
     def test_lock_question_with_permissions_GET(self):
         """Trying to lock a question via HTTP GET."""

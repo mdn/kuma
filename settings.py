@@ -150,18 +150,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
-
-    # TODO: Replace with Kitsune auth.
-    'sumo.middleware.TikiCookieMiddleware',
-
     'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
 )
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'sumo.backends.SessionBackend',  # TODO: Replace with Kitsune auth.
+    'users.backends.Sha256Backend',
 )
 
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
@@ -182,6 +177,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'users',
     'tower',
     'jingo_minify',
     ROOT_PACKAGE,
@@ -332,6 +328,9 @@ MINIFY_BUNDLES = {
         'chat': (
             'css/chat.css',
         ),
+        'users': (
+            'css/users.css',
+        ),
     },
     'js': {
         'common': (
@@ -437,10 +436,11 @@ MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 
 # Auth and permissions related constants
-# TODO: Once we can log in through Kitsune, change this.
-LOGIN_URL = '/tiki-login.php'
-LOGOUT_URL = '/tiki-logout.php'
-REGISTER_URL = '/tiki-register.php'
+LOGIN_URL = '/users/login'
+LOGOUT_URL = '/users/logout'
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+REGISTER_URL = '/users/register'
 WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
 WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
 WIKI_VIDEO_WIDTH = 640
