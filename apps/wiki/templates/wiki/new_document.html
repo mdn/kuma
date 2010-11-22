@@ -22,7 +22,7 @@
       <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
         {{ csrf() }}
         <ul>
-          {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' %}
+          {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' and (field.name != 'is_localizable' or settings.WIKI_DEFAULT_LANGUAGE == request.locale) %}
             <li>{{ field|label_with_help }}{{ field|safe }}</li>
           {% endfor %}
         </ul>
