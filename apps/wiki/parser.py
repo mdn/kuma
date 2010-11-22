@@ -315,11 +315,11 @@ class WikiParser(sumo.parser.WikiParser):
     def _hook_include(self, parser, space, title):
         """Returns the document's parsed content."""
         from wiki.models import Document
-        try:
-            return Document.objects.get(locale=self.locale,
-                                        title=title).content_parsed
-        except Document.DoesNotExist:
-            return _lazy('The document "%s" does not exist.') % title
+        message = _lazy('The document "%s" does not exist.') % title
+        t = get_object_fallback(Document, title, locale=self.locale)
+        if not t or not t.current_revision:
+            return message
+        return t.current_revision.content_parsed
 
     # Wiki templates are documents that receive arguments.
     #

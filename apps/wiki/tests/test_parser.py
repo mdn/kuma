@@ -324,9 +324,9 @@ class TestWikiInclude(TestCase):
         # Parsing in English should find the French article
         doc = pq(p.parse('[[Include:Test title]]', locale='en-US'))
         eq_('English content', doc.text())
-        # If the French article does not exist, notify
+        # The French article will include the English content as fallback.
         doc = pq(p.parse('[[I:Test title]]', locale='fr'))
-        eq_('The document "Test title" does not exist.', doc.text())
+        eq_('English content', doc.text())
         # Create the French article, and test again
         parent_rev = revision()
         d = document(parent=parent_rev.document, title='Test title',
