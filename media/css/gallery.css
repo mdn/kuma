@@ -138,11 +138,6 @@ a.btn-upload {
     margin-right: 0;
 }
 
-#media-list li img {
-    max-height: 120px;
-    max-width: 120px;
-}
-
 #gallery-search input[type="submit"] {
     height: 31px;
     position: relative;

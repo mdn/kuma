@@ -896,6 +896,11 @@ section.marky div.submit button {
     border: solid 1px #9ACCF7;
 }
 
+#media-list li img {
+    max-width: 120px;
+    max-height: 120px;    
+}
+
 #media-modal div.filter {
     border-bottom: 1px solid #9ACCF7;
     border-top: 1px solid #9ACCF7;
