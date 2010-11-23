@@ -9,7 +9,7 @@ from gallery.models import Video
 from gallery.tests import image, video
 from sumo.tests import TestCase
 import sumo.tests.test_parser
-from wiki.parser import (WikiParser, ForParser, PATTERNS,
+from wiki.parser import (WikiParser, ForParser, PATTERNS, RECURSION_MESSAGE,
                          _build_template_params as _btp,
                          _format_template_content as _ftc, _key_split)
 from wiki.tests import document, revision
@@ -302,6 +302,33 @@ class TestWikiTemplate(TestCase):
         eq_(0, doc('div.caption').length)
         eq_(0, doc('div.img').length)
 
+    def test_direct_recursion(self):
+        """Make sure direct recursion is caught on the very first nesting."""
+        d = document(title='Template:Boo')
+        d.save()
+
+        # Twice so the second revision sees content identical to itself:
+        for i in range(2):
+            revision(document=d, content='Fine [[Template:Boo]] Fellows',
+                     is_approved=True).save()
+
+        eq_('<p>Fine %s Fellows\n</p>' % (RECURSION_MESSAGE % 'Template:Boo'),
+            d.content_parsed)
+
+    def test_indirect_recursion(self):
+        """Make sure indirect recursion is caught."""
+        boo = document(title='Template:Boo')
+        boo.save()
+        yah = document(title='Template:Yah')
+        yah.save()
+        revision(document=boo, content='Paper [[Template:Yah]] Cups',
+                 is_approved=True).save()
+        revision(document=yah, content='Wooden [[Template:Boo]] Bats',
+                 is_approved=True).save()
+        recursion_message = RECURSION_MESSAGE % 'Template:Boo'
+        eq_('<p>Paper Wooden %s Bats\n Cups\n</p>' % recursion_message,
+            boo.content_parsed)
+
 
 class TestWikiInclude(TestCase):
     fixtures = ['users.json']
@@ -337,6 +364,37 @@ class TestWikiInclude(TestCase):
         # Parsing in French should find the French article
         doc = pq(p.parse('[[Include:Test title]]', locale='fr'))
         eq_('French content', doc.text())
+
+    def test_direct_recursion(self):
+        """Make sure direct recursion is caught on the very first nesting."""
+        d = document(title='Boo')
+        d.save()
+
+        # Twice so the second revision sees content identical to itself:
+        for i in range(2):
+            revision(document=d, content='Fine [[Include:Boo]] Fellows',
+                     is_approved=True).save()
+
+        eq_('<p>Fine %s Fellows\n</p>' % (RECURSION_MESSAGE % 'Boo'),
+            d.content_parsed)
+
+    def test_indirect_recursion(self):
+        """Make sure indirect recursion is caught."""
+        boo = document(title='Boo')
+        boo.save()
+        yah = document(title='Yah')
+        yah.save()
+        revision(document=boo, content='Paper [[Include:Yah]] Cups',
+                 is_approved=True).save()
+        revision(document=yah, content='Wooden [[Include:Boo]] Bats',
+                 is_approved=True).save()
+        recursion_message = RECURSION_MESSAGE % 'Boo'
+
+        # boo.content_parsed is something like <p>Paper </p><p>Wooden
+        # [Recursive inclusion of "Boo"] Bats\n</p> Cups\n<p></p>.
+        eq_('Paper Wooden %s Bats Cups' % recursion_message,
+            boo.content_parsed.replace('</p>', '').replace('<p>',
+            '').replace('\n', ''))
 
 
 class TestWikiVideo(TestCase):

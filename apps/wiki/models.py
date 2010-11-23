@@ -539,7 +539,8 @@ class Revision(ModelBase):
     @property
     def content_parsed(self):
         from wiki.parser import wiki_to_html
-        return wiki_to_html(self.content, self.document.locale)
+        return wiki_to_html(self.content, locale=self.document.locale,
+                            doc_id=self.document.id)
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

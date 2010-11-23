@@ -27,9 +27,11 @@ VIDEO_PARAMS = ['height', 'width', 'modal', 'title', 'placeholder']
 TEMPLATE_ARG_REGEX = re.compile('{{{([^{]+?)}}}')
 
 
-def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
+def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE,
+                 doc_id=None):
     """Wiki Markup -> HTML with the wiki app's enhanced parser"""
-    return WikiParser().parse(wiki_markup, show_toc=False, locale=locale)
+    return WikiParser(doc_id=doc_id).parse(wiki_markup, show_toc=False,
+                                           locale=locale)
 
 
 def _format_template_content(content, params):
@@ -273,14 +275,27 @@ class ForParser(object):
         return cls._PARSED_STRIPPED_FOR_CLOSER.sub(u'</for>', html)
 
 
+RECURSION_MESSAGE = _lazy('[Recursive inclusion of "%s"]')
+
+
 class WikiParser(sumo.parser.WikiParser):
     """An extension of the parser from the forums adding more crazy features
 
     {for} tags, inclusions, and templates--oh my!
 
     """
-    def __init__(self, base_url=None):
+
+    def __init__(self, base_url=None, doc_id=None):
+        """
+        doc_id -- If you want to be nice, pass the ID of the Document you are
+            rendering. This will make recursive inclusions fail immediately
+            rather than after the first round of recursion.
+
+        """
         super(WikiParser, self).__init__(base_url)
+
+        # Stack of document IDs to prevent Include or Template recursion:
+        self.inclusions = [doc_id] if doc_id else []
 
         # The wiki has additional hooks not used elsewhere
         self.registerInternalLinkHook('Include', self._hook_include)
@@ -315,11 +330,19 @@ class WikiParser(sumo.parser.WikiParser):
     def _hook_include(self, parser, space, title):
         """Returns the document's parsed content."""
         from wiki.models import Document
-        message = _lazy('The document "%s" does not exist.') % title
+        message = _('The document "%s" does not exist.') % title
         t = get_object_fallback(Document, title, locale=self.locale)
         if not t or not t.current_revision:
             return message
-        return t.current_revision.content_parsed
+
+        if t.id in parser.inclusions:
+            return RECURSION_MESSAGE % title
+        else:
+            parser.inclusions.append(t.id)
+        ret = parser.parse(t.current_revision.content, show_toc=False,
+                           locale=self.locale)
+        parser.inclusions.pop()
+        return ret
 
     # Wiki templates are documents that receive arguments.
     #
@@ -343,11 +366,16 @@ class WikiParser(sumo.parser.WikiParser):
         if not t or not t.current_revision:
             return message
 
+        if t.id in parser.inclusions:
+            return RECURSION_MESSAGE % template_title
+        else:
+            parser.inclusions.append(t.id)
         c = t.current_revision.content.rstrip()
         # Note: this completely ignores the allowed attributes passed to the
-        # WikiParser.parse() method, and defaults to ALLOWED_ATTRIBUTES
+        # WikiParser.parse() method and defaults to ALLOWED_ATTRIBUTES.
         parsed = parser.parse(c, show_toc=False, attributes=ALLOWED_ATTRIBUTES,
                               locale=self.locale)
+        parser.inclusions.pop()
 
         # Special case for inline templates
         if '\n' not in c:
