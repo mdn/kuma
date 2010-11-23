@@ -183,11 +183,21 @@
             updateHashFragment();
         }
 
+        // Clear the menu selection cookies.
+        function clearSelectionCookies() {
+            $.cookie("for_os", null, {path: '/'});
+            $.cookie("for_browser", null, {path: '/'});
+        }
+
+        // Get the dependency based on the currently selected OS
+        function getCurrentDependency() {
+            return $osMenu.find('[value="' + $osMenu.val() + '"]')
+                          .attr('data-dependency');
+        }
+
         //Handle OS->Browser dependencies
         function handleDependencies(evt, noRedirect) {
-            var currentOS = $osMenu.val(),
-                currentDependency = $osMenu.find('[value="' + currentOS + '"]')
-                                           .attr('data-dependency'),
+            var currentDependency = getCurrentDependency(),
                 currentBrowser, newBrowser, availableBrowsers;
 
             if (!noRedirect && $body.is('.home') &&
@@ -195,6 +205,7 @@
                 // If we are on the mobile page and select a desktop OS,
                 // redirect to the desktop home page. And vice-versa.
                 // TODO: maybe use data-* attrs for the URLs?
+                persistSelection();
                 var url = document.location.href;
                 if ($body.is('.mobile')) {
                     document.location = url.replace('/mobile/', '/home/');
@@ -240,9 +251,50 @@
             return isManual;
         }
 
+        // Set the selector value to the first option that doesn't
+        // have the passed in dependency.
+        function setSelectorDefault($select, dependency) {
+            $select.val(
+                $select.find('option:not([data-dependency="' + dependency +
+                             '"]):first').attr('value'));
+        }
+
+        // If we are on home page, make sure appropriate OS is selected
+        function checkSelectorValues() {
+            var currentDependency,
+                isManual = false;
+
+            if ($body.is('.home')) {
+                currentDependency = getCurrentDependency();
+                // currentDependency will be 'desktop' or 'mobile'
+                // Make sure we are on the corresponding home page. Otherwise,
+                // change the selection appropriately.
+                if (!$body.is('.' + currentDependency)) {
+                    var $detectedOS = $osMenu.find('[value=' + BrowserDetect.OS + ']');
+                    if ($detectedOS.attr('data-dependency') != currentDependency) {
+                        // The detected OS is valid. Make it the new selection.
+                        $osMenu.val($detectedOS.attr('value'));
+                        $browserMenu.val(detectBrowser());
+                        clearSelectionCookies();
+                    } else {
+                        // Force a new selection.
+                        setSelectorDefault($osMenu, currentDependency);
+                        setSelectorDefault($browserMenu, currentDependency);
+
+                        // Set the cookie so that the selection sticks when
+                        // browsing to articles.
+                        persistSelection();
+                        isManual = true;
+                    }
+                }
+            }
+            return isManual;
+        }
+
         // Select the sniffed, cookied, or hashed browser or OS if there is one:
         isSetManually = setSelectorValue("for_os", "os", hash, function() { return BrowserDetect.OS; }, $osMenu);
         isSetManually |= setSelectorValue("for_browser", "browser", hash, detectBrowser, $browserMenu);
+        isSetManually |= checkSelectorValues();
 
         // Possibly change the settings based on dependency rules:
         handleDependencies(null, true);
