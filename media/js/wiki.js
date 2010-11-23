@@ -13,13 +13,13 @@
         initActionModals();
         initDetailsTags();
 
-        if ($('body').is('.document') || $('body').is('.home')) { // Document page
+        if ($('body').is('.document') || $('body').is('.home')) {  // Document page
             initForTags();
-            initShowforSelectors();
+            updateShowforSelectors();
             initHelpfulVote();
         }
 
-        if ($('body').is('.translate')) { // Translate page
+        if ($('body').is('.translate')) {  // Translate page
             initChangeTranslateLocale();
         }
         if ($('body').is('.edit, .new, .translate')) {
@@ -104,18 +104,10 @@
         }
     }
 
-    // Return the OS that the cookie indicates or, failing that, that appears
-    // to be running. Possible values are {mac, win, linux, maemo, android,
-    // undefined}.
-    function initialOs() {
-        return $.cookie('for_os') || BrowserDetect.OS;
-    }
-
-    // Return the browser and version that the cookie indicates or, failing
-    // that, that appears to be running. Possible values resemble {fx4, fx35,
-    // m1, m11}. Return undefined if the currently running browser can't be
-    // identified.
-    function initialBrowser() {
+    // Return the browser and version that appears to be running. Possible
+    // values resemble {fx4, fx35, m1, m11}. Return undefined if the currently
+    // running browser can't be identified.
+    function detectBrowser() {
         function getVersionGroup(browser, version) {
             if ((browser === undefined) || (version === undefined) || !VERSIONS[browser]) {
                 return;
@@ -127,7 +119,21 @@
                 }
             }
         }
-        return $.cookie('for_browser') || getVersionGroup(BrowserDetect.browser, BrowserDetect.version);
+        return getVersionGroup(BrowserDetect.browser, BrowserDetect.version);
+    }
+
+    // Treat the hash fragment of the URL as a querystring (e.g.
+    // #os=this&browser=that), and return an object with a property for each
+    // param. May not handle URL escaping yet.
+    function hashFragment() {
+        var o = {},
+            args = document.location.hash.substr(1).split('&'),
+            chunks;
+        for (var i = 0; i < args.length; i++) {
+            chunks = args[i].split('=');
+            o[chunks[0]] = chunks[1];
+        }
+        return o;
     }
 
     // Hide/show the proper page sections that are marked with {for} tags as
@@ -138,7 +144,14 @@
         OSES = $.parseJSON($('select#os').attr('data-oses'));  // {'mac': true, 'win': true, ...}
         BROWSERS = $.parseJSON($('select#browser').attr('data-browsers'));  // {'fx4': true, ...}
         VERSIONS = $.parseJSON($('select#browser').attr('data-version-groups'));  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
-        MISSING_MSG = gettext('[missing header]');  // l10nized "missing header" message
+        MISSING_MSG = gettext('[missing header]');
+
+        var $osMenu = $('select#os'),
+            $browserMenu = $('select#browser'),
+            $origBrowserOptions = $browserMenu.find('option').clone(),
+            $body = $('body'),
+            hash = hashFragment(),
+            isSetManually;
 
         function updateForsAndToc() {
             // Hide and show document sections accordingly:
@@ -152,42 +165,30 @@
             return false;
         }
 
-        function makeMenuChangeHandler(cookieName) {
-            function handler() {
-                $.cookie(cookieName, $(this).attr('value'), {path: '/'});
-                updateForsAndToc();
+        // If there isn't already a hash for purposes of actual navigation,
+        // stick our {for} settings in there.
+        function updateHashFragment() {
+            var hash = hashFragment();
+
+            // Kind of a shortcut. What we really want to know is "Is there anything in the hash fragment that isn't a {for} selector?"
+            if (!document.location.hash || hash.hasOwnProperty("os") || hash.hasOwnProperty("browser")) {
+                document.location.hash = "os=" + $osMenu.val() + "&browser=" + $browserMenu.val();
             }
-            return handler;
         }
 
-        var $osMenu = $('select#os'),
-            $browserMenu = $('select#browser'),
-            $origBrowserOptions = $browserMenu.find('option').clone(),
-            $body = $('body'),
-            initial, currentOS, currentBrowser, currentDependency, newBrowser,
-            availableBrowsers;
-
-        $osMenu.change(makeMenuChangeHandler('for_os'));
-        $browserMenu.change(makeMenuChangeHandler('for_browser'));
-
-        // Select the sniffed or cookied browser or OS if there is one:
-        initial = initialOs();
-        if (initial) {
-            $osMenu.val(initial);  // does not fire change event
+        // Persist the menu selection in a cookie and hash fragment.
+        function persistSelection() {
+            $.cookie("for_os", $osMenu.val(), {path: '/'});
+            $.cookie("for_browser", $browserMenu.val(), {path: '/'});
+            updateHashFragment();
         }
-        initial = initialBrowser();
-        if (initial) {
-            $browserMenu.val(initial);
-        }
-
-        // Fire off the change handler for the first time:
-        updateForsAndToc();
 
         //Handle OS->Browser dependencies
-        function handleDependencies(evt, noRedirect){
-            currentOS = $osMenu.val();
-            currentDependency = $osMenu.find('[value="' + currentOS + '"]')
-                                       .attr('data-dependency');
+        function handleDependencies(evt, noRedirect) {
+            var currentOS = $osMenu.val(),
+                currentDependency = $osMenu.find('[value="' + currentOS + '"]')
+                                           .attr('data-dependency'),
+                currentBrowser, newBrowser, availableBrowsers;
 
             if (!noRedirect && $body.is('.home') &&
                 !$body.is('.' + currentDependency)) {
@@ -215,16 +216,49 @@
                     $browserMenu.val($this.val());
                 }
             });
-            initShowforSelectors();
-
-            newBrowser = $browserMenu.val();
-            if (newBrowser !== currentBrowser) {
-                $browserMenu.change();
-                currentBrowser = newBrowser;
-            }
+            updateShowforSelectors();
         }
-        $osMenu.change(handleDependencies);
+
+        // Select the right item from the browser or OS menu, taking cues from
+        // the following places, in order: the URL hash fragment, the cookie,
+        // and client detection. Return whether the item appears to have
+        // selected manually: that is, via a cookie or a hash fragment.
+        function setSelectorValue(cookieName, hashName, hash, detector, $menu) {
+            var initial = hash[hashName]
+                isManual = true;
+            if (!initial) {
+                initial = $.cookie(cookieName);
+                if (!initial) {
+                    initial = detector();
+                    isManual = false;
+                }
+            }
+            if (initial) {
+                $menu.val(initial);  // does not fire change event
+                updateShowforSelectors();
+            }
+            return isManual;
+        }
+
+        // Select the sniffed, cookied, or hashed browser or OS if there is one:
+        isSetManually = setSelectorValue("for_os", "os", hash, function() { return BrowserDetect.OS; }, $osMenu);
+        isSetManually |= setSelectorValue("for_browser", "browser", hash, detectBrowser, $browserMenu);
+
+        // Possibly change the settings based on dependency rules:
         handleDependencies(null, true);
+
+        if (isSetManually) {
+            updateHashFragment();
+        }
+
+        $osMenu.change(handleDependencies);
+        $osMenu.change(persistSelection);
+        $osMenu.change(updateForsAndToc);
+        $browserMenu.change(persistSelection);
+        $browserMenu.change(updateForsAndToc);
+
+        // Fire off the change handler for the first time:
+        updateForsAndToc();
     }
 
     function initPrepopulatedSlugs() {
@@ -401,7 +435,7 @@
                         .find('select.enable-if-js').removeAttr('disabled');
                     document.location.hash = 'preview';
                     initForTags();
-                    initShowforSelectors();
+                    updateShowforSelectors();
                     k.initVideo();
                     $btn.removeAttr('disabled');
                 },
@@ -479,7 +513,7 @@
         }
     }
 
-    function initShowforSelectors() {
+    function updateShowforSelectors() {
         $('#support-for input.selectbox, #support-for div.selectbox-wrapper').remove();
         $('#support-for select').selectbox();
     }
@@ -549,3 +583,4 @@
     $(document).ready(init);
 
 }(jQuery));
+
