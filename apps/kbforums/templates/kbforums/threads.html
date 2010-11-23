@@ -29,7 +29,7 @@
   </div>
   <ol class="threads-columns {% if not desc_toggle %}desc{% endif %}">
     <li class="type"><a href="{{ url('wiki.discuss.threads', document.slug) }}">{{ _('Type') }}</a></li>
-    <li class="title">{{ _('Title') }}</a></li>
+    <li class="title">{{ _('Title') }}</li>
     <li class="author{% if sort == 3 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=3, desc=desc_toggle) }}">{{ _('Author') }}</a></li>
     <li class="replies{% if sort == 4 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=4, desc=desc_toggle) }}">{{ _('Replies') }}</a></li>
     <li class="last-post{% if sort == 5 %} sort{% endif %}"><a href="{{ request.path|urlparams(sort=5, desc=desc_toggle) }}">{{ _('Last Post') }}</a></li>
