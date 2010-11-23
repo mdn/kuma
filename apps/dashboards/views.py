@@ -26,9 +26,8 @@ def home(request):
     data = {}
     for side, title in HOME_DOCS.iteritems():
         message = _lazy('The template "%s" does not exist.') % title
-        full_title = 'Template:' + title
         data[side] = get_object_fallback(
-            Document, full_title, request.locale, message, is_template=True)
+            Document, title, request.locale, message)
 
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'dashboards/home.html', data)
@@ -38,9 +37,8 @@ def mobile(request):
     data = {}
     for side, title in MOBILE_DOCS.iteritems():
         message = _lazy('The template "%s" does not exist.') % title
-        full_title = 'Template:' + title
         data[side] = get_object_fallback(
-            Document, full_title, request.locale, message, is_template=True)
+            Document, title, request.locale, message)
 
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'dashboards/mobile.html', data)
