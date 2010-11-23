@@ -72,21 +72,6 @@
               {{ document_form.slug|safe }}
             </div>
           </li>
-          <li>
-            <div class="approved">
-              <h3>{{ _('Topics:') }}</h3>
-              <div class="val">
-                {% for tag in parent.tags.all() %}
-                  {{ tag.name }}
-                  {% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-            <div class="localized">
-              <h3><label for="{{ document_form.tags.auto_id }}" title="{{ document_form.tags.help_text }}">{{ _('Topics in {locale}:')|f(locale=language) }}</label></h3>
-              {{ document_form.tags|safe }}
-            </div>
-          </li>
         </ul>
         {% if document %}
             <div class="submit">
