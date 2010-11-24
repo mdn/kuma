@@ -1,0 +1,12 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Password Reset') %}
+{% set classes = 'password' %}
+
+{% block content %}
+  <article id="pw-reset" class="main">
+    <h1>{{ title }}</h1>
+    <p>{{ _('The password reset link was sent to your email address.') }}</p>
+  </article>
+{% endblock content %}

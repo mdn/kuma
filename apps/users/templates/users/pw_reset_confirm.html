@@ -1,0 +1,35 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Password Reset') %}
+{% set classes = 'password' %}
+
+{% block content %}
+  <article id="pw-reset" class="main">
+    {% if validlink %}
+      <h1>{{ title }}</h1>
+      <form method="post" action="">
+        {{ csrf() }}
+        <fieldset>
+          {{ errorlist(form) }}
+          <ul>
+            <li>
+              <label for="id_new_password1">{{ _('New password') }}</label>
+              {{ form.new_password1|safe }}
+            </li>
+            <li>
+              <label for="id_new_password2">{{ _('Confirm password') }}</label>
+              {{ form.new_password2|safe }}
+            </li>
+          </ul>
+        </fieldset>
+        <div class="submit">
+          <input type="submit" value="{{ _('Update') }}" />
+        </div>
+      </form>
+    {% else %}
+      <h1>{{ _('Password reset unsuccessful') }}</h1>
+      <p>{{ _('The password reset link was invalid, possibly because it has already been used.  Please request a new password reset.') }}</p>
+    {% endif %}
+  </article>
+{% endblock content %}

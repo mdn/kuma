@@ -2,7 +2,10 @@ import hashlib
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
+from django.core import mail
+from django.utils.http import int_to_base36
 
 import mock
 from nose.tools import eq_
@@ -17,7 +20,7 @@ from users.tests import TestCaseBase
 class LoginTests(TestCaseBase):
     """Login tests."""
     fixtures = ['users.json']
-    
+
     def setUp(self):
         super(LoginTests, self).setUp()
         self.orig_debug = settings.DEBUG
@@ -117,3 +120,78 @@ class LoginTests(TestCaseBase):
                                     {'username': 'rrosario',
                                      'password': legacypw})
         eq_(302, response.status_code)
+
+
+class PasswordReset(TestCaseBase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(PasswordReset, self).setUp()
+        self.user = User.objects.get(username='rrosario')
+        self.user.email = 'valid@email.com'
+        self.user.save()
+        self.uidb36 = int_to_base36(self.user.id)
+        self.token = default_token_generator.make_token(self.user)
+        self.orig_debug = settings.DEBUG
+        settings.DEBUG = True
+
+    def tearDown(self):
+        super(PasswordReset, self).tearDown()
+        settings.DEBUG = self.orig_debug
+
+    def test_bad_email(self):
+        r = self.client.post(reverse('users.pw_reset'),
+                             {'email': 'foo@bar.com'})
+        eq_(200, r.status_code)
+        eq_(len(mail.outbox), 0)
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_success(self, get_current):
+        get_current.return_value.domain = 'testserver.com'
+        r = self.client.post(reverse('users.pw_reset'),
+                             {'email': self.user.email})
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US/users/pwresetsent', r['location'])
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Password reset') == 0
+        assert mail.outbox[0].body.find('pwreset/%s' % self.uidb36) > 0
+
+    def _get_reset_url(self):
+        return reverse('users.pw_reset_confirm',
+                       args=[self.uidb36, self.token])
+
+    def test_bad_reset_url(self):
+        r = self.client.get('/users/pwreset/junk/', follow=True)
+        eq_(r.status_code, 404)
+
+        r = self.client.get(reverse('users.pw_reset_confirm',
+                                    args=[self.uidb36, '12-345']))
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_('Password reset unsuccessful', doc('article h1').text())
+
+    def test_reset_fail(self):
+        url = self._get_reset_url()
+        r = self.client.post(url, {'new_password1': '', 'new_password2': ''})
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_(1, len(doc('ul.errorlist')))
+
+        r = self.client.post(url, {'new_password1': 'one',
+                                   'new_password2': 'two'})
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_("The two password fields didn't match.",
+            doc('ul.errorlist li').text())
+
+    def test_reset_success(self):
+        url = self._get_reset_url()
+        new_pw = 'fjdka387fvstrongpassword!'
+        assert self.user.check_password(new_pw) is False
+
+        r = self.client.post(url, {'new_password1': new_pw,
+                               'new_password2': new_pw})
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US/users/pwresetcomplete', r['location'])
+        self.user = User.objects.get(username='rrosario')
+        assert self.user.check_password(new_pw)

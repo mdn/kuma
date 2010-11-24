@@ -3,10 +3,15 @@ import urlparse
 from django import http
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
+                                       SetPasswordForm)
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import get_object_or_404
+from django.utils.http import base36_to_int
 
 import jingo
 
@@ -68,6 +73,69 @@ def register(request):
     return jingo.render(request, 'users/register.html',
                         {'form': form})
 
+
+
+# Password reset views are based on django.contrib.auth.views.
+# 4 views for password reset:
+# - password_reset sends the mail
+# - password_reset_sent shows a success message for the above
+# - password_reset_confirm checks the link the user clicked and
+#   prompts for a new password
+# - password_reset_complete shows a success message for the above
+
+@ssl_required
+def password_reset(request):
+    """Password reset form."""
+    if request.method == "POST":
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            form.save(use_https=request.is_secure(),
+                      token_generator=default_token_generator,
+                      email_template_name='users/email/pw_reset.ltxt')
+            return HttpResponseRedirect(reverse('users.pw_reset_sent'))
+    else:
+        form = PasswordResetForm()
+
+    return jingo.render(request, 'users/pw_reset_form.html', {'form': form})
+
+
+def password_reset_sent(request):
+    """Password reset email sent."""
+    return jingo.render(request, 'users/pw_reset_sent.html')
+
+
+@ssl_required
+def password_reset_confirm(request, uidb36=None, token=None):
+    """View that checks the hash in a password reset link and presents a
+    form for entering a new password.
+    """
+    try:
+        uid_int = base36_to_int(uidb36)
+    except ValueError:
+        raise Http404
+
+    user = get_object_or_404(User, id=uid_int)
+    context = {}
+
+    if default_token_generator.check_token(user, token):
+        context['validlink'] = True
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('users.pw_reset_complete'))
+        else:
+            form = SetPasswordForm(None)
+    else:
+        context['validlink'] = False
+        form = None
+    context['form'] = form
+    return jingo.render(request, 'users/pw_reset_confirm.html', context)
+
+
+def password_reset_complete(request):
+    """Password reset complete."""
+    return jingo.render(request, 'users/pw_reset_complete.html')
 
 
 def _clean_next_url(request):

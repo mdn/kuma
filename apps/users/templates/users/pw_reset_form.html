@@ -1,0 +1,31 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Password Reset') %}
+{% set classes = 'password' %}
+
+{% block content %}
+  <article id="pw-reset" class="main">
+    <h1>{{ title }}</h1>
+    <form method="post" action="">
+      {{ csrf() }}
+      <fieldset>
+        <p class="instruct">
+          {% trans %} Forgotten your password? Enter your e-mail address below,
+          and we'll e-mail instructions for setting a new one.
+          {% endtrans %}
+        </p>
+        {{ errorlist(form) }}
+        <ul>
+          <li>
+            <label for="id_email">{{ _('Email Address:') }}</label>
+            {{ form.email|safe }}
+          </li>
+        </ul>
+      </fieldset>
+      <div class="submit">
+        <input type="submit" value="{{ _('Send password reset link') }}" />
+      </div>
+    </form>
+  </article>
+{% endblock content %}
