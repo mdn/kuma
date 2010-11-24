@@ -1,13 +1,16 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% macro search_box(settings, id=False, prefix=None, target=None,
-                    placeholder='Search Firefox Help') %}
+                    placeholder=None) %}
+  {% if placeholder is none %}
+    {% set placeholder = _('Search Firefox Help') %}
+  {% endif %}
   <div class="support-search"{% if id %} id="{{ id }}"{% endif %} role="search">
     {% if prefix %}
-      {{ _(prefix) }}
+      {{ prefix }}
     {% endif %}
     <form action="{{ url('search') }}" method="get" {% if target %} target="{{ target }}"{% endif %}>
       <span class="wrap">
-        <input type="text" class="text" name="q" placeholder="{{ _(placeholder) }}" required="required" />
+        <input type="text" class="text" name="q" placeholder="{{ placeholder }}" required="required" />
       </span>
       <input type="image" class="submit" src="{{ settings.MEDIA_URL }}img/btn.search.png" title="{{ _('Search') }}" alt="{{ _('Search') }}" />
     </form>
