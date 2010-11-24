@@ -1,8 +1,8 @@
 (function($){
 
-    function Memory() {
+    function Memory(name) {
         this._id = null;
-        this._name = 'custcare_persist_reply';
+        this._name = name;
 
         this.__defineGetter__('id', function() {
             if (!this._id) {
@@ -33,7 +33,9 @@
             }
         };
     }
-    var memory = new Memory();
+
+    var memory = new Memory('custcare_persist_reply'),
+        last_reply = new Memory('custcare_last_reply');
 
     function Tweet(target) {
         this.$el = $(target);
@@ -142,14 +144,14 @@
                 'modal': true,
                 'position': 'top',
                 'width': 500,
-                'close': function() { 
-                    modal.reset(); 
+                'close': function() {
+                    modal.reset();
                 },
             };
 
             this.$el.find('#submit').bind('click', {reply: this}, function(e) {
-                var reply = e.data.reply;
-                var data = {
+                var reply = e.data.reply,
+                    data = {
                     'content': reply.content,
                     'reply_to': reply.tweet.id,
                 };
@@ -159,6 +161,10 @@
                     data: data,
                     type: 'POST',
                     success: function(data) {
+                        // Remember reply ID.
+                        last_reply.id = reply.tweet.id;
+                        mark_last_reply();
+
                         reply.$success_msg.show();
                         setTimeout(function() {
                             reply.close();
@@ -208,6 +214,44 @@
         }
         var signin = new Signin();
 
+        /** Mark the tweets that the logged-in user has replied to. */
+        function mark_my_replies() {
+            if (!signin.authed) return;
+
+            var me = $('#twitter-modal').attr('data-twitter-user'),
+                replied_to = $('#tweets .replies').filter(function() {
+                var myreplies = $(this).children('.tweet').filter(function() {
+                        return ($(this).find('.twittername').text() == me);
+                    });
+                return (myreplies.length > 0);  // Keep all tweets we've replied to.
+            });
+            replied_to.each(function() {
+                var reply_txt = $('#tweet-'+$(this).attr('data-tweet-id')).find('.reply_count'),
+                    count = reply_txt.attr('data-count') - 1;
+                reply_txt.addClass('you');
+                if (count == 0) {
+                    reply_txt.text('You replied');
+                } else if (count == 1) {
+                    reply_txt.text('You and 1 other replied');
+                } else {
+                    reply_txt.text('You and '+count+' others replied');
+                }
+            });
+            mark_last_reply();
+        }
+
+        function mark_last_reply() {
+            if (!last_reply.id) return;
+
+            var last = $('#tweet-'+last_reply.id).find('.reply_count');
+            if (!last.hasClass('you')) {
+                last.addClass('you')
+                    .text('You replied');
+            }
+        }
+
+        mark_my_replies();
+
         $('.tweet').live('click', function(e) {
             // Do not open tweet window if clicked on link.
             if ($(e.target).is('a') || $(e.target).parentsUntil('li.tweet').is('a')) {
@@ -247,6 +291,7 @@
                 function(data) {
                     $('#tweets').fadeOut('fast', function() {
                         $(this).html(data).fadeIn();
+                        mark_my_replies();
                         $("#refresh-busy").hide();
                     });
                 }
@@ -286,6 +331,7 @@
                 function(data) {
                     if (data) {
                         $('#tweets').append(data);
+                        mark_my_replies();
                     } else {
                         // No data left, remove infinite scrolling.
                         $('#infinite-scroll').unbind('enterviewport');

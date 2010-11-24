@@ -83,6 +83,8 @@ def landing(request):
         'canned_responses': canned_responses,
         'tweets': _get_tweets(),
         'authed': twitter.authed,
+        'twitter_user': (twitter.api.auth.get_username() if
+                         twitter.authed else None),
     })
 
 

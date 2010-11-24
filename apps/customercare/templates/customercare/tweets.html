@@ -20,7 +20,7 @@
     {% endif %}
     <p class="text">{{ tweet.text|safe }}</p>
   </li>
-  <div id="replies_{{ tweet.id }}" class="replies">
+  <div id="replies_{{ tweet.id }}" class="replies" data-tweet-id="{{ tweet.id }}">
     {% if tweet.replies %}
       {% with tweets = tweet.replies %}
         {% include 'customercare/tweets.html' %}
