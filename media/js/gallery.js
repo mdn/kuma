@@ -16,27 +16,34 @@ $(document).ready(function () {
              'del': gettext('Delete %s file')}];
 
     jQuery.fn.makeCancelUpload = function (options) {
-        var $this = this;
+        var $this = this,
+            field_name = $this.attr('data-name');
         if (!$this.is('input')) {
             return $this;
         }
 
-        // drafts: delete, regular cancel: just close the modal
         $this.wrap('<form class="inline" method="POST" action="' +
                      $(this).attr('data-action') + '"/>')
                .closest('form')
                .append($('input[name="csrfmiddlewaretoken"]').first()
                        .clone());
 
+        // delete buttons must not close the modal, unbind that click event
+        if (field_name !== undefined) {
+            $this.unbind('click');
+        }
+
         // now bind to the click event
         $this.click(function (ev) {
-            var $this = $(this);
             if ($this.hasClass('draft') ||
                 $this.closest('.upload-form').hasClass('uploading')) {
 
                 // Delete draft asynchronously
                 var $cancelForm = $this.closest('form'),
                     $uploadForm = $this.closest('.upload-form');
+                    in_progress = $('.progress:visible', $uploadForm).length,
+                    $add = $('.upload-media.' + field_name, $uploadForm);
+
                 $.ajax({
                     url: $cancelForm.attr('action'),
                     type: 'POST',
@@ -45,19 +52,77 @@ $(document).ready(function () {
                     // Ignore the response, nothing to do.
                 });
 
-                // Clean up
-                $this.removeClass('draft');
-                $uploadForm.removeClass('uploading')
-                    .find('div.row-right.preview').html('');
-                $('#gallery-upload-type').show();
-                $uploadForm.find('.upload-media').show();
-                $uploadForm.find('.progress, .preview, .metadata').hide();
+                if (field_name === undefined) {
+                    // special case for Cancel buttons
+                    $this.removeClass('draft');
+                    $uploadForm.removeClass('uploading');
+                    return false;
+                }
+
+                reShowFileUpload({
+                    add: $add, form: $uploadForm,
+                    progress: $('.progress', $uploadForm)
+                        .filter('.' + field_name),
+                    metadata: $('.metadata', $uploadForm),
+                    cancel_btn: $this
+                }, true /* hide preview */);
+
             }
             return false;
         });
 
         return $this;
     };
+
+    function reShowFileUpload($options, delete_button) {
+        var $inputs_remaining = $('input[type="file"]:visible', $options.form);
+            in_progress = $('.progress:visible', $options.form).length,
+            total_files = (current ? 4 : 1),
+            uploaded_files = ($inputs_remaining.length < total_files - 1);
+
+        if (current === 0) {
+            $options.form.find('.preview').hide().filter('.row-right').html('');
+        }
+
+        if (in_progress <= 2 && !uploaded_files) {
+            $options.metadata.fadeOut('fast');
+        }
+
+        if (in_progress > 2) {
+            $options.progress = $options.progress.not('label');
+        }
+
+        if ($options.add.hasClass('thumbnail') && delete_button) {
+            $options.add.find('.image-preview,form.inline').remove();
+            $options.add = $options.add.children();
+            // if thumbnail starts loaded, it will be hidden by
+            // showEmptyMediaFields
+            $options.add.children().children().show();
+        }
+
+        if (!$options.add.hasClass('file') &&
+            !$options.add.hasClass('thumbnail') && delete_button) {
+            var $preview = $options.cancel_btn.closest('.video-preview');
+            if ($preview.parent().children().length === 1) {
+               $preview.parent().html('');
+                $('.preview', $options.form).hide();
+            } else {
+                $preview.remove();
+            }
+        }
+
+        $options.progress.first().fadeOut('fast', function chooseAgain() {
+            $options.add.fadeIn('fast').removeClass('uploading');
+            $options.form.removeClass('uploading');
+            $('label.upload-media', $options.form).fadeIn('fast');
+            // allow to change type if: nothing has been uploaded
+            // and nothing is in progress
+            if (in_progress <= 2 && !uploaded_files) {
+                $('#gallery-upload-type').fadeIn('fast');
+            }
+        });
+        $options.progress.not(':first').fadeOut('fast');
+    }
 
     init();
 
@@ -75,9 +140,13 @@ $(document).ready(function () {
                 $(this).show();
             }
         });
-        if ($('.upload-media:visible', $form).length === 1) {
+        if ($('.upload-media:visible', $form).not('.thumbnail').length === 1) {
             // only label is left, hide it too
-            $('label.upload-media', $form).hide();
+            $('label.upload-media', $form).not('.thumbnail').hide();
+        }
+        if ($('.upload-media.thumbnail .image-preview').length > 0) {
+            $('.upload-media.thumbnail').children('label,input[name="thumbnail"]')
+                .hide();
         }
     }
 
@@ -135,7 +204,8 @@ $(document).ready(function () {
                     };
                 $form.find('input[type="submit"]').not('[name="cancel"]')
                     .attr('disabled', 'disabled');
-                $options.remaining = $('.upload-media:visible', $form);
+                $options.remaining = $('.upload-media:visible', $form)
+                    .not('.thumbnail');
                 // if there are other inputs remaining to upload
                 // don't hide the Video label
                 if ($options.remaining.length > 2 && upName !== 'thumbnail') {
@@ -198,7 +268,7 @@ $(document).ready(function () {
                     upStatus = iframeJSON.status, upFile, $thumbnail,
                     $cancel_btn = $('.upload-action input[name="cancel"]',
                                     $options.form),
-                    message, message_index,
+                    message, message_index, attrs
                     $appendCancelTo = $('.row-right.preview', $options.form);
 
                 message_index = current;
@@ -244,10 +314,11 @@ $(document).ready(function () {
                         .appendTo($('.row-right.preview ul', $options.form));
                     message = interpolate(message, [upName]);
                 }
-                $cancel_btn.clone().val(message)
-                           .attr('data-action',
-                                 $cancel_btn.attr('data-action') +
-                                 '?field=' + upName.toLowerCase())
+                attrs = {};
+                attrs['data-action'] = $cancel_btn.attr('data-action') +
+                                           '?field=' + upName;
+                attrs['data-name'] = upName;
+                $cancel_btn.clone().val(message).attr(attrs)
                            .appendTo($appendCancelTo)
                            .makeCancelUpload();
                 $options.progress.fadeOut('fast', function () {
@@ -261,9 +332,7 @@ $(document).ready(function () {
 
 
     function reUploadWithMessage($options, message, invalid) {
-        var $msgContainer = $options.add.filter('.row-right').find('label'),
-            in_progress = $('.upload-media.uploading', $options.form).length,
-            $progress = $options.progress;
+        var $msgContainer = $options.add.filter('.row-right').find('label');
         $msgContainer.html(message);
         $options.form.find('input[type="submit"]').attr('disabled', '');
         if (invalid) {
@@ -271,22 +340,7 @@ $(document).ready(function () {
         } else {
             $msgContainer.removeClass('invalid');
         }
-        if (in_progress <= 1 && !$options.add.hasClass('thumbnail')) {
-            $options.metadata.fadeOut('fast');
-        } else if ($options.add.hasClass('thumbnail')) {
-            in_progress = 2;
-        } else {  // if (in_progress > 2) {
-            $progress = $progress.not('label');
-        }
-        $progress.fadeOut('fast', function chooseAgain() {
-            $options.add.fadeIn('fast').removeClass('uploading');
-            $options.form.removeClass('uploading');
-            $('label.upload-media', $options.form).fadeIn('fast');
-            // check if other uploads are still in progress before showing this
-            if (in_progress <= 1) {
-                $('#gallery-upload-type').fadeIn('fast');
-            }
-        });
+        reShowFileUpload($options);
     }
 
     function init() {
@@ -299,7 +353,7 @@ $(document).ready(function () {
             $radios.eq($forms.index($forms.filter('.draft'))).click();
             $('#btn-upload').click();
         }
-        // auto-open the modal window when drafts are present
+
         $uploadModal.find('input[name="cancel"]').each(function () {
             $(this).makeCancelUpload();
         });
