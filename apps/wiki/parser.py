@@ -286,10 +286,24 @@ class ForParser(object):
 
     # Dratted wiki formatter likes to put <p> tags around my token when it sits
     # on a line by itself, so tolerate and consume that foolishness:
-    _PARSED_STRIPPED_FOR = re.compile(r'<p>\s*\x07(\d+)\x07\s*</p>'
-                                          r'|\x07(\d+)\x07')
-    _PARSED_STRIPPED_FOR_CLOSER = re.compile(r'<p>\s*\x07/sf\x07\s*</p>'
-                                                 r'|\x07/sf\x07')
+    _PARSED_STRIPPED_FOR = re.compile(
+        # Whitespace, a {for} token, then more whitespace (including <br>s):
+        r'<p>'
+        r'(?:\s|<br\s*/?>)*'
+        r'\x07(\d+)\x07'  # The {for} token
+        r'(?:\s|<br\s*/?>)*'
+        r'</p>'
+        # Alternately, a lone {for} token that didn't get wrapped in a <p>:
+        r'|\x07(\d+)\x07')
+    _PARSED_STRIPPED_FOR_CLOSER = re.compile(
+        # Similar to above, a {/for} token wrapped in <p> and whitespace:
+        r'<p>'
+        r'(?:\s|<br\s*/?>)*'
+        r'\x07/sf\x07'  # {/for} token
+        r'(?:\s|<br\s*/?>)*'
+        r'</p>'
+        # Or a lone {/for} token:
+        r'|\x07/sf\x07')
 
     @classmethod
     def unstrip_fors(cls, html, dehydrations):

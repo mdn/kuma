@@ -577,6 +577,13 @@ class ForWikiTests(TestCase):
         # The two div.fors should be siblings, not nested:
         eq_([], pq(html)('div.for div.for'))
 
+    def test_leading_newlines(self):
+        """Make sure leading newlines don't cause a block-level {for} to be
+        sucked into the leading blank paragraph, causing the actual text to
+        always be shown."""
+        doc = pq(WikiParser().parse('\n\n{for linux}\nunixify\n{/for}'))
+        eq_('unixify', doc('.for').text().strip())
+
     def test_big_swath(self):
         """Enclose a big section containing many tags."""
         parsed_eq('<div class="for"><h1 id="w_h1">H1</h1>'
