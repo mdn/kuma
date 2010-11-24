@@ -48,8 +48,7 @@
         {% trans %}Did you know that Firefox Help is powered by volunteer
           superheroes all around the world?{% endtrans %}
       </p>
-      {# TODO: insert URL below #}
-      <a href="#">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
+      <a href="{{ url('wiki.document', 'superheroes-wanted') }}">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
     </section>
     {% if not hide_plugin_check %}
       <section id="check-your-plugins">
@@ -63,8 +62,7 @@
             questions and run an instant check to see if you're up to date.
           {% endtrans %}
         </p>
-        {# TODO: insert URL below #}
-        <a href="#">{{ _('Find out more &raquo;')|safe }}</a>
+        <a href="http://www.mozilla.com/plugincheck/">{{ _('Find out more &raquo;')|safe }}</a>
       </section>
     {% endif %}
   </div>
