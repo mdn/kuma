@@ -69,6 +69,10 @@ def upload(request, media_type='image'):
         image_form = _init_media_form(ImageForm, request, draft['image'])
         if image_form.is_valid():
             img = image_form.save()
+            # TODO: We can drop this when we start using Redis.
+            invalidate = Image.objects.exclude(pk=img.pk)
+            if invalidate.exists():
+                Image.objects.invalidate(invalidate[0])
             return HttpResponseRedirect(img.get_absolute_url())
         else:
             return gallery(request, media_type='image')
@@ -77,6 +81,10 @@ def upload(request, media_type='image'):
         video_form = _init_media_form(VideoForm, request, draft['video'])
         if video_form.is_valid():
             vid = video_form.save()
+            # TODO: We can drop this when we start using Redis.
+            invalidate = Video.objects.exclude(pk=vid.pk)
+            if invalidate.exists():
+                Video.objects.invalidate(invalidate[0])
             return HttpResponseRedirect(vid.get_absolute_url())
         else:
             return gallery(request, media_type='video')
