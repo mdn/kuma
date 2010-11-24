@@ -2,24 +2,29 @@
  * Users app CSS
  */
 
+#register form,
 #login form {
     margin: 25px 0;
 }
 
+#register form li,
 #login form li {
     list-style: none;
     padding: 5px 0;
 }
 
+#register form label,
 #login form label {
     display: inline-block;
     width: 100px;
 }
 
+#register form li input,
 #login form li input {
     width: 200px;
 }
 
+#register div.submit,
 #login div.submit {
     padding: 10px 0 0 103px;
 }

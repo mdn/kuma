@@ -14,7 +14,7 @@ users_patterns = patterns('',
     url('^login', views.login, name='users.login'),
     url('^logout', views.logout, name='users.logout'),
 # TODO:
-#    url('^register$', views.register, name='users.register'),
+    url('^register$', views.register, name='users.register'),
 #    url(r'^pwreset/?$', auth_views.password_reset,
 #                        {'template_name': 'users/pwreset_request.html',
 #                         'email_template_name': 'users/email/pwreset.ltxt',

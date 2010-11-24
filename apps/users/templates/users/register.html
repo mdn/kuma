@@ -1,0 +1,23 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Register') %}
+{% set classes = 'register' %}
+
+{% block content %}
+  <article id="register" class="main">
+    <h1>{{ _('Register') }}</h1>
+    {{ errorlist(form) }}
+    <form method="post" action="">
+      {{ csrf() }}
+      <ul>
+        {% for field in form %}
+          <li>{{ field|label_with_help }} {{ field|safe }}</li>
+        {% endfor %}
+      </ul>
+      <div class="submit">
+        <input type="submit" value="{{ _('Register') }}" />
+      </div>
+    </form>
+  </article>
+{% endblock %}

@@ -1,0 +1,15 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Register') %}
+{% set classes = 'register' %}
+
+{% block content %}
+  <article id="register" class="main">
+    <h1>{{ _('Thank you for registering!') }}</h1>
+    {# TODO: Text for this page. #}
+    <p>{% trans %}Thank you for being awesome!{% endtrans %}</p>
+    <p>{% trans login_url=settings.LOGIN_URL %}You can now
+      <a href="{{ login_url }}">login</a>!{% endtrans %}</p>
+  </article>
+{% endblock %}
