@@ -40,9 +40,9 @@ $(document).ready(function () {
 
                 // Delete draft asynchronously
                 var $cancelForm = $this.closest('form'),
-                    $uploadForm = $this.closest('.upload-form');
                     in_progress = $('.progress:visible', $uploadForm).length,
-                    $add = $('.upload-media.' + field_name, $uploadForm);
+                    $add = $('.upload-media.' + field_name, $uploadForm),
+                    $uploadForm = $this.closest('.upload-form');
 
                 $.ajax({
                     url: $cancelForm.attr('action'),
@@ -53,9 +53,8 @@ $(document).ready(function () {
                 });
 
                 if (field_name === undefined) {
-                    // special case for Cancel buttons
-                    $this.removeClass('draft');
-                    $uploadForm.removeClass('uploading');
+                    // cancel/close modal must reset the form
+                    resetForms();
                     return false;
                 }
 
@@ -74,8 +73,24 @@ $(document).ready(function () {
         return $this;
     };
 
+    function resetForms() {
+        $forms.find('.uploading').removeClass('uploading');
+        $forms.find('.draft').removeClass('draft');
+        $forms.find('.invalid').removeClass('invalid');
+        $forms.find('.metadata').hide();
+        $forms.first().find('.preview').hide().filter('.row-right').html('');
+        $forms.last().find('.preview').hide();
+        $forms.last().find('.video-preview').remove();
+        $forms.last().find('.upload-media.row-right.thumbnail')
+            .find('.image-preview,form.inline').remove();
+        $forms.last().find('.upload-media.row-right.thumbnail')
+            .children().show()
+        $('#gallery-upload-type').show();
+        $forms.find('.upload-media').show();
+    }
+
     function reShowFileUpload($options, delete_button) {
-        var $inputs_remaining = $('input[type="file"]:visible', $options.form);
+        var $inputs_remaining = $('input[type="file"]:visible', $options.form),
             in_progress = $('.progress:visible', $options.form).length,
             total_files = (current ? 4 : 1),
             uploaded_files = ($inputs_remaining.length < total_files - 1);
@@ -98,6 +113,7 @@ $(document).ready(function () {
             // if thumbnail starts loaded, it will be hidden by
             // showEmptyMediaFields
             $options.add.children().children().show();
+            $options.add.find('input').show();
         }
 
         if (!$options.add.hasClass('file') &&
@@ -167,9 +183,14 @@ $(document).ready(function () {
             $('.metadata', $uploadModal).insertBefore(
                 $('.upload-action', $toShow));
         }
-        if ($preview.find('.image-preview,.video-preview').length > 0) {
+        if ($preview.find('.image-preview,.video-preview').length > 0 ||
+            $('.upload-media.thumbnail .image-preview').length > 0) {
             showEmptyMediaFields($toShow);
-            $preview.show();
+            if ($preview.find('.image-preview,.video-preview').length > 0) {
+                $preview.show();
+            } else {
+                $preview.hide();
+            }
             // move metadata from one form to another
             $('.metadata', $toShow).show();
         } else {
@@ -305,9 +326,8 @@ $(document).ready(function () {
                         .wrap('<div class="image-preview"/>').closest('div')
                         .appendTo($('.row-right.uploading.thumbnail',
                                     $options.form));
-                    $('.row-right.thumbnail,.row-left.thumbnail',
-                      $options.form).show();
-                    $appendCancelTo = $('.row-right.thumbnail', $options.form);
+                    $('.upload-media.thumbnail', $options.form).show();
+                    $appendCancelTo = $('.row-right.uploading.thumbnail', $options.form);
                 } else {
                     $appendCancelTo = $('<li class="video-preview"/>');
                     $appendCancelTo.html($options.filename)

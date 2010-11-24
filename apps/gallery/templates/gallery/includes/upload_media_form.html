@@ -57,7 +57,7 @@
     {% endfor %}
     <div class="upload-action">
       <input type="submit" name="upload" value="{{ _('Submit file') }}">
-      <input type="submit" name="cancel"{% if image_form.instance.pk %} class="draft"{% endif %} data-action="{{ url('gallery.cancel_draft', media_type='image') }}" value="{% if image_form.instance.pk %}{{ _('Delete this {type}')|f(type='image') }}{% else %}{{ _('Cancel') }}{% endif %}">
+      <input type="submit" name="cancel"{% if image_form.instance.pk %} class="draft"{% endif %} data-action="{{ url('gallery.cancel_draft', media_type='image') }}" value="{{ _('Cancel') }}">
     </div>
   </form>
   <form id="gallery-upload-video" class="upload-form {% if video_form.instance.pk %}draft{% endif %} {% if video_form.instance.pk %}errors{% endif %}"
@@ -138,7 +138,7 @@
       <input type="submit" name="upload" value="{{ _('Submit file') }}">
       <input {% if video_form.instance.pk %} class="draft"{% endif %}
              data-action="{{ url('gallery.cancel_draft', media_type='video')}}"
-             name="cancel" type="submit" value="{% if video_form.instance.pk %}{{ _('Delete this {type}')|f(type='video') }}{% else %}{{ _('Cancel') }}{% endif %}">
+             name="cancel" type="submit" value="{{ _('Cancel') }}">
     </div>
   </form>
 </div>
