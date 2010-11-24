@@ -48,10 +48,7 @@
       {% endif %}
     </section>
     <section id="doc-contributors">
-      {{ _('Contributors to this page:') }}
-      {% for name in contributors %}
-        {{ name }}{% if not loop.last %},{% endif %}
-      {% endfor %}
+      {{ _('Contributors to this page: {users}')|f(users=contributors|join(', ')) }}
     </section>
   </article>
   {% if not document.has_voted(request) %}

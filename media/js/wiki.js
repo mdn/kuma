@@ -153,6 +153,9 @@
             hash = hashFragment(),
             isSetManually;
 
+        // Make the 'Table of Contents' header localizable.
+        $('#toc > h2').text(gettext('Table of Contents'));
+
         function updateForsAndToc() {
             // Hide and show document sections accordingly:
             showAndHideFors($('select#os').val(),
