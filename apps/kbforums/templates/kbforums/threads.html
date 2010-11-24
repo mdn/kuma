@@ -62,7 +62,6 @@
 
     {{ threads|paginator }}
   {% else %}
-    {# Not localized because it's not worth localizers time. #}
-    <p>There are no threads. Maybe you should create some!</p>
+    <p>{{ _('There are no threads. Maybe you should create some!') }}</p>
   {% endif %}
 {% endblock %}

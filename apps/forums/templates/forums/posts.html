@@ -86,8 +86,7 @@
     {{ posts|paginator }}
 
   {% else %}
-    {# Not localized because it's not worth localizers time. #}
-    <p>Oh, no! Looks like there are no posts!</p>
+    <p>{{ _('Oh, no! Looks like there are no posts!') }}</p>
   {% endif %}
 
   {% if user.is_authenticated() and not thread.is_locked %}
