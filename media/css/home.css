@@ -6,6 +6,7 @@
 #featured {
     background: url("../img/nurse.png") no-repeat scroll right top transparent;
     height: 279px;
+    overflow: hidden;
     padding: 75px 330px 0 0;
     position: relative;
     top: -75px; /* the background image needs to slide under #main-hdr */
@@ -104,11 +105,19 @@ body.mobile #featured {
     list-style-type: none;
 }
 
+#home-content-quick li {
+    margin-bottom: 4px;
+}
+
 #home-content-explore {
     border-left: 2px dotted #a8c4ef;
     margin-top: 40px;
     padding-left: 20px;
     width: 460px;
+}
+
+#home-content-explore h1 {
+    margin: -5px 0 0.5em;
 }
 
 #home-content-explore h2 {
