@@ -2,15 +2,15 @@
 <div id="footer-right">
   <form id="lang_form" dir="ltr" method="get" action="{{ localizable_url }}">
     <div>
-    	<label for="flang">{{ _('Other Languages') }}</label>
+      <label for="flang">{{ _('Other Languages') }}</label>
       <select id="flang" class="autosubmit" name="lang" dir="ltr">
         {% for locale in settings.LANGUAGE_CHOICES %}
           <option value="{{ locale[0] }}" {% if request.locale == locale[0] %}selected="selected"{% endif %}>{{ locale[1] }}</option>
         {% endfor %}
       </select>
-    	<noscript>
-    		<div><input type="submit" id="lang_submit" value="_('Go')" /></div>
-    	</noscript>
+      <noscript>
+        <div><input type="submit" id="lang_submit" value="_('Go')" /></div>
+      </noscript>
     </div>
   </form>
 </div>
@@ -85,18 +85,18 @@
 </div>
 
 <div id="copyright">
-	<p id="footer-links">
-	  <a href="http://mozilla.com/privacy-policy.html">{{ _('Privacy Policy') }}</a> &nbsp;|&nbsp;
-	  <a href="http://mozilla.com/about/legal.html">{{ _('Legal Notices') }}</a> &nbsp;|&nbsp;
+  <p id="footer-links">
+    <a href="http://mozilla.com/privacy-policy.html">{{ _('Privacy Policy') }}</a> &nbsp;|&nbsp;
+    <a href="http://mozilla.com/about/legal.html">{{ _('Legal Notices') }}</a> &nbsp;|&nbsp;
     <a href="http://mozilla.com/legal/fraud-report/index.html">{{ _('Report Trademark Abuse') }}</a>
   </p>
-	<p>
-	  {% trans %}
-	    Except where otherwise <a href="http://mozilla.com/about/legal.html#site">noted</a>,
-	    content on this site is licensed under the <br />
-	    <a href="http://creativecommons.org/licenses/by-sa/3.0/">
-	      Creative Commons Attribution Share-Alike License v3.0
-	    </a> or any later version.
-	  {% endtrans %}
-	</p>
+  <p>
+    {% trans %}
+      Except where otherwise <a href="http://mozilla.com/about/legal.html#site">noted</a>,
+      content on this site is licensed under the <br />
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/">
+        Creative Commons Attribution Share-Alike License v3.0
+      </a> or any later version.
+    {% endtrans %}
+  </p>
 </div>
