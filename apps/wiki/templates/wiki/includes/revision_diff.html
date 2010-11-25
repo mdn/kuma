@@ -8,7 +8,7 @@
           {% if revision_from_header %}
             {{ revision_from_header}}
           {% else %}
-            {{ ('Revision {num}:')|f(num=revision_from.id) }}
+            {{ _('Revision {num}:')|f(num=revision_from.id) }}
           {% endif %}
         </h3>
         <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
@@ -18,7 +18,7 @@
           {% if revision_to_header %}
             {{ revision_to_header}}
           {% else %}
-            {{ ('Revision {num}:')|f(num=revision_to.id) }}
+            {{ _('Revision {num}:')|f(num=revision_to.id) }}
           {% endif %}
         </h3>
         <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
