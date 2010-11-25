@@ -45,11 +45,11 @@ class RegisterForm(forms.ModelForm):
                              error_messages={'required': EMAIL_REQUIRED,
                                              'min_length': EMAIL_SHORT,
                                              'max_length': EMAIL_LONG})
-    password1 = forms.CharField(label=_('Password:'),
-                                widget=forms.PasswordInput(
-                                    render_value=False),
-                                error_messages={'required': PASSWD_REQUIRED})
-    password2 = forms.CharField(label=_('Password confirmation:'),
+    password = forms.CharField(label=_('Password:'),
+                               widget=forms.PasswordInput(
+                                   render_value=False),
+                               error_messages={'required': PASSWD_REQUIRED})
+    password2 = forms.CharField(label=_('Repeat password:'),
                                 widget=forms.PasswordInput(
                                     render_value=False),
                                 error_messages={'required': PASSWD2_REQUIRED},
@@ -58,14 +58,14 @@ class RegisterForm(forms.ModelForm):
 
     class Meta(object):
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password', 'password2')
 
     def clean(self):
         super(RegisterForm, self).clean()
-        password1 = self.cleaned_data.get('password1')
+        password = self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('password2')
 
-        if not password1 == password2:
+        if not password == password2:
             raise forms.ValidationError(_('Passwords must match.'))
 
         return self.cleaned_data
@@ -76,6 +76,10 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError(_('A user with that email address '
                                           'already exists.'))
         return email
+
+    def __init__(self,  request=None, *args, **kwargs):
+        super(RegisterForm, self).__init__(request, auto_id='id_for_%s',
+                                           *args, **kwargs)
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):

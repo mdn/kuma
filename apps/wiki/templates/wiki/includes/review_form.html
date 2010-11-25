@@ -12,7 +12,7 @@
       <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel Review') }}</a>
     </form>
 
-    <form id="approve-modal" class="accept-form pop-in" action="" method="post">
+    <form id="approve-modal" class="fixed-modal accept-form pop-in" action="" method="post">
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Accept this Translation') }}{% else %}{{ _('Accept this Revision') }}{% endif %}</legend>
@@ -40,7 +40,7 @@
       </fieldset>
     </form>
 
-    <form id="reject-modal" class="reject-form pop-in" action="" method="post">
+    <form id="reject-modal" class="fixed-modal reject-form pop-in" action="" method="post">
       {{ csrf() }}
       <fieldset>
         <legend>{% if document.parent %}{{ _('Reject this Translation') }}{% else %}{{ _('Reject this Revision') }}{% endif %}</legend>

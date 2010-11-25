@@ -31,51 +31,6 @@ ol.breadcrumbs {
     display: inline;
 }
 
-.js .pop-in {
-    border: solid 4px #1c3054;
-    font-size: 14px;
-    padding: 0;
-    position: absolute;
-    z-index: 8;
-}
-
-.js .pop-in h1,
-.js .pop-in legend {
-    background: #2d488d;
-    border-bottom: solid 2px #22366a;
-    color: #fff;
-    display: block;
-    font-family: Verdana;
-    font-size: 15px;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    -moz-border-radius-bottomleft: 0;
-    -moz-border-radius-bottomright: 0;
-    -webkit-border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    padding: 5px 15px;
-    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
-}
-
-.js .pop-in div.wrap {
-    padding: 15px;
-}
-
-#doc-content .fixed-modal h1,
-.fixed-modal h1 {
-    margin-top: 0;
-}
-
-.pop-in a.close {
-    font-size: 18px;
-    position: absolute;
-    right: 8px;
-    top: 3px;
-}
-
 /* Template Layout */
 #content {
     font-family: Georgia;
@@ -1301,31 +1256,16 @@ body.review #content-fields textarea {
     margin: 5px 0 0;
 }
 
+.js .pop-in {
+    border: solid 4px #1c3054;
+}
+
 .js form.pop-in {
     display: none;
 }
 
 form.pop-in legend {
     font-weight: bold;
-}
-
-#approve-modal,
-#reject-modal,
-.fixed-modal {
-    color: #4B4740;
-    left: 50%;
-    margin-left: -220px;
-    position: fixed;
-    text-align: left;
-    top: 100px;
-    width: 400px;
-    z-index:10;
-}
-
-#approve-modal.active,
-#reject-modal.active,
-.fixed-modal.active {
-    display: block;
 }
 
 #approve-modal legend,
@@ -1418,14 +1358,7 @@ td.diff_header {
 }
 
 #submit-modal {
-    color: #4B4740;
-    left: 50%;
-    margin-left: -220px;
-    position: fixed;
-    text-align: left;
     top: 150px;
-    width: 400px;
-    z-index:10;
 }
 
 #submit-modal legend {

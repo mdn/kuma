@@ -28,7 +28,8 @@
     margin: .5em 0 0;
 }
 
-#support-search, #greeting {
+#support-search,
+#greeting {
     float: right;
     padding: 0 20px 0 0;
     width: 260px;
@@ -1364,7 +1365,8 @@ input.g-btn:disabled {
 }
 
 #ask-question textarea,
-#ask-question input[type="text"] {
+#ask-question input[type="text"],
+#ask-question input[type="password"] {
     border: solid 1px #87C4DC;
     border-radius: 6px;
     -moz-border-radius: 6px;
@@ -1559,33 +1561,70 @@ body.flagged #main-content {
     padding: 10px 25px;
 }
 
-#login-modal {
-    background: #fff;
-    border: solid 3px #898377;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    box-shadow: 1px 2px 15px #aaa;
-    -moz-box-shadow: 1px 2px 15px #333;
-    -webkit-box-shadow: 1px 2px 15px #aaa;
-    color: #4B4740;
-    display: block;
-    font-size: 14px;
-    left: 50%;
-    margin-left: -410px;
-    padding: 20px;
-    position: fixed;
-    text-align: left;
-    top: 70px;
-    width: 780px;
-    z-index:10;
+#register_form ul,
+#login_form ul {
+    list-style-type: none;
 }
 
-#login-modal iframe {
-    border: none;
-    height: 400px;
-    overflow: auto;
-    width: 100%;
+#register_form li,
+#login_form li {
+    margin: 10px 0;
+}
+
+#login_form,
+#register_form {
+    float: left;
+    margin: 40px 0;
+    width: 240px;
+}
+#register_form {
+    border-right: 2px dotted #EDECE9;
+    padding-right: 40px;
+}
+#login_form {
+    margin-left: 25px;
+    width: 230px;
+}
+
+#register_form input[type="text"],
+#login_form input[type="text"],
+#register_form input[type="password"],
+#login_form input[type="password"] {
+    display: inline-block;
+    width: 100px;
+}
+
+#login_form .submit {
+    padding-left: 9px;
+    margin-left: 6em;
+}
+#register_form .submit {
+    padding-left: 9px;
+    margin-left: 9em;
+}
+
+#reset_password {
+    display: block;
+    margin: 1em 0 0 6em;
+    padding-left: 9px;
+}
+
+#register_form label,
+#login_form label {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    width: 9em;
+    text-align: right;
+    margin-right: .5em;
+}
+#login_form label {
+    width: 6em;
+}
+#register_form h2,
+#login_form h2 {
+    margin-bottom: 1em;
+    text-align: center;
 }
 
 div.confirm-question {

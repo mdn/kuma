@@ -347,6 +347,7 @@ MINIFY_BUNDLES = {
             'js/libs/jqueryui.min.js',
             'js/markup.js',
             'js/libs/jquery.ajaxupload.js',
+            'js/libs/jquery.modal.js',
             'js/upload.js',
             'js/questions.js',
             'js/tags.js',

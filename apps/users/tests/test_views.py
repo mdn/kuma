@@ -28,7 +28,7 @@ class RegisterTestCase(TestCase):
         response = self.client.post(reverse('users.register', locale='en-US'),
                                     {'username': 'newbie',
                                      'email': 'newbie@example.com',
-                                     'password1': 'foo',
+                                     'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         eq_(200, response.status_code)
         u = User.objects.get(username='newbie')
@@ -56,7 +56,7 @@ class RegisterTestCase(TestCase):
         response = self.client.post(reverse('users.register', locale='en-US'),
                                     {'username': 'jsocol',
                                      'email': 'newbie@example.com',
-                                     'password1': 'foo',
+                                     'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')
 
@@ -65,7 +65,7 @@ class RegisterTestCase(TestCase):
         response = self.client.post(reverse('users.register', locale='en-US'),
                                     {'username': 'newbie',
                                      'email': 'noob@example.com',
-                                     'password1': 'foo',
+                                     'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')
 
@@ -73,6 +73,6 @@ class RegisterTestCase(TestCase):
         response = self.client.post(reverse('users.register', locale='en-US'),
                                     {'username': 'newbie',
                                      'email': 'newbie@example.com',
-                                     'password1': 'foo',
+                                     'password': 'foo',
                                      'password2': 'bar'}, follow=True)
         self.assertContains(response, 'must match')

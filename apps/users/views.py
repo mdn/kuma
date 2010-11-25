@@ -17,29 +17,19 @@ import jingo
 from sumo.decorators import ssl_required, logout_required
 from sumo.urlresolvers import reverse
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import RegisterForm, AuthenticationForm, ProfileForm
+from users.forms import ProfileForm
 from users.models import Profile, RegistrationProfile
+from users.utils import handle_login, handle_register
 
 
 @ssl_required
 def login(request):
     """Try to log the user in."""
-    auth.logout(request)
     next_url = _clean_next_url(request) or settings.LOGIN_REDIRECT_URL
+    form = handle_login(request)
 
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            auth.login(request, form.get_user())
-
-            if request.session.test_cookie_worked():
-                request.session.delete_test_cookie()
-
-            return HttpResponseRedirect(next_url)
-    else:
-        form = AuthenticationForm(request)
-
-    request.session.set_test_cookie()
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(next_url)
 
     return jingo.render(request, 'users/login.html',
                         {'form': form, 'next_url': next_url})
@@ -59,15 +49,9 @@ def logout(request):
 @require_http_methods(['GET', 'POST'])
 def register(request):
     """Register a new user."""
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            RegistrationProfile.objects.create_inactive_user(
-                form.cleaned_data['username'], form.cleaned_data['password1'],
-                form.cleaned_data['email'])
-            return jingo.render(request, 'users/register_done.html')
-    else:  # request.method == 'GET'
-        form = RegisterForm()
+    form = handle_register(request)
+    if form.is_valid():
+        return jingo.render(request, 'users/register_done.html')
     return jingo.render(request, 'users/register.html',
                         {'form': form})
 
@@ -104,16 +88,12 @@ def edit_profile(request):
                         {'form': form, 'profile': profile})
 
 
-# Password reset views are based on django.contrib.auth.views.
-# 4 views for password reset:
-# - password_reset sends the mail
-# - password_reset_sent shows a success message for the above
-# - password_reset_confirm checks the link the user clicked and
-#   prompts for a new password
-# - password_reset_complete shows a success message for the above
-@ssl_required
 def password_reset(request):
-    """Password reset form."""
+    """Password reset form.
+
+    Based on django.contrib.auth.views. This view sends the email.
+
+    """
     if request.method == "POST":
         form = PasswordResetForm(request.POST)
         if form.is_valid():
@@ -128,7 +108,12 @@ def password_reset(request):
 
 
 def password_reset_sent(request):
-    """Password reset email sent."""
+    """Password reset email sent.
+
+    Based on django.contrib.auth.views. This view shows a success message after
+    email is sent.
+
+    """
     return jingo.render(request, 'users/pw_reset_sent.html')
 
 
@@ -136,6 +121,9 @@ def password_reset_sent(request):
 def password_reset_confirm(request, uidb36=None, token=None):
     """View that checks the hash in a password reset link and presents a
     form for entering a new password.
+
+    Based on django.contrib.auth.views.
+
     """
     try:
         uid_int = base36_to_int(uidb36)
@@ -162,7 +150,11 @@ def password_reset_confirm(request, uidb36=None, token=None):
 
 
 def password_reset_complete(request):
-    """Password reset complete."""
+    """Password reset complete.
+
+    Based on django.contrib.auth.views. Show a success message.
+
+    """
     return jingo.render(request, 'users/pw_reset_complete.html')
 
 

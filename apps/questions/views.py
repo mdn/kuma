@@ -4,7 +4,9 @@ import json
 import logging
 
 from django.conf import settings
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.cache import cache
@@ -40,6 +42,8 @@ from sumo.utils import paginate
 from tags.utils import add_existing_tag
 from upload.models import ImageAttachment
 from upload.views import upload_imageattachment
+from users.forms import RegisterForm
+from users.utils import handle_login, handle_register
 
 
 log = logging.getLogger('k.questions')
@@ -153,7 +157,14 @@ def new_question(request):
         if request.GET.get('showform'):
             # Before we show the form, make sure the user is auth'd:
             if not request.user.is_authenticated():
-                return HttpResponseRedirect(settings.LOGIN_URL)
+                login_form = AuthenticationForm()
+                register_form = RegisterForm()
+                return jingo.render(request,
+                                    'questions/new_question_login.html',
+                                    {'product': product, 'category': category,
+                                     'title': search,
+                                     'register_form': register_form,
+                                     'login_form': login_form})
             form = NewQuestionForm(product=product,
                                    category=category,
                                    initial={'title': search})
@@ -171,11 +182,40 @@ def new_question(request):
                              'deadend': deadend,
                              'host': Site.objects.get_current().domain})
 
-    # Handle the form post
+    # Handle the form post.
+    just_logged_in = False  # Used below for whether to pre-load Question form.
     if not request.user.is_authenticated():
-        return HttpResponseRedirect(settings.LOGIN_URL)
-    form = NewQuestionForm(product=product, category=category,
-                           data=request.POST)
+        authenticated = False
+        if request.POST.get('type') == 'login':
+            login_form = handle_login(request)
+            register_form = RegisterForm()
+            authenticated = True
+        elif request.POST.get('type') == 'register':
+            register_form = handle_register(request)
+            login_form = AuthenticationForm()
+            if register_form.is_valid():  # now try to log in
+                user = auth.authenticate(username=request.POST.get('username'),
+                                         password=request.POST.get('password'))
+                auth.login(request, user)
+                authenticated = True
+        if not authenticated and request.POST.get('type') in ('login',
+                                                              'register'):
+            return jingo.render(request,
+                                'questions/new_question_login.html',
+                                {'product': product, 'category': category,
+                                 'title': request.POST.get('title'),
+                                 'register_form': register_form,
+                                 'login_form': login_form})
+        else:
+            just_logged_in = True
+
+    if just_logged_in:
+        form = NewQuestionForm(product=product,
+                               category=category,
+                               initial={'title': request.GET.get('search')})
+    else:
+        form = NewQuestionForm(product=product, category=category,
+                               data=request.POST)
 
     if form.is_valid():
         question = Question(creator=request.user,
@@ -195,6 +235,8 @@ def new_question(request):
         question_vote(request, question.id)
 
         send_confirmation_email.delay(question)
+        if not request.user.is_active:
+            auth.logout(request)
         return jingo.render(request, 'questions/confirm_question.html',
                             {'question': question})
 

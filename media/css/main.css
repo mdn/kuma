@@ -904,7 +904,7 @@ section.marky div.submit button {
 
 #media-list li img {
     max-width: 120px;
-    max-height: 120px;    
+    max-height: 120px;
 }
 
 #media-modal div.filter {
@@ -1014,31 +1014,6 @@ div#main div.img a:hover {
 }
 /* End image markup styling */
 
-/*----------------------------------
-    Common "pop-in" styles
-----------------------------------*/
-.js .pop-in {
-    background: #fff;
-    border: solid 3px #898377;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    box-shadow: 1px 2px 15px #aaa;
-    -moz-box-shadow: 1px 2px 15px #333;
-    -webkit-box-shadow: 1px 2px 15px #aaa;
-    font-size: 14px;
-    padding: 15px;
-    position: absolute;
-    z-index: 8;
-}
-
-.pop-in a.close {
-    font-size: 18px;
-    position: absolute;
-    right: 8px;
-    top: 5px;
-}
-
 /* jQueryUI styles */
 a.ui-state-hover {
     border: none !important;
@@ -1062,4 +1037,86 @@ ul.ui-autocomplete {
 }
 .input-placeholder.placeholder-focused {
     color: #333;
+}
+
+/*----------------------------------
+    Common "pop-in" and modal styles
+----------------------------------*/
+.js .pop-in,
+.js .fixed-modal {
+    background: #fff;
+    border: solid 3px #898377;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    box-shadow: 1px 2px 15px #aaa;
+    -moz-box-shadow: 1px 2px 15px #333;
+    -webkit-box-shadow: 1px 2px 15px #aaa;
+}
+.js .pop-in {
+    font-size: 14px;
+    padding: 15px;
+    position: absolute;
+    z-index: 8;
+}
+.js .pop-in.fixed-modal {
+    padding: 0;
+}
+
+.pop-in a.close,
+.fixed-modal a.close {
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}
+
+.js .fixed-modal {
+    color: #4B4740;
+    left: 50%;
+    margin-left: -220px;
+    position: fixed;
+    text-align: left;
+    top: 100px;
+    width: 400px;
+    z-index:10;
+}
+
+.js .fixed-modal {
+    display: none;
+}
+
+.js .fixed-modal.active {
+    display: block;
+}
+
+.js .pop-in h1,
+.js .pop-in legend,
+.js #login-modal h1 {
+    background: #2d488d;
+    border-bottom: solid 2px #22366a;
+    color: #fff;
+    display: block;
+    font-family: Verdana;
+    font-size: 15px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    padding: 5px 15px;
+    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
+}
+
+.js .pop-in div.wrap {
+    padding: 15px;
+}
+
+#doc-content .fixed-modal h1,
+.fixed-modal h1 {
+    margin-top: 0;
 }
