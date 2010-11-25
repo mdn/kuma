@@ -1,12 +1,17 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% from "layout/errorlist.html" import errorlist %}
 <div id="gallery-upload-modal" class="pop-in">
-  {% if image_form.instance.pk or video_form.instance.pk %}
+  {% if image_form.instance.pk %}
+    {% set current_form = image_form %}
+  {% else %}
+    {% set current_form = video_form %}
+  {% endif %}
+  {% if current_form.instance.pk %}
     <h1>{{ _('Continue Uploading Media') }}</h1>
   {% else %}
     <h1>{{ _('Upload a New Media File') }}</h1>
   {% endif %}
-  <form id="gallery-upload-type" action="" method="post"{% if image_form.instance.pk or video_form.instance.pk %} class="draft"{% endif %}>
+  <form id="gallery-upload-type" action="" method="post"{% if current_form.instance.pk %} class="draft"{% endif %}>
     <label class="row-left upload-type">{{ _('Upload') }}</label>
     <div class="row-right upload-type">
       <label><input type="radio" name="upload-type" value="image" checked="checked"> {{ _('Image') }}</label>
@@ -36,21 +41,14 @@
         <div class="image-preview file">
           <img src="{{ image_form.instance.thumbnail_url_if_set() }}">
         </div>
-        <input type="submit" name="cancel" class="draft" data-name="file" data-action="{{ url('gallery.cancel_draft', media_type='image') }}" value="{{ _('Delete this {type}')|f(type='image') }}">
+        <input type="submit" name="cancel" class="draft" data-name="file" data-action="{{ url('gallery.cancel_draft', media_type='image') }}" value="{{ _('Delete this image') }}">
       {% endif %}
     </div>
-    {% if image_form.instance.pk %}
-      {% set metadata_form = image_form %}
-    {% else %}
-      {% set metadata_form = video_form %}
-    {% endif %}
-    {% for field in metadata_form if field.name in ('title', 'locale', 'description') %}
+    {% for field in current_form if field.name in ('title', 'locale', 'description') %}
       <label class="row-left metadata" for="id_{{ field.name }}">{{ field.label }}</label>
       <div class="row-right metadata">
-        {% if field.name == 'title' %}
-          <div class="details">{{ _('Include this in wiki syntax with [[{type}:title]]')|f(type=metadata_form.instance.__class__.__name__.capitalize()) }}</div>
-        {% elif field.name == 'description' %}
-          <div class="details">{{ _('Provide a brief description of this media.') }}</div>
+        {% if field.help_text %}
+          <div class="details">{{ field.help_text }}</div>
         {% endif %}
         {{ field|safe }}
       </div>
@@ -129,7 +127,7 @@
         <div class="image-preview">
           <img src="{{ video_form.instance.thumbnail.url }}"/>
         </div>
-        <input type="submit" name="cancel" class="draft" data-name="thumbnail" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='thumbnail') }}" value="{{ _('Delete {format} file')|fe(format='thumbnail') }}">
+        <input type="submit" name="cancel" class="draft" data-name="thumbnail" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='thumbnail') }}" value="{{ _('Delete thumbnail') }}">
       {% endif %}
       <label for="id_thumbnail">{{ _('Upload a thumbnail for your video. Suggested size: {width}x{height}px')|f(width=settings.THUMBNAIL_SIZE, height=settings.THUMBNAIL_SIZE) }}</label>
       {{ video_form['thumbnail']|safe }}

@@ -1,11 +1,18 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "gallery/media.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{# L10n: {t} is the title of the media, {type} is image or video. #}
-{% set title = _('Edit {type} | {t} | Media Gallery')|f(type=media_type, t=media.title) %}
+{% if media_type == 'image' %}
+  {% set edit_this = _('Edit image') %}
+  {% set save_this = _('Save image') %}
+  {% set title = _('Edit image | {t} | Media Gallery')|f(t=media.title) %}
+{% else %}
+  {% set edit_this = _('Edit video') %}
+  {% set save_this = _('Save video') %}
+  {% set title = _('Edit video | {t} | Media Gallery')|f(t=media.title) %}
+{% endif %}
 {% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
                  (url('gallery.media', media_type, media.id), media.title),
-                 (None, _('Edit {type}')|f(type=media_type))] %}
+                 (None, edit_this)] %}
 
 {% block content %}
   <article id="media-object-edit" class="main">
@@ -23,7 +30,7 @@
       </div>
       <div class="form-actions form-item">
         <a href="{{ url('gallery.media', media_type, media.id) }}">{{ _('Cancel') }}</a>
-        <input type="submit" class="btn g-btn" value="{{ _('Save {type}')|f(type=media_type) }}" />
+        <input type="submit" class="btn g-btn" value="{{ save_this }}" />
       </div>
     </form>
   </article>

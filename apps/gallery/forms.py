@@ -12,32 +12,35 @@ from sumo_locales import LOCALES
 # Error messages
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a title.')
 MSG_TITLE_SHORT = _lazy(
-    'The title is too short (%(show_value)s characters). It must be at '
-    'least %(limit_value)s characters.')
+    u'The title is too short (%(show_value)s characters). It must be at '
+    u'least %(limit_value)s characters.')
 MSG_TITLE_LONG = _lazy(
-    'Please keep the length of your title to %(limit_value)s characters '
-    'or less. It is currently %(show_value)s characters.')
+    u'Please keep the length of your title to %(limit_value)s characters '
+    u'or less. It is currently %(show_value)s characters.')
 MSG_DESCRIPTION_REQUIRED = _lazy(u'Please provide a description.')
 MSG_DESCRIPTION_LONG = _lazy(
-    'Please keep the length of your description to %(limit_value)s '
-    'characters or less. It is currently %(show_value)s characters.')
+    u'Please keep the length of your description to %(limit_value)s '
+    u'characters or less. It is currently %(show_value)s characters.')
 MSG_IMAGE_REQUIRED = _lazy(u'You have not selected an image to upload.')
 MSG_IMAGE_LONG = _lazy(
-    'Please keep the length of your image filename to %(max)s '
-    'characters or less. It is currently %(length)s characters.')
+    u'Please keep the length of your image filename to %(max)s '
+    u'characters or less. It is currently %(length)s characters.')
 MSG_WEBM_LONG = _lazy(
-    'Please keep the length of your webm filename to %(max)s '
-    'characters or less. It is currently %(length)s characters.')
+    u'Please keep the length of your webm filename to %(max)s '
+    u'characters or less. It is currently %(length)s characters.')
 MSG_OGV_LONG = _lazy(
-    'Please keep the length of your ogv filename to %(max)s '
-    'characters or less. It is currently %(length)s characters.')
+    u'Please keep the length of your ogv filename to %(max)s '
+    u'characters or less. It is currently %(length)s characters.')
 MSG_FLV_LONG = _lazy(
-    'Please keep the length of your flv filename to %(max)s '
-    'characters or less. It is currently %(length)s characters.')
-MSG_VID_REQUIRED = _lazy('The video has no files associated with it. You must '
-                         'upload one of the following extensions: webm, ogv, '
-                         'flv.')
-MSG_TITLE_DRAFT = _lazy('Please select a different title.')
+    u'Please keep the length of your flv filename to %(max)s '
+    u'characters or less. It is currently %(length)s characters.')
+MSG_VID_REQUIRED = _lazy(
+    u'The video has no files associated with it. You must upload one of the '
+    u'following extensions: webm, ogv, flv.')
+MSG_TITLE_DRAFT = _lazy(u'Please select a different title.')
+
+TITLE_HELP_TEXT = _lazy(u'Include this in wiki syntax with [[%(type)s:title]]')
+DESCRIPTION_HELP_TEXT = _lazy(u'Provide a brief description of this media.')
 
 
 class ImageUploadFormAsync(forms.Form):
@@ -53,15 +56,20 @@ class ImageForm(forms.ModelForm):
                                             'max_length': MSG_IMAGE_LONG},
                             max_length=settings.MAX_FILENAME_LENGTH)
     locale = forms.ChoiceField(
+                    label=_lazy(u'Locale'),
                     choices=[(LOCALES[k].external, LOCALES[k].native) for
                              k in settings.SUMO_LANGUAGES],
                     initial=settings.WIKI_DEFAULT_LANGUAGE)
     title = StrippedCharField(
+        label=_lazy(u'Title'),
+        help_text=TITLE_HELP_TEXT % {'type': u'Image'},
         min_length=5, max_length=255,
         error_messages={'required': MSG_TITLE_REQUIRED,
                         'min_length': MSG_TITLE_SHORT,
                         'max_length': MSG_TITLE_LONG})
     description = StrippedCharField(
+        label=_lazy(u'Description'),
+        help_text=DESCRIPTION_HELP_TEXT,
         max_length=10000, widget=forms.Textarea(),
         error_messages={'required': MSG_DESCRIPTION_REQUIRED,
                         'max_length': MSG_DESCRIPTION_LONG})
@@ -125,15 +133,20 @@ class VideoForm(forms.ModelForm):
                                  error_messages={'max_length': MSG_IMAGE_LONG},
                                  max_length=settings.MAX_FILENAME_LENGTH)
     locale = forms.ChoiceField(
+                    label=_lazy(u'Locale'),
                     choices=[(LOCALES[k].external, LOCALES[k].native) for
                              k in settings.SUMO_LANGUAGES],
                     initial=settings.WIKI_DEFAULT_LANGUAGE)
     title = StrippedCharField(
+        label=_lazy(u'Title'),
+        help_text=TITLE_HELP_TEXT % {'type': u'Video'},
         min_length=5, max_length=255,
         error_messages={'required': MSG_TITLE_REQUIRED,
                         'min_length': MSG_TITLE_SHORT,
                         'max_length': MSG_TITLE_LONG})
     description = StrippedCharField(
+        label=_lazy(u'Description'),
+        help_text=DESCRIPTION_HELP_TEXT,
         max_length=10000, widget=forms.Textarea(),
         error_messages={'required': MSG_DESCRIPTION_REQUIRED,
                         'max_length': MSG_DESCRIPTION_LONG})

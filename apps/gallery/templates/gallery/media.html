@@ -9,6 +9,13 @@
   {% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
                    (None, media.title)] %}
 {% endif %}
+{% if media_type == 'image' %}
+  {% set delete_this = _('Delete this image') %}
+  {% set edit_this = _('Edit this image') %}
+{% else %}
+  {% set delete_this = _('Delete this video') %}
+  {% set edit_this = _('Edit this video') %}
+{% endif %}
 
 {% block content %}
   <article id="media-object" class="main">
@@ -61,14 +68,18 @@
       {% endif %}
     </div>
     <div class="description">{{ media.description|wiki_to_html }}</div>
-    {% if user == media.creator or
-          (media_type == 'image' and user.has_perm('gallery.delete_image')) or
-          (media_type == 'video' and user.has_perm('gallery.delete_video')) %}
-      <form id="media-actions" action="{{ url('gallery.delete_media', media_type, media.pk) }}" method="GET">
-        <input type="submit" value="{{ _('Delete this {type}')|f(type=media_type) }}" />
-        <a href="{{ url('gallery.edit_media', media_type, media.id) }}">{{ _('Edit this {type}')|f(type=media_type) }}</a>
-      </form>
-    {% endif %}
+    <form id="media-actions" action="{{ url('gallery.delete_media', media_type, media.pk) }}" method="GET">
+      {% if user == media.creator or
+            (media_type == 'image' and user.has_perm('gallery.delete_image')) or
+            (media_type == 'video' and user.has_perm('gallery.delete_video')) %}
+        <input type="submit" value="{{ delete_this }}" />
+      {% endif %}
+      {% if user == media.creator or
+            (media_type == 'image' and user.has_perm('gallery.change_image')) or
+            (media_type == 'video' and user.has_perm('gallery.change_video')) %}
+        <a href="{{ url('gallery.edit_media', media_type, media.id) }}">{{ edit_this }}</a>
+      {% endif %}
+    </form>
   </article>
 {% endblock %}
 
