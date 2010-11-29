@@ -1,10 +1,8 @@
 import urlparse
 
-from django import http
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
-                                       SetPasswordForm)
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
@@ -18,7 +16,7 @@ import jingo
 from sumo.decorators import ssl_required, logout_required
 from sumo.urlresolvers import reverse
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import RegisterForm
+from users.forms import RegisterForm, AuthenticationForm
 
 
 @ssl_required
@@ -74,7 +72,6 @@ def register(request):
                         {'form': form})
 
 
-
 # Password reset views are based on django.contrib.auth.views.
 # 4 views for password reset:
 # - password_reset sends the mail
@@ -82,7 +79,6 @@ def register(request):
 # - password_reset_confirm checks the link the user clicked and
 #   prompts for a new password
 # - password_reset_complete shows a success message for the above
-
 @ssl_required
 def password_reset(request):
     """Password reset form."""

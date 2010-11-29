@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate, forms as auth_forms
 from django.contrib.auth.models import User
 
 from tower import ugettext as _, ugettext_lazy as _lazy
@@ -18,6 +19,7 @@ EMAIL_LONG = _lazy('Email address is too long (%(show_value)s characters). '
                    'It must be %(limit_value)s characters or less.')
 PASSWD_REQUIRED = _lazy('Password is required.')
 PASSWD2_REQUIRED = _lazy('Please enter your password twice.')
+
 
 class RegisterForm(forms.ModelForm):
     """A user registration form that requires unique email addresses.
@@ -48,8 +50,8 @@ class RegisterForm(forms.ModelForm):
                                 widget=forms.PasswordInput(
                                     render_value=False),
                                 error_messages={'required': PASSWD2_REQUIRED},
-                                help_text = _('Enter the same password as '
-                                              'above, for verification.'))
+                                help_text=_('Enter the same password as '
+                                            'above, for verification.'))
 
     class Meta(object):
         model = User
@@ -71,3 +73,33 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError(_('A user with that email address '
                                           'already exists.'))
         return email
+
+
+class AuthenticationForm(auth_forms.AuthenticationForm):
+    """Overrides the default django form to allow logging in inactive
+    users. To allow inactive users, initialize with `only_active=False`."""
+    def __init__(self, request=None, only_active=True, *args, **kwargs):
+        self.only_active = only_active
+        super(AuthenticationForm, self).__init__(request, *args, **kwargs)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username and password:
+            self.user_cache = authenticate(username=username,
+                                           password=password)
+            if self.user_cache is None:
+                raise forms.ValidationError(
+                    _('Please enter a correct username and password. Note '
+                      'that both fields are case-sensitive.'))
+            elif self.only_active and not self.user_cache.is_active:
+                raise forms.ValidationError(_("This account is inactive."))
+
+        if self.request:
+            if not self.request.session.test_cookie_worked():
+                raise forms.ValidationError(
+                    _("Your Web browser doesn't appear to have cookies "
+                      "enabled. Cookies are required for logging in."))
+
+        return self.cleaned_data
