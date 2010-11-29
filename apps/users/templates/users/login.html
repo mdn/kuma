@@ -15,7 +15,7 @@
         <ul>
           <li>
             <label for="id_username">{{ _('Username:') }}</label>
-            <input id="id_username" type="text" name="username" autofocus />
+            {{ form.username|safe }}
           </li>
           <li>
             <label for="id_password">{{ _('Password:') }}</label>

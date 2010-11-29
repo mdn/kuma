@@ -76,8 +76,14 @@ class RegisterForm(forms.ModelForm):
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):
-    """Overrides the default django form to allow logging in inactive
-    users. To allow inactive users, initialize with `only_active=False`."""
+    """Overrides the default django form.
+
+    * Doesn't prefill password on validation error.
+    * Allows logging in inactive users (initialize with `only_active=False`).
+    """
+    password = forms.CharField(label=_("Password"),
+                               widget=forms.PasswordInput(render_value=False))
+
     def __init__(self, request=None, only_active=True, *args, **kwargs):
         self.only_active = only_active
         super(AuthenticationForm, self).__init__(request, *args, **kwargs)
