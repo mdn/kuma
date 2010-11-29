@@ -161,8 +161,7 @@ h2 {
 }
 
 #nav-main {
-    float: left;
-    padding-left: 140px;
+    display: inline-block;
     text-align: left;
 }
 

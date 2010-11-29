@@ -1,4 +1,10 @@
 /* IE stylesheet */
+#nav-main {
+    *display: inline;
+    _height: 47px;
+    zoom: 1;
+}
+
 #nav-main .sfhover ul li {
     height: 24px !important;
 }
