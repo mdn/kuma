@@ -152,6 +152,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
+    'commonware.middleware.HidePasswordOnException',
 )
 
 # Auth
