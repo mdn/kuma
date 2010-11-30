@@ -61,6 +61,6 @@ class RebuildTestCase(TestCase):
         cache.set(settings.WIKI_REBUILD_TOKEN, True)
         wiki.tasks.rebuild_kb()
         assert not cache.get(settings.WIKI_REBUILD_TOKEN)
-        data = set(((1,), (2,), (4,), (5,)))
+        data = set((1, 2, 4, 5))
         assert 'args' in apply_async.call_args[1]
         eq_(data, set(apply_async.call_args[1]['args'][0]))

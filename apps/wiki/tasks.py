@@ -11,6 +11,7 @@ from django.template import Context, loader
 import celery.conf
 from celery.decorators import task
 from celery.messaging import establish_connection
+from multidb.pinning import pin_this_thread, unpin_this_thread
 from tower import ugettext as _
 
 from notifications.tasks import send_notification
@@ -110,7 +111,7 @@ def rebuild_kb():
     cache.delete(settings.WIKI_REBUILD_TOKEN)
 
     d = (Document.objects.using('default')
-         .filter(current_revision__isnull=False).values_list('id'))
+         .filter(current_revision__isnull=False).values_list('id', flat=True))
 
     with establish_connection() as conn:
         for chunk in chunked(d, 100):
@@ -123,11 +124,15 @@ def _rebuild_kb_chunk(data, **kwargs):
     """Re-render a chunk of documents."""
     log.info('Rebuilding %s documents.' % len(data))
 
+    pin_this_thread()  # Stick to master.
+
     for pk in data:
         try:
-            document = Document.objects.get(pk=pk[0])
+            document = Document.objects.get(pk=pk)
             document.html = document.current_revision.content_parsed
             document.save()
         except Document.DoesNotExist:
             log.debug('Missing document: %d' % pk)
     transaction.commit_unless_managed()
+
+    unpin_this_thread()  # Not all tasks need to do use the master.
