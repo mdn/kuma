@@ -144,12 +144,16 @@ def _clean_next_url(request):
 
     if url:
         parsed_url = urlparse.urlparse(url)
-        # Don't redirect outside of SUMO
+        # Don't redirect outside of SUMO.
+        # Don't include protocol+domain, so if we are https we stay that way.
         if parsed_url.scheme:
             site_domain = Site.objects.get_current().domain
             url_domain = parsed_url.netloc
             if site_domain != url_domain:
                 url = None
+            else:
+                url = u'?'.join([getattr(parsed_url, x) for x in
+                                ('path', 'query') if getattr(parsed_url, x)])
 
         # Don't redirect right back to login or logout page
         if parsed_url.path in [settings.LOGIN_URL, settings.LOGOUT_URL]:
