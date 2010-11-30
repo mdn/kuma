@@ -159,6 +159,8 @@ MIDDLEWARE_CLASSES = (
 AUTHENTICATION_BACKENDS = (
     'users.backends.Sha256Backend',
 )
+AUTH_PROFILE_MODULE = 'users.Profile'
+USER_AVATAR_PATH = 'uploads/images/avatars/'
 
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 
@@ -183,6 +185,7 @@ INSTALLED_APPS = (
     'jingo_minify',
     ROOT_PACKAGE,
     'authority',
+    'timezones',
     'access',
     'sumo',
     'search',
