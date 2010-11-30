@@ -29,7 +29,7 @@ class ImageTestCase(TestCase):
         img = image()
         eq_(img.file.url, img.thumbnail_url_if_set())
 
-        generate_image_thumbnail(img, img.file, img.file.name)
+        generate_image_thumbnail(img, img.file.name)
         eq_(img.thumbnail.url, img.thumbnail_url_if_set())
 
 

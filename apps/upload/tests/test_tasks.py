@@ -89,7 +89,7 @@ class GenerateThumbnail(TestCase):
             up_file = File(f)
             image.file.save(up_file.name, up_file, save=True)
 
-        generate_image_thumbnail(image, image.file, up_file.name)
+        generate_image_thumbnail(image, up_file.name)
 
         eq_(90, image.thumbnail.width)
         eq_(120, image.thumbnail.height)

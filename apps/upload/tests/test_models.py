@@ -33,6 +33,6 @@ class ImageAttachmentTestCase(TestCase):
 
         eq_(image.file, image.thumbnail_if_set())
 
-        generate_image_thumbnail(image, image.file, up_file.name)
+        generate_image_thumbnail(image, up_file.name)
 
         eq_(image.thumbnail, image.thumbnail_if_set())
