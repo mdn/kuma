@@ -532,15 +532,20 @@ THUMBNAIL_PROGRESS_WIDTH = 32  # width of the above image
 THUMBNAIL_PROGRESS_HEIGHT = 32  # height of the above image
 VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes
 
-# Customer Care tweet collection settings
-CC_MAX_TWEETS = 500 # Max. no. of tweets in DB
-CC_TWEETS_PERPAGE = 100 # How many tweets to collect in one go. Max: 100.
+# Customer Care settings
+CC_MAX_TWEETS = 500   # Max. no. of tweets in DB
+CC_TWEETS_PERPAGE = 100   # How many tweets to collect in one go. Max: 100.
+CC_SHOW_REPLIES = True  # Show replies to tweets?
 
-# Show replies to tweets?
-CC_SHOW_REPLIES = True
+CC_TWEET_ACTIVITY_URL = 'https://metrics.mozilla.com/stats/twitter/armyOfAwesomeKillRate.json'  # Tweet activity stats
+CC_TOP_CONTRIB_URL = 'https://metrics.mozilla.com/stats/twitter/armyOfAwesomeTopSoldiers.json'  # Top contributor stats
+CC_TWEET_ACTIVITY_CACHE_KEY = 'sumo-cc-tweet-stats'
+CC_TOP_CONTRIB_CACHE_KEY = 'sumo-cc-top-contrib-stats'
+CC_STATS_CACHE_TIMEOUT = 24 * 60 * 60  # 24 hours
 
 TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''
+
 
 NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
 

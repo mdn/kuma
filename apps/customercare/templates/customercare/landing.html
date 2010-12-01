@@ -18,7 +18,7 @@
       <li class="respond">Respond to the tweet!</li>
     </ol>
   </div>
-	
+
   <div id="tweetcontainer">
     <div class="tweets-header">
       <img id="twitter-icon" src="{{ MEDIA_URL }}img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">Choose a tweet to help</h2>
@@ -31,7 +31,7 @@
         </form>
       {% endif %}
     </div>
-    
+
     <br style="clear:both; height: 1px" />
 
     <ul id="tweets">
@@ -49,6 +49,61 @@
 {% endblock %}
 
 {% block extra_sidebar %}
+  <div id="side-stats">
+    <h3>Our army has responded to:</h3>
+    {% if not activity_stats %}
+      <p class="unavailable">Recent stats not available.</p>
+    {% else %}
+      <div class="bubble">
+        <div class="perc">
+          <span class="data">{{ activity_stats[0][1]['perc'] }}</span>%
+          <span class="label">of tweets</span>
+        </div>
+        <div class="numbers">
+          <div class="replies">
+            <span class="data">{{ activity_stats[0][1]['replies'] }}</span>
+            <span class="label">replies</span>
+          </div>
+          /
+          <div class="tweets">
+            <span class="data">{{ activity_stats[0][1]['requests'] }}</span>
+            <span class="label">tweets</span>
+          </div>
+        </div>
+
+        <select>
+          {% for act in activity_stats %}
+            <option value="{{ loop.index0 }}"
+                    data-perc ="{{ act[1]['perc'] }}"
+                    data-replies="{{ act[1]['replies'] }}"
+                    data-requests="{{ act[1]['requests'] }}">
+              {{ act[0] }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="speech"></div>
+    {% endif %}
+
+    <div class="contribs">
+      {% if contributor_stats %}
+        {% for act in activity_stats %}
+          {% set period = act[0] %}
+          <div class="contributors period{{ loop.index0 }}"
+               data-period="{{ period }}">
+            {% for contrib in contributor_stats.get(period, []) %}
+              <a href="http://twitter.com/{{ contrib['username'] }}" target="_blank">
+                <img src="{{ contrib['avatar'] }}" alt="{{ contrib['username'] }}"
+                     title="{{ contrib['name']}}: {{ contrib['count'] }} replies"
+                     class="avatar" />
+              </a>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
   <div id="side-getinvolved">
     <h3>Take it to the next level!</h3>
     <p>Want to go beyond 140 characters? Join the support community and help many more
