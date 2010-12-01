@@ -189,9 +189,16 @@ h2 {
 #nav-main span {
     display: block;
     color: #fff;
-    font-family: "Trebuchet MS", sans-serif;
     font-weight: bold;
     font-size: 13px;
+}
+
+#nav-main ul {
+    font-family: "Trebuchet MS", MetaBlack, sans-serif;
+}
+
+#nav-main ul ul {
+    font-family: "Trebuchet MS", sans-serif;
 }
 
 #nav-main ul {
