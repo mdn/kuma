@@ -220,6 +220,18 @@ class DocumentTests(TestCase):
         d = document(category=9999)
         self.assertRaises(ValidationError, d.save)
 
+    def test_new_doc_does_not_update_categories(self):
+        """Make sure that creating a new document doesn't change the
+        category of all the other documents."""
+        d1 = document(category=20)
+        d1.save()
+        assert d1.pk
+        d2 = document(category=30)
+        assert not d2.pk
+        d2._clean_category()
+        d1prime = Document.objects.get(pk=d1.pk)
+        eq_(20, d1prime.category)
+
 
 class DocumentTestsWithFixture(TestCase):
     """Document tests which need the users fixture"""

@@ -235,7 +235,8 @@ class Document(ModelBase, BigVocabTaggableMixin):
             raise ValidationError(_('Please choose a category.'))
         else:  # An article cannot have both a parent and children.
             # Make my children the same as me:
-            self.translations.all().update(category=self.category)
+            if self.id:
+                self.translations.all().update(category=self.category)
 
     def _attr_for_redirect(self, attr, template):
         """Return the slug or title for a new redirect.
