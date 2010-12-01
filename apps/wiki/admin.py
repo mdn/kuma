@@ -4,6 +4,7 @@ from wiki.models import Document
 
 
 class DocumentAdmin(admin.ModelAdmin):
+    exclude = ('tags',)
     list_display = ('locale', 'title', 'category', 'is_localizable')
     list_display_links = ('title',)
     list_filter = ('is_template', 'is_localizable', 'category', 'locale')

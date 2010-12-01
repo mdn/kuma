@@ -149,7 +149,8 @@ class Document(ModelBase, BigVocabTaggableMixin):
     # The Document I was translated from. NULL iff this doc is in the default
     # locale or it is nonlocalizable. TODO: validate against
     # settings.WIKI_DEFAULT_LANGUAGE.
-    parent = models.ForeignKey('self', related_name='translations', null=True)
+    parent = models.ForeignKey('self', related_name='translations',
+                               null=True, blank=True)
 
     # Related documents, based on tags in common.
     # The RelatedDocument table is populated by
