@@ -17,6 +17,7 @@ from sumo.decorators import ssl_required, logout_required
 from sumo.urlresolvers import reverse
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import RegisterForm, AuthenticationForm
+from users.models import RegistrationProfile
 
 
 @ssl_required
@@ -60,16 +61,22 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            # TODO: Send registration email for confirmation.
-            user.is_active = True
-            user.set_password(form['password1'].data)
-            user.save()
+            RegistrationProfile.objects.create_inactive_user(
+                form.cleaned_data['username'], form.cleaned_data['password1'],
+                form.cleaned_data['email'])
             return jingo.render(request, 'users/register_done.html')
     else:  # request.method == 'GET'
         form = RegisterForm()
     return jingo.render(request, 'users/register.html',
                         {'form': form})
+
+
+def activate(request, activation_key):
+    """Activate a User account."""
+    activation_key = activation_key.lower()
+    account = RegistrationProfile.objects.activate_user(activation_key)
+    return jingo.render(request, 'users/activate.html',
+                        {'account': account})
 
 
 # Password reset views are based on django.contrib.auth.views.

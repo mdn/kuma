@@ -14,6 +14,8 @@ users_patterns = patterns('',
     url(r'^login$', views.login, name='users.login'),
     url(r'^logout$', views.logout, name='users.logout'),
     url(r'^register$', views.register, name='users.register'),
+    url(r'^activate/(?P<activation_key>\w+)$', views.activate,
+        name='users.activate'),
 
     # Password reset
     url(r'^pwreset$', views.password_reset, name='users.pw_reset'),
@@ -23,12 +25,6 @@ users_patterns = patterns('',
         views.password_reset_confirm, name="users.pw_reset_confirm"),
     url(r'^pwresetcomplete$', views.password_reset_complete,
         name="users.pw_reset_complete"),
-
-# TODO:
-#    url('^confirm/resend$', views.confirm_resend, name='users.confirm.resend'),
-#    url('^confirm/(?P<token>[-\w]+)$', views.confirm, name='users.confirm'),
-#    url(r'^emailchange/(?P<token>[-\w]+={0,3})/(?P<hash>[\w]+)$',
-#                        views.emailchange, name="users.emailchange"),
 )
 
 urlpatterns = patterns('',

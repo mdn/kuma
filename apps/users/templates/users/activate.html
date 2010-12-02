@@ -1,0 +1,19 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% if account %}
+  {% set title = _('Account successfully verified!') %}
+{% else %}
+  {% set title = _('Something is wrong') %}
+{% endif %}
+{% set classes = 'account' %}
+
+{% block content %}
+  <article class="main">
+    <h1>{{ title }}</h1>
+    {% if account %}
+      <p><a href="{{ settings.LOGIN_URL|urlparams(next=settings.LOGIN_REDIRECT_URL) }}">{{ _('Log in') }}</a></p>
+    {% else %}
+      <p class="failure">{{ _('We could not activate your account. Please make sure that you have clicked the correct link in your e-mail or typed in the correct address.') }}</p>
+    {% endif %}
+  </article>
+{% endblock content %}
