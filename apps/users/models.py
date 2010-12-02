@@ -1,7 +1,7 @@
 import datetime
+import hashlib
 import random
 import re
-import sha
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -141,8 +141,8 @@ class RegistrationManager(models.Manager):
         SHA1 hash, generated from a combination of the ``User``'s
         username and a random salt.
         """
-        salt = sha.new(str(random.random())).hexdigest()[:5]
-        activation_key = sha.new(salt + user.username).hexdigest()
+        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        activation_key = hashlib.sha1(salt + user.username).hexdigest()
         return self.create(user=user,
                            activation_key=activation_key)
 
