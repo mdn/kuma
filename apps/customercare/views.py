@@ -102,6 +102,9 @@ def landing(request):
             period = contrib[1]
             if not contributor_stats.get(period):
                 contributor_stats[period] = []
+            elif len(contributor_stats[period]) == 16:
+                # Show a max. of 16 people.
+                continue
 
             contributor_stats[period].append({
                 'name': contrib[2],
