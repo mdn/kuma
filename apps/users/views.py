@@ -2,6 +2,7 @@ import urlparse
 
 from django.conf import settings
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -16,8 +17,8 @@ import jingo
 from sumo.decorators import ssl_required, logout_required
 from sumo.urlresolvers import reverse
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import RegisterForm, AuthenticationForm
-from users.models import RegistrationProfile
+from users.forms import RegisterForm, AuthenticationForm, ProfileForm
+from users.models import Profile, RegistrationProfile
 
 
 @ssl_required
@@ -77,6 +78,30 @@ def activate(request, activation_key):
     account = RegistrationProfile.objects.activate_user(activation_key)
     return jingo.render(request, 'users/activate.html',
                         {'account': account})
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def edit_profile(request):
+    """Edit user profile."""
+    try:
+        profile = request.user.get_profile()
+    except Profile.DoesNotExist:
+        # TODO: Once we do user profile migrations, all users should have a
+        # a profile. We can remove this fallback.
+        profile = Profile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save()
+            # TODO: Redirect to view profile page when we have it.
+            return HttpResponseRedirect(reverse('users.edit_profile'))
+    else:  # request.method == 'GET'
+        form = ProfileForm(instance=profile)
+
+    return jingo.render(request, 'users/edit_profile.html',
+                        {'form': form, 'profile': profile})
 
 
 # Password reset views are based on django.contrib.auth.views.

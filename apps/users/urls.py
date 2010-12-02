@@ -16,6 +16,7 @@ users_patterns = patterns('',
     url(r'^register$', views.register, name='users.register'),
     url(r'^activate/(?P<activation_key>\w+)$', views.activate,
         name='users.activate'),
+    url(r'^edit$', views.edit_profile, name='users.edit_profile'),
 
     # Password reset
     url(r'^pwreset$', views.password_reset, name='users.pw_reset'),

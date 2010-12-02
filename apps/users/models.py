@@ -29,35 +29,35 @@ class Profile(ModelBase):
     """Profile model for django users, get it with user.get_profile()."""
 
     user = models.OneToOneField(User, primary_key=True,
-                                verbose_name=_lazy('User'))
+                                verbose_name=_lazy(u'User'))
     name = models.CharField(max_length=255, null=True, blank=True,
-                            verbose_name=_lazy('Display name'))
+                            verbose_name=_lazy(u'Display name'))
     public_email = models.BooleanField(  # show/hide email
-        default=False, verbose_name=_lazy('Make my email public'))
+        default=False, verbose_name=_lazy(u'Make my email public'))
     avatar = models.ImageField(upload_to=settings.USER_AVATAR_PATH, null=True,
-                               blank=True, verbose_name=_lazy('Avatar'),
+                               blank=True, verbose_name=_lazy(u'Avatar'),
                                max_length=settings.MAX_FILEPATH_LENGTH)
     bio = models.TextField(null=True, blank=True,
-                           verbose_name=_lazy('Biography'))
+                           verbose_name=_lazy(u'Biography'))
     # verify_exists=True by default for URLs
     website = models.URLField(max_length=255, null=True, blank=True,
-                              verbose_name=_lazy('Website'))
+                              verbose_name=_lazy(u'Website'))
     twitter = models.URLField(max_length=255, null=True, blank=True,
-                              verbose_name=_lazy('Twitter URL'))
+                              verbose_name=_lazy(u'Twitter URL'))
     facebook = models.URLField(max_length=255, null=True, blank=True,
-                               verbose_name=_lazy('Facebook URL'))
+                               verbose_name=_lazy(u'Facebook URL'))
     irc_handle = models.CharField(max_length=255, null=True, blank=True,
-                                  verbose_name=_lazy('IRC nickname'))
+                                  verbose_name=_lazy(u'IRC nickname'))
     timezone = TimeZoneField(null=True, blank=True,
-                             verbose_name=_lazy('Timezone'))
+                             verbose_name=_lazy(u'Timezone'))
     country = models.CharField(max_length=2, choices=COUNTRIES, null=True,
-                               blank=True, verbose_name=_lazy('Country'))
+                               blank=True, verbose_name=_lazy(u'Country'))
     # No city validation
     city = models.CharField(max_length=255, null=True, blank=True,
-                            verbose_name=_lazy('City'))
+                            verbose_name=_lazy(u'City'))
     livechat_id = models.CharField(default=None, null=True, blank=True,
                                    max_length=255,
-                                   verbose_name=_lazy('Livechat ID'))
+                                   verbose_name=_lazy(u'Livechat ID'))
 
 
 # Registration model and manager:
@@ -107,13 +107,14 @@ class RegistrationManager(models.Manager):
 
     def create_inactive_user(self, username, password, email):
         """
-        Create a new, inactive ``User``, generates a
+        Create a new, inactive ``User`` and ``Profile``, generates a
         ``RegistrationProfile`` and email its activation key to the
         ``User``, returning the new ``User``.
         """
         new_user = User.objects.create_user(username, email, password)
         new_user.is_active = False
         new_user.save()
+        Profile.objects.create(user=new_user)
 
         registration_profile = self.create_profile(new_user)
 

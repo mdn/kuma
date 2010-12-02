@@ -18,11 +18,43 @@ article.main form li {
 
 article.main form label {
     display: inline-block;
+    vertical-align: top;
     width: 100px;
 }
 
-#article.main form li input {
+article.main form li input {
     width: 200px;
+}
+
+article.main form li input[type="checkbox"] {
+    width: auto;
+}
+
+article.main form li img {
+    max-width: 100%;
+}
+
+article.main form div.val-wrap {
+    display: inline-block;
+    width: 350px;
+}
+
+article.main form div.val-wrap input {
+    display: block;
+}
+
+article.main form textarea {
+    width: 325px;
+}
+
+article.main form li ul.errorlist {
+    margin: 0;
+    padding: 0 0 0 100px;
+}
+
+article.main form li ul.errorlist li {
+    margin: 0;
+    padding: 0 0 2px;
 }
 
 article.main div.submit {

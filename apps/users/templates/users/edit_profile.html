@@ -1,0 +1,19 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% set title = _('Edit Profile') %}
+{% set classes = 'profile' %}
+
+{% block content %}
+  <article id="edit-profile" class="main">
+    <h1>{{ title }}</h1>
+    <form method="post" action="" enctype="multipart/form-data">
+      {{ csrf() }}
+      <ul>
+        {{ form.as_ul()|safe }}
+      </ul>
+      <div class="submit">
+        <input type="submit" value="{{ _('Update') }}" />
+      </div>
+    </form>
+  </article>
+{% endblock %}

@@ -114,6 +114,48 @@
             "email": "user180054@nowhere",
             "date_joined": "2010-06-10 14:08:53"
         }
+    },
+    {
+        "pk": 1,
+        "model": "users.profile",
+        "fields": {
+            "user": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "users.profile",
+        "fields": {
+            "user": 2
+        }
+    },
+    {
+        "pk": 47963,
+        "model": "users.profile",
+        "fields": {
+            "user": 47963
+        }
+    },
+    {
+        "pk": 118533,
+        "model": "users.profile",
+        "fields": {
+            "user": 118533
+        }
+    },
+    {
+        "pk": 118577,
+        "model": "users.profile",
+        "fields": {
+            "user": 118577
+        }
+    },
+    {
+        "pk": 180054,
+        "model": "users.profile",
+        "fields": {
+            "user": 180054
+        }
     }
 ]
 

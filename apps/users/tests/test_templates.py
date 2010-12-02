@@ -208,3 +208,28 @@ class PasswordReset(TestCaseBase):
         eq_('http://testserver/en-US/users/pwresetcomplete', r['location'])
         self.user = User.objects.get(username='rrosario')
         assert self.user.check_password(new_pw)
+
+
+class EditProfileTests(TestCaseBase):
+    fixtures = ['users.json']
+
+    def test_edit_profile(self):
+        url = reverse('users.edit_profile')
+        self.client.login(username='rrosario', password='testpass')
+        data = {'name': 'John Doe',
+                'public_email': True,
+                'bio': 'my bio',
+                'website': 'http://google.com/',
+                'twitter': '',
+                'facebook': '',
+                'irc_handle': 'johndoe',
+                'timezone': 'America/New_York',
+                'country': 'US',
+                'city': 'Disney World'}
+        r = self.client.post(url, data)
+        eq_(302, r.status_code)
+        profile = User.objects.get(username='rrosario').get_profile()
+        for key in data:
+            if key != 'timezone':
+                eq_(data[key], getattr(profile, key))
+        eq_(data['timezone'], profile.timezone.zone)

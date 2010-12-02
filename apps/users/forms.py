@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 from tower import ugettext as _, ugettext_lazy as _lazy
 
+from sumo.widgets import ImageWidget
+from users.models import Profile
+
 
 USERNAME_INVALID = _lazy('Username may contain only letters, '
                          'numbers and @/./+/-/_ characters.')
@@ -109,3 +112,12 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
                       "enabled. Cookies are required for logging in."))
 
         return self.cleaned_data
+
+
+class ProfileForm(forms.ModelForm):
+    """The form for editing the user's profile."""
+    avatar = forms.ImageField(required=False, widget=ImageWidget)
+
+    class Meta(object):
+        model = Profile
+        exclude = ('user', 'livechat_id')
