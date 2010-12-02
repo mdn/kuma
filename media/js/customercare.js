@@ -340,5 +340,25 @@
                 }
             );
         }).bullseye();
+
+        /* Statistics */
+        $('#side-stats select').change(function(e) {
+            var $this = $(this),
+                option = $this.children('option[value=' + $this.val() + ']'),
+                bubble = $('#side-stats .bubble')
+                contribs = $('#side-stats .contribs');
+            // Update numbers
+            bubble.find('.perc .data').text(option.attr('data-perc'));
+            bubble.find('.replies .data').text(option.attr('data-replies'));
+            bubble.find('.tweets .data').text(option.attr('data-requests'));
+
+            // Update contributors
+            contribs.find('.contributors:visible').fadeOut('fast', function() {
+                contribs.find('.contributors.period' + $this.val()).fadeIn('fast');
+            });
+
+            $this.blur();
+            e.preventDefault();
+        }).val('0');
     });
 }(jQuery));

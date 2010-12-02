@@ -5,14 +5,17 @@ import logging
 import re
 import rfc822
 import urllib
+import urllib2
 
 from django.conf import settings
+from django.core.cache import cache
 from django.db.utils import IntegrityError
 from django.utils.encoding import smart_str
 
 import cronjobs
+import tweepy
 
-from .models import Tweet
+from customercare.models import Tweet
 
 
 SEARCH_URL = 'http://search.twitter.com/search.json'
@@ -118,3 +121,56 @@ def _filter_tweet(item):
         return None
 
     return item
+
+
+@cronjobs.register
+def get_customercare_stats():
+    """
+    Fetch Customer Care stats from Mozilla Metrics.
+
+    Example Activity Stats data:
+        {"resultset": [["Yesterday",1234,123,0.0154],
+                       ["Last Week",12345,1234,0.0240], ...]
+         "metadata": [...]}
+
+    Example Top Contributor data:
+        {"resultset": [[1,"Overall","John Doe","johndoe",840],
+                       [2,"Overall","Jane Doe","janedoe",435], ...],
+         "metadata": [...]}
+    """
+
+    stats_sources = {
+        settings.CC_TWEET_ACTIVITY_URL: settings.CC_TWEET_ACTIVITY_CACHE_KEY,
+        settings.CC_TOP_CONTRIB_URL: settings.CC_TOP_CONTRIB_CACHE_KEY,
+    }
+    for url, cache_key in stats_sources.items():
+        log.debug('Updating %s from %s' % (cache_key, url))
+        try:
+            json_data = json.load(urllib2.urlopen(url))
+            json_data['resultset'] = ''
+            if not json_data['resultset']:
+                raise KeyError('Result set was empty.')
+        except Exception, e:
+            log.error('Error updating %s: %s' % (cache_key, e))
+            continue
+
+        # Grab top contributors' avatar URLs from the public twitter API.
+        if cache_key == settings.CC_TOP_CONTRIB_CACHE_KEY:
+            twitter = tweepy.API()
+            avatars = {}
+            for contrib in json_data['resultset']:
+                username = contrib[3]
+
+                if avatars.get(username):
+                    continue
+
+                try:
+                    user = twitter.get_user(username)
+                except tweepy.TweepError, e:
+                    log.warning('Error grabbing avatar of user %s: %s' % (
+                        username, e))
+                else:
+                    avatars[username] = user.profile_image_url
+            json_data['avatars'] = avatars
+
+        cache.set(cache_key, json_data, settings.CC_STATS_CACHE_TIMEOUT)

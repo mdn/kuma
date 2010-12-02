@@ -5,9 +5,11 @@ import logging
 import time
 
 from django.conf import settings
+from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST, require_GET
 
+from babel.numbers import format_number
 from bleach import Bleach
 import jingo
 import tweepy
@@ -79,7 +81,40 @@ def landing(request):
 
     canned_responses = CannedCategory.objects.all()
 
+    # Stats. See customercare.cron.get_customercare_stats.
+    activity = cache.get(settings.CC_TWEET_ACTIVITY_CACHE_KEY)
+    if activity:
+        activity_stats = []
+        for act in activity['resultset']:
+            activity_stats.append((act[0], {
+                'requests': format_number(act[1], locale='en_US'),
+                'replies': format_number(act[2], locale='en_US'),
+                'perc': int(round(act[3] * 100)),
+            }))
+    else:
+        activity_stats = None
+
+    contributors = cache.get(settings.CC_TOP_CONTRIB_CACHE_KEY)
+    if contributors:
+        contributor_stats = {}
+        for contrib in contributors['resultset']:
+            # Create one list per time period
+            period = contrib[1]
+            if not contributor_stats.get(period):
+                contributor_stats[period] = []
+
+            contributor_stats[period].append({
+                'name': contrib[2],
+                'username': contrib[3],
+                'count': contrib[4],
+                'avatar': contributors['avatars'].get(contrib[3]),
+            })
+    else:
+        contributor_stats = None
+
     return jingo.render(request, 'customercare/landing.html', {
+        'activity_stats': activity_stats,
+        'contributor_stats': contributor_stats,
         'canned_responses': canned_responses,
         'tweets': _get_tweets(),
         'authed': twitter.authed,

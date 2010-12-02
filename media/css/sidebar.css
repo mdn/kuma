@@ -67,13 +67,89 @@
     text-decoration: underline;
 }
 
-#side-getinvolved {
-    background: transparent url('../img/side-getinvolved-bg.png') no-repeat top left;
-    margin-top: 140px;
-    padding-top: 20px;
-    color: #999186;
+#side-stats {
+    margin-top: 40px;
+}
+#side-stats .unavailable {
+    font-size: 1.2em;
+    font-style: italic;
+    margin-top: 10px;
+}
+#side-stats .bubble {
+    background-color: #E6F0F9;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    margin-top: 10px;
+    text-align: center;
+}
+#side-stats .speech {
+    background: transparent url(../img/customercare/bubble.png) no-repeat 50px bottom;
+    height: 20px;
+    width: 100%;
+}
+#side-stats .label {
+    color: #00639B;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: .75em;
+    font-style: normal;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+#side-stats .perc {
+    font-size: 2.5em;
+    font-style: italic;
+    padding-top: 10px;
+    text-align: center;
+}
+#side-stats .numbers {
+    font-size: 1.8em;
+}
+#side-stats .numbers .replies,
+#side-stats .numbers .tweets {
+    text-align: center;
+    width: 45%;
+}
+#side-stats .numbers .replies {
+    float: left;
+}
+#side-stats .numbers .tweets {
+    float: right;
+}
+#side-stats .numbers .data {
+    display: block;
+    margin-bottom: -.3em;
+}
+#side-stats select {
+    font-family: Arial,Helvetica,sans-serif;
+    margin: 10px 0 20px;
+    text-align: center;
+    width: 80%;
+}
+#side-stats .contribs {
+    clear: both;
+    margin: 10px 20px 0;
+    width: 160px;
+}
+#side-stats .avatar {
+    margin: 2px;
+    width: 32px;
+}
+#side-stats .contribs .contributors {
+    display: none;
+}
+#side-stats .contribs .contributors:first-child {
+    display: block;
 }
 
+#side-getinvolved {
+    background: transparent url('../img/side-getinvolved-bg.png') no-repeat top left;
+    padding-top: 20px;
+    color: #999186;
+    margin-top: 40px;
+}
+
+#side-stats h3,
 #side-getinvolved h3 {
     color: #1E4262;
     font-size: 150%;
