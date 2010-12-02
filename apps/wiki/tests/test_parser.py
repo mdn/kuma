@@ -565,6 +565,18 @@ class ForWikiTests(TestCase):
                     '<source src="/some/path/file.ogv" type="video/ogv">'
                   '</video></p>')
 
+    def test_adjacent_blocks(self):
+        """Make sure one block-level {for} doesn't absorb an adjacent one."""
+        p = WikiParser()
+        html = p.parse('{for fx4}\n'
+                       '{for mac}Fx4{/for}\n'
+                       '{/for}\n'
+                       '{for fx3}\n'
+                       '{for mac}Fx3{/for}\n'
+                       '{/for}')
+        # The two div.fors should be siblings, not nested:
+        eq_([], pq(html)('div.for div.for'))
+
     def test_big_swath(self):
         """Enclose a big section containing many tags."""
         parsed_eq('<div class="for"><h1 id="w_h1">H1</h1>'
@@ -598,6 +610,10 @@ def expanded_eq(want, to_expand):
     expander = ForParser(to_expand)
     expander.expand_fors()
     eq_(want, expander.to_unicode())
+
+
+def strip_eq(want, text):
+    eq_(want, ForParser.strip_fors(text)[0])
 
 
 class ForParserTests(TestCase):
@@ -675,8 +691,6 @@ class ForParserTests(TestCase):
         on_own_line_eq((True, False, False), '\n{for} \nq')
 
     def test_strip(self):
-        def strip_eq(want, text):
-            eq_(want, ForParser.strip_fors(text)[0])
         strip_eq('\x070\x07inline\x07/sf\x07', '{for}inline{/for}')
         strip_eq('\x070\x07\n\nblock\n\n\x07/sf\x07',
                  '{for}\nblock\n{/for}')
@@ -684,13 +698,36 @@ class ForParserTests(TestCase):
                  '{for}inline\n{/for}')
         strip_eq('\x070\x07\n\nblock\x07/sf\x07', '{for}\nblock{/for}')
 
-        # Fails because both the postspace for the first closer and the
-        # prespace for the 2nd get 1 \n added. Stick a look[behind|ahead]
-        # assertion in there somewhere or something. In the meantime, worst
-        # case, we get extra empty paragraphs if fors are really close
-        # together:
-        #strip_eq('\x070\x07\n\n\x071\x07inline\x07/sf\x07\n\n\x07/sf\x07',
-        #         '{for}\n{for}inline{/for}\n{/for}')
+    def test_whitespace_lookbehind(self):
+        """Assert strip_fors is aware of newlines preceding the current match.
+
+        This used to fail because both the postspace for the first closer and
+        the prespace for the 2nd got 1 \n added, resulting in 3, which is 1
+        too many. Now we use the preceding_whitespace function to look behind
+        and take preceding newlines into account.
+
+        """
+        strip_eq('\x070\x07\n\n\x071\x07inline\x07/sf\x07\n\n\x07/sf\x07',
+                 '{for}\n{for}inline{/for}\n{/for}')
+
+    def test_matches_see_replacements(self):
+        """Make sure each whitespace lookbehind takes into account the effect
+        of previous replacements' whitespace additions.
+
+        When this bug existed, strip_fors would add a \n for postspace to the
+        2nd {/for}, but then the preceding_whitespace call for the next {for}
+        wouldn't see what was added, since it was still looking in the
+        original string, without the replacements applied.
+
+        """
+        strip_eq('\x070\x07\n\n\x071\x07Fx4\x07/sf\x07\n\n\x07/sf\x07\n\n'
+                 '\x072\x07\n\n\x073\x07Fx3\x07/sf\x07\n\n\x07/sf\x07',
+                 '{for fx4}\n'
+                 '{for mac}Fx4{/for}\n'
+                 '{/for}\n'
+                 '{for fx3}\n'
+                 '{for mac}Fx3{/for}\n'
+                 '{/for}')
 
     def test_self_closers(self):
         """Make sure self-closing tags aren't balanced as paired ones."""

@@ -200,8 +200,8 @@ class ForParser(object):
         return '<for data-for=' + quoteattr(stripped) + '>'
 
     _FOR_OR_CLOSER = re.compile(r'(\s*)'
-                                    r'(\{for(?: +([^\}]*))?\}|{/for})'
-                                    r'(\s*)', re.MULTILINE)
+                                r'(\{for(?: +([^\}]*))?\}|{/for})'
+                                r'(\s*)', re.MULTILINE)
 
     @classmethod
     def strip_fors(cls, text):
@@ -225,6 +225,17 @@ class ForParser(object):
                 such that appending them will cause it to."""
                 return '\n' * max(2 - str.count('\n'), 0)
 
+            def preceding_whitespace(str, pos):
+                """Return all contiguous whitespace preceding str[pos]."""
+                whitespace = []
+                for i in xrange(pos - 1, 0, -1):
+                    if str[i] in '\t \n\r':
+                        whitespace.append(str[i])
+                    else:
+                        break
+                whitespace.reverse()
+                return ''.join(whitespace)
+
             prespace, tag, attrs, postspace = match.groups()
 
             if tag != '{/for}':
@@ -244,7 +255,13 @@ class ForParser(object):
                 # If tag (excluding leading whitespace) wasn't at top of
                 # document, space it off from preceding block elements:
                 if not at_top:
-                    prespace += paragraph_padding(prespace)
+                    # If there are already enough \ns before the tag to
+                    # distance it from the preceding paragraph, take them into
+                    # account before adding more.
+                    prespace += paragraph_padding(
+                                    preceding_whitespace(match.string,
+                                                         match.start(1))
+                                    + prespace)
 
                 # If tag (including trailing whitespace) wasn't at the bottom
                 # of the document, space it off from following block elements:
@@ -253,7 +270,19 @@ class ForParser(object):
 
             return prespace + token + postspace
 
-        return cls._FOR_OR_CLOSER.sub(dehydrate, text), dehydrations
+        # Do single replaces over and over, taking into account the effects of
+        # previous ones so that whitespace added in a previous replacement can
+        # be considered for its role in helping to nudge an adjacent block-
+        # level {for} into its own paragraph. There's no pos arg to replace(),
+        # so we had to write our own.
+        pos = 0
+        while True:
+            m = cls._FOR_OR_CLOSER.search(text, pos)
+            if m is None:
+                return text, dehydrations
+            done = text[:m.start()] + dehydrate(m)  # already been searched
+            pos = len(done)
+            text = done + text[m.end():]
 
     # Dratted wiki formatter likes to put <p> tags around my token when it sits
     # on a line by itself, so tolerate and consume that foolishness:
@@ -284,7 +313,6 @@ class WikiParser(sumo.parser.WikiParser):
     {for} tags, inclusions, and templates--oh my!
 
     """
-
     def __init__(self, base_url=None, doc_id=None):
         """
         doc_id -- If you want to be nice, pass the ID of the Document you are
