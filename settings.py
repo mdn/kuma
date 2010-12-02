@@ -194,7 +194,6 @@ INSTALLED_APPS = (
     'djcelery',
     'cronjobs',
     'notifications',
-    'identicons',
     'questions',
     'kadmin',
     'taggit',
