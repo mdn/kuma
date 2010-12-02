@@ -1,9 +1,10 @@
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import logging
 import re
 import rfc822
+import time
 import urllib
 import urllib2
 
@@ -146,13 +147,22 @@ def get_customercare_stats():
     for url, cache_key in stats_sources.items():
         log.debug('Updating %s from %s' % (cache_key, url))
         try:
-            json_data = json.load(urllib2.urlopen(url))
-            json_data['resultset'] = ''
+            json_resource = urllib2.urlopen(url)
+            json_data = json.load(json_resource)
             if not json_data['resultset']:
                 raise KeyError('Result set was empty.')
         except Exception, e:
             log.error('Error updating %s: %s' % (cache_key, e))
             continue
+
+        # Make sure the file is not outdated.
+        headers = json_resource.info()
+        lastmod = datetime.fromtimestamp(time.mktime(
+            rfc822.parsedate(headers['Last-Modified'])))
+        if ((datetime.now() - lastmod) > timedelta(
+            seconds=settings.CC_STATS_WARNING)):
+            log.warning('Resource %s is outdated. Last update: %s' % (
+                cache_key, lastmod))
 
         # Grab top contributors' avatar URLs from the public twitter API.
         if cache_key == settings.CC_TOP_CONTRIB_CACHE_KEY:
