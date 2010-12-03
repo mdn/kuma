@@ -369,6 +369,13 @@ class RedirectTests(TestCase):
         """Dodge existing titles when making redirects due to slug changes."""
         self._test_collision_avoidance('title', 'slug', REDIRECT_SLUG)
 
+    def test_redirects_unlocalizable(self):
+        """Auto-created redirects should be marked unlocalizable."""
+        self.d.slug = 'new-slug'
+        self.d.save()
+        redirect = Document.uncached.get(slug=self.old_slug)
+        eq_(False, redirect.is_localizable)
+
 
 class RevisionTests(TestCase):
     """Tests for the Revision model"""

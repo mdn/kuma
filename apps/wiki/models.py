@@ -129,7 +129,6 @@ class Document(ModelBase, BigVocabTaggableMixin):
     slug = models.CharField(max_length=255, db_index=True)
 
     # Is this document a template or not?
-    # TODO: Localizing templates does not allow changing titles
     is_template = models.BooleanField(default=False, editable=False,
                                       db_index=True)
     # Is this document localizable or not?
@@ -292,14 +291,13 @@ class Document(ModelBase, BigVocabTaggableMixin):
         slug_changed = hasattr(self, 'old_slug')
         title_changed = hasattr(self, 'old_title')
         if self.current_revision and (slug_changed or title_changed):
-            # TODO: Mark the redirect doc as unlocalizable when there is way to
-            # represent that.
             doc = Document.objects.create(locale=self.locale,
                                           title=self._attr_for_redirect(
                                               'title', REDIRECT_TITLE),
                                           slug=self._attr_for_redirect(
                                               'slug', REDIRECT_SLUG),
-                                          category=self.category)
+                                          category=self.category,
+                                          is_localizable=False)
             Revision.objects.create(document=doc,
                                     content=REDIRECT_CONTENT % self.title,
                                     is_approved=True,
