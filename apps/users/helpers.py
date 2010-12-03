@@ -1,4 +1,8 @@
+from django.conf import settings
+
 from jingo import register
+
+from users.models import Profile
 
 
 @register.function
@@ -11,5 +15,8 @@ def profile_url(user):
 @register.function
 def profile_avatar(user):
     """Return a URL to the user's avatar."""
-    # TODO: revisit this when we have a users app
-    return '/tiki-show_user_avatar.php?user=%s' % user.username
+    try:  # This is mostly for tests.
+        profile = user.get_profile()
+    except Profile.DoesNotExist:
+        return settings.DEFAULT_AVATAR
+    return profile.avatar.url if profile.avatar else settings.DEFAULT_AVATAR
