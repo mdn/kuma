@@ -145,20 +145,6 @@ def breadcrumbs(context, items=list(), add_default=True):
     return jinja2.Markup(t)
 
 
-@register.function
-def profile_url(user):
-    """Return a URL to the user's profile."""
-    # TODO: revisit this when we have a users app
-    return '/tiki-user_information.php?locale=en-US&userId=%s' % user.id
-
-
-@register.function
-def profile_avatar(user):
-    """Return a URL to the user's avatar."""
-    # TODO: revisit this when we have a users app
-    return '/tiki-show_user_avatar.php?user=%s' % user.username
-
-
 def _babel_locale(locale):
     """Return the Babel locale code, given a normal one."""
     # Babel uses underscore as separator.

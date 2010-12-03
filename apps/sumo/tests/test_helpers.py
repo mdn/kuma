@@ -2,20 +2,18 @@
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.forms.fields import CharField
 
 from babel.dates import format_date, format_time, format_datetime
 import jingo
-from nose.tools import eq_
-from nose.tools import assert_raises
+from nose.tools import eq_, assert_raises
 from pytz import timezone
 from pyquery import PyQuery as pq
 import test_utils
 
-from sumo.helpers import (profile_url, profile_avatar, datetimeformat,
-                          DateTimeFormatError, collapse_linebreaks, url,
-                          json, timesince, label_with_help, urlparams)
+from sumo.helpers import (datetimeformat, DateTimeFormatError,
+                          collapse_linebreaks, url, json, timesince,
+                          label_with_help, urlparams)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -61,16 +59,6 @@ class TestHelpers(TestCase):
     def test_urlparams_multivalue(self):
         eq_(u'/foo?a=foo&a=bar', urlparams('/foo?a=foo&a=bar'))
         eq_(u'/foo?a=bar', urlparams('/foo?a=foo', a='bar'))
-
-    def test_profile_url(self):
-        user = User.objects.create(pk=500000, username=u'testuser')
-        eq_(u'/tiki-user_information.php?locale=en-US&userId=500000',
-            profile_url(user))
-
-    def test_profile_avatar(self):
-        user = User.objects.create(pk=500001, username=u'testuser2')
-        eq_(u'/tiki-show_user_avatar.php?user=testuser2',
-            profile_avatar(user))
 
     def test_collapse_linebreaks(self):
         """Make sure collapse_linebreaks works on some tricky cases."""
