@@ -15,6 +15,7 @@ from users.models import User, Profile
 
 AVATAR_ROOT = os.path.join(settings.MEDIA_ROOT, settings.USER_AVATAR_PATH)
 AVATAR_PATH = os.path.join(AVATAR_ROOT, 'avatar-%s.png')
+AVATAR_URL = os.path.join(settings.USER_AVATAR_PATH, 'avatar-%s.png')
 
 
 class Command(BaseCommand):  #pragma: no cover
@@ -103,7 +104,7 @@ class Command(BaseCommand):  #pragma: no cover
                         avatar = image.resize(size, resample=1)
                         avatar.save(AVATAR_PATH % du.pk)
 
-                        profile.avatar = AVATAR_PATH % du.pk
+                        profile.avatar = AVATAR_URL % du.pk
                     except IOError:
                         pass  # Couldn't read or write the image.
 
