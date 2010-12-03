@@ -160,7 +160,7 @@ AUTHENTICATION_BACKENDS = (
     'users.backends.Sha256Backend',
 )
 AUTH_PROFILE_MODULE = 'users.Profile'
-USER_AVATAR_PATH = 'uploads/images/avatars/'
+USER_AVATAR_PATH = 'uploads/avatars/'
 ACCOUNT_ACTIVATION_DAYS = 30
 
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
