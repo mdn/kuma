@@ -30,7 +30,8 @@ class Profile(ModelBase):
 
     user = models.OneToOneField(User, primary_key=True,
                                 verbose_name=_lazy('User'))
-    name = models.CharField(max_length=255, verbose_name=_lazy('Full Name'))
+    name = models.CharField(max_length=255, null=True, blank=True,
+                            verbose_name=_lazy('Display name'))
     public_email = models.BooleanField(  # show/hide email
         default=False, verbose_name=_lazy('Make my email public'))
     avatar = models.ImageField(upload_to=settings.USER_AVATAR_PATH, null=True,
@@ -46,7 +47,7 @@ class Profile(ModelBase):
     facebook = models.URLField(max_length=255, null=True, blank=True,
                                verbose_name=_lazy('Facebook URL'))
     irc_handle = models.CharField(max_length=255, null=True, blank=True,
-                                  verbose_name=_lazy('IRC Nickname'))
+                                  verbose_name=_lazy('IRC nickname'))
     timezone = TimeZoneField(null=True, blank=True,
                              verbose_name=_lazy('Timezone'))
     country = models.CharField(max_length=2, choices=COUNTRIES, null=True,
