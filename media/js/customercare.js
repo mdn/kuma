@@ -75,11 +75,19 @@
             this.$content_el.text(val);
         });
 
+        this.__defineGetter__('$permalink_el', function() {
+            return this.$el.find('.permalink');
+        });
+        this.__defineSetter__('$permalink_el', function($val) {
+            this.$el.find('.permalink').replaceWith($val.clone());
+        });
+
         this.set_from_tweet = function(tweet) {
             this.id = tweet.id;
             this.avatar = tweet.avatar;
             this.username = tweet.username;
             this.content = tweet.content;
+            this.$permalink_el = tweet.$permalink_el;
         };
     }
 

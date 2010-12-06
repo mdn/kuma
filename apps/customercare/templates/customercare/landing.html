@@ -24,7 +24,7 @@
       <img id="twitter-icon" src="{{ MEDIA_URL }}img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">Choose a tweet to help</h2>
       <a id="refresh-tweets" href="{{ url('customercare.more_tweets') }}" class="header-button">Refresh<img id="refresh-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/></a>
       {% if authed %}
-        <form  id='twitter-logout' action='' method='post'>
+        <form id='twitter-logout' action='' method='post'>
           {{ csrf() }}
           <input type='hidden' name='twitter_delete_auth' value='1'>
           <input type='submit' class="header-button" value='Sign out'>

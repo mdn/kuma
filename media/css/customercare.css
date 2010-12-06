@@ -151,7 +151,8 @@
     text-decoration: none;
 }
 
-#tweets li time {
+#tweets li time,
+#initial-tweet time {
     color: #afaba3;
     float: right;
     font-size: 12px;
@@ -159,7 +160,8 @@
     font-weight: normal;
 }
 
-#tweets li time:hover {
+#tweets li time:hover,
+#initial-tweet time:hover {
     text-decoration: underline;
 }
 
@@ -244,9 +246,8 @@
     text-align: left;
 }
 
-#initial-tweet a {
+#initial-tweet a.twittername {
     color: #2276bb;
-    display: block;
     font-weight: bold;
     text-decoration: none;
 }
@@ -255,8 +256,8 @@
     display: inline;
 }
 
-#initial-tweet .box a {
-    padding-bottom: 4px;
+#initial-tweet .text {
+    padding-top: 4px;
 }
 
 #initial-tweet #arrow {
