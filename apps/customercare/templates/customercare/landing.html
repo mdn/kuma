@@ -29,6 +29,8 @@
           <input type='hidden' name='twitter_delete_auth' value='1'>
           <input type='submit' class="header-button" value='Sign out'>
         </form>
+      {% else %}
+        <a id="signin-button" href="#" class="header-button">Sign in</a>
       {% endif %}
     </div>
 

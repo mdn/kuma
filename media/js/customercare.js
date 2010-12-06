@@ -186,9 +186,13 @@
 
         function Signin() {
             this.open = function(tweet) {
-                this.$el.find('.signin').bind('click', {tweet: tweet}, function(e) {
-                    memory.id = e.data.tweet.id;
-                });
+                if (tweet) {
+                    this.$el
+                        .find('.signin')
+                        .bind('click', {tweet: tweet}, function(e) {
+                            memory.id = e.data.tweet.id;
+                        });
+                }
                 this.$el.dialog(this.dialog_options);
             };
 
@@ -284,6 +288,14 @@
             signin.close();
         });
 
+        /** Signin button */
+        $('#signin-button').click(function(e) {
+            signin.open(null);
+            e.preventDefault();
+        });
+
+
+        /** Refresh button */
         $('#refresh-tweets').click(function(e) {
             $("#refresh-busy").show();
             $.get(
