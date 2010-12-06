@@ -28,12 +28,12 @@
     margin-top: 15px;
 }
 
-#speach-bubbles {
+#speech-bubbles {
     float: left;
     padding: 60px 0 15px 25px;
 }
 
-#speach-bubbles li {
+#speech-bubbles li {
     float: left;
     height: 97px;
     list-style-type: none;
@@ -41,15 +41,15 @@
     width: 177px;
 }
 
-#speach-bubbles li.choose {
+#speech-bubbles li.choose {
     background: url("../img/customercare/bubble-choose.png") no-repeat scroll top left transparent;
 }
 
-#speach-bubbles li.signin {
+#speech-bubbles li.signin {
     background: url("../img/customercare/bubble-signin.png") no-repeat scroll top left transparent;
 }
 
-#speach-bubbles li.respond {
+#speech-bubbles li.respond {
     background: url("../img/customercare/bubble-respond.png") no-repeat scroll top left transparent;
 }
 
