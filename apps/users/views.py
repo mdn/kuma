@@ -64,28 +64,37 @@ def activate(request, activation_key):
                         {'account': account})
 
 
+def profile(request, user_id):
+    user_profile = get_object_or_404(Profile, user__id=user_id)
+    return jingo.render(request, 'users/profile.html',
+                        {'profile': user_profile})
+
+
 @login_required
 @require_http_methods(['GET', 'POST'])
 def edit_profile(request):
     """Edit user profile."""
     try:
-        profile = request.user.get_profile()
+        user_profile = request.user.get_profile()
     except Profile.DoesNotExist:
         # TODO: Once we do user profile migrations, all users should have a
         # a profile. We can remove this fallback.
-        profile = Profile.objects.create(user=request.user)
+        user_profile = Profile.objects.create(user=request.user)
 
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
-            profile = form.save()
-            # TODO: Redirect to view profile page when we have it.
-            return HttpResponseRedirect(reverse('users.edit_profile'))
+            user_profile = form.save()
+            return HttpResponseRedirect(reverse('users.profile',
+                                                args=[request.user.id]))
     else:  # request.method == 'GET'
-        form = ProfileForm(instance=profile)
+        form = ProfileForm(instance=user_profile)
+
+    # TODO: detect timezone automatically from client side, see
+    # http://rocketscience.itteco.org/2010/03/13/automatic-users-timezone-determination-with-javascript-and-django-timezones/
 
     return jingo.render(request, 'users/edit_profile.html',
-                        {'form': form, 'profile': profile})
+                        {'form': form, 'profile': user_profile})
 
 
 def password_reset(request):

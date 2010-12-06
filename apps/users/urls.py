@@ -5,8 +5,8 @@ from users import views
 
 # These will all start with /user/<user_id>/
 detail_patterns = patterns('',
+    url('^$', views.profile, name='users.profile'),
 # TODO:
-#    url('^$', views.profile, name='users.profile'),
 #    url('^abuse', views.report_abuse, name='users.abuse'),
 )
 

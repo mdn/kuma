@@ -233,3 +233,25 @@ class EditProfileTests(TestCaseBase):
             if key != 'timezone':
                 eq_(data[key], getattr(profile, key))
         eq_(data['timezone'], profile.timezone.zone)
+
+
+class ViewProfileTests(TestCaseBase):
+    fixtures = ['users.json']
+
+    def test_view_profile(self):
+        r = self.client.get(reverse('users.profile', args=[47963]))
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_(0, doc('#edit-profile-link').length)
+        eq_('pcraciunoiu', doc('#main-area h1').text())
+        # No name set and livechat_id is not different => no optional fields.
+        eq_(0, doc('#main-area ul').length)
+
+    def test_view_profile_mine(self):
+        """Logged in, on my profile, I see an edit link."""
+        self.client.login(username='pcraciunoiu', password='testpass')
+        r = self.client.get(reverse('users.profile', args=[47963]))
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_('Edit my profile', doc('#edit-profile-link').text())
+        self.client.logout()

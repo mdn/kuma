@@ -66,3 +66,75 @@ article.main div.submit {
     list-style: none;
     padding: 2px 0;
 }
+
+/* profile view */
+#profile section {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+#profile h2,
+#contact-area h1 {
+    font-size: 20px;
+}
+
+section#avatar-area {
+    text-align: center;
+    width: 12%;
+}
+
+#edit-profile-link {
+    display: block;
+    font-size: 85%;
+    margin: 0 auto;
+    width: 80%;
+}
+
+section#main-area {
+    position: relative;
+    width: 57%;
+}
+
+#main-area ul {
+    list-style: none;
+    margin-top: 1em;
+}
+
+
+#main-area li:before {
+    content: '\00B7';
+    margin: 0 .5em;
+}
+#main-area li:first-child:before {
+    content: '';
+    margin: 0;
+}
+
+#main-area li {
+    float: left;
+}
+
+#bio {
+    position: absolute;
+    top: 90px;
+}
+
+section#contact-area {
+    padding-top: 90px;
+    margin-left: 3%;
+    width: 27%;
+}
+
+#contact-area h1 {
+    margin-bottom: .25em;
+}
+
+#contact-area ul {
+    margin-left: 1em;
+}
+
+#profile p {
+    margin: 1em 0;
+}

@@ -21,9 +21,6 @@ from sumo.urlresolvers import reverse
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
-# TODO: detect timezone automatically from client side, see
-# http://rocketscience.itteco.org/2010/03/13/automatic-users-timezone-determination-with-javascript-and-django-timezones/
-
 
 class Profile(ModelBase):
     """Profile model for django users, get it with user.get_profile()."""
@@ -39,12 +36,14 @@ class Profile(ModelBase):
                                max_length=settings.MAX_FILEPATH_LENGTH)
     bio = models.TextField(null=True, blank=True,
                            verbose_name=_lazy(u'Biography'))
-    # verify_exists=True by default for URLs
     website = models.URLField(max_length=255, null=True, blank=True,
+                              verify_exists=False,
                               verbose_name=_lazy(u'Website'))
     twitter = models.URLField(max_length=255, null=True, blank=True,
+                              verify_exists=False,
                               verbose_name=_lazy(u'Twitter URL'))
     facebook = models.URLField(max_length=255, null=True, blank=True,
+                               verify_exists=False,
                                verbose_name=_lazy(u'Facebook URL'))
     irc_handle = models.CharField(max_length=255, null=True, blank=True,
                                   verbose_name=_lazy(u'IRC nickname'))
@@ -58,6 +57,9 @@ class Profile(ModelBase):
     livechat_id = models.CharField(default=None, null=True, blank=True,
                                    max_length=255,
                                    verbose_name=_lazy(u'Livechat ID'))
+
+    def __unicode__(self):
+        return unicode(self.user)
 
 
 # Registration model and manager:

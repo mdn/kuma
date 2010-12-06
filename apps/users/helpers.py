@@ -1,5 +1,6 @@
 from django.conf import settings
 
+import jinja2
 from jingo import register
 
 from users.models import Profile
@@ -20,3 +21,9 @@ def profile_avatar(user):
     except Profile.DoesNotExist:
         return settings.DEFAULT_AVATAR
     return profile.avatar.url if profile.avatar else settings.DEFAULT_AVATAR
+
+
+@register.filter
+def public_email(email):
+    """Email address -> publicly displayable email."""
+    return jinja2.Markup(email.replace(u'@', u' [at] '))
