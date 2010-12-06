@@ -29,6 +29,7 @@ class SessionMiddleware(object):
 
         if request.REQUEST.get('twitter_delete_auth'):
             request.twitter = Session()
+            return http.HttpResponseRedirect(url(request))
 
         elif request.twitter.authed:
             auth.set_access_token(request.twitter.key, request.twitter.secret)
