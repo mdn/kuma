@@ -660,6 +660,12 @@ div.warning-box p {
    padding-left: 2em;
 }
 
+#doc-content .pref {
+	border: solid 1px #ddd;
+	color: #303030;
+	padding: 0 3px;
+}
+
 /* helpful vote form */
 #helpful-vote {
     color: #666;

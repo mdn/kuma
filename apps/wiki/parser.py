@@ -94,7 +94,7 @@ PATTERNS = [
         (r'\{/(note|warning)\}', '</div>'),
         # To use } as a key, this syntax won't work. Use [[T:key|}]] instead
         (r'\{key (.+?)\}', _key_split),  # ungreedy: stop at the first }
-        (r'{(?P<name>button|menu|filepath) (?P<content>.*?)}',
+        (r'{(?P<name>button|menu|filepath|pref) (?P<content>.*?)}',
          '<span class="\g<name>">\g<content></span>'),
     )]
 
