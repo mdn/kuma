@@ -547,6 +547,7 @@ CC_TWEET_ACTIVITY_CACHE_KEY = 'sumo-cc-tweet-stats'
 CC_TOP_CONTRIB_CACHE_KEY = 'sumo-cc-top-contrib-stats'
 CC_STATS_CACHE_TIMEOUT = 24 * 60 * 60  # 24 hours
 CC_STATS_WARNING = 30 * 60 * 60  # Warn if JSON data is older than 30 hours
+CC_IGNORE_USERS = ['fx4status',]  # User names whose tweets to ignore.
 
 TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''
