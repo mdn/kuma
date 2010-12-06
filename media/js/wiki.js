@@ -175,7 +175,8 @@
 
             // Kind of a shortcut. What we really want to know is "Is there anything in the hash fragment that isn't a {for} selector?"
             if (!document.location.hash || hash.hasOwnProperty("os") || hash.hasOwnProperty("browser")) {
-                document.location.hash = "os=" + $osMenu.val() + "&browser=" + $browserMenu.val();
+                var newHash = "os=" + $osMenu.val() + "&browser=" + $browserMenu.val();
+                document.location.replace(document.location.href.split('#')[0] + '#' + newHash);
             }
         }
 
