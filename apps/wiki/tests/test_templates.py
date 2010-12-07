@@ -272,6 +272,15 @@ class NewDocumentTests(TestCaseBase):
         eq_('Document with this Title and Locale already exists.',
             ul('li').text())
 
+    def test_slug_3_chars(self):
+        """Make sure we can create a slug with only 3 characters."""
+        self.client.login(username='admin', password='testpass')
+        data = new_document_data()
+        data['slug'] = 'ask'
+        response = self.client.post(reverse('wiki.new_document'), data)
+        eq_(302, response.status_code)
+        eq_('ask', Document.objects.all()[0].slug)
+
 
 class NewRevisionTests(TestCaseBase):
     """Tests for the New Revision template"""

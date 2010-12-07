@@ -66,7 +66,7 @@ class DocumentForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=5, max_length=255,
+    slug = StrippedCharField(min_length=3, max_length=255,
                              widget=forms.TextInput(),
                              label=_('Slug:'),
                              help_text=_('Article URL'),
