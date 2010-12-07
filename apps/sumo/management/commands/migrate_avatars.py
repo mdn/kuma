@@ -82,7 +82,11 @@ class Command(BaseCommand):  #pragma: no cover
                 # Set livechat_id
                 profile.livechat_id = tu.livechat_id
 
-                if tu.avatarFileType and tu.avatarFileType.startswith('image'):
+                # If the avatar already exists because we generated it ahead
+                # of time, just use it.
+                if os.path.exists(AVATAR_PATH % du.pk):
+                    profile.avatar = AVATAR_PATH % du.pk
+                elif tu.avatarFileType and tu.avatarFileType.startswith('image'):
 
                     # What format is it currently in?
                     format = 'png'
@@ -105,6 +109,7 @@ class Command(BaseCommand):  #pragma: no cover
                         avatar.save(AVATAR_PATH % du.pk)
 
                         profile.avatar = AVATAR_URL % du.pk
+
                     except IOError:
                         pass  # Couldn't read or write the image.
 
