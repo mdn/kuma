@@ -18,6 +18,7 @@ from sumo.urlresolvers import reverse
 TEST_IMG = 'apps/upload/tests/media/test.jpg'
 TEST_VID = {'webm': 'apps/gallery/tests/media/test.webm',
             'ogv': 'apps/gallery/tests/media/test.ogv',
+            'thumbnail': TEST_IMG,
             'flv': 'apps/gallery/tests/media/test.flv'}
 INVALID_VID = 'apps/gallery/tests/media/test.rtf'
 VIDEO_PATH = settings.MEDIA_URL + settings.GALLERY_VIDEO_PATH
@@ -349,6 +350,15 @@ class UploadVideoTestCase(TestCase):
         eq_('error', json_r['status'])
         eq_('Could not upload your video.', json_r['message'])
         eq_(forms.MSG_VID_REQUIRED, json_r['errors']['__all__'][0])
+
+    def test_upload_thumbnail(self):
+        """Uploading a thumbnail resizes it."""
+        r = self._upload_extension('thumbnail')
+        vid = Video.objects.all()[0]
+
+        eq_(1, Video.objects.count())
+        eq_(200, r.status_code)
+        eq_(90, vid.thumbnail.width)
 
 
 class SearchTestCase(TestCase):

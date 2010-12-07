@@ -61,7 +61,8 @@ def create_video(files, user):
 
         # Generate thumbnail off thread
         if 'thumbnail' == name:
-            generate_image_thumbnail.delay(vid, up_file.name)
+            generate_image_thumbnail.delay(vid, up_file.name,
+                                           field_name='thumbnail')
 
     vid.save()
     if 'thumbnail' in files:
