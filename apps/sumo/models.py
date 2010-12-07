@@ -24,21 +24,8 @@ class ModelBase(caching.base.CachingMixin, models.Model):
         abstract = True
 
 
-class Category(ModelBase):
-    categId = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=250, null=True)
-    parentId = models.IntegerField(null=True)
-    hits = models.IntegerField(null=True)
-
-    class Meta:
-        db_table = "tiki_categories"
-
-    def __unicode__(self):
-        return self.name
-
-
 class TikiUser(ModelBase):
+    # TODO: Delete me!
     class Meta:
         db_table = 'users_users'
 
