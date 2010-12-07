@@ -1,9 +1,14 @@
+from os import listdir
+from os.path import join, dirname
+import re
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test.client import Client
 
 from test_utils import TestCase  # So others can import it from here
 
+import sumo
 from sumo.urlresolvers import reverse, split_path
 
 
@@ -46,3 +51,20 @@ def get_user(username='jsocol'):
         raise FixtureMissingError(
             'Username "%s" not found. You probably forgot to import a'
             ' users fixture.' % username)
+
+
+class MigrationNumberTests(TestCase):
+    def test_unique(self):
+        """Assert that the numeric prefixes of the DB migrations are unique."""
+        leading_digits = re.compile(r'^\d+')
+        path = join(dirname(dirname(dirname(sumo.__file__))), 'migrations')
+        seen_numbers = set()
+        for node in listdir(path):
+            match = leading_digits.match(node)
+            if match:
+                number = match.group()
+                if number in seen_numbers:
+                    self.fail('There is more than one migration #%s in %s.' %
+                              (number, path))
+                seen_numbers.add(number)
+
