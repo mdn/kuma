@@ -16,6 +16,7 @@ import jingo
 
 from sumo.decorators import ssl_required, logout_required
 from sumo.urlresolvers import reverse
+from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import ProfileForm
 from users.models import Profile, RegistrationProfile
@@ -85,6 +86,11 @@ def edit_profile(request):
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             user_profile = form.save()
+            if user_profile.avatar:
+                content = _create_image_thumbnail(user_profile.avatar.path,
+                                                  settings.AVATAR_SIZE)
+                user_profile.avatar.save(user_profile.avatar.name,
+                                         content, save=True)
             return HttpResponseRedirect(reverse('users.profile',
                                                 args=[request.user.id]))
     else:  # request.method == 'GET'

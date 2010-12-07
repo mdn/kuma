@@ -1,10 +1,12 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth import authenticate, forms as auth_forms
 from django.contrib.auth.models import User
 
 from tower import ugettext as _, ugettext_lazy as _lazy
 
 from sumo.widgets import ImageWidget
+from upload.utils import check_file_size, FileTooLargeError
 from users.models import Profile
 
 
@@ -125,3 +127,13 @@ class ProfileForm(forms.ModelForm):
     class Meta(object):
         model = Profile
         exclude = ('user', 'livechat_id')
+
+    def clean_avatar(self):
+        if not ('avatar' in self.cleaned_data and self.cleaned_data['avatar']):
+            return self.cleaned_data['avatar']
+        try:
+            check_file_size(self.cleaned_data['avatar'],
+                            settings.MAX_AVATAR_FILE_SIZE)
+        except FileTooLargeError as e:
+            raise forms.ValidationError(e.args[0])
+        return self.cleaned_data['avatar']

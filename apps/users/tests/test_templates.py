@@ -1,3 +1,4 @@
+from copy import deepcopy
 import hashlib
 
 from django.conf import settings
@@ -213,6 +214,14 @@ class PasswordReset(TestCaseBase):
 class EditProfileTests(TestCaseBase):
     fixtures = ['users.json']
 
+    def setUp(self):
+        super(EditProfileTests, self).setUp()
+        self.old_settings = deepcopy(settings._wrapped.__dict__)
+
+    def tearDown(self):
+        settings._wrapped.__dict__ = self.old_settings
+        super(EditProfileTests, self).tearDown()
+
     def test_edit_profile(self):
         url = reverse('users.edit_profile')
         self.client.login(username='rrosario', password='testpass')
@@ -233,6 +242,17 @@ class EditProfileTests(TestCaseBase):
             if key != 'timezone':
                 eq_(data[key], getattr(profile, key))
         eq_(data['timezone'], profile.timezone.zone)
+
+    def test_large_avatar(self):
+        settings.MAX_AVATAR_FILE_SIZE = 1024
+        url = reverse('users.edit_profile')
+        self.client.login(username='rrosario', password='testpass')
+        with open('apps/upload/tests/media/test.jpg') as f:
+            r = self.client.post(url, {'avatar': f})
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_('"test.jpg" is too large (12KB), the limit is 1KB',
+            doc('.errorlist').text())
 
 
 class ViewProfileTests(TestCaseBase):
