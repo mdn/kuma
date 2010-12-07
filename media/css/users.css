@@ -67,6 +67,23 @@ article.main div.submit {
     padding: 2px 0;
 }
 
+/* edit profile view */
+#edit-profile-avatar a {
+    padding-left: .5em;
+}
+
+#edit-profile-avatar ul {
+    display: inline-block;
+    margin-left: .5em;
+}
+
+/* edit avatar view */
+#id_avatar,
+#change-avatar div.val-wrap {
+    margin-right: 10px;
+    width: auto;
+}
+
 /* profile view */
 #profile section {
     display: inline-block;
@@ -137,4 +154,21 @@ section#contact-area {
 
 #profile p {
     margin: 1em 0;
+}
+
+/* delete avatar */
+#avatar-delete .form-actions {
+    margin: 1em 0;
+}
+
+#avatar-delete .form-actions input {
+    margin-left: 1em;
+}
+
+#avatar-delete h1 {
+    margin-bottom: 1em;
+}
+
+#avatar-preview {
+    text-align: center;
 }

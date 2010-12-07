@@ -1,11 +1,13 @@
 from copy import deepcopy
 import hashlib
+import os
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
 from django.core import mail
+from django.core.files import File
 from django.utils.http import int_to_base36
 
 import mock
@@ -16,6 +18,7 @@ from test_utils import RequestFactory
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post
+from users.models import Profile
 from users.tests import TestCaseBase
 from users.views import _clean_next_url
 
@@ -214,14 +217,6 @@ class PasswordReset(TestCaseBase):
 class EditProfileTests(TestCaseBase):
     fixtures = ['users.json']
 
-    def setUp(self):
-        super(EditProfileTests, self).setUp()
-        self.old_settings = deepcopy(settings._wrapped.__dict__)
-
-    def tearDown(self):
-        settings._wrapped.__dict__ = self.old_settings
-        super(EditProfileTests, self).tearDown()
-
     def test_edit_profile(self):
         url = reverse('users.edit_profile')
         self.client.login(username='rrosario', password='testpass')
@@ -243,9 +238,24 @@ class EditProfileTests(TestCaseBase):
                 eq_(data[key], getattr(profile, key))
         eq_(data['timezone'], profile.timezone.zone)
 
+
+class EditAvatarTests(TestCaseBase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(EditAvatarTests, self).setUp()
+        self.old_settings = deepcopy(settings._wrapped.__dict__)
+
+    def tearDown(self):
+        settings._wrapped.__dict__ = self.old_settings
+        user_profile = Profile.objects.get(user__username='rrosario')
+        if user_profile.avatar:
+            user_profile.avatar.delete()
+        super(EditAvatarTests, self).tearDown()
+
     def test_large_avatar(self):
         settings.MAX_AVATAR_FILE_SIZE = 1024
-        url = reverse('users.edit_profile')
+        url = reverse('users.edit_avatar')
         self.client.login(username='rrosario', password='testpass')
         with open('apps/upload/tests/media/test.jpg') as f:
             r = self.client.post(url, {'avatar': f})
@@ -253,6 +263,43 @@ class EditProfileTests(TestCaseBase):
         doc = pq(r.content)
         eq_('"test.jpg" is too large (12KB), the limit is 1KB',
             doc('.errorlist').text())
+
+    def test_upload_avatar(self):
+        """Upload a valid avatar."""
+        user_profile = Profile.uncached.get(user__username='rrosario')
+        with open('apps/upload/tests/media/test.jpg') as f:
+            user_profile.avatar.save('test_old.jpg', File(f), save=True)
+        eq_(settings.USER_AVATAR_PATH + 'test_old.jpg',
+            user_profile.avatar.name)
+        old_path = (settings.MEDIA_ROOT + '/' + settings.USER_AVATAR_PATH +
+                    'test_old.jpg')
+        assert os.path.exists(old_path), 'Old avatar is not in place.'
+
+        url = reverse('users.edit_avatar')
+        self.client.login(username='rrosario', password='testpass')
+        with open('apps/upload/tests/media/test.jpg') as f:
+            r = self.client.post(url, {'avatar': f})
+
+        user_profile = Profile.uncached.get(user__username='rrosario')
+        eq_(settings.USER_AVATAR_PATH + 'test.jpg', user_profile.avatar.name)
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US' + reverse('users.edit_profile'),
+            r['location'])
+        assert not os.path.exists(old_path), 'Old avatar was not removed.'
+
+    def test_delete_avatar(self):
+        """Delete an avatar."""
+        self.test_upload_avatar()
+
+        url = reverse('users.delete_avatar')
+        self.client.login(username='rrosario', password='testpass')
+        r = self.client.post(url)
+
+        user_profile = Profile.objects.get(user__username='rrosario')
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US' + reverse('users.edit_profile'),
+            r['location'])
+        eq_('', user_profile.avatar.name)
 
 
 class ViewProfileTests(TestCaseBase):

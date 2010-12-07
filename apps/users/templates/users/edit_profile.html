@@ -6,9 +6,23 @@
 {% block content %}
   <article id="edit-profile" class="main">
     <h1>{{ title }}</h1>
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="post" action="">
       {{ csrf() }}
       <ul>
+        <li id="edit-profile-avatar">
+          <label>{{ _('Avatar') }}</label>
+          <img src="{{ profile_avatar(profile.user) }}">
+          <ul>
+            <li>
+              <a href="{{ url('users.edit_avatar') }}">{{ _('Change', 'avatar') }}</a>
+            </li>
+            {% if profile.avatar %}
+              <li>
+                <a href="{{ url('users.delete_avatar') }}">{{ _('Delete', 'avatar') }}</a>
+              </li>
+            {% endif %}
+          </ul>
+        </li>
         {{ form.as_ul()|safe }}
       </ul>
       <div class="submit">

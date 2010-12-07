@@ -1,3 +1,4 @@
+import os
 import urlparse
 
 from django.conf import settings
@@ -18,7 +19,7 @@ from sumo.decorators import ssl_required, logout_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import ProfileForm
+from users.forms import ProfileForm, AvatarForm
 from users.models import Profile, RegistrationProfile
 from users.utils import handle_login, handle_register
 
@@ -86,11 +87,6 @@ def edit_profile(request):
         form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             user_profile = form.save()
-            if user_profile.avatar:
-                content = _create_image_thumbnail(user_profile.avatar.path,
-                                                  settings.AVATAR_SIZE)
-                user_profile.avatar.save(user_profile.avatar.name,
-                                         content, save=True)
             return HttpResponseRedirect(reverse('users.profile',
                                                 args=[request.user.id]))
     else:  # request.method == 'GET'
@@ -101,6 +97,67 @@ def edit_profile(request):
 
     return jingo.render(request, 'users/edit_profile.html',
                         {'form': form, 'profile': user_profile})
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def edit_avatar(request):
+    """Edit user avatar."""
+    try:
+        user_profile = request.user.get_profile()
+    except Profile.DoesNotExist:
+        # TODO: Once we do user profile migrations, all users should have a
+        # a profile. We can remove this fallback.
+        user_profile = Profile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        # Upload new avatar and replace old one.
+        old_avatar_path = None
+        if user_profile.avatar:
+            # Need to store the path, not the file here, or else django's
+            # form.is_valid() messes with it.
+            old_avatar_path = user_profile.avatar.path
+        form = AvatarForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            if old_avatar_path:
+                os.unlink(old_avatar_path)
+            user_profile = form.save()
+
+            content = _create_image_thumbnail(user_profile.avatar.path,
+                                              settings.AVATAR_SIZE)
+            # Delete uploaded avatar and replace with thumbnail.
+            name = user_profile.avatar.name
+            user_profile.avatar.delete()
+            user_profile.avatar.save(name, content, save=True)
+            return HttpResponseRedirect(reverse('users.edit_profile'))
+
+    else:  # request.method == 'GET'
+        form = AvatarForm(instance=user_profile)
+
+    return jingo.render(request, 'users/edit_avatar.html',
+                        {'form': form, 'profile': user_profile})
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def delete_avatar(request):
+    """Delete user avatar."""
+    try:
+        user_profile = request.user.get_profile()
+    except Profile.DoesNotExist:
+        # TODO: Once we do user profile migrations, all users should have a
+        # a profile. We can remove this fallback.
+        user_profile = Profile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        # Delete avatar here
+        if user_profile.avatar:
+            user_profile.avatar.delete()
+        return HttpResponseRedirect(reverse('users.edit_profile'))
+    # else:  # request.method == 'GET'
+
+    return jingo.render(request, 'users/confirm_avatar_delete.html',
+                        {'profile': user_profile})
 
 
 def password_reset(request):

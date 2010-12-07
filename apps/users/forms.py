@@ -122,11 +122,25 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
 class ProfileForm(forms.ModelForm):
     """The form for editing the user's profile."""
-    avatar = forms.ImageField(required=False, widget=ImageWidget)
 
     class Meta(object):
         model = Profile
-        exclude = ('user', 'livechat_id')
+        exclude = ('user', 'livechat_id', 'avatar')
+
+
+class AvatarForm(forms.ModelForm):
+    """The form for editing the user's avatar."""
+    avatar = forms.ImageField(required=True, widget=ImageWidget)
+
+    def __init__(self, *args, **kwargs):
+        super(AvatarForm, self).__init__(*args, **kwargs)
+        self.fields['avatar'].help_text = (
+            u'Your avatar will be resized to {size}x{size}'.format(
+                size=settings.AVATAR_SIZE))
+
+    class Meta(object):
+        model = Profile
+        fields = ('avatar',)
 
     def clean_avatar(self):
         if not ('avatar' in self.cleaned_data and self.cleaned_data['avatar']):
