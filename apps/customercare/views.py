@@ -89,7 +89,7 @@ def landing(request):
             activity_stats.append((act[0], {
                 'requests': format_number(act[1], locale='en_US'),
                 'replies': format_number(act[2], locale='en_US'),
-                'perc': int(round(act[3] * 100)),
+                'perc': act[3] * 100,
             }))
     else:
         activity_stats = None

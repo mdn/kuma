@@ -58,7 +58,7 @@
     {% else %}
       <div class="bubble">
         <div class="perc">
-          <span class="data">{{ activity_stats[0][1]['perc'] }}</span>%
+          <span class="data">{% if activity_stats[0][1]['perc'] < 10 %}{{ activity_stats[0][1]['perc']|round(1) }}{% else %}{{ activity_stats[0][1]['perc']|round(0)|int }}{% endif %}</span>%
           <span class="label">of tweets</span>
         </div>
         <div class="numbers">
@@ -76,7 +76,7 @@
         <select>
           {% for act in activity_stats %}
             <option value="{{ loop.index0 }}"
-                    data-perc ="{{ act[1]['perc'] }}"
+                    data-perc ="{% if act[1]['perc'] < 10 %}{{ act[1]['perc']|round(1) }}{% else %}{{ act[1]['perc']|round(0)|int }}{% endif %}"
                     data-replies="{{ act[1]['replies'] }}"
                     data-requests="{{ act[1]['requests'] }}">
               {{ act[0] }}
