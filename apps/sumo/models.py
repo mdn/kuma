@@ -1,9 +1,6 @@
-from django.conf import settings
 from django.db import models
 
 import caching.base
-
-from sumo_locales import INTERNAL_MAP
 
 # Our apps should subclass ManagerBase instead of models.Manager or
 # caching.base.CachingManager directly.
