@@ -7,7 +7,7 @@
   <li><a href="{{ url('wiki.document', 'Other Firefox Support') }}">{{ _('Other Firefox Support') }}</a></li>
   <li><a href="{{ url('wiki.document', 'How to contribute') }}">{{ _('How to Contribute') }}</a></li>
   {% if user.is_authenticated() %}
-    <li><a href="/tiki-user_preferences.php">{{ _('My Account') }}</a></li>
+    <li><a href="{{ profile_url(user) }}">{{ _('My Account') }}</a></li>
     <li><a href="{{ settings.LOGOUT_URL }}">{{ _('Log Out') }}</a></li>
   {% else %}
     <li><a href="{{ settings.LOGIN_URL }}">{{ _('Log In') }}</a></li>

@@ -24,7 +24,7 @@
     [ <a title="{{ _('Click here to register') }}" href="{{ settings.REGISTER_URL }}">
         {{ _('Register') }}
       </a>
-    | <a title="{{ _("Click here if you've forgotten your password") }}" href="/tiki-remind_password.php">{{ _('I forgot my password') }}</a> ]
+    | <a title="{{ _("Click here if you've forgotten your password") }}" href="{{ url('users.pw_reset') }}">{{ _('I forgot my password') }}</a> ]
 
     <input type="hidden" value="y" name="stay_in_ssl_mode"/>
   </form>
