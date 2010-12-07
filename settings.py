@@ -447,8 +447,6 @@ LOGOUT_URL = '/users/logout'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 REGISTER_URL = '/users/register'
-WIKI_CREATE_URL = '/tiki-editpage.php?page=%s'
-WIKI_EDIT_URL = '/tiki-editpage.php?page=%s'
 WIKI_VIDEO_WIDTH = 640
 WIKI_VIDEO_HEIGHT = 480
 

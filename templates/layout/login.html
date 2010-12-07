@@ -4,8 +4,7 @@
 <div id="login-form">
   <h3>{{ _('Log in') }}</h3>
 
-  {# TODO: Use reverse for the login url once it's off TikiWiki #}
-  <form action="https://{{ request.META['HTTP_HOST'] }}{{ settings.LOGIN_URL }}" method="POST">
+  <form action="{{ settings.LOGIN_URL }}" method="POST">
     <label for="id_username">{{ _('Username:') }}</label>
     <input type="text" id="id_username" name="user"/>
 
@@ -24,7 +23,7 @@
     [ <a title="{{ _('Click here to register') }}" href="{{ settings.REGISTER_URL }}">
         {{ _('Register') }}
       </a>
-    | <a title="{{ _("Click here if you've forgotten your password") }}" href="/tiki-remind_password.php">{{ _('I forgot my password') }}</a> ]
+    | <a title="{{ _("Click here if you've forgotten your password") }}" href="{{ url('users.pw_reset') }}">{{ _('I forgot my password') }}</a> ]
 
     <input type="hidden" value="y" name="stay_in_ssl_mode"/>
   </form>
