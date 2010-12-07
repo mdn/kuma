@@ -9,14 +9,12 @@ import urllib
 
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
 from django.utils.encoding import smart_str
-from django.contrib import auth
 
 import jingo
 import MySQLdb as mysql
 import tower
 
 from sumo.helpers import urlparams
-from sumo.models import Session
 from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
 from sumo.views import handle403
 
@@ -74,27 +72,6 @@ class LocaleURLMiddleware(object):
 
     def process_exception(self, request, exception):
         set_url_prefixer(None)
-
-
-class TikiCookieMiddleware(object):
-    """
-    This middleware looks at the SUMOv1 cookie set by Tiki and authenticates
-    the user in django.
-    """
-
-    def process_request(self, request):
-        """Look up the SUMOv1 cookie and authenticate the user"""
-
-        id = request.COOKIES.get('SUMOv1')
-
-        if id:
-            try:
-                session = Session.objects.get(pk=id)
-            except Session.DoesNotExist:
-                return
-            user = auth.authenticate(session=session)
-            if user is not None:
-                auth.login(request, user)
 
 
 class Forbidden403Middleware(object):

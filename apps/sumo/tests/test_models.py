@@ -6,8 +6,7 @@ import jingo
 from nose.tools import eq_
 
 import sumo
-from sumo import backends
-from sumo.models import WikiPage, TikiUser
+from sumo.models import WikiPage
 from sumo.tests import TestCase
 
 
@@ -27,16 +26,6 @@ class TestWikiPage(TestCase):
         """Edit url for a page exists."""
         w = WikiPage.objects.get(title='Installing Firefox')
         eq_('/tiki-editpage.php?page=Installing+Firefox', w.get_edit_url())
-
-
-class TestTikiUserModel(TestCase):
-
-    def test_django_user(self):
-        tiki_user = TikiUser.objects.create(pk=1234, login='djangotestuser',
-                                            email='user1234@nowhere',
-                                            registrationDate=1207303253)
-        user = backends.create_django_user(tiki_user)
-        eq_(tiki_user.userId, user.id)
 
 
 class MigrationNumberTests(TestCase):

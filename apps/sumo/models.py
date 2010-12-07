@@ -105,20 +105,6 @@ class Category(ModelBase):
         return self.name
 
 
-class Session(ModelBase):
-    class Meta:
-        db_table = 'tiki_sessions'
-
-    sessionId = models.CharField(unique=True,
-        primary_key=True, max_length=32)
-    user = models.CharField(max_length=200)
-    timestamp = models.IntegerField(null=True)
-    tikihost = models.CharField(max_length=200, null=True)
-
-    def __unicode__(self):
-        return '%s: %s' % (self.sessionId, self.user)
-
-
 class TikiUser(ModelBase):
     class Meta:
         db_table = 'users_users'
