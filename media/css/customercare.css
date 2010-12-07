@@ -411,9 +411,29 @@
     cursor: pointer;
     float: right;
     height: 36px;
+    line-height: 36px;
     margin-top: 10px;
+    text-align: center;
     text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
     width: 140px;
+}
+
+#submit-busy {
+    display: none;
+    height: 13px;
+    padding-left: 5px;
+    width: 13px;
+}
+
+#reply .submitButton.busy {
+    background: -moz-linear-gradient(center top, #ccc 15px, #ccc 18px, #aaa, #aaa);
+    background: -webkit-gradient(linear, center top, center bottom, color-stop(.417, #ccc), color-stop(.5, #ccc), color-stop(.75, #aaa), to(#aaa));
+    border-color: #aaa;
+    color: #666;
+}
+
+#reply .submitButton.busy #submit-busy {
+    display: inline;
 }
 
 #reply .character-counter {

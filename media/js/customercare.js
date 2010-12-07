@@ -177,32 +177,38 @@
             this.$el.find('#submit').bind('click', {reply: this}, function(e) {
                 var reply = e.data.reply,
                     data = {
-                    'content': reply.content,
-                    'reply_to': reply.tweet.id,
-                };
-
-                $.ajax({
-                    url: reply.action,
-                    data: data,
-                    type: 'POST',
-                    success: function(data) {
-                        // Remember reply ID.
-                        last_reply.id = reply.tweet.id;
-                        mark_last_reply();
-
-                        reply.$success_msg.show();
-                        setTimeout(function() {
-                            reply.close();
-                        }, 2000);
+                        'content': reply.content,
+                        'reply_to': reply.tweet.id,
                     },
-                    error: function(data) {
-                        reply.$error_msg.text(data.responseText);
-                        reply.$error_msg.show();
-                        setTimeout(function() {
-                            reply.$error_msg.fadeOut();
-                        }, 4000);
-                    },
-                });
+                    $btn = $(this);
+                if (!$btn.is('.busy')) {
+                    $btn.addClass('busy');
+                    $.ajax({
+                        url: reply.action,
+                        data: data,
+                        type: 'POST',
+                        success: function(data) {
+                            // Remember reply ID.
+                            last_reply.id = reply.tweet.id;
+                            mark_last_reply();
+
+                            reply.$success_msg.show();
+                            setTimeout(function() {
+                                reply.close();
+                            }, 2000);
+                        },
+                        error: function(data) {
+                            reply.$error_msg.text(data.responseText);
+                            reply.$error_msg.show();
+                            setTimeout(function() {
+                                reply.$error_msg.fadeOut();
+                            }, 4000);
+                        },
+                        complete: function() {
+                            $btn.removeClass('busy');
+                        }
+                    });
+                }
                 e.preventDefault();
                 return false;
             });
