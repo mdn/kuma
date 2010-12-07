@@ -91,6 +91,23 @@
         };
     }
 
+    // Return the text of the selected region of the HTML document; '' if none.
+    // Based on http://www.quirksmode.org/dom/range_intro.html
+    function selectedText() {
+        var selection = '';
+        if (window.getSelection) {
+            selection = window.getSelection();
+        } else if (document.selection) {  // Opera
+            selection = document.selection.createRange();
+        }
+        if (selection.text) {
+            selection = selection.text;
+        } else if (selection.toString) {
+            selection = selection.toString();
+        }
+        return selection;
+    }
+
     $(document).ready(function() {
 
         $('#accordion').accordion({
@@ -267,6 +284,16 @@
         $('.tweet').live('click', function(e) {
             // Do not open tweet window if clicked on link.
             if ($(e.target).is('a') || $(e.target).parentsUntil('li.tweet').is('a')) {
+                return;
+            }
+
+            // Allow for selecting the text of a tweet without popping up a
+            // dialog. We could do all kinds of mouseup/mousedown gymnastics,
+            // but it's simpler and sufficient to see if the selection is
+            // empty, assuming that selecting is the only use case for dragging
+            // within a tweet. This doesn't allow for double-click-and-drag,
+            // unfortunately, but neither would mouseup/mousedown magic.
+            if (selectedText().length) {
                 return;
             }
 
