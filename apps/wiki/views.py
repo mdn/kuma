@@ -409,8 +409,8 @@ def translate(request, document_slug):
         initial = {'based_on': based_on_rev.id, 'comment': ''}
         if not doc:
             initial.update(content=based_on_rev.content)
-        rev_form = RevisionForm(instance=doc and doc.current_revision,
-                                initial=initial)
+        instance = doc and get_current_or_latest_revision(doc)
+        rev_form = RevisionForm(instance=instance, initial=initial)
 
     if request.method == 'POST':
         which_form = request.POST.get('form', 'both')

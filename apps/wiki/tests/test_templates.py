@@ -873,6 +873,17 @@ class TranslateTests(TestCaseBase):
         d = Document.objects.get(id=rev_es.document.id)
         eq_(orig_title, d.title)  # Title isn't updated
 
+    def test_translate_form_content_fallback(self):
+        """If there are existing but unapproved translations, prefill
+        content with latest."""
+        self.test_first_translation_to_locale()
+        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        response = self.client.get(url)
+        doc = pq(response.content)
+        document = Document.objects.filter(locale='es')[0]
+        existing_rev = document.revisions.all()[0]
+        eq_(existing_rev.content, doc('#id_content').text())
+
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                                       locale=None):
