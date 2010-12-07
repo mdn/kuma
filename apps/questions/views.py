@@ -36,7 +36,6 @@ from questions.question_config import products
 from search.clients import WikiClient, QuestionsClient, SearchError
 from search.utils import locale_or_default, sphinx_locale
 from sumo.helpers import urlparams
-from sumo.models import WikiPage
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from tags.utils import add_existing_tag
@@ -44,6 +43,7 @@ from upload.models import ImageAttachment
 from upload.views import upload_imageattachment
 from users.forms import RegisterForm
 from users.utils import handle_login, handle_register
+from wiki.models import Document
 
 
 log = logging.getLogger('k.questions')
@@ -669,8 +669,11 @@ def _search_suggestions(query, locale):
 
     Weights wiki pages infinitely higher than questions at the moment.
 
+    TODO: ZOMFG this needs to be refactored and the search app should
+          provide an internal API. Seriously.
+
     """
-    def prepare(result, model, searcher, result_to_id):
+    def prepare(result, model, attr, searcher, result_to_id):
         """Turn a search result from a Sphinx client into a dict for templates.
 
         Return {} if an object corresponding to the result cannot be found.
@@ -682,7 +685,7 @@ def _search_suggestions(query, locale):
             return {}
         return {'url': obj.get_absolute_url(),
                 'title': obj.title,
-                'excerpt_html': searcher.excerpt(obj.content, query)}
+                'excerpt_html': searcher.excerpt(getattr(obj, attr), query)}
 
     max_suggestions = settings.QUESTIONS_MAX_SUGGESTIONS
     query_limit = max_suggestions + settings.QUESTIONS_SUGGESTION_SLOP
@@ -702,7 +705,8 @@ def _search_suggestions(query, locale):
                                       limit=query_limit)
     # Lazily build excerpts from results. Stop when we have enough:
     results = islice((p for p in
-                       (prepare(r, WikiPage, wiki_searcher, lambda x: x['id'])
+                       (prepare(r, Document, 'html', wiki_searcher,
+                                lambda x: x['id'])
                         for r in raw_results) if p),
                      max_suggestions)
     results = list(results)
@@ -715,7 +719,8 @@ def _search_suggestions(query, locale):
         raw_results = question_searcher.query(query,
                                               limit=query_limit - len(results))
         results.extend(islice((p for p in
-                               (prepare(r, Question, question_searcher,
+                               (prepare(r, Question, 'content',
+                                        question_searcher,
                                         lambda x: x['attrs']['question_id'])
                                 for r in raw_results) if p),
                               max_suggestions - len(results)))
