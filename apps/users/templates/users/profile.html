@@ -12,7 +12,7 @@
       {% endif %}
     </section>
     <section id="main-area">
-      <h1>{{ profile.name or profile.user.username }}</h1>
+      <h1>{{ display_name(profile.user) }}</h1>
       {% if profile.country %}
         <h2>
           {% if profile.city %}
@@ -28,7 +28,7 @@
           {% if profile.name %}
             <li>{{ _('Username: {username}')|f(username=profile.user.username) }}</li>
           {% endif %}
-          {% if profile.livechat_id != profile.user.username %}
+          {% if profile.livechat_id|lower != profile.user.username|lower %}
             <li>{{ _('Livechat ID: {livechat_id}')|f(livechat_id=profile.livechat_id) }}</li>
           {% endif %}
         </ul>
