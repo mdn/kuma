@@ -10,7 +10,7 @@
       <a href="#" class="reply_count" data-count="{{ tweet.reply_count }}">
         {% if tweet.reply_count > 1 %}
           {{ ngettext('{0} and {1} other replied', '{0} and {1} others replied',
-                      tweet.reply_count - 1)|f(tweet.replies[0].user, tweet.reply_count - 1) }}
+                      tweet.reply_count - 1)|f(tweet.replies[-1].user, tweet.reply_count - 1) }}
         {% else %}
           {{ '{0} replied'|f(tweet.replies[0].user) }}
         {% endif %}
