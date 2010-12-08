@@ -108,6 +108,10 @@
 }
 
 #tweets li {
+    list-style-type: none;
+}
+
+#tweets div.tweet-contents {
     border-top: 1px solid #ccc;
     cursor: pointer;
     margin-bottom: 0px;
@@ -115,20 +119,21 @@
     padding: 10px;
     width: 630px;
 }
-
-#tweets li.alt {
-    background: -moz-linear-gradient(top, #fff, #f5f5f5);
-    background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#f5f5f5));
-}
-#tweets li.reply {
+#tweets div.replies div.tweet-contents {
     padding-left: 70px;
     width: 570px;
 }
+#tweets div.alt {
+    background: -moz-linear-gradient(top, #fff, #f5f5f5);
+    background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#f5f5f5));
+}
+
 #tweets div.replies {
+    clear: left;
     display: none;
 }
 
-#tweets li:hover {
+#tweets div.tweet-contents:hover {
     background: -moz-linear-gradient(top, #fffffd, #fdefa6);
     background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#fdefa6));
     border-top: 1px solid #fef1ad;

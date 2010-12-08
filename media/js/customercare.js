@@ -33,15 +33,13 @@
             }
         };
     }
-
-    var memory = new Memory('custcare_persist_reply'),
-        last_reply = new Memory('custcare_last_reply');
+    var memory = new Memory('custcare_persist_reply');
 
     function Tweet(target) {
         this.$el = $(target);
-        this.$username_el = this.$el.find('.twittername');
-        this.$content_el = this.$el.find('.text');
-        this.$avatar_el = this.$el.find('.avatar');
+        this.$username_el = this.$el.find('.twittername').first();
+        this.$content_el = this.$el.find('.text').first();
+        this.$avatar_el = this.$el.find('.avatar').first();
 
         this.__defineGetter__('id', function() {
             return this.$el.attr('data-tweet-id');
@@ -76,10 +74,10 @@
         });
 
         this.__defineGetter__('$permalink_el', function() {
-            return this.$el.find('.permalink');
+            return this.$el.find('.permalink').first();
         });
         this.__defineSetter__('$permalink_el', function($val) {
-            this.$el.find('.permalink').replaceWith($val.clone());
+            this.$el.find('.permalink').first().replaceWith($val.clone());
         });
 
         this.set_from_tweet = function(tweet) {
@@ -188,14 +186,12 @@
                         data: data,
                         type: 'POST',
                         success: function(data) {
-                            // Remember reply ID.
-                            last_reply.id = reply.tweet.id;
-                            mark_last_reply();
-
                             reply.$success_msg.show();
                             setTimeout(function() {
                                 reply.close();
                             }, 2000);
+
+                            appendReply(data, reply.tweet.id);
                         },
                         error: function(data) {
                             reply.$error_msg.text(data.responseText);
@@ -249,47 +245,62 @@
         }
         var signin = new Signin();
 
+        // Update the "Such and such replied" link text and formatting based on
+        // the data-count attr of a parent tweet.
+        function update_reply_indicator($parent) {
+            var reply_txt = $parent.find('.reply_count').first(),  // first() avoids nested tweets.
+                count = reply_txt.attr('data-count') - 1;
+            reply_txt.addClass('you');
+            if (count === 0) {
+                reply_txt.text('You replied');
+            } else if (count === 1) {
+                reply_txt.text('You and 1 other replied');
+            } else {
+                reply_txt.text('You and '+count+' others replied');
+            }
+        }
+
+        // Append a new tweet, given as the HTML of an <li>, to this thread.
+        function appendReply(html, parentId) {
+            var $parent = $('#tweet-' + parentId),
+                $count,
+                $replyList = $('#replies_' + parentId).children('ul');
+            $replyList.append($(html).hide());
+
+            $count = $parent.find('.reply_count').first();
+            if ($count.is('span')) {
+                var $zeroCount = $('<a href="#" class="reply_count you" data-count="0"></a>');
+                $count.replaceWith($zeroCount);
+                $count = $zeroCount;
+            }
+            $count.addClass('opened')
+                  .attr('data-count', parseInt($count.attr('data-count')) + 1);
+            $parent.children('.replies:hidden').slideDown();
+
+            update_reply_indicator($parent);
+
+            $replyList.children().last().slideDown();
+        }
+
         /** Mark the tweets that the logged-in user has replied to. */
         function mark_my_replies() {
             if (!signin.authed) return;
 
-            var me = $('#twitter-modal').attr('data-twitter-user'),
-                replied_to = $('#tweets .replies').filter(function() {
-                var myreplies = $(this).children('.tweet').filter(function() {
-                        return ($(this).find('.twittername').text() == me);
-                    });
-                return (myreplies.length > 0);  // Keep all tweets we've replied to.
-            });
-            replied_to.each(function() {
-                var reply_txt = $('#tweet-'+$(this).attr('data-tweet-id')).find('.reply_count'),
-                    count = reply_txt.attr('data-count') - 1;
-                reply_txt.addClass('you');
-                if (count == 0) {
-                    reply_txt.text('You replied');
-                } else if (count == 1) {
-                    reply_txt.text('You and 1 other replied');
-                } else {
-                    reply_txt.text('You and '+count+' others replied');
-                }
-            });
-            mark_last_reply();
+            var me = $('#twitter-modal').attr('data-twitter-user');
+            
+            $('#tweets .replies .twittername')
+                .filter(function isMe() { 
+                    return $(this).text() == me; })
+                .closest('div.replies')  // Walk up to parent.
+                .closest('li.tweet')
+                .each(function() {
+                    update_reply_indicator($('#tweet-' + $(this).attr('data-tweet-id'))); });
         }
-
-        function mark_last_reply() {
-            if (!last_reply.id) return;
-
-            var last = $('#tweet-'+last_reply.id).find('.reply_count');
-            if (!last.hasClass('you')) {
-                last.addClass('you')
-                    .text('You replied');
-            }
-        }
-
         mark_my_replies();
 
-        $('.tweet').live('click', function(e) {
+        $('.tweet-contents').live('click', function(e) {
             // Do not open tweet window if clicked on link.
-            if ($(e.target).is('a') || $(e.target).parentsUntil('li.tweet').is('a')) {
+            if ($(e.target).is('a') || $(e.target).parentsUntil('div.tweet-contents').is('a')) {
                 return;
             }
 
@@ -303,7 +314,7 @@
                 return;
             }
 
-            var t = new Tweet(this);
+            var t = new Tweet($(this).closest('li'));
 
             if (!signin.authed) {
                 signin.open(t);
@@ -355,8 +366,8 @@
 
         /* Show/hide replies */
         $('#tweets a.reply_count').live('click', function(e) {
-            var to_show = (!$(this).hasClass('opened')),
-                tweet_id = $(this).parent().attr('data-tweet-id'),
+            var to_show = !$(this).hasClass('opened'),
+                tweet_id = $(this).closest('li').attr('data-tweet-id'),
                 replies = $('#replies_'+tweet_id);
             if (to_show) {
                 replies.slideDown();

@@ -25,6 +25,29 @@ bleach = Bleach()
 MAX_TWEETS = 20
 
 
+def _tweet_for_template(tweet):
+    """Return the dict needed for tweets.html to render a tweet + replies."""
+    data = json.loads(tweet.raw_json)
+
+    parsed_date = parsedate(data['created_at'])
+    date = datetime(*parsed_date[0:6])
+
+    # Recursively fetch replies.
+    if settings.CC_SHOW_REPLIES:
+        replies = _get_tweets(limit=0, reply_to=tweet.tweet_id)
+    else:
+        replies = None
+
+    return {'profile_img': bleach.clean(data['profile_image_url']),
+            'user': bleach.clean(data['from_user']),
+            'text': bleach.clean(data['text']),
+            'id': int(tweet.tweet_id),
+            'date': date,
+            'reply_count': len(replies) if replies else 0,
+            'replies': replies,
+            'reply_to': tweet.reply_to}
+
+
 def _get_tweets(limit=MAX_TWEETS, max_id=None, reply_to=None):
     """
     Fetch a list of tweets.
@@ -32,36 +55,13 @@ def _get_tweets(limit=MAX_TWEETS, max_id=None, reply_to=None):
     limit is the maximum number of tweets returned.
     max_id will only return tweets with the status ids less than the given id.
     """
-    tweets = []
     q = Tweet.objects.filter(locale='en', reply_to=reply_to)
     if max_id:
         q = q.filter(tweet_id__lt=max_id)
     if limit:
         q = q[:limit]
 
-    for tweet in q:
-        data = json.loads(tweet.raw_json)
-
-        parsed_date = parsedate(data['created_at'])
-        date = datetime(*parsed_date[0:6])
-
-        # Recursively fetch replies.
-        if settings.CC_SHOW_REPLIES:
-            replies = _get_tweets(limit=0, reply_to=tweet.tweet_id)
-        else:
-            replies = None
-
-        tweets.append({
-            'profile_img': bleach.clean(data['profile_image_url']),
-            'user': bleach.clean(data['from_user']),
-            'text': bleach.clean(data['text']),
-            'id': int(tweet.tweet_id),
-            'date': date,
-            'reply_count': len(replies) if replies else 0,
-            'replies': replies,
-            'reply_to': tweet.reply_to,
-        })
-    return tweets
+    return [_tweet_for_template(tweet) for tweet in q]
 
 
 @require_GET
@@ -129,6 +129,8 @@ def landing(request):
 @require_POST
 @twitter.auth_required
 def twitter_post(request):
+    """Post a tweet, and return a rendering of it (and any replies)."""
+
     try:
         reply_to = int(request.POST.get('reply_to', ''))
     except ValueError:
@@ -175,4 +177,6 @@ def twitter_post(request):
     tweet = Tweet(**tweet_model_data)
     tweet.save()
 
-    return HttpResponse()
+    # We could optimize by not encoding and then decoding JSON.
+    return jingo.render(request, 'customercare/tweets.html',
+        {'tweets': [_tweet_for_template(tweet)]})
