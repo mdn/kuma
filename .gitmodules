@@ -1,3 +1,9 @@
 [submodule "locale"]
 	path = locale
 	url = git://github.com/jsocol/sumo-locales.git
+[submodule "templates/global"]
+	path = templates/global
+	url = git://github.com/mozilla/django-moz-header.git
+[submodule "media/global"]
+	path = media/global
+	url = git://github.com/mozilla/django-moz-header.git

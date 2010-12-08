@@ -289,6 +289,8 @@ TOWER_ADD_HEADERS = True
 MINIFY_BUNDLES = {
     'css': {
         'common': (
+            'css/reset.css',
+            'global/headerfooter.css',
             'css/main.css',
             'css/sidebar.css',
         ),
@@ -343,7 +345,7 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.5.min.js',
-            'js/menu.js',
+            'global/menu.js',
             'js/main.js',
         ),
         'questions': (

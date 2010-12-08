@@ -1,0 +1,12 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "global/menu_links.html" %}
+
+{% block sumo_links %}
+    <li class="current"><a href="{{ url('home') }}">{{ _('Support') }}</a>
+      <ul>
+        <li class="first"><a href="{{ url('home') }}">{{ _('Firefox Support') }}</a></li>
+        <li><a href="{{ url('home.mobile') }}">{{ _('Mobile Support') }}</a></li>
+        <li class="last"><a href="http://www.mozilla.org/support/thunderbird/">{{ _('Thunderbird Support') }}</a></li>
+      </ul>
+    </li>
+{% endblock %}
