@@ -9,7 +9,9 @@ from sumo_locales import LOCALES
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-LOG_LEVEL = logging.DEBUG
+
+LOG_LEVEL = logging.INFO
+SYSLOG_TAG = 'http_sumo_app'
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)

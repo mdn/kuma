@@ -3,12 +3,15 @@ import logging.handlers
 
 from django.conf import settings
 
+import celery.log
+
 
 # Loggers created under the "z" namespace, e.g. "z.caching", will inherit the
 # configuration from the base z logger.
 log = logging.getLogger('k')
 
-fmt = '%(asctime)s %(name)s:%(levelname)s %(message)s :%(pathname)s:%(lineno)s'
+fmt = ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
+       ':%%(pathname)s:%%(lineno)s' % settings.SYSLOG_TAG)
 fmt = getattr(settings, 'LOG_FORMAT', fmt)
 level = settings.LOG_LEVEL
 
@@ -25,3 +28,10 @@ handler.setLevel(level)
 handler.setFormatter(formatter)
 log.addHandler(handler)
 
+if not settings.DEBUG:
+    task_log = logging.getLogger('k.task')
+    task_proxy = celery.log.LoggingProxy(task_log, level)
+    task_format = ('%s: [%%(asctime)s: %%(levelname)s/%%(processName)s] '
+                   '%%(message)s' % settings.SYSLOG_TAG)
+    celery.log.setup_logger(logfile=task_proxy, loglevel=level,
+                            colorize=False)
