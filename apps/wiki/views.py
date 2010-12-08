@@ -4,7 +4,6 @@ import logging
 from string import ascii_letters
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponse, HttpResponseRedirect,
                          Http404, HttpResponseBadRequest)
@@ -17,7 +16,7 @@ from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
-from access.decorators import permission_required
+from access.decorators import permission_required, login_required
 from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse

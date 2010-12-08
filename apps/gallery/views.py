@@ -3,7 +3,6 @@ import json
 import logging
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponseBadRequest, Http404)
@@ -14,6 +13,7 @@ from commonware.decorators import xframe_sameorigin
 import jingo
 from tower import ugettext as _
 
+from access.decorators import login_required
 from gallery import ITEMS_PER_PAGE, DRAFT_TITLE_PREFIX
 from gallery.forms import ImageForm, VideoForm
 from gallery.models import Image, Video

@@ -6,6 +6,6 @@
 {% block content %}
   <article id="pw-reset" class="main">
     <h1>{{ title }}</h1>
-    <p><a href="{{ settings.LOGIN_URL|urlparams(next=settings.LOGIN_REDIRECT_URL) }}">{{ _('Log in') }}</a></p>
+    <p><a href="{{ url('users.login')|urlparams(next=url('home')) }}">{{ _('Log in') }}</a></p>
   </article>
 {% endblock content %}

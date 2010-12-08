@@ -608,8 +608,10 @@ class ReviewRevisionTests(TestCaseBase):
                         args=[self.document.slug, self.revision.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver%s?next=/en-US/kb/test-document/review/%s' %
-            (settings.LOGIN_URL, str(self.revision.id)), redirect[0])
+        eq_('http://testserver/%s%s?next=/en-US/kb/test-document/review/%s' %
+            (settings.LANGUAGE_CODE, settings.LOGIN_URL,
+                 str(self.revision.id)),
+            redirect[0])
 
     def test_review_translation(self):
         """Make sure it works for localizations as well."""
@@ -1137,16 +1139,18 @@ class RevisionDeleteTestCase(TestCaseBase):
                        args=[self.d.slug, self.r.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver%s?next=/en-US/kb/%s/revision/%s/delete' %
-            (settings.LOGIN_URL, self.d.slug, self.r.id),
+        eq_('http://testserver/%s%s?next=/en-US/kb/%s/revision/%s/delete' %
+            (settings.LANGUAGE_CODE, settings.LOGIN_URL, self.d.slug,
+                self.r.id),
             redirect[0])
 
         response = post(self.client, 'wiki.delete_revision',
                         args=[self.d.slug, self.r.id])
         redirect = response.redirect_chain[0]
         eq_(302, redirect[1])
-        eq_('http://testserver%s?next=/en-US/kb/%s/revision/%s/delete' %
-            (settings.LOGIN_URL, self.d.slug, self.r.id),
+        eq_('http://testserver/%s%s?next=/en-US/kb/%s/revision/%s/delete' %
+            (settings.LANGUAGE_CODE, settings.LOGIN_URL, self.d.slug,
+                self.r.id),
             redirect[0])
 
     def test_delete_revision_with_permissions(self):

@@ -4,7 +4,6 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from sumo.tests import LocalizingClient, TestCase
-from sumo.urlresolvers import reverse
 
 
 class TestCaseBase(TestCase):

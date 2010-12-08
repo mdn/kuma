@@ -105,8 +105,7 @@ class PostTestCase(KBForumTestCase):
     def test_post_no_session(self):
         r = get(self.client, 'wiki.discuss.new_thread',
                 kwargs={'document_slug': 'article-title'})
-        assert('http://testserver' + settings.LOGIN_URL in
-               r.redirect_chain[0][0])
+        assert(settings.LOGIN_URL in r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])
 
 
@@ -116,6 +115,5 @@ class ThreadTestCase(KBForumTestCase):
         """Delete a thread while logged out redirects."""
         r = get(self.client, 'wiki.discuss.delete_thread',
                 kwargs={'document_slug': 'article-title', 'thread_id': 1})
-        assert('http://testserver' + settings.LOGIN_URL in
-               r.redirect_chain[0][0])
+        assert(settings.LOGIN_URL in r.redirect_chain[0][0])
         eq_(302, r.redirect_chain[0][1])

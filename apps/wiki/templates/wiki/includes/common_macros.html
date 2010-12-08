@@ -24,11 +24,11 @@
       <nav>
         <a href="{{ profile_url(user) }}">{{ _('Profile') }}</a>
         |
-        <a href="{{ settings.LOGOUT_URL }}">{{ _('Sign Out') }}</a>
+        <a href="{{ url('users.logout') }}">{{ _('Sign Out') }}</a>
       </nav>
     {% else %}
       <p>
-        {% trans login_url=settings.LOGIN_URL, register_url=settings.REGISTER_URL %}
+        {% trans login_url=url('users.login'), register_url=url('users.register') %}
           Want to contribute?<br /> <a href="{{ login_url }}">Sign In</a> or <a href="{{ register_url }}">Register</a>
         {% endtrans %}
       </p>

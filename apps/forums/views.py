@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
@@ -10,7 +9,7 @@ from django.views.decorators.http import require_POST
 import jingo
 from authority.decorators import permission_required_or_403
 
-from access.decorators import has_perm_or_owns_or_403
+from access.decorators import has_perm_or_owns_or_403, login_required
 from access import has_perm
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate

@@ -3,7 +3,6 @@ import urlparse
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -15,7 +14,8 @@ from django.utils.http import base36_to_int
 
 import jingo
 
-from sumo.decorators import ssl_required, logout_required
+from access.decorators import logout_required, login_required
+from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
@@ -27,7 +27,7 @@ from users.utils import handle_login, handle_register
 @ssl_required
 def login(request):
     """Try to log the user in."""
-    next_url = _clean_next_url(request) or settings.LOGIN_REDIRECT_URL
+    next_url = _clean_next_url(request) or reverse('home')
     form = handle_login(request)
 
     if request.user.is_authenticated():
@@ -43,7 +43,7 @@ def logout(request):
     auth.logout(request)
     next_url = _clean_next_url(request) if 'next' in request.GET else ''
 
-    return HttpResponseRedirect(next_url or settings.LOGOUT_REDIRECT_URL)
+    return HttpResponseRedirect(next_url or reverse('home'))
 
 
 @ssl_required

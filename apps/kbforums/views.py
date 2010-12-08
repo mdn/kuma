@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -9,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 import jingo
 
-from access.decorators import permission_required
+from access.decorators import permission_required, login_required
 import kbforums
 from kbforums.feeds import ThreadsFeed, PostsFeed
 from kbforums.forms import (ReplyForm, NewThreadForm,

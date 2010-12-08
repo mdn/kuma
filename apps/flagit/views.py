@@ -2,14 +2,13 @@ import json
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.views.decorators.http import require_POST
 
 import jingo
 from tower import ugettext as _
 
-from access.decorators import permission_required
+from access.decorators import permission_required, login_required
 from flagit.models import FlaggedObject
 from sumo.urlresolvers import reverse
 

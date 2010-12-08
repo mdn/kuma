@@ -1,6 +1,5 @@
 import json
 
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import get_model
@@ -10,7 +9,7 @@ from django.http import (HttpResponse, HttpResponseNotFound,
 from commonware.decorators import xframe_sameorigin
 from tower import ugettext as _
 
-from access.decorators import has_perm_or_owns_or_403
+from access.decorators import has_perm_or_owns_or_403, login_required
 from upload.models import ImageAttachment
 from upload.utils import upload_imageattachment, FileTooLargeError
 

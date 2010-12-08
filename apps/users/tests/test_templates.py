@@ -60,7 +60,8 @@ class LoginTests(TestCaseBase):
                                     {'username': 'rrosario',
                                      'password': 'testpass'})
         eq_(302, response.status_code)
-        eq_('http://testserver' + settings.LOGIN_REDIRECT_URL,
+        eq_('http://testserver' +
+                reverse('home', locale=settings.LANGUAGE_CODE),
             response['location'])
 
     def test_login_next_parameter(self):
@@ -98,7 +99,7 @@ class LoginTests(TestCaseBase):
         '''Test with an invalid ?next=http://example.com parameter.'''
         get_current.return_value.domain = 'testserver.com'
         invalid_next = 'http://foobar.com/evil/'
-        valid_next = settings.LOGIN_REDIRECT_URL
+        valid_next = reverse('home', locale=settings.LANGUAGE_CODE)
 
         # Verify that _valid_ next parameter is set in form hidden field.
         response = self.client.get(urlparams(reverse('users.login'),

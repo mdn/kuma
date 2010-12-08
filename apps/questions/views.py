@@ -5,7 +5,6 @@ import logging
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -22,7 +21,8 @@ from taggit.models import Tag
 from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
-from access.decorators import has_perm_or_owns_or_403, permission_required
+from access.decorators import (has_perm_or_owns_or_403, permission_required,
+                               login_required)
 from notifications import create_watch, destroy_watch
 import questions as constants
 from questions.feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed

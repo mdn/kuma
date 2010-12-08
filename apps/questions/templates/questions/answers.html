@@ -296,10 +296,10 @@
       <div class="user-section"></div>
       <div class="main-section">
         <p>
-          {{ _('You must <a href="{url}">log in to your account</a> to reply to posts.')|fe(url=settings.LOGIN_URL) }}
+          {{ _('You must <a href="{url}">log in to your account</a> to reply to posts.')|fe(url=url('users.login')) }}
         </p>
         <p>
-          {{ _("Don't have an account? You can <a href='{url}'>create a free account</a> now.")|fe(url=settings.REGISTER_URL) }}
+          {{ _("Don't have an account? You can <a href='{url}'>create a free account</a> now.")|fe(url=url('users.register')) }}
         </p>
       </div>
       <div class="side-section"></div>
