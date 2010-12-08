@@ -51,21 +51,18 @@ k = {};
             });
         }
 
-        if ($browser.length) {
-            function updateBrowserFilter() {
+        /**
+         * Before submitting the form, update the hidden input values for
+         * browser version and OS.
+         */
+        $search.submit(function() {
+            if ($browser.length) {
                 updateAndCreateFilter('fx', $browser, for_version);
             }
-            updateBrowserFilter();
-            $browser.change(updateBrowserFilter);
-        }
-
-        if ($os.length) {
-            function updateOSFilter() {
+            if ($os.length) {
                 updateAndCreateFilter('os', $os, for_os);
             }
-            updateOSFilter();
-            $os.change(updateOSFilter);
-        }
+        });
     }
 })();
 
