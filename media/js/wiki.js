@@ -140,18 +140,17 @@
     // applying to only certain browsers or OSes. Update the table of contents
     // to reflect what was hidden/shown.
     function initForTags() {
-
-        OSES = $.parseJSON($('select#os').attr('data-oses'));  // {'mac': true, 'win': true, ...}
-        BROWSERS = $.parseJSON($('select#browser').attr('data-browsers'));  // {'fx4': true, ...}
-        VERSIONS = $.parseJSON($('select#browser').attr('data-version-groups'));  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
-        MISSING_MSG = gettext('[missing header]');
-
-        var $osMenu = $('select#os'),
-            $browserMenu = $('select#browser'),
+        var $osMenu = $('#os'),
+            $browserMenu = $('#browser'),
             $origBrowserOptions = $browserMenu.find('option').clone(),
             $body = $('body'),
             hash = hashFragment(),
             isSetManually;
+
+        OSES = $osMenu.data('oses');  // {'mac': true, 'win': true, ...}
+        BROWSERS = $browserMenu.data('browsers');  // {'fx4': true, ...}
+        VERSIONS = $browserMenu.data('version-groups');  // {'fx': [[3.4999, '3'], [3.9999, '35']], 'm': [[1.0999, '1'], [1.9999, '11']]}
+        MISSING_MSG = gettext('[missing header]');
 
         // Make the 'Table of Contents' header localizable.
         $('#toc > h2').text(gettext('Table of Contents'));
@@ -196,7 +195,7 @@
         // Get the dependency based on the currently selected OS
         function getCurrentDependency() {
             return $osMenu.find('[value="' + $osMenu.val() + '"]')
-                          .attr('data-dependency');
+                          .data('dependency');
         }
 
         //Handle OS->Browser dependencies
@@ -275,7 +274,7 @@
                 // change the selection appropriately.
                 if (!$body.is('.' + currentDependency)) {
                     var $detectedOS = $osMenu.find('[value=' + BrowserDetect.OS + ']');
-                    if ($detectedOS.attr('data-dependency') != currentDependency) {
+                    if ($detectedOS.data('dependency') != currentDependency) {
                         // The detected OS is valid. Make it the new selection.
                         $osMenu.val($detectedOS.attr('value'));
                         $browserMenu.val(detectBrowser());
@@ -412,7 +411,7 @@
                 shouldHide;
 
             // Catch the "not" operator if it's there:
-            forData = $(this).attr('data-for');
+            forData = $(this).data('for');
             if (!forData) {
                 // If the data-for attribute is missing, move on.
                 return;
@@ -481,7 +480,7 @@
             var $btn = $(this);
             $btn.attr('disabled', 'disabled');
             $.ajax({
-                url: $(this).attr('data-preview-url'),
+                url: $(this).data('preview-url'),
                 type: 'POST',
                 data: $('#id_content').serialize(),
                 dataType: 'html',
@@ -608,13 +607,13 @@
             var data = {};
             data[fieldname] = value;
             $.ajax({
-                url: $form.attr('data-json-url'),
+                url: $form.data('json-url'),
                 type: 'GET',
                 data: data,
                 dataType: 'json',
                 success: function(json) {
                     // Success means we found an existing doc
-                    var docId = $form.attr('data-document-id');
+                    var docId = $form.data('document-id');
                     if (!docId || (json.id && json.id !== parseInt(docId))) {
                         // Collision !!
                         $field.addClass('error');

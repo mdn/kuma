@@ -9,7 +9,7 @@ k = {};
                 return false;
             });
 
-        if (document.body.getAttribute('data-readonly') == 'true') {
+        if ($('body').data('readonly') == 'true') {
             $forms = $('form[method=post]');
             $forms.find('input, button, select, textarea').attr('disabled', 'disabled');
             $forms.find('input[type=image]').css('opacity', .5);
@@ -33,8 +33,8 @@ k = {};
         var $browser = $('#browser'),
             $os = $('#os'),
             $search = $('.support-search form'),
-            for_os = $.parseJSON($('body').attr('data-for-os')),
-            for_version = $.parseJSON($('body').attr('data-for-version'));
+            for_os = $('body').data('for-os'),
+            for_version = $('body').data('for-version');
 
         /**
          * (Possibly create, and) update a hidden input on new search forms

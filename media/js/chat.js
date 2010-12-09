@@ -1,7 +1,7 @@
 (function() {
     $(document).ready(function() {
         var $status = $('#chat-status'),
-            server = $status.attr('data-server');
+            server = $status.data('server');
 
         var statusUrl = 'queue-status/',
             startUrl = '/webchat/start.jsp?workgroup=support@workgroup.chat-support.mozilla.com&location=http://bk-sumo.khan.mozilla.org/en-US/kb/Live+chat',

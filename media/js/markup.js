@@ -245,7 +245,7 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     openModal: function(e) {
         var me = this,
             // TODO: look at using a js template solution (jquery-tmpl?)
-            $modal = $('<section id="showfor-modal" class="pop-in marky">' +
+            $modal = $('<section id="showfor-modal" class="pop-in marky fixed-modal">' +
                        '<a href="#close" class="close">&#x2716;</a><h1/>' +
                        '<div class="wrap"><div class="placeholder"/>' +
                        '<div class="submit"><button type="button"></button>' +
@@ -253,7 +253,7 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
                        '</div></section>'),
             $overlay = $('<div id="modal-overlay"></div>'),
             $placeholder = $modal.find('div.placeholder'),
-            data = $.parseJSON($(this.textarea).attr('data-showfor'));
+            data = $(this.textarea).data('showfor');
 
         $modal.find('h1').text(this.name);
         $modal.find('button').text(gettext('Add Rule')).click(function(e){
@@ -487,8 +487,8 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     openModal: function(e) {
         var me = this,
             $editor = $(me.textarea).closest('div.forum-editor'),
-            mediaSearchUrl = $editor.attr('data-media-search-url'),
-            galleryUrl = $editor.attr('data-media-gallery-url'),
+            mediaSearchUrl = $editor.data('media-search-url'),
+            galleryUrl = $editor.data('media-gallery-url'),
             // TODO: look at using a js template solution (jquery-tmpl?)
             $modal = $(
                 '<section id="media-modal" class="pop-in marky">' +
@@ -509,7 +509,7 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             ),
             $overlay = $('<div id="modal-overlay"></div>'),
             selectedText = me.getSelectedText(),
-            mediaType = $modal.find('div.type li.selected').attr('data-type'),
+            mediaType = $modal.find('div.type li.selected').data('type'),
             mediaQ = '',
             mediaPage = 1;
 
@@ -519,7 +519,7 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             if(!$this.is('.selected')) {
                 $modal.find('div.type li.selected').removeClass('selected');
                 $this.addClass('selected');
-                mediaType = $this.attr('data-type');
+                mediaType = $this.data('type');
                 mediaPage = 1;
                 updateResults();
             }

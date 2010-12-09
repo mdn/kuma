@@ -32,7 +32,7 @@ $(document).ready(function () {
     $('div.attachments-upload input[type="file"]').each(function() {
         $(this).closest('form').removeAttr('enctype');
         $(this).ajaxSubmitInput({
-            url: $(this).closest('.attachments-upload').attr('data-post-url'),
+            url: $(this).closest('.attachments-upload').data('post-url'),
             beforeSubmit: function($input) {
                 var $divUpload = $input.closest('.attachments-upload'),
                     $options = {

@@ -42,10 +42,10 @@
         this.$avatar_el = this.$el.find('.avatar').first();
 
         this.__defineGetter__('id', function() {
-            return this.$el.attr('data-tweet-id');
+            return this.$el.data('tweet-id');
         });
         this.__defineSetter__('id', function(val) {
-            this.$el.attr('data-tweet-id', val);
+            this.$el.data('tweet-id', val);
         });
 
         this.__defineGetter__('avatar', function() {
@@ -228,7 +228,7 @@
             };
 
             this.__defineGetter__('authed', function() {
-                return (this.$el.attr('data-authed') == 'True');
+                return (this.$el.data('authed') == 'True');
             });
 
             this.dialog_options = {
@@ -249,7 +249,7 @@
         // the data-count attr of a parent tweet.
         function update_reply_indicator($parent) {
             var reply_txt = $parent.find('.reply_count').first(),  // first() avoids nested tweets.
-                count = reply_txt.attr('data-count') - 1;
+                count = reply_txt.data('count') - 1;
             reply_txt.addClass('you');
             if (count === 0) {
                 reply_txt.text('You replied');
@@ -274,7 +274,7 @@
                 $count = $zeroCount;
             }
             $count.addClass('opened')
-                  .attr('data-count', parseInt($count.attr('data-count')) + 1);
+                  .data('count', parseInt($count.data('count')) + 1);
             $parent.children('.replies:hidden').slideDown();
 
             update_reply_indicator($parent);
@@ -286,7 +286,7 @@
         function mark_my_replies() {
             if (!signin.authed) return;
 
-            var me = $('#twitter-modal').attr('data-twitter-user');
+            var me = $('#twitter-modal').data('twitter-user');
             
             $('#tweets .replies .twittername')
                 .filter(function isMe() { 
@@ -294,7 +294,7 @@
                 .closest('div.replies')  // Walk up to parent.
                 .closest('li.tweet')
                 .each(function() {
-                    update_reply_indicator($('#tweet-' + $(this).attr('data-tweet-id'))); });
+                    update_reply_indicator($('#tweet-' + $(this).data('tweet-id'))); });
         }
         mark_my_replies();
 
@@ -367,7 +367,7 @@
         /* Show/hide replies */
         $('#tweets a.reply_count').live('click', function(e) {
             var to_show = !$(this).hasClass('opened'),
-                tweet_id = $(this).closest('li').attr('data-tweet-id'),
+                tweet_id = $(this).closest('li').data('tweet-id'),
                 replies = $('#replies_'+tweet_id);
             if (to_show) {
                 replies.slideDown();
@@ -387,7 +387,7 @@
         $('#infinite-scroll').bind('enterviewport', function() {
             $('#scroll-busy').show();
 
-            var max_id = $('#tweets li:last').attr('data-tweet-id');
+            var max_id = $('#tweets li:last').data('tweet-id');
             if (!max_id) return;
 
             $.get(
@@ -412,9 +412,9 @@
                 bubble = $('#side-stats .bubble')
                 contribs = $('#side-stats .contribs');
             // Update numbers
-            bubble.find('.perc .data').text(option.attr('data-perc'));
-            bubble.find('.replies .data').text(option.attr('data-replies'));
-            bubble.find('.tweets .data').text(option.attr('data-requests'));
+            bubble.find('.perc .data').text(option.data('perc'));
+            bubble.find('.replies .data').text(option.data('replies'));
+            bubble.find('.tweets .data').text(option.data('requests'));
 
             // Update contributors
             contribs.find('.contributors:visible').fadeOut('fast', function() {

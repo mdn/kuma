@@ -19,7 +19,7 @@
         $("div.tags[data-tag-vocab-json]").each(
             function() {
                 var $tagContainer = $(this);
-                var parsedVocab = $.parseJSON($tagContainer.attr("data-tag-vocab-json"));
+                var parsedVocab = $tagContainer.data("tag-vocab-json");
                 $tagContainer.data("tagVocab", parsedVocab);
             }
         );
@@ -34,7 +34,7 @@
             var $adder = $addForm.find("input.adder"),
                 $input = $addForm.find("input.autocomplete-tags"),
                 $tagsDiv = $input.closest("div.tags"),
-                canCreateTags = $tagsDiv.attr("data-can-create-tags") !== undefined,
+                canCreateTags = $tagsDiv.data("can-create-tags") !== undefined,
                 vocab = $tagsDiv.data("tagVocab"),
                 $tagList = inputToTagList($input);
 
@@ -134,7 +134,7 @@
                     $tag.addClass("in-progress");  // Dim for immediate feedback.
                     $.ajax({
                         type: "POST",
-                        url: $remover.closest("form.remove-tag-form").attr("data-action-async"),
+                        url: $remover.closest("form.remove-tag-form").data("action-async"),
                         data: {name: tagName},
                         success: makeTagDisappear,
                         error: function makeTagReappear() {
@@ -191,7 +191,7 @@
         if ($tag && async) {
             $.ajax({
                 type: "POST",
-                url: $container.attr("data-action-async"),
+                url: $container.data("action-async"),
                 data: {"tag-name": tagName},
                 success: function solidifyTag(data) {
                              // Make an onscreen tag non-ghostly,

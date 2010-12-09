@@ -17,13 +17,13 @@ $(document).ready(function () {
 
     jQuery.fn.makeCancelUpload = function (options) {
         var $this = this,
-            field_name = $this.attr('data-name');
+            field_name = $this.data('name');
         if (!$this.is('input')) {
             return $this;
         }
 
         $this.wrap('<form class="inline" method="POST" action="' +
-                     $(this).attr('data-action') + '"/>')
+                     $this.data('action') + '"/>')
                .closest('form')
                .append($('input[name="csrfmiddlewaretoken"]').first()
                        .clone());
@@ -213,7 +213,7 @@ $(document).ready(function () {
             type = 'image';
         $form.removeAttr('enctype');
         $(this).ajaxSubmitInput({
-            url: $(this).closest('.upload-form').attr('data-post-url'),
+            url: $form.data('post-url'),
             beforeSubmit: function($input) {
                 var upName = $input.attr('name'),
                     $options = {
@@ -335,7 +335,7 @@ $(document).ready(function () {
                     message = interpolate(message, [upName]);
                 }
                 attrs = {};
-                attrs['data-action'] = $cancel_btn.attr('data-action') +
+                attrs['data-action'] = $cancel_btn.data('action') +
                                            '?field=' + upName;
                 attrs['data-name'] = upName;
                 $cancel_btn.clone().val(message).attr(attrs)

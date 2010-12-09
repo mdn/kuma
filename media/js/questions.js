@@ -255,7 +255,7 @@
                 }
                 $form.addClass('processing');
 
-                $form.find('select').val($(this).attr('data-val'));
+                $form.find('select').val($(this).data('val'));
                 var other = $modal.find('input[name="modal-other"]').val();
                 $form.find('input[name="other"]').val(other);
                 $.ajax({

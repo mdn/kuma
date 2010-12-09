@@ -59,7 +59,7 @@
         }
 
         // Get the video fallback URL
-        flash_file = $video.attr('data-fallback');
+        flash_file = $video.data('fallback');
         if (flash_file.substr(-4) === '.swf') {
             swfobject.embedSWF(
                 flash_file, unique_id, width, height, FLASH_VERSION,
