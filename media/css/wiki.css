@@ -278,15 +278,15 @@ div.support-search input.submit {
 }
 
 #quick-links li.aaq a {
-    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -21px;
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -44px;
 }
 
 #quick-links li.home.active a {
-    background: transparent url(../img/wiki/icons.quicklinks-selected.png) no-repeat 6px 6px;
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -95px;
 }
 
 #quick-links li.aaq.active a {
-    background: transparent url(../img/wiki/icons.quicklinks-selected.png) no-repeat 6px -21px;
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -144px;
 }
 
 .sd-module {
