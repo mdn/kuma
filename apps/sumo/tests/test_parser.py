@@ -96,6 +96,13 @@ class TestWikiParser(TestCase):
         fr_d = document(parent=en_d, title='Une doc', locale='fr')
         fr_d.save()
 
+        # Without an approved revision, the en-US doc should be returned.
+        obj = get_object_fallback(Document, 'A doc', 'fr')
+        eq_(en_d, obj)
+
+        # Approve a revision, then fr doc should be returned.
+        fr_r = revision(document=fr_d, is_approved=True)
+        fr_r.save()
         obj = get_object_fallback(Document, 'A doc', 'fr')
         eq_(fr_d, obj)
 
@@ -261,6 +268,14 @@ class TestWikiInternalLinks(TestCase):
         fr_d = document(parent=en_d, title='Une doc', locale='fr')
         fr_d.save()
 
+        # Without an approved revision, link should go to en-US doc.
+        link = pq(self.p.parse('[[A doc]]', locale='fr'))
+        eq_('/en-US/kb/a-doc', link.find('a').attr('href'))
+        eq_('A doc', link.find('a').text())
+
+         # Approve a revision. Now link should go to fr doc.
+        fr_r = revision(document=fr_d, is_approved=True)
+        fr_r.save()
         link = pq(self.p.parse('[[A doc]]', locale='fr'))
         eq_('/fr/kb/une-doc', link.find('a').attr('href'))
         eq_('Une doc', link.find('a').text())

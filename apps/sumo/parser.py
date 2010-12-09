@@ -56,7 +56,7 @@ def get_object_fallback(cls, title, locale, default=None, **kwargs):
             title=title, locale=settings.WIKI_DEFAULT_LANGUAGE, **kwargs)
         if hasattr(fallback, 'translated_to'):
             trans = fallback.translated_to(locale)
-            if trans:
+            if trans and trans.current_revision:
                 return trans
         return fallback
     # Okay, all else failed
