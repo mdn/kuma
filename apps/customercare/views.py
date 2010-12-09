@@ -1,8 +1,8 @@
+import calendar
 from datetime import datetime
 from email.utils import parsedate, formatdate
 import json
 import logging
-import time
 
 from django.conf import settings
 from django.core.cache import cache
@@ -157,7 +157,7 @@ def twitter_post(request):
     raw_tweet_data = {
         'id': status['id'],
         'text': status['text'],
-        'created_at': formatdate(time.mktime(
+        'created_at': formatdate(calendar.timegm(
             status['created_at'].timetuple())),
         'iso_language_code': author['lang'],
         'from_user_id': author['id'],
