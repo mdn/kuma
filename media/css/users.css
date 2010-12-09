@@ -152,6 +152,7 @@ section#contact-area {
     margin-left: 1em;
 }
 
+body.register p,
 #profile p {
     margin: 1em 0;
 }

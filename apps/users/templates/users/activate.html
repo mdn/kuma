@@ -5,15 +5,22 @@
 {% else %}
   {% set title = _('Something is wrong') %}
 {% endif %}
-{% set classes = 'account' %}
+{% set classes = 'register' %}
 
 {% block content %}
   <article class="main">
     <h1>{{ title }}</h1>
     {% if account %}
-      <p><a href="{{ settings.LOGIN_URL|urlparams(next=settings.LOGIN_REDIRECT_URL) }}">{{ _('Log in') }}</a></p>
+      <p>{% trans login_url=url('users.login')|urlparams(next=url('home')),
+        profile_url=url('users.edit_profile') %}
+        You've confirmed your email address and activated your account! You
+        can now <a href="{{ login_url }}">log in</a>, and go
+        <a href="{{ profile_url }}">edit your profile</a>.{% endtrans %}
+      </p>
     {% else %}
-      <p class="failure">{{ _('We could not activate your account. Please make sure that you have clicked the correct link in your e-mail or typed in the correct address.') }}</p>
+      <p class="failure">{% trans %}We could not activate your account.
+        Please make sure that you have clicked the correct link in your
+        email or typed in the correct address.{% endtrans %}</p>
     {% endif %}
   </article>
 {% endblock content %}
