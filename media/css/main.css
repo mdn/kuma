@@ -278,6 +278,7 @@ img.markup-toolbar-button {
     display: block;
     left: 50%;
     margin-left: -260px;
+    padding: 0;
     position: fixed;
     text-align: left;
     top: 100px;
