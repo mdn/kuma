@@ -513,6 +513,9 @@ BROKER_VHOST = 'kitsune'
 CELERY_RESULT_BACKEND = 'amqp'
 CELERY_IGNORE_RESULT = True
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
+CELERY_SEND_TASK_ERROR_EMAILS = True
+CELERYD_LOG_LEVEL = logging.INFO
+CELERYD_CONCURRENCY = 4
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'

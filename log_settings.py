@@ -3,6 +3,7 @@ import logging.handlers
 
 from django.conf import settings
 
+import celery.conf
 import celery.log
 
 
@@ -29,9 +30,7 @@ handler.setFormatter(formatter)
 log.addHandler(handler)
 
 if not settings.DEBUG:
-    task_log = logging.getLogger('k.task')
-    task_proxy = celery.log.LoggingProxy(task_log, level)
-    task_format = ('%s: [%%(asctime)s: %%(levelname)s/%%(processName)s] '
-                   '%%(message)s' % settings.SYSLOG_TAG)
-    celery.log.setup_logger(logfile=task_proxy, loglevel=level,
-                            colorize=False)
+    task_log = logging.getLogger('k.celery')
+    task_proxy = celery.log.LoggingProxy(task_log)
+    celery.conf.CELERYD_LOG_FILE = task_proxy
+    celery.conf.CELERYD_LOG_COLOR = False
