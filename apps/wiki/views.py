@@ -89,7 +89,7 @@ def document(request, document_slug):
                                 slug=document_slug)
         # If there's a translation to the requested locale, take it:
         translation = doc.translated_to(request.locale)
-        if translation:
+        if translation and translation.current_revision:
             doc = translation
         return HttpResponseRedirect(doc.get_absolute_url())
 

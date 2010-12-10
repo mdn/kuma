@@ -7,7 +7,7 @@ from nose.tools import eq_
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from wiki.models import VersionMetadata, Document
-from wiki.tests import doc_rev, document, new_document_data
+from wiki.tests import doc_rev, document, new_document_data, revision
 from wiki.views import _version_groups
 
 
@@ -49,6 +49,8 @@ class LocaleRedirectTests(TestCase):
     """Tests for fallbacks to en-US and such for slug lookups."""
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
 
+    fixtures = ['users.json']
+
     def test_fallback_to_english(self):
         """Looking up a slug should fall back to the default locale if there
         is no match in the requested locale."""
@@ -70,6 +72,8 @@ class LocaleRedirectTests(TestCase):
         en_doc.save()
         de_doc = document(locale='de', parent=en_doc)
         de_doc.save()
+        de_rev = revision(document=de_doc, is_approved=True)
+        de_rev.save()
         response = self.client.get(reverse('wiki.document',
                                            args=['english-slug'],
                                            locale='de'),
