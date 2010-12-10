@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = patterns('',
     # Kitsune stuff.
+    url('^celery', views.celery_settings, name='kadmin.celery'),
     url('^settings', views.settings, name='kadmin.settings'),
     url('^env$', views.env, name='kadmin.env'),
 
