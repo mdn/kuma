@@ -3,7 +3,8 @@ import urlparse
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import (PasswordResetForm, SetPasswordForm,
+                                       PasswordChangeForm)
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
@@ -228,6 +229,25 @@ def password_reset_complete(request):
 
     """
     return jingo.render(request, 'users/pw_reset_complete.html')
+
+
+@login_required
+def password_change(request):
+    """Change password form page."""
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users.pw_change_complete'))
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return jingo.render(request, 'users/pw_change.html', {'form': form})
+
+
+@login_required
+def password_change_complete(request):
+    """Change password complete page."""
+    return jingo.render(request, 'users/pw_change_complete.html')
 
 
 def _clean_next_url(request):

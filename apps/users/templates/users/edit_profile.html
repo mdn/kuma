@@ -10,7 +10,7 @@
       {{ csrf() }}
       <ul>
         <li id="edit-profile-avatar">
-          <label>{{ _('Avatar') }}</label>
+          <label>{{ _('Avatar:') }}</label>
           <img src="{{ profile_avatar(profile.user) }}">
           <ul>
             <li>
@@ -22,6 +22,10 @@
               </li>
             {% endif %}
           </ul>
+        </li>
+        <li>
+          <label>{{_('Password:') }}</label>
+          <a href="{{ url('users.pw_change') }}">{{ _('Change') }}</a>
         </li>
         {{ form.as_ul()|safe }}
       </ul>

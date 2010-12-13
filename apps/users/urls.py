@@ -28,6 +28,11 @@ users_patterns = patterns('',
         views.password_reset_confirm, name="users.pw_reset_confirm"),
     url(r'^pwresetcomplete$', views.password_reset_complete,
         name="users.pw_reset_complete"),
+
+    # Change password
+    url(r'^pwchange$', views.password_change, name='users.pw_change'),
+    url(r'^pwchangecomplete$', views.password_change_complete,
+        name='users.pw_change_complete'),
 )
 
 urlpatterns = patterns('',

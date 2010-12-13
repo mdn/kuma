@@ -323,3 +323,44 @@ class ViewProfileTests(TestCaseBase):
         doc = pq(r.content)
         eq_('Edit my profile', doc('#edit-profile-link').text())
         self.client.logout()
+
+
+class PasswordChangeTests(TestCaseBase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(PasswordChangeTests, self).setUp()
+        self.user = User.objects.get(username='rrosario')
+        self.url = reverse('users.pw_change')
+        self.new_pw = 'fjdka387fvstrongpassword!'
+        self.client.login(username='rrosario', password='testpass')
+
+    def test_change_password(self):
+        assert self.user.check_password(self.new_pw) is False
+
+        r = self.client.post(self.url, {'old_password': 'testpass',
+                                        'new_password1': self.new_pw,
+                                        'new_password2': self.new_pw})
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US/users/pwchangecomplete', r['location'])
+        self.user = User.objects.get(username='rrosario')
+        assert self.user.check_password(self.new_pw)
+
+    def test_bad_old_password(self):
+        r = self.client.post(self.url, {'old_password': 'testpqss',
+                                        'new_password1': self.new_pw,
+                                        'new_password2': self.new_pw})
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_('Your old password was entered incorrectly. Please enter it '
+            'again.', doc('ul.errorlist').text())
+
+    def test_new_pw_doesnt_match(self):
+        r = self.client.post(self.url, {'old_password': 'testpqss',
+                                        'new_password1': self.new_pw,
+                                        'new_password2': self.new_pw + '1'})
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_("Your old password was entered incorrectly. Please enter it "
+            "again. The two password fields didn't match.",
+            doc('ul.errorlist').text())

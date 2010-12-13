@@ -1,0 +1,22 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Change Password') %}
+{% set classes = 'password' %}
+
+{% block content %}
+  <article id="pw-change" class="main">
+    <h1>{{ title }}</h1>
+    <form method="post" action="">
+      {{ csrf() }}
+      <fieldset>
+        <ul>
+          {{ form.as_ul()|safe }}
+        </ul>
+      </fieldset>
+      <div class="submit">
+        <input type="submit" value="{{ _('Change my password') }}" />
+      </div>
+    </form>
+  </article>
+{% endblock content %}
