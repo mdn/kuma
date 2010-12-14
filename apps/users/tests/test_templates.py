@@ -18,7 +18,7 @@ from test_utils import RequestFactory
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post
-from users.models import Profile
+from users.models import Profile, RegistrationProfile
 from users.tests import TestCaseBase
 from users.views import _clean_next_url
 
@@ -374,3 +374,19 @@ class PasswordChangeTests(TestCaseBase):
         eq_("Your old password was entered incorrectly. Please enter it "
             "again. The two password fields didn't match.",
             doc('ul.errorlist').text())
+
+
+class ResendConfirmationTests(TestCaseBase):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_resend_confirmation(self, get_current):
+        get_current.return_value.domain = 'testserver.com'
+
+        user = RegistrationProfile.objects.create_inactive_user(
+            'testuser', 'testpass', 'testuser@email.com')
+        eq_(1, len(mail.outbox))
+
+        r = self.client.post(reverse('users.resend_confirmation'),
+                             {'email': 'testuser@email.com'})
+        eq_(200, r.status_code)
+        eq_(2, len(mail.outbox))
+        assert mail.outbox[1].subject.find('Please confirm your email') == 0

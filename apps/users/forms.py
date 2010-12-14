@@ -153,3 +153,8 @@ class AvatarForm(forms.ModelForm):
             raise forms.ValidationError(e.args[0])
         clean_image_extension(self.cleaned_data.get('avatar'))
         return self.cleaned_data['avatar']
+
+
+class ResendConfirmationForm(forms.Form):
+    """A simple form that requires an email address."""
+    email = forms.EmailField(label=_lazy(u'Email address:'))

@@ -5,7 +5,7 @@ from users import views
 
 # These will all start with /user/<user_id>/
 detail_patterns = patterns('',
-    url('^$', views.profile, name='users.profile'),
+    url(r'^$', views.profile, name='users.profile'),
 # TODO:
 #    url('^abuse', views.report_abuse, name='users.abuse'),
 )
@@ -33,6 +33,9 @@ users_patterns = patterns('',
     url(r'^pwchange$', views.password_change, name='users.pw_change'),
     url(r'^pwchangecomplete$', views.password_change_complete,
         name='users.pw_change_complete'),
+
+    url(r'^resendconfirmation$', views.resend_confirmation,
+        name='users.resend_confirmation'),
 )
 
 urlpatterns = patterns('',

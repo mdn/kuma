@@ -20,7 +20,7 @@ from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import ProfileForm, AvatarForm
+from users.forms import ProfileForm, AvatarForm, ResendConfirmationForm
 from users.models import Profile, RegistrationProfile
 from users.utils import handle_login, handle_register
 
@@ -65,6 +65,28 @@ def activate(request, activation_key):
     account = RegistrationProfile.objects.activate_user(activation_key)
     return jingo.render(request, 'users/activate.html',
                         {'account': account})
+
+
+def resend_confirmation(request):
+    """Resend confirmation email."""
+    if request.method == 'POST':
+        form = ResendConfirmationForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                reg_prof = RegistrationProfile.objects.get(
+                    user__email=email, user__is_active=False)
+                RegistrationProfile.objects.send_confirmation_email(reg_prof)
+            except RegistrationProfile.DoesNotExist:
+                # Don't leak existence of email addresses.
+                pass
+            return jingo.render(request,
+                                'users/resend_confirmation_done.html',
+                                {'email': email})
+    else:
+        form = ResendConfirmationForm()
+    return jingo.render(request, 'users/resend_confirmation.html',
+                        {'form': form})
 
 
 def profile(request, user_id):

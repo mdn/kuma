@@ -120,7 +120,12 @@ class RegistrationManager(models.Manager):
 
         registration_profile = self.create_profile(new_user)
 
-        # Send confirmation email.
+        self.send_confirmation_email(registration_profile)
+
+        return new_user
+
+    def send_confirmation_email(self, registration_profile):
+        """Send the user confirmation email."""
         current_site = Site.objects.get_current()
         subject = _('Please confirm your email address')
         url = reverse('users.activate',
@@ -132,9 +137,7 @@ class RegistrationManager(models.Manager):
              'domain': current_site.domain,
              'activate_url': url})
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
-                  [new_user.email])
-
-        return new_user
+                  [registration_profile.user.email])
 
     def create_profile(self, user):
         """

@@ -1,0 +1,16 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Confirmation email sent successfully.') %}
+{% set classes = 'register' %}
+
+{% block content %}
+  <article id="register" class="main">
+    <h1>{{ title }}</h1>
+    <p>{% trans %}Before you can log in, you need to confirm your email
+      address. We've sent a new confirmation email to any account using
+      <strong>{{ email }}</strong>. To confirm the email address, just
+      follow the link in the email.{% endtrans %}
+    </p>
+  </article>
+{% endblock %}
