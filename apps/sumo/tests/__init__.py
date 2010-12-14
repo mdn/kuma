@@ -81,7 +81,7 @@ class MigrationTests(TestCase):
         # statements, which are fine.)
         path = self._migrations_path()
         # The ones before 66 have known failures.
-        for filename in listdir(path)[66:]:
+        for filename in sorted(listdir(path))[66:]:
             with open(join(path, filename)) as f:
                 contents = f.read()
             creates = contents.count('CREATE TABLE')
