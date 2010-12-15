@@ -1366,6 +1366,7 @@ input.g-btn:disabled {
 
 #ask-question textarea,
 #ask-question input[type="text"],
+#ask-question input[type="email"],
 #ask-question input[type="password"] {
     border: solid 1px #87C4DC;
     border-radius: 6px;
@@ -1388,6 +1389,7 @@ input.g-btn:disabled {
 }
 
 #ask-question li.invalid textarea,
+#ask-question li.invalid input[type="email"],
 #ask-question li.invalid input[type="text"] {
     border-color: #ff0000;
 }
@@ -1587,6 +1589,7 @@ body.flagged #main-content {
 }
 
 #register_form input[type="text"],
+#register_form input[type="email"],
 #login_form input[type="text"],
 #register_form input[type="password"],
 #login_form input[type="password"] {

@@ -830,6 +830,8 @@ ul.description li ul.errorlist li {
 }
 
 article.main input[type="text"],
+article.main input[type="email"],
+article.main input[type="url"],
 article.main input[type="password"],
 article.main textarea,
 section.marky input[type="text"] {
@@ -845,6 +847,7 @@ section.marky input[type="text"] {
     width: 325px;
 }
 
+article.main input[type="text"].error,
 article.main input[type="text"].error {
     border-color: #ff0000;
 }
