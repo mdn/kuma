@@ -320,7 +320,7 @@ class ForParser(object):
         return cls._PARSED_STRIPPED_FOR_CLOSER.sub(u'</for>', html)
 
 
-RECURSION_MESSAGE = _lazy('[Recursive inclusion of "%s"]')
+RECURSION_MESSAGE = _lazy(u'[Recursive inclusion of "%s"]')
 
 
 class WikiParser(sumo.parser.WikiParser):
@@ -434,7 +434,7 @@ class WikiParser(sumo.parser.WikiParser):
     # parser.
     def _hook_video(self, parser, space, title):
         """Handles [[Video:video title]] with locale from parser."""
-        message = _lazy('The video "%s" does not exist.') % title
+        message = _lazy(u'The video "%s" does not exist.') % title
 
         # params, only modal supported for now
         title, params = build_hook_params(title, self.locale, VIDEO_PARAMS)

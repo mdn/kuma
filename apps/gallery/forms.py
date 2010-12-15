@@ -14,30 +14,30 @@ from upload.forms import clean_image_extension
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a title.')
 MSG_TITLE_SHORT = _lazy(
     u'The title is too short (%(show_value)s characters). It must be at '
-    u'least %(limit_value)s characters.')
+     'least %(limit_value)s characters.')
 MSG_TITLE_LONG = _lazy(
     u'Please keep the length of your title to %(limit_value)s characters '
-    u'or less. It is currently %(show_value)s characters.')
+     'or less. It is currently %(show_value)s characters.')
 MSG_DESCRIPTION_REQUIRED = _lazy(u'Please provide a description.')
 MSG_DESCRIPTION_LONG = _lazy(
     u'Please keep the length of your description to %(limit_value)s '
-    u'characters or less. It is currently %(show_value)s characters.')
+     'characters or less. It is currently %(show_value)s characters.')
 MSG_IMAGE_REQUIRED = _lazy(u'You have not selected an image to upload.')
 MSG_IMAGE_LONG = _lazy(
     u'Please keep the length of your image filename to %(max)s '
-    u'characters or less. It is currently %(length)s characters.')
+     'characters or less. It is currently %(length)s characters.')
 MSG_WEBM_LONG = _lazy(
     u'Please keep the length of your webm filename to %(max)s '
-    u'characters or less. It is currently %(length)s characters.')
+     'characters or less. It is currently %(length)s characters.')
 MSG_OGV_LONG = _lazy(
     u'Please keep the length of your ogv filename to %(max)s '
-    u'characters or less. It is currently %(length)s characters.')
+     'characters or less. It is currently %(length)s characters.')
 MSG_FLV_LONG = _lazy(
     u'Please keep the length of your flv filename to %(max)s '
-    u'characters or less. It is currently %(length)s characters.')
+     'characters or less. It is currently %(length)s characters.')
 MSG_VID_REQUIRED = _lazy(
     u'The video has no files associated with it. You must upload one of the '
-    u'following extensions: webm, ogv, flv.')
+     'following extensions: webm, ogv, flv.')
 MSG_TITLE_DRAFT = _lazy(u'Please select a different title.')
 
 TITLE_HELP_TEXT = _lazy(u'Include this in wiki syntax with [[%(type)s:title]]')

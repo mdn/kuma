@@ -110,7 +110,7 @@ class Readout(object):
 
 class UntranslatedReadout(Readout):
     title = _lazy(u'Untranslated Articles')
-    short_title = _lazy('Untranslated')
+    short_title = _lazy(u'Untranslated')
     details_link_text = _lazy(u'All untranslated articles...')
     slug = 'untranslated'
     column4_label = _lazy(u'Updated')
@@ -145,7 +145,7 @@ class UntranslatedReadout(Readout):
 
 class OutOfDateReadout(Readout):
     title = _lazy(u'Out-of-Date Translations')
-    short_title = _lazy('Out-of-Date')
+    short_title = _lazy(u'Out-of-Date')
     details_link_text = _lazy(u'All out-of-date translations...')
     slug = 'out-of-date'
     column4_label = _lazy(u'Out of date since')
@@ -213,7 +213,7 @@ class OutOfDateReadout(Readout):
 
 class NeedingUpdatesReadout(OutOfDateReadout):
     title = _lazy(u'Translations Needing Updates')
-    short_title = _lazy('Needing Updates')
+    short_title = _lazy(u'Needing Updates')
     details_link_text = _lazy(u'All translations needing updates...')
     slug = 'needing-updates'
 
@@ -225,7 +225,7 @@ class UnreviewedReadout(Readout):
     # ^ Not just changes to translations but also unreviewed chanages to docs
     # in this locale that are not translations
 
-    short_title = _lazy('Unreviewed')
+    short_title = _lazy(u'Unreviewed')
     details_link_text = _lazy(u'All articles requiring review...')
     slug = 'unreviewed'
     column4_label = _lazy(u'Changed')

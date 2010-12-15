@@ -15,7 +15,7 @@ def check_file_size(f, max_allowed_size):
 
     """
     if f.size > max_allowed_size:
-        message = _lazy('"%s" is too large (%sKB), the limit is %sKB') % (
+        message = _lazy(u'"%s" is too large (%sKB), the limit is %sKB') % (
             f.name, f.size >> 10, max_allowed_size >> 10)
         raise FileTooLargeError(message)
 

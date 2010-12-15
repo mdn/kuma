@@ -1,15 +1,15 @@
 from django.utils.datastructures import SortedDict
 
-from tower import ugettext_lazy as _
+from tower import ugettext_lazy as _lazy
 
 products = SortedDict([
     ('desktop', {
-        'name': _('Firefox 3.6 or earlier on Desktops/Laptops/Netbooks'),
+        'name': _lazy(u'Firefox 3.6 or earlier on Desktops/Laptops/Netbooks'),
         'extra_fields': ['troubleshooting', 'ff_version', 'os', 'plugins'],
         'tags': ['desktop'],
         'categories': SortedDict([
         ('d1', {
-            'name': _('Firefox is having problems with certain web sites'),
+            'name': _lazy(u'Firefox is having problems with certain web sites'),
             'extra_fields': ['sites_affected'],
             'html': 'We have lots of helpful articles on <em>problems with web'
                     ' sites</em> and hundreds of questions in our database. '
@@ -23,7 +23,7 @@ products = SortedDict([
             'tags': ['websites'],
         }),
         ('d2', {
-            'name': _('Firefox is crashing or closing unexpectedly'),
+            'name': _lazy(u'Firefox is crashing or closing unexpectedly'),
             'extra_fields': ['crash_id'],
             'html': 'We have lots of helpful articles on <em>crashes</em> '
                     'and hundreds of questions in our database. Try one of '
@@ -43,7 +43,7 @@ products = SortedDict([
             'tags': ['crash'],
         }),
         ('d3', {
-            'name': _('I have a problem with my bookmarks, cookies, history or settings'),
+            'name': _lazy(u'I have a problem with my bookmarks, cookies, history or settings'),
             'html': 'We have lots of helpful articles on <em>bookmarks, '
                     'cookies, history or settings</em> and hundreds of '
                     'questions in our database. Try one of the following:',
@@ -56,7 +56,7 @@ products = SortedDict([
             'tags': ['data'],
         }),
         ('d4', {
-            'name': _('I need help learning to use a Firefox feature'),
+            'name': _lazy(u'I need help learning to use a Firefox feature'),
             'html': 'We have lots of helpful articles to get you started <em>'
                     'learning and using Firefox</em> and hundreds of questions'
                     ' in our database. Try one of the following:',
@@ -75,7 +75,7 @@ products = SortedDict([
             'tags': ['learning'],
         }),
         ('d5', {
-            'name': _('I have a problem with an extension or plugin'),
+            'name': _lazy(u'I have a problem with an extension or plugin'),
             'extra_fields': ['addon'],
             'html': 'Most extensions or plugins are not written by Mozilla '
                     'and you will need to contact the people or company who '
@@ -86,7 +86,7 @@ products = SortedDict([
             'tags': ['addon'],
         }),
         ('d6', {
-            'name': _('I have another kind of problem with Firefox'),
+            'name': _lazy(u'I have another kind of problem with Firefox'),
             'extra_fields': ['frequency', 'started'],
             'html': 'We have lots of helpful articles on <em>general Firefox '
                     'issues</em> and hundreds of questions in our database. '
@@ -106,36 +106,36 @@ products = SortedDict([
         ])
     }),
     ('beta', {
-        'name': _('Firefox 4 betas on Desktops/Laptops/Netbooks'),
+        'name': _lazy(u'Firefox 4 betas on Desktops/Laptops/Netbooks'),
         'extra_fields': ['troubleshooting', 'ff_version', 'os', 'plugins'],
         'tags': ['beta'],
         'categories': SortedDict([
         ('b1', {
-            'name': _("I'm having trouble with the look and feel of the Firefox beta"),
+            'name': _lazy(u"I'm having trouble with the look and feel of the Firefox beta"),
             'tags': ['ui'],
         }),
         ('b2', {
-            'name': _('Firefox is having problems with certain web sites'),
+            'name': _lazy(u'Firefox is having problems with certain web sites'),
             'extra_fields': ['sites_affected'],
             'tags': ['websites'],
         }),
         ('b3', {
-            'name': _('Firefox is crashing or closing unexpectedly'),
+            'name': _lazy(u'Firefox is crashing or closing unexpectedly'),
             'extra_fields': ['crash_id'],
             'tags': ['crash'],
         }),
         ('b4', {
-            'name': _('I have a problem with an extension or plugin'),
+            'name': _lazy(u'I have a problem with an extension or plugin'),
             'extra_fields': ['addon'],
             'tags': ['addon'],
         }),
         ('b5', {
-            'name': _('I have another kind of problem with Firefox'),
+            'name': _lazy(u'I have another kind of problem with Firefox'),
             'extra_fields': ['frequency', 'started'],
             'tags': ['general'],
         }),
         ('b6', {
-            'name': _('I have feedback/suggestions about the beta'),
+            'name': _lazy(u'I have feedback/suggestions about the beta'),
             'html': 'Firefox 4 beta versions have a feedback system built in.'
                     ' For more details, see our '
                     '<a href="http://www.mozilla.com/en-US/firefox/beta/feedback/">'
@@ -145,17 +145,17 @@ products = SortedDict([
         ])
     }),
     ('mobile', {
-        'name': _('Firefox on Mobile (Android or Maemo systems)'),
+        'name': _lazy(u'Firefox on Mobile (Android or Maemo systems)'),
         'extra_fields': ['ff_version', 'os', 'plugins'],
         'tags': ['mobile'],
         'categories': SortedDict([
             ('m1', {
-                'name': _('Firefox for mobile is having problems with certain web sites'),
+                'name': _lazy(u'Firefox for mobile is having problems with certain web sites'),
                 'extra_fields': ['sites_affected'],
                 'tags': ['websites'],
             }),
             ('m2', {
-                'name': _("I'm having trouble learning to use Firefox for mobile"),
+                'name': _lazy(u"I'm having trouble learning to use Firefox for mobile"),
                 'html': 'We have lots of helpful articles to get you started '
                         '<em>learning to use Firefox for mobile</em> and '
                         'hundreds of questions in our database. Try one of the'
@@ -177,11 +177,11 @@ products = SortedDict([
                 'tags': ['learning'],
             }),
             ('m3', {
-                'name': _('Firefox for mobile is crashing or closing unexpectedly'),
+                'name': _lazy(u'Firefox for mobile is crashing or closing unexpectedly'),
                 'tags': ['crash'],
             }),
             ('m4', {
-                'name': _('I have a problem with an extension or plugin'),
+                'name': _lazy(u'I have a problem with an extension or plugin'),
                 'extra_fields': ['addon'],
                 'html': 'Most extensions or plugins are not written by Mozilla '
                         'and you will need to contact the people or company who '
@@ -193,7 +193,7 @@ products = SortedDict([
                 'tags': ['addon'],
             }),
             ('m5', {
-                'name': _('I have another kind of problem with Firefox for mobile'),
+                'name': _lazy(u'I have another kind of problem with Firefox for mobile'),
                 'extra_fields': ['frequency'],
                 'html': 'We have lots of helpful articles on <em>general '
                         'issues with Firefox for mobile</em> and hundreds '
@@ -216,7 +216,7 @@ products = SortedDict([
                 'tags': ['general'],
             }),
             ('m6', {
-                'name': _('I have suggestions for how to improve Firefox for mobile'),
+                'name': _lazy(u'I have suggestions for how to improve Firefox for mobile'),
                 'html': '<p>You can provide suggestions for '
                         '<strong>Firefox on Android or Maemo</strong> in the '
                         '<a href="http://firefoxformobile.uservoice.com/forums/70211-firefox-for-mobile-ideas">'
@@ -226,11 +226,11 @@ products = SortedDict([
         ])
     }),
     ('home', {
-        'name': _('Firefox Home App for iPhone'),
+        'name': _lazy(u'Firefox Home App for iPhone'),
         'tags': ['FxHome'],
         'categories': SortedDict([
             ('i1', {
-                'name': _("I'm having trouble setting up Firefox Home on my iPhone"),
+                'name': _lazy(u"I'm having trouble setting up Firefox Home on my iPhone"),
                 'html': 'We have lots of helpful articles on <em>setting up '
                         'Firefox Home</em> and hundreds of questions in our '
                         'database. Try the following:',
@@ -241,7 +241,7 @@ products = SortedDict([
                 'tags': ['iphone'],
             }),
             ('i2', {
-                'name': _("I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
+                'name': _lazy(u"I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
                 'html': 'We have lots of helpful articles on <em>setting up '
                         'Firefox Sync</em> and hundreds of questions in our '
                         'database. Try the following:',
@@ -252,7 +252,7 @@ products = SortedDict([
                 'tags': ['desktop', 'sync'],
             }),
             ('i3', {
-                'name': _('Not all my data is syncing between Firefox '
+                'name': _lazy(u'Not all my data is syncing between Firefox '
                           'and Firefox Home or I have other problems '),
                 'html': 'We have lots of helpful articles on <em>Firefox Home '
                         'issues</em> and hundreds of questions in our '
@@ -268,7 +268,7 @@ products = SortedDict([
                 'tags': ['general'],
             }),
             ('i4', {
-                'name': _('I have suggestions for how to improve Firefox Home for iPhone'),
+                'name': _lazy(u'I have suggestions for how to improve Firefox Home for iPhone'),
                 'html': 'You can provide suggestions in our '
                         '<a href="http://firefoxformobile.uservoice.com/forums/67057-firefox-home-ideas">'
                         'Firefox Home feedback forum</a>.',
@@ -277,11 +277,11 @@ products = SortedDict([
         ])
     }),
     ('sync', {
-        'name': _('Firefox Sync'),
+        'name': _lazy(u'Firefox Sync'),
         'tags': ['sync'],
         'categories': SortedDict([
             ('s1', {
-                'name': _("I'm having trouble setting up Firefox Sync on my Nokia or Android device"),
+                'name': _lazy(u"I'm having trouble setting up Firefox Sync on my Nokia or Android device"),
                 'html': 'We have lots of helpful articles on <em>setting up '
                         'Firefox Sync in Firefox for mobile</em> and hundreds '
                         'of questions in our database. Try the following:',
@@ -292,7 +292,7 @@ products = SortedDict([
                 'tags': ['mobile'],
             }),
             ('s2', {
-                'name': _("I'm having trouble setting up Firefox Home on my iPhone"),
+                'name': _lazy(u"I'm having trouble setting up Firefox Home on my iPhone"),
                 'html': 'We have lots of helpful articles on <em>setting up '
                         'Firefox Home</em> and hundreds of questions in our '
                         'database. Try one of the following:',
@@ -303,7 +303,7 @@ products = SortedDict([
                 'tags': ['iphone'],
             }),
             ('s3', {
-                'name': _("I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
+                'name': _lazy(u"I'm having trouble setting up Firefox Sync on my Desktop Firefox"),
                 'html': 'We have lots of helpful articles on <em>setting up '
                         'Firefox Sync</em> and hundreds of questions in our '
                         'database. Try one of the following:',
@@ -314,7 +314,7 @@ products = SortedDict([
                 'tags': ['desktop'],
             }),
             ('s4', {
-                'name': _('I have other problems syncing data between computers or devices'),
+                'name': _lazy(u'I have other problems syncing data between computers or devices'),
                 'html': 'We have lots of helpful articles on <em>Firefox sync'
                         '</em> and hundreds of questions in our database. Try '
                         'one of the following:',
@@ -331,7 +331,7 @@ products = SortedDict([
                 'tags': ['general'],
             }),
             ('s5', {
-                'name': _('I have suggestions for how to improve Firefox Sync'),
+                'name': _lazy(u'I have suggestions for how to improve Firefox Sync'),
                 'html': 'You can provide suggestions in our '
                         '<a href="http://assets2.getsatisfaction.com/mozilla_labs/products/mozilla_labs_weave_sync">'
                         'Firefox Sync feedback forum</a>.',
@@ -340,7 +340,7 @@ products = SortedDict([
         ])
     }),
     ('other', {
-        'name': _("Thunderbird (Mozilla's email client) or other Mozilla product"),
+        'name': _lazy(u"Thunderbird (Mozilla's email client) or other Mozilla product"),
         'html': 'Support for Thunderbird and other Mozilla products can be found at'
                 ' <a href="http://www.mozilla.org/support">Mozilla Support</a>.',
         'categories': SortedDict([]),

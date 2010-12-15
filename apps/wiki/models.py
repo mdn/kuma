@@ -25,21 +25,21 @@ MEDIUM_SIGNIFICANCE = 20
 MAJOR_SIGNIFICANCE = 30
 SIGNIFICANCES = (
     (TYPO_SIGNIFICANCE,
-     _lazy('Minor details like punctuation and spelling errors')),
+     _lazy(u'Minor details like punctuation and spelling errors')),
     (MEDIUM_SIGNIFICANCE,
-     _lazy("Content changes that don't require immediate translation")),
+     _lazy(u"Content changes that don't require immediate translation")),
     (MAJOR_SIGNIFICANCE,
-     _lazy('Major content changes that will make older translations '
+     _lazy(u'Major content changes that will make older translations '
            'inaccurate')),
 )
 
 CATEGORIES = (
-    (10, _lazy('Troubleshooting')),
-    (20, _lazy('How to')),
-    (30, _lazy('How to contribute')),
-    (40, _lazy('Administration')),
-    (50, _lazy('Navigation')),
-    (60, _lazy('Templates')),
+    (10, _lazy(u'Troubleshooting')),
+    (20, _lazy(u'How to')),
+    (30, _lazy(u'How to contribute')),
+    (40, _lazy(u'Administration')),
+    (50, _lazy(u'Navigation')),
+    (60, _lazy(u'Templates')),
 )
 
 # FF versions used to filter article searches, power {for} tags, etc.:
@@ -54,18 +54,18 @@ CATEGORIES = (
 VersionMetadata = namedtuple('VersionMetadata',
                              'id, name, long, slug, max_version, show_in_ui')
 GROUPED_FIREFOX_VERSIONS = (
-    ((_lazy('Desktop:'), 'desktop'), (
+    ((_lazy(u'Desktop:'), 'desktop'), (
         # The first option is the default for {for} display. This should be the
         # newest version.
-        VersionMetadata(2, _lazy('Firefox 3.5-3.6'), _lazy('Firefox 3.5-3.6'),
-                        'fx35', 3.9999, True),
-        VersionMetadata(1, _lazy('Firefox 4'), _lazy('Firefox 4'), 'fx4',
-                        4.9999, True),
-        VersionMetadata(3, _lazy('Firefox 3.0'), _lazy('Firefox 3.0'), 'fx3',
-                        3.4999, False))),
-    ((_lazy('Mobile:'), 'mobile'), (
-        VersionMetadata(4, _lazy('Firefox 4'), _lazy('Firefox 4 for Mobile'),
-                        'm4', 4.9999, True),)))
+        VersionMetadata(2, _lazy(u'Firefox 3.5-3.6'),
+                        _lazy(u'Firefox 3.5-3.6'), 'fx35', 3.9999, True),
+        VersionMetadata(1, _lazy(u'Firefox 4'),
+                        _lazy(u'Firefox 4'), 'fx4', 4.9999, True),
+        VersionMetadata(3, _lazy(u'Firefox 3.0'),
+                        _lazy(u'Firefox 3.0'), 'fx3', 3.4999, False))),
+    ((_lazy(u'Mobile:'), 'mobile'), (
+        VersionMetadata(4, _lazy(u'Firefox 4'),
+                        _lazy(u'Firefox 4 for Mobile'), 'm4', 4.9999, True),)))
 
 # Flattened:  # TODO: perhaps use optgroups everywhere instead
 FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
@@ -74,13 +74,13 @@ FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
 # OSes used to filter articles and declare {for} sections:
 OsMetaData = namedtuple('OsMetaData', 'id, name, slug')
 GROUPED_OPERATING_SYSTEMS = (
-    ((_lazy('Desktop OS:'), 'desktop'), (
-        OsMetaData(1, _lazy('Windows'), 'win'),
-        OsMetaData(2, _lazy('Mac OS X'), 'mac'),
-        OsMetaData(3, _lazy('Linux'), 'linux'))),
-    ((_lazy('Mobile OS:'), 'mobile'), (
-        OsMetaData(5, _lazy('Android'), 'android'),
-        OsMetaData(4, _lazy('Maemo'), 'maemo'))))
+    ((_lazy(u'Desktop OS:'), 'desktop'), (
+        OsMetaData(1, _lazy(u'Windows'), 'win'),
+        OsMetaData(2, _lazy(u'Mac OS X'), 'mac'),
+        OsMetaData(3, _lazy(u'Linux'), 'linux'))),
+    ((_lazy(u'Mobile OS:'), 'mobile'), (
+        OsMetaData(5, _lazy(u'Android'), 'android'),
+        OsMetaData(4, _lazy(u'Maemo'), 'maemo'))))
 
 # Flattened
 OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
@@ -89,8 +89,8 @@ OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
 
 REDIRECT_HTML = '<p>REDIRECT <a '  # how a redirect looks as rendered HTML
 REDIRECT_CONTENT = 'REDIRECT [[%s]]'
-REDIRECT_TITLE = _lazy('%(old)s Redirect %(number)i')
-REDIRECT_SLUG = _lazy('%(old)s-redirect-%(number)i')
+REDIRECT_TITLE = _lazy(u'%(old)s Redirect %(number)i')
+REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
 
 
 class TitleCollision(Exception):

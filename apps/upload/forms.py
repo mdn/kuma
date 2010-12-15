@@ -6,8 +6,8 @@ from tower import ugettext_lazy as _lazy
 
 MSG_IMAGE_REQUIRED = _lazy(u'You have not selected an image to upload.')
 MSG_IMAGE_LONG = _lazy(
-    'Please keep the length of your image filename to %(max)s '
-    'characters or less. It is currently %(length)s characters.')
+    u'Please keep the length of your image filename to %(max)s '
+     'characters or less. It is currently %(length)s characters.')
 MSG_IMAGE_EXTENSION = _lazy(u'Please upload an image with one of the '
                             u'following extensions: jpg, jpeg, png, gif.')
 ALLOWED_IMAGE_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')

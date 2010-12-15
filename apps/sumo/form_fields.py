@@ -6,7 +6,7 @@ from django.utils import translation
 
 from babel import Locale, localedata
 from babel.support import Format
-from tower import ugettext_lazy as _
+from tower import ugettext_lazy as _lazy
 
 
 class NoValidateMultipleChoiceField(forms.MultipleChoiceField):
@@ -60,13 +60,13 @@ class BaseValidator(validators.BaseValidator):
 
 
 class MinLengthValidator(validators.MinLengthValidator, BaseValidator):
-    message = _(u'Ensure this value has at least %(limit_value)s ' + \
-                'characters (it has %(show_value)s).')
+    message = _lazy(u'Ensure this value has at least %(limit_value)s '
+                     'characters (it has %(show_value)s).')
 
 
 class MaxLengthValidator(validators.MaxLengthValidator, BaseValidator):
-    message = _(u'Ensure this value has at most %(limit_value)s ' + \
-                 'characters (it has %(show_value)s).')
+    message = _lazy(u'Ensure this value has at most %(limit_value)s '
+                     'characters (it has %(show_value)s).')
 
 
 def _format_decimal(num, format=None):

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from tower import ugettext_lazy as _
+from tower import ugettext_lazy as _lazy
 
 from sumo.models import ModelBase, ManagerBase
 
@@ -20,16 +20,16 @@ class FlaggedObject(ModelBase):
     """A flag raised on an object."""
 
     REASONS = (
-        ('spam', _('Spam or other unrelated content')),
-        ('language', _('Inappropriate language/dialog')),
-        ('bug_support', _('Misplaced bug report or support request')),
-        ('other', _('Other (please specify)')),
+        ('spam', _lazy(u'Spam or other unrelated content')),
+        ('language', _lazy(u'Inappropriate language/dialog')),
+        ('bug_support', _lazy(u'Misplaced bug report or support request')),
+        ('other', _lazy(u'Other (please specify)')),
     )
 
     STATUSES = (
-        (0, _('Pending')),
-        (1, _('Accepted and Fixed')),
-        (2, _('Rejected')),
+        (0, _lazy(u'Pending')),
+        (1, _lazy(u'Accepted and Fixed')),
+        (2, _lazy(u'Rejected')),
     )
 
     content_type = models.ForeignKey(ContentType)

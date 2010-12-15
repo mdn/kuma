@@ -20,8 +20,8 @@ TITLE_SHORT = _lazy(u'The title is too short (%(show_value)s characters). '
 TITLE_LONG = _lazy(u'Please keep the length of the title to %(limit_value)s '
                    u'characters or less. It is currently %(show_value)s '
                    u'characters.')
-SLUG_REQUIRED = _lazy('Please provide a slug.')
-SLUG_INVALID = _lazy('The slug provided is not valid.')
+SLUG_REQUIRED = _lazy(u'Please provide a slug.')
+SLUG_INVALID = _lazy(u'The slug provided is not valid.')
 SLUG_SHORT = _lazy(u'The slug is too short (%(show_value)s characters). '
                    u'It must be at least %(limit_value)s characters.')
 SLUG_LONG = _lazy(u'Please keep the length of the slug to %(limit_value)s '
@@ -33,7 +33,7 @@ SUMMARY_SHORT = _lazy(u'The summary is too short (%(show_value)s characters). '
 SUMMARY_LONG = _lazy(u'Please keep the length of the summary to '
                      u'%(limit_value)s characters or less. It is currently '
                      u'%(show_value)s characters.')
-CONTENT_REQUIRED = _lazy('Please provide content.')
+CONTENT_REQUIRED = _lazy(u'Please provide content.')
 CONTENT_SHORT = _lazy(u'The content is too short (%(show_value)s characters). '
                       u'It must be at least %(limit_value)s characters.')
 CONTENT_LONG = _lazy(u'Please keep the length of the content to '
@@ -61,21 +61,21 @@ class DocumentForm(forms.ModelForm):
 
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(),
-                              label=_('Title:'),
-                              help_text=_('Title of article'),
+                              label=_lazy(u'Title:'),
+                              help_text=_lazy(u'Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=3, max_length=255,
                              widget=forms.TextInput(),
-                             label=_('Slug:'),
-                             help_text=_('Article URL'),
+                             label=_lazy(u'Slug:'),
+                             help_text=_lazy(u'Article URL'),
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
 
     firefox_versions = forms.MultipleChoiceField(
-                                label=_('Firefox version:'),
+                                label=_lazy(u'Firefox version:'),
                                 choices=[(v.id, v.long) for v in
                                          FIREFOX_VERSIONS],
                                 initial=[v.id for v in
@@ -84,7 +84,7 @@ class DocumentForm(forms.ModelForm):
                                 widget=forms.CheckboxSelectMultiple())
 
     operating_systems = forms.MultipleChoiceField(
-                                label=_('Operating systems:'),
+                                label=_lazy(u'Operating systems:'),
                                 choices=[(o.id, o.name) for o in
                                          OPERATING_SYSTEMS],
                                 initial=[o.id for o in
@@ -94,15 +94,15 @@ class DocumentForm(forms.ModelForm):
 
     is_localizable = forms.BooleanField(
                                 initial=True,
-                                label=_('Allow translations:'),
+                                label=_lazy(u'Allow translations:'),
                                 required=False)
 
     category = forms.ChoiceField(choices=CATEGORIES,
                                  # Required for non-translations, which is
                                  # enforced in Document.clean().
                                  required=False,
-                                 label=_('Category:'),
-                                 help_text=_('Type of article'))
+                                 label=_lazy(u'Category:'),
+                                 help_text=_lazy(u'Type of article'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -147,13 +147,13 @@ class DocumentForm(forms.ModelForm):
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
     keywords = StrippedCharField(required=False,
-                                 label=_('Keywords:'),
-                                 help_text=_('Affects search results'))
+                                 label=_lazy(u'Keywords:'),
+                                 help_text=_lazy(u'Affects search results'))
 
     summary = StrippedCharField(
                 min_length=5, max_length=1000, widget=forms.Textarea(),
-                label=_('Search result summary:'),
-                help_text=_('Only displayed on search results page'),
+                label=_lazy(u'Search result summary:'),
+                help_text=_lazy(u'Only displayed on search results page'),
                 error_messages={'required': SUMMARY_REQUIRED,
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
@@ -167,7 +167,7 @@ class RevisionForm(forms.ModelForm):
                      c in GROUPED_FIREFOX_VERSIONS]}
     content = StrippedCharField(
                 min_length=5, max_length=100000,
-                label=_('Content:'),
+                label=_lazy(u'Content:'),
                 widget=forms.Textarea(attrs={'data-showfor':
                                              json.dumps(showfor_data)}),
                 error_messages={'required': CONTENT_REQUIRED,

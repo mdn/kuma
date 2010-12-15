@@ -186,14 +186,15 @@ class RegistrationProfile(models.Model):
     """
     ACTIVATED = u"ALREADY_ACTIVATED"
 
-    user = models.ForeignKey(User, unique=True, verbose_name=_('user'))
-    activation_key = models.CharField(_('activation key'), max_length=40)
+    user = models.ForeignKey(User, unique=True, verbose_name=_lazy(u'user'))
+    activation_key = models.CharField(verbose_name=_lazy(u'activation key'),
+                                      max_length=40)
 
     objects = RegistrationManager()
 
     class Meta:
-        verbose_name = _('registration profile')
-        verbose_name_plural = _('registration profiles')
+        verbose_name = _lazy(u'registration profile')
+        verbose_name_plural = _lazy(u'registration profiles')
 
     def __unicode__(self):
         return u"Registration information for %s" % self.user

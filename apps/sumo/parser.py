@@ -199,7 +199,7 @@ class WikiParser(Parser):
         title, params = build_hook_params(name, self.locale, IMAGE_PARAMS,
                                           IMAGE_PARAM_VALUES)
 
-        message = _lazy('The image "%s" does not exist.') % title
+        message = _lazy(u'The image "%s" does not exist.') % title
         image = get_object_fallback(Image, title, self.locale, message)
         if isinstance(image, basestring):
             return image

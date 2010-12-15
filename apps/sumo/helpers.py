@@ -184,7 +184,7 @@ def datetimeformat(context, value, format='shortdatetime'):
     if format == 'shortdatetime':
         # Check if the date is today
         if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _lazy('Today at %s') % format_time(
+            formatted = _lazy(u'Today at %s') % format_time(
                                     tzvalue, format='short', locale=locale)
         else:
             formatted = format_datetime(tzvalue, format='short', locale=locale)

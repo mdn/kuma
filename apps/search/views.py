@@ -37,6 +37,7 @@ def search(request):
     """Performs search or displays the search form"""
 
     # Form must be nested inside request for fixtures to be used properly
+    # TODO: If you move it, change _() to _lazy().
     class SearchForm(forms.Form):
         """Django form for handling display and validation"""
 

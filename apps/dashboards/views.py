@@ -25,7 +25,7 @@ MOBILE_DOCS = {'quick': 'Mobile home - Quick',
 def home(request):
     data = {}
     for side, title in HOME_DOCS.iteritems():
-        message = _lazy('The template "%s" does not exist.') % title
+        message = _lazy(u'The template "%s" does not exist.') % title
         data[side] = get_object_fallback(
             Document, title, request.locale, message)
 
@@ -36,7 +36,7 @@ def home(request):
 def mobile(request):
     data = {}
     for side, title in MOBILE_DOCS.iteritems():
-        message = _lazy('The template "%s" does not exist.') % title
+        message = _lazy(u'The template "%s" does not exist.') % title
         data[side] = get_object_fallback(
             Document, title, request.locale, message)
 

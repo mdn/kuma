@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 
 from commonware.decorators import xframe_sameorigin
 import jingo
-from tower import ugettext as _
+from tower import ugettext as _, ugettext_lazy as _lazy
 
 from access.decorators import login_required
 from gallery import ITEMS_PER_PAGE, DRAFT_TITLE_PREFIX
@@ -22,8 +22,8 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from upload.utils import FileTooLargeError
 
-MSG_FAIL_UPLOAD = {'image': _('Could not upload your image.'),
-                   'video': _('Could not upload your video.')}
+MSG_FAIL_UPLOAD = {'image': _lazy(u'Could not upload your image.'),
+                   'video': _lazy(u'Could not upload your video.')}
 
 
 log = logging.getLogger('k.gallery')
@@ -259,7 +259,7 @@ def upload_async(request, media_type='image'):
 
     message = MSG_FAIL_UPLOAD[media_type]
     return HttpResponseBadRequest(
-        json.dumps({'status': 'error', 'message': message,
+        json.dumps({'status': 'error', 'message': unicode(message),
                     'errors': file_info}))
 
 

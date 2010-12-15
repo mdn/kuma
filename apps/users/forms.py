@@ -11,20 +11,20 @@ from upload.utils import check_file_size, FileTooLargeError
 from users.models import Profile
 
 
-USERNAME_INVALID = _lazy('Username may contain only letters, '
+USERNAME_INVALID = _lazy(u'Username may contain only letters, '
                          'numbers and @/./+/-/_ characters.')
-USERNAME_REQUIRED = _lazy('Username is required.')
-USERNAME_SHORT = _lazy('Username is too short (%(show_value)s characters). '
+USERNAME_REQUIRED = _lazy(u'Username is required.')
+USERNAME_SHORT = _lazy(u'Username is too short (%(show_value)s characters). '
                        'It must be at least %(limit_value)s characters.')
-USERNAME_LONG = _lazy('Username is too long (%(show_value)s characters). '
+USERNAME_LONG = _lazy(u'Username is too long (%(show_value)s characters). '
                       'It must be %(limit_value)s characters or less.')
-EMAIL_REQUIRED = _lazy('Email address is required.')
-EMAIL_SHORT = _lazy('Email address is too short (%(show_value)s characters). '
+EMAIL_REQUIRED = _lazy(u'Email address is required.')
+EMAIL_SHORT = _lazy(u'Email address is too short (%(show_value)s characters). '
                     'It must be at least %(limit_value)s characters.')
-EMAIL_LONG = _lazy('Email address is too long (%(show_value)s characters). '
+EMAIL_LONG = _lazy(u'Email address is too long (%(show_value)s characters). '
                    'It must be %(limit_value)s characters or less.')
-PASSWD_REQUIRED = _lazy('Password is required.')
-PASSWD2_REQUIRED = _lazy('Please enter your password twice.')
+PASSWD_REQUIRED = _lazy(u'Password is required.')
+PASSWD2_REQUIRED = _lazy(u'Please enter your password twice.')
 
 
 class RegisterForm(forms.ModelForm):
@@ -36,28 +36,28 @@ class RegisterForm(forms.ModelForm):
 
     """
     username = forms.RegexField(
-        label=_('Username:'), max_length=30, min_length=4,
+        label=_lazy(u'Username:'), max_length=30, min_length=4,
         regex=r'^[\w.@+-]+$',
-        help_text=_('Required. 30 characters or fewer. Letters, digits '
-                    'and @/./+/-/_ only.'),
+        help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
+                         'and @/./+/-/_ only.'),
         error_messages={'invalid': USERNAME_INVALID,
                         'required': USERNAME_REQUIRED,
                         'min_length': USERNAME_SHORT,
                         'max_length': USERNAME_LONG})
-    email = forms.EmailField(label=_('Email address:'),
+    email = forms.EmailField(label=_lazy(u'Email address:'),
                              error_messages={'required': EMAIL_REQUIRED,
                                              'min_length': EMAIL_SHORT,
                                              'max_length': EMAIL_LONG})
-    password = forms.CharField(label=_('Password:'),
+    password = forms.CharField(label=_lazy(u'Password:'),
                                widget=forms.PasswordInput(
                                    render_value=False),
                                error_messages={'required': PASSWD_REQUIRED})
-    password2 = forms.CharField(label=_('Repeat password:'),
+    password2 = forms.CharField(label=_lazy(u'Repeat password:'),
                                 widget=forms.PasswordInput(
                                     render_value=False),
                                 error_messages={'required': PASSWD2_REQUIRED},
-                                help_text=_('Enter the same password as '
-                                            'above, for verification.'))
+                                help_text=_lazy(u'Enter the same password as '
+                                                 'above, for verification.'))
 
     class Meta(object):
         model = User
@@ -91,7 +91,7 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
     * Doesn't prefill password on validation error.
     * Allows logging in inactive users (initialize with `only_active=False`).
     """
-    password = forms.CharField(label=_("Password"),
+    password = forms.CharField(label=_lazy(u"Password"),
                                widget=forms.PasswordInput(render_value=False))
 
     def __init__(self, request=None, only_active=True, *args, **kwargs):
@@ -110,7 +110,7 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
                     _('Please enter a correct username and password. Note '
                       'that both fields are case-sensitive.'))
             elif self.only_active and not self.user_cache.is_active:
-                raise forms.ValidationError(_("This account is inactive."))
+                raise forms.ValidationError(_('This account is inactive.'))
 
         if self.request:
             if not self.request.session.test_cookie_worked():
