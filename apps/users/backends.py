@@ -17,7 +17,7 @@ ever gets fixed, this can be removed.
 def get_hexdigest(algorithm, salt, raw_password):
     """Generate SHA-256 hash."""
     if algorithm == 'sha256':
-        return hashlib.sha256(salt + raw_password).hexdigest()
+        return hashlib.sha256((salt + raw_password).encode('utf8')).hexdigest()
     else:
         return get_hexdigest_old(algorithm, salt, raw_password)
 get_hexdigest_old = auth_models.get_hexdigest

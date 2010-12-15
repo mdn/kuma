@@ -39,6 +39,37 @@ class RegisterTestCase(TestCase):
         key = RegistrationProfile.objects.all()[0].activation_key
         assert mail.outbox[0].body.find('activate/%s' % key) > 0
 
+        # Now try to log in
+        u.is_active = True
+        u.save()
+        response = self.client.post(reverse('users.login', locale='en-US'),
+                                    {'username': 'newbie',
+                                     'password': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        eq_('http://testserver/en-US/home/', response.redirect_chain[0][0])
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_unicode_password(self, get_current):
+        u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
+        get_current.return_value.domain = 'su.mo.com'
+        response = self.client.post(reverse('users.register', locale='ja'),
+                                    {'username': 'cjkuser',
+                                     'email': 'cjkuser@example.com',
+                                     'password': u_str,
+                                     'password2': u_str}, follow=True)
+        eq_(200, response.status_code)
+        u = User.objects.get(username='cjkuser')
+        u.is_active = True
+        u.save()
+        assert u.password.startswith('sha256')
+
+        # make sure you can login now
+        response = self.client.post(reverse('users.login', locale='ja'),
+                                    {'username': 'cjkuser',
+                                     'password': u_str}, follow=True)
+        eq_(200, response.status_code)
+        eq_('http://testserver/ja/home/', response.redirect_chain[0][0])
+
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
