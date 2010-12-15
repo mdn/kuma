@@ -265,6 +265,16 @@ class EditAvatarTests(TestCaseBase):
         eq_('"test.jpg" is too large (12KB), the limit is 1KB',
             doc('.errorlist').text())
 
+    def test_avatar_extensions(self):
+        url = reverse('users.edit_avatar')
+        self.client.login(username='rrosario', password='testpass')
+        with open('apps/upload/tests/media/test_invalid.ext') as f:
+            r = self.client.post(url, {'avatar': f})
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_('Please upload an image with one of the following extensions: '
+            'jpg, jpeg, png, gif.', doc('.errorlist').text())
+
     def test_upload_avatar(self):
         """Upload a valid avatar."""
         user_profile = Profile.uncached.get(user__username='rrosario')

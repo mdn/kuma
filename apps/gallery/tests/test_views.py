@@ -154,6 +154,32 @@ class UploadImageTestCase(TestCase):
         eq_('Upload a valid image. The file you uploaded was either not an '
             'image or a corrupted image.', json_r['errors']['file'][0])
 
+    def test_invalid_image_extension(self):
+        """Make sure invalid extensions are not accepted as images."""
+        with open('apps/upload/tests/media/test_invalid.ext', 'rb') as f:
+            r = post(self.client, 'gallery.upload_async', {'file': f},
+                     args=['image'])
+
+        eq_(400, r.status_code)
+        json_r = json.loads(r.content)
+        eq_('error', json_r['status'])
+        eq_('Could not upload your image.', json_r['message'])
+        eq_('Please upload an image with one of the following extensions: '
+            'jpg, jpeg, png, gif.', json_r['errors']['__all__'][0])
+
+    def test_invalid_thumbnail_extension(self):
+        """Make sure invalid extensions are not accepted as thumbnails."""
+        with open('apps/upload/tests/media/test_invalid.ext', 'rb') as f:
+            r = post(self.client, 'gallery.upload_async', {'thumbnail': f},
+                     args=['video'])
+
+        eq_(400, r.status_code)
+        json_r = json.loads(r.content)
+        eq_('error', json_r['status'])
+        eq_('Could not upload your video.', json_r['message'])
+        eq_('Please upload an image with one of the following extensions: '
+            'jpg, jpeg, png, gif.', json_r['errors']['__all__'][0])
+
     def test_upload_image_long_filename(self):
         """Uploading an image with a filename that's too long fails."""
         with open('apps/upload/tests/media/a_really_long_filename_worth_'

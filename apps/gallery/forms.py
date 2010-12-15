@@ -8,6 +8,7 @@ from gallery import DRAFT_TITLE_PREFIX
 from gallery.models import Image, Video
 from sumo.form_fields import StrippedCharField
 from sumo_locales import LOCALES
+from upload.forms import clean_image_extension
 
 # Error messages
 MSG_TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -49,6 +50,11 @@ class ImageUploadFormAsync(forms.Form):
                                             'max_length': MSG_IMAGE_LONG},
                             max_length=settings.MAX_FILENAME_LENGTH)
 
+    def clean(self):
+        c = super(ImageUploadFormAsync, self).clean()
+        clean_image_extension(c.get('file'))
+        return c
+
 
 class ImageForm(forms.ModelForm):
     """Image form."""
@@ -76,7 +82,9 @@ class ImageForm(forms.ModelForm):
 
     def clean(self):
         c = super(ImageForm, self).clean()
-        return clean_draft(self, c)
+        c = clean_draft(self, c)
+        clean_image_extension(c.get('file'))
+        return c
 
     def save(self, update_user=None, **kwargs):
         return save_form(self, update_user, **kwargs)
@@ -111,6 +119,7 @@ class VideoUploadFormAsync(forms.ModelForm):
                 'flv' in c and c['flv'] and c['flv'].name.endswith('.flv') or
                 'thumbnail' in c and c['thumbnail']):
             raise ValidationError(MSG_VID_REQUIRED)
+        clean_image_extension(c.get('thumbnail'))
         return c
 
     class Meta:
@@ -159,6 +168,7 @@ class VideoForm(forms.ModelForm):
                 'flv' in c and c['flv']):
             raise ValidationError(MSG_VID_REQUIRED)
         clean_draft(self, c)
+        clean_image_extension(c.get('thumbnail'))
         return self.cleaned_data
 
     def save(self, update_user=None, **kwargs):

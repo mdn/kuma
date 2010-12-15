@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from tower import ugettext as _, ugettext_lazy as _lazy
 
 from sumo.widgets import ImageWidget
+from upload.forms import clean_image_extension
 from upload.utils import check_file_size, FileTooLargeError
 from users.models import Profile
 
@@ -150,4 +151,5 @@ class AvatarForm(forms.ModelForm):
                             settings.MAX_AVATAR_FILE_SIZE)
         except FileTooLargeError as e:
             raise forms.ValidationError(e.args[0])
+        clean_image_extension(self.cleaned_data.get('avatar'))
         return self.cleaned_data['avatar']
