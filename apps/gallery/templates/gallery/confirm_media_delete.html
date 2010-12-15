@@ -56,7 +56,7 @@
 
       <form action="{{ url('gallery.delete_media', media_type, media.id) }}" method="post">
         {{ csrf() }}
-        <p>{{ delete_warning }}</p>
+        <p>{{ delete_warning|safe }}</p>
         <div class="form-actions">
           <a href="{{ url('gallery.media', media_type, media.id) }}">{{ _('Cancel') }}</a>
           <input type="submit" class="btn g-btn" value="{{ delete_this }}" />
