@@ -65,7 +65,8 @@ class MigrationTests(TestCase):
         """Assert that the numeric prefixes of the DB migrations are unique."""
         leading_digits = re.compile(r'^\d+')
         seen_numbers = set()
-        for filename in listdir(self._migrations_path()):
+        path = self._migrations_path()
+        for filename in listdir(path):
             match = leading_digits.match(filename)
             if match:
                 number = match.group()
