@@ -141,6 +141,17 @@ class UploadImageTestCase(TestCase):
         eq_('Autosaved draft.', img.description)
         eq_('en-US', img.locale)
 
+    def test_upload_unicode_image(self):
+        """Uploading an unicode image works."""
+        with open(u'apps/upload/tests/media/123ascii\u6709\u52b9.jpg') as f:
+            r = post(self.client, 'gallery.upload_async', {'file': f},
+                     args=['image'])
+
+        eq_(1, Image.objects.count())
+        eq_(200, r.status_code)
+        json_r = json.loads(r.content)
+        eq_('success', json_r['status'])
+
     def test_invalid_image(self):
         """Make sure invalid files are not accepted as images."""
         with open('apps/gallery/__init__.py', 'rb') as f:
@@ -316,8 +327,8 @@ class UploadVideoTestCase(TestCase):
         ogv.close()
         flv.close()
         vid = Video.objects.all()[0]
-        eq_(VIDEO_PATH + 'test.ogv', vid.ogv.url)
-        eq_(VIDEO_PATH + 'test.flv', vid.flv.url)
+        assert vid.ogv.url.endswith('098f6b.ogv')
+        assert vid.flv.url.endswith('098f6b.flv')
 
     def test_upload_video_all(self):
         """Upload the same video, in all formats"""
@@ -330,9 +341,9 @@ class UploadVideoTestCase(TestCase):
         ogv.close()
         flv.close()
         vid = Video.objects.all()[0]
-        eq_(VIDEO_PATH + 'test.webm', vid.webm.url)
-        eq_(VIDEO_PATH + 'test.ogv', vid.ogv.url)
-        eq_(VIDEO_PATH + 'test.flv', vid.flv.url)
+        assert vid.webm.url.endswith('098f6b.webm')
+        assert vid.ogv.url.endswith('098f6b.ogv')
+        assert vid.flv.url.endswith('098f6b.flv')
 
     def test_video_required(self):
         """At least one video format is required to upload."""

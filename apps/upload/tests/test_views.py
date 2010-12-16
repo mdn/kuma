@@ -66,8 +66,9 @@ class UploadImageTestCase(TestCase):
         eq_('test.jpg', file['name'])
         eq_(90, file['width'])
         eq_(120, file['height'])
-        message = 'Url "%s" does not contain "test"' % file['url']
-        assert ('test' in file['url']), message
+        name = '098f6b.jpg'
+        message = 'Url "%s" does not contain "%s"' % (file['url'], name)
+        assert (name in file['url']), message
 
         eq_(1, ImageAttachment.objects.count())
         image = ImageAttachment.objects.all()[0]
@@ -76,6 +77,16 @@ class UploadImageTestCase(TestCase):
         eq_(200, image.file.height)
         eq_('question', image.content_type.model)
         eq_(1, image.object_id)
+
+    def test_upload_unicode_image(self):
+        """Uploading an unicode image works."""
+        with open(u'apps/upload/tests/media/123ascii\u6709\u52b9.jpg') as f:
+            r = post(self.client, 'upload.up_image_async', {'image': f},
+                     args=['questions.Question', 1])
+
+        eq_(200, r.status_code)
+        json_r = json.loads(r.content)
+        eq_('success', json_r['status'])
 
     def test_delete_image(self):
         """Deleting an uploaded image works."""

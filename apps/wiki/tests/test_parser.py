@@ -411,10 +411,9 @@ class TestWikiVideo(TestCase):
         d, _, p = doc_rev_parser('[[V:Some title]]')
         doc = pq(d.html)
         eq_('video', doc('div.video').attr('class'))
-        eq_(u'<source src="{0}uploads/gallery/videos/test.webm" '
-            u'type="video/webm"><source src="{0}uploads/gallery/'
-            u'videos/test.ogv" type="video/ogg"/>'
-            u'</source>'.format(settings.MEDIA_URL),
+        eq_(u'<source src="{0}" '
+            u'type="video/webm"><source src="{1}" type="video/ogg"/>'
+            u'</source>'.format(v.webm.url, v.ogv.url),
             doc('video').html())
         eq_(1, len(doc('video')))
         eq_(2, len(doc('source')))
@@ -471,9 +470,9 @@ class TestWikiVideo(TestCase):
         settings._wrapped.__dict__ = self.old_settings
 
         doc = pq(d.html)
-        eq_(cdn_url + 'test.flv', doc('video').attr('data-fallback'))
-        eq_(cdn_url + 'test.webm', doc('source').eq(0).attr('src'))
-        eq_(cdn_url + 'test.ogv', doc('source').eq(1).attr('src'))
+        assert cdn_url in doc('video').attr('data-fallback')
+        assert cdn_url in doc('source').eq(0).attr('src')
+        assert cdn_url in doc('source').eq(1).attr('src')
 
 
 def parsed_eq(want, to_parse):

@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from nose.tools import eq_
 from nose import SkipTest
 
@@ -44,9 +42,9 @@ class VideoTestCase(TestCase):
         """New Video is created and saved"""
         vid = video()
         eq_('Some title', vid.title)
-        eq_(settings.GALLERY_VIDEO_PATH + 'test.webm', vid.webm.name)
-        eq_(settings.GALLERY_VIDEO_PATH + 'test.ogv', vid.ogv.name)
-        eq_(settings.GALLERY_VIDEO_PATH + 'test.flv', vid.flv.name)
+        assert vid.webm.name.endswith('098f6b.webm')
+        assert vid.ogv.name.endswith('098f6b.ogv')
+        assert vid.flv.name.endswith('098f6b.flv')
 
     def test_thumbnail_url_if_set(self):
         """thumbnail_url_if_set() returns self.thumbnail if set, or else

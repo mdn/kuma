@@ -280,10 +280,8 @@ class EditAvatarTests(TestCaseBase):
         user_profile = Profile.uncached.get(user__username='rrosario')
         with open('apps/upload/tests/media/test.jpg') as f:
             user_profile.avatar.save('test_old.jpg', File(f), save=True)
-        eq_(settings.USER_AVATAR_PATH + 'test_old.jpg',
-            user_profile.avatar.name)
-        old_path = (settings.MEDIA_ROOT + '/' + settings.USER_AVATAR_PATH +
-                    'test_old.jpg')
+        assert user_profile.avatar.name.endswith('92b516.jpg')
+        old_path = user_profile.avatar.path
         assert os.path.exists(old_path), 'Old avatar is not in place.'
 
         url = reverse('users.edit_avatar')
@@ -291,8 +289,6 @@ class EditAvatarTests(TestCaseBase):
         with open('apps/upload/tests/media/test.jpg') as f:
             r = self.client.post(url, {'avatar': f})
 
-        user_profile = Profile.uncached.get(user__username='rrosario')
-        eq_(settings.USER_AVATAR_PATH + 'test.jpg', user_profile.avatar.name)
         eq_(302, r.status_code)
         eq_('http://testserver/en-US' + reverse('users.edit_profile'),
             r['location'])

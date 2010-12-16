@@ -115,7 +115,7 @@ class GalleryUploadTestCase(TestCase):
         response = get(self.client, 'gallery.gallery', args=['image'])
         eq_(200, response.status_code)
         doc = pq(response.content)
-        assert 'images/test' in doc('.image-preview img').attr('src')
+        assert doc('.image-preview img').attr('src').endswith('098f6b.jpg')
         eq_(1, doc('.image-preview img').length)
 
     def test_video_draft_shows(self):

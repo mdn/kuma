@@ -7,6 +7,7 @@ from nose.tools import eq_
 from questions.models import Question
 from sumo.tests import TestCase
 from upload.models import ImageAttachment
+from upload.storage import RenameFileStorage
 from upload.utils import (create_imageattachment, check_file_size,
                           FileTooLargeError)
 
@@ -19,6 +20,11 @@ def check_file_info(file_info, name, width, height, delete_url, url,
     eq_(delete_url, file_info['delete_url'])
     eq_(url, file_info['url'])
     eq_(thumbnail_url, file_info['thumbnail_url'])
+
+
+def get_file_name(name):
+    storage = RenameFileStorage()
+    return storage.get_available_name(name)
 
 
 class CheckFileSizeTestCase(TestCase):
@@ -65,3 +71,32 @@ class CreateImageAttachmentTestCase(TestCase):
             file_info, name='apps/upload/tests/media/test.jpg',
             width=90, height=120, delete_url=image.get_delete_url(),
             url=image.get_absolute_url(), thumbnail_url=image.thumbnail.url)
+
+
+class FileNameTestCase(TestCase):
+    def _match_file_name(self, name, name_end):
+        assert name.endswith(name_end), '"%s" does not end with "%s"' % (
+                                            name, name_end)
+
+    def test_empty_file_name(self):
+        self._match_file_name('', '')
+
+    def test_empty_file_name_with_extension(self):
+        self._match_file_name(get_file_name('.wtf'), '3f8242')
+
+    def test_ascii(self):
+        self._match_file_name(get_file_name('some ascii.jpg'), '5959e0.jpg')
+
+    def test_low_unicode(self):
+        self._match_file_name(
+            get_file_name('157d9383e6aeba7180378fd8c1d46f80.gif'),
+            'bdaf1a.gif')
+
+    def test_high_unicode(self):
+        self._match_file_name(get_file_name(u'\u6709\u52b9.jpeg'),
+                              'ce1518.jpeg')
+
+    def test_full_mixed(self):
+        self._match_file_name(
+            get_file_name(u'123\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9.png'),
+            '686c11.png')
