@@ -22,7 +22,9 @@ from sumo.parser import (ALLOWED_ATTRIBUTES, get_object_fallback,
 
 BLOCK_LEVEL_ELEMENTS = ['table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5',
                         'h6', 'td', 'th', 'div', 'hr', 'pre', 'p', 'li', 'ul',
-                        'ol', 'center']  # from Parser.doBlockLevels
+                        'ol', 'center', 'dl', 'dt', 'dd', 'ins', 'del',
+                        'section']  # block elements wikimarkup
+                                    # knows about (and thus preserves)
 VIDEO_PARAMS = ['height', 'width', 'modal', 'title', 'placeholder']
 TEMPLATE_ARG_REGEX = re.compile('{{{([^{]+?)}}}')
 

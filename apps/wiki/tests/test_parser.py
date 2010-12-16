@@ -603,6 +603,12 @@ class ForWikiTests(TestCase):
                   'They have high melting points.\n'
                   '{/for}')
 
+    def test_block_level_section(self):
+        """Make sure we recognize <section> as a block element."""
+        p = WikiParser()
+        html = p.parse('{for}<section>hi</section>{/for}')
+        assert '<div' in html, "Didn't detect <section> tag as block level"
+
 
 def balanced_eq(want, to_balance):
     """Run `to_balance` through the expander to get its tags balanced, and
