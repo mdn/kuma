@@ -127,7 +127,8 @@ body.mobile #featured {
 
 #home-content-explore section {
     float: left;
-    width: 220px;
+    padding: 0 15px 0 0;
+    width: 205px;
 }
 
 #home-content-explore ul {
