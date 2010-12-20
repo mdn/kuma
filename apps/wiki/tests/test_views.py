@@ -4,6 +4,7 @@ from django.conf import settings
 
 from nose.tools import eq_
 
+from sumo.helpers import urlparams
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from wiki.models import VersionMetadata, Document
@@ -67,6 +68,21 @@ class LocaleRedirectTests(TestCase):
         """If a slug isn't found in the requested locale but is in the default
         locale and if there is a translation of that default-locale document to
         the requested locale, the translation should be served."""
+        en_doc, de_doc = self._create_en_and_de_docs()
+        response = self.client.get(reverse('wiki.document',
+                                           args=[en_doc.slug],
+                                           locale='de'),
+                                   follow=True)
+        self.assertRedirects(response, de_doc.get_absolute_url())
+
+    def test_fallback_with_query_params(self):
+        """The query parameters should be passed along to the redirect."""
+        en_doc, de_doc = self._create_en_and_de_docs()
+        url = reverse('wiki.document', args=[en_doc.slug], locale='de')
+        response = self.client.get(url + '?x=y&x=z', follow=True)
+        self.assertRedirects(response, de_doc.get_absolute_url() + '?x=y&x=z')
+
+    def _create_en_and_de_docs(self):
         en = settings.WIKI_DEFAULT_LANGUAGE
         en_doc = document(locale=en, slug='english-slug')
         en_doc.save()
@@ -74,11 +90,7 @@ class LocaleRedirectTests(TestCase):
         de_doc.save()
         de_rev = revision(document=de_doc, is_approved=True)
         de_rev.save()
-        response = self.client.get(reverse('wiki.document',
-                                           args=['english-slug'],
-                                           locale='de'),
-                                   follow=True)
-        self.assertRedirects(response, de_doc.get_absolute_url())
+        return en_doc, de_doc
 
 
 class ViewTests(TestCase):

@@ -40,7 +40,7 @@ def url(viewname, *args, **kwargs):
 
 
 @register.filter
-def urlparams(url_, hash=None, **query):
+def urlparams(url_, hash=None, query_dict=None, **query):
     """
     Add a fragment and/or query paramaters to a URL.
 
@@ -51,12 +51,18 @@ def urlparams(url_, hash=None, **query):
     fragment = hash if hash is not None else url_.fragment
 
     q = url_.query
-    query_dict = (QueryDict(smart_str(q), mutable=True) if
-                  q else QueryDict('', mutable=True))
-    for k, v in query.items():
-        query_dict[k] = v  # Replace, don't append.
+    new_query_dict = (QueryDict(smart_str(q), mutable=True) if
+                      q else QueryDict('', mutable=True))
+    if query_dict:
+        for k, l in query_dict.lists():
+            new_query_dict[k] = None  # Replace, don't append.
+            for v in l:
+                new_query_dict.appendlist(k, v)
 
-    query_string = urlencode([(k, v) for k, l in query_dict.lists() for
+    for k, v in query.items():
+        new_query_dict[k] = v  # Replace, don't append.
+
+    query_string = urlencode([(k, v) for k, l in new_query_dict.lists() for
                               v in l if v is not None])
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)

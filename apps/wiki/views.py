@@ -91,7 +91,9 @@ def document(request, document_slug):
         translation = doc.translated_to(request.locale)
         if translation and translation.current_revision:
             doc = translation
-        return HttpResponseRedirect(doc.get_absolute_url())
+        url = doc.get_absolute_url()
+        url = urlparams(url, query_dict=request.GET)
+        return HttpResponseRedirect(url)
 
     # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a
@@ -100,9 +102,9 @@ def document(request, document_slug):
     redirect_url = (None if request.GET.get('redirect') == 'no'
                     else doc.redirect_url())
     if redirect_url:
-        return HttpResponseRedirect(urlparams(redirect_url,
-                                              redirectslug=doc.slug,
-                                              redirectlocale=doc.locale))
+        url = urlparams(redirect_url, query_dict=request.GET,
+                        redirectslug=doc.slug, redirectlocale=doc.locale)
+        return HttpResponseRedirect(url)
 
     # Get "redirected from" doc if we were redirected:
     redirect_slug = request.GET.get('redirectslug')
