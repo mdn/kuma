@@ -689,6 +689,22 @@ class CompareRevisionTests(TestCaseBase):
         doc = pq(response.content)
         eq_('Dolor',  doc('div.revision-diff span.diff_add').text())
 
+    def test_compare_revisions_invalid_to_int(self):
+        """Provide invalid 'to' int for revision ids."""
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {'from': '', 'to': 'invalid'}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(404, response.status_code)
+
+    def test_compare_revisions_invalid_from_int(self):
+        """Provide invalid 'from' int for revision ids."""
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {'from': 'invalid', 'to': ''}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(404, response.status_code)
+
     def test_compare_revisions_missing_query_param(self):
         """Try to compare two revisions, with a missing query string param."""
         url = reverse('wiki.compare_revisions', args=[self.document.slug])

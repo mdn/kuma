@@ -20,7 +20,7 @@ from access.decorators import permission_required, login_required
 from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
-from sumo.utils import paginate
+from sumo.utils import paginate, smart_int
 from wiki import DOCUMENTS_PER_PAGE
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
@@ -275,7 +275,8 @@ def edit_document(request, document_slug, revision_id=None):
 def preview_revision(request):
     """Create an HTML fragment preview of the posted wiki syntax."""
     wiki_content = request.POST.get('content', '')
-    data = {'content': wiki_to_html(wiki_content, request.locale)}  # TODO: Get doc ID from JSON.
+    # TODO: Get doc ID from JSON.
+    data = {'content': wiki_to_html(wiki_content, request.locale)}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
@@ -341,10 +342,10 @@ def compare_revisions(request, document_slug):
     if 'from' not in request.GET or 'to' not in request.GET:
         raise Http404
 
-    revision_from = get_object_or_404(Revision, document=doc,
-                                      id=request.GET.get('from'))
-    revision_to = get_object_or_404(Revision, document=doc,
-                                    id=request.GET.get('to'))
+    from_id = smart_int(request.GET.get('from'))
+    to_id = smart_int(request.GET.get('to'))
+    revision_from = get_object_or_404(Revision, document=doc, id=from_id)
+    revision_to = get_object_or_404(Revision, document=doc, id=to_id)
 
     return jingo.render(request, 'wiki/compare_revisions.html',
                         {'document': doc, 'revision_from': revision_from,

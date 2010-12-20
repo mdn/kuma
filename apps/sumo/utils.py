@@ -42,3 +42,11 @@ def chunked(seq, n):
     """
     for i in xrange(0, len(seq), n):
         yield seq[i:i + n]
+
+
+def smart_int(string, fallback=0):
+    """Convert a string to int, with fallback for invalid strings or types."""
+    try:
+        return int(float(string))
+    except (ValueError, TypeError):
+        return fallback
