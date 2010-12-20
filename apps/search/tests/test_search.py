@@ -256,6 +256,12 @@ class SearchTest(SphinxTestCase):
             assert url_end, ('Url was "%s", expected to end with "%s"' %
                              (result['url'], url_id))
 
+    def test_sortby_invalid(self):
+        """Invalid created_date is ignored."""
+        qs = {'a': 1, 'w': 4, 'format': 'json', 'sortby': ''}
+        response = self.client.get(reverse('search'), qs)
+        eq_(200, response.status_code)
+
     def test_created_invalid(self):
         """Invalid created_date is ignored."""
         qs = {'a': 1, 'w': 4, 'format': 'json',

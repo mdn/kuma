@@ -21,7 +21,7 @@ from forums.models import Forum as DiscussionForum, Thread, Post
 from questions.models import Question
 import search as constants
 from sumo.form_fields import NoValidateMultipleChoiceField
-from sumo.utils import paginate
+from sumo.utils import paginate, smart_int
 from sumo_locales import LOCALES
 from wiki.models import (Document, CATEGORIES, FIREFOX_VERSIONS,
                          OPERATING_SYSTEMS)
@@ -277,11 +277,7 @@ def search(request):
     cleaned = search_form.cleaned_data
     search_locale = (sphinx_locale(language),)
 
-    try:
-        page = int(request.GET.get('page', 1))
-        page = max(page, 1)
-    except ValueError:
-        page = 1
+    page = max(smart_int(request.GET.get('page')), 1)
     offset = (page - 1) * settings.SEARCH_RESULTS_PER_PAGE
 
     # get language name for display in template
@@ -438,7 +434,7 @@ def search(request):
                 filters_f.append(after)
             filters_q.append(after)
 
-    sortby = int(request.GET.get('sortby', 0))
+    sortby = smart_int(request.GET.get('sortby'))
     try:
         if cleaned['w'] & constants.WHERE_WIKI:
             wc = WikiClient()  # Wiki SearchClient instance
