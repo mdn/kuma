@@ -278,7 +278,6 @@ img.markup-toolbar-button {
     display: block;
     left: 50%;
     margin-left: -260px;
-    padding: 0;
     position: fixed;
     text-align: left;
     top: 100px;
@@ -549,12 +548,8 @@ ul.ui-autocomplete {
 }
 .js .pop-in {
     font-size: 14px;
-    padding: 15px;
     position: absolute;
     z-index: 8;
-}
-.js .pop-in.fixed-modal {
-    padding: 0;
 }
 
 .pop-in a.close,

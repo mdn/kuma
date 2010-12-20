@@ -312,6 +312,18 @@ div#question div.content h2 {
     margin-bottom: .3em;
 }
 
+#question-vote-thanks {
+    padding: 15px;
+}
+
+#question-vote-thanks h1 {
+    background: none;
+    border: 0;
+    color: #4B4742;
+    font-family: Georgia,freeserif,serif;
+    text-shadow: none;
+}
+
 /* side modules */
 div.sd-module {
     background:transparent url(../img/questions/bkg.askquestion.gif) no-repeat;
@@ -674,6 +686,7 @@ div.report-reply a.delete {
 /* report post */
 form.report div.report-post-box {
     left: -70px;
+    padding: 15px;
     top: 25px;
     width: 255px;
 }
@@ -820,6 +833,7 @@ ul.related li {
 .js #email-subscribe {
     display: none;
     left: -50px;
+    padding: 15px;
     top: 25px;
     width: 235px;
 }
