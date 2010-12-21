@@ -614,3 +614,15 @@ ul.ui-autocomplete {
 .fixed-modal h1 {
     margin-top: 0;
 }
+
+/*----------------------------------
+    Common button styles
+----------------------------------*/
+button.img-submit {
+    background: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    padding: 0;
+}
+/* TODO: more to come during the great css/html refactor */

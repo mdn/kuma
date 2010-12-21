@@ -112,12 +112,11 @@ div.support-search input.text {
     width: 98%;
 }
 
-div.support-search input.submit {
-    box-shadow: none;
+div.support-search button.img-submit {
     float: left;
     height: 33px;
-    margin: 0 0 0 5px;
-    width: 37px;
+    margin: -1px 0 0 2px;
+    width: 40px;
 }
 
 #greeting {

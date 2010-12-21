@@ -12,7 +12,9 @@
       <span class="wrap">
         <input type="text" class="text" name="q" placeholder="{{ placeholder }}" required="required" />
       </span>
-      <input type="image" class="submit" src="{{ settings.MEDIA_URL }}img/btn.search.png" title="{{ _('Search') }}" alt="{{ _('Search') }}" />
+      <button type="submit" class="img-submit" title="{{ _('Search') }}">
+        <img src="{{ settings.MEDIA_URL }}img/btn.search.png" alt="{{ _('Search') }}" />
+      </button>
     </form>
   </div>
 {% endmacro %}
