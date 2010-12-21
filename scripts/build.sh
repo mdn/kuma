@@ -30,7 +30,7 @@ if [ ! -d "$VENV/bin" ]; then
     virtualenv --no-site-packages $VENV
 fi
 source $VENV/bin/activate
-pip install -qr requirements/compiled.txt
+pip install -r requirements/compiled.txt
 
 # Using a vendor library for the rest.
 if [ ! -d "$VENDOR" ]; then
@@ -54,6 +54,7 @@ ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 LOG_LEVEL = logging.ERROR
 DATABASES['default']['NAME'] = 'kitsune_$1'
 DATABASES['default']['HOST'] = 'sm-hudson01'
+DATABASES['default']['USER'] = 'hudson'
 DATABASES['default']['TEST_NAME'] = 'test_kitsune_$1'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
