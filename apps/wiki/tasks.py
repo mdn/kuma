@@ -4,7 +4,8 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.cache import cache
-from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
+from django.core.mail import send_mail, mail_admins
 from django.db import transaction
 from django.template import Context, loader
 
@@ -17,7 +18,7 @@ from tower import ugettext as _
 from notifications.tasks import send_notification
 from sumo.urlresolvers import reverse
 from sumo.utils import chunked
-from wiki.models import Document
+from wiki.models import Document, SlugCollision, TitleCollision
 
 
 log = logging.getLogger('k.task')
@@ -126,13 +127,29 @@ def _rebuild_kb_chunk(data, **kwargs):
 
     pin_this_thread()  # Stick to master.
 
+    messages = []
     for pk in data:
+        message = None
         try:
             document = Document.objects.get(pk=pk)
             document.html = document.current_revision.content_parsed
             document.save()
         except Document.DoesNotExist:
-            log.debug('Missing document: %d' % pk)
+            message = 'Missing document: %d' % pk
+        except ValidationError as e:
+            message = 'ValidationError for %d: %s' % (pk, e.messages[0])
+        except SlugCollision:
+            message = 'SlugCollision: %d' % pk
+        except TitleCollision:
+            message = 'TitleCollision: %d' % pk
+
+        if message:
+            log.debug(message)
+            messages.append(message)
+
+    if messages:
+        mail_admins(subject='Exceptions raised in _rebuild_kb_chunk()',
+                    message='\n'.join(messages))
     transaction.commit_unless_managed()
 
     unpin_this_thread()  # Not all tasks need to do use the master.

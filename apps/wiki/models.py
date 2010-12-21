@@ -219,9 +219,9 @@ class Document(ModelBase, BigVocabTaggableMixin):
         # This only applies to documents that already exist, hence self.pk
         # TODO: Use uncached manager here, if we notice problems
         if self.pk and not self.is_localizable and self.translations.exists():
-            raise ValidationError('"%s": parent "%s" has translations but is '
+            raise ValidationError('"%s": document has %s translations but is '
                                   'not localizable.' % (
-                                  unicode(self), unicode(self.parent)))
+                                  unicode(self), self.translations.count()))
 
     def _clean_category(self):
         """Make sure a doc's category is the same as its parent's."""
