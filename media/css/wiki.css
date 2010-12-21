@@ -327,6 +327,11 @@ div.support-search button.img-submit {
     padding: 20px;
 }
 
+#want-to-get-involved a {
+    display: block;
+    margin-right: 2em;
+}
+
 #check-your-plugins {
     background: -moz-radial-gradient(center -40%, circle, rgba(255,255,255,1), rgba(255,255,255,0) 50%);
     background: -webkit-gradient(radial, center -40%, 0, center -40%, 175, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
