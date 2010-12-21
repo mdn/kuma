@@ -106,6 +106,8 @@ class PlusToSpaceMiddleware(object):
             new = p.sub(' ', request.path_info)
             if request.META['QUERY_STRING']:
                 new = u'%s?%s' % (new, request.META['QUERY_STRING'])
+            if hasattr(request, 'locale'):
+                new = u'/%s%s' % (request.locale, new)
             return HttpResponsePermanentRedirect(new)
 
 

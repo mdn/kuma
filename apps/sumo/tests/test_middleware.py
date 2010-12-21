@@ -35,3 +35,10 @@ class PlusToSpaceTestCase(TestCase):
         """URLs without a + should be left alone."""
         request = self.rf.get('/path')
         assert not self.ptsm.process_request(request)
+
+    def test_with_locale(self):
+        """URLs with a locale should keep it."""
+        request = self.rf.get('/pa+th', {'a': 'b'})
+        request.locale = 'ru'
+        response = self.ptsm.process_request(request)
+        eq_('/ru/pa%20th?a=b', response['location'])
