@@ -187,9 +187,9 @@ def new_question(request):
     if not request.user.is_authenticated():
         authenticated = False
         if request.POST.get('type') == 'login':
-            login_form = handle_login(request)
+            login_form = handle_login(request, only_active=False)
             register_form = RegisterForm()
-            authenticated = True
+            authenticated = login_form.is_valid()
         elif request.POST.get('type') == 'register':
             register_form = handle_register(request)
             login_form = AuthenticationForm()

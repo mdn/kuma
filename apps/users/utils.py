@@ -4,11 +4,11 @@ from users.forms import RegisterForm, AuthenticationForm
 from users.models import RegistrationProfile
 
 
-def handle_login(request):
+def handle_login(request, only_active=True):
     auth.logout(request)
 
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = AuthenticationForm(data=request.POST, only_active=only_active)
         if form.is_valid():
             auth.login(request, form.get_user())
 
