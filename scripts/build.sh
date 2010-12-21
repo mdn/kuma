@@ -54,7 +54,6 @@ ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 LOG_LEVEL = logging.ERROR
 DATABASES['default']['NAME'] = 'kitsune_$1'
 DATABASES['default']['HOST'] = 'sm-hudson01'
-DATABASES['default']['USER'] = 'hudson'
 DATABASES['default']['TEST_NAME'] = 'test_kitsune_$1'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
