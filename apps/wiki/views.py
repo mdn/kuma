@@ -205,8 +205,7 @@ def edit_document(request, document_slug, revision_id=None):
     # If this document has a parent, then the edit is handled by the
     # translate view. Pass it on.
     if doc.parent:
-        return translate(request, doc.parent.slug)
-
+        return translate(request, doc.parent.slug, revision_id)
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
     else:
@@ -362,7 +361,7 @@ def select_locale(request, document_slug):
 
 @require_http_methods(['GET', 'POST'])
 @login_required
-def translate(request, document_slug):
+def translate(request, document_slug, revision_id=None):
     """Create a new translation of a wiki document.
 
     * document_slug is for the default locale
@@ -386,7 +385,12 @@ def translate(request, document_slug):
         return jingo.render(request, 'handlers/400.html',
                             {'message': message}, status=400)
 
-    based_on_rev = get_current_or_latest_revision(parent_doc)
+    if revision_id:
+        based_on_rev = get_object_or_404(Revision, pk=revision_id,
+                                         document__parent=parent_doc)
+    else:
+        based_on_rev = get_current_or_latest_revision(parent_doc)
+
     disclose_description = bool(request.GET.get('opendescription'))
 
     try:
@@ -409,7 +413,7 @@ def translate(request, document_slug):
             can_create_tags=user.has_perm('taggit.add_tag'))
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
-        if not doc:
+        if revision_id or not doc:
             initial.update(content=based_on_rev.content)
         instance = doc and get_current_or_latest_revision(doc)
         rev_form = RevisionForm(instance=instance, initial=initial)

@@ -903,6 +903,23 @@ class TranslateTests(TestCaseBase):
         existing_rev = document.revisions.all()[0]
         eq_(existing_rev.content, doc('#id_content').text())
 
+    def test_translate_based_on(self):
+        """Test translating based on a non-current revision."""
+        # Create the base revision
+        base_rev = self._create_and_approve_first_translation()
+        # Create a new current revision
+        r = revision(document=base_rev.document, is_approved=True)
+        r.save()
+        d = Document.objects.get(pk=base_rev.document.id)
+        eq_(r, base_rev.document.current_revision)
+
+        url = reverse('wiki.new_revision_based_on', locale='es',
+                      args=[d.slug, base_rev.id])
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(doc('#id_content')[0].value, base_rev.content)
+
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                                       locale=None):
