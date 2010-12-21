@@ -172,6 +172,7 @@ class NewQuestionForm(EditQuestionForm):
 class AnswerForm(forms.Form):
     """Form for replying to a question."""
     content = StrippedCharField(
+                label=_lazy('Content:'),
                 min_length=5,
                 max_length=10000,
                 widget=forms.Textarea(),

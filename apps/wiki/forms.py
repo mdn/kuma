@@ -174,7 +174,7 @@ class RevisionForm(forms.ModelForm):
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})
 
-    comment = StrippedCharField(required=False)
+    comment = StrippedCharField(required=False, label=_lazy(u'Comment:'))
 
     class Meta(object):
         model = Revision
@@ -202,9 +202,10 @@ class RevisionForm(forms.ModelForm):
 
 class ReviewForm(forms.Form):
     comment = StrippedCharField(max_length=255, widget=forms.Textarea(),
-                                required=False,
+                                required=False, label=_lazy(u'Comment:'),
                                 error_messages={'max_length': COMMENT_LONG})
 
     significance = forms.ChoiceField(
+                    label=_lazy(u'Significance:'),
                     choices=SIGNIFICANCES, initial=SIGNIFICANCES[0][0],
                     required=False, widget=forms.RadioSelect())
