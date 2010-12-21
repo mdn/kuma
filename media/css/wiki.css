@@ -1224,18 +1224,12 @@ ol.pagination li.selected a:hover {
 }
 
 /* Revision page */
-div.revision-info {
-    background: #f0f0f0;
-    border: solid 1px #ccc;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
-    margin: 10px 20px 10px 0;
-    padding: 10px 20px;
-}
-
 div.revision-info li {
     list-style-position: inside;
+}
+
+#doc-source textarea {
+    height: 400px;
 }
 
 /* Review revision */

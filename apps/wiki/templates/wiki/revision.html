@@ -16,47 +16,62 @@
       {{ breadcrumbs(crumbs) }}
     </div>
     <h1 class="title">{{ document.title }}</h1>
-    <div class="revision-info">
-      <h2>{{ _('Revision {num}')|f(num=revision.id) }}</h2>
-      <ul>
-        <li>
-          <mark>{{ _('Created:') }}</mark>
-          <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
-        </li>
-        <li>
-          <mark>{{ _('Creator:') }}</mark>
-          <span>{{ revision.creator }}</span>
-        </li>
-        <li>
-          <mark>{{ _('Is reviewed?') }}</mark>
-          <span>{{ revision.reviewed != None }}</span>
-        </li>
-        {% if revision.reviewed %}
+    <details class="h2" open="open">
+      <summary>{{ _('Revision Information') }}</summary>
+      <div class="revision-info">
+        <ul>
           <li>
-            <mark>{{ _('Reviewed:') }}</mark>
-            <span>{{ datetimeformat(revision.reviewed, format='datetime') }}</span>
+            <mark>{{ _('Revision id:') }}</mark>
+            <span>{{ revision.id }}</span>
           </li>
           <li>
-            <mark>{{ _('Reviewed by:') }}</mark>
-            <span>{{ revision.reviewer }}</span>
+            <mark>{{ _('Created:') }}</mark>
+            <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
           </li>
           <li>
-            <mark>{{ _('Is approved?') }}</mark>
-            <span>{{ revision.is_approved }}</span>
+            <mark>{{ _('Creator:') }}</mark>
+            <span>{{ revision.creator }}</span>
           </li>
           <li>
-            <mark>{{ _('Is current revision?') }}</mark>
-            <span>{{ revision == document.current_revision }}</span>
+            <mark>{{ _('Is reviewed?') }}</mark>
+            <span>{{ revision.reviewed != None }}</span>
           </li>
-        {% endif %}
-        {% if user.is_authenticated() %}
-          <li><a href="{{ url('wiki.new_revision_based_on', document.slug, revision.id) }}">{{ _('Edit article based on this revision') }}</a></li>
-        {% endif %}
-      </ul>
-    </div>
-    <div id="doc-content">
-      {{ revision.content_parsed|safe }}
-    </div>
+          {% if revision.reviewed %}
+            <li>
+              <mark>{{ _('Reviewed:') }}</mark>
+              <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
+            </li>
+            <li>
+              <mark>{{ _('Reviewed by:') }}</mark>
+              <span>{{ revision.reviewer }}</span>
+            </li>
+            <li>
+              <mark>{{ _('Is approved?') }}</mark>
+              <span>{{ revision.is_approved }}</span>
+            </li>
+            <li>
+              <mark>{{ _('Is current revision?') }}</mark>
+              <span>{{ revision == document.current_revision }}</span>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated() %}
+            <li><a href="{{ url('wiki.new_revision_based_on', document.slug, revision.id) }}">{{ _('Edit article based on this revision') }}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </details>
+    <details class="h2">
+      <summary>{{ _('Revision Source') }}</summary>
+      <div id="doc-source">
+        <textarea readonly="readonly">{{ revision.content }}</textarea>
+      </div>
+    </details>
+    <details class="h2">
+      <summary>{{ _('Revision Content') }}</summary>
+      <div id="doc-content">
+        {{ revision.content_parsed|safe }}
+      </div>
+    </details>
   </article>
 {% endblock %}
 
