@@ -647,4 +647,10 @@ button.img-submit {
     cursor: pointer;
     padding: 0;
 }
+
+form.disabled input[type="submit"],
+form.disabled input[type="image"],
+form.disabled button {
+    opacity: 0.5; /* dim submit buttons when form is disabled */
+}
 /* TODO: more to come during the great css/html refactor */

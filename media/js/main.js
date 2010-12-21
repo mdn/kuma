@@ -17,6 +17,7 @@ k = {};
 
         initAutoSubmitSelects();
         initSearchAutoFilters();
+        disableFormsOnSubmit();
 
     });
 
@@ -64,6 +65,25 @@ k = {};
             }
         });
     }
+
+    /*
+     * Disable forms on submit to avoid multiple POSTs when double+ clicking.
+     * Adds `disabled` CSS class to the form for optionally styling elements.
+     *
+     * NOTE: We can't disable the buttons because it prevents their name/value
+     * from being submitted and we depend on those in some views.
+     */
+    function disableFormsOnSubmit() {
+        $('form').submit(function(ev) {
+            var $this = $(this);
+            if ($this.data('disabled')) {
+                ev.preventDefault();
+            } else {
+                $this.data('disabled', true).addClass('disabled');
+            }
+        });
+    }
+
 })();
 
 
