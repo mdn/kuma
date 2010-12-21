@@ -25,6 +25,7 @@ MSG_CONTENT_LONG = _lazy(u'Please keep the length of your message to '
 class ReplyForm(forms.ModelForm):
     """Reply form for forum threads."""
     content = StrippedCharField(
+                label=_lazy('Content:'),
                 min_length=5,
                 max_length=10000,
                 widget=forms.Textarea(attrs={'rows': 10, 'cols': 80}),
@@ -40,11 +41,13 @@ class ReplyForm(forms.ModelForm):
 class NewThreadForm(forms.Form):
     """Form to start a new thread."""
     title = StrippedCharField(min_length=5, max_length=255,
+                              label=_lazy('Title:'),
                               widget=forms.TextInput(attrs={'size': 80}),
                               error_messages={'required': MSG_TITLE_REQUIRED,
                                               'min_length': MSG_TITLE_SHORT,
                                               'max_length': MSG_TITLE_LONG})
     content = StrippedCharField(
+                label=_lazy('Content:'),
                 min_length=5,
                 max_length=10000,
                 widget=forms.Textarea(attrs={'rows': 30, 'cols': 76}),
@@ -56,6 +59,7 @@ class NewThreadForm(forms.Form):
 class EditThreadForm(forms.ModelForm):
     """Form to start a new thread."""
     title = StrippedCharField(min_length=5, max_length=255,
+                              label=_lazy('Title:'),
                               widget=forms.TextInput(attrs={'size': 80}),
                               error_messages={'required': MSG_TITLE_REQUIRED,
                                               'min_length': MSG_TITLE_SHORT,
@@ -69,6 +73,7 @@ class EditThreadForm(forms.ModelForm):
 class EditPostForm(forms.Form):
     """Form to edit an existing post."""
     content = StrippedCharField(
+            label=_lazy('Content:'),
             min_length=5,
             max_length=10000,
             widget=forms.Textarea(attrs={'rows': 30, 'cols': 76}),
