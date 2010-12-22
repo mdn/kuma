@@ -2,7 +2,6 @@
 import os
 import site
 import sys
-print sys.getfilesystemencoding()
 
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
