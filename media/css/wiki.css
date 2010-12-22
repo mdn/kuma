@@ -223,6 +223,8 @@ div.support-search button.img-submit {
     color: #447bc4;
     cursor: pointer;
     padding: 0;
+    text-align: left;
+    white-space: normal;
 }
 
 #for-contributors h1 {
