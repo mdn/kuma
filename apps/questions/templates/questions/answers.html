@@ -10,6 +10,11 @@
   <div id="back-link">
     <a href="{{ url('questions.questions') }}">&laquo; {{ _('Back to the Firefox Support Forum') }}</a>
   </div>
+  {% if request.GET.get('new') %}
+    <div id="new-question">
+      {{ _('Thanks! Your question has been posted. See it below.') }}
+    </div>
+  {% endif %}
   <div id="question">
     <div class="user-section">
       <div class="avatar">

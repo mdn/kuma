@@ -101,6 +101,19 @@
     text-decoration: underline;
 }
 
+#new-question {
+    background: #e0f2ef;
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    font-size: 150%;
+    font-style: italic;
+    padding: 10px 0;
+    position: absolute;
+    text-align: center;
+    top: -100px;
+    width: 100%;
+}
 
 #filter li.active a {
     background: #6CC2D9;
@@ -1648,10 +1661,14 @@ div.confirm-question {
     padding: 0 25px;
 }
 
-div.confirm-question h2{
+div.confirm-question h2 {
     margin: 0 0 15px;
 }
 
-div.confirm-question h3{
+div.confirm-question h3 {
     margin: 0 0 15px;
+}
+
+div.confirm-question p {
+    padding: .3em 0;
 }

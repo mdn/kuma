@@ -30,8 +30,7 @@ from questions.forms import (NewQuestionForm, EditQuestionForm, AnswerForm,
                              WatchQuestionForm, FREQUENCY_CHOICES)
 from questions.models import (Question, Answer, QuestionVote, AnswerVote,
                               CONFIRMED, UNCONFIRMED)
-from questions.tasks import (cache_top_contributors, send_confirmation_email,
-                             build_solution_notification)
+from questions.tasks import cache_top_contributors, build_solution_notification
 from questions.question_config import products
 from search.clients import WikiClient, QuestionsClient, SearchError
 from search.utils import locale_or_default, sphinx_locale
@@ -42,6 +41,7 @@ from tags.utils import add_existing_tag
 from upload.models import ImageAttachment
 from upload.views import upload_imageattachment
 from users.forms import RegisterForm
+from users.models import RegistrationProfile
 from users.utils import handle_login, handle_register
 from wiki.models import Document
 
@@ -67,7 +67,8 @@ def questions(request):
         sort_ = None
         order = '-updated'
 
-    question_qs = Question.objects.filter(status=CONFIRMED)
+    question_qs = Question.objects.filter(creator__is_active=1,
+                                          status=CONFIRMED)
     if filter == 'no-replies':
         question_qs = question_qs.filter(num_answers=0)
     elif filter == 'replies':
@@ -184,12 +185,11 @@ def new_question(request):
 
     # Handle the form post.
     just_logged_in = False  # Used below for whether to pre-load Question form.
+    just_registered = False  # Used below for sending confirmation email.
     if not request.user.is_authenticated():
-        authenticated = False
         if request.POST.get('type') == 'login':
             login_form = handle_login(request, only_active=False)
             register_form = RegisterForm()
-            authenticated = login_form.is_valid()
         elif request.POST.get('type') == 'register':
             register_form = handle_register(request)
             login_form = AuthenticationForm()
@@ -197,9 +197,8 @@ def new_question(request):
                 user = auth.authenticate(username=request.POST.get('username'),
                                          password=request.POST.get('password'))
                 auth.login(request, user)
-                authenticated = True
-        if not authenticated and request.POST.get('type') in ('login',
-                                                              'register'):
+                just_registered = True
+        if not request.user.is_authenticated():
             return jingo.render(request,
                                 'questions/new_question_login.html',
                                 {'product': product, 'category': category,
@@ -234,10 +233,16 @@ def new_question(request):
         # Submitting the question counts as a vote
         question_vote(request, question.id)
 
-        send_confirmation_email.delay(question)
-        if not request.user.is_active:
-            auth.logout(request)
-        return jingo.render(request, 'questions/confirm_question.html',
+        if request.user.is_active:
+            url = reverse('questions.answers',
+                          kwargs={'question_id': question.id})
+            return HttpResponseRedirect(urlparams(url, new=1))
+
+        if not just_registered:  # Don't send email twice, if registered above
+            RegistrationProfile.objects.send_confirmation_email(
+                request.user.registrationprofile_set.get())
+        auth.logout(request)
+        return jingo.render(request, 'questions/confirm_email.html',
                             {'question': question})
 
     return jingo.render(request, 'questions/new_question.html',
@@ -299,11 +304,14 @@ def confirm_question_form(request, question_id, confirmation_id):
     if question.status == UNCONFIRMED:
         if request.method == 'GET':
             template = 'questions/confirm_question_form.html'
-            return jingo.render(request, template,
-                                {'question': question})
+            return jingo.render(request, template, {'question': question})
         else:
-            log.info("User %s is confirming question with id=%s " %
+            log.info("User %s is confirming email on question with id=%s " %
                      (question.creator, question.id))
+            if not question.creator.is_active:
+                u = question.creator
+                u.is_active = True
+                u.save()
             question.status = CONFIRMED
             question.save()
 

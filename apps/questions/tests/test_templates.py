@@ -3,13 +3,16 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.auth.models import User, Permission
+from django.contrib.sites.models import Site
+from django.core import mail
 
+import mock
 from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from notifications import check_watch, create_watch
-from questions.models import Question, Answer, QuestionVote, UNCONFIRMED
+from questions.models import Question, Answer, QuestionVote
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
@@ -17,6 +20,7 @@ from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import get, post
 from upload.models import ImageAttachment
+from users.models import RegistrationProfile
 
 
 class AnswersTemplateTestCase(TestCaseBase):
@@ -988,8 +992,8 @@ class AAQTemplateTestCase(TestCaseBase):
         super(AAQTemplateTestCase, self).tearDown()
         self.client.logout()
 
-    def test_full_workflow(self):
-        # Post a new question
+    def _post_new_question(self):
+        """Post a new question and return the response."""
         url = urlparams(reverse('questions.new_question'),
                         product='desktop', category='d1',
                         search='A test question', showform=1)
@@ -1002,30 +1006,43 @@ class AAQTemplateTestCase(TestCaseBase):
                 'useragent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X ' +
                              '10.6; en-US; rv:1.9.2.6) Gecko/20100625 ' +
                              'Firefox/3.6.6'}
+        return self.client.post(url, data, follow=True)
 
-        response = self.client.post(url, data)
+    def test_full_workflow(self):
+        response = self._post_new_question()
         eq_(200, response.status_code)
 
-        # Verify questions is in db now
+        # Verify question is in db now
         question = Question.objects.filter(title='A test question')[0]
-        eq_(UNCONFIRMED, question.status)
 
-        # Verify question doesn't show up in questions list yet
-        response = get(self.client, 'questions.questions')
-        doc = pq(response.content)
-        eq_(0, len(doc('li#question-%s' % question.id)))
-
-        # Confirm the question and make sure it now appears in questions list
-        response = post(self.client, 'questions.confirm_form', {},
-                        args=[question.id, question.confirmation_id])
-        eq_(1, len(response.redirect_chain))
-        eq_(('http://testserver/en-US/questions/%s' % question.id, 302),
-            response.redirect_chain[0])
-        doc = pq(response.content)
-        eq_('jsocol', doc('#question div.asked-by span.user').text())
+        # Make sure question is in questions list
         response = get(self.client, 'questions.questions')
         doc = pq(response.content)
         eq_(1, len(doc('li#question-%s' % question.id)))
+        # And no email was sent
+        eq_(0, len(mail.outbox))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_full_workflow_inactive(self, get_current):
+        get_current.return_value.domain = 'testserver'
+
+        u = User.objects.get(username='jsocol')
+        u.is_active = False
+        u.save()
+        RegistrationProfile.objects.create_profile(u)
+        response = self._post_new_question()
+        eq_(200, response.status_code)
+
+        # Verify question is in db now
+        question = Question.objects.filter(title='A test question')[0]
+
+        # Make sure question is not in questions list
+        response = get(self.client, 'questions.questions')
+        doc = pq(response.content)
+        eq_(0, len(doc('li#question-%s' % question.id)))
+        # And confirmation email was sent
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject == 'Please confirm your email address'
 
     def test_invalid_product_404(self):
         url = urlparams(reverse('questions.new_question'), product='lipsum')

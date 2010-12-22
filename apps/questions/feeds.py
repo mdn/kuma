@@ -9,7 +9,7 @@ from sumo.urlresolvers import reverse
 from taggit.models import Tag
 from sumo.helpers import urlparams
 
-from .models import Question, CONFIRMED
+from questions.models import Question, CONFIRMED
 import questions as constants
 
 
@@ -23,7 +23,7 @@ class QuestionsFeed(Feed):
         return reverse('questions.questions')
 
     def items(self):
-        qs = Question.objects.filter(status=CONFIRMED)
+        qs = Question.objects.filter(creator__is_active=True, status=CONFIRMED)
         return qs.order_by('-updated')[:constants.QUESTIONS_PER_PAGE]
 
     def item_title(self, item):
@@ -51,7 +51,8 @@ class TaggedQuestionsFeed(QuestionsFeed):
         return urlparams(reverse('questions.questions'), tagged=tag.slug)
 
     def items(self, tag):
-        qs = Question.objects.filter(status=CONFIRMED, tags__in=[tag.name])
+        qs = Question.objects.filter(creator__is_active=True, status=CONFIRMED,
+                                     tags__in=[tag.name])
         return qs.order_by('-updated')[:constants.QUESTIONS_PER_PAGE]
 
 

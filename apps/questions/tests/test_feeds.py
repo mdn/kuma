@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.models import User
 from django.core.cache import cache
 
 from nose.tools import eq_
@@ -9,7 +10,7 @@ from pyquery import PyQuery as pq
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from questions.feeds import QuestionsFeed, TaggedQuestionsFeed
-from questions.models import Question, UNCONFIRMED
+from questions.models import Question
 from questions.tests import TaggingTestCaseBase
 
 
@@ -46,9 +47,12 @@ class ForumTestFeedSorting(TaggingTestCaseBase):
         eq_('/en-US/questions/tagged/green/feed',
             feed_links[1].attrib['href'])
 
-    def test_no_unconfirmed_questions(self):
-        """Ensure that unconfirmed questions don't appear in the feed."""
+    def test_no_inactive_users(self):
+        """Ensure that inactive users' questions don't appear in the feed."""
+        u = User.objects.get(pk=118533)
+        u.is_active = False
+        u.save()
         q = Question(title='Test Question', content='Lorem Ipsum Dolor',
-                     creator_id=118533, status=UNCONFIRMED)
+                     creator_id=118533)
         q.save()
         assert q.id not in [x.id for x in QuestionsFeed().items()]

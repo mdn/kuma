@@ -50,7 +50,7 @@ class Question(ModelBase, BigVocabTaggableMixin):
     num_answers = models.IntegerField(default=0, db_index=True)
     solution = models.ForeignKey('Answer', related_name='solution_for',
                                  null=True)
-    status = models.IntegerField(default=UNCONFIRMED, db_index=True,
+    status = models.IntegerField(default=CONFIRMED, db_index=True,
                                  choices=QUESTION_STATUS_CHOICES)
     is_locked = models.BooleanField(default=False)
     num_votes_past_week = models.PositiveIntegerField(default=0, db_index=True)
