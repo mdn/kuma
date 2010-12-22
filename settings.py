@@ -212,15 +212,11 @@ INSTALLED_APPS = (
     'customercare',
     'twitter',
     'chat',
-)
 
-# Extra apps for testing
-if DEBUG:
-    INSTALLED_APPS += (
-        'django_extensions',
-        'django_nose',
-        'test_utils',
-    )
+    # Extra apps for testing.
+    'django_nose',
+    'test_utils',
+)
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
@@ -422,23 +418,14 @@ TEST_SPHINX_PATH = path('tmp/test/sphinx')
 TEST_SPHINX_PORT = 3416
 TEST_SPHINXQL_PORT = 3418
 
-#
-# Sphinx results tweaking
-SEARCH_FORUM_MIN_AGE = 7  # age before which decay doesn't apply, in days
-SEARCH_FORUM_HALF_LIFE = 14  # controls the decay rate, in days
 SEARCH_MAX_RESULTS = 1000
 SEARCH_RESULTS_PER_PAGE = 10
 
-#
 # Search default settings
 # comma-separated tuple of included category IDs. Negative IDs are excluded.
 SEARCH_DEFAULT_CATEGORIES = (10, 20,)
 SEARCH_SUMMARY_LENGTH = 275
-# because of markup cleanup, search summaries lengths vary quite a bit
-# so we extract longer excerpts and perform truncation to the length above
-SEARCH_SUMMARY_LENGTH_MULTIPLIER = 1.3
 
-#
 # The length for which we would like the user to cache search forms and
 # results, in minutes.
 SEARCH_CACHE_PERIOD = 15
@@ -458,6 +445,9 @@ LOGOUT_URL = '/users/logout'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 REGISTER_URL = '/users/register'
+
+# Video settings, hard coded here for now.
+# TODO: figure out a way that doesn't need these values
 WIKI_VIDEO_WIDTH = 640
 WIKI_VIDEO_HEIGHT = 480
 
@@ -483,6 +473,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Read-only mode setup.
 READ_ONLY = False
+
 
 # Turn on read-only mode in settings_local.py by putting this line
 # at the VERY BOTTOM: read_only_mode(globals())
@@ -560,7 +551,7 @@ CC_TWEET_ACTIVITY_CACHE_KEY = 'sumo-cc-tweet-stats'
 CC_TOP_CONTRIB_CACHE_KEY = 'sumo-cc-top-contrib-stats'
 CC_STATS_CACHE_TIMEOUT = 24 * 60 * 60  # 24 hours
 CC_STATS_WARNING = 30 * 60 * 60  # Warn if JSON data is older than 30 hours
-CC_IGNORE_USERS = ['fx4status',]  # User names whose tweets to ignore.
+CC_IGNORE_USERS = ['fx4status']  # User names whose tweets to ignore.
 
 TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''
