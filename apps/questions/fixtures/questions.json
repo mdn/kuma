@@ -24,7 +24,8 @@
             "created": "2010-06-21 19:47:34",
             "content": "Lorem ipsum dolor sit amet.\r\n\r\n* lorem\r\n* ipsum\r\n* dolor\r\n* sit\r\n* amet",
             "title": "Lorem ipsum dolor sit amet audio?",
-            "num_answers": 0
+            "num_answers": 0,
+            "num_votes_past_week": 1
         }
     },
     {
@@ -38,7 +39,8 @@
             "created": "2010-06-17 19:47:34",
             "content": "It's a marvellous night for an audio lolrus.",
             "title": "lolrus?",
-            "num_answers": 0
+            "num_answers": 0,
+            "num_votes_past_week": 3
         }
     },
     {
@@ -162,6 +164,42 @@
             "question": 4,
             "content": "An answer & stuff, too.",
             "upvotes": 0
+        }
+    },
+    {
+        "pk": 1,
+        "model": "questions.questionvote",
+        "fields": {
+            "question": 3,
+            "anonymous_id": "abcdef123",
+            "created": "2010-08-04 19:42:34"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "questions.questionvote",
+        "fields": {
+            "question": 3,
+            "anonymous_id": "321fedcba",
+            "created": "2010-08-04 19:44:44"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "questions.questionvote",
+        "fields": {
+            "question": 3,
+            "anonymous_id": "322fedcba",
+            "created": "2010-08-04 19:48:44"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "questions.questionvote",
+        "fields": {
+            "question": 2,
+            "anonymous_id": "b9bf881a0",
+            "created": "2010-08-04 19:52:05"
         }
     }
 ]

@@ -1,14 +1,18 @@
+from celery.messaging import establish_connection
 import cronjobs
 
-from .models import Question
+from questions.models import Question
+from questions.tasks import update_question_vote_chunk
+from sumo.utils import chunked
 
 
 @cronjobs.register
 def update_weekly_votes():
     """Keep the num_votes_past_week value accurate."""
 
-    questions = Question.objects.all()
+    questions = Question.objects.all().values_list('pk', flat=True)
 
-    for q in questions:
-        q.sync_num_votes_past_week()
-        q.save(no_update=True)
+    with establish_connection() as conn:
+        for chunk in chunked(questions, 200):
+            update_question_vote_chunk.apply_async(args=[chunk],
+                                                   connection=conn)

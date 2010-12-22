@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.db import transaction
 from django.template import Context, loader
 
 from celery.decorators import task
@@ -22,6 +23,24 @@ def update_question_votes(q):
     log.debug('Got a new QuestionVote.')
     q.sync_num_votes_past_week()
     q.save(no_update=True)
+
+
+@task(rate_limit='15/m')
+def update_question_vote_chunk(data, **kwargs):
+    """Update num_votes_past_week for a number of questions."""
+    log.info('Calculating past week votes for %s questions.' % len(data))
+
+    # Import here to avoid a circle.
+    from questions.models import Question
+
+    for pk in data:
+        try:
+            question = Question.objects.get(pk=pk)
+            question.sync_num_votes_past_week()
+            question.save(no_update=True)
+        except Question.DoesNotExist:
+            log.debug('Missing question: %d' % pk)
+    transaction.commit_unless_managed()
 
 
 @task
