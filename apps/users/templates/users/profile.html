@@ -40,7 +40,7 @@
     </section>
     <section id="contact-area">
       <h1>{{ _('Contact') }}</h1>
-      {% if profile.public_email and profile.website or profile.twitter or profile.facebook or profile.irc_handle %}
+      {% if profile.public_email or profile.website or profile.twitter or profile.facebook or profile.irc_handle %}
         <ul>
           {% if profile.public_email %}
             <li class="email">{{ profile.user.email|public_email }}</li>
