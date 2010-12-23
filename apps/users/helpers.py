@@ -36,4 +36,9 @@ def display_name(user):
 @register.filter
 def public_email(email):
     """Email address -> publicly displayable email."""
-    return jinja2.Markup(email.replace(u'@', u' [at] '))
+    return jinja2.Markup(unicode_to_html(email))
+
+
+def unicode_to_html(text):
+    """Turns all unicode into html entities, e.g. &#69; -> E."""
+    return ''.join([u'&#%s;' % ord(i) for i in text])

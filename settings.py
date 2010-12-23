@@ -395,6 +395,9 @@ MINIFY_BUNDLES = {
         'chat': (
             'js/chat.js',
         ),
+        'users': (
+            'js/users.js',
+        ),
     },
 }
 

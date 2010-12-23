@@ -43,7 +43,7 @@
       {% if profile.public_email and profile.website or profile.twitter or profile.facebook or profile.irc_handle %}
         <ul>
           {% if profile.public_email %}
-            <li>{{ profile.user.email|public_email }}</li>
+            <li class="email">{{ profile.user.email|public_email }}</li>
           {% endif %}
           {% if profile.website %}
             <li><a rel="nofollow" href="{{ profile.website }}">{{ _('Website') }}</a></li>
