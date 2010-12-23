@@ -193,16 +193,14 @@ div.support-search button.img-submit {
     z-index: 2;
 }
 
-#doc-tabs li.active span {
+#doc-tabs li.active span,
+#doc-tabs li.active a {
     border-left: solid 2px #fff;
+    color: #666;
     left: -2px;
     padding-left : 52px;
     position: relative;
     z-index: 0;
-}
-
-#doc-tabs li.active a {
-    color: #666;
 }
 
 #doc-tabs li.edit {

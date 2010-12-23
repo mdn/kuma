@@ -93,71 +93,52 @@ article.main div.submit {
 }
 
 /* profile view */
-#profile section {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    vertical-align: top;
+#main-content article#profile {
+    padding-left: 20px;
 }
 
-#profile h2,
-#contact-area h1 {
-    font-size: 20px;
+#profile h2 {
+    color: #808080;
+    font-size: 16px;
+}
+
+#profile h1 em {
+    color: #999;
+    font-style: normal;
+}
+
+#main-area {
+    margin-left: 65px;
 }
 
 section#avatar-area {
-    text-align: center;
-    width: 12%;
-}
-
-#edit-profile-link {
-    display: block;
-    font-size: 85%;
-    margin: 0 auto;
-    width: 80%;
-}
-
-section#main-area {
-    position: relative;
-    width: 57%;
-}
-
-#main-area ul {
-    list-style: none;
-    margin-top: 1em;
-}
-
-
-#main-area li:before {
-    content: '\00B7';
-    margin: 0 .5em;
-}
-#main-area li:first-child:before {
-    content: '';
-    margin: 0;
-}
-
-#main-area li {
     float: left;
+    margin-left: 0;
+    text-align: center;
+    width: 48px;
 }
 
-#bio {
-    position: absolute;
-    top: 90px;
+#contact-box {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #D9EEF9;
+    margin: 1em 0 1.5em;
+    padding: 1em;
 }
 
-section#contact-area {
-    padding-top: 90px;
-    margin-left: 3%;
-    width: 27%;
+#contact-box ul {
+    list-style-type: none;
 }
 
-#contact-area h1 {
-    margin-bottom: .25em;
+#contact-box label {
+    display: inline-block;
+    width: 7em;
 }
 
-#contact-area ul {
-    margin-left: 1em;
+section#main-area h2 {
+    height: 20px;
+    width: 100%;
 }
 
 body.register p,
