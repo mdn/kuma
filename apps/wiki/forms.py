@@ -8,6 +8,7 @@ from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
 from sumo.form_fields import StrippedCharField
+from tags import forms as tag_forms
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                      GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
@@ -53,11 +54,7 @@ class DocumentForm(forms.ModelForm):
 
         # Set up tags field, which is instantiated deep within taggit:
         tags_field = self.fields['tags']
-        tags_field.label = _('Topics:')
-        tags_field.help_text = (
-          _('Popular articles in each topic are displayed on the front page'))
         tags_field.widget.can_create_tags = can_create_tags
-        tags_field.required = False
 
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(),
@@ -103,6 +100,11 @@ class DocumentForm(forms.ModelForm):
                                  required=False,
                                  label=_lazy(u'Category:'),
                                  help_text=_lazy(u'Type of article'))
+
+    tags = tag_forms.TagField(required=False, label=_lazy(u'Topics:'),
+                              help_text=_lazy(
+                                u'Popular articles in each topic '
+                                'are displayed on the front page'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 

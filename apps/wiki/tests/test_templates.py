@@ -137,6 +137,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.get(reverse('wiki.new_document'))
         doc = pq(response.content)
         eq_(7, len(doc('input[checked=checked]')))
+        eq_(None, doc('input[name="tags"]').attr('required'))
 
     @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
