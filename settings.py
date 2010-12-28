@@ -148,6 +148,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.LocaleURLMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
+    'sumo.middleware.RemoveSlashMiddleware',
     'sumo.middleware.NoCacheHttpsMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',

@@ -15,7 +15,7 @@ class HelperTestCase(TestCase):
         self.u = User.objects.create(pk=500000, username=u'testuser')
 
     def test_profile_url(self):
-        eq_(u'/user/500000/', profile_url(self.u))
+        eq_(u'/user/500000', profile_url(self.u))
 
     def test_profile_avatar_default(self):
         profile = Profile.objects.create(user=self.u)

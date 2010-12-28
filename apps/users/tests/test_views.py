@@ -46,7 +46,7 @@ class RegisterTestCase(TestCase):
                                     {'username': 'newbie',
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
-        eq_('http://testserver/en-US/home/', response.redirect_chain[0][0])
+        eq_('http://testserver/en-US/home', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
@@ -68,7 +68,7 @@ class RegisterTestCase(TestCase):
                                     {'username': 'cjkuser',
                                      'password': u_str}, follow=True)
         eq_(200, response.status_code)
-        eq_('http://testserver/ja/home/', response.redirect_chain[0][0])
+        eq_('http://testserver/ja/home', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):

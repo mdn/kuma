@@ -61,7 +61,7 @@ document_patterns = patterns('wiki.views',
 )
 
 urlpatterns = patterns('wiki.views',
-    url(r'^/$', redirect_to, {'url': 'home'}, name='wiki.home'),
+    url(r'^$', redirect_to, {'url': 'home'}, name='wiki.home'),
 
     # Un/Subscribe to locale 'ready for review' notifications.
     url(r'^/watch-ready-for-review$', 'watch_locale',

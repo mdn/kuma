@@ -1,14 +1,10 @@
-"""
-Taken from zamboni.amo.middleware.
-
-Tried to use localeurl but it choked on 'en-US' with capital letters.
-"""
-
+import contextlib
 import re
 import urllib
 
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
-from django.utils.encoding import smart_str
+from django.middleware import common
+from django.utils.encoding import iri_to_uri, smart_str
 
 import jingo
 import MySQLdb as mysql
@@ -21,6 +17,9 @@ from sumo.views import handle403
 
 class LocaleURLMiddleware(object):
     """
+    Taken from zamboni.amo.middleware.
+    Tried to use localeurl but it choked on 'en-US' with capital letters.
+
     1. Search for the locale.
     2. Save it in the request.
     3. Strip them from the URL.
@@ -120,3 +119,42 @@ class ReadOnlyMiddleware(object):
     def process_exception(self, request, exception):
         if isinstance(exception, mysql.OperationalError):
             return jingo.render(request, 'sumo/read-only.html', status=503)
+
+
+class RemoveSlashMiddleware(object):
+    """
+    Middleware that tries to remove a trailing slash if there was a 404.
+
+    If the response is a 404 because url resolution failed, we'll look for a
+    better url without a trailing slash.
+    """
+
+    def process_response(self, request, response):
+        if (response.status_code == 404
+            and request.path_info.endswith('/')
+            and not common._is_valid_path(request.path_info)
+            and common._is_valid_path(request.path_info[:-1])):
+            # Use request.path because we munged app/locale in path_info.
+            newurl = request.path[:-1]
+            if request.GET:
+                with safe_query_string(request):
+                    newurl += '?' + request.META['QUERY_STRING']
+            return HttpResponsePermanentRedirect(newurl)
+        else:
+            return response
+
+
+@contextlib.contextmanager
+def safe_query_string(request):
+    """
+    Turn the QUERY_STRING into a unicode- and ascii-safe string.
+
+    We need unicode so it can be combined with a reversed URL, but it has to be
+    ascii to go in a Location header.  iri_to_uri seems like a good compromise.
+    """
+    qs = request.META['QUERY_STRING']
+    try:
+        request.META['QUERY_STRING'] = iri_to_uri(qs)
+        yield
+    finally:
+        request.META['QUERY_STRING'] = qs
