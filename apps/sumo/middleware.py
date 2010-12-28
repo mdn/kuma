@@ -17,7 +17,7 @@ from sumo.views import handle403
 
 class LocaleURLMiddleware(object):
     """
-    Taken from zamboni.amo.middleware.
+    Based on zamboni.amo.middleware.
     Tried to use localeurl but it choked on 'en-US' with capital letters.
 
     1. Search for the locale.
@@ -140,8 +140,7 @@ class RemoveSlashMiddleware(object):
                 with safe_query_string(request):
                     newurl += '?' + request.META['QUERY_STRING']
             return HttpResponsePermanentRedirect(newurl)
-        else:
-            return response
+        return response
 
 
 @contextlib.contextmanager

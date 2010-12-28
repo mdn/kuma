@@ -7,6 +7,21 @@ from sumo.middleware import PlusToSpaceMiddleware
 from sumo.tests import TestCase
 
 
+class TrailingSlashMiddlewareTestCase(TestCase):
+    def test_no_trailing_slash(self):
+        response = self.client.get(u'/en-US/ohnoez')
+        eq_(response.status_code, 404)
+
+    def test_404_trailing_slash(self):
+        response = self.client.get(u'/en-US/ohnoez/')
+        eq_(response.status_code, 404)
+
+    def test_remove_trailing_slash(self):
+        response = self.client.get(u'/en-US/home/?xxx=\xc3')
+        eq_(response.status_code, 301)
+        assert response['Location'].endswith('/en-US/home?xxx=%C3%83')
+
+
 class PlusToSpaceTestCase(TestCase):
 
     rf = RequestFactory()

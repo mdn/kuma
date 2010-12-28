@@ -3,7 +3,7 @@
         var $status = $('#chat-status'),
             server = $status.data('server');
 
-        var statusUrl = 'queue-status/',
+        var statusUrl = 'queue-status',
             startUrl = '/webchat/start.jsp?workgroup=support@workgroup.chat-support.mozilla.com&location=http://bk-sumo.khan.mozilla.org/en-US/kb/Live+chat',
             openImage = '/media/img/chat/foxkeh-open.png',
             closedImage = '/media/img/chat/foxkeh-closed.png';
