@@ -13,7 +13,7 @@ import test_utils
 
 from sumo.helpers import (datetimeformat, DateTimeFormatError,
                           collapse_linebreaks, url, json, timesince,
-                          label_with_help, urlparams)
+                          label_with_help, urlparams, yesno)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -74,6 +74,12 @@ class TestHelpers(TestCase):
         field.auto_id = 'foo'
         expect = '<label for="foo" title="Foo bar">Foo</label>'
         eq_(expect, label_with_help(field))
+
+    def test_yesno(self):
+        eq_('Yes', yesno(True))
+        eq_('No', yesno(False))
+        eq_('Yes', yesno(1))
+        eq_('No', yesno(0))
 
 
 class TestDateTimeFormat(TestCase):

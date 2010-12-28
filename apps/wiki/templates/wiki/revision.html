@@ -34,7 +34,7 @@
           </li>
           <li>
             <mark>{{ _('Is reviewed?') }}</mark>
-            <span>{{ revision.reviewed != None }}</span>
+            <span>{{ revision.reviewed|yesno }}</span>
           </li>
           {% if revision.reviewed %}
             <li>
@@ -47,7 +47,7 @@
             </li>
             <li>
               <mark>{{ _('Is approved?') }}</mark>
-              <span>{{ revision.is_approved }}</span>
+              <span>{{ revision.is_approved|yesno }}</span>
             </li>
             <li>
               <mark>{{ _('Is current revision?') }}</mark>

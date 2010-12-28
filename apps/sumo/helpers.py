@@ -295,3 +295,8 @@ def label_with_help(f):
     value as a title attribute."""
     label = u'<label for="%s" title="%s">%s</label>'
     return jinja2.Markup(label % (f.auto_id, f.help_text, f.label))
+
+
+@register.filter
+def yesno(boolean_value):
+    return jinja2.Markup(_lazy(u'Yes') if boolean_value else _lazy(u'No'))

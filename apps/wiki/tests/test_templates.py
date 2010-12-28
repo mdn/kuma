@@ -116,6 +116,8 @@ class RevisionTests(TestCaseBase):
             doc('#wiki-doc div.revision-info li')[1].text_content().strip())
         eq_('Reviewed:Jan 2, 2011 12:00:00 AM', 
             doc('#wiki-doc div.revision-info li')[4].text_content().strip())
+        # is reviewed?
+        eq_('Yes', doc('.revision-info li').eq(3).find('span').text())
 
 
 class NewDocumentTests(TestCaseBase):
