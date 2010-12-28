@@ -160,8 +160,9 @@ class PasswordReset(TestCaseBase):
     def test_bad_email(self):
         r = self.client.post(reverse('users.pw_reset'),
                              {'email': 'foo@bar.com'})
-        eq_(200, r.status_code)
-        eq_(len(mail.outbox), 0)
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US/users/pwresetsent', r['location'])
+        eq_(0, len(mail.outbox))
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_success(self, get_current):
@@ -377,7 +378,7 @@ class ResendConfirmationTests(TestCaseBase):
     def test_resend_confirmation(self, get_current):
         get_current.return_value.domain = 'testserver.com'
 
-        user = RegistrationProfile.objects.create_inactive_user(
+        RegistrationProfile.objects.create_inactive_user(
             'testuser', 'testpass', 'testuser@email.com')
         eq_(1, len(mail.outbox))
 

@@ -195,7 +195,8 @@ def password_reset(request):
             form.save(use_https=request.is_secure(),
                       token_generator=default_token_generator,
                       email_template_name='users/email/pw_reset.ltxt')
-            return HttpResponseRedirect(reverse('users.pw_reset_sent'))
+        # Don't leak existence of email addresses.
+        return HttpResponseRedirect(reverse('users.pw_reset_sent'))
     else:
         form = PasswordResetForm()
 

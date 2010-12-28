@@ -7,6 +7,11 @@
 {% block content %}
   <article id="pw-reset" class="main">
     <h1>{{ title }}</h1>
-    <p>{{ _('The password reset link was sent to your email address.') }}</p>
+    <p>
+      {% trans %}
+        We've sent an email to any account using this address.
+        Please follow the link in the email to reset your password.
+      {% endtrans %}
+    </p>
   </article>
 {% endblock content %}
