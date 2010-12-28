@@ -225,7 +225,7 @@ class UnreviewedReadout(Readout):
     # ^ Not just changes to translations but also unreviewed chanages to docs
     # in this locale that are not translations
 
-    short_title = _lazy(u'Unreviewed')
+    short_title = _lazy(u'Unreviewed', 'document')
     details_link_text = _lazy(u'All articles requiring review...')
     slug = 'unreviewed'
     column4_label = _lazy(u'Changed')

@@ -55,7 +55,7 @@
                   {% if not reached_current %}
                     <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
                   {% else %}
-                    <span class="unreviewed">{{ _('Unreviewed') }}</span>
+                    <span class="unreviewed">{{ _('Unreviewed', 'revision') }}</span>
                   {% endif %}
                 {% else %}
                   {% if document.current_revision == rev %}
