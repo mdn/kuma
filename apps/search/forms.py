@@ -72,14 +72,14 @@ class SearchForm(forms.Form):
         label=_lazy('Category'), choices=CATEGORIES, coerce_only=True)
 
     fx = TypedMultipleChoiceField(
-        coerce=int, widget=forms.CheckboxSelectMultiple,
+        required=False, coerce=int, widget=forms.CheckboxSelectMultiple,
         label=_lazy('Firefox version'),
         choices=[(v.id, v.long) for v in FIREFOX_VERSIONS],
         initial=[v.id for v in FIREFOX_VERSIONS],
         coerce_only=True)
 
     os = TypedMultipleChoiceField(
-        coerce=int, widget=forms.CheckboxSelectMultiple,
+        required=False, coerce=int, widget=forms.CheckboxSelectMultiple,
         label=_lazy('Operating System'),
         choices=[(o.id, o.name) for o in OPERATING_SYSTEMS],
         initial=[o.id for o in OPERATING_SYSTEMS],
