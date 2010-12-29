@@ -3,10 +3,8 @@ import re
 import json
 from datetime import datetime, timedelta
 
-from django import forms
 from django.conf import settings
 from django.db.models import ObjectDoesNotExist
-from django.forms.util import ValidationError
 from django.http import HttpResponse
 from django.utils.http import urlencode
 
@@ -14,17 +12,15 @@ import jingo
 import jinja2
 from tower import ugettext as _
 
-from .clients import (QuestionsClient, WikiClient,
-                      DiscussionClient, SearchError)
-from .utils import crc32, locale_or_default, sphinx_locale
-from forums.models import Forum as DiscussionForum, Thread, Post
+from search.clients import (QuestionsClient, WikiClient,
+                            DiscussionClient, SearchError)
+from search.utils import crc32, locale_or_default, sphinx_locale
+from forums.models import Thread, Post
 from questions.models import Question
 import search as constants
-from sumo.form_fields import NoValidateMultipleChoiceField
+from search.forms import SearchForm
 from sumo.utils import paginate, smart_int
-from sumo_locales import LOCALES
-from wiki.models import (Document, CATEGORIES, FIREFOX_VERSIONS,
-                         OPERATING_SYSTEMS)
+from wiki.models import Document, FIREFOX_VERSIONS, OPERATING_SYSTEMS
 
 
 def jsonp_is_valid(func):
@@ -34,179 +30,7 @@ def jsonp_is_valid(func):
 
 
 def search(request):
-    """Performs search or displays the search form"""
-
-    # Form must be nested inside request for fixtures to be used properly
-    # TODO: If you move it, change _() to _lazy().
-    class SearchForm(forms.Form):
-        """Django form for handling display and validation"""
-
-        def clean(self):
-            """Clean up data and set defaults"""
-
-            cleaned_data = self.cleaned_data
-
-            if ('a' not in cleaned_data or
-                not cleaned_data['a']) and cleaned_data['q'] == '':
-                raise ValidationError('Basic search requires a query string.')
-
-            # Validate created and updated dates
-            date_fields = (('created', 'created_date'),
-                           ('updated', 'updated_date'))
-            for field_option, field_date in date_fields:
-                if cleaned_data[field_date] != '':
-                    try:
-                        created_timestamp = time.mktime(
-                            time.strptime(cleaned_data[field_date],
-                                          '%m/%d/%Y'))
-                        cleaned_data[field_date] = int(created_timestamp)
-                    except (ValueError, OverflowError):
-                        cleaned_data[field_option] = None
-                else:
-                    cleaned_data[field_option] = None
-
-            # Validate all integer fields
-            if not cleaned_data.get('num_votes'):
-                cleaned_data['num_votes'] = 0
-
-            # Set defaults for MultipleChoiceFields and convert to ints.
-            # Ticket #12398 adds TypedMultipleChoiceField which would replace
-            # MultipleChoiceField + map(int, ...) and use coerce instead.
-            if cleaned_data.get('category'):
-                try:
-                    cleaned_data['category'] = map(int,
-                                                   cleaned_data['category'])
-                except ValueError:
-                    cleaned_data['category'] = None
-
-            try:
-                cleaned_data['fx'] = map(int, cleaned_data['fx'])
-            except ValueError:
-                cleaned_data['fx'] = None
-
-            try:
-                cleaned_data['os'] = map(int, cleaned_data['os'])
-            except ValueError:
-                cleaned_data['os'] = None
-
-            try:
-                cleaned_data['forum'] = map(int, cleaned_data.get('forum'))
-            except ValueError:
-                cleaned_data['forum'] = None
-
-            try:
-                cleaned_data['thread_type'] = map(
-                    int, cleaned_data.get('thread_type'))
-            except ValueError:
-                cleaned_data['thread_type'] = None
-
-            return cleaned_data
-
-        # Common fields
-        q = forms.CharField(required=False)
-
-        w = forms.TypedChoiceField(
-            widget=forms.HiddenInput, required=False, coerce=int,
-            empty_value=constants.WHERE_BASIC,
-            choices=((constants.WHERE_SUPPORT, None),
-                     (constants.WHERE_WIKI, None),
-                     (constants.WHERE_BASIC, None),
-                     (constants.WHERE_DISCUSSION, None)))
-
-        a = forms.IntegerField(widget=forms.HiddenInput, required=False)
-
-        # KB fields
-        tag_widget = forms.TextInput(attrs={'placeholder': _('tag1, tag2'),
-                                            'class': 'auto-fill'})
-        tags = forms.CharField(label=_('Tags'), required=False,
-                               widget=tag_widget)
-
-        language = forms.ChoiceField(
-            label=_('Language'), required=False,
-            choices=[(LOCALES[k].external, LOCALES[k].native) for
-                     k in settings.SUMO_LANGUAGES])
-
-        category = NoValidateMultipleChoiceField(
-            widget=forms.CheckboxSelectMultiple,
-            label=_('Category'), choices=CATEGORIES, required=False)
-
-        fx = NoValidateMultipleChoiceField(
-            widget=forms.CheckboxSelectMultiple,
-            label=_('Firefox version'),
-            choices=[(v.id, v.long) for v in FIREFOX_VERSIONS],
-            initial=[v.id for v in FIREFOX_VERSIONS])
-
-        os = NoValidateMultipleChoiceField(
-            widget=forms.CheckboxSelectMultiple,
-            label=_('Operating System'),
-            choices=[(o.id, o.name) for o in OPERATING_SYSTEMS],
-            initial=[o.id for o in OPERATING_SYSTEMS])
-
-        # Support questions and discussion forums fields
-        created = forms.TypedChoiceField(
-            label=_('Created'), coerce=int, empty_value=0,
-            choices=constants.DATE_LIST, required=False)
-        created_date = forms.CharField(required=False)
-
-        updated = forms.TypedChoiceField(
-            label=_('Last updated'), coerce=int, empty_value=0,
-            choices=constants.DATE_LIST, required=False)
-        updated_date = forms.CharField(required=False)
-
-        user_widget = forms.TextInput(attrs={'placeholder': _('username'),
-                                             'class': 'auto-fill'})
-
-        # Discussion forums fields
-        author = forms.CharField(required=False, widget=user_widget)
-
-        sortby = forms.TypedChoiceField(
-            label=_('Sort results by'), coerce=int, empty_value=0,
-            choices=constants.SORTBY_FORUMS, required=False)
-
-        thread_type = NoValidateMultipleChoiceField(
-            label=_('Thread type'), choices=constants.DISCUSSION_STATUS_LIST,
-            required=False,
-            widget=forms.CheckboxSelectMultiple)
-
-        forums = [(f.id, f.name) for f in DiscussionForum.objects.all()]
-        forum = NoValidateMultipleChoiceField(label=_('Search in forum'),
-                                              choices=forums, required=False)
-
-        # Support questions fields
-        asked_by = forms.CharField(required=False, widget=user_widget)
-        answered_by = forms.CharField(required=False, widget=user_widget)
-
-        sortby_questions = forms.TypedChoiceField(
-            label=_('Sort results by'), coerce=int, empty_value=0,
-            choices=constants.SORTBY_QUESTIONS, required=False)
-
-        is_locked = forms.TypedChoiceField(
-            label=_('Locked'), coerce=int, empty_value=0,
-            choices=constants.TERNARY_LIST, required=False,
-            widget=forms.RadioSelect)
-
-        is_solved = forms.TypedChoiceField(
-            label=_('Solved'), coerce=int, empty_value=0,
-            choices=constants.TERNARY_LIST, required=False,
-            widget=forms.RadioSelect)
-
-        has_answers = forms.TypedChoiceField(
-            label=_('Has answers'), coerce=int, empty_value=0,
-            choices=constants.TERNARY_LIST, required=False,
-            widget=forms.RadioSelect)
-
-        has_helpful = forms.TypedChoiceField(
-            label=_('Has helpful answers'), coerce=int, empty_value=0,
-            choices=constants.TERNARY_LIST, required=False,
-            widget=forms.RadioSelect)
-
-        num_voted = forms.TypedChoiceField(
-            label=_('Votes'), coerce=int, empty_value=0,
-            choices=constants.NUMBER_LIST, required=False)
-        num_votes = forms.IntegerField(required=False)
-
-        q_tags = forms.CharField(label=_('Tags'), required=False,
-                                 widget=tag_widget)
+    """Performs search or displays the search form."""
 
     # JSON-specific variables
     is_json = (request.GET.get('format') == 'json')
