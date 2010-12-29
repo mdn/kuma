@@ -43,9 +43,6 @@ git pull -q origin master
 git submodule --quiet update --init
 popd > /dev/null
 
-# Rebuild the .mos.
-locale/compile-mo.sh locale
-
 python manage.py update_product_details
 
 cat > settings_local.py <<SETTINGS

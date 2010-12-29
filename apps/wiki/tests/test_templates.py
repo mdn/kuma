@@ -655,11 +655,9 @@ class ReviewRevisionTests(TestCaseBase):
         response = self.client.get(url, follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(u'Revision %s: Revision %s: Traducci\xf3n p\xfablica actual: '
-            u'Traducci\xf3n enviada: Versi\xf3n English aprobada: '
-            u'Traducci\xf3n Espa\xf1ol aprobada:' %
-             (rev_es1.based_on.id, rev.id),
-            doc('div.revision-diff h3').text())
+        diff_heading = doc('div.revision-diff h3').text()
+        assert str(rev_es1.based_on.id) in diff_heading
+        assert str(rev.id) in diff_heading
 
         # And finally, approve the translation
         response = self.client.post(url, {'approve': 'Approve Translation'},
@@ -762,8 +760,6 @@ class TranslateTests(TestCaseBase):
         url = reverse('wiki.translate', locale='es', args=[self.d.slug])
         response = self.client.get(url)
         eq_(400, response.status_code)
-        doc = pq(response.content)
-        eq_('No puedes traducir este documento.', doc('#content p').html())
 
     def test_invalid_document_form(self):
         """Make sure we handle invalid document form without a 500."""
