@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth import authenticate, forms as auth_forms
@@ -9,6 +11,7 @@ from sumo.widgets import ImageWidget
 from upload.forms import clean_image_extension
 from upload.utils import check_file_size, FileTooLargeError
 from users.models import Profile
+from users.widgets import FacebookURLWidget, TwitterURLWidget
 
 
 USERNAME_INVALID = _lazy(u'Username may contain only letters, '
@@ -127,6 +130,22 @@ class ProfileForm(forms.ModelForm):
     class Meta(object):
         model = Profile
         exclude = ('user', 'livechat_id', 'avatar')
+        widgets = {
+            'twitter': TwitterURLWidget,
+            'facebook': FacebookURLWidget,
+        }
+
+    def clean_twitter(self):
+        twitter = self.cleaned_data['twitter']
+        if twitter and not re.match(TwitterURLWidget.pattern, twitter):
+            raise forms.ValidationError(_(u'Please enter a twitter.com URL.'))
+        return twitter
+
+    def clean_facebook(self):
+        facebook = self.cleaned_data['facebook']
+        if facebook and not re.match(FacebookURLWidget.pattern, facebook):
+            raise forms.ValidationError(_(u'Please enter a facebook.com URL.'))
+        return facebook
 
 
 class AvatarForm(forms.ModelForm):
