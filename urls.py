@@ -33,6 +33,9 @@ urlpatterns = patterns('',
 
     # Users
     ('', include('users.urls')),
+
+    # Services and sundry.
+    (r'', include('sumo.urls')),
 )
 
 # Handle 404 and 500 errors

@@ -89,6 +89,9 @@ SITE_TITLE = _lazy(u'Firefox Support', 'site_title')
 USE_I18N = True
 USE_L10N = True
 
+# Use the real robots.txt?
+ENGAGE_ROBOTS = False
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')
@@ -104,7 +107,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media', 'admin')
+SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'

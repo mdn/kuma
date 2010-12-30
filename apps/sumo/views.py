@@ -1,4 +1,6 @@
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.conf import settings
+from django.http import (HttpResponsePermanentRedirect, HttpResponseRedirect,
+                         HttpResponse)
 
 import jingo
 
@@ -41,3 +43,12 @@ def redirect_to(request, url, permanent=True):
         return HttpResponsePermanentRedirect(dest)
 
     return HttpResponseRedirect(dest)
+
+
+def robots(request):
+    """Generate a robots.txt."""
+    if not settings.ENGAGE_ROBOTS:
+        template = 'Disallow: /'
+    else:
+        template = jingo.render(request, 'sumo/robots.html')
+    return HttpResponse(template, mimetype='text/plain')
