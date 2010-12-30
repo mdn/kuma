@@ -62,16 +62,49 @@ class Profile(ModelBase):
         return unicode(self.user)
 
 
-# Registration model and manager:
+# Activation model and manager:
 # (based on http://bitbucket.org/ubernostrum/django-registration)
-class RegistrationManager(models.Manager):
+class ConfirmationManager(models.Manager):
     """
-    Custom manager for the ``RegistrationProfile`` model.
+    Custom manager for confirming keys sent by email.
 
-    The methods defined here provide shortcuts for account creation
-    and activation (including generation and emailing of activation
-    keys), and for cleaning out expired inactive accounts.
+    The methods defined here provide shortcuts for creation of instances
+    and sending email confirmations.
+    Activation should be done in specific managers.
     """
+    def _send_email(self, confirmation_profile, url,
+                    subject, email_template, send_to, **kwargs):
+        """
+        Send an email using a passed in confirmation profile.
+
+        Use specified url, subject, email_template, and email to send_to.
+        """
+        current_site = Site.objects.get_current()
+        email_kwargs = {'activation_key': confirmation_profile.activation_key,
+                        'domain': current_site.domain,
+                        'activate_url': url}
+        email_kwargs.update(kwargs)
+        message = render_to_string(email_template, email_kwargs)
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [send_to])
+
+    def send_confirmation_email(self, *args, **kwargs):
+        """This is meant to be overwritten."""
+        raise NotImplementedError
+
+    def create_profile(self, user, *args, **kwargs):
+        """
+        Create an instance of this manager's object class for a given
+        ``User``, and return it.
+
+        The activation key will be a SHA1 hash, generated from a combination
+        of the ``User``'s username and a random salt.
+        """
+        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        activation_key = hashlib.sha1(salt + user.username).hexdigest()
+        return self.create(user=user, activation_key=activation_key, **kwargs)
+
+
+class RegistrationManager(ConfirmationManager):
     def activate_user(self, activation_key):
         """
         Validate an activation key and activate the corresponding
@@ -126,39 +159,21 @@ class RegistrationManager(models.Manager):
 
     def send_confirmation_email(self, registration_profile):
         """Send the user confirmation email."""
-        current_site = Site.objects.get_current()
-        subject = _('Please confirm your email address')
-        url = reverse('users.activate',
-                      args=[registration_profile.activation_key])
-        message = render_to_string(
-            'users/email/activate.ltxt',
-            {'activation_key': registration_profile.activation_key,
-             'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
-             'domain': current_site.domain,
-             'activate_url': url})
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
-                  [registration_profile.user.email])
-
-    def create_profile(self, user):
-        """
-        Create a ``RegistrationProfile`` for a given
-        ``User``, and return the ``RegistrationProfile``.
-
-        The activation key for the ``RegistrationProfile`` will be a
-        SHA1 hash, generated from a combination of the ``User``'s
-        username and a random salt.
-        """
-        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
-        activation_key = hashlib.sha1(salt + user.username).hexdigest()
-        return self.create(user=user,
-                           activation_key=activation_key)
+        self._send_email(
+            confirmation_profile=registration_profile,
+            url=reverse('users.activate',
+                        args=[registration_profile.activation_key]),
+            subject=_('Please confirm your email address'),
+            email_template='users/email/activate.ltxt',
+            send_to=registration_profile.user.email,
+            expiration_days=settings.ACCOUNT_ACTIVATION_DAYS)
 
     def delete_expired_users(self):
         """
-        Remove expired instances of ``RegistrationProfile``.
+        Remove expired instances of this manager's object class.
 
         Accounts to be deleted are identified by searching for
-        instances of ``RegistrationProfile`` with expired activation
+        instances of this manager's object class with expired activation
         keys, and then checking to see if their associated ``User``
         instances have the field ``is_active`` set to ``False``; any
         ``User`` who is both inactive and has an expired activation
@@ -175,9 +190,21 @@ class RegistrationManager(models.Manager):
                 #    user.delete()
 
 
+class EmailChangeManager(ConfirmationManager):
+    def send_confirmation_email(self, email_change, new_email):
+        """Ask for confirmation before changing a user's email."""
+        self._send_email(
+            confirmation_profile=email_change,
+            url=reverse('users.confirm_email',
+                        args=[email_change.activation_key]),
+            subject=_('Please confirm your email address'),
+            email_template='users/email/confirm_email.ltxt',
+            send_to=new_email)
+
+
 class RegistrationProfile(models.Model):
     """
-    A simple profile which stores an activation key for use during
+    A simple profile which stores an activation key used for
     user account registration.
 
     Generally, you will not want to interact directly with instances
@@ -197,7 +224,7 @@ class RegistrationProfile(models.Model):
         verbose_name_plural = _lazy(u'registration profiles')
 
     def __unicode__(self):
-        return u"Registration information for %s" % self.user
+        return u'Registration information for %s' % self.user
 
     def activation_key_expired(self):
         """
@@ -222,3 +249,18 @@ class RegistrationProfile(models.Model):
         return (self.activation_key == self.ACTIVATED or
                (self.user.date_joined + exp_date <= datetime.datetime.now()))
     activation_key_expired.boolean = True
+
+
+class EmailChange(models.Model):
+    """Stores email with activation key when user requests a change."""
+    ACTIVATED = u"ALREADY_ACTIVATED"
+
+    user = models.ForeignKey(User, unique=True, verbose_name=_lazy(u'user'))
+    activation_key = models.CharField(verbose_name=_lazy(u'activation key'),
+                                      max_length=40)
+    email = models.EmailField(db_index=True, null=True)
+
+    objects = EmailChangeManager()
+
+    def __unicode__(self):
+        return u'Change email request to %s for %s' % (self.email, self.user)

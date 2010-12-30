@@ -6,9 +6,10 @@ from django.core import mail
 import mock
 from nose.tools import eq_
 
-from sumo.tests import TestCase
+from notifications.models import EventWatch
+from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
-from users.models import RegistrationProfile
+from users.models import RegistrationProfile, EmailChange
 
 
 class RegisterTestCase(TestCase):
@@ -107,3 +108,44 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo',
                                      'password2': 'bar'}, follow=True)
         self.assertContains(response, 'must match')
+
+
+class ChangeEmailTestCase(TestCase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.client = LocalizingClient()
+        # Create some notifications
+        EventWatch.objects.create(content_type_id=1, watch_id=2,
+                                  email='user47963@nowhere')
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_user_change_email(self, get_current):
+        """Send email to change user's email and then change it."""
+        get_current.return_value.domain = 'su.mo.com'
+
+        self.client.login(username='pcraciunoiu', password='testpass')
+        # Attempt to change email.
+        response = self.client.post(reverse('users.change_email'),
+                                    {'email': 'paulc@trololololololo.com'},
+                                    follow=True)
+        eq_(200, response.status_code)
+
+        # Be notified to click a confirmation link.
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Please confirm your') == 0
+        ec = EmailChange.objects.all()[0]
+        assert ec.activation_key in mail.outbox[0].body
+        eq_('paulc@trololololololo.com', ec.email)
+
+        # Visit confirmation link to change email.
+        response = self.client.get(reverse('users.confirm_email',
+                                           args=[ec.activation_key]))
+        eq_(200, response.status_code)
+        u = User.objects.get(username='pcraciunoiu')
+        eq_('paulc@trololololololo.com', u.email)
+
+        # Notifications have been updated.
+        # TODO: remove this after notifications model is updated.
+        ew = EventWatch.objects.get()
+        eq_('paulc@trololololololo.com', ew.email)

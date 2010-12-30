@@ -24,8 +24,13 @@
           </ul>
         </li>
         <li>
-          <label>{{_('Password:') }}</label>
+          <label>{{ _('Password:') }}</label>
           <a href="{{ url('users.pw_change') }}">{{ _('Change') }}</a>
+        </li>
+        <li>
+          <label>{{ _('Email:') }}</label>
+          {{ user.email }}
+          <a href="{{ url('users.change_email') }}">{{ _('Change') }}</a>
         </li>
         {{ form.as_ul()|safe }}
       </ul>

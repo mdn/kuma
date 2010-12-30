@@ -36,6 +36,11 @@ users_patterns = patterns('',
 
     url(r'^/resendconfirmation$', views.resend_confirmation,
         name='users.resend_confirmation'),
+
+    # Change email
+    url(r'^change_email$', views.change_email, name='users.change_email'),
+    url(r'^confirm_email/(?P<activation_key>\w+)$',
+        views.confirm_change_email, name='users.confirm_email'),
 )
 
 urlpatterns = patterns('',

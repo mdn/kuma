@@ -1,0 +1,17 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Confirmation email sent') %}
+{% set classes = 'register' %}
+
+{% block content %}
+  <article id="register" class="main">
+    <h1>{{ title }}</h1>
+    <p>
+      {% trans new_email=email %}
+      We've sent a confirmation to {{ new_email }}. Please follow the link
+      in the confirmation to change your account's email.
+      {% endtrans %}
+    </p>
+  </article>
+{% endblock %}

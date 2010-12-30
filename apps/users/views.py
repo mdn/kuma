@@ -9,19 +9,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect, Http404
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_GET
 from django.shortcuts import get_object_or_404
 from django.utils.http import base36_to_int
 
 import jingo
 
 from access.decorators import logout_required, login_required
+from notifications.tasks import update_email_in_notifications
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import ProfileForm, AvatarForm, ResendConfirmationForm
-from users.models import Profile, RegistrationProfile
+from users.forms import ProfileForm, AvatarForm, EmailConfirmationForm
+from users.models import Profile, RegistrationProfile, EmailChange
 from users.utils import handle_login, handle_register
 
 
@@ -70,7 +71,7 @@ def activate(request, activation_key):
 def resend_confirmation(request):
     """Resend confirmation email."""
     if request.method == 'POST':
-        form = ResendConfirmationForm(request.POST)
+        form = EmailConfirmationForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             try:
@@ -84,9 +85,59 @@ def resend_confirmation(request):
                                 'users/resend_confirmation_done.html',
                                 {'email': email})
     else:
-        form = ResendConfirmationForm()
+        form = EmailConfirmationForm()
     return jingo.render(request, 'users/resend_confirmation.html',
                         {'form': form})
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def change_email(request):
+    """Change user's email. Send confirmation first."""
+    if request.method == 'POST':
+        form = EmailConfirmationForm(request.POST)
+        u = request.user
+        if form.is_valid() and u.email != form.cleaned_data['email']:
+            # Delete old registration profiles.
+            EmailChange.objects.filter(user=request.user).delete()
+            # Create a new registration profile and send a confirmation email.
+            email_change = EmailChange.objects.create_profile(
+                user=request.user, email=form.cleaned_data['email'])
+            EmailChange.objects.send_confirmation_email(
+                email_change, form.cleaned_data['email'])
+            return jingo.render(request,
+                                'users/change_email_done.html',
+                                {'email': form.cleaned_data['email']})
+    else:
+        form = EmailConfirmationForm(initial={'email': request.user.email})
+    return jingo.render(request, 'users/change_email.html',
+                        {'form': form})
+
+
+@require_GET
+def confirm_change_email(request, activation_key):
+    """Confirm the new email for the user."""
+    activation_key = activation_key.lower()
+    email_change = get_object_or_404(EmailChange,
+                                     activation_key=activation_key)
+    u = email_change.user
+
+    # Update all notifications matching this email, off-thread.
+    # TODO: remove this once we have the new notifications model in place.
+    old_email = u.email
+    update_email_in_notifications.delay(old=old_email,
+                                        new=email_change.email)
+
+    # Update user's email.
+    u.email = email_change.email
+    u.save()
+
+    # Delete the activation profile now, we don't need it anymore.
+    email_change.delete()
+
+    return jingo.render(request, 'users/change_email_complete.html',
+                        {'old_email': old_email, 'new_email': u.email,
+                         'username': u.username})
 
 
 def profile(request, user_id):

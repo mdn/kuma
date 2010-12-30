@@ -174,6 +174,6 @@ class AvatarForm(forms.ModelForm):
         return self.cleaned_data['avatar']
 
 
-class ResendConfirmationForm(forms.Form):
+class EmailConfirmationForm(forms.Form):
     """A simple form that requires an email address."""
     email = forms.EmailField(label=_lazy(u'Email address:'))

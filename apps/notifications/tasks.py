@@ -39,3 +39,10 @@ def delete_watches(cls, pk):
     e = EventWatch.uncached.using('default').filter(
         content_type=ct, watch_id=pk)
     e.delete()
+
+
+@task(rate_limit='20/m')
+def update_email_in_notifications(old, new):
+    """Change the email in notifications from old to new."""
+    log.info(u'Changing email %s to %s' % (old, new))
+    EventWatch.objects.filter(email=old).update(email=new)
