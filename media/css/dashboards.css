@@ -14,16 +14,17 @@
 .dashboards td,
 .dashboards th {
     padding: 7px 12px;
-    vertical-align: text-top;
 }
 
-.dashboards th {
-    padding-bottom: 2px;
+.dashboards td {
+    vertical-align: middle;
 }
 
 .dashboards th {
     font-size: 90%;
     font-weight: bold;
+    padding-bottom: 2px;
+    vertical-align: bottom;
 }
 
 .dashboards .denominator {
@@ -76,8 +77,7 @@
     width: 50%;
 }
 
-.dashboards table.documents td:nth-child(2),
-.dashboards table.documents th:nth-child(2) {
+.dashboards table.documents td:nth-child(2) {
     padding-right: 6px;
     text-align: right;
     width: 15%;
@@ -86,7 +86,6 @@
 .dashboards table.documents td:nth-child(3),
 .dashboards table.documents th:nth-child(3) {
     padding-left: 0;
-    vertical-align: middle;
     width: 160px;
 }
 

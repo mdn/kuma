@@ -1,7 +1,8 @@
 # Django settings for kitsune project.
-import platform
-import os
+from datetime import date
 import logging
+import os
+import platform
 
 from tower import ugettext_lazy as _lazy
 
@@ -567,3 +568,11 @@ NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
 # URL of the chat server.
 CHAT_SERVER = 'https://chat-support.mozilla.com:9091'
 CHAT_CACHE_KEY = 'sumo-chat-queue-status'
+
+#WEBTRENDS_WIKI_REPORT_URL = 'https://foo.com/v2_1/ReportService/
+#                             profiles/123456/reports/987654/?format=json'
+#WEBTRENDS_USER = r'someaccount\someperson'  # format: account\username
+#WEBTRENDS_PASSWORD = 'password'
+WEBTRENDS_EPOCH = date(2010, 8, 1)  # When WebTrends started gathering stats on
+                                    # the KB
+WEBTRENDS_REALM = 'Webtrends Basic Authentication'

@@ -79,6 +79,16 @@ The following settings may need to be set:
   This should be set to ``False`` to actually use Rabbit/Celery.
 ``BROKER_*``
   These should be set to allow Kitsune to talk to your RabbitMQ server.
+``WEBTRENDS_WIKI_REPORT_URL``
+  The URL from which JSON-formatted WebTrends reports about the Knowledge Base
+  can be downloaded, e.g.
+  https://foo.com/v2_1/ReportService/profiles/12345/reports/98765/?format=json.
+  Leave out the start_period and end_period parameters.
+``WEBTRENDS_USER``
+  The WebTrends user with which to authenticate to the above URL. Format:
+  account\username
+``WEBTRENDS_PASSWORD``
+  The password with which to authenticate to WebTrends
 
 
 Concat and Minify

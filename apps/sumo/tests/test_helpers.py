@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collections import namedtuple
 from datetime import datetime
 
 from django.conf import settings
@@ -13,7 +14,7 @@ import test_utils
 
 from sumo.helpers import (datetimeformat, DateTimeFormatError,
                           collapse_linebreaks, url, json, timesince,
-                          label_with_help, urlparams, yesno)
+                          label_with_help, urlparams, yesno, number)
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
@@ -80,6 +81,11 @@ class TestHelpers(TestCase):
         eq_('No', yesno(False))
         eq_('Yes', yesno(1))
         eq_('No', yesno(0))
+
+    def test_number(self):
+        context = {'request': namedtuple('R', 'locale')('en-US')}
+        eq_('5,000', number(context, 5000))
+        eq_('', number(context, None))
 
 
 class TestDateTimeFormat(TestCase):
