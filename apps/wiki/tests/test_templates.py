@@ -100,6 +100,9 @@ class RevisionTests(TestCaseBase):
         """Load the revision view page and verify the title and content."""
         d = _create_document()
         r = d.current_revision
+        r.created = datetime(2011, 1, 1)
+        r.reviewed = datetime(2011, 1, 2)
+        r.save()
         url = reverse('wiki.revision', args=[d.slug, r.id])
         response = self.client.get(url)
         eq_(200, response.status_code)
@@ -109,6 +112,10 @@ class RevisionTests(TestCaseBase):
         eq_(d.title, doc('#wiki-doc h1.title').text())
         eq_(pq(r.content_parsed)('div').text(),
             doc('#doc-content div').text())
+        eq_('Created:Jan 1, 2011 12:00:00 AM', 
+            doc('#wiki-doc div.revision-info li')[1].text_content().strip())
+        eq_('Reviewed:Jan 2, 2011 12:00:00 AM', 
+            doc('#wiki-doc div.revision-info li')[4].text_content().strip())
 
 
 class NewDocumentTests(TestCaseBase):
