@@ -249,6 +249,10 @@ div.forum-editor-actions {
     text-align: right;
 }
 
+div.forum-editor-tools {
+    height: 20px;
+}
+
 div.forum-editor-tools img {
     margin: 0 0.3em 0 0;
 }
@@ -258,17 +262,40 @@ div.forum-editor-tools span.separator {
     font-size: 14px;
     margin: 0 8px 0 6px;
     position: relative;
-    top: -3px;
 }
 
 div.forum-editor-tools a.markup-toolbar-link {
     padding: 0 6px;
-    position: relative;
-    top: -10px;
 }
 
-img.markup-toolbar-button {
+button.markup-toolbar-button {
+    border: 0;
+    background: url(../img/old_markup.png) no-repeat 0 0;
     cursor: pointer;
+    height: 16px;
+    margin: 0 2px;
+    text-indent: -9999px;
+    width: 16px;
+}
+
+div.forum-editor-tools button:first-child {
+    margin-left: 0;
+}
+
+button.btn-italic {
+    background-position: -26px 0px;
+}
+button.btn-page {
+    background-position: -52px 0px;
+}
+button.btn-link {
+    background-position: -78px 0px;
+}
+button.btn-ol {
+    background-position: -104px 0px;
+}
+button.btn-ul {
+    background-position: -130px 0px;
 }
 
 #showfor-modal,

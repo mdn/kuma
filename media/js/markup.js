@@ -13,11 +13,11 @@
         //or, create a custom toolbar.
         Marky.createFullToolbar('#toolbar-container-id', '#textarea-id', [
             new Marky.SimpleButton(
-                gettext('Bold'), '/media/img/markup/text_bold.png', "'''",
-                "'''", gettext('bold text')),
+                gettext('Bold'), "'''", "'''", gettext('bold text'),
+                'btn-bold'),
             new Marky.SimpleButton(
-                gettext('Italic'), '/media/img/markup/text_italic.png', "''",
-                "''", gettext('italic text'))
+                gettext('Italic'), "''", "''", gettext('italic text'),
+                'btn-italic')
         ]);
     </script>
 
@@ -28,48 +28,43 @@ var Marky = {
     createSimpleToolbar: function(toolbarSel, textareaSel) {
         var SB = Marky.SimpleButton;
         var buttons = [
-            new SB(gettext('Bold'), '/media/img/markup/text_bold.png',
-                   "'''", "'''", gettext('bold text')),
-            new SB(gettext('Italic'), '/media/img/markup/text_italic.png',
-                   "''", "''", gettext('italic text')),
-            new SB(gettext('Article Link'), '/media/img/markup/page_link.png',
-                   '[[', ']]', gettext('Knowledge Base Article')),
-            new SB(gettext('External Link'),
-                   '/media/img/markup/world_link.png', '[http://example.com ',
-                   ']', gettext('external link')),
-            new SB(gettext('Numbered List'),
-                   '/media/img/markup/text_list_numbers.png', '# ', '',
-                   gettext('Numbered list item'), true),
-            new SB(gettext('Bulleted List'),
-                   '/media/img/markup/text_list_bullets.png', '* ', '',
-                   gettext('Bulleted list item'), true)
+            new SB(gettext('Bold'), "'''", "'''", gettext('bold text'),
+                   'btn-bold'),
+            new SB(gettext('Italic'), "''", "''", gettext('italic text'),
+                   'btn-italic'),
+            new SB(gettext('Article Link'),  '[[', ']]',
+                   gettext('Knowledge Base Article'), 'btn-page'),
+            new SB(gettext('External Link'), '[http://example.com ',
+                   ']', gettext('external link'), 'btn-link'),
+            new SB(gettext('Numbered List'), '# ', '',
+                   gettext('Numbered list item'), 'btn-ol', true),
+            new SB(gettext('Bulleted List'), '* ', '',
+                   gettext('Bulleted list item'), 'btn-ul', true)
         ];
         Marky.createCustomToolbar(toolbarSel, textareaSel, buttons);
     },
     createFullToolbar: function(toolbarSel, textareaSel) {
         var SB = Marky.SimpleButton;
         var buttons = [
-            new SB(gettext('Bold'), '/media/img/markup/new/bold.png',
-                   "'''", "'''", gettext('bold text')),
-            new SB(gettext('Italic'), '/media/img/markup/new/italic.png',
-                   "''", "''", gettext('italic text')),
+            new SB(gettext('Bold'), "'''", "'''", gettext('bold text'),
+                   'btn-bold'),
+            new SB(gettext('Italic'), "''", "''", gettext('italic text'),
+                   'btn-italic'),
             new Marky.Separator(),
             new Marky.LinkButton(),
             new Marky.MediaButton(),
             new Marky.Separator(),
-            new SB(gettext('Numbered List'),
-                   '/media/img/markup/new/ol.png', '# ', '',
-                   gettext('Numbered list item'), true),
-            new SB(gettext('Bulleted List'),
-                   '/media/img/markup/new/ul.png', '* ', '',
-                   gettext('Bulleted list item'), true),
+            new SB(gettext('Numbered List'), '# ', '',
+                   gettext('Numbered list item'), 'btn-ol', true),
+            new SB(gettext('Bulleted List'), '* ', '',
+                   gettext('Bulleted list item'), 'btn-ul', true),
             new Marky.Separator(),
-            new SB(gettext('Heading 1'), '/media/img/markup/new/h1.png', '=',
-                   '=', gettext('Heading 1')),
-            new SB(gettext('Heading 2'), '/media/img/markup/new/h2.png', '==',
-                   '==', gettext('Heading 2')),
-            new SB(gettext('Heading 3'), '/media/img/markup/new/h3.png', '===',
-                   '===', gettext('Heading 3')),
+            new SB(gettext('Heading 1'), '=', '=', gettext('Heading 1'),
+                   'btn-h1', true),
+            new SB(gettext('Heading 2'), '==', '==', gettext('Heading 2'),
+                   'btn-h2', true),
+            new SB(gettext('Heading 3'), '===', '===', gettext('Heading 3'),
+                   'btn-h3', true),
             new Marky.Separator(),
             new Marky.ShowForButton()
         ];
@@ -90,17 +85,21 @@ var Marky = {
  * Note: `everyline` is a boolean value that says whether or not the selected
  *       text should be broken into multiple lines and have the markup applied
  *       to each line or not. Default is false (do not apply this behavior).
+ *       `classes` is a list of classes to include in the output
  */
-Marky.SimpleButton = function(name, imagePath, openTag, closeTag, defaultText,
-                              everyline) {
+Marky.SimpleButton = function(name, openTag, closeTag, defaultText,
+                              classes, everyline) {
     this.name = name;
-    this.imagePath = imagePath;
+    this.classes = '';
     this.openTag = openTag;
     this.closeTag = closeTag;
     this.defaultText = defaultText;
     this.everyline = everyline;
+    if (undefined !== classes) {
+        this.classes = classes;
+    }
 
-    this.html = '<img class="markup-toolbar-button" />';
+    this.html = '<button class="markup-toolbar-button" />';
 };
 
 Marky.SimpleButton.prototype = {
@@ -111,11 +110,12 @@ Marky.SimpleButton.prototype = {
     },
     // Renders the html.
     render: function() {
-        return $(this.html).attr({
-            src: this.imagePath,
+        var $out = $(this.html).attr({
             title: this.name,
-            alt: this.name
+            innerHTML: this.name
         });
+        $out.addClass(this.classes);
+        return $out;
     },
     // Gets the DOM node for the button.
     node: function() {
@@ -218,6 +218,7 @@ Marky.SimpleButton.prototype = {
  */
 Marky.ShowForButton = function() {
     this.name = gettext('Show for...');
+    this.classes = 'btn-showfor';
     this.openTag = '{for}';
     this.closeTag = '{/for}';
     this.defaultText = 'Show for text.';
@@ -319,7 +320,7 @@ Marky.Separator.prototype = {
  */
 Marky.LinkButton = function() {
     this.name = gettext('Insert a link...');
-    this.imagePath = '/media/img/markup/new/link.png';
+    this.classes = 'btn-link';
     this.openTag = '[http://example.com ';
     this.closeTag = ']';
     this.defaultText = gettext('link text');
@@ -329,7 +330,7 @@ Marky.LinkButton = function() {
     this.origCloseTag = this.closeTag;
     this.origDefaultText = this.defaultText;
 
-    this.html = '<img class="markup-toolbar-button" />';
+    this.html = '<button class="markup-toolbar-button" />';
 };
 
 Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
@@ -460,13 +461,13 @@ Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
  */
 Marky.MediaButton = function() {
     this.name = gettext('Insert media...');
-    this.imagePath = '/media/img/markup/new/image.png';
+    this.classes = 'btn-media';
     this.openTag = '';
     this.closeTag = '';
     this.defaultText = gettext('media');
     this.everyline = false;
 
-    this.html = '<img class="markup-toolbar-button" />';
+    this.html = '<button class="markup-toolbar-button" />';
 };
 
 Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
