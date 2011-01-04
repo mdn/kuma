@@ -28,7 +28,8 @@ from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
-from wiki.tasks import (send_reviewed_notification,
+from wiki.tasks import (send_approved_notification,
+                        send_reviewed_notification,
                         send_ready_for_review_notification,
                         send_edited_notification,
                         schedule_rebuild_kb)
@@ -315,6 +316,9 @@ def review_revision(request, document_slug, revision_id):
             msg = form.cleaned_data['comment']
             send_reviewed_notification.delay(rev, doc, msg)
 
+            # If approved, send approved notification
+            send_approved_notification.delay(rev, doc)
+
             # Schedule KB rebuild?
             schedule_rebuild_kb()
 
@@ -507,6 +511,30 @@ def unwatch_locale(request):
     """Stop watching a locale for revisions ready for review."""
     destroy_watch(Document, None, request.user.email, 'ready_for_review',
                   request.locale)
+    return HttpResponseRedirect(reverse('dashboards.localization'))
+
+
+@require_POST
+@login_required
+def watch_approved(request):
+    """Start watching approved revisions."""
+    locale = request.POST.get('locale')
+    if locale not in settings.SUMO_LANGUAGES:
+        raise Http404
+
+    create_watch(Document, None, request.user.email, 'approved', locale)
+    return HttpResponseRedirect(reverse('dashboards.localization'))
+
+
+@require_POST
+@login_required
+def unwatch_approved(request):
+    """Stop watching approved revisions."""
+    locale = request.POST.get('locale')
+    if locale not in settings.SUMO_LANGUAGES:
+        raise Http404
+
+    destroy_watch(Document, None, request.user.email, 'approved', locale)
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 

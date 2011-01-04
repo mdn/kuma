@@ -15,7 +15,7 @@ from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
 from wiki.cron import calculate_related_documents
-from wiki.helpers import is_watching_locale
+from wiki.helpers import is_watching_approved, is_watching_locale
 from wiki.models import Document, Revision, HelpfulVote, SIGNIFICANCES
 import wiki.tasks
 from wiki.tests import TestCaseBase, document, revision, new_document_data
@@ -112,9 +112,9 @@ class RevisionTests(TestCaseBase):
         eq_(d.title, doc('#wiki-doc h1.title').text())
         eq_(pq(r.content_parsed)('div').text(),
             doc('#doc-content div').text())
-        eq_('Created:Jan 1, 2011 12:00:00 AM', 
+        eq_('Created:Jan 1, 2011 12:00:00 AM',
             doc('#wiki-doc div.revision-info li')[1].text_content().strip())
-        eq_('Reviewed:Jan 2, 2011 12:00:00 AM', 
+        eq_('Reviewed:Jan 2, 2011 12:00:00 AM',
             doc('#wiki-doc div.revision-info li')[4].text_content().strip())
         # is reviewed?
         eq_('Yes', doc('.revision-info li').eq(3).find('span').text())
@@ -1222,6 +1222,42 @@ class RevisionDeleteTestCase(TestCaseBase):
              args=[self.d.slug, self.r.id])
         d = Document.objects.get(pk=d.pk)
         eq_(prev_revision, d.current_revision)
+
+
+class ApprovedWatchTests(TestCaseBase):
+    """Tests for un/subscribing to revision approvals."""
+    fixtures = ['users.json']
+
+    def setUp(self):
+        super(ApprovedWatchTests, self).setUp()
+        self.client.login(username='rrosario', password='testpass')
+
+    def test_watch_GET_405(self):
+        """Watch with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.approved_watch')
+        eq_(405, response.status_code)
+
+    def test_unwatch_GET_405(self):
+        """Unwatch with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.approved_unwatch')
+        eq_(405, response.status_code)
+
+    def test_watch_unwatch(self):
+        """Watch and unwatch a document."""
+        user = User.objects.get(username='rrosario')
+        locale = 'es'
+        # Subscribe
+        response = post(self.client, 'wiki.approved_watch',
+                        {'locale': locale})
+        eq_(200, response.status_code)
+        assert check_watch(Document, None, user.email, 'approved', locale)
+        assert is_watching_approved(user, locale)
+        # Unsubscribe
+        response = post(self.client, 'wiki.approved_unwatch',
+                        {'locale': locale})
+        eq_(200, response.status_code)
+        assert not check_watch(Document, None, user.email, 'approved', locale)
+        assert not is_watching_approved(user, locale)
 
 
 # TODO: Merge with wiki.tests.doc_rev()?

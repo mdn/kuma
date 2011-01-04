@@ -77,8 +77,16 @@
 
 {% block side %}
   {{ for_contributors(user) }}
-  {% with locale=request.locale, user=user %}
-    {% include 'dashboards/includes/watch_locale.html' %}
-  {% endwith %}
+  <div id="doc-watch">
+    {% with locale=request.locale, user=user %}
+      {% include 'dashboards/includes/watch_locale.html' %}
+      {% include 'dashboards/includes/watch_approved.html' %}
+    {% endwith %}
+    {% if request.locale != settings.WIKI_DEFAULT_LANGUAGE %}
+      {% with locale=settings.WIKI_DEFAULT_LANGUAGE, user=user %}
+        {% include 'dashboards/includes/watch_approved.html' %}
+      {% endwith %}
+    {% endif %}
+  </div>
   {{ quick_links() }}
 {% endblock %}

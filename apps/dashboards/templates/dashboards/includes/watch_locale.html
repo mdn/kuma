@@ -1,16 +1,14 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% if user.is_authenticated() %}
-  <div id="doc-watch">
-    {% if is_watching_locale(user, locale) %}
-      <form action="{{ url('wiki.locale_unwatch') }}" method="post">
-        {{ csrf() }}
-        <input type="submit" class="submit" value="{{ _('Turn off emails.') }}" />
-      </form>
-    {% else %}
-      <form action="{{ url('wiki.locale_watch') }}" method="post">
-        {{ csrf() }}
-        <input type="submit" class="submit" value="{{ _('Get emailed when reviews are waiting') }}" />
-      </form>
-    {% endif %}
-  </div>
+  {% if is_watching_locale(user, locale) %}
+    <form action="{{ url('wiki.locale_unwatch') }}" method="post">
+      {{ csrf() }}
+      <input type="submit" class="submit" value="{{ _('Stop getting emailed when {locale} reviews are waiting')|f(locale=settings.LANGUAGES[locale.lower()]) }}" />
+    </form>
+  {% else %}
+    <form action="{{ url('wiki.locale_watch') }}" method="post">
+      {{ csrf() }}
+      <input type="submit" class="submit" value="{{ _('Get emailed when {locale} reviews are waiting')|f(locale=settings.LANGUAGES[locale.lower()]) }}" />
+    </form>
+  {% endif %}
 {% endif %}

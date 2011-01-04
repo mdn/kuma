@@ -27,3 +27,9 @@ def generate_video(v):
 def is_watching_locale(user, locale):
     """Check if the user is watching documents in the locale."""
     return check_watch(Document, None, user.email, 'ready_for_review', locale)
+
+
+@register.function
+def is_watching_approved(user, locale):
+    """Check if the user is watching approvals."""
+    return check_watch(Document, None, user.email, 'approved', locale)

@@ -34,10 +34,10 @@ def send_reviewed_notification(revision, document, message):
 
     log.debug('Sending reviewed email for revision (id=%s)' % revision.id)
     if revision.is_approved:
-        subject = _('Your revision has been approved: %s')
+        subject = _('Your revision has been approved: {title}')
     else:
-        subject = _('Your revision has been rejected: %s')
-    subject = subject % document.title
+        subject = _('Your revision has been rejected: {title}')
+    subject = subject.format(title=document.title)
     t = loader.get_template('wiki/email/reviewed.ltxt')
     url = reverse('wiki.document_revisions', locale=document.locale,
                   args=[document.slug])
@@ -52,11 +52,24 @@ def send_reviewed_notification(revision, document, message):
 
 
 @task
+def send_approved_notification(revision, document):
+    """Send notification that a new revision is ready for review."""
+    log.debug('Sending approved email for revision (id=%s)' %
+              revision.id)
+    subject = _(u'{title} ({locale}) has a new approved revision')
+    url = reverse('wiki.document', locale=document.locale,
+                  args=[document.slug])
+    _send_notification(revision, document, subject,
+                       'wiki/email/approved.ltxt', url,
+                       'approved', document.locale)
+
+
+@task
 def send_ready_for_review_notification(revision, document):
     """Send notification that a new revision is ready for review."""
     log.debug('Sending ready for review email for revision (id=%s)' %
               revision.id)
-    subject = _('%(title)s is ready for review (%(creator)s)')
+    subject = _('{title} is ready for review ({creator})')
     url = reverse('wiki.review_revision', locale=document.locale,
                   args=[document.slug, revision.id])
     _send_notification(revision, document, subject,
@@ -69,7 +82,7 @@ def send_edited_notification(revision, document):
     """Send notification of new revision to watchers of the document."""
     log.debug('Sending edited notification email for document (id=%s)' %
               document.id)
-    subject = _('%(title)s was edited by %(creator)s')
+    subject = _('{title} was edited by {creator}')
     url = reverse('wiki.document_revisions', locale=document.locale,
                   args=[document.slug])
     _send_notification(revision, document, subject, 'wiki/email/edited.ltxt',
@@ -78,7 +91,8 @@ def send_edited_notification(revision, document):
 
 def _send_notification(revision, document, subject, template, url, event_type,
                        locale=''):
-    subject = subject % dict(title=document.title, creator=revision.creator)
+    subject = subject.format(title=document.title, creator=revision.creator,
+                             locale=document.locale)
     t = loader.get_template(template)
     c = {'document_title': document.title,
          'creator': revision.creator,
@@ -87,7 +101,11 @@ def _send_notification(revision, document, subject, template, url, event_type,
     content = t.render(Context(c))
     exclude = revision.creator.email,
     ct = ContentType.objects.get_for_model(document)
-    id = None if event_type == 'ready_for_review' else document.id
+    if event_type == 'ready_for_review' or event_type == 'approved':
+        id = None
+    else:
+        id = document.id
+
     send_notification.delay(ct, id, subject, content, exclude,
                             event_type, locale)
 

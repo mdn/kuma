@@ -68,6 +68,13 @@ urlpatterns = patterns('wiki.views',
         name='wiki.locale_watch'),
     url(r'^/unwatch-ready-for-review$', 'unwatch_locale',
         name='wiki.locale_unwatch'),
+
+    # Un/Subscribe to 'approved' notifications.
+    url(r'^/watch-approved$', 'watch_approved',
+        name='wiki.approved_watch'),
+    url(r'^/unwatch-approved$', 'unwatch_approved',
+        name='wiki.approved_unwatch'),
+
     url(r'^/json$', 'json_view', name='wiki.json'),
 
     url(r'^/new$', 'new_document', name='wiki.new_document'),

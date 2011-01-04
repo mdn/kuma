@@ -10,7 +10,8 @@ from nose.tools import eq_
 
 from . import TestCaseBase, revision
 import notifications.tasks
-from wiki.tasks import (send_reviewed_notification,
+from wiki.tasks import (send_approved_notification,
+                        send_reviewed_notification,
                         send_ready_for_review_notification,
                         send_edited_notification)
 
@@ -30,6 +31,17 @@ To view the history of this document, click the following
 link, or paste it into your browser's location bar:
 
 https://testserver/en-US/kb/%s/history
+"""
+
+APPROVED_EMAIL_CONTENT = """
+
+A new revision has been approved for the document
+%s.
+
+To view the updated document, click the following
+link, or paste it into your browser's location bar:
+
+https://testserver/en-US/kb/%s
 """
 
 READY_FOR_REVIEW_EMAIL_CONTENT = """
@@ -74,7 +86,7 @@ class NotificationTestCase(TestCaseBase):
 
         rev = revision()
         doc = rev.document
-        msg = "great work!"
+        msg = 'great work!'
         self._approve_and_send(rev, User.objects.get(username='admin'), msg)
 
         eq_(1, len(mail.outbox))
@@ -126,3 +138,24 @@ class NotificationTestCase(TestCaseBase):
             DOCUMENT_EDITED_EMAIL_CONTENT % (doc.title, doc.slug),
             (u'user118533@nowhere',),
             'edited', '')
+
+    @mock.patch_object(notifications.tasks.send_notification, 'delay')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_approved_notification(self, get_current, delay):
+        get_current.return_value.domain = 'testserver'
+
+        rev = revision()
+        doc = rev.document
+        rev.reviewer = User.objects.get(username='admin')
+        rev.reviewed = datetime.now()
+        rev.is_approved = True
+        rev.save()
+        send_approved_notification(rev, doc)
+
+        delay.assert_called_with(
+            ContentType.objects.get_for_model(doc), None,
+            '%s (%s) has a new approved revision' % (doc.title, doc.locale),
+            APPROVED_EMAIL_CONTENT % (doc.title, doc.slug),
+            (u'user118533@nowhere',),
+            'approved', 'en-US')
+    test_approved_notification.xx = 1
