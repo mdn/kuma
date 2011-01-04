@@ -22,9 +22,24 @@
         {{ _('This revision was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}
       </p>
     {% elif document.current_revision %}
-      {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current public revision:'), revision_to_header = _('Submitted revision:') %}
-        {% include 'wiki/includes/revision_diff.html' %}
-      {% endwith %}
+      <details class="h2" open="open">
+        <summary>{{ _('Submitted Revision Changes') }}</summary>
+        {% with revision_from = document.current_revision, revision_to = revision, revision_from_header = _('Current public revision:'), revision_to_header = _('Submitted revision:') %}
+          {% include 'wiki/includes/revision_diff.html' %}
+        {% endwith %}
+      </details>
+      <details class="h2">
+        <summary>{{ _('Revision Source') }}</summary>
+        <div id="doc-source">
+          <textarea readonly="readonly">{{ revision.content }}</textarea>
+        </div>
+      </details>
+      <details class="h2">
+        <summary>{{ _('Revision Content') }}</summary>
+        <div id="doc-content">
+          {{ revision.content_parsed|safe }}
+        </div>
+      </details>
     {% else %}
       <p>{{ _('This document does not have a current revision.') }}</p>
       <h3>{{ _('Keywords:') }}</h3>
@@ -54,4 +69,5 @@
 {% block side %}
   {{ document_tabs(document, document.parent, user, '', settings) }}
   {{ for_contributors(user) }}
+  {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}

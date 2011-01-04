@@ -325,8 +325,10 @@ def review_revision(request, document_slug, revision_id):
         template = 'wiki/review_translation.html'
     else:
         template = 'wiki/review_revision.html'
-    return jingo.render(request, template,
-                        {'revision': rev, 'document': doc, 'form': form})
+
+    data = {'revision': rev, 'document': doc, 'form': form}
+    data.update(SHOWFOR_DATA)
+    return jingo.render(request, template, data)
 
 
 @require_GET

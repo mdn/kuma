@@ -17,6 +17,9 @@
             initForTags();
             updateShowforSelectors();
             initHelpfulVote();
+        } else if ($('body').is('.review')) { // Review pages
+            initForTags();
+            updateShowforSelectors();
         }
 
         if ($('body').is('.translate')) {  // Translate page
