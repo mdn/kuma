@@ -71,7 +71,7 @@
         </div>
       {% endif %}
 
-      {% for answer in question.helpful_replies %}
+      {% for answer in question.helpful_replies[0:2] %}
         {% if loop.first %}
           <div class="other-helpful">
             <h3>{{ _('Other Helpful Replies') }}</h3>
