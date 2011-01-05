@@ -7,7 +7,7 @@ from django.conf import settings
 from bleach import Bleach
 
 import search as constants
-from .sphinxapi import SphinxClient
+from search import sphinxapi
 
 
 log = logging.getLogger('k.search')
@@ -23,14 +23,17 @@ class SearchClient(object):
     """
 
     bleach = Bleach()
+    match_mode = sphinxapi.SPH_MATCH_EXTENDED2
 
     def __init__(self):
-        self.sphinx = SphinxClient()
+        self.sphinx = sphinxapi.SphinxClient()
         if os.environ.get('DJANGO_ENVIRONMENT') == 'test':
             self.sphinx.SetServer(settings.SPHINX_HOST,
                                   settings.TEST_SPHINX_PORT)
         else:
             self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
+
+        self.sphinx.SetMatchMode(self.match_mode)
 
     def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
