@@ -8,7 +8,9 @@
           {% if revision_from_header %}
             {{ revision_from_header}}
           {% else %}
-            {{ _('Revision {num}:')|f(num=revision_from.id) }}
+            <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}">
+              {{ _('Revision {num}:')|f(num=revision_from.id) }}
+            </a>
           {% endif %}
         </h3>
         <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
@@ -18,7 +20,9 @@
           {% if revision_to_header %}
             {{ revision_to_header}}
           {% else %}
-            {{ _('Revision {num}:')|f(num=revision_to.id) }}
+            <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}">
+              {{ _('Revision {num}:')|f(num=revision_to.id) }}
+            </a>
           {% endif %}
         </h3>
         <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
