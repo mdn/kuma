@@ -984,6 +984,16 @@ class QuestionEditingTests(TestCaseBase):
 
 class AAQTemplateTestCase(TestCaseBase):
     """Test the AAQ template."""
+    data = {'title': 'A test question',
+            'content': 'I have this question that I hope...',
+            'sites_affected': 'http://example.com',
+            'ff_version': '3.6.6',
+            'os': 'Intel Mac OS X 10.6',
+            'plugins': '* Shockwave Flash 10.1 r53',
+            'useragent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X ' +
+                         '10.6; en-US; rv:1.9.2.6) Gecko/20100625 ' +
+                         'Firefox/3.6.6'}
+
     def setUp(self):
         super(AAQTemplateTestCase, self).setUp()
         self.client.login(username='jsocol', password='testpass')
@@ -997,16 +1007,7 @@ class AAQTemplateTestCase(TestCaseBase):
         url = urlparams(reverse('questions.new_question'),
                         product='desktop', category='d1',
                         search='A test question', showform=1)
-        data = {'title': 'A test question',
-                'content': 'I have this question that I hope...',
-                'sites_affected': 'http://example.com',
-                'ff_version': '3.6.6',
-                'os': 'Intel Mac OS X 10.6',
-                'plugins': '* Shockwave Flash 10.1 r53',
-                'useragent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X ' +
-                             '10.6; en-US; rv:1.9.2.6) Gecko/20100625 ' +
-                             'Firefox/3.6.6'}
-        return self.client.post(url, data, follow=True)
+        return self.client.post(url, self.data, follow=True)
 
     def test_full_workflow(self):
         response = self._post_new_question()
@@ -1022,10 +1023,7 @@ class AAQTemplateTestCase(TestCaseBase):
         # And no email was sent
         eq_(0, len(mail.outbox))
 
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_full_workflow_inactive(self, get_current):
-        get_current.return_value.domain = 'testserver'
-
+    def test_full_workflow_inactive(self):
         u = User.objects.get(username='jsocol')
         u.is_active = False
         u.save()
@@ -1040,9 +1038,56 @@ class AAQTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.questions')
         doc = pq(response.content)
         eq_(0, len(doc('li#question-%s' % question.id)))
-        # And confirmation email was sent
+        # And no confirmation email was sent (already sent on registration)
+        eq_(0, len(mail.outbox))
+
+    def test_invalid_type(self):
+        """Providing an invalid type returns 400."""
+        self.client.logout()
+
+        url = urlparams(reverse('questions.new_question'),
+                        product='desktop', category='d1',
+                        search='A test question', showform=1)
+        # Register before asking question
+        data = {'type': 'invalid', 'username': 'testaaq',
+                'password': 'testpass', 'password2': 'testpass',
+                'email': 'testaaq@example.com'}
+        data.update(**self.data)
+        response = self.client.post(url, data, follow=True)
+        eq_(400, response.status_code)
+        assert 'Request type not recognized' in response.content
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_register_through_aaq(self, get_current):
+        """Registering through AAQ form sends confirmation email."""
+        get_current.return_value.domain = 'testserver'
+        self.client.logout()
+
+        url = urlparams(reverse('questions.new_question'),
+                        product='desktop', category='d1',
+                        search='A test question', showform=1)
+        # Register before asking question
+        data = {'type': 'register', 'username': 'testaaq',
+                'password': 'testpass', 'password2': 'testpass',
+                'email': 'testaaq@example.com'}
+        data.update(**self.data)
+        self.client.post(url, data, follow=True)
+
+        # Confirmation email is sent
         eq_(1, len(mail.outbox))
         assert mail.outbox[0].subject == 'Please confirm your email address'
+
+        # Finally post question
+        self.client.post(url, self.data, follow=True)
+
+        # Verify question is in db now
+        question = Question.objects.filter(title='A test question')
+        eq_(1, question.count())
+        eq_('testaaq', question[0].creator.username)
+
+        # And no confirmation email was sent (already sent on registration)
+        # Note: there was already an email sent above
+        eq_(1, len(mail.outbox))
 
     def test_invalid_product_404(self):
         url = urlparams(reverse('questions.new_question'), product='lipsum')

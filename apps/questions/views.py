@@ -41,7 +41,6 @@ from tags.utils import add_existing_tag
 from upload.models import ImageAttachment
 from upload.views import upload_imageattachment
 from users.forms import RegisterForm
-from users.models import RegistrationProfile
 from users.utils import handle_login, handle_register
 from wiki.models import Document
 
@@ -185,19 +184,23 @@ def new_question(request):
 
     # Handle the form post.
     just_logged_in = False  # Used below for whether to pre-load Question form.
-    just_registered = False  # Used below for sending confirmation email.
     if not request.user.is_authenticated():
-        if request.POST.get('type') == 'login':
+        type = request.POST.get('type')
+        if type not in ('login', 'register'):
+            # L10n: This shouldn't happen unless people tamper with POST data
+            message = _lazy('Request type not recognized.')
+            return jingo.render(request, 'handlers/400.html',
+                            {'message': message}, status=400)
+        if type == 'login':
             login_form = handle_login(request, only_active=False)
             register_form = RegisterForm()
-        elif request.POST.get('type') == 'register':
-            register_form = handle_register(request)
+        else:  # must be 'register'
             login_form = AuthenticationForm()
+            register_form = handle_register(request)
             if register_form.is_valid():  # now try to log in
                 user = auth.authenticate(username=request.POST.get('username'),
                                          password=request.POST.get('password'))
                 auth.login(request, user)
-                just_registered = True
         if not request.user.is_authenticated():
             return jingo.render(request,
                                 'questions/new_question_login.html',
@@ -238,9 +241,6 @@ def new_question(request):
                           kwargs={'question_id': question.id})
             return HttpResponseRedirect(urlparams(url, new=1))
 
-        if not just_registered:  # Don't send email twice, if registered above
-            RegistrationProfile.objects.send_confirmation_email(
-                request.user.registrationprofile_set.get())
         auth.logout(request)
         return jingo.render(request, 'questions/confirm_email.html',
                             {'question': question})

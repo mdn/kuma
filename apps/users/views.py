@@ -17,6 +17,7 @@ import jingo
 
 from access.decorators import logout_required, login_required
 from notifications.tasks import update_email_in_notifications
+from questions.models import Question, CONFIRMED
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
@@ -64,8 +65,13 @@ def activate(request, activation_key):
     """Activate a User account."""
     activation_key = activation_key.lower()
     account = RegistrationProfile.objects.activate_user(activation_key)
+    my_questions = None
+    if account:
+        my_questions = Question.uncached.filter(creator=account)
+        # TODO: remove this after dropping unconfirmed questions.
+        my_questions.update(status=CONFIRMED)
     return jingo.render(request, 'users/activate.html',
-                        {'account': account})
+                        {'account': account, 'questions': my_questions})
 
 
 def resend_confirmation(request):

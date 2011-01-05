@@ -3,6 +3,14 @@
  */
 
 /* common form styles for users app */
+article.main ul.questions {
+    margin-left: 20px;
+}
+
+article.main ul.questions li {
+    margin: .3em 0;
+}
+
 article.main form {
     margin: 25px 0;
 }

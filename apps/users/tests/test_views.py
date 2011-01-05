@@ -7,6 +7,7 @@ import mock
 from nose.tools import eq_
 
 from notifications.models import EventWatch
+from questions.models import Question, CONFIRMED, UNCONFIRMED
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
@@ -83,6 +84,31 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         user = User.objects.get(pk=user.pk)
         assert user.is_active
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_with_questions(self, get_current):
+        """Unconfirmed questions get confirmed with account confirmation."""
+        get_current.return_value.domain = 'su.mo.com'
+        # TODO: remove this test once we drop unconfirmed questions.
+        user = RegistrationProfile.objects.create_inactive_user(
+            'sumouser1234', 'testpass', 'sumouser@test.com')
+
+        # Before we activate, let's create a question.
+        q = Question.objects.create(title='test_question', creator=user,
+                                    content='test', status=UNCONFIRMED,
+                                    confirmation_id='$$$')
+
+        # Activate account.
+        key = RegistrationProfile.objects.all()[0].activation_key
+        url = reverse('users.activate', args=[key])
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+
+        q = Question.objects.get(creator=user)
+        # Question is listed on the confirmation page.
+        assert 'test_question' in response.content
+        assert q.get_absolute_url() in response.content
+        eq_(CONFIRMED, q.status)
 
     def test_duplicate_username(self):
         response = self.client.post(reverse('users.register', locale='en-US'),
