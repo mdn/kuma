@@ -127,6 +127,11 @@ body.mobile #featured {
     width: 205px;
 }
 
+#home-content-explore section:nth-child(odd),
+#home-content-explore section.odd {
+    clear: left;
+}
+
 #home-content-explore ul {
     margin-bottom: 1em;
     padding-left: 1em;

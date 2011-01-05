@@ -9,6 +9,10 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
+        if ($('body').is('.home')) {
+            clearOddSections();
+        }
+
         initPrepopulatedSlugs();
         initActionModals();
         initDetailsTags();
@@ -31,6 +35,11 @@
         }
 
         Marky.createFullToolbar('.forum-editor-tools', '#id_content');
+    }
+
+    // Add `odd` CSS class to home page content sections for older browsers.
+    function clearOddSections() {
+        $('#home-content-explore section:nth-child(odd)').addClass('odd');
     }
 
     // Make <summary> and <details> tags work even if the browser doesn't support them.
