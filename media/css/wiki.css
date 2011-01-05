@@ -93,23 +93,19 @@ div.support-search form {
     padding: 5px;
 }
 
-div.support-search span.wrap {
-    background: #fff url(../img/icon.searchloupe.png) no-repeat 7px center;
+div.support-search input.text {
+    background: #fff url(../img/icon.searchloupe.png) no-repeat 7px 2px;
+    border: none;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    float: left;
-    height: 28px;
-    padding: 2px 0 0 36px;
-    width: 218px;
-}
-
-div.support-search input.text {
-    border: none;
     box-shadow: none;
+    float: left;
     font-size: 16px;
     height: 26px;
-    width: 98%;
+    margin: 0 1px 0 0;
+    padding: 2px 0 2px 34px;
+    width: 220px;
 }
 
 div.support-search button.img-submit {
@@ -473,8 +469,8 @@ article #toc ul li {
     margin: 15px 0 0;
 }
 
-#more-help div.support-search span.wrap {
-    width: 145px;
+#more-help div.support-search input.text {
+    width: 146px;
 }
 
 #support-for {
