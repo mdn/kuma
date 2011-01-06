@@ -24,6 +24,7 @@ class SearchClient(object):
 
     bleach = Bleach()
     match_mode = sphinxapi.SPH_MATCH_EXTENDED2
+    rank_mode = sphinxapi.SPH_RANK_PROXIMITY_BM25
 
     def __init__(self):
         self.sphinx = sphinxapi.SphinxClient()
@@ -34,6 +35,7 @@ class SearchClient(object):
             self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
 
         self.sphinx.SetMatchMode(self.match_mode)
+        self.sphinx.SetRankingMode(self.rank_mode)
 
     def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
@@ -149,7 +151,7 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-    weights = {'title': 4, 'content': 1, 'keywords': 4, 'tag': 2, 'summary': 2}
+    weights = {'title': 6, 'content': 1, 'keywords': 4, 'summary': 2}
 
 
 class DiscussionClient(SearchClient):
