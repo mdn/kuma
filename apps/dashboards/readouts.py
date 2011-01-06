@@ -12,8 +12,16 @@ from sumo.urlresolvers import reverse
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
 
 
+def _cursor():
+    """Return a DB cursor for reading."""
+    return connections[router.db_for_read(Document)].cursor()
+
+
 def overview_rows(locale):
     """Return the iterable of dicts needed to draw the Overview table."""
+    def percent_or_100(num, denom):
+        return int(round(num / float(denom) * 100)) if denom else 100
+
     # The Overview table is a special case: it has only a static number of
     # rows, so it has no expanded, all-rows view, and thus needs no slug, no
     # "max" kwarg on rows(), etc. It doesn't fit the Readout signature, so we
@@ -26,22 +34,36 @@ def overview_rows(locale):
     translated = Document.uncached.filter(locale=locale).exclude(
         current_revision=None).exclude(parent=None).count()
 
-    return [dict(title=_('All Knowledge Base Articles'),
+    # Of the top 20 most visited English articles, how many are not translated
+    # into German?
+    TOP_N = 20
+    cursor = _cursor()
+    cursor.execute(
+        'SELECT count(*) FROM '
+            '(SELECT trans.id FROM dashboards_wikidocumentvisits '
+                'LEFT JOIN wiki_document trans '
+                'ON dashboards_wikidocumentvisits.document_id=trans.parent_id '
+                'AND trans.locale=%s '
+             'WHERE dashboards_wikidocumentvisits.period=%s '
+             'ORDER BY dashboards_wikidocumentvisits.visits DESC '
+             'LIMIT %s) t1 '
+        'WHERE t1.id IS NOT NULL',
+        (locale, THIS_WEEK, TOP_N))
+    popular_translated = cursor.fetchone()[0]
+
+    return [dict(title=_('Most-Viewed Articles'),
+                 numerator=popular_translated, denominator=TOP_N,
+                 percent=percent_or_100(popular_translated, TOP_N),
+                 description=_('These are the top %s most visited English '
+                               'articles, which in sum account for over 50%% '
+                               'of the total traffic to the English '
+                               'Knowledge Base.') % TOP_N),
+            dict(title=_('All Knowledge Base Articles'),
                  numerator=translated, denominator=total,
-                 percent=(int(round(translated / float(total) * 100)) if total
-                          else 100),
+                 percent=percent_or_100(translated, total),
                  description=_('How many of the approved English articles '
                                'which allow translations have an approved '
-                               'translation into this language')),
-            # TODO: Enable after we integrate WebTrends stats:
-#             dict(title='Most Viewed Articles',
-#                  numerator=0, denominator=1,
-#                  percent=0,
-#                  description='These are the top 15-20 most visited English'
-#                              ' articles, which in sum account for over 50%'
-#                              ' of the total traffic to the English '
-#                              'Knowledge Base.')
-           ]
+                               'translation into this language'))]
 
 
 class Readout(object):
@@ -69,19 +91,28 @@ class Readout(object):
     def rows(self, max=None):
         """Return an iterable of dicts containing the data for the table.
 
-        This default implementation does calls _query_and_params and
-        _format_row. You can either implement those or, if you need more
-        flexibility, override this.
+        This default implementation calls _query_and_params and _format_row.
+        You can either implement those or, if you need more flexibility,
+        override this.
 
         Limit to `max` rows.
 
         """
-        cursor = connections[router.db_for_read(Document)].cursor()
+        cursor = _cursor()
         cursor.execute(*self._query_and_params(max))
-        return (self._format_row(r) for r in cursor.fetchall())
+        return [self._format_row(r) for r in cursor.fetchall()]
 
-    def render(self, rows):
-        """Return HTML table rows for the given data."""
+    def render(self, max_rows=None):
+        """Return HTML table rows, optionally limiting to a number of rows."""
+        # Compute percents for bar widths:
+        rows = self.rows(max_rows)
+        max_visits = max(r['visits'] for r in rows) if rows else 0
+        for r in rows:
+            visits = r['visits']
+            r['percent'] = (0 if visits is None or not max_visits
+                            else int(round(visits / float(max_visits) * 100)))
+
+        # Render:
         return jingo.render_to_string(
             self.request,
             'dashboards/includes/kb_readout.html',
@@ -100,7 +131,7 @@ class Readout(object):
     # Convenience methods:
 
     @staticmethod
-    def limit_clause(max):
+    def _limit_clause(max):
         """Return a SQL LIMIT clause limiting returned rows to `max`.
 
         Return '' if max is None.
@@ -121,26 +152,36 @@ class UntranslatedReadout(Readout):
         # against an inner query returning translated docs, and the left join
         # yielded a faster-looking plan (on a production corpus).
         return ('SELECT parent.slug, parent.title, '
-            'wiki_revision.reviewed '
+            'wiki_revision.reviewed, dashboards_wikidocumentvisits.visits '
             'FROM wiki_document parent '
             'INNER JOIN wiki_revision ON '
                 'parent.current_revision_id=wiki_revision.id '
-            'LEFT OUTER JOIN wiki_document translated ON '
+            'LEFT JOIN wiki_document translated ON '
                 'parent.id=translated.parent_id AND translated.locale=%s '
+            'LEFT JOIN dashboards_wikidocumentvisits ON '
+                'parent.id=dashboards_wikidocumentvisits.document_id AND '
+                'dashboards_wikidocumentvisits.period=%s '
             'WHERE '
             'translated.id IS NULL AND parent.is_localizable AND '
             'parent.locale=%s '
-            'ORDER BY wiki_revision.reviewed DESC' + self.limit_clause(max),
-            [self.locale, settings.WIKI_DEFAULT_LANGUAGE])
+            + self._order_clause() + self._limit_clause(max),
+            (self.locale, THIS_WEEK, settings.WIKI_DEFAULT_LANGUAGE))
 
-    def _format_row(self, (slug, title, reviewed)):
+    def _order_clause(self):
+        # TODO: Figure out how to structure these things so I don't repeat logic.
+        return ('ORDER BY wiki_revision.reviewed DESC, parent.title ASC'
+                if self.request.GET.get('order') == 'reviewed'
+                else 'ORDER BY dashboards_wikidocumentvisits.visits DESC, '
+                     'parent.title ASC')
+
+    def _format_row(self, (slug, title, reviewed, visits)):
         # Run the data through the model to (potentially) format it and
         # take advantage of SPOTs (like for get_absolute_url()):
         d = Document(slug=slug, title=title,
                      locale=settings.WIKI_DEFAULT_LANGUAGE)
         return (dict(title=d.title,
                      url=d.get_absolute_url(),
-                     visits=0, percent=0,
+                     visits=visits,
                      updated=reviewed))
 
 
@@ -162,7 +203,8 @@ class OutOfDateReadout(Readout):
         # higher. We could arguably knock this up to MAJOR, but technically it
         # is out of date when the original gets anything more than typo
         # corrections.
-        return ('SELECT transdoc.slug, transdoc.title, engrev.reviewed '
+        return ('SELECT transdoc.slug, transdoc.title, engrev.reviewed, '
+            'dashboards_wikidocumentvisits.visits '
             'FROM wiki_document transdoc '
             'INNER JOIN wiki_revision engrev ON engrev.id='
             # The oldest english rev to have an approved level-30 change since
@@ -201,15 +243,19 @@ class OutOfDateReadout(Readout):
                     'WHERE basedonrev.id=transdoc.current_revision_id) '
                   ')'
                 ') '
+            # Join up the visits table for stats:
+            'LEFT JOIN dashboards_wikidocumentvisits ON '
+                'engrev.document_id=dashboards_wikidocumentvisits.document_id '
+                'AND dashboards_wikidocumentvisits.period=%s '
             'WHERE transdoc.locale=%s '
-            'ORDER BY engrev.reviewed DESC' + self.limit_clause(max),
-            [MEDIUM_SIGNIFICANCE, self._max_significance, self.locale])
+            'ORDER BY engrev.reviewed DESC' + self._limit_clause(max),
+            (MEDIUM_SIGNIFICANCE, self._max_significance, THIS_WEEK,
+                self.locale))
 
-    def _format_row(self, (slug, title, reviewed)):
+    def _format_row(self, (slug, title, reviewed, visits)):
         return (dict(title=title,
                      url=reverse('wiki.edit_document', args=[slug]),
-                     visits=0, percent=0,
-                     updated=reviewed))
+                     visits=visits, updated=reviewed))
 
 
 class NeedingUpdatesReadout(OutOfDateReadout):
@@ -232,26 +278,33 @@ class UnreviewedReadout(Readout):
     column4_label = _lazy(u'Changed')
 
     def _query_and_params(self, max):
+        english_id = ('id' if self.locale == settings.WIKI_DEFAULT_LANGUAGE
+                      else 'parent_id')
         return ('SELECT wiki_document.slug, wiki_document.title, '
             'MAX(wiki_revision.created) maxcreated, '
             'GROUP_CONCAT(DISTINCT auth_user.username '
-                         "ORDER BY wiki_revision.id SEPARATOR ', ') "
+                         "ORDER BY wiki_revision.id SEPARATOR ', '), "
+            'dashboards_wikidocumentvisits.visits '
             'FROM wiki_document '
             'INNER JOIN wiki_revision ON '
                         'wiki_document.id=wiki_revision.document_id '
             'INNER JOIN auth_user ON wiki_revision.creator_id=auth_user.id '
+            'LEFT JOIN dashboards_wikidocumentvisits ON '
+                'wiki_document.' + english_id
+                    + '=dashboards_wikidocumentvisits.document_id AND '
+                'dashboards_wikidocumentvisits.period=%s '
             'WHERE wiki_revision.reviewed IS NULL '
             'AND (wiki_document.current_revision_id IS NULL OR '
                  'wiki_revision.id>wiki_document.current_revision_id) '
             'AND wiki_document.locale=%s '
             'GROUP BY wiki_document.id '
-            'ORDER BY maxcreated DESC' + self.limit_clause(max),
-            [self.locale])
+            'ORDER BY maxcreated DESC' + self._limit_clause(max),
+            (THIS_WEEK, self.locale))
 
-    def _format_row(self, (slug, title, changed, users)):
+    def _format_row(self, (slug, title, changed, users, visits)):
         return (dict(title=title,
                      url=reverse('wiki.document_revisions', args=[slug]),
-                     visits=0, percent=0,
+                     visits=visits,
                      updated=changed,
                      users=users))
 

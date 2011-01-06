@@ -233,7 +233,13 @@ def json(s):
 @register.function
 @jinja2.contextfunction
 def number(context, n):
-    """Return the localized representation of an integer or decimal."""
+    """Return the localized representation of an integer or decimal.
+
+    For None, print nothing.
+
+    """
+    if n is None:
+        return ''
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
 
 

@@ -92,5 +92,6 @@
 .dashboards table.documents td:nth-child(4),
 .dashboards table.documents th:nth-child(4) {
     text-align: right;
+    vertical-align: middle;
     width: 25%;
 }
