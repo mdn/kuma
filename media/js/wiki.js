@@ -223,9 +223,9 @@
                 persistSelection();
                 var url = document.location.href;
                 if ($body.is('.mobile')) {
-                    document.location = url.replace('/mobile/', '/home/');
+                    document.location = url.replace('/mobile', '/home');
                 } else {
-                    document.location = url.replace('/home/', '/mobile/');
+                    document.location = url.replace('/home', '/mobile');
                 }
             }
 
