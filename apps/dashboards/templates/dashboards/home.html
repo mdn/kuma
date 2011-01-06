@@ -1,12 +1,12 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import quick_links %}
-{% from "wiki/includes/common_macros.html" import search_box %}
+{% extends "base.html" %}
+{% from "includes/common_macros.html" import search_box %}
 {% set styles = ('wiki', 'home') %}
 {% set scripts = ('wiki',) %}
 {% set classes = ('home desktop') %}
 {% set title = _('Firefox Support Home Page') %}
 {% set hide_header_search = True %}
+{% set active_side_link = 1 %}
 
 {% block content %}
   <div id="featured-wrap">{# Top area, includes "Need Help With FIREFOX?" #}
@@ -32,8 +32,8 @@
 {% endblock %}
 
 {% block side %}
-  <section id="featured-side">
-    {{ quick_links(active=1) }}
-    {% include 'wiki/includes/support_for_selectors.html' %}
-  </section>
+  {% include 'wiki/includes/support_for_selectors.html' %}
+{% endblock %}
+
+{% block breadcrumbs %}
 {% endblock %}

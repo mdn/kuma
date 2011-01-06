@@ -1,12 +1,10 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
-{% set title = _('Search') %}
-{% set crumbs = [(None, title)] %}
-{% set styles = ('search',) %}
+{% extends "search/base.html" %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
 
 {% block content %}
+<article id="search-results" class="main">
   <div id="basic-search" class="search-refine">
     <form role="search" method="get" action="search">
     {% for name, field in search_form.fields.items() if not name in ('q',) %}
@@ -48,4 +46,5 @@
   </div>
 
   <p>{{ _("Can't find what you're looking for? <a href='{0}'>Ask a support question instead!</a>")|fe(url('wiki.document', 'ask')) }}</p>
+</article>
 {% endblock %}

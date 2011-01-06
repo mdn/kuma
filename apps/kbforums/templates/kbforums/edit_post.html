@@ -10,7 +10,8 @@
                  (None, _('Edit a post'))] %}
 
 {% block content %}
-  <h2>{{ _('Edit a post') }}</h2>
+<article id="edit-post" class="main">
+  <h1>{{ _('Edit a post') }}</h1>
 
   <form action="{{ url('wiki.discuss.edit_post', document.slug, thread.id, post.id) }}" method="post" class="edit-post">
     {{ csrf() }}
@@ -42,4 +43,5 @@
       </ol>
     </div>
   {% endif %}
+</article>
 {% endblock %}

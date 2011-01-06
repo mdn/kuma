@@ -31,7 +31,7 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(d.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(d.title, doc('#main-content h1.title').text())
+        eq_(d.title, doc('#main h1.title').text())
         eq_(pq(d.html)('div').text(), doc('#doc-content div').text())
 
     def test_redirect(self):

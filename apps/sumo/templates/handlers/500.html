@@ -1,13 +1,13 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "base.html" %}
 {% set title = _('An Error Occurred') %}
 
 {% block content %}
+<article id="error-page" class="main">
+  <h1>{{ title }}</h1>
 
-<h2>{{ title }}</h2>
-
-<p>{% trans %}Oh, no! It looks like an unexpected error occurred. We've
-already notified the site administrators. Please try again now, or in a few
-minutes.{% endtrans %}</p>
-
+  <p>{% trans %}Oh, no! It looks like an unexpected error occurred. We've
+  already notified the site administrators. Please try again now, or in a few
+  minutes.{% endtrans %}</p>
+</article>
 {% endblock %}

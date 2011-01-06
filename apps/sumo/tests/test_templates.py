@@ -32,11 +32,11 @@ class MockRequestTests(TestCase):
 
 
 class BaseTemplateTests(MockRequestTests):
-    """Tests for layout/base.html"""
+    """Tests for base.html"""
 
     def setUp(self):
         super(BaseTemplateTests, self).setUp()
-        self.template = 'layout/base.html'
+        self.template = 'base.html'
 
     @raises(KeyError)
     def test_no_dir_attribute(self):

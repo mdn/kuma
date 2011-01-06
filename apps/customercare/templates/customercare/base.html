@@ -1,4 +1,29 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "base.html" %}
 {% set styles = ('customercare', 'jqueryui/jqueryui') %}
 {% set scripts = ('customercare', 'libs/jqueryui') %}
+
+{% block content %}
+  {% block content_area %}{% endblock %}
+{% endblock %}
+
+{% block outer_side %}
+  <div id="sidebar">
+    <ul id="side-menu"> {# This is the last place the old style sidebar exists #}
+      <li class="first"><h3><a href="{{ url('home') }}">{{ _('Firefox Support') }}</a></h3></li>
+      <li><a href="{{ url('home') }}">{{ _('Firefox Help Home') }}</a></li>
+      <li><a href="{{ url('wiki.document', 'ask') }}">{{ _('Ask a Question') }}</a></li>
+      <li><a href="{{ url('wiki.document', 'superheroes-wanted') }}">{{ _('Be Awesome') }}</a></li>
+      {% if user.is_authenticated() %}
+        <li><a href="{{ profile_url(user) }}">{{ _('My Profile') }}</a></li>
+        <li><a href="{{ settings.LOGOUT_URL }}">{{ _('Sign Out') }}</a></li>
+      {% else %}
+        <li><a href="{{ settings.LOGIN_URL }}">{{ _('Log In') }}</a></li>
+      {% endif %}
+    </ul>
+    {% block extra_sidebar %}{% endblock %}
+  </div>
+{% endblock %}
+
+{% block sub_header %}
+{% endblock %}

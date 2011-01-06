@@ -9,7 +9,8 @@
                  (None, _('Delete Post'))] %}
 
 {% block content %}
-  <h2>{{ _('Are you sure you want to delete this post?') }}</h2>
+<article id="confirm-delete" class="main">
+  <h1>{{ _('Are you sure you want to delete this post?') }}</h1>
   <div class="post-to-delete">
     <label>{{ _('Author') }}</label>
     <div>{{ post.creator }}</div>
@@ -27,4 +28,5 @@
       <input type="submit" value="{{ _('Delete') }}" />
     </form>
   </div>
+</article>
 {% endblock %}

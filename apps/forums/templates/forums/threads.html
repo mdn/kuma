@@ -5,7 +5,8 @@
 {% set crumbs = [(url('forums.forums'), _('Forums')), (None, forum.name)] %}
 
 {% block content %}
-  <h2>{{ forum.name }}</h2>
+<article id="threads" class="main">
+  <h1>{{ forum.name }}</h1>
   <div class="badges">
     {% if is_watching(forum) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
   </div>
@@ -62,4 +63,5 @@
   {% else %}
     <p>{{ _('There are no threads. Maybe you should create some!') }}</p>
   {% endif %}
+</article>
 {% endblock %}

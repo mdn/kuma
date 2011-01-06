@@ -92,10 +92,6 @@ body.mobile #featured {
     _margin-left: 10px;
 }
 
-#featured-side {
-    _height: 230px;
-}
-
 /* Fix z-index issue with header drop downs */
 #nav-main {
     position: relative;

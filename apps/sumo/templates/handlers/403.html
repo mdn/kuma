@@ -1,15 +1,15 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "base.html" %}
 {% set title = _('Access denied') %}
 
 {% block content %}
+<article id="error-page" class="main">
+  <h1>{{ title }}</h1>
 
-<h2>{{ title }}</h2>
+  <p>{{ _('You do not have permission to access this page.') }}</p>
 
-<p>{{ _('You do not have permission to access this page.') }}</p>
-
-{% if not user.is_authenticated() %}
-  {% include "layout/login.html" %}
-{% endif %}
-
+  {% if not user.is_authenticated() %}
+    {% include "layout/login.html" %}
+  {% endif %}
+</article>
 {% endblock %}

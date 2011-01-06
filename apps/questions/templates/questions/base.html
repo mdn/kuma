@@ -1,11 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "layout/base.html" %}
+{% extends "base.html" %}
 {% set styles = ('questions', 'jqueryui/jqueryui') %}
 {% set scripts = ('questions', 'libs/jqueryui') %}
 
-{% block content_area %}
-
-<div id="main-hdr">
+{% block sub_header %}
   <hgroup>
     <h1><a href="{{ url('questions.questions') }}">{{ _('Firefox Support Forum') }}</a></h1>
     <h2>{{ _('The Official Community-Driven Support Web Site for Firefox') }}</h2>
@@ -39,16 +37,14 @@
       </p>
     {% endif %}
   </div>
-</div>
-
-{% block filter %}
 {% endblock %}
 
-<div id="main-content">
-  {% block content %}
+{% block above_main %}
+  {% block filter %}
   {% endblock %}
-</div>
+{% endblock %}
 
+{% block outer_side %}
 <div id="main-sd">
   {% block side %}
     <div class="sd-module" id="ask-question-module">
@@ -74,11 +70,7 @@
     {% endif %}
   {% endblock %}
 </div>
-
 {% endblock %}
 
 {% block breadcrumbs %}
-{% endblock %}
-
-{% block sidebar %}
 {% endblock %}

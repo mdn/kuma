@@ -16,6 +16,10 @@
 /*----------------------------------
     Global
 ----------------------------------*/
+article, nav, section {
+    display: block;
+}
+
 body {
     font: 13px/1.231 Georgia, freeserif, serif;
     min-width: 998px;
@@ -31,16 +35,17 @@ body.html-rtl {
 }
 
 a:link, a:visited, a:active {
-    color: #0489B7;
+    color: #447bc4;
     text-decoration: none;
 }
 
-h1, h2, h3 {
-    font-weight: normal;
+h1, h2, h3, h4, h5, h6 {
+	color: #303030;
+	font-weight: normal;
 }
 
 h1 {
-    font-size: 3.5em;
+    font-size: 26px;
 }
 
 h2 {
@@ -70,9 +75,17 @@ h2 {
     Breadcrumbs
 ----------------------------------*/
 
+#breadcrumbs {
+    margin: 0 0 20px;
+}
+
 .breadcrumbs {
-    margin: 14px 0 0 20px;
+    margin: 5px 0 15px;
     font-family: Verdana;
+}
+
+#breadcrumbs .breadcrumbs {
+    display: inline;
 }
 
 .breadcrumbs li {
@@ -112,12 +125,311 @@ h2 {
 
 #content {
     clear:both;
-    width: 920px;
+    font-family: Georgia;
+    font-size: 92.31%;
     margin: auto;
     text-align: left;
-    font-size: 92.31%;
+    width: 978px;
 }
 
+#content:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+#sub-header {
+    height: 90px;
+}
+
+#main {
+    background: transparent url(../img/wiki/bkg.main.top.png) no-repeat right top;
+    clear: both;
+    float: left;
+    padding: 16px 0 0;
+    width: 754px;
+}
+
+#main article.main {
+    background: transparent url(../img/wiki/bkg.article.jpg) no-repeat right top;
+    font-size: 13px;
+    min-height: 450px;
+    padding: 14px 20px 0 0;
+}
+
+article.main > h1 {
+    margin: 0 0 15px;
+}
+
+#firefox-help {
+    float: left;
+    font-size: 18px;
+    font-style: italic;
+    padding: 10px 0;
+    width: 445px;
+}
+
+#firefox-help a {
+    background: transparent url(../img/ff-logo.png) no-repeat left center;
+    color: #333;
+    float: left;
+    padding: 20px 0 20px 60px;
+}
+
+#support-search {
+    float: left;
+    padding: 15px 0 0;
+    width: 310px;
+}
+
+div.support-search form {
+    background: #1b5898;
+    background: -moz-linear-gradient(top, #2e89ca, #1b5898);
+    background: -webkit-gradient(linear, left top, left bottom, from(#2e89ca), to(#1b5898));
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    padding: 5px;
+}
+
+div.support-search input.text {
+    background: #fff url(../img/icon.searchloupe.png) no-repeat 7px 2px;
+    border: none;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: none;
+    float: left;
+    font-size: 16px;
+    height: 26px;
+    margin: 0 1px 0 0;
+    padding: 2px 0 2px 34px;
+    width: 220px;
+}
+
+div.support-search button.img-submit {
+    float: left;
+    height: 33px;
+    margin: -1px 0 0 2px;
+    width: 40px;
+}
+
+#greeting {
+    color: #666;
+    float: right;
+    font-size: 14px;
+    padding: 20px 0 0;
+    text-align: right;
+    width: 222px;
+}
+
+#greeting span.user {
+    color: #333;
+}
+
+#greeting nav {
+    display: block;
+}
+
+/*----------------------------------
+    Sidebar
+----------------------------------*/
+
+#side {
+    float: left;
+    width: 222px;
+}
+
+#for-contributors h1 {
+    color: #333;
+    font-size: 18px;
+    font-style: italic;
+    margin: 0 0 5px;
+}
+
+#for-contributors li {
+    list-style: none;
+    padding: 3px 0;
+}
+
+#quick-links {
+    font-size: 13px;
+    margin: 25px 0 0 20px;
+}
+
+#quick-links li {
+    background: #cde6f5;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    list-style: none;
+    margin: 0 0 6px;
+}
+
+#quick-links li:hover {
+    background: #e6f1fb;
+}
+
+#quick-links li.active:hover {
+    background: #4978bc;
+}
+
+#quick-links .active {
+    background: #3862a9;
+}
+
+#quick-links .active a {
+    color: #fff;
+}
+
+#quick-links li a {
+    display: block;
+    padding: 5px 0 5px 30px;
+}
+
+#quick-links li.home a {
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px 6px;
+}
+
+#quick-links li.aaq a {
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -44px;
+}
+
+#quick-links li.home.active a {
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -95px;
+}
+
+#quick-links li.aaq.active a {
+    background: transparent url(../img/wiki/icons.quicklinks.png) no-repeat 6px -144px;
+}
+
+.sd-module {
+    background: #cde6f5;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    font-size: 13px;
+    margin: 20px 0 0 20px;
+    padding: 20px;
+}
+
+.sd-module.promos {
+    margin-top: 50px;
+    padding: 0;
+}
+
+.sd-module h1 {
+    color: #32559b;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.sd-module h1 mark {
+    color: #32559b;
+    font-family: MetaBlack, "Trebuchet MS", sans-serif;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+.sd-module p {
+    color: #666;
+    margin: 10px 0;
+}
+
+.sd-module section {
+    padding: 20px;
+}
+
+#want-to-get-involved a {
+    display: block;
+    margin-right: 2em;
+}
+
+#check-your-plugins {
+    background: -moz-radial-gradient(center -40%, circle, rgba(255,255,255,1), rgba(255,255,255,0) 50%);
+    background: -webkit-gradient(radial, center -40%, 0, center -40%, 175, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
+}
+
+/* Side tabs -- TODO: rename doc-tabs to something more generic */
+#doc-tabs {
+    color: #666;
+    font-size: 13px;
+    margin: 16px 0 0;
+}
+
+#doc-tabs li {
+    background: #fff;
+    background: -moz-linear-gradient(left, #cde4f7, #fff);
+    background: -webkit-gradient(linear, left top, right top, from(#cde4f7), to(#fff));
+    border: solid 1px #9accf7;
+    border-left: none;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -moz-border-radius: 10px;
+    -moz-border-radius-bottomleft: 0;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-radius: 10px;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    box-shadow: 2px 2px 3px #9dbbd0;
+    -moz-box-shadow: 2px 2px 3px #9dbbd0;
+    -webkit-box-shadow: 2px 2px 3px #9dbbd0;
+    list-style: none;
+    margin: 7px 0 0;
+}
+
+#doc-tabs li.disabled, #doc-tabs li.disabled:hover {
+    background: -moz-linear-gradient(left, #dedede, #fff);
+    background: -webkit-gradient(linear, left top, right top, from(#dedede), to(#fff));
+    border: solid 1px #ccc;
+    box-shadow: 2px 2px 3px #cecece;
+    -moz-box-shadow: 2px 2px 3px #cecece;
+    -webkit-box-shadow: 2px 2px 3px #cecece;
+}
+
+#doc-tabs li.disabled a {
+    color: #999;
+}
+
+#doc-tabs li a,
+#doc-tabs li span {
+    display: block;
+    padding: 7px 0 8px 50px;
+}
+
+#doc-tabs li:hover {
+    background: -moz-linear-gradient(left, #e6f1fb, #fff);
+    background: -webkit-gradient(linear, left top, right top, from(#e6f1fb), to(#fff));
+}
+
+#doc-tabs li.active {
+    background: #fff;
+    left: -1px;
+    position: relative;
+    width: 102%;
+    z-index: 2;
+}
+
+#doc-tabs li.active span,
+#doc-tabs li.active a {
+    border-left: solid 2px #fff;
+    color: #666;
+    left: -2px;
+    padding-left : 52px;
+    position: relative;
+    z-index: 0;
+}
+
+#doc-tabs li.edit {
+    margin: 25px 0 0;
+}
+
+/**********************/
+/* TODO: DELETE START */
 #content-inner {
     width: 680px;
     padding: 0 20px;
@@ -140,6 +452,8 @@ h2 {
     height: 20px;
     width: 723px;
 }
+/* TODO: DELETE END */
+/********************/
 
 /* orange buttons */
 .btn-small, .btn-large {
@@ -224,7 +538,78 @@ ol.pagination li.selected a {
     color: #000;
 }
 
-/* Markup editor */
+/*----------------------------------
+    Form element styles
+----------------------------------*/
+
+article.main input[type="text"],
+article.main input[type="email"],
+article.main input[type="url"],
+article.main input[type="password"],
+article.main textarea,
+section.marky input[type="text"] {
+    background: -moz-linear-gradient(top, #deebf4, #deebf4 2px, #fff 3px, #fff 100%);
+    background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(5%, #deebf4), color-stop(10%, #fff));
+    border: solid 1px #97cbf7;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: #666;
+    font-size: 15px;
+    padding: 5px;
+    width: 325px;
+}
+
+article.main input[type="text"].error,
+article.main input[type="text"].error {
+    border-color: #ff0000;
+}
+
+article.main input[type="text"].autocomplete-tags {
+    width: 100px;
+}
+
+article.main textarea {
+    background: -webkit-gradient(linear, center top, center bottom, from(#deebf4), to(#fff), color-stop(0.5%, #deebf4), color-stop(1%, #fff));
+    height: 150px;
+    width: 700px;
+}
+
+article.main div.submit {
+    clear: both;
+    padding: 10px 0 0;
+}
+
+article.main input[type="button"],
+article.main input[type="submit"]:not(.remover),  /* Exclude tag remover button. */
+section.marky button {
+    border: none;
+    background: #0063d8;
+    background: -moz-linear-gradient(top, #4aa9f7, #0063d8);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    color: #fff;
+    cursor: pointer;
+    font-family: Verdana;
+    margin: 0 15px 0 0;
+    padding: 3px 20px 5px;
+    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
+}
+
+article.main input[disabled]:not(.remover) {
+    background: #ddd;
+    color: #888;
+    cursor: default;
+}
+
+/*----------------------------------
+    Markup editor styles
+----------------------------------*/
+
 div.forum-editor {
     padding: 1em;
 }

@@ -9,7 +9,8 @@
                  (None, _('Create a new thread'))] %}
 
 {% block content %}
-  <h2>{{ _('Create a new thread') }}</h2>
+<article id="new-thread" class="main">
+  <h1>{{ _('Create a new thread') }}</h1>
 
   <form action="{{ url('wiki.discuss.new_thread', document.slug) }}" method="post" class="new-thread">
     {{ csrf() }}
@@ -47,4 +48,5 @@
       </div>
     {% endif %}
   </form>
+</article>
 {% endblock %}

@@ -1,9 +1,8 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends 'wiki/base.html' %}
-{% from "wiki/includes/sidebar_modules.html" import quick_links %}
+{% extends 'base.html' %}
 {% set title = _('Live Chat') %}
 {% set scripts = ('chat',) %}
-{% set styles = ('wiki', 'chat') %}
+{% set styles = ('chat',) %}
 
 {% block content %}
   <article id="chat" class="main">
@@ -59,8 +58,5 @@
   </article>
 {% endblock %}
 
-{% block side %}
-  <section>
-    {{ quick_links() }}
-  </section>
+{% block breadcrumbs %}
 {% endblock %}

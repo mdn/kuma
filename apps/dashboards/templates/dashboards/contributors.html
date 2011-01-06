@@ -1,8 +1,10 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% extends "base.html" %}
 {% from "dashboards/includes/macros.html" import print_readout %}
 {% set title = _('Contributor Dashboard') %}
+{% set scripts = ('wiki',) %}
+{% set styles = ('wiki',) %}
+{# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
 
 {% block content %}
   <article id="localize" class="main dashboards">
@@ -32,7 +34,6 @@
 {% endblock %}
 
 {% block side %}
-  {{ for_contributors(user) }}
   <div id="doc-watch">
     {% with locale=request.locale, user=user %}
       {% include 'dashboards/includes/watch_locale.html' %}
@@ -44,5 +45,7 @@
       {% endwith %}
     {% endif %}
   </div>
-  {{ quick_links() }}
+{% endblock %}
+
+{% block breadcrumbs %}
 {% endblock %}

@@ -1,5 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "base.html" %}
 {% set styles = ('search',) %}
 {% if not title %}
   {% set title = _('Oops, your request was unsuccessful') %}
@@ -9,9 +9,9 @@
 {% endif %}
 
 {% block content %}
+<article id="error-page" class="main">
+  <h1>{{ title }}</h1>
 
-<h2>{{ title }}</h2>
-
-<p>{{ message }}</p>
-
+  <p>{{ message }}</p>
+</article>
 {% endblock %}

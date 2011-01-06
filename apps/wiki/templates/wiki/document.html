@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs, for_contributors, document_notifications, quick_links %}
+{% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
 {% set classes = 'document' %}
@@ -90,7 +90,7 @@
   </div>
 {% endblock %}
 
-{% block side %}
+{% block side_top %}
   {{ document_tabs(document, document.parent, user, 'article', settings) }}
 
   {% if user.is_authenticated() and document %}
@@ -108,8 +108,8 @@
       {% endif %}
     </div>
   {% endif %}
+{% endblock %}
 
-  {{ for_contributors(user) }}
-  {{ quick_links() }}
+{% block side %}
   {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}

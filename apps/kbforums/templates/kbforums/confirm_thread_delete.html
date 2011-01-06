@@ -9,7 +9,8 @@
                  (None, _('Delete Thread'))] %}
 
 {% block content %}
-  <h2>{{ _('Are you sure you want to delete this thread?') }}</h2>
+<article id="confirm-delete" class="main">
+  <h1>{{ _('Are you sure you want to delete this thread?') }}</h1>
   <div class="thread-to-delete">
     <label>{{ _('Title') }}</label>
     <div class="content">{{ thread.title }}</div>
@@ -29,4 +30,5 @@
       <input type="submit" value="{{ _('Delete') }}" />
     </form>
   </div>
+</article>
 {% endblock %}

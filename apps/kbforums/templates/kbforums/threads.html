@@ -7,7 +7,8 @@
                  (None, _('Discuss'))] %}
 
 {% block content %}
-  <h2>{{ _('{d} Discussion')|f(d=document.title) }}</h2>
+<article id="threads" class="main">
+  <h1>{{ _('{d} Discussion')|f(d=document.title) }}</h1>
   <div class="badges">
     {% if is_watching(document) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
   </div>
@@ -64,4 +65,5 @@
   {% else %}
     <p>{{ _('There are no threads. Maybe you should create some!') }}</p>
   {% endif %}
+</article>
 {% endblock %}

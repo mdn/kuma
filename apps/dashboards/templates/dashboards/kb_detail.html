@@ -1,7 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% extends "base.html" %}
 {% set title = readout.title %}
+{% set scripts = ('wiki',) %}
+{% set styles = ('wiki',) %}
+{# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
 
 {% block content %}
   <article class="main dashboards dashboards-detail">
@@ -25,7 +27,5 @@
   </article>
 {% endblock %}
 
-{% block side %}
-  {{ for_contributors(user) }}
-  {{ quick_links() }}
+{% block breadcrumbs %}
 {% endblock %}

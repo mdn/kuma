@@ -10,7 +10,8 @@
                  (None, _('Edit thread'))] %}
 
 {% block content %}
-  <h2>{{ _('Edit thread "{t}"')|f(t=thread.title) }}</h2>
+<article id="edit-thread" class="main">
+  <h1>{{ _('Edit thread "{t}"')|f(t=thread.title) }}</h1>
 
   <form action="{{ url('wiki.discuss.edit_thread', document.slug, thread.id) }}" method="post" class="edit-thread">
     {{ csrf() }}
@@ -26,4 +27,5 @@
       <input type="submit" value="{{ _('Update thread') }}" />
     </div>
   </form>
+</article>
 {% endblock %}

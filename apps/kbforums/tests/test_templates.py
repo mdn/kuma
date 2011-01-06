@@ -318,7 +318,7 @@ class ForumsTemplateTestCase(KBForumTestCase):
         eq_(403, response.status_code)
 
         doc = pq(response.content)
-        eq_('Access denied', doc('#content-inner h2').text())
+        eq_('Access denied', doc('#main h1').text())
 
 
 class NewThreadTemplateTestCase(KBForumTestCase):

@@ -1,10 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import for_contributors, quick_links %}
+{% extends "base.html" %}
 {% if not title %}
   {% set title = _('{title} | Media Gallery')|f(title=media.title) %}
 {% endif %}
-{% set styles = ('wiki', 'gallery') %}
+{% set styles = ('gallery',) %}
 {% if not crumbs %}
   {% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
                    (None, media.title)] %}
@@ -83,7 +82,5 @@
   </article>
 {% endblock %}
 
-{% block side %}
-  {{ for_contributors(user) }}
-  {{ quick_links() }}
+{% block breadcrumbs %}
 {% endblock %}

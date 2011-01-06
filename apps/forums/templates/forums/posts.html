@@ -8,7 +8,8 @@
                  (None, thread.title)] %}
 
 {% block content %}
-  <h2>{{ thread.title }}</h2>
+<article id="posts" class="main">
+  <h1>{{ thread.title }}</h1>
   <div class="badges">
     {% if thread.is_sticky %}<span class="sticky">{{ _('Sticky') }}</span>{% endif %}
     {% if thread.is_locked %}<span class="locked">{{ _('Locked') }}</span>{% endif %}
@@ -126,5 +127,5 @@
       </ol>
     </div>
   {% endif %}
-
+</article>
 {% endblock %}

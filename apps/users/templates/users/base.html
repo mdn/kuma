@@ -1,11 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "wiki/base.html" %}
-{% set styles = ('wiki', 'users') %}
+{% extends "base.html" %}
+{% set styles = ('users',) %}
 {% set scripts = ('users',) %}
 
-{# NOTE/TODO: We are using wiki base.html and CSS for now (Until the refactoring moves what we need into main.css, etc.) #}
-
-{% block side %}
+{% block side_top %}
   {% if not profile and user.is_authenticated() %}
     {% set profile = user.get_profile() %}
   {% endif %}
@@ -29,4 +27,7 @@
       </ul>
     </nav>
   {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
 {% endblock %}

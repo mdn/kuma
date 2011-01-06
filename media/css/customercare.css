@@ -1,6 +1,14 @@
 /*
  * Customer Care CSS
  */
+#sub-header {
+    display: none; /* TODO: bug 623906 - update AoA for new theme */
+}
+
+#main {
+    background: none;
+}
+
 #sidebar {
     margin-top: 20px;
 }

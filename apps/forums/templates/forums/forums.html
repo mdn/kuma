@@ -4,7 +4,8 @@
 {% set crumbs = [(None, title)] %}
 
 {% block content %}
-  <h2>{{ title }}</h2>
+<article id="forums" class="main">
+  <h1>{{ title }}</h1>
 
   <ol class="forums-columns">
     <li class="name">{{ _('Name') }}</li>
@@ -41,4 +42,5 @@
     {# Not localized because it's not worth localizers time. #}
     <p>There are no forums. You should create some!</p>
   {% endif %}
+</article>
 {% endblock %}

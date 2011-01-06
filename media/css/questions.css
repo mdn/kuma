@@ -2,27 +2,37 @@
  * Questions forums CSS
  */
 
+#content {
+    width: 920px;
+}
+
 /* main header */
-#main-hdr {
+#main {
+    background: none;
+    padding: 0;
+    width: 640px;
+}
+
+#sub-header {
     height: 200px;
 }
 
-#main-hdr hgroup {
+#sub-header hgroup {
     float: left;
     padding: 45px 0 0 25px;
     width: 600px;
 }
 
-#main-hdr h1 {
+#sub-header h1 {
     font-size: 46px;
     line-height: 46px;
 }
 
-#main-hdr h1 a {
+#sub-header h1 a {
     color: #303030;
 }
 
-#main-hdr h2 {
+#sub-header h2 {
     color: #4B4741;
     font-size: 18px;
     margin: .5em 0 0;
@@ -142,11 +152,6 @@
     margin: 0 0 0 25px;
 }
 /* main content layout */
-#main-content {
-    float: left;
-    width: 640px;
-}
-
 #main-sd {
     float: right;
     width: 235px;
@@ -340,6 +345,10 @@ div#question div.content h2 {
 /* side modules */
 div.sd-module {
     background:transparent url(../img/questions/bkg.askquestion.gif) no-repeat;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    margin: 0;
     padding: 15px;
 }
 
@@ -413,7 +422,7 @@ div.sd-module p {
 }
 
 /* answers page */
-body.answers #main-content {
+body.answers #main {
     background: transparent url(../img/questions/topbar.gif) no-repeat center top;
     float: none;
     margin: 50px 0 0 0;
@@ -1555,7 +1564,7 @@ div.edit-answer input.btn {
 /*
  * Flagged content queue
  */
-body.flagged #main-content {
+body.flagged #main {
     float: none;
     padding: 20px 200px 0 30px;
     position: relative;

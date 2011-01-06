@@ -1,77 +1,11 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "layout/base.html" %}
-{% from 'wiki/includes/common_macros.html' import search_box, greeting %}
-
+{% extends "base.html" %}
 {% if not styles %}
   {% set styles = ('wiki', 'jqueryui/jqueryui') %}
 {% endif %}
 {% if not scripts %}
   {% set scripts = ('wiki', 'libs/jqueryui') %}
 {% endif %}
-{% if not top_link %}
-  {% set top_link = url('home') %}
-{% endif %}
-{% if not top_text %}
-  {% set top_text = _('Firefox Help') %}
-{% endif %}
-
-
-{% block content_area %}
-
-{% block main_header %}
-  <div id="main-hdr">
-    <div id="firefox-help">
-      <a href="{{ top_link }}">{{ top_text }}</a>
-    </div>
-    {% if not hide_header_search %}
-      {{ search_box(settings, id='support-search') }}
-    {% endif %}
-    {{ greeting(user, settings) }}
-  </div>
-{% endblock %}
-
-<div id="main-content">
-  {% block content %}
-  {% endblock %}
-</div>
-
-<div id="main-sd">
-  {% block side %}
-  {% endblock %}
-  <div class="sd-module promos">
-    <section id="want-to-get-involved">
-      <h1>{{ _('Be <mark>Awesome</mark>')|safe }}</h1>
-      <div class="img">
-        <img src="{{ settings.MEDIA_URL }}img/promo.sumo.png" alt="" />
-      </div>
-      <p>
-        {% trans %}Did you know that Firefox Help is powered by volunteer
-          superheroes all around the world?{% endtrans %}
-      </p>
-      <a href="{{ url('wiki.document', 'superheroes-wanted') }}">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
-    </section>
-    {% if not hide_plugin_check %}
-      <section id="check-your-plugins">
-        <h1>{{ _('Check your <mark>plugins</mark>')|safe }}</h1>
-        <div class="img">
-          <img src="{{ settings.MEDIA_URL }}img/promo.plugins.png" alt="" />
-        </div>
-        <p>
-          {% trans %}
-            What is a plugin? Why should I keep them updated? Answer these
-            questions and run an instant check to see if you're up to date.
-          {% endtrans %}
-        </p>
-        <a href="http://www.mozilla.com/plugincheck/">{{ _('Find out more &raquo;')|safe }}</a>
-      </section>
-    {% endif %}
-  </div>
-</div>
-
-{% endblock %}
 
 {% block breadcrumbs %}
-{% endblock %}
-
-{% block sidebar %}
 {% endblock %}

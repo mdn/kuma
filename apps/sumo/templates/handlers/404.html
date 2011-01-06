@@ -1,17 +1,18 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
+{% extends "base.html" %}
 {% set title = _('Page Not Found') %}
 {% set styles = ('search',) %}
+{% set hide_header_search = True %}
 
 {% block content %}
+<article id="error-page" class="main">
+  <h1>{{ title }}</h1>
 
-<h2>{{ title }}</h2>
+  <p>{% trans %}Sorry, we couldn't find the page you were looking for. Please,
+  try searching our site using the form below.{% endtrans %}</p>
 
-<p>{% trans %}Sorry, we couldn't find the page you were looking for. Please,
-try searching our site using the form below.{% endtrans %}</p>
+  {% import "search/basic-form.html" as form %}
 
-{% import "search/basic-form.html" as form %}
-
-{{ form.form() }}
-
+  {{ form.form() }}
+</article>
 {% endblock %}

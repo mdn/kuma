@@ -1,14 +1,16 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% extends "common/base.html" %}
-{% set title = _('Search') %}
-{% set crumbs = [(None, title)] %}
+{% extends "search/base.html" %}
 {% if advanced != '0' %}
 {% set classes = 'advanced_search' %}
 {% endif %}
+<<<<<<< HEAD
 {% set styles = ('search',) %}
 {% set scripts = ('search', 'libs/jqueryui') %}
+=======
+>>>>>>> 547380e... A start to the great refactor:
 
 {% block content %}
+<article id="search-page" class="main">
   {% if advanced != '0' %}
   <div id="search-tabs">
     <span id="where" style="display: none">{{ search_form.w.data or '' }}</span>
@@ -211,4 +213,5 @@
     {{ basic.form(q=search_form.q.data) }}
     <a href="{{ url('search')|urlparams(a=2, q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
   {% endif %}
+</article>
 {% endblock %}

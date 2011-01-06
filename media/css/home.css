@@ -1,3 +1,8 @@
+#main {
+    background: none;
+    padding: 0;
+}
+
 #main-hdr {
     position: relative;
     z-index: 2;
@@ -15,10 +20,6 @@
 
 body.mobile #featured {
     background: url("../img/nurse.mobile.png") no-repeat scroll right top transparent;
-}
-
-#featured-side {
-    height: 210px;
 }
 
 #main-content {
