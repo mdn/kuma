@@ -53,12 +53,19 @@ class SearchClient(object):
     def _prepare(self):
         """Override to twiddle `self.sphinx` before the query gets sent."""
 
+    def _sanitize_query(self, query):
+        """Strip control characters that cause problems."""
+        return query.replace('^', '').replace('$', '')
+
     def _query_sphinx(self, query=''):
         """
         Pass the query to the SphinxClient() and return the results.
 
         Catches common exceptions raised by Sphinx.
         """
+
+        query = self._sanitize_query(query)
+
         try:
             result = self.sphinx.Query(query, self.index)
         except socket.timeout:

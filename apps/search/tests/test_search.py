@@ -538,6 +538,15 @@ class SearchTest(SphinxTestCase):
         eq_(1, len(results))
         eq_(2, results[0]['id'])
 
+    def test_no_syntax_error(self):
+        """Test that special chars cannot cause a syntax error."""
+        wc = WikiClient()
+        results = wc.query('video^$')
+        eq_(1, len(results))
+
+        results = wc.query('video^^^$$$^')
+        eq_(1, len(results))
+
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)
 
