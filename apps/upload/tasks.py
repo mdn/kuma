@@ -11,13 +11,21 @@ log = logging.getLogger('k.task')
 
 
 @task(rate_limit='15/m')
-def generate_image_thumbnail(obj, image_name, field_name='file'):
-    """Generate a thumbnail given an image and a name."""
+def generate_thumbnail(for_obj, from_field, to_field,
+                       max_size=settings.THUMBNAIL_SIZE):
+    """Generate a thumbnail, given a model instance with from and to fields.
+
+    Optionally specify a max_size.
+
+    """
+
+    from_ = getattr(for_obj, from_field)
+    to_ = getattr(for_obj, to_field)
+
     log.info('Generating thumbnail for %(model_class)s %(id)s.' %
-             {'model_class': obj.__class__.__name__, 'id': obj.id})
-    field = getattr(obj, field_name)
-    thumb_content = _create_image_thumbnail(field.path)
-    obj.thumbnail.save(image_name, thumb_content, save=True)
+             {'model_class': for_obj.__class__.__name__, 'id': for_obj.id})
+    thumb_content = _create_image_thumbnail(from_.path, longest_side=max_size)
+    to_.save(from_.path, thumb_content, save=True)
 
 
 def _create_image_thumbnail(file_path, longest_side=settings.THUMBNAIL_SIZE):

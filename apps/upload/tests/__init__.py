@@ -87,6 +87,10 @@ class FileNameTestCase(TestCase):
     def test_ascii(self):
         self._match_file_name(get_file_name('some ascii.jpg'), '5959e0.jpg')
 
+    def test_ascii_dir(self):
+        self._match_file_name(get_file_name('dir1/dir2/some ascii.jpg'),
+                              '5959e0.jpg')
+
     def test_low_unicode(self):
         self._match_file_name(
             get_file_name('157d9383e6aeba7180378fd8c1d46f80.gif'),

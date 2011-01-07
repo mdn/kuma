@@ -4,7 +4,7 @@ from nose import SkipTest
 from sumo.tests import TestCase
 from gallery.models import Image, Video
 from gallery.tests import image, video
-from upload.tasks import generate_image_thumbnail
+from upload.tasks import generate_thumbnail
 
 
 class ImageTestCase(TestCase):
@@ -27,7 +27,7 @@ class ImageTestCase(TestCase):
         img = image()
         eq_(img.file.url, img.thumbnail_url_if_set())
 
-        generate_image_thumbnail(img, img.file.name)
+        generate_thumbnail(img, 'file', 'thumbnail')
         eq_(img.thumbnail.url, img.thumbnail_url_if_set())
 
 

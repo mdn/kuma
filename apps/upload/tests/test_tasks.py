@@ -9,7 +9,7 @@ from questions.models import Question
 from sumo.tests import TestCase
 from upload.models import ImageAttachment
 from upload.tasks import (_scale_dimensions, _create_image_thumbnail,
-                          generate_image_thumbnail)
+                          generate_thumbnail)
 
 
 class ScaleDimensionsTestCase(TestCase):
@@ -82,14 +82,14 @@ class GenerateThumbnail(TestCase):
     def tearDown(self):
         ImageAttachment.objects.all().delete()
 
-    def test_generate_image_thumbnail_default(self):
-        """generate_image_thumbnail creates a thumbnail."""
+    def test_generate_thumbnail_default(self):
+        """generate_thumbnail creates a thumbnail."""
         image = ImageAttachment(content_object=self.obj, creator=self.user)
         with open('apps/upload/tests/media/test.jpg') as f:
             up_file = File(f)
             image.file.save(up_file.name, up_file, save=True)
 
-        generate_image_thumbnail(image, up_file.name)
+        generate_thumbnail(image, 'file', 'thumbnail')
 
         eq_(90, image.thumbnail.width)
         eq_(120, image.thumbnail.height)

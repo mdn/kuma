@@ -5,7 +5,7 @@ from tower import ugettext_lazy as _lazy
 
 from upload.forms import ImageAttachmentUploadForm
 from upload.models import ImageAttachment
-from upload.tasks import generate_image_thumbnail, _scale_dimensions
+from upload.tasks import generate_thumbnail, _scale_dimensions
 
 
 def check_file_size(f, max_allowed_size):
@@ -32,7 +32,7 @@ def create_imageattachment(files, user, obj):
     image.file.save(up_file.name, File(up_file), save=True)
 
     # Generate thumbnail off thread
-    generate_image_thumbnail.delay(image, up_file.name)
+    generate_thumbnail.delay(image, 'file', 'thumbnail')
 
     (width, height) = _scale_dimensions(image.file.width, image.file.height)
     return {'name': up_file.name, 'url': image.file.url,

@@ -7,7 +7,7 @@ from nose.tools import eq_
 from questions.models import Question
 from sumo.tests import TestCase
 from upload.models import ImageAttachment
-from upload.tasks import generate_image_thumbnail
+from upload.tasks import generate_thumbnail
 
 
 class ImageAttachmentTestCase(TestCase):
@@ -33,6 +33,5 @@ class ImageAttachmentTestCase(TestCase):
 
         eq_(image.file, image.thumbnail_if_set())
 
-        generate_image_thumbnail(image, up_file.name)
-
+        generate_thumbnail(image, 'file', 'thumbnail')
         eq_(image.thumbnail, image.thumbnail_if_set())
