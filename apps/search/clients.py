@@ -6,7 +6,6 @@ from django.conf import settings
 
 from bleach import Bleach
 
-import search as constants
 from search import sphinxapi
 
 
@@ -25,6 +24,7 @@ class SearchClient(object):
     bleach = Bleach()
     match_mode = sphinxapi.SPH_MATCH_EXTENDED2
     rank_mode = sphinxapi.SPH_RANK_PROXIMITY_BM25
+    sort_mode = (sphinxapi.SPH_SORT_RELEVANCE, '')
 
     def __init__(self):
         self.sphinx = sphinxapi.SphinxClient()
@@ -36,6 +36,7 @@ class SearchClient(object):
 
         self.sphinx.SetMatchMode(self.match_mode)
         self.sphinx.SetRankingMode(self.rank_mode)
+        self.sphinx.SetSortMode(*self.sort_mode)
 
     def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
@@ -154,10 +155,8 @@ class DiscussionClient(SearchClient):
     """
     index = 'discussion_forums'
     weights = {'title': 2, 'content': 1}
-
-    def __init__(self):
-        super(DiscussionClient, self).__init__()
-        self.groupsort = '@group desc'
+    groupsort = '@group desc'
+    sort_mode = (sphinxapi.SPH_SORT_ATTR_ASC, 'created')
 
     def _prepare(self):
         """Group posts together, and ensure thread['attrs']['updated'] is the
@@ -165,9 +164,6 @@ class DiscussionClient(SearchClient):
 
         """
         super(DiscussionClient, self)._prepare()
-        self.sphinx.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR,
+        self.sphinx.SetGroupBy('thread_id', sphinxapi.SPH_GROUPBY_ATTR,
                                self.groupsort)
-        self.sphinx.SetSortMode(constants.SPH_SORT_ATTR_ASC, 'created')
-
-    def set_groupsort(self, groupsort=''):
-        self.groupsort = groupsort
+        self.sphinx.SetSortMode(*self.sort_mode)
