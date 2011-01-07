@@ -22,7 +22,7 @@
       <div class="wrap">
   {% endif %}
 
-  <video data-fallback="{{ fallback }}" height="{{ height }}" width="{{ width }}" controls="">
+  <video data-fallback="{{ fallback }}" height="{{ height }}" width="{{ width }}" controls=""{% if video.poster %} poster="{{ video.poster.url }}"{% endif %}>
     {% for s in sources %}
       <source src="{{ s.src }}" type="video/{{ s.type }}">
     {% endfor %}

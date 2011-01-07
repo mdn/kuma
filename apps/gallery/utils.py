@@ -61,6 +61,8 @@ def create_video(files, user):
 
         # Generate thumbnail off thread
         if 'thumbnail' == name:
+            generate_thumbnail.delay(vid, 'thumbnail', 'poster',
+                                     max_size=settings.WIKI_VIDEO_WIDTH)
             generate_thumbnail.delay(vid, 'thumbnail', 'thumbnail')
 
     vid.save()

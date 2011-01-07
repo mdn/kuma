@@ -396,6 +396,7 @@ class UploadVideoTestCase(TestCase):
         eq_(1, Video.objects.count())
         eq_(200, r.status_code)
         eq_(90, vid.thumbnail.width)
+        eq_(150, vid.poster.width)
 
 
 class SearchTestCase(TestCase):

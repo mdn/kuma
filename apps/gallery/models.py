@@ -52,6 +52,9 @@ class Video(Media):
                            max_length=settings.MAX_FILEPATH_LENGTH)
     flv = models.FileField(upload_to=settings.GALLERY_VIDEO_PATH, null=True,
                            max_length=settings.MAX_FILEPATH_LENGTH)
+    poster = models.ImageField(upload_to=settings.GALLERY_VIDEO_THUMBNAIL_PATH,
+                               max_length=settings.MAX_FILEPATH_LENGTH,
+                               null=True)
     thumbnail = models.ImageField(
         upload_to=settings.GALLERY_VIDEO_THUMBNAIL_PATH, null=True,
         max_length=settings.MAX_FILEPATH_LENGTH)
