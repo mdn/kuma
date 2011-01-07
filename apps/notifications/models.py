@@ -1,6 +1,7 @@
 import hashlib
 
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
 from sumo.models import ModelBase, LocaleField
@@ -48,3 +49,18 @@ class EventWatch(ModelBase):
         """Get the URL to remove an EventWatch."""
         url_ = reverse('notifications.remove', args=[self.key])
         return urlparams(url_, email=self.email)
+
+
+class Watch(ModelBase):
+    """Watch events."""
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    event_type = models.CharField(max_length=60, db_index=True)
+    user = models.ForeignKey(User, null=True, blank=True)
+    email = models.EmailField(db_index=True, null=True, blank=True)
+    secret = models.CharField(max_length=40, null=True, blank=True)
+
+
+class WatchFilter(ModelBase):
+    watch = models.ForeignKey(Watch, related_name='filters')
+    name = models.CharField(max_length=4, db_index=True)
+    value = models.IntegerField()
