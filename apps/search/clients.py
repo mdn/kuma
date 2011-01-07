@@ -14,7 +14,7 @@ log = logging.getLogger('k.search')
 
 
 class SearchError(Exception):
-    pass
+    """An error occurred executing a search."""
 
 
 class SearchClient(object):
@@ -131,19 +131,13 @@ class SearchClient(object):
 class QuestionsClient(SearchClient):
     index = 'questions'
     weights = {'title': 4, 'question_content': 3, 'answer_content': 3}
-
-    def __init__(self):
-        super(QuestionsClient, self).__init__()
-        self.groupsort = '@group desc'
+    groupsort = '@group desc'
 
     def _prepare(self):
         """Prepare to group the answers together."""
         super(QuestionsClient, self)._prepare()
-        self.sphinx.SetGroupBy('question_id', constants.SPH_GROUPBY_ATTR,
+        self.sphinx.SetGroupBy('question_id', sphinxapi.SPH_GROUPBY_ATTR,
                       self.groupsort)
-
-    def set_groupsort(self, groupsort=''):
-        self.groupsort = groupsort
 
 
 class WikiClient(SearchClient):

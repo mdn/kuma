@@ -283,7 +283,7 @@ def search(request):
 
             # Sort results by
             try:
-                dc.set_groupsort(constants.GROUPSORT[sortby])
+                dc.groupsort = constants.GROUPSORT[sortby]
             except IndexError:
                 pass
 

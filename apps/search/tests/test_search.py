@@ -488,14 +488,14 @@ class SearchTest(SphinxTestCase):
                              (result['url'], url_id))
 
     def test_discussion_sort_mode(self):
-        """Test set_groupsort()."""
+        """Test set groupsort."""
         # Initialize client and attrs.
         dc = DiscussionClient()
         test_for = ('updated', 'created', 'replies')
 
         i = 0
         for groupsort in constants.GROUPSORT[1:]:  # Skip default sorting.
-            dc.set_groupsort(groupsort)
+            dc.groupsort = groupsort
             results = dc.query('')
             eq_(5, len(results))
 
