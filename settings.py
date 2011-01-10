@@ -386,6 +386,7 @@ MINIFY_BUNDLES = {
             'js/wiki.js',
             'js/libs/jqueryui.min.js',
             'js/tags.js',
+            'js/dashboards.js',
         ),
         'customercare': (
             'js/libs/jqueryui.min.js',

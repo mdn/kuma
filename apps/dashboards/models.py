@@ -1,6 +1,6 @@
 import json
 import logging
-from urllib2 import urlopen, HTTPBasicAuthHandler, build_opener
+from urllib2 import HTTPBasicAuthHandler, build_opener
 from urlparse import urlparse
 
 from django.conf import settings
@@ -66,6 +66,8 @@ class WikiDocumentVisits(ModelBase):
         counts = cls._visit_counts(json_data)
         if counts:
             # Delete and remake the rows:
+            # Horribly inefficient until
+            # http://code.djangoproject.com/ticket/9519 is fixed.
             cls.objects.filter(period=period).delete()
             for doc_id, visits in counts.iteritems():
                 cls.objects.create(document=Document(pk=doc_id), visits=visits,

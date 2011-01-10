@@ -61,6 +61,10 @@ class TestHelpers(TestCase):
         eq_(u'/foo?a=foo&a=bar', urlparams('/foo?a=foo&a=bar'))
         eq_(u'/foo?a=bar', urlparams('/foo?a=foo', a='bar'))
 
+    def test_urlparams_none(self):
+        """Assert a value of None doesn't make it into the query string."""
+        eq_(u'/foo', urlparams('/foo', bar=None))
+
     def test_collapse_linebreaks(self):
         """Make sure collapse_linebreaks works on some tricky cases."""
         eq_(collapse_linebreaks('\r\n \t  \n\r  Trouble\r\n\r\nshooting \r\n'),

@@ -12,6 +12,10 @@ from sumo.urlresolvers import reverse
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
 
 
+MOST_VIEWED = 1
+MOST_RECENT = 2
+
+
 def _cursor():
     """Return a DB cursor for reading."""
     return connections[router.db_for_read(Document)].cursor()
@@ -77,8 +81,10 @@ class Readout(object):
     #slug = 'URL slug for detail page'
     #details_link_text = _lazy(u'All articles from this readout...')
     column4_label = _lazy(u'Status')
+    modes = [(MOST_VIEWED, _lazy('Most Viewed')),
+             (MOST_RECENT, _lazy('Most Recent'))]
 
-    def __init__(self, request, locale=None):
+    def __init__(self, request, locale=None, mode=None):
         """Take request so the template can use contextual macros that need it.
 
         Renders the data for the locale specified by the request, but you can
@@ -87,6 +93,8 @@ class Readout(object):
         """
         self.request = request
         self.locale = locale or request.locale
+        self.mode = mode or self.modes[0][1]
+        # self.mode is allowed to be invalid.
 
     def rows(self, max=None):
         """Return an iterable of dicts containing the data for the table.
@@ -168,9 +176,8 @@ class UntranslatedReadout(Readout):
             (self.locale, THIS_WEEK, settings.WIKI_DEFAULT_LANGUAGE))
 
     def _order_clause(self):
-        # TODO: Figure out how to structure these things so I don't repeat logic.
         return ('ORDER BY wiki_revision.reviewed DESC, parent.title ASC'
-                if self.request.GET.get('order') == 'reviewed'
+                if self.mode == MOST_RECENT
                 else 'ORDER BY dashboards_wikidocumentvisits.visits DESC, '
                      'parent.title ASC')
 
@@ -248,9 +255,15 @@ class OutOfDateReadout(Readout):
                 'engrev.document_id=dashboards_wikidocumentvisits.document_id '
                 'AND dashboards_wikidocumentvisits.period=%s '
             'WHERE transdoc.locale=%s '
-            'ORDER BY engrev.reviewed DESC' + self._limit_clause(max),
+            + self._order_clause() + self._limit_clause(max),
             (MEDIUM_SIGNIFICANCE, self._max_significance, THIS_WEEK,
                 self.locale))
+
+    def _order_clause(self):
+        return ('ORDER BY engrev.reviewed DESC'
+                if self.mode == MOST_RECENT
+                else 'ORDER BY dashboards_wikidocumentvisits.visits DESC, '
+                     'transdoc.title ASC')
 
     def _format_row(self, (slug, title, reviewed, visits)):
         return (dict(title=title,
@@ -298,8 +311,14 @@ class UnreviewedReadout(Readout):
                  'wiki_revision.id>wiki_document.current_revision_id) '
             'AND wiki_document.locale=%s '
             'GROUP BY wiki_document.id '
-            'ORDER BY maxcreated DESC' + self._limit_clause(max),
+            + self._order_clause() + self._limit_clause(max),
             (THIS_WEEK, self.locale))
+
+    def _order_clause(self):
+        return ('ORDER BY maxcreated DESC'
+                if self.mode == MOST_RECENT
+                else 'ORDER BY dashboards_wikidocumentvisits.visits DESC, '
+                     'wiki_document.title ASC')
 
     def _format_row(self, (slug, title, changed, users, visits)):
         return (dict(title=title,
@@ -310,7 +329,7 @@ class UnreviewedReadout(Readout):
 
 
 # L10n Dashboard tables that have their own whole-page views:
-L10N_READOUTS = SortedDict((t.slug, t) for t in
+L10N_READOUTS = READOUTS = SortedDict((t.slug, t) for t in
     [UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
     UnreviewedReadout])
 

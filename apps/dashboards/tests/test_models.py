@@ -48,31 +48,42 @@ class DocumentVisitsTests(TestCase):
 
     def test_no_locale(self):
         """Skip URLs with no locale."""
-        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/home":8}}}}'))
+        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
+            '2010": {"SubRows":{"http://support.mozilla.com/home":8}}}}'))
 
     def test_foreign_locale(self):
         """Skip URLs with non-English locale."""
-        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/zh/home/":8}}}}'))
+        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
+            '2010": {"SubRows":{"http://support.mozilla.com/zh/home/":8}}}}'))
 
     def test_unknown_view(self):
         """Skip URLs that don't resolve."""
-        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/%s/unknown/":8}}}}' % settings.LANGUAGE_CODE))
+        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
+            '2010": {"SubRows":{"http://support.mozilla.com/%s/unknown/":8}}}}'
+            % settings.LANGUAGE_CODE))
 
     def test_non_document_view(self):
         """Skip URLs that don't resolve to the wiki document view."""
-        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/%s/contributors":8}}}}' % settings.LANGUAGE_CODE))
+        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
+            '2010": {"SubRows":{"http://support.mozilla.com/%s/contributors":8'
+            '}}}}' % settings.LANGUAGE_CODE))
 
     def test_bad_visit_count(self):
         """Skip URLs whose visit counts aren't ints."""
         d = document()
         d.save()
-        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/%s/kb/%s":{"measures":{"Visits":"non-integer"}}}}}}' % (settings.LANGUAGE_CODE, d.slug)))
+        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
+            '2010": {"SubRows":{"http://support.mozilla.com/%s/kb/%s":{'
+            '"measures":{"Visits":"non-integer"}}}}}}'
+            % (settings.LANGUAGE_CODE, d.slug)))
 
     def test_bad_page_info(self):
         """Skip URLs whose page info is unsubscriptable."""
         d = document()
         d.save()
-        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/%s/kb/%s":8}}}}' % (settings.LANGUAGE_CODE, d.slug)))
+        eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
+            '2010": {"SubRows":{"http://support.mozilla.com/%s/kb/%s":8}}}}'
+            % (settings.LANGUAGE_CODE, d.slug)))
 
     def test_good_visit_count(self):
         """Extract visit counts from good data.
@@ -85,7 +96,18 @@ class DocumentVisitsTests(TestCase):
         d2 = document(slug='there')
         d2.save()
         # We get a str, not a unicode obj, out of the urllib call.
-        eq_({d.pk: 1037639, d2.pk: 213817}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/2010": {"SubRows":{"http://support.mozilla.com/%s/kb/hellỗ":{"Attributes":{"Title":"Firefox Support Home Page | Firefox Support","UrlLink":"http://support.mozilla.com/en-US/home/"},"measures":{"Visits":1037639.0,"Views":3357731.0,"Average Time Viewed":23.0},"SubRows":null},"http://support.mozilla.com/%s/kb/there":{"Attributes":{"Title":"Startseite der Firefox-Hilfe | Firefox Support","UrlLink":"http://support.mozilla.com/de/home/"},"measures":{"Visits":213817.0,"Views":595329.0,"Average Time Viewed":25.0},"SubRows":null}}}}}' % ((settings.LANGUAGE_CODE,) * 2)))
+        eq_({d.pk: 1037639, d2.pk: 213817}, WikiDocumentVisits._visit_counts(
+            '{"data": {"12/01/2010-12/07/2010": {"SubRows":{'
+            '"http://support.mozilla.com/%s/kb/hellỗ":{"Attributes":{"Title":'
+            '"Firefox Support Home Page | Firefox Support","UrlLink":'
+            '"http://support.mozilla.com/en-US/home/"},"measures":'
+            '{"Visits":1037639.0,"Views":3357731.0,"Average Time Viewed":23.0'
+            '},"SubRows":null},"http://support.mozilla.com/%s/kb/there":'
+            '{"Attributes":{"Title":"Startseite der Firefox-Hilfe | Firefox'
+            'Support","UrlLink":"http://support.mozilla.com/de/home/"},'
+            '"measures":{"Visits":213817.0,"Views":595329.0,"Average Time '
+            'Viewed":25.0},"SubRows":null}}}}}'
+            % ((settings.LANGUAGE_CODE,) * 2)))
 
     @patch_object(settings._wrapped, 'WEBTRENDS_WIKI_REPORT_URL',
                   'https://localhost:123654/nonexistent')

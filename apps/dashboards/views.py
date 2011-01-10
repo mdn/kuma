@@ -1,18 +1,19 @@
 from functools import partial
 
 from django.conf import settings
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.utils.datastructures import SortedDict
 from django.views.decorators.http import require_GET
 
 import jingo
 from tower import ugettext_lazy as _lazy, ugettext as _
 
-from dashboards.readouts import (overview_rows, L10N_READOUTS,
+from dashboards.readouts import (overview_rows, READOUTS, L10N_READOUTS,
                                  CONTRIBUTOR_READOUTS)
 from sumo_locales import LOCALES
 from sumo.parser import get_object_fallback
 from sumo.urlresolvers import reverse
+from sumo.utils import smart_int
 from wiki.models import Document
 from wiki.views import SHOWFOR_DATA
 
@@ -44,29 +45,39 @@ def mobile(request):
     return jingo.render(request, 'dashboards/mobile.html', data)
 
 
+def _kb_readout(request, readout_slug, readouts, locale=None, mode=None):
+    """Instantiate and return the readout with the given slug.
+
+    Raise Http404 if there is no such readout.
+
+    """
+    if readout_slug not in readouts:
+        raise Http404
+    return readouts[readout_slug](request, locale=locale, mode=mode)
+
+
 def _kb_detail(request, readout_slug, readouts, main_view_name,
                main_dash_title, locale=None):
     """Show all the rows for the given KB article statistics table."""
-    if readout_slug not in readouts:
-        raise Http404
     return jingo.render(request, 'dashboards/kb_detail.html',
-        {'readout': readouts[readout_slug](request, locale),
+        {'readout': _kb_readout(request, readout_slug, readouts, locale),
+         'locale': locale,
          'main_dash_view': main_view_name,
          'main_dash_title': main_dash_title})
 
 
 @require_GET
-def contributors_detail(request, readout):
+def contributors_detail(request, readout_slug):
     """Show all the rows for the given contributor dashboard table."""
-    return _kb_detail(request, readout, CONTRIBUTOR_READOUTS,
+    return _kb_detail(request, readout_slug, CONTRIBUTOR_READOUTS,
                       'dashboards.contributors', _('Contributor Dashboard'),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
 
 
 @require_GET
-def localization_detail(request, readout):
+def localization_detail(request, readout_slug):
     """Show all the rows for the given localizer dashboard table."""
-    return _kb_detail(request, readout, L10N_READOUTS,
+    return _kb_detail(request, readout_slug, L10N_READOUTS,
                       'dashboards.localization', _('Localization Dashboard'))
 
 
@@ -80,6 +91,7 @@ def _kb_main(request, readouts, template, locale=None, extra_data=None):
     """
     data = {'readouts': SortedDict((slug, class_(request, locale=locale))
                          for slug, class_ in readouts.iteritems()),
+            'default_locale': settings.WIKI_DEFAULT_LANGUAGE,
             'default_locale_name':
                 LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
             'current_locale_name': LOCALES[request.locale].native}
@@ -103,3 +115,13 @@ def contributors(request):
     """Render aggregate data about the articles in the default locale."""
     return _kb_main(request, CONTRIBUTOR_READOUTS, 'contributors.html',
                     locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+
+@require_GET
+def wiki_rows(request, readout_slug):
+    """Return the table contents HTML for the given readout and mode."""
+    readout = _kb_readout(request, readout_slug, READOUTS,
+                          locale=request.GET.get('locale'),
+                          mode=smart_int(request.GET.get('mode'), None))
+    max_rows = smart_int(request.GET.get('max'), fallback=None)
+    return HttpResponse(readout.render(max_rows=max_rows))
