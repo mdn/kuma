@@ -99,6 +99,8 @@ $(document).ready(function () {
 
                 $options.adding.hide();
                 $options.add.show();
+
+                $(this).closest('form').trigger('ajaxComplete');
             }
         });
     });

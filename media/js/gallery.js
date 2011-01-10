@@ -74,6 +74,7 @@ $(document).ready(function () {
     };
 
     function resetForms() {
+        $forms.data('disabled', false).removeClass('disabled');
         $forms.find('.uploading').removeClass('uploading');
         $forms.find('.draft').removeClass('draft');
         $forms.find('.invalid').removeClass('invalid');
@@ -346,6 +347,8 @@ $(document).ready(function () {
                         $('.preview', $options.form).fadeIn('fast');
                     }
                 });
+                
+                $form.trigger('ajaxComplete');
             }
         });
     }); // end ajax upload gallery code

@@ -81,6 +81,11 @@ k = {};
             } else {
                 $this.data('disabled', true).addClass('disabled');
             }
+
+            $this.ajaxComplete(function(){
+                $this.data('disabled', false).removeClass('disabled');
+                $this.unbind('ajaxComplete');
+            });
         });
     }
 
