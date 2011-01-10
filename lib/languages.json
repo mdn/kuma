@@ -719,5 +719,12 @@
         "external":"bs",
         "dictionary":"bs_BA",
         "native":"Bosanski"
+    },
+    "my":{
+        "English":"Burmese",
+        "internal":"my",
+        "external":"my",
+        "dictionary":"my",
+        "native":"\u1019\u103C\u1014\u103A\u1019\u102C\u1018\u102C\u101E\u102C"
     }
 }
