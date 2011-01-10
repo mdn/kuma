@@ -298,6 +298,9 @@ MINIFY_BUNDLES = {
             'css/main.css',
             'css/sidebar.css',
         ),
+        'jqueryui/jqueryui': (
+            'css/jqueryui/jqueryui.css',
+        ),
         'forums': (
             'css/forums.css',
         ),
@@ -305,9 +308,6 @@ MINIFY_BUNDLES = {
             'css/to-delete.css',
             'css/questions.css',
             'css/tags.css',
-            'css/jqueryui/jquery.ui.core.css',
-            'css/jqueryui/jquery.ui.autocomplete.css',
-            'css/jqueryui/jquery.ui.theme.css',
         ),
         'search': (
             'css/search.css',
@@ -319,9 +319,6 @@ MINIFY_BUNDLES = {
             'css/dashboards.css',
             'css/screencast.css',
             'css/tags.css',
-            'css/jqueryui/jquery.ui.core.css',
-            'css/jqueryui/jquery.ui.autocomplete.css',
-            'css/jqueryui/jquery.ui.theme.css',
         ),
         'home': (
             'css/home.css',
@@ -334,8 +331,6 @@ MINIFY_BUNDLES = {
             'css/ie.css',
         ),
         'customercare': (
-            'css/jqueryui/jquery.ui.core.css',
-            'css/jqueryui/jquery.ui.theme.css',
             'css/customercare.css',
         ),
         'chat': (
