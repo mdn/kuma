@@ -322,7 +322,8 @@ class UnreviewedReadout(Readout):
 
     def _format_row(self, (slug, title, changed, users, visits)):
         return (dict(title=title,
-                     url=reverse('wiki.document_revisions', args=[slug]),
+                     url=reverse('wiki.document_revisions', args=[slug],
+                                 locale=self.locale),
                      visits=visits,
                      updated=changed,
                      users=users))
