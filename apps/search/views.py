@@ -4,9 +4,11 @@ import json
 from datetime import datetime, timedelta
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.db.models import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.utils.http import urlencode
+from django.views.decorators.cache import cache_page
 
 import jingo
 import jinja2
@@ -370,3 +372,12 @@ def search(request):
                            timedelta(minutes=settings.SEARCH_CACHE_PERIOD)) \
                            .strftime(expires_fmt)
     return results_
+
+
+@cache_page(60 * 60 * 168)  # 1 week.
+def plugin(request):
+    """Render an OpenSearch Plugin."""
+    site = Site.objects.get_current()
+    return jingo.render(request, 'search/plugin.html',
+                        {'site': site, 'locale': request.locale},
+                        mimetype='application/opensearchdescription+xml')
