@@ -2,6 +2,9 @@
 k = {};
 
 (function () {
+    k.LAZY_DELAY = 500;  // delay to lazy loading scripts, in ms
+    k.MEDIA_URL = '/media/';
+
     $(document).ready(function() {
         /* Focus form field when clicking on error message. */
         $('#content-inner ul.errorlist a').click(function () {
@@ -18,6 +21,7 @@ k = {};
         initAutoSubmitSelects();
         initSearchAutoFilters();
         disableFormsOnSubmit();
+        lazyLoadScripts();
 
     });
 
@@ -87,6 +91,53 @@ k = {};
                 $this.unbind('ajaxComplete');
             });
         });
+    }
+
+    /*
+     * This lazy loads our jQueryUI script.
+     */
+    function lazyLoadScripts() {
+        var scripts = ['js/libs/jqueryui-min.js'],
+            styles = [],  // was: ['css/jqueryui/jqueryui-min.css']
+                          // turns out this messes with search
+            i;
+
+        // Don't lazy load scripts that have already been loaded
+        $.each($('script'), function () {
+            var this_src = $(this).attr('src');
+            if (!this_src) return ;
+            remove_item(scripts, this_src);
+        });
+
+        // Don't lazy load stylesheets that have already been loaded
+        $.each($('link[rel="stylesheet"]'), function () {
+            remove_item(styles, $(this).attr('href'));
+        });
+
+        setTimeout(function lazyLoad() {
+            for (i in scripts) {
+                $.get(k.MEDIA_URL + scripts[i]);
+            }
+            for (i in styles) {
+                $('head').append(
+                    '<link rel="stylesheet" type="text/css" href="' +
+                    k.MEDIA_URL + styles[i] + '">');
+            }
+        }, k.LAZY_DELAY);
+    }
+
+    /*
+     * Remove an item from a list if it matches the substring match_against.
+     * Caution: modifies from_list.
+     * E.g. list = ['string'], remove_item(list, 'str') => list is [].
+     */
+    function remove_item(from_list, match_against) {
+        match_against = match_against.toLowerCase();
+        for (var i in from_list) {
+            if (match_against.indexOf(from_list[i]) >= 0) {
+                from_list.splice(i, 1);
+            }
+        }
     }
 
 })();

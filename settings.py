@@ -298,6 +298,7 @@ MINIFY_BUNDLES = {
             'css/main.css',
             'css/sidebar.css',
         ),
+        # TODO: remove dependency on jquery ui CSS and use our own
         'jqueryui/jqueryui': (
             'css/jqueryui/jqueryui.css',
         ),
@@ -347,8 +348,10 @@ MINIFY_BUNDLES = {
             'global/menu.js',
             'js/main.js',
         ),
-        'questions': (
+        'libs/jqueryui': (
             'js/libs/jqueryui.min.js',
+        ),
+        'questions': (
             'js/markup.js',
             'js/libs/jquery.ajaxupload.js',
             'js/libs/jquery.modal.js',
@@ -357,7 +360,6 @@ MINIFY_BUNDLES = {
             'js/tags.js',
         ),
         'search': (
-            'js/libs/jqueryui.min.js',
             'js/search.js',
         ),
         'forums': (
@@ -379,12 +381,10 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.modal.js',
             'js/screencast.js',
             'js/wiki.js',
-            'js/libs/jqueryui.min.js',
             'js/tags.js',
             'js/dashboards.js',
         ),
         'customercare': (
-            'js/libs/jqueryui.min.js',
             'js/libs/jquery.NobleCount.js',
             'js/libs/jquery.cookie.js',
             'js/libs/jquery.bullseye-1.0.min.js',

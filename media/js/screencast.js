@@ -5,7 +5,6 @@
 
 (function () {
     var VIDEO_ID_PREFIX = 'video-flash-', id_counter = 0,
-        MEDIA_URL = '/media/',  // same value as settings.py
         FLASH_VERSION = '9.0.0',
         params = {allowfullscreen: 'true'},
         flashvars = {
@@ -63,12 +62,12 @@
         if (flash_file.substr(-4) === '.swf') {
             swfobject.embedSWF(
                 flash_file, unique_id, width, height, FLASH_VERSION,
-                MEDIA_URL + '/media/swf/expressInstall.swf', flashvars, params);
+                k.MEDIA_URL + '/media/swf/expressInstall.swf', flashvars, params);
         } else if (flash_file) {
             flashvars.flv = flash_file;
             swfobject.embedSWF(
-                MEDIA_URL + 'swf/screencast.swf', unique_id, width, height,
-                FLASH_VERSION, MEDIA_URL + '/media/swf/expressInstall.swf',
+                k.MEDIA_URL + 'swf/screencast.swf', unique_id, width, height,
+                FLASH_VERSION, k.MEDIA_URL + '/media/swf/expressInstall.swf',
                 flashvars, params);
         } else {
             $video.hide();
