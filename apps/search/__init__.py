@@ -1,7 +1,7 @@
 from tower import ugettext_lazy as _lazy
-from .utils import crc32
-from .sphinxapi import (SPH_SORT_ATTR_DESC, SPH_SORT_ATTR_ASC,
-                        SPH_SORT_EXTENDED, SPH_GROUPBY_ATTR)
+
+from search.sphinxapi import (SPH_SORT_ATTR_DESC, SPH_SORT_ATTR_ASC,
+                              SPH_SORT_EXTENDED, SPH_GROUPBY_ATTR)
 
 
 WHERE_WIKI = 1

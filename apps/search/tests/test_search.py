@@ -488,14 +488,14 @@ class SearchTest(SphinxTestCase):
                              (result['url'], url_id))
 
     def test_discussion_sort_mode(self):
-        """Test set_groupsort()."""
+        """Test set groupsort."""
         # Initialize client and attrs.
         dc = DiscussionClient()
         test_for = ('updated', 'created', 'replies')
 
         i = 0
         for groupsort in constants.GROUPSORT[1:]:  # Skip default sorting.
-            dc.set_groupsort(groupsort)
+            dc.groupsort = groupsort
             results = dc.query('')
             eq_(5, len(results))
 
@@ -537,6 +537,15 @@ class SearchTest(SphinxTestCase):
         results = wc.query(u'\u30c1')
         eq_(1, len(results))
         eq_(2, results[0]['id'])
+
+    def test_no_syntax_error(self):
+        """Test that special chars cannot cause a syntax error."""
+        wc = WikiClient()
+        results = wc.query('video^$')
+        eq_(1, len(results))
+
+        results = wc.query('video^^^$$$^')
+        eq_(1, len(results))
 
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)

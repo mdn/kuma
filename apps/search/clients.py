@@ -6,15 +6,14 @@ from django.conf import settings
 
 from bleach import Bleach
 
-import search as constants
-from .sphinxapi import SphinxClient
+from search import sphinxapi
 
 
 log = logging.getLogger('k.search')
 
 
 class SearchError(Exception):
-    pass
+    """An error occurred executing a search."""
 
 
 class SearchClient(object):
@@ -23,14 +22,21 @@ class SearchClient(object):
     """
 
     bleach = Bleach()
+    match_mode = sphinxapi.SPH_MATCH_EXTENDED2
+    rank_mode = sphinxapi.SPH_RANK_PROXIMITY_BM25
+    sort_mode = (sphinxapi.SPH_SORT_RELEVANCE, '')
 
     def __init__(self):
-        self.sphinx = SphinxClient()
+        self.sphinx = sphinxapi.SphinxClient()
         if os.environ.get('DJANGO_ENVIRONMENT') == 'test':
             self.sphinx.SetServer(settings.SPHINX_HOST,
                                   settings.TEST_SPHINX_PORT)
         else:
             self.sphinx.SetServer(settings.SPHINX_HOST, settings.SPHINX_PORT)
+
+        self.sphinx.SetMatchMode(self.match_mode)
+        self.sphinx.SetRankingMode(self.rank_mode)
+        self.sphinx.SetSortMode(*self.sort_mode)
 
     def _prepare_filters(self, filters=None):
         """Process filters and filter ranges."""
@@ -50,12 +56,19 @@ class SearchClient(object):
     def _prepare(self):
         """Override to twiddle `self.sphinx` before the query gets sent."""
 
+    def _sanitize_query(self, query):
+        """Strip control characters that cause problems."""
+        return query.replace('^', '').replace('$', '')
+
     def _query_sphinx(self, query=''):
         """
         Pass the query to the SphinxClient() and return the results.
 
         Catches common exceptions raised by Sphinx.
         """
+
+        query = self._sanitize_query(query)
+
         try:
             result = self.sphinx.Query(query, self.index)
         except socket.timeout:
@@ -119,19 +132,13 @@ class SearchClient(object):
 class QuestionsClient(SearchClient):
     index = 'questions'
     weights = {'title': 4, 'question_content': 3, 'answer_content': 3}
-
-    def __init__(self):
-        super(QuestionsClient, self).__init__()
-        self.groupsort = '@group desc'
+    groupsort = '@group desc'
 
     def _prepare(self):
         """Prepare to group the answers together."""
         super(QuestionsClient, self)._prepare()
-        self.sphinx.SetGroupBy('question_id', constants.SPH_GROUPBY_ATTR,
+        self.sphinx.SetGroupBy('question_id', sphinxapi.SPH_GROUPBY_ATTR,
                       self.groupsort)
-
-    def set_groupsort(self, groupsort=''):
-        self.groupsort = groupsort
 
 
 class WikiClient(SearchClient):
@@ -139,7 +146,7 @@ class WikiClient(SearchClient):
     Search the knowledge base
     """
     index = 'wiki_pages'
-    weights = {'title': 4, 'content': 1, 'keywords': 4, 'tag': 2, 'summary': 2}
+    weights = {'title': 6, 'content': 1, 'keywords': 4, 'summary': 2}
 
 
 class DiscussionClient(SearchClient):
@@ -148,10 +155,8 @@ class DiscussionClient(SearchClient):
     """
     index = 'discussion_forums'
     weights = {'title': 2, 'content': 1}
-
-    def __init__(self):
-        super(DiscussionClient, self).__init__()
-        self.groupsort = '@group desc'
+    groupsort = '@group desc'
+    sort_mode = (sphinxapi.SPH_SORT_ATTR_ASC, 'created')
 
     def _prepare(self):
         """Group posts together, and ensure thread['attrs']['updated'] is the
@@ -159,9 +164,6 @@ class DiscussionClient(SearchClient):
 
         """
         super(DiscussionClient, self)._prepare()
-        self.sphinx.SetGroupBy('thread_id', constants.SPH_GROUPBY_ATTR,
+        self.sphinx.SetGroupBy('thread_id', sphinxapi.SPH_GROUPBY_ATTR,
                                self.groupsort)
-        self.sphinx.SetSortMode(constants.SPH_SORT_ATTR_ASC, 'created')
-
-    def set_groupsort(self, groupsort=''):
-        self.groupsort = groupsort
+        self.sphinx.SetSortMode(*self.sort_mode)
