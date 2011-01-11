@@ -43,6 +43,15 @@
     <section id="doc-content">
       {% if document.current_revision %}
         {{ document.html|safe }}
+      {% elif document.parent and document.parent.current_revision %}
+        <div id="doc-pending-fallback" class="warning-box">
+          {# L10n: This is shown for existing, never-approved translations #}
+          {% trans %}
+            Our volunteers are working on translating this article.
+            Until it's ready, maybe the English version can be of some help.
+          {% endtrans %}
+        </div>
+        {{ document.parent.html|safe }}
       {% else %}
         {{ _("This article doesn't have approved content yet.") }}
       {% endif %}

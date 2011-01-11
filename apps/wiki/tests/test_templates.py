@@ -34,6 +34,25 @@ class DocumentTests(TestCaseBase):
         eq_(d.title, doc('#main h1.title').text())
         eq_(pq(d.html)('div').text(), doc('#doc-content div').text())
 
+    def test_document_fallback(self):
+        """The document template falls back to English if translation
+        does not exist or it has no approved revisions."""
+        d = _create_document()
+        d2 = document(parent=d, locale='fr', slug='french', save=True)
+        r2 = revision(document=d2, is_approved=False, save=True)
+        url = reverse('wiki.document', args=[d2.slug], locale='fr')
+        response = self.client.get(url)
+        doc = pq(response.content)
+        eq_(d2.title, doc('#main h1.title').text())
+
+        # Fallback message is shown.
+        eq_(1, len(doc('#doc-pending-fallback')))
+        # Removing this as it shows up in text(), and we don't want to depend
+        # on its localization.
+        doc('#doc-pending-fallback').remove()
+        # Included content is English.
+        eq_(pq(d.html)('div').text(), doc('#doc-content div').text())
+
     def test_redirect(self):
         """Make sure documents with REDIRECT directives redirect properly.
 

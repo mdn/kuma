@@ -262,6 +262,10 @@ div.warning-box p {
 	line-height: 1.5em;
 }
 
+#doc-pending-fallback {
+    margin: -1em 0 2em;
+}
+
 #doc-content p {
 	margin: 0 0 1.5em;
 }

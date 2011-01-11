@@ -19,17 +19,20 @@ class TestCaseBase(TestCase):
 # than being hidden amongst the values needed merely to get the model to
 # validate.
 
-def document(**kwargs):
+def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
     defaults = {'category': CATEGORIES[0][0], 'title': str(datetime.now())}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
         defaults['slug'] = slugify(defaults['title'])
-    return Document(**defaults)
+    d = Document(**defaults)
+    if save:
+        d.save()
+    return d
 
 
-def revision(**kwargs):
+def revision(save=False, **kwargs):
     """Return an empty revision with enough stuff filled out that it can be
     saved.
 
@@ -49,7 +52,10 @@ def revision(**kwargs):
 
     defaults.update(kwargs)
 
-    return Revision(**defaults)
+    r = Revision(**defaults)
+    if save:
+        r.save()
+    return r
 
 
 def translated_revision(locale='de', **kwargs):
