@@ -364,6 +364,14 @@ class SearchTest(SphinxTestCase):
         except UnicodeDecodeError:
             self.fail('Raised UnicodeDecodeError.')
 
+    def test_utf8_excerpt(self):
+        """Characters should stay in UTF-8."""
+        wc = WikiClient()
+        page = Document.objects.get(pk=4)
+        q = u'fa\xe7on'
+        excerpt = wc.excerpt(page.html, q)
+        assert q in excerpt, u'%s not in %s' % (q, excerpt)
+
     def test_clean_excerpt(self):
         """SearchClient.excerpt() should not allow disallowed HTML through."""
         wc = WikiClient()  # Index strips HTML

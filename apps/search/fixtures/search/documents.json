@@ -49,7 +49,7 @@
             "locale": "fr",
             "current_revision": 19,
             "is_template": false,
-            "html": "<p>ceci n'est pas une pipe\n</p><p>mon dieu!\n</p>",
+            "html": "<p>ceci n'est pas une pipe\n</p><p>mon dieu! fa\u00e7on\n</p>",
             "slug": "le-title"
         }
     },

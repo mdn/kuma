@@ -3,6 +3,7 @@ import socket
 import os
 
 from django.conf import settings
+from django.utils.encoding import smart_unicode
 
 from bleach import Bleach
 
@@ -123,7 +124,7 @@ class SearchClient(object):
             log.error('Building excerpt timed out!')
             excerpt = ''
 
-        return self.bleach.clean(excerpt)
+        return self.bleach.clean(smart_unicode(excerpt))
 
     def set_sort_mode(self, mode, clause=''):
         self.sphinx.SetSortMode(mode, clause)
