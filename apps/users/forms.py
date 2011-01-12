@@ -177,3 +177,19 @@ class AvatarForm(forms.ModelForm):
 class EmailConfirmationForm(forms.Form):
     """A simple form that requires an email address."""
     email = forms.EmailField(label=_lazy(u'Email address:'))
+
+
+class EmailChangeForm(forms.Form):
+    """A simple form that requires an email address and validates that it is
+    not the current user's email."""
+    email = forms.EmailField(label=_lazy(u'Email address:'))
+
+    def __init__(self, user, *args, **kwargs):
+        super(EmailChangeForm, self).__init__(*args, **kwargs)
+        self.user = user
+
+    def clean_email(self):
+        if self.user.email == self.cleaned_data['email']:
+            raise forms.ValidationError(_('This is your current email.'))
+
+        return self.cleaned_data['email']

@@ -22,7 +22,8 @@ from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
-from users.forms import ProfileForm, AvatarForm, EmailConfirmationForm
+from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
+                         EmailChangeForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from users.utils import handle_login, handle_register
 
@@ -101,7 +102,7 @@ def resend_confirmation(request):
 def change_email(request):
     """Change user's email. Send confirmation first."""
     if request.method == 'POST':
-        form = EmailConfirmationForm(request.POST)
+        form = EmailChangeForm(request.user, request.POST)
         u = request.user
         if form.is_valid() and u.email != form.cleaned_data['email']:
             # Delete old registration profiles.
@@ -115,7 +116,8 @@ def change_email(request):
                                 'users/change_email_done.html',
                                 {'email': form.cleaned_data['email']})
     else:
-        form = EmailConfirmationForm(initial={'email': request.user.email})
+        form = EmailChangeForm(request.user,
+                               initial={'email': request.user.email})
     return jingo.render(request, 'users/change_email.html',
                         {'form': form})
 

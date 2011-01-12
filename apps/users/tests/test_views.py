@@ -5,6 +5,7 @@ from django.core import mail
 
 import mock
 from nose.tools import eq_
+from pyquery import PyQuery as pq
 
 from notifications.models import EventWatch
 from questions.models import Question, CONFIRMED, UNCONFIRMED
@@ -175,3 +176,15 @@ class ChangeEmailTestCase(TestCase):
         # TODO: remove this after notifications model is updated.
         ew = EventWatch.objects.get()
         eq_('paulc@trololololololo.com', ew.email)
+
+    def test_user_change_email_same(self):
+        """Changing to same email shows validation error."""
+        self.client.login(username='rrosario', password='testpass')
+        user = User.objects.get(username='rrosario')
+        user.email = 'valid@email.com'
+        user.save()
+        response = self.client.post(reverse('users.change_email'),
+                                    {'email': user.email})
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('This is your current email.', doc('ul.errorlist').text())
