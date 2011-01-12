@@ -6,7 +6,7 @@ from django.conf import settings
 
 from celery.decorators import task
 
-from .models import EventWatch
+from notifications.models import EventWatch
 
 log = logging.getLogger('k.notifications')
 
@@ -29,7 +29,11 @@ def send_notification(content_type, pk, subject, content, exclude=None,
     emails = [(subject, content, settings.NOTIFICATIONS_FROM_ADDRESS,
                [w.email]) for w in watchers]
 
-    send_mass_mail(emails)
+    sent = send_mass_mail(emails, fail_silently=True)
+
+    if sent != len(emails):
+        log.warning('Tried to send %s emails, but only sent %s' %
+                    (len(emails), sent))
 
 
 @task(rate_limit='4/m')
