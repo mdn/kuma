@@ -112,11 +112,12 @@
 .dashboards ul.readout-modes li {
     background: #cde6f5;
     border-radius: 10px;
+    cursor: pointer;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     list-style: none;
-    padding: 3px 10px;
     margin: 0 1px;
+    padding: 3px 10px;
     vertical-align: -6px;
 }
 
@@ -138,4 +139,8 @@
 
 .dashboards-detail h1 {
     display: inline-block;
+}
+
+.dashboards summary.with-mode-selectors {
+    display: inline;
 }

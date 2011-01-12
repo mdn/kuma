@@ -32,7 +32,13 @@
       <table class="overview">
         {% for row in overview_rows() %}
           <tr>
-            <td><a href="#">{{ row.title }}</a></td>
+            <td>
+              {% if row.url %}
+                <a href="{{ row.url }}">{{ row.title }}</a>
+              {% else %}
+                {{ row.title }}
+              {% endif %}
+            </td>
             <td>
               {{ number(row.numerator) }}
               <div class="denominator">of {{ number(row.denominator) }}</div>

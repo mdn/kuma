@@ -29,7 +29,9 @@
       </div>
     {% endif %}
 
-    {{ print_readout(readouts['unreviewed'], 'dashboards.contributors_detail', locale=default_locale) }}
+    {% for readout in readouts.itervalues() %}
+      {{ print_readout(readout, 'dashboards.contributors_detail', locale=default_locale) }}
+    {% endfor %}
   </article>
 {% endblock %}
 

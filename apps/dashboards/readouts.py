@@ -7,7 +7,7 @@ from django.utils.datastructures import SortedDict
 import jingo
 from tower import ugettext as _, ugettext_lazy as _lazy
 
-from dashboards.models import THIS_WEEK
+from dashboards.models import THIS_WEEK, ALL_TIME, PERIODS
 from sumo.urlresolvers import reverse
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
 
@@ -55,7 +55,8 @@ def overview_rows(locale):
         (locale, THIS_WEEK, TOP_N))
     popular_translated = cursor.fetchone()[0]
 
-    return [dict(title=_('Most-Viewed Articles'),
+    return [dict(title=_('Most-Visited Articles'),
+                 url='#' + MostVisitedTranslationsReadout.slug,
                  numerator=popular_translated, denominator=TOP_N,
                  percent=percent_or_100(popular_translated, TOP_N),
                  description=_('These are the top %s most visited English '
@@ -76,10 +77,11 @@ class Readout(object):
     Describing these as atoms gives us the whole-page details views for free.
 
     """
-    #title = _lazy(u'Title of Readout')
-    #short_title= = _lazy(u'Short Title of Readout for In-Page Links')
-    #slug = 'URL slug for detail page'
-    #details_link_text = _lazy(u'All articles from this readout...')
+    # title = _lazy(u'Title of Readout')
+    # short_title= = _lazy(u'Short Title of Readout for In-Page Links')
+    # slug = 'URL slug for detail page'
+    # details_link_text = _lazy(u'All articles from this readout...')
+    column3_label = _lazy(u'Visits this week')
     column4_label = _lazy(u'Status')
     modes = [(MOST_VIEWED, _lazy('Most Viewed')),
              (MOST_RECENT, _lazy('Most Recent'))]
@@ -124,7 +126,8 @@ class Readout(object):
         return jingo.render_to_string(
             self.request,
             'dashboards/includes/kb_readout.html',
-            {'rows': rows, 'column4_label': self.column4_label})
+            {'rows': rows, 'column3_label': self.column3_label,
+             'column4_label': self.column4_label})
 
     # To override:
 
@@ -146,6 +149,108 @@ class Readout(object):
 
         """
         return ' LIMIT %i' % max if max else ''
+
+
+class MostVisitedDefaultLanguageReadout(Readout):
+    title = _lazy(u'Most-Visited Articles')
+    # No short_title; the link to this one is hard-coded in Overview readout
+    details_link_text = _lazy(u'All knowledge base articles...')
+    slug = 'most-visited'
+    column3_label = _lazy(u'Visits')
+    modes = PERIODS
+    review_statuses = {
+        1: (_lazy(u'Review Needed'), 'wiki.document_revisions'),
+        0: (u'', '')}
+
+    def _query_and_params(self, max):
+        # Review Needed: link to /history.
+        return ('SELECT engdoc.slug, engdoc.title, '
+                'dashboards_wikidocumentvisits.visits, '
+                'count(engrev.document_id) '
+               'FROM wiki_document engdoc '
+               'LEFT JOIN dashboards_wikidocumentvisits ON '
+                   'engdoc.id=dashboards_wikidocumentvisits.document_id '
+                   'AND dashboards_wikidocumentvisits.period=%s '
+               'LEFT JOIN wiki_revision engrev ON '
+                   'engrev.document_id=engdoc.id '
+                   'AND engrev.reviewed IS NULL '
+                   'AND engrev.id>engdoc.current_revision_id '
+               'WHERE engdoc.locale=%s '
+               'GROUP BY engdoc.id '
+               'ORDER BY dashboards_wikidocumentvisits.visits DESC, '
+                        'engdoc.title ASC' + self._limit_clause(max),
+            (ALL_TIME if self.mode == ALL_TIME else THIS_WEEK, self.locale))
+
+    def _format_row(self, (slug, title, visits, num_unreviewed)):
+        needs_review = int(num_unreviewed > 0)
+        status, view_name = self.review_statuses[needs_review]
+        return (dict(title=title,
+                     url=reverse('wiki.document', args=[slug],
+                                 locale=self.locale),
+                     visits=visits,
+                     status=status,
+                     status_url=reverse(view_name, args=[slug],
+                                        locale=self.locale)
+                                if view_name else ''))
+
+
+class MostVisitedTranslationsReadout(MostVisitedDefaultLanguageReadout):
+    slug = 'most-visited-translations'
+
+    # L10n: Replace "English" with your language.
+    details_link_text = _lazy(u'All translations in English...')
+
+    significance_statuses = {
+        MEDIUM_SIGNIFICANCE: (_lazy(u'Update Needed'), 'wiki.edit_document'),
+        MAJOR_SIGNIFICANCE: (_lazy(u'Out of Date'), 'wiki.edit_document')}
+
+    def _query_and_params(self, max):
+        # Out of Date or Update Needed: link to /edit.
+        # Review Needed: link to /history.
+        # These match the behavior of the corresponding readouts.
+        return ('SELECT transdoc.slug, transdoc.title, '
+                'dashboards_wikidocumentvisits.visits, '
+                # The most significant approved change to the English article
+                # since the English revision the current translated revision is
+                # based on:
+                '(SELECT MAX(engrev.significance) '
+                 'FROM wiki_revision engrev, wiki_revision transrev '
+                 'WHERE engrev.is_approved '
+                 'AND transrev.id=transdoc.current_revision_id '
+                 'AND engrev.document_id=transdoc.parent_id '
+                 'AND engrev.id>transrev.based_on_id '
+                '), '
+                # Whether there are any unreviewed revs of the translation made
+                # since the current one:
+                '(SELECT EXISTS '
+                    '(SELECT * '
+                     'FROM wiki_revision transrev '
+                     'WHERE transrev.document_id=transdoc.id '
+                     'AND transrev.reviewed IS NULL '
+                     'AND transrev.id>transdoc.current_revision_id '
+                    ')'
+                ') '
+               'FROM wiki_document transdoc '
+               'LEFT JOIN dashboards_wikidocumentvisits ON transdoc.parent_id='
+                   'dashboards_wikidocumentvisits.document_id '
+                   'AND dashboards_wikidocumentvisits.period=%s '
+               'WHERE transdoc.locale=%s '
+               'ORDER BY dashboards_wikidocumentvisits.visits DESC, '
+                        'transdoc.title ASC' + self._limit_clause(max),
+            (ALL_TIME if self.mode == ALL_TIME else THIS_WEEK, self.locale))
+
+    def _format_row(self, (slug, title, visits, significance, needs_review)):
+        status, view_name = self.significance_statuses.get(
+                                significance,
+                                self.review_statuses[needs_review])
+        return (dict(title=title,
+                     url=reverse('wiki.document', args=[slug],
+                                 locale=self.locale),
+                     visits=visits,
+                     status=status,
+                     status_url=reverse(view_name, args=[slug],
+                                        locale=self.locale)
+                                if view_name else ''))
 
 
 class UntranslatedReadout(Readout):
@@ -330,9 +435,14 @@ class UnreviewedReadout(Readout):
 
 
 # L10n Dashboard tables that have their own whole-page views:
-L10N_READOUTS = READOUTS = SortedDict((t.slug, t) for t in
-    [UntranslatedReadout, OutOfDateReadout, NeedingUpdatesReadout,
-    UnreviewedReadout])
+L10N_READOUTS = SortedDict((t.slug, t) for t in
+    [MostVisitedTranslationsReadout, UntranslatedReadout, OutOfDateReadout,
+     NeedingUpdatesReadout, UnreviewedReadout])
 
 # Contributors ones:
-CONTRIBUTOR_READOUTS = dict((t.slug, t) for t in [UnreviewedReadout])
+CONTRIBUTOR_READOUTS = SortedDict((t.slug, t) for t in
+    [MostVisitedDefaultLanguageReadout, UnreviewedReadout])
+
+# All:
+READOUTS = L10N_READOUTS.copy()
+READOUTS.update(CONTRIBUTOR_READOUTS)

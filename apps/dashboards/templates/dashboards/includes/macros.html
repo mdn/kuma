@@ -1,6 +1,6 @@
 {% macro print_readout(readout, detail_view_name, locale=None) %}
   <details class="h2" open="open">
-    <summary style="display: inline">
+    <summary class="with-mode-selectors">
       <a id="{{ readout.slug }}">{{ readout.title }}</a>
     </summary>
     <ul class="readout-modes" data-slug="{{ readout.slug }}">
