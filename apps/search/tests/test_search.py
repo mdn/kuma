@@ -8,6 +8,7 @@ import json
 import socket
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 
 import jingo
 import mock
@@ -554,6 +555,31 @@ class SearchTest(SphinxTestCase):
 
         results = wc.query('video^^^$$$^')
         eq_(1, len(results))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_suggestions(self, get_current):
+        """Suggestions API is well-formatted."""
+        get_current.return_value.domain = 'testserver'
+
+        response = self.client.get(reverse('search.suggestions',
+                                           locale='en-US'),
+                                   {'q': 'audio'})
+        eq_(200, response.status_code)
+        eq_('application/x-suggestions+json', response['content-type'])
+        results = json.loads(response.content)
+        eq_('audio', results[0])
+        eq_(2, len(results[1]))
+        eq_(0, len(results[2]))
+        eq_(2, len(results[3]))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_invalid_suggestions(self, get_current):
+        """The suggestions API needs a query term."""
+        get_current.return_value.domain = 'testserver'
+        response = self.client.get(reverse('search.suggestions',
+                                           locale='en-US'))
+        eq_(400, response.status_code)
+        assert not response.content
 
 
 query = lambda *args, **kwargs: WikiClient().query(*args, **kwargs)
