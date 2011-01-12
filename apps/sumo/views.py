@@ -38,9 +38,9 @@ def handle500(request):
     return jingo.render(request, 'handlers/500.html', status=500)
 
 
-def redirect_to(request, url, permanent=True):
+def redirect_to(request, url, permanent=True, **kwargs):
     """Like Django's redirect_to except that 'url' is passed to reverse."""
-    dest = reverse(url)
+    dest = reverse(url, kwargs=kwargs)
     if permanent:
         return HttpResponsePermanentRedirect(dest)
 

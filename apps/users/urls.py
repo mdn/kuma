@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, url, include
 
+from sumo.views import redirect_to
 from users import views
 
 
@@ -38,8 +39,13 @@ users_patterns = patterns('',
         name='users.resend_confirmation'),
 
     # Change email
-    url(r'^change_email$', views.change_email, name='users.change_email'),
+    url(r'^change_email$', redirect_to, {'url': 'users.change_email'},
+        name='users.old_change_email'),
     url(r'^confirm_email/(?P<activation_key>\w+)$',
+        redirect_to, {'url': 'users.confirm_email'},
+        name='users.old_confirm_email'),
+    url(r'^/change_email$', views.change_email, name='users.change_email'),
+    url(r'^/confirm_email/(?P<activation_key>\w+)$',
         views.confirm_change_email, name='users.confirm_email'),
 )
 
