@@ -328,7 +328,7 @@ class ViewProfileTests(TestCaseBase):
         r = self.client.get(reverse('users.profile', args=[47963]))
         eq_(200, r.status_code)
         doc = pq(r.content)
-        eq_('Edit my profile', doc('#edit-profile-link').text())
+        eq_('Edit my profile', doc('#doc-tabs li a').eq(1).text())
         self.client.logout()
 
 
