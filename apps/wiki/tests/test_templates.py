@@ -27,18 +27,42 @@ class DocumentTests(TestCaseBase):
 
     def test_document_view(self):
         """Load the document view page and verify the title and content."""
-        d = _create_document()
-        response = self.client.get(d.get_absolute_url())
+        r = revision(save=True, content='Some text.', is_approved=True)
+        response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(d.title, doc('#main h1.title').text())
-        eq_(pq(d.html)('div').text(), doc('#doc-content div').text())
+        eq_(r.document.title, doc('#main h1.title').text())
+        eq_(pq(r.document.html)('div').text(), doc('#doc-content div').text())
 
-    def test_document_fallback(self):
-        """The document template falls back to English if translation
-        does not exist or it has no approved revisions."""
-        d = _create_document()
-        d2 = document(parent=d, locale='fr', slug='french', save=True)
+    def test_english_document_no_approved_content(self):
+        """Load an English document with no approved content."""
+        r = revision(save=True, content='Some text.', is_approved=False)
+        response = self.client.get(r.document.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(r.document.title, doc('#main h1.title').text())
+        eq_("This article doesn't have approved content yet.",
+            doc('#doc-content').text())
+
+    def test_translation_document_no_approved_content(self):
+        """Load a non-English document with no approved content, with a parent
+        with no approved content either."""
+        r = revision(save=True, content='Some text.', is_approved=False)
+        d2 = document(parent=r.document, locale='fr', slug='french', save=True)
+        revision(document=d2, save=True, content='Moartext', is_approved=False)
+        response = self.client.get(d2.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(d2.title, doc('#main h1.title').text())
+        # Avoid depending on localization, assert just that there is only text
+        # d.html would definitely have a <p> in it, at least.
+        eq_(doc('#doc-content').html().strip(), doc('#doc-content').text())
+
+    def test_document_fallback_with_translation(self):
+        """The document template falls back to English if translation exists
+        but it has no approved revisions."""
+        r = revision(save=True, content='Test', is_approved=True)
+        d2 = document(parent=r.document, locale='fr', slug='french', save=True)
         revision(document=d2, is_approved=False, save=True)
         url = reverse('wiki.document', args=[d2.slug], locale='fr')
         response = self.client.get(url)
@@ -51,7 +75,24 @@ class DocumentTests(TestCaseBase):
         # on its localization.
         doc('#doc-pending-fallback').remove()
         # Included content is English.
-        eq_(pq(d.html)('div').text(), doc('#doc-content div').text())
+        eq_(pq(r.document.html)('div').text(), doc('#doc-content div').text())
+
+    def test_document_fallback_no_translation(self):
+        """The document template falls back to English if no translation
+        exists."""
+        r = revision(save=True, content='Some text.', is_approved=True)
+        url = reverse('wiki.document', args=[r.document.slug], locale='fr')
+        response = self.client.get(url)
+        doc = pq(response.content)
+        eq_(r.document.title, doc('#main h1.title').text())
+
+        # Fallback message is shown.
+        eq_(1, len(doc('#doc-pending-fallback')))
+        # Removing this as it shows up in text(), and we don't want to depend
+        # on its localization.
+        doc('#doc-pending-fallback').remove()
+        # Included content is English.
+        eq_(pq(r.document.html)('div').text(), doc('#doc-content div').text())
 
     def test_redirect(self):
         """Make sure documents with REDIRECT directives redirect properly.
@@ -59,8 +100,7 @@ class DocumentTests(TestCaseBase):
         Also check the backlink to the redirect page.
 
         """
-        target = document()
-        target.save()
+        target = document(save=True)
         target_url = target.get_absolute_url()
 
         # Ordinarily, a document with no approved revisions cannot have HTML,
@@ -78,8 +118,7 @@ class DocumentTests(TestCaseBase):
     def test_redirect_from_nonexistent(self):
         """The template shouldn't crash or print a backlink if the "from" page
         doesn't exist."""
-        d = document()
-        d.save()
+        d = document(save=True)
         response = self.client.get(urlparams(d.get_absolute_url(),
                                              redirectlocale='en-US',
                                              redirectslug='nonexistent'))
@@ -88,8 +127,7 @@ class DocumentTests(TestCaseBase):
     def test_watch_includes_csrf(self):
         """The watch/unwatch forms should include the csrf tag."""
         self.client.login(username='jsocol', password='testpass')
-        d = document()
-        d.save()
+        d = document(save=True)
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
         assert doc('#doc-watch input[type=hidden]')
@@ -97,8 +135,7 @@ class DocumentTests(TestCaseBase):
     def test_non_localizable_translate_disabled(self):
         """Non localizable document doesn't show tab for 'Localize'."""
         self.client.login(username='jsocol', password='testpass')
-        d = document(is_localizable=True)
-        d.save()
+        d = document(is_localizable=True, save=True)
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
         assert 'Translate' in doc('#doc-tabs li').text()

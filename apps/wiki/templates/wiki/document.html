@@ -41,9 +41,18 @@
       </div>
     {% endif %}
     <section id="doc-content">
-      {% if document.current_revision %}
+      {% if not fallback_reason %}
         {{ document.html|safe }}
-      {% elif document.parent and document.parent.current_revision %}
+      {% elif fallback_reason == 'no_translation' %}
+        <div id="doc-pending-fallback" class="warning-box">
+          {% trans help_link=url('wiki.document', 'localize-firefox-help'),
+                   locale=settings.LOCALES[request.locale].native %}
+            Our volunteers haven't translated this article into {{ locale }} yet.
+            <a href="{{ help_link }}">Join us and help get the job done!</a>
+          {% endtrans %}
+        </div>
+        {{ document.html|safe }}
+      {% elif fallback_reason == 'translation_not_approved' %}
         <div id="doc-pending-fallback" class="warning-box">
           {# L10n: This is shown for existing, never-approved translations #}
           {% trans %}

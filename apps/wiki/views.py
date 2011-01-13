@@ -80,9 +80,19 @@ SHOWFOR_DATA = {
 @require_GET
 def document(request, document_slug):
     """View a wiki document."""
+    fallback_reason = None
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
         doc = Document.objects.get(locale=request.locale, slug=document_slug)
+        if (not doc.current_revision and doc.parent and
+            doc.parent.current_revision):
+            # This is a translation but its current_revision is None
+            # and OK to fall back to parent (parent is approved).
+            fallback_reason = 'translation_not_approved'
+        elif not doc.current_revision:
+            # No current_revision, no parent with current revision, so
+            # nothing to show.
+            fallback_reason = 'no_content'
     except Document.DoesNotExist:
         # Look in default language:
         doc = get_object_or_404(Document,
@@ -91,10 +101,17 @@ def document(request, document_slug):
         # If there's a translation to the requested locale, take it:
         translation = doc.translated_to(request.locale)
         if translation and translation.current_revision:
-            doc = translation
-        url = doc.get_absolute_url()
-        url = urlparams(url, query_dict=request.GET)
-        return HttpResponseRedirect(url)
+            url = translation.get_absolute_url()
+            url = urlparams(url, query_dict=request.GET)
+            return HttpResponseRedirect(url)
+        elif translation and doc.current_revision:
+            # Found a translation but its current_revision is None
+            # and OK to fall back to parent (parent is approved).
+            fallback_reason = 'translation_not_approved'
+        elif doc.current_revision:
+            # There is no translation
+            # and OK to fall back to parent (parent is approved).
+            fallback_reason = 'no_translation'
 
     # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a
@@ -126,7 +143,8 @@ def document(request, document_slug):
         is_approved=True).values_list('creator__username', flat=True)
 
     data = {'document': doc, 'redirected_from': redirected_from,
-            'related': related, 'contributors': contributors.distinct()}
+            'related': related, 'contributors': contributors.distinct(),
+            'fallback_reason': fallback_reason}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/document.html', data)
 

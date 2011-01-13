@@ -4,7 +4,6 @@ from django.conf import settings
 
 from nose.tools import eq_
 
-from sumo.helpers import urlparams
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from wiki.models import VersionMetadata, Document
@@ -51,18 +50,6 @@ class LocaleRedirectTests(TestCase):
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
 
     fixtures = ['users.json']
-
-    def test_fallback_to_english(self):
-        """Looking up a slug should fall back to the default locale if there
-        is no match in the requested locale."""
-        en = settings.WIKI_DEFAULT_LANGUAGE
-        en_doc = document(locale=en, slug='english-slug')
-        en_doc.save()
-        response = self.client.get(reverse('wiki.document',
-                                           args=['english-slug'],
-                                           locale='de'),
-                                   follow=True)
-        self.assertRedirects(response, en_doc.get_absolute_url())
 
     def test_fallback_to_translation(self):
         """If a slug isn't found in the requested locale but is in the default
