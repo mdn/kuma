@@ -144,3 +144,7 @@
 .dashboards summary.with-mode-selectors {
     display: inline;
 }
+
+.dashboards details table {
+    display: block;  /* Makes collapse animation work */
+}
