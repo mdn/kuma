@@ -214,6 +214,7 @@ INSTALLED_APPS = (
     'customercare',
     'twitter',
     'chat',
+    'inproduct',
 
     # Extra apps for testing.
     'django_nose',
