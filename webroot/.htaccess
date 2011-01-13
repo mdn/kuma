@@ -1,0 +1,171 @@
+<FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
+	order deny,allow
+	deny from all
+</FilesMatch>
+
+
+RewriteEngine On
+
+# Allow static files through.
+# TODO: move these to Django (bugs filed).
+RewriteRule ^search.xml$ - [L]
+
+# Account URLs.
+RewriteRule ^tiki-login /users/login [L,R=301]
+RewriteRule ^tiki-logout.php /users/logout [L,R=301]
+RewriteRule ^tiki-register /users/register [L,R=301]
+RewriteRule ^tiki-remind_password.php /users/pwreset [L,R=301]
+RewriteRule ^tiki-user_preferences.php /users/edit [L,R=301]
+
+# Any other tiki-* pages are 404s.
+#RewriteRule ^tiki- /404/ [L,QSA,R=301]
+
+# Contribute shortcut
+RewriteRule ^contribute/?$ /kb/How+to+contribute [L,QSA,R=302]
+
+# Redirect old discussion forums to new discussion forums
+RewriteRule ^forum/3(.*) /en-US/forums/contributors$1 [L,QSA,R=301]
+RewriteRule ^([\-a-zA-Z]+)/forum/3(.*) /en-US/forums/contributors$2 [L,QSA,R=301]
+RewriteRule ^forum/4(.*) /en-US/forums/off-topic$1 [L,QSA,R=301]
+RewriteRule ^([\-a-zA-Z]+)/forum/4(.*) /en-US/forums/off-topic$2 [L,QSA,R=301]
+RewriteRule ^forum/5(.*) /en-US/forums/knowledge-base-articles$1 [L,QSA,R=301]
+RewriteRule ^([\-a-zA-Z]+)/forum/5(.*) /en-US/forums/knowledge-base-articles$2 [L,QSA,R=301]
+
+# Redirect old KB docs to new locations
+RewriteRule ^kb/Firefox\+Help$ /home/ [L,NC,R=301]
+RewriteRule ^kb/Windows\+start\+page$ /home/ [L,NC,R=301]
+RewriteRule ^kb/Firefox\+Support\+Home\+Page$ /home/ [L,NC,R=301]
+RewriteRule ^kb/Get\+help\+with\+Firefox\+4\+Beta$ /home/ [L,NC,R=301]
+RewriteRule ^kb/Localization\+Dashboard$ /contributors [L,NC,R=301]
+RewriteRule ^kb/All\+Knowledge\+Base\+articles$ /contributors [L,NC,R=301]
+RewriteRule ^kb/Live\+Chat$ /en-US/chat/ [L,NC,R=301]  # Chat is not localized.
+RewriteRule ^kb/Mobile\+Help\+and\+Tutorials$ /mobile/ [L,NC,R=301]
+RewriteRule ^kb/Support\+Website\+Forums$ /en-US/questions/ [L,NC,R=301]  # Questions is not localized.
+RewriteRule ^kb/Article\+list$ /kb/all [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Firefox\+Help$ /$1/home/ [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Windows\+start\+page$ /$1/home/ [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Firefox\+Support\+Home\+Page$ /$1/home/ [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Get\+help\+with\+Firefox\+4\+Beta$ /$1/home/ [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Localization\+Dashboard$ /$1/contributors [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/All\+Knowledge\+Base\+articles$ /$1/contributors [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Live\+Chat$ /en-US/chat/ [L,NC,R=301]  # Chat is not localized.
+RewriteRule ^([\-a-z]+)/kb/Mobile\+Help\+and\+Tutorials$ /$1/mobile/ [L,NC,R=301]
+RewriteRule ^([\-a-z]+)/kb/Support\+Website\+Forums$ /en-US/questions/ [L,NC,R=301]  # Questions is not localized.
+RewriteRule ^([\-a-z]+)/kb/Article\+list$ /$1/kb/all [L,NC,R=301]
+
+# Fix missing trailing slashes.
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)$   /1/$1/$2/$3/$4/ [L,R]
+
+# Platform-specific redirects.
+RewriteRule ^1/mobile/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/$  "http://www.mozilla.com/m/support" [L,R,NE]
+RewriteRule ^1/mobile/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/firefox-help\/$  "http://www.mozilla.com/m/support" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/iPhone/([\-a-zA-Z]+)/?$  "/$3/kb/What is Firefox Home?as=u" [L,R,NE]
+
+# Redirect no help topic to main in-product page
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)\/$  "/$4/home/?as=u" [L,R,NE]
+
+# Rewrite rules for in-product help
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/([\-_a-zA-Z]+)$   /1/$1/$2/$3/$4/$5/ [L,R]
+
+# Specific-product rewrite rules
+# Firefox Home
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/iPhone/([\-a-zA-Z]+)/install/$  "/$3/kb/How to set up Firefox Home on your iPhone?as=u" [L,R,NE]
+
+# http://support.mozilla.com/1/%PRODUCT%/%VERSION%/%PLATFORM%/%LOCALE%/<helptopic>/
+# general
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_general\/$  "/$4/kb/Page Info window?as=u#General" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_media\/$  "/$4/kb/Page Info window?as=u#Media" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_feed\/$  "/$4/kb/Page Info window?as=u#Feeds" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_permissions\/$  "/$4/kb/Page Info window?as=u#Permissions" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/pageinfo_security\/$  "/$4/kb/Page Info window?as=u#Security" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-weave\/$ "/$4/kb/How to sync Firefox settings between computers?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/plugin-crashed\/$ "/$4/kb/Plugin crash reports?as=u" [L,R,NE]
+# Firefox 3.5+ help redirects for F1, OsX key and Help menu
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/firefox-help\/$  "/$4/home/?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/firefox-f1(\/)?$ "/$4/home/?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/firefox-osxkey\/$  "/$4/home/?as=u" [L,R,NE]
+# Windows 7 application link
+RewriteRule ^1/windows7-support(\/)?$  "/home/?as=u" [L,R,NE]
+# Keyboard shortcuts, Fx3.7+
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/keyboard-shortcuts/?$  "/$4/kb/Keyboard shortcuts?as=u" [L,R,NE]
+
+# preferences
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-main\/$  "/$4/kb/Options window - General panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-clear-private-data\/$  "/$4/kb/Clear Recent History?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-fonts-and-colors\/$  "/$4/kb/Options window - Content panel?as=u#fonts_and_colors" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-privacy\/$  "/$4/kb/Options window - Privacy panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-applications\/$  "/$4/kb/Options window - Applications panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-connection-settings\/$  "/$4/kb/Options window - Advanced panel?as=u#connection_settings" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-tabs\/$  "/$4/kb/Options window - Tabs panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-advanced-javascript\/$  "/$4/kb/Options window - Content panel?as=u#advanced_javascript" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-languages\/$  "/$4/kb/Options window - Content panel?as=u#languages" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-content\/$  "/$4/kb/Options window - Content panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-security\/$  "/$4/kb/Options window - Security panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-advanced-general\/$  "/$4/kb/Options window - Advanced panel?as=u" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-advanced-network\/$  "/$4/kb/Options window - Advanced panel?as=u#advanced_network" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-advanced-update\/$  "/$4/kb/Options window - Advanced panel?as=u#advanced_update" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/prefs-advanced-encryption\/$  "/$4/kb/Options window - Advanced panel?as=u#advanced_encryption" [L,R,NE]
+
+# help for IE users
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/ieusers\/$  "/$4/kb/Windows start page?as=u" [L,R,NE]
+
+# inproduct help for places-locked
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/places-locked\/$ "/$4/kb/The bookmarks and history system will not be functional?as=u" [L,R,NE]
+
+# inproduct help for private browsing
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/private-browsing\/$ "/$4/kb/Private Browsing?as=u" [L,R,NE]
+
+
+# EU ballot redirects
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/pageinfo_general/?$  "/$4/kb/Page Info window?as=u&eu=1#General" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/pageinfo_media/?$  "/$4/kb/Page Info window?as=u&eu=1#Media" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/pageinfo_feed/?$  "/$4/kb/Page Info window?as=u&eu=1#Feeds" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/pageinfo_permissions/?$  "/$4/kb/Page Info window?as=u&eu=1#Permissions" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/pageinfo_security/?$  "/$4/kb/Page Info window?as=u&eu=1#Security" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-weave/?$ "/$4/kb/How to sync Firefox settings between computers?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/plugin-crashed/?$ "/$4/kb/Plugin crash reports?as=u&eu=1" [L,R,NE]
+
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/firefox-help/?$  "/$4/home/?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/firefox-f1/?$ "/$4/home/?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/firefox-osxkey/?$  "/$4/home/?as=u&eu=1" [L,R,NE]
+
+# EU ballot preferences
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-main/?$  "/$4/kb/Options window - General panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-clear-private-data/?$  "/$4/kb/Clear Recent History?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-fonts-and-colors/?$  "/$4/kb/Options window - Content panel?as=u&eu=1#fonts_and_colors" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-privacy\/?$  "/$4/kb/Options window - Privacy panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-applications/?$  "/$4/kb/Options window - Applications panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-connection-settings/?$  "/$4/kb/Options window - Advanced panel?as=u&eu=1#connection_settings" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-tabs/?$  "/$4/kb/Options window - Tabs panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-advanced-javascript/?$  "/$4/kb/Options window - Content panel?as=u&eu=1#advanced_javascript" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-languages/?$  "/$4/kb/Options window - Content panel?as=u&eu=1#languages" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-content/?$  "/$4/kb/Options window - Content panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-security/?$  "/$4/kb/Options window - Security panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-advanced-general?/$  "/$4/kb/Options window - Advanced panel?as=u&eu=1" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-advanced-network?/$  "/$4/kb/Options window - Advanced panel?as=u&eu=1#advanced_network" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-advanced-update/?$  "/$4/kb/Options window - Advanced panel?as=u&eu=1#advanced_update" [L,R,NE]
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/prefs-advanced-encryption/?$  "/$4/kb/Options window - Advanced panel?as=u&eu=1#advanced_encryption" [L,R,NE]
+
+# EU ballot -- help for IE users
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/ieusers/?$  "/$4/kb/Windows start page?as=u&eu=1" [L,R,NE]
+
+# EU ballot -- inproduct help for places-locked
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/places-locked/?$ "/$4/kb/The bookmarks and history system will not be functional?as=u&eu=1" [L,R,NE]
+
+# EU ballot -- inproduct help for private browsing
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/private-browsing/?$ "/$4/kb/Private Browsing?as=u&eu=1" [L,R,NE]
+# Keyboard shortcuts, Fx3.7+
+RewriteRule ^1/([\-a-zA-Z]+)/([0-9]+\.[0-9]+[^/]*)/([\-_a-zA-Z0-9]+)/([\-a-zA-Z]+)/eu/keyboard-shortcuts/?$  "/$4/kb/Keyboard shortcuts?as=u&eu=1" [L,R,NE]
+
+# Firefox Home help articles
+RewriteRule ^1/firefox-home/([0-9]+\.[0-9]+[^/]*)/iPhone/([\-a-zA-Z]+)/log-in/?$ "/$2/kb/Cannot log in to Firefox Home App?as=u" [L,R,NE]
+
+# Redirect locales that point to one locale in SUMO.
+# Kitsune does this by itself, mostly.
+# Not sure about this guy: may need to special-case it in the LocaleURLMiddleware.
+RewriteRule ^n[bn]\-NO/(.+)$           /no/$1 [L,R]
+# Just need to move sr-CYRL above sr-LATN to get this.
+RewriteRule ^sr/(.+)$           /sr-CYRL/$1 [L,R]
+
+# Everything else goes to Kitsune.
+RewriteRule ^(.*) /k/$1 [QSA]
