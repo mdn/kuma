@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     (r'^gallery', include('gallery.urls')),
     (r'^army-of-awesome', include('customercare.urls')),
     (r'^chat', include('chat.urls')),
+    (r'^1', include('inproduct.urls')),
 
     # Kitsune admin (not Django admin).
     (r'^admin/', include('kadmin.urls')),

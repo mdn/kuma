@@ -106,7 +106,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services')
+SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', '1')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -147,6 +147,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
+    'inproduct.middleware.EuBuildMiddleware',
     'sumo.middleware.NoCacheHttpsMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',
