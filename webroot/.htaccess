@@ -1,14 +1,7 @@
-<FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
-	order deny,allow
-	deny from all
-</FilesMatch>
-
-
 RewriteEngine On
 
-# Allow static files through.
-# TODO: move these to Django (bugs filed).
-RewriteRule ^search.xml$ - [L]
+# TODO: remove this after a month or so.
+RewriteRule ^search\.xml$ /search/xml [L,R=301]
 
 # Account URLs.
 RewriteRule ^tiki-login /users/login [L,R=301]
@@ -16,9 +9,6 @@ RewriteRule ^tiki-logout.php /users/logout [L,R=301]
 RewriteRule ^tiki-register /users/register [L,R=301]
 RewriteRule ^tiki-remind_password.php /users/pwreset [L,R=301]
 RewriteRule ^tiki-user_preferences.php /users/edit [L,R=301]
-
-# Any other tiki-* pages are 404s.
-#RewriteRule ^tiki- /404/ [L,QSA,R=301]
 
 # Contribute shortcut
 RewriteRule ^contribute/?$ /kb/How+to+contribute [L,QSA,R=302]
