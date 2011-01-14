@@ -12,3 +12,4 @@ build.py
 media/uploads
 vendor
 tmp
+locale
