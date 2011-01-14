@@ -11,13 +11,12 @@
   {% set delete_warning = _('You are about to permanently delete this video. <strong>This cannot be undone!</strong> Are you sure you want to continue?') %}
   {% set title = _('Delete video | {t} | Media Gallery')|f(t=media.title) %}
 {% endif %}
+{% set crumbs = [(url('gallery.gallery', media_type), _('Media Gallery')),
+                 (url('gallery.media', media_type, media.id), media.title),
+                 (None, delete_this)] %}
 
 {% block content %}
   <article id="media-object-delete" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ delete_confirm }}</h1>
     <div class="to-delete">
       <label>{{ _('Title') }}</label>
@@ -64,7 +63,4 @@
       </form>
     </div>
   </article>
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

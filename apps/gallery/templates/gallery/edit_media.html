@@ -16,10 +16,6 @@
 
 {% block content %}
   <article id="media-object-edit" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ media.title }}</h1>
     <form action="{{ url('gallery.edit_media', media_type, media.id) }}" method="post">
       {{ csrf() }}
@@ -34,7 +30,4 @@
       </div>
     </form>
   </article>
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

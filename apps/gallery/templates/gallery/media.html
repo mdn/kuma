@@ -18,10 +18,6 @@
 
 {% block content %}
   <article id="media-object" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ media.title|truncate(length=55, killwords=True) }}</h1>
     <div id="media-metainfo">
       <ul id="media-info">
@@ -80,7 +76,4 @@
       {% endif %}
     </form>
   </article>
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

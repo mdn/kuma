@@ -134,8 +134,7 @@ def breadcrumbs(context, items=list(), add_default=True):
     Accepts: [(url, label)]
     """
     if add_default:
-        crumbs = [('/' + context['request'].locale + '/kb',
-                   _lazy(u'Firefox Support'))]
+        crumbs = [(reverse('home'), _lazy(u'Firefox Help'))]
     else:
         crumbs = []
 

@@ -11,10 +11,6 @@
 
 {% block content %}
   <article id="document-list" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ title }}</h1>
     {% if documents.object_list %}
       <ul class="documents">

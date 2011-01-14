@@ -4,16 +4,11 @@
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New Article | Knowledge Base') %}
 {# TODO: Change KB url to landing page when we have one #}
-{% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
-                 (None, _('New Article'))] %}
+{% set crumbs = [(None, _('New Article'))] %}
 {% set classes = 'new' %}
 
 {% block content %}
   <article id="edit-document" class="main form-page">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ _('Create a New Knowledge Base Article') }}</h1>
     <div id="document-form">
       {{ errorlist(document_form) }}

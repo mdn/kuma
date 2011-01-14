@@ -4,15 +4,11 @@
 {% set title = _('Localization Dashboard') %}
 {% set scripts = ('wiki',) %}
 {% set styles = ('wiki',) %}
+{% set crumbs = [(None, title)] %}
 {# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
 
 {% block content %}
   <article id="localize" class="main dashboards">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs([(None, _(title))]) }}
-    </div>
-
     <h1>{{ title }}</h1>
 
     <div class="choice-list">
@@ -96,7 +92,3 @@
     {% endif %}
   </div>
 {% endblock %}
-
-{% block breadcrumbs %}
-{% endblock %}
-

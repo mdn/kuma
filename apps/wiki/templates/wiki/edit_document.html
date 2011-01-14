@@ -5,18 +5,13 @@
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Edit Article | {document}')|f(document=document.title) %}
 {# TODO: Change KB url to landing page when we have one #}
-{% set crumbs = [(url('wiki.all_documents'), _('Knowledge Base')),
-                 (url('wiki.category', document.category), document.get_category_display()),
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Edit Article'))] %}
 {% set classes = 'edit' %}
 
 {% block content %}
   <article id="edit-document" class="main form-page">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ _('<em>Editing</em> {title}')|f(title=document.title)|safe }}</h1>
     {% if document_form %}
       <div id="document-form">

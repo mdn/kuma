@@ -4,14 +4,10 @@
 {% set title = _('Revision History | {document}')|fe(document=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
-                 (None, _('Revisions'))] %}
+                 (None, _('History'))] %}
 
 {% block content %}
   <article id="revision-history" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1 class="title">{{ _('History of {title}')|fe(title=document.title) }}</h1>
     <div class="choice-list">
       <label>{{ _('Revision history for:') }}</label>

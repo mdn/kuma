@@ -3,6 +3,7 @@
 {% set title = _('Live Chat') %}
 {% set scripts = ('chat',) %}
 {% set styles = ('chat',) %}
+{% set crumbs = [(None, _('Chat'))] %}
 
 {% block content %}
   <article id="chat" class="main">
@@ -56,7 +57,4 @@
       <a href="{{ help }}">help users through Live Chat</a>.{% endtrans %}</p>
     </section>
   </article>
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

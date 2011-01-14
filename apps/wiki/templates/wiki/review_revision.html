@@ -3,16 +3,11 @@
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Review Revision {id} | {document}')|f(document=document.title, id=revision.id) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title)] %}
+                 (document.get_absolute_url(), document.title), (None, 'Review Revision')] %}
 {% set classes = 'review' %}
 
 {% block content %}
   <article id="review-revision" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
-
     <h1>{{ _('Review Revision of {title}')|f(title=document.title) }}</h1>
     <p>{{ _('Reviewing Revision {id} by {user}')|f(id=revision.id, user=revision.creator) }}.
     <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>

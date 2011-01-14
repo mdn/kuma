@@ -12,10 +12,6 @@
 {% block content %}
   {% set language = settings.LANGUAGES[locale.lower()] %}
   <article id="localize-document" class="main form-page">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ _('Translating {title}')|f(title=parent.title) }}</h1>
     <div class="change-locale">
       <p>

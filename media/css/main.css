@@ -75,17 +75,9 @@ h2 {
     Breadcrumbs
 ----------------------------------*/
 
-#breadcrumbs {
-    margin: 0 0 20px;
-}
-
 .breadcrumbs {
-    margin: 5px 0 15px;
+    margin: 0 0 15px;
     font-family: Verdana;
-}
-
-#breadcrumbs .breadcrumbs {
-    display: inline;
 }
 
 .breadcrumbs li {

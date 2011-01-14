@@ -3,15 +3,11 @@
 {% set title = readout.title %}
 {% set scripts = ('wiki',) %}
 {% set styles = ('wiki',) %}
+{% set crumbs = [(url(main_dash_view), main_dash_title), (None, title)] %}
 {# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
 
 {% block content %}
   <article class="main dashboards dashboards-detail">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs([(url(main_dash_view), main_dash_title), (None, readout.title)]) }}
-    </div>
-
     <h1>{{ readout.title }}</h1>
     <ul class="readout-modes" data-slug="{{ readout.slug }}">
       {% for key, name in readout.modes %}
@@ -25,7 +21,4 @@
       {{ readout.render()|safe }}
     </table>
   </article>
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

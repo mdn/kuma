@@ -7,10 +7,6 @@
 
 {% block content %}
   <article id="gallery-list" class="main">
-    <div id="breadcrumbs">
-      {{ _('You are here:') }}
-      {{ breadcrumbs(crumbs) }}
-    </div>
     <h1>{{ _('Media Gallery') }}</h1>
     <div id="locale-filter">
       {% if user.is_authenticated() %}
@@ -66,7 +62,4 @@
       {% include 'gallery/includes/upload_media_form.html' %}
     {% endif %}
   </article>
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}
