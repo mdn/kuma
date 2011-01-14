@@ -88,22 +88,31 @@
     height: 20px;
     width: 100%;
 }
-#side-stats .label {
+#side-stats .bubble div {
     color: #00639B;
     font-family: Arial,Helvetica,sans-serif;
-    font-size: .75em;
     font-style: normal;
     font-weight: bold;
     font-variant: small-caps;
 }
+#side-stats .bubble mark {
+    color: #4B4742;
+    font-family: Georgia, freeserif, serif;
+    font-size: 130%;
+    font-style: italic;
+    font-weight: normal;
+}
 #side-stats .perc {
-    font-size: 2.5em;
+    font-size: 1.9em;
     font-style: italic;
     padding-top: 10px;
     text-align: center;
 }
 #side-stats .numbers {
-    font-size: 1.8em;
+    font-size: 135%;
+}
+#side-stats .bubble .numbers mark {
+    font-style: normal;
 }
 #side-stats .numbers .replies,
 #side-stats .numbers .tweets {
@@ -113,12 +122,17 @@
 #side-stats .numbers .replies {
     float: left;
 }
+#side-stats .numbers .separator {
+    color: #4B4742;
+    float: left;
+    font-family: Georgia, freeserif, serif;
+    font-style: normal;
+    font-size: 135%;
+    font-weight: normal;
+    margin-left: .25em;
+}
 #side-stats .numbers .tweets {
     float: right;
-}
-#side-stats .numbers .data {
-    display: block;
-    margin-bottom: -.3em;
 }
 #side-stats select {
     font-family: Arial,Helvetica,sans-serif;

@@ -1,10 +1,17 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
 <div id="twitter-modal" data-authed="{{ authed }}" data-twitter-user="{{ twitter_user }}">
   <div class="inner-container">
-    <h4>Sign in with your Twitter account</h4>
-    <p>Before you join the Army of Awesome, you need to log in so you can respond to tweets. You will now be redirected to Twitter to log in.</p>
+    <h4>{{ _('Sign in with your Twitter account') }}</h4>
+    <p>
+      {% trans %}
+        Before you join the Army of Awesome, you need to log in so you
+        can respond to tweets.
+        You will now be redirected to Twitter to log in.
+      {% endtrans %}
+    </p>
     <div>
-      <a href="#" class="cancel">Cancel</a>
-      <a href="?twitter_auth_request=1" class="signin">Sign in</a>
+      <a href="#" class="cancel">{{ _('Cancel') }}</a>
+      <a href="?twitter_auth_request=1" class="signin">{{ _('Sign in') }}</a>
     </div>
   </div>
 </div>

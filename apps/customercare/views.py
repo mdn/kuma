@@ -6,12 +6,13 @@ import logging
 
 from django.conf import settings
 from django.core.cache import cache
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 from django.views.decorators.http import require_POST, require_GET
 
 from babel.numbers import format_number
 from bleach import Bleach
 import jingo
+from tower import ugettext as _
 import tweepy
 
 from .models import CannedCategory, Tweet
@@ -134,19 +135,23 @@ def twitter_post(request):
     try:
         reply_to = int(request.POST.get('reply_to', ''))
     except ValueError:
-        return HttpResponseBadRequest('Reply-to is empty')
+        # L10n: the tweet needs to be a reply to another tweet.
+        return HttpResponseBadRequest(_('Reply-to is empty'))
 
     content = request.POST.get('content', '')
     if len(content) == 0:
-        return HttpResponseBadRequest('Message is empty')
+        # L10n: the tweet has no content.
+        return HttpResponseBadRequest(_('Message is empty'))
 
     if len(content) > 140:
-        return HttpResponseBadRequest('Message is too long')
+        return HttpResponseBadRequest(_('Message is too long'))
 
     try:
         result = request.twitter.api.update_status(content, reply_to)
     except tweepy.TweepError, e:
-        return HttpResponseBadRequest('An error occured: %s' % e)
+        # L10n: {message} is an error coming from our twitter api library
+        return HttpResponseBadRequest(
+            _('An error occured: {message}').format(message=e))
 
     # Store reply in database.
 

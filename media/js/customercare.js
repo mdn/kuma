@@ -252,11 +252,12 @@
                 count = reply_txt.data('count') - 1;
             reply_txt.addClass('you');
             if (count === 0) {
-                reply_txt.text('You replied');
+                reply_txt.text(gettext('You replied'));
             } else if (count === 1) {
-                reply_txt.text('You and 1 other replied');
+                reply_txt.text(gettext('You and 1 other replied'));
             } else {
-                reply_txt.text('You and '+count+' others replied');
+                reply_txt.text(interpolate('You and %s others replied',
+                                           [count]));
             }
         }
 
@@ -287,9 +288,9 @@
             if (!signin.authed) return;
 
             var me = $('#twitter-modal').data('twitter-user');
-            
+
             $('#tweets .replies .twittername')
-                .filter(function isMe() { 
+                .filter(function isMe() {
                     return $(this).text() == me; })
                 .closest('div.replies')  // Walk up to parent.
                 .closest('li.tweet')
@@ -410,11 +411,13 @@
             var $this = $(this),
                 option = $this.children('option[value=' + $this.val() + ']'),
                 bubble = $('#side-stats .bubble')
+                percent = interpolate(gettext('%s%'),
+                                      [option.data('perc')]);
                 contribs = $('#side-stats .contribs');
             // Update numbers
-            bubble.find('.perc .data').text(option.data('perc'));
-            bubble.find('.replies .data').text(option.data('replies'));
-            bubble.find('.tweets .data').text(option.data('requests'));
+            bubble.find('.perc mark').text(percent);
+            bubble.find('.replies mark').text(option.data('replies'));
+            bubble.find('.tweets mark').text(option.data('requests'));
 
             // Update contributors
             contribs.find('.contributors:visible').fadeOut('fast', function() {

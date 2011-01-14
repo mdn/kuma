@@ -1,3 +1,4 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
 <div id="reply-modal">
   <div id="reply-container">
 
@@ -14,7 +15,7 @@
     </div>
 
     <div id="replies">
-      <h4>What is your reply about?</h4>
+      <h4>{{ _('What is your reply about?') }}</h4>
       <div id="accordion">
         {% for resp in canned_responses %}
         <h3><a href="#">{{ resp.title }}</a></h3>
@@ -34,8 +35,13 @@
       <div class="hrbreak"></div>
 
       <div id="reply">
-        <h4>Get personal</h4>
-        <p class="desc">Tweak it and make it your own. Personalized messages go a long way in helping others.</p>
+        <h4>{{ _('Get personal') }}</h4>
+        <p class="desc">
+          {% trans %}
+            Tweak it and make it your own.
+            Personalized messages go a long way in helping others.
+          {% endtrans %}
+        </p>
         <div class="container">
           <div class="character-counter">140</div>
           <form action="{{ url('customercare.twitter_post') }}" method="POST">
@@ -44,9 +50,9 @@
               <textarea id="reply-message"></textarea>
             </div>
 
-            <span id="submit-message">Your message was sent!</span>
+            <span id="submit-message">{{ _('Your message was sent!') }}</span>
             <span id="error-message"></span>
-            <a href="#submit" id="submit" class="submitButton" title="Submit">Submit <img id="submit-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/></a>
+            <a href="#submit" id="submit" class="submitButton" title="{{ _('Submit') }}">{{ _('Submit') }} <img id="submit-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/></a>
           </form>
         </div>
       </div>

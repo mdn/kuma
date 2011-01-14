@@ -7,30 +7,36 @@
 
 {% block content_area %}
   <div class="feature-contents">
-    <h2>Join our <br />Army of Awesome</h2>
-    <h3>Love Firefox and have a few moments to help? Help other Firefox users on Twitter. Good things will come to those who tweet!</h3>
+    <h2>{{ _('Join our <br />Army of Awesome')|safe }}</h2>
+    <h3>
+      {% trans %}
+        Love Firefox and have a few moments to help?
+        Help other Firefox users on Twitter.
+        Good things will come to those who tweet!
+      {% endtrans %}
+    </h3>
   </div>
 
   <div id="speech-bubbles">
     <ol>
-      <li class="choose">Choose a tweet below</li>
-      <li class="signin">Sign in with Twitter</li>
-      <li class="respond">Respond to the tweet!</li>
+      <li class="choose">{{ _('Choose a tweet below') }}</li>
+      <li class="signin">{{ _('Sign in with Twitter') }}</li>
+      <li class="respond">{{ _('Respond to the tweet!') }}</li>
     </ol>
   </div>
 
   <div id="tweetcontainer">
     <div class="tweets-header">
-      <img id="twitter-icon" src="{{ MEDIA_URL }}img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">Choose a tweet to help</h2>
-      <a id="refresh-tweets" href="{{ url('customercare.more_tweets') }}" class="header-button">Refresh<img id="refresh-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/></a>
+      <img id="twitter-icon" src="{{ MEDIA_URL }}img/customercare/twitter-icon.png" /><h2 class="showhide_heading" id="Where_to_ask_your_question">{{ _('Choose a tweet to help') }}</h2>
+      <a id="refresh-tweets" href="{{ url('customercare.more_tweets') }}" class="header-button">{{ _('Refresh') }}<img id="refresh-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/></a>
       {% if authed %}
-        <form id='twitter-logout' action='' method='post'>
+        <form id="twitter-logout" action="" method="post">
           {{ csrf() }}
-          <input type='hidden' name='twitter_delete_auth' value='1'>
-          <input type='submit' class="header-button" value='Sign out'>
+          <input type="hidden" name="twitter_delete_auth" value="1">
+          <input type="submit" class="header-button" value="{{ _('Sign out') }}">
         </form>
       {% else %}
-        <a id="signin-button" href="#" class="header-button">Sign in</a>
+        <a id="signin-button" href="#" class="header-button">{{ _('Sign in') }}</a>
       {% endif %}
     </div>
 
@@ -52,34 +58,41 @@
 
 {% block extra_sidebar %}
   <div id="side-stats">
-    <h3>Our army has responded to:</h3>
+    <h3>{{ _('Our army has responded to:') }}</h3>
     {% if not activity_stats %}
-      <p class="unavailable">Recent stats not available.</p>
+      <p class="unavailable">{{ _('Recent stats not available.') }}</p>
     {% else %}
       <div class="bubble">
         <div class="perc">
-          <span class="data">{% if activity_stats[0][1]['perc'] < 10 %}{{ activity_stats[0][1]['perc']|round(1) }}{% else %}{{ activity_stats[0][1]['perc']|round(0)|int }}{% endif %}</span>%
-          <span class="label">of tweets</span>
+          {{ _('<mark>{percent}%</mark> of tweets')|fe(percent=activity_stats[0][1]['perc']|round_percent) }}
         </div>
         <div class="numbers">
           <div class="replies">
-            <span class="data">{{ activity_stats[0][1]['replies'] }}</span>
-            <span class="label">replies</span>
+            {{ _('<mark>{num_replies}</mark> replies')|fe(num_replies=activity_stats[0][1]['replies']) }}
           </div>
-          /
+          <div class="separator">/</div>
           <div class="tweets">
-            <span class="data">{{ activity_stats[0][1]['requests'] }}</span>
-            <span class="label">tweets</span>
+            {{ _('<mark>{num_requests}</mark> tweets')|fe(num_requests=activity_stats[0][1]['requests']) }}
           </div>
         </div>
 
         <select>
           {% for act in activity_stats %}
             <option value="{{ loop.index0 }}"
-                    data-perc ="{% if act[1]['perc'] < 10 %}{{ act[1]['perc']|round(1) }}{% else %}{{ act[1]['perc']|round(0)|int }}{% endif %}"
+                    data-perc ="{{ act[1]['perc']|round_percent }}"
                     data-replies="{{ act[1]['replies'] }}"
                     data-requests="{{ act[1]['requests'] }}">
-              {{ act[0] }}
+              {% if act[0] == 'Yesterday' %}
+                {{ _('Yesterday', 'army_stats') }}
+              {% elif act[0] == 'Last Week'%}
+                {{ _('Last Week', 'army_stats') }}
+              {% elif act[0] == 'Last Month'%}
+                {{ _('Last Month', 'army_stats') }}
+              {% elif act[0] == 'Overall'%}
+                {{ _('Last Overall', 'army_stats') }}
+              {% else %}
+                {{ act[0] }}
+              {% endif %}
             </option>
           {% endfor %}
         </select>
@@ -107,10 +120,15 @@
   </div>
 
   <div id="side-getinvolved">
-    <h3>Take it to the next level!</h3>
-    <p>Want to go beyond 140 characters? Join the support community and help many more
-       Firefox users in the <a href="{{ url('questions.questions') }}">forum</a>.</p>
-    <p><a href="/"><img src="{{ MEDIA_URL }}img/sumo-logo.png" class="sumo-logo"></a></p>
+    <h3>{{ _('Take it to the next level!') }}</h3>
+    <p>
+      {% trans questions_url=url('questions.questions') %}
+        Want to go beyond 140 characters?
+        Join the support community and help many more Firefox users in the
+        <a href="{{ questions_url }}">forum</a>.
+      {% endtrans %}
+    </p>
+    <p><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/sumo-logo.png" class="sumo-logo"></a></p>
   </div>
 
   {{ search_box(settings, id='side-search', target='_blank', placeholder=_('Search')) }}

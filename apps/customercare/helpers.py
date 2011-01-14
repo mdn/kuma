@@ -23,3 +23,9 @@ def isotime(t):
     if not hasattr(t, 'tzinfo'):
         return
     return _append_tz(t).astimezone(pytz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+@register.filter
+def round_percent(num):
+    """Return a customercare-format percentage from a number."""
+    return round(num, 1) if num < 10 else int(round(num, 0))
