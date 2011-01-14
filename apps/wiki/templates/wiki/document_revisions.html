@@ -52,7 +52,7 @@
               </div>
               <div class="status">
                 {% if not rev.reviewed %}
-                  {% if not reached_current %}
+                  {% if not reached_current and user.has_perm('wiki.review_revision') %}
                     <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
                   {% else %}
                     <span class="unreviewed">{{ _('Unreviewed', 'revision') }}</span>

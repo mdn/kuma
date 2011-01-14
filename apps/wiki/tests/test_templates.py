@@ -39,7 +39,7 @@ class DocumentTests(TestCaseBase):
         does not exist or it has no approved revisions."""
         d = _create_document()
         d2 = document(parent=d, locale='fr', slug='french', save=True)
-        r2 = revision(document=d2, is_approved=False, save=True)
+        revision(document=d2, is_approved=False, save=True)
         url = reverse('wiki.document', args=[d2.slug], locale='fr')
         response = self.client.get(url)
         doc = pq(response.content)
@@ -555,6 +555,19 @@ class DocumentRevisionsTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(3, len(doc('#revision-list li')))
+        # Verify there is no Review link
+        eq_(0, len(doc('#revision-list div.status a')))
+        eq_('Unreviewed', doc('#revision-list div.status:first').text())
+
+        # Log in as user with permission to review
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(reverse('wiki.document_revisions',
+                                   args=[d.slug]))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        # Verify there are Review links now
+        eq_(2, len(doc('#revision-list div.status a')))
+        eq_('Review', doc('#revision-list div.status:first').text())
 
 
 class ReviewRevisionTests(TestCaseBase):
