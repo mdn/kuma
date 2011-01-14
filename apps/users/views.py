@@ -23,7 +23,7 @@ from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
-                         EmailChangeForm)
+                         AuthenticationForm, EmailChangeForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from users.utils import handle_login, handle_register
 
@@ -67,12 +67,14 @@ def activate(request, activation_key):
     activation_key = activation_key.lower()
     account = RegistrationProfile.objects.activate_user(activation_key)
     my_questions = None
+    form = AuthenticationForm()
     if account:
         my_questions = Question.uncached.filter(creator=account)
         # TODO: remove this after dropping unconfirmed questions.
         my_questions.update(status=CONFIRMED)
     return jingo.render(request, 'users/activate.html',
-                        {'account': account, 'questions': my_questions})
+                        {'account': account, 'questions': my_questions,
+                         'form': form})
 
 
 def resend_confirmation(request):
@@ -310,7 +312,9 @@ def password_reset_complete(request):
     Based on django.contrib.auth.views. Show a success message.
 
     """
-    return jingo.render(request, 'users/pw_reset_complete.html')
+    form = AuthenticationForm()
+    return jingo.render(request, 'users/pw_reset_complete.html',
+                        {'form': form})
 
 
 @login_required

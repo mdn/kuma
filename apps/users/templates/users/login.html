@@ -1,39 +1,11 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "users/base.html" %}
-{% from "layout/errorlist.html" import errorlist %}
 {% set title = _('Log In') %}
 {% set classes = 'login' %}
 
 {% block content %}
   <article id="login" class="main">
     <h1>{{ _('Log In') }}</h1>
-    {{ errorlist(form) }}
-    <form method="post" action="">
-      {{ csrf() }}
-      <input type="hidden" name="next" value="{{ next_url }}" />
-      <fieldset>
-        <ul>
-          <li>
-            <label for="id_username">{{ _('Username:') }}</label>
-            {{ form.username|safe }}
-          </li>
-          <li>
-            <label for="id_password">{{ _('Password:') }}</label>
-            {{ form.password|safe }}
-          </li>
-        </ul>
-      </fieldset>
-      <div class="submit">
-        <input type="submit" value="{{ _('Log in') }}" />
-      </div>
-    </form>
-    <div id="login-help">
-      <h3>{{ _('Login Problems?') }}</h3>
-      <ul>
-        <li><a href="{{ url('users.register') }}">{{ _("I don't have an account.") }} </a></li>
-        <li><a href="{{ url('users.pw_reset') }}">{{ _('I forgot my password.') }}</a></li>
-        <li><a href="{{ url('users.resend_confirmation') }}">{{ _('My account is inactive.') }}</a></li>
-      </ul>
-    </div>
+    {% include "users/login_form.html" %}
   </article>
 {% endblock %}

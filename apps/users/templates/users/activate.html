@@ -11,11 +11,9 @@
   <article class="main">
     <h1>{{ title }}</h1>
     {% if account %}
-      <p>{% trans login_url=url('users.login')|urlparams(next=url('home')),
-        profile_url=url('users.edit_profile') %}
+      <p>{% trans %}
         You've confirmed your email address and activated your account! You
-        can now <a href="{{ login_url }}">log in</a>, and go
-        <a href="{{ profile_url }}">edit your profile</a>.{% endtrans %}
+        can now log in, and go edit your profile.{% endtrans %}
       </p>
       {% if questions %}
         <p>{{ ngettext('Your question is now visible on the site!',
@@ -27,6 +25,7 @@
           {% endfor %}
         </ul>
       {% endif %}
+      {% include "users/login_form.html" %}
     {% else %}
       <p class="failure">{% trans %}We could not activate your account.
         Please make sure that you have clicked the correct link in your

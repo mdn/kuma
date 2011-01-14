@@ -6,6 +6,7 @@
 {% block content %}
   <article id="pw-reset" class="main">
     <h1>{{ title }}</h1>
-    <p><a href="{{ url('users.login')|urlparams(next=url('home')) }}">{{ _('Log in') }}</a></p>
+    <p>{{ _('You can now log in.') }}</p>
+    {% include "users/login_form.html" %}
   </article>
 {% endblock content %}
