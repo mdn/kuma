@@ -3,7 +3,7 @@
 <html class="no-js" lang="{{ request.locale }}" {% if dir %}dir="{{ dir }}"{% endif %}>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>{{ title }} | {{ settings.SITE_TITLE }}</title>
+<title>{{ title }} | {{ _('Firefox Help', 'site_title') }}</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 <link rel="search" type="application/opensearchdescription+xml" title="{{ _('Firefox Help') }}" href="{{ url('search.plugin') }}"/>

@@ -83,7 +83,6 @@ LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
 TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
-SITE_TITLE = _lazy(u'Firefox Support', 'site_title')
 
 
 # If you set this to False, Django will make some optimizations so as not
