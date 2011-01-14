@@ -1,3 +1,4 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
 {% for tweet in tweets -%}
   <li class="tweet{% if tweet.reply_to %} reply{% endif %}" data-tweet-id="{{ tweet.id }}" id="tweet-{{ tweet.id }}">
     <div class="tweet-contents{{ loop.cycle('', ' alt') }}">
@@ -18,7 +19,7 @@
           {% endif %}
         </a>
       {% elif settings.CC_SHOW_REPLIES %}
-        <span class="reply_count">0 replies</span>
+        <span class="reply_count">{{ _('Reply now') }}</span>
       {% endif %}
       <p class="text">{{ tweet.text|safe }}</p>
     </div>
