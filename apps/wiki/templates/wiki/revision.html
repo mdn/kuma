@@ -47,7 +47,7 @@
             </li>
             <li>
               <mark>{{ _('Is current revision?') }}</mark>
-              <span>{{ revision == document.current_revision }}</span>
+              <span>{{ (revision == document.current_revision)|yesno }}</span>
             </li>
           {% endif %}
           {% if user.is_authenticated() %}

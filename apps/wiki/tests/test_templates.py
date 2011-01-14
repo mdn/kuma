@@ -174,6 +174,8 @@ class RevisionTests(TestCaseBase):
             doc('#wiki-doc div.revision-info li')[4].text_content().strip())
         # is reviewed?
         eq_('Yes', doc('.revision-info li').eq(3).find('span').text())
+        # is current revision?
+        eq_('Yes', doc('.revision-info li').eq(7).find('span').text())
 
 
 class NewDocumentTests(TestCaseBase):
