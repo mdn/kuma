@@ -30,10 +30,12 @@ class HelperTestCase(TestCase):
         eq_('%simages/foo.png' % settings.MEDIA_URL, profile_avatar(self.u))
 
     def test_public_email(self):
-        eq_(u'&#109;&#101;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;'
-             '&#111;&#109;', public_email('me@domain.com'))
-        eq_(u'&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
-             '&#108;', public_email('not.an.email'))
+        eq_(u'<span class="email">'
+             '&#109;&#101;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;'
+             '&#111;&#109;</span>', public_email('me@domain.com'))
+        eq_(u'<span class="email">'
+             '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
+             '&#108;</span>', public_email('not.an.email'))
 
     def test_display_name(self):
         eq_(u'testuser', display_name(self.u))

@@ -4,8 +4,6 @@ import logging
 import os
 import platform
 
-from tower import ugettext_lazy as _lazy
-
 from sumo_locales import LOCALES
 
 DEBUG = True
@@ -389,6 +387,7 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.cookie.js',
             'js/libs/jquery.bullseye-1.0.min.js',
             'js/customercare.js',
+            'js/users.js',
         ),
         'chat': (
             'js/chat.js',

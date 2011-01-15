@@ -33,7 +33,7 @@
             {% if profile.public_email %}
               <li>
                 <label>{{ _('Email:') }}</label>
-                <span class="email">{{ profile.user.email|public_email }}</span>
+                {{ profile.user.email|public_email }}
               </li>
             {% endif %}
             {% if profile.website %}

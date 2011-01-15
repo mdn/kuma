@@ -36,7 +36,7 @@ def display_name(user):
 @register.filter
 def public_email(email):
     """Email address -> publicly displayable email."""
-    return Markup(unicode_to_html(email))
+    return Markup('<span class="email">%s</span>' % unicode_to_html(email))
 
 
 def unicode_to_html(text):

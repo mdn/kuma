@@ -16,21 +16,32 @@
 
     <div id="replies">
       <h4>{{ _('What is your reply about?') }}</h4>
-      <div id="accordion">
-        {% for resp in canned_responses %}
-        <h3><a href="#">{{ resp.title }}</a></h3>
-        <div>
-          <ul class="topics">
-            {% for topic in resp.responses.all() %}
-            <li>
-              <a class="reply-topic" href="#">{{ topic.title }}</a>
-              <span class="snippet">{{ topic.response }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+      {% if not canned_responses %}
+        <span id="no-responses">
+          {% trans signpost_help_url='https://wiki.mozilla.org/Army_of_Awesome/Signposts', contact_email='atopal@mozilla.com'|public_email %}
+            We have created <a href="{{ signpost_help_url }}">signpost messages</a>
+            for easily replying to top Firefox topics on Twitter.
+            If you would like to have messages for your language appear
+            here, contact Kadir Topal for more info: {{ contact_email }}
+          {% endtrans %}
+        </span>
+      {% else %}
+        <div id="accordion">
+          {% for resp in canned_responses %}
+          <h3><a href="#">{{ resp.title }}</a></h3>
+          <div>
+            <ul class="topics">
+              {% for topic in resp.responses.all() %}
+              <li>
+                <a class="reply-topic" href="#">{{ topic.title }}</a>
+                <span class="snippet">{{ topic.response }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
+      {% endif %}
 
       <div class="hrbreak"></div>
 

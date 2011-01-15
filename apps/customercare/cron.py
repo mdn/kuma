@@ -73,7 +73,7 @@ def collect_tweets():
 
         item_lang = item.get('iso_language_code', 'en')
         tweet = Tweet(tweet_id=item['id'], raw_json=json.dumps(item),
-                      locale=item_lang, created=created_date)
+                      locale=item_lang[0:2], created=created_date)
         try:
             tweet.save()
         except IntegrityError:

@@ -3,7 +3,7 @@ import json
 
 from django.db import models
 
-from sumo.models import ModelBase
+from sumo.models import ModelBase, LocaleField
 
 
 class Tweet(ModelBase):
@@ -30,9 +30,11 @@ class CannedCategory(ModelBase):
     weight = models.IntegerField(
         default=0, db_index=True,
         help_text='Heavier items sink, lighter ones bubble up.')
+    locale = LocaleField()
 
     class Meta:
-        ordering = ('weight', 'title')
+        ordering = ('locale', 'weight', 'title')
+        unique_together = ('title', 'locale')
         verbose_name_plural = 'Canned categories'
 
     def __unicode__(self):
@@ -45,6 +47,7 @@ class CannedResponse(ModelBase):
     response = models.CharField(max_length=140)
     categories = models.ManyToManyField(
         CannedCategory, related_name='responses', through='CategoryMembership')
+    locale = LocaleField()
 
     class Meta:
         ordering = ('title',)

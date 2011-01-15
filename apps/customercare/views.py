@@ -49,14 +49,16 @@ def _tweet_for_template(tweet):
             'reply_to': tweet.reply_to}
 
 
-def _get_tweets(limit=MAX_TWEETS, max_id=None, reply_to=None):
+def _get_tweets(locale=settings.LANGUAGE_CODE,
+                limit=MAX_TWEETS, max_id=None, reply_to=None):
     """
     Fetch a list of tweets.
 
     limit is the maximum number of tweets returned.
     max_id will only return tweets with the status ids less than the given id.
     """
-    q = Tweet.objects.filter(locale='en', reply_to=reply_to)
+    locale = locale[0:2]
+    q = Tweet.objects.filter(locale=locale, reply_to=reply_to)
     if max_id:
         q = q.filter(tweet_id__lt=max_id)
     if limit:
@@ -70,7 +72,8 @@ def more_tweets(request):
     """AJAX view returning a list of tweets."""
     max_id = request.GET.get('max_id')
     return jingo.render(request, 'customercare/tweets.html',
-                        {'tweets': _get_tweets(max_id=max_id)})
+                        {'tweets': _get_tweets(locale=request.locale,
+                                               max_id=max_id)})
 
 
 @require_GET
@@ -80,7 +83,7 @@ def landing(request):
 
     twitter = request.twitter
 
-    canned_responses = CannedCategory.objects.all()
+    canned_responses = CannedCategory.objects.filter(locale=request.locale)
 
     # Stats. See customercare.cron.get_customercare_stats.
     activity = cache.get(settings.CC_TWEET_ACTIVITY_CACHE_KEY)
@@ -120,7 +123,7 @@ def landing(request):
         'activity_stats': activity_stats,
         'contributor_stats': contributor_stats,
         'canned_responses': canned_responses,
-        'tweets': _get_tweets(),
+        'tweets': _get_tweets(locale=request.locale),
         'authed': twitter.authed,
         'twitter_user': (twitter.api.auth.get_username() if
                          twitter.authed else None),

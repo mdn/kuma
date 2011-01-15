@@ -18,7 +18,7 @@ class MembershipInline(admin.StackedInline):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'weight', 'response_count')
+    list_display = ('title', 'locale', 'weight', 'response_count')
     inlines = (MembershipInline,)
 
     def response_count(self, obj):
@@ -27,7 +27,7 @@ admin.site.register(CannedCategory, CategoryAdmin)
 
 
 class ResponseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category_count')
+    list_display = ('title', 'locale', 'category_count')
     inlines = (MembershipInline,)
 
     def category_count(self, obj):

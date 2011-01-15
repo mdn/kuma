@@ -328,6 +328,10 @@
     padding-bottom: 2px;
 }
 
+#reply-container #no-responses a {
+    color: #447BC4;
+}
+
 #reply-container h3.ui-accordion-header.ui-state-default {
     background: #f0f0f0 url('../img/customercare/expander-closed.png') 8px 50% no-repeat;
 }
