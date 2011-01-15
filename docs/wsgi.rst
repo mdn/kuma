@@ -1,5 +1,3 @@
-.. _wsgi:
-
 =============================
 Running Kitsune with mod_wsgi
 =============================
@@ -25,7 +23,7 @@ packages sneak into the Kitsune virtualenv.
 Kitsune should be cloned into a directory named ``kitsune`` outside of the
 web root for the server or ``<VirtualHost>``. It will be aliased to the
 correct location.
-    
+
 
 WSGI Configuration
 ------------------
@@ -68,7 +66,7 @@ Configuration
 
 Most of our ``settings.py`` is under version control, but can be overridden
 in a file called ``settings_local.py`` in the base of the app (the same
-place as ``settings.py``). You can see example settings in 
+place as ``settings.py``). You can see example settings in
 ``/docs/settings/settings_local.prod.py``:
 
 .. literalinclude:: /settings/settings_local.prod.py
