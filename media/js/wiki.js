@@ -9,10 +9,6 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
-        if ($('body').is('.home')) {
-            clearOddSections();
-        }
-
         initPrepopulatedSlugs();
         initActionModals();
         initDetailsTags();
@@ -24,6 +20,10 @@
         } else if ($('body').is('.review')) { // Review pages
             initForTags();
             updateShowforSelectors();
+        }
+
+        if ($('body').is('.home')) {
+            initClearOddSections();
         }
 
         if ($('body').is('.translate')) {  // Translate page
@@ -38,8 +38,21 @@
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
+    function initClearOddSections() {
+        clearOddSections();
+        $('#os, #browser').change(clearOddSections);
+    }
+
     function clearOddSections() {
-        $('#home-content-explore section:nth-child(odd)').addClass('odd');
+        var odd = true;
+        $('#home-content-explore section').removeClass('odd');
+        $('#home-content-explore section:visible').each(function(){
+            // I can't use :nth-child(odd) because of showfor
+            if (odd) {
+                $(this).addClass('odd');
+            }
+            odd = !odd;
+        });
     }
 
     // Make <summary> and <details> tags work even if the browser doesn't support them.

@@ -128,7 +128,6 @@ body.mobile #featured {
     width: 205px;
 }
 
-#home-content-explore section:nth-child(odd),
 #home-content-explore section.odd {
     clear: left;
 }
