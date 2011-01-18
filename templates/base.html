@@ -14,7 +14,7 @@
 <title>{{ title }} | {{ _('Firefox Help', 'site_title') }}</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
-<link rel="search" type="application/opensearchdescription+xml" title="Firefox Support" href="/search.xml"/>
+<link rel="search" type="application/opensearchdescription+xml" title="{{ _('Firefox Help') }}" href="{{ url('search.plugin') }}"/>
 {% if feeds %}
   {% for feed in feeds %}
     <link rel="alternate" type="application/atom+xml" href="{{ feed[0] }}" title="{{ feed[1] }}"/>
