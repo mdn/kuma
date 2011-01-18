@@ -79,6 +79,7 @@ class ErrorListTests(MockRequestTests):
         """Make sure we escape HTML entities, lest we court XSS errors."""
         class MockForm(object):
             errors = True
+            auto_id = 'id_'
 
             def visible_fields(self):
                 return [{'errors': ['<"evil&ness-field">']}]

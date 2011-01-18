@@ -4,7 +4,7 @@
     <ul class="errorlist">
       {% for field in form.visible_fields() %}
         {% for error in field.errors %}
-          <li><a href="#id_{{ field.name }}">{{ error }}</a></li>
+          <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
         {% endfor %}
       {% endfor %}
       {% for error in form.non_field_errors() %}

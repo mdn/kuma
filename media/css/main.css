@@ -420,33 +420,6 @@ div.support-search button.img-submit {
     margin: 25px 0 0;
 }
 
-/**********************/
-/* TODO: DELETE START */
-#content-inner {
-    width: 680px;
-    padding: 0 20px;
-    position: relative;
-}
-
-#content-inner h2 {
-    margin: 0 0 1em;
-}
-
-.topbar {
-    background: url(../img/topbar.png) no-repeat top left;
-    height: 20px;
-    width: 723px;
-    margin-top: 30px;
-}
-
-.botbar {
-    background: url(../img/botbar.png) no-repeat top left;
-    height: 20px;
-    width: 723px;
-}
-/* TODO: DELETE END */
-/********************/
-
 /* orange buttons */
 .btn-small, .btn-large {
     border: 0;
@@ -515,19 +488,51 @@ ul.errorlist li a {
 }
 /* End error styling */
 
-/* Paginators */
+/*----------------------------------
+    Pagination styles
+----------------------------------*/
+
 ol.pagination {
-    margin: 0 auto 1em;
-    text-align: center;
+    border-top: solid 1px #9ACCF7;
+    font-family: Verdana;
+    margin: 20px 0;
+    padding: 20px 0;
 }
 
 ol.pagination li {
-    display: inline;
-    padding: 0 4px;
+    float: left;
+    list-style: none;
+    padding: 0 2px;
+}
+
+ol.pagination li.prev {
+    padding-left: 0;
+}
+
+ol.pagination li a {
+    float: left;
+    padding: 3px 8px 5px;
+}
+
+ol.pagination li a:hover {
+    text-decoration: underline;
+}
+
+ol.pagination li.prev a {
+    padding-left: 0;
 }
 
 ol.pagination li.selected a {
-    color: #000;
+    background: #447bc4;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: #fff;
+    cursor: default;
+}
+
+ol.pagination li.selected a:hover {
+    text-decoration:none;
 }
 
 /*----------------------------------

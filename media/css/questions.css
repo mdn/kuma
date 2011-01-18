@@ -282,46 +282,10 @@ ol.questions ul.tag-list {
     display: inline;
 }
 
-/* questions pagination */
+/* questions pagination tweak */
 ol.pagination {
-    font-family: Verdana;
-    margin: 1.5em auto 0;
+    border: none;
     padding: 0 0 0 25px;
-}
-
-ol.pagination li {
-    float: left;
-    padding: 0 2px;
-}
-
-ol.pagination li.prev {
-    padding-left: 0;
-}
-
-ol.pagination li a {
-    float: left;
-    padding: 4px 8px;
-}
-
-ol.pagination li a:hover {
-    text-decoration: underline;
-}
-
-ol.pagination li.prev a {
-    padding-left: 0;
-}
-
-ol.pagination li.selected a {
-    background: #0489B6;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    color: #fff;
-    cursor: default;
-}
-
-ol.pagination li.selected a:hover {
-    text-decoration:none;
 }
 
 /* on question page */

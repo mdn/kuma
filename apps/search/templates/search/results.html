@@ -28,8 +28,6 @@
 
   <div class="search-results">
 
-    {{ pages|paginator }}
-
     {% for doc in results %}
       <div class="result {{ doc.type }}">
         <a class="title" href="{{ doc.url|urlparams(s=q,as='s') }}">{{ doc.title }}</a>

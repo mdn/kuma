@@ -282,7 +282,7 @@ div#post-preview h3 {
 
 /* Wiki markup for posts */
 ol.posts li div.content h1,
-#content-inner ol.posts li div.content h2,
+#content ol.posts li div.content h2,
 ol.posts li div.content h3,
 ol.posts li div.content h4,
 ol.posts li div.content h5,
@@ -359,12 +359,6 @@ ol.posts li div.content a:hover {
 }
 
 /* End of wiki markup */
-
-/* Pagination tweaks */
-ol.pagination {
-    clear: left;
-    margin: 1.5em auto 0;
-}
 
 form.new-thread div.form-widget,
 form.edit-post div.form-widget,
