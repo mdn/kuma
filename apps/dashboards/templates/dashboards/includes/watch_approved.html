@@ -4,13 +4,25 @@
     <form action="{{ url('wiki.approved_unwatch') }}" method="post">
       {{ csrf() }}
       <input type="hidden" name="locale" value="{{ locale }}" />
-      <input type="submit" class="submit" value="{{ _('Stop getting emailed when {locale} revisions are approved')|f(locale=settings.LANGUAGES[locale.lower()]) }}" />
+      {% if locale == 'en-US' %}
+        {# L10n: Please localize 'English' here. #}
+        <input type="submit" class="submit" value="{{ _('Stop getting emailed when English revisions are approved', 'english') }}" />
+      {% else %}
+        {# L10n: Please replace 'English' with your language. #}
+        <input type="submit" class="submit" value="{{ _('Stop getting emailed when English revisions are approved', 'locale') }}" />
+      {% endif %}
     </form>
   {% else %}
     <form action="{{ url('wiki.approved_watch') }}" method="post">
       {{ csrf() }}
       <input type="hidden" name="locale" value="{{ locale }}" />
-      <input type="submit" class="submit" value="{{ _('Get emailed when {locale} revisions are approved')|f(locale=settings.LANGUAGES[locale.lower()]) }}" />
+      {% if locale == 'en-US' %}
+        {# L10n: Please localize 'English' here. #}
+        <input type="submit" class="submit" value="{{ _('Get emailed when English revisions are approved', 'english') }}" />
+      {% else %}
+        {# L10n: Please replace 'English' with your language. #}
+        <input type="submit" class="submit" value="{{ _('Get emailed when English revisions are approved', 'locale') }}" />
+      {% endif %}
     </form>
   {% endif %}
 {% endif %}

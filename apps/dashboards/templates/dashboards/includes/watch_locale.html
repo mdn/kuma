@@ -3,12 +3,24 @@
   {% if is_watching_locale(user, locale) %}
     <form action="{{ url('wiki.locale_unwatch') }}" method="post">
       {{ csrf() }}
-      <input type="submit" class="submit" value="{{ _('Stop getting emailed when {locale} reviews are waiting')|f(locale=settings.LANGUAGES[locale.lower()]) }}" />
+      {% if locale == 'en-US' %}
+        {# L10n: Please localize 'English' here. #}
+        <input type="submit" class="submit" value="{{ _('Stop getting emailed when English reviews are waiting', 'english') }}" />
+      {% else %}
+        {# L10n: Please replace 'English' with your language. #}
+        <input type="submit" class="submit" value="{{ _('Stop getting emailed when English reviews are waiting', 'locale') }}" />
+      {% endif %}
     </form>
   {% else %}
     <form action="{{ url('wiki.locale_watch') }}" method="post">
       {{ csrf() }}
-      <input type="submit" class="submit" value="{{ _('Get emailed when {locale} reviews are waiting')|f(locale=settings.LANGUAGES[locale.lower()]) }}" />
+      {% if locale == 'en-US' %}
+        {# L10n: Please localize 'English' here. #}
+        <input type="submit" class="submit" value="{{ _('Get emailed when English reviews are waiting', 'english') }}" />
+      {% else %}
+        {# L10n: Please replace 'English' with your language. #}
+        <input type="submit" class="submit" value="{{ _('Get emailed when English reviews are waiting', 'locale') }}" />
+      {% endif %}
     </form>
   {% endif %}
 {% endif %}
