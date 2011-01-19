@@ -7,7 +7,7 @@ class QuestionSolvedEvent(Event):
 
     event_type = 'question solved'
     content_type = Question
-    filters = {'locale': 'LOCL'}
+    filters = {'id': 'id  '}
 
     def __init__(self, question):
         self.instance = question
@@ -20,8 +20,9 @@ class QuestionSolvedEvent(Event):
         # in Event or at the module level of notifications.events.
 
     def _watches(self):
-        return self._watches_core(instance=self.instance.pk)
+        return self._watches_core(id=self.instance.pk)
 
     def _build_mails(self, users):
         # TODO: Implement. This does any necessary templating.
         # Let's not concretize possibly thousands of mails in memory.
+        pass

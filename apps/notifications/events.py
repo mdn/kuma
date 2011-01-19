@@ -42,6 +42,7 @@ class Event(object):
         # TODO: Move offthread.
         connection = mail.get_connection()
         connection.send_messages(self._build_mails(self._watches()))
+        # TODO: Pass fail_silently or whatever.
 
     def _watches_core(self, **filters):
         """Return an iterable of Users/AnonymousUsers watching the event.
@@ -83,7 +84,7 @@ class Event(object):
             'LEFT JOIN auth_user u ON u.id=w.user_id{left_joins} '
             'WHERE w.event_type=%s{content_type} '
             'AND (length(w.email)>0 OR length(u.email)>0)').format(
-            left_joins=joins()
+            left_joins=joins(),
             content_type=content_type)
         watches = Watch.objects.raw(query, left_params + [self.event_type] +
                                            ct_param)
