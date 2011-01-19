@@ -22,7 +22,7 @@ log = logging.getLogger('k.task')
 def update_question_votes(q):
     log.debug('Got a new QuestionVote.')
     q.sync_num_votes_past_week()
-    q.save(no_update=True)
+    q.save(no_update=True, force_update=True)
 
 
 @task(rate_limit='15/m')
