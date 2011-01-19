@@ -344,11 +344,14 @@ def review_revision(request, document_slug, revision_id):
                                                 args=[document_slug]))
 
     if doc.parent:  # A translation
+        parent_revision = get_current_or_latest_revision(doc.parent)
         template = 'wiki/review_translation.html'
     else:
+        parent_revision = None
         template = 'wiki/review_revision.html'
 
-    data = {'revision': rev, 'document': doc, 'form': form}
+    data = {'revision': rev, 'document': doc, 'form': form,
+            'parent_revision': parent_revision}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, template, data)
 

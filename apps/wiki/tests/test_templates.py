@@ -742,6 +742,72 @@ class ReviewRevisionTests(TestCaseBase):
         assert r.reviewed
         assert r.is_approved
 
+    def test_review_translation_of_unapproved_parent(self):
+        """Translate unapproved English document a 2nd time.
+
+        Reviewing a revision of a translation when the English document
+        does not have a current revision should fall back to the latest
+        English revision.
+
+        """
+        en_revision = revision(is_approved=False, save=True)
+
+        # Create the translated document based on the current revision
+        es_document = document(locale='es', parent=en_revision.document,
+                               save=True)
+        # Create first revision
+        revision(document=es_document, is_approved=True, save=True)
+        es_revision = revision(document=es_document, reviewed=None,
+                               is_approved=False,
+                               reviewer=None, save=True)
+
+        # Now render the review page
+        self.client.login(username='admin', password='testpass')
+        url = reverse('wiki.review_revision',
+                      args=[es_document.slug, es_revision.id])
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        # There's no 'Recent English Changes' <details> section
+        eq_(3, len(doc('details')))
+        eq_('Approved English version:',
+            doc('#content-fields h3').eq(0).text())
+        rev_message = doc('#content-fields p').eq(0).text()
+        assert 'by jsocol' in rev_message, ('%s does not contain "by jsocol"'
+                                            % rev_message)
+
+    def test_review_translation_of_rejected_parent(self):
+        """Translate rejected English document a 2nd time.
+
+        Reviewing a revision of a translation when the English document
+        has only rejected revisions should show a message.
+
+        """
+        user = User.objects.get(pk=118533)
+        en_revision = revision(is_approved=False, save=True, reviewer=user,
+                               reviewed=datetime.now())
+
+        # Create the translated document based on the current revision
+        es_document = document(locale='es', parent=en_revision.document,
+                               save=True)
+        # Create first revision
+        revision(document=es_document, is_approved=True, save=True)
+        es_revision = revision(document=es_document, reviewed=None,
+                               is_approved=False,
+                               reviewer=None, save=True)
+
+        # Now render the review page
+        self.client.login(username='admin', password='testpass')
+        url = reverse('wiki.review_revision',
+                      args=[es_document.slug, es_revision.id])
+        response = self.client.get(url, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        # There's no 'Recent English Changes' <details> section
+        eq_(3, len(doc('details')))
+        eq_('The English version has no approved content to show.',
+            doc('details .warning-box').text())
+
 
 class CompareRevisionTests(TestCaseBase):
     """Tests for Review Revisions"""
