@@ -53,14 +53,27 @@ class EventWatch(ModelBase):
 
 class Watch(ModelBase):
     """Watch events."""
+    # Optional reference to a content type:
     content_type = models.ForeignKey(ContentType, null=True, blank=True)
+
+    # Key used by an Event to find watches it manages:
     event_type = models.CharField(max_length=60, db_index=True)
+
     user = models.ForeignKey(User, null=True, blank=True)
+
+    # Email stored only in the case of anonymous users:
     email = models.EmailField(db_index=True, null=True, blank=True)
+
+    # Secret for confirming anonymous watch email addresses. We clear the
+    # secret upon confirmation. Until then, the watch is inactive.
     secret = models.CharField(max_length=40, null=True, blank=True)
 
 
 class WatchFilter(ModelBase):
+    """Additional key/value pairs that pare down the scope of a watch"""
     watch = models.ForeignKey(Watch, related_name='filters')
     name = models.CharField(max_length=4, db_index=True)
+
+    # Either ints or CRC32s of enumerated strings. All we can't represent
+    # easily with this schema is arbitrary (open-vocab) strings.
     value = models.IntegerField()
