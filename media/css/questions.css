@@ -294,18 +294,6 @@ div#question div.content h2 {
     margin-bottom: .3em;
 }
 
-#question-vote-thanks {
-    padding: 15px;
-}
-
-#question-vote-thanks h1 {
-    background: none;
-    border: 0;
-    color: #4B4742;
-    font-family: Georgia,freeserif,serif;
-    text-shadow: none;
-}
-
 /* side modules */
 div.sd-module {
     background:transparent url(../img/questions/bkg.askquestion.gif) no-repeat;
@@ -670,24 +658,23 @@ div.report-reply a.delete {
 }
 
 /* report post */
-form.report div.report-post-box {
+form.report .report-post-box {
     left: -70px;
-    padding: 15px;
     top: 25px;
     width: 255px;
 }
 
-form.report div.report-post-box ul {
+form.report .report-post-box ul {
     list-style: none;
 }
 
-form.report div.report-post-box li {
+form.report .report-post-box li {
     border: 0;
     margin: 0;
-    padding: 3px 0;
+    padding: 0 0 6px;
 }
 
-form.report div.report-post-box input.text {
+form.report .report-post-box input.text {
     border: solid 1px #87C4DC;
     border-radius: 6px;
     -moz-border-radius: 6px;
@@ -697,12 +684,12 @@ form.report div.report-post-box input.text {
     width: 92%;
 }
 
-form.report.processing div.report-post-box a {
+form.report.processing .report-post-box a {
     color: #bbb;
     cursor: default;
 }
 
-form.report.processing div.report-post-box input.text {
+form.report.processing .report-post-box input.text {
     border-color: #bbb;
 }
 
@@ -717,28 +704,14 @@ div.report-reply a.reply {
     width: 355px;
 }
 
-#question-vote-thanks h1,
-#question-vote-thanks h2 {
-    font-size: 14px;
-    padding: 0;
-}
-
-#question-vote-thanks h2 {
-    color: #898378;
-}
-
 #question-vote-thanks p {
     color: #898378;
-    margin: 20px 0 0;
+    margin: 0 0 10px;
 }
 
 #question-vote-thanks p strong{
     color: #4B4740;
     font-weight: normal;
-}
-
-#question-vote-thanks form {
-    margin: 5px 0 0;
 }
 
 #question-vote-thanks input#id_email {
@@ -817,15 +790,13 @@ ul.related li {
 
 /* email subscribe box */
 .js #email-subscribe {
-    display: none;
     left: -50px;
-    padding: 15px;
     top: 25px;
-    width: 235px;
+    width: 280px;
 }
 
-.js li.email.show-form #email-subscribe {
-    display: block;
+.subscribe .pop-in {
+    display: none;
 }
 
 .no-js #email-subscribe {
@@ -847,16 +818,12 @@ ul.related li {
     padding: 0;
 }
 
-#email-subscribe form {
-    margin: 5px 0 0;
-}
-
 #email-subscribe input#id_email {
     width: 230px;
 }
 
 #email-subscribe form ul {
-    padding: 10px 0;
+    padding: 0 0 10px;
 }
 
 #email-subscribe input.btn {
@@ -864,38 +831,16 @@ ul.related li {
 }
 
 /* more system details modal */
-.js div.more-system-details {
-    display: none;
-}
-
 #more-system-details {
-    color: #4B4740;
-    display: block;
-    left: 50%;
     margin-left: -310px;
-    padding: 20px;
-    position: fixed;
-    text-align: left;
-    top: 100px;
+    padding: 0 0 10px;
     width: 580px;
-    z-index:10;
-}
-
-#modal-overlay {
-    background: #000;
-    height: 100%;
-    opacity: 0.3;
-    filter: alpha(opacity=30);
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9;
 }
 
 #more-system-details p,
 #more-system-details li {
     color: #898378;
+    list-style: none;
 }
 
 #more-system-details div.wrap {
@@ -903,13 +848,7 @@ ul.related li {
     overflow: auto;
 }
 
-#more-system-details h4 {
-    font-size: 18px;
-    font-weight: normal;
-    margin: 0 0 10px;
-}
-
-#more-system-details h5 {
+#more-system-details h2 {
     font-size: 14px;
     font-weight: normal;
     margin: 15px 0 5px;

@@ -876,10 +876,6 @@ body.review #content-fields textarea {
     margin: 5px 0 0;
 }
 
-.js .pop-in {
-    border: solid 4px #1c3054;
-}
-
 .js form.pop-in {
     display: none;
 }

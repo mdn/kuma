@@ -13,7 +13,6 @@
         }
 
         if($('body').is('.answers')) {
-            initMoreDetailsModal();
             initReportPost();
             initHaveThisProblemTooAjax();
             initEmailSubscribeAjax();
@@ -182,36 +181,6 @@
         return plugins;
     }
 
-
-    /*
-     * Initialize the more details modal on answers page
-     */
-    function initMoreDetailsModal() {
-        $('#show-more-details').click(function(ev){
-            ev.preventDefault();
-
-            var $modal = $(this).closest('div.side-section')
-                                .find('div.more-system-details').clone();
-            $modal.attr('id', 'more-system-details')
-                  .append('<a href="#close" class="close">&#x2716;</a>');
-            $modal.find('a.close').click(closeModal);
-
-            var $overlay = $('<div id="modal-overlay"></div>');
-            $overlay.click(closeModal);
-
-            $('body').append($overlay).append($modal);
-
-            function closeModal(ev) {
-                ev.preventDefault();
-                $modal.unbind().remove();
-                $overlay.unbind().remove();
-                delete $modal;
-                delete $overlay;
-                return false;
-            }
-        });
-    }
-
     /*
      * Initialize the 'Report Post' form (ajaxify)
      */
@@ -224,8 +193,10 @@
             }
             $('div.report-post-box').remove();
 
-            var html = '<div class="report-post-box pop-in"><a href="#close" ' +
-                       'class="close">&#x2716;</a><ul></ul></div>';
+            var html = '<section class="report-post-box pop-in"><a href="#close" ' +
+                       'class="close">&#x2716;</a>' +
+                       '<h1>' + gettext('Report this post') + '</h1>' +
+                       '<ul class="wrap"></ul></section>';
                 $modal = $(html),
                 $ul = $modal.find('ul');
 
@@ -264,12 +235,12 @@
                     data: $form.serialize(),
                     dataType: 'json',
                     success: function(data) {
-                        $modal.find('ul').replaceWith('<div class="msg">' +
+                        $modal.find('ul').replaceWith('<div class="wrap msg">' +
                                                     data.message + '</div>');
                     },
                     error: function() {
                         var message = gettext("There was an error :(.");
-                        $modal.find('ul').replaceWith('<div class="msg">' +
+                        $modal.find('ul').replaceWith('<div class="wrap msg">' +
                                                       message + '</div>');
                     },
                     complete: function() {
@@ -306,17 +277,7 @@
         var $container = $('#question ul.subscribe li.email'),
             $link = $('#email-subscribe-link');
         if ($link.length > 0) {
-            $link.click(function(ev) {
-                ev.preventDefault();
-                $(this).closest('li').addClass('show-form');
-                return false
-            });
             initAjaxForm($container, '#email-subscribe');
-            $container.delegate('a.close, a.no-thanks', 'click', function(ev){
-                ev.preventDefault();
-                $container.removeClass('show-form');
-                return false;
-            });
         }
     }
 

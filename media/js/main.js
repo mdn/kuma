@@ -22,7 +22,7 @@ k = {};
         initSearchAutoFilters();
         disableFormsOnSubmit();
         lazyLoadScripts();
-
+        initActionModals();
     });
 
     /*
@@ -138,6 +138,14 @@ k = {};
                 from_list.splice(i, 1);
             }
         }
+    }
+
+    /*
+     * Initialize action modals.
+     * @see libs/jquery.modal.js
+     */
+    function initActionModals() {
+        $('.activates-modal').initClickModal();
     }
 
 })();

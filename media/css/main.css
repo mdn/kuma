@@ -947,7 +947,7 @@ ul.ui-autocomplete {
 .js .pop-in,
 .js .fixed-modal {
     background: #fff;
-    border: solid 3px #898377;
+    border: solid 4px #1c3054;
     border-radius: 15px;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -958,7 +958,7 @@ ul.ui-autocomplete {
 .js .pop-in {
     font-size: 14px;
     position: absolute;
-    z-index: 8;
+    z-index: 10;
 }
 
 .pop-in a.close,
@@ -984,6 +984,7 @@ ul.ui-autocomplete {
     display: none;
 }
 
+.js .pop-in.active,
 .js .fixed-modal.active {
     display: block;
 }
@@ -1010,7 +1011,7 @@ ul.ui-autocomplete {
     text-shadow: rgba(0,0,0,.25) 0 -1px 0;
 }
 
-.js .pop-in div.wrap {
+.js .pop-in .wrap {
     padding: 15px;
 }
 

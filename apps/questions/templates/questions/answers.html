@@ -128,7 +128,7 @@
               <input type="submit" class="submit" value="{{ _('Stop receiving updates via email') }}" />
             </form>
           {% else %}
-            <a id="email-subscribe-link" href="#email-subscribe">{{ _('Receive updates via email') }}</a>
+            <a id="email-subscribe-link" class="activates-modal" href="#email-subscribe" data-modal-selector="#email-subscribe">{{ _('Receive updates via email') }}</a>
             {% include "questions/includes/email_subscribe.html" %}
           {% endif %}
         </li>
@@ -150,43 +150,43 @@
           {% endif %}
         </ul>
       {% endblock %}
-      <p><a id="show-more-details" href="#more-system-details">{{ _('More system details...') }}</a></p>
-      <div class="more-system-details pop-in">
-        <h4>{{ _('Additional System Details') }}</h4>
+      <p><a id="show-more-details" class="activates-modal" href="#more-system-details" data-modal-selector="#more-system-details">{{ _('More system details...') }}</a></p>
+      <section id="more-system-details" class="pop-in fixed-modal">
+        <h1>{{ _('Additional System Details') }}</h1>
         <div class="wrap">
           {{ self.system_info() }}
           {% if question.metadata.sites_affected %}
-            <h5>{{ _('Sites Affected') }}</h5>
+            <h2>{{ _('Sites Affected') }}</h2>
             <p>{{ question.metadata.sites_affected }}</p>
           {% endif %}
           {% if question.metadata.crash_id %}
-            <h5>{{ _('Crash ID') }}</h5>
+            <h2>{{ _('Crash ID') }}</h2>
             <p>{{ question.metadata.crash_id }}</p>
           {% endif %}
           {% if question.metadata.frequency %}
-            <h5>{{ _('This happened') }}</h5>
+            <h2>{{ _('This happened') }}</h2>
             <p>{{ frequencies[question.metadata.frequency] }}</p>
           {% endif %}
           {% if question.metadata.started %}
-            <h5>{{ _('This started when...') }}</h5>
+            <h2>{{ _('This started when...') }}</h2>
             <p>{{ question.metadata.started }}</p>
           {% endif %}
           {% if question.metadata.troubleshooting %}
-            <h5>{{ _('More Information') }}</h5>
+            <h2>{{ _('More Information') }}</h2>
             <p>{{ question.metadata.troubleshooting|trim|collapse_linebreaks|nl2br }}</p>
           {% endif %}
           {% if question.metadata.plugins %}
-            <h5>{{ _('Installed Plug-ins') }}</h5>
+            <h2>{{ _('Installed Plug-ins') }}</h2>
             <div class="plugins">
               {{ question.metadata.plugins|wiki_to_html }}
             </div>
           {% endif %}
           {% if question.metadata.useragent %}
-            <h5>{{ _('User Agent') }}</h5>
+            <h2>{{ _('User Agent') }}</h2>
             <p>{{ question.metadata.useragent }}</p>
           {% endif %}
         </div>
-      </div>
+      </section>
 
       {% set tags = question.tags.all() %}
       {% if tags or can_tag %}

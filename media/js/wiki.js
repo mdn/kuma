@@ -10,7 +10,6 @@
         $('select.enable-if-js').removeAttr('disabled');
 
         initPrepopulatedSlugs();
-        initActionModals();
         initDetailsTags();
 
         if ($('body').is('.document') || $('body').is('.home')) {  // Document page
@@ -357,14 +356,6 @@
                    .prepopulate($(field.dependency_ids.join(',')),
                                 field.maxLength);
         });
-    }
-
-    /*
-     * Initialize wiki action modals.
-     * @see libs/jquery.modal.js
-     */
-    function initActionModals() {
-        $('.activates-modal').initClickModal();
     }
 
     // Return a table of contents (an <ol>) listing the visible headers within
