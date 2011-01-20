@@ -39,7 +39,7 @@
       </div>
       {% if question.updated_by %}
         <p class="edited">
-          {{ _('Modified {datetime} by {name}')|f(name=question.updated_by.username, datetime=datetimeformat(question.updated, format='longdatetime'))|safe }}
+          {{ _('Modified {datetime} by {name}')|fe(name=question.updated_by.username, datetime=datetimeformat(question.updated, format='longdatetime')) }}
         </p>
       {% endif %}
       <div class="problem">

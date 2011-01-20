@@ -13,7 +13,7 @@
             </a>
           {% endif %}
         </h3>
-        <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime'))|safe }}</p>
+        <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime')) }}</p>
       </div>
       <div>
         <h3>
@@ -25,7 +25,7 @@
             </a>
           {% endif %}
         </h3>
-        <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime'))|safe }}</p>
+        <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime')) }}</p>
       </div>
     </header>
     <h4>{{ _('Keywords:') }}</h4>

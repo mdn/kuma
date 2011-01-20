@@ -12,7 +12,7 @@
 
 {% block content %}
   <article id="edit-document" class="main form-page">
-    <h1>{{ _('<em>Editing</em> {title}')|f(title=document.title)|safe }}</h1>
+    <h1>{{ _('<em>Editing</em> {title}')|fe(title=document.title) }}</h1>
     {% if document_form %}
       <div id="document-form">
         <details class="h2"{% if disclose_description %} open="open"{% endif %}>

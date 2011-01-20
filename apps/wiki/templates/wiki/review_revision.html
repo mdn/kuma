@@ -14,7 +14,7 @@
 
     {% if revision.reviewed %}
       <p>
-        {{ _('This revision was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}
+        {{ _('This revision was already reviewed by {user} on {date}.')|fe(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime')) }}
       </p>
     {% elif document.current_revision %}
       <details class="h2" open="open">

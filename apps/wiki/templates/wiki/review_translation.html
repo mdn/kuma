@@ -14,7 +14,7 @@
 
     {% if revision.reviewed %}
       <p>
-        {{ _('This translation was already reviewed by {user} on {date}.')|f(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime'))|safe }}
+        {{ _('This translation was already reviewed by {user} on {date}.')|fe(user=revision.reviewer, date=datetimeformat(revision.reviewed, format='longdatetime')) }}
       </p>
     {% elif document.current_revision %}
       <details class="h2" open="open">
@@ -38,11 +38,11 @@
         <div id="content-fields" class="revision-diff">
           <div class="approved">
             <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
-            <p>{{ _('Revision {id} by {user} on {date}')|f(id=document.parent.current_revision.id, user=document.parent.current_revision.creator, date=datetimeformat(document.parent.current_revision.created, format='longdatetime'))|safe }}</p>
+            <p>{{ _('Revision {id} by {user} on {date}')|fe(id=document.parent.current_revision.id, user=document.parent.current_revision.creator, date=datetimeformat(document.parent.current_revision.created, format='longdatetime')) }}</p>
           </div>
           <div class="localized">
             <h3>{{ _('Submitted {locale} translation:')|f(locale=settings.LANGUAGES[document.locale.lower()]) }}</h3>
-            <p>{{ _('Revision {id} by {user} on {date}')|f(id=revision.id, user=revision.creator, date=datetimeformat(revision.created, format='longdatetime'))|safe }}</p>
+            <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision.id, user=revision.creator, date=datetimeformat(revision.created, format='longdatetime')) }}</p>
           </div>
           <h4>{{ ('Keywords:') }}</h4>
           <div class="approved">
