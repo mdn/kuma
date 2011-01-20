@@ -22,15 +22,20 @@ $(document).ready(function () {
     }
 
     $('input.delete', 'div.attachments-list').each(function () {
+        var $form = $(this).closest('form');
         $(this).wrapDeleteInput({
             error_title_del: UPLOAD.error_title_del,
-            error_login: UPLOAD.error_login
+            error_login: UPLOAD.error_login,
+            onComplete: function() {
+                $form.trigger('ajaxComplete');
+            }
         });
     });
 
     // Upload a file on input value change
     $('div.attachments-upload input[type="file"]').each(function() {
-        $(this).closest('form').removeAttr('enctype');
+        var $form = $(this).closest('form');
+        $form.removeAttr('enctype');
         $(this).ajaxSubmitInput({
             url: $(this).closest('.attachments-upload').data('post-url'),
             beforeSubmit: function($input) {
@@ -91,7 +96,10 @@ $(document).ready(function () {
                         upFile.delete_url + '" value="&#x2716;"/>');
                     $thumbnail.children().first().wrapDeleteInput({
                         error_title_del: UPLOAD.error_title_del,
-                        error_login: UPLOAD.error_login
+                        error_login: UPLOAD.error_login,
+                        onComplete: function() {
+                            $form.trigger('ajaxComplete');
+                        }
                     });
                 } else {
                     dialogSet(iframeJSON.message, UPLOAD.error_title_up);
@@ -100,7 +108,7 @@ $(document).ready(function () {
                 $options.adding.hide();
                 $options.add.show();
 
-                $(this).closest('form').trigger('ajaxComplete');
+                $form.trigger('ajaxComplete');
             }
         });
     });

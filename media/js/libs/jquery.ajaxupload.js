@@ -28,7 +28,8 @@ jQuery.fn.wrapDeleteInput = function (options) {
 
     options = $.extend({
         error_title_del: 'Error deleting',
-        error_json: 'Please check you are logged in, and try again.'
+        error_json: 'Please check you are logged in, and try again.',
+        onComplete: function() {}
     }, options);
 
     var $that = this,
@@ -68,6 +69,7 @@ jQuery.fn.wrapDeleteInput = function (options) {
                 return;
             }
             $attachment.remove();
+            options.onComplete();
         }
     });
 
