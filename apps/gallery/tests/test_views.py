@@ -3,7 +3,6 @@ import json
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from nose import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
@@ -397,7 +396,6 @@ class UploadVideoTestCase(TestCase):
         eq_(1, Video.objects.count())
         eq_(200, r.status_code)
         eq_(90, vid.thumbnail.width)
-        raise SkipTest
         eq_(150, vid.poster.width)
 
 

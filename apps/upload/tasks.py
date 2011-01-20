@@ -22,10 +22,16 @@ def generate_thumbnail(for_obj, from_field, to_field,
     from_ = getattr(for_obj, from_field)
     to_ = getattr(for_obj, to_field)
 
-    log.info('Generating thumbnail for %(model_class)s %(id)s.' %
-             {'model_class': for_obj.__class__.__name__, 'id': for_obj.id})
+    log_msg = 'Generating thumbnail for {model} {id}: {from_f} -> {to_f}'
+    log.info(log_msg.format(model=for_obj.__class__.__name__, id=for_obj.id,
+                            from_f=from_field, to_f=to_field))
     thumb_content = _create_image_thumbnail(from_.path, longest_side=max_size)
-    to_.save(from_.path, thumb_content, save=True)
+    # Don't modify the object.
+    to_.save(from_.path, thumb_content, save=False)
+    # Use update to avoid race conditions with updating different fields.
+    # E.g. when generating two thumbnails for different fields of a single
+    # object.
+    for_obj.update(**{to_field: to_.name})
 
 
 def _create_image_thumbnail(file_path, longest_side=settings.THUMBNAIL_SIZE):

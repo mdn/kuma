@@ -5,9 +5,10 @@ from django.contrib.contenttypes import generic
 from django.db import models
 
 from sumo.helpers import reverse
+from sumo.models import ModelBase
 
 
-class ImageAttachment(models.Model):
+class ImageAttachment(ModelBase):
     """An image attached to an object using a generic foreign key"""
     file = models.ImageField(upload_to=settings.IMAGE_UPLOAD_PATH,
                              max_length=settings.MAX_FILEPATH_LENGTH)

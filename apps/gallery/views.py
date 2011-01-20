@@ -107,6 +107,8 @@ def cancel_draft(request, media_type='image'):
 
         if delete_file and getattr(draft['video'], delete_file):
             getattr(draft['video'], delete_file).delete()
+            if delete_file == 'thumbnail' and draft['video'].poster:
+                draft['video'].poster.delete()
         elif not delete_file:
             draft['video'].delete()
             draft['video'] = None
