@@ -1,8 +1,12 @@
 import copy
 
+from django.conf import settings
+
+from mock import patch_object
 from nose.tools import eq_
 
-from customercare.cron import _filter_tweet
+from customercare.cron import _filter_tweet, _get_oldest_tweet, purge_tweets
+from customercare.models import Tweet
 from sumo.tests import TestCase
 
 
@@ -59,3 +63,43 @@ class TwitterCronTestCase(TestCase):
         """Ensure fx4status tweets are filtered out."""
         self.tweet['from_user'] = 'fx4status'
         assert _filter_tweet(self.tweet) is None
+
+
+class GetOldestTweetTestCase(TestCase):
+    fixtures = ['tweets.json']
+
+    def test_get_oldest_tweet_exists(self):
+        eq_(11, _get_oldest_tweet('en', 2).pk)
+        eq_(4, _get_oldest_tweet('en', 0).pk)
+        eq_(21, _get_oldest_tweet('en', 6).pk)
+
+    def test_get_oldest_tweet_offset_too_big(self):
+        eq_(None, _get_oldest_tweet('en', 100))
+
+    def test_get_oldest_tweet_none_exist(self):
+        eq_(None, _get_oldest_tweet('fr', 0))
+        eq_(None, _get_oldest_tweet('fr', 1))
+        eq_(None, _get_oldest_tweet('fr', 20))
+
+
+class PurgeTweetsTestCase(TestCase):
+    """Tweets are deleted for each locale."""
+    fixtures = ['tweets.json']
+
+    @patch_object(settings._wrapped, 'CC_MAX_TWEETS', 1)
+    def test_purge_tweets_two_locales(self):
+        purge_tweets()
+        eq_(1, Tweet.objects.filter(locale='en').count())
+        eq_(1, Tweet.objects.filter(locale='ro').count())
+
+    @patch_object(settings._wrapped, 'CC_MAX_TWEETS', 3)
+    def test_purge_tweets_one_locale(self):
+        purge_tweets()
+        eq_(3, Tweet.objects.filter(locale='en').count())
+        # Does not touch Romanian tweets.
+        eq_(2, Tweet.objects.filter(locale='ro').count())
+
+    @patch_object(settings._wrapped, 'CC_MAX_TWEETS', 0)
+    def test_purge_all_tweets(self):
+        purge_tweets()
+        eq_(0, Tweet.objects.count())

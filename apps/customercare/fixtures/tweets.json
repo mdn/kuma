@@ -77,6 +77,28 @@
         }
     },
     {
+        "pk": 101,
+        "model": "customercare.tweet",
+        "fields": {
+            "locale": "ro",
+            "tweet_id": 25309168529,
+            "raw_json": "{\"iso_language_code\": \"en\", \"text\": \"Un tweet n romana #Firefox\", \"created_at\": \"Thu, 23 Sep 2010 13:58:06 +0000\", \"profile_image_url\": \"http://a1.twimg.com/profile_images/1117809237/cool_cat_normal.jpg\", \"source\": \"&lt;a href=&quot;http://www.tweetdeck.com&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;\", \"from_user\": \"__jimcasey__\", \"from_user_id\": 142651388, \"to_user_id\": null, \"geo\": null, \"id\": 25309168521, \"metadata\": {\"result_type\": \"recent\"}}",
+            "reply_to": null,
+            "created": "2010-09-23 13:58:06"
+        }
+    },
+    {
+        "pk": 102,
+        "model": "customercare.tweet",
+        "fields": {
+            "locale": "ro",
+            "tweet_id": 25309168528,
+            "raw_json": "{\"iso_language_code\": \"en\", \"text\": \"Inca un tweet in Romana pentru Firefox!\", \"created_at\": \"Thu, 23 Sep 2010 13:54:56 +0000\", \"profile_image_url\": \"http://a2.twimg.com/profile_images/1120347326/cole_normal.jpg\", \"source\": \"&lt;a href=&quot;http://www.tweetdeck.com&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;\", \"from_user\": \"Kid_Zer0\", \"from_user_id\": 130442244, \"to_user_id\": null, \"geo\": null, \"id\": 25308906635, \"metadata\": {\"result_type\": \"recent\"}}",
+            "reply_to": null,
+            "created": "2010-09-24 14:58:06"
+        }
+    },
+    {
         "pk": 10,
         "model": "customercare.tweet",
         "fields": {

@@ -14,6 +14,7 @@ from django.db.utils import IntegrityError
 from django.utils.encoding import smart_str
 
 import cronjobs
+from multidb.pinning import pin_this_thread
 import tweepy
 
 from customercare.models import Tweet
@@ -73,7 +74,7 @@ def collect_tweets():
 
         item_lang = item.get('iso_language_code', 'en')
         tweet = Tweet(tweet_id=item['id'], raw_json=json.dumps(item),
-                      locale=item_lang[0:2], created=created_date)
+                      locale=item_lang, created=created_date)
         try:
             tweet.save()
         except IntegrityError:
@@ -81,16 +82,39 @@ def collect_tweets():
         else:
             log.debug('Tweet %d saved.' % item['id'])
 
-    # When all is done, truncate list of tweets to (approx.) maximum number.
+
+@cronjobs.register
+def purge_tweets():
+    """Periodically purge old tweets for each locale.
+
+    This does a lot of DELETEs on master, so it shouldn't run too frequently.
+    Probably once every hour or more.
+
+    """
+    # Pin to master
+    pin_this_thread()
+
+    # Build list of tweets to delete, by id.
+    for locale in settings.SUMO_LANGUAGES:
+        locale = settings.LOCALES[locale].iso639_1
+        # Some locales don't have an iso639_1 code, too bad for them.
+        if not locale:
+            continue
+        oldest = _get_oldest_tweet(locale, settings.CC_MAX_TWEETS)
+        if oldest:
+            log.debug('Truncating tweet list: Removing tweets older than %s, '
+                      'for [%s].' % (oldest.created, locale))
+            Tweet.objects.filter(locale=locale,
+                                 created__lte=oldest.created).delete()
+
+
+def _get_oldest_tweet(locale, n=0):
+    """Returns the nth oldest tweet per locale, defaults to newest."""
     try:
-        keep_tweet = Tweet.objects.filter(
-            reply_to=None)[settings.CC_MAX_TWEETS]
+        return Tweet.objects.filter(locale=locale).order_by(
+            '-created')[n]
     except IndexError:
-        pass
-    else:
-        log.debug('Truncating tweet list: Removing tweets older than %s.' % (
-            keep_tweet.created))
-        Tweet.objects.filter(created__lte=keep_tweet.created).delete()
+        return None
 
 
 def _filter_tweet(item):
