@@ -29,21 +29,6 @@ class TestHelpers(TestCase):
     def setUp(self):
         jingo.load_helpers()
 
-    def test_fe_helper(self):
-        context = {'var': '<bad>'}
-        template = '{{ "<em>{t}</em>"|fe(t=var) }}'
-        eq_('<em>&lt;bad&gt;</em>', render(template, context))
-
-    def test_fe_positional(self):
-        context = {'var': '<bad>'}
-        template = '{{ "<em>{0}</em>"|fe(var) }}'
-        eq_('<em>&lt;bad&gt;</em>', render(template, context))
-
-    def test_fe_unicode(self):
-        context = {'var': u'Français'}
-        template = '{{ "Speak {0}"|fe(var) }}'
-        eq_(u'Speak Français', render(template, context))
-
     def test_urlparams_unicode(self):
         context = {'q': u'Français'}
         eq_(u'/foo?q=Fran%C3%A7ais', urlparams('/foo', **context))

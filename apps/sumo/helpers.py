@@ -111,21 +111,6 @@ class Paginator(object):
         return jinja2.Markup(t)
 
 
-@register.filter
-def fe(str_, *args, **kwargs):
-    """Format a safe string with potentially unsafe arguments, then return a
-    safe string."""
-
-    str_ = unicode(str_)
-
-    args = [jinja2.escape(smart_unicode(v)) for v in args]
-
-    for k in kwargs:
-        kwargs[k] = jinja2.escape(smart_unicode(kwargs[k]))
-
-    return jinja2.Markup(str_.format(*args, **kwargs))
-
-
 @register.function
 @jinja2.contextfunction
 def breadcrumbs(context, items=list(), add_default=True):
