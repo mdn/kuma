@@ -1,6 +1,6 @@
 from django.conf import settings
 
-import jinja2
+from jinja2 import escape, Markup
 from jingo import register
 
 from sumo.urlresolvers import reverse
@@ -36,9 +36,18 @@ def display_name(user):
 @register.filter
 def public_email(email):
     """Email address -> publicly displayable email."""
-    return jinja2.Markup(unicode_to_html(email))
+    return Markup(unicode_to_html(email))
 
 
 def unicode_to_html(text):
     """Turns all unicode into html entities, e.g. &#69; -> E."""
     return ''.join([u'&#%s;' % ord(i) for i in text])
+
+
+@register.function
+def user_list(users):
+    """Turn a list of users into a list of links to their profiles."""
+    link = u'<a href="%s">%s</a>'
+    list = u', '.join([link % (escape(profile_url(u)), escape(u.username)) for
+                       u in users])
+    return Markup(list)

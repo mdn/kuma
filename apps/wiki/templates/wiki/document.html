@@ -66,7 +66,9 @@
       {% endif %}
     </section>
     <section id="doc-contributors">
-      {{ _('Contributors to this page: {users}')|f(users=contributors|join(', ')) }}
+      {% trans contributors=user_list(contributors) %}
+        Contributors to this page: {{ contributors }}
+      {% endtrans %}
     </section>
   </article>
   {% if not document.has_voted(request) %}

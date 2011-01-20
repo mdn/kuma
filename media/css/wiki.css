@@ -256,6 +256,15 @@ div.warning-box p {
     margin: 0 0 25px;
 }
 
+#doc-contributors a {
+    color: #aaa;
+}
+
+#doc-contributors a:hover {
+    color: #447BC4;
+    text-decoration: underline;
+}
+
 /* Wiki Document content */
 #doc-content {
 	font-size: 14px;

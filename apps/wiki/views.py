@@ -139,11 +139,11 @@ def document(request, document_slug):
 
     # Get the contributors. (To avoid this query, we could render the
     # the contributors right into the Document's html field.)
-    contributors = doc.revisions.filter(
-        is_approved=True).values_list('creator__username', flat=True)
+    contributors = set([r.creator for r in doc.revisions.filter(
+                            is_approved=True).select_related('creator')])
 
     data = {'document': doc, 'redirected_from': redirected_from,
-            'related': related, 'contributors': contributors.distinct(),
+            'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/document.html', data)

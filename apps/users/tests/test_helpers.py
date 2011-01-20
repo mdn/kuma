@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from jinja2 import Markup
 from nose.tools import eq_
+from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
 from users.helpers import (profile_url, profile_avatar, public_email,
-                           display_name)
+                           display_name, user_list)
 from users.models import Profile
 
 
@@ -39,3 +41,15 @@ class HelperTestCase(TestCase):
         p.name = u'Test User'
         p.save()
         eq_(u'Test User', display_name(self.u))
+
+    def test_user_list(self):
+        User.objects.create(pk=300000, username='testuser2')
+        User.objects.create(pk=400000, username='testuser3')
+        users = User.objects.all()
+        list = user_list(users)
+        assert isinstance(list, Markup)
+        fragment = pq(list)
+        eq_(3, len(fragment('a')))
+        a = fragment('a')[1]
+        assert a.attrib['href'].endswith('400000')
+        eq_('testuser3', a.text)
