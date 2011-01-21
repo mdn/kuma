@@ -32,9 +32,8 @@
 
 #toc {
     font-size: 13px;
-    left: -50px;
+    margin-left: -50px;
     padding: 0 0 25px;
-    position: relative;
 }
 
 #related-articles h1,
