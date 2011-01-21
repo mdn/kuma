@@ -346,6 +346,7 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
+            'js/libs/jquery.modal.js',
             'global/menu.js',
             'js/main.js',
         ),
@@ -355,7 +356,6 @@ MINIFY_BUNDLES = {
         'questions': (
             'js/markup.js',
             'js/libs/jquery.ajaxupload.js',
-            'js/libs/jquery.modal.js',
             'js/upload.js',
             'js/questions.js',
             'js/tags.js',
@@ -379,7 +379,6 @@ MINIFY_BUNDLES = {
             'js/browserdetect.js',
             'js/libs/swfobject.js',
             'js/libs/jquery.selectbox-1.2.js',
-            'js/libs/jquery.modal.js',
             'js/screencast.js',
             'js/wiki.js',
             'js/tags.js',

@@ -1,10 +1,8 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "search/base.html" %}
 {% if advanced != '0' %}
-{% set classes = 'advanced_search' %}
+  {% set classes = 'advanced_search' %}
 {% endif %}
-{% set styles = ('search',) %}
-{% set scripts = ('search', 'libs/jqueryui') %}
 
 {% block content %}
 <article id="search-page" class="main">

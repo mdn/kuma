@@ -19,6 +19,8 @@
  *     * overlay_close: close when overlay is clicked, default false
  *     * escape_close: close when hitting escape, default false
  */
+jQuery(document).ready(function() {
+
 k.open_modal = $();  // keeps track of open modals, since escape_close needs it
 jQuery.fn.initClickModal = function (options) {
     // Make it work on an array of elements too
@@ -78,3 +80,5 @@ jQuery.fn.initClickModal = function (options) {
 
     return this;
 };
+
+});
