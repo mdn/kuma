@@ -210,10 +210,12 @@ class UploadImageTestCase(TestCase):
                                     'max': settings.MAX_FILENAME_LENGTH},
             json_r['errors']['file'][0])
 
-    def test_upload_draft(self):
-        """Uploading draft works, sets locale too."""
+    def test_upload_draft_image(self):
+        """Uploading draft image works, sets locale too."""
         u = User.objects.get(username='pcraciunoiu')
-        image(creator=u, title=get_draft_title(u))
+        img = image(creator=u, title=get_draft_title(u))
+        # No thumbnail yet.
+        eq_(None, img.thumbnail)
 
         r = post(self.client, 'gallery.upload',
                  {'locale': 'de', 'title': 'Hasta la vista',
@@ -225,6 +227,8 @@ class UploadImageTestCase(TestCase):
         eq_('de', img.locale)
         eq_('Hasta la vista', img.title)
         eq_('Auf wiedersehen!', img.description)
+        # Thumbnail generated after form is saved.
+        eq_(90, img.thumbnail.width)
 
     def test_image_title_locale_unique_validation(self):
         """Posting an existing locale/title combination shows a validation
@@ -389,14 +393,37 @@ class UploadVideoTestCase(TestCase):
         eq_(forms.MSG_VID_REQUIRED, json_r['errors']['__all__'][0])
 
     def test_upload_thumbnail(self):
-        """Uploading a thumbnail resizes it and adds a poster."""
+        """Uploading a thumbnail sets the field and adds a poster."""
         r = self._upload_extension('thumbnail')
         vid = Video.objects.all()[0]
 
         eq_(1, Video.objects.count())
         eq_(200, r.status_code)
-        eq_(90, vid.thumbnail.width)
+        eq_(150, vid.thumbnail.width)
         eq_(150, vid.poster.width)
+
+    def test_upload_draft_video(self):
+        """Uploading draft video works, sets locale too."""
+        # Upload a thumbnail/poster
+        self._upload_extension('webm')
+        self._upload_extension('thumbnail')
+        vid = Video.uncached.all()[0]
+        assert vid.thumbnail
+        assert vid.poster
+
+        r = post(self.client, 'gallery.upload',
+                 {'locale': 'de', 'title': 'Hasta la vista',
+                  'description': 'Auf wiedersehen!'},
+                 args=['video'])
+
+        vid = Video.uncached.all()[0]
+        eq_(200, r.status_code)
+        eq_('de', vid.locale)
+        eq_('Hasta la vista', vid.title)
+        eq_('Auf wiedersehen!', vid.description)
+        # Thumbnail and poster generated after form is saved.
+        eq_(150, vid.poster.width)
+        eq_(90, vid.thumbnail.width)
 
 
 class SearchTestCase(TestCase):

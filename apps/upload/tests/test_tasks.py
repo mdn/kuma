@@ -1,3 +1,6 @@
+from glob import glob
+import os
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files import File
@@ -82,14 +85,31 @@ class GenerateThumbnail(TestCase):
     def tearDown(self):
         ImageAttachment.objects.all().delete()
 
-    def test_generate_thumbnail_default(self):
-        """generate_thumbnail creates a thumbnail."""
+    def _image_with_thumbnail(self):
         image = ImageAttachment(content_object=self.obj, creator=self.user)
         with open('apps/upload/tests/media/test.jpg') as f:
             up_file = File(f)
             image.file.save(up_file.name, up_file, save=True)
-
         generate_thumbnail(image, 'file', 'thumbnail')
+        return image
+
+    def test_generate_thumbnail_default(self):
+        """generate_thumbnail creates a thumbnail."""
+        image = self._image_with_thumbnail()
 
         eq_(90, image.thumbnail.width)
         eq_(120, image.thumbnail.height)
+
+    def test_generate_thumbnail_twice(self):
+        """generate_thumbnail replaces old thumbnail."""
+        image = self._image_with_thumbnail()
+
+        image_dir, _ = os.path.split(image.thumbnail.path)
+        glob_path = image_dir + '/*.jpg'
+        num_files = len(glob(glob_path))
+        # We only have one file before.
+        assert num_files == 1, 'Expected 1, got %s' % num_files
+        generate_thumbnail(image, 'file', 'thumbnail')
+
+        # And only one file after.
+        assert len(glob(glob_path)) == 1

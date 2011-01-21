@@ -26,8 +26,11 @@ def generate_thumbnail(for_obj, from_field, to_field,
     log.info(log_msg.format(model=for_obj.__class__.__name__, id=for_obj.id,
                             from_f=from_field, to_f=to_field))
     thumb_content = _create_image_thumbnail(from_.path, longest_side=max_size)
+    file_path = from_.path
+    if to_:  # Clean up old file before creating new one.
+        to_.delete(save=False)
     # Don't modify the object.
-    to_.save(from_.path, thumb_content, save=False)
+    to_.save(file_path, thumb_content, save=False)
     # Use update to avoid race conditions with updating different fields.
     # E.g. when generating two thumbnails for different fields of a single
     # object.
