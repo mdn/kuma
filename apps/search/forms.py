@@ -13,7 +13,7 @@ from sumo_locales import LOCALES
 from wiki.models import CATEGORIES, FIREFOX_VERSIONS, OPERATING_SYSTEMS
 
 
-SEARCH_LANGUAGES = [(LOCALES[k].external, LOCALES[k].native) for
+SEARCH_LANGUAGES = [(k, LOCALES[k].native) for
                     k in settings.SUMO_LANGUAGES]
 
 

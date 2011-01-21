@@ -63,7 +63,7 @@ class ImageForm(forms.ModelForm):
                             max_length=settings.MAX_FILENAME_LENGTH)
     locale = forms.ChoiceField(
                     label=_lazy(u'Locale'),
-                    choices=[(LOCALES[k].external, LOCALES[k].native) for
+                    choices=[(k, LOCALES[k].native) for
                              k in settings.SUMO_LANGUAGES],
                     initial=settings.WIKI_DEFAULT_LANGUAGE)
     title = StrippedCharField(
@@ -143,7 +143,7 @@ class VideoForm(forms.ModelForm):
                                  max_length=settings.MAX_FILENAME_LENGTH)
     locale = forms.ChoiceField(
                     label=_lazy(u'Locale'),
-                    choices=[(LOCALES[k].external, LOCALES[k].native) for
+                    choices=[(k, LOCALES[k].native) for
                              k in settings.SUMO_LANGUAGES],
                     initial=settings.WIKI_DEFAULT_LANGUAGE)
     title = StrippedCharField(

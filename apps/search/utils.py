@@ -59,4 +59,4 @@ def locale_or_default(locale):
 
 def sphinx_locale(locale):
     """Given a locale string like 'en-US', return a Sphinx-ready locale."""
-    return crc32(LOCALES[locale].internal)
+    return crc32(locale)
