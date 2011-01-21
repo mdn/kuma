@@ -2,175 +2,176 @@
 Installation
 ============
 
-
 Requirements
-------------
+============
 
-* Python 2.6
+To run everything and make all the tests pass locally, you'll need the
+following things (in addition to Git, of course).
+
+* Python 2.6.
 
 * `setuptools <http://pypi.python.org/pypi/setuptools#downloads>`_
+  or `pip <http://pip.openplans.org/>`_.
+
+* MySQL Server and client headers.
+
+* Memcached Server.
+
+* `Sphinx <http://sphinxsearch.com/>`_ 0.9.9, compiled with the
+  ``--enable-id64`` flag.
+
+* RabbitMQ.
+
+* ``libxml`` and headers.
+
+* ``libxslt`` and headers.
+
+* ``libjpeg`` and headers.
+
+* ``zlib`` and headers.
+
+* Several Python packages. See `Installing the Packages`_.
+
+Installation for these is very system dependent. Using a package manager, like
+yum, aptitude, or brew, is encouraged.
 
 
 Additional Requirements
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-Besides the Pythonic requirements, you'll probably want this software to make
-things happen:
+If you want to use Apache, instead of the dev server (not strictly required but
+it's more like our production environment) you'll also need:
 
-* Git, obviously.
-* Memcached - the server, since the client is included in requirements.txt.
-* Sphinx - the server. We're currently on 0.9.9-release.
+* Apache HTTPD Server.
+
+* ``mod_wsgi``
+
+See the documentation on `WSGI <wsgi.rst>`_ for more information and
+instructions.
 
 
 Getting the Source
-------------------
+==================
 
 Grab the source from Github using::
 
     git clone git://github.com/jsocol/kitsune.git
+    cd kitsune
     git submodule update --init
 
 
-virtualenv
-----------
+Installing the Packages
+=======================
 
-`virtualenv <http://pypi.python.org/pypi/virtualenv>`_ is a tool to create
-isolated Python environments.  We're going to be installing a bunch of packages,
-but we don't want your system littered with all these things you only need for
-kitsune.  Some other piece of software might want an older version than kitsune
-wants, which can create quite a mess.  ::
-
-    easy_install virtualenv
-
-virtualenv is the only package I install system-wide.  Everything else goes in a
-virtual environment.
-
-
-virtualenvwrapper
+Compiled Packages
 -----------------
 
-`virtualenvwrapper <http://www.doughellmann.com/docs/virtualenvwrapper/>`_
-complements virtualenv by installing some shell functions that make environment
-management smoother.
+There are a small number of compiled packages, including the MySQL Python
+client. You can install these using ``pip`` (if you don't have ``pip``, you
+can get it with ``easy_install pip``) or via a package manager.
+To use ``pip``, you only need to do this::
 
-Install it like this::
-
-    wget http://bitbucket.org/dhellmann/virtualenvwrapper/raw/tip/virtualenvwrapper_bashrc -O ~/.virtualenvwrapper
-    mkdir ~/.virtualenvs
-
-Then put these lines in your ``~/.bashrc``::
-
-    export WORKON_HOME=$HOME/.virtualenvs
-    source $HOME/.virtualenvwrapper
-
-``exec bash`` and you're set.
+    sudo pip install -r requirements/compiled.txt
 
 
-virtualenvwrapper Hooks
-~~~~~~~~~~~~~~~~~~~~~~~
+Python Packages
+---------------
 
-virtualenvwrapper lets you run hooks when creating, activating, and deleting
-virtual environments.  These hooks can change settings, the shell environment,
-or anything else you want to do from a shell script.  For complete hook
-documentation, see
-http://www.doughellmann.com/docs/virtualenvwrapper/hooks.html.
+All of the pure-Python requirements are available in a git repository, known as
+a vendor library. This allows them to be available on the Python path without
+needing to be installed in the system, allowing multiple versions for multiple
+projects simultaneously.
 
-You can find some lovely hooks to get started at http://gist.github.com/234301.
-The hook files should go in ``$WORKON_HOME`` (``$HOME/.virtualenvs`` from
-above), and ``premkvirtualenv`` should be made executable.
+To get the vendor library, just::
 
+    git clone --recursive git://github.com/jsocol/kitsune-lib.git vendor
 
-premkvirtualenv
-***************
-
-This hook installs pip and ipython into every virtualenv you create.
+This will clone the repository and all its submodules into a directory called
+``vendor``.
 
 
-postactivate
-************
+Configuration
+=============
 
-This runs whenever you start a virtual environment.  If you have a virtual
-environment named ``kitsune``, ``postactivate`` switches the shell to
-``~/dev/kitsune`` if that directory exists.
-
-
-Getting Packages
-----------------
-
-Now we're ready to go, so create an environment for kitsune::
-
-    mkvirtualenv --no-site-packages kitsune
-
-That creates a clean environment named kitsune and (for convenience) initializes
-the environment.  You can get out of the environment by restarting your shell or
-calling ``deactivate``.
-
-To get back into the kitsune environment later, type::
-
-    workon kitsune
-
-If you keep your Python binary in a special place (i.e. you don't want to use
-the system Python), pass the path to mkvirtualenv with ``--python``::
-
-    mkvirtualenv --python=/usr/local/bin/python2.6 --no-site-packages kitsune
-
-
-pip
-~~~
-
-We're going to use pip to install Python packages from `pypi
-<http://pypi.python.org/pypi>`_ and github. ::
-
-    easy_install pip
-
-Since we're in our kitsune environment, pip was only installed locally, not
-system-wide.
-
-kitsune uses a requirements file to tell pip what to install.  Get just the
-basics you need by running ::
-
-    pip install -r requirements.txt
-
-from the root of your kitsune checkout. For a development environment, you'll
-want to use ``requirements-dev.txt`` instead ::
-
-    pip install -r requirements-dev.txt
-
-
-Settings
---------
-
-Most of kitsune is configured in ``settings.py``, but it's incomplete since we
-don't want to put database passwords into version control.  Put any local
-settings into ``settings_local.py``.  Make sure you have ::
+Start by creating a file named ``settings_local.py``, and putting this line in
+it::
 
     from settings import *
 
-in your ``settings_local.py`` so that all of the configuration is included.
-
-I'm overriding the database parameters from ``settings.py`` and then extending
-``INSTALLED_APPS`` and ``MIDDLEWARE_CLASSES`` to include the `Django Debug
-Toolbar <http://github.com/robhudson/django-debug-toolbar>`_.  It's awesome,
-and I recommend you do the same.
+Now you can copy and modify any settings from ``settings.py`` into
+``settings_local.py`` and the value will override the default.
 
 
 Database
 --------
 
-For now, you'll need a dump of the SUMO database. It's unfortunate, but we're 
-working on it.
+At a minimum, you will need to define a database connection. An example
+configuration is::
 
+    DATABASES = {
+        'default': {
+            'NAME': 'kitsune',
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': 'localhost',
+            'USER': 'kitsune',
+            'PASSWORD': '',
+            'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+            'TEST_CHARSET': 'utf8',
+            'TEST_COLLATION': 'utf8_unicode_ci',
+        },
+    }
+
+Once you've set up the database, you can generate the schema with Django's
+``syncdb`` command::
+
+    ./manage.py syncdb
+
+This will generate an empty database, which will get you started!
+
+
+Testing it Out
+==============
+
+To start the dev server, run ``./manage.py runserver``, then open up
+``http://localhost:8000``. If everything's working, you should see a somewhat
+empty version of the SUMO home page!
+
+
+Running the Tests
+-----------------
+
+A great way to check that everything really is working is to run the test
+suite. You'll need to add an extra grant in MySQL for your database user::
+
+    GRANT ALL ON test_NAME.* TO USER@localhost;
+
+Where ``NAME`` and ``USER`` are the same as the values in your database
+configuration.
+
+The test suite will create and use this database, to keep any data in your
+development database safe from tests.
+
+Running the test suite is easy::
+
+    ./manage.py test -s --noinput --logging-clear-handlers
+
+For more information, see the `test documentation <tests.rst>`_.
+
+
+Last Steps
+==========
 
 Initializing Mozilla Product Details
 ------------------------------------
 
-One of the packages kitsune uses, Mozilla Product Details, needs to fetch JSON
-files containing historical Firefox version data and write them within its
-package directory. To set this up...
+One of the packages Kitsune uses, Django Mozilla Product Details, needs to
+fetch JSON files containing historical Firefox version data and write them
+within its package directory. To set this up, just run
+``./manage.py update_product_details`` to do the initial fetch.
 
-#. Run ``./manage.py update_product_details`` to do the initial fetch.
-#. Schedule the above command to run periodically. Once a day is a reasonable
-   choice. It will fail safely on network failure.
-#. Arrange for the folder django-mozilla-product-details/product_details/json
-   to be writable by whomever runs ``./manage.py update_product_details`` and
-   readable by kitsune Python processes.
+
+Setting Up Search
+-----------------
+
+See the `search documentation <search.rst>`_ for steps to get Sphinx search
+working.
