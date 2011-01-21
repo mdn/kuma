@@ -131,23 +131,26 @@ def confirm_change_email(request, activation_key):
     email_change = get_object_or_404(EmailChange,
                                      activation_key=activation_key)
     u = email_change.user
-
-    # Update all notifications matching this email, off-thread.
-    # TODO: remove this once we have the new notifications model in place.
     old_email = u.email
-    update_email_in_notifications.delay(old=old_email,
-                                        new=email_change.email)
 
-    # Update user's email.
-    u.email = email_change.email
-    u.save()
+    # Check that this new email isn't a duplicate in the system.
+    new_email = email_change.email
+    duplicate = User.objects.filter(email=new_email).exists()
+    if not duplicate:
+        # Update all notifications matching this email, off-thread.
+        # TODO: remove this once we have the new notifications model in place.
+        update_email_in_notifications.delay(old=old_email, new=new_email)
+
+        # Update user's email.
+        u.email = new_email
+        u.save()
 
     # Delete the activation profile now, we don't need it anymore.
     email_change.delete()
 
     return jingo.render(request, 'users/change_email_complete.html',
-                        {'old_email': old_email, 'new_email': u.email,
-                         'username': u.username})
+                        {'old_email': old_email, 'new_email': new_email,
+                         'username': u.username, 'duplicate': duplicate})
 
 
 def profile(request, user_id):

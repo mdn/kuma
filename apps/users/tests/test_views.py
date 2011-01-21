@@ -188,3 +188,42 @@ class ChangeEmailTestCase(TestCase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('This is your current email.', doc('ul.errorlist').text())
+
+    def test_user_change_email_duplicate(self):
+        """Changing to same email shows validation error."""
+        self.client.login(username='rrosario', password='testpass')
+        email = 'newvalid@email.com'
+        User.objects.filter(username='pcraciunoiu').update(email=email)
+        response = self.client.post(reverse('users.change_email'),
+                                    {'email': email})
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('A user with that email address already exists.',
+            doc('ul.errorlist').text())
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_user_confirm_email_duplicate(self, get_current):
+        """If we detect a duplicate email when confirming an email change,
+        don't change it and notify the user."""
+        get_current.return_value.domain = 'su.mo.com'
+        self.client.login(username='rrosario', password='testpass')
+        old_email = User.objects.get(username='rrosario').email
+        new_email = 'newvalid@email.com'
+        response = self.client.post(reverse('users.change_email'),
+                                    {'email': new_email})
+        eq_(200, response.status_code)
+        assert mail.outbox[0].subject.find('Please confirm your') == 0
+        ec = EmailChange.objects.all()[0]
+
+        # Before new email is confirmed, give the same email to a user
+        User.objects.filter(username='pcraciunoiu').update(email=new_email)
+
+        # Visit confirmation link and verify email wasn't changed.
+        response = self.client.get(reverse('users.confirm_email',
+                                           args=[ec.activation_key]))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('Unable to change email for user rrosario',
+            doc('#main h1').text())
+        u = User.objects.get(username='rrosario')
+        eq_(old_email, u.email)

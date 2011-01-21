@@ -189,7 +189,10 @@ class EmailChangeForm(forms.Form):
         self.user = user
 
     def clean_email(self):
-        if self.user.email == self.cleaned_data['email']:
+        email = self.cleaned_data['email']
+        if self.user.email == email:
             raise forms.ValidationError(_('This is your current email.'))
-
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(_('A user with that email address '
+                                          'already exists.'))
         return self.cleaned_data['email']
