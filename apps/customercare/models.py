@@ -38,7 +38,7 @@ class CannedCategory(ModelBase):
         verbose_name_plural = 'Canned categories'
 
     def __unicode__(self):
-        return self.title
+        return u'[%s] %s' % (self.locale, self.title)
 
 
 class CannedResponse(ModelBase):
@@ -50,16 +50,17 @@ class CannedResponse(ModelBase):
     locale = LocaleField()
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('locale', 'title')
+        unique_together = ('title', 'locale')
 
     def __unicode__(self):
-        return self.title
+        return u'[%s] %s' % (self.locale, self.title)
 
 
 class CategoryMembership(ModelBase):
     """Mapping table for canned responses <-> categories."""
-    category = models.ForeignKey(CannedCategory)
-    response = models.ForeignKey(CannedResponse)
+    category = models.ForeignKey(CannedCategory, blank=True)
+    response = models.ForeignKey(CannedResponse, blank=True)
     weight = models.IntegerField(
         default=0, db_index=True,
         help_text='Heavier items sink, lighter ones bubble up.')

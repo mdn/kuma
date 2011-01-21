@@ -13,8 +13,9 @@ admin.site.register(Tweet, TweetAdmin)
 
 class MembershipInline(admin.StackedInline):
     """Inline to show response/category relationships."""
-    model = CategoryMembership
     extra = 1
+    model = CategoryMembership
+    raw_id_fields = ('response',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
