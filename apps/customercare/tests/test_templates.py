@@ -42,3 +42,15 @@ class CannedResponsesTestCase(TestCase):
 
         # Listing 5 responses: r1 x 3, r2 x 2, r3 x 1
         eq_(5, len(doc('#accordion a.reply-topic')))
+
+
+class TweetListTestCase(TestCase):
+    """Tests for the list of tweets."""
+
+    def test_fallback_message(self):
+        """Fallback message when there are no tweets."""
+        r = self.client.get(reverse('customercare.landing'), follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        assert doc('#tweets-wrap .warning-box'), (
+               'Fallback message is not showing up.')

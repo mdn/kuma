@@ -1,4 +1,6 @@
 (function($){
+    // Tweet IDs are too high. Using .data('tweet-id') returns incorrect
+    // results. See jQuery bug 7579 - http://bugs.jquery.com/ticket/7579
 
     function Memory(name) {
         this._id = null;
@@ -42,10 +44,10 @@
         this.$avatar_el = this.$el.find('.avatar').first();
 
         this.__defineGetter__('id', function() {
-            return this.$el.data('tweet-id');
+            return this.$el.attr('data-tweet-id');
         });
         this.__defineSetter__('id', function(val) {
-            this.$el.data('tweet-id', val);
+            this.$el.attr('data-tweet-id', val);
         });
 
         this.__defineGetter__('avatar', function() {
@@ -295,7 +297,7 @@
                 .closest('div.replies')  // Walk up to parent.
                 .closest('li.tweet')
                 .each(function() {
-                    update_reply_indicator($('#tweet-' + $(this).data('tweet-id'))); });
+                    update_reply_indicator($('#tweet-' + $(this).attr('data-tweet-id'))); });
         }
         mark_my_replies();
 
@@ -355,6 +357,11 @@
                 $(this).attr('href'), {},
                 function(data) {
                     $('#tweets').fadeOut('fast', function() {
+                        if (data.length) {
+                            $('#tweets-wrap').find('.warning-box').hide();
+                        } else {
+                            $('#tweets-wrap').find('.warning-box').show();
+                        }
                         $(this).html(data).fadeIn();
                         mark_my_replies();
                         $("#refresh-busy").hide();
@@ -368,8 +375,8 @@
         /* Show/hide replies */
         $('#tweets a.reply_count').live('click', function(e) {
             var to_show = !$(this).hasClass('opened'),
-                tweet_id = $(this).closest('li').data('tweet-id'),
-                replies = $('#replies_'+tweet_id);
+                tweet_id = $(this).closest('li').attr('data-tweet-id'),
+                replies = $('#replies_' + tweet_id);
             if (to_show) {
                 replies.slideDown();
             } else {
@@ -386,9 +393,12 @@
 
         /* Infinite scrolling */
         $('#infinite-scroll').bind('enterviewport', function() {
+            if (!$('#tweets').children().length) {
+                return;
+            }
             $('#scroll-busy').show();
 
-            var max_id = $('#tweets li:last').data('tweet-id');
+            var max_id = $('#tweets li:last').attr('data-tweet-id');
             if (!max_id) return;
 
             $.get(

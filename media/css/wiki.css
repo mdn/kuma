@@ -232,24 +232,6 @@ article #toc ul li {
     color: #fff;
 }
 
-div.warning-box {
-    border: 1px #f2d273 solid;
-    background: #fffaed url(../img/wiki/bkg.warning.png) repeat-y left top;
-    background: url(../img/wiki/bkg.warning.png) repeat-y left top, -moz-linear-gradient(top, #fffaed, #fff2cb);
-    background: url(../img/wiki/bkg.warning.png) repeat-y left top, -webkit-gradient(linear, center top, center bottom, from(#fffaed), to(#fff2cb));
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    margin: 35px 20px 0 0;
-    padding: .5em 2em .5em 2em;
-}
-
-div.warning-box p {
-    margin: .5em 0 .5em 0;
-    line-height: 1.5em;
-    color: #444;
-}
-
 #doc-contributors {
     color: #aaa;
     margin: 0 0 25px;

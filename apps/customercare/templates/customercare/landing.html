@@ -44,9 +44,20 @@
 
     <br style="clear:both; height: 1px" />
 
-    <ul id="tweets">
-      {% include 'customercare/tweets.html' %}
-    </ul>
+    <div id="tweets-wrap">
+      {% if not tweets %}
+        <div class="warning-box">
+          {% trans language=settings.LOCALES[request.locale].native %}
+            We couldn't find any recent tweets for {{ language }} at this time.
+            Please check again later or view tweets for other languages
+            by using the language selector at the bottom of the page.
+          {% endtrans %}
+        </div>
+      {% endif %}
+      <ul id="tweets">
+        {% include 'customercare/tweets.html' %}
+      </ul>
+    </div>
 
     <div id="infinite-scroll">
       <img id="scroll-busy" src="{{ MEDIA_URL }}img/customercare/spinner.gif"/>
