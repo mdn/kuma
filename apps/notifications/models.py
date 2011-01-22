@@ -3,7 +3,7 @@ import hashlib
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 
-from sumo.models import ModelBase
+from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 
@@ -19,7 +19,7 @@ class EventWatch(ModelBase):
     # an instance.
     watch_id = models.IntegerField(db_index=True, null=True)
     event_type = models.CharField(max_length=20, db_index=True)
-    locale = models.CharField(default='', max_length=7, db_index=True)
+    locale = LocaleField(default='', db_index=True)
     email = models.EmailField(db_index=True)
     hash = models.CharField(max_length=40, null=True, db_index=True)
 

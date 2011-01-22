@@ -12,7 +12,7 @@ from django.db import models
 
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
-from sumo.models import ModelBase
+from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
@@ -135,9 +135,7 @@ class Document(ModelBase, BigVocabTaggableMixin):
     is_localizable = models.BooleanField(default=True, db_index=True)
 
     # TODO: validate (against settings.SUMO_LANGUAGES?)
-    locale = models.CharField(max_length=7, db_index=True,
-                              default=settings.WIKI_DEFAULT_LANGUAGE,
-                              choices=settings.LANGUAGE_CHOICES)
+    locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
 
     # Latest approved revision. L10n dashboard depends on this being so (rather
     # than being able to set it to earlier approved revisions). (Remove "+" to

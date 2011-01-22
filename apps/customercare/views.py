@@ -57,7 +57,7 @@ def _get_tweets(locale=settings.LANGUAGE_CODE,
     limit is the maximum number of tweets returned.
     max_id will only return tweets with the status ids less than the given id.
     """
-    locale = locale[0:2]
+    locale = settings.LOCALES[locale].iso639_1
     q = Tweet.objects.filter(locale=locale, reply_to=reply_to)
     if max_id:
         q = q.filter(tweet_id__lt=max_id)

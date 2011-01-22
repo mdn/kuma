@@ -10,6 +10,7 @@ class Tweet(ModelBase):
     """An entry on twitter."""
     tweet_id = models.BigIntegerField(unique=True)
     raw_json = models.TextField()
+    # This is different from our usual locale, so not using LocaleField.
     locale = models.CharField(max_length=20, db_index=True)
     created = models.DateTimeField(default=datetime.now, db_index=True)
     reply_to = models.BigIntegerField(blank=True, null=True, default=None,
@@ -30,7 +31,7 @@ class CannedCategory(ModelBase):
     weight = models.IntegerField(
         default=0, db_index=True,
         help_text='Heavier items sink, lighter ones bubble up.')
-    locale = LocaleField()
+    locale = LocaleField(db_index=True)
 
     class Meta:
         ordering = ('locale', 'weight', 'title')
@@ -47,7 +48,7 @@ class CannedResponse(ModelBase):
     response = models.CharField(max_length=140)
     categories = models.ManyToManyField(
         CannedCategory, related_name='responses', through='CategoryMembership')
-    locale = LocaleField()
+    locale = LocaleField(db_index=True)
 
     class Meta:
         ordering = ('locale', 'title')

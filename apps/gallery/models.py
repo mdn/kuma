@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
-from sumo.models import ModelBase
+from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
 
 
@@ -15,9 +15,8 @@ class Media(ModelBase):
     updated = models.DateTimeField(default=datetime.now, db_index=True)
     updated_by = models.ForeignKey(User, null=True)
     description = models.TextField(max_length=10000)
-    locale = models.CharField(max_length=7, db_index=True,
-                              default=settings.GALLERY_DEFAULT_LANGUAGE,
-                              choices=settings.LANGUAGE_CHOICES)
+    locale = LocaleField(default=settings.GALLERY_DEFAULT_LANGUAGE,
+                         db_index=True)
 
     class Meta:
         abstract = True
