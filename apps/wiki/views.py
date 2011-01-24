@@ -161,7 +161,7 @@ def revision(request, document_slug, revision_id):
 @require_GET
 def list_documents(request, category=None, tag=None):
     """List wiki documents."""
-    docs = Document.objects.filter(locale=request.locale)
+    docs = Document.objects.filter(locale=request.locale).order_by('title')
     if category:
         docs = docs.filter(category=category)
         try:
