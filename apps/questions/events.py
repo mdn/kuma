@@ -7,22 +7,22 @@ class QuestionSolvedEvent(Event):
 
     event_type = 'question solved'
     content_type = Question
-    filters = {'id': 'id  '}
+    filters = set('id')
 
     def __init__(self, question):
         self.instance = question
 
     @classmethod
-    def watch(cls, question, user):  # Should this take user? Email? Both?
+    def notify(cls, question, user_or_email):
         """Create, save, and return a Watch which fires when `question` is
         solved."""
-        # TODO: Implement. This will probably spawn a helper function to live
-        # in Event or at the module level of notifications.events.
+        return super(QuestionSolvedEvent, cls).notify(user_or_email,
+                                                      id=question.pk)
 
-    def _watches(self):
-        return self._watches_core(id=self.instance.pk)
+    def _users_watching(self):
+        return self._users_watching_by_filter(id=self.instance.pk)
 
-    def _build_mails(self, users):
+    def _mails(self, users):
         # TODO: Implement. This does any necessary templating.
         # Let's not concretize possibly thousands of mails in memory.
         pass

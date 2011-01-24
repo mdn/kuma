@@ -1,10 +1,10 @@
 CREATE TABLE `notifications_watch` (
   `id` integer NOT NULL AUTO_INCREMENT,
   `content_type_id` integer,
-  `event_type` varchar(60) binary NOT NULL,
+  `event_type` varchar(30) binary NOT NULL,
   `user_id` integer,
   `email` varchar(75),
-  `secret` char(40),
+  `secret` char(10),
   PRIMARY KEY (`id`),
   KEY `notifications_watch_e4470c6e` (`content_type_id`),
   KEY `notifications_watch_2be07fce` (`event_type`),
@@ -17,7 +17,7 @@ CREATE TABLE `notifications_watch` (
 CREATE TABLE `notifications_watchfilter` (
   `id` integer NOT NULL AUTO_INCREMENT,
   `watch_id` integer NOT NULL,
-  `name` binary(4) NOT NULL,
+  `name` binary(20) NOT NULL,
   `value` integer NOT NULL,
   PRIMARY KEY (`id`),
   KEY `notifications_watchfilter_6e1bd094` (`watch_id`),

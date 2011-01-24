@@ -1,23 +1,23 @@
 from notifications.models import Watch, WatchFilter
-from sumo.tests import get_user
+from users.tests import user
 
 
-def watch(**kwargs):
-    u = kwargs.get('user') or get_user()
-
+def watch(save=False, **kwargs):
     # TODO: better defaults, when there are events available.
-    defaults = {'user': u}
+    defaults = {'user': kwargs.get('user') or user()}
     defaults.update(kwargs)
+    w = Watch.objects.create(**defaults)
+    if save:
+        w.save()
+    return w
 
-    return Watch.objects.create(**defaults)
 
-
-def watch_filter(**kwargs):
-    w = None
-    if 'watch' not in kwargs:
-        w = watch()
-
-    defaults = {'watch': w, 'name': 'test', 'value': 1234}
+def watch_filter(save=False, **kwargs):
+    defaults = {'watch': kwargs.get('watch') or watch(),
+                'name': 'test',
+                'value': 1234}
     defaults.update(kwargs)
-
-    return WatchFilter.objects.create(**defaults)
+    f = WatchFilter.objects.create(**defaults)
+    if save:
+        f.save()
+    return f
