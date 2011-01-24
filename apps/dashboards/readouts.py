@@ -59,10 +59,9 @@ def overview_rows(locale):
                  url='#' + MostVisitedTranslationsReadout.slug,
                  numerator=popular_translated, denominator=TOP_N,
                  percent=percent_or_100(popular_translated, TOP_N),
-                 description=_('These are the top %s most visited English '
-                               'articles, which in sum account for over 50%% '
-                               'of the total traffic to the English '
-                               'Knowledge Base.') % TOP_N),
+                 description=_('These are the top 20 most visited articles, '
+                               'which account for over 50% of the traffic to '
+                               'the Knowledge Base.')),
             dict(title=_('All Knowledge Base Articles'),
                  numerator=translated, denominator=total,
                  percent=percent_or_100(translated, total),
