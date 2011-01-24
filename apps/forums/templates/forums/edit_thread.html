@@ -22,8 +22,8 @@
     </div>
 
     <div class="form-widget submit">
-      <a href="{{ url('forums.posts', forum.slug, thread.id) }}">{{ _('Cancel') }}</a>
       <input type="submit" value="{{ _('Update thread') }}" />
+      <a href="{{ url('forums.posts', forum.slug, thread.id) }}">{{ _('Cancel') }}</a>
     </div>
   </form>
 </article>

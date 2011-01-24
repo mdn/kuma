@@ -232,6 +232,11 @@ div.thread-actions form.move {
     float: right;
 }
 
+div.thread-actions form.move input[type="submit"] {
+    margin: 0 0 0 10px;
+    padding: 0 10px 2px;
+}
+
 ol.posts li div.post-actions {
    margin: 1em 0;
 }

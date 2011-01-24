@@ -25,8 +25,8 @@
       <p>
         {{ _('You are about to permanently delete this thread. <strong>This cannot be undone!</strong> Are you sure you want to continue?')|safe }}
       </p>
-      <a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ _('Cancel') }}</a>
       <input type="submit" value="{{ _('Delete') }}" />
+      <a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) }}">{{ _('Cancel') }}</a>
     </form>
   </div>
 </article>
