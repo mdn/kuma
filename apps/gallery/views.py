@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 
 from commonware.decorators import xframe_sameorigin
 import jingo
-from tower import ugettext as _, ugettext_lazy as _lazy
+from tower import ugettext_lazy as _lazy
 
 from access.decorators import login_required
 from gallery import ITEMS_PER_PAGE, DRAFT_TITLE_PREFIX
@@ -20,6 +20,7 @@ from gallery.models import Image, Video
 from gallery.utils import upload_image, upload_video, check_media_permissions
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
+from upload.tasks import generate_thumbnail
 from upload.utils import FileTooLargeError
 
 MSG_FAIL_UPLOAD = {'image': _lazy(u'Could not upload your image.'),
@@ -69,6 +70,7 @@ def upload(request, media_type='image'):
         image_form = _init_media_form(ImageForm, request, draft['image'])
         if image_form.is_valid():
             img = image_form.save()
+            generate_thumbnail.delay(img, 'file', 'thumbnail')
             # TODO: We can drop this when we start using Redis.
             invalidate = Image.objects.exclude(pk=img.pk)
             if invalidate.exists():
@@ -81,6 +83,10 @@ def upload(request, media_type='image'):
         video_form = _init_media_form(VideoForm, request, draft['video'])
         if video_form.is_valid():
             vid = video_form.save()
+            if vid.thumbnail:
+                generate_thumbnail.delay(vid, 'poster', 'poster',
+                                         max_size=settings.WIKI_VIDEO_WIDTH)
+                generate_thumbnail.delay(vid, 'thumbnail', 'thumbnail')
             # TODO: We can drop this when we start using Redis.
             invalidate = Video.objects.exclude(pk=vid.pk)
             if invalidate.exists():
@@ -107,6 +113,8 @@ def cancel_draft(request, media_type='image'):
 
         if delete_file and getattr(draft['video'], delete_file):
             getattr(draft['video'], delete_file).delete()
+            if delete_file == 'thumbnail' and draft['video'].poster:
+                draft['video'].poster.delete()
         elif not delete_file:
             draft['video'].delete()
             draft['video'] = None

@@ -7,7 +7,7 @@ from gallery.forms import ImageUploadFormAsync, VideoUploadFormAsync
 from gallery.models import Image, Video
 from sumo.urlresolvers import reverse
 from upload.utils import upload_media, check_file_size
-from upload.tasks import generate_thumbnail, _scale_dimensions
+from upload.tasks import _scale_dimensions
 
 
 def create_image(files, user):
@@ -24,9 +24,6 @@ def create_image(files, user):
     image = Image(title=title, creator=user, locale=locale,
                   description=description)
     image.file.save(up_file.name, File(up_file), save=True)
-
-    # Generate thumbnail off thread
-    generate_thumbnail.delay(image, 'file', 'thumbnail')
 
     (width, height) = _scale_dimensions(image.file.width, image.file.height)
     delete_url = reverse('gallery.delete_media', args=['image', image.id])
@@ -59,9 +56,9 @@ def create_video(files, user):
         # name is in (webm, ogv, flv) sent from upload_video(), below
         getattr(vid, name).save(up_file.name, up_file, save=False)
 
-        # Generate thumbnail off thread
         if 'thumbnail' == name:
-            generate_thumbnail.delay(vid, 'thumbnail', 'thumbnail')
+            # Save poster too, we shrink it later.
+            vid.poster.save(up_file.name, up_file, save=False)
 
     vid.save()
     if 'thumbnail' in files:
