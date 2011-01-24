@@ -292,7 +292,6 @@ MINIFY_BUNDLES = {
             'css/reset.css',
             'global/headerfooter.css',
             'css/main.css',
-            'css/sidebar.css',
         ),
         # TODO: remove dependency on jquery ui CSS and use our own
         'jqueryui/jqueryui': (

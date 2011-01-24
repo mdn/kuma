@@ -31,4 +31,5 @@ input,textarea,select {
 
 mark {
     background: none;
+    color: inherit;
 }

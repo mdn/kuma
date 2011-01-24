@@ -2,26 +2,28 @@
 {% extends "customercare/base.html" %}
 {% from 'includes/common_macros.html' import search_box %}
 {% set title = _('Join our Army of Awesome') %}
+{% set hide_plugin_check = True %}
 
 {% block breadcrumbs %}{% endblock %}
 
-{% block content_area %}
+{% block content %}
+<article class="main">
   <div class="feature-contents">
-    <h2>{{ _('Join our <br />Army of Awesome')|safe }}</h2>
-    <h3>
+    <h1>{{ _('Join our <mark>Army of Awesome</mark>')|safe }}</h1>
+    <h2>
       {% trans %}
-        Love Firefox and have a few moments to help?
+        Love Firefox and have a few moments to help?<br />
         Help other Firefox users on Twitter.
         Good things will come to those who tweet!
       {% endtrans %}
-    </h3>
+    </h2>
   </div>
 
   <div id="speech-bubbles">
     <ol>
-      <li class="choose">{{ _('Choose a tweet below') }}</li>
-      <li class="signin">{{ _('Sign in with Twitter') }}</li>
-      <li class="respond">{{ _('Respond to the tweet!') }}</li>
+      <li class="choose">{{ _('Choose a <mark>tweet below</mark>')|safe }}</li>
+      <li class="signin">{{ _('Sign in with <mark>Twitter</mark>')|safe }}</li>
+      <li class="respond">{{ _('Respond to <mark>the tweet!</mark>')|safe }}</li>
     </ol>
   </div>
 
@@ -54,82 +56,82 @@
   {% include 'customercare/reply_modal.html' %}
 
   {% include 'customercare/twitter_modal.html' %}
+</article>
 {% endblock %}
 
-{% block extra_sidebar %}
-  <div id="side-stats">
-    <h3>{{ _('Our army has responded to:') }}</h3>
-    {% if not activity_stats %}
-      <p class="unavailable">{{ _('Recent stats not available.') }}</p>
-    {% else %}
-      <div class="bubble">
-        <div class="perc">
-          {{ _('<mark>{percent}%</mark> of tweets')|fe(percent=activity_stats[0][1]['perc']|round_percent) }}
-        </div>
-        <div class="numbers">
-          <div class="replies">
-            {{ _('<mark>{num_replies}</mark> replies')|fe(num_replies=activity_stats[0][1]['replies']) }}
+{% block side_promos %}
+  <section id="side-stats">
+    <h1>{{ _('Our army has responded to:') }}</h1>
+      {% if not activity_stats %}
+        <p class="unavailable">{{ _('Recent stats not available.') }}</p>
+      {% else %}
+        <div class="bubble">
+          <div class="perc">
+            {{ _('<mark>{percent}%</mark> of tweets')|fe(percent=activity_stats[0][1]['perc']|round_percent) }}
           </div>
-          <div class="separator">/</div>
-          <div class="tweets">
-            {{ _('<mark>{num_requests}</mark> tweets')|fe(num_requests=activity_stats[0][1]['requests']) }}
+          <div class="numbers">
+            <div class="replies">
+              {{ _('<mark>{num_replies}</mark> replies')|fe(num_replies=activity_stats[0][1]['replies']) }}
+            </div>
+            <div class="separator">/</div>
+            <div class="tweets">
+              {{ _('<mark>{num_requests}</mark> tweets')|fe(num_requests=activity_stats[0][1]['requests']) }}
+            </div>
           </div>
-        </div>
 
-        <select>
-          {% for act in activity_stats %}
-            <option value="{{ loop.index0 }}"
-                    data-perc ="{{ act[1]['perc']|round_percent }}"
-                    data-replies="{{ act[1]['replies'] }}"
-                    data-requests="{{ act[1]['requests'] }}">
-              {% if act[0] == 'Yesterday' %}
-                {{ _('Yesterday', 'army_stats') }}
-              {% elif act[0] == 'Last Week'%}
-                {{ _('Last Week', 'army_stats') }}
-              {% elif act[0] == 'Last Month'%}
-                {{ _('Last Month', 'army_stats') }}
-              {% elif act[0] == 'Overall'%}
-                {{ _('Last Overall', 'army_stats') }}
-              {% else %}
-                {{ act[0] }}
-              {% endif %}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="speech"></div>
-    {% endif %}
-
-    <div class="contribs">
-      {% if contributor_stats %}
-        {% for act in activity_stats %}
-          {% set period = act[0] %}
-          <div class="contributors period{{ loop.index0 }}"
-               data-period="{{ period }}">
-            {% for contrib in contributor_stats.get(period, []) %}
-              <a href="http://twitter.com/{{ contrib['username'] }}" target="_blank">
-                <img src="{{ contrib['avatar'] }}" alt="{{ contrib['username'] }}"
-                     title="{{ contrib['name']}}: {{ contrib['count'] }} replies"
-                     class="avatar" />
-              </a>
+          <select>
+            {% for act in activity_stats %}
+              <option value="{{ loop.index0 }}"
+                      data-perc ="{{ act[1]['perc']|round_percent }}"
+                      data-replies="{{ act[1]['replies'] }}"
+                      data-requests="{{ act[1]['requests'] }}">
+                {% if act[0] == 'Yesterday' %}
+                  {{ _('Yesterday', 'army_stats') }}
+                {% elif act[0] == 'Last Week'%}
+                  {{ _('Last Week', 'army_stats') }}
+                {% elif act[0] == 'Last Month'%}
+                  {{ _('Last Month', 'army_stats') }}
+                {% elif act[0] == 'Overall'%}
+                  {{ _('Last Overall', 'army_stats') }}
+                {% else %}
+                  {{ act[0] }}
+                {% endif %}
+              </option>
             {% endfor %}
-          </div>
-        {% endfor %}
+          </select>
+        </div>
+        <div class="speech"></div>
       {% endif %}
-    </div>
-  </div>
 
-  <div id="side-getinvolved">
-    <h3>{{ _('Take it to the next level!') }}</h3>
+      <div class="contribs">
+        {% if contributor_stats %}
+          {% for act in activity_stats %}
+            {% set period = act[0] %}
+            <div class="contributors period{{ loop.index0 }}"
+                 data-period="{{ period }}">
+              {% for contrib in contributor_stats.get(period, []) %}
+                <a href="http://twitter.com/{{ contrib['username'] }}" target="_blank">
+                  <img src="{{ contrib['avatar'] }}" alt="{{ contrib['username'] }}"
+                       title="{{ contrib['name']}}: {{ contrib['count'] }} replies"
+                       class="avatar" />
+                </a>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+  </section>
+  <section id="next-level">
+    <h1>{{ _('Take it to the <mark>next level!</mark>')|safe }}</h1>
+    <div class="img">
+      <img src="{{ settings.MEDIA_URL }}img/promo.sumo.png" alt="" />
+    </div>
     <p>
-      {% trans questions_url=url('questions.questions') %}
+      {% trans join_url=url('wiki.document', 'superheroes-wanted') %}
         Want to go beyond 140 characters?
-        Join the support community and help many more Firefox users in the
-        <a href="{{ questions_url }}">forum</a>.
+        <a href="{{ join_url }}">Join the support community</a>
+        and help many more Firefox users.
       {% endtrans %}
     </p>
-    <p><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/sumo-logo.png" class="sumo-logo"></a></p>
-  </div>
-
-  {{ search_box(settings, id='side-search', target='_blank', placeholder=_('Search')) }}
+  </section>
 {% endblock %}

@@ -77,32 +77,34 @@
       {% block side %}{% endblock %}
       {{ for_contributors(user) }}
       <div class="sd-module promos">
-        <section id="want-to-get-involved">
-          <h1>{{ _('Be <mark>Awesome</mark>')|safe }}</h1>
-          <div class="img">
-            <img src="{{ settings.MEDIA_URL }}img/promo.sumo.png" alt="" />
-          </div>
-          <p>
-            {% trans %}Did you know that Firefox Help is powered by volunteer
-              superheroes all around the world?{% endtrans %}
-          </p>
-          <a href="{{ url('wiki.document', 'superheroes-wanted') }}">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
-        </section>
-        {% if not hide_plugin_check %}
-          <section id="check-your-plugins">
-            <h1>{{ _('Check your <mark>plugins</mark>')|safe }}</h1>
+        {% block side_promos %}
+          <section id="want-to-get-involved">
+            <h1>{{ _('Be <mark>Awesome</mark>')|safe }}</h1>
             <div class="img">
-              <img src="{{ settings.MEDIA_URL }}img/promo.plugins.png" alt="" />
+              <img src="{{ settings.MEDIA_URL }}img/promo.sumo.png" alt="" />
             </div>
             <p>
-              {% trans %}
-                What is a plugin? Why should I keep them updated? Answer these
-                questions and run an instant check to see if you're up to date.
-              {% endtrans %}
+              {% trans %}Did you know that Firefox Help is powered by volunteer
+                superheroes all around the world?{% endtrans %}
             </p>
-            <a href="http://www.mozilla.com/plugincheck/">{{ _('Find out more &raquo;')|safe }}</a>
+            <a href="{{ url('wiki.document', 'superheroes-wanted') }}">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
           </section>
-        {% endif %}
+          {% if not hide_plugin_check %}
+            <section id="check-your-plugins">
+              <h1>{{ _('Check your <mark>plugins</mark>')|safe }}</h1>
+              <div class="img">
+                <img src="{{ settings.MEDIA_URL }}img/promo.plugins.png" alt="" />
+              </div>
+              <p>
+                {% trans %}
+                  What is a plugin? Why should I keep them updated? Answer these
+                  questions and run an instant check to see if you're up to date.
+                {% endtrans %}
+              </p>
+              <a href="http://www.mozilla.com/plugincheck/">{{ _('Find out more &raquo;')|safe }}</a>
+            </section>
+          {% endif %}
+        {% endblock %}
       </div>
     </div>
   {% endblock %}

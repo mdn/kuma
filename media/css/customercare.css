@@ -1,64 +1,68 @@
 /*
  * Customer Care CSS
  */
-#sub-header {
-    display: none; /* TODO: bug 623906 - update AoA for new theme */
-}
 
-#main {
+#main,
+#main article.main {
     background: none;
+    padding: 0;
 }
 
-#sidebar {
-    margin-top: 20px;
+#quick-links {
+    margin-bottom: 118px;
 }
 
 .feature-contents {
-    background: url("../img/customercare/nurse.png") no-repeat scroll right 20px transparent;
-    padding: 30px 0 0 25px;
+    padding: 0 0 0 25px;
     width: 640px;
 }
 
-.feature-contents h2, .feature-contents h3 {
+.feature-contents h1,
+.feature-contents h2 {
     line-height: 1em;
-    margin-right: 250px;
+}
+
+.feature-contents h1 {
+    font-size: 46px;
+    font-style: italic;
+}
+
+.feature-contents h1 mark {
+    display: block;
+    font-family: MetaBlack,"Trebuchet MS",sans-serif;
+    font-size: 64px;
+    font-style: normal;
+    text-transform: uppercase;
 }
 
 .feature-contents h2 {
-    color: #303030;
-    font-size: 46px;
-}
-
-.feature-contents h3 {
-    color: #68645b;
     font-size: 150%;
-    line-height: 1.5em;
-    margin-top: 15px;
+    line-height: 1.2em;
+    margin: 15px 200px 0 0;
 }
 
 #speech-bubbles {
-    float: left;
+    background: transparent url(../img/customercare/bubbles.png) no-repeat 0 25px;
+    min-height: 100px;
     padding: 60px 0 15px 25px;
 }
 
 #speech-bubbles li {
+    color: #fff;
     float: left;
-    height: 97px;
-    list-style-type: none;
-    text-indent: -99999px;
-    width: 177px;
+    font-size: 20px;
+    font-style: italic;
+    margin: 0 0 0 25px;
+    padding: 5px 0 0;
+    width: 200px;
 }
 
-#speech-bubbles li.choose {
-    background: url("../img/customercare/bubble-choose.png") no-repeat scroll top left transparent;
-}
-
-#speech-bubbles li.signin {
-    background: url("../img/customercare/bubble-signin.png") no-repeat scroll top left transparent;
-}
-
-#speech-bubbles li.respond {
-    background: url("../img/customercare/bubble-respond.png") no-repeat scroll top left transparent;
+#speech-bubbles li mark {
+    display: block;
+    font-family: MetaBlack,"Trebuchet MS",sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    text-transform: uppercase;
 }
 
 #tweetcontainer {
@@ -125,7 +129,7 @@
     margin-bottom: 0px;
     overflow: auto;
     padding: 10px;
-    width: 630px;
+    width: 690px;
 }
 #tweets div.replies div.tweet-contents {
     padding-left: 70px;
@@ -485,19 +489,24 @@
     color: #69645b;
 }
 
-.header-button {
+.header-button,
+#twitter-logout input.header-button {
     background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 transparent;
     background: -webkit-gradient(linear, center top, center bottom, from(#f9f9f9), to(#e3e3e3));
     border: 1px solid #BBBBBB;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
     color: #000000;
     cursor: default;
     float: right;
     margin: 15px 5px 0 0;
     padding: 3px 8px;
     text-align: center;
+    text-shadow: none;
 }
 
 .header-button:hover,
@@ -600,37 +609,121 @@ a.header-button {
     background: none;
 }
 
-/** Sidebar search box */
-div.support-search form {
-    background: #1b5898;
-    background: -moz-linear-gradient(top, #2e89ca, #1b5898);
-    background: -webkit-gradient(linear, left top, left bottom, from(#2e89ca), to(#1b5898));
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    height: 30px;
-    padding: 5px;
+/*----------------------------------
+    AoA Sidebar
+----------------------------------*/
+
+#side-stats {
+    padding: 10px;
 }
 
-div.support-search input.text {
-    background: #fff url(../img/icon.searchloupe.png) no-repeat 7px 2px;
-    border: none;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: none;
-    float: left;
-    font-size: 16px;
-    height: 26px;
-    margin: 0 1px 0 0;
-    padding: 2px 0 2px 34px;
-    width: 100px;
+#side-stats h1 {
+    padding: 10px;
 }
 
-div.support-search input.submit {
-    box-shadow: none;
+#side-stats .unavailable {
+    color: #b41b00;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#side-stats .bubble {
+    background-color: #E6F0F9;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#side-stats .speech {
+    background: transparent url(../img/customercare/bubble.png) no-repeat 50px bottom;
+    height: 20px;
+    width: 100%;
+}
+
+#side-stats .bubble div {
+    font-variant: small-caps;
+}
+
+#side-stats .perc,
+#side-stats .numbers {
+    color: #669be1;
+    font-family: MetaBlack,"Trebuchet MS",sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: normal;
+    padding: 10px 0 0;
+}
+
+#side-stats .perc mark,
+#side-stats .numbers mark {
+    color: #666;
+    font-family: Georgia, freeserif, serif;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: normal;
+    text-align: center;
+}
+#side-stats .numbers {
+    font-size: 13px;
+}
+#side-stats .numbers mark {
+    display: block;
+    font-size: 20px;
+}
+
+#side-stats .numbers .replies,
+#side-stats .numbers .tweets {
+    text-align: center;
+    width: 44%;
+}
+
+#side-stats .numbers .replies {
     float: left;
-    height: 33px;
-    margin: 0 0 0 5px;
-    width: 37px;
+}
+
+#side-stats .numbers .separator {
+    color: #4B4742;
+    float: left;
+    font-family: Georgia, freeserif, serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: normal;
+    margin-left: .25em;
+}
+
+#side-stats .numbers .tweets {
+    float: right;
+}
+
+#side-stats select {
+    font-family: Arial,Helvetica,sans-serif;
+    margin: 10px 0 20px;
+    text-align: center;
+    width: 80%;
+}
+
+#side-stats .contribs {
+    clear: both;
+    padding: 10px;
+    width: 160px;
+}
+
+#side-stats .avatar {
+    margin: 2px;
+    width: 32px;
+}
+
+#side-stats .contribs .contributors {
+    display: none;
+}
+
+#side-stats .contribs .contributors:first-child {
+    display: block;
+}
+
+#next-level {
+    background: -moz-radial-gradient(center -40%, circle, rgba(255,255,255,1), rgba(255,255,255,0) 50%);
+    background: -webkit-gradient(radial, center -40%, 0, center -40%, 175, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
 }
