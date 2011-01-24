@@ -4,7 +4,7 @@ import urllib
 
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
 from django.middleware import common
-from django.utils.encoding import iri_to_uri, smart_str
+from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 import jingo
 import MySQLdb as mysql
@@ -104,7 +104,8 @@ class PlusToSpaceMiddleware(object):
         if p.search(request.path_info):
             new = p.sub(' ', request.path_info)
             if request.META['QUERY_STRING']:
-                new = u'%s?%s' % (new, request.META['QUERY_STRING'])
+                new = u'%s?%s' % (new,
+                                  smart_unicode(request.META['QUERY_STRING']))
             if hasattr(request, 'locale'):
                 new = u'/%s%s' % (request.locale, new)
             return HttpResponsePermanentRedirect(new)
