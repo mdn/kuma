@@ -1,18 +1,14 @@
 import json
 import logging
 from urllib2 import HTTPBasicAuthHandler, build_opener
-from urlparse import urlparse
 
 from django.conf import settings
-from django.core.urlresolvers import resolve
 from django.db import models
-from django.http import Http404
 
 from tower import ugettext_lazy as _lazy
 
 from sumo.models import ModelBase
 from wiki.models import Document
-import wiki.views
 
 
 log = logging.getLogger('k.dashboards')
@@ -101,40 +97,9 @@ class WikiDocumentVisits(ModelBase):
 
         counts = {}
         for url, page_info in pages:
-            # Extract locale and path from URL:
-            path = urlparse(url)[2]  # never has errors AFAICT
-            try:
-                locale, path = path[1:].split('/', 1)
-            except ValueError:  # from tuple unpack
-                continue
-            if locale != settings.LANGUAGE_CODE:
-                # WebTrends tracks visit counts for only the top 2000 pages,
-                # which kicks most of the non-English ones out of the running.
-                # Therefore, we track only the English counts and assume the
-                # other languages parallel them.
-                continue
-            path = '/' + path
-
-            # Get document slug from URL:
-            try:
-                view, view_args, view_kwargs = resolve(path)
-            except Http404:
-                continue
-            if view != wiki.views.document:
-                #log.warning("WebTrends returned a URL that doesn't point to "
-                #            'the wiki page view: %s' % url)
-                # As it turns out, this happens a LOT: about 50%. TODO: Figure
-                # out why the questions app, /home, /mobile, /kb/category, and
-                # /kb/*/discuss are getting WebTrended in the KB-only profile.
-                # Ask Cww or djst.
-                continue
-
-            # Map locale-slug pair to Document ID:
-            try:
-                doc = Document.objects.only('id').get(
-                        locale=locale,
-                        slug=view_kwargs['document_slug'])
-            except Document.DoesNotExist:
+            doc = Document.from_url(url,
+                required_locale=settings.LANGUAGE_CODE, id_only=True)
+            if not doc:
                 continue
 
             # Get visit count:

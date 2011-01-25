@@ -39,9 +39,14 @@ def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
 
 
 def get_object_fallback(cls, title, locale, default=None, **kwargs):
-    """Returns an instance of cls matching title, locale, or falls back.
+    """Return an instance of cls matching title and locale, or fall back to the
+    default locale.
 
-    If the fallback fails, the return value is default.
+    When falling back to the default locale, follow any wiki redirects
+    internally.
+
+    If the fallback fails, the return value is `default`.
+
     You may pass in additional kwargs which go straight to the query.
 
     """
@@ -52,13 +57,30 @@ def get_object_fallback(cls, title, locale, default=None, **kwargs):
 
     # Fallback
     try:
-        fallback = cls.objects.get(
+        default_lang_doc = cls.objects.get(
             title=title, locale=settings.WIKI_DEFAULT_LANGUAGE, **kwargs)
-        if hasattr(fallback, 'translated_to'):
-            trans = fallback.translated_to(locale)
+
+        # Return the translation of this English item:
+        if hasattr(default_lang_doc, 'translated_to'):
+            trans = default_lang_doc.translated_to(locale)
             if trans and trans.current_revision:
                 return trans
-        return fallback
+
+        # Follow redirects internally in an attempt to find a translation of
+        # the final redirect target in the requested locale. This happens a lot
+        # when an English article is renamed and a redirect is left in its
+        # wake: we wouldn't want the non-English user to be linked to the
+        # English redirect, which would happily redirect them to the English
+        # final article.
+        if hasattr(default_lang_doc, 'redirect_document'):
+            target = default_lang_doc.redirect_document()
+            if target:
+                trans = target.translated_to(locale)
+                if trans and trans.current_revision:
+                    return trans
+
+        # Return the English item:
+        return default_lang_doc
     # Okay, all else failed
     except cls.DoesNotExist:
         return default

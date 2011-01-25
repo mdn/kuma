@@ -37,20 +37,16 @@ build_hook_params_default = partial(build_hook_params,
                                     allowed_param_values=IMAGE_PARAM_VALUES)
 
 
-class TestWikiParser(TestCase):
+class GetObjectFallbackTests(TestCase):
     fixtures = ['users.json']
 
-    def setUp(self):
-        self.d, self.r, self.p = doc_rev_parser(
-            'Test content', 'Installing Firefox')
-
-    def test_get_object_fallback_empty(self):
+    def test_empty(self):
         """get_object_fallback returns message when no objects."""
         # English does not exist
         obj = get_object_fallback(Document, 'A doc', 'en-US', '!')
         eq_('!', obj)
 
-    def test_get_object_fallback_english(self):
+    def test_english(self):
         # Create the English document
         d = document(title='A doc')
         d.save()
@@ -58,7 +54,7 @@ class TestWikiParser(TestCase):
         obj = get_object_fallback(Document, 'A doc', 'en-US', '!')
         eq_(d, obj)
 
-    def test_get_object_fallback_from_french(self):
+    def test_from_french(self):
         # Create the English document
         d = document(title='A doc')
         d.save()
@@ -66,7 +62,7 @@ class TestWikiParser(TestCase):
         obj = get_object_fallback(Document, 'A doc', 'fr', '!')
         eq_(d, obj)
 
-    def test_get_object_fallback_french(self):
+    def test_french(self):
         # Create English parent document
         en_d = document()
         en_d.save()
@@ -85,7 +81,7 @@ class TestWikiParser(TestCase):
         obj = get_object_fallback(Document, 'A doc', 'fr', '!')
         eq_(fr_d, obj)
 
-    def test_get_object_fallback_translated(self):
+    def test_translated(self):
         """If a localization of the English fallback exists, use it."""
 
         en_d = document(title='A doc')
@@ -105,6 +101,52 @@ class TestWikiParser(TestCase):
         fr_r.save()
         obj = get_object_fallback(Document, 'A doc', 'fr')
         eq_(fr_d, obj)
+
+    def test_redirect(self):
+        """Assert get_object_fallback follows wiki redirects."""
+        target_rev = revision(
+            document=document(title='target', save=True),
+            is_approved=True,
+            save=True)
+        translated_target_rev = revision(
+            document=document(parent=target_rev.document, locale='de',
+                              save=True),
+            is_approved=True,
+            save=True)
+        revision(
+            document=document(title='redirect', save=True),
+            content='REDIRECT [[target]]',
+            is_approved=True).save()
+
+        eq_(translated_target_rev.document,
+            get_object_fallback(Document, 'redirect', 'de'))
+
+    def test_redirect_translations_only(self):
+        """Make sure get_object_fallback doesn't follow redirects when working
+        purely in the default language.
+
+        That would make it hard to navigate to redirects (to edit them, for
+        example).
+
+        """
+        revision(document=document(title='target', save=True),
+                              content='O hai.',
+                              is_approved=True).save()
+        redirect_rev = revision(document=document(title='redirect', save=True),
+                                content='REDIRECT [[target]]',
+                                is_approved=True,
+                                save=True)
+        eq_(redirect_rev.document,
+            get_object_fallback(Document, 'redirect',
+                                redirect_rev.document.locale))
+
+
+class TestWikiParser(TestCase):
+    fixtures = ['users.json']
+
+    def setUp(self):
+        self.d, self.r, self.p = doc_rev_parser(
+            'Test content', 'Installing Firefox')
 
     def test_image_params_page(self):
         """build_hook_params handles wiki pages."""

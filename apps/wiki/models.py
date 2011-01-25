@@ -1,6 +1,7 @@
 from collections import namedtuple
 from datetime import datetime
 from itertools import chain
+from urlparse import urlparse
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -8,12 +9,14 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import resolve
 from django.db import models
+from django.http import Http404
 
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ModelBase, LocaleField
-from sumo.urlresolvers import reverse
+from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 
@@ -344,6 +347,46 @@ class Document(ModelBase, BigVocabTaggableMixin):
     def get_absolute_url(self):
         return reverse('wiki.document', locale=self.locale, args=[self.slug])
 
+    @staticmethod
+    def from_url(url, required_locale=None, id_only=False):
+        """Return the approved Document the URL represents, None if there isn't
+        one.
+
+        Return None if the URL is a 404, the URL doesn't point to the right
+        view, or the indicated document doesn't exist.
+
+        To limit the universe of discourse to a certain locale, pass in a
+        `required_locale`. To fetch only the ID of the returned Document, set
+        `id_only` to True.
+
+        """
+        # Extract locale and path from URL:
+        path = urlparse(url)[2]  # never has errors AFAICT
+        locale, path = split_path(path)
+        if required_locale and locale != required_locale:
+            return None
+        path = '/' + path
+
+        try:
+            view, view_args, view_kwargs = resolve(path)
+        except Http404:
+            return None
+
+        import wiki.views  # Views import models; models import views.
+        if view != wiki.views.document:
+            return None
+
+        # Map locale-slug pair to Document ID:
+        doc_query = Document.objects.exclude(current_revision__isnull=True)
+        if id_only:
+            doc_query = doc_query.only('id')
+        try:
+            return doc_query.get(
+                locale=locale,
+                slug=view_kwargs['document_slug'])
+        except Document.DoesNotExist:
+            return None
+
     def redirect_url(self):
         """If I am a redirect, return the absolute URL to which I redirect.
 
@@ -357,7 +400,16 @@ class Document(ModelBase, BigVocabTaggableMixin):
             anchors = PyQuery(self.html)('a[href]')
             if anchors:
                 return anchors[0].get('href')
-        return None
+
+    def redirect_document(self):
+        """If I am a redirect to a Document, return that Document.
+
+        Otherwise, return None.
+
+        """
+        url = self.redirect_url()
+        if url:
+            return self.from_url(url)
 
     def __unicode__(self):
         return '[%s] %s' % (self.locale, self.title)

@@ -18,6 +18,14 @@ def _objects_eq(manager, list_):
     eq_(set(manager.all()), set(list_))
 
 
+def redirect_rev(title, redirect_to):
+    return revision(
+        document=document(title=title, save=True),
+        content='REDIRECT [[%s]]' % redirect_to,
+        is_approved=True,
+        save=True)
+
+
 class DocumentTests(TestCase):
     """Tests for the Document model"""
 
@@ -297,8 +305,24 @@ class DocumentTestsWithFixture(TestCase):
             ('A translation was not considered majorly outdated when its '
              "current revision's based_on value was None.")
 
+    def test_redirect_document_non_redirect(self):
+        """Assert redirect_document on non-redirects returns None."""
+        eq_(None, document().redirect_document())
 
-class RedirectTests(TestCase):
+    def test_redirect_document_external_redirect(self):
+        """Assert redirects to external pages return None."""
+        eq_(None, revision(content='REDIRECT [http://example.com]',
+                           is_approved=True,
+                           save=True).document.redirect_document())
+
+    def test_redirect_document_nonexistent(self):
+        """Assert redirects to non-existent pages return None."""
+        eq_(None, revision(content='REDIRECT [[kersmoo]]',
+                           is_approved=True,
+                           save=True).document.redirect_document())
+
+
+class RedirectCreationTests(TestCase):
     """Tests for automatic creation of redirects when slug or title changes"""
     fixtures = ['users.json']
 

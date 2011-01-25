@@ -7,11 +7,12 @@ from nose.tools import raises, eq_
 from dashboards.models import (WikiDocumentVisits, StatsException, THIS_WEEK,
                                StatsIOError)
 from sumo.tests import TestCase
-from wiki.tests import document
+from wiki.tests import document, revision
 
 
 class DocumentVisitsTests(TestCase):
     """Tests for the WebTrends statistics gathering"""
+    fixtures = ['users.json']
 
     @raises(StatsException)
     def test_bad_json(self):
@@ -70,8 +71,7 @@ class DocumentVisitsTests(TestCase):
 
     def test_bad_visit_count(self):
         """Skip URLs whose visit counts aren't ints."""
-        d = document()
-        d.save()
+        d = revision(is_approved=True, save=True).document
         eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
             '2010": {"SubRows":{"http://support.mozilla.com/%s/kb/%s":{'
             '"measures":{"Visits":"non-integer"}}}}}}'
@@ -79,8 +79,7 @@ class DocumentVisitsTests(TestCase):
 
     def test_bad_page_info(self):
         """Skip URLs whose page info is unsubscriptable."""
-        d = document()
-        d.save()
+        d = revision(is_approved=True, save=True).document
         eq_({}, WikiDocumentVisits._visit_counts('{"data": {"12/01/2010-12/07/'
             '2010": {"SubRows":{"http://support.mozilla.com/%s/kb/%s":8}}}}'
             % (settings.LANGUAGE_CODE, d.slug)))
@@ -91,10 +90,10 @@ class DocumentVisitsTests(TestCase):
         It has some nasty non-ASCII chars in it.
 
         """
-        d = document(slug='hellỗ')
-        d.save()
-        d2 = document(slug='there')
-        d2.save()
+        d = revision(document=document(slug='hellỗ', save=True),
+                     is_approved=True, save=True).document
+        d2 = revision(document=document(slug='there', save=True),
+                      is_approved=True, save=True).document
         # We get a str, not a unicode obj, out of the urllib call.
         eq_({d.pk: 1037639, d2.pk: 213817}, WikiDocumentVisits._visit_counts(
             '{"data": {"12/01/2010-12/07/2010": {"SubRows":{'
