@@ -7,7 +7,7 @@
 (function($){
 
     function init() {
-        Marky.createSimpleToolbar('.forum-editor-tools', '#reply-content, #id_content');
+        Marky.createSimpleToolbar('.editor-tools', '#reply-content, #id_content');
     }
 
     $(document).ready(init);

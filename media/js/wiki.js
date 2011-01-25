@@ -33,7 +33,7 @@
             initTitleAndSlugCheck();
         }
 
-        Marky.createFullToolbar('.forum-editor-tools', '#id_content');
+        Marky.createFullToolbar('.editor-tools', '#id_content');
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.

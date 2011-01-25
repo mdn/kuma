@@ -2,6 +2,7 @@
 {% extends "questions/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% from "upload/attachments.html" import attachments_form %}
+{% from "includes/common_macros.html" import content_editor %}
 {# L10n: {q} is the title of the question. #}
 {% set title = _('{q} | Firefox Support Forum')|f(q=question.title) %}
 {% set classes = 'answers' %}
@@ -283,10 +284,7 @@
           {{ csrf() }}
           {{ errorlist(form) }}
 
-          <div class="forum-editor{% if form.content.errors %} invalid{% endif %}">
-            <div class="forum-editor-tools"></div>
-            <textarea name="content" id="id_content">{{ form.content.data or '' }}</textarea>
-          </div>
+          {{ content_editor(form.content) }}
 
           {{ attachments_form('questions.Question', question.pk, images, settings, user) }}
 

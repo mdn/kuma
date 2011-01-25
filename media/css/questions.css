@@ -1019,7 +1019,7 @@ ol.answers div.side-section a.edit {
     padding: 0 15px;
 }
 
-#question-reply div.forum-editor {
+#question-reply div.editor {
     padding: 0;
 }
 
@@ -1317,6 +1317,10 @@ input.g-btn:disabled {
     width: 450px;
 }
 
+#ask-question div.editor-tools {
+    width: 458px;
+}
+
 #ask-question select {
     border: solid 1px #87C4DC;
     border-radius: 6px;
@@ -1383,7 +1387,7 @@ input.g-btn:disabled {
     margin: 0 0 0 5px;
 }
 
-#question-form div.forum-editor {
+#question-form div.editor {
     margin: 0 0 0 115px;
     padding: 0;
 }
@@ -1456,8 +1460,9 @@ div.edit-answer ul.info label {
     width: 150px;
 }
 
-div.edit-answer div.forum-editor {
+div.edit-answer div.editor {
     padding-left: 0;
+    width: 512px;
 }
 
 div.edit-answer input.btn {

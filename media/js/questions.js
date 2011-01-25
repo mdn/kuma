@@ -18,7 +18,7 @@
             initEmailSubscribeAjax();
         }
 
-        Marky.createSimpleToolbar('.forum-editor-tools', '#reply-content, #id_content');
+        Marky.createSimpleToolbar('.editor-tools', '#reply-content, #id_content');
     }
 
     /*

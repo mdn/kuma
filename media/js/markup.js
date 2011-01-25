@@ -32,10 +32,9 @@ var Marky = {
                    'btn-bold'),
             new SB(gettext('Italic'), "''", "''", gettext('italic text'),
                    'btn-italic'),
-            new SB(gettext('Article Link'),  '[[', ']]',
-                   gettext('Knowledge Base Article'), 'btn-page'),
-            new SB(gettext('External Link'), '[http://example.com ',
-                   ']', gettext('external link'), 'btn-link'),
+            new Marky.Separator(),
+            new Marky.LinkButton(),
+            new Marky.Separator(),
             new SB(gettext('Numbered List'), '# ', '',
                    gettext('Numbered list item'), 'btn-ol', true),
             new SB(gettext('Bulleted List'), '* ', '',
@@ -71,7 +70,7 @@ var Marky = {
         Marky.createCustomToolbar(toolbarSel, textareaSel, buttons);
     },
     createCustomToolbar: function(toolbarSel, textareaSel, partsArray) {
-        var $toolbar = $(toolbarSel || '.forum-editor-tools'),
+        var $toolbar = $(toolbarSel || '.editor-tools'),
             textarea = $(textareaSel || '#reply-content, #id_content')[0];
         for (var i=0, l=partsArray.length; i<l; i++) {
             $toolbar.append(partsArray[i].bind(textarea).node());
@@ -487,7 +486,7 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     },
     openModal: function(e) {
         var me = this,
-            $editor = $(me.textarea).closest('div.forum-editor'),
+            $editor = $(me.textarea).closest('.editor'),
             mediaSearchUrl = $editor.data('media-search-url'),
             galleryUrl = $editor.data('media-gallery-url'),
             // TODO: look at using a js template solution (jquery-tmpl?)

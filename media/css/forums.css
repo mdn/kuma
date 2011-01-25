@@ -191,7 +191,7 @@ ol.posts li div.info span.post-action {
 }
 
 div#thread-reply {
-    background-color: #edf7fA;
+    background-color: #E7F6FD;
 }
 
 div#thread-reply h3,
@@ -446,8 +446,8 @@ span.watching {
 }
 
 /* Forums markup editor */
-form.new-thread div.forum-editor,
-form.edit-post div.forum-editor {
+form.new-thread div.editor,
+form.edit-post div.editor {
     float: left;
     padding-left: 0;
     width: 500px;

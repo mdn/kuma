@@ -2,6 +2,7 @@
 {% extends "questions/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% from "upload/attachments.html" import attachments_form %}
+{% from "includes/common_macros.html" import content_editor %}
 {# L10n: {t} is the title of the question. #}
 {% set title = _('Editing an answer | {t} | Firefox Support Forum')|f(t=answer.question.title) %}
 {% set classes = 'answers' %}
@@ -38,10 +39,7 @@
       {{ errorlist(form) }}
 
       <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
-        <div class="forum-editor">
-          <div class="forum-editor-tools"></div>
-          {{ form.content|safe }}
-        </div>
+        {{ content_editor(form.content) }}
       </div>
 
       {{ attachments_form('questions.Answer', answer.pk, answer.images.all(), settings, request.user) }}

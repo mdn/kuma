@@ -514,55 +514,10 @@ article.main textarea[name="content"] {
     height: 500px;
 }
 
-article.main .forum-editor {
+article.main .editor {
     float: left;
     padding: 0;
     width: 711px;
-}
-
-article.main .forum-editor-tools {
-    background: #daedf6;
-    background: -moz-linear-gradient(top, #e7f6fd, #daedf6);
-    background: -webkit-gradient(linear, center top, center bottom, from(#e7f6fd), to(#daedf6));
-    height: 40px;
-    line-height: 30px;
-    padding: 5px 5px 0;
-}
-
-button.markup-toolbar-button {
-    background: url(../img/markup.png) no-repeat 0 0;
-    height: 34px;
-    width: 34px;
-}
-button.btn-h2 {
-    background-position: -44px 0px;
-}
-button.btn-h3 {
-    background-position: -88px 0px;
-}
-button.btn-bold {
-    background-position: -132px 0px;
-}
-button.btn-italic {
-    background-position: -176px 0px;
-}
-button.btn-media {
-    background-position: -220px 0px;
-}
-button.btn-link {
-    background-position: -264px 0px;
-}
-button.btn-ol {
-    background-position: -308px 0px;
-}
-button.btn-ul {
-    background-position: -352px 0px;
-}
-
-div.forum-editor-tools span.separator {
-    /* override for new editor style */
-    font-size: 24px;
-    top: 4px;
 }
 
 article.main div.tags input.adder {
@@ -655,7 +610,7 @@ ul.description textarea {
     margin: 96px 0 0;
 }
 
-#content-fields .forum-editor {
+#content-fields .editor {
     margin: 10px 0 0;
     padding: 0;
     width: 345px;

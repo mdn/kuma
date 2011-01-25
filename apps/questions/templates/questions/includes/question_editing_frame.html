@@ -11,6 +11,7 @@ we can compute the edit-title URL.
 #}
 {% extends "questions/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "includes/common_macros.html" import content_editor %}
 {% set classes = 'new-question' %}
 
 {% block content %}
@@ -81,10 +82,7 @@ we can compute the edit-title URL.
                 {{ field.as_hidden()|safe }}
               </div>
             {% elif field.name == 'content' %}
-              <div class="forum-editor">
-                <div class="forum-editor-tools"></div>
-                {{ field|safe }}
-              </div>
+              {{ content_editor(field) }}
             {% else %}
               {{ field|safe }}
             {% endif %}

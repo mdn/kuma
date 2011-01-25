@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "kbforums/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "includes/common_macros.html" import content_editor %}
 {# L10n: {t} is the title of the thread. {d} is the name of the document. #}
 {% set title = _('{t} | {d} Discussion | Knowledge Base')|f(t=thread.title, d=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
@@ -85,12 +86,9 @@
         {{ csrf() }}
         {{ errorlist(form) }}
 
-        <div class="forum-editor{% if form.content.errors %} invalid{% endif %}">
-          <div class="forum-editor-tools"></div>
-          <textarea name="content" id="id_content" rows="10" cols="80">{{ form.content.data or '' }}</textarea>
-        </div>
+        {{ content_editor(form.content) }}
 
-        <div class="forum-editor-actions">
+        <div class="editor-actions">
           <input type="submit" name="preview" value="{{ _('Preview') }}" />
           <input type="submit" value="{{ _('Reply') }}" />
         </div>

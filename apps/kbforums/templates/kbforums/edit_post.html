@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "kbforums/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "includes/common_macros.html" import content_editor %}
 {# L10n: {t} is the title of the thread. {d} is the name of the document. #}
 {% set title = _('Edit a post | {t} | {d} Discussion | Knowledge Base')|f(t=thread.title, d=document.title) %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
@@ -19,10 +20,7 @@
 
     <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
       {{ form.content.label_tag()|safe }}
-      <div class="forum-editor">
-        <div class="forum-editor-tools"></div>
-        {{ form.content|safe }}
-      </div>
+      {{ content_editor(form.content) }}
     </div>
 
     <div class="form-widget submit">

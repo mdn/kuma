@@ -629,77 +629,96 @@ article.main input[disabled]:not(.remover) {
     Markup editor styles
 ----------------------------------*/
 
-div.forum-editor {
+div.editor {
     padding: 1em;
 }
 
-div.forum-editor textarea {
-    width: 100%;
+div.editor textarea {
+    width: 98%;
 }
 
-div.forum-editor-notes {
+div.editor-notes {
     float: left;
     padding: 1em 0 0 1em;
 }
 
-div.forum-editor-notes p {
+div.editor-notes p {
     margin-top: .8em;
 }
 
-div.forum-editor-actions {
+div.editor-actions {
     clear: both;
     border-top: 2px solid #fff;
     padding: 1em 2em;
     text-align: right;
 }
 
-div.forum-editor-tools {
-    height: 20px;
+div.editor-tools {
+    background: #daedf6;
+    background: -moz-linear-gradient(top, #e7f6fd, #daedf6);
+    background: -webkit-gradient(linear, center top, center bottom, from(#e7f6fd), to(#daedf6));
+    height: 40px;
+    line-height: 30px;
+    padding: 5px 5px 0;
+    width: 98%;
 }
 
-div.forum-editor-tools img {
-    margin: 0 0.3em 0 0;
-}
-
-div.forum-editor-tools span.separator {
+div.editor-tools span.separator {
     border-left: solid 1px #ddd;
-    font-size: 14px;
+    font-size: 24px;
     margin: 0 8px 0 6px;
     position: relative;
+    top: 4px;
 }
 
-div.forum-editor-tools a.markup-toolbar-link {
+div.editor-tools a.markup-toolbar-link {
     padding: 0 6px;
 }
 
 button.markup-toolbar-button {
     border: 0;
-    background: url(../img/old_markup.png) no-repeat 0 0;
+    background: url(../img/markup.png) no-repeat 0 0;
     cursor: pointer;
-    height: 16px;
+    height: 34px;
     margin: 0 2px;
     text-indent: -9999px;
-    width: 16px;
+    width: 34px;
 }
 
-div.forum-editor-tools button:first-child {
+div.editor-tools button:first-child {
     margin-left: 0;
 }
 
+button.btn-h2 {
+    background-position: -44px 0px;
+}
+
+button.btn-h3 {
+    background-position: -88px 0px;
+}
+
+button.btn-bold {
+    background-position: -132px 0px;
+}
+
 button.btn-italic {
-    background-position: -26px 0px;
+    background-position: -176px 0px;
 }
-button.btn-page {
-    background-position: -52px 0px;
+
+button.btn-media {
+    background-position: -220px 0px;
 }
+
 button.btn-link {
-    background-position: -78px 0px;
+    background-position: -264px 0px;
 }
+
 button.btn-ol {
-    background-position: -130px 0px;
+    background-position: -308px 0px;
 }
+
 button.btn-ul {
-    background-position: -104px 0px;
+    background-position: -352px 0px;
 }
 
 #showfor-modal,

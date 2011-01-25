@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "forums/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from "includes/common_macros.html" import content_editor %}
 {# L10n: {f} if the name of the forum. #}
 {% set title = _('Create a new thread | {f} | Forums')|f(f=forum.name) %}
 {% set crumbs = [(url('forums.forums'), _('Forums')),
@@ -19,10 +20,7 @@
       <div class="form-widget{% if field.errors %} invalid{% endif %}">
         {{ field.label_tag()|safe }}
         {% if field.name == 'content' %}
-          <div class="forum-editor">
-            <div class="forum-editor-tools"></div>
-            {{ field|safe }}
-          </div>
+          {{ content_editor(field) }}
         {% else %}
           {{ field|safe }}
         {% endif %}
