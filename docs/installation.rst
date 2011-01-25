@@ -121,6 +121,10 @@ configuration is::
         },
     }
 
+Note the two settings ``TEST_CHARSET`` and ``TEST_COLLATION``. Without these,
+the test suite will use MySQL's (moronic) defaults when creating the test
+database (see below) and lots of tests will fail. Hundreds.
+
 Once you've set up the database, you can generate the schema with Django's
 ``syncdb`` command::
 
