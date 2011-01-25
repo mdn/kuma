@@ -4,7 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from notifications.events import Event
 from notifications.models import Watch
-from notifications.tests import watch, watch_filter
+from notifications.tests import watch, watch_filter, ModelsTestCase
+from notifications.tests.models import MockModel
 from sumo.tests import TestCase
 from users.tests import user
 
@@ -140,3 +141,21 @@ class TestNotification(TestCase):
         FilteredContentTypeEvent.notify('hi@there.com', color=3, flavor=4)
         assert not FilteredContentTypeEvent.is_notifying('hi@there.com',
                                                          color=3)
+
+
+class TestCascadeDelete(ModelsTestCase):
+    """Cascading deletes on object_id + content_type."""
+    apps = ['notifications.tests']
+
+    def test_mock_model(self):
+        """Deleting an instance of MockModel should delete watches.
+
+        Create instance of MockModel from notifications.tests.models, then
+        delete it and watch the cascade go.
+
+        """
+        mock_m = MockModel.objects.create()
+        watch(event_type=TYPE, email='hi@there.com', content_object=mock_m,
+              save=True)
+        MockModel.objects.all().delete()
+        assert not Watch.objects.count(), 'Cascade delete failed.'

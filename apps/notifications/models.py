@@ -2,6 +2,7 @@ import hashlib
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
 from sumo.models import ModelBase, LocaleField
@@ -58,6 +59,8 @@ class Watch(ModelBase):
 
     # Optional reference to a content type:
     content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    object_id = models.PositiveIntegerField(db_index=True, null=True)
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     user = models.ForeignKey(User, null=True, blank=True)
 
@@ -81,3 +84,15 @@ class WatchFilter(ModelBase):
     # Either ints or hashes of enumerated strings. All we can't represent
     # easily with this schema is arbitrary (open-vocab) strings.
     value = models.IntegerField()
+
+
+class NotificationsMixin(models.Model):
+    """Mixin for notifications models that adds watches as a generic relation.
+
+    So we get cascading deletes for free, yay!
+
+    """
+    watches = generic.GenericRelation(Watch)
+
+    class Meta(object):
+        abstract = True
