@@ -45,7 +45,7 @@
             <img src="{{ MEDIA_URL }}img/forums/type/sticky.png" alt="{{ _('Sticky', 'thread_type') }}" title="{{ _('Sticky', 'thread_type') }}"/>
           {% endif %}
         </div>
-        <div class="title"><a href="{{ thread.get_absolute_url() }}">{{ thread.title }}</a></div>
+        <div class="title"><a href="{{ url('forums.posts', forum_slug=forum.slug, thread_id=thread.id)|urlparams(last=thread.last_post.id) }}">{{ thread.title }}</a></div>
         <div class="author"><a class="username" href="{{ profile_url(thread.creator) }}">{{ thread.creator.username }}</a></div>
         <div class="replies">{{ thread.replies }}</div>
         <div class="last-post">

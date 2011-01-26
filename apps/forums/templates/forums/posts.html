@@ -7,7 +7,7 @@
 {% set crumbs = [(url('forums.forums'), _('Forums')),
                  (url('forums.threads', forum.slug), forum.name),
                  (None, thread.title)] %}
-{% set canonical_url = url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) %}
+{% set canonical_url = thread.get_absolute_url() %}
 {% if posts.number > 1 %}
   {% set canonical_url = canonical_url|urlparams(page=posts.number) %}
 {% endif %}

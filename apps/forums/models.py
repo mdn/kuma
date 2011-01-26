@@ -145,10 +145,9 @@ class Thread(ModelBase):
         return self.post_set.create(author=author, content=content)
 
     def get_absolute_url(self):
-        url_ = reverse('forums.posts',
+        return reverse('forums.posts',
                        kwargs={'forum_slug': self.forum.slug,
                                'thread_id': self.id})
-        return urlparams(url_, last=self.last_post.id)
 
     def save(self, *args, **kwargs):
         super(Thread, self).save(*args, **kwargs)
