@@ -16,9 +16,10 @@ def _fire_task(event):
     """Build and send the emails as a celery task."""
     # This is outside the Event class because @task doesn't send the `self` arg
     # implicitly, and there's no sense making it look like it does.
-    connection = mail.get_connection()
-    connection.send_messages(event._mails(event._users_watching()))
-    # TODO: Pass fail_silently or whatever.
+    connection = mail.get_connection(fail_silently=True)
+    connection.open()
+    for m in event._mails(event._users_watching()):
+        connection.send_messages([m])
 
 
 class Event(object):
@@ -260,7 +261,7 @@ class Event(object):
     # Subclasses should implement the following:
 
     def _mails(self, users):
-        """Return an iterable of EmailMessages to send to each User."""
+        """Return an iterable yielding a EmailMessage to send to each User."""
         raise NotImplementedError
 
     def _users_watching(self):
