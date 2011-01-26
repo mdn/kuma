@@ -1,6 +1,8 @@
 from nose.tools import eq_
 
 from django.contrib.contenttypes.models import ContentType
+from django.core import mail
+from django.core.mail import EmailMessage
 
 from notifications.events import Event
 from notifications.models import Watch
@@ -15,6 +17,10 @@ TYPE = 'some event'
 
 class SimpleEvent(Event):
     event_type = TYPE
+
+    def _mails(self, users):
+        """People watch the event in general; there are no parameters."""
+        return (EmailMessage('Subject!', 'Body!', to=[u.email]) for u in users)
 
 
 class ContentTypeEvent(SimpleEvent):
@@ -36,7 +42,7 @@ def emails_eq(addresses, event, **filters):
         set(u.email for u in event._users_watching_by_filter(**filters)))
 
 
-class TestUsersWatching(TestCase):
+class UsersWatchingTests(TestCase):
     """Unit tests for Event._users_watching_by_filter()"""
 
     def test_simple(self):
@@ -99,7 +105,7 @@ class TestUsersWatching(TestCase):
                           SimpleEvent()._users_watching_by_filter(smoo=3))
 
 
-class TestNotification(TestCase):
+class NotificationTests(TestCase):
     """Tests for Event methods that create, examine, and destroy watches."""
 
     def test_lifecycle(self):
@@ -143,7 +149,7 @@ class TestNotification(TestCase):
                                                          color=3)
 
 
-class TestCascadeDelete(ModelsTestCase):
+class CascadingDeleteTests(ModelsTestCase):
     """Cascading deletes on object_id + content_type."""
     apps = ['notifications.tests']
 
@@ -159,3 +165,18 @@ class TestCascadeDelete(ModelsTestCase):
               save=True)
         MockModel.objects.all().delete()
         assert not Watch.objects.count(), 'Cascade delete failed.'
+
+
+class FireTests(TestCase):
+    """Tests for things that happen when events are fired"""
+
+    def test_fire(self):
+        """Assert that fire() runs and that generated mails get sent."""
+        SimpleEvent.notify('hi@there.com').confirm().save()
+        SimpleEvent().fire()
+        eq_(1, len(mail.outbox))
+
+        first_mail = mail.outbox[0]
+        eq_(['hi@there.com'], first_mail.to)
+        eq_('Subject!', first_mail.subject)
+        eq_('Body!', first_mail.body)

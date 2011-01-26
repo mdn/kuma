@@ -72,8 +72,13 @@ class Watch(ModelBase):
     secret = models.CharField(max_length=10, null=True, blank=True)
 
     def confirm(self):
-        """Activate this watch so it actually fires."""
+        """Activate this watch so it actually fires.
+
+        Return self to support method chaining.
+
+        """
         self.secret = None
+        return self
 
 
 class WatchFilter(ModelBase):

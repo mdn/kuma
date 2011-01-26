@@ -6,7 +6,19 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.db.models import Q
 
+from celery.decorators import task
+
 from notifications.models import Watch, WatchFilter
+
+
+@task
+def _fire_task(event):
+    """Build and send the emails as a celery task."""
+    # This is outside the Event class because @task doesn't send the `self` arg
+    # implicitly, and there's no sense making it look like it does.
+    connection = mail.get_connection()
+    connection.send_messages(event._mails(event._users_watching()))
+    # TODO: Pass fail_silently or whatever.
 
 
 class Event(object):
@@ -26,15 +38,18 @@ class Event(object):
     WatchFilter rows holding name/value pairs, the meaning of which is up to
     each individual subclass. NULL values are considered wildcards.
 
+    Event subclass instances must be pickleable so they can be shuttled off to
+    celery tasks.
+
     """
     # event_type = 'hamster modified'  # key for the event_type column
     content_type = None  # or, for example, Hamster
     filters = set()  # or, for example, set(['color', 'flavor'])
 
     def fire(self):
-        """Notify everyone watching the question--except the asker.
+        """Asynchronously notify everyone watching the event.
 
-        We are explicit about sending notifications; don't just key off
+        We are explicit about sending notifications; we don't just key off
         creation signals, because the receiver of a post_save signal has no
         idea what just changed, so it doesn't know which notifications to send.
         Also, we could easily send mail accidentally: for instance, during
@@ -42,10 +57,7 @@ class Event(object):
         signal handler that calls fire().
 
         """
-        # TODO: Move offthread.
-        connection = mail.get_connection()
-        connection.send_messages(self._mails(self._users_watching()))
-        # TODO: Pass fail_silently or whatever.
+        _fire_task.delay(self)
 
     @classmethod
     def _validate_filters(cls, filters):
@@ -139,7 +151,8 @@ class Event(object):
         If you pass an email, it will be matched against only the email
         addresses of anonymous watches. At the moment, the only integration
         point planned between anonymous and registered watches is the claiming
-        of anonymous watches of the same email address on user registration.
+        of anonymous watches of the same email address on user registration
+        confirmation.
 
         """
         # If we have trouble distinguishing subsets and such, we could store a
@@ -253,9 +266,11 @@ class Event(object):
     def _users_watching(self):
         """Return an iterable of Users and AnonymousUsers watching this event.
 
+        Default implementation returns users watching this object's event_type
+        and, if defined, content_type.
+
         Take care not to hash or compare AnonymousUsers; they all compare
         equal.
 
         """
-        # Typically call through to _users_watching_by_filter().
-        raise NotImplementedError
+        return self._users_watching_by_filter()
