@@ -11,14 +11,13 @@ from authority.decorators import permission_required_or_403
 
 from access.decorators import has_perm_or_owns_or_403, login_required
 from access import has_perm
+import forums as constants
+from forums.events import ThreadReplyEvent, ForumThreadEvent
+from forums.feeds import ThreadsFeed, PostsFeed
+from forums.forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
+from forums.models import Forum, Thread, Post
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
-from .models import Forum, Thread, Post
-from .forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
-from .feeds import ThreadsFeed, PostsFeed
-from notifications import create_watch, destroy_watch
-from .tasks import build_reply_notification, build_thread_notification
-import forums as constants
 
 log = logging.getLogger('k.forums')
 
@@ -131,7 +130,7 @@ def reply(request, forum_slug, thread_id):
                 reply_.save()
 
                 # Send notifications to thread/forum watchers.
-                build_reply_notification.delay(reply_)
+                ThreadReplyEvent(reply_).fire()
 
                 return HttpResponseRedirect(reply_.get_absolute_url())
 
@@ -170,8 +169,7 @@ def new_thread(request, forum_slug):
                                    content=form.cleaned_data['content'])
             post.save()
 
-            # Send notifications to forum watchers.
-            build_thread_notification.delay(post)
+            ForumThreadEvent(post).fire()
 
             return HttpResponseRedirect(
                 reverse('forums.posts', args=[forum_slug, thread.id]))
@@ -388,9 +386,9 @@ def watch_thread(request, forum_slug, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     if request.POST.get('watch') == 'yes':
-        create_watch(Thread, thread.id, request.user.email, 'reply')
+        ThreadReplyEvent.notify(request.user, thread)
     else:
-        destroy_watch(Thread, thread.id, request.user.email, 'reply')
+        ThreadReplyEvent.stop_notifying(request.user, thread)
 
     return HttpResponseRedirect(reverse('forums.posts',
                                         args=[forum_slug, thread_id]))
@@ -405,8 +403,8 @@ def watch_forum(request, forum_slug):
         raise Http404
 
     if request.POST.get('watch') == 'yes':
-        create_watch(Forum, forum.id, request.user.email, 'post')
+        ForumThreadEvent.notify(request.user, forum)
     else:
-        destroy_watch(Forum, forum.id, request.user.email, 'post')
+        ForumThreadEvent.stop_notifying(request.user, forum)
 
     return HttpResponseRedirect(reverse('forums.threads', args=[forum_slug]))

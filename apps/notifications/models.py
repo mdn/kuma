@@ -93,6 +93,10 @@ class Watch(ModelBase):
     # secret upon confirmation. Until then, the watch is inactive.
     secret = models.CharField(max_length=10, null=True, blank=True)
 
+    def __unicode__(self):
+        rest = self.content_object or self.content_type or self.object_id
+        return u'[%s] %s, %s' % (self.pk, self.event_type, str(rest))
+
     def confirm(self):
         """Activate this watch so it actually fires.
 

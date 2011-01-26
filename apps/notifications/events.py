@@ -87,7 +87,7 @@ class Event(object):
         connection = mail.get_connection(fail_silently=True)
         # Warning: fail_silently swallows errors thrown by the generators, too.
         connection.open()
-        for m in self._mails(self._users_watching()):
+        for m in self._mails(self.users_watching()):
             connection.send_messages([m])
 
     @classmethod
@@ -100,7 +100,7 @@ class Event(object):
                 raise TypeError("%s got an unsupported filter type '%s'" %
                                 (cls.__name__, k))
 
-    def _users_watching_by_filter(self, **filters):
+    def _users_watching_by_filter(self, object_id=None, **filters):
         """Return an iterable of (User/EmailUser, Watch) pairs watching the
         event.
 
@@ -144,21 +144,30 @@ class Event(object):
         else:
             content_type = ''
             ct_param = []
+        if object_id:
+            o_id = ' AND (w.object_id IS NULL OR w.object_id=%s)'
+            o_id_param = [object_id]
+        else:
+            o_id = ''
+            o_id_param = []
+
         query = (
             'SELECT u.*, w.* '
             'FROM notifications_watch w '
             'LEFT JOIN auth_user u ON u.id=w.user_id{left_joins} '
-            'WHERE w.event_type=%s{content_type}{wheres} '
+            'WHERE w.event_type=%s{content_type}{object_id}{wheres} '
             'AND (length(w.email)>0 OR length(u.email)>0) '
             'AND w.secret IS NULL '
             'ORDER BY u.email DESC, w.email DESC').format(
             left_joins=joins,
             content_type=content_type,
+            object_id=o_id,
             wheres=wheres)
 
         for user, watch in _unique_by_email(multi_raw(
             query,
-            join_params + [self.event_type] + ct_param + where_params,
+            join_params + [self.event_type] + ct_param + o_id_param +
+                where_params,
             [User, Watch])):
             # The query above guarantees us an email from either the user or
             # the watch. Some of these cases shouldn't happen, but we're
@@ -171,7 +180,8 @@ class Event(object):
         # set() call from forums.events.
 
     @classmethod
-    def _watches_belonging_to_user(cls, user_or_email, **filters):
+    def _watches_belonging_to_user(cls, user_or_email, object_id=None,
+                                   **filters):
         """Return a QuerySet of watches having the given user or email, having
         (only) the given filters, and having the event_type and content_type
         attrs of the class.
@@ -197,6 +207,9 @@ class Event(object):
                                    else Q(user=user_or_email),
             Q(content_type=ContentType.objects.get_for_model(cls.content_type))
                 if cls.content_type
+                else Q(),
+            Q(object_id=object_id)
+                if object_id
                 else Q(),
             event_type=cls.event_type).extra(
                 where=['(SELECT count(*) FROM notifications_watchfilter WHERE '
@@ -234,7 +247,7 @@ class Event(object):
                                               **filters).exists()
 
     @classmethod
-    def notify(cls, user_or_email_, **filters):
+    def notify(cls, user_or_email_, object_id=None, **filters):
         """Start notifying the given user or email address when this event
         occurs and meets the criteria given in `filters`.
 
@@ -260,8 +273,14 @@ class Event(object):
                     ContentType.objects.get_for_model(cls.content_type)
             create_kwargs['email' if isinstance(user_or_email_, basestring)
                           else 'user'] = user_or_email_
+            # Registered users don't need to confirm => no secret.
+            # ... but anonymous users do.
+            secret = (''.join(random.choice(letters) for x in xrange(10)) if
+                      'email' in create_kwargs else None)
+            if object_id:
+                create_kwargs['object_id'] = object_id
             watch = Watch.objects.create(
-                secret=''.join(random.choice(letters) for x in xrange(10)),
+                secret=secret,
                 event_type=cls.event_type,
                 **create_kwargs)
             for k, v in filters.iteritems():
@@ -303,7 +322,7 @@ class Event(object):
         """
         raise NotImplementedError
 
-    def _users_watching(self):
+    def users_watching(self):
         """Return an iterable of Users and EmailUsers watching this event
         and the Watches that map them to it.
 
@@ -314,3 +333,33 @@ class Event(object):
 
         """
         return self._users_watching_by_filter()
+
+
+class InstanceEvent(Event):
+    """Common case of watching a specific instance of a Model."""
+
+    def __init__(self, instance):
+        self.instance = instance
+
+    @classmethod
+    def notify(cls, user_or_email, instance):
+        """Create, save, and return a Watch which fires when something
+        happens to `instance`."""
+        return super(InstanceEvent, cls).notify(user_or_email,
+                                                object_id=instance.pk)
+
+    @classmethod
+    def stop_notifying(cls, user_or_email, instance):
+        """Delete the watch created by notify."""
+        super(InstanceEvent, cls).stop_notifying(user_or_email,
+                                                 object_id=instance.pk)
+
+    @classmethod
+    def is_notifying(cls, user_or_email, instance):
+        """Check if the watch created by notify exists."""
+        return super(InstanceEvent, cls).is_notifying(user_or_email,
+                                                      object_id=instance.pk)
+
+    def users_watching(self):
+        """Return users watching this instance."""
+        return self._users_watching_by_filter(object_id=self.instance.pk)
