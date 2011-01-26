@@ -5,10 +5,10 @@ from django.core import mail
 import mock
 from nose.tools import eq_
 
-from forums.events import ThreadReplyEvent, ForumThreadEvent
+from forums.events import NewPostEvent, NewThreadEvent
 from forums.models import Thread, Forum, Post
 from forums.tests import ForumTestCase
-from sumo.tests import post
+from sumo.tests import post, attrs_eq
 
 
 # Some of these contain a locale prefix on included links, while others don't.
@@ -53,27 +53,20 @@ https://testserver/en-US/forums/test-forum/%s
 """,)
 
 
-def _check_email(expected, received):
-    """Helper to check email, takes in a dict and a mail outbox."""
-    eq_(expected['to'], received.to)
-    eq_(expected['subject'], received.subject)
-    eq_(expected['body'], received.body)
-
-
 class NotificationsTests(ForumTestCase):
     """Test that notifications get sent."""
 
-    @mock.patch_object(ThreadReplyEvent, 'fire')
+    @mock.patch_object(NewPostEvent, 'fire')
     def test_fire_on_reply(self, fire):
         """The event fires when there is a reply."""
         t = Thread.objects.get(pk=2)
         self.client.login(username='jsocol', password='testpass')
         post(self.client, 'forums.reply', {'content': 'a post'},
              args=[t.forum.slug, t.id])
-        # ThreadReplyEvent.fire() is called.
+        # NewPostEvent.fire() is called.
         assert fire.called
 
-    @mock.patch_object(ForumThreadEvent, 'fire')
+    @mock.patch_object(NewThreadEvent, 'fire')
     def test_fire_on_new_thread(self, fire):
         """The event fires when there is a new thread."""
         f = Forum.objects.get(pk=1)
@@ -81,7 +74,7 @@ class NotificationsTests(ForumTestCase):
         post(self.client, 'forums.new_thread',
              {'title': 'a title', 'content': 'a post'},
              args=[f.slug])
-        # ForumThreadEvent.fire() is called.
+        # NewThreadEvent.fire() is called.
         assert fire.called
 
     def _toggle_watch_thread_as(self, username, turn_on=True, thread_id=2):
@@ -94,11 +87,11 @@ class NotificationsTests(ForumTestCase):
              args=[thread.forum.slug, thread.id])
         # Watch exists or not, depending on watch.
         if turn_on:
-            assert ThreadReplyEvent.is_notifying(user, thread), (
-                   'ThreadReplyEvent should be notifying.')
+            assert NewPostEvent.is_notifying(user, thread), (
+                   'NewPostEvent should be notifying.')
         else:
-            assert not ThreadReplyEvent.is_notifying(user, thread), (
-                   'ThreadReplyEvent should not be notifying.')
+            assert not NewPostEvent.is_notifying(user, thread), (
+                   'NewPostEvent should not be notifying.')
         return thread
 
     def _toggle_watch_forum_as(self, username, turn_on=True, forum_id=1):
@@ -111,11 +104,11 @@ class NotificationsTests(ForumTestCase):
              args=[forum.slug])
         # Watch exists or not, depending on watch.
         if turn_on:
-            assert ForumThreadEvent.is_notifying(user, forum), (
-                   'ForumThreadEvent should be notifying.')
+            assert NewThreadEvent.is_notifying(user, forum), (
+                   'NewThreadEvent should be notifying.')
         else:
-            assert not ThreadReplyEvent.is_notifying(user, forum), (
-                   'ForumThreadEvent should not be notifying.')
+            assert not NewPostEvent.is_notifying(user, forum), (
+                   'NewThreadEvent should not be notifying.')
         return forum
 
     @mock.patch_object(Site.objects, 'get_current')
@@ -129,9 +122,9 @@ class NotificationsTests(ForumTestCase):
              args=[t.forum.slug, t.id])
 
         p = Post.objects.all().order_by('-id')[0]
-        _check_email({'to': ['user47963@nowhere'],
-                      'subject': 'Reply to: Sticky Thread',
-                      'body': EMAIL_CONTENT[0] % p.id}, mail.outbox[0])
+        attrs_eq(mail.outbox[0], to=['user47963@nowhere'],
+                 subject='Reply to: Sticky Thread',
+                 body=EMAIL_CONTENT[0] % p.id)
 
         self._toggle_watch_thread_as('pcraciunoiu', turn_on=False)
 
@@ -146,8 +139,6 @@ class NotificationsTests(ForumTestCase):
 
         assert not mail.outbox
 
-        self._toggle_watch_thread_as('pcraciunoiu', turn_on=False)
-
     @mock.patch_object(Site.objects, 'get_current')
     def test_watch_forum_then_new_thread(self, get_current):
         """Watching a forum and creating a new thread should send email."""
@@ -159,23 +150,24 @@ class NotificationsTests(ForumTestCase):
              {'title': 'a title', 'content': 'a post'}, args=[f.slug])
 
         t = Thread.objects.all().order_by('-id')[0]
-        _check_email({'to': ['user47963@nowhere'],
-                      'subject': 'New thread in Test forum forum: a title',
-                      'body': EMAIL_CONTENT[1] % t.id}, mail.outbox[0])
+        attrs_eq(mail.outbox[0], to=['user47963@nowhere'],
+                 subject='New thread in Test forum forum: a title',
+                 body=EMAIL_CONTENT[1] % t.id)
 
         self._toggle_watch_forum_as('pcraciunoiu', turn_on=False)
 
-    def test_watch_forum_then_new_thread_as_self(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_watch_forum_then_new_thread_as_self(self, get_current):
         """Watching a forum and creating a new thread as myself should not
         send email."""
+        get_current.return_value.domain = 'testserver'
+
         f = self._toggle_watch_forum_as('pcraciunoiu', turn_on=True)
         self.client.login(username='pcraciunoiu', password='testpass')
         post(self.client, 'forums.new_thread',
              {'title': 'a title', 'content': 'a post'}, args=[f.slug])
         # Assert no email is sent.
         assert not mail.outbox
-
-        self._toggle_watch_forum_as('pcraciunoiu', turn_on=False)
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_watch_forum_then_new_post(self, get_current):
@@ -189,14 +181,15 @@ class NotificationsTests(ForumTestCase):
              args=[f.slug, t.id])
 
         p = Post.objects.all().order_by('-id')[0]
-        _check_email({'to': ['user47963@nowhere'],
-                      'subject': 'Reply to: Sticky Thread',
-                      'body': EMAIL_CONTENT[0] % p.id}, mail.outbox[0])
+        attrs_eq(mail.outbox[0], to=['user47963@nowhere'],
+                 subject='Reply to: Sticky Thread',
+                 body=EMAIL_CONTENT[0] % p.id)
 
-        self._toggle_watch_forum_as('pcraciunoiu', turn_on=False)
-
-    def test_watch_forum_then_new_post_as_self(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_watch_forum_then_new_post_as_self(self, get_current):
         """Watching a forum and replying as myself should not send email."""
+        get_current.return_value.domain = 'testserver'
+
         f = self._toggle_watch_forum_as('pcraciunoiu', turn_on=True)
         t = f.thread_set.all()[0]
         self.client.login(username='pcraciunoiu', password='testpass')
@@ -204,8 +197,6 @@ class NotificationsTests(ForumTestCase):
              args=[f.slug, t.id])
         # Assert no email is sent.
         assert not mail.outbox
-
-        self._toggle_watch_forum_as('pcraciunoiu', turn_on=False)
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_watch_both_then_new_post(self, get_current):
@@ -222,9 +213,9 @@ class NotificationsTests(ForumTestCase):
 
         eq_(1, len(mail.outbox))
         p = Post.objects.all().order_by('-id')[0]
-        _check_email({'to': ['user47963@nowhere'],
-                     'subject': 'Reply to: Sticky Thread',
-                     'body': EMAIL_CONTENT[0] % p.id}, mail.outbox[0])
+        attrs_eq(mail.outbox[0], to=['user47963@nowhere'],
+                 subject='Reply to: Sticky Thread',
+                 body=EMAIL_CONTENT[0] % p.id)
 
         self._toggle_watch_forum_as('pcraciunoiu', turn_on=False)
         self._toggle_watch_thread_as('pcraciunoiu', turn_on=False)

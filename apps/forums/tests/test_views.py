@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 from forums.models import Forum, Thread
 from forums.tests import ForumTestCase
-from forums.events import ForumThreadEvent, ThreadReplyEvent
+from forums.events import NewThreadEvent, NewPostEvent
 from sumo.tests import get, post
 from sumo.urlresolvers import reverse
 
@@ -96,13 +96,13 @@ class ThreadTests(ForumTestCase):
         f = Forum.objects.filter()[0]
         post(self.client, 'forums.watch_forum', {'watch': 'yes'},
              args=[f.slug])
-        eq_(True, ForumThreadEvent.is_notifying(user, f))
-        # ThreadReplyEvent is not notifying.
-        eq_(False, ThreadReplyEvent.is_notifying(user, f.last_post))
+        assert NewThreadEvent.is_notifying(user, f)
+        # NewPostEvent is not notifying.
+        assert not NewPostEvent.is_notifying(user, f.last_post)
 
         post(self.client, 'forums.watch_forum', {'watch': 'no'},
              args=[f.slug])
-        eq_(False, ForumThreadEvent.is_notifying(user, f))
+        assert not NewThreadEvent.is_notifying(user, f)
 
     def test_watch_thread(self):
         """Watch then unwatch a thread."""
@@ -112,13 +112,13 @@ class ThreadTests(ForumTestCase):
         t = Thread.objects.filter()[1]
         post(self.client, 'forums.watch_thread', {'watch': 'yes'},
              args=[t.forum.slug, t.id])
-        eq_(True, ThreadReplyEvent.is_notifying(user, t))
-        # ForumThreadEvent is not notifying.
-        eq_(False, ForumThreadEvent.is_notifying(user, t.forum))
+        assert NewPostEvent.is_notifying(user, t)
+        # NewThreadEvent is not notifying.
+        assert not NewThreadEvent.is_notifying(user, t.forum)
 
         post(self.client, 'forums.watch_thread', {'watch': 'no'},
              args=[t.forum.slug, t.id])
-        eq_(False, ThreadReplyEvent.is_notifying(user, t))
+        assert not NewPostEvent.is_notifying(user, t)
 
     def test_edit_thread(self):
         """Changing thread title works."""

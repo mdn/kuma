@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test.client import Client
 
+from nose.tools import eq_
 from test_utils import TestCase  # So others can import it from here
 
 import sumo
@@ -14,6 +15,12 @@ from sumo.urlresolvers import reverse, split_path
 
 get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)
 post = lambda c, v, data={}, **kw: c.post(reverse(v, **kw), data, follow=True)
+
+
+def attrs_eq(received, **expected):
+    """Compares received's attributes with expected's kwargs."""
+    for k, v in expected.iteritems():
+        eq_(v, getattr(received, k))
 
 
 class LocalizingClient(Client):

@@ -12,7 +12,7 @@ from authority.decorators import permission_required_or_403
 from access.decorators import has_perm_or_owns_or_403, login_required
 from access import has_perm
 import forums as constants
-from forums.events import ThreadReplyEvent, ForumThreadEvent
+from forums.events import NewPostEvent, NewThreadEvent
 from forums.feeds import ThreadsFeed, PostsFeed
 from forums.forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
 from forums.models import Forum, Thread, Post
@@ -72,7 +72,7 @@ def threads(request, forum_slug):
                   ThreadsFeed().title(forum)),)
 
     is_watching_forum = (request.user.is_authenticated() and
-                         ForumThreadEvent.is_notifying(request.user, forum))
+                         NewThreadEvent.is_notifying(request.user, forum))
     return jingo.render(request, 'forums/threads.html',
                         {'forum': forum, 'threads': threads_,
                          'is_watching_forum': is_watching_forum,
@@ -100,7 +100,7 @@ def posts(request, forum_slug, thread_id, form=None, reply_preview=None):
                   PostsFeed().title(thread)),)
 
     is_watching_thread = (request.user.is_authenticated() and
-                          ThreadReplyEvent.is_notifying(request.user, thread))
+                          NewPostEvent.is_notifying(request.user, thread))
     return jingo.render(request, 'forums/posts.html',
                         {'forum': forum, 'thread': thread,
                          'posts': posts_, 'form': form,
@@ -136,7 +136,7 @@ def reply(request, forum_slug, thread_id):
                 reply_.save()
 
                 # Send notifications to thread/forum watchers.
-                ThreadReplyEvent(reply_).fire(exclude=reply_.author)
+                NewPostEvent(reply_).fire(exclude=reply_.author)
 
                 return HttpResponseRedirect(reply_.get_absolute_url())
 
@@ -175,7 +175,7 @@ def new_thread(request, forum_slug):
                                    content=form.cleaned_data['content'])
             post.save()
 
-            ForumThreadEvent(post).fire(exclude=post.author)
+            NewThreadEvent(post).fire(exclude=post.author)
 
             return HttpResponseRedirect(
                 reverse('forums.posts', args=[forum_slug, thread.id]))
@@ -392,9 +392,9 @@ def watch_thread(request, forum_slug, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id, forum=forum)
 
     if request.POST.get('watch') == 'yes':
-        ThreadReplyEvent.notify(request.user, thread)
+        NewPostEvent.notify(request.user, thread)
     else:
-        ThreadReplyEvent.stop_notifying(request.user, thread)
+        NewPostEvent.stop_notifying(request.user, thread)
 
     return HttpResponseRedirect(reverse('forums.posts',
                                         args=[forum_slug, thread_id]))
@@ -409,8 +409,8 @@ def watch_forum(request, forum_slug):
         raise Http404
 
     if request.POST.get('watch') == 'yes':
-        ForumThreadEvent.notify(request.user, forum)
+        NewThreadEvent.notify(request.user, forum)
     else:
-        ForumThreadEvent.stop_notifying(request.user, forum)
+        NewThreadEvent.stop_notifying(request.user, forum)
 
     return HttpResponseRedirect(reverse('forums.threads', args=[forum_slug]))

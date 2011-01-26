@@ -5,12 +5,11 @@ from django.contrib.auth.models import User
 
 from kbforums.models import Thread, Post
 from kbforums.tests import KBForumTestCase
-from notifications import check_watch
 from sumo.tests import get, post
 from wiki.models import Document
 
 
-class PostsTemplateTestCase(KBForumTestCase):
+class PostsTemplateTests(KBForumTestCase):
 
     def test_empty_reply_errors(self):
         """Posting an empty reply shows errors."""
@@ -49,7 +48,7 @@ class PostsTemplateTestCase(KBForumTestCase):
         u = User.objects.get(username='jsocol')
         p = Post.objects.filter(creator=u, thread__is_locked=False)[0]
         res = get(self.client, 'wiki.discuss.edit_post',
-                 args=[p.thread.document.slug, p.thread.id, p.id])
+                  args=[p.thread.document.slug, p.thread.id, p.id])
 
         doc = pq(res.content)
         eq_(len(doc('form.edit-post')), 1)
@@ -86,23 +85,16 @@ class PostsTemplateTestCase(KBForumTestCase):
         d = t.document
 
         r = post(self.client, 'wiki.discuss.edit_post',
-                 {'content': 'More new content'},
-                 args=[d.slug, t.id, p.id])
+                 {'content': 'More new content'}, args=[d.slug, t.id, p.id])
         eq_(200, r.status_code)
 
         edited_p = Post.uncached.get(pk=p.pk)
         eq_('More new content', edited_p.content)
 
-    def test_read_without_permission(self):
-        """Listing posts without the view_in_forum permission should 404."""
-        response = get(self.client, 'wiki.discuss.posts',
-                       args=['restricted-forum', 6])
-        eq_(404, response.status_code)
-
     def test_preview_reply(self):
         """Preview a reply."""
         self.client.login(username='rrosario', password='testpass')
-        d = Document.objects.filter()[0]
+        d = Document.objects.all()[0]
         t = d.thread_set.all()[0]
         num_posts = t.post_set.count()
         content = 'Full of awesome.'
@@ -114,8 +106,21 @@ class PostsTemplateTestCase(KBForumTestCase):
         eq_(content, doc('#post-preview div.content').text())
         eq_(num_posts, t.post_set.count())
 
+    def test_watch_thread(self):
+        """Watch and unwatch a thread."""
+        self.client.login(username='rrosario', password='testpass')
 
-class ThreadsTemplateTestCase(KBForumTestCase):
+        t = Thread.objects.filter()[0]
+        response = post(self.client, 'wiki.discuss.watch_thread',
+                        {'watch': 'yes'}, args=[t.document.slug, t.id])
+        self.assertContains(response, 'Watching')
+
+        response = post(self.client, 'wiki.discuss.watch_thread',
+                        {'watch': 'no'}, args=[t.document.slug, t.id])
+        self.assertNotContains(response, 'Watching')
+
+
+class ThreadsTemplateTests(KBForumTestCase):
 
     def test_last_thread_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
@@ -130,31 +135,22 @@ class ThreadsTemplateTestCase(KBForumTestCase):
         """Posting an empty thread shows errors."""
         self.client.login(username='jsocol', password='testpass')
 
-        doc = Document.objects.filter()[0]
+        d = Document.objects.all()[0]
         response = post(self.client, 'wiki.discuss.new_thread',
-                        {'title': '', 'content': ''}, args=[doc.slug])
+                        {'title': '', 'content': ''}, args=[d.slug])
 
         doc = pq(response.content)
         errors = doc('ul.errorlist li a')
         eq_(errors[0].text, 'Please provide a title.')
         eq_(errors[1].text, 'Please provide a message.')
 
-    def test_new_thread_without_view_permission(self):
-        """Making a new thread without view permission should 404."""
-        self.client.login(username='jsocol', password='testpass')
-        response = post(self.client, 'wiki.discuss.new_thread',
-                        {'title': 'Blahs', 'content': 'Blahs'},
-                        args=['restricted-forum'])
-        eq_(404, response.status_code)
-
     def test_new_short_thread_errors(self):
         """Posting a short new thread shows errors."""
         self.client.login(username='jsocol', password='testpass')
 
-        doc = Document.objects.filter()[0]
+        d = Document.objects.all()[0]
         response = post(self.client, 'wiki.discuss.new_thread',
-                        {'title': 'wha?', 'content': 'wha?'},
-                        args=[doc.slug])
+                        {'title': 'wha?', 'content': 'wha?'}, args=[d.slug])
 
         doc = pq(response.content)
         errors = doc('ul.errorlist li a')
@@ -169,7 +165,7 @@ class ThreadsTemplateTestCase(KBForumTestCase):
         """Editing thread with too short of a title shows errors."""
         self.client.login(username='jsocol', password='testpass')
 
-        d = Document.objects.filter()[0]
+        d = Document.objects.all()[0]
         t_creator = User.objects.get(username='jsocol')
         t = d.thread_set.filter(creator=t_creator)[0]
         response = post(self.client, 'wiki.discuss.edit_thread',
@@ -193,135 +189,21 @@ class ThreadsTemplateTestCase(KBForumTestCase):
         doc = pq(res.content)
         eq_(len(doc('form.edit-thread')), 1)
 
-    def test_edit_thread(self):
-        """Changing thread title works."""
-        self.client.login(username='jsocol', password='testpass')
-
-        d = Document.objects.filter()[0]
-        t_creator = User.objects.get(username='jsocol')
-        t = d.thread_set.filter(creator=t_creator)[0]
-        post(self.client, 'wiki.discuss.edit_thread', {'title': 'A new title'},
-             args=[d.slug, t.id])
-        edited_t = d.thread_set.get(pk=t.id)
-
-        eq_('Sticky Thread', t.title)
-        eq_('A new title', edited_t.title)
-
-    def test_edit_thread_moderator(self):
-        """Editing post as a moderator works."""
-        self.client.login(username='pcraciunoiu', password='testpass')
-
-        t = Thread.objects.get(pk=2)
-        d = t.document
-
-        eq_('Sticky Thread', t.title)
-
-        r = post(self.client, 'wiki.discuss.edit_thread',
-                 {'title': 'new title'}, args=[d.slug, t.id])
-        eq_(200, r.status_code)
-
-        edited_t = Thread.uncached.get(pk=2)
-        eq_('new title', edited_t.title)
-
-    def test_watch_GET_405(self):
-        """Watch KB forum with HTTP GET results in 405."""
+    def test_watch_forum(self):
+        """Watch and unwatch a forum."""
         self.client.login(username='rrosario', password='testpass')
-        doc = Document.objects.filter()[0]
-        response = get(self.client, 'wiki.discuss.watch_forum',
-                       args=[doc.slug])
-        eq_(405, response.status_code)
 
-    def test_watch_set_unset(self):
-        """Watch then unwatch a KB forum."""
-        self.client.login(username='rrosario', password='testpass')
-        doc = Document.objects.filter()[0]
-        post(self.client, 'wiki.discuss.watch_forum', {'watch': 'yes'},
-             args=[doc.slug])
-        assert check_watch(Document, doc.id, 'user118577@nowhere',
-                           'post'), 'Watch was not created'
+        d = Document.objects.all()[0]
+        response = post(self.client, 'wiki.discuss.watch_forum',
+                        {'watch': 'yes'}, args=[d.slug])
+        self.assertContains(response, 'Watching')
 
-        post(self.client, 'wiki.discuss.watch_forum', {'watch': 'no'},
-             args=[doc.slug])
-        assert not check_watch(Document, doc.id, 'user118577@nowhere',
-                           'post'), 'Watch was not created'
+        response = post(self.client, 'wiki.discuss.watch_forum',
+                        {'watch': 'no'}, args=[d.slug])
+        self.assertNotContains(response, 'Watching')
 
 
-class ForumsTemplateTestCase(KBForumTestCase):
-
-    def setUp(self):
-        super(ForumsTemplateTestCase, self).setUp()
-        self.doc = Document.objects.all()[0]
-        admin = User.objects.get(pk=1)
-        self.thread = self.doc.thread_set.filter(creator=admin)[0]
-        self.post = self.thread.post_set.all()[0]
-        # Login for testing 403s
-        self.client.login(username='jsocol', password='testpass')
-
-    def tearDown(self):
-        self.client.logout()
-        super(ForumsTemplateTestCase, self).tearDown()
-
-    def test_edit_thread_403(self):
-        """Editing a thread without permissions returns 403."""
-        response = get(self.client, 'wiki.discuss.edit_thread',
-                       args=[self.doc.slug, self.thread.id])
-        eq_(403, response.status_code)
-
-    def test_edit_locked_thread_403(self):
-        """Editing a locked thread returns 403."""
-        jsocol = User.objects.get(username='jsocol')
-        t = self.doc.thread_set.filter(creator=jsocol, is_locked=True)[0]
-        response = get(self.client, 'wiki.discuss.edit_thread',
-                       args=[self.doc.slug, t.id])
-        eq_(403, response.status_code)
-
-    def test_delete_thread_403(self):
-        """Deleting a thread without permissions returns 403."""
-        response = get(self.client, 'wiki.discuss.delete_thread',
-                       args=[self.doc.slug, self.thread.id])
-        eq_(403, response.status_code)
-
-    def test_sticky_thread_405(self):
-        """Marking a thread sticky with a HTTP GET returns 405."""
-        response = get(self.client, 'wiki.discuss.sticky_thread',
-                       args=[self.doc.slug, self.thread.id])
-        eq_(405, response.status_code)
-
-    def test_sticky_thread_403(self):
-        """Marking a thread sticky without permissions returns 403."""
-        response = post(self.client, 'wiki.discuss.sticky_thread',
-                        args=[self.doc.slug, self.thread.id])
-        eq_(403, response.status_code)
-
-    def test_locked_thread_403(self):
-        """Marking a thread locked without permissions returns 403."""
-        response = post(self.client, 'wiki.discuss.lock_thread',
-                        args=[self.doc.slug, self.thread.id])
-        eq_(403, response.status_code)
-
-    def test_locked_thread_405(self):
-        """Marking a thread locked via a GET instead of a POST request."""
-        response = get(self.client, 'wiki.discuss.lock_thread',
-                       args=[self.doc.slug, self.thread.id])
-        eq_(405, response.status_code)
-
-    def test_post_edit_403(self):
-        """Editing a post without permissions returns 403."""
-        response = get(self.client, 'wiki.discuss.edit_post',
-                       args=[self.doc.slug, self.thread.id, self.post.id])
-        eq_(403, response.status_code)
-
-    def test_post_delete_403(self):
-        """Deleting a post without permissions returns 403."""
-        response = get(self.client, 'wiki.discuss.delete_post',
-                       args=[self.doc.slug, self.thread.id, self.post.id])
-        eq_(403, response.status_code)
-
-        doc = pq(response.content)
-        eq_('Access denied', doc('#main h1').text())
-
-
-class NewThreadTemplateTestCase(KBForumTestCase):
+class NewThreadTemplateTests(KBForumTestCase):
 
     def test_preview(self):
         """Preview the thread post."""

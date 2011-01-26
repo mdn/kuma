@@ -181,7 +181,7 @@ class ThreadsTemplateTests(ForumTestCase):
         u = User.objects.get(username='jsocol')
         t = Thread.objects.filter(creator=u, is_locked=False)[0]
         res = get(self.client, 'forums.edit_thread',
-                 args=[t.forum.slug, t.id])
+                  args=[t.forum.slug, t.id])
 
         doc = pq(res.content)
         eq_(len(doc('form.edit-thread')), 1)

@@ -10,12 +10,11 @@ import jingo
 
 from access.decorators import permission_required, login_required
 import kbforums
+from kbforums.events import NewPostEvent, NewThreadEvent
 from kbforums.feeds import ThreadsFeed, PostsFeed
 from kbforums.forms import (ReplyForm, NewThreadForm,
                             EditThreadForm, EditPostForm)
 from kbforums.models import Thread, Post
-from kbforums.tasks import build_reply_notification, build_thread_notification
-from notifications import create_watch, destroy_watch
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate
 from wiki.models import Document
@@ -49,7 +48,7 @@ def sort_threads(threads_, sort=0, desc=0):
 
 
 def threads(request, document_slug):
-    """View all the threads in a forum."""
+    """View all the threads in a discussion forum."""
     doc = get_document(document_slug, request)
     try:
         sort = int(request.GET.get('sort', 0))
@@ -69,8 +68,11 @@ def threads(request, document_slug):
     feed_urls = ((reverse('wiki.discuss.threads.feed', args=[document_slug]),
                   ThreadsFeed().title(doc)),)
 
+    is_watching_forum = (request.user.is_authenticated() and
+                         NewThreadEvent.is_notifying(request.user, doc))
     return jingo.render(request, 'kbforums/threads.html',
                         {'document': doc, 'threads': threads_,
+                         'is_watching_forum': is_watching_forum,
                          'sort': sort, 'desc_toggle': desc_toggle,
                          'feeds': feed_urls})
 
@@ -92,10 +94,13 @@ def posts(request, document_slug, thread_id, form=None, reply_preview=None):
                                   'thread_id': thread_id}),
                   PostsFeed().title(thread)),)
 
+    is_watching_thread = (request.user.is_authenticated() and
+                          NewPostEvent.is_notifying(request.user, thread))
     return jingo.render(request, 'kbforums/posts.html',
                         {'document': doc, 'thread': thread,
                          'posts': posts_, 'form': form,
                          'reply_preview': reply_preview,
+                         'is_watching_thread': is_watching_thread,
                          'feeds': feed_urls})
 
 
@@ -120,7 +125,7 @@ def reply(request, document_slug, thread_id):
                 reply_.save()
 
                 # Send notifications to thread/forum watchers.
-                build_reply_notification.delay(reply_)
+                NewPostEvent(reply_).fire(exclude=reply_.creator)
 
                 return HttpResponseRedirect(reply_.get_absolute_url())
 
@@ -154,7 +159,7 @@ def new_thread(request, document_slug):
             post.save()
 
             # Send notifications to forum watchers.
-            build_thread_notification.delay(post)
+            NewThreadEvent(post).fire(exclude=post.creator)
 
             return HttpResponseRedirect(
                 reverse('wiki.discuss.posts', args=[document_slug, thread.id]))
@@ -317,9 +322,9 @@ def watch_thread(request, document_slug, thread_id):
     thread = get_object_or_404(Thread, pk=thread_id, document=doc)
 
     if request.POST.get('watch') == 'yes':
-        create_watch(Thread, thread.id, request.user.email, 'reply')
+        NewPostEvent.notify(request.user, thread)
     else:
-        destroy_watch(Thread, thread.id, request.user.email, 'reply')
+        NewPostEvent.stop_notifying(request.user, thread)
 
     return HttpResponseRedirect(reverse('wiki.discuss.posts',
                                         args=[document_slug, thread_id]))
@@ -328,12 +333,12 @@ def watch_thread(request, document_slug, thread_id):
 @require_POST
 @login_required
 def watch_forum(request, document_slug):
-    """Watch/unwatch a forum (based on 'watch' POST param)."""
+    """Watch/unwatch a document (based on 'watch' POST param)."""
     doc = get_document(document_slug, request)
     if request.POST.get('watch') == 'yes':
-        create_watch(Document, doc.id, request.user.email, 'post')
+        NewThreadEvent.notify(request.user, doc)
     else:
-        destroy_watch(Document, doc.id, request.user.email, 'post')
+        NewThreadEvent.stop_notifying(request.user, doc)
 
     return HttpResponseRedirect(reverse('wiki.discuss.threads',
                                         args=[document_slug]))

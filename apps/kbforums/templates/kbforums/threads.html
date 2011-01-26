@@ -10,13 +10,13 @@
 <article id="threads" class="main">
   <h1>{{ _('{d} Discussion')|f(d=document.title) }}</h1>
   <div class="badges">
-    {% if is_watching(document) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
+    {% if is_watching_forum %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
   </div>
   <div class="forum-actions">
     {% if user.is_authenticated() %}
       <form action="{{ url('wiki.discuss.watch_forum', document.slug) }}" method="post">
         {{ csrf() }}
-        {% if is_watching(document) %}
+        {% if is_watching_forum %}
           {% set watch = _('Stop watching') %}
           <input type="hidden" name="watch" value="no" />
         {% else %}
