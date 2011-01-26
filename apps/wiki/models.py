@@ -635,13 +635,16 @@ class RelatedDocument(ModelBase):
         ordering = ['-in_common']
 
 
-def get_current_or_latest_revision(document):
+def get_current_or_latest_revision(document, reviewed_only=True):
     """Returns current revision if there is one, else the last created
     revision."""
     rev = document.current_revision
     if not rev:
-        revs = document.revisions.exclude(
-            is_approved=False, reviewed__isnull=False).order_by('-created')
+        if reviewed_only:
+            filter = models.Q(is_approved=False, reviewed__isnull=False)
+        else:
+            filter = models.Q()
+        revs = document.revisions.exclude(filter).order_by('-created')
         if revs.exists():
             rev = revs[0]
 

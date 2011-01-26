@@ -18,6 +18,11 @@
         {{ _('Translating article to {locale}' )|f(locale=language) }}.
         <a class="change" href="#change-locale">{{ _('Change') }}</a>
       </p>
+      {% if not based_on.reviewed or not based_on.is_approved %}
+        <div class="warning-box">
+          {{ _('You are translating an unreviewed or rejected English document.') }}
+        </div>
+      {% endif %}
       <section id="change-locale" class="pop-in">
         <h1>{{ _('Choose a locale:') }}</h1>
         <div class="wrap">

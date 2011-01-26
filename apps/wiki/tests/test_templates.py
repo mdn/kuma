@@ -1064,6 +1064,19 @@ class TranslateTests(TestCaseBase):
         doc = pq(response.content)
         eq_(doc('#id_content')[0].value, base_rev.content)
 
+    def test_translate_rejected_parent(self):
+        """Translate view of rejected English document shows warning."""
+        user = User.objects.get(pk=118533)
+        en_revision = revision(is_approved=False, save=True, reviewer=user,
+                               reviewed=datetime.now())
+
+        url = reverse('wiki.translate', locale='es',
+                      args=[en_revision.document.slug])
+        response = self.client.get(url)
+        doc = pq(response.content)
+        eq_('You are translating an unreviewed or rejected English document.',
+            doc('.warning-box').text())
+
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                                       locale=None):

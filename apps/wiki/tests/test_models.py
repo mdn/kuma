@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from nose.tools import eq_
 from taggit.models import TaggedItem
 
@@ -8,7 +10,8 @@ from sumo.tests import TestCase
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
-                         REDIRECT_HTML, MAJOR_SIGNIFICANCE, CATEGORIES)
+                         REDIRECT_HTML, MAJOR_SIGNIFICANCE, CATEGORIES,
+                         get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tests import document, revision, doc_rev, translated_revision
 
@@ -473,7 +476,7 @@ class RevisionTests(TestCase):
         eq_(en_rev.document.current_revision, de_rev.based_on)
 
 
-class RelatedDocumentTestCase(TestCase):
+class RelatedDocumentTests(TestCase):
     fixtures = ['users.json', 'wiki/documents.json']
 
     def test_related_documents_calculated(self):
@@ -501,3 +504,58 @@ class RelatedDocumentTestCase(TestCase):
         calculate_related_documents()
         d = Document.uncached.get(pk=3)
         eq_(0, d.related_documents.count())
+
+
+class GetCurrentOrLatestRevisionTests(TestCase):
+    fixtures = ['users.json']
+
+    """Tests for get_current_or_latest_revision."""
+    def test_single_approved(self):
+        """Get approved revision."""
+        rev = revision(is_approved=True, save=True)
+        eq_(rev, get_current_or_latest_revision(rev.document))
+
+    def test_single_rejected(self):
+        """No approved revisions available should return None."""
+        rev = revision(is_approved=False)
+        eq_(None, get_current_or_latest_revision(rev.document))
+
+    def test_multiple_approved(self):
+        """When multiple approved revisions exist, return the most recent."""
+        r1 = revision(is_approved=True, save=True)
+        r2 = revision(is_approved=True, save=True, document=r1.document)
+        eq_(r2, get_current_or_latest_revision(r2.document))
+
+    def test_approved_over_most_recent(self):
+        """Should return most recently approved when there is a more recent
+        unreviewed revision."""
+        r1 = revision(is_approved=True, save=True,
+                      created=datetime.now() - timedelta(days=1))
+        r2 = revision(is_approved=False, reviewed=None, save=True,
+                      document=r1.document)
+        eq_(r1, get_current_or_latest_revision(r2.document))
+
+    def test_latest(self):
+        """Return latest not-rejected revision when no current exists."""
+        r1 = revision(is_approved=False, reviewed=None, save=True,
+                      created=datetime.now() - timedelta(days=1))
+        r2 = revision(is_approved=False, reviewed=None, save=True,
+                      document=r1.document)
+        eq_(r2, get_current_or_latest_revision(r1.document))
+
+    def test_latest_rejected(self):
+        """Return latest rejected revision when no current exists."""
+        r1 = revision(is_approved=False, reviewed=None, save=True,
+                      created=datetime.now() - timedelta(days=1))
+        r2 = revision(is_approved=False, save=True, document=r1.document)
+        eq_(r2, get_current_or_latest_revision(r1.document,
+                                               reviewed_only=False))
+
+    def test_latest_unreviewed(self):
+        """Return latest unreviewed revision when no current exists."""
+        r1 = revision(is_approved=False, reviewed=None, save=True,
+                      created=datetime.now() - timedelta(days=1))
+        r2 = revision(is_approved=False, reviewed=None, save=True,
+                      document=r1.document)
+        eq_(r2, get_current_or_latest_revision(r1.document,
+                                               reviewed_only=False))

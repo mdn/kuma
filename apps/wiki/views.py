@@ -416,7 +416,8 @@ def translate(request, document_slug, revision_id=None):
         based_on_rev = get_object_or_404(Revision, pk=revision_id,
                                          document__parent=parent_doc)
     else:
-        based_on_rev = get_current_or_latest_revision(parent_doc)
+        based_on_rev = get_current_or_latest_revision(parent_doc,
+                                                      reviewed_only=False)
 
     disclose_description = bool(request.GET.get('opendescription'))
 
