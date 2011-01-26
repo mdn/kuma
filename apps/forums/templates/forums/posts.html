@@ -7,6 +7,10 @@
 {% set crumbs = [(url('forums.forums'), _('Forums')),
                  (url('forums.threads', forum.slug), forum.name),
                  (None, thread.title)] %}
+{% set canonical_url = url('forums.posts', forum_slug=forum.slug, thread_id=thread.id) %}
+{% if posts.number > 1 %}
+  {% set canonical_url = canonical_url|urlparams(page=posts.number) %}
+{% endif %}
 
 {% block content %}
 <article id="posts" class="main">
