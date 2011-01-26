@@ -406,7 +406,12 @@
             }
 
             // Now $cur_ol is at exactly the right level to add a header by appending an <li>.
-            $cur_ol.append($('<li />').text($h.text()).wrapInner($('<a>').attr('href', '#' + $h.attr('id'))));
+            // Clone the header, remove any hidden elements and get the text,
+            // and replace back with the clone.
+            var $tmpClone = $h.clone(),
+                text = $h.find(':hidden').remove().end().text();
+            $h.replaceWith($tmpClone);
+            $cur_ol.append($('<li />').text(text).wrapInner($('<a>').attr('href', '#' + $h.attr('id'))));
         });
         return $root;
     }
