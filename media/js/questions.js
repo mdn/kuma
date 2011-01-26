@@ -301,7 +301,7 @@
                         $container.append(data.html);
                     } else if (data.message) {
                         var html = '<a class="close" href="#close">' +
-                               '&#x2716;</a><div class="msg"></div>';
+                               '&#x2716;</a><div class="msg wrap"></div>';
                         $(boxSelector)
                             .html(html)
                             .find('div.msg').text(data.message);

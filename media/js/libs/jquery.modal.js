@@ -50,8 +50,8 @@ jQuery.fn.initClickModal = function (options) {
         if (!options.modal.data('inited')) {
             options.modal.append('<a href="#close" class="close">&#x2716;</a>')
                 .data('inited', true);
-            options.modal.find('a.close, a.cancel, input[name="cancel"]')
-                .click(closeModal);
+            options.modal.delegate('a.close, a.cancel, input[name="cancel"]',
+                                   'click', closeModal);
         }
 
         options.modal.addClass('active');
