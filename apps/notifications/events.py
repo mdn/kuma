@@ -1,14 +1,13 @@
 import random
 from string import letters
 
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.db.models import Q
 
 from celery.decorators import task
 
-from notifications.models import Watch, WatchFilter
+from notifications.models import Watch, WatchFilter, EmailUser
 
 
 @task
@@ -71,7 +70,7 @@ class Event(object):
                                 (cls.__name__, k))
 
     def _users_watching_by_filter(self, **filters):
-        """Return an iterable of Users/AnonymousUsers watching the event.
+        """Return an iterable of Users/EmailUsers watching the event.
 
         "Watching the event" means having a Watch whose event_type is
         self.event_type, whose content_type is self.content_type or NULL, and
@@ -130,7 +129,7 @@ class Event(object):
             # The query above guarantees us an email from either the user or
             # the watch. Some of these cases shouldn't happen, but we're
             # tolerant.
-            user = w.user or AnonymousUser()
+            user = w.user or EmailUser()
             if not getattr(user, 'email', ''):
                 user.email = w.email
             yield user
@@ -265,13 +264,10 @@ class Event(object):
         raise NotImplementedError
 
     def _users_watching(self):
-        """Return an iterable of Users and AnonymousUsers watching this event.
+        """Return an iterable of Users and EmailUsers watching this event.
 
         Default implementation returns users watching this object's event_type
         and, if defined, content_type.
-
-        Take care not to hash or compare AnonymousUsers; they all compare
-        equal.
 
         """
         return self._users_watching_by_filter()

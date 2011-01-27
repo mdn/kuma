@@ -1,7 +1,7 @@
 import hashlib
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
@@ -101,3 +101,22 @@ class NotificationsMixin(models.Model):
 
     class Meta(object):
         abstract = True
+
+
+class EmailUser(AnonymousUser):
+    """An anonymous user identified only by email address"""
+
+    def __init__(self, email=''):
+        self.email = email
+
+    def __unicode__(self):
+        return 'Anonymous user <%s>' % self.email
+
+    def __eq__(self, other):
+        return self.email == other.email
+
+    def __ne__(self, other):
+        return self.email != other.email
+
+    def __hash__(self):
+        return hash(self.email)

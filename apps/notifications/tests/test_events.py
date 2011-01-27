@@ -5,7 +5,7 @@ from django.core import mail
 from django.core.mail import EmailMessage
 
 from notifications.events import Event
-from notifications.models import Watch
+from notifications.models import Watch, EmailUser
 from notifications.tests import watch, watch_filter, ModelsTestCase
 from notifications.tests.models import MockModel
 from sumo.tests import TestCase
@@ -180,3 +180,18 @@ class FireTests(TestCase):
         eq_(['hi@there.com'], first_mail.to)
         eq_('Subject!', first_mail.subject)
         eq_('Body!', first_mail.body)
+
+
+def test_anonymous_user_compares():
+    """Make sure anonymous users with different emails compare different."""
+    # Test __ne__:
+    assert EmailUser('frank') != EmailUser('george')
+    assert not EmailUser('frank') != EmailUser('frank')
+
+    # Test __eq__:
+    assert not EmailUser('frank') == EmailUser('george')
+    assert EmailUser('frank') == EmailUser('frank')
+
+    # Test __hash__:
+    assert hash(EmailUser('frank')) == hash(EmailUser('frank'))
+    assert hash(EmailUser('frank')) != hash(EmailUser('george'))
