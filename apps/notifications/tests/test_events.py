@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.core.mail import EmailMessage
 
-from notifications.events import Event
+from notifications.events import Event, _unique_by_email
 from notifications.models import Watch, EmailUser
 from notifications.tests import watch, watch_filter, ModelsTestCase
 from notifications.tests.models import MockModel
@@ -18,9 +18,10 @@ TYPE = 'some event'
 class SimpleEvent(Event):
     event_type = TYPE
 
-    def _mails(self, users):
+    def _mails(self, users_and_watches):
         """People watch the event in general; there are no parameters."""
-        return (EmailMessage('Subject!', 'Body!', to=[u.email]) for u in users)
+        return (EmailMessage('Subject!', 'Body!', to=[u.email]) for u, w in
+                users_and_watches)
 
 
 class ContentTypeEvent(SimpleEvent):
@@ -38,8 +39,9 @@ class FilteredContentTypeEvent(ContentTypeEvent):
 def emails_eq(addresses, event, **filters):
     """Assert that the given emails are the ones watched by `event`, given the
     scoping in `filters`."""
-    eq_(set(addresses),
-        set(u.email for u in event._users_watching_by_filter(**filters)))
+    eq_(sorted(addresses),
+        sorted([u.email for u, w in
+                event._users_watching_by_filter(**filters)]))
 
 
 class UsersWatchingTests(TestCase):
@@ -103,6 +105,71 @@ class UsersWatchingTests(TestCase):
         # anything.
         self.assertRaises(TypeError, list,
                           SimpleEvent()._users_watching_by_filter(smoo=3))
+
+    def test_duplicates(self):
+        """Don't return duplicate email addresses."""
+        watch(event_type=TYPE, user=user(email='hi@there.com', save=True),
+              save=True)
+        watch(event_type=TYPE, email='hi@there.com').save()
+        watch(event_type=TYPE, email='hi@there.com').save()
+        eq_(3, Watch.objects.all().count())  # We created what we meant to.
+
+        emails_eq(['hi@there.com'], SimpleEvent())
+
+    def test_registered_users_favored(self):
+        """When removing duplicates, make sure registered users are kept in
+        favor of anonymous ones having the same email address."""
+        def make_anonymous_watches():
+            for x in xrange(3):
+                watch(event_type=TYPE, email='hi@there.com').save()
+
+        # Throw some anonymous watches in there in the hope that they would
+        # come out on top if we didn't purposely favor registered users.
+        # Suggestions on how to make this test more reliable are welcome.
+        make_anonymous_watches()
+
+        # File the registered watch:
+        watch(event_type=TYPE,
+              user=user(first_name='Jed', email='hi@there.com',
+                        save=True)).save()
+
+        # A few more anonymous watches in case the BTrees flop in the other
+        # direction:
+        make_anonymous_watches()
+
+        users_and_watches = list(SimpleEvent()._users_watching_by_filter())
+        u, w = users_and_watches[0]
+        eq_('Jed', u.first_name)
+
+    def test_unique_by_email(self):
+        """Test the routine that sorts through users and watches having the
+        same email addresses."""
+        # Test the best in a cluster coming first, in the middle, and last.
+        # We mark the correct choices with secret='a'.
+        users_and_watches = [
+            (user(email='hi'), watch(secret='a')),
+            (user(email='hi'), watch()),
+            (user(), watch(email='hi')),
+
+            (user(), watch(email='mid')),
+            (user(email='mid'), watch(secret='a')),
+            (user(), watch(email='mid')),
+
+            (user(), watch(email='lo')),
+            (user(), watch(email='lo')),
+            (user(email='lo'), watch(secret='a')),
+
+            (user(), watch(email='none', secret='a')),
+            (user(), watch(email='none')),
+            
+            (user(), watch(email='hi', secret='a')),
+            (user(), watch(email='hi')),
+            (user(), watch(email='hi'))]
+
+        favorites = list(_unique_by_email(users_and_watches))
+        num_clusters = 5
+        eq_(num_clusters, len(favorites))
+        eq_(['a'] * num_clusters, [w.secret for u, w in favorites])
 
 
 class NotificationTests(TestCase):

@@ -1,6 +1,6 @@
 import hashlib
 
-from django.db import models
+from django.db import models, connections, router
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -8,6 +8,28 @@ from django.contrib.contenttypes.models import ContentType
 from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
+
+
+def multi_raw(query, params, models):
+    """Scoop multiple model instances out of the DB at once, given a query that
+    returns all fields of each.
+
+    Return an iterable of sequences of model instances parallel to the `models`
+    sequence of classes. For example...
+
+        [(<User such-and-such>, <Watch such-and-such>), ...]
+
+    """
+    cursor = connections[router.db_for_read(models[0])].cursor()
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+    model_attnames = dict((m, [f.get_attname() for f in m._meta._fields()])
+                          for m in models)
+    for row in rows:
+        next_value = iter(row).next
+        yield [model_class(**dict((a, next_value())
+                           for a in model_attnames[model_class]))
+               for model_class in models]
 
 
 class EventWatch(ModelBase):
@@ -111,6 +133,8 @@ class EmailUser(AnonymousUser):
 
     def __unicode__(self):
         return 'Anonymous user <%s>' % self.email
+
+    __repr__ = AnonymousUser.__str__
 
     def __eq__(self, other):
         return self.email == other.email

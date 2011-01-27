@@ -1,24 +1,45 @@
 import random
 from string import letters
 
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.db.models import Q
 
 from celery.decorators import task
 
-from notifications.models import Watch, WatchFilter, EmailUser
+from notifications.models import Watch, WatchFilter, EmailUser, multi_raw
 
 
-@task
-def _fire_task(event):
-    """Build and send the emails as a celery task."""
-    # This is outside the Event class because @task doesn't send the `self` arg
-    # implicitly, and there's no sense making it look like it does.
-    connection = mail.get_connection(fail_silently=True)
-    connection.open()
-    for m in event._mails(event._users_watching()):
-        connection.send_messages([m])
+def _unique_by_email(users_and_watches):
+    """Given a sequence of (User, Watch) pairs clustered by email
+    address (which is never ''), yield from each cluster...
+
+    (1) the first pair where the User has an email, or, if there isn't such a
+        user...
+    (2) the first pair.
+
+    """
+    # It is late, and I am tired, and this is ugly. Ideas welcome. Can
+    # we replace this with clever SQL that somehow returns just the
+    # best row for each email?
+
+    # Email of current cluster:
+    email = ''
+    # Best pairs in cluster so far:
+    favorite_user, favorite_watch = None, None
+    for u, w in users_and_watches:
+        row_email = u.email or w.email
+        if email != row_email:
+            if email != '':
+                yield favorite_user, favorite_watch
+                favorite_user = None
+            favorite_user, favorite_watch = u, w
+            email = row_email
+        elif not favorite_user.email and u.email:
+            favorite_user, favorite_watch = u, w
+    if favorite_user is not None:
+        yield favorite_user, favorite_watch
 
 
 class Event(object):
@@ -57,7 +78,17 @@ class Event(object):
         signal handler that calls fire().
 
         """
-        _fire_task.delay(self)
+        # Tasks don't receive the `self` arg implicitly.
+        self._fire_task.delay(self)
+
+    @task
+    def _fire_task(self):
+        """Build and send the emails as a celery task."""
+        connection = mail.get_connection(fail_silently=True)
+        # Warning: fail_silently swallows errors thrown by the generators, too.
+        connection.open()
+        for m in self._mails(self._users_watching()):
+            connection.send_messages([m])
 
     @classmethod
     def _validate_filters(cls, filters):
@@ -70,7 +101,12 @@ class Event(object):
                                 (cls.__name__, k))
 
     def _users_watching_by_filter(self, **filters):
-        """Return an iterable of Users/EmailUsers watching the event.
+        """Return an iterable of (User/EmailUser, Watch) pairs watching the
+        event.
+
+        Of multiple Users/EmailUsers having the same email address, only one is
+        returned. Users are favored over EmailUsers so we are sure to be able
+        to, for example, include a link to a user profile in the mail.
 
         "Watching the event" means having a Watch whose event_type is
         self.event_type, whose content_type is self.content_type or NULL, and
@@ -109,40 +145,36 @@ class Event(object):
             content_type = ''
             ct_param = []
         query = (
-            'SELECT w.id, w.content_type_id, w.event_type, w.user_id, '
-                   'w.email, w.secret '
+            'SELECT u.*, w.* '
             'FROM notifications_watch w '
             'LEFT JOIN auth_user u ON u.id=w.user_id{left_joins} '
             'WHERE w.event_type=%s{content_type}{wheres} '
             'AND (length(w.email)>0 OR length(u.email)>0) '
-            'AND w.secret IS NULL').format(
+            'AND w.secret IS NULL '
+            'ORDER BY u.email DESC, w.email DESC').format(
             left_joins=joins,
             content_type=content_type,
             wheres=wheres)
 
-        # TODO: Pin to default DB.
-        watches = Watch.uncached.raw(query, join_params + [self.event_type] +
-                                            ct_param + where_params)
-
-        # Yank the user out of each, or construct an anonymous user:
-        for w in watches:
+        for user, watch in _unique_by_email(multi_raw(
+            query,
+            join_params + [self.event_type] + ct_param + where_params,
+            [User, Watch])):
             # The query above guarantees us an email from either the user or
             # the watch. Some of these cases shouldn't happen, but we're
             # tolerant.
-            user = w.user or EmailUser()
             if not getattr(user, 'email', ''):
-                user.email = w.email
-            yield user
+                user = EmailUser(watch.email)
+            yield user, watch
 
-        # Can we do "where user_id in (1, 2, 3)", grab all the real Users with
-        # one query, and match them up? YAGNI for now.
-
-        # TODO: De-dupe by email address?
+        # TODO: If I write a de-duping union(), factor up the slightly horrible
+        # set() call from forums.events.
 
     @classmethod
-    def _watches_by_user(cls, user_or_email, **filters):
-        """Return a QuerySet of watches having (only) the given filters as well
-        as the event_type and content_type attrs of the class.
+    def _watches_belonging_to_user(cls, user_or_email, **filters):
+        """Return a QuerySet of watches having the given user or email, having
+        (only) the given filters, and having the event_type and content_type
+        attrs of the class.
 
         Matched Watches may be either confirmed and unconfirmed. They may
         include duplicates if the get-then-create race condition in
@@ -160,7 +192,7 @@ class Event(object):
         cls._validate_filters(filters)
 
         # Filter by stuff in the Watch row:
-        watches = Watch.uncached.using('default').filter(
+        watches = Watch.uncached.filter(
             Q(email=user_or_email) if isinstance(user_or_email, basestring)
                                    else Q(user=user_or_email),
             Q(content_type=ContentType.objects.get_for_model(cls.content_type))
@@ -198,7 +230,8 @@ class Event(object):
         supports and the meaning of each.
 
         """
-        return cls._watches_by_user(user_or_email_, **filters).exists()
+        return cls._watches_belonging_to_user(user_or_email_,
+                                              **filters).exists()
 
     @classmethod
     def notify(cls, user_or_email_, **filters):
@@ -217,7 +250,7 @@ class Event(object):
         # on delete_watch() nullify its effects.
         try:
             # Pick 1 if >1 are returned:
-            watch = cls._watches_by_user(
+            watch = cls._watches_belonging_to_user(
                 user_or_email_,
                 **filters)[0:1].get()
         except Watch.DoesNotExist:
@@ -247,7 +280,7 @@ class Event(object):
         docstring of is_notifying().
 
         """
-        cls._watches_by_user(user_or_email_, **filters).delete()
+        cls._watches_belonging_to_user(user_or_email_, **filters).delete()
 
     # TODO: If GenericForeignKeys don't give us cascading deletes, make a
     # stop_notifying_all(**filters) or something. It should delete any watch of
@@ -255,16 +288,26 @@ class Event(object):
     # of **filters. Even if there are additional filters on a watch, that watch
     # should still be deleted so we can delete, for example, any watch that
     # references a certain Question instance. To do that, factor such that you
-    # can effectively call _watches_by_user() without it calling extra().
+    # can effectively call _watches_belonging_to_user() without it calling
+    # extra().
 
     # Subclasses should implement the following:
 
-    def _mails(self, users):
-        """Return an iterable yielding a EmailMessage to send to each User."""
+    def _mails(self, users_and_watches):
+        """Return an iterable yielding an EmailMessage to send to each user.
+
+        `users_and_watches` -- an iterable of (User or EmailUser, Watch) pairs
+            where the first element is the user to send to and the second is
+            the watch that indicated the user's interest in this event
+
+        """
         raise NotImplementedError
 
     def _users_watching(self):
-        """Return an iterable of Users and EmailUsers watching this event.
+        """Return an iterable of Users and EmailUsers watching this event
+        and the Watches that map them to it.
+
+        Each yielded item is a tuple: (User or EmailUser, Watch).
 
         Default implementation returns users watching this object's event_type
         and, if defined, content_type.
