@@ -445,17 +445,17 @@
 
             // Divide {for} attrs into OSes and browsers:
             $(forData.split(',')).each(function(index) {
-                if (OSES.hasOwnProperty(this)) {
+                if (OSES[this] != undefined) {
                     osAttrs[this] = true;
                     foundAnyOses = true;
-                } else if (BROWSERS.hasOwnProperty(this)) {
+                } else if (BROWSERS[this] != undefined) {
                     browserAttrs[this] = true;
                     foundAnyBrowsers = true;
                 }
             });
 
-            shouldHide = (foundAnyOses && !osAttrs.hasOwnProperty(os)) ||
-                         (foundAnyBrowsers && !browserAttrs.hasOwnProperty(browser));
+            shouldHide = (foundAnyOses && osAttrs[os] == undefined) ||
+                         (foundAnyBrowsers && browserAttrs[browser] == undefined);
             if ((shouldHide && !isInverted) || (!shouldHide && isInverted)) {
                 $(this).hide();  // saves original visibility, which is nice but not necessary
             }
