@@ -224,7 +224,7 @@
             <form action="{{ url('questions.add_tag', question.id) }}"
                   data-action-async="{{ url('questions.add_tag_async', question.id) }}"
                   method="POST"
-                  class="add-tag-immediately">
+                  class="tag-adder">
               {{ csrf() }}
               <input type="text" name="tag-name" size="12"
                      class="autocomplete-tags {% if tag_adding_error %} invalid{% endif %}"

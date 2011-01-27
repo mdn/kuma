@@ -80,9 +80,9 @@ class TagWidget(Widget):
 
     def render(self, name, value, attrs=None):
         """Render a hidden input for each choice plus a blank text input."""
-        output = u'<div class="tags%s"' % ('' if self.read_only or
+        output = u'<div class="tag-adder tags%s"' % ('' if self.read_only or
                                                  self.async_urls
-                                              else ' tag-deferred')
+                                              else ' deferred')
         if not self.read_only:
             vocab = [t.name for t in Tag.objects.only('name').all()]
             output += u' data-tag-vocab-json="%s"' % escape(json.dumps(vocab))

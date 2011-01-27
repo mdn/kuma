@@ -102,7 +102,7 @@
         $("div.tags").each(
             function() {
                 var $div = $(this),
-                    async = !$div.hasClass("tag-deferred");
+                    async = !$div.hasClass("deferred");
                 $div.find(".tag").each(
                     function() {
                         attachRemoverHandlerTo($(this), async);
@@ -222,29 +222,18 @@
         // Dim all Add buttons. We'll undim them upon valid input.
         $("div.tags input.adder:enabled").attr("disabled", true);
 
-        // Attach an async submit handler to all form.add-tag-immediately.
-        $("form.add-tag-immediately").each(
-            function initOneForm() {
-                var $form = $(this);
-                $form.submit(
-                    function() {
-                        return addTag($form, true);
-                    }
-                );
+        $(".tag-adder").each(function() {
+            var $this = $(this),
+                async = !$this.hasClass("deferred");
+            function handler() {
+                return addTag($this, async);
             }
-        );
-
-        // Attach a tag-appearing handler to all div.tag-deferred.
-        $("div.tag-deferred").each(
-            function initOneDiv() {
-                var $div = $(this);
-                $div.find("input.adder").click(
-                    function() {
-                        return addTag($div, false);
-                    }
-                );
+            if ($this.is("form")) {
+                $this.submit(handler);
+            } else {
+                $this.find("input.adder").click(handler);
             }
-        );
+        });
     }
 
     // Given the tag-adding form, return the tag list in the corresponding
