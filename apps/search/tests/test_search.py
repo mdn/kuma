@@ -556,6 +556,12 @@ class SearchTest(SphinxTestCase):
         results = wc.query('video^^^$$$^')
         eq_(1, len(results))
 
+    def test_no_redirects(self):
+        """Redirect articles should never appear in search results."""
+        wc = WikiClient()
+        results = wc.query('ghosts')
+        eq_(1, len(results))
+
     @mock.patch_object(Site.objects, 'get_current')
     def test_suggestions(self, get_current):
         """Suggestions API is well-formatted."""

@@ -68,6 +68,20 @@
         }
     },
     {
+        "pk": 6,
+        "model": "wiki.document",
+        "fields": {
+            "category": 11,
+            "parent": null,
+            "title": "redirect lorem ipsum",
+            "locale": "en-US",
+            "current_revision": 30,
+            "is_template": false,
+            "html": "REDIRECT <a href=\"/foo\">bar</a>",
+            "slug": "redirect-lorem-ipsum"
+        }
+    },
+    {
         "pk": 14,
         "model": "wiki.revision",
         "fields": {
@@ -154,6 +168,24 @@
             "keywords": "ghosts",
             "reviewer": 118533,
             "document": 5,
+            "creator": 118533
+        }
+    },
+    {
+        "pk": 30,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "",
+            "based_on": null,
+            "is_approved": true,
+            "created": "2010-09-30 09:12:10",
+            "summary": "",
+            "reviewed": "2010-09-30 09:12:25",
+            "content": "REDIRECT [[foo|bar]]",
+            "significance": 30,
+            "keywords": "ghosts",
+            "reviewer": 118533,
+            "document": 6,
             "creator": 118533
         }
     },
