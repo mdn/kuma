@@ -144,8 +144,8 @@ Using ``{% trans %}`` Blocks for Long Strings
 
 When a string is very long, i.e. long enough to make Github scroll sideways, it
 should be line-broken and put in a ``{% trans %}`` block. ``{% trans %}``
-blocks work exactly like other block-level tags in Jinja2, and can have other
-things inside them. *Please do not do that!*
+blocks work like other block-level tags in Jinja2, except they cannot have
+other tags, except strings, inside them.
 
 The only thing that should be inside a ``{% trans %}`` block is printing a
 string with ``{{ string }}``. These are defined in the opening ``{% trans %}``
