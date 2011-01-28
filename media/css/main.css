@@ -20,6 +20,10 @@ article, nav, section {
     display: block;
 }
 
+html {
+    background: #fff url(../global/background.png) 0 -700px repeat-x;
+}
+
 body {
     font: 13px/1.231 Georgia, freeserif, serif;
     min-width: 998px;
@@ -68,6 +72,7 @@ h2 {
     Header
 ----------------------------------*/
 #header {
+    margin-top: 10px;
     width: 980px;
 }
 
