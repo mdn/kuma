@@ -67,6 +67,10 @@ class Event(object):
     content_type = None  # or, for example, Hamster
     filters = set()  # or, for example, set(['color', 'flavor'])
 
+    def __init__(self, exclude=None):
+        """Initialize event with option of excluding a user."""
+        self.exclude = exclude
+
     def fire(self):
         """Asynchronously notify everyone watching the event.
 
@@ -151,23 +155,32 @@ class Event(object):
             o_id = ''
             o_id_param = []
 
+        # Skip self.exclude if user was passed in at init time.
+        if self.exclude:
+            exclude = ' AND (u.id != %s)'
+            u_id_param = [self.exclude.id]
+        else:
+            exclude = ''
+            u_id_param = []
+
         query = (
             'SELECT u.*, w.* '
             'FROM notifications_watch w '
             'LEFT JOIN auth_user u ON u.id=w.user_id{left_joins} '
             'WHERE w.event_type=%s{content_type}{object_id}{wheres} '
-            'AND (length(w.email)>0 OR length(u.email)>0) '
+            'AND (length(w.email)>0 OR length(u.email)>0){exclude} '
             'AND w.secret IS NULL '
             'ORDER BY u.email DESC, w.email DESC').format(
             left_joins=joins,
             content_type=content_type,
             object_id=o_id,
+            exclude=exclude,
             wheres=wheres)
 
         for user, watch in _unique_by_email(multi_raw(
             query,
             join_params + [self.event_type] + ct_param + o_id_param +
-                where_params,
+                where_params + u_id_param,
             [User, Watch])):
             # The query above guarantees us an email from either the user or
             # the watch. Some of these cases shouldn't happen, but we're
@@ -338,7 +351,8 @@ class Event(object):
 class InstanceEvent(Event):
     """Common case of watching a specific instance of a Model."""
 
-    def __init__(self, instance):
+    def __init__(self, instance, exclude=None):
+        super(InstanceEvent, self).__init__(exclude=exclude)
         self.instance = instance
 
     @classmethod
