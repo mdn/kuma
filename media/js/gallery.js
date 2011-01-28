@@ -28,13 +28,14 @@ $(document).ready(function () {
                .append($('input[name="csrfmiddlewaretoken"]').first()
                        .clone());
 
-        // delete buttons must not close the modal, unbind that click event
+        // delete buttons must not close the modal, remove kbox-cancel class
         if (field_name !== undefined) {
-            $this.unbind('click');
+            $this.removeClass('kbox-cancel');
         }
 
         // now bind to the click event
         $this.click(function (ev) {
+            ev.preventDefault();
             if ($this.hasClass('draft') ||
                 $this.closest('.upload-form').hasClass('uploading')) {
 
@@ -55,7 +56,7 @@ $(document).ready(function () {
                 if (field_name === undefined) {
                     // cancel/close modal must reset the form
                     resetForms();
-                    return false;
+                    return;
                 }
 
                 reShowFileUpload({
@@ -67,7 +68,6 @@ $(document).ready(function () {
                 }, true /* hide preview */);
 
             }
-            return false;
         });
 
         return $this;
@@ -347,7 +347,7 @@ $(document).ready(function () {
                         $('.preview', $options.form).fadeIn('fast');
                     }
                 });
-                
+
                 $form.trigger('ajaxComplete');
             }
         });

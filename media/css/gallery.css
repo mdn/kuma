@@ -201,12 +201,11 @@ a.btn-upload {
 
 
 /* Upload media - modal window */
-#gallery-upload-modal {
-    display: none;
-}
-
-.js #gallery-upload-modal.active {
-    display: block;
+#upload-kbox {
+    left: 50%;
+    margin-left: -280px;
+    top: 150px;
+    width: 560px;
 }
 
 #gallery-upload-image, #gallery-upload-video, #gallery-upload-type {
@@ -219,17 +218,6 @@ a.btn-upload {
 
 #gallery-upload-type.draft {
     display: none;
-}
-
-.js #gallery-upload-modal {
-    color: #4B4740;
-    min-height: 100px;
-    left: 50%;
-    margin-left: -280px;
-    position: absolute;
-    top: 200px;
-    width: 560px;
-    z-index:10;
 }
 
 #gallery-upload-modal .row-left {

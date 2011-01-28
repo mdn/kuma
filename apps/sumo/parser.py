@@ -11,7 +11,8 @@ from wiki.models import Document
 
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title', 'class', 'rel'],
-    'div': ['id', 'class', 'style', 'data-for'],
+    'div': ['id', 'class', 'style', 'data-for', 'title', 'data-target',
+            'data-modal'],
     'h1': ['id'],
     'h2': ['id'],
     'h3': ['id'],

@@ -231,15 +231,11 @@ div.warning-box {
 }
 
 /* reply page styling */
-#reply-modal {
-    display: none;
-}
 
 #reply-container {
     background-color: #fff;
     font-family: Verdana, sans-serif;
     margin: 0 auto;
-    padding: 30px 24px;
     text-align: left;
     top: 86px;
 }
@@ -283,7 +279,7 @@ div.warning-box {
 
 #initial-tweet #arrow {
     border: 0;
-    left: 84px;
+    left: 75px;
     position: absolute;
     top: 60px;
 }
@@ -383,7 +379,7 @@ div.warning-box {
     height: 65px;
     font-size: .9em;
     padding: 10px 15px;
-    width: 310px;
+    width:325px;
 }
 
 #reply #reply-arrow {
@@ -486,9 +482,6 @@ div.warning-box {
     text-align:center;
 }
 
-#twitter-modal {
-    display: none;
-}
 .input-placeholder {
     color: #69645b;
 }
@@ -528,9 +521,6 @@ a.header-button {
 #twitter-modal {
     color: #69645b;
     font-family: Verdana, sans-serif;
-    margin: auto;
-    opacity: 1;
-    padding: 15px 24px 30px 24px;
     text-align: left;
 }
 

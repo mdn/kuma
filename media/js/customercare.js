@@ -139,13 +139,14 @@
             this.open = function(tweet) {
                 this.tweet = tweet;
                 this.content = '';
-                this.$el.dialog(this.dialog_options);
+                this.kbox.open();
                 var pos = this.$textarea.val().length - 8; // == ' #fxhelp'.length
                 this.$textarea.get(0).setSelectionRange(pos, pos);
                 this.$textarea.focus();
             };
             this.close = function() {
-                this.$el.dialog('close');
+                this.kbox.close();
+                modal.reset();
             };
             this.reset = function() {
                 this.content = '';
@@ -165,14 +166,7 @@
             this.$error_msg = this.$el.find("#error-message");
 
             var modal = this;
-            this.dialog_options = {
-                'modal': true,
-                'position': 'top',
-                'width': 500,
-                'close': function() {
-                    modal.reset();
-                },
-            };
+            this.kbox = $(this.$el).data('kbox');
 
             this.$el.find('#submit').bind('click', {reply: this}, function(e) {
                 var reply = e.data.reply,
@@ -222,28 +216,19 @@
                             memory.id = e.data.tweet.id;
                         });
                 }
-                this.$el.dialog(this.dialog_options);
+                this.kbox.open();
             };
 
             this.close = function() {
-                this.$el.dialog('close');
+                this.kbox.close();
             };
 
             this.__defineGetter__('authed', function() {
                 return (this.$el.data('authed') == 'True');
             });
 
-            this.dialog_options = {
-                'modal': 'true',
-                'position': 'top',
-                'width': 500,
-            };
             this.$el = $("#twitter-modal");
-            this.$el.find('.cancel').bind('click', {dialog: this.$el}, function(e) {
-                e.data.dialog.dialog('close');
-                e.preventDefault();
-                return false;
-            });
+            this.kbox = this.$el.data('kbox');
         }
         var signin = new Signin();
 

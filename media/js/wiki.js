@@ -25,9 +25,6 @@
             initClearOddSections();
         }
 
-        if ($('body').is('.translate')) {  // Translate page
-            initChangeTranslateLocale();
-        }
         if ($('body').is('.edit, .new, .translate')) {
             initArticlePreview();
             initTitleAndSlugCheck();
@@ -466,34 +463,6 @@
     }
 
     /*
-     * Initialize the Change locale link on the translate page
-     */
-    function initChangeTranslateLocale() {
-        // Add the close button to the modal and handle clicks
-        $('#change-locale')
-            .append('<a href="#close" class="close">&#x2716;</a>')
-            .click(function(ev){
-                ev.stopPropagation();
-            })
-            .find('a.close')
-                .click(function(e){
-                    $('div.change-locale').removeClass('open');
-                    e.preventDefault();
-                    return false;
-                });
-
-        // Open the modal on click of the "change" link
-        $('div.change-locale a.change').click(function(ev){
-            ev.preventDefault();
-            $(this).closest('div.change-locale').addClass('open');
-            $('body').one('click', function() {
-                $('div.change-locale').removeClass('open');
-            });
-            return false;
-        });
-    }
-
-    /*
      * Initialize the article preview functionality.
      */
     function initArticlePreview() {
@@ -506,12 +475,13 @@
                 data: $('#id_content').serialize(),
                 dataType: 'html',
                 success: function(html) {
-                    $('#preview')
-                        .html(html)
+                    var $preview = $('#preview');
+                    $preview.html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
                     document.location.hash = 'preview';
                     initForTags();
                     updateShowforSelectors();
+                    $preview.find('.kbox').kbox();
                     k.initVideo();
                     $btn.removeAttr('disabled');
                 },

@@ -445,7 +445,7 @@ class TestWikiVideo(TestCase):
         d, _, p = doc_rev_parser(
             '[[V:Some title|modal]]')
         doc = pq(d.html)
-        eq_('Some title', doc('.video-modal h1').text())
+        eq_('Some title', doc('.video-modal')[0].attrib['title'])
         eq_(1, doc('.video video').length)
         eq_(replacement, doc('.video-placeholder').html().strip())
         eq_('video modal-trigger', doc('div.video').attr('class'))
@@ -456,7 +456,7 @@ class TestWikiVideo(TestCase):
         d, _, p = doc_rev_parser(
             '[[V:Some title|modal|placeholder=Place<b>holder</b>|title=WOOT]]')
         doc = pq(d.html)
-        eq_('WOOT', doc('.video-modal h1').text())
+        eq_('WOOT', doc('.video-modal')[0].attrib['title'])
         eq_('Place<b>holder</b>', doc('.video-placeholder').html().strip())
 
     def test_video_cdn(self):

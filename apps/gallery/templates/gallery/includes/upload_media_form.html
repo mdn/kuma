@@ -1,16 +1,11 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% from "layout/errorlist.html" import errorlist %}
-<div id="gallery-upload-modal" class="pop-in">
-  {% if image_form.instance.pk %}
-    {% set current_form = image_form %}
-  {% else %}
-    {% set current_form = video_form %}
-  {% endif %}
-  {% if current_form.instance.pk %}
-    <h1>{{ _('Continue Uploading Media') }}</h1>
-  {% else %}
-    <h1>{{ _('Upload a New Media File') }}</h1>
-  {% endif %}
+{% if image_form.instance.pk %}
+  {% set current_form = image_form %}
+{% else %}
+  {% set current_form = video_form %}
+{% endif %}
+<div id="gallery-upload-modal" class="kbox" title="{% if current_form.instance.pk %}{{ _('Continue Uploading Media') }}{% else %}{{ _('Upload a New Media File') }}{% endif %}" data-modal="true" data-target="#btn-upload" data-id="upload-kbox" data-position="none">
   <form id="gallery-upload-type" action="" method="post"{% if current_form.instance.pk %} class="draft"{% endif %}>
     <label class="row-left upload-type">{{ _('Upload') }}</label>
     <div class="row-right upload-type">
@@ -55,7 +50,7 @@
     {% endfor %}
     <div class="upload-action">
       <input type="submit" name="upload" value="{{ _('Submit file') }}">
-      <input type="submit" name="cancel"{% if image_form.instance.pk %} class="draft"{% endif %} data-action="{{ url('gallery.cancel_draft', media_type='image') }}" value="{{ _('Cancel') }}">
+      <input type="submit" name="cancel" class="kbox-cancel{% if image_form.instance.pk %} draft{% endif %}" data-action="{{ url('gallery.cancel_draft', media_type='image') }}" value="{{ _('Cancel') }}">
     </div>
   </form>
   <form id="gallery-upload-video" class="upload-form {% if video_form.instance.pk %}draft{% endif %} {% if video_form.instance.pk %}errors{% endif %}"
@@ -110,7 +105,7 @@
           {% if video_form.instance.webm %}
             <li class="video-preview webm">
               {{ video_form.instance.webm.name.rsplit('/', 1)[-1] }}
-              <input type="submit" name="cancel" class="draft" data-name="webm" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='webm') }}" value="{{ _('Delete {format} file')|fe(format='webm') }}">
+              <input type="submit" name="cancel" class="draft kbox-cancel" data-name="webm" data-action="{{ url('gallery.cancel_draft', media_type='video')|urlparams(field='webm') }}" value="{{ _('Delete {format} file')|fe(format='webm') }}">
             </li>
           {% endif %}
         {% endif %}
@@ -134,7 +129,7 @@
     </div>
     <div class="upload-action">
       <input type="submit" name="upload" value="{{ _('Submit file') }}">
-      <input {% if video_form.instance.pk %} class="draft"{% endif %}
+      <input class="kbox-cancel{% if video_form.instance.pk %} draft{% endif %}"
              data-action="{{ url('gallery.cancel_draft', media_type='video')}}"
              name="cancel" type="submit" value="{{ _('Cancel') }}">
     </div>

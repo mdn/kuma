@@ -2,7 +2,7 @@
 
 <div class="video{% if params['modal'] %} modal-trigger{% endif %}">
   {% if params['modal'] %}
-    <a href="{% if sources %}{{ sources[0].src }}{% else %}{{ fallback }}{% endif %}" class="video-modal-trigger" data-modal-selector="">
+    <a href="{% if sources %}{{ sources[0].src }}{% else %}{{ fallback }}{% endif %}" class="video-modal-trigger-{{ video.id }}">
       <span class="video-placeholder">
         {% if params['placeholder'] %}
           {{ params['placeholder']|safe }}
@@ -11,15 +11,7 @@
         {% endif %}
       </span>
     </a>{# /video-modal#}
-    <div class="video-modal fixed-modal pop-in">
-      <h1>
-        {% if params['title'] %}
-          {{ params['title'] }}
-        {% else %}
-          {{ video.title }}
-        {% endif %}
-      </h1>
-      <div class="wrap">
+    <div class="video-modal kbox" title="{% if params['title'] %}{{ params['title'] }}{% else %}{{ video.title }}{% endif %}" data-target="a.video-modal-trigger-{{ video.id }}" data-modal="true">
   {% endif %}
 
   <video data-fallback="{{ fallback }}" height="{{ height }}" width="{{ width }}" controls=""{% if video.poster %} poster="{{ video.poster.url }}"{% endif %}>
@@ -29,9 +21,6 @@
   </video>
 
   {% if params['modal'] %}
-      </div>
     </div>
   {% endif %}
 </div>
-
-

@@ -188,17 +188,18 @@
         $('form.report input[type="submit"]').click(function(ev){
             ev.preventDefault();
             var $form = $(this).closest('form');
-            if ($form.is('.processing')) {
-                return false;
-            }
             $('div.report-post-box').remove();
 
-            var html = '<section class="report-post-box pop-in"><a href="#close" ' +
-                       'class="close">&#x2716;</a>' +
-                       '<h1>' + gettext('Report this post') + '</h1>' +
+            var html = '<section class="report-post-box">' +
                        '<ul class="wrap"></ul></section>';
-                $modal = $(html),
-                $ul = $modal.find('ul');
+                $html = $(html),
+                $ul = $html.find('ul'),
+                kbox = new KBox($html, {
+                    title: gettext('Report this post'),
+                    position: 'none',
+                    container: $form,
+                    closeOnOutClick: true
+                });
 
             $form.find('select option').each(function(){
                 var $this = $(this),
@@ -210,24 +211,10 @@
             $ul.append('<li><input type="text" class="text" ' +
                        'name="modal-other" /></li>');
 
-            $modal.find('a.close').one('click', function(ev){
+            $html.find('ul a').click(function(ev){
                 ev.preventDefault();
-                if ($form.is('.processing')) {
-                    return false;
-                }
-                $modal.remove();
-                return false;
-            });
-
-            $modal.find('ul a').click(function(ev){
-                ev.preventDefault();
-                if ($form.is('.processing')) {
-                    return false;
-                }
-                $form.addClass('processing');
-
                 $form.find('select').val($(this).data('val'));
-                var other = $modal.find('input[name="modal-other"]').val();
+                var other = $html.find('input[name="modal-other"]').val();
                 $form.find('input[name="other"]').val(other);
                 $.ajax({
                     url: $form.attr('action'),
@@ -235,25 +222,22 @@
                     data: $form.serialize(),
                     dataType: 'json',
                     success: function(data) {
-                        $modal.find('ul').replaceWith('<div class="wrap msg">' +
-                                                    data.message + '</div>');
+                        var $msg = $('<div class="msg"></div>');
+                        $msg.text(data.message);
+                        $html.find('ul').replaceWith($msg);
                     },
                     error: function() {
-                        var message = gettext("There was an error :(.");
-                        $modal.find('ul').replaceWith('<div class="wrap msg">' +
-                                                      message + '</div>');
-                    },
-                    complete: function() {
-                        $form.removeClass('processing');
+                        var message = gettext("There was an error."),
+                            $msg = $('<div class="msg"></div>');
+                        $msg.text(data.message);
+                        $html.find('ul').replaceWith($msg);
                     }
                 });
 
                 return false;
             });
 
-            $form.append($modal);
-
-            return false;
+            kbox.open();
         });
     }
 
@@ -262,11 +246,10 @@
      */
     function initHaveThisProblemTooAjax() {
         var $container = $('#question div.me-too');
-        initAjaxForm($container, '#question-vote-thanks');
-        $container.delegate('a.close, a.no-thanks', 'click', function(ev){
+        initAjaxForm($container, '#vote-thanks');
+        $container.delegate('.kbox-close, .kbox-cancel', 'click', function(ev){
             ev.preventDefault();
             $container.unbind().remove();
-            return false;
         });
     }
 
@@ -283,13 +266,9 @@
 
     // Helper
     function initAjaxForm($container, boxSelector) {
-        $container.delegate('input[type="submit"]', 'click', function(ev){
+        $container.delegate('form', 'submit', function(ev){
             ev.preventDefault();
-            var $form = $(this).closest('form');
-            if ($form.is('.processing')) {
-                return false;
-            }
-            $form.addClass('processing');
+            var $form = $(this);
             $.ajax({
                 url: $form.attr('action'),
                 type: 'POST',
@@ -297,22 +276,25 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.html) {
-                        $(boxSelector).remove();
-                        $container.append(data.html);
+                        if($(boxSelector).length === 0) {
+                            // We don't have a modal set up yet.
+                            var kbox = new KBox(data.html, {
+                               container: $container
+                            });
+                            kbox.open();
+                        } else {
+                            $(boxSelector).html($(data.html).children());
+                        }
                     } else if (data.message) {
-                        var html = '<a class="close" href="#close">' +
-                               '&#x2716;</a><div class="msg wrap"></div>';
+                        var html = '<div class="msg"></div>';
                         $(boxSelector)
                             .html(html)
-                            .find('div.msg').text(data.message);
+                            .find('.msg').text(data.message);
                     }
                 },
                 error: function() {
-                    var message = gettext("There was an error :(.");
+                    var message = gettext("There was an error.");
                     alert(message);
-                },
-                complete: function() {
-                    $form.removeClass('processing');
                 }
             });
 

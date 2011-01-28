@@ -1,14 +1,11 @@
 {% from "layout/errorlist.html" import errorlist %}
-<section id="email-subscribe" class="pop-in">
-  <a class="close" href="#close">&#x2716;</a>
-  <h1>
-    {% if user.is_authenticated() %}
-      {{ _("Send an email:") }}
-    {% else %}
-      {{ _("Send an email to this address:") }}
-    {% endif %}
-  </h1>
-  <form class="wrap" action="{{ url('questions.watch', question.id) }}" method="post">
+{% if user.is_authenticated() %}
+  {% set title = _("Send an email") %}
+{% else %}
+  {% set title =  _("Send an email to this address")  %}
+{% endif %}
+<section id="email-subscribe" class="kbox" title="{{ title }}" data-target="#email-subscribe-link" data-id="email-subscribe-kbox" data-position="none" data-close-on-out-click="true">
+  <form action="{{ url('questions.watch', question.id) }}" method="post">
     {{ csrf() }}
     {{ errorlist(watch_form) }}
     {% if user.is_authenticated() %}
@@ -19,7 +16,7 @@
     {{ watch_form.event_type|safe }}
     <input type="submit" class="btn g-btn" value="{{ _('Send Updates') }}" />
     <span class="cancel">
-      <a class="cancel no-thanks" href="{{ question.get_absolute_url() }}">{{ _('Cancel') }}</a>
+      <a class="kbox-cancel" href="{{ question.get_absolute_url() }}">{{ _('Cancel') }}</a>
     </span>
   </form>
 </section>

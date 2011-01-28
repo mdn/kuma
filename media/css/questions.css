@@ -658,7 +658,7 @@ div.report-reply a.delete {
 }
 
 /* report post */
-form.report .report-post-box {
+form.report .kbox-container {
     left: -70px;
     top: 25px;
     width: 255px;
@@ -671,6 +671,7 @@ form.report .report-post-box ul {
 form.report .report-post-box li {
     border: 0;
     margin: 0;
+    min-height: 17px;
     padding: 0 0 6px;
 }
 
@@ -679,7 +680,7 @@ form.report .report-post-box input.text {
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
-    display: inline;
+    display: block;
     padding: 3px 8px;
     width: 92%;
 }
@@ -698,29 +699,29 @@ div.report-reply a.reply {
 }
 
 /* thanks for voting */
-#question-vote-thanks {
+#vote-thanks-kbox {
     left: -120px;
     top: 45px;
-    width: 355px;
+    width: 380px;
 }
 
-#question-vote-thanks p {
+#vote-thanks p {
     color: #898378;
     margin: 0 0 10px;
 }
 
-#question-vote-thanks p strong{
+#vote-thanks p strong{
     color: #4B4740;
     font-weight: normal;
 }
 
-#question-vote-thanks input#id_email {
+#vote-thanks input#id_email {
     display: block;
     margin: 0 0 15px;
     width: 230px;
 }
 
-#question-vote-thanks input.btn {
+#vote-thanks input.btn {
     margin-right: 15px;
 }
 
@@ -789,23 +790,9 @@ ul.related li {
 }
 
 /* email subscribe box */
-.js #email-subscribe {
+#email-subscribe-kbox {
     left: -50px;
-    top: 25px;
-    width: 280px;
-}
-
-.subscribe .pop-in {
-    display: none;
-}
-
-.no-js #email-subscribe {
-    padding: 0 0 10px;
-}
-
-.no-js #email-subscribe a.close,
-.no-js #email-subscribe span.cancel {
-    display: none;
+    width: 300px;
 }
 
 #email-subscribe ul.errorlist,
@@ -831,21 +818,18 @@ ul.related li {
 }
 
 /* more system details modal */
-#more-system-details {
-    margin-left: -310px;
-    padding: 0 0 10px;
-    width: 580px;
+#more-system-details-kbox {
+    width: 600px;
+}
+
+#more-system-details h1 {
+    display: none;
 }
 
 #more-system-details p,
 #more-system-details li {
     color: #898378;
     list-style: none;
-}
-
-#more-system-details div.wrap {
-    height: 350px;
-    overflow: auto;
 }
 
 #more-system-details h2 {

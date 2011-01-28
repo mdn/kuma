@@ -638,15 +638,6 @@ body.translate div.significance {
     padding: 15px 0;
 }
 
-#change-locale {
-    display: none;
-    width: 535px;
-}
-
-div.change-locale.open #change-locale {
-    display: block;
-}
-
 #change-locale li {
     display: inline-block;
     list-style: none;
@@ -839,19 +830,6 @@ body.review #content-fields textarea {
     margin: 5px 0 0;
 }
 
-.js form.pop-in {
-    display: none;
-}
-
-form.pop-in legend {
-    font-weight: bold;
-}
-
-#approve-modal legend,
-#reject-modal legend {
-    width: 370px;
-}
-
 #approve-modal li {
     list-style: none;
     padding: 2px 5px;
@@ -928,23 +906,6 @@ td.diff_header {
 }
 
 /* Submit commit message modal */
-.js #submit-modal {
-    display: none;
-}
-
-.js #submit-modal.active {
-    display: block;
-}
-
-#submit-modal {
-    top: 150px;
-}
-
-#submit-modal legend {
-    font-weight: bold;
-    width: 370px;
-}
-
 #submit-modal div.comment,
 #submit-modal div.notifications {
     margin: 10px 0;
@@ -955,7 +916,7 @@ td.diff_header {
 }
 
 #submit-modal input[type="text"] {
-    width: 300px;
+    width: 400px;
 }
 
 /* Select locale for l10n page */
@@ -1015,16 +976,8 @@ details {
 }
 
 /* Style video modal */
-div.video-modal.pop-in {
+div.video .kbox-container {
     width: 680px;
     height: 550px;
-    margin-left: -340px;
-    position: fixed;
     text-align: left;
-    top: 20px;
-    z-index: 20;
-}
-
-div.video-modal {
-    display: none;
 }

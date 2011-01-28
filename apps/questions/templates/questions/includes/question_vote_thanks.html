@@ -1,8 +1,6 @@
 {% from "layout/errorlist.html" import errorlist %}
-<section id="question-vote-thanks" class="pop-in">
-  <a class="close" href="#close">&#x2716;</a>
-  <h1>{{ _('Thanks!') }}</h1>
-  <form class="wrap" action="{{ url('questions.watch', question.id) }}" method="post">
+<section id="vote-thanks" title="{{ _('Thanks!') }}" data-position="none" data-id="vote-thanks-kbox">
+  <form action="{{ url('questions.watch', question.id) }}" method="post">
     {{ csrf() }}
     <p>{{ _('Thanks for letting us know you have this problem.') }}</p>
     <p>{{ _('Identifying common problems helps the community answer your questions more quickly.') }}</p>
@@ -23,6 +21,6 @@
     {% endif %}
 
     <input type="submit" class="btn g-btn" value="{{ _('Send Updates') }}" />
-    <a class="no-thanks" href="{{ question.get_absolute_url() }}">{{ _('No Thanks') }}</a>
+    <a class="no-thanks kbox-cancel" href="{{ question.get_absolute_url() }}">{{ _('No Thanks') }}</a>
   </form>
 </section>

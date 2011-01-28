@@ -293,6 +293,7 @@ MINIFY_BUNDLES = {
         'common': (
             'css/reset.css',
             'global/headerfooter.css',
+            'css/kbox.css',
             'css/main.css',
         ),
         # TODO: remove dependency on jquery ui CSS and use our own
@@ -345,7 +346,7 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
-            'js/libs/jquery.modal.js',
+            'js/kbox.js',
             'global/menu.js',
             'js/main.js',
         ),

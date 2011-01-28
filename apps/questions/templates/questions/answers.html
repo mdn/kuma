@@ -129,7 +129,7 @@
               <input type="submit" class="submit" value="{{ _('Stop receiving updates via email') }}" />
             </form>
           {% else %}
-            <a id="email-subscribe-link" class="activates-modal" href="#email-subscribe" data-modal-selector="#email-subscribe">{{ _('Receive updates via email') }}</a>
+            <a id="email-subscribe-link" href="#email-subscribe">{{ _('Receive updates via email') }}</a>
             {% include "questions/includes/email_subscribe.html" %}
           {% endif %}
         </li>
@@ -151,42 +151,40 @@
           {% endif %}
         </ul>
       {% endblock %}
-      <p><a id="show-more-details" class="activates-modal" href="#more-system-details" data-modal-selector="#more-system-details">{{ _('More system details...') }}</a></p>
-      <section id="more-system-details" class="pop-in fixed-modal">
+      <p><a id="show-more-details" href="#more-system-details">{{ _('More system details...') }}</a></p>
+      <section id="more-system-details" class="kbox" title="{{ _('Additional System Details') }}" data-target="#show-more-details" data-modal="true" data-id="more-system-details-kbox">
         <h1>{{ _('Additional System Details') }}</h1>
-        <div class="wrap">
-          {{ self.system_info() }}
-          {% if question.metadata.sites_affected %}
-            <h2>{{ _('Sites Affected') }}</h2>
-            <p>{{ question.metadata.sites_affected }}</p>
-          {% endif %}
-          {% if question.metadata.crash_id %}
-            <h2>{{ _('Crash ID') }}</h2>
-            <p>{{ question.metadata.crash_id }}</p>
-          {% endif %}
-          {% if question.metadata.frequency %}
-            <h2>{{ _('This happened') }}</h2>
-            <p>{{ frequencies[question.metadata.frequency] }}</p>
-          {% endif %}
-          {% if question.metadata.started %}
-            <h2>{{ _('This started when...') }}</h2>
-            <p>{{ question.metadata.started }}</p>
-          {% endif %}
-          {% if question.metadata.troubleshooting %}
-            <h2>{{ _('More Information') }}</h2>
-            <p>{{ question.metadata.troubleshooting|trim|collapse_linebreaks|nl2br }}</p>
-          {% endif %}
-          {% if question.metadata.plugins %}
-            <h2>{{ _('Installed Plug-ins') }}</h2>
-            <div class="plugins">
-              {{ question.metadata.plugins|wiki_to_html }}
-            </div>
-          {% endif %}
-          {% if question.metadata.useragent %}
-            <h2>{{ _('User Agent') }}</h2>
-            <p>{{ question.metadata.useragent }}</p>
-          {% endif %}
-        </div>
+        {{ self.system_info() }}
+        {% if question.metadata.sites_affected %}
+          <h2>{{ _('Sites Affected') }}</h2>
+          <p>{{ question.metadata.sites_affected }}</p>
+        {% endif %}
+        {% if question.metadata.crash_id %}
+          <h2>{{ _('Crash ID') }}</h2>
+          <p>{{ question.metadata.crash_id }}</p>
+        {% endif %}
+        {% if question.metadata.frequency %}
+          <h2>{{ _('This happened') }}</h2>
+          <p>{{ frequencies[question.metadata.frequency] }}</p>
+        {% endif %}
+        {% if question.metadata.started %}
+          <h2>{{ _('This started when...') }}</h2>
+          <p>{{ question.metadata.started }}</p>
+        {% endif %}
+        {% if question.metadata.troubleshooting %}
+          <h2>{{ _('More Information') }}</h2>
+          <p>{{ question.metadata.troubleshooting|trim|collapse_linebreaks|nl2br }}</p>
+        {% endif %}
+        {% if question.metadata.plugins %}
+          <h2>{{ _('Installed Plug-ins') }}</h2>
+          <div class="plugins">
+            {{ question.metadata.plugins|wiki_to_html }}
+          </div>
+        {% endif %}
+        {% if question.metadata.useragent %}
+          <h2>{{ _('User Agent') }}</h2>
+          <p>{{ question.metadata.useragent }}</p>
+        {% endif %}
       </section>
 
       {% set tags = question.tags.all() %}

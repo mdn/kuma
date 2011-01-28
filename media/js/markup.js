@@ -245,32 +245,27 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     openModal: function(e) {
         var me = this,
             // TODO: look at using a js template solution (jquery-tmpl?)
-            $modal = $('<section id="showfor-modal" class="pop-in marky fixed-modal">' +
-                       '<a href="#close" class="close">&#x2716;</a><h1/>' +
-                       '<div class="wrap"><div class="placeholder"/>' +
+            $html = $('<section class="marky">' +
+                       '<div class="placeholder"/>' +
                        '<div class="submit"><button type="button"></button>' +
-                       '<a href="#cancel" class="cancel"></a></div>' +
-                       '</div></section>'),
-            $overlay = $('<div id="modal-overlay"></div>'),
-            $placeholder = $modal.find('div.placeholder'),
-            data = $(this.textarea).data('showfor');
+                       '<a href="#cancel" class="kbox-cancel"></a></div>' +
+                       '</section>'),
+            $placeholder = $html.find('div.placeholder'),
+            data = $(this.textarea).data('showfor'),
+            kbox;
 
-        $modal.find('h1').text(this.name);
-        $modal.find('button').text(gettext('Add Rule')).click(function(e){
+        $html.find('button').text(gettext('Add Rule')).click(function(e){
             var showfor = '';
             $('#showfor-modal input:checked').each(function(){
                 showfor += ($(this).val() + ',');
             });
             me.openTag = '{for ' + showfor.slice(0,showfor.length-1) + '}';
             me.handleClick(e);
-            closeModal(e);
+            kbox.close();
         });
-        $modal.find('a.cancel').text(gettext('Cancel'));
+        $html.find('a.kbox-cancel').text(gettext('Cancel'));
         appendOptions($placeholder, data.versions);
         appendOptions($placeholder, data.oses);
-        $modal.find('a.close, a.cancel').click(closeModal);
-
-        $('body').append($overlay).append($modal);
 
         function appendOptions($ph, options) {
             $.each(options, function(i, value) {
@@ -286,12 +281,14 @@ Marky.ShowForButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             });
         }
 
-        function closeModal(e) {
-            $modal.unbind().remove();
-            $overlay.unbind().remove();
-            e.preventDefault();
-            return false;
-        }
+        kbox = new KBox($html, {
+            title: this.name,
+            destroy: true,
+            modal: true,
+            id: 'showfor-modal',
+            container: $('body')
+        });
+        kbox.open();
 
         e.preventDefault();
         return false;
@@ -350,10 +347,8 @@ Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
     openModal: function(e) {
         var me = this,
             // TODO: look at using a js template solution (jquery-tmpl?)
-            $modal = $(
-                '<section id="link-modal" class="pop-in marky">' +
-                '<a href="#close" class="close">&#x2716;</a>' +
-                '<h1>' + this.name + '</h1><div class="wrap">' +
+            $html = $(
+                '<section class="marky">' +
                 '<label>' + gettext('Link text:') + '</label>' +
                 '<input type="text" name="link-text" />' +
                 '<label>' + gettext('Link target:') + '</label>' +
@@ -366,24 +361,24 @@ Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
                 '<input type="text" name="external" placeholder="' +
                 gettext('Enter the URL of the external link') + '" /></li>' +
                 '</ol><div class="submit"><button type="button"></button>' +
-                '<a href="#cancel" class="cancel">' + gettext('Cancel') + '</a></div>' +
-                '</div></section>' // whew, yuck!?
+                '<a href="#cancel" class="kbox-cancel">' + gettext('Cancel') +
+                '</a></div></section>' // whew, yuck!?
             ),
-            $overlay = $('<div id="modal-overlay"></div>'),
-            selectedText = me.getSelectedText();
+            selectedText = me.getSelectedText(),
+            kbox;
 
-        $modal.find('li input[type="text"]').focus(function() {
+        $html.find('li input[type="text"]').focus(function() {
             $(this).closest('li').find('input[type="radio"]').click();
         });
 
-        $modal.find('button').text(gettext('Insert Link')).click(function(e){
+        $html.find('button').text(gettext('Insert Link')).click(function(e){
             // Generate the wiki markup based on what the user has selected
             // (interval vs external links) and entered into the textboxes,
             // if anything.
-            var val = $modal.find('input[type="radio"]:checked').val(),
-                text = $modal.find('input[name=link-text]').val(),
-                $internal = $modal.find('input[name="internal"]'),
-                $external = $modal.find('input[name="external"]');
+            var val = $html.find('input[type="radio"]:checked').val(),
+                text = $html.find('input[name=link-text]').val(),
+                $internal = $html.find('input[name="internal"]'),
+                $external = $html.find('input[name="external"]');
             me.reset();
             if (val === 'internal') {
                 var title = $internal.val();
@@ -431,24 +426,23 @@ Marky.LinkButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             }
 
             me.handleClick(e);
-            closeModal(e);
+            kbox.close();
         });
-        $modal.find('a.close, a.cancel').click(closeModal);
-
-        $('body').append($overlay).append($modal);
 
         if (selectedText) {
             // If there user has selected text, lets default to it being
             // the Article Title.
-            $modal.find('input[name="internal"]').val(selectedText).focus();
+            $html.find('input[name="internal"]').val(selectedText).focus();
         }
 
-        function closeModal(e) {
-            $modal.unbind().remove();
-            $overlay.unbind().remove();
-            e.preventDefault();
-            return false;
-        }
+        kbox = new KBox($html, {
+            title: this.name,
+            destroy: true,
+            modal: true,
+            id: 'link-modal',
+            container: $('body')
+        });
+        kbox.open();
 
         e.preventDefault();
         return false;
@@ -490,10 +484,8 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             mediaSearchUrl = $editor.data('media-search-url'),
             galleryUrl = $editor.data('media-gallery-url'),
             // TODO: look at using a js template solution (jquery-tmpl?)
-            $modal = $(
-                '<section id="media-modal" class="pop-in marky">' +
-                '<a href="#close" class="close">&#x2716;</a>' +
-                '<h1>' + this.name + '</h1>' +
+            $html = $(
+                '<section class="marky">' +
                 '<div class="filter"><div class="type">' +
                 '<span>' + gettext('Show:') + '</span>' +
                 '<ol><li data-type="image" class="selected">' + gettext('Images') + '</li>' +
@@ -504,20 +496,20 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
                 '<button>' + gettext('Insert Media') + '</button>' +
                 '<a href="' + galleryUrl + '#upload" class="upload" target="_blank">' +
                 gettext('Upload Media') + '</a>' +
-                '<a href="#cancel" class="cancel">' + gettext('Cancel') + '</a></div>' +
+                '<a href="#cancel" class="kbox-cancel">' + gettext('Cancel') + '</a></div>' +
                 '</section>'
             ),
-            $overlay = $('<div id="modal-overlay"></div>'),
             selectedText = me.getSelectedText(),
-            mediaType = $modal.find('div.type li.selected').data('type'),
+            mediaType = $html.find('div.type li.selected').data('type'),
             mediaQ = '',
-            mediaPage = 1;
+            mediaPage = 1,
+            kbox;
 
         // Handle Images/Videos filter
-        $modal.find('div.type li').click(function(e) {
+        $html.find('div.type li').click(function(e) {
             var $this = $(this);
             if(!$this.is('.selected')) {
-                $modal.find('div.type li.selected').removeClass('selected');
+                $html.find('div.type li.selected').removeClass('selected');
                 $this.addClass('selected');
                 mediaType = $this.data('type');
                 mediaPage = 1;
@@ -528,8 +520,8 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
         });
 
         // Handle Search button
-        $modal.find('div.search button').click(function(e) {
-            mediaQ = $modal.find('input[name="q"]').val();
+        $html.find('div.search button').click(function(e) {
+            mediaQ = $html.find('input[name="q"]').val();
             mediaPage = 1;
             updateResults();
             e.preventDefault();
@@ -537,13 +529,13 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
         });
 
         // Handle Upload link
-        $modal.find('a.upload').click(function(e) {
+        $html.find('a.upload').click(function(e) {
             // Close the modal. The link itself will open gallery in new tab/window.
-            $modal.find('a.close').click();
+            kbox.close();
         });
 
         //Handle pagination
-        $modal.delegate('ol.pagination a', 'click', function(e) {
+        $html.delegate('ol.pagination a', 'click', function(e) {
             mediaPage = parseInt($(this).attr('href').split('&page=')[1], 10);
             updateResults();
             e.preventDefault();
@@ -551,11 +543,11 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
         });
 
         // Handle 'Insert Media' button click
-        $modal.find('div.submit button').click(function(e) {
+        $html.find('div.submit button').click(function(e) {
             // Generate the wiki markup based on what the user has selected.
             me.reset();
 
-            var $selected = $modal.find('#media-list > li.selected');
+            var $selected = $html.find('#media-list > li.selected');
             if ($selected.length < 1) {
                 alert(gettext('Please select an image or video to insert.'));
                 return false;
@@ -566,32 +558,22 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
             me.openTag += ':' + $selected.find('a').attr('title') + ']] ';
 
             me.handleClick(e);
-            closeModal(e);
+            kbox.close();
         });
-
-        $modal.find('a.close, a.cancel').click(closeModal);
-        $('body').append($overlay).append($modal);
 
         updateResults();
 
-        function closeModal(e) {
-            $modal.unbind().remove();
-            $overlay.unbind().remove();
-            e.preventDefault();
-            return false;
-        }
-
         // Update the media list via ajax call.
         function updateResults(type, q) {
-            $modal.addClass('processing');
+            $html.addClass('processing');
             $.ajax({
                 url: mediaSearchUrl,
                 type: 'GET',
                 data: {type: mediaType, q: mediaQ, page: mediaPage},
                 dataType: 'html',
                 success: function(html) {
-                    $modal.find('div.placeholder').html(html);
-                    $modal.find('#media-list > li').click(function(e) {
+                    $html.find('div.placeholder').html(html);
+                    $html.find('#media-list > li').click(function(e) {
                         var $this = $(this),
                             $mediaList = $(this).parent();
                         $mediaList.find('li.selected').removeClass('selected');
@@ -602,14 +584,24 @@ Marky.MediaButton.prototype = $.extend({}, Marky.SimpleButton.prototype, {
                 },
                 error: function() {
                     var message = gettext("Oops, there was an error.");
-                    $modal.find('div.placeholder').html('<div class="msg">' +
+                    $html.find('div.placeholder').html('<div class="msg">' +
                                                   message + '</div>');
                 },
                 complete: function() {
-                    $modal.removeClass('processing');
+                    $html.removeClass('processing');
                 }
             });
         }
+
+        kbox = new KBox($html, {
+            title: this.name,
+            destroy: true,
+            modal: true,
+            id: 'media-modal',
+            container: $('body'),
+            position: 'none'
+        });
+        kbox.open();
 
         e.preventDefault();
         return false;
