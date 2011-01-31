@@ -248,8 +248,8 @@ article #toc ul li {
 
 /* Wiki Document content */
 #doc-content {
-	font-size: 14px;
-	line-height: 1.5em;
+    font-size: 14px;
+    line-height: 1.5em;
 }
 
 #doc-pending-fallback {
@@ -261,7 +261,7 @@ article #toc ul li {
 #doc-content pre,
 #doc-content .warning,
 #doc-content .note {
-	margin: 1em 0;
+    margin: 1em 0;
 }
 
 /* NOTE:
@@ -269,31 +269,31 @@ article #toc ul li {
 */
 
 #doc-content h1 {
-	font-size: 22px;
-	margin: 21px 0 8px;
+    font-size: 22px;
+    margin: 21px 0 8px;
 }
 
 #doc-content h2 {
-	font-size: 19px;
-	margin: 21px 0 8px;
+    font-size: 19px;
+    margin: 21px 0 8px;
 }
 
 #doc-content h3 {
-	font-size: 16px;
-	margin: 21px 0 8px;
+    font-size: 16px;
+    margin: 21px 0 8px;
 }
 
 #doc-content h4,
 #doc-content h5,
 #doc-content h6 {
-	font-size: 14px;
-	margin: 21px 0 8px;
+    font-size: 14px;
+    margin: 21px 0 8px;
 }
 
 #doc-content ol,
 #doc-content ul,
 #doc-content dd {
-	margin: 1em 0 1em 21px;
+    margin: 1em 0 1em 21px;
 }
 
 #doc-content li {
@@ -313,37 +313,37 @@ article #toc ul li {
 }
 
 #doc-content .filepath {
-	font-style: italic;
-	white-space: nowrap;
+    font-style: italic;
+    white-space: nowrap;
 }
 
 #doc-content .key,
 #doc-content .button {
-	background: #f0f0f0;
-	background: -moz-linear-gradient(top, #f0f0f0, #fcfcfc);
-	background: -webkit-gradient(linear, center top, center bottom, from(#f0f0f0), to(#fcfcfc));
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	color: #303030;
-	border: 1px solid #e0e0e0;
-	border-bottom-width: 2px;
+    background: #f0f0f0;
+    background: -moz-linear-gradient(top, #f0f0f0, #fcfcfc);
+    background: -webkit-gradient(linear, center top, center bottom, from(#f0f0f0), to(#fcfcfc));
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    color: #303030;
+    border: 1px solid #e0e0e0;
+    border-bottom-width: 2px;
     white-space: nowrap;
 }
 
 #doc-content .key {
-	font-family: monospace;
-	padding: 1px 6px;
+    font-family: monospace;
+    padding: 1px 6px;
 }
 
 #doc-content .button {
-	padding: 1px 10px;
+    padding: 1px 10px;
 }
 
 #doc-content .menu {
-	background: #e8e8e8;
-	color: #303030;
-	padding: 2px 4px;
+    background: #e8e8e8;
+    color: #303030;
+    padding: 2px 4px;
 }
 
 #doc-content .note {
@@ -360,9 +360,9 @@ article #toc ul li {
 }
 
 #doc-content .pref {
-	border: solid 1px #ddd;
-	color: #303030;
-	padding: 0 3px;
+    border: solid 1px #ddd;
+    color: #303030;
+    padding: 0 3px;
 }
 
 /* helpful vote form */
@@ -661,7 +661,7 @@ details.h2[open] {
 details.h2 > summary {
     color: #333;
     font-size: 24px;
-	margin: 21px 0 8px;
+    margin: 21px 0 8px;
 }
 
 /* Document list pages */
