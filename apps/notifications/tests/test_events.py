@@ -1,10 +1,11 @@
+import mock
 from nose.tools import eq_
 
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.core.mail import EmailMessage
 
-from notifications.events import Event, _unique_by_email
+from notifications.events import Event, _unique_by_email, EventUnion
 from notifications.models import Watch, EmailUser
 from notifications.tests import watch, watch_filter, ModelsTestCase
 from notifications.tests.models import MockModel
@@ -13,6 +14,7 @@ from users.tests import user
 
 
 TYPE = 'some event'
+ANOTHER_TYPE = 'another type'
 
 
 class SimpleEvent(Event):
@@ -22,6 +24,10 @@ class SimpleEvent(Event):
         """People watch the event in general; there are no parameters."""
         return (EmailMessage('Subject!', 'Body!', to=[u.email]) for u, w in
                 users_and_watches)
+
+
+class AnotherEvent(Event):
+    event_type = ANOTHER_TYPE
 
 
 class ContentTypeEvent(SimpleEvent):
@@ -36,16 +42,16 @@ class FilteredContentTypeEvent(ContentTypeEvent):
     filters = set(['color', 'flavor'])
 
 
-def emails_eq(addresses, event, **filters):
-    """Assert that the given emails are the ones watched by `event`, given the
-    scoping in `filters`."""
-    eq_(sorted(addresses),
-        sorted([u.email for u, w in
-                event._users_watching_by_filter(**filters)]))
-
-
 class UsersWatchingTests(TestCase):
     """Unit tests for Event._users_watching_by_filter()"""
+
+    @staticmethod
+    def _emails_eq(addresses, event, **filters):
+        """Assert that the given emails are the ones watching `event`, given
+        the scoping in `filters`."""
+        eq_(sorted(addresses),
+            sorted([u.email for u, w in
+                    event._users_watching_by_filter(**filters)]))
 
     def test_simple(self):
         """Test whether a watch scoped only by event type fires for both
@@ -54,13 +60,13 @@ class UsersWatchingTests(TestCase):
         watch(event_type=TYPE, user=registered_user).save()
         watch(event_type=TYPE, email='anon@ymous.com').save()
         watch(event_type='something else', email='never@fires.com').save()
-        emails_eq(['regist@ered.com', 'anon@ymous.com'], SimpleEvent())
+        self._emails_eq(['regist@ered.com', 'anon@ymous.com'], SimpleEvent())
 
     def test_unconfirmed(self):
         """Make sure unconfirmed watches don't fire."""
         watch(event_type=TYPE, email='anon@ymous.com', secret='x' * 10).save()
         watch(event_type=TYPE, email='confirmed@one.com').save()
-        emails_eq(['confirmed@one.com'], SimpleEvent())
+        self._emails_eq(['confirmed@one.com'], SimpleEvent())
 
     def test_content_type(self):
         """Make sure watches filter properly by content type."""
@@ -73,8 +79,8 @@ class UsersWatchingTests(TestCase):
               email='anon@ymous.com').save()
         watch(event_type=TYPE, content_type=watch_type,
               email='never@fires.com').save()
-        emails_eq(['regist@ered.com', 'anon@ymous.com'],
-                   ContentTypeEvent())
+        self._emails_eq(['regist@ered.com', 'anon@ymous.com'],
+                        ContentTypeEvent())
 
     def test_filtered(self):
         """Make sure watches cull properly by additional filters."""
@@ -96,15 +102,26 @@ class UsersWatchingTests(TestCase):
                                save=True)
         watch_filter(watch=mismatch_watch, name='color', value=3).save()
 
-        emails_eq(['ex@act.com', 'extra@one.com', 'wild@card.com'],
-                    FilteredEvent(), color=1)
+        self._emails_eq(['ex@act.com', 'extra@one.com', 'wild@card.com'],
+                        FilteredEvent(), color=1)
+
+        # Search on multiple filters to test joining the filters table twice.
+        # We provide values that match for both filters, as mis@match.com
+        # suffices to test exclusion.
+        self._emails_eq(['ex@act.com', 'extra@one.com', 'wild@card.com'],
+                        FilteredEvent(), color=1, flavor=2)
 
     def test_bad_filters(self):
         """Bad filter types passed in should throw TypeError."""
         # We have to actually iterate over the iterator to get it to do
         # anything.
-        self.assertRaises(TypeError, list,
-                          SimpleEvent()._users_watching_by_filter(smoo=3))
+        try:
+            list(SimpleEvent()._users_watching_by_filter(smoo=3))
+        except TypeError:
+            pass
+        else:
+            self.fail('Bad filters did not raise a TypeError.')
+        # assertRaises lets the TypeError escape for some unknown reason.
 
     def test_duplicates(self):
         """Don't return duplicate email addresses."""
@@ -114,7 +131,7 @@ class UsersWatchingTests(TestCase):
         watch(event_type=TYPE, email='hi@there.com').save()
         eq_(3, Watch.objects.all().count())  # We created what we meant to.
 
-        emails_eq(['hi@there.com'], SimpleEvent())
+        self._emails_eq(['hi@there.com'], SimpleEvent())
 
     def test_registered_users_favored(self):
         """When removing duplicates, make sure registered users are kept in
@@ -161,7 +178,7 @@ class UsersWatchingTests(TestCase):
 
             (user(), watch(email='none', secret='a')),
             (user(), watch(email='none')),
-            
+
             (user(), watch(email='hi', secret='a')),
             (user(), watch(email='hi')),
             (user(), watch(email='hi'))]
@@ -170,6 +187,35 @@ class UsersWatchingTests(TestCase):
         num_clusters = 5
         eq_(num_clusters, len(favorites))
         eq_(['a'] * num_clusters, [w.secret for u, w in favorites])
+
+
+class EventUnionTests(TestCase):
+    """Tests for EventUnion"""
+
+    @staticmethod
+    def _emails_eq(addresses, event):
+        """Assert that the given emails are the ones watching `event`."""
+        eq_(sorted(addresses),
+            sorted([u.email for u, w in
+                    event._users_watching()]))
+
+    def test_merging(self):
+        """Test that duplicate emails across multiple events get merged."""
+        # Remember to keep the emails in order when writing these test cases.
+        watch(event_type=TYPE, email='he@llo.com').save()
+        watch(event_type=TYPE, email='ick@abod.com').save()
+        registered_user = user(email='he@llo.com', save=True)
+        watch(event_type=ANOTHER_TYPE, user=registered_user).save()
+
+        self._emails_eq(['he@llo.com', 'ick@abod.com'],
+                        EventUnion(SimpleEvent(), AnotherEvent()))
+
+    @mock.patch_object(SimpleEvent, '_mails')
+    def test_fire(self, _mails):
+        """Assert firing the union gets the mails from the first event."""
+        watch(event_type=TYPE, email='he@llo.com').save()
+        EventUnion(SimpleEvent(), AnotherEvent()).fire()
+        assert _mails.called
 
 
 class NotificationTests(TestCase):
@@ -234,8 +280,8 @@ class CascadingDeleteTests(ModelsTestCase):
         assert not Watch.objects.count(), 'Cascade delete failed.'
 
 
-class FireTests(TestCase):
-    """Tests for things that happen when events are fired"""
+class MailTests(TestCase):
+    """Tests for mail-sending and templating"""
 
     def test_fire(self):
         """Assert that fire() runs and that generated mails get sent."""

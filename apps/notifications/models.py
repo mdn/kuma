@@ -110,11 +110,19 @@ class Watch(ModelBase):
 class WatchFilter(ModelBase):
     """Additional key/value pairs that pare down the scope of a watch"""
     watch = models.ForeignKey(Watch, related_name='filters')
-    name = models.CharField(max_length=20, db_index=True)
+    name = models.CharField(max_length=20)
 
     # Either ints or hashes of enumerated strings. All we can't represent
     # easily with this schema is arbitrary (open-vocab) strings.
     value = models.IntegerField()
+
+    class Meta(object):
+        # There's no particular reason we couldn't allow multiple values for
+        # one name to be ORed together, but the API needs a little work
+        # (accepting lists passed to notify()) to support that.
+        #
+        # This ordering makes the index usable for lookups by name.
+        unique_together = ('name', 'watch')
 
 
 class NotificationsMixin(models.Model):

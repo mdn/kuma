@@ -3,7 +3,6 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
-from nose import SkipTest
 from nose.tools import eq_
 
 from forums.events import ThreadReplyEvent, ForumThreadEvent
@@ -211,8 +210,6 @@ class NotificationsTests(ForumTestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_watch_both_then_new_post(self, get_current):
         """Watching both and replying to a thread should send ONE email."""
-        # TODO: Make this work after unique-fying list of user-watch pairs.
-        raise SkipTest
         get_current.return_value.domain = 'testserver'
 
         f = self._toggle_watch_forum_as('pcraciunoiu', turn_on=True)

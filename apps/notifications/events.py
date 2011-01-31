@@ -9,20 +9,33 @@ from django.db.models import Q
 from celery.decorators import task
 
 from notifications.models import Watch, WatchFilter, EmailUser, multi_raw
+from notifications.utils import merge
 
 
 def _unique_by_email(users_and_watches):
-    """Given a sequence of (User, Watch) pairs clustered by email
+    """Given a sequence of (User/EmailUser, Watch) pairs clustered by email
     address (which is never ''), yield from each cluster...
 
-    (1) the first pair where the User has an email, or, if there isn't such a
-        user...
+    (1) the first pair where the User has an email and is not anonymous, or, if
+        there isn't such a user...
     (2) the first pair.
 
     """
-    # It is late, and I am tired, and this is ugly. Ideas welcome. Can
-    # we replace this with clever SQL that somehow returns just the
-    # best row for each email?
+    def ensure_user_has_email(user, watch):
+        """Make sure the user in the user-watch pair has an email address.
+
+        The caller guarantees us an email from either the user or the watch. If
+        the passed-in user has no email, we return an EmailUser instead having
+        the email address from the watch.
+
+        """
+        # Some of these cases shouldn't happen, but we're tolerant.
+        if not getattr(user, 'email', ''):
+            user = EmailUser(watch.email)
+        return user, watch
+
+    # TODO: Do this instead with clever SQL that somehow returns just the
+    # best row for each email.
 
     # Email of current cluster:
     email = ''
@@ -32,14 +45,14 @@ def _unique_by_email(users_and_watches):
         row_email = u.email or w.email
         if email != row_email:
             if email != '':
-                yield favorite_user, favorite_watch
-                favorite_user = None
+                yield ensure_user_has_email(favorite_user, favorite_watch)
             favorite_user, favorite_watch = u, w
             email = row_email
-        elif not favorite_user.email and u.email:
+        elif ((not favorite_user.email or isinstance(u, EmailUser))
+              and u.email and not isinstance(u, EmailUser)):
             favorite_user, favorite_watch = u, w
     if favorite_user is not None:
-        yield favorite_user, favorite_watch
+        yield ensure_user_has_email(favorite_user, favorite_watch)
 
 
 class Event(object):
@@ -91,7 +104,7 @@ class Event(object):
         connection = mail.get_connection(fail_silently=True)
         # Warning: fail_silently swallows errors thrown by the generators, too.
         connection.open()
-        for m in self._mails(self.users_watching()):
+        for m in self._mails(self._users_watching()):
             connection.send_messages([m])
 
     @classmethod
@@ -121,6 +134,14 @@ class Event(object):
         different event_type instead.
 
         """
+        # I don't think we can use the ORM here, as there's no way to get a
+        # second condition (name=whatever) into a left join. However, if we
+        # were willing to have 2 subqueries run for every watch row--select
+        # {are there any filters with name=x?} and select {is there a filter
+        # with name=x and value=y?}--we could do it with extra(). Then we could
+        # have EventUnion simple | the QuerySets together, which would avoid
+        # having to merge in Python.
+
         def joins_and_params():
             """Return a concatenation of joins and params to bind to them in
             order to check a notification against all the given filters."""
@@ -176,21 +197,14 @@ class Event(object):
             object_id=o_id,
             exclude=exclude,
             wheres=wheres)
+        # IIRC, the DESC ordering was something to do with the placement of
+        # NULLs. Track this down and explain it.
 
-        for user, watch in _unique_by_email(multi_raw(
+        return _unique_by_email(multi_raw(
             query,
             join_params + [self.event_type] + ct_param + o_id_param +
                 where_params + u_id_param,
-            [User, Watch])):
-            # The query above guarantees us an email from either the user or
-            # the watch. Some of these cases shouldn't happen, but we're
-            # tolerant.
-            if not getattr(user, 'email', ''):
-                user = EmailUser(watch.email)
-            yield user, watch
-
-        # TODO: If I write a de-duping union(), factor up the slightly horrible
-        # set() call from forums.events.
+            [User, Watch]))
 
     @classmethod
     def _watches_belonging_to_user(cls, user_or_email, object_id=None,
@@ -333,9 +347,12 @@ class Event(object):
             the watch that indicated the user's interest in this event
 
         """
+        # Did this instead of mail() because a common case might be sending the
+        # same mail to many users. mail() would make it difficult to avoid
+        # redoing the templating every time.
         raise NotImplementedError
 
-    def users_watching(self):
+    def _users_watching(self):
         """Return an iterable of Users and EmailUsers watching this event
         and the Watches that map them to it.
 
@@ -346,6 +363,41 @@ class Event(object):
 
         """
         return self._users_watching_by_filter()
+
+
+class EventUnion(Event):
+    """Fireable conglomeration of multiple events"""
+    # Calls some private methods on events, but this and Event are good
+    # friends.
+
+    def __init__(self, *events):
+        """`events` -- the events of which to take the union"""
+        self.events = events
+
+    def _mails(self, users_and_watches):
+        """Default implementation fires the _mails() of my first event but may
+        pass it any of my events as `self`.
+
+        Use this default implementation when the content of each event's mail
+        template is essentially the same, e.g. "This new post was made.
+        Enjoy.". When the receipt of a second mail from the second event would
+        add no value, this is a fine choice. If the second event's email would
+        add value, you should probably fire both events independently and let
+        both mails be delivered. Or, if you would like to send a single mail
+        with a custom template for a batch of events, just subclass EventUnion
+        and override this method.
+
+        """
+        return self.events[0]._mails(users_and_watches)
+
+    def _users_watching(self):
+        # Get a sorted iterable of user-watch pairs:
+        users_and_watches = merge(*[e._users_watching() for e in self.events],
+                                  key=lambda (user, watch): user.email,
+                                  reverse=True)
+
+        # Pick the best User out of each cluster of identical email addresses:
+        return _unique_by_email(users_and_watches)
 
 
 class InstanceEvent(Event):
@@ -374,6 +426,6 @@ class InstanceEvent(Event):
         return super(InstanceEvent, cls).is_notifying(user_or_email,
                                                       object_id=instance.pk)
 
-    def users_watching(self):
+    def _users_watching(self):
         """Return users watching this instance."""
         return self._users_watching_by_filter(object_id=self.instance.pk)

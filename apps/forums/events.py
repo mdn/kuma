@@ -1,5 +1,3 @@
-import itertools
-
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage
@@ -7,13 +5,16 @@ from django.template import Context, loader
 
 from tower import ugettext as _
 
-from notifications.events import InstanceEvent
+from notifications.events import InstanceEvent, EventUnion
 from forums.models import Thread, Forum
 
 
 class ThreadReplyEvent(InstanceEvent):
-    """An event which fires when a thread receives a reply"""
+    """An event which fires when a thread receives a reply
 
+    Firing this also notifies watchers of the containing forum.
+
+    """
     event_type = 'thread reply'
     content_type = Thread
 
@@ -21,6 +22,10 @@ class ThreadReplyEvent(InstanceEvent):
         super(ThreadReplyEvent, self).__init__(reply.thread, reply.author)
         # Need to store the reply for _mails
         self.reply = reply
+
+    def fire(self):
+        """Notify not only watchers of this thread but of the parent forum."""
+        return EventUnion(self, ForumThreadEvent(self.reply)).fire()
 
     def _mails(self, users_and_watches):
         subject = _('Reply to: %s') % self.reply.thread.title
@@ -33,14 +38,7 @@ class ThreadReplyEvent(InstanceEvent):
         return (EmailMessage(subject, content,
                              settings.NOTIFICATIONS_FROM_ADDRESS,
                              [u.email]) for
-                u, _ in users_and_watches)
-
-    def users_watching(self):
-        """Return users watching thread replies OR forum posts."""
-        thread_watchers = self._users_watching_by_filter(
-            object_id=self.instance.pk)
-        forum_watchers = ForumThreadEvent(self.reply).users_watching()
-        return set(itertools.chain(thread_watchers, forum_watchers))
+                u, dummy in users_and_watches)
 
 
 class ForumThreadEvent(InstanceEvent):
@@ -67,4 +65,4 @@ class ForumThreadEvent(InstanceEvent):
         return (EmailMessage(subject, content,
                              settings.NOTIFICATIONS_FROM_ADDRESS,
                              [u.email]) for
-                u, _ in users_and_watches)
+                u, dummy in users_and_watches)

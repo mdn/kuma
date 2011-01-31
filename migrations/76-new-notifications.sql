@@ -23,7 +23,7 @@ CREATE TABLE `notifications_watchfilter` (
   `name` binary(20) NOT NULL,
   `value` integer NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE (`name`, `watch_id`),
   KEY `notifications_watchfilter_6e1bd094` (`watch_id`),
-  KEY `notifications_watchfilter_52094d6e` (`name`),
   CONSTRAINT `watch_id_refs_id_444d6e79` FOREIGN KEY (`watch_id`) REFERENCES `notifications_watch` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
