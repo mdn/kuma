@@ -5,7 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.core.mail import EmailMessage
 
-from notifications.events import Event, _unique_by_email, EventUnion
+from notifications.events import (Event, _unique_by_email, EventUnion,
+                                  InstanceEvent)
 from notifications.models import Watch, EmailUser
 from notifications.tests import watch, watch_filter, ModelsTestCase
 from notifications.tests.models import MockModel
@@ -320,3 +321,49 @@ def test_anonymous_user_compares():
     # Test __hash__:
     assert hash(EmailUser('frank')) == hash(EmailUser('frank'))
     assert hash(EmailUser('frank')) != hash(EmailUser('george'))
+
+
+class MockModelEvent(InstanceEvent):
+    event_type = 'mock model event'
+    content_type = MockModel
+
+
+class InstanceEventTests(ModelsTestCase):
+    apps = ['notifications.tests']
+
+    def _test_user_or_email(self, user_or_email):
+        """Test all states of the truth table for 2 instances being watched.
+
+        E.g. watch m, assert watching m but not m2; watch m2, assert watching
+        both, etc.
+
+        """
+        mock_m = MockModel.objects.create()
+        mock_m2 = MockModel.objects.create()
+        MockModelEvent.notify(user_or_email, mock_m)
+        # We're watching instance #1...
+        assert MockModelEvent.is_notifying(user_or_email, mock_m)
+        # ... but not instance #2
+        assert not MockModelEvent.is_notifying(user_or_email, mock_m2)
+        # Now also watch instance #2.
+        MockModelEvent.notify(user_or_email, mock_m2)
+        assert MockModelEvent.is_notifying(user_or_email, mock_m)
+        assert MockModelEvent.is_notifying(user_or_email, mock_m2)
+        # Stop watching instance #1...
+        MockModelEvent.stop_notifying(user_or_email, mock_m)
+        assert not MockModelEvent.is_notifying(user_or_email, mock_m)
+        assert MockModelEvent.is_notifying(user_or_email, mock_m2)
+        # ... and instance #2
+        MockModelEvent.stop_notifying(user_or_email, mock_m2)
+        assert not MockModelEvent.is_notifying(user_or_email, mock_m2)
+        # No watch objects are left over.
+        assert not Watch.objects.count()
+
+    def test_instance_anonymous(self):
+        """Watch with an anonymous user."""
+        self._test_user_or_email('fred@example.com')
+
+    def test_instance_registered(self):
+        """Watch with a registered user."""
+        registered_user = user(email='regist@ered.com', save=True)
+        self._test_user_or_email(registered_user)

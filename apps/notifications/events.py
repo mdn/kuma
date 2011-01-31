@@ -257,7 +257,7 @@ class Event(object):
 
     @classmethod
     # Funny arg name to reserve use of nice ones for filters
-    def is_notifying(cls, user_or_email_, **filters):
+    def is_notifying(cls, user_or_email_, object_id=None, **filters):
         """Return whether the user/email is watching this event (either
         confirmed or unconfirmed), conditional on meeting the criteria in
         `filters`.
@@ -274,6 +274,7 @@ class Event(object):
 
         """
         return cls._watches_belonging_to_user(user_or_email_,
+                                              object_id=object_id,
                                               **filters).exists()
 
     @classmethod
@@ -295,6 +296,7 @@ class Event(object):
             # Pick 1 if >1 are returned:
             watch = cls._watches_belonging_to_user(
                 user_or_email_,
+                object_id=object_id,
                 **filters)[0:1].get()
         except Watch.DoesNotExist:
             create_kwargs = {}
