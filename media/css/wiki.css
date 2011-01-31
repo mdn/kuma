@@ -256,8 +256,12 @@ article #toc ul li {
     margin: -1em 0 2em;
 }
 
-#doc-content p {
-	margin: 0 0 1.5em;
+/* Blocks in the content that need margins. */
+#doc-content p,
+#doc-content pre,
+#doc-content .warning,
+#doc-content .note {
+	margin: 1em 0;
 }
 
 /* NOTE:
@@ -289,7 +293,20 @@ article #toc ul li {
 #doc-content ol,
 #doc-content ul,
 #doc-content dd {
-	margin-left: 21px;
+	margin: 1em 0 1em 21px;
+}
+
+#doc-content li {
+    margin: 0.2em 0;
+}
+
+#doc-content li p {
+    margin: 0;
+}
+
+#doc-content li ol,
+#doc-content li ul {
+    margin: 0 0 0 21px;
 }
 
 #doc-content .code {
@@ -311,15 +328,16 @@ article #toc ul li {
 	color: #303030;
 	border: 1px solid #e0e0e0;
 	border-bottom-width: 2px;
+    white-space: nowrap;
 }
 
 #doc-content .key {
 	font-family: monospace;
-	padding: 2px 6px;
+	padding: 1px 6px;
 }
 
 #doc-content .button {
-	padding: 2px 10px;
+	padding: 1px 10px;
 }
 
 #doc-content .menu {
