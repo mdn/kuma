@@ -114,15 +114,8 @@ class UsersWatchingTests(TestCase):
 
     def test_bad_filters(self):
         """Bad filter types passed in should throw TypeError."""
-        # We have to actually iterate over the iterator to get it to do
-        # anything.
-        try:
-            list(SimpleEvent()._users_watching_by_filter(smoo=3))
-        except TypeError:
-            pass
-        else:
-            self.fail('Bad filters did not raise a TypeError.')
-        # assertRaises lets the TypeError escape for some unknown reason.
+        self.assertRaises(TypeError, SimpleEvent()._users_watching_by_filter,
+                          smoo=3)
 
     def test_duplicates(self):
         """Don't return duplicate email addresses."""
@@ -188,6 +181,12 @@ class UsersWatchingTests(TestCase):
         num_clusters = 5
         eq_(num_clusters, len(favorites))
         eq_(['a'] * num_clusters, [w.secret for u, w in favorites])
+
+    def test_unsaved_exclude(self):
+        """Excluding an unsaved user should throw a ValueError."""
+        self.assertRaises(ValueError,
+                          SimpleEvent()._users_watching_by_filter,
+                          exclude=user())
 
 
 class EventUnionTests(TestCase):

@@ -147,67 +147,62 @@ class Event(object):
         # have EventUnion simple | the QuerySets together, which would avoid
         # having to merge in Python.
 
-        def joins_and_params():
-            """Return a concatenation of joins and params to bind to them in
+        def filter_conditions():
+            """Return joins, WHERE conditions, and params to bind to them in
             order to check a notification against all the given filters."""
             # Not a one-liner. You're welcome. :-)
             self._validate_filters(filters)
             joins, wheres, join_params, where_params = [], [], [], []
             for n, (k, v) in enumerate(filters.iteritems()):
                 joins.append(
-                    ' LEFT JOIN notifications_watchfilter f{n} '
+                    'LEFT JOIN notifications_watchfilter f{n} '
                     'ON f{n}.watch_id=w.id '
                         'AND f{n}.name=%s'.format(n=n))
                 join_params.append(k)
-                wheres.append(' AND (f{n}.value=%s '
+                wheres.append('(f{n}.value=%s '
                               'OR f{n}.value IS NULL)'.format(n=n))
                 where_params.append(v)
-            return ''.join(joins), join_params, ''.join(wheres), where_params
+            return joins, wheres, join_params + where_params
 
-        # Get applicable watches:
-        joins, join_params, wheres, where_params = joins_and_params()
+        # Apply watchfilter constraints:
+        joins, wheres, params = filter_conditions()
+
+        # Start off with event_type, which is always a constraint. These go in
+        # the `wheres` list to guarantee that the AND after the {wheres}
+        # substitution in the query is okay.
+        wheres.append('w.event_type=%s')
+        params.append(self.event_type)
+
+        # Constrain on other 1-to-1 attributes:
         if self.content_type:
-            content_type = (' AND (w.content_type_id IS NULL '
-                            'OR w.content_type_id=%s)')
-            ct_param = [ContentType.objects.get_for_model(
-                        self.content_type).id]
-        else:
-            content_type = ''
-            ct_param = []
+            wheres.append('(w.content_type_id IS NULL '
+                          'OR w.content_type_id=%s)')
+            params.append(ContentType.objects.get_for_model(
+                          self.content_type).id)
         if object_id:
-            o_id = ' AND (w.object_id IS NULL OR w.object_id=%s)'
-            o_id_param = [object_id]
-        else:
-            o_id = ''
-            o_id_param = []
-        if exclude and exclude.id:  # Don't try excluding unsaved Users.
-            exclude_clause = ' AND (u.id IS NULL OR u.id!=%s)'
-            u_id_param = [exclude.id]
-        else:
-            exclude_clause = ''
-            u_id_param = []
+            wheres.append('(w.object_id IS NULL OR w.object_id=%s)')
+            params.append(object_id)
+        if exclude:
+            if exclude.id:  # Don't try excluding unsaved Users.
+                wheres.append('(u.id IS NULL OR u.id!=%s)')
+                params.append(exclude.id)
+            else:
+                raise ValueError("Can't exclude an unsaved User.")
 
         query = (
             'SELECT u.*, w.* '
             'FROM notifications_watch w '
-            'LEFT JOIN auth_user u ON u.id=w.user_id{left_joins} '
-            'WHERE w.event_type=%s{content_type}{object_id}{wheres} '
-            'AND (length(w.email)>0 OR length(u.email)>0){exclude} '
+            'LEFT JOIN auth_user u ON u.id=w.user_id {joins} '
+            'WHERE {wheres} '
+            'AND (length(w.email)>0 OR length(u.email)>0) '
             'AND w.secret IS NULL '
             'ORDER BY u.email DESC, w.email DESC').format(
-            left_joins=joins,
-            content_type=content_type,
-            object_id=o_id,
-            exclude=exclude_clause,
-            wheres=wheres)
+            joins=' '.join(joins),
+            wheres=' AND '.join(wheres))
         # IIRC, the DESC ordering was something to do with the placement of
         # NULLs. Track this down and explain it.
 
-        return _unique_by_email(multi_raw(
-            query,
-            join_params + [self.event_type] + ct_param + o_id_param +
-                where_params + u_id_param,
-            [User, Watch]))
+        return _unique_by_email(multi_raw(query, params, [User, Watch]))
 
     @classmethod
     def _watches_belonging_to_user(cls, user_or_email, object_id=None,
