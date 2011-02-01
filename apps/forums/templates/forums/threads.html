@@ -8,13 +8,13 @@
 <article id="threads" class="main">
   <h1>{{ forum.name }}</h1>
   <div class="badges">
-    {% if is_watching(forum) %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
+    {% if is_watching_forum %}<span class="watching">{{ _('Watching') }}</span>{% endif %}
   </div>
   <div class="forum-actions">
     {% if user.is_authenticated() %}
       <form action="{{ url('forums.watch_forum', forum_slug=forum.slug) }}" method="post">
         {{ csrf() }}
-        {% if is_watching(forum) %}
+        {% if is_watching_forum %}
           {% set watch = _('Stop watching') %}
           <input type="hidden" name="watch" value="no" />
         {% else %}

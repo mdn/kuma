@@ -8,7 +8,7 @@ from forums.tests import ForumTestCase
 from sumo.tests import get, post
 
 
-class PostsTemplateTestCase(ForumTestCase):
+class PostsTemplateTests(ForumTestCase):
 
     def test_empty_reply_errors(self):
         """Posting an empty reply shows errors."""
@@ -104,8 +104,21 @@ class PostsTemplateTestCase(ForumTestCase):
         eq_(content, doc('#post-preview div.content').text())
         eq_(num_posts, t.post_set.count())
 
+    def test_watch_thread(self):
+        """Watch and unwatch a thread."""
+        self.client.login(username='rrosario', password='testpass')
 
-class ThreadsTemplateTestCase(ForumTestCase):
+        t = Thread.objects.filter()[1]
+        response = post(self.client, 'forums.watch_thread', {'watch': 'yes'},
+                        args=[t.forum.slug, t.id])
+        self.assertContains(response, 'Watching')
+
+        response = post(self.client, 'forums.watch_thread', {'watch': 'no'},
+                        args=[t.forum.slug, t.id])
+        self.assertNotContains(response, 'Watching')
+
+
+class ThreadsTemplateTests(ForumTestCase):
 
     def test_last_thread_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
@@ -173,11 +186,24 @@ class ThreadsTemplateTestCase(ForumTestCase):
         doc = pq(res.content)
         eq_(len(doc('form.edit-thread')), 1)
 
+    def test_watch_forum(self):
+        """Watch and unwatch a forum."""
+        self.client.login(username='rrosario', password='testpass')
 
-class ForumsTemplateTestCase(ForumTestCase):
+        f = Forum.objects.filter()[0]
+        response = post(self.client, 'forums.watch_forum', {'watch': 'yes'},
+                        args=[f.slug])
+        self.assertContains(response, 'Watching')
+
+        response = post(self.client, 'forums.watch_forum', {'watch': 'no'},
+                        args=[f.slug])
+        self.assertNotContains(response, 'Watching')
+
+
+class ForumsTemplateTests(ForumTestCase):
 
     def setUp(self):
-        super(ForumsTemplateTestCase, self).setUp()
+        super(ForumsTemplateTests, self).setUp()
         self.forum = Forum.objects.all()[0]
         admin = User.objects.get(pk=1)
         self.thread = self.forum.thread_set.filter(creator=admin)[0]
@@ -187,7 +213,7 @@ class ForumsTemplateTestCase(ForumTestCase):
 
     def tearDown(self):
         self.client.logout()
-        super(ForumsTemplateTestCase, self).tearDown()
+        super(ForumsTemplateTests, self).tearDown()
 
     def test_last_post_link_has_post_id(self):
         """Make sure the last post url links to the last post (#post-<id>)."""
@@ -203,7 +229,7 @@ class ForumsTemplateTestCase(ForumTestCase):
         self.assertNotContains(response, 'restricted-forum')
 
 
-class NewThreadTemplateTestCase(ForumTestCase):
+class NewThreadTemplateTests(ForumTestCase):
 
     def test_preview(self):
         """Preview the thread post."""

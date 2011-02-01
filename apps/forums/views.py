@@ -71,8 +71,11 @@ def threads(request, forum_slug):
     feed_urls = ((reverse('forums.threads.feed', args=[forum_slug]),
                   ThreadsFeed().title(forum)),)
 
+    is_watching_forum = (request.user.is_authenticated() and
+                         ForumThreadEvent.is_notifying(request.user, forum))
     return jingo.render(request, 'forums/threads.html',
                         {'forum': forum, 'threads': threads_,
+                         'is_watching_forum': is_watching_forum,
                          'sort': sort, 'desc_toggle': desc_toggle,
                          'feeds': feed_urls})
 
@@ -96,10 +99,13 @@ def posts(request, forum_slug, thread_id, form=None, reply_preview=None):
                                   'thread_id': thread_id}),
                   PostsFeed().title(thread)),)
 
+    is_watching_thread = (request.user.is_authenticated() and
+                          ThreadReplyEvent.is_notifying(request.user, thread))
     return jingo.render(request, 'forums/posts.html',
                         {'forum': forum, 'thread': thread,
                          'posts': posts_, 'form': form,
                          'reply_preview': reply_preview,
+                         'is_watching_thread': is_watching_thread,
                          'feeds': feed_urls,
                          'forums': Forum.objects.all()})
 
