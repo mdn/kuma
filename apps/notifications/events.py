@@ -80,11 +80,7 @@ class Event(object):
     content_type = None  # or, for example, Hamster
     filters = set()  # or, for example, set(['color', 'flavor'])
 
-    def __init__(self, exclude=None):
-        """Initialize event with option of excluding a user."""
-        self.exclude = exclude
-
-    def fire(self):
+    def fire(self, exclude=None):
         """Asynchronously notify everyone watching the event.
 
         We are explicit about sending notifications; we don't just key off
@@ -94,17 +90,21 @@ class Event(object):
         tests. If we want implicit event firing, we can always register a
         signal handler that calls fire().
 
+        If a saved user is passed in as `exclude`, that user will not be
+        notified, though anonymous notifications having the same email address
+        may still be sent.
+
         """
         # Tasks don't receive the `self` arg implicitly.
-        self._fire_task.delay(self)
+        self._fire_task.delay(self, exclude=exclude)
 
     @task
-    def _fire_task(self):
+    def _fire_task(self, exclude=None):
         """Build and send the emails as a celery task."""
         connection = mail.get_connection(fail_silently=True)
         # Warning: fail_silently swallows errors thrown by the generators, too.
         connection.open()
-        for m in self._mails(self._users_watching()):
+        for m in self._mails(self._users_watching(exclude=exclude)):
             connection.send_messages([m])
 
     @classmethod
@@ -117,7 +117,8 @@ class Event(object):
                 raise TypeError("%s got an unsupported filter type '%s'" %
                                 (cls.__name__, k))
 
-    def _users_watching_by_filter(self, object_id=None, **filters):
+    def _users_watching_by_filter(self, object_id=None, exclude=None,
+                                  **filters):
         """Return an iterable of (User/EmailUser, Watch) pairs watching the
         event.
 
@@ -126,12 +127,16 @@ class Event(object):
         to, for example, include a link to a user profile in the mail.
 
         "Watching the event" means having a Watch whose event_type is
-        self.event_type, whose content_type is self.content_type or NULL, and
-        whose WatchFilter rows match as follows: each name/value pair given in
-        `filters` must be matched by a related WatchFilter, or there must be no
-        related WatchFilter having that name. If you find yourself wanting the
-        lack of a particularly named WatchFilter to scuttle the match, use a
-        different event_type instead.
+        self.event_type, whose content_type is self.content_type or NULL, whose
+        object_id is `object_id` or NULL, and whose WatchFilter rows match as
+        follows: each name/value pair given in `filters` must be matched by a
+        related WatchFilter, or there must be no related WatchFilter having
+        that name. If you find yourself wanting the lack of a particularly
+        named WatchFilter to scuttle the match, use a different event_type
+        instead.
+
+        If a saved user is passed in as `exclude`, that user will never be
+        returned, though anonymous watches having the same email address may.
 
         """
         # I don't think we can use the ORM here, as there's no way to get a
@@ -175,13 +180,11 @@ class Event(object):
         else:
             o_id = ''
             o_id_param = []
-
-        # Skip self.exclude if user was passed in at init time.
-        if self.exclude:
-            exclude = ' AND (u.id != %s)'
-            u_id_param = [self.exclude.id]
+        if exclude and exclude.id:  # Don't try excluding unsaved Users.
+            exclude_clause = ' AND (u.id IS NULL OR u.id!=%s)'
+            u_id_param = [exclude.id]
         else:
-            exclude = ''
+            exclude_clause = ''
             u_id_param = []
 
         query = (
@@ -195,7 +198,7 @@ class Event(object):
             left_joins=joins,
             content_type=content_type,
             object_id=o_id,
-            exclude=exclude,
+            exclude=exclude_clause,
             wheres=wheres)
         # IIRC, the DESC ordering was something to do with the placement of
         # NULLs. Track this down and explain it.
@@ -352,7 +355,7 @@ class Event(object):
         # redoing the templating every time.
         raise NotImplementedError
 
-    def _users_watching(self):
+    def _users_watching(self, **kwargs):
         """Return an iterable of Users and EmailUsers watching this event
         and the Watches that map them to it.
 
@@ -362,7 +365,7 @@ class Event(object):
         and, if defined, content_type.
 
         """
-        return self._users_watching_by_filter()
+        return self._users_watching_by_filter(**kwargs)
 
 
 class EventUnion(Event):
@@ -390,9 +393,10 @@ class EventUnion(Event):
         """
         return self.events[0]._mails(users_and_watches)
 
-    def _users_watching(self):
+    def _users_watching(self, **kwargs):
         # Get a sorted iterable of user-watch pairs:
-        users_and_watches = merge(*[e._users_watching() for e in self.events],
+        users_and_watches = merge(*[e._users_watching(**kwargs)
+                                    for e in self.events],
                                   key=lambda (user, watch): user.email,
                                   reverse=True)
 
@@ -403,8 +407,8 @@ class EventUnion(Event):
 class InstanceEvent(Event):
     """Common case of watching a specific instance of a Model."""
 
-    def __init__(self, instance, exclude=None):
-        super(InstanceEvent, self).__init__(exclude=exclude)
+    def __init__(self, instance, *args, **kwargs):
+        super(InstanceEvent, self).__init__(*args, **kwargs)
         self.instance = instance
 
     @classmethod
@@ -426,6 +430,7 @@ class InstanceEvent(Event):
         return super(InstanceEvent, cls).is_notifying(user_or_email,
                                                       object_id=instance.pk)
 
-    def _users_watching(self):
+    def _users_watching(self, **kwargs):
         """Return users watching this instance."""
-        return self._users_watching_by_filter(object_id=self.instance.pk)
+        return self._users_watching_by_filter(object_id=self.instance.pk,
+                                              **kwargs)

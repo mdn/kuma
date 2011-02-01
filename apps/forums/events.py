@@ -19,13 +19,13 @@ class ThreadReplyEvent(InstanceEvent):
     content_type = Thread
 
     def __init__(self, reply):
-        super(ThreadReplyEvent, self).__init__(reply.thread, reply.author)
+        super(ThreadReplyEvent, self).__init__(reply.thread)
         # Need to store the reply for _mails
         self.reply = reply
 
-    def fire(self):
+    def fire(self, **kwargs):
         """Notify not only watchers of this thread but of the parent forum."""
-        return EventUnion(self, ForumThreadEvent(self.reply)).fire()
+        return EventUnion(self, ForumThreadEvent(self.reply)).fire(**kwargs)
 
     def _mails(self, users_and_watches):
         subject = _('Reply to: %s') % self.reply.thread.title
@@ -48,7 +48,7 @@ class ForumThreadEvent(InstanceEvent):
     content_type = Forum
 
     def __init__(self, post):
-        super(ForumThreadEvent, self).__init__(post.thread.forum, post.author)
+        super(ForumThreadEvent, self).__init__(post.thread.forum)
         # Need to store the post for _mails
         self.post = post
 

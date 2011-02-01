@@ -287,12 +287,24 @@ class MailTests(TestCase):
         """Assert that fire() runs and that generated mails get sent."""
         SimpleEvent.notify('hi@there.com').confirm().save()
         SimpleEvent().fire()
-        eq_(1, len(mail.outbox))
 
+        eq_(1, len(mail.outbox))
         first_mail = mail.outbox[0]
         eq_(['hi@there.com'], first_mail.to)
         eq_('Subject!', first_mail.subject)
         eq_('Body!', first_mail.body)
+
+    def test_exclude(self):
+        """Assert the `exclude` arg to fire() excludes the given user."""
+        SimpleEvent.notify('du@de.com').confirm().save()
+        registered_user = user(email='ex@clude.com', save=True)
+        SimpleEvent.notify(registered_user).confirm().save()
+
+        SimpleEvent().fire(exclude=registered_user)
+
+        eq_(1, len(mail.outbox))
+        first_mail = mail.outbox[0]
+        eq_(['du@de.com'], first_mail.to)
 
 
 def test_anonymous_user_compares():

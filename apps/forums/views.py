@@ -130,7 +130,7 @@ def reply(request, forum_slug, thread_id):
                 reply_.save()
 
                 # Send notifications to thread/forum watchers.
-                ThreadReplyEvent(reply_).fire()
+                ThreadReplyEvent(reply_).fire(exclude=reply_.author)
 
                 return HttpResponseRedirect(reply_.get_absolute_url())
 
@@ -169,7 +169,7 @@ def new_thread(request, forum_slug):
                                    content=form.cleaned_data['content'])
             post.save()
 
-            ForumThreadEvent(post).fire()
+            ForumThreadEvent(post).fire(exclude=post.author)
 
             return HttpResponseRedirect(
                 reverse('forums.posts', args=[forum_slug, thread.id]))
