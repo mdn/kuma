@@ -3,6 +3,7 @@ import json
 from django.conf import settings
 
 from nose.tools import eq_
+from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -153,3 +154,16 @@ class DocumentEditingTests(TestCase):
         self.assertRedirects(response, reverse('wiki.document_revisions',
                                                args=[data['slug']],
                                                locale='en-US'))
+
+    def test_localized_based_on(self):
+        """Editing a localized article 'based on' an older revision of the
+        localization is OK."""
+        self.client.login(username='admin', password='testpass')
+        en_r = revision(save=True)
+        fr_d = document(parent=en_r.document, locale='fr', save=True)
+        fr_r = revision(document=fr_d, based_on=en_r, save=True)
+        url = reverse('wiki.new_revision_based_on',
+                      locale='fr', args=(fr_d.slug, fr_r.pk,))
+        response = self.client.get(url)
+        input = pq(response.content)('#id_based_on')[0]
+        eq_(int(input.value), en_r.pk)

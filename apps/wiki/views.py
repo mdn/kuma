@@ -413,11 +413,10 @@ def translate(request, document_slug, revision_id=None):
                             {'message': message}, status=400)
 
     if revision_id:
-        based_on_rev = get_object_or_404(Revision, pk=revision_id,
-                                         document__parent=parent_doc)
-    else:
-        based_on_rev = get_current_or_latest_revision(parent_doc,
-                                                      reviewed_only=False)
+        initial_rev = get_object_or_404(Revision, pk=revision_id)
+
+    based_on_rev = get_current_or_latest_revision(parent_doc,
+                                                  reviewed_only=False)
 
     disclose_description = bool(request.GET.get('opendescription'))
 
@@ -441,7 +440,9 @@ def translate(request, document_slug, revision_id=None):
             can_create_tags=user.has_perm('taggit.add_tag'))
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
-        if revision_id or not doc:
+        if revision_id:
+            initial.update(content=Revision.objects.get(pk=revision_id).content)
+        elif not doc:
             initial.update(content=based_on_rev.content)
         instance = doc and get_current_or_latest_revision(doc)
         rev_form = RevisionForm(instance=instance, initial=initial)
