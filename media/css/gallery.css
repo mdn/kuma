@@ -191,6 +191,16 @@ a.btn-upload {
     display: block;
 }
 
+#media-object {
+    position: relative;
+}
+
+#media-object a.btn-upload {
+    position: absolute;
+    right: 20px;
+    top: 24px;
+}
+
 #media-object div.description {
     padding: 10px;
 }
