@@ -320,6 +320,7 @@ class ForParser(object):
         return cls._PARSED_STRIPPED_FOR_CLOSER.sub(u'</for>', html)
 
 
+# L10n: This error is displayed if a template is included into itself.
 RECURSION_MESSAGE = _lazy(u'[Recursive inclusion of "%s"]')
 
 
