@@ -1,11 +1,35 @@
 import hashlib
 
-from django.db import models
+from django.db import models, connections, router
+from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
 from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
+
+
+def multi_raw(query, params, models):
+    """Scoop multiple model instances out of the DB at once, given a query that
+    returns all fields of each.
+
+    Return an iterable of sequences of model instances parallel to the `models`
+    sequence of classes. For example...
+
+        [(<User such-and-such>, <Watch such-and-such>), ...]
+
+    """
+    cursor = connections[router.db_for_read(models[0])].cursor()
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+    model_attnames = dict((m, [f.get_attname() for f in m._meta._fields()])
+                          for m in models)
+    for row in rows:
+        next_value = iter(row).next
+        yield [model_class(**dict((a, next_value())
+                           for a in model_attnames[model_class]))
+               for model_class in models]
 
 
 class EventWatch(ModelBase):
@@ -48,3 +72,87 @@ class EventWatch(ModelBase):
         """Get the URL to remove an EventWatch."""
         url_ = reverse('notifications.remove', args=[self.key])
         return urlparams(url_, email=self.email)
+
+
+class Watch(ModelBase):
+    """Watch events."""
+    # Key used by an Event to find watches it manages:
+    event_type = models.CharField(max_length=30, db_index=True)
+
+    # Optional reference to a content type:
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    object_id = models.PositiveIntegerField(db_index=True, null=True)
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    user = models.ForeignKey(User, null=True, blank=True)
+
+    # Email stored only in the case of anonymous users:
+    email = models.EmailField(db_index=True, null=True, blank=True)
+
+    # Secret for confirming anonymous watch email addresses. We clear the
+    # secret upon confirmation. Until then, the watch is inactive.
+    secret = models.CharField(max_length=10, null=True, blank=True)
+
+    def __unicode__(self):
+        rest = self.content_object or self.content_type or self.object_id
+        return u'[%s] %s, %s' % (self.pk, self.event_type, str(rest))
+
+    def confirm(self):
+        """Activate this watch so it actually fires.
+
+        Return self to support method chaining.
+
+        """
+        self.secret = None
+        return self
+
+
+class WatchFilter(ModelBase):
+    """Additional key/value pairs that pare down the scope of a watch"""
+    watch = models.ForeignKey(Watch, related_name='filters')
+    name = models.CharField(max_length=20)
+
+    # Either ints or hashes of enumerated strings. All we can't represent
+    # easily with this schema is arbitrary (open-vocab) strings.
+    value = models.IntegerField()
+
+    class Meta(object):
+        # There's no particular reason we couldn't allow multiple values for
+        # one name to be ORed together, but the API needs a little work
+        # (accepting lists passed to notify()) to support that.
+        #
+        # This ordering makes the index usable for lookups by name.
+        unique_together = ('name', 'watch')
+
+
+class NotificationsMixin(models.Model):
+    """Mixin for notifications models that adds watches as a generic relation.
+
+    So we get cascading deletes for free, yay!
+
+    """
+    watches = generic.GenericRelation(Watch)
+
+    class Meta(object):
+        abstract = True
+
+
+class EmailUser(AnonymousUser):
+    """An anonymous user identified only by email address"""
+
+    def __init__(self, email=''):
+        self.email = email
+
+    def __unicode__(self):
+        return 'Anonymous user <%s>' % self.email
+
+    __repr__ = AnonymousUser.__str__
+
+    def __eq__(self, other):
+        return self.email == other.email
+
+    def __ne__(self, other):
+        return self.email != other.email
+
+    def __hash__(self):
+        return hash(self.email)
