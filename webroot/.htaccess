@@ -44,7 +44,7 @@ RewriteRule ^([\-a-z]+)/kb/Support\+Website\+Forums$ /en-US/questions/ [L,NC,R=3
 RewriteRule ^([\-a-z]+)/kb/Article\+list$ /$1/kb/all [L,NC,R=301]
 
 # Windows 7 application link
-RewriteRule ^1/windows7-support(\/)?$  "/home/?as=u" [L,R,NE]
+RewriteRule ^windows7-support(\/)?$  "/home/?as=u" [L,R,NE]
 
 # Redirect locales that point to one locale in SUMO.
 # Kitsune does this by itself, mostly.
