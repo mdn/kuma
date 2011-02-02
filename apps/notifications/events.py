@@ -9,7 +9,7 @@ from django.db.models import Q
 from celery.decorators import task
 
 from notifications.models import Watch, WatchFilter, EmailUser, multi_raw
-from notifications.utils import merge
+from notifications.utils import merge, hash_to_unsigned
 
 
 def _unique_by_email(users_and_watches):
@@ -161,7 +161,7 @@ class Event(object):
                 join_params.append(k)
                 wheres.append('(f{n}.value=%s '
                               'OR f{n}.value IS NULL)'.format(n=n))
-                where_params.append(v)
+                where_params.append(hash_to_unsigned(v))
             return joins, wheres, join_params + where_params
 
         # Apply watchfilter constraints:
@@ -246,7 +246,8 @@ class Event(object):
 
         # Apply 1-to-many filters:
         for k, v in filters.iteritems():
-            watches = watches.filter(filters__name=k, filters__value=v)
+            watches = watches.filter(filters__name=k,
+                                     filters__value=hash_to_unsigned(v))
 
         return watches
 
@@ -312,7 +313,8 @@ class Event(object):
                 **create_kwargs)
             for k, v in filters.iteritems():
                 # TODO: Auto-hash v into an int if it isn't one?
-                WatchFilter.objects.create(watch=watch, name=k, value=v)
+                WatchFilter.objects.create(watch=watch, name=k,
+                                           value=hash_to_unsigned(v))
         return watch
 
     @classmethod

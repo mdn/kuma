@@ -112,9 +112,10 @@ class WatchFilter(ModelBase):
     watch = models.ForeignKey(Watch, related_name='filters')
     name = models.CharField(max_length=20)
 
-    # Either ints or hashes of enumerated strings. All we can't represent
-    # easily with this schema is arbitrary (open-vocab) strings.
-    value = models.IntegerField()
+    # Either an int or the hash of an item in a reasonably small set, which is
+    # indicated by the name field. See comments by hash_to_unsigned() for more
+    # on what is reasonably small.
+    value = models.PositiveIntegerField()
 
     class Meta(object):
         # There's no particular reason we couldn't allow multiple values for

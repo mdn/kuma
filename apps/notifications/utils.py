@@ -1,3 +1,6 @@
+from zlib import crc32
+
+
 class peekable(object):
     """Wrapper for an iterator to allow 1-item lookahead"""
     # Lowercase to blend in with itertools. The fact that it's a class is an
@@ -53,3 +56,28 @@ def merge(*iterables, **kwargs):
         _, p = min_or_max((key(p.peek()), p) for p in peekables)
         yield p.next()
         peekables = [p for p in peekables if p]
+
+
+def hash_to_unsigned(data):
+    """If data is a string, return an unsigned 4-byte int hash of it. If data
+    is already an int that fits those parameters, return it verbatim.
+
+    If data is an int outside that range, behavior is undefined at the moment.
+    We rely on the PositiveIntegerField on WatchFilter to scream if the int is
+    too long for the field.
+
+    """
+    if isinstance(data, basestring):
+        # Return a CRC32 value identical across Python versions and platforms
+        # by stripping the sign bit as on
+        # http://docs.python.org/library/zlib.html. Though CRC32 is not a good
+        # general-purpose hash function, it has no collisions on a dictionary
+        # of 38,470 English words, which should be fine for the small sets that
+        # watch filters are designed to enumerate. As a bonus, it is fast and
+        # available as a built-in function in some DBs. If your set of filter
+        # values is very large or has different CRC32 distribution properties
+        # than English words, you might want to do your own hashing in your
+        # Event subclass and pass ints when specifying filter values.
+        return crc32(data.encode('utf-8')) & 0xffffffff
+    else:
+        return int(data)

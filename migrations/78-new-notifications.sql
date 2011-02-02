@@ -21,7 +21,7 @@ CREATE TABLE `notifications_watchfilter` (
   `id` integer NOT NULL AUTO_INCREMENT,
   `watch_id` integer NOT NULL,
   `name` binary(20) NOT NULL,
-  `value` integer NOT NULL,
+  `value` integer UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`name`, `watch_id`),
   KEY `notifications_watchfilter_6e1bd094` (`watch_id`),

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import mock
 from nose.tools import eq_
 
@@ -260,6 +261,19 @@ class NotificationTests(TestCase):
         FilteredContentTypeEvent.notify('hi@there.com', color=3, flavor=4)
         assert not FilteredContentTypeEvent.is_notifying('hi@there.com',
                                                          color=3)
+
+    def test_hashing(self):
+        """Strings should be hashed to ints, but ints should be left alone.
+
+        Unicode strings should also work.
+
+        """
+        FilteredEvent.notify('red@x.com', color='red', flavor=6)
+        FilteredEvent.notify('blue@x.com', color=u'blüe', flavor=7)
+        assert FilteredEvent.is_notifying('red@x.com', color='red', flavor=6)
+        assert FilteredEvent.is_notifying('blue@x.com', color=u'blüe', flavor=7)
+        assert not FilteredEvent.is_notifying('blue@x.com', color='red',
+                                              flavor=7)
 
 
 class CascadingDeleteTests(ModelsTestCase):
