@@ -14,7 +14,7 @@
       {{ watch_form.email|safe }}
     {% endif %}
     {{ watch_form.event_type|safe }}
-    <input type="submit" class="btn g-btn" value="{{ _('Send Updates') }}" />
+    <input type="submit" class="btn" value="{{ _('Send Updates') }}" />
     <span class="cancel">
       <a class="kbox-cancel" href="{{ question.get_absolute_url() }}">{{ _('Cancel') }}</a>
     </span>

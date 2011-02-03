@@ -36,6 +36,7 @@ MSG_CONTENT_REQUIRED = _lazy(u'Please provide content.')
 MSG_CONTENT_SHORT = _lazy(u'Your content is too short (%(show_value)s characters). It must be at least %(limit_value)s characters.')
 MSG_CONTENT_LONG = _lazy(u'Please keep the length of your content to %(limit_value)s characters or less. It is currently %(show_value)s characters.')
 
+REPLY_PLACEHOLDER = _lazy(u'Enter your reply here.')
 
 class EditQuestionForm(forms.Form):
     """Form to edit an existing question"""
@@ -175,7 +176,8 @@ class AnswerForm(forms.Form):
                 label=_lazy('Content:'),
                 min_length=5,
                 max_length=10000,
-                widget=forms.Textarea(),
+                widget=forms.Textarea(attrs={'placeholder':
+                                             REPLY_PLACEHOLDER}),
                 error_messages={'required': MSG_CONTENT_REQUIRED,
                                 'min_length': MSG_CONTENT_SHORT,
                                 'max_length': MSG_CONTENT_LONG})

@@ -8,62 +8,66 @@
 {% set classes = 'answers' %}
 
 {% block content %}
-  <div class="edit-answer">
-    <h2>{{ _('Edit an answer') }}</h2>
-    <ul class="info">
-      <li>
-        <label>{{ _('Created by:') }}</label>
-        {{ answer.creator }}
-      </li>
-      <li>
-        <label>{{ _('Created:') }}</label>
-        {{ datetimeformat(answer.created, format='longdatetime') }}
-      </li>
-      {% if answer.updated_by %}
+  <article class="main">
+    <div class="edit-answer">
+      <h2>{{ _('Edit an answer') }}</h2>
+      <ul class="info">
         <li>
-          <label>{{ _('Last updated by:') }}</label>
-          {{ answer.updated_by }}
+          <label>{{ _('Created by:') }}</label>
+          {{ answer.creator }}
         </li>
         <li>
-          <label>{{ _('Last updated:') }}</label>
-          {{ datetimeformat(answer.updated, format='longdatetime') }}
+          <label>{{ _('Created:') }}</label>
+          {{ datetimeformat(answer.created, format='longdatetime') }}
         </li>
-      {% endif %}
-      <li>
-        <label>{{ _('Question:') }}</label>
-        {{ answer.question.title }}
-      </li>
-    </ul>
-    <form action="{{ url('questions.edit_answer', answer.question.id, answer.id) }}" method="post">
-      {{ csrf() }}
-      {{ errorlist(form) }}
-
-      <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
-        {{ content_editor(form.content) }}
-      </div>
-
-      {{ attachments_form('questions.Answer', answer.pk, answer.images.all(), settings, request.user) }}
-
-      <div class="form-widget submit">
-        <a href="{{ url('questions.answers', answer.question.id) }}">{{ _('Cancel') }}</a>
-        <input type="submit" class="btn y-btn" name="preview" value="{{ _('Preview Reply') }}" />
-        <input type="submit" class="btn g-btn" value="{{ _('Update answer') }}" />
-      </div>
-    </form>
-
-    {% if answer_preview %}
-      <div id="answer-preview">
-        <h3>{{ _('Answer Preview:') }}</h3>
-        <ol class="answers">
+        {% if answer.updated_by %}
           <li>
-            {% set answer = answer_preview %}
-            {% set question = answer.question %}
-            {% include "questions/includes/answer.html" %}
+            <label>{{ _('Last updated by:') }}</label>
+            {{ answer.updated_by }}
           </li>
-        </ol>
-      </div>
-    {% endif %}
-  </div>
+          <li>
+            <label>{{ _('Last updated:') }}</label>
+            {{ datetimeformat(answer.updated, format='longdatetime') }}
+          </li>
+        {% endif %}
+        <li>
+          <label>{{ _('Question:') }}</label>
+          {{ answer.question.title }}
+        </li>
+      </ul>
+      <form action="{{ url('questions.edit_answer', answer.question.id, answer.id) }}" method="post">
+        {{ csrf() }}
+        {{ errorlist(form) }}
+
+        <div class="form-widget{% if form.content.errors %} invalid{% endif %}">
+          {{ content_editor(form.content) }}
+        </div>
+
+        {{ attachments_form('questions.Answer', answer.pk, answer.images.all(), settings, request.user) }}
+
+        <div class="form-widget submit">
+          <input type="submit" class="btn" value="{{ _('Update answer') }}" />
+          <input type="submit" class="preview" name="preview" value="{{ _('Preview Reply') }}" />
+          <a href="{{ url('questions.answers', answer.question.id) }}">{{ _('Cancel') }}</a>
+        </div>
+      </form>
+
+      {% if answer_preview %}
+        <section id="answer-preview">
+          <header>
+            <h1>{{ _('Answer Preview:') }}</h1>
+          </header>
+          <ol class="answers">
+            <li class="answer">
+              {% set answer = answer_preview %}
+              {% set question = answer.question %}
+              {% include "questions/includes/answer.html" %}
+            </li>
+          </ol>
+        </section>
+      {% endif %}
+    </div>
+  </article>
 {% endblock %}
 
 {% block side %}

@@ -16,7 +16,7 @@
 /*----------------------------------
     Global
 ----------------------------------*/
-article, nav, section {
+article, header, hgroup, footer, nav, section {
     display: block;
 }
 
@@ -43,9 +43,13 @@ a:link, a:visited, a:active {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 h1, h2, h3, h4, h5, h6 {
-	color: #303030;
-	font-weight: normal;
+    color: #303030;
+    font-weight: normal;
 }
 
 h1 {
@@ -69,8 +73,9 @@ h2 {
 ----------------------------------*/
 
 .breadcrumbs {
-    margin: 0 0 15px;
     font-family: Verdana;
+    margin: 0 0 15px;
+    padding: 0 9px;
 }
 
 .breadcrumbs li {
@@ -341,6 +346,12 @@ div.warning-box p {
     text-transform: uppercase;
 }
 
+.sd-module h2 {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 15px 0 0;
+}
+
 .sd-module p {
     color: #666;
     margin: 10px 0;
@@ -590,32 +601,6 @@ article.main textarea {
 article.main div.submit {
     clear: both;
     padding: 10px 0 0;
-}
-
-article.main input[type="button"],
-article.main input[type="submit"]:not(.remover),  /* Exclude tag remover button. */
-section.marky button {
-    border: none;
-    background: #0063d8;
-    background: -moz-linear-gradient(top, #4aa9f7, #0063d8);
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    box-shadow: 0 2px 2px rgba(0,0,0,.25);
-    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.25);
-    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.25);
-    color: #fff;
-    cursor: pointer;
-    font-family: Verdana;
-    margin: 0 15px 0 0;
-    padding: 3px 20px 5px;
-    text-shadow: rgba(0,0,0,.25) 0 -1px 0;
-}
-
-article.main input[disabled]:not(.remover) {
-    background: #ddd;
-    color: #888;
-    cursor: default;
 }
 
 /*----------------------------------
@@ -972,6 +957,61 @@ ul.ui-autocomplete {
 /*----------------------------------
     Common button styles
 ----------------------------------*/
+
+input[type="button"],
+input[type="submit"]:not(.remover),  /* Exclude tag remover button. */
+section.marky button,
+a.btn {
+    border: none;
+    background: #5784BF;
+    background: -moz-linear-gradient(#669BE1, #5784BF) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, from(#669BE1), to(#5784BF));
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    box-shadow: 0 2px rgba(0, 0, 0, 0.1), 0 -3px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 2px rgba(0, 0, 0, 0.1), 0 -3px rgba(0, 0, 0, 0.1) inset;
+    -webkit-box-shadow: 0 2px rgba(0, 0, 0, 0.1), 0 -3px rgba(0, 0, 0, 0.1) inset;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Trebuchet MS",Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 15px 0 0;
+    overflow: visible;
+    padding: 5px 12px 7px;
+    text-align: center;
+    width: auto;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:not(.remover):hover,  /* Exclude tag remover button. */
+section.marky button:hover,
+a.btn:hover {
+    box-shadow: 0 2px rgba(0, 0, 0, 0.1), 0 -3px rgba(0, 0, 0, 0.1) inset, 0 0 100px rgba(255, 255, 255, 0.2) inset;
+    -moz-box-shadow: 0 2px rgba(0, 0, 0, 0.1), 0 -3px rgba(0, 0, 0, 0.1) inset, 0 0 100px rgba(255, 255, 255, 0.2) inset;
+    -webkit-box-shadow: 0 2px rgba(0, 0, 0, 0.1), 0 -3px rgba(0, 0, 0, 0.1) inset, 0 0 100px rgba(255, 255, 255, 0.2) inset;
+    text-decoration: none;
+}
+
+input[type="submit"].btn-important,
+a.btn-important {
+    background: #489615;
+    background: -moz-linear-gradient(#84C63C, #489615) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, from(#84C63C), to(#489615));
+    box-shadow: 0 3px rgba(0, 0, 0, 0.1), 0 -4px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 3px rgba(0, 0, 0, 0.1), 0 -4px rgba(0, 0, 0, 0.1) inset;
+    -webkit-box-shadow: 0 3px rgba(0, 0, 0, 0.1), 0 -4px rgba(0, 0, 0, 0.1) inset;
+    font-size: 16px;
+    padding: 8px 16px 12px;
+}
+
+input[disabled]:not(.remover) {
+    background: #ddd;
+    color: #888;
+    cursor: default;
+}
+
 button.img-submit {
     background: none;
     border: none;
@@ -985,4 +1025,3 @@ form.disabled input[type="image"],
 form.disabled button {
     opacity: 0.5; /* dim submit buttons when form is disabled */
 }
-/* TODO: more to come during the great css/html refactor */

@@ -1,6 +1,8 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "questions/includes/question_editing_frame.html" %}
 {% set title = _('Ask a Question') %}
+{% set crumbs = [(url('questions.questions'), _('Forum')),
+                 (None, _('Ask a New Question'))] %}
 
 {% block headline %}{{ _('Ask a New Question') }}{% endblock %}
 
@@ -80,7 +82,7 @@
       <input type="hidden" name="product" value="{{ current_product.key }}" />
       <input type="hidden" name="category" value="{{ current_category.key }}" />
       <input type="text" class="question" name="search" value="{{ request.GET.search }}" />
-      <input type="submit" class="btn g-btn" value="Ask this" />
+      <input type="submit" class="btn btn-important" value="{{ _('Ask this') }}" />
     </form>
   {% endif %}
 
@@ -108,7 +110,7 @@
       <input type="hidden" name="category" value="{{ current_category.key }}" />
       <input type="hidden" name="search" value="{{ request.GET.search }}" />
       <input type="hidden" name="showform" value="1" />
-      <input type="submit" id="show-form-btn" class="btn y-btn" value="{{ button_text }}" />
+      <input type="submit" id="show-form-btn" class="btn" value="{{ button_text }}" />
     </form>
   {% endif %}
 

@@ -3,87 +3,90 @@
 {# TODO: Make the title and other references to FF configurable. #}
 {% set title = _('Firefox Support Forum') %}
 {% set classes = 'questions' %}
+{% set crumbs = [(None, _('Forum'))] %}
 
-{% block filter %}
-{% if tags %}
-  <div id="tagged">
-    <label>{{ _('Questions Tagged:') }}</label>
-    {% for tag in tags %}
-      <a href="{{ url('questions.questions')|urlparams(tagged=tag.slug, filter=filter, sort=sort) }}">{{ tag.name }}</a>{% if not loop.last %},{% endif %}
-    {% endfor %}
-    <a class="show-all" href="{{ url('questions.questions')|urlparams(filter=filter, sort=sort) }}">{{ _('Show All Questions') }}</a>
-  </div>
-{% endif %}
-<div id="filter">
-  <ul>
-    <li{% if not sort %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter=filter, tagged=tagged) }}">{{ _('Most Recent') }}</a>
-    </li>
-    <li{% if sort == 'requested' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(sort='requested', filter=filter, tagged=tagged) }}">{{ _('Most Requested') }}</a>
-    </li>
-    <li class="separator">|</li>
-    <li{% if not filter %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(sort=sort, tagged=tagged) }}">{{ _('All') }}</a>
-    </li>
-    <li{% if filter == 'unsolved' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='unsolved', sort=sort, tagged=tagged) }}">{{ _('Unsolved') }}</a>
-    </li>
-    <li{% if filter == 'solved' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='solved', sort=sort, tagged=tagged) }}">{{ _('Solved') }}</a>
-    </li>
-    <li{% if filter == 'no-replies' %} class="active"{% endif %}>
-      <a href="{{ url('questions.questions')|urlparams(filter='no-replies', sort=sort, tagged=tagged) }}">{{ _('No Replies') }}</a>
-    </li>
-    {% if user.is_authenticated() %}
-      <li{% if filter == 'my-contributions' %} class="active"{% endif %}>
-        <a href="{{ url('questions.questions')|urlparams(filter='my-contributions', sort=sort, tagged=tagged) }}">{{ _('My Contributions') }}</a>
-      </li>
-    {% endif %}
-  </ul>
-</div>
+{% block above_main %}
+  <hgroup>
+    <h1><a href="{{ url('questions.questions') }}">{{ _('Firefox Support Forum') }}</a></h1>
+    <h2>{{ _('The Official Community-Driven Support Web Site for Firefox') }}</h2>
+  </hgroup>
 {% endblock %}
 
 {% block content %}
+  {% if tags %}
+    <div id="tagged">
+      {{ _('Showing questions tagged:') }}
+      {% set comma = joiner(', ') %}
+      {% for tag in tags %}{{ comma() }}
+        <a href="{{ url('questions.questions')|urlparams(tagged=tag.slug, filter=filter, sort=sort) }}">{{ tag.name }}</a>{% endfor %}
+      <a class="show-all" href="{{ url('questions.questions')|urlparams(filter=filter, sort=sort) }}">{{ _('Show all questions') }}</a>
+    </div>
+  {% endif %}
+  <div id="filter">
+    {{ _('Sort:') }}
+    <ul>
+      <li{% if not sort %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(filter=filter, tagged=tagged) }}">{{ _('Most Recent') }}</a>
+      </li>
+      <li{% if sort == 'requested' %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(sort='requested', filter=filter, tagged=tagged) }}">{{ _('Most Requested') }}</a>
+      </li>
+    </ul>
+    {{ _('Show:') }}
+    <ul>
+      <li{% if not filter %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(sort=sort, tagged=tagged) }}">{{ _('All') }}</a>
+      </li>
+      <li{% if filter == 'unsolved' %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(filter='unsolved', sort=sort, tagged=tagged) }}">{{ _('Unsolved') }}</a>
+      </li>
+      <li{% if filter == 'solved' %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(filter='solved', sort=sort, tagged=tagged) }}">{{ _('Solved') }}</a>
+      </li>
+      <li{% if filter == 'no-replies' %} class="active"{% endif %}>
+        <a href="{{ url('questions.questions')|urlparams(filter='no-replies', sort=sort, tagged=tagged) }}">{{ _('No Replies') }}</a>
+      </li>
+      {% if user.is_authenticated() %}
+        <li{% if filter == 'my-contributions' %} class="active"{% endif %}>
+          <a href="{{ url('questions.questions')|urlparams(filter='my-contributions', sort=sort, tagged=tagged) }}">{{ _('My Contributions') }}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
   {% if questions.object_list %}
     <ol class="questions">
       {% for question in questions.object_list %}
         <li id="question-{{ question.id }}" class="question">
-          {% include 'questions/includes/have_problem.html' %}
-          <div class="title">
+          <div class="content">
             <h2><a href="{{ question.get_absolute_url() }}">{{ question.title }}</a></h2>
+            <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
+            <div class="stem"></div>
+          </div>
+          <div class="user-meta">
+            <div class="user">{{ question.creator }}</div>
+            <div class="date">{{ datetimeformat(question.created, format='longdatetime') }}</div>
+            {% include 'questions/includes/have_problem.html' %}
+          </div>
+          <div class="thread-meta">
             {% if question.solution %}
-              <span class="badge solved">{{ _('Solved') }}</span>
-            {% elif question.num_answers > 0 %}
-              {# L10n: {n} is the number of replies. #}
-              <span class="badge replies">{{ ngettext('{n} reply', '{n} replies', question.num_answers)|fe(n=question.num_answers) }}</span>
+              <span class="solved">{{ _('Solved') }}</span>
             {% endif %}
+            <span><a class="replies" href="{{ question.get_absolute_url()|urlparams(hash='answers') }}">
+              {% if question.num_answers > 0 %}
+                {# L10n: {n} is the number of replies. #}
+                {{ ngettext('1 reply', '{n} replies', question.num_answers)|f(n=question.num_answers) }}
+              {% else %}
+                {{ _('No replies') }}
+              {% endif %}
+            </a></span>
             {% if question.is_locked %}
-              <span class="badge locked">{{ _('Locked') }}</span>
+              <span class="locked">{{ _('Locked') }}</span>
             {% endif %}
             {% if question.is_contributor(user) %}
-              <span class="badge contributed">{{ _('Contributed') }}</span>
-            {% endif %}
-          </div>
-          <div class="asked-by">
-            {{ _('Asked by <span class="user">{user}</span>')|fe(user=question.creator) }}
-            {{ datetimeformat(question.created, format='longdatetime') }}
-          </div>
-          <p>{{ question.content_parsed|striptags()|truncate(170) }}</p>
-          <div class="meta">
-            {% set bullet = joiner("&bull;") %}
-            {% if question.metadata.ff_version %}
-              {{ bullet()|safe }}
-              <span>Firefox {{ question.metadata.ff_version }}</span>
-            {% endif %}
-            {% if question.metadata.os %}
-              {{ bullet()|safe }}
-              <span>{{ question.metadata.os }}</span>
+              <span class="contributed">{{ _('Contributed') }}</span>
             {% endif %}
             {% set tags = question.tags.all() %}
             {% if tags %}
-              {{ bullet()|safe }}
-              {{ _('Tagged') }}
               <ul class="tag-list immutable">
                 {% for tag in tags %}
                     <li><a class="tag-name" href="{{ url('questions.questions')|urlparams(tagged=tag.slug, filter=filter, sort=sort) }}">{{ tag }}</a></li>

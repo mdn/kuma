@@ -126,7 +126,8 @@ class AnswersTemplateTestCase(TestCaseBase):
                         args=[self.question.id, answer.id])
         doc = pq(response.content)
         eq_(1, len(doc('div.solution')))
-        eq_('answer-%s' % answer.id, doc('li.solution')[0].attrib['id'])
+        li = doc('span.solved')[0].getparent().getparent().getparent()
+        eq_('answer-%s' % answer.id, li.attrib['id'])
 
         self.question.solution = None
         self.question.save()
@@ -212,14 +213,16 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id])
         doc = pq(response.content)
 
-        eq_('1 out of 1 person', doc('#answer-1 div.helpful mark')[0].text)
+        eq_('1 out of 1 person found this reply helpful',
+            doc('#answer-1 span.helpful')[0].text.strip())
         eq_(0, len(doc('form.helpful input[name="helpful"]')))
 
         # Voting again (same user) should not increment vote count
         post(self.client, 'questions.answer_vote', {'helpful': 'y'},
              args=[self.question.id, self.answer.id])
         doc = pq(response.content)
-        eq_('1 out of 1 person', doc('#answer-1 div.helpful mark')[0].text)
+        eq_('1 out of 1 person found this reply helpful',
+            doc('#answer-1 span.helpful')[0].text.strip())
 
     def test_answer_authenticated_vote(self):
         """Authenticated user answer vote."""
@@ -237,31 +240,6 @@ class AnswersTemplateTestCase(TestCaseBase):
 
         # Common vote test
         self.common_answer_vote()
-
-    def test_answer_score(self):
-        """Test the helpful replies score."""
-        self.client.logout()
-
-        # A helpful vote
-        post(self.client, 'questions.answer_vote', {'helpful': 'y'},
-             args=[self.question.id, self.answer.id])
-
-        # Verify score (should be 1)
-        response = get(self.client, 'questions.answers',
-                       args=[self.question.id])
-        doc = pq(response.content)
-        eq_('1', doc('div.other-helpful span.votes')[0].text)
-
-        # A non-helpful vote
-        self.client.login(username='rrosario', password='testpass')
-        post(self.client, 'questions.answer_vote', {'not-helpful': 'y'},
-             args=[self.question.id, self.answer.id])
-
-        # Verify score (should be 0 now)
-        response = get(self.client, 'questions.answers',
-                       args=[self.question.id])
-        doc = pq(response.content)
-        eq_('0', doc('div.other-helpful span.votes')[0].text)
 
     def test_delete_question_without_permissions(self):
         """Deleting a question without permissions is a 403."""
@@ -350,7 +328,7 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.answers',
                        args=[self.question.id])
         doc = pq(response.content)
-        eq_(0, len(doc('ol.answers a.edit')))
+        eq_(0, len(doc('ol.answers li.edit')))
 
         answer = self.question.last_answer
         response = get(self.client, 'questions.edit_answer',
@@ -372,7 +350,7 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.answers',
                        args=[self.question.id])
         doc = pq(response.content)
-        eq_(1, len(doc('ol.answers a.edit')))
+        eq_(1, len(doc('ol.answers li.edit')))
 
         answer = self.question.last_answer
         response = get(self.client, 'questions.edit_answer',
@@ -393,7 +371,7 @@ class AnswersTemplateTestCase(TestCaseBase):
         response = get(self.client, 'questions.answers',
                        args=[self.question.id])
         doc = pq(response.content)
-        eq_(0, len(doc('ol.answers a.edit')))
+        eq_(0, len(doc('ol.answers li.edit')))
 
         # Add an answer and verify the edit link shows up
         content = 'lorem ipsum dolor sit amet'
@@ -401,9 +379,9 @@ class AnswersTemplateTestCase(TestCaseBase):
                         {'content': content},
                         args=[self.question.id])
         doc = pq(response.content)
-        eq_(1, len(doc('ol.answers a.edit')))
+        eq_(1, len(doc('ol.answers li.edit')))
         new_answer = self.question.answers.order_by('-created')[0]
-        eq_(1, len(doc('#answer-%s a.edit' % new_answer.id)))
+        eq_(1, len(doc('#answer-%s li.edit' % new_answer.id)))
 
         # Make sure it can be edited
         content = 'New content for answer'
@@ -450,14 +428,13 @@ class AnswersTemplateTestCase(TestCaseBase):
         eq_(200, response.status_code)
         eq_(True, Question.objects.get(pk=q.pk).is_locked)
         doc = pq(response.content)
-        eq_(1, len(doc('#question div.badges span.locked')))
+        eq_('This question is locked.',
+            doc('#question-reply div.main-section p').text())
 
         # now unlock it
         response = post(self.client, 'questions.lock', args=[q.id])
         eq_(200, response.status_code)
         eq_(False, Question.objects.get(pk=q.pk).is_locked)
-        doc = pq(response.content)
-        eq_(0, len(doc('#question div.badges span.locked')))
 
     def test_reply_to_locked_question_403(self):
         """Locked questions can't be answered."""
@@ -778,7 +755,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
     def test_all_filter_highlight(self):
         response = get(self.client, 'questions.questions')
         doc = pq(response.content)
-        eq_('active', doc('div#filter ul li')[3].attrib['class'])
+        eq_('active', doc('div#filter ul li')[2].attrib['class'])
         eq_('question-1', doc('ol.questions li')[0].attrib['id'])
 
     def test_no_reply_filter(self):
@@ -795,7 +772,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
                          filter='solved')
         response = self.client.get(url_)
         doc = pq(response.content)
-        eq_('active', doc('div#filter ul li')[5].attrib['class'])
+        eq_('active', doc('div#filter ul li')[4].attrib['class'])
         eq_(0, len(doc('ol.questions li')))
 
         # solve one question then verify that it shows up
@@ -814,7 +791,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
                          filter='unsolved')
         response = self.client.get(url_)
         doc = pq(response.content)
-        eq_('active', doc('div#filter ul li')[4].attrib['class'])
+        eq_('active', doc('div#filter ul li')[3].attrib['class'])
         eq_(4, len(doc('ol.questions li')))
 
         # solve one question then verify that it doesn't show up
@@ -832,7 +809,7 @@ class QuestionsTemplateTestCase(TestCaseBase):
         self.client.login(username=username, password="testpass")
         response = self.client.get(url_)
         doc = pq(response.content)
-        eq_('active', doc('div#filter ul li')[7].attrib['class'])
+        eq_('active', doc('div#filter ul li')[6].attrib['class'])
         eq_(expected_qty, len(doc('ol.questions li')))
 
     def test_my_contributions_filter(self):
