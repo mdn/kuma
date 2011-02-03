@@ -1,6 +1,6 @@
 from django import forms
 
-from tower import ugettext_lazy as _lazy
+from tower import ugettext_lazy as _lazy, ugettext as _
 
 from sumo.form_fields import StrippedCharField
 from .models import Answer
@@ -194,6 +194,19 @@ class WatchQuestionForm(forms.Form):
         ('solution', 'when a solution is found.'),
     )
 
-    email = forms.EmailField()
+    email = forms.EmailField(required=False)
     event_type = forms.ChoiceField(choices=EVENT_TYPE_CHOICES,
                                    widget=forms.RadioSelect)
+
+    def __init__(self, user, *args, **kwargs):
+        # Initialize with logged in user's email.
+        self.user = user
+        super(WatchQuestionForm, self).__init__(*args, **kwargs)
+
+    def clean_email(self):
+        if not self.user.is_authenticated() and not self.cleaned_data['email']:
+            raise forms.ValidationError(_('Please provide an email.'))
+        elif not self.user.is_authenticated():
+            return self.cleaned_data['email']
+        # Clear out the email for logged in users, we don't want to use it.
+        return None

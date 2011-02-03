@@ -12,18 +12,15 @@ from product_details import product_details
 from taggit.models import Tag
 
 from flagit.models import FlaggedObject
-from notifications import create_watch
-from notifications.tasks import delete_watches
+import questions as constants
+from questions.question_config import products
+from questions.tasks import update_question_votes, update_answer_pages
 from sumo.helpers import urlparams
 from sumo.models import ModelBase
 from sumo.parser import wiki_to_html
 from sumo.urlresolvers import reverse
-import questions as constants
-from .question_config import products
 from tags.models import BigVocabTaggableMixin
 from tags.utils import add_existing_tag
-from .tasks import (update_question_votes, build_answer_notification,
-                    update_answer_pages)
 from upload.models import ImageAttachment
 
 
@@ -88,13 +85,10 @@ class Question(ModelBase, BigVocabTaggableMixin):
         super(Question, self).save(*args, **kwargs)
 
         if new:
+            # Avoid circular import, events.py imports Question
+            from questions.events import QuestionReplyEvent
             # Authors should automatically watch their own questions.
-            create_watch(Question, self.id, self.creator.email, 'reply')
-
-    def delete(self, *args, **kwargs):
-        """Override delete to trigger delete_watches."""
-        delete_watches.delay(Question, self.pk)
-        super(Question, self).delete(*args, **kwargs)
+            QuestionReplyEvent.notify(self.creator, self)
 
     def add_metadata(self, **kwargs):
         """Add (save to db) the passed in metadata.
@@ -291,7 +285,9 @@ class Answer(ModelBase):
             self.question.save(no_update)
 
             if not no_notify:
-                build_answer_notification.delay(self)
+                # Avoid circular import, events.py imports Question
+                from questions.events import QuestionReplyEvent
+                QuestionReplyEvent(self).fire(exclude=self.creator)
 
     def delete(self, *args, **kwargs):
         """Override delete method to update parent question info."""

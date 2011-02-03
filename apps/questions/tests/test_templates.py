@@ -11,7 +11,7 @@ from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from notifications import check_watch, create_watch
+from questions.events import QuestionReplyEvent, QuestionSolvedEvent
 from questions.models import Question, Answer, QuestionVote
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.views import UNAPPROVED_TAG, NO_TAG
@@ -482,45 +482,47 @@ class AnswersTemplateTestCase(TestCaseBase):
         """Watch a question for replies."""
         self.client.logout()
         post(self.client, 'questions.watch',
-             {'email': 'somebody@nowhere.com', 'event_type': 'reply'},
+             {'email': 'some@bo.dy', 'event_type': 'reply'},
              args=[self.question.id])
-        assert check_watch(Question, self.question.id, 'somebody@nowhere.com',
-                           'reply'), 'Watch was not created'
+        assert QuestionReplyEvent.is_notifying('some@bo.dy', self.question), (
+               'Watch was not created')
 
     def test_watch_replies_logged_in(self):
         """Watch a question for replies (logged in)."""
         self.client.login(username='rrosario', password='testpass')
         user = User.objects.get(username='rrosario')
         post(self.client, 'questions.watch',
-             {'email': 'user118577@nowhere.com', 'event_type': 'reply'},
+             {'event_type': 'reply'},
              args=[self.question.id])
-        assert check_watch(Question, self.question.id, user.email,
-                           'reply'), 'Watch was not created'
+        assert QuestionReplyEvent.is_notifying(user, self.question), (
+               'Watch was not created')
 
     def test_watch_solution(self):
         """Watch a question for solution."""
         self.client.logout()
         post(self.client, 'questions.watch',
-             {'email': 'somebody@nowhere.com', 'event_type': 'solution'},
+             {'email': 'some@bo.dy', 'event_type': 'solution'},
              args=[self.question.id])
-        assert check_watch(Question, self.question.id, 'somebody@nowhere.com',
-                           'solution'), 'Watch was not created'
+        assert QuestionSolvedEvent.is_notifying('some@bo.dy', self.question), (
+               'Watch was not created')
 
     def test_unwatch(self):
         """Unwatch a question."""
+        # First watch question.
+        self.test_watch_replies_logged_in()
+        # Then unwatch it.
         self.client.login(username='rrosario', password='testpass')
         user = User.objects.get(username='rrosario')
-        create_watch(Question, self.question.id, user.email, 'solution')
         post(self.client, 'questions.unwatch', args=[self.question.id])
-        assert not check_watch(Question, self.question.id, user.email,
-                               'solution'), 'Watch was not destroyed'
+        assert not QuestionReplyEvent.is_notifying(user, self.question), (
+                   'Watch was not destroyed')
 
     def test_watch_solution_and_replies(self):
         """User subscribes to solution and replies: page doesn't break"""
         self.client.login(username='rrosario', password='testpass')
         user = User.objects.get(username='rrosario')
-        create_watch(Question, self.question.id, user.email, 'reply')
-        create_watch(Question, self.question.id, user.email, 'solution')
+        QuestionReplyEvent.notify(user, self.question)
+        QuestionSolvedEvent.notify(user, self.question)
         response = get(self.client, 'questions.answers',
                        args=[self.question.id])
         eq_(200, response.status_code)

@@ -23,14 +23,14 @@ from tower import ugettext_lazy as _lazy
 
 from access.decorators import (has_perm_or_owns_or_403, permission_required,
                                login_required)
-from notifications import create_watch, destroy_watch
 import questions as constants
+from questions.events import QuestionReplyEvent, QuestionSolvedEvent
 from questions.feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
 from questions.forms import (NewQuestionForm, EditQuestionForm, AnswerForm,
                              WatchQuestionForm, FREQUENCY_CHOICES)
 from questions.models import (Question, Answer, QuestionVote, AnswerVote,
                               CONFIRMED, UNCONFIRMED)
-from questions.tasks import cache_top_contributors, build_solution_notification
+from questions.tasks import cache_top_contributors
 from questions.question_config import products
 from search.clients import WikiClient, QuestionsClient, SearchError
 from search.utils import locale_or_default, sphinx_locale
@@ -374,7 +374,7 @@ def solution(request, question_id, answer_id):
 
     question.solution = answer
     question.save()
-    build_solution_notification.delay(question)
+    QuestionSolvedEvent(answer).fire(exclude=question.creator)
 
     return HttpResponseRedirect(answer.get_absolute_url())
 
@@ -621,16 +621,16 @@ def edit_answer(request, question_id, answer_id):
 def watch_question(request, question_id):
     """Start watching a question for replies or solution."""
     question = get_object_or_404(Question, pk=question_id)
-    form = WatchQuestionForm(request.POST)
+    form = WatchQuestionForm(request.user, request.POST)
 
     # Process the form
     if form.is_valid():
-        if request.user.is_authenticated():
-            email = request.user.email
+        user_or_email = (request.user if request.user.is_authenticated()
+                                      else form.cleaned_data['email'])
+        if form.cleaned_data['event_type'] == 'reply':
+            QuestionReplyEvent.notify(user_or_email, question)
         else:
-            email = form.cleaned_data['email']
-        event_type = form.cleaned_data['event_type']
-        create_watch(Question, question.id, email, event_type)
+            QuestionSolvedEvent.notify(user_or_email, question)
 
     # Respond to ajax request
     if request.is_ajax():
@@ -659,7 +659,8 @@ def watch_question(request, question_id):
 def unwatch_question(request, question_id):
     """Stop watching a question."""
     question = get_object_or_404(Question, pk=question_id)
-    destroy_watch(Question, question.id, request.user.email)
+    QuestionReplyEvent.stop_notifying(request.user, question)
+    QuestionSolvedEvent.stop_notifying(request.user, question)
     return HttpResponseRedirect(question.get_absolute_url())
 
 
@@ -748,6 +749,10 @@ def _answers_data(request, question_id, form=None, watch_form=None,
                   AnswersFeed().title(question)),)
     frequencies = dict(FREQUENCY_CHOICES)
 
+    is_watching_question = (
+        request.user.is_authenticated() and (
+        QuestionReplyEvent.is_notifying(request.user, question) or
+        QuestionSolvedEvent.is_notifying(request.user, question)))
     return {'question': question,
             'answers': answers_,
             'form': form or AnswerForm(),
@@ -756,6 +761,7 @@ def _answers_data(request, question_id, form=None, watch_form=None,
             'feeds': feed_urls,
             'tag_vocab': json.dumps(vocab),
             'frequencies': frequencies,
+            'is_watching_question': is_watching_question,
             'can_tag': request.user.has_perm('questions.tag_question'),
             'can_create_tags': request.user.has_perm('taggit.add_tag')}
 
@@ -798,6 +804,4 @@ def _get_top_contributors():
 # Initialize a WatchQuestionForm
 def _init_watch_form(request, event_type='solution'):
     initial = {'event_type': event_type}
-    if request.user.is_authenticated():
-        initial['email'] = request.user.email
-    return WatchQuestionForm(initial=initial)
+    return WatchQuestionForm(request.user, initial=initial)

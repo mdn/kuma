@@ -1,7 +1,35 @@
+from django.contrib.auth.models import AnonymousUser
+
 from nose.tools import eq_
 
-from questions.forms import NewQuestionForm
+from questions.forms import NewQuestionForm, WatchQuestionForm
 from questions.tests import TestCaseBase
+from users.tests import user
+
+
+class WatchQuestionFormTests(TestCaseBase):
+    """Tests for WatchQuestionForm."""
+    def test_anonymous_watch_with_email(self):
+        form = WatchQuestionForm(AnonymousUser(),
+                                 data={'email': 'wo@ot.com',
+                                       'event_type': 'reply'})
+        assert form.is_valid()
+        eq_('wo@ot.com', form.cleaned_data['email'])
+
+    def test_anonymous_watch_without_email(self):
+        form = WatchQuestionForm(AnonymousUser(), data={'event_type': 'reply'})
+        assert not form.is_valid()
+        eq_('Please provide an email.', form.errors['email'][0])
+
+    def test_registered_watch_with_email(self):
+        form = WatchQuestionForm(user(), data={'email': 'wo@ot.com',
+                                               'event_type': 'reply'})
+        assert form.is_valid()
+        assert not form.cleaned_data['email']
+
+    def test_registered_watch_without_email(self):
+        form = WatchQuestionForm(user(), data={'event_type': 'reply'})
+        assert form.is_valid()
 
 
 class TestNewQuestionForm(TestCaseBase):

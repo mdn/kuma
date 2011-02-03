@@ -8,9 +8,7 @@
   <form action="{{ url('questions.watch', question.id) }}" method="post">
     {{ csrf() }}
     {{ errorlist(watch_form) }}
-    {% if user.is_authenticated() %}
-      {{ watch_form.email.as_hidden()|safe }}
-    {% else %}
+    {% if not user.is_authenticated() %}
       {{ watch_form.email|safe }}
     {% endif %}
     {{ watch_form.event_type|safe }}

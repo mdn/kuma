@@ -129,7 +129,7 @@
             </li>
           {% endif %}
           <li class="email">
-            {% if is_watching(question) %}
+            {% if is_watching_question %}
               <form class="unwatch" action="{{ url('questions.unwatch', question.id) }}" method="post">
                 {{ csrf() }}
                 <input type="submit" class="stop" value="{{ _('Stop email updates') }}" />
