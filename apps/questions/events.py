@@ -7,6 +7,7 @@ from tower import ugettext as _
 
 from notifications.events import InstanceEvent
 from questions.models import Question
+from sumo.urlresolvers import reverse
 
 
 class QuestionEvent(InstanceEvent):
@@ -16,6 +17,24 @@ class QuestionEvent(InstanceEvent):
     def __init__(self, answer):
         super(QuestionEvent, self).__init__(answer.question)
         self.answer = answer
+
+    @classmethod
+    def _activation_email(cls, watch, email):
+        """Return an EmailMessage containing the activation URL to be sent to
+        a new watcher."""
+        subject = _('Please confirm your email address')
+        email_kwargs = {'activation_url': cls._activation_url(watch),
+                        'domain': Site.objects.get_current().domain,
+                        'watch_description': cls.get_watch_description(watch)}
+        template_path = 'questions/email/activate_watch.ltxt'
+        message = loader.render_to_string(template_path, email_kwargs)
+        return EmailMessage(subject, message,
+                            settings.NOTIFICATIONS_FROM_ADDRESS, [email])
+
+    @classmethod
+    def _activation_url(cls, watch):
+        return reverse('questions.activate_watch',
+                       args=[watch.id, watch.secret])
 
 
 class QuestionReplyEvent(QuestionEvent):
@@ -38,6 +57,10 @@ class QuestionReplyEvent(QuestionEvent):
                              settings.NOTIFICATIONS_FROM_ADDRESS,
                              [u.email]) for
                 u, dummy in users_and_watches)
+
+    @classmethod
+    def get_watch_description(cls, watch):
+        return _('New answers for question: %s') % watch.content_object.title
 
 
 class QuestionSolvedEvent(QuestionEvent):
@@ -63,3 +86,8 @@ class QuestionSolvedEvent(QuestionEvent):
                              settings.NOTIFICATIONS_FROM_ADDRESS,
                              [u.email]) for
                 u, dummy in users_and_watches)
+
+    @classmethod
+    def get_watch_description(cls, watch):
+        question = watch.content_object
+        return _('Solution found for question: %s') % question.title

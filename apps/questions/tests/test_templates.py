@@ -11,6 +11,7 @@ from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from notifications.models import Watch
 from questions.events import QuestionReplyEvent, QuestionSolvedEvent
 from questions.models import Question, Answer, QuestionVote
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
@@ -18,7 +19,7 @@ from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from sumo.tests import get, post
+from sumo.tests import get, post, attrs_eq
 from upload.models import ImageAttachment
 from users.models import RegistrationProfile
 
@@ -478,14 +479,44 @@ class AnswersTemplateTestCase(TestCaseBase):
                        args=[self.question.id])
         eq_(405, response.status_code)
 
-    def test_watch_replies(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_watch_replies(self, get_current):
         """Watch a question for replies."""
+        get_current.return_value.domain = 'testserver'
         self.client.logout()
+
         post(self.client, 'questions.watch',
              {'email': 'some@bo.dy', 'event_type': 'reply'},
              args=[self.question.id])
         assert QuestionReplyEvent.is_notifying('some@bo.dy', self.question), (
                'Watch was not created')
+
+        attrs_eq(mail.outbox[0], to=['some@bo.dy'],
+                 subject='Please confirm your email address')
+        assert 'questions/confirm/' in mail.outbox[0].body
+        assert 'New answers' in mail.outbox[0].body
+
+        # Now activate the watch.
+        w = Watch.objects.get()
+        get(self.client, 'questions.activate_watch', args=[w.id, w.secret])
+        assert Watch.objects.get().is_active
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_watch_replies_wrong_secret(self, get_current):
+        """Watch a question for replies."""
+        # This also covers test_watch_solution_wrong_secret.
+        get_current.return_value.domain = 'testserver'
+        self.client.logout()
+
+        post(self.client, 'questions.watch',
+             {'email': 'some@bo.dy', 'event_type': 'reply'},
+             args=[self.question.id])
+
+        # Now activate the watch.
+        w = Watch.objects.get()
+        r = get(self.client, 'questions.activate_watch', args=[w.id, 'fail'])
+        eq_(200, r.status_code)
+        assert not Watch.objects.get().is_active
 
     def test_watch_replies_logged_in(self):
         """Watch a question for replies (logged in)."""
@@ -497,14 +528,27 @@ class AnswersTemplateTestCase(TestCaseBase):
         assert QuestionReplyEvent.is_notifying(user, self.question), (
                'Watch was not created')
 
-    def test_watch_solution(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_watch_solution(self, get_current):
         """Watch a question for solution."""
         self.client.logout()
+        get_current.return_value.domain = 'testserver'
+
         post(self.client, 'questions.watch',
              {'email': 'some@bo.dy', 'event_type': 'solution'},
              args=[self.question.id])
         assert QuestionSolvedEvent.is_notifying('some@bo.dy', self.question), (
                'Watch was not created')
+
+        attrs_eq(mail.outbox[0], to=['some@bo.dy'],
+                 subject='Please confirm your email address')
+        assert 'questions/confirm/' in mail.outbox[0].body
+        assert 'Solution found' in mail.outbox[0].body
+
+        # Now activate the watch.
+        w = Watch.objects.get()
+        get(self.client, 'questions.activate_watch', args=[w.id, w.secret])
+        assert Watch.objects.get().is_active
 
     def test_unwatch(self):
         """Unwatch a question."""

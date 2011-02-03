@@ -1411,3 +1411,17 @@ div.confirm-question {
 div.confirm-question p {
     padding: .3em 0;
 }
+
+div.activate-watch h2,
+div.unsubscribe-watch h2 {
+    margin-bottom: 1em;
+}
+
+div.activate-watch ul {
+    margin-left: 1.2em;
+}
+
+a#activate-watch, a#remove-watch {
+    display: block;
+    font-size: 120%;
+}

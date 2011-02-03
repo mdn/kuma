@@ -561,6 +561,9 @@ TWITTER_CONSUMER_SECRET = ''
 
 
 NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
+# Anonymous watches must be confirmed.
+CONFIRM_ANONYMOUS_WATCHES = True
+
 
 # URL of the chat server.
 CHAT_SERVER = 'https://chat-support.mozilla.com:9091'

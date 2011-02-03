@@ -2,6 +2,7 @@
 import mock
 from nose.tools import eq_
 
+from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
@@ -65,11 +66,11 @@ class UsersWatchingTests(TestCase):
         watch(event_type='something else', email='never@fires.com').save()
         self._emails_eq(['regist@ered.com', 'anon@ymous.com'], SimpleEvent())
 
-    def test_unconfirmed(self):
-        """Make sure unconfirmed watches don't fire."""
-        watch(event_type=TYPE, email='anon@ymous.com', secret='x' * 10).save()
-        watch(event_type=TYPE, email='confirmed@one.com').save()
-        self._emails_eq(['confirmed@one.com'], SimpleEvent())
+    def test_inactive(self):
+        """Make sure inactive watches don't fire."""
+        watch(event_type=TYPE, email='anon@ymous.com', is_active=False).save()
+        watch(event_type=TYPE, email='active@one.com').save()
+        self._emails_eq(['active@one.com'], SimpleEvent())
 
     def test_content_type(self):
         """Make sure watches filter properly by content type."""
@@ -280,7 +281,8 @@ class NotificationTests(TestCase):
         FilteredEvent.notify('red@x.com', color='red', flavor=6)
         FilteredEvent.notify('blue@x.com', color=u'blüe', flavor=7)
         assert FilteredEvent.is_notifying('red@x.com', color='red', flavor=6)
-        assert FilteredEvent.is_notifying('blue@x.com', color=u'blüe', flavor=7)
+        assert FilteredEvent.is_notifying('blue@x.com', color=u'blüe',
+                                          flavor=7)
         assert not FilteredEvent.is_notifying('blue@x.com', color='red',
                                               flavor=7)
 
@@ -306,9 +308,10 @@ class CascadingDeleteTests(ModelsTestCase):
 class MailTests(TestCase):
     """Tests for mail-sending and templating"""
 
+    @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)
     def test_fire(self):
         """Assert that fire() runs and that generated mails get sent."""
-        SimpleEvent.notify('hi@there.com').confirm().save()
+        SimpleEvent.notify('hi@there.com').activate().save()
         SimpleEvent().fire()
 
         eq_(1, len(mail.outbox))
@@ -317,17 +320,38 @@ class MailTests(TestCase):
         eq_('Subject!', first_mail.subject)
         eq_('Body!', first_mail.body)
 
+    def test_anonymous_notify_and_fire(self):
+        """Calling notify() sends confirmation email, and calling fire() sends
+        notification email."""
+        w = SimpleEvent.notify('hi@there.com')
+
+        eq_(1, len(mail.outbox))
+        first_mail = mail.outbox[0]
+        eq_(['hi@there.com'], first_mail.to)
+        eq_('TODO', first_mail.subject)
+        eq_('Activate!', first_mail.body)
+
+        w.activate().save()
+        SimpleEvent().fire()
+
+        second_mail = mail.outbox[1]
+        eq_(['hi@there.com'], second_mail.to)
+        eq_('Subject!', second_mail.subject)
+        eq_('Body!', second_mail.body)
+
+    @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)
     def test_exclude(self):
         """Assert the `exclude` arg to fire() excludes the given user."""
-        SimpleEvent.notify('du@de.com').confirm().save()
+        SimpleEvent.notify('du@de.com').activate().save()
         registered_user = user(email='ex@clude.com', save=True)
-        SimpleEvent.notify(registered_user).confirm().save()
+        SimpleEvent.notify(registered_user).activate().save()
 
         SimpleEvent().fire(exclude=registered_user)
 
         eq_(1, len(mail.outbox))
         first_mail = mail.outbox[0]
         eq_(['du@de.com'], first_mail.to)
+        eq_('Subject!', first_mail.subject)
 
 
 def test_anonymous_user_compares():

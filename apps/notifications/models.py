@@ -89,21 +89,22 @@ class Watch(ModelBase):
     # Email stored only in the case of anonymous users:
     email = models.EmailField(db_index=True, null=True, blank=True)
 
-    # Secret for confirming anonymous watch email addresses. We clear the
-    # secret upon confirmation. Until then, the watch is inactive.
+    # Secret for activating anonymous watch email addresses.
     secret = models.CharField(max_length=10, null=True, blank=True)
+    # Active watches receive notifications, inactive watches don't.
+    is_active = models.BooleanField(default=False, db_index=True)
 
     def __unicode__(self):
         rest = self.content_object or self.content_type or self.object_id
         return u'[%s] %s, %s' % (self.pk, self.event_type, str(rest))
 
-    def confirm(self):
-        """Activate this watch so it actually fires.
+    def activate(self):
+        """Enable this watch so it actually fires.
 
         Return self to support method chaining.
 
         """
-        self.secret = None
+        self.is_active = True
         return self
 
 

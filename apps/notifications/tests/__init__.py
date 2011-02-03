@@ -9,7 +9,8 @@ from users.tests import user
 
 def watch(save=False, **kwargs):
     # TODO: better defaults, when there are events available.
-    defaults = {'user': kwargs.get('user') or user()}
+    defaults = {'user': kwargs.get('user') or user(),
+                'is_active': True}
     defaults.update(kwargs)
     w = Watch.objects.create(**defaults)
     if save:

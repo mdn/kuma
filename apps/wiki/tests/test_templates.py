@@ -434,6 +434,7 @@ class NewRevisionTests(TestCaseBase):
         eq_(doc('#id_content')[0].value, r.content)
 
     @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
 
@@ -446,9 +447,9 @@ class NewRevisionTests(TestCaseBase):
         get_current.return_value.domain = 'testserver'
 
         # Sign up for notifications:
-        EditDocumentEvent.notify('sam@example.com', self.d).confirm().save()
+        EditDocumentEvent.notify('sam@example.com', self.d).activate().save()
         ReviewableRevisionInLocaleEvent.notify('joe@example.com',
-            locale='en-US').confirm().save()
+            locale='en-US').activate().save()
 
         # Edit a document:
         response = self.client.post(
@@ -694,13 +695,14 @@ class ReviewRevisionTests(TestCaseBase):
 
     @mock.patch_object(send_reviewed_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)
     def test_approve_revision(self, get_current, reviewed_delay):
         """Verify revision approval with proper notifications."""
         get_current.return_value.domain = 'testserver'
 
         # Subscribe to approvals:
         ApproveRevisionInLocaleEvent.notify('joe@example.com',
-                                            locale='en-US').confirm().save()
+                                            locale='en-US').activate().save()
 
         # Approve something:
         significance = SIGNIFICANCES[0][0]

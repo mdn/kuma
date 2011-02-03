@@ -14,7 +14,8 @@ from django.db.models import Q
 from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseBadRequest, HttpResponseForbidden)
 from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_POST, require_http_methods
+from django.views.decorators.http import (require_POST, require_GET,
+                                          require_http_methods)
 
 import jingo
 from taggit.models import Tag
@@ -23,6 +24,8 @@ from tower import ugettext_lazy as _lazy
 
 from access.decorators import (has_perm_or_owns_or_403, permission_required,
                                login_required)
+from notifications.models import Watch
+from notifications.events import ActivationRequestFailed
 import questions as constants
 from questions.events import QuestionReplyEvent, QuestionSolvedEvent
 from questions.feeds import QuestionsFeed, AnswersFeed, TaggedQuestionsFeed
@@ -624,18 +627,26 @@ def watch_question(request, question_id):
     form = WatchQuestionForm(request.user, request.POST)
 
     # Process the form
+    msg = None
     if form.is_valid():
         user_or_email = (request.user if request.user.is_authenticated()
                                       else form.cleaned_data['email'])
-        if form.cleaned_data['event_type'] == 'reply':
-            QuestionReplyEvent.notify(user_or_email, question)
-        else:
-            QuestionSolvedEvent.notify(user_or_email, question)
+        try:
+            if form.cleaned_data['event_type'] == 'reply':
+                QuestionReplyEvent.notify(user_or_email, question)
+            else:
+                QuestionSolvedEvent.notify(user_or_email, question)
+        except ActivationRequestFailed:
+            msg = _('Could not send message to that email address.')
 
     # Respond to ajax request
     if request.is_ajax():
         if form.is_valid():
-            msg = _('You will be notified of updates by email.')
+            if not msg:
+                msg = (_('You will be notified of updates by email.') if
+                       request.user.is_authenticated() else
+                       _('You should receive an email shortly '
+                         'to confirm your subscription.'))
             return HttpResponse(json.dumps({'message': msg}))
 
         if request.POST.get('from_vote'):
@@ -648,6 +659,7 @@ def watch_question(request, question_id):
         return HttpResponse(json.dumps({'html': html}))
 
     # Respond to normal request
+    # TODO: show failure here if email fails to send.
     if form.is_valid():
         return HttpResponseRedirect(question.get_absolute_url())
 
@@ -662,6 +674,37 @@ def unwatch_question(request, question_id):
     QuestionReplyEvent.stop_notifying(request.user, question)
     QuestionSolvedEvent.stop_notifying(request.user, question)
     return HttpResponseRedirect(question.get_absolute_url())
+
+
+@require_GET
+def unsubscribe_watch(request, watch_id, secret):
+    """Stop watching a question, for anonymous users."""
+    watch = get_object_or_404(Watch, pk=watch_id)
+    question = watch.content_object
+    success = False
+    if watch.secret == secret and isinstance(question, Question):
+        user_or_email = watch.user or watch.email
+        QuestionReplyEvent.stop_notifying(user_or_email, question)
+        QuestionSolvedEvent.stop_notifying(user_or_email, question)
+        success = True
+
+    return jingo.render(request, 'questions/unsubscribe_watch.html',
+                        {'question': question, 'success': success})
+
+
+@require_GET
+def activate_watch(request, watch_id, secret):
+    """Activate watching a question."""
+    watch = get_object_or_404(Watch, pk=watch_id)
+    question = watch.content_object
+    if watch.secret == secret and isinstance(question, Question):
+        watch.activate().save()
+
+    return jingo.render(request, 'questions/activate_watch.html',
+                        {'question': question,
+                         'unsubscribe_url': reverse('questions.unsubscribe',
+                                                    args=[watch_id, secret]),
+                         'is_active': watch.is_active})
 
 
 def _search_suggestions(query, locale):

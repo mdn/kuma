@@ -51,6 +51,10 @@ urlpatterns = patterns('questions.views',
         name='questions.watch'),
     url(r'^/(?P<question_id>\d+)/unwatch$', 'unwatch_question',
         name='questions.unwatch'),
+    url(r'^/confirm/(?P<watch_id>\d+)/(?P<secret>\w+)$', 'activate_watch',
+        name='questions.activate_watch'),
+    url(r'^/unsubscribe/(?P<watch_id>\d+)/(?P<secret>\w+)$',
+        'unsubscribe_watch', name='questions.unsubscribe'),
 
     # Feeds
     url(r'^/feed$', QuestionsFeed(), name='questions.feed'),

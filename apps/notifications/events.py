@@ -1,6 +1,8 @@
 import random
+from smtplib import SMTPException
 from string import letters
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
@@ -10,6 +12,12 @@ from celery.decorators import task
 
 from notifications.models import Watch, WatchFilter, EmailUser, multi_raw
 from notifications.utils import merge, hash_to_unsigned
+
+
+class ActivationRequestFailed(Exception):
+    """Raised when activation request fails, e.g. if email could not be sent"""
+    def __init__(self, msgs):
+        self.msgs = msgs
 
 
 def _unique_by_email(users_and_watches):
@@ -195,7 +203,7 @@ class Event(object):
             'LEFT JOIN auth_user u ON u.id=w.user_id {joins} '
             'WHERE {wheres} '
             'AND (length(w.email)>0 OR length(u.email)>0) '
-            'AND w.secret IS NULL '
+            'AND w.is_active '
             'ORDER BY u.email DESC, w.email DESC').format(
             joins=' '.join(joins),
             wheres=' AND '.join(wheres))
@@ -263,7 +271,7 @@ class Event(object):
     # Funny arg name to reserve use of nice ones for filters
     def is_notifying(cls, user_or_email_, object_id=None, **filters):
         """Return whether the user/email is watching this event (either
-        confirmed or unconfirmed), conditional on meeting the criteria in
+        active or inactive watches), conditional on meeting the criteria in
         `filters`.
 
         Count only watches that match the given filters exactly--not ones which
@@ -290,10 +298,17 @@ class Event(object):
         occurs and meets the criteria given in `filters`.
 
         Return the created (or the existing matching) Watch so you can call
-        confirm() on it if you're so inclined.
+        activate() on it if you're so inclined.
 
         Implementations in subclasses may take different arguments; see the
         docstring of is_notifying().
+
+        Send an activation email if an anonymous watch is created and
+        settings.CONFIRM_ANONYMOUS_WATCHES = True. If the activation request
+        fails, raise a ActivationRequestFailed exception.
+
+        Calling notify() twice for an anonymous user will send the email
+        each time.
 
         """
         # A test-for-existence-then-create race condition exists here, but it
@@ -312,27 +327,36 @@ class Event(object):
                     ContentType.objects.get_for_model(cls.content_type)
             create_kwargs['email' if isinstance(user_or_email_, basestring)
                           else 'user'] = user_or_email_
-            # Registered users don't need to confirm => no secret.
-            # ... but anonymous users do.
-            secret = (''.join(random.choice(letters) for x in xrange(10)) if
-                      'email' in create_kwargs else None)
+            secret = ''.join(random.choice(letters) for x in xrange(10))
+            # Registered users don't need to confirm, but anonymous users do.
+            is_active = ('user' in create_kwargs or
+                          not settings.CONFIRM_ANONYMOUS_WATCHES)
             if object_id:
                 create_kwargs['object_id'] = object_id
             watch = Watch.objects.create(
                 secret=secret,
+                is_active=is_active,
                 event_type=cls.event_type,
                 **create_kwargs)
             for k, v in filters.iteritems():
-                # TODO: Auto-hash v into an int if it isn't one?
                 WatchFilter.objects.create(watch=watch, name=k,
                                            value=hash_to_unsigned(v))
+        # Send email for inactive watches.
+        if not watch.is_active:
+            email = watch.user.email if watch.user else watch.email
+            message = cls._activation_email(watch, email)
+            try:
+                message.send()
+            except SMTPException, e:
+                watch.delete()
+                raise ActivationRequestFailed(e.recipients)
         return watch
 
     @classmethod
     def stop_notifying(cls, user_or_email_, **filters):
         """Delete all watches matching the exact user/email and filters.
 
-        Delete both confirmed and unconfirmed watches. If duplicate watches
+        Delete both active and inactive watches. If duplicate watches
         exist due to the get-then-create race condition, delete them all.
 
         Implementations in subclasses may take different arguments; see the
@@ -376,6 +400,35 @@ class Event(object):
 
         """
         return self._users_watching_by_filter(**kwargs)
+
+    @classmethod
+    def _activation_email(cls, watch, email):
+        """Return an EmailMessage to send to anonymous watchers.
+
+        They are expected to follow the activation URL sent in the email to
+        activate their watch, so you should include at least that.
+
+        """
+        # TODO: basic implementation.
+        return mail.EmailMessage('TODO', 'Activate!',
+                                 settings.NOTIFICATIONS_FROM_ADDRESS,
+                                 [email])
+
+    @classmethod
+    def _activation_url(cls, watch):
+        """Return a URL pointing to the watch activation.
+
+        TODO: provide generic implementation of this before liberating.
+        Generic implementation could involve a setting to the default reverse()
+        path, e.g. 'notifications.activate_watch'.
+
+        """
+        raise NotImplementedError
+
+    @classmethod
+    def watch_description(cls, watch):
+        """Return a description of the watch which can be used in emails."""
+        raise NotImplementedError
 
 
 class EventUnion(Event):
