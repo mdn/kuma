@@ -1025,3 +1025,18 @@ form.disabled input[type="image"],
 form.disabled button {
     opacity: 0.5; /* dim submit buttons when form is disabled */
 }
+
+/*----------------------------------
+    Image modal kbox
+----------------------------------*/
+#image-attachment-kbox img {
+    max-width: 100%;
+}
+
+#image-attachment-kbox img.loading {
+    background: transparent url(../img/wait-trans.gif) no-repeat center center;
+    display: block;
+    height: 32px;
+    margin: auto;
+    width: 32px;
+}

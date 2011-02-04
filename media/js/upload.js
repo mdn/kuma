@@ -113,6 +113,36 @@ $(document).ready(function () {
         });
     });
 
+    // hijack the click on the thumb and open modal kbox
+    function initImageModal() {
+        $('div.attachments-list').delegate('a.image', 'click', function(ev) {
+            ev.preventDefault();
+            var imgUrl = $(this).attr('href');
+                image = new Image(),
+                html = '<div><img class="loading" /></div>',
+                kbox = new KBox(html, {
+                    modal: true,
+                    title: gettext('Image Attachment'),
+                    id: 'image-attachment-kbox',
+                    destroy: true
+                });
+            kbox.open();
+            
+            function setWidth() {
+                $('#image-attachment-kbox').width(image.width)
+                    .find('img').removeClass('loading').attr('src', imgUrl);
+                kbox.setPosition();
+            }
+
+            image.onload = setWidth;
+            image.src = imgUrl;
+            if (image.width) {
+                setWidth();
+            }
+        });
+    }
+    initImageModal();
+
     // Workaround to IE6's lack of div:hover support
     if($.browser.msie && $.browser.version=="6.0") {
         $('div.attachments-upload').delegate('div.attachment', 'hover',
