@@ -10,3 +10,7 @@ UPDATE auth_user SET
 TRUNCATE notifications_eventwatch;
 
 TRUNCATE django_session;
+
+UPDATE django_site SET
+    domain = 'support-local.allizom.org',
+    name = 'support-local.allizom.org';
