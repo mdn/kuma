@@ -115,7 +115,7 @@
 
   {% if user.is_authenticated() and document %}
     <div id="doc-watch">
-      {% if is_watching(document, user) %}
+      {% if document.is_watched_by(user) %}
         <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
           {{ csrf() }}
           <input type="submit" class="submit" value="{{ _('Turn off emails.') }}" />

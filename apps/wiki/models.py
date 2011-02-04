@@ -487,6 +487,11 @@ class Document(ModelBase, BigVocabTaggableMixin):
             is_approved=True,
             significance__gte=MAJOR_SIGNIFICANCE, **more_filters).exists()
 
+    def is_watched_by(self, user):
+        """Return whether `user` is notified of edits to me."""
+        from wiki.events import EditDocumentEvent
+        return EditDocumentEvent.is_notifying(user, self)
+
 
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""

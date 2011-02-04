@@ -157,3 +157,6 @@ class EmailUser(AnonymousUser):
 
     def __hash__(self):
         return hash(self.email)
+
+    def is_anonymous(self):
+        return False

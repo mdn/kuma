@@ -14,6 +14,8 @@ from sumo_locales import LOCALES
 from sumo.parser import get_object_fallback
 from sumo.urlresolvers import reverse
 from sumo.utils import smart_int
+from wiki.events import (ApproveRevisionInLocaleEvent,
+                         ReviewableRevisionInLocaleEvent)
 from wiki.models import Document
 from wiki.views import SHOWFOR_DATA
 
@@ -94,7 +96,14 @@ def _kb_main(request, readouts, template, locale=None, extra_data=None):
             'default_locale': settings.WIKI_DEFAULT_LANGUAGE,
             'default_locale_name':
                 LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
-            'current_locale_name': LOCALES[request.locale].native}
+            'current_locale_name': LOCALES[request.locale].native,
+            'is_watching_approved': ApproveRevisionInLocaleEvent.is_notifying(
+                request.user, locale=request.locale),
+            'is_watching_locale': ReviewableRevisionInLocaleEvent.is_notifying(
+                request.user, locale=request.locale),
+            'is_watching_approved_default':
+                ApproveRevisionInLocaleEvent.is_notifying(
+                    request.user, locale=settings.WIKI_DEFAULT_LANGUAGE)}
     if extra_data:
         data.update(extra_data)
     return jingo.render(request, 'dashboards/' + template, data)

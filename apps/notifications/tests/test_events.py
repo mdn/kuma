@@ -2,6 +2,7 @@
 import mock
 from nose.tools import eq_
 
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.core.mail import EmailMessage
@@ -261,6 +262,14 @@ class NotificationTests(TestCase):
         FilteredContentTypeEvent.notify('hi@there.com', color=3, flavor=4)
         assert not FilteredContentTypeEvent.is_notifying('hi@there.com',
                                                          color=3)
+
+    def test_anonymous(self):
+        """Anonymous users with no emails can't be watching anything.
+
+        Mostly, this is just to make sure it doesn't crash.
+
+        """
+        assert not SimpleEvent.is_notifying(AnonymousUser())
 
     def test_hashing(self):
         """Strings should be hashed to ints, but ints should be left alone.

@@ -17,22 +17,19 @@ from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
 from access.decorators import permission_required, login_required
-from notifications import create_watch, destroy_watch
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
 from wiki import DOCUMENTS_PER_PAGE
+from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
+                         ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
-from wiki.tasks import (send_approved_notification,
-                        send_reviewed_notification,
-                        send_ready_for_review_notification,
-                        send_edited_notification,
-                        schedule_rebuild_kb)
+from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 
 
 log = logging.getLogger('k.wiki')
@@ -330,12 +327,13 @@ def review_revision(request, document_slug, revision_id):
                 rev.significance = form.cleaned_data['significance']
             rev.save()
 
-            # Send notification to revision creator.
+            # Send an email (not really a "notification" in the sense that
+            # there's a Watch table entry) to revision creator.
             msg = form.cleaned_data['comment']
             send_reviewed_notification.delay(rev, doc, msg)
 
             # If approved, send approved notification
-            send_approved_notification.delay(rev, doc)
+            ApproveRevisionInLocaleEvent(rev).fire(exclude=rev.creator)
 
             # Schedule KB rebuild?
             schedule_rebuild_kb()
@@ -441,7 +439,8 @@ def translate(request, document_slug, revision_id=None):
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
         if revision_id:
-            initial.update(content=Revision.objects.get(pk=revision_id).content)
+            initial.update(
+                content=Revision.objects.get(pk=revision_id).content)
         elif not doc:
             initial.update(content=based_on_rev.content)
         instance = doc and get_current_or_latest_revision(doc)
@@ -505,7 +504,7 @@ def watch_document(request, document_slug):
     """Start watching a document for edits."""
     document = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
-    create_watch(Document, document.id, request.user.email, 'edited')
+    EditDocumentEvent.notify(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
 
 
@@ -515,7 +514,7 @@ def unwatch_document(request, document_slug):
     """Stop watching a document for edits."""
     document = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
-    destroy_watch(Document, document.id, request.user.email)
+    EditDocumentEvent.stop_notifying(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
 
 
@@ -523,8 +522,9 @@ def unwatch_document(request, document_slug):
 @login_required
 def watch_locale(request):
     """Start watching a locale for revisions ready for review."""
-    create_watch(Document, None, request.user.email, 'ready_for_review',
-                 request.locale)
+    ReviewableRevisionInLocaleEvent.notify(request.user, locale=request.locale)
+    # This redirect is pretty bad, because you might also have been on the
+    # Contributor Dashboard:
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
@@ -532,20 +532,20 @@ def watch_locale(request):
 @login_required
 def unwatch_locale(request):
     """Stop watching a locale for revisions ready for review."""
-    destroy_watch(Document, None, request.user.email, 'ready_for_review',
-                  request.locale)
+    ReviewableRevisionInLocaleEvent.stop_notifying(request.user,
+                                                   locale=request.locale)
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
 @require_POST
 @login_required
 def watch_approved(request):
-    """Start watching approved revisions."""
+    """Start watching approved revisions in a locale."""
     locale = request.POST.get('locale')
     if locale not in settings.SUMO_LANGUAGES:
         raise Http404
 
-    create_watch(Document, None, request.user.email, 'approved', locale)
+    ApproveRevisionInLocaleEvent.notify(request.user, locale=locale)
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
@@ -557,7 +557,7 @@ def unwatch_approved(request):
     if locale not in settings.SUMO_LANGUAGES:
         raise Http404
 
-    destroy_watch(Document, None, request.user.email, 'approved', locale)
+    ApproveRevisionInLocaleEvent.stop_notifying(request.user, locale=locale)
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
@@ -670,8 +670,8 @@ def _save_rev_and_notify(rev_form, creator, document):
     new_rev = rev_form.save(creator, document)
 
     # Enqueue notifications
-    send_ready_for_review_notification.delay(new_rev, document)
-    send_edited_notification.delay(new_rev, document)
+    ReviewableRevisionInLocaleEvent(new_rev).fire(exclude=new_rev.creator)
+    EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
 
 
 def _maybe_schedule_rebuild(form):

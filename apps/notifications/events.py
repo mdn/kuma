@@ -221,15 +221,23 @@ class Event(object):
         of anonymous watches of the same email address on user registration
         confirmation.
 
+        If you pass the AnonymousUser, this will return an empty QuerySet.
+
         """
         # If we have trouble distinguishing subsets and such, we could store a
         # number_of_filters on the Watch.
         cls._validate_filters(filters)
 
+        if isinstance(user_or_email, basestring):
+            user_condition = Q(email=user_or_email)
+        elif not user_or_email.is_anonymous():
+            user_condition = Q(user=user_or_email)
+        else:
+            return Watch.objects.none()
+
         # Filter by stuff in the Watch row:
         watches = Watch.uncached.filter(
-            Q(email=user_or_email) if isinstance(user_or_email, basestring)
-                                   else Q(user=user_or_email),
+            user_condition,
             Q(content_type=ContentType.objects.get_for_model(cls.content_type))
                 if cls.content_type
                 else Q(),
@@ -267,6 +275,9 @@ class Event(object):
         example, to assume certain filters--though most will probably just use
         this. However, subclasses should clearly document what filters they
         supports and the meaning of each.
+
+        Passing this an AnonymousUser always returns False. This means you can
+        always pass it request.user in a view and get a sensible response.
 
         """
         return cls._watches_belonging_to_user(user_or_email_,
@@ -368,12 +379,21 @@ class Event(object):
 
 
 class EventUnion(Event):
-    """Fireable conglomeration of multiple events"""
+    """Fireable conglomeration of multiple events
+
+    Use this when you want to send a single mail to each person watching any of
+    several events. For example, this sends only 1 mail to a given user, even
+    if he was being notified of all 3 events:
+
+        EventUnion(SomeEvent(), OtherEvent(), ThirdEvent()).fire()
+
+    """
     # Calls some private methods on events, but this and Event are good
     # friends.
 
     def __init__(self, *events):
         """`events` -- the events of which to take the union"""
+        super(EventUnion, self).__init__()
         self.events = events
 
     def _mails(self, users_and_watches):
@@ -396,7 +416,7 @@ class EventUnion(Event):
         # Get a sorted iterable of user-watch pairs:
         users_and_watches = merge(*[e._users_watching(**kwargs)
                                     for e in self.events],
-                                  key=lambda (user, watch): user.email,
+                                  key=lambda (user, watch): user.email.lower(),
                                   reverse=True)
 
         # Pick the best User out of each cluster of identical email addresses:

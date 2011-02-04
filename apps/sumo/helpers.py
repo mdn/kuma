@@ -5,7 +5,7 @@ import urlparse
 
 from django.conf import settings
 from django.http import QueryDict
-from django.utils.encoding import smart_unicode, smart_str
+from django.utils.encoding import smart_str
 from django.utils.http import urlencode
 from django.utils.tzinfo import LocalTimezone
 

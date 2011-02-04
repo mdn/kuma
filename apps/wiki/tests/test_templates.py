@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core import mail
 
 import mock
 from nose import SkipTest
@@ -10,15 +11,51 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 from taggit.models import Tag
 
-from notifications import check_watch
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from sumo.tests import post, get
+from sumo.tests import post, get, attrs_eq
 from wiki.cron import calculate_related_documents
-from wiki.helpers import is_watching_approved, is_watching_locale
+from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
+                         ApproveRevisionInLocaleEvent)
 from wiki.models import Document, Revision, HelpfulVote, SIGNIFICANCES
-import wiki.tasks
+from wiki.tasks import send_reviewed_notification
 from wiki.tests import TestCaseBase, document, revision, new_document_data
+
+
+READY_FOR_REVIEW_EMAIL_CONTENT = """
+
+
+admin submitted a new revision to the document
+%s.
+
+To review this revision, click the following
+link, or paste it into your browser's location bar:
+
+https://testserver/en-US/kb/%s/review/%s
+"""
+
+DOCUMENT_EDITED_EMAIL_CONTENT = """
+
+
+admin created a new revision to the document
+%s.
+
+To view this document's history, click the following
+link, or paste it into your browser's location bar:
+
+https://testserver/en-US/kb/%s/history
+"""
+
+APPROVED_EMAIL_CONTENT = """
+
+A new revision has been approved for the document
+%s.
+
+To view the updated document, click the following
+link, or paste it into your browser's location bar:
+
+https://testserver/en-US/kb/%s
+"""
 
 
 class DocumentTests(TestCaseBase):
@@ -199,9 +236,9 @@ class NewDocumentTests(TestCaseBase):
         eq_(7, len(doc('input[checked=checked]')))
         eq_(None, doc('input[name="tags"]').attr('required'))
 
-    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_new_document_POST(self, get_current, delay):
+    def test_new_document_POST(self, get_current, ready_fire):
         """HTTP POST to new document URL creates the document."""
         get_current.return_value.domain = 'testserver'
 
@@ -224,11 +261,11 @@ class NewDocumentTests(TestCaseBase):
         eq_(data['keywords'], r.keywords)
         eq_(data['summary'], r.summary)
         eq_(data['content'], r.content)
-        delay.assert_called_with(r, d)
+        ready_fire.assert_called()
 
-    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
+    @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_new_document_other_locale(self, get_current, delay):
+    def test_new_document_other_locale(self, get_current, ready_fire):
         """Make sure we can create a document in a non-default locale."""
         # You shouldn't be able to make a new doc in a non-default locale
         # without marking it as non-localizable. Unskip this when the non-
@@ -244,7 +281,7 @@ class NewDocumentTests(TestCaseBase):
                                     data, follow=True)
         d = Document.objects.get(title=data['title'])
         eq_(locale, d.locale)
-        delay.assert_called_with(d.revisions.all()[0], d)
+        ready_fire.assert_called()
 
     def test_new_document_POST_empty_title(self):
         """Trigger required field validation for title."""
@@ -396,19 +433,24 @@ class NewRevisionTests(TestCaseBase):
         eq_(doc('#id_summary')[0].value, r.summary)
         eq_(doc('#id_content')[0].value, r.content)
 
-    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
-    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_new_revision_POST_document_with_current(
-            self, get_current, edited_delay, ready_delay):
+    def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case already has a current_revision, therefore
         the document document fields are not editable.
 
+        Also assert that the edited and reviewable notifications go out.
+
         """
         get_current.return_value.domain = 'testserver'
 
+        # Sign up for notifications:
+        EditDocumentEvent.notify('sam@example.com', self.d).confirm().save()
+        ReviewableRevisionInLocaleEvent.notify('joe@example.com',
+            locale='en-US').confirm().save()
+
+        # Edit a document:
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.slug]),
             {'summary': 'A brief summary', 'content': 'The article content',
@@ -416,17 +458,28 @@ class NewRevisionTests(TestCaseBase):
              'based_on': self.d.current_revision.id, 'form': 'rev'})
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
-
         new_rev = self.d.revisions.order_by('-id')[0]
         eq_(self.d.current_revision, new_rev.based_on)
-        edited_delay.assert_called_with(new_rev, self.d)
-        ready_delay.assert_called_with(new_rev, self.d)
 
-    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
-    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
+        # Assert notifications fired and have the expected content:
+        attrs_eq(mail.outbox[0],
+                 subject=u'%s is ready for review (%s)' % (self.d.title,
+                                                           new_rev.creator),
+                 body=READY_FOR_REVIEW_EMAIL_CONTENT %
+                    (self.d.title, self.d.slug, new_rev.id),
+                 to=['joe@example.com'])
+        attrs_eq(mail.outbox[1],
+                 subject=u'%s was edited by %s' % (self.d.title,
+                                                   new_rev.creator),
+                 body=DOCUMENT_EDITED_EMAIL_CONTENT %
+                    (self.d.title, self.d.slug),
+                 to=['sam@example.com'])
+
+    @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
+    @mock.patch_object(EditDocumentEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_revision_POST_document_without_current(
-            self, get_current, edited_delay, ready_delay):
+            self, get_current, edited_fire, ready_fire):
         """HTTP POST to new revision URL creates the revision on a document.
 
         The document in this case doesn't have a current_revision, therefore
@@ -448,8 +501,8 @@ class NewRevisionTests(TestCaseBase):
         new_rev = self.d.revisions.order_by('-id')[0]
         # There are no approved revisions, so it's based_on nothing:
         eq_(None, new_rev.based_on)
-        edited_delay.assert_called_with(new_rev, self.d)
-        ready_delay.assert_called_with(new_rev, self.d)
+        edited_fire.assert_called()
+        ready_fire.assert_called()
 
     def test_new_revision_POST_removes_old_tags(self):
         """Changing the tags on a document removes the old tags from
@@ -639,25 +692,40 @@ class ReviewRevisionTests(TestCaseBase):
         # Does the {for} syntax seem to have rendered?
         assert pq(response.content)('span[class=for]')
 
-    @mock.patch_object(wiki.tasks.send_reviewed_notification, 'delay')
+    @mock.patch_object(send_reviewed_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_approve_revision(self, get_current, delay):
-        """Verify revision approval."""
+    def test_approve_revision(self, get_current, reviewed_delay):
+        """Verify revision approval with proper notifications."""
         get_current.return_value.domain = 'testserver'
 
+        # Subscribe to approvals:
+        ApproveRevisionInLocaleEvent.notify('joe@example.com',
+                                            locale='en-US').confirm().save()
+
+        # Approve something:
         significance = SIGNIFICANCES[0][0]
         response = post(self.client, 'wiki.review_revision',
                         {'approve': 'Approve Revision',
                          'significance': significance},
                         args=[self.document.slug, self.revision.id])
+
         eq_(200, response.status_code)
         r = Revision.uncached.get(pk=self.revision.id)
         eq_(significance, r.significance)
         assert r.reviewed
         assert r.is_approved
-        delay.assert_called_with(r, r.document, '')
 
-    @mock.patch_object(wiki.tasks.send_reviewed_notification, 'delay')
+        # The "reviewed" mail should be sent to the creator, and the "approved"
+        # mail should be sent to any subscribers:
+        reviewed_delay.assert_called_with(r, r.document, '')
+        attrs_eq(mail.outbox[0],
+                 subject='%s (%s) has a new approved revision' %
+                     (self.document.title, self.document.locale),
+                 body=APPROVED_EMAIL_CONTENT %
+                    (self.document.title, self.document.slug),
+                 to=['joe@example.com'])
+
+    @mock.patch_object(send_reviewed_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
     def test_reject_revision(self, get_current, delay):
         """Verify revision rejection."""
@@ -918,11 +986,11 @@ class TranslateTests(TestCaseBase):
         eq_(200, response.status_code)
         eq_(0, self.d.translations.count())
 
-    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
-    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
+    @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
+    @mock.patch_object(EditDocumentEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_first_translation_to_locale(self, get_current, edited_delay,
-                                         ready_delay):
+    def test_first_translation_to_locale(self, get_current, edited_fire,
+                                         ready_fire):
         """Create the first translation of a doc to new locale."""
         get_current.return_value.domain = 'testserver'
 
@@ -938,8 +1006,8 @@ class TranslateTests(TestCaseBase):
         eq_(data['keywords'], rev.keywords)
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
-        edited_delay.assert_called_with(rev, new_doc)
-        ready_delay.assert_called_with(rev, new_doc)
+        edited_fire.assert_called()
+        ready_fire.assert_called()
 
     def _create_and_approve_first_translation(self):
         """Returns the revision."""
@@ -951,11 +1019,11 @@ class TranslateTests(TestCaseBase):
         rev_es.save()
         return rev_es
 
-    @mock.patch_object(wiki.tasks.send_ready_for_review_notification, 'delay')
-    @mock.patch_object(wiki.tasks.send_edited_notification, 'delay')
+    @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
+    @mock.patch_object(EditDocumentEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
-    def test_another_translation_to_locale(self, get_current, edited_delay,
-                                           ready_delay):
+    def test_another_translation_to_locale(self, get_current, edited_fire,
+                                           ready_fire):
         """Create the second translation of a doc."""
         get_current.return_value.domain = 'testserver'
 
@@ -988,8 +1056,8 @@ class TranslateTests(TestCaseBase):
         eq_(data['summary'], rev.summary)
         eq_(data['content'], rev.content)
         assert not rev.is_approved
-        edited_delay.assert_called_with(rev, doc)
-        ready_delay.assert_called_with(rev, doc)
+        edited_fire.assert_called()
+        ready_fire.assert_called()
 
     def test_translate_form_maintains_based_on_rev(self):
         """Revision.based_on should be the rev that was current when the
@@ -1132,14 +1200,14 @@ class DocumentWatchTests(TestCaseBase):
         response = post(self.client, 'wiki.document_watch',
                        args=[self.document.slug])
         eq_(200, response.status_code)
-        assert check_watch(Document, self.document.id, user.email,
-                           'edited'), 'Watch was not created'
+        assert EditDocumentEvent.is_notifying(user, self.document), \
+               'Watch was not created'
         # Unsubscribe
         response = post(self.client, 'wiki.document_unwatch',
                        args=[self.document.slug])
         eq_(200, response.status_code)
-        assert not check_watch(Document, self.document.id, user.email,
-                               'edited'), 'Watch was not destroyed'
+        assert not EditDocumentEvent.is_notifying(user, self.document), \
+               'Watch was not destroyed'
 
 
 class LocaleWatchTests(TestCaseBase):
@@ -1163,18 +1231,18 @@ class LocaleWatchTests(TestCaseBase):
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
         user = User.objects.get(username='rrosario')
+
         # Subscribe
         response = post(self.client, 'wiki.locale_watch')
         eq_(200, response.status_code)
-        assert check_watch(Document, None, user.email,
-                           'ready_for_review', 'en-US')
-        assert is_watching_locale(user, 'en-US')
+        assert ReviewableRevisionInLocaleEvent.is_notifying(user,
+                                                            locale='en-US')
+
         # Unsubscribe
         response = post(self.client, 'wiki.locale_unwatch')
         eq_(200, response.status_code)
-        assert not check_watch(Document, None, user.email,
-                               'ready_for_review', 'en-US')
-        assert not is_watching_locale(user, 'en-US')
+        assert not ReviewableRevisionInLocaleEvent.is_notifying(user,
+                                                                locale='en-US')
 
 
 class ArticlePreviewTests(TestCaseBase):
@@ -1396,18 +1464,19 @@ class ApprovedWatchTests(TestCaseBase):
         """Watch and unwatch a document."""
         user = User.objects.get(username='rrosario')
         locale = 'es'
+
         # Subscribe
         response = post(self.client, 'wiki.approved_watch',
                         {'locale': locale})
         eq_(200, response.status_code)
-        assert check_watch(Document, None, user.email, 'approved', locale)
-        assert is_watching_approved(user, locale)
+        assert ApproveRevisionInLocaleEvent.is_notifying(user, locale=locale)
+
         # Unsubscribe
         response = post(self.client, 'wiki.approved_unwatch',
                         {'locale': locale})
         eq_(200, response.status_code)
-        assert not check_watch(Document, None, user.email, 'approved', locale)
-        assert not is_watching_approved(user, locale)
+        assert not ApproveRevisionInLocaleEvent.is_notifying(user,
+                                                             locale=locale)
 
 
 # TODO: Merge with wiki.tests.doc_rev()?

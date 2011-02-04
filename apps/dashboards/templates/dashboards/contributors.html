@@ -33,12 +33,13 @@
 
 {% block side %}
   <div id="doc-watch">
-    {% with locale=request.locale, user=user %}
+    {% with locale=request.locale %}
       {% include 'dashboards/includes/watch_locale.html' %}
       {% include 'dashboards/includes/watch_approved.html' %}
     {% endwith %}
     {% if request.locale != settings.WIKI_DEFAULT_LANGUAGE %}
-      {% with locale=settings.WIKI_DEFAULT_LANGUAGE, user=user %}
+      {% with locale=settings.WIKI_DEFAULT_LANGUAGE,
+              is_watching_approved=is_watching_approved_default %}
         {% include 'dashboards/includes/watch_approved.html' %}
       {% endwith %}
     {% endif %}

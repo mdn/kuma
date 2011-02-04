@@ -59,8 +59,9 @@ def merge(*iterables, **kwargs):
 
 
 def hash_to_unsigned(data):
-    """If data is a string, return an unsigned 4-byte int hash of it. If data
-    is already an int that fits those parameters, return it verbatim.
+    """If data is a string or unicode string, return an unsigned 4-byte int
+    hash of it. If data is already an int that fits those parameters, return it
+    verbatim.
 
     If data is an int outside that range, behavior is undefined at the moment.
     We rely on the PositiveIntegerField on WatchFilter to scream if the int is
