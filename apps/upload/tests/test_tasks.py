@@ -1,4 +1,3 @@
-from glob import glob
 import os
 
 from django.conf import settings
@@ -103,13 +102,16 @@ class GenerateThumbnail(TestCase):
     def test_generate_thumbnail_twice(self):
         """generate_thumbnail replaces old thumbnail."""
         image = self._image_with_thumbnail()
+        old_path = image.thumbnail.path
 
-        image_dir, _ = os.path.split(image.thumbnail.path)
-        glob_path = image_dir + '/*.jpg'
-        num_files = len(glob(glob_path))
-        # We only have one file before.
-        assert num_files == 1, 'Expected 1, got %s' % num_files
+        # The thumbnail exists.
+        assert os.path.exists(old_path)
+        assert os.path.isfile(old_path)
+
         generate_thumbnail(image, 'file', 'thumbnail')
+        new_path = image.thumbnail.path
 
-        # And only one file after.
-        assert len(glob(glob_path)) == 1
+        # The thumbnail was replaced.
+        eq_(old_path, new_path)
+        assert os.path.exists(new_path)
+        assert os.path.isfile(new_path)
