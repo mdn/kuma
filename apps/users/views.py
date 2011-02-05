@@ -16,7 +16,7 @@ from django.utils.http import base36_to_int
 import jingo
 
 from access.decorators import logout_required, login_required
-from notifications.tasks import update_email_in_notifications
+from notifications.tasks import update_email_in_notifications, claim_watches
 from questions.models import Question, CONFIRMED
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
@@ -69,6 +69,9 @@ def activate(request, activation_key):
     my_questions = None
     form = AuthenticationForm()
     if account:
+        # Claim anonymous watches belonging to this email
+        claim_watches.delay(account)
+
         my_questions = Question.uncached.filter(creator=account)
         # TODO: remove this after dropping unconfirmed questions.
         my_questions.update(status=CONFIRMED)

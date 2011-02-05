@@ -6,7 +6,7 @@ from django.conf import settings
 
 from celery.decorators import task
 
-from notifications.models import EventWatch
+from notifications.models import EventWatch, Watch
 
 log = logging.getLogger('k.notifications')
 
@@ -50,3 +50,10 @@ def update_email_in_notifications(old, new):
     """Change the email in notifications from old to new."""
     log.info(u'Changing email %s to %s' % (old, new))
     EventWatch.objects.filter(email=old).update(email=new)
+
+
+@task(rate_limit='1/m')
+def claim_watches(user):
+    """Look for anonymous watches with this user's email and attach them to the
+    user."""
+    Watch.objects.filter(email=user.email).update(email=None, user=user)

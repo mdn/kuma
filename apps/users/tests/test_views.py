@@ -8,6 +8,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from notifications.models import EventWatch
+from notifications.tests import watch
 from questions.models import Question, CONFIRMED, UNCONFIRMED
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -85,6 +86,20 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         user = User.objects.get(pk=user.pk)
         assert user.is_active
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_claim_watches(self, get_current):
+        """Claim user watches upon activation."""
+        watch(email='sumouser@test.com', save=True)
+
+        get_current.return_value.domain = 'su.mo.com'
+        user = RegistrationProfile.objects.create_inactive_user(
+            'sumouser1234', 'testpass', 'sumouser@test.com')
+        key = RegistrationProfile.objects.all()[0].activation_key
+        self.client.get(reverse('users.activate', args=[key]), follow=True)
+
+        # Watches are claimed.
+        assert user.watch_set.exists()
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_with_questions(self, get_current):
