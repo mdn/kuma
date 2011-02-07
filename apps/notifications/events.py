@@ -212,8 +212,8 @@ class Event(object):
         attrs of the class.
 
         Matched Watches may be either confirmed and unconfirmed. They may
-        include duplicates if the get-then-create race condition in
-        get_or_create_watch() allowed them to be created.
+        include duplicates if the get-then-create race condition in notify()
+        allowed them to be created.
 
         If you pass an email, it will be matched against only the email
         addresses of anonymous watches. At the moment, the only integration
@@ -298,7 +298,7 @@ class Event(object):
         """
         # A test-for-existence-then-create race condition exists here, but it
         # doesn't matter: de-duplication on fire() and deletion of all matches
-        # on delete_watch() nullify its effects.
+        # on stop_notifying() nullify its effects.
         try:
             # Pick 1 if >1 are returned:
             watch = cls._watches_belonging_to_user(

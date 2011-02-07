@@ -4,12 +4,11 @@ from django.contrib.auth.models import User
 
 from nose.tools import eq_
 
+from kbforums.events import NewPostEvent, NewThreadEvent
 from kbforums.models import Thread, Post
 from kbforums.tests import KBForumTestCase
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from notifications import create_watch
-from notifications.models import EventWatch
 from wiki.models import Document
 
 
@@ -59,6 +58,15 @@ class KBForumModelTestCase(KBForumTestCase):
         thread = Thread.objects.get(pk=thread.id)
         eq_(thread.last_post.id, 25)
 
+    def test_delete_removes_watches(self):
+        """Assert deleting a document deletes watches on its threads."""
+        t = Thread.objects.get(pk=1)
+        d = t.document
+        NewThreadEvent.notify('me@me.com', t)
+        assert NewThreadEvent.is_notifying('me@me.com', t)
+        d.delete()
+        assert not NewThreadEvent.is_notifying('me@me.com', t)
+
 
 class KBThreadModelTestCase(KBForumTestCase):
 
@@ -67,11 +75,11 @@ class KBThreadModelTestCase(KBForumTestCase):
         self.fixtures = self.fixtures + ['kbnotifications.json']
 
     def test_delete_removes_watches(self):
-        create_watch(Thread, 1, 'me@me.com', 'reply')
-        eq_(1, EventWatch.uncached.filter(watch_id=1).count())
         t = Thread.objects.get(pk=1)
+        NewPostEvent.notify('me@me.com', t)
+        assert NewPostEvent.is_notifying('me@me.com', t)
         t.delete()
-        eq_(0, EventWatch.uncached.filter(watch_id=1).count())
+        assert not NewPostEvent.is_notifying('me@me.com', t)
 
     def test_delete_last_and_only_post_in_thread(self):
         """Deleting the only post in a thread should delete the thread"""

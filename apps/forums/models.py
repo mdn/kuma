@@ -4,10 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from access import has_perm, perm_is_defined_on
+from notifications.models import NotificationsMixin
 from sumo.helpers import urlparams, wiki_to_html
 from sumo.urlresolvers import reverse
 from sumo.models import ModelBase
-from notifications.tasks import delete_watches
 import forums
 
 
@@ -30,7 +30,7 @@ class ThreadLockedError(Exception):
     """Trying to create a post in a locked thread."""
 
 
-class Forum(ModelBase):
+class Forum(NotificationsMixin, ModelBase):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
     description = models.TextField(null=True)
@@ -85,7 +85,7 @@ class Forum(ModelBase):
         self.last_post = _last_post_from(posts, exclude_post=exclude_post)
 
 
-class Thread(ModelBase):
+class Thread(NotificationsMixin, ModelBase):
     title = models.CharField(max_length=255)
     forum = models.ForeignKey('Forum')
     created = models.DateTimeField(default=datetime.datetime.now,
@@ -132,8 +132,6 @@ class Thread(ModelBase):
         if forum.last_post and forum.last_post.thread_id == self.id:
             forum.update_last_post(exclude_thread=self)
             forum.save()
-
-        delete_watches.delay(Thread, self.pk)
 
         super(Thread, self).delete(*args, **kwargs)
 

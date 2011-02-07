@@ -7,7 +7,6 @@ from django.contrib.contenttypes.models import ContentType
 
 from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
-from sumo.helpers import urlparams
 
 
 def multi_raw(query, params, models):
@@ -70,6 +69,7 @@ class EventWatch(ModelBase):
 
     def get_remove_url(self):
         """Get the URL to remove an EventWatch."""
+        from sumo.helpers import urlparams
         url_ = reverse('notifications.remove', args=[self.key])
         return urlparams(url_, email=self.email)
 
@@ -132,7 +132,8 @@ class NotificationsMixin(models.Model):
     So we get cascading deletes for free, yay!
 
     """
-    watches = generic.GenericRelation(Watch)
+    watches = generic.GenericRelation(Watch,
+                  related_name='%(app_label)s_%(class)s_watches')
 
     class Meta(object):
         abstract = True

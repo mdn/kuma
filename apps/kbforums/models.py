@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 import kbforums
-from notifications.tasks import delete_watches
+from notifications.models import NotificationsMixin
 from sumo.helpers import urlparams, wiki_to_html
 from sumo.models import ModelBase
 from sumo.urlresolvers import reverse
@@ -30,7 +30,7 @@ class ThreadLockedError(Exception):
     """Trying to create a post in a locked thread."""
 
 
-class Thread(ModelBase):
+class Thread(NotificationsMixin, ModelBase):
     title = models.CharField(max_length=255)
     document = models.ForeignKey(Document)
     created = models.DateTimeField(default=datetime.datetime.now,
@@ -56,11 +56,6 @@ class Thread(ModelBase):
 
     def __unicode__(self):
         return self.title
-
-    def delete(self, *args, **kwargs):
-        """Override delete method to remove watches."""
-        delete_watches.delay(Thread, self.pk)
-        super(Thread, self).delete(*args, **kwargs)
 
     def new_post(self, creator, content):
         """Create a new post, if the thread is unlocked."""

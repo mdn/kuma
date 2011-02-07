@@ -13,6 +13,7 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.http import Http404
 
+from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ModelBase, LocaleField
@@ -126,7 +127,7 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
-class Document(ModelBase, BigVocabTaggableMixin):
+class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     """A localized knowledgebase document, not revision-specific."""
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
