@@ -16,7 +16,7 @@ from django.utils.http import base36_to_int
 import jingo
 
 from access.decorators import logout_required, login_required
-from notifications.tasks import update_email_in_notifications, claim_watches
+from notifications.tasks import claim_watches
 from questions.models import Question, CONFIRMED
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
@@ -140,10 +140,6 @@ def confirm_change_email(request, activation_key):
     new_email = email_change.email
     duplicate = User.objects.filter(email=new_email).exists()
     if not duplicate:
-        # Update all notifications matching this email, off-thread.
-        # TODO: remove this once we have the new notifications model in place.
-        update_email_in_notifications.delay(old=old_email, new=new_email)
-
         # Update user's email.
         u.email = new_email
         u.save()

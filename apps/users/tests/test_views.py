@@ -7,7 +7,6 @@ import mock
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from notifications.models import EventWatch
 from notifications.tests import watch
 from questions.models import Question, CONFIRMED, UNCONFIRMED
 from sumo.tests import TestCase, LocalizingClient
@@ -157,9 +156,6 @@ class ChangeEmailTestCase(TestCase):
 
     def setUp(self):
         self.client = LocalizingClient()
-        # Create some notifications
-        EventWatch.objects.create(content_type_id=1, watch_id=2,
-                                  email='user47963@nowhere')
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_user_change_email(self, get_current):
@@ -186,11 +182,6 @@ class ChangeEmailTestCase(TestCase):
         eq_(200, response.status_code)
         u = User.objects.get(username='pcraciunoiu')
         eq_('paulc@trololololololo.com', u.email)
-
-        # Notifications have been updated.
-        # TODO: remove this after notifications model is updated.
-        ew = EventWatch.objects.get()
-        eq_('paulc@trololololololo.com', ew.email)
 
     def test_user_change_email_same(self):
         """Changing to same email shows validation error."""
