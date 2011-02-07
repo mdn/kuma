@@ -584,21 +584,8 @@ form.report input.text {
 }
 
 form.report input[type="submit"] {
-    background: none;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
     color: #999;
-    cursor: pointer;
-    font-weight: normal;
     margin: 0;
-    padding: 0;
-}
-
-form.report input[type="submit"]:hover {
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
 }
 
 form.report .kbox-container {
@@ -732,21 +719,11 @@ ul.actions li.rss a {
 ul.actions li.email input.stop,
 ul.actions li.lock input {
     background: transparent url(../img/icons.actions.png) no-repeat left -100px;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    color: #447BC4;
     font-family: inherit;
     font-size: inherit;
+    font-weight: bold;
     margin: 0;
     padding: 0 0 0 16px;
-}
-
-ul.actions li.email input.stop:hover,
-ul.actions li.lock input:hover {
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
 }
 
 ul.actions li.email input.stop {
@@ -974,20 +951,7 @@ ol.answers form.report {
 }
 
 div.submit input.preview {
-    background: none;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    color: #447BC4;
     font-size: 16px;
-    font-weight: normal;
-    padding: 0;
-}
-
-div.submit input.preview:hover {
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
 }
 
 /*

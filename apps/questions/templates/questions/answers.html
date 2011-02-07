@@ -124,7 +124,7 @@
             <li class="lock">
               <form class="lock" action="{{ url('questions.lock', question.id) }}" method="post">
                 {{ csrf() }}
-                <input type="submit" class="submit" value="{% if question.is_locked %}{{ _('Unlock this post') }}{% else %}{{ _('Lock this post') }}{% endif %}" />
+                <input type="submit" class="link-btn" value="{% if question.is_locked %}{{ _('Unlock this post') }}{% else %}{{ _('Lock this post') }}{% endif %}" />
               </form>
             </li>
           {% endif %}
@@ -132,7 +132,7 @@
             {% if is_watching_question %}
               <form class="unwatch" action="{{ url('questions.unwatch', question.id) }}" method="post">
                 {{ csrf() }}
-                <input type="submit" class="stop" value="{{ _('Stop email updates') }}" />
+                <input type="submit" class="stop link-btn" value="{{ _('Stop email updates') }}" />
               </form>
             {% else %}
               <a id="email-subscribe-link" href="#email-subscribe">{{ _('Get email updates') }}</a>
@@ -315,7 +315,7 @@
 
             <div class="submit">
               <input type="submit" class="btn btn-important" value="{{ _('Post Reply') }}" />
-              <input type="submit" class="preview" name="preview" value="{{ _('Preview Reply') }}" />
+              <input type="submit" class="preview link-btn" name="preview" value="{{ _('Preview Reply') }}" />
             </div>
           </form>
         </div>

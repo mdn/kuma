@@ -295,17 +295,6 @@ label.invalid {
 }
 
 article.main #gallery-upload-modal input[name="cancel"] {
-    background: none;
-    border: 0;
-    border-radius: 0;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-    box-shadow: 0;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: 0;
-    color: #447BC4;
     display: inline;
     margin: 0;
-    padding: 0;
-    text-shadow: none;
 }

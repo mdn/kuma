@@ -8,14 +8,7 @@
 }
 
 #doc-watch input {
-    background: none;
-    border: none;
-    color: #447bc4;
-    cursor: pointer;
     margin: 0 0 10px;
-    padding: 0;
-    text-align: left;
-    white-space: normal;
 }
 
 /* Document view */
@@ -780,18 +773,6 @@ details.h2 > summary {
 #revision-list div.compare.bottom {
     background: transparent url(../img/wiki/compare.arrows.png) no-repeat 4px -40px;
     padding-top: 10px;
-}
-
-#revision-list div.compare input {
-    background: none;
-    border: none;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    color: #447bc4;
-    cursor: pointer;
-    padding: 0;
-    text-shadow: none;
 }
 
 /* Revision page */

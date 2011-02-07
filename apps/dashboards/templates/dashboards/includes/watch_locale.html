@@ -5,10 +5,10 @@
       {{ csrf() }}
       {% if locale == 'en-US' %}
         {# L10n: Please localize 'English' here. #}
-        <input type="submit" class="submit" value="{{ _('Stop getting emailed when English reviews are waiting', 'english') }}" />
+        <input type="submit" class="link-btn" value="{{ _('Stop getting emailed when English reviews are waiting', 'english') }}" />
       {% else %}
         {# L10n: Please replace 'English' with your language. #}
-        <input type="submit" class="submit" value="{{ _('Stop getting emailed when English reviews are waiting', 'locale') }}" />
+        <input type="submit" class="link-btn" value="{{ _('Stop getting emailed when English reviews are waiting', 'locale') }}" />
       {% endif %}
     </form>
   {% else %}
@@ -16,10 +16,10 @@
       {{ csrf() }}
       {% if locale == 'en-US' %}
         {# L10n: Please localize 'English' here. #}
-        <input type="submit" class="submit" value="{{ _('Get emailed when English reviews are waiting', 'english') }}" />
+        <input type="submit" class="link-btn" value="{{ _('Get emailed when English reviews are waiting', 'english') }}" />
       {% else %}
         {# L10n: Please replace 'English' with your language. #}
-        <input type="submit" class="submit" value="{{ _('Get emailed when English reviews are waiting', 'locale') }}" />
+        <input type="submit" class="link-btn" value="{{ _('Get emailed when English reviews are waiting', 'locale') }}" />
       {% endif %}
     </form>
   {% endif %}

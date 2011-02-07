@@ -1006,6 +1006,31 @@ a.btn-important {
     padding: 8px 16px 12px;
 }
 
+/* buttons styled to look like links */
+input[type="submit"].link-btn {
+    background: none;
+    border: none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    color: #447bc4;
+    cursor: pointer;
+    font-weight: normal;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+}
+
+input[type="submit"].link-btn:hover {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    text-decoration: underline;
+}
+
 input[disabled]:not(.remover) {
     background: #ddd;
     color: #888;
