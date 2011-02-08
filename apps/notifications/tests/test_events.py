@@ -130,6 +130,19 @@ class UsersWatchingTests(TestCase):
 
         self._emails_eq(['hi@there.com'], SimpleEvent())
 
+    def test_duplicates_case_insensitive(self):
+        """De-duping should compare case-insensitively."""
+        watch(event_type=TYPE, user=user(email='HI@example.com', save=True),
+              save=True)
+        watch(event_type=TYPE, email='hi@EXAMPLE.com').save()
+        watch(event_type=TYPE, email='hi@EXAMPLE.com').save()
+        eq_(3, Watch.objects.all().count())  # We created what we meant to.
+
+        addresses = [u.email
+                     for u, w in SimpleEvent()._users_watching_by_filter()]
+        eq_(1, len(addresses))
+        eq_('hi@example.com', addresses[0].lower())
+
     def test_registered_users_favored(self):
         """When removing duplicates, make sure registered users are kept in
         favor of anonymous ones having the same email address."""
@@ -205,6 +218,7 @@ class EventUnionTests(TestCase):
     def test_merging(self):
         """Test that duplicate emails across multiple events get merged."""
         # Remember to keep the emails in order when writing these test cases.
+        # [Ed: But doesn't the SQL query have an ORDER BY?]
         watch(event_type=TYPE, email='he@llo.com').save()
         watch(event_type=TYPE, email='ick@abod.com').save()
         registered_user = user(email='he@llo.com', save=True)
@@ -212,6 +226,25 @@ class EventUnionTests(TestCase):
 
         self._emails_eq(['he@llo.com', 'ick@abod.com'],
                         EventUnion(SimpleEvent(), AnotherEvent()))
+
+    def test_duplicates_case_insensitive(self):
+        """Test that duplicate merging is case insensitive."""
+        # These mocks return their users in descending order like the SQL
+        # query.
+        class OneEvent(object):
+            def _users_watching(self):
+                return [(user(email='HE@LLO.COM'), watch())]
+        class AnotherEvent(object):
+            def _users_watching(self):
+                return [(user(email='he@llo.com'), watch()),
+                        (user(email='br@illo.com'), watch())]
+
+        addresses = [u.email for u, w in
+                     EventUnion(OneEvent(),
+                                AnotherEvent())._users_watching()]
+
+        eq_(2, len(addresses))
+        eq_('he@llo.com', addresses[0].lower())
 
     @mock.patch_object(SimpleEvent, '_mails')
     def test_fire(self, _mails):

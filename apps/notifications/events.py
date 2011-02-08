@@ -28,6 +28,8 @@ def _unique_by_email(users_and_watches):
         there isn't such a user...
     (2) the first pair.
 
+    Compares email addresses case-insensitively.
+
     """
     def ensure_user_has_email(user, watch):
         """Make sure the user in the user-watch pair has an email address.
@@ -51,7 +53,7 @@ def _unique_by_email(users_and_watches):
     favorite_user, favorite_watch = None, None
     for u, w in users_and_watches:
         row_email = u.email or w.email
-        if email != row_email:
+        if email.lower() != row_email.lower():
             if email != '':
                 yield ensure_user_has_email(favorite_user, favorite_watch)
             favorite_user, favorite_watch = u, w
