@@ -15,8 +15,3 @@ This Time
 =========
 
 1. Update Sphinx config.
-2. Migrate watches:
-2.1. Set CONFIRM_ANONYMOUS_WATCHES = False in settings_local.py
-2.2. manage.py migrate_watches  # may take a while
-2.3. Set CONFIRM_ANONYMOUS_WATCHES = True (or comment out = False)
-
