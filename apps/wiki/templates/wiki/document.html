@@ -118,12 +118,12 @@
       {% if document.is_watched_by(user) %}
         <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
           {{ csrf() }}
-          <input type="submit" class="submit" value="{{ _('Turn off emails.') }}" />
+          <input type="submit" class="link-btn" value="{{ _('Turn off emails.') }}" />
         </form>
       {% else %}
         <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
           {{ csrf() }}
-          <input type="submit" class="submit" value="{{ _('Get emailed when this article changes.') }}" />
+          <input type="submit" class="link-btn" value="{{ _('Get emailed when this article changes.') }}" />
         </form>
       {% endif %}
     </div>
