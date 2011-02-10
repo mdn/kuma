@@ -1066,6 +1066,12 @@ form div.attachments-upload input.image-delete {
     margin-top: 1em;
 }
 
+ol.answers div.ans-attachments img,
+form div.attachments-upload img {
+    max-height: 120px;
+    max-width: 120px;
+}
+
 /*
  * Answer preview
  */

@@ -98,3 +98,10 @@ body.mobile #featured {
 #more-help {
     _background: transparent url(../img/wiki/morehelp.nurse.gif) no-repeat left top;
 }
+
+/* Questions image thumbnails should be scaled to thumbnail size */
+ol.answers div.ans-attachments img,
+form div.attachments-upload img {
+    height: expression(this.scrollHeight > this.scrollWidth ? "120px" : "auto");
+    width: expression(this.scrollHeight < this.scrollWidth ? "120px" : "auto");
+}
