@@ -446,31 +446,6 @@ div.warning-box p {
     margin: 25px 0 0;
 }
 
-/* orange buttons */
-.btn-small, .btn-large {
-    border: 0;
-    cursor: pointer;
-    background: #e26000;
-    text-transform: uppercase;
-    text-shadow: #b85f06 -1px 1px 1px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    color: #fff;
-}
-.btn-small {
-    font: bold 11px Verdana, sans-serif;
-    padding: 2px 5px;
-}
-.btn-large {
-    font: bold 12px Verdana, sans-serif;
-    padding: 5px;
-}
-.btn-small:hover, .btn-large:hover {
-    background: #ff9900;
-    text-decoration: none;
-}
-/* end orange buttons */
-
 /* Login form */
 #login-form {
     margin: 1em 0;
