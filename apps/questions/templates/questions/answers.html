@@ -267,7 +267,9 @@
             {{ _('No replies') }}
           {% endif %}
         </h1>
-        <a class="btn btn-important" href="#question-reply">{{ _('Post a Reply') }}</a>
+        {% if not question.is_locked %}
+          <a class="btn btn-important" href="#question-reply">{{ _('Post a Reply') }}</a>
+        {% endif %}
       </header>
       <ol class="answers">
         {% for answer in answers.object_list %}
