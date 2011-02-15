@@ -55,8 +55,8 @@ Getting the Source
 
 Grab the source from Github using::
 
-    git clone git://github.com/jsocol/kitsune.git
-    cd kitsune
+    git clone git://github.com/mozilla/kuma.git
+    cd kuma
     git submodule update --init
 
 
@@ -84,7 +84,7 @@ projects simultaneously.
 
 To get the vendor library, just::
 
-    git clone --recursive git://github.com/jsocol/kitsune-lib.git vendor
+    git clone --recursive git://github.com/mozilla/kuma-lib.git vendor
 
 This will clone the repository and all its submodules into a directory called
 ``vendor``.
@@ -110,10 +110,10 @@ configuration is::
 
     DATABASES = {
         'default': {
-            'NAME': 'kitsune',
+            'NAME': 'kuma',
             'ENGINE': 'django.db.backends.mysql',
             'HOST': 'localhost',
-            'USER': 'kitsune',
+            'USER': 'kuma',
             'PASSWORD': '',
             'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
             'TEST_CHARSET': 'utf8',
@@ -168,7 +168,7 @@ Last Steps
 Initializing Mozilla Product Details
 ------------------------------------
 
-One of the packages Kitsune uses, Django Mozilla Product Details, needs to
+One of the packages Kuma uses, Django Mozilla Product Details, needs to
 fetch JSON files containing historical Firefox version data and write them
 within its package directory. To set this up, just run
 ``./manage.py update_product_details`` to do the initial fetch.
