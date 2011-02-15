@@ -2,7 +2,7 @@
 Search
 ======
 
-Kitsune uses `Sphinx Search <http://www.sphinxsearch.com>`_ to power its
+Kuma uses `Sphinx Search <http://www.sphinxsearch.com>`_ to power its
 on-site search facility.
 
 Sphinx search gives us a number of advantages over MySQL's full-text search or
@@ -37,9 +37,9 @@ To test that everything works, make sure that the ``SPHINX_INDEXER`` and
 ``SPHINX_SEARCHD`` settings point to the ``indexer`` and ``searchd`` binaries,
 respectively. (Probably ``/usr/local/bin/indexer`` and
 ``/usr/local/bin/searchd``, unless you changed the prefix.) Then run the
-Kitsune search tests::
+Kuma search tests::
 
-    $ ./manage.py test -s --no-input --logging-clear-handlers search
+    $ ./manage.py test -s --noinput --logging-clear-handlers search
 
 If the tests pass, everything is set up correctly!
 

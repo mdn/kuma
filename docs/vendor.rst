@@ -3,15 +3,15 @@ Vendor Library
 ==============
 
 The vendor library is the easiest way to manage pure-Python dependencies. It
-contains the source code for all the library Kitsune depends on.
+contains the source code for all the library Kuma depends on.
 
 
 Getting the Vendor Library
 ==========================
 
-Getting the vendor library is easy. In your Kitsune clone, just type::
+Getting the vendor library is easy. In your Kuma clone, just type::
 
-    $ git clone --recursive git://github.com/jsocol/kitsune-lib.git vendor
+    $ git clone --recursive git://github.com/mozilla/kuma-lib.git vendor
 
 Git will clone the repository and all its submodules.
 
