@@ -248,17 +248,17 @@ Getting the Localizations
 
 Localizations are not stored in this repository, but are in Mozilla's SVN::
 
-    http://svn.mozilla.org/projects/sumo/locales
+    http://svn.mozilla.org/projects/mdn/trunk/locale
 
 You don't need the localization files for general development. However, if
 you need them for something, they're pretty easy to get::
 
-    $ cd kitsune
-    $ svn checkout https://svn.mozilla.org/projects/sumo/locales locale
+    $ cd kuma
+    $ svn checkout https://svn.mozilla.org/projects/mdn/trunk/locale
 
 (Alternatively, you can do yourself a favor and use::
 
-    $ git svn clone -r HEAD https://svn.mozilla.org/projects/sumo/locales locale
+    $ git svn clone -r HEAD https://svn.mozilla.org/projects/mdn/trunk/locale
 
 if you're a git fan.)
 
