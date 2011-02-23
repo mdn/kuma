@@ -59,8 +59,8 @@ even easier method when installing a new library from a git repo::
     $ git clone git://<repo>
     $ cd ../..
     $ ./addsubmodules.sh
-    $ vim kitsune.pth  # Add the new library's path
-    $ git add kitsune.pth
+    $ vim kuma.pth  # Add the new library's path
+    $ git add kuma.pth
     $ git ci -m "Adding $LIBRARY"
 
 
@@ -108,7 +108,7 @@ Adding a new library from PyPI is easy using pip::
     $ pip install --no-install --build=vendor/packages --src=vendor/src -I $LIBRARY
     $ cd vendor
     $ git add packages
-    $ vim kitsune.pth  # Add any new libraries' paths.
+    $ vim kuma.pth  # Add any new libraries' paths.
     $ git ci -m "Adding $LIBRARY"
 
 Make sure you add any dependencies from the new library, as well.

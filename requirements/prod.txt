@@ -5,9 +5,15 @@ python-memcached==1.45
 Babel>=0.9.4
 django-celery==2.1.4
 celery==2.1.4
-python-dateutil
+python-dateutil==1.5
 django-taggit==0.8.0
 pytz
+
+# Feeds and cron jobs
+feedparser==4.1
+jsonpickle==0.3.1
+lockfile==0.8
+
 
 -e git://github.com/jbalogh/django-multidb-router.git@25ca0c68929144ed9020d89f2ea1e941c7f9aeca#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
@@ -27,3 +33,9 @@ pytz
 
 # Adds TimeZoneField
 -e git://github.com/brosner/django-timezones.git@2b903a38da1ff9df4b2aba8e4f5429d967f73881#egg=django-timezones
+
+# Demo Room dependencies
+-e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
+django-tagging==0.3.1
+django-threadedcomments==0.5.2
+#django-oembed
