@@ -390,6 +390,11 @@ MINIFY_BUNDLES = {
         'monitor': (
             'css/monitor.css',
         ),
+        'mdn': (
+            'css/mdn/screen.css',
+            'css/mdn/video-player.css',
+            'css/mdn/forums-sidebar-module.css',
+        ),
     },
     'js': {
         'common': (
@@ -445,6 +450,25 @@ MINIFY_BUNDLES = {
         ),
         'users': (
             'js/users.js',
+        ),
+        'mdn': (
+            'js/mdn/jquery-1.4.2.min.js',
+            'js/mdn/init.js',
+            'js/mdn/gsearch.js',
+            'js/mdn/webtrends.js',
+
+            # Home Page
+            # cycle and slideshow only needed on the home page (or any page
+            # featuring the slide show widget).
+            'js/mdn/jquery.cycle.js',
+            'js/mdn/slideshow.js',
+            'js/mdn/TabInterface.js',
+            'js/mdn/home.js',
+
+            # Used only on pages with video popups
+            'js/mdn/video-player.js',
+
+            'js/mdn/jquery.simplemodal.1.4.1.min.js',
         ),
     },
 }

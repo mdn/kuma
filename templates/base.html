@@ -16,7 +16,7 @@
 
   {% block site_css %}
   <!--[if !IE 6]><!-->
-  {{ css('common') }}
+  {{ css('mdn') }}
   <!--<![endif]-->
   <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css"><![endif]-->
   <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css"><![endif]-->
@@ -119,7 +119,7 @@
 {# js #}
 {% block site_js %}
 <script src="//www.google.com/jsapi" type="text/javascript"></script>
-  {{ js('common') }}
+  {{ js('mdn') }}
 <script type="text/javascript">
 $(document).ready(function() {
   // Set up input placeholders.
