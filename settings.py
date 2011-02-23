@@ -4,6 +4,8 @@ import logging
 import os
 import platform
 
+from django.utils.functional import lazy
+
 from sumo_locales import LOCALES
 
 DEBUG = True
@@ -40,6 +42,9 @@ DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
 # Put the aliases for your slave databases in this list
 SLAVE_DATABASES = []
 
+# Dekiwiki has a backend API. protocol://hostname:port
+DEKIWIKI_ENDPOINT = 'http://developer-stage9.mozilla.org'
+
 # Cache Settings
 #CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
 #CACHE_PREFIX = 'sumo:'
@@ -73,10 +78,32 @@ SUMO_LANGUAGES = (
     'zh-TW',
 )
 
-LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in SUMO_LANGUAGES])
-LANGUAGES = dict([(i.lower(), LOCALES[i].native) for i in SUMO_LANGUAGES])
+#LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in SUMO_LANGUAGES])
+#LANGUAGES = dict([(i.lower(), LOCALES[i].native) for i in SUMO_LANGUAGES])
 
-LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
+#LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
+
+# Accepted locales
+MDN_LANGUAGES = ('en-US', 'de', 'fr', 'el', 'es', 'fy-NL', 'ga-IE', 'hr', 'hu', 'ko', 'ja', 'nl', 'pl', 'sl', 'sq',
+                 'zh-CN', 'zh-TW')
+RTL_LANGUAGES = None # ('ar', 'fa', 'fa-IR', 'he')
+LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
+
+# DEKI uses different locale keys
+LANGUAGE_DEKI_MAP = dict([(i, i) for i in MDN_LANGUAGES])
+LANGUAGE_DEKI_MAP['en-US'] = 'en'
+LANGUAGE_DEKI_MAP['zh-CN'] = 'cn'
+LANGUAGE_DEKI_MAP['zh-TW'] = 'zh_tw'
+
+# Override Django's built-in with our native names
+class LazyLangs(dict):
+    def __new__(self):
+        from product_details import product_details
+        return dict([(lang.lower(), product_details.languages[lang]['native'])
+                     for lang in MDN_LANGUAGES])
+
+LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES])
+LANGUAGES = lazy(LazyLangs, dict)()
 
 TEXT_DOMAIN = 'messages'
 
@@ -183,41 +210,61 @@ TEMPLATE_DIRS = (
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
 INSTALLED_APPS = (
+    # django
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'users',
-    'tower',
-    'jingo_minify',
-    ROOT_PACKAGE,
-    'authority',
-    'timezones',
-    'access',
-    'sumo',
-    'search',
-    'forums',
-    'djcelery',
+    
+    # MDN
+    'dekicompat',
+    'devmo',
+    'docs',
+    'feeder',
+    'landing',
+    
+    # DEMOS
+    'demos',
+    'captcha',
+    'tagging',
+    'contentflagging',
+    'actioncounters',
+    'threadedcomments',
+    
+    # util
     'cronjobs',
-    'notifications',
-    'questions',
-    'kadmin',
-    'taggit',
-    'flagit',
-    'upload',
+    'jingo_minify',
     'product_details',
-    'wiki',
-    'kbforums',
-    'dashboards',
-    'gallery',
-    'customercare',
-    'twitter',
-    'chat',
-    'inproduct',
+    'tower',
 
-    # Extra apps for testing.
+    # SUMO
+    #'users',
+    #ROOT_PACKAGE,
+    #'authority',
+    #'timezones',
+    #'access',
+    #'sumo',
+    #'search',
+    #'forums',
+    #'djcelery',
+    #'notifications',
+    #'questions',
+    #'kadmin',
+    #'taggit',
+    #'flagit',
+    #'upload',
+    'wiki',
+    #'kbforums',
+    #'dashboards',
+    #'gallery',
+    #'customercare',
+    #'twitter',
+    #'chat',
+    #'inproduct',
+
+    # testing.
     'django_nose',
     'test_utils',
 )
@@ -225,6 +272,8 @@ INSTALLED_APPS = (
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
 TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
 
+# Feed fetcher config
+FEEDER_TIMEOUT = 6 # in seconds
 
 def JINJA_CONFIG():
     import jinja2

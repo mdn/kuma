@@ -1,0 +1,55 @@
+{% set is_popup = request.GET.get('popup', false) %}
+{% if not is_popup %}
+    {% extends "demos/base.html" %}
+{% else %}
+    {% extends "demos/base_popup.html" %}
+{% endif %}
+
+{% block pageid %}{% endblock %}
+{% block bodyclass %}section-demos{% endblock %}
+{% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}{% endblock %}
+
+{% block content %}
+
+{% if not is_popup %}
+    <section id="nav-toolbar">
+    <div class="wrap">
+
+      <nav class="crumbs">
+        <ol role="navigation">
+            <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
+            <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
+          <li><a href="{{ submission.get_absolute_url() }}">{{submission.title}}</a></li>
+        </ol>
+      </nav>
+      
+      <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
+    </div>
+    </section>
+{% endif %}
+
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" role="main" class="full">
+
+    <form  id="flag-confirm" enctype="multipart/form-data" action="" method="POST" target="_top">
+        <h1 class="page-title">{{_('Flag this demo?')}}</h1>
+        {{ csrf() }}
+        <fieldset>
+            <ul>
+                {{ form.as_ul() | safe }}
+                <li class="submit">
+                    <button type="submit" name="action_create">{{ _("Flag content") }}</button>
+                    or <a class="closeModal" href="{{ submission.get_absolute_url() }}">{{_('Cancel')}}</a>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+
+  </section>
+
+</div>
+</section>
+
+{% endblock %}

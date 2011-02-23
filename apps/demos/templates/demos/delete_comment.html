@@ -1,0 +1,62 @@
+{% set is_popup = request.GET.get('popup', false) %}
+{% if not is_popup %}
+    {% extends "demos/base.html" %}
+{% else %}
+    {% extends "demos/base_popup.html" %}
+{% endif %}
+
+{% block pageid %}{% endblock %}
+{% block bodyclass %}section-demos{% endblock %}
+{% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Delete Comment'))) }}{% endblock %}
+
+{% block content %}
+
+{% if not is_popup %}
+  <section id="nav-toolbar">
+    <div class="wrap">
+
+      <nav class="crumbs">
+        <ol role="navigation">
+            <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
+            <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
+            <li><a href="{{ next }}">{{_('Delete Comment')}}</a></li>
+        </ol>
+      </nav>
+      
+      <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
+    </div>
+  </section>
+{% endif %}
+
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" role="main" class="full">
+  
+    <section id="delete-confirm">
+    
+        <h2>{{_('Delete this comment?')}}</h2>
+        {% trans %}
+            <p>Are you sure that you would like to delete this comment?</p>
+        {% endtrans %}
+        {% if comment %}
+            <blockquote id="comment_preview">
+                {{ comment.comment | nl2br }}
+            </blockquote>
+        {% endif %}
+
+        <form id="demo-remove" method="post" target="_top" action=".">
+            {{ csrf() }}
+            <input type="hidden" name="next" value="{{ request.GET.get('next') }}" />
+            <button type="submit" class="remove"><span>{{_("Delete comment")}}</span></button>
+            or <a class="closeModal" href="{{ next }}">{{_('Cancel')}}</a>
+        </form>
+        <ul>
+
+    </section>
+  </section>
+
+</div>
+</section>
+
+{% endblock %}

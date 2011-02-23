@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block pageid %}addons{% endblock %}
+
+{% block extrahead %}
+<link rel="alternate" type="application/rss+xml" title="Mozilla Add-ons Blog &raquo; Feed" href="http://blog.mozilla.com/addons/feed/" />
+{% endblock %}
+
+{% block bodyclass %}section-addons landing{% endblock %}
+
+{% block title %}{{ page_title(_('Add-ons')) }}{% endblock %}
+
+{% block content %}
+<header id="section-head">
+<div class="wrap">
+  <p class="intro">{{ _('Welcome to the Add-ons Developer Community:') }}</p>
+  <h1 id="logo-addons" class="addons">{{ _('Add-ons') }}</h1>
+
+  <div class="util">
+    <p><strong>{{ _('Are you ready to make browsing better?') }}</strong></p>
+    <ul>
+      <li class="util-twitter"><a href="http://twitter.com/mozamo">{{ _('Twitter') }}</a></li>
+      <li class="util-rss"><a href="http://blog.mozilla.com/addons/feed/">{{ _('Subscribe') }}</a></li>
+      <li class="util-discuss"><a href="https://forums.addons.mozilla.org/">{{ _('Join the Add-ons discussions!') }}</a></li>
+    </ul>
+  </div>
+</div>
+</header>
+
+<section id="content">
+<div class="wrap sidebar">
+  <section id="content-main" role="main">
+
+    <section class="boxed">
+      <div id="popular-docs" class="articles-list">
+        <header class="head section-addons">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h2>{{ _('Popular <span class="addons">Add-ons</span> Documentation')|safe }}</h2>
+        </header>
+
+        <ul class="hfeed">
+          <li class="hentry">
+            <h4 class="entry-title"><a href="https://jetpack.mozillalabs.com/sdk/0.5/docs/" rel="bookmark">{{ _('Add-ons Builder SDK Docs') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            If you are comfortable with a command line and prefer working locally, the Add-ons
+            Builder SDK gives you a development environment on your own computer.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="https://addons.mozilla.org/en-US/developers/docs/how-to" rel="bookmark">{{ _('How-to Library') }}</a></h4>
+            <p class="entry-summary">{{ _('Get add-on development guidance in a top-notch collection of tutorials, articles, and more.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="https://addons.mozilla.org/en-US/developers/docs/reference" rel="bookmark">{{ _('API & Language Reference') }}</a></h4>
+            <p class="entry-summary">{{ _('The official documentation on APIs and languages. What you need, when you need it, to create your masterpiece.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Extensions')) }}" rel="bookmark">{{ _('Extensions') }}</a></h4>
+            <p class="entry-summary">{{ _('Complete documentation for developing extensions for Mozilla applications.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="https://addons.mozilla.org/en-US/developers/docs/case-studies" rel="bookmark">{{ _('Case Studies') }}</a></h4>
+            <p class="entry-summary">{{ _('Start-to-finish success stories. See how add-on developers made magic with Mozilla.') }}</p>
+          </li>
+        </ul>
+        <p class="all"><a href="https://addons.mozilla.org/en-US/developers/" class="go">{{ _('All add-ons development documentation') }}</a></p>
+      </div>
+
+      <div id="videos">
+        <header class="subhead">
+          <h2>{{ _('Watch <span class="addons">Add-on</span> Videos')|safe }}</h2>
+        </header>
+        {% include "includes/video_player.html" %}
+        <ul class="hfeed">
+          <li class="hentry video">
+            <h3 class="entry-title">
+              <a href="/en-US/firefox/video/?video=about-mobile" title="{{ _('Watch this video') }}" 
+                 id="myk_jetpack_summit_2010" class="addons video_thumbnail">
+                <img src="http://videos-cdn.mozilla.net/serv/mdn/myk_jetpack_summit_2010/myk_jetpack_summit_2010.jpg" alt="Myk creating an Add-on" height="150" width="270">
+                <span>{{  _("Build Add-on in 5 Minutes") }}</span>
+              </a>
+            </h3>
+            <p class="entry-summary">{% trans %}
+            Watch Myk Melez create an Add-on in 5 minutes using the new Add-on Builder!
+            {% endtrans %}
+            </p>
+          </li>
+        </ul>      
+      </div>
+
+      <div id="fave-tools">
+        <header class="subhead">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h3>{{ _('Favorite <span class="addons">Add-on</span> Tools')|safe }}</h3>
+        </header>
+        <ul class="tools">
+          <li>
+            <h4><a href="https://builder.mozillalabs.com/">{{ _('Add-ons Builder [Preview]') }} <img src="{{ MEDIA_URL }}img/icn-tool-builder-sdk.png" alt="" /></a></h4>
+            <p class="desc">{{ _('Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web technologies.') }}</p>
+          </li>
+          <li>
+            <h4><a href="https://addons.mozilla.org/en-US/developers/tools/builder">{{ _('Add-on Packager') }} <img src="{{ MEDIA_URL }}img/icn-tool-packager.png" alt="" /></a></h4>
+            <p class="desc">{{ _('Auto-generate add-on packaging by entering basic info and picking UI parts. Get working without setup.') }}</p>
+          </li>
+          <li>
+            <h4><a href="https://addons.mozilla.org/en-US/developers/addon/validate">{{ _('Add-on Validator') }} <img src="{{ MEDIA_URL }}img/icn-tool-validator.png" alt="" /></a></h4>
+            <p class="desc">{{ _('Check your add-on for common problems and errors. Open to anyone, not just add-ons hosted here.') }}</p>
+          </li>
+          <li class="all"><a href="https://addons.mozilla.org/en-US/developers/" class="go">{{ _('All add-on development tools') }}</a></li>
+        </ul>
+      </div>
+
+      <div id="recent-news" class="articles-list">
+        <header class="subhead">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h3>{{ _('Recent <span class="addons">Add-ons</span> News &amp; Updates')|safe }}</h3>
+        </header>
+
+        {{ newsfeed(updates) }}
+
+        <p class="all"><a href="http://blog.mozilla.com/addons/" class="go">{{ _('All add-ons development entries') }}</a></p>
+      </div>
+    </section>{# /.boxed #}
+
+  </section>{# /#content-main #}
+
+  <aside id="content-sub" role="complementary">
+    {{ twitter(tweets, title=_('Correspondence on Twitter from the Add-ons developer community.')) }}
+  </aside>{# /#content-sub #}
+
+</div>
+</section>{# /#content #}
+
+<section id="content-latest">
+<div class="wrap">
+
+  <div id="latest-forums" class="boxed">
+    <header>
+      {# L10n: Please escape HTML entities here, like &amp; #}
+      <h3>{{ _('Latest <span class="addons">Add-ons</span> Discussions from Our Forums:')|safe }}</h3>
+    </header>
+    {{ discussions_feed(discussions) }}
+  </div>
+
+  <div id="latest-comments" class="boxed">
+    <header>
+      {# L10n: Please escape HTML entities here, like &amp; #}
+      <h3>{{ _('Latest <span class="addons">Add-ons</span> Comments from Our Community:')|safe }}</h3>
+    </header>
+    {{ discussions_feed(comments) }}
+  </div>
+
+</div>
+</section>
+{% endblock %}

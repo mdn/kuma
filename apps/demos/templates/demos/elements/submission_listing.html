@@ -1,0 +1,69 @@
+{% cache submission_list %}
+
+    {% set current_sort = request.GET.get('sort', 'created') %} 
+    {% set query = request.GET.get('q','') %}
+
+    <div id="gallery-sort">
+      {% set count = submission_list|length %}
+      <p class="count">{{ ngettext('{count} Demo', '{count} Demos', count) | f(count=count) }}</p>
+      <ul class="sort">
+        {% if false %}{# TODO: Implement up and coming sort index #}
+            <li><strong title="{{_('You are viewing up and coming demos')}}">{{_('Up and Coming')}}</strong></li>
+        {% endif %}
+        {% set sort_orders = (
+            ( 'launches', _('Sort demos by most views'), _('You are viewing demos by most views'), _('Most Viewed') ),
+            ( 'likes', _('Sort demos by most likes'), _('You are viewing demos by most likes'), _('Most Liked') ),
+            ( 'created', _('Sort demos by most recently submitted'), _('You are viewing demos by most recently submitted'), _('Most Recent') ),
+        ) %}
+        {% for order in sort_orders %}
+            {% set sort_url = '?sort=' ~ order[0] %}
+            {% if query %}
+                {% set sort_url = sort_url ~ '&q=' ~ query %}
+            {% endif %}
+            <li>{% if order[0] == current_sort %}
+                <strong title="{{ order[2] }}">{{ order[3] }}</strong>
+            {% else %}
+                <a href="{{ sort_url }}" title="{{ order[1] }}">{{ order[3] }}</a>
+            {% endif %}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% set cols_per_row = 3 %}
+    <ul class="gallery">
+        {% for submission in submission_list %}
+            {% set extra_class = loop.cycle(' row-first', '', '')%}
+            {{ submission_thumb(submission, extra_class) }}
+        {% else %}
+        {% endfor %}
+    </ul>
+    <script type="text/javascript">
+        var els = document.getElementsByTagName('ul');
+        for (var i=0,el; el=els[i]; i++) {
+            if (el.className == 'gallery') { el.className += ' js'; }
+        }
+    </script>
+    
+    <div id="gallery-foot">
+        {% if page_obj %}
+            <p class="showing">{{_('{start}&ndash;{end} of {total}') | f(start=page_obj.start_index(),end=page_obj.end_index(),total=submission_list|length) | safe }}</p>
+        {% endif %}
+        {% if is_paginated %}
+          <ul class="paging">
+            <!-- No first or prev when we're on the first page, no next or last when we're on the last page -->
+            <li class="first"><a href="?page=1" title="{{_('Go to the first page')}}">First</a></li>
+            {% if page_obj.has_previous() %}
+                <li class="prev"><a href="?page={{ page_obj.previous_page_number() }}" title="{{_('Go to the previous page')}}">{{_('Previous')}}</a></li>
+            {% endif %}
+            {% if page_obj.has_next() %}
+                <li class="next"><a href="?page={{ page_obj.next_page_number() }}" title="{{_('Go to the next page')}}">{{_('Next')}}</a></li>
+            {% endif %}
+            <li class="last"><a href="?page={{ paginator.num_pages }}" title="{{_('Go to the last page')}}">{{_('Last')}}</a></li>
+          </ul>
+        {% endif %}
+        {% if feed_url %}
+        <p class="feed"><a href="{{feed_url}}" rel="alternate" title="{{feed_title}}">{{_('Feed')}}</a></p>
+        {% endif %}
+    </div>
+
+{% endcache %}

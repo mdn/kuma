@@ -1,0 +1,22 @@
+ <li class="demo{{extra_class}}">
+    <h2 class="demo-title">
+        {# TODO: Title seems to interfere with hoverIntent #}
+        {% if False %}
+            <a href="{{ submission.get_absolute_url() }}" title="{{ _('See more about {title} by {author}') | f(title=submission.title, author=submission.creator.first_name) }}"></a>
+        {% endif %}
+        <a href="{{ submission.get_absolute_url() }}"><img src="{{ submission.thumbnail_url(1) }}" alt="" width="200" height="150">{{ submission.title }}</a>
+    </h2>
+    <p class="byline vcard">{{ submission_creator(submission) }}</p>
+    <div class="extra">
+      <ul class="stats">
+        {% set launches = submission.launches.total %}
+        {% set likes = submission.likes.total %}
+        {% set comments = submission.comments_total %}
+        <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}">{{ launches }}</li>
+        <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}">{{ likes }}</li>
+        <li class="comments"><a href="{{ submission.get_absolute_url() }}#comments" title="{{ ngettext('There is {count} comment for this demo', 'There are {count} comments for this demo', comments) | f(count=comments) }}">{{ comments }}</a></li>
+      </ul>
+      <p class="desc">{{ submission.summary }}</p>
+      <p class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button" title="{{ _('Launch {title}') | f(title=submission.title) }}">Launch</a></p>
+    </div>
+</li>

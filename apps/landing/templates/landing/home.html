@@ -1,0 +1,224 @@
+{% extends "base_major.html" %}
+
+{% block pageid %}home{% endblock %}
+
+{% block content %}
+<header id="welcome-bar">
+<div class="wrap">
+  <p class="intro" id="welcome-devmo"><span class="leadin">
+    {# L10n: a.k.a. stands for 'also known as'. Followed by 'DEVMO'. #}
+    {{ _('Welcome to the Mozilla Developer Network, a.k.a.:') }}</span>
+  <strong class="devmo">
+    {# L10n: DEVMO is the nickname for MDN. #}
+    {{ _('DEVMO') }}
+  </strong>
+  <a href="{{ _('http://en.wikipedia.org/wiki/Mozilla_Developer_Center') }}" class="go">
+    {{ _('Learn the history behind Project <em>Devmo</em>')|safe }}</a></p>
+
+  <p class="extra" id="welcome-new"><strong>{{ _('New to MDN?') }}</strong>
+    {{ _('Want to help make our network even better?') }}<br />
+    <a href="/forums/viewtopic.php?f=3&amp;t=5" class="go">{{ _("Here's how to get started") }}</a></p>
+
+  <p class="extra" id="welcome-login"><strong>{{ _('Already a member?') }}</strong>
+    {{ _('Customize your profile & fine-tune your participation within MDN.') }}<br />
+  <a href="/forums/ucp.php?mode=login" class="go">{{ _('Log in') }}</a></p>
+</div>
+</header>
+<script type="text/javascript">
+try {
+    if ('localStorage' in window && window['localStorage'] != null) {
+        if (localStorage['/home/devmo_shown_once'] == 'true') {
+            document.getElementById('home').removeChild(
+                document.getElementById('welcome-bar'));
+        } else {
+            localStorage['/home/devmo_shown_once'] = 'true';
+        }
+    }
+} catch (e) {}
+</script>
+<section id="content">
+<div class="wrap sidebar">
+  <section id="content-main" role="main">
+
+  <div id="slideshow">
+    <ol id="slide-control">
+      <li id="slide2"><a href="#slide-two">{{ _('School of Webcraft') }}</a></li>
+      <li id="slide3"><a href="#slide-three">{{ _('HTML5') }}</a></li>
+      <li id="slide4"><a href="#slide-four">{{ _('Firefox 4 Beta') }}</a></li>
+      <li id="slide5"><a href="#slide-five">{{ _('Addons Builder Preview') }}</a></li>
+    </ol>
+    <ol id="slides">
+      <li id="slide-two" class="slide">
+        <img src="{{ MEDIA_URL }}img/features/feature-p2pu.jpg" alt="" width="660">
+        <div class="slide-desc">
+          <h2>{{ _('School of Webcraft') }}</h2>
+          <p>
+          {% trans p2pu='http://p2pu.org/', p2pu_drumbeat='http://www.drumbeat.org/p2pu-webcraft' %}
+          Mozilla and <a href="{{ p2pu }}">P2PU</a> are creating the <a href="{{ p2pu_drumbeat }}">School
+            of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes
+          are globally accessible, 100% free, and powered entirely by learners, mentors and
+          contributors like you people. Our goal: a vibrant, peer-led system that helps people
+          around the world easily access and build careers on open web technology.
+          {% endtrans %}
+          </p>
+          <p class="more"><a href="http://www.drumbeat.org/p2pu-webcraft" class="button">{{ _('More') }}</a></p>
+        </div>
+      </li>
+      <li id="slide-three" class="slide">
+        <img src="{{ MEDIA_URL }}img/features/feature-html5.jpg" alt="" width="660">
+        <div class="slide-desc">
+          <h2>{{ _('HTML5') }}</h2>
+          <p>
+          {% trans devmo_html5=devmo_url(_('/en/HTML/HTML5')), devmo_fx4dev=devmo_url(_('/en/Firefox_4_for_developers')) %}
+          Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies.
+          Find out more about the <a href="{{ devmo_html5 }}">HTML5 spec</a> and the latest enhancements in HTML5, CSS3
+          and other <a href="{{ devmo_fx4dev }}">developer features for Firefox 4</a>.
+          {% endtrans %}
+          </p>
+          <p class="more"><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}" class="button">{{ _('More') }}</a></p>
+        </div>
+      </li>
+      <li id="slide-four" class="slide">
+        <img src="{{ MEDIA_URL }}img/features/feature-firefox4b.jpg" alt="" width="660">
+        <div class="slide-desc">
+          <h2>{{ _('Firefox 4 Beta') }}</h2>
+          <p>
+          {% trans fx4_features='https://www.mozilla.com/en-US/firefox/beta/features/',
+                   fx4_tech='https://www.mozilla.com/firefox/beta/technology/' %}
+          Test the <a href="{{ fx4_features }}">next version of Firefox</a> and help us make the
+          world's best browser even better. Firefox 4 advances the modern web and we have a
+          <a href="{{ fx4_tech }}">big chart full of check marks</a> to prove it.
+          {% endtrans %}
+          </p>
+          <p class="more"><a href="https://www.mozilla.com/firefox/beta/" class="button">{{ _('More') }}</a></p>
+        </div>
+      </li>
+      <li id="slide-five" class="slide">
+        <img src="{{ MEDIA_URL }}img/features/feature-addonsbuilder.jpg" alt="" width="660">
+        <div class="slide-desc">
+          <h2>{{ _('Addons Builder Preview') }}</h2>
+          <p>
+          {% trans tutorial='https://builder.mozillalabs.com/tutorial/',
+                   api='https://builder.mozillalabs.com/api/jetpack-core/' %}
+          Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web
+          technologies. There is a <a href="{{ tutorial }}">tutorial</a> to get you started and a
+          <a href="{{ api }}">variety of APIs in the core library</a> to add functionality to Firefox.
+          {% endtrans %}
+          </p>
+          <p class="more"><a href="https://builder.mozillalabs.com/" class="button">{{ _('More') }}</a></p>
+        </div>
+      </li>
+    </ol>
+  </div><!-- /#slideshow -->
+
+    <div id="home-highlights">
+      <div class="tabbed">
+        <h3>{{ _('News & Updates') }}</h3>
+        <p class="intro">{{ _('Highlighted Mozilla Developer News & Updates') }}</p>
+        {{ newsfeed(updates, section_headers=True) }}
+
+        <h3>{{ _('Docs') }}</h3>
+        <h4 class="gloss-title">
+          {% trans web_url=url('web') %}
+          Key Topics for <a href="{{ web_url }}" class="web">Web</a> Developers
+          {% endtrans %}
+        </h4>
+        {% include "docs/glossary.html" %}
+
+        <div id="other-sections">
+          <div class="section">
+            <h4><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></h4>
+            <p>
+            {% trans devmo_mobile=devmo_url(_('/en/Mobile')), devmo_geo=devmo_url(_('/en/Using_geolocation')) %}
+            Learn more about <a href="{{ devmo_mobile }}">Fennec</a> and mobile-specific technologies
+            like <a href="{{ devmo_geo }}">geolocation</a>.</p>
+            {% endtrans %}
+          </div>
+          <div class="section">
+            <h4><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></h4>
+            <p>
+            {% trans builder_url='https://builder.mozillalabs.com/', dev_url='https://addons.mozilla.org/en-US/developers/' %}
+            <a href="{{ builder_url }}">Build your own add-ons</a> and discuss them with the
+            <a href="{{ dev_url }}">add-on developer community</a>.
+            {% endtrans %}
+            </p>
+          </div>
+          <div class="section">
+            <h4><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></h4>
+            <p>
+            {% trans devmo_participate=devmo_url(_('/en/Participating_in_the_Mozilla_project')),
+                     devmo_l10n=devmo_url(_('/en/Localization')), devmo_qa=devmo_url(_('/en/QA')) %}
+              See how you can <a href="{{ devmo_participate }}">participate</a> in
+              <a href="{{ devmo_l10n }}">localization</a>, <a href="{{ devmo_qa }}">quality
+                assurance</a>, and other Mozilla projects.
+            {% endtrans %}
+            </p>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+
+  </section>
+
+  <aside id="content-sub" role="complementary">
+    <a href="{{ devmo_url(_('/en/Firefox_4_for_developers')) }}">
+      <div class="module" id="mdn-firefox4-webdev">
+        <h3>Firefox 4</h3>
+        <h4>for Developers</h4>
+        <p>{{ _("See what's new for web developers in the latest version of Firefox") }}</p>
+      </div>
+    </a>
+    <div class="module hot" id="mdn-popular-docs">
+      <h3 class="mod-title">{{ _('Popular Docs') }}</h3>
+      <ul class="hfeed">
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></h4>
+          <p class="entry-content">{{ _('Hypertext Markup Language, the core technology of the web.') }}</p>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS Reference') }}</a></h4>
+          <p class="entry-content">{{ _('Cascading Style Sheets.') }}</p>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/JavaScript')) }}">{{ _('JavaScript') }}</a></h4>
+          <p class="entry-content">{{ _('The scripting language that powers modern web applications.') }}</p>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/DOM')) }}">{{ _('DOM') }}</a></h4>
+          <p class="entry-content">{% trans %}
+            The Document Object Model describes the layout and content of web pages.
+          {% endtrans %}</p>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="https://addons.mozilla.org/en-US/developers/">{{ _('Developing Add-ons') }}</a></h4>
+          <p class="entry-content">{% trans %}
+            Creating extensions, themes, and plug-ins for Firefox and Thunderbird.
+          {% endtrans %}</p>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/mobile')) }}">{{ _('Developing for Mobile') }}</a></h4>
+          <p class="entry-content">{% trans %}
+            Developing add-ons and content for Firefox mobile.
+          {% endtrans %}</p>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Participating_in_the_Mozilla_project')) }}">{{ _('Participating in the Mozilla Project') }}</a></h4>
+          <p class="entry-content">{% trans %}
+            Everything from filing bugs to fixing them.
+          {% endtrans %}</p>
+        </li>
+      </ul>
+    </div>
+    <div class="module" id="mdn-forums-sidebar">
+      <h3>{{ _('Be Heard.') }}</h3>
+      <p>Join the MDN forum and share your thoughts on the open web:</p>
+      <a href='/forums'>{{
+        _('Get Started Today!') }}</a>
+    </div>
+  </aside>
+</div>
+</section>{# /#content #}
+
+{% endblock %}

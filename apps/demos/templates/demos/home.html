@@ -1,0 +1,142 @@
+{% extends "demos/base.html" %}
+
+{% block pageid %}demos{% endblock %}
+
+{% block bodyclass %}section-demos landing{% endblock %}
+
+{% block extrahead %}
+<link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
+        href="{{ url('demos_feed_recent', format='atom') }}" />
+        <link rel="alternate" type="application/atom+xml" title="{{_('Featured demos')}}"
+        href="{{ url('demos_feed_featured', format='atom') }}" />
+{% endblock %}
+
+{% block title %}{{ page_title(_('Demo Studio')) }}{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+
+  <header id="page-head" class="landing">
+    <div class="main">
+      <h1 class="page-title">{{_('Mozilla Demo Studio')}}</h1>
+      {% trans %}
+      <p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what’s possible by exploring Demo Studio:</p>
+      <ul>
+        <li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li>
+        <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li>
+        <li>Read <strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li>
+      </ul>
+      {% endtrans %}
+    </div>
+    
+    <p class="aside demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>    
+  </header>
+  
+  {% if featured_submission_list | length %}
+  <section id="featured-demos" class="boxed">
+    <header>
+        <h2>{{_('Featured Demos')}}</h2>
+    </header>
+
+    <ul class="nav-slide">
+        <li class="nav-prev"><a href="#" class="prev" title="{{_('See the previous three demos')}}">{{_('Previous')}}</a></li>
+        <li class="nav-next"><a href="#" class="next" title="{{_('See the next three demos')}}">{{_('Next')}}</a></li>
+    </ul>
+  
+    <div class="frame">
+        {% set cols_per_row = 3 %}
+        <ul class="slider gallery">
+            {% for submission in featured_submission_list %}
+                {% set extra_class = loop.cycle(' row-first panel', ' panel', ' panel')%}
+                {{ submission_thumb(submission, extra_class) }}
+            {% endfor %}
+        </ul>
+    </div>
+  </section>
+    <script type="text/javascript">
+        document.getElementById('featured-demos').className += ' js';
+    </script>
+    {% endif %}
+
+
+  <section id="content-main" role="main">
+    {{ submission_listing(request, submission_list, False, None, None,
+        _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
+        url('demos_feed_recent', format='rss') ) }}
+  </section><!-- /#content-main -->
+  
+  <aside id="content-sub" role="complementary">
+    {{ search_form() }}
+    {{ tags_list() }}
+  </aside><!-- /#content-sub -->
+
+</div>
+</section>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+
+<script type="text/javascript" src="{{MEDIA_URL}}js/carousel.js"></script>
+<script type="text/javascript">
+$("#featured-demos").ready(function(){
+
+  var page_len = 3;
+  var demos_len = $('#featured-demos .slider .demo').length;
+
+  // Set up the carousel, if we have enough for multiple pages
+  if (demos_len > page_len) {
+
+      // HACK: Bugfix where carousel goes wonky without a multiple of page_len
+      var page_mod = demos_len % page_len;
+      if (page_mod > 0) {
+        for (var i=0; i<(page_len-page_mod); i++) {
+            $('#featured-demos .slider').append('<li class="demo panel dummy"></li>');
+        }
+      }
+
+      $('.nav-next a').show();
+      $('.nav-prev a').show();
+
+      $("#featured-demos .frame").addClass("js").jCarouselLite({
+          btnNext: ".nav-next a",
+          btnPrev: ".nav-prev a", 
+          visible: page_len,
+          scroll:  page_len
+      });
+  }
+
+});
+</script>
+
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+	$(".gallery").ready(function(){
+		$(".gallery").addClass("js");
+
+    $(".gallery .demo:not(.dummy)").hoverIntent({
+      interval: 250,
+      over: function() {
+        var content = $(this).html(),
+            demo = $(this), 
+            offs = $(this).offset();
+        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
+        if (demo.parents("#featured-demos").length) {
+          $("#content").find("div.demohover").addClass("featured");
+        };
+        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
+          $(this).fadeOut(200, function(){ 
+            $(this).remove(); 
+          });
+        });
+      }, 
+      out: function() { /* do nothing */ }
+    });
+
+	});	
+// ]]>
+</script>
+
+{% endblock %}

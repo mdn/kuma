@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block pageid %}docs{% endblock %}
+
+{% block bodyclass %}section-docs landing{% endblock %}
+
+{% block title %}{{ page_title(_('Doc Center')) }}{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap sidebar">
+  <section id="content-main" role="main">
+    <form id="doc-search" method="get" action="http://www.google.com/search"
+          data-url="{{ url('search') }}">
+    <div>
+      <p>
+        <input type="text" id="q-docs" name="q" placeholder="{{ _('Search MDN Documentation') }}">
+        <button type="submit">{{ _('Search') }}</button>
+      </p>
+      <input type="hidden" name="sitesearch" value="developer.mozilla.org" />
+    </div>
+    <script type="text/javascript" src="//www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+    </form>
+
+    <section class="section-intro boxed">
+      <header class="head section-web">
+        {# L10n: Please escape HTML entities here, like &amp; #}
+        <h2>{{ _('Popular Topics for <span class="web">Web</span> Developers')|safe }}</h2>
+      </header>
+      <ul id="doc-topics">
+        <li>
+          <h3><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></h3>
+          <p>{{ _('HyperText Markup Language, the core language of the web.') }}</p>
+        </li>
+        <li>
+          <h3><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">{{ _('HTML5') }}</a></h3>
+          <p>{{ _('The next generation of HTML, HTML5 adds powerful new capabilities for web sites and web applications.') }}</p>
+        </li>
+        <li>
+          <h3><a href="{{ devmo_url(_('/en/JavaScript')) }}">{{ _('JavaScript') }}</a></h3>
+          <p>{{ _('The scripting language that powers modern web applications.') }}</p>
+        </li>
+        <li>
+          <h3><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS') }}</a></h3>
+          <p>{{ _('Cascading Style Sheets provide advanced layout and formatting of web content.') }}</p>
+        </li>
+        <li>
+          <h3><a href="{{ devmo_url(_('/en/DOM')) }}">{{ _('DOM') }}</a></h3>
+          <p>{{ _('The Document Object Model describes the structure and content of web pages.') }}</p>
+        </li>
+        <li>
+          <h3><a href="{{ devmo_url(_('/en/AJAX')) }}">{{ _('AJAX') }}</a></h3>
+          <p>{{ _('"Asynchronous JavaScript and XML" is a term that describes the use of all these technologies together to create powerful web applications.') }}</p>
+        </li>
+      </ul>
+
+      <header class="subhead">
+        {# L10n: Please escape HTML entities here, like &amp; #}
+        <h2>{{ _('Key Topics for <span class="web">Web</span> Developers')|safe }}</h2>
+        <p>{{ _('A comprehensive list of terms to help Web developers find the documentation they need.') }}</p>
+      </header>
+      {% include "docs/glossary.html" %}
+
+    </section>{# /.section-intro #}
+
+    <section id="other-sections">
+      <header>
+      <h3>
+        {% trans mobile_link='<a href="{0}" class="mobile">{1}</a>'|f(url('mobile'), _('Mobile'))|safe,
+                 addons_link='<a href="{0}" class="addons">{1}</a>'|f(url('addons'), _('Add-ons'))|safe,
+                 apps_link='<a href="{0}" class="mozilla">{1}</a>'|f(url('mozilla'), _('Mozilla'))|safe %}
+        Get involved in the {{ mobile_link }}, {{ addons_link }}, & {{ apps_link }} Developer Communities:
+        {% endtrans %}
+      </h3>
+      </header>
+      <div class="boxed">
+        <div class="section">
+          <h4><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></h4>
+          <ul>
+            <li><a href="{{ devmo_url(_('/en/Mobile')) }}">{{ _('Firefox Mobile for developers') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Detecting_device_orientation')) }}">{{ _('Detecting device orientation') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">{{ _('Using geolocation') }}</a></li>
+          </ul>
+        </div>
+        <div class="section">
+          <h4><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></h4>
+          <ul>
+            <li><a href="https://addons.mozilla.org/en-US/developers/">{{ _('AMO Developer Hub') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Extensions')) }}">{{ _('Extensions') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Plugins')) }}">{{ _('Plugins') }}</a></li>
+            <li><a href="https://builder.mozillalabs.com/">{{ _('Add-ons Builder') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Themes')) }}">{{ _('Themes') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Creating_OpenSearch_plugins_for_Firefox')) }}">{{ _('Search engine plugins') }}</a></li>
+          </ul>
+        </div>
+        <div class="section">
+          <h4><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></h4>
+          <ul>
+            <li><a href="{{ devmo_url(_('/en/Participating_in_the_Mozilla_project')) }}">{{ _('Participating in the Mozilla project') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Using_Mozilla_code_in_other_projects')) }}">{{ _('Using Mozilla code in other projects') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/Localization')) }}">{{ _('Localization') }}</a></li>
+            <li><a href="{{ devmo_url(_('/en/QA')) }}">{{ _('Quality Assurance') }}</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </section>{# /#content-main #}
+
+  <aside id="content-sub" role="complementary">
+
+    <div class="module hot" id="most-active">
+      <h3 class="mod-title">{{ _('Most Active Docs') }}</h3>
+      <ul class="hfeed">
+        {% for doc in active_docs %}
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ doc['link'] }}">{{ doc['title']|entity_decode }}</a></h4>
+          <p class="entry-meta">{{ _('Last edited by:') }} <cite class="author vcard">{{ doc['author']|entity_decode }}</cite></p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="module hfeed" id="doc-of-the-day">
+      <h3 class="mod-title">{{ _('Doc Of The Day') }}</h3>
+      <div class="hentry">
+        <h4 class="entry-title"><a href="{{ dotd['uri'] }}">{{ dotd['title']|entity_decode }}</a></h4>
+        <p class="entry-summary">{{ dotd['content']|entity_decode|truncatewords(30) }}</p>
+        <p class="entry-meta">
+        {% trans author='<cite class="author vcard">{0}</cite>'|f(dotd['last_author'])|safe,
+                 updated='<abbr class="updated" title="{0}">{1}</abbr>'|f(
+                   dotd['last_edit'], dotd['last_edit']|datetime)|safe %}
+        Modified by {{ author }} on {{ updated }}
+        {% endtrans %}
+        </p>
+      </div>
+    </div>
+
+  </aside>{# /#content-sub #}
+
+</div>
+</section>{# /#content #}
+
+{% endblock %}

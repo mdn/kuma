@@ -1,139 +1,177 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
-{% from 'includes/common_macros.html' import search_box, greeting %}
-{% from 'includes/sidebar_modules.html' import quick_links, for_contributors %}
-{% if not top_link %}
-  {% set top_link = url('home') %}
-{% endif %}
-{% if not top_text %}
-  {% set top_text = _('Firefox Help') %}
-{% endif %}
 <!DOCTYPE html>
-<html class="no-js" lang="{{ request.locale }}" {% if dir %}dir="{{ dir }}"{% endif %}>
+<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>{{ title }} | {{ _('Firefox Help', 'site_title') }}</title>
+  <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
-<link rel="shortcut icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
-<link rel="search" type="application/opensearchdescription+xml" title="{{ _('Firefox Help') }}" href="{{ url('search.plugin') }}"/>
-{% if feeds %}
-  {% for feed in feeds %}
-    <link rel="alternate" type="application/atom+xml" href="{{ feed[0] }}" title="{{ feed[1] }}"/>
-  {% endfor %}
-{% endif %}
+	<meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="MSSmartTagsPreventParsing" content="true">
+  <meta name="ROBOTS" content="ALL">
+  <meta name="Copyright" content="Copyright (c) 2005-{{ thisyear() }} Mozilla.">
+  <meta name="Rating" content="General">
 
-{{ css('common') }}
-{% for style in styles %}
-{{ css(style) }}
-{% endfor %}
-<!--[if lte IE 7]>
-{{ css('ie') }}
-<![endif]-->
+  <link rel="home" href="{{ url('home') }}">
+  <link rel="copyright" href="#copyright">
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 
-{% if meta %}
-  {% for tag in meta %}
-    <meta name="{{ tag[0] }}" content="{{ tag[1] }}"/>
-  {% endfor %}
-{% endif %}
-
-{% if canonical_url %}
-  <link rel="canonical" href="{{ canonical_url }}" />
-{% endif %}
-
-<!--[if lt IE 9]>
-{# html5-shiv.js must be inside <head/> to work. #}
-<script src="{{ MEDIA_URL }}js/libs/html5-shiv.js"></script>
-<![endif]-->
-</head>
-<body class="moz-header-slim {{ classes }}"
-      data-readonly="{{ settings.READ_ONLY|json }}"
-      data-for-os="{{ for_os|json }}"
-      data-for-version="{{ for_version|json }}">
-
-{% include 'layout/header.html' %}
-
-<div id="content">
-  <div id="sub-header">
-    {% block sub_header %}
-      <div id="firefox-help">
-        <a href="{{ top_link }}">{{ top_text }}</a>
-      </div>
-      {% if not hide_header_search %}
-        {{ search_box(settings, id='support-search') }}
-      {% endif %}
-      {{ greeting(user, settings) }}
-    {% endblock %}
-  </div>
-
-  {% block breadcrumbs %}
-    {{ breadcrumbs(crumbs) }}
+  {% block site_css %}
+  <!--[if !IE 6]><!-->
+  {{ css('common') }}
+  <!--<![endif]-->
+  <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css"><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css"><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css"><![endif]-->
+  <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/print.css">
   {% endblock %}
 
-  {% block above_main %}{% endblock %}
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script src="{{ MEDIA_URL }}js/html5.js"></script>
+  <![endif]-->
 
-  <div id="main" role="main">
-    {% block content %}{% endblock %}
-  </div>
+  {% block extrahead %}{% endblock %}
+</head>
 
-  {% block outer_side %}{# TODO: temporary wrapper block until questions and AoA get updated #}
-    <div id="side">
-      {% block side_top %}{% endblock %}
-      {{ quick_links(active=active_side_link) }}
-      {% block side %}{% endblock %}
-      {{ for_contributors(user) }}
-      <div class="sd-module promos">
-        {% block side_promos %}
-          <section id="want-to-get-involved">
-            <h1>{{ _('Be <mark>Awesome</mark>')|safe }}</h1>
-            <div class="img">
-              <img src="{{ settings.MEDIA_URL }}img/promo.sumo.png" alt="" />
-            </div>
-            <p>
-              {% trans %}Did you know that Firefox Help is powered by volunteer
-                superheroes all around the world?{% endtrans %}
-            </p>
-            <a href="{{ url('wiki.document', 'superheroes-wanted') }}">{{ _('Grab your cape and join us &raquo;')|safe }}</a>
-          </section>
-          {% if not hide_plugin_check %}
-            <section id="check-your-plugins">
-              <h1>{{ _('Check your <mark>plugins</mark>')|safe }}</h1>
-              <div class="img">
-                <img src="{{ settings.MEDIA_URL }}img/promo.plugins.png" alt="" />
-              </div>
-              <p>
-                {% trans %}
-                  What is a plugin? Why should I keep them updated? Answer these
-                  questions and run an instant check to see if you're up to date.
-                {% endtrans %}
-              </p>
-              <a href="http://www.mozilla.com/plugincheck/">{{ _('Find out more &raquo;')|safe }}</a>
-            </section>
-          {% endif %}
+<body id="{% block pageid %}{% endblock %}" class="html-{{ DIR }} {% block bodyclass %}{% endblock %}" role="document">
+<!--[if lte IE 8]>
+<noscript><div class="global-notice">
+<p><strong>Warning:</strong> The Mozilla Developer Network website employs emerging web standards that may not be fully supported in some versions of MicroSoft Internet Explorer. You can improve your experience of this website by enabling JavaScript.</p>
+</div></noscript>
+<![endif]-->
+  <header id="masthead" class="{% block headerclass %}minor{% endblock %}">
+    <div class="wrap">
+      <div id="branding">
+        {% block headerlogo %}
+        <h4 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="" width="62" height="71"> Mozilla Developer Network</a></h4>
+        {% endblock %}
+        {% block headertagline %}
+        <p id="tagline">{{ _('A comprehensive, usable, and accurate resource for everyone developing for the Open Web.') }}</p>
         {% endblock %}
       </div>
+
+      <div id="utility">
+        {% include "includes/login.html" %}
+
+        <form id="site-search" method="get" action="http://www.google.com/search"
+              data-url="{{ url('search') }}">
+          <p>
+            <input type="text" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}" />
+            <button type="submit">{{ _('Search') }}</button>
+          </p>
+          <input type="hidden" name="sitesearch" value="developer.mozilla.org" />
+        </form>
+        <div id="site-search-gg"></div>
+      </div>
+
+      {% block headernav %}
+      <nav id="nav">
+        <ul id="nav-main" role="navigation">
+          <li id="nav-main-web"><a href="{{ url('web') }}" class="web">{{ _('Web') }}</a></li>
+          <li id="nav-main-mobile"><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></li>
+          <li id="nav-main-addons"><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></li>
+          <li id="nav-main-mozilla"><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></li>
+        </ul>
+
+        <ul id="nav-extra" role="navigation">
+          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Doc Center') }}</a></li>
+          <li id="nav-extra-demos"><a href="{{ url('demos') }}">{{ _('Demo Studio') }}</a></li>
+          <li id="nav-extra-community"><a href="/forums">{{ _('Forums') }}</a></li>
+        </ul>
+      </nav>
+      {% endblock %}
+
     </div>
-  {% endblock %}
+  </header>
+{# end head #}
 
-</div>{# /#content #}
+{% block content %}{% endblock %}
 
-<footer id="footer">
-  <div id="footer-contents" role="contentinfo">
-    {% with localizable_url=localizable_url %}
-      {% include 'layout/footer.html' %}
-    {% endwith %}
-  </div>{# /#footer-contents #}
-</footer>{# /#footer #}
+{# footer #}
+<section id="footbar">
+<div class="wrap">
+  <p>
+  {% trans uservoice_url='http://mdn.uservoice.com/forums/51389-mdn-website-feedback-http-developer-mozilla-org' %}
+  What do you think of the new MDN? Please <a href="{{ uservoice_url }}">share
+  your feedback</a> with us.
+  {% endtrans %}
+  </p>
+</div>
+</section>
+<footer id="site-info" role="contentinfo">
+<div class="wrap">
+    <div id="legal">
+      <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
+      <p id="copyright">&copy; {{ thisyear() }} Mozilla Developer Network</p>
+      <p>
+      {% trans copyright_url=devmo_url('/Project:Copyrights') %}
+      Content is available under <a href="{{ copyright_url }}">these licenses</a>
+      {% endtrans %}
+      &bull; <a href="{{ devmo_url('/Project:en/About') }}">{{ _('About MDN') }}</a> &bull;
+      <a href="http://www.mozilla.org/about/policies/privacy-policy.html">Privacy Policy</a> &bull;
+      <a href="/forums/viewtopic.php?f=3&amp;t=5">{{ _('Help') }}</a></p>
+    </div>
+    {% include "includes/login.html" %}
+    {% include "includes/lang_switcher.html" %}
+</div>
+</footer>
 
-<script src="{{ url('jsi18n') }}/build:{{ BUILD_ID_JS }}"></script>
-{{ js('common') }}
-{% for script in scripts %}
-{{ js(script) }}
-{% endfor %}
+{# js #}
+{% block site_js %}
+<script src="//www.google.com/jsapi" type="text/javascript"></script>
+  {{ js('common') }}
+<script type="text/javascript">
+$(document).ready(function() {
+  // Set up input placeholders.
+  $('input[placeholder]').placeholder();
+}); 
 
-{# Webtrends Stats Tracking #}
-<script src="{{ MEDIA_URL }}js/webtrends.js" defer></script>
-<noscript>
-    <img id="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcskot6d000000w0qxqho15rf_7r6o/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.6.2"/>
-</noscript>
-{# End Webtrends #}
+/* Fake the placeholder attribute since Firefox doesn't support it. */
+jQuery.fn.placeholder = function(new_value) {
+  if (new_value) {
+    this.attr('placeholder', new_value);
+  }
+
+  /* Bail early if we have built-in placeholder support. */
+  if ('placeholder' in document.createElement('input')) {
+    return this;
+  }
+
+  if (new_value && this.hasClass('placeholder')) {
+    this.val('').blur();
+  }
+
+  return this.focus(function() {
+    var $this = $(this),
+    text = $this.attr('placeholder');
+
+    if ($this.val() == text) {
+      $this.val('').removeClass('placeholder');
+    }
+  }).blur(function() {
+    var $this = $(this),
+    text = $this.attr('placeholder');
+
+    if ($this.val() == '') {
+      $this.val(text).addClass('placeholder');
+    }
+  }).each(function(){
+    /* Remove the placeholder text before submitting the form. */
+    var self = $(this);
+    self.closest('form').submit(function() {
+      if (self.hasClass('placeholder')) {
+        self.val('');
+      }
+    });
+  }).blur();
+};
+
+</script>
+  
+{% endblock %}
+{% block js %}{% endblock %}
+{# end js #}
+
+{% include "includes/webtrends.html" %}
 </body>
 </html>

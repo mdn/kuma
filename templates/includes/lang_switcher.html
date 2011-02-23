@@ -1,0 +1,11 @@
+<form class="languages go" method="get" action="#">
+  <label for="language">{{ _('Other languages:') }}</label>
+  <select id="language" name="lang" dir="ltr">
+    {% for code, name in settings.LANGUAGES|dictsort -%}
+      <option value="{{ code }}" {{ code|ifeq(LANG|lower, "selected") }}>
+        {{ name }}
+      </option>
+    {%- endfor %}
+  </select>
+  <noscript><button type="submit">{{ _('Go') }}</button></noscript>
+</form>

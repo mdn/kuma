@@ -1,0 +1,1 @@
+UPDATE feeder_bundle SET shortname = 'updates-mozilla' WHERE shortname = 'updates-updates';

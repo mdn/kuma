@@ -1,0 +1,12 @@
+{% if user.is_authenticated() %}
+    <p class="user-state"><a href="/User:{{user.username}}">{{ _('Welcome back')  }}</a> |
+    <a href="/logout?returntotitle={{request.path|urlencode}}">{{ _('Log out') }}</a></p>
+{% else %}
+  {% if not PHPBB_LOGGED_IN %}
+    <p class="user-state"><a href="/Special:UserLogin?returntotitle=%2Fen-US%2Fmobile">{{ _('Log in') }}</a> |
+    <a href="{{ devmo_url('/Special:UserRegistration') }}">{{ _('Become an MDN member') }}</a></p>
+  {% else %}
+    <p class="user-state"><a href="/forums/ucp.php">{{ _('Welcome back') }}</a> |
+    <a href="/forums/ucp.php?mode=logout&amp;sid={{ PHPBB_SID }}">{{ _('Log out') }}</a></p>
+  {% endif %}
+{% endif %}

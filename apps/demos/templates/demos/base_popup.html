@@ -1,0 +1,25 @@
+{% extends "base_popup.html" %}
+
+{% block site_css %}
+    {{ super() }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    <script src="{{MEDIA_URL}}js/demos.js" 
+        type="text/javascript"></script>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.closeModal').click(function () {
+                if (top.$ && top.$.modal) {
+                    top.$.modal.close();
+                }
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

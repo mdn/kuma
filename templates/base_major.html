@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{# base.html with major header. #}
+
+{% block headerclass %}major{% endblock %}
+
+{% block headerlogo %}
+<h1 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo.png" alt="" width="128" height="146"> Mozilla Developer Network</a></h1>
+{% endblock %}

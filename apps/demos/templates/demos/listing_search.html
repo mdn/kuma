@@ -1,0 +1,57 @@
+{% extends "demos/base.html" %}
+
+{% set query = request.GET.get('q','') %}
+{% if not query %}
+    {% set query = ' ' %}
+{% endif %}
+
+{% block pageid %}demos{% endblock %}
+{% block bodyclass %}section-demos{% endblock %}
+{% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Search for "{q}"') | f(q=query))) }}{% endblock %}
+
+{% block extrahead %}
+  <link rel="alternate" type="application/atom+xml" 
+      title="{{ _('Search results for "{q}"') | f(q=query) }}"
+      href="{{ url('demos_feed_search', format='atom') | urlparams(None, q=query) }}" />
+{% endblock %}
+
+{% block content %}
+<section id="nav-toolbar">
+<div class="wrap">
+  <nav class="crumbs">
+    <ol role="navigation">
+        <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
+        <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
+      <li><a href="">{{ _('Search demos for "{q}"') | f(q=query) }}</a></li>
+    </ol>
+  </nav>
+  <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
+</div>
+</section>
+
+<section id="content">
+<div class="wrap">
+
+  <header id="page-head">
+    <div class="main">
+        <h1 class="page-title">{{ _('Search demos for "{q}"') | f(q=query) }}</h1>
+    </div>
+  </header>
+
+  <section id="content-main" role="main">
+    {{ submission_listing(
+        request, submission_list, is_paginated, paginator, page_obj,
+        _('Subscribe to a feed of search results for "{q}"') | f(q=query),
+        url('demos_feed_search', format='atom') | urlparams(None, q=query) 
+    ) }}
+  </section>{# /#content-main #}
+
+  <aside id="content-sub" role="complementary">
+    {{ search_form() }}
+    {{ tags_list() }}
+  </aside>
+
+</div>
+</section>{# /#content #}
+
+{% endblock %}

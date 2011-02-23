@@ -5,42 +5,55 @@ from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
 import authority
+import jingo
 
 
 admin.autodiscover()
 authority.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^search', include('search.urls')),
-    (r'^forums', include('forums.urls')),
-    (r'^questions', include('questions.urls')),
-    (r'^flagged', include('flagit.urls')),
-    (r'^upload', include('upload.urls')),
-    (r'^kb', include('wiki.urls')),
-    (r'^gallery', include('gallery.urls')),
-    (r'^army-of-awesome', include('customercare.urls')),
-    (r'^chat', include('chat.urls')),
-    (r'^1', include('inproduct.urls')),
+   # Home / landing pages:
+    ('', include('landing.urls')),
+    ('', include('docs.urls')),
+    (r'^logout/$', 'dekicompat.views.logout'),
+    (r'^demos/', include('demos.urls')),
+
+    # Django admin:
+    (r'^admin/', include(admin.site.urls)),
+
+    #(r'^search', include('search.urls')),
+    #(r'^forums', include('forums.urls')),
+    #(r'^questions', include('questions.urls')),
+    #(r'^flagged', include('flagit.urls')),
+    #(r'^upload', include('upload.urls')),
+    #(r'^kb', include('wiki.urls')),
+    #(r'^gallery', include('gallery.urls')),
+    #(r'^army-of-awesome', include('customercare.urls')),
+    #(r'^chat', include('chat.urls')),
+    #(r'^1', include('inproduct.urls')),
 
     # Kitsune admin (not Django admin).
-    (r'^admin/', include('kadmin.urls')),
+    #(r'^admin/', include('kadmin.urls')),
 
     # Javascript translations.
-    url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
-        {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
+    #url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
+    #    {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
 
-    url(r'^', include('dashboards.urls')),
+    #url(r'^', include('dashboards.urls')),
 
     # Users
-    ('', include('users.urls')),
+    #('', include('users.urls')),
 
     # Services and sundry.
-    (r'', include('sumo.urls')),
+    #(r'', include('sumo.urls')),
 )
 
 # Handle 404 and 500 errors
-handler404 = 'sumo.views.handle404'
-handler500 = 'sumo.views.handle500'
+def _error_page(request, status):
+    """Render error pages with jinja2."""
+    return jingo.render(request, '%d.html' % status, status=status)
+handler404 = lambda r: _error_page(r, 404)
+handler500 = lambda r: _error_page(r, 500)
 
 if settings.DEBUG:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')

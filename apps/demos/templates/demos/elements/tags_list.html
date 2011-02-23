@@ -1,0 +1,8 @@
+<div class="module" id="demo-tags">
+    <h3 class="mod-title">{{_('Browse by Technology')}}</h3>
+  <ul class="cols-2">
+    {% for tag in tags_used_for_submissions() %}
+        <li><a href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a></li>
+    {% endfor %}
+  </ul>
+</div> 
