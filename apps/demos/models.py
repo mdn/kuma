@@ -9,6 +9,7 @@ import logging
 
 import zipfile
 import tarfile
+import magic
 
 from django.conf import settings
 
@@ -71,6 +72,10 @@ DEMO_UPLOADS_ROOT = getattr(settings, 'DEMO_UPLOADS_ROOT',
 DEMO_UPLOADS_URL = getattr(settings, 'DEMO_UPLOADS_URL',
     '%s/uploads/demos' % getattr(settings, 'MEDIA_URL', '/media'))
 demo_uploads_fs = FileSystemStorage(location=DEMO_UPLOADS_ROOT, base_url=DEMO_UPLOADS_URL)
+
+DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
+    'application/zip'
+])
 
 
 def get_root_for_submission(instance):
@@ -440,6 +445,8 @@ class Submission(caching.base.CachingMixin, models.Model):
         if len(valid_entries) == 0:
             raise ValidationError(_('ZIP file contains no acceptable files'))
 
+        m_mime = magic.Magic(mime=True)
+
         index_found = False
         for zi in valid_entries:
             name = zi.filename
@@ -451,6 +458,12 @@ class Submission(caching.base.CachingMixin, models.Model):
 
             if zi.file_size > DEMO_MAX_FILESIZE_IN_ZIP:
                 raise ValidationError(_('ZIP file contains files that are too large'))
+
+            file_data = zf.read(zi)
+            file_mime_type = m_mime.from_buffer(file_data)
+
+            if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
+                raise ValidationError(_('ZIP file contains unacceptable files'))
         
         if not index_found:
             raise ValidationError(_('HTML index not found in ZIP'))

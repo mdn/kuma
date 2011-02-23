@@ -3,6 +3,7 @@ import re
 import urlparse
 import time
 import zipfile
+import os
 from os import unlink
 from os.path import basename, dirname, isfile, isdir
 from shutil import rmtree
@@ -31,6 +32,7 @@ from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 
 from demos.models import Submission
+import demos.models
 
 import demos.models
 demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
@@ -42,8 +44,10 @@ class DemoPackageTest(TestCase):
         self.user.save()
 
         self.submission = self._build_submission()
+        self.old_blacklist = demos.models.DEMO_MIMETYPE_BLACKLIST
 
     def tearDown(self):
+        demos.models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist
         self.user.delete()
 
     def _build_submission(self):
@@ -262,3 +266,37 @@ class DemoPackageTest(TestCase):
 
         unlink(s.demo_package.path)
         
+    def test_demo_file_type_blacklist(self):
+        """Demo package cannot contain files whose detected types are blacklisted"""
+
+        sub_fout = StringIO()
+        sub_zf = zipfile.ZipFile(sub_fout, 'w')
+        sub_zf.writestr('hello.txt', 'I am some hidden text')
+        sub_zf.close()
+
+        # TODO: Need more file types?
+        types = (
+            ( 'text/plain', 'Hi there, I am bad' ),
+            ( 'application/xml', '<?xml version="1.0"?><hi>I am bad</hi>' ),
+            ( 'application/zip', sub_fout.getvalue() ),
+            ( 'image/x-ico', open('media/img/favicon.ico','r').read() ),
+        )
+
+        for type, fdata in types:
+            demos.models.DEMO_MIMETYPE_BLACKLIST = [ type ]
+
+            s = self.submission
+
+            fout = StringIO()
+            zf = zipfile.ZipFile(fout, 'w')
+            zf.writestr('index.html', """<html> </html>""")
+            zf.writestr('badfile', fdata)
+            zf.close()
+
+            s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+
+            try:
+                s.clean()
+                ok_(False, "There should be a validation exception")
+            except ValidationError, e:
+                ok_('ZIP file contains unacceptable files' in e.messages)
