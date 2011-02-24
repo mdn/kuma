@@ -109,6 +109,7 @@ TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 
+MDC_PAGES_DIR = path('lib/mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
