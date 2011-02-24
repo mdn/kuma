@@ -391,9 +391,9 @@ MINIFY_BUNDLES = {
             'css/monitor.css',
         ),
         'mdn': (
-            'css/mdn/screen.css',
-            'css/mdn/video-player.css',
-            'css/mdn/forums-sidebar-module.css',
+            'css/mdn-screen.css',
+            'css/mdn-video-player.css',
+            'css/mdn-forums-sidebar-module.css',
         ),
     },
     'js': {
