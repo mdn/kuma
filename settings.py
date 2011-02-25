@@ -5,15 +5,18 @@ import os
 import platform
 
 from django.utils.functional import lazy
+from django.utils.translation import ugettext_lazy as _
 
 from sumo_locales import LOCALES
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-LOG_LEVEL = logging.INFO
-SYSLOG_TAG = 'http_sumo_app'
-
+LOG_LEVEL = logging.WARN
+SYSLOG_TAG = 'http_app_mdn'
+LOGGING = {
+           'loggers': {},
+}
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
@@ -46,12 +49,13 @@ SLAVE_DATABASES = []
 DEKIWIKI_ENDPOINT = 'http://developer-stage9.mozilla.org'
 
 # Cache Settings
-#CACHE_BACKEND = 'caching.backends.memcached://localhost:11211'
-#CACHE_PREFIX = 'sumo:'
+CACHE_BACKEND = 'locmem://?timeout=86400'
+CACHE_PREFIX = 'mdn:'
+CACHE_COUNT_TIMEOUT = 60  # seconds
 
 # Addresses email comes from
-DEFAULT_FROM_EMAIL = 'notifications@support.mozilla.com'
-SERVER_EMAIL = 'server-error@support.mozilla.com'
+DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
+SERVER_EMAIL = 'server-error@developer.mozilla.org'
 
 PLATFORM_NAME = platform.node()
 
@@ -109,6 +113,7 @@ TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 
+PROD_DETAILS_DIR = path('lib/product_details_json')
 MDC_PAGES_DIR = path('lib/mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
@@ -127,6 +132,8 @@ MEDIA_ROOT = path('media')
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
+
+SERVE_MEDIA = False
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -151,10 +158,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
     'sumo.context_processors.global_settings',
     'sumo.context_processors.for_data',
+
+    'devmo.context_processors.i18n',
+    'devmo.context_processors.phpbb_logged_in',
+
     'jingo_minify.helpers.build_ids',
 )
 
@@ -180,19 +192,28 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
+    'dekicompat.middleware.DekiUserMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
 # Auth
+#AUTHENTICATION_BACKENDS = (
+#    'users.backends.Sha256Backend',
+#)
+#AUTH_PROFILE_MODULE = 'users.Profile'
+
 AUTHENTICATION_BACKENDS = (
-    'users.backends.Sha256Backend',
+    'dekicompat.backends.DekiUserBackend',
 )
-AUTH_PROFILE_MODULE = 'users.Profile'
+AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
 AVATAR_SIZE = 48  # in pixels
@@ -250,7 +271,7 @@ INSTALLED_APPS = (
     #'search',
     #'forums',
     #'djcelery',
-    #'notifications',
+    'notifications',
     #'questions',
     #'kadmin',
     #'taggit',
@@ -281,7 +302,7 @@ def JINJA_CONFIG():
     from django.conf import settings
     from caching.base import cache
     config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',
-                             'jinja2.ext.with_'],
+                             'jinja2.ext.with_', 'jinja2.ext.loopcontrols'],
               'finalize': lambda x: x if x is not None else ''}
     if 'memcached' in cache.scheme and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
@@ -304,25 +325,25 @@ TOWER_KEYWORDS = {
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
     'messages': [
-        ('vendor/**', 'ignore'),
-        ('apps/forums/**', 'ignore'),
-        ('apps/questions/**', 'ignore'),
-        ('apps/chat/**', 'ignore'),
+#        ('vendor/**', 'ignore'),
+#        ('apps/forums/**', 'ignore'),
+#        ('apps/questions/**', 'ignore'),
+#        ('apps/chat/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
     ],
-    'lhtml': [
-        ('apps/forums/**', 'ignore'),
-        ('apps/questions/**', 'ignore'),
-        ('**/templates/**.lhtml',
-            'tower.management.commands.extract.extract_tower_template'),
-    ],
-    'javascript': [
-        # We can't say **.js because that would dive into any libraries.
-        ('media/js/*.js', 'javascript'),
-    ],
+#    'lhtml': [
+#        ('apps/forums/**', 'ignore'),
+#        ('apps/questions/**', 'ignore'),
+#        ('**/templates/**.lhtml',
+#            'tower.management.commands.extract.extract_tower_template'),
+#    ],
+#    'javascript': [
+#        # We can't say **.js because that would dive into any libraries.
+#        ('media/js/*.js', 'javascript'),
+#    ],
 }
 
 # These domains will not be merged into messages.pot and will use separate PO
@@ -480,6 +501,9 @@ JAVA_BIN = '/usr/bin/java'
 # Session cookies
 SESSION_COOKIE_SECURE = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Cookie prefix from PHPBB settings.
+PHPBB_COOKIE_PREFIX = 'phpbb3_jzxvr'
 
 #
 # Connection information for Sphinx search
@@ -649,3 +673,25 @@ WEBTRENDS_PASSWORD = 'password'
 WEBTRENDS_EPOCH = date(2010, 8, 1)  # When WebTrends started gathering stats on
                                     # the KB
 WEBTRENDS_REALM = 'Webtrends Basic Authentication'
+
+# recaptcha
+RECAPTCHA_USE_SSL = False
+RECAPTCHA_PRIVATE_KEY = 'SET ME IN SETTINGS_LOCAL'
+RECAPTCHA_PUBLIC_KEY = 'SET ME IN SETTINGS_LOCAL'
+
+# content flagging
+FLAG_REASONS = (
+    ('notworking', _('This demo is not working for me')),
+    ('inappropriate', _('This demo contains inappropriate content')),
+    ('plagarised', _('This demo was not created by the author')),
+)
+
+# bit.ly
+BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
+BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
+
+# demo studio uploads
+# Filesystem path where files uploaded for demos will be written
+DEMO_UPLOADS_ROOT = path('media/uploads/demos')
+# Base URL from where files uploaded for demos will be linked and served
+DEMO_UPLOADS_URL = '/media/uploads/demos/'
