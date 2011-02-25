@@ -262,7 +262,7 @@ class DemoPackageTest(TestCase):
             s.clean()
             ok_(False, "There should be a validation exception")
         except ValidationError, e:
-            ok_('ZIP file contains files that are too large' in e.messages)
+            ok_('ZIP file contains a file that is too large: bigfile.txt' in e.messages)
 
         unlink(s.demo_package.path)
         
@@ -299,4 +299,4 @@ class DemoPackageTest(TestCase):
                 s.clean()
                 ok_(False, "There should be a validation exception")
             except ValidationError, e:
-                ok_('ZIP file contains unacceptable files' in e.messages)
+                ok_('ZIP file contains an unacceptable file: badfile' in e.messages)

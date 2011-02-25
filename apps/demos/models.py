@@ -74,7 +74,52 @@ DEMO_UPLOADS_URL = getattr(settings, 'DEMO_UPLOADS_URL',
 demo_uploads_fs = FileSystemStorage(location=DEMO_UPLOADS_ROOT, base_url=DEMO_UPLOADS_URL)
 
 DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
-    'application/zip'
+    'application/msword',
+    'application/pdf',
+    'application/postscript',
+    'application/vnd.lotus-wordpro',
+    'application/vnd.ms-cab-compressed',
+    'application/vnd.ms-excel',
+    'application/vnd.ms-tnef',
+    'application/vnd.oasis.opendocument.text',
+    'application/vnd.symbian.install',
+    'application/x-123',
+    'application/x-arc',
+    'application/x-archive',
+    'application/x-arj',
+    'application/x-bittorrent',
+    'application/x-bzip2',
+    'application/x-compress',
+    'application/x-debian-package',
+    'application/x-dosexec',
+    'application/x-executable',
+    'application/x-gzip',
+    'application/x-iso9660-image',
+    'application/x-java-applet',
+    'application/x-java-jce-keystore',
+    'application/x-java-keystore',
+    'application/x-java-pack200',
+    'application/x-lha',
+    'application/x-lharc',
+    'application/x-lzip',
+    'application/x-msaccess',
+    'application/x-rar',
+    'application/x-rpm',
+    'application/x-sc',
+    'application/x-setupscript.',
+    'application/x-sharedlib',
+    'application/x-shockwave-flash',
+    'application/x-stuffit',
+    'application/x-tar',
+    'application/x-xz',
+    'application/x-zoo',
+    'application/xml-sitemap',
+    'application/zip',
+    'model/vrml',
+    'model/x3d',
+    'text/x-msdos-batch',
+    'text/x-perl',
+    'text/x-php',
 ])
 
 
@@ -457,13 +502,19 @@ class Submission(caching.base.CachingMixin, models.Model):
                 index_found = True
 
             if zi.file_size > DEMO_MAX_FILESIZE_IN_ZIP:
-                raise ValidationError(_('ZIP file contains files that are too large'))
+                raise ValidationError(
+                    _('ZIP file contains a file that is too large: %(filename)s') % 
+                    { "filename": name }
+                )
 
             file_data = zf.read(zi)
             file_mime_type = m_mime.from_buffer(file_data)
 
             if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
-                raise ValidationError(_('ZIP file contains unacceptable files'))
+                raise ValidationError(
+                    _('ZIP file contains an unacceptable file: %(filename)s') % 
+                    { "filename": name }
+                )
         
         if not index_found:
             raise ValidationError(_('HTML index not found in ZIP'))
