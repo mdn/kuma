@@ -1,47 +1,41 @@
-#!/bin/bash
-# This script should run from inside Hudson
-
+# This script should be called from within Hudson
 cd $WORKSPACE
 VENV=$WORKSPACE/venv
 VENDOR=$WORKSPACE/vendor
+LOCALE=$WORKSPACE/locale
 
-echo "Starting build..."
+echo "Starting build on executor $EXECUTOR_NUMBER..." `date`
 
-if [ -z $1 ]; then
-    echo "Warning: You should provide a unique name for this job to prevent database collisions."
-    echo "Usage: ./build.sh <name>"
-    echo "Continuing, but don't say you weren't warned."
-fi
+echo "Setup..." `date`
 
-if [ -z $2 ]; then
-    echo "Warning: You should provide a unique Sphinx port for this build."
-    SPHINX_PORT=3381
-else
-    SPHINX_PORT=$2
-fi
+# Make sure there's no old pyc files around.
+find . -name '*.pyc' | xargs rm
 
-
-# Clean up after last time.
-find . -name '*.pyc' -delete;
-
-# Using a virtualenv for python26 and compiled requirements.
 if [ ! -d "$VENV/bin" ]; then
-    echo "No virtualenv found; making one..."
-    virtualenv --no-site-packages $VENV
+  echo "No virtualenv found.  Making one..."
+  virtualenv $VENV
 fi
-source $VENV/bin/activate
-pip install -r requirements/compiled.txt
 
-# Using a vendor library for the rest.
-if [ ! -d "$VENDOR" ]; then
-    echo "No vendor library found; making one..."
-    git clone --recursive git://github.com/jsocol/kitsune-lib.git $VENDOR
+echo "Activating $VENV"
+source $VENV/bin/activate
+
+pip install -q -r requirements/compiled.txt
+
+# Create paths we want for addons
+if [ ! -d "$LOCALE" ]; then
+    echo "No locale dir?  Cloning..."
+    git clone --recursive git://github.com/fwenzel/mdn-locales.git $LOCALE
 fi
-echo "Updating vendor library..."
-pushd $VENDOR > /dev/null
-git pull -q origin master
-git submodule --quiet update --init
-popd > /dev/null
+
+if [ ! -d "$VENDOR" ]; then
+    echo "No vendor lib?  Cloning..."
+    git clone --recursive git://github.com/mozilla/kuma-lib.git $VENDOR
+fi
+
+# Update the vendor lib.
+echo "Updating vendor..."
+pushd $VENDOR && git pull && git submodule update --init;
+popd
 
 python manage.py update_product_details
 
@@ -49,19 +43,26 @@ cat > settings_local.py <<SETTINGS
 from settings import *
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 LOG_LEVEL = logging.ERROR
-DATABASES['default']['NAME'] = 'kitsune_$1'
 DATABASES['default']['HOST'] = 'sm-hudson01'
 DATABASES['default']['USER'] = 'hudson'
-DATABASES['default']['TEST_NAME'] = 'test_kitsune_$1'
+DATABASES['default']['TEST_NAME'] = 'test_kuma'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
-TEST_SPHINX_PORT = $SPHINX_PORT
-TEST_SPHINXQL_PORT = TEST_SPHINX_PORT + 1
+CACHE_BACKEND = 'caching.backends.locmem://'
+
+ASYNC_SIGNALS = False
 SETTINGS
 
-echo "Starting tests..."
-export FORCE_DB=1
-coverage run manage.py test --noinput --logging-clear-handlers --with-xunit
-coverage xml $(find apps lib -name '*.py')
 
-echo 'Booyahkasha!'
+echo "Starting tests..." `date`
+export FORCE_DB='yes sir'
+
+# with-coverage excludes sphinx so it doesn't conflict with real builds.
+if [[ $2 = 'with-coverage' ]]; then
+    coverage run manage.py test -v 2 --noinput --logging-clear-handlers --with-xunit
+    coverage xml $(find apps lib -name '*.py')
+else
+    python manage.py test actioncounters contentflagging dekicompat demos devmo -v 2 --noinput --logging-clear-handlers --with-xunit
+fi
+
+echo 'shazam!'

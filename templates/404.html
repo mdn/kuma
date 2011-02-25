@@ -1,0 +1,15 @@
+{% extends "generic.html" %}
+
+{% block title %}{{ page_title(_('Not Found')) }}{% endblock %}
+
+{% block h1 %}{{ _('Not Found') }}{% endblock %}
+
+{% block main_content %}
+<p>I'm sorry, I could not find what you were looking for.</p>
+
+<p>Please start over on the <a href="{{ url('home') }}">home page</a>.</p>
+
+<p>If you were following a broken link, please
+<a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
+Thanks!</p>
+{% endblock %}
