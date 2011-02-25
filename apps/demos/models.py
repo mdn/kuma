@@ -111,6 +111,7 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
     'application/x-shockwave-flash',
     'application/x-stuffit',
     'application/x-tar',
+    'application/x-zip',
     'application/x-xz',
     'application/x-zoo',
     'application/xml-sitemap',

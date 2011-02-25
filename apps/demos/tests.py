@@ -276,14 +276,14 @@ class DemoPackageTest(TestCase):
 
         # TODO: Need more file types?
         types = (
-            ( 'text/plain', 'Hi there, I am bad' ),
-            ( 'application/xml', '<?xml version="1.0"?><hi>I am bad</hi>' ),
-            ( 'application/zip', sub_fout.getvalue() ),
-            ( 'image/x-ico', open('media/img/favicon.ico','r').read() ),
+            ( [ 'text/plain' ], 'Hi there, I am bad' ),
+            ( [ 'application/xml' ], '<?xml version="1.0"?><hi>I am bad</hi>' ),
+            ( [ 'application/zip', 'application/x-zip' ], sub_fout.getvalue() ),
+            ( [ 'image/x-ico' ], open('media/img/favicon.ico','r').read() ),
         )
 
-        for type, fdata in types:
-            demos.models.DEMO_MIMETYPE_BLACKLIST = [ type ]
+        for blist, fdata in types:
+            demos.models.DEMO_MIMETYPE_BLACKLIST = blist
 
             s = self.submission
 
