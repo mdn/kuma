@@ -35,14 +35,32 @@
       <div id="popular-docs" class="articles-list">
         <header class="head section-web">
           {# L10n: Please escape HTML entities here, like &amp; #}
-          <h2>{{ _('Popular <span class="web">Web</span> Documentation')|safe }}</h2>
+          <h2>{{ _('Awesome <span class="web">Web</span> Demos')|safe }}</h2>
         </header>
 
         <ul class="hfeed">
           <li class="hentry">
-            <h4 class="entry-title"><a href="http://hacks.mozilla.org/demos/" rel="bookmark">{{ _('Hacks Demos') }}</a></h4>
-            <p class="entry-summary">{{ _('For the latest in open Web technologies, these cool demos are a great way to discover new documentation.') }}</p>
+            <h4 class="entry-title"><a href="http://webowonder.org/" rel="bookmark">{{ _('Web O\' Wonder') }}</a></h4>
+            <p class="entry-summary">{{ _('Want to see what the Web is really capable of? Explore the Web o\' Wonder website and prepare to be amazed!') }}</p>
           </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ url('demos') }}" rel="bookmark">{{ _('Demo Studio') }}</a></h4>
+            <p class="entry-summary">{{ _('Do you want to show the world what the Web can do? Demo Studio is your place for sharing awesome demos and experiments with the latest Web standards and open technologies.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="http://hacks.mozilla.org/demos/" rel="bookmark">{{ _('Hacks Blog') }}</a></h4>
+            <p class="entry-summary">{{ _('Learn more about developer features and the latest technologies through articles and demos on the Hacks Blog.') }}</p>
+          </li>
+        </ul>
+      </div>
+
+      <div id="popular-docs" class="articles-list">
+        <header class="subhead">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h3>{{ _('Popular <span class="web">Web</span> Documentation')|safe }}</h3>
+        </header>
+
+        <ul class="hfeed">
           <li class="hentry">
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}" rel="bookmark">{{ _('HTML5') }}</a></h4>
             <p class="entry-summary">{{ _('Find out what HTML5 is really all about and how you can develop for a better Web through open standards.') }}</p>
