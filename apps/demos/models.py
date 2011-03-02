@@ -509,7 +509,9 @@ class Submission(caching.base.CachingMixin, models.Model):
                 )
 
             file_data = zf.read(zi)
-            file_mime_type = m_mime.from_buffer(file_data)
+            # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
+            file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
+            logging.debug("FILE TYPE DETECTED: '%s' /  '%s'" % ( m_mime.from_buffer(file_data), file_mime_type ))
 
             if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
                 raise ValidationError(
