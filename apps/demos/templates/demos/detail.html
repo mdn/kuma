@@ -1,8 +1,19 @@
 {% extends "demos/base.html" %}
 
+{% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
+{% set short_url = full_url | bitly_shorten %}
+
 {% block pageid %}demos-detail{% endblock %}
 {% block bodyclass %}section-demos{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}{% endblock %}
+
+{% block extrahead %}
+    <meta property="og:title" content="{{ submission.title }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_1.url) }}"/>    
+    <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
+    <meta property="og:description" content="{{ submission.summary }}"/>
+{% endblock %}
 
 {% block content %}
 
@@ -94,11 +105,9 @@
 
         <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">Share It</a>
           <ul id="share-opts">
-            {% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
-            {% set short_url = full_url | bitly_shorten %}
             <li class="sharetitle">{{_('Share It')}}</li>
             <li class="twitter"><a href="http://twitter.com/share?{{ urlencode({"url":short_url, "text":submission.title, "via":"mozhacks"}) }}">{{_('Share on Twitter')}}</a></li>
-            <li class="facebook"><a href="http://www.facebook.com/sharer.php?{{ urlencode({"u":short_url, "t":submission.title}) }}">{{_('Share on Facebook')}}</a></li>
+            <li class="facebook"><a href="http://www.facebook.com/sharer.php?{{ urlencode({"u":full_url, "t":submission.title}) }}">{{_('Share on Facebook')}}</a></li>
             <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
           </ul>
           <script type="text/javascript">
@@ -326,6 +335,13 @@
         });
         $("#shorturl").blur(function() {
           $(this).removeClass("focus");
+        });
+
+        $('#share-opts li a').click(function () {
+            var link = $(this);
+            window.open(link.attr('href'), 'sharer', 
+                'toolbar=0, status=0, resizable=1, width=626, height=436');
+            return false;
         });
       
       });

@@ -44,7 +44,7 @@ try {
     <ol id="slide-control">
       <li id="slide2"><a href="#slide-two">{{ _('School of Webcraft') }}</a></li>
       <li id="slide3"><a href="#slide-three">{{ _('HTML5') }}</a></li>
-      <li id="slide4"><a href="#slide-four">{{ _('Firefox 4 Beta') }}</a></li>
+      <li id="slide4"><a href="#slide-four">{{ _('Firefox 4 RC') }}</a></li>
       <li id="slide5"><a href="#slide-five">{{ _('Addons Builder Preview') }}</a></li>
     </ol>
     <ol id="slides">
@@ -81,16 +81,16 @@ try {
       <li id="slide-four" class="slide">
         <img src="{{ MEDIA_URL }}img/features/feature-firefox4b.jpg" alt="" width="660">
         <div class="slide-desc">
-          <h2>{{ _('Firefox 4 Beta') }}</h2>
+          <h2>{{ _('Firefox 4 RC') }}</h2>
           <p>
-          {% trans fx4_features='https://www.mozilla.com/en-US/firefox/beta/features/',
-                   fx4_tech='https://www.mozilla.com/firefox/beta/technology/' %}
+          {% trans fx4_features='https://www.mozilla.com/firefox/rc/features/',
+                   fx4_tech='https://www.mozilla.com/firefox/rc/technology/' %}
           Test the <a href="{{ fx4_features }}">next version of Firefox</a> and help us make the
           world's best browser even better. Firefox 4 advances the modern web and we have a
           <a href="{{ fx4_tech }}">big chart full of check marks</a> to prove it.
           {% endtrans %}
           </p>
-          <p class="more"><a href="https://www.mozilla.com/firefox/beta/" class="button">{{ _('More') }}</a></p>
+          <p class="more"><a href="https://www.mozilla.com/firefox/rc/" class="button">{{ _('More') }}</a></p>
         </div>
       </li>
       <li id="slide-five" class="slide">
