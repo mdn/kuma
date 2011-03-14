@@ -13,13 +13,13 @@ from tower import ugettext as _
 from feeder.models import Entry
 
 
-log = commonware.log.getLogger('mdn.docs')
+log = commonware.log.getLogger('kuma.docs')
 
 def docs(request):
     """Docs landing page."""
 
     # Doc of the day
-    dotd = cached(_get_popular_item, 'mdn_docs_dotd', 24*60*60)
+    dotd = cached(_get_popular_item, 'kuma_docs_dotd', 24*60*60)
 
     # Recent updates
     entries = Entry.objects.filter(feed__shortname='mdc-latest')

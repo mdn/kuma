@@ -14,7 +14,7 @@ from dateutil.parser import parse as parse_date
 
 from devmo.helpers import get_localized_devmo_path, check_devmo_local_page
 
-log = commonware.log.getLogger('mdn.cron')
+log = commonware.log.getLogger('kuma.cron')
 
 @cronjobs.register
 def mdc_pages():

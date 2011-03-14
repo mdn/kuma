@@ -4,7 +4,7 @@ from django.contrib import auth
 
 import commonware
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 class DekiUserMiddleware(object):
     """

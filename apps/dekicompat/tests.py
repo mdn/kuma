@@ -11,7 +11,7 @@ import commonware
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend, DekiUser
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 class DekiCompatTestCase(TestCase):
     """

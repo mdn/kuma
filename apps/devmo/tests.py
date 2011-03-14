@@ -57,6 +57,7 @@ class TestDevMoRobots(test_utils.TestCase):
             ("Disallow", "/"),
         ]
 
+        # TODO: update to kuma when kuma staging server is up
         #No https://mdn.staging.mozilla.com, this serves up Sumo
         eq_(parse_robots('http://mdn.staging.mozilla.com'), rules)
 

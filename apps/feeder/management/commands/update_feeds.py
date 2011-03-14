@@ -16,7 +16,7 @@ from feeder.models import Feed, Entry
 from utils import locked
 
 
-log = commonware.log.getLogger('mdn.feeder')
+log = commonware.log.getLogger('kuma.feeder')
 
 
 class Command(NoArgsCommand):
@@ -27,7 +27,7 @@ class Command(NoArgsCommand):
                     default=False, help='Fetch even disabled feeds.'),
     )
 
-    @locked('mdn_feeder_lock')
+    @locked('kuma_feeder_lock')
     def handle_noargs(self, **options):
         """
         Locked command handler to avoid running this command more than once

@@ -8,7 +8,7 @@ import commonware
 
 from devmo.models import UserProfile
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 class DekiUserBackend(object):
     """

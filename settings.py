@@ -13,7 +13,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_mdn'
+SYSLOG_TAG = 'http_app_kuma'
 LOGGING = {
            'loggers': {},
 }
@@ -50,7 +50,7 @@ DEKIWIKI_ENDPOINT = 'http://developer-stage9.mozilla.org'
 
 # Cache Settings
 CACHE_BACKEND = 'locmem://?timeout=86400'
-CACHE_PREFIX = 'mdn:'
+CACHE_PREFIX = 'kuma:'
 CACHE_COUNT_TIMEOUT = 60  # seconds
 
 # Addresses email comes from
