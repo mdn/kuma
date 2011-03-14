@@ -14,7 +14,6 @@ authority.autodiscover()
 urlpatterns = patterns('',
    # Home / landing pages:
     ('', include('landing.urls')),
-    ('', include('docs.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
     (r'^demos/', include('demos.urls')),
 
@@ -26,7 +25,7 @@ urlpatterns = patterns('',
     #(r'^questions', include('questions.urls')),
     #(r'^flagged', include('flagit.urls')),
     #(r'^upload', include('upload.urls')),
-    #(r'^kb', include('wiki.urls')),
+    (r'^docs', include('wiki.urls')),
     #(r'^gallery', include('gallery.urls')),
     #(r'^army-of-awesome', include('customercare.urls')),
     #(r'^chat', include('chat.urls')),
@@ -55,7 +54,7 @@ def _error_page(request, status):
 handler404 = lambda r: _error_page(r, 404)
 handler500 = lambda r: _error_page(r, 500)
 
-if settings.DEBUG:
+if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
     urlpatterns += patterns('',
         (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
