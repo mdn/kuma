@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     #(r'^flagged', include('flagit.urls')),
     #(r'^upload', include('upload.urls')),
     (r'^docs', include('wiki.urls')),
-    #(r'^gallery', include('gallery.urls')),
+    (r'^gallery', include('gallery.urls')),
     #(r'^army-of-awesome', include('customercare.urls')),
     #(r'^chat', include('chat.urls')),
     #(r'^1', include('inproduct.urls')),
@@ -41,7 +41,7 @@ urlpatterns = patterns('',
     #url(r'^', include('dashboards.urls')),
 
     # Users
-    #('', include('users.urls')),
+    ('', include('users.urls')),
 
     # Services and sundry.
     #(r'', include('sumo.urls')),
