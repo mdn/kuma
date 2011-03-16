@@ -81,7 +81,7 @@ class ActionCounterUnique(models.Model):
             db_index=True, blank=True, null=True)
     session_key = models.CharField(max_length=40, editable=False, 
             db_index=True, blank=True, null=True)
-    user_agent = models.CharField(max_length=255, editable=False, 
+    user_agent = models.CharField(max_length=128, editable=False, 
             db_index=True, blank=True, null=True)
     user = models.ForeignKey(User, editable=False, 
             db_index=True, blank=True, null=True)
