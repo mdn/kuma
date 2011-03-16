@@ -17,15 +17,6 @@
   
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
   <script src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js"></script>
-
-  <script type="text/javascript">
-    $('#share-opts li a').click(function () {
-        var link = $(this);
-        window.open(link.attr('href'), 'sharer', 
-            'toolbar=0, status=0, resizable=1, width=626, height=436');
-        return false;
-    });
-  </script>
   
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
@@ -140,6 +131,15 @@
             ifrm.contentWindow.postMessage('start_demo', '*');
         }
     }, true);
+  </script>
+
+  <script type="text/javascript">
+    $('#share-opts li a').click(function () {
+        var link = $(this);
+        window.open(link.attr('href'), 'sharer', 
+            'toolbar=0, status=0, resizable=1, width=626, height=436');
+        return false;
+    });
   </script>
 
 </body>
