@@ -29,8 +29,8 @@
             initArticlePreview();
             initTitleAndSlugCheck();
         }
-
-        Marky.createFullToolbar('.editor-tools', '#id_content');
+        CKEDITOR.replace('id_content');
+        //Marky.createFullToolbar('.editor-tools', '#id_content');
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.

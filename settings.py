@@ -459,6 +459,7 @@ MINIFY_BUNDLES = {
             'js/wiki.js',
             'js/tags.js',
             'js/dashboards.js',
+            'ckeditor/ckeditor.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',

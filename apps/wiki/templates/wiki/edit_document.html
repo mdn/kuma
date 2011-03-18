@@ -77,3 +77,7 @@
 {% block side_top %}
   {{ document_tabs(document, document.parent, user, 'edit', settings) }}
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="/media/ckeditor/ckeditor.js"></script>
+{% endblock %}
