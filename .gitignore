@@ -1,5 +1,7 @@
 *.pyc
 *.pyo
+*.sw?
+.vagrant
 settings_local.py
 pip-log.txt
 .coverage
@@ -10,6 +12,4 @@ build.py
 **-all.js
 **-min.js
 media/uploads
-vendor
-tmp
 locale
