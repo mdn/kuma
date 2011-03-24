@@ -1,57 +1,94 @@
-RewriteEngine On
+# Note this file should be symlinked from the dekiwiki root
+# Example: ln -s /home/foo/mdn/configs/htaccess /var/www/dekiwiki/.htaccess
+#
+# Make sure AllowOverride has FileInfo
+ReWriteEngine On
+RewriteBase /
 
-# TODO: remove this after a month or so.
-RewriteRule ^search\.xml$ /search/xml [L,R=301]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?)$           /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?docs/?)$     /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?logout/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?mobile/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?mozilla/?)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?search/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?web/?)$      /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|ro|sl|sq|th|zh-TW|zh-CN)/)?learn.*)$      /mwsgi/$1 [PT,L]
+RewriteRule ^(admin(/.*)?)$                                                                 /mwsgi/$1 [PT,L]
 
-# Account URLs.
-RewriteRule ^tiki-login /users/login [L,R=301]
-RewriteRule ^tiki-logout.php /users/logout [L,R=301]
-RewriteRule ^tiki-register /users/register [L,R=301]
-RewriteRule ^tiki-remind_password.php /users/pwreset [L,R=301]
-RewriteRule ^tiki-user_preferences.php /users/edit [L,R=301]
+   # PeteE: redirect feeds to a feeds disabled page
+   RewriteCond %{REQUEST_URI} ^/Special:Article$ [NC]
+   RewriteCond %{QUERY_STRING} type=feed [NC]
+   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
 
-# Contribute shortcut
-RewriteRule ^contribute/?$ /kb/How+to+contribute [L,QSA,R=302]
+   RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
+   RewriteCond %{QUERY_STRING} title=Special:Article [NC]
+   RewriteCond %{QUERY_STRING} type=feed [NC]
+   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
 
-# Redirect old discussion forums to new discussion forums
-RewriteRule ^forum/3(.*) /en-US/forums/contributors$1 [L,QSA,R=301]
-RewriteRule ^([\-a-zA-Z]+)/forum/3(.*) /en-US/forums/contributors$2 [L,QSA,R=301]
-RewriteRule ^forum/4(.*) /en-US/forums/off-topic$1 [L,QSA,R=301]
-RewriteRule ^([\-a-zA-Z]+)/forum/4(.*) /en-US/forums/off-topic$2 [L,QSA,R=301]
-RewriteRule ^forum/5(.*) /en-US/forums/knowledge-base-articles$1 [L,QSA,R=301]
-RewriteRule ^([\-a-zA-Z]+)/forum/5(.*) /en-US/forums/knowledge-base-articles$2 [L,QSA,R=301]
+   RewriteCond %{REQUEST_URI} ^/Special:Watchlist$ [NC]
+   RewriteCond %{QUERY_STRING} type=feed [NC]
+   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
 
-# Redirect old KB docs to new locations
-RewriteRule ^kb/Firefox\+Help$ /home/ [L,NC,R=301]
-RewriteRule ^kb/Windows\+start\+page$ /home/ [L,NC,R=301]
-RewriteRule ^kb/Firefox\+Support\+Home\+Page$ /home/ [L,NC,R=301]
-RewriteRule ^kb/Get\+help\+with\+Firefox\+4\+Beta$ /home/ [L,NC,R=301]
-RewriteRule ^kb/Localization\+Dashboard$ /contributors [L,NC,R=301]
-RewriteRule ^kb/All\+Knowledge\+Base\+articles$ /contributors [L,NC,R=301]
-RewriteRule ^kb/Live\+Chat$ /en-US/chat/ [L,NC,R=301]  # Chat is not localized.
-RewriteRule ^kb/Mobile\+Help\+and\+Tutorials$ /mobile/ [L,NC,R=301]
-RewriteRule ^kb/Support\+Website\+Forums$ /en-US/questions/ [L,NC,R=301]  # Questions is not localized.
-RewriteRule ^kb/Article\+list$ /kb/all [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Firefox\+Help$ /$1/home/ [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Windows\+start\+page$ /$1/home/ [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Firefox\+Support\+Home\+Page$ /$1/home/ [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Get\+help\+with\+Firefox\+4\+Beta$ /$1/home/ [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Localization\+Dashboard$ /$1/contributors [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/All\+Knowledge\+Base\+articles$ /$1/contributors [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Live\+Chat$ /en-US/chat/ [L,NC,R=301]  # Chat is not localized.
-RewriteRule ^([\-a-z]+)/kb/Mobile\+Help\+and\+Tutorials$ /$1/mobile/ [L,NC,R=301]
-RewriteRule ^([\-a-z]+)/kb/Support\+Website\+Forums$ /en-US/questions/ [L,NC,R=301]  # Questions is not localized.
-RewriteRule ^([\-a-z]+)/kb/Article\+list$ /$1/kb/all [L,NC,R=301]
+   RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
+   RewriteCond %{QUERY_STRING} title=Special:Watchlist [NC]
+   RewriteCond %{QUERY_STRING} type=feed [NC]
+   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
 
-# Windows 7 application link
-RewriteRule ^windows7-support(\/)?$  "/home/?as=u" [L,R,NE]
+   RewriteCond %{REQUEST_URI} ^/@api/deki/pages/[0-9]+/feed(/)?$ [NC,OR]
+   RewriteCond %{REQUEST_URI} ^/@api/deki/pages/[0-9]+/feed/new(/)?$ [NC,OR]
+   RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/feed(/)?$ [NC,OR]
+   RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/feed/new(/)?$ [NC,OR]
+   RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/favorites/feed(/)?$ [NC]
+   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   # END FEEDS DISABLED
 
-# Redirect locales that point to one locale in SUMO.
-# Kitsune does this by itself, mostly.
-# Not sure about this guy: may need to special-case it in the LocaleURLMiddleware.
-RewriteRule ^n[bn]\-NO/(.+)$           /no/$1 [L,R]
-# Just need to move sr-CYRL above sr-LATN to get this.
-RewriteRule ^sr/(.+)$           /sr-CYRL/$1 [L,R]
+	RewriteRule ^patches(.*) data/www/patches$1 [L]
+	RewriteRule ^presentations(.*) data/www/presentations$1 [L]
+	RewriteRule ^samples(.*) data/www/samples$1 [L]
+	RewriteRule ^diagrams(.*) data/www/diagrams$1 [L]
+	RewriteRule ^devnews(.*) data/www/devnews$1 [L]
+	RewriteRule ^web-tech(.*) data/www/web-tech$1 [L]
+	RewriteRule ^css(.*) data/www/css$1 [L]
 
-# Everything else goes to Kitsune.
-RewriteRule ^(.*) /k/$1 [QSA]
+    RewriteRule ^En/JavaScript/Reference/Objects/Array$ en/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]
+    RewriteRule ^En/JavaScript/Reference/Objects$ en/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]
+
+    RewriteRule ^En/Core_JavaScript_1\.5_Reference/Objects/(.*) en/JavaScript/Reference/Global_Objects/$1 [R=301,L,NC]
+    RewriteRule ^En/Core_JavaScript_1\.5_Reference/(.*) en/JavaScript/Reference/$1 [R=301,L,NC]
+	RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
+	RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
+	RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
+
+       RewriteCond %{REQUEST_URI} ^/$
+       RewriteRule ^$ En [L,NE,R]
+
+	RewriteCond %{REQUEST_URI} ^/@gui/[^.]+$
+	RewriteRule ^@gui/(.*)$ proxy.php?path=$1 [L,QSA,NE]
+
+	### Begin MDC rewrite rules ###
+	RewriteCond %{REQUEST_URI} ^/(.*)$
+	RewriteRule ^([a-z]{2}|[a-z_]{5})/docs/(.*):(.*)$ $2:$3/$1 [L,QSA,NE,NC,R]
+
+	RewriteCond %{REQUEST_URI} ^/(.*)$
+	RewriteRule ^([a-z]{2}|[a-z_]{5})/docs/(.*)$ $1/$2 [L,QSA,NE,NC,R]
+
+	RewriteCond %{REQUEST_URI} ^/(.*)$
+	RewriteRule ^docs/(.*):(.*)$ $1:$2/En [L,QSA,NE,NC,R]
+
+	RewriteCond %{REQUEST_URI} ^/(.*)$
+	RewriteRule ^docs/(.*)$ En/$1 [L,QSA,NE,NC,R]
+	### End MDC rewrite rules ###
+
+	RewriteCond %{REQUEST_URI} !/(@api|editor|skins|config|deki|media|admin-media)/
+	RewriteCond %{REQUEST_URI} !/forums
+	RewriteCond %{REQUEST_URI} !/(redirect|texvc|Version).php
+	RewriteCond %{REQUEST_URI} !/error/(40(1|3|4)|500).html
+	RewriteCond %{REQUEST_URI} !/favicon.ico
+	RewriteCond %{REQUEST_URI} !/robots.txt
+	RewriteCond %{REQUEST_URI} !/block_862be.html
+	RewriteCond %{REQUEST_URI} !/block_f90c2.html
+	RewriteCond %{QUERY_STRING} ^$ [OR] %{REQUEST_URI} ^/Special:Search
+	RewriteRule ^(.*)$ index.php?title=$1 [L,QSA,NE]
+

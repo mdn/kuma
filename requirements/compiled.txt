@@ -3,3 +3,4 @@ Jinja2==2.5.2
 PIL==1.1.7
 lxml==2.2.6
 coverage==3.2b4
+pylibmc
