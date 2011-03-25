@@ -87,7 +87,7 @@ class ContentFlag(models.Model):
             max_length=40, editable=False, 
             blank=True, null=True)
     user_agent = models.CharField(
-            max_length=255, editable=False, 
+            max_length=128, editable=False, 
             blank=True, null=True)
     user = models.ForeignKey(
             User, editable=False, blank=True, null=True)
