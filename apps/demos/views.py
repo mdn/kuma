@@ -2,6 +2,7 @@ import jingo
 import logging
 
 from django.conf import settings
+from django.core.cache import cache
 
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 
@@ -28,6 +29,7 @@ from tagging.utils import LINEAR, LOGARITHMIC
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
+from . import DEMOS_CACHE_NS_KEY
 
 from contentflagging.models import ContentFlag
 from contentflagging.forms import ContentFlagForm
@@ -38,6 +40,7 @@ from threadedcomments.models import ThreadedComment
 from utils import JingoTemplateLoader
 template_loader = JingoTemplateLoader()
 
+DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 24)
 
 def home(request):
     """Home page."""
@@ -76,7 +79,7 @@ def all(request):
     queryset = Submission.objects.all_sorted(sort_order)\
             .exclude(hidden=True)
     return object_list(request, queryset,
-        paginate_by=24, allow_empty=True,
+        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
         template_loader=template_loader,
         template_object_name='submission',
         template_name='demos/listing_all.html') 
@@ -88,7 +91,7 @@ def tag(request, tag):
 
     return tagged_object_list(request,
         queryset_or_model=queryset, tag=tag,
-        paginate_by=24, allow_empty=True, 
+        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True, 
         template_loader=template_loader,
         template_object_name='submission',
         template_name='demos/listing_tag.html')
@@ -100,7 +103,7 @@ def search(request):
     queryset = Submission.objects.search(query_string, sort_order)\
             .exclude(hidden=True)
     return object_list(request, queryset,
-        paginate_by=24, allow_empty=True,
+        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
         template_loader=template_loader,
         template_object_name='submission',
         template_name='demos/listing_search.html') 
@@ -193,6 +196,7 @@ def submit(request):
             if request.user.is_authenticated():
                 new_sub.creator = request.user
             new_sub.save()
+            cache.incr(DEMOS_CACHE_NS_KEY)
             
             # TODO: Process in a cronjob?
             new_sub.process_demo_package()

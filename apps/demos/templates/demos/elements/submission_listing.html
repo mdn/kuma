@@ -1,5 +1,3 @@
-{% cache submission_list %}
-
     {% set current_sort = request.GET.get('sort', 'created') %} 
     {% set query = request.GET.get('q','') %}
 
@@ -65,5 +63,3 @@
         <p class="feed"><a href="{{feed_url}}" rel="alternate" title="{{feed_title}}">{{_('Feed')}}</a></p>
         {% endif %}
     </div>
-
-{% endcache %}

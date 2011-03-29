@@ -224,7 +224,7 @@ class OverwritingImageField(models.ImageField):
     attr_class = OverwritingImageFieldFile
 
 
-class SubmissionManager(caching.base.CachingManager):
+class SubmissionManager(models.Manager):
     """Manager for Submission objects"""
 
     # TODO: Make these search functions into a mixin?

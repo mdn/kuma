@@ -294,3 +294,5 @@ DEMO_LICENSES = dict( (x['name'], x) for x in getattr(settings, 'DEMO_LICENSES',
         'icon': '',
     },
 )))
+
+DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
