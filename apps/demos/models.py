@@ -30,8 +30,6 @@ from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify, filesizeformat
 
-import caching.base
-
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 
@@ -288,7 +286,7 @@ class SubmissionManager(models.Manager):
             return queryset.order_by('-created')
         
 
-class Submission(caching.base.CachingMixin, models.Model):
+class Submission(models.Model):
     """Representation of a demo submission"""
     objects = SubmissionManager()
 
