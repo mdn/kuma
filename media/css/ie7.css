@@ -1,0 +1,38 @@
+/*----------------------------------------------------------------------------
+IE7 CSS file for Mozilla Developer Network
+Created by Craig Cook - focalcurve.com
+        on 27 June, 2010
+-----------------------------------------------------------------------------*/
+
+.wrap, #nav, .type, #sections, #footbar, .folder.visible, #gallery-sort, #gallery-foot, #page-head, .gallery { zoom: 1; } /* I can hasLayout */
+#nav { margin-bottom: -3px; }
+#nav-main li, #nav-extra li { display: inline; }
+.module .gallery li { display: inline; }
+#content-sub .heat-graph a b { margin-top: -1.25em; }
+.entry-meta cite { font-style: normal; }
+#content #glossary ul li { width: 90%; display: list-item; margin: 0 10px .5em 0; background: transparent url("../img/bullet-tiny.png") 0 .5em no-repeat; padding: 0 0 0 12px; border: 0; }
+#sections { padding: 0 1.5%; margin: 0 -1.5%; }
+#sections .mdn-section { width: 16.25%; }
+#slideshow.js .slide-desc { background-color: #444; }
+#other-sections .section:first-child { border-left: 1px; }
+ul.sortable .remove { font-family: sans-serif; margin-top: -1.25em; }
+.replaced input { filter:alpha(opacity=100); }
+.replaced .replacement { display: none; }
+#content .submission .aside { position: relative; right: -30px; }
+.nav-slide a { background-color: #000; }
+#featured-demos .nav-slide a { background-color: #000; }
+#masthead.compact { position: relative; z-index: 99; }
+.compact #nav .menu:hover .sub-menu, .compact #nav .hover .sub-menu, .compact #nav a:focus + ul { left: 0; }
+.gallery .demo { height: 10em; }
+.js .demo { height: 5em; }
+
+#featured-demos { border: 1px solid #000; }
+#featured-demos header { position: relative; top: -60px; width: 580px; margin-bottom: -60px; }
+#featured-demos header h2 { zoom: 1; }
+
+#demobox, #demobox .demo-meta, #demobox .tools, #demobox .like, #demobox .unlike, #demobox .share { zoom: 1; }
+
+/* IE doesn't inherit */
+ul.sortable .remove, 
+button.like, button.unlike,
+#comments-list .comment-opts button { font-family: "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; }
