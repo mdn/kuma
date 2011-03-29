@@ -3,6 +3,7 @@ import urllib
 import logging
 import functools
 import hashlib
+import random
 
 from django.core.cache import cache
 #from django.utils.translation import ungettext, ugettext
@@ -32,6 +33,7 @@ from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR, LOGARITHMIC
 
 from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES
+from . import DEMOS_CACHE_NS_KEY
 
 from threadedcomments.models import ThreadedComment, FreeThreadedComment
 from threadedcomments.forms import ThreadedCommentForm, FreeThreadedCommentForm
@@ -103,7 +105,14 @@ def profile_link(user, show_gravatar=False, gravatar_size=48): return locals()
 @register.inclusion_tag('demos/elements/submission_thumb.html')
 def submission_thumb(submission,extra_class=None): return locals()
 
-@register.inclusion_tag('demos/elements/submission_listing.html')
+def submission_listing_cache_key(*args, **kw):
+    ns_key = cache.get(DEMOS_CACHE_NS_KEY)
+    if ns_key is None:
+        ns_key = random.randint(1,10000)
+        cache.set(DEMOS_CACHE_NS_KEY, ns_key)
+    return 'demos_%s:%s' % (ns_key, args[0].get_full_path())
+
+@register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
 def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url): 
     return locals()
 
