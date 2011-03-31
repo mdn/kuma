@@ -61,7 +61,7 @@
 
 
   <section id="content-main" role="main">
-    {{ submission_listing(request, submission_list, False, None, None,
+    {{ submission_listing(request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
         url('demos_feed_recent', format='rss') ) }}
   </section><!-- /#content-main -->
