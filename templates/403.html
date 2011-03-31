@@ -1,0 +1,17 @@
+{% extends "generic.html" %}
+
+{% block title %}{{ page_title(_('Permission Denied')) }}{% endblock %}
+
+{% block h1 %}{{ _('Permission Denied') }}{% endblock %}
+
+{% block main_content %}
+{% trans returnto=request.get_full_path() %}
+<p>You're not authorized to make this request.</p>
+
+<p>Are you <a href="/Special:UserLogin?returntotitle={{ returnto }}">logged in</a> as the right user?</p>
+
+<p>If you think this is an error, please
+<a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
+Thanks!</p>
+{% endtrans %}
+{% endblock %}
