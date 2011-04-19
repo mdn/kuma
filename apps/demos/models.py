@@ -1,3 +1,4 @@
+from hashlib import md5
 from datetime import datetime
 from time import time, gmtime, strftime
 from os import unlink, makedirs
@@ -161,8 +162,9 @@ class ConstrainedTagField(tagging.fields.TagField):
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
     c_name = instance.creator.username
-    return '%(h1)s/%(h2)s/%(username)s/%(slug)s' % dict(
-         h1=c_name[0], h2=c_name[1], username=c_name, slug=instance.slug)
+    return '%(h1)s/%(h2)s/%(username)s/%(slug_hash)s' % dict(
+         h1=c_name[0], h2=c_name[1], username=c_name, 
+         slug_hash=md5(instance.slug).hexdigest())
 
 def mk_upload_to(field_fn):
     """upload_to builder for file upload fields"""
@@ -177,8 +179,8 @@ def mk_slug_upload_to(field_fn):
     """upload_to builder for file upload fields, includes slug in filename"""
     def upload_to(instance, filename):
         time_now = int(time())
-        return '%(base)s/%(slug)s_%(time_now)s_%(field_fn)s' % dict( 
-            time_now=time_now, slug=instance.slug,
+        return '%(base)s/%(slug_short)s_%(time_now)s_%(field_fn)s' % dict( 
+            time_now=time_now, slug=instance.slug[:20],
             base=get_root_for_submission(instance), field_fn=field_fn)
     return upload_to
 
@@ -408,26 +410,31 @@ class Submission(models.Model):
 
     screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
+            max_length=255,
             storage=demo_uploads_fs,
             upload_to=mk_upload_to('screenshot_1.png'), 
             blank=False)
     screenshot_2 = ReplacingImageWithThumbField(
             _('Screenshot #2'),
+            max_length=255,
             storage=demo_uploads_fs,
             upload_to=mk_upload_to('screenshot_2.png'), 
             blank=True)
     screenshot_3 = ReplacingImageWithThumbField(
             _('Screenshot #3'),
+            max_length=255,
             storage=demo_uploads_fs,
             upload_to=mk_upload_to('screenshot_3.png'), 
             blank=True)
     screenshot_4 = ReplacingImageWithThumbField(
             _('Screenshot #4'),
+            max_length=255,
             storage=demo_uploads_fs,
             upload_to=mk_upload_to('screenshot_4.png'), 
             blank=True)
     screenshot_5 = ReplacingImageWithThumbField(
             _('Screenshot #5'),
+            max_length=255,
             storage=demo_uploads_fs,
             upload_to=mk_upload_to('screenshot_5.png'), 
             blank=True)
@@ -438,6 +445,7 @@ class Submission(models.Model):
 
     demo_package = ReplacingZipFileField(
             _('select a ZIP file containing your demo'),
+            max_length=255,
             max_upload_size=DEMO_MAX_ZIP_FILESIZE,
             storage=demo_uploads_fs,
             upload_to=mk_slug_upload_to('demo_package.zip'),
