@@ -180,7 +180,7 @@ def mk_slug_upload_to(field_fn):
     def upload_to(instance, filename):
         time_now = int(time())
         return '%(base)s/%(slug_short)s_%(time_now)s_%(field_fn)s' % dict( 
-            time_now=time_now, slug=instance.slug[:20],
+            time_now=time_now, slug_short=instance.slug[:20],
             base=get_root_for_submission(instance), field_fn=field_fn)
     return upload_to
 
