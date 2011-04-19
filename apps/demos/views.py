@@ -1,5 +1,6 @@
 import jingo
 import logging
+import random
 
 from django.conf import settings
 from django.core.cache import cache
@@ -200,7 +201,12 @@ def submit(request):
             if request.user.is_authenticated():
                 new_sub.creator = request.user
             new_sub.save()
-            cache.incr(DEMOS_CACHE_NS_KEY)
+            ns_key = cache.get(DEMOS_CACHE_NS_KEY)
+            if ns_key is None:
+                ns_key = random.randint(1,10000)
+                cache.set(DEMOS_CACHE_NS_KEY, ns_key)
+            else:
+                cache.incr(DEMOS_CACHE_NS_KEY)
             
             # TODO: Process in a cronjob?
             new_sub.process_demo_package()

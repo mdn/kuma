@@ -249,7 +249,7 @@
         <ul class="gallery">
           {% for more_submission in more_by %}
             {% if more_submission.id != submission.id %}
-                <li><a href="{{ more_submission.get_absolute_url() }}"><img src="{{ more_submission.thumbnail_url(1) }}" alt="" title="{{ more_submission.title }}" width="90" height="68"></a></li>
+                <li><a href="{{ more_submission.get_absolute_url() }}"><img src="{{ more_submission.screenshot_1.thumbnail_url() }}" alt="" title="{{ more_submission.title }}" width="90" height="68"></a></li>
             {% endif %}
           {% endfor %}
         </ul>
