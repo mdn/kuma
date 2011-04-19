@@ -128,17 +128,6 @@ class SubmissionEditForm(MyModelForm):
             except ValidationError, e:
                 self._errors['demo_package'] = self.error_class(e.messages)
 
-        # TODO: Should this be moved to model class?
-        for idx in range(1, 6):
-            name = 'screenshot_%s' % idx
-            if name in self.files:
-                scaled_file = scale_image(self.files[name].file,
-                        (SCREENSHOT_MAXW, SCREENSHOT_MAXH))
-                if not scaled_file:
-                    self._errors[name] = self.error_class([_('Cannot process image')])
-                else:
-                    self.files[name].file = scaled_file
-
         return cleaned_data
 
 

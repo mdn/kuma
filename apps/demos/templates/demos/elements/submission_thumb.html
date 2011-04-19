@@ -4,7 +4,7 @@
         {% if False %}
             <a href="{{ submission.get_absolute_url() }}" title="{{ _('See more about {title} by {author}') | f(title=submission.title, author=submission.creator.first_name) }}"></a>
         {% endif %}
-        <a href="{{ submission.get_absolute_url() }}"><img src="{{ submission.thumbnail_url(1) }}" alt="" width="200" height="150">{{ submission.title }}</a>
+        <a href="{{ submission.get_absolute_url() }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="200" height="150">{{ submission.title }}</a>
     </h2>
     <p class="byline vcard">{{ submission_creator(submission) }}</p>
     <div class="extra">

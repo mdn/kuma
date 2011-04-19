@@ -1,5 +1,5 @@
 from datetime import datetime
-from time import strftime
+from time import time, gmtime, strftime
 from os import unlink, makedirs
 from os.path import basename, dirname, isfile, isdir
 from shutil import rmtree
@@ -55,6 +55,9 @@ try:
 except ImportError:
     import Image
 
+
+SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
+SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
 
 THUMBNAIL_MAXW = getattr(settings, 'DEMO_THUMBNAIL_MAX_WIDTH', 200)
 THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
@@ -122,20 +125,6 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
 ])
 
 
-def get_root_for_submission(instance):
-    """Build a root path for demo submission files"""
-    c_name = instance.creator.username
-    return '%(h1)s/%(h2)s/%(username)s/%(slug)s' % dict(
-         h1=c_name[0], h2=c_name[1], username=c_name, slug=instance.slug,)
-
-def mk_upload_to(field_fn):
-    """upload_to builder for file upload fields"""
-    def upload_to(instance, filename):
-        return '%(base)s/%(field_fn)s' % dict( 
-            base=get_root_for_submission(instance), field_fn=field_fn)
-    return upload_to
-
-
 class ConstrainedTagField(tagging.fields.TagField):
     """Tag field constrained to described tags"""
 
@@ -169,28 +158,79 @@ class ConstrainedTagField(tagging.fields.TagField):
         return super(ConstrainedTagField, self).formfield(**defaults)
 
 
-class OverwritingFieldFile(FieldFile):
-    """The built-in FieldFile alters the filename when saving, if a file with
-    that name already exists. This subclass deletes an existing file first so
-    that an upload will replace it."""
-    # TODO:liberate
+def get_root_for_submission(instance):
+    """Build a root path for demo submission files"""
+    c_name = instance.creator.username
+    return '%(h1)s/%(h2)s/%(username)s/%(slug)s' % dict(
+         h1=c_name[0], h2=c_name[1], username=c_name, slug=instance.slug)
+
+def mk_upload_to(field_fn):
+    """upload_to builder for file upload fields"""
+    def upload_to(instance, filename):
+        time_now = int(time())
+        return '%(base)s/%(time_now)s_%(field_fn)s' % dict( 
+            time_now=time_now,
+            base=get_root_for_submission(instance), field_fn=field_fn)
+    return upload_to
+
+def mk_slug_upload_to(field_fn):
+    """upload_to builder for file upload fields, includes slug in filename"""
+    def upload_to(instance, filename):
+        time_now = int(time())
+        return '%(base)s/%(slug)s_%(time_now)s_%(field_fn)s' % dict( 
+            time_now=time_now, slug=instance.slug,
+            base=get_root_for_submission(instance), field_fn=field_fn)
+    return upload_to
+
+def generate_filename_and_delete_previous(ffile, name, before_delete=None):
+    """Generate a new filename for a file upload field; delete the previously
+    uploaded file."""
+
+    new_filename = ffile.field.generate_filename(ffile.instance, name)
+
+    try:
+        # HACK: Speculatively re-fetching the original object makes me feel
+        # wasteful and dirty. But, I can't think of another way to get
+        # to the original field's value. Should be cached, though.
+        # see also - http://code.djangoproject.com/ticket/11663#comment:10
+        orig_instance   = ffile.instance.__class__.objects.get(id=ffile.instance.id)
+        orig_field_file = getattr(orig_instance, ffile.field.name)
+        orig_filename   = orig_field_file.name
+        
+        if orig_filename and new_filename != orig_filename:
+            if before_delete: before_delete(orig_field_file)
+            orig_field_file.delete()
+    except ffile.instance.__class__.DoesNotExist:
+        pass
+
+    return new_filename
+
+
+class ReplacingFieldZipFile(FieldFile):
+
+    def delete(self, save=True):
+        # Delete any unpacked zip file, if found.
+        new_root_dir = self.path.replace('.zip','')
+        if isdir(new_root_dir): 
+            rmtree(new_root_dir)
+        return super(ReplacingFieldZipFile, self).delete(save)
+
     def save(self, name, content, save=True):
-        name = self.field.generate_filename(self.instance, name)
-        self.storage.delete(name)
-        super(OverwritingFieldFile, self).save(name,content,save)
+        new_filename = generate_filename_and_delete_previous(self, name)
+        super(ReplacingFieldZipFile, self).save(new_filename, content, save)
     
 
-class OverwritingFileField(models.FileField):
+class ReplacingZipFileField(models.FileField):
     # TODO:liberate
     """This field causes an uploaded file to replace an existing one on disk."""
-    attr_class = OverwritingFieldFile
+    attr_class = ReplacingFieldZipFile
 
     def __init__(self, *args, **kwargs):
         self.max_upload_size = kwargs.pop("max_upload_size")
-        super(OverwritingFileField, self).__init__(*args, **kwargs)
+        super(ReplacingZipFileField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):        
-        data = super(OverwritingFileField, self).clean(*args, **kwargs)
+        data = super(ReplacingZipFileField, self).clean(*args, **kwargs)
         
         file = data.file
         try:
@@ -201,25 +241,69 @@ class OverwritingFileField(models.FileField):
                 )
         except AttributeError:
             pass        
-            
+
         return data
 
 
-class OverwritingImageFieldFile(ImageFieldFile):
-    # TODO:liberate
-    """The built-in FieldFile alters the filename when saving, if a file with
-    that name already exists. This subclass deletes an existing file first so
-    that an upload will replace it."""
-    def save(self, name, content, save=True):
-        name = self.field.generate_filename(self.instance, name)
-        self.storage.delete(name)
-        super(OverwritingImageFieldFile, self).save(name,content,save)
+class ReplacingImageWithThumbFieldFile(ImageFieldFile):
     
+    def thumbnail_name(self):
+        # HACK: This works, but I'm not proud of it
+        if not self.name: return ''
+        parts = self.name.rsplit('.', 1)
+        return ''.join(( parts[0], '_thumb', '.', parts[1] ))
 
-class OverwritingImageField(models.ImageField):
+    def thumbnail_url(self):
+        if not self.url: return ''
+        # HACK: Use legacy thumbnail URL, if new-style file missing.
+        if not self.storage.exists(self.thumbnail_name()):
+            return self.url.replace('screenshot', 'screenshot_thumb')
+        # HACK: This works, but I'm not proud of it
+        parts = self.url.rsplit('.', 1)
+        return ''.join(( parts[0], '_thumb', '.', parts[1] ))
+
+    def delete(self, save=True):
+        # Delete any associated thumbnail image before deleting primary
+        t_name = self.thumbnail_name()
+        if t_name: 
+            self.storage.delete(t_name)
+        return super(ImageFieldFile, self).delete(save)
+
+    def save(self, name, content, save=True):
+        new_filename = generate_filename_and_delete_previous(self, name)
+        super(ImageFieldFile, self).save(new_filename, content, save)
+
+        # Create associated scaled thumbnail image
+        t_name = self.thumbnail_name()
+        if t_name:
+            thumb_file = scale_image(self.storage.open(new_filename), 
+                    (self.field.thumb_max_width, self.field.thumb_max_height))
+            self.storage.save(t_name, thumb_file)
+
+
+class ReplacingImageWithThumbField(models.ImageField):
     # TODO:liberate
     """This field causes an uploaded file to replace an existing one on disk."""
-    attr_class = OverwritingImageFieldFile
+    attr_class = ReplacingImageWithThumbFieldFile
+
+    def __init__(self, *args, **kwargs):
+        self.full_max_width   = kwargs.pop("full_max_width",  SCREENSHOT_MAXW)
+        self.full_max_height  = kwargs.pop("full_max_width",  SCREENSHOT_MAXH)
+        self.thumb_max_width  = kwargs.pop("thumb_max_width", THUMBNAIL_MAXW)
+        self.thumb_max_height = kwargs.pop("thumb_max_width", THUMBNAIL_MAXH)
+        super(ReplacingImageWithThumbField, self).__init__(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):        
+        data = super(ReplacingImageWithThumbField, self).clean(*args, **kwargs)
+        
+        # Scale the input image down to maximum full size.
+        scaled_file = scale_image(data.file, 
+                (self.full_max_width, self.full_max_height))
+        if not scaled_file:
+            raise ValidationError(_('Cannot process image'))
+        data.file = scaled_file
+
+        return data
 
 
 class SubmissionManager(models.Manager):
@@ -322,36 +406,41 @@ class Submission(models.Model):
             _('select up to 5 tags that describe your demo'),
             max_tags=5)
 
-    screenshot_1 = OverwritingImageField(
+    screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_1.png'), blank=False)
-    screenshot_2 = OverwritingImageField(
+            upload_to=mk_upload_to('screenshot_1.png'), 
+            blank=False)
+    screenshot_2 = ReplacingImageWithThumbField(
             _('Screenshot #2'),
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_2.png'), blank=True)
-    screenshot_3 = OverwritingImageField(
+            upload_to=mk_upload_to('screenshot_2.png'), 
+            blank=True)
+    screenshot_3 = ReplacingImageWithThumbField(
             _('Screenshot #3'),
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_3.png'), blank=True)
-    screenshot_4 = OverwritingImageField(
+            upload_to=mk_upload_to('screenshot_3.png'), 
+            blank=True)
+    screenshot_4 = ReplacingImageWithThumbField(
             _('Screenshot #4'),
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_4.png'), blank=True)
-    screenshot_5 = OverwritingImageField(
+            upload_to=mk_upload_to('screenshot_4.png'), 
+            blank=True)
+    screenshot_5 = ReplacingImageWithThumbField(
             _('Screenshot #5'),
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('screenshot_5.png'), blank=True)
+            upload_to=mk_upload_to('screenshot_5.png'), 
+            blank=True)
 
     video_url = VideoEmbedURLField(
             _("have a video of your demo in action? (optional)"),
             verify_exists=False, blank=True, null=True)
 
-    demo_package = OverwritingFileField(
+    demo_package = ReplacingZipFileField(
             _('select a ZIP file containing your demo'),
             max_upload_size=DEMO_MAX_ZIP_FILESIZE,
             storage=demo_uploads_fs,
-            upload_to=mk_upload_to('demo_package.zip'),
+            upload_to=mk_slug_upload_to('demo_package.zip'),
             blank=False)
 
     source_code_url = models.URLField(
@@ -380,7 +469,6 @@ class Submission(models.Model):
         """Save the submission, updating slug and screenshot thumbnails"""
         self.slug = slugify(self.title)
         super(Submission,self).save()
-        self.update_thumbnails()
 
     def delete(self,using=None):
         root = '%s/%s' % (settings.MEDIA_ROOT, get_root_for_submission(self))
@@ -444,30 +532,10 @@ class Submission(models.Model):
             return True
         return False
 
-    def update_thumbnails(self):
-        """Update thumbnails to accompany full-size screenshots"""
-        for idx in range(1, 6):
-
-            name = 'screenshot_%s' % idx
-            field = getattr(self, name)
-            if not field: continue
-
-            try:
-                # TODO: Only update thumbnail if source image has changed / is newer
-                thumb_name = field.name.replace('screenshot','screenshot_thumb')
-                scaled_file = scale_image(field.file, (THUMBNAIL_MAXW, THUMBNAIL_MAXH))
-                if scaled_file:
-                    field.storage.delete(thumb_name)
-                    field.storage.save(thumb_name, scaled_file)
-            except:
-                # TODO: Had some exceptions here related to scaling that
-                # nonetheless resulted in an updated thumbnail. Investigate further.
-                pass
-
     @classmethod
     def get_valid_demo_zipfile_entries(cls, zf):
         """Filter a ZIP file's entries for only accepted entries"""
-        # TODO: Should we restrict to a certain set of {css,js,html,wot} extensions?
+        # TODO: Move to zip file field?
         return [ x for x in zf.infolist() if 
             not (x.filename.startswith('/') or '/..' in x.filename) and
             not (basename(x.filename).startswith('.')) and
@@ -477,6 +545,7 @@ class Submission(models.Model):
     def validate_demo_zipfile(cls, file):
         """Ensure a given file is a valid ZIP file without disallowed file
         entries and with an HTML index."""
+        # TODO: Move to zip file field?
         try:
             zf = zipfile.ZipFile(file)
         except:
@@ -524,6 +593,7 @@ class Submission(models.Model):
         """Unpack the demo ZIP file into the appropriate directory, filtering
         out any invalid file entries and normalizing demo.html to index.html if
         present."""
+        # TODO: Move to zip file field?
 
         # Derive a directory name from the zip filename, clean up any existing
         # directory before unpacking.
