@@ -37,17 +37,19 @@
     <ul class="tools">
       <li>
         {% set likes = submission.likes.get_total_for_request(request) %}
-        {% if likes > 0 %}
-            <form id="demo-like" action="{{ url('demos_unlike', slug=submission.slug) }}" method="POST">
+        <form id="demo-unlike" target="like_receiver" method="POST"
+            action="{{ url('demos_unlike', slug=submission.slug) }}?iframe=1"
+            style="{{ likes > 0 and ' ' or 'display: none' }}">
                 {{ csrf() }}
                 <button type="submit" class="unlike" title="{{_('You like this demo. Undo?')}}"><span>{{_('You Like')}}</span></button>
-            </form>
-        {% else %}
-            <form id="demo-like" action="{{ url('demos_like', slug=submission.slug) }}" method="POST">
+        </form>
+        <form id="demo-like" target="like_receiver" method="POST" 
+            action="{{ url('demos_like', slug=submission.slug) }}?iframe=1"
+            style="{{ likes > 0 and 'display: none' or ' ' }}">
                 {{ csrf() }}
                 <button type="submit" class="like" title="{{_('Do you like this demo?')}}"><span>{{_('Like It')}}</span></button>
-            </form>
-        {% endif %}
+        </form>
+        <iframe style="display: none" id="like_receiver" name="like_receiver"></iframe>
       </li>
       <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">{{_('Share It')}}</a>
         <ul id="share-opts">
@@ -140,6 +142,21 @@
             'toolbar=0, status=0, resizable=1, width=626, height=436');
         return false;
     });
+  </script>
+
+  <script type="text/javascript">
+      window.handleIFrameEvent = function (name, data) {
+          switch (name) {
+              case 'liked':
+                  $('#demo-unlike').show();
+                  $('#demo-like').hide();
+                  break;
+              case 'unliked':
+                  $('#demo-like').show();
+                  $('#demo-unlike').hide();
+                  break;
+          }
+      };
   </script>
 
 </body>

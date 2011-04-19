@@ -143,6 +143,13 @@ def like(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
     if request.method == "POST":
         submission.likes.increment(request)
+    if request.GET.get('iframe', False):
+        # Use iframe event to update like button display to current state
+        event = ( (submission.likes.get_total_for_request(request) > 0) 
+            and 'liked' or 'unliked' )
+        return jingo.render(request, 'demos/iframe_utils.html', dict(
+            submission=submission, event=event
+        ))
     return HttpResponseRedirect(reverse(
         'demos.views.detail', args=(submission.slug,)))
 
@@ -150,6 +157,13 @@ def unlike(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
     if request.method == "POST":
         submission.likes.decrement(request)
+    if request.GET.get('iframe', False):
+        # Use iframe event to update like button display to current state
+        event = ( (submission.likes.get_total_for_request(request) > 0) 
+            and 'liked' or 'unliked' )
+        return jingo.render(request, 'demos/iframe_utils.html', dict(
+            submission=submission, event=event
+        ))
     return HttpResponseRedirect(reverse(
         'demos.views.detail', args=(submission.slug,)))
 
