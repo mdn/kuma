@@ -205,7 +205,7 @@
         </script>
         
         {% if request.user.is_authenticated() %}
-            <form id="comment-post" class="comment_form" method="POST" action="{{ get_comment_url(submission) }}">
+            <form id="comment-post" class="comment_form" method="POST" action="{{ url('demos_new_comment', slug=submission.slug) }}">
               {{ csrf() }}
               <fieldset>
                   <legend><span>{{_('Add your comment')}}</span></legend>
@@ -391,5 +391,22 @@
           }
       };
   </script>
+
+  {% if last_new_comment_id %}
+      {* This seems kind of hacky but force a scroll to the last comment posted. *}
+      <script type="text/javascript">
+          $('#comments-list').ready(function () {
+            var comment_ele_id = "comment-{{ last_new_comment_id }}";
+            $.scrollTo('#'+comment_ele_id, 1000, { 
+                onAfter: function () {
+                    // FIXME: Seems to negate the effect of the scrolling + offset
+                    setTimeout(function () {
+                        window.location.hash = comment_ele_id;
+                    }, 100);
+                }
+            });
+          });
+      </script>
+  {% endif %}
 
 {% endblock %}

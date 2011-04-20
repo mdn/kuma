@@ -637,7 +637,6 @@ def update_submission_comment_count(sender, instance, **kwargs):
     if isinstance(obj, Submission):
         new_total = ThreadedComment.public.all_for_object(obj).count()  
         Submission.objects.filter(pk=obj.pk).update(comments_total=new_total)
-        Submission.objects.invalidate(obj)
 
 models.signals.post_save.connect(update_submission_comment_count, sender=ThreadedComment)
 models.signals.post_delete.connect(update_submission_comment_count, sender=ThreadedComment)

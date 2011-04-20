@@ -12,6 +12,8 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 from django.contrib.auth.views import AuthenticationForm 
+from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -37,11 +39,13 @@ from contentflagging.forms import ContentFlagForm
 
 import threadedcomments.views
 from threadedcomments.models import ThreadedComment
+from threadedcomments.forms import ThreadedCommentForm
 
 from utils import JingoTemplateLoader
 template_loader = JingoTemplateLoader()
 
 DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 24)
+DEMOS_LAST_NEW_COMMENT_ID = 'demos_last_new_comment_id'
 
 def home(request):
     """Home page."""
@@ -69,12 +73,17 @@ def detail(request, slug):
     if not submission.allows_viewing_by(request.user):
         return HttpResponseForbidden(_('access denied')+'')
 
+    last_new_comment_id = request.session.get(DEMOS_LAST_NEW_COMMENT_ID, None)
+    if last_new_comment_id:
+        del request.session[DEMOS_LAST_NEW_COMMENT_ID]
+
     more_by = Submission.objects.filter(creator=submission.creator)\
             .exclude(hidden=True)\
             .order_by('-modified').all()[:5]
     
     return jingo.render(request, 'demos/detail.html', {
         'submission': submission,
+        'last_new_comment_id': last_new_comment_id,
         'more_by': more_by 
     })
 
@@ -265,6 +274,30 @@ def delete(request, slug):
 
     return jingo.render(request, 'demos/delete.html', { 
         'submission': submission })
+
+@login_required
+def new_comment(request, slug, parent_id=None):
+    """ """
+    submission = get_object_or_404(Submission, slug=slug)
+    model = ThreadedComment
+    form_class = ThreadedCommentForm
+    threadedcomments.views._adjust_max_comment_length(form_class)
+
+    form = form_class(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.ip_address = request.META.get('REMOTE_ADDR', None)
+        new_comment.content_type = ContentType.objects.get_for_model(submission)
+        new_comment.object_id = submission.id
+        new_comment.user = request.user
+        if parent_id:
+            new_comment.parent = get_object_or_404(model, id = int(parent_id))
+        new_comment.save()
+
+        request.session[DEMOS_LAST_NEW_COMMENT_ID] = new_comment.id
+
+    return HttpResponseRedirect(reverse(
+        'demos.views.detail', args=(submission.slug,)))
 
 def delete_comment(request, slug, object_id):
     """Delete a comment on a submission, if permitted."""
