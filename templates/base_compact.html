@@ -15,7 +15,7 @@
     {# TODO: Make this adapt to current section - only Demo Studio uses this compact layout, so far #}
     <nav id="nav">
     {% block headernav_current %}
-      <h2 class="current"><a href="{{ url('demos') }}">{{ _('Demo Studio') }}</a></h2>
+      <h2 class="current"><a href="{{ url('demos') }}">{{ _('Demos') }}</a></h2>
     {% endblock %}
       <div class="menu"><a href="#nav-main" class="toggle" title="Explore other parts of MDN">Explore MDN</a>
         <ul id="nav-main" class="sub-menu" role="navigation">
@@ -23,8 +23,11 @@
           <li id="nav-main-mobile"><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></li>
           <li id="nav-main-addons"><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></li>
           <li id="nav-main-mozilla"><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></li>
-          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Doc Center') }}</a></li>
-          <li id="nav-extra-forums"><a href="/forums">{{ _('Forums') }}</a></li>      
+          {% block headernav_others %}
+          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Docs') }}</a></li>
+          <li id="nav-extra-learning"><a href="/learn">{{ _('Learning') }}</a></li>
+          <li id="nav-extra-forums"><a href="/forums">{{ _('Forums') }}</a></li>
+          {% endblock %}      
         </ul>
       </div>
     </nav>

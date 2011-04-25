@@ -1,0 +1,195 @@
+{% extends "landing/base_learn.html" %}
+
+{% block pageid %}learn-css{% endblock %}
+
+{% block title %}{{ page_title(_('Learn CSS')) }}{% endblock %}
+
+{% block content %}
+<header id="page-head">
+  <div class="wrap">
+    <nav class="crumb"><a href="{{ url('learn') }}">{{ _('Back to Home') }}</a></nav>
+    <h1 class="page-title">{{ _('Learn CSS') }}</h1>
+    {% trans %}
+    <p class="intro">CSS (<strong>Cascading Style Sheets</strong>) ​is a language for describing the appearance of web pages. 
+    To create good-looking web pages, you need to learn CSS in order to define the appearance and location of 
+    the HTML elements within the pages.</p>
+    <p>The links on this page lead to a variety of CSS tutorials and CSS training materials. ​Whether you are 
+    just starting out, learning the basics of CSS, or are an experienced web developer wanting to learn 
+    <strong>CSS3</strong> (the newest version of the standard) and CSS best practices, you can find helpful 
+    resources here.</p>
+    {% endtrans %}
+  </div>
+</header>
+  
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" class="full" role="main">
+    <div id="intro-level" class="learn-module boxed">
+      <h2>{{ _('Introductory Level') }}</h2>
+      <ul class="link-list">
+        <li>
+          <h3 class="title"><a href="{{ devmo_url('/en/CSS/Getting_Started') }}">{{ _('CSS Getting Started') }}</a></h3>
+          <h4 class="source">MDN</h4>
+          <p>{{ _('This tutorial introduces you to Cascading Style Sheets (CSS). It guides you through the basic features of CSS with practical examples that you can try for yourself on your own computer.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://dev.opera.com/articles/view/27-css-basics/" rel="external">{{ _('CSS Basics') }}</a></h3> 
+          <h4 class="source">Dev.Opera</h4>
+          <p>{{ _('What CSS is, how to apply it to HTML, and what basic CSS syntax looks like.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://en.wikiversity.org/wiki/Web_Design/CSS_Classes" rel="external">{{ _('CSS Selector Classes') }}</a></h3>
+          <h4 class="source">Wikiversity</h4>
+          <p>{{ _('What are classes in CSS?') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://en.wikiversity.org/wiki/Web_Design/External_CSS" rel="external">{{ _('External CSS') }}</a></h3>
+          <h4 class="source">Wikiversity</h4>
+          <p>{{ _('Using CSS from an external style sheet.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://www.w3.org/MarkUp/Guide/Style" rel="external">{{ _('Adding a Touch of Style') }}</a></h3>
+          <h4 class="source">W3C</h4>
+          <p>{{ _('A brief beginner’s guide to styling web pages with CSS.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://code.google.com/edu/submissions/html-css-javascript/#css" rel="external">{{ _('CSS From the Ground Up') }}</a></h3>
+          <h4 class="source">Google Code University</h4>
+          <p>{{ _('Video tutorial on styling pages with CSS.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="{{ devmo_url(_('/en/Common_CSS_Questions'))}}">{{ _('Common CSS Questions') }}</a></h3>
+          <h4 class="source">MDN</h4>
+          <p>{{ _('Common questions and answers for beginners.') }}</p>
+        </li>
+      </ul>
+    </div>
+    
+    <div id="inter-level" class="learn-module boxed">
+      <h2>{{ _('Intermediate Level') }}</h2>
+      <ul class="link-list">
+        <li>
+          <h3 class="title"><a href="{{ devmo_url(_('/en/CSS_Reference'))}}">{{ _('CSS Reference') }}</a></h3>
+          <h4 class="source">MDN</h4>
+          <p>{{ _('Complete reference to CSS, with details on support by Firefox and other browsers.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://en.wikiversity.org/wiki/Web_Design/CSS_challenges" rel="external">{{ _('CSS Challenges') }}</a></h3>
+          <h4 class="source">Wikiversity</h4>
+          <p>{{ _('Flex your CSS skills, and see where you need more practice.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://www.html.net/tutorials/css/" rel="external">{{ _('Intermediate CSS Concepts') }}</a></h3>
+          <h4 class="source">HTML.net</h4>
+          <p>{{ _('Grouping, pseudo-classes, and more.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://www.alistapart.com/articles/css-positioning-101/" rel="external">{{ _('CSS Positioning 101') }}</a></h3>
+          <h4 class="source">A List Apart</h4>
+          <p>{{ _('Using positioning for standards-compliant, table-free layout.') }}</p>
+        </li>
+        <li>  
+          <h3 class="title"><a href="http://www.alistapart.com/articles/progressiveenhancementwithcss/" rel="external">{{ _('Progressive Enhancement with CSS') }}</a></h3>
+          <h4 class="source">A List Apart</h4>
+          <p>{{ _('Integrate progressive enhancement into your web pages with CSS.') }}</p>
+        </li>
+        <li>
+          <h3 class="title"><a href="http://www.alistapart.com/articles/fluidgrids/" rel="external">{{ _('Fluid Grids') }}</a></h3>
+          <h4 class="source">A List Apart</h4>
+          <p>{{ _('Design layouts that fluidly resize with the browser window, while still using a typographic grid.') }}</p>
+        </li>
+      </ul>
+    </div>
+    
+    <div id="adv-level" class="learn-module boxed">
+      <h2>{{ _('Advanced Level') }}</h2>
+      <ul class="link-list col1">
+        <li>  
+          <h3 class="title"><a href="http://addyosmani.com/blog/css3-screencast/" rel="external">{{ _('CSS3 in Under 5 Minutes') }}</a> <span class="tag css3" title="{{ _('This site features CSS3') }}">(CSS3)</span></h3>
+          <h4 class="source">Addy Osmani</h4>
+          <p>{{ _('A quick introduction to some of the core features introduced in CSS3.') }}</p>
+        </li>
+        <li>  
+          <h3 class="title"><a href="{{ devmo_url(_('/En/CSS/Using_CSS_transforms'))}}">{{ _('Using CSS Transforms') }}</a> <span class="tag css3" title="{{ _('This site features CSS3') }}">(CSS3)</span></h3>
+          <h4 class="source">MDN</h4>
+          <p>{{ _('Apply rotation, skewing, scaling, and translation using CSS.') }}</p>
+        </li>
+        <li>  
+          <h3 class="title"><a href="{{ devmo_url(_('/en/CSS/CSS_transitions'))}}">{{ _('CSS Transitions') }}</a> <span class="tag css3" title="{{ _('This site features CSS3') }}">(CSS3)</span></h3>
+          <h4 class="source">MDN</h4>
+          <p>{{ _('CSS transitions, part of the draft CSS3 specification, provide a way to animate changes to CSS properties, instead of having the changes take effect instantly.') }}</p>
+        </li>
+      </ul>
+      <ul class="link-list col2">
+        <li>  
+          <h3 class="title"><a href="http://www.alistapart.com/articles/understanding-css3-transitions/" rel="external">{{ _('Understanding CSS3 Transitions') }}</a> <span class="tag css3" title="{{ _('This site features CSS3') }}">(CSS3)</span></h3>
+          <h4 class="source">A List Apart</h4>
+          <p>{{ _('Start using CSS3 transitions by carefully choosing the situations in which to use them.') }}</p>
+        </li>
+        <li> 
+          <h3 class="title"><a href="http://www.html5rocks.com/tutorials/webfonts/quick/" rel="external">{{ _('Quick Guide to Implement Web Fonts with @font-face') }}</a> <span class="tag css3" title="{{ _('This site features CSS3') }}">(CSS3)</span></h3>
+          <h4 class="source">HTML5 Rocks</h4>
+          <p>{{ _('The @font-face feature from CSS3 allows you to use custom typefaces on the web in an accessible, manipulable, and scalable way.') }}</p>
+        </li>
+      </ul>
+    </div>
+
+  </section><!-- /#content-main -->
+
+  <section id="learn-p2pu">
+    {% trans %}
+    <h2>Are you tired of learning CSS on your own?<br> Do you want to join a community of people who are learning CSS and other open web technologies?</h2>
+    <p>Consider signing up for free online peer study groups through <a href="http://p2pu.org/">Peer-to-Peer University's<span title="Peer-to-Peer University"></span></a> <a href="http://p2pu.org/webcraft/course-listing">School of Webcraft</a>. Share your discoveries, struggles, and victories with others who are learning the same things.</p>
+    {% endtrans %}
+    </section>
+
+    <footer id="learn-fineprint">
+      {% trans %}
+      <p>These resources are created by forward-thinking companies and web developers who have embraced open standards and best practices for web development. If you think we've omitted a great resource, please tell us about it in the <a href="https://developer.mozilla.org/forums/viewforum.php?f=4">Open Web Forum</a>. We want to share these resources with our international community, so we prefer ones that provide or allow translations, through an open content license such as <a href="http://creativecommons.org" rel="external">Creative Commons</a>.</p>
+      {% endtrans %}
+    </footer>
+    
+    <div id="css3-popup" class="tag-popup">
+      <div class="bubble">
+        <p>{{ _('This site discusses <strong>CSS3</strong>, latest, still-evolving version of CSS. Many CSS3 features are supported in various ways by modern browsers, but many users still have older browsers and so can’t take advantage.')|safe }}</p>
+        <span></span>
+      </div>
+    </div>
+
+{% block js %}
+<script type="text/javascript">
+// <![CDATA[
+(function($) {
+    $.fn.popup = function(popupElem) {
+        this.removeAttr('title');
+        
+        return this.hover(
+            function onIn() {
+                var self = $(this),
+                    offs = self.offset(),
+                    w = self.outerWidth(),
+                    h = self.outerHeight();
+                $(popupElem)
+                    .offset( { left: (offs.left + w/2), top: (offs.top + h/2) })
+                    .addClass('visible');
+            },
+            function onOut() {
+                $(popupElem).removeClass('visible');
+            }
+        );
+    };
+    
+    $(function() {
+        $('.tag.css3').popup('#css3-popup');
+    });
+})(jQuery);
+    
+// ]]>
+</script>
+{% endblock %}
+
+</div>
+</section>
+
+{% endblock %}
