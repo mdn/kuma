@@ -74,8 +74,9 @@
         </ul>
 
         <ul id="nav-extra" role="navigation">
-          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Doc Center') }}</a></li>
-          <li id="nav-extra-demos"><a href="{{ url('demos') }}">{{ _('Demo Studio') }}</a></li>
+          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Docs') }}</a></li>
+          <li id="nav-extra-demos"><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
+          <li id="nav-extra-learning"><a href="{{ url('learn') }}">{{ _('Learning') }}</a></li>
           <li id="nav-extra-community"><a href="/forums">{{ _('Forums') }}</a></li>
         </ul>
       </nav>
@@ -104,10 +105,10 @@
       <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
       <p id="copyright">&copy; {{ thisyear() }} Mozilla Developer Network</p>
       <p>
-      {% trans copyright_url=devmo_url('/Project:Copyrights') %}
+      {% trans copyright_url=devmo_url(_('/Project:Copyrights')) %}
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
       {% endtrans %}
-      &bull; <a href="{{ devmo_url('/Project:en/About') }}">{{ _('About MDN') }}</a> &bull;
+      &bull; <a href="{{ devmo_url(_('/Project:en/About')) }}">{{ _('About MDN') }}</a> &bull;
       <a href="http://www.mozilla.org/about/policies/privacy-policy.html">Privacy Policy</a> &bull;
       <a href="/forums/viewtopic.php?f=3&amp;t=5">{{ _('Help') }}</a></p>
     </div>
