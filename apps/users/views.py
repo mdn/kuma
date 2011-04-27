@@ -72,9 +72,9 @@ def activate(request, activation_key):
         # Claim anonymous watches belonging to this email
         claim_watches.delay(account)
 
-        my_questions = Question.uncached.filter(creator=account)
+        #my_questions = Question.uncached.filter(creator=account)
         # TODO: remove this after dropping unconfirmed questions.
-        my_questions.update(status=CONFIRMED)
+        #my_questions.update(status=CONFIRMED)
     return jingo.render(request, 'users/activate.html',
                         {'account': account, 'questions': my_questions,
                          'form': form})

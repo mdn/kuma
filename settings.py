@@ -199,7 +199,7 @@ MIDDLEWARE_CLASSES = (
     'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
-    'dekicompat.middleware.DekiUserMiddleware',
+    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
