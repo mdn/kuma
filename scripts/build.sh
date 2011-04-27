@@ -62,7 +62,7 @@ if [[ $2 = 'with-coverage' ]]; then
     coverage run manage.py test -v 2 --noinput --logging-clear-handlers --with-xunit
     coverage xml $(find apps lib -name '*.py')
 else
-    python manage.py test actioncounters contentflagging dekicompat demos devmo -v 2 --noinput --logging-clear-handlers --with-xunit
+    python manage.py test actioncounters contentflagging demos devmo -v 2 --noinput --logging-clear-handlers --with-xunit
 fi
 
 echo 'shazam!'
