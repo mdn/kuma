@@ -130,6 +130,10 @@ file {
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0755;
 
+    "/home/vagrant/logs":
+        ensure => directory,
+        owner => "vagrant", group => "vagrant", mode => 0777;
+
     "/home/vagrant/uploads":
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0777;
@@ -235,7 +239,8 @@ service {
         subscribe => [ 
             Service['iptables'], 
             File["/etc/httpd/conf.d/mozilla-kuma-apache.conf"],
-            File["/vagrant/settings_local.py"]
+            File["/vagrant/settings_local.py"],
+            File["/home/vagrant/logs"]
         ];
     "mysqld": 
         ensure => running, 
