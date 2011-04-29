@@ -42,12 +42,28 @@ try {
 
   <div id="slideshow">
     <ol id="slide-control">
+      <li id="slide1"><a href="#slide-one">{{ _('Aurora') }}</a></li>
       <li id="slide2"><a href="#slide-two">{{ _('School of Webcraft') }}</a></li>
       <li id="slide3"><a href="#slide-three">{{ _('HTML5') }}</a></li>
       <li id="slide4"><a href="#slide-four">{{ _('Firefox 4') }}</a></li>
       <li id="slide5"><a href="#slide-five">{{ _('Addons Builder Preview') }}</a></li>
     </ol>
     <ol id="slides">
+      <li id="slide-two" class="slide">
+        <img src="{{ MEDIA_URL }}img/features/feature-aurora.jpg" alt="" width="660">
+        <div class="slide-desc">
+          <h2>{{ _('Aurora') }}</h2>
+          <p>
+          {% trans %}
+          Experience the very latest features before they go to beta by trying out the
+          new Aurora builds.  Test things out early and help decide what makes it to
+          final release.  Note: Aurora is not for the faint of heart, but that's the
+          price of being on the cutting edge.
+          {% endtrans %}
+          </p>
+          <p class="more"><a href="http://www.mozilla.com/en-US/firefox/channel/" class="button">{{ _('Get Aurora now') }}</a></p>
+        </div>
+      </li>
       <li id="slide-two" class="slide">
         <img src="{{ MEDIA_URL }}img/features/feature-p2pu.jpg" alt="" width="660">
         <div class="slide-desc">
