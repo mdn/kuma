@@ -110,7 +110,7 @@ def submission_listing_cache_key(*args, **kw):
     if ns_key is None:
         ns_key = random.randint(1,10000)
         cache.set(DEMOS_CACHE_NS_KEY, ns_key)
-    return 'demos_%s:%s' % (ns_key, args[0].get_full_path())
+    return 'demos_%s:%s' % (ns_key, hashlib.md5(args[0].get_full_path()).hexdigest())
 
 @register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
 def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url): 
