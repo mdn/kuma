@@ -43,7 +43,7 @@
 
             {% if comment.depth < 4 %}
             <div class="comment-reply">
-                <form method="POST" class="comment_form" action="{{ get_comment_url(object, comment) }}">
+                <form method="POST" class="comment_form" action="{{ url('demos_new_reply', slug=object.slug, parent_id=comment.id) }}">
                     {{ csrf() }}
                     <fieldset>
                         <div><textarea name="comment" rows="6" cols="60"></textarea></div>
