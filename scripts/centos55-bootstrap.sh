@@ -3,9 +3,9 @@
 #
 # Usage: 
 #   export HOST={IP address of your Centos 5.5 host}
-#   ssh root@$HOST 'wget --no-check-certificate -O- https://github.com/lmorchard/kuma/raw/HEAD/scripts/centos55-bootstrap.sh | bash'
+#   ssh root@$HOST 'wget --no-check-certificate -O- https://github.com/mozilla/kuma/raw/HEAD/scripts/centos55-bootstrap.sh | bash'
 
-GIT_REPO_URL="git://github.com/lmorchard/kuma.git"
+GIT_REPO_URL="git://github.com/mozilla/kuma.git"
 
 # Need the EPEL repo right away, for git and puppet
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
