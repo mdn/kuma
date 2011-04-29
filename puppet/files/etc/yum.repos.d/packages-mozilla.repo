@@ -1,7 +1,0 @@
-[moz-package]
-name=Mozilla Package Repo - $basearch
-#baseurl=http://nagios.mozilla.org/mrepo/5Server-$basearch/RPMS.mozilla
-baseurl=http://mrepo.mozilla.org/mrepo/$releasever-$basearch/RPMS.mozilla
-enabled=1
-gpgcheck=0
-
