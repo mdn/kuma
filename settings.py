@@ -204,15 +204,11 @@ MIDDLEWARE_CLASSES = (
 )
 
 # Auth
-#AUTHENTICATION_BACKENDS = (
-#    'users.backends.Sha256Backend',
-#)
-#AUTH_PROFILE_MODULE = 'users.Profile'
-
 AUTHENTICATION_BACKENDS = (
+#    'users.backends.Sha256Backend',
     'dekicompat.backends.DekiUserBackend',
 )
-AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+AUTH_PROFILE_MODULE = 'users.Profile'
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
