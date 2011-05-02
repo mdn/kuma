@@ -31,7 +31,7 @@ ENV_BRANCH = {
 GIT_PULL = "git pull -q origin %(branch)s"
 GIT_SUBMODULE = "git submodule update --init"
 SVN_UP = "svn update"
-COMPILE_PO = "./compile.sh"
+COMPILE_PO = "./compile-mo.sh"
 
 EXEC = 'exec'
 CHDIR = 'chdir'
