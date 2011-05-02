@@ -205,8 +205,8 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-#    'users.backends.Sha256Backend',
-    'dekicompat.backends.DekiUserBackend',
+    'users.backends.Sha256Backend',
+    #    'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'users.Profile'
 
