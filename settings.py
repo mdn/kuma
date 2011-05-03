@@ -165,7 +165,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'sumo.context_processors.for_data',
 
     'devmo.context_processors.i18n',
-    'devmo.context_processors.phpbb_logged_in',
+#    'devmo.context_processors.phpbb_logged_in',
 
     'jingo_minify.helpers.build_ids',
 )
