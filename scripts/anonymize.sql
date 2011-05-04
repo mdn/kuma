@@ -1,7 +1,7 @@
--- Does a quick anonymization of a SUMO database. Note that this does
+-- Does a quick anonymization of a kuma database. Note that this does
 -- not necessarily clear out all confidential information and should
--- not be considered approval to distribute this SUMO database.
--- Talk to jsocol if you have questions.
+-- not be considered approval to distribute this kuma database.
+-- Talk to lcrouch if you have questions.
 
 UPDATE auth_user SET
     email = CONCAT('user',id,'@example.com'),
