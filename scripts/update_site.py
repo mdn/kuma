@@ -7,7 +7,7 @@ assets, migrates the database, and other nifty deployment tasks.
 Options:
   -h, --help            show this help message and exit
   -e ENVIRONMENT, --environment=ENVIRONMENT
-                        Type of environment. One of (prod|dev|stage) Example:
+                        Type of environment. One of (prod|dev|stage|mdn_stage|mdn_prod) Example:
                         update_site.py -e stage
   -v, --verbose         Echo actions before taking them.
 """
@@ -26,6 +26,8 @@ ENV_BRANCH = {
     'dev':   ['base',   'master'],
     'stage': ['master', 'master'],
     'prod':  ['prod',   'master'],
+    'mdn_stage':   ['mdn', 'master'],
+    'mdn_prod':    ['mdn_prod', 'master']
 }
 
 GIT_PULL = "git pull -q origin %(branch)s"
