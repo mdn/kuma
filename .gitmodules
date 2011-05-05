@@ -7,3 +7,6 @@
 [submodule "media/global"]
 	path = media/global
 	url = git://github.com/mozilla/django-moz-header.git
+[submodule "vendor"]
+	path = vendor
+	url = git://github.com/mozilla/kuma-lib.git
