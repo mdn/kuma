@@ -67,6 +67,10 @@ def learn_javascript(request):
     """JavaScript landing page."""
     return jingo.render(request, 'landing/learn_javascript.html')
 
+def promote_buttons(request):
+    """Bug 646192: MDN affiliate buttons"""
+    return jingo.render(request, 'landing/promote_buttons.html')
+
 def common_landing(request, section=None, extra=None):
     """Common code for landing pages."""
     if not section:

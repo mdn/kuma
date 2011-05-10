@@ -1,0 +1,190 @@
+{% extends "landing/base_promote.html" %}
+
+{% block pageid %}promote-buttons{% endblock %}
+
+{% block title %}{{ page_title(_('Promote MDN')) }}{% endblock %}
+
+{% block content %}
+  <header id="page-head">
+    <div class="wrap">
+      {# <nav class="crumb"><a href="{{ url('promote') }}">{{ _('Back to Home') }}</a></nav> #}
+      <h1 class="page-title">{{ _('Promote MDN') }}</h1>
+      {% trans %}
+      <p class="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nulla eros. Morbi ultrices ornare adipiscing. Nam ac justo enim.</p>
+      {% endtrans %}
+    </div> 
+  </header>
+
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" class="full" role="main">
+  
+    <div id="intro-level" class="learn-module boxed">
+        <form>
+            <p>Intro copy. Suspendisse ut nulla eros.</p>
+            <ul id="button-selectors">
+                <li>
+                    <select id="button-design" name="">
+                        <option value="betterdocs" selected>Better Docs</option>
+                        <option value="devpowered">Developer Powered</option>
+                        <option value="bydev">For Developer, By Developers</option>
+                        <option value="devtoolbox">Web Developer Toolbox</option>
+                    </select>
+                </li>
+                <li>
+                    <select id="button-topic" name="">
+                        <option value="css" selected>CSS</option>
+                        <option value="html">HTML</option>
+                        <option value="js">JavaScript</option>
+                        <option value="web">Web</option>
+                    </select>
+                </li>
+                <li>
+                    <select id="button-color" name="">
+                        <option value="gray" selected>Gray</option>
+                        <option value="orange">Orange</option>
+                        <option value="red">Red</option>
+                    </select>
+                </li>
+                <li>
+                    <textarea id="button-code" cols="40" rows="7"></textarea>
+                </li>
+                <li>
+                    <img id="button-image" src="" width="200" height="200" />
+                </li>
+            </ul>
+        </form>
+    </div>
+    
+  </section><!-- /#content-main -->
+
+</div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+// <![CDATA[
+
+function rowsToObjects (col_names, rows) {
+    var items = [];
+    for (var i=0,row; row=rows[i]; i++) {
+        var item = {};
+        for (var j=0,col_name; col_name=col_names[j]; j++) {
+            item[col_name] = row[j];
+        }
+        items.push(item);
+    }
+    return items;
+}
+
+var buttons = rowsToObjects(
+    [ "design","topic","color","url","wt","id","tracked_url" ],
+    [
+        [ "betterdocs","css","gray","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn1","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn1" ],
+        [ "betterdocs","html","gray","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn2","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn2" ],
+        [ "betterdocs","js","gray","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn3","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn3" ],
+        [ "betterdocs","web","gray","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn4","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn4" ],
+        [ "betterdocs","css","orange","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn5","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn5" ],
+        [ "betterdocs","html","orange","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn6","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn6" ],
+        [ "betterdocs","js","orange","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn7","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn7" ],
+        [ "betterdocs","web","orange","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn8","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn8" ],
+        [ "betterdocs","css","red","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn9","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn9" ],
+        [ "betterdocs","html","red","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn10","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn10" ],
+        [ "betterdocs","js","red","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn11","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn11" ],
+        [ "betterdocs","web","red","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn12","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn12" ],
+        [ "devpowered","css","gray","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn13","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn13" ],
+        [ "devpowered","html","gray","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn14","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn14" ],
+        [ "devpowered","js","gray","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn15","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn15" ],
+        [ "devpowered","web","gray","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn16","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn16" ],
+        [ "devpowered","css","orange","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn17","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn17" ],
+        [ "devpowered","html","orange","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn18","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn18" ],
+        [ "devpowered","js","orange","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn19","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn19" ],
+        [ "devpowered","web","orange","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn20","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn20" ],
+        [ "devpowered","css","red","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn21","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn21" ],
+        [ "devpowered","html","red","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn22","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn22" ],
+        [ "devpowered","js","red","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn23","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn23" ],
+        [ "devpowered","web","red","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn24","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn24" ],
+        [ "bydev","css","gray","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn25","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn25" ],
+        [ "bydev","html","gray","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn26","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn26" ],
+        [ "bydev","js","gray","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn27","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn27" ],
+        [ "bydev","web","gray","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn28","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn28" ],
+        [ "bydev","css","orange","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn29","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn29" ],
+        [ "bydev","html","orange","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn30","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn30" ],
+        [ "bydev","js","orange","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn31","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn31" ],
+        [ "bydev","web","orange","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn32","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn32" ],
+        [ "bydev","css","red","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn33","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn33" ],
+        [ "bydev","html","red","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn34","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn34" ],
+        [ "bydev","js","red","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn35","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn35" ],
+        [ "bydev","web","red","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn36","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn36" ],
+        [ "devtoolbox","---","gray","https:\/\/developer.mozilla.org\/web","\/?WT.mc_id=","mdn37","https:\/\/developer.mozilla.org\/web\/?WT.mc_id=mdn37" ],
+        [ "devtoolbox","---","orange","https:\/\/developer.mozilla.org\/web","\/?WT.mc_id=","mdn38","https:\/\/developer.mozilla.org\/web\/?WT.mc_id=mdn38" ],
+        [ "devtoolbox","---","red","https:\/\/developer.mozilla.org\/web","\/?WT.mc_id=","mdn39","https:\/\/developer.mozilla.org\/web\/?WT.mc_id=mdn39" ]
+    ]
+);
+
+(function($) {
+
+    function updateButtonCode (ev) {
+
+        // Build a search spec from current selection state.
+        var spec = {
+            design: $('#button-design').val(),
+            topic:  $('#button-topic').val(),
+            color:  $('#button-color').val()
+        };
+
+        // Search through known combinations for a match
+        var sel = null;
+        for (var i=0,item; item=buttons[i]; i++) {
+            // Be optimistic, assume a match until a column mismatch.
+            var found = true;
+            for (var k in spec) if (spec.hasOwnProperty(k)) {
+                // Accept --- or selector value as column match.
+                if ('---' != item[k] && spec[k] != item[k]) { 
+                    found = false; break;
+                }
+            }
+            // If nothing mismatched, then we have our item.
+            if (found) { sel = item; break; }
+        }
+
+        // Do nothing if, somehow, a valid selection wasn't found.
+        if (!sel) { return; }
+
+        // Enable / disable selectors as appropriate for the current selection.
+        for (k in sel) if (sel.hasOwnProperty(k)) {
+            $('#button-' + k).attr('disabled', 
+                ('---' == sel[k]) ? 'disabled' : '');
+        }
+
+        // Update the button preview image.
+        $('#button-image').attr('src', 'https://bug646192.bugzilla.mozilla.org/attachment.cgi?id=522779');
+
+        // Update the button code.
+        $('#button-code').val([
+            '<a href="' + sel.tracked_url + '">',
+            '<img src="http://media/button_' + sel.id + '.png">' +
+            '</a>'
+        ].join(''));
+
+    }
+
+    // Update the button code on any change to selectors.
+    $('#button-selectors select').change(updateButtonCode);
+    
+    // Do an initial code update on page ready.
+    $(document).ready(function () {
+        updateButtonCode();
+    });
+
+    // Focusing on the code textarea selects all for copypasta
+    $('#button-code').click(function (ev) { $(ev.target).select(); });
+
+})(jQuery);
+
+// ]]>
+</script>
+{% endblock %}
