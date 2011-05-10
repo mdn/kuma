@@ -8,7 +8,7 @@ import commonware.log
 import lockfile
 
 
-log = commonware.log.getLogger('basket')
+log = commonware.log.getLogger('mdn.basket')
 htmlparser = HTMLParser.HTMLParser()
 
 
