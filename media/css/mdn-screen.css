@@ -225,6 +225,7 @@ body.section-mozilla #nav-main-mozilla a, #nav-main .current a.mozilla { backgro
 .compact #nav-main a.addons:hover, .compact #nav-main a.addons:focus, .compact #nav-main a.addons:active { background: #00b6f0; }
 .compact #nav-main a.mozilla:hover, .compact #nav-main a.mozilla:focus, .compact #nav-main a.mozilla:active { background: #ed2024; }
 .compact #nav-main #nav-extra-docs a:hover, .compact #nav-main #nav-extra-docs a:focus, .compact #nav-main #nav-extra-docs a:active,
+.compact #nav-main #nav-extra-demos a:hover, .compact #nav-main #nav-extra-demos a:focus, .compact #nav-main #nav-extra-demos a:active,
 .compact #nav-main #nav-extra-learning a:hover, .compact #nav-main #nav-extra-learning a:focus, .compact #nav-main #nav-extra-learning a:active,
 .compact #nav-main #nav-extra-forums a:hover, .compact #nav-main #nav-extra-forums a:focus, .compact #nav-main #nav-extra-forums a:active { background: #f8d575; color: #000; }
 .compact #nav-extra-docs { border-top: 1px solid #888; }

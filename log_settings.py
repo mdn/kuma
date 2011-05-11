@@ -9,7 +9,7 @@ import celery.log
 
 # Loggers created under the "z" namespace, e.g. "z.caching", will inherit the
 # configuration from the base z logger.
-log = logging.getLogger('k')
+log = logging.getLogger('mdn')
 
 fmt = ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
        ':%%(pathname)s:%%(lineno)s' % settings.SYSLOG_TAG)
@@ -30,7 +30,7 @@ handler.setFormatter(formatter)
 log.addHandler(handler)
 
 if not settings.DEBUG:
-    task_log = logging.getLogger('k.celery')
+    task_log = logging.getLogger('mdn.celery')
     task_proxy = celery.log.LoggingProxy(task_log)
     celery.conf.CELERYD_LOG_FILE = task_proxy
     celery.conf.CELERYD_LOG_COLOR = False

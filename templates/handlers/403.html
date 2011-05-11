@@ -1,0 +1,35 @@
+{% extends "generic.html" %}
+
+{% block title %}{{ page_title(_('Permission Denied')) }}{% endblock %}
+
+{% block h1 %}{{ _('Permission Denied') }}{% endblock %}
+
+{% block main_content %}
+{% if user.username %}
+{% trans name=user.username %}
+<p>I'm sorry {{ name }}, I'm afraid I can't do that.</p>
+{% endtrans %}
+{% else %}
+{% trans name=user.username %}
+<p>I'm sorry, I'm afraid I can't do that.</p>
+{% endtrans %}
+{% endif %}
+<ul>
+    {% if user.username %}
+    {% trans %}
+    <li><a href="/logout">Log out</a> to try again.</li>
+    {% endtrans %}
+    {% else %}
+    {% trans returnto=request.get_full_path() %}
+    <li><a href="/Special:UserLogin?returntotitle={{ returnto }}">Log in</a> to try again.</li>
+    <li><a href="/Special:UserRegistration">Register</a> to edit docs, submit demos, and post to forums.</li>
+    {% endtrans %}
+    {% endif %}
+    {% trans %}
+    <li><a href="/demos">View demos</a> or <a href="/docs">browse docs</a></li>
+    {% endtrans %}
+</ul>
+{% trans %}
+<p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human error. If so, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug</a> for my human operators.</p>
+{% endtrans %}
+{% endblock %}
