@@ -4,11 +4,22 @@
 
 {% block title %}{{ page_title(_('Promote MDN')) }}{% endblock %}
 
+{% block extrahead %}
+<style type="text/css">
+#step-design { float: left; }
+#step-color { display: none; float: left;  clear: left; padding: 0 0.5em 0 0.5em; }
+#step-topic { display: none; float: left; padding: 0 0.5em 0 0.5em; }
+#step-topic label a { display: block }
+#button-preview { display: none; margin-left: 50%; }    
+</style>
+{% endblock %}
+
 {% block content %}
   <header id="page-head">
     <div class="wrap">
       {# <nav class="crumb"><a href="{{ url('promote') }}">{{ _('Back to Home') }}</a></nav> #}
       <h1 class="page-title">{{ _('Promote MDN') }}</h1>
+      <h2 class="page-subtitle">{{ _('Spread some developer love.') }}</h2>
       {% trans %}
       <p class="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nulla eros. Morbi ultrices ornare adipiscing. Nam ac justo enim.</p>
       {% endtrans %}
@@ -20,40 +31,79 @@
 
   <section id="content-main" class="full" role="main">
   
-    <div id="intro-level" class="learn-module boxed">
-        <form>
+    <div id="" class="">
+        <form id="button-builder">
             <p>Intro copy. Suspendisse ut nulla eros.</p>
-            <ul id="button-selectors">
-                <li>
-                    <select id="button-design" name="">
-                        <option value="betterdocs" selected>Better Docs</option>
-                        <option value="devpowered">Developer Powered</option>
-                        <option value="bydev">For Developer, By Developers</option>
-                        <option value="devtoolbox">Web Developer Toolbox</option>
-                    </select>
-                </li>
-                <li>
-                    <select id="button-topic" name="">
-                        <option value="css" selected>CSS</option>
-                        <option value="html">HTML</option>
-                        <option value="js">JavaScript</option>
-                        <option value="web">Web</option>
-                    </select>
-                </li>
-                <li>
-                    <select id="button-color" name="">
-                        <option value="gray" selected>Gray</option>
-                        <option value="orange">Orange</option>
-                        <option value="red">Red</option>
-                    </select>
-                </li>
-                <li>
+
+            <section id="step-design">
+                <h3>{{_('1. Pick your button style')}}</h3>
+                <ul>
+                    <li><input type="radio" name="button-design" value="betterdocs" id="button-design-betterdocs">
+                        <label for="button-design-betterdocs">{{_('Better Docs')}}</label></li>
+                    <li><input type="radio" name="button-design" value="devpowered" id="button-design-devpowered">
+                        <label for="button-design-devpowered">{{_('Developer Powered')}}</label></li>
+                    <li><input type="radio" name="button-design" value="bydev" id="button-design-bydev">
+                        <label for="button-design-bydev">{{_('For Developers, By Developers')}}</label></li>
+                    <li><input type="radio" name="button-design" value="devtoolbox" id="button-design-devtoolbox">
+                        <label for="button-design-devtoolbox">{{_('Web Developer Toolbox')}}</label></li>
+                </ul>
+            </section>
+
+            <section id="step-color">
+                <h3>{{_('2. Choose a color')}}</h3>
+                <ul>
+                    <li><input id="button-color-gray" name="button-color" type="radio" value="gray" />
+                        <label for="button-color-gray">{{_('Gray')}}</label></li>
+                    <li><input id="button-color-orange" name="button-color" type="radio" value="orange" />
+                        <label for="button-color-orange">{{_('Orange')}}</label></li>
+                    <li><input id="button-color-red" name="button-color" type="radio" value="red" />
+                        <label for="button-color-red">{{_('Red')}}</label></li>
+                </ul>
+            </section>
+
+            <section id="step-topic">
+                <h3>{{_('3. Replace <FOO> with')}}</h3>
+                <ul>
+                    <li>
+                        <input id="button-topic-css" name="button-topic" type="radio" value="css" />
+                        <label for="button-topic-css">
+                            <span>{{_('CSS')}}</span>
+                            <a href="http://developer.mozilla.org/docs/css">http://developer.mozilla.org/docs/css</a>
+                        </label>
+                    </li>
+                    <li>
+                        <input id="button-topic-html" name="button-topic" type="radio" value="html" />
+                        <label for="button-topic-html">
+                            <span>{{_('HTML')}}</span>
+                            <a href="http://developer.mozilla.org/docs/html">http://developer.mozilla.org/docs/html</a>
+                        </label>
+                    </li>
+                    <li>
+                        <input id="button-topic-js" name="button-topic" type="radio" value="js" />
+                        <label for="button-topic-js">
+                            <span>{{_('JavaScript')}}</span>
+                            <a href="http://developer.mozilla.org/docs/js">http://developer.mozilla.org/docs/js</a>
+                        </label>
+                    </li>
+                    <li>
+                        <input id="button-topic-web" name="button-topic" type="radio" value="web" />
+                        <label for="button-topic-web">
+                            <span>{{_('Web')}}</span>
+                            <a href="http://developer.mozilla.org/docs/web">http://developer.mozilla.org/docs/web</a>
+                       </label>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="button-preview">
+                <h3>{{_('Your custom button preview:')}}</h3>
+                    <div><img id="button-image" src="" width="200" height="200" /></div>
+                <h4>{{_('And your source code:')}}</h4>
                     <textarea id="button-code" cols="40" rows="7"></textarea>
-                </li>
-                <li>
-                    <img id="button-image" src="" width="200" height="200" />
-                </li>
-            </ul>
+                <h4>{{_('Adding that code will take people to:')}}</h4>
+                    <a id="button-url" href="#">...</a>
+            </section>
+
         </form>
     </div>
     
@@ -131,10 +181,14 @@ var buttons = rowsToObjects(
 
         // Build a search spec from current selection state.
         var spec = {
-            design: $('#button-design').val(),
-            topic:  $('#button-topic').val(),
-            color:  $('#button-color').val()
+            design: $('input:radio[name=button-design]:checked').val(),
+            color:  $('input:radio[name=button-color]:checked').val(),
+            topic:  $('input:radio[name=button-topic]:checked').val()
         };
+
+        // Reveal / hide builder steps only if preceding conditions are met.
+        $('#step-color')[ ( spec['design'] ) ? 'show':'hide' ]();
+        $('#step-topic')[ ( spec['design'] && 'devtoolbox' != spec['design'] && spec['color'] ) ? 'show':'hide' ]();
 
         // Search through known combinations for a match
         var sel = null;
@@ -151,33 +205,41 @@ var buttons = rowsToObjects(
             if (found) { sel = item; break; }
         }
 
+        // Reveal preview only if there's a valid selection.
+        $('#button-preview')[ sel ? 'show':'hide' ]();
+
         // Do nothing if, somehow, a valid selection wasn't found.
         if (!sel) { return; }
-
-        // Enable / disable selectors as appropriate for the current selection.
-        for (k in sel) if (sel.hasOwnProperty(k)) {
-            $('#button-' + k).attr('disabled', 
-                ('---' == sel[k]) ? 'disabled' : '');
-        }
 
         // Update the button preview image.
         $('#button-image').attr('src', 'https://bug646192.bugzilla.mozilla.org/attachment.cgi?id=522779');
 
+        $('#button-url').text(sel.url).attr('href', sel.tracked_url);
+
         // Update the button code.
         $('#button-code').val([
-            '<a href="' + sel.tracked_url + '">',
-            '<img src="http://media/button_' + sel.id + '.png">' +
+            '<a href="', sel.tracked_url, '">',
+            '<img src="http://media/button_', sel.id, '.png" ', 
+                'alt="', $('#button-design-'+sel.design+' + label').text(), '">',
             '</a>'
         ].join(''));
 
     }
 
     // Update the button code on any change to selectors.
-    $('#button-selectors select').change(updateButtonCode);
+    $('#button-builder input:radio').click(updateButtonCode);
+    $('#button-builder select').change(updateButtonCode);
     
     // Do an initial code update on page ready.
     $(document).ready(function () {
         updateButtonCode();
+    });
+
+    // Redirect clicks on topic links to radio selection.
+    $('#step-topic a').click(function () { 
+        $(this).parent().prev().click(); 
+        updateButtonCode();
+        return false; 
     });
 
     // Focusing on the code textarea selects all for copypasta
