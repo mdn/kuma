@@ -7,10 +7,14 @@
 {% block extrahead %}
 <style type="text/css">
 #step-design { float: left; }
+#step-design ul { }
+#step-design ul li { display: inline; }
+#step-design ul li input { display: none; }
+#step-design ul li.selected img { }
 #step-color { display: none; float: left;  clear: left; padding: 0 0.5em 0 0.5em; }
 #step-topic { display: none; float: left; padding: 0 0.5em 0 0.5em; }
 #step-topic label a { display: block }
-#button-preview { display: none; margin-left: 50%; }    
+#button-preview { display: none; margin-left: 66%; }    
 </style>
 {% endblock %}
 
@@ -38,14 +42,30 @@
             <section id="step-design">
                 <h3>{{_('1. Pick your button style')}}</h3>
                 <ul>
-                    <li><input type="radio" name="button-design" value="betterdocs" id="button-design-betterdocs">
-                        <label for="button-design-betterdocs">{{_('Better Docs')}}</label></li>
-                    <li><input type="radio" name="button-design" value="devpowered" id="button-design-devpowered">
-                        <label for="button-design-devpowered">{{_('Developer Powered')}}</label></li>
-                    <li><input type="radio" name="button-design" value="bydev" id="button-design-bydev">
-                        <label for="button-design-bydev">{{_('For Developers, By Developers')}}</label></li>
-                    <li><input type="radio" name="button-design" value="devtoolbox" id="button-design-devtoolbox">
-                        <label for="button-design-devtoolbox">{{_('Web Developer Toolbox')}}</label></li>
+                    <li>
+                        <input type="radio" name="button-design" value="betterdocs" id="button-design-betterdocs">
+                        <label for="button-design-betterdocs">
+                            <img src="{{ MEDIA_URL }}img/promote/betterdocs_foo.png" alt="{{_('Better Docs')}}" />
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="button-design" value="devpowered" id="button-design-devpowered">
+                        <label for="button-design-devpowered">
+                            <img src="{{ MEDIA_URL }}img/promote/devpowered_foo.png" alt="{{_('Developer Powered')}}" />
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="button-design" value="bydev" id="button-design-bydev">
+                        <label for="button-design-bydev">
+                            <img src="{{ MEDIA_URL }}img/promote/bydev_foo.png" alt="{{_('For Developers, By Developers')}}" />
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="button-design" value="devtoolbox" id="button-design-devtoolbox">
+                        <label for="button-design-devtoolbox">
+                            <img src="{{ MEDIA_URL }}img/promote/devtoolbox_foo.png" alt="{{_('Web Developer Toolbox')}}" />
+                        </label>
+                    </li>
                 </ul>
             </section>
 
@@ -97,7 +117,7 @@
 
             <section id="button-preview">
                 <h3>{{_('Your custom button preview:')}}</h3>
-                    <div><img id="button-image" src="" width="200" height="200" /></div>
+                    <div><img id="button-image" src="" width="" height="" /></div>
                 <h4>{{_('And your source code:')}}</h4>
                     <textarea id="button-code" cols="40" rows="7"></textarea>
                 <h4>{{_('Adding that code will take people to:')}}</h4>
@@ -212,15 +232,18 @@ var buttons = rowsToObjects(
         if (!sel) { return; }
 
         // Update the button preview image.
-        $('#button-image').attr('src', 'https://bug646192.bugzilla.mozilla.org/attachment.cgi?id=522779');
+        $('#button-image').attr('src', '{{ MEDIA_URL }}img/promote/promobutton_'+sel.id+'.png');
 
         $('#button-url').text(sel.url).attr('href', sel.tracked_url);
+
+        // var button_label = $('#button-design-'+sel.design+' + label').text();
+        var button_label = $('#button-design-'+sel.design+' + label img').attr('alt');
 
         // Update the button code.
         $('#button-code').val([
             '<a href="', sel.tracked_url, '">',
-            '<img src="http://media/button_', sel.id, '.png" ', 
-                'alt="', $('#button-design-'+sel.design+' + label').text(), '">',
+            '<img src="{{ request.build_absolute_uri(MEDIA_URL) }}img/promote/promobutton_', sel.id, '.png" ', 
+                'alt="', button_label, '">',
             '</a>'
         ].join(''));
 
