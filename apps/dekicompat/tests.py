@@ -23,8 +23,8 @@ class DekiCompatTestCase(TestCase):
     fixtures = ['dekicompat/users',]
     """
 
-    # Don't use settings.DEKIWIKI_ENDPOINT tests always point at stage9...
-    stage_endpoint = 'http://developer-stage9.mozilla.org'
+    # Don't use settings.DEKIWIKI_ENDPOINT tests always point at stage...
+    stage_endpoint = 'http://developer-stage.mozilla.org'
     auth_url = "%s/@api/deki/users/authenticate" % stage_endpoint
     username = 'test6'
     password = 'password'     
