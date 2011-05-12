@@ -24,7 +24,8 @@ pip install -q -r requirements/compiled.txt
 # Create paths we want for addons
 if [ ! -d "$LOCALE" ]; then
     echo "No locale dir?  Cloning..."
-    git clone --recursive git://github.com/fwenzel/mdn-locales.git $LOCALE
+    svn co http://svn.mozilla.org/projects/mdn/trunk/locale $LOCALE
+    #git clone --recursive git://github.com/fwenzel/mdn-locales.git $LOCALE
 fi
 
 if [ ! -d "$VENDOR" ]; then
@@ -34,7 +35,7 @@ fi
 
 # Update the vendor lib.
 echo "Updating vendor..."
-pushd $VENDOR && git pull && git submodule update --init;
+pushd $VENDOR && git pull origin master && git submodule update --init;
 popd
 
 python manage.py update_product_details
