@@ -131,9 +131,10 @@ def profile_detail(request, username):
         deki_user = None
 
     sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.all_sorted(sort_order)\
-            .exclude(hidden=True)\
-            .filter(creator=user)
+    show_hidden = user == request.user
+    queryset = Submission.objects.all_sorted(sort_order).filter(creator=user)
+    if not show_hidden:
+        queryset = queryset.exclude(hidden=True)
     return object_list(request, queryset,
         extra_context=dict( 
             profile_user=user, 

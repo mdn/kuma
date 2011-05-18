@@ -389,7 +389,9 @@ class Submission(models.Model):
             blank=True)
 
     featured = models.BooleanField()
-    hidden = models.BooleanField()
+    hidden = models.BooleanField(
+            _("Hide this demo from others?"), default=True)
+    #censored = models.BooleanField()
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
@@ -513,30 +515,24 @@ class Submission(models.Model):
         return False
 
     def allows_hiding_by(self, user):
-        if user.is_staff or user.is_superuser:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
 
     def allows_viewing_by(self, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        if user == self.creator:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         if not self.hidden:
             return True
         return False
 
     def allows_editing_by(self, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        if user == self.creator:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
 
     def allows_deletion_by(self, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        if user == self.creator:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
 
