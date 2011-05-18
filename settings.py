@@ -181,6 +181,9 @@ MIDDLEWARE_CLASSES = (
     # snapshotted reads where we don't explicitly use the "uncached" manager.
     'django.middleware.transaction.TransactionMiddleware',
 
+    # TODO: devmo and sumo LocaleURLMiddleware - pick one / merge them.
+    'devmo.middleware.LocaleURLMiddleware', 
+
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
     'sumo.middleware.LocaleURLMiddleware',
