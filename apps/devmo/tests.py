@@ -6,7 +6,6 @@ import urllib2
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
-from devmo.middleware import LocaleURLMiddleware
 
 def parse_robots(base_url):
     """ Given a base url, retrieves the robot.txt file and
@@ -96,10 +95,3 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
         req.META['HTTP_ACCEPT_LANGUAGE'] = 'fr'
         prefixer = urlresolvers.Prefixer(req)
         eq_(prefixer.get_language(), 'fr')
-
-class TestDevMoMiddleWare(test_utils.TestCase):
-    def test_locale_process_request(self):
-        req = test_utils.RequestFactory().get('/', {'lang': 'es'})
-        locale_middleware = LocaleURLMiddleware()
-        response = locale_middleware.process_request(req)
-        eq_(response.cookies['lang'].value, 'es')
