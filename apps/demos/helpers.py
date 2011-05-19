@@ -139,11 +139,6 @@ def gravatar(email, size=72, default=None):
     )
     return {'gravatar': {'url': url, 'size': size}}
 
-@register.function
-def urlencode(args):
-    """URL encode a query string from a given dict"""
-    return urllib.urlencode(args)
-
 bitly_api = None
 def _get_bitly_api():
     """Get an instance of the bit.ly API class"""
@@ -347,43 +342,3 @@ def _contextual_locale(context):
     if not localedata.exists(locale):
         locale = settings.LANGUAGE_CODE
     return locale
-
-
-@register.function
-@jinja2.contextfunction
-def datetimeformat(context, value, format='shortdatetime'):
-    """
-    Returns date/time formatted using babel's locale settings. Uses the
-    timezone from settings.py
-    """
-    if not isinstance(value, datetime.datetime):
-        # Expecting date value
-        raise ValueError
-
-    tzinfo = timezone(settings.TIME_ZONE)
-    tzvalue = tzinfo.localize(value)
-    locale = _babel_locale(_contextual_locale(context))
-
-    # If within a day, 24 * 60 * 60 = 86400s
-    if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _lazy(u'Today at %s') % format_time(
-                                    tzvalue, format='short', locale=locale)
-        else:
-            formatted = format_datetime(tzvalue, format='short', locale=locale)
-    elif format == 'longdatetime':
-        formatted = format_datetime(tzvalue, format='long', locale=locale)
-    elif format == 'date':
-        formatted = format_date(tzvalue, locale=locale)
-    elif format == 'time':
-        formatted = format_time(tzvalue, locale=locale)
-    elif format == 'datetime':
-        formatted = format_datetime(tzvalue, locale=locale)
-    else:
-        # Unknown format
-        raise DateTimeFormatError
-
-    return jinja2.Markup('<time datetime="%s">%s</time>' % \
-                         (tzvalue.isoformat(), formatted))
-
