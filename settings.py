@@ -183,7 +183,7 @@ MIDDLEWARE_CLASSES = (
 
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
-    #'sumo.middleware.LocaleURLMiddleware',
+    'sumo.middleware.LocaleURLMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
