@@ -391,7 +391,7 @@ class Submission(models.Model):
     featured = models.BooleanField()
     hidden = models.BooleanField(
             _("Hide this demo from others?"), default=True)
-    #censored = models.BooleanField()
+    censored = models.BooleanField()
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
