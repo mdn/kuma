@@ -46,6 +46,15 @@ CREATE TABLE `actioncounters_actioncounterunique` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `actioncounters_actioncounterunique`
+--
+
+LOCK TABLES `actioncounters_actioncounterunique` WRITE;
+/*!40000 ALTER TABLE `actioncounters_actioncounterunique` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actioncounters_actioncounterunique` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `actioncounters_testmodel`
 --
 
@@ -77,6 +86,15 @@ CREATE TABLE `actioncounters_testmodel` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `actioncounters_testmodel`
+--
+
+LOCK TABLES `actioncounters_testmodel` WRITE;
+/*!40000 ALTER TABLE `actioncounters_testmodel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actioncounters_testmodel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auth_group`
 --
 
@@ -90,6 +108,15 @@ CREATE TABLE `auth_group` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `auth_group_permissions`
@@ -111,6 +138,15 @@ CREATE TABLE `auth_group_permissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auth_message`
 --
 
@@ -128,6 +164,15 @@ CREATE TABLE `auth_message` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `auth_message`
+--
+
+LOCK TABLES `auth_message` WRITE;
+/*!40000 ALTER TABLE `auth_message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auth_permission`
 --
 
@@ -142,8 +187,18 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   KEY `auth_permission_content_type_id_idx` (`content_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (112,'Can add permission',39,'add_permission'),(113,'Can change permission',39,'change_permission'),(114,'Can delete permission',39,'delete_permission'),(115,'Can add group',40,'add_group'),(116,'Can change group',40,'change_group'),(117,'Can delete group',40,'delete_group'),(118,'Can add user',41,'add_user'),(119,'Can change user',41,'change_user'),(120,'Can delete user',41,'delete_user'),(121,'Can add message',42,'add_message'),(122,'Can change message',42,'change_message'),(123,'Can delete message',42,'delete_message'),(124,'Can add content type',43,'add_contenttype'),(125,'Can change content type',43,'change_contenttype'),(126,'Can delete content type',43,'delete_contenttype'),(127,'Can add session',44,'add_session'),(128,'Can change session',44,'change_session'),(129,'Can delete session',44,'delete_session'),(130,'Can add site',45,'add_site'),(131,'Can change site',45,'change_site'),(132,'Can delete site',45,'delete_site'),(133,'Can add log entry',46,'add_logentry'),(134,'Can change log entry',46,'change_logentry'),(135,'Can delete log entry',46,'delete_logentry'),(136,'Can add user profile',47,'add_userprofile'),(137,'Can change user profile',47,'change_userprofile'),(138,'Can delete user profile',47,'delete_userprofile'),(139,'Can add bundle',48,'add_bundle'),(140,'Can change bundle',48,'change_bundle'),(141,'Can delete bundle',48,'delete_bundle'),(142,'Can add feed',49,'add_feed'),(143,'Can change feed',49,'change_feed'),(144,'Can delete feed',49,'delete_feed'),(145,'Can add entry',50,'add_entry'),(146,'Can change entry',50,'change_entry'),(147,'Can delete entry',50,'delete_entry'),(148,'Can add submission',51,'add_submission'),(149,'Can change submission',51,'change_submission'),(150,'Can delete submission',51,'delete_submission'),(151,'Can add tag',52,'add_tag'),(152,'Can change tag',52,'change_tag'),(153,'Can delete tag',52,'delete_tag'),(154,'Can add tagged item',53,'add_taggeditem'),(155,'Can change tagged item',53,'change_taggeditem'),(156,'Can delete tagged item',53,'delete_taggeditem'),(157,'Can add content flag',54,'add_contentflag'),(158,'Can change content flag',54,'change_contentflag'),(159,'Can delete content flag',54,'delete_contentflag'),(160,'Can add test model',55,'add_testmodel'),(161,'Can change test model',55,'change_testmodel'),(162,'Can delete test model',55,'delete_testmodel'),(163,'Can add action counter unique',56,'add_actioncounterunique'),(164,'Can change action counter unique',56,'change_actioncounterunique'),(165,'Can delete action counter unique',56,'delete_actioncounterunique'),(166,'Can add Threaded Comment',57,'add_threadedcomment'),(167,'Can change Threaded Comment',57,'change_threadedcomment'),(168,'Can delete Threaded Comment',57,'delete_threadedcomment'),(169,'Can add Free Threaded Comment',58,'add_freethreadedcomment'),(170,'Can change Free Threaded Comment',58,'change_freethreadedcomment'),(171,'Can delete Free Threaded Comment',58,'delete_freethreadedcomment'),(172,'Can add test model',59,'add_testmodel'),(173,'Can change test model',59,'change_testmodel'),(174,'Can delete test model',59,'delete_testmodel'),(175,'Can add profile',60,'add_profile'),(176,'Can change profile',60,'change_profile'),(177,'Can delete profile',60,'delete_profile'),(178,'Can add registration profile',61,'add_registrationprofile'),(179,'Can change registration profile',61,'change_registrationprofile'),(180,'Can delete registration profile',61,'delete_registrationprofile'),(181,'Can add email change',62,'add_emailchange'),(182,'Can change email change',62,'change_emailchange'),(183,'Can delete email change',62,'delete_emailchange'),(184,'Can add event watch',63,'add_eventwatch'),(185,'Can change event watch',63,'change_eventwatch'),(186,'Can delete event watch',63,'delete_eventwatch'),(187,'Can add watch',64,'add_watch'),(188,'Can change watch',64,'change_watch'),(189,'Can delete watch',64,'delete_watch'),(190,'Can add watch filter',65,'add_watchfilter'),(191,'Can change watch filter',65,'change_watchfilter'),(192,'Can delete watch filter',65,'delete_watchfilter'),(193,'Can add Tag',66,'add_tag'),(194,'Can change Tag',66,'change_tag'),(195,'Can delete Tag',66,'delete_tag'),(196,'Can add Tagged Item',67,'add_taggeditem'),(197,'Can change Tagged Item',67,'change_taggeditem'),(198,'Can delete Tagged Item',67,'delete_taggeditem'),(199,'Can add document',68,'add_document'),(200,'Can change document',68,'change_document'),(201,'Can delete document',68,'delete_document'),(202,'Can add revision',69,'add_revision'),(203,'Can change revision',69,'change_revision'),(204,'Can delete revision',69,'delete_revision'),(205,'Can add firefox version',70,'add_firefoxversion'),(206,'Can change firefox version',70,'change_firefoxversion'),(207,'Can delete firefox version',70,'delete_firefoxversion'),(208,'Can add operating system',71,'add_operatingsystem'),(209,'Can change operating system',71,'change_operatingsystem'),(210,'Can delete operating system',71,'delete_operatingsystem'),(211,'Can add helpful vote',72,'add_helpfulvote'),(212,'Can change helpful vote',72,'change_helpfulvote'),(213,'Can delete helpful vote',72,'delete_helpfulvote'),(214,'Can add related document',73,'add_relateddocument'),(215,'Can change related document',73,'change_relateddocument'),(216,'Can delete related document',73,'delete_relateddocument'),(217,'Can add image',74,'add_image'),(218,'Can change image',74,'change_image'),(219,'Can delete image',74,'delete_image'),(220,'Can add video',75,'add_video'),(221,'Can change video',75,'change_video'),(222,'Can delete video',75,'delete_video');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `auth_user`
@@ -170,6 +225,15 @@ CREATE TABLE `auth_user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auth_user_groups`
 --
 
@@ -189,6 +253,15 @@ CREATE TABLE `auth_user_groups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auth_user_user_permissions`
 --
 
@@ -206,6 +279,15 @@ CREATE TABLE `auth_user_user_permissions` (
   CONSTRAINT `user_id_refs_id_dfbab7d` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `contentflagging_contentflag`
@@ -233,6 +315,15 @@ CREATE TABLE `contentflagging_contentflag` (
   KEY `contentflagging_contentflag_fbfc09f1` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contentflagging_contentflag`
+--
+
+LOCK TABLES `contentflagging_contentflag` WRITE;
+/*!40000 ALTER TABLE `contentflagging_contentflag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contentflagging_contentflag` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `demos_submission`
@@ -280,6 +371,15 @@ CREATE TABLE `demos_submission` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `demos_submission`
+--
+
+LOCK TABLES `demos_submission` WRITE;
+/*!40000 ALTER TABLE `demos_submission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `demos_submission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `django_admin_log`
 --
 
@@ -302,6 +402,15 @@ CREATE TABLE `django_admin_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `django_content_type`
 --
 
@@ -315,8 +424,18 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_label` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (39,'permission','auth','permission'),(40,'group','auth','group'),(41,'user','auth','user'),(42,'message','auth','message'),(43,'content type','contenttypes','contenttype'),(44,'session','sessions','session'),(45,'site','sites','site'),(46,'log entry','admin','logentry'),(47,'user profile','devmo','userprofile'),(48,'bundle','feeder','bundle'),(49,'feed','feeder','feed'),(50,'entry','feeder','entry'),(51,'submission','demos','submission'),(52,'tag','tagging','tag'),(53,'tagged item','tagging','taggeditem'),(54,'content flag','contentflagging','contentflag'),(55,'test model','actioncounters','testmodel'),(56,'action counter unique','actioncounters','actioncounterunique'),(57,'Threaded Comment','threadedcomments','threadedcomment'),(58,'Free Threaded Comment','threadedcomments','freethreadedcomment'),(59,'test model','threadedcomments','testmodel'),(60,'profile','users','profile'),(61,'registration profile','users','registrationprofile'),(62,'email change','users','emailchange'),(63,'event watch','notifications','eventwatch'),(64,'watch','notifications','watch'),(65,'watch filter','notifications','watchfilter'),(66,'Tag','taggit','tag'),(67,'Tagged Item','taggit','taggeditem'),(68,'document','wiki','document'),(69,'revision','wiki','revision'),(70,'firefox version','wiki','firefoxversion'),(71,'operating system','wiki','operatingsystem'),(72,'helpful vote','wiki','helpfulvote'),(73,'related document','wiki','relateddocument'),(74,'image','gallery','image'),(75,'video','gallery','video');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `django_session`
@@ -334,6 +453,15 @@ CREATE TABLE `django_session` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `django_site`
 --
 
@@ -347,7 +475,16 @@ CREATE TABLE `django_site` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-insert into django_site(id,domain,name) values(1,'developer.mozilla.org','developer.mozilla.org');
+
+--
+-- Dumping data for table `django_site`
+--
+
+LOCK TABLES `django_site` WRITE;
+/*!40000 ALTER TABLE `django_site` DISABLE KEYS */;
+INSERT INTO `django_site` VALUES (1,'developer.mozilla.org','developer.mozilla.org');
+/*!40000 ALTER TABLE `django_site` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `feeder_bundle`
@@ -365,6 +502,16 @@ CREATE TABLE `feeder_bundle` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `feeder_bundle`
+--
+
+LOCK TABLES `feeder_bundle` WRITE;
+/*!40000 ALTER TABLE `feeder_bundle` DISABLE KEYS */;
+INSERT INTO `feeder_bundle` VALUES (3,'twitter-addons'),(2,'twitter-mobile'),(4,'twitter-mozilla'),(1,'twitter-web'),(6,'updates-addons'),(7,'updates-mobile'),(5,'updates-mozilla'),(8,'updates-web');
+/*!40000 ALTER TABLE `feeder_bundle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `feeder_bundle_feeds`
 --
 
@@ -380,8 +527,18 @@ CREATE TABLE `feeder_bundle_feeds` (
   KEY `feed_id_refs_id_55f1514b` (`feed_id`),
   CONSTRAINT `bundle_id_refs_id_1a46350d` FOREIGN KEY (`bundle_id`) REFERENCES `feeder_bundle` (`id`),
   CONSTRAINT `feed_id_refs_id_55f1514b` FOREIGN KEY (`feed_id`) REFERENCES `feeder_feed` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feeder_bundle_feeds`
+--
+
+LOCK TABLES `feeder_bundle_feeds` WRITE;
+/*!40000 ALTER TABLE `feeder_bundle_feeds` DISABLE KEYS */;
+INSERT INTO `feeder_bundle_feeds` VALUES (25,1,2),(24,1,3),(26,1,5),(22,2,4),(21,3,7),(23,4,8),(29,5,13),(27,6,10),(28,7,6),(30,8,1);
+/*!40000 ALTER TABLE `feeder_bundle_feeds` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `feeder_entry`
@@ -407,6 +564,15 @@ CREATE TABLE `feeder_entry` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `feeder_entry`
+--
+
+LOCK TABLES `feeder_entry` WRITE;
+/*!40000 ALTER TABLE `feeder_entry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feeder_entry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `feeder_feed`
 --
 
@@ -429,6 +595,16 @@ CREATE TABLE `feeder_feed` (
   UNIQUE KEY `shortname` (`shortname`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feeder_feed`
+--
+
+LOCK TABLES `feeder_feed` WRITE;
+/*!40000 ALTER TABLE `feeder_feed` DISABLE KEYS */;
+INSERT INTO `feeder_feed` VALUES (1,'moz-hacks','','http://hacks.mozilla.org/feed/','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(2,'tw-mozhacks','','http://twitter.com/statuses/user_timeline/45496942.rss','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(3,'tw-mozillaweb','','http://twitter.com/statuses/user_timeline/38209403.rss','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(4,'tw-mozmobile','','http://twitter.com/statuses/user_timeline/67033966.rss','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(5,'tw-mozillaqa','','http://twitter.com/statuses/user_timeline/24752152.rss','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(6,'planet-mobile','','http://planet.firefox.com/mobile/rss20.xml','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(7,'tw-mozamo','','http://twitter.com/statuses/user_timeline/15383463.rss','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(8,'tw-planetmozilla','','http://twitter.com/statuses/user_timeline/39292665.rss','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(9,'moz-hacks-comments','','http://hacks.mozilla.org/comments/feed/','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(10,'amo-blog','','http://blog.mozilla.com/addons/feed/','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(11,'amo-blog-comments','','http://blog.mozilla.com/addons/comments/feed/','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(12,'amo-forums','','https://forums.addons.mozilla.org/feed.php','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(13,'about-mozilla','','http://blog.mozilla.com/about_mozilla/feed/atom/','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28'),(14,'mdc-latest','','https://developer.mozilla.org/@api/deki/site/feed','','2011-03-24 10:00:28',1,'',50,'2011-03-24 10:00:28','2011-03-24 10:00:28');
+/*!40000 ALTER TABLE `feeder_feed` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `gallery_image`
@@ -460,6 +636,15 @@ CREATE TABLE `gallery_image` (
   CONSTRAINT `updated_by_id_refs_id_9add8201` FOREIGN KEY (`updated_by_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gallery_image`
+--
+
+LOCK TABLES `gallery_image` WRITE;
+/*!40000 ALTER TABLE `gallery_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gallery_image` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `gallery_video`
@@ -496,6 +681,15 @@ CREATE TABLE `gallery_video` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `gallery_video`
+--
+
+LOCK TABLES `gallery_video` WRITE;
+/*!40000 ALTER TABLE `gallery_video` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gallery_video` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `notifications_eventwatch`
 --
 
@@ -521,6 +715,15 @@ CREATE TABLE `notifications_eventwatch` (
   CONSTRAINT `content_type_id_refs_id_e49edd32` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notifications_eventwatch`
+--
+
+LOCK TABLES `notifications_eventwatch` WRITE;
+/*!40000 ALTER TABLE `notifications_eventwatch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifications_eventwatch` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `notifications_watch`
@@ -551,6 +754,15 @@ CREATE TABLE `notifications_watch` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `notifications_watch`
+--
+
+LOCK TABLES `notifications_watch` WRITE;
+/*!40000 ALTER TABLE `notifications_watch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifications_watch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `notifications_watchfilter`
 --
 
@@ -570,6 +782,15 @@ CREATE TABLE `notifications_watchfilter` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `notifications_watchfilter`
+--
+
+LOCK TABLES `notifications_watchfilter` WRITE;
+/*!40000 ALTER TABLE `notifications_watchfilter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifications_watchfilter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `schema_version`
 --
 
@@ -580,6 +801,15 @@ CREATE TABLE `schema_version` (
   `version` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schema_version`
+--
+
+LOCK TABLES `schema_version` WRITE;
+/*!40000 ALTER TABLE `schema_version` DISABLE KEYS */;
+/*!40000 ALTER TABLE `schema_version` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tagging_tag`
@@ -595,6 +825,15 @@ CREATE TABLE `tagging_tag` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tagging_tag`
+--
+
+LOCK TABLES `tagging_tag` WRITE;
+/*!40000 ALTER TABLE `tagging_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tagging_tag` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tagging_taggeditem`
@@ -617,6 +856,15 @@ CREATE TABLE `tagging_taggeditem` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `tagging_taggeditem`
+--
+
+LOCK TABLES `tagging_taggeditem` WRITE;
+/*!40000 ALTER TABLE `tagging_taggeditem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tagging_taggeditem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `taggit_tag`
 --
 
@@ -631,6 +879,15 @@ CREATE TABLE `taggit_tag` (
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `taggit_tag`
+--
+
+LOCK TABLES `taggit_tag` WRITE;
+/*!40000 ALTER TABLE `taggit_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `taggit_tag` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `taggit_taggeditem`
@@ -651,6 +908,15 @@ CREATE TABLE `taggit_taggeditem` (
   CONSTRAINT `tag_id_refs_id_c87e3f85` FOREIGN KEY (`tag_id`) REFERENCES `taggit_tag` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `taggit_taggeditem`
+--
+
+LOCK TABLES `taggit_taggeditem` WRITE;
+/*!40000 ALTER TABLE `taggit_taggeditem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `taggit_taggeditem` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `threadedcomments_freethreadedcomment`
@@ -684,6 +950,15 @@ CREATE TABLE `threadedcomments_freethreadedcomment` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `threadedcomments_freethreadedcomment`
+--
+
+LOCK TABLES `threadedcomments_freethreadedcomment` WRITE;
+/*!40000 ALTER TABLE `threadedcomments_freethreadedcomment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `threadedcomments_freethreadedcomment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `threadedcomments_testmodel`
 --
 
@@ -698,6 +973,15 @@ CREATE TABLE `threadedcomments_testmodel` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `threadedcomments_testmodel`
+--
+
+LOCK TABLES `threadedcomments_testmodel` WRITE;
+/*!40000 ALTER TABLE `threadedcomments_testmodel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `threadedcomments_testmodel` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `threadedcomments_threadedcomment`
@@ -731,6 +1015,15 @@ CREATE TABLE `threadedcomments_threadedcomment` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `threadedcomments_threadedcomment`
+--
+
+LOCK TABLES `threadedcomments_threadedcomment` WRITE;
+/*!40000 ALTER TABLE `threadedcomments_threadedcomment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `threadedcomments_threadedcomment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_profiles`
 --
 
@@ -747,6 +1040,15 @@ CREATE TABLE `user_profiles` (
   KEY `user_id_refs_id` (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_profiles`
+--
+
+LOCK TABLES `user_profiles` WRITE;
+/*!40000 ALTER TABLE `user_profiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_profiles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users_emailchange`
@@ -766,6 +1068,15 @@ CREATE TABLE `users_emailchange` (
   CONSTRAINT `user_id_refs_id_7c0fddb0` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_emailchange`
+--
+
+LOCK TABLES `users_emailchange` WRITE;
+/*!40000 ALTER TABLE `users_emailchange` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_emailchange` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users_profile`
@@ -794,6 +1105,15 @@ CREATE TABLE `users_profile` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `users_profile`
+--
+
+LOCK TABLES `users_profile` WRITE;
+/*!40000 ALTER TABLE `users_profile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_profile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users_registrationprofile`
 --
 
@@ -809,6 +1129,15 @@ CREATE TABLE `users_registrationprofile` (
   CONSTRAINT `user_id_refs_id_e9e30776` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_registrationprofile`
+--
+
+LOCK TABLES `users_registrationprofile` WRITE;
+/*!40000 ALTER TABLE `users_registrationprofile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_registrationprofile` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `wiki_document`
@@ -846,6 +1175,15 @@ CREATE TABLE `wiki_document` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `wiki_document`
+--
+
+LOCK TABLES `wiki_document` WRITE;
+/*!40000 ALTER TABLE `wiki_document` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wiki_document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `wiki_firefoxversion`
 --
 
@@ -862,6 +1200,15 @@ CREATE TABLE `wiki_firefoxversion` (
   CONSTRAINT `document_id_refs_id_5d21595b` FOREIGN KEY (`document_id`) REFERENCES `wiki_document` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wiki_firefoxversion`
+--
+
+LOCK TABLES `wiki_firefoxversion` WRITE;
+/*!40000 ALTER TABLE `wiki_firefoxversion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wiki_firefoxversion` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `wiki_helpfulvote`
@@ -889,6 +1236,15 @@ CREATE TABLE `wiki_helpfulvote` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `wiki_helpfulvote`
+--
+
+LOCK TABLES `wiki_helpfulvote` WRITE;
+/*!40000 ALTER TABLE `wiki_helpfulvote` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wiki_helpfulvote` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `wiki_operatingsystem`
 --
 
@@ -905,6 +1261,15 @@ CREATE TABLE `wiki_operatingsystem` (
   CONSTRAINT `document_id_refs_id_e92dd159` FOREIGN KEY (`document_id`) REFERENCES `wiki_document` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wiki_operatingsystem`
+--
+
+LOCK TABLES `wiki_operatingsystem` WRITE;
+/*!40000 ALTER TABLE `wiki_operatingsystem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wiki_operatingsystem` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `wiki_relateddocument`
@@ -925,6 +1290,15 @@ CREATE TABLE `wiki_relateddocument` (
   CONSTRAINT `related_id_refs_id_5206177f` FOREIGN KEY (`related_id`) REFERENCES `wiki_document` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wiki_relateddocument`
+--
+
+LOCK TABLES `wiki_relateddocument` WRITE;
+/*!40000 ALTER TABLE `wiki_relateddocument` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wiki_relateddocument` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `wiki_revision`
@@ -959,6 +1333,15 @@ CREATE TABLE `wiki_revision` (
   CONSTRAINT `reviewer_id_refs_id_4298f2ad` FOREIGN KEY (`reviewer_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wiki_revision`
+--
+
+LOCK TABLES `wiki_revision` WRITE;
+/*!40000 ALTER TABLE `wiki_revision` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wiki_revision` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -969,4 +1352,4 @@ CREATE TABLE `wiki_revision` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-19 15:25:53
+-- Dump completed on 2011-05-19 16:31:59
