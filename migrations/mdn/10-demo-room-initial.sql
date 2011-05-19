@@ -20,7 +20,7 @@ CREATE TABLE `actioncounters_actionhit` (
 -- TODO re-enable  UNIQUE KEY `ip` (`ip`,`session_key`,`user_agent`,`user_id`),
   KEY `actioncounters_actionhit_7952d08b` (`counter_id`),
   KEY `actioncounters_actionhit_fbfc09f1` (`user_id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `contentflagging_contentflag`
@@ -45,7 +45,7 @@ CREATE TABLE `contentflagging_contentflag` (
   KEY `contentflagging_contentflag_68c2f437` (`flag_type`),
   KEY `contentflagging_contentflag_e4470c6e` (`content_type_id`),
   KEY `contentflagging_contentflag_fbfc09f1` (`user_id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `demos_submission`
@@ -77,7 +77,7 @@ CREATE TABLE `demos_submission` (
   UNIQUE KEY `title` (`title`),
   UNIQUE KEY `slug` (`slug`),
   KEY `demos_submission_f97a5119` (`creator_id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `demos_tagdescription`
@@ -90,7 +90,7 @@ CREATE TABLE `demos_tagdescription` (
   `description` longtext NOT NULL,
   PRIMARY KEY (`tag_name`),
   UNIQUE KEY `title` (`title`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `demos_tagdescription`
@@ -133,7 +133,7 @@ CREATE TABLE `tagging_taggeditem` (
   KEY `tagging_taggeditem_3747b463` (`tag_id`),
   KEY `tagging_taggeditem_e4470c6e` (`content_type_id`),
   KEY `tagging_taggeditem_829e37fd` (`object_id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `tagging_tag`
@@ -145,4 +145,4 @@ CREATE TABLE `tagging_tag` (
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
