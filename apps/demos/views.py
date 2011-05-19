@@ -159,9 +159,11 @@ def unlike(request, slug):
 
 def _like_feedback(request, submission, event):
     if request.GET.get('iframe', False):
-        return jingo.render(request, 'demos/iframe_utils.html', dict(
+        response = jingo.render(request, 'demos/iframe_utils.html', dict(
             submission=submission, event=event
         ))
+        response['x-frame-options'] = 'SAMEORIGIN'
+        return response
     return HttpResponseRedirect(reverse(
         'demos.views.detail', args=(submission.slug,)))
 
