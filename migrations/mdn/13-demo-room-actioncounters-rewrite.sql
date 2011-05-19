@@ -24,8 +24,8 @@ CREATE TABLE `actioncounters_actioncounterunique` (
     `user_agent` varchar(255),
     `user_id` integer,
     `modified` datetime
-)
-;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 ALTER TABLE `actioncounters_actioncounterunique` ADD CONSTRAINT `content_type_id_refs_id_a1fb3291` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
 ALTER TABLE `actioncounters_actioncounterunique` ADD CONSTRAINT `user_id_refs_id_b752f625` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 

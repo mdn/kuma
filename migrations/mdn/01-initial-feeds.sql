@@ -5,20 +5,20 @@ CREATE TABLE `auth_permission` (
     `content_type_id` integer NOT NULL,
     `codename` varchar(100) NOT NULL,
     UNIQUE (`content_type_id`, `codename`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 CREATE TABLE `auth_group_permissions` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `group_id` integer NOT NULL,
     `permission_id` integer NOT NULL,
     UNIQUE (`group_id`, `permission_id`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `auth_group_permissions` ADD CONSTRAINT `permission_id_refs_id_5886d21f` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
 CREATE TABLE `auth_group` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `name` varchar(80) NOT NULL UNIQUE
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `auth_group_permissions` ADD CONSTRAINT `group_id_refs_id_3cea63fe` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`);
 CREATE TABLE `auth_user_user_permissions` (
@@ -26,7 +26,7 @@ CREATE TABLE `auth_user_user_permissions` (
     `user_id` integer NOT NULL,
     `permission_id` integer NOT NULL,
     UNIQUE (`user_id`, `permission_id`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `auth_user_user_permissions` ADD CONSTRAINT `permission_id_refs_id_67e79cb` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
 CREATE TABLE `auth_user_groups` (
@@ -34,7 +34,7 @@ CREATE TABLE `auth_user_groups` (
     `user_id` integer NOT NULL,
     `group_id` integer NOT NULL,
     UNIQUE (`user_id`, `group_id`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `auth_user_groups` ADD CONSTRAINT `group_id_refs_id_f116770` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`);
 CREATE TABLE `auth_user` (
@@ -49,7 +49,7 @@ CREATE TABLE `auth_user` (
     `is_superuser` bool NOT NULL,
     `last_login` datetime NOT NULL,
     `date_joined` datetime NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `auth_user_user_permissions` ADD CONSTRAINT `user_id_refs_id_dfbab7d` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 ALTER TABLE `auth_user_groups` ADD CONSTRAINT `user_id_refs_id_7ceef80f` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
@@ -57,7 +57,7 @@ CREATE TABLE `auth_message` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `user_id` integer NOT NULL,
     `message` longtext NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `auth_message` ADD CONSTRAINT `user_id_refs_id_650f49a6` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 -- The following references should be added but depend on non-existent tables:
@@ -70,20 +70,21 @@ CREATE TABLE `django_content_type` (
     `app_label` varchar(100) NOT NULL,
     `model` varchar(100) NOT NULL,
     UNIQUE (`app_label`, `model`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 CREATE TABLE `django_session` (
     `session_key` varchar(40) NOT NULL PRIMARY KEY,
     `session_data` longtext NOT NULL,
     `expire_date` datetime NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 CREATE TABLE `django_site` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `domain` varchar(100) NOT NULL,
     `name` varchar(50) NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
+insert into django_site (id, domain, name) values (1, 'developer.mozilla.org', 'developer.mozilla.org');
 CREATE TABLE `django_admin_log` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `action_time` datetime NOT NULL,
@@ -93,7 +94,7 @@ CREATE TABLE `django_admin_log` (
     `object_repr` varchar(200) NOT NULL,
     `action_flag` smallint UNSIGNED NOT NULL,
     `change_message` longtext NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 -- The following references should be added but depend on non-existent tables:
 -- ALTER TABLE `django_admin_log` ADD CONSTRAINT `content_type_id_refs_id_288599e6` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`);
@@ -112,7 +113,7 @@ CREATE TABLE `actioncounters_actioncounterunique` (
     `user_agent` varchar(255),
     `user_id` integer,
     `modified` datetime NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 -- The following references should be added but depend on non-existent tables:
 -- ALTER TABLE `actioncounters_actioncounterunique` ADD CONSTRAINT `user_id_refs_id_48ad09db` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
@@ -130,7 +131,7 @@ CREATE TABLE `user_profiles` (
     `homepage` varchar(255) NOT NULL,
     `location` varchar(255) NOT NULL,
     `user_id` integer
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 -- The following references should be added but depend on non-existent tables:
 -- ALTER TABLE `user_profiles` ADD CONSTRAINT `user_id_refs_id_69a818e9` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
@@ -140,12 +141,12 @@ CREATE TABLE `feeder_bundle_feeds` (
     `bundle_id` integer NOT NULL,
     `feed_id` integer NOT NULL,
     UNIQUE (`bundle_id`, `feed_id`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 CREATE TABLE `feeder_bundle` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `shortname` varchar(50) NOT NULL UNIQUE
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `feeder_bundle_feeds` ADD CONSTRAINT `bundle_id_refs_id_1a46350d` FOREIGN KEY (`bundle_id`) REFERENCES `feeder_bundle` (`id`);
 CREATE TABLE `feeder_feed` (
@@ -160,7 +161,7 @@ CREATE TABLE `feeder_feed` (
     `keep` integer UNSIGNED NOT NULL,
     `created` datetime NOT NULL,
     `updated` datetime NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `feeder_bundle_feeds` ADD CONSTRAINT `feed_id_refs_id_55f1514b` FOREIGN KEY (`feed_id`) REFERENCES `feeder_feed` (`id`);
 CREATE TABLE `feeder_entry` (
@@ -173,7 +174,7 @@ CREATE TABLE `feeder_entry` (
     `created` datetime NOT NULL,
     `updated` datetime NOT NULL,
     UNIQUE (`feed_id`, `guid`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ;
 ALTER TABLE `feeder_entry` ADD CONSTRAINT `feed_id_refs_id_3323b4e` FOREIGN KEY (`feed_id`) REFERENCES `feeder_feed` (`id`);
 CREATE INDEX `feeder_entry_idx` ON `feeder_entry` (`feed_id`);
