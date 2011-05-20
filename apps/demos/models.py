@@ -311,6 +311,10 @@ class ReplacingImageWithThumbField(models.ImageField):
 class SubmissionManager(models.Manager):
     """Manager for Submission objects"""
 
+    # never show censored submissions
+    def get_query_set(self):
+        return super(SubmissionManager, self).get_query_set().exclude(censored=True)
+
     # TODO: Make these search functions into a mixin?
 
     # See: http://www.julienphalip.com/blog/2008/08/16/adding-search-django-site-snap/
@@ -522,7 +526,7 @@ class Submission(models.Model):
     def allows_viewing_by(self, user):
         if user.is_staff or user.is_superuser or user == self.creator:
             return True
-        if not self.hidden:
+        if not self.hidden and not self.censored:
             return True
         return False
 
