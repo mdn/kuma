@@ -379,6 +379,7 @@ class SubmissionManager(models.Manager):
 class Submission(models.Model):
     """Representation of a demo submission"""
     objects = SubmissionManager()
+    admin_manager = models.Manager()
 
     title = models.CharField(
             _("what is your demo's name?"), 
