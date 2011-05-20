@@ -16,7 +16,7 @@ from feeder.models import Feed, Entry
 from utils import locked
 
 
-log = commonware.log.getLogger('kuma.feeder')
+log = commonware.log.getLogger('mdn.feeder')
 
 
 class Command(NoArgsCommand):
