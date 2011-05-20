@@ -72,8 +72,7 @@ def update_site(env, debug):
         (EXEC,  GIT_PULL % vendor_branch),
         (EXEC,  GIT_SUBMODULE),
         (CHDIR, os.path.join(here)),
-        # kuma can't run all of kitsune's migrations
-        #(EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
+        (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py compress_assets'),
     ]
 
