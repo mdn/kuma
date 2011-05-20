@@ -311,6 +311,10 @@ class ReplacingImageWithThumbField(models.ImageField):
 class SubmissionManager(models.Manager):
     """Manager for Submission objects"""
 
+    # never show censored submissions
+    def get_query_set(self):
+        return super(SubmissionManager, self).get_query_set().exclude(censored=True)
+
     # TODO: Make these search functions into a mixin?
 
     # See: http://www.julienphalip.com/blog/2008/08/16/adding-search-django-site-snap/
@@ -375,6 +379,7 @@ class SubmissionManager(models.Manager):
 class Submission(models.Model):
     """Representation of a demo submission"""
     objects = SubmissionManager()
+    admin_manager = models.Manager()
 
     title = models.CharField(
             _("what is your demo's name?"), 
@@ -389,7 +394,9 @@ class Submission(models.Model):
             blank=True)
 
     featured = models.BooleanField()
-    hidden = models.BooleanField()
+    hidden = models.BooleanField(
+            _("Hide this demo from others?"), default=True)
+    censored = models.BooleanField()
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
@@ -513,30 +520,24 @@ class Submission(models.Model):
         return False
 
     def allows_hiding_by(self, user):
-        if user.is_staff or user.is_superuser:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
 
     def allows_viewing_by(self, user):
-        if user.is_staff or user.is_superuser:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
-        if user == self.creator:
-            return True
-        if not self.hidden:
+        if not self.hidden and not self.censored:
             return True
         return False
 
     def allows_editing_by(self, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        if user == self.creator:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
 
     def allows_deletion_by(self, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        if user == self.creator:
+        if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
 
