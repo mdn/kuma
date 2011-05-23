@@ -196,7 +196,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
-    'twitter.middleware.SessionMiddleware',
+    #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
     #'dekicompat.middleware.DekiUserMiddleware',
