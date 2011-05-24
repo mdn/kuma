@@ -35,7 +35,7 @@ fi
 
 # Update the vendor lib.
 echo "Updating vendor..."
-pushd $VENDOR && git pull origin master && git submodule update --init;
+pushd $VENDOR && git pull origin master && git submodule sync && git submodule update --init;
 popd
 
 python manage.py update_product_details
