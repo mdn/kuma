@@ -1,4 +1,4 @@
--e svn+http://code.djangoproject.com/svn/django/trunk@13302#egg=Django
+-e git://github.com/django/django@b8ac1085#egg=django
 
 GitPython==0.1.7
 python-memcached==1.45
