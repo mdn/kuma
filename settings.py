@@ -289,6 +289,9 @@ INSTALLED_APPS = (
     # testing.
     'django_nose',
     'test_utils',
+
+    # migrations
+    'south',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
@@ -695,3 +698,6 @@ BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
 DEMO_UPLOADS_ROOT = path('media/uploads/demos')
 # Base URL from where files uploaded for demos will be linked and served
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
+
+SOUTH_TESTS_MIGRATE = False
+SKIP_SOUTH_TESTS = True

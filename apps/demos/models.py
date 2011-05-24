@@ -34,6 +34,8 @@ from django.template.defaultfilters import slugify, filesizeformat
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 
+import south.modelsinspector
+
 import tagging
 import tagging.fields
 import tagging.models
@@ -158,6 +160,16 @@ class ConstrainedTagField(tagging.fields.TagField):
         defaults.update(kwargs)
         return super(ConstrainedTagField, self).formfield(**defaults)
 
+south.modelsinspector.add_introspection_rules([
+    (
+        [ ConstrainedTagField ],
+        [ ],
+        {
+            'max_tags': ['max_tags', {'default':5}],
+        },
+    )
+], ["^demos.models.ConstrainedTagField"])
+
 
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
@@ -246,6 +258,16 @@ class ReplacingZipFileField(models.FileField):
 
         return data
 
+south.modelsinspector.add_introspection_rules([
+    (
+        [ ReplacingZipFileField ],
+        [ ],
+        {
+            'max_upload_size': ['max_upload_size', {'default':5}],
+        },
+    )
+], ["^demos.models.ReplacingZipFileField"])
+
 
 class ReplacingImageWithThumbFieldFile(ImageFieldFile):
     
@@ -290,9 +312,9 @@ class ReplacingImageWithThumbField(models.ImageField):
 
     def __init__(self, *args, **kwargs):
         self.full_max_width   = kwargs.pop("full_max_width",  SCREENSHOT_MAXW)
-        self.full_max_height  = kwargs.pop("full_max_width",  SCREENSHOT_MAXH)
+        self.full_max_height  = kwargs.pop("full_max_height",  SCREENSHOT_MAXH)
         self.thumb_max_width  = kwargs.pop("thumb_max_width", THUMBNAIL_MAXW)
-        self.thumb_max_height = kwargs.pop("thumb_max_width", THUMBNAIL_MAXH)
+        self.thumb_max_height = kwargs.pop("thumb_max_height", THUMBNAIL_MAXH)
         super(ReplacingImageWithThumbField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):        
@@ -306,6 +328,19 @@ class ReplacingImageWithThumbField(models.ImageField):
         data.file = scaled_file
 
         return data
+
+south.modelsinspector.add_introspection_rules([
+    (
+        [ ReplacingImageWithThumbField ],
+        [ ],
+        {
+            'full_max_width': ['full_max_width', {'default':SCREENSHOT_MAXW}],
+            'full_max_width': ['full_max_height', {'default':SCREENSHOT_MAXH}],
+            'full_max_width': ['full_max_width', {'default':THUMBNAIL_MAXW}],
+            'full_max_width': ['thumb_max_height', {'default':THUMBNAIL_MAXH}],
+        },
+    )
+], ["^demos.models.ReplacingImageWithThumbField"])
 
 
 class SubmissionManager(models.Manager):

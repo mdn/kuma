@@ -8,6 +8,7 @@ celery==2.1.4
 python-dateutil==1.5
 django-taggit==0.8.0
 pytz
+South==0.7.3
 
 # Feeds and cron jobs
 feedparser==4.1
