@@ -791,27 +791,6 @@ LOCK TABLES `notifications_watchfilter` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `schema_version`
---
-
-DROP TABLE IF EXISTS `schema_version`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `schema_version` (
-  `version` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `schema_version`
---
-
-LOCK TABLES `schema_version` WRITE;
-/*!40000 ALTER TABLE `schema_version` DISABLE KEYS */;
-/*!40000 ALTER TABLE `schema_version` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tagging_tag`
 --
 
