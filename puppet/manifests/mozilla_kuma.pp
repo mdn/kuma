@@ -138,6 +138,14 @@ file {
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0777;
     
+    "/home/vagrant/product_details_json":
+        ensure => directory,
+        owner => "vagrant", group => "vagrant", mode => 0777;
+    
+    "/home/vagrant/mdc_pages":
+        ensure => directory,
+        owner => "vagrant", group => "vagrant", mode => 0777;
+    
     "/vagrant/settings_local.py":
         ensure => file,
         source => "/vagrant/puppet/files/vagrant/settings_local.py";
@@ -268,15 +276,10 @@ service {
 }
 
 exec { 
-    "vendor_lib_git_clone":
-        command => "/usr/bin/git clone git://github.com/mozilla/kuma-lib.git vendor",
-        cwd => "/home/vagrant",
-        creates => "/home/vagrant/vendor",
-        require => [ Package['git'] ];
     "vendor_lib_git_submodule_update":
         command => "/usr/bin/git submodule update --init --recursive",
-        cwd => "/home/vagrant/vendor",
-        creates => "/home/vagrant/vendor/src/django/README",
+        cwd => "/vagrant",
+        creates => "/vagrant/vendor/src/django/README",
         require => [ Exec["vendor_lib_git_clone"] ];
     "svn_co_deki_mozilla":
         command => "/usr/bin/svn co http://svn.mozilla.org/projects/deki/trunk/mozilla/",
@@ -334,7 +337,8 @@ exec {
     "kuma_update_product_details":
         cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_product_details",
         require => [
-            Exec["kuma_syncdb"]
+            Exec["kuma_syncdb"],
+            File["/home/vagrant/product_details_json"]
         ];
     "kuma_update_feeds":
         cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_feeds",

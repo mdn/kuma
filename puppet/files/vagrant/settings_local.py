@@ -8,6 +8,9 @@ SERVE_MEDIA = DEBUG
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
 DEMO_UPLOADS_URL = '/uploads/demos/'
 
+PROD_DETAILS_DIR = '/home/vagrant/product_details_json'
+MDC_PAGES_DIR    = '/home/vagrant/mdc_pages'
+
 DEKIWIKI_ENDPOINT = "http://localhost/"
 
 RECAPTCHA_USE_SSL = False
