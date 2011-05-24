@@ -113,8 +113,8 @@ TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 
-PROD_DETAILS_DIR = path('lib/product_details_json')
-MDC_PAGES_DIR = path('lib/mdc_pages')
+PROD_DETAILS_DIR = path('../product_details_json')
+MDC_PAGES_DIR = path('../mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
