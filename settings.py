@@ -274,7 +274,7 @@ INSTALLED_APPS = (
     'notifications',
     #'questions',
     #'kadmin',
-    #'taggit',
+    'taggit',
     #'flagit',
     #'upload',
     'wiki',
