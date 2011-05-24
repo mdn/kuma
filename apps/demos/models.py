@@ -44,6 +44,8 @@ from tagging.utils import parse_tag_input
 from tagging.fields import TagField
 from tagging.models import Tag
 
+from taggit.managers import TaggableManager
+
 from threadedcomments.models import ThreadedComment, FreeThreadedComment
 
 from actioncounters.fields import ActionCounterField
@@ -449,6 +451,8 @@ class Submission(models.Model):
     tags = ConstrainedTagField(
             _('select up to 5 tags that describe your demo'),
             max_tags=5)
+
+    taggit_tags = TaggableManager()
 
     screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
