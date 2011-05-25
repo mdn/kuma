@@ -34,7 +34,7 @@ from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
 from . import DEMOS_CACHE_NS_KEY
 
-from contentflagging.models import ContentFlag
+from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from contentflagging.forms import ContentFlagForm
 
 import threadedcomments.views
@@ -175,14 +175,22 @@ def flag(request, slug):
     else:
         form = ContentFlagForm(request.POST, request.FILES)
         if form.is_valid():
+            flag_type=form.cleaned_data['flag_type']
+            recipients = None
+            if flag_type in FLAG_NOTIFICATIONS and FLAG_NOTIFICATIONS[flag_type]:
+                recipients = [profile.user.email for profile in UserProfile.objects.filter(content_flagging_email=True)]
             flag, created = ContentFlag.objects.flag(request=request, object=submission,
-                    flag_type=form.cleaned_data['flag_type'],
-                    explanation=form.cleaned_data['explanation'])
+                    flag_type=flag_type,
+                    explanation=form.cleaned_data['explanation'],
+                    recipients=recipients)
             return HttpResponseRedirect(reverse(
                 'demos.views.detail', args=(submission.slug,)))
 
-    return jingo.render(request, 'demos/flag.html', {
+    #TODO liberate?
+    response = jingo.render(request, 'demos/flag.html', {
         'form': form, 'submission': submission })
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 def download(request, slug):
     """Demo download with action counting"""

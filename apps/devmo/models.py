@@ -19,10 +19,10 @@ class UserProfile(ModelBase):
     Want to track some data that isn't in dekiwiki's db?
     This is the proper grab bag for user profile info.
 
-    Also, dekicompat middleware and backends use this 
+    Also, dekicompat middleware and backends use this
     class to find Django user objects.
 
-    The UserProfile *must* exist for each 
+    The UserProfile *must* exist for each
     django.contrib.auth.models.User object. This may be relaxed
     once Dekiwiki isn't the definitive db for user info.
     """
@@ -37,8 +37,10 @@ class UserProfile(ModelBase):
                                             'http://example.com/my_page.')})
     # Duplicates phpBB's location field, but it's days are numbered
     location = models.CharField(max_length=255, default='', blank=True)
+    # should this user receive contentflagging emails?
+    content_flagging_email = models.BooleanField(default=False)
     user = models.ForeignKey(DjangoUser, null=True, editable=False, blank=True)
-    
+
     class Meta:
         db_table = 'user_profiles'
 
