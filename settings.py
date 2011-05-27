@@ -699,5 +699,13 @@ DEMO_UPLOADS_ROOT = path('media/uploads/demos')
 # Base URL from where files uploaded for demos will be linked and served
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
 
+# Make sure South stays out of the way during testing
 SOUTH_TESTS_MIGRATE = False
 SKIP_SOUTH_TESTS = True
+
+# Provide migrations for third-party vendor apps
+# TODO: Move migrations for our apps here, rather than living with the app?
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'migrations.south.taggit',
+}
+
