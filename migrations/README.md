@@ -1,18 +1,38 @@
 Migration Notes
 ===============
 
-This project is in transition between [Schematic][1] and [South][2] migrations.
+This project is in transition from [Schematic][1] to [South][2] migrations.
 
-The main thing to keep in mind about this is that any SQL migrations you write
+The main thing to keep in mind is this: Any SQL migrations you write
 for Schematic should steer clear of any tables of apps managed by South. 
+
+If you know what you're doing, you can break this rule, but there is no guard
+on the table saw. If you do the wrong thing, you may break auto-update on
+staging or make a bad day for a contributor.
 
 Someday, this README might contain more useful information.
 
 [1]: https://github.com/jbalogh/schematic/
 [2]: http://south.aeracode.org/
 
-How to run migrations
----------------------
+South-managed apps and DB tables
+--------------------------------
+
+* demos
+    * demos_submission
+* taggit
+    * taggit_tag
+    * taggit_taggeditem
+
+These are apps managed by South. Do not create Schematic SQL migrations that
+touch these tables, unless you're very sure about what you're doing and can
+keep from breaking South migrations.
+
+If you convert an app over to South, add it and its tables here, for great
+justice.
+
+How to run the migrations
+-------------------------
 
 Order is important. Run Schematic before South, just in case the SQL migrations
 have fixes that preempt South:
@@ -20,18 +40,17 @@ have fixes that preempt South:
     python2.6 vendor/src/schematic/schematic migrations
     python2.6 manage.py migrate
 
-South-managed apps and DB tables
---------------------------------
+Where are the migrations?
+-------------------------
 
-These are apps managed by South. Do not create Schematic SQL migrations that
-touch these tables, unless you're very sure about what you're doing and can
-keep from breaking South migrations.
+All Schematic migrations are plain text SQL files under `migrations`, run in
+numerical order by prefix.
 
-* demos
-    * demos_submission
-* taggit
-    * taggit_tag
-    * taggit_taggeditem
+All South migrations are python modules under `migrations/south/` and are
+activated by adding them to `SOUTH_MIGRATION_MODULES` in `settings.py`. See
+[the South docs][south_migration_modules] about this.
+
+[south_migration_modules]: http://south.aeracode.org/docs/settings.html#setting-south-migration-modules
 
 How to not break South migrations
 ---------------------------------
