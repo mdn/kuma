@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     (r'^demos/', include('demos.urls')),
 
     # Django admin:
+    (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
     #(r'^search', include('search.urls')),

@@ -260,6 +260,7 @@ INSTALLED_APPS = (
     'jingo_minify',
     'product_details',
     'tower',
+    'smuggler',
 
     # SUMO
     #'users',
