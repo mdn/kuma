@@ -3,8 +3,10 @@ Migration Notes
 
 This project is in transition from [Schematic][1] to [South][2] migrations.
 
-The main thing to keep in mind is this: Any SQL migrations you write
-for Schematic should steer clear of any tables of apps managed by South. 
+The main thing to keep in mind is this: 
+
+* Any SQL migrations you write for Schematic should steer clear of any tables
+    of apps managed by South. 
 
 If you know what you're doing, you can break this rule, but there is no guard
 on the table saw. If you do the wrong thing, you may break auto-update on
@@ -46,8 +48,12 @@ Where are the migrations?
 All Schematic migrations are plain text SQL files under `migrations`, run in
 numerical order by prefix.
 
-All South migrations are python modules under `migrations/south/` and are
-activated by adding them to `SOUTH_MIGRATION_MODULES` in `settings.py`. See
+South migrations for first-party, non-vendor apps are in a `migrations`
+subdirectory. For example, check out `apps/demos/migrations`.
+
+South migrations for third-party apps under `vendor/` are found in python
+modules under `migrations/south/` and are activated by adding them to
+`SOUTH_MIGRATION_MODULES` in `settings.py`. See 
 [the South docs][south_migration_modules] about this.
 
 [south_migration_modules]: http://south.aeracode.org/docs/settings.html#setting-south-migration-modules
