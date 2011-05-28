@@ -30,8 +30,10 @@ These are apps managed by South. Do not create Schematic SQL migrations that
 touch these tables, unless you're very sure about what you're doing and can
 keep from breaking South migrations.
 
-If you convert an app over to South, add it and its tables here, for great
-justice.
+If you [convert an app over to South][south_convert], add it and its tables
+here, for great justice.
+
+[south_convert]: http://south.aeracode.org/docs/convertinganapp.html#converting-an-app
 
 How to run the migrations
 -------------------------
@@ -64,17 +66,17 @@ How to not break South migrations
 * Ensure your SQL migrations don't contain anything that will cause an error if
     South tries doing the same thing again. (eg. table creation, etc)
 
-* Converting apps over to South migrations.
+* [Converting apps over to South][south_convert]
     * Mozilla staging auto-update does not ever run `manage.py migrate --fake`
-    * So, South will try to run the 0001_initial migration, which will break
+    * So, South will try to run the `0001_initial` migration, which will break
         when it tries to create tables that already exist.
     * To prevent that, commit a SQL migration that inserts a row into
         `south_migrationhistory` that tricks South into thinking that the initial
         migration has already been run.
-    * [An example SQL migration][southfix]
+    * [An example SQL migration][south_fix]
 
 * In general, if you must use a schematic migration, and it would conflict with
     a South migration, insert a row into `south_migrationhistory` to make South
     skip the migration.
 
-[southfix]: https://github.com/mozilla/kuma/blob/mdn/migrations/06-taggit-convert-to-south.sql
+[south_fix]: https://github.com/mozilla/kuma/blob/mdn/migrations/06-taggit-convert-to-south.sql
