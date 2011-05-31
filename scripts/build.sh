@@ -38,6 +38,9 @@ echo "Updating vendor..."
 pushd $VENDOR && git pull origin master && git submodule sync && git submodule update --init;
 popd
 
+if [ ! -d "$WORKSPACE/../product_details_json" ]; then
+    mkdir $WORKSPACE/../product_details_json
+fi
 python manage.py update_product_details
 
 cat > settings_local.py <<SETTINGS
