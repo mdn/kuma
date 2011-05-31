@@ -6,6 +6,8 @@ from django.db import models
 
 from tagging.utils import parse_tag_input
 from taggit.utils import edit_string_for_tags
+from taggit.models import TaggedItem, GenericTaggedItemBase
+from taggit.managers import _TaggableManager
 
 class Migration(DataMigration):
 
@@ -20,7 +22,9 @@ class Migration(DataMigration):
         "Convert from django-tagging tags to tech:* tags under django-taggit"
         for demo in orm.Submission.objects.all():
             tags = parse_tag_input(demo.tags)
-            demo.taggit_tags.set(*(
+            # HACK: South gets confused by taggit_tags field, so we have to conjure it up here
+            taggit_tags = _TaggableManager(through=TaggedItem, model=orm.Submission, instance=demo)
+            taggit_tags.set(*(
                 'tech:%s' % ( x )
                 for x in tags
                 if x in self.KNOWN_TECH_TAGS
@@ -32,13 +36,15 @@ class Migration(DataMigration):
     def backwards(self, orm):
         "Convert back from tech:* tags under django-taggit to django-tagging tags"
         for demo in orm.Submission.objects.all():
+            # HACK: South gets confused by taggit_tags field, so we have to conjure it up here
+            taggit_tags = _TaggableManager(through=TaggedItem, model=orm.Submission, instance=demo)
             demo.tags = ' '.join(
                 x.name.replace('tech:', '')
-                for x in demo.taggit_tags.all()
+                for x in taggit_tags.all()
                 if (x.name.startswith('tech:'))
             )
             # Could destroy the data, but why bother?
-            # demo.taggit_tags.clear()
+            # taggit_tags.clear()
             demo.save()
 
     models = {
@@ -105,7 +111,6 @@ class Migration(DataMigration):
             'source_code_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'summary': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'tags': ('demos.models.ConstrainedTagField', [], {}),
-            'taggit_tags': ('taggit.managers.TaggableManager', [], {}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         }

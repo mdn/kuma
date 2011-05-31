@@ -32,9 +32,7 @@ from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify, filesizeformat
 
 from django.contrib.sites.models import Site
-from django.contrib.auth.models import User
-
-import south.modelsinspector
+from django.contrib.auth.models import User, AnonymousUser
 
 import tagging
 import tagging.fields
@@ -45,6 +43,10 @@ from tagging.fields import TagField
 from tagging.models import Tag
 
 from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
+import south.modelsinspector
+south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
 from threadedcomments.models import ThreadedComment, FreeThreadedComment
 
@@ -69,6 +71,11 @@ THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
 
 DEMO_MAX_ZIP_FILESIZE = getattr(settings, 'DEMO_MAX_ZIP_FILESIZE', 60 * 1024 * 1024) # 60MB
 DEMO_MAX_FILESIZE_IN_ZIP = getattr(settings, 'DEMO_MAX_FILESIZE_IN_ZIP', 60 * 1024 * 1024) # 60MB
+
+# These are tag namespaces whitelisted for demo creators
+TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
+    'tech:', 'challenge:'
+])
 
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
@@ -129,7 +136,6 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
     'text/x-php',
 ])
 
-
 class ConstrainedTagField(tagging.fields.TagField):
     """Tag field constrained to described tags"""
 
@@ -171,7 +177,6 @@ south.modelsinspector.add_introspection_rules([
         },
     )
 ], ["^demos.models.ConstrainedTagField"])
-
 
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
@@ -432,7 +437,7 @@ class Submission(models.Model):
 
     featured = models.BooleanField()
     hidden = models.BooleanField(
-            _("Hide this demo from others?"), default=True)
+            _("Hide this demo from others?"), default=False)
     censored = models.BooleanField()
 
     navbar_optout = models.BooleanField(
@@ -451,7 +456,7 @@ class Submission(models.Model):
     tags = ConstrainedTagField(
             _('select up to 5 tags that describe your demo'),
             max_tags=5)
-
+    
     taggit_tags = TaggableManager()
 
     screenshot_1 = ReplacingImageWithThumbField(
@@ -579,6 +584,59 @@ class Submission(models.Model):
         if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    def allows_tag_namespace_for(self, ns, user):
+        """Decide whether a tag namespace is editable by a user"""
+        if user.is_staff or user.is_superuser:
+            # Staff / superuser can manage any tag namespace
+            return True
+        if user == self.creator and ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
+            # Creator can manage whitelisted namespaces
+            return True
+        return False
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    @classmethod
+    def parse_tag_namespaces(cls, tag_list):
+        """Parse a list of tags out into a dict of lists by namespace"""
+        namespaces = { }
+        for tag in tag_list:
+            ns = (':' in tag) and ('%s:' % tag.rsplit(':', 1)[0]) or ''
+            if ns not in namespaces: namespaces[ns] = []
+            namespaces[ns].append(tag)
+        return namespaces
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    def resolve_allowed_tags(self, tags_curr, tags_new, request_user=AnonymousUser):
+        """Given a new set of tags and a user, build a list of allowed new tags
+        with changes accepted only for namespaces where editing is allowed for
+        the user. For disallowed namespaces, this object's current tag set will
+        be imposed.
+        
+        No changes are made; the new tag list is just returned.
+        """
+        # Produce namespaced sets of current and incoming new tags.
+        ns_tags_curr = self.parse_tag_namespaces(tags_curr)
+        ns_tags_new  = self.parse_tag_namespaces(tags_new)
+
+        # Produce a union of all namespaces, current and new tag set
+        all_ns = set( ns_tags_curr.keys() + ns_tags_new.keys() )
+
+        # Assemble accepted changed tag set according to permissions
+        tags_out = []
+        for ns in all_ns:
+            if self.allows_tag_namespace_for(ns, request_user):
+                # If the user is allowed this namespace, apply changes by
+                # accepting new tags or lack thereof.
+                if ns in ns_tags_new:
+                    tags_out.extend(ns_tags_new[ns])
+            elif ns in ns_tags_curr:
+                # If the user is not allowed this namespace, carry over
+                # existing tags or lack thereof
+                tags_out.extend(ns_tags_curr[ns])
+
+        return tags_out
 
     @classmethod
     def get_valid_demo_zipfile_entries(cls, zf):
