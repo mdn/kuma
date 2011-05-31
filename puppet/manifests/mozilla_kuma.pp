@@ -121,6 +121,18 @@ exec {
         command => "/usr/bin/pip install lxml",
         creates => "/usr/lib64/python2.6/site-packages/lxml/__init__.py",
         require => [ Exec["pip-install"], Package["libxml2-devel", "libxslt-devel"] ];
+    "django-devserver":
+        command => "/usr/bin/pip install django-devserver",
+        creates => "/usr/lib/python2.6/site-packages/devserver/__init__.py",
+        require => [ Exec["pip-install"] ];
+    "django-extensions":
+        command => "/usr/bin/pip install django-extensions",
+        creates => "/usr/lib/python2.6/site-packages/django_extensions/__init__.py",
+        require => [ Exec["pip-install"] ];
+    "django-debug-toolbar":
+        command => "/usr/bin/pip install -e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar",
+        creates => "/usr/lib/python2.6/site-packages/debug_toolbar/__init__.py",
+        require => [ Exec["pip-install"] ];
 }
 
 file { 
