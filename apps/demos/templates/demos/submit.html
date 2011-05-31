@@ -91,11 +91,16 @@
           <fieldset class="inline">
               <legend><b>{{_('Select up to five technologies used in your demo.')}}</b></legend>
               <ul id="tech-tags" class="cols-4">
-                {{ li_field(form, 'tags', show_label=False) }}
+                {{ li_field(form, 'tech_tags', show_label=False) }}
               </ul>
           </fieldset>
 
-          {{ li_field(form, 'hidden') }}
+          <fieldset class="inline">
+              <legend><b>{{_("Select any Dev Derby Challenges for which you'd like your demo considered.")}}</b></legend>
+              <ul id="challenge-tags">
+                {{ li_field(form, 'challenge_tags', show_label=False) }}
+              </ul>
+          </fieldset>
 
         </ul>
 

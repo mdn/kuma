@@ -77,6 +77,11 @@ TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CRE
     'tech:', 'challenge:'
 ])
 
+# These are tag namespaces whitelisted for demo creators
+TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
+    'tech:', 'challenge:'
+])
+
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
 # defaults are tried.
@@ -556,6 +561,59 @@ class Submission(models.Model):
 
     def thumbnail_url(self, index='1'):
         return getattr(self, 'screenshot_%s' % index).url.replace('screenshot','screenshot_thumb')
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    def allows_tag_namespace_for(self, ns, user):
+        """Decide whether a tag namespace is editable by a user"""
+        if user.is_staff or user.is_superuser:
+            # Staff / superuser can manage any tag namespace
+            return True
+        if user == self.creator and ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
+            # Creator can manage whitelisted namespaces
+            return True
+        return False
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    @classmethod
+    def parse_tag_namespaces(cls, tag_list):
+        """Parse a list of tags out into a dict of lists by namespace"""
+        namespaces = { }
+        for tag in tag_list:
+            ns = (':' in tag) and ('%s:' % tag.rsplit(':', 1)[0]) or ''
+            if ns not in namespaces: namespaces[ns] = []
+            namespaces[ns].append(tag)
+        return namespaces
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    def resolve_allowed_tags(self, tags_curr, tags_new, request_user=AnonymousUser):
+        """Given a new set of tags and a user, build a list of allowed new tags
+        with changes accepted only for namespaces where editing is allowed for
+        the user. For disallowed namespaces, this object's current tag set will
+        be imposed.
+        
+        No changes are made; the new tag list is just returned.
+        """
+        # Produce namespaced sets of current and incoming new tags.
+        ns_tags_curr = self.parse_tag_namespaces(tags_curr)
+        ns_tags_new  = self.parse_tag_namespaces(tags_new)
+
+        # Produce a union of all namespaces, current and new tag set
+        all_ns = set( ns_tags_curr.keys() + ns_tags_new.keys() )
+
+        # Assemble accepted changed tag set according to permissions
+        tags_out = []
+        for ns in all_ns:
+            if self.allows_tag_namespace_for(ns, request_user):
+                # If the user is allowed this namespace, apply changes by
+                # accepting new tags or lack thereof.
+                if ns in ns_tags_new:
+                    tags_out.extend(ns_tags_new[ns])
+            elif ns in ns_tags_curr:
+                # If the user is not allowed this namespace, carry over
+                # existing tags or lack thereof
+                tags_out.extend(ns_tags_curr[ns])
+
+        return tags_out
 
     @classmethod
     def allows_listing_hidden_by(cls, user):

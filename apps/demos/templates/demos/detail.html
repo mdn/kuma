@@ -124,7 +124,9 @@
         <p class="tags">
             {{_('Built using')}} 
             {% for tag in tags_for_object(submission) %}
-                <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+                {% if tag.name.startswith('tech:') %}
+                    <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+                {% endif %}
             {% endfor %}
         </p>
 
