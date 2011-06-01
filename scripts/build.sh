@@ -55,6 +55,15 @@ DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
 CACHE_BACKEND = 'caching.backends.locmem://'
 
 ASYNC_SIGNALS = False
+
+NOSE_PLUGINS = [
+    'nose.plugins.logcapture.LogCapture',
+    'nose.plugins.xunit.Xunit',
+]
+NOSE_ARGS = [
+    '--logging-clear-handlers',
+    '--with-xunit',
+]
 SETTINGS
 
 
@@ -63,10 +72,10 @@ export FORCE_DB='yes sir'
 
 # with-coverage excludes sphinx so it doesn't conflict with real builds.
 if [[ $2 = 'with-coverage' ]]; then
-    coverage run manage.py test -v 2 --noinput --logging-clear-handlers --with-xunit
+    coverage run manage.py test -v 2 --noinput
     coverage xml $(find apps lib -name '*.py')
 else
-    python manage.py test actioncounters contentflagging dekicompat demos devmo -v 2 --noinput --logging-clear-handlers --with-xunit
+    python manage.py test actioncounters contentflagging demos devmo -v 2 --noinput
 fi
 
 echo 'shazam!'
