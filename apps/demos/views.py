@@ -42,7 +42,7 @@ from threadedcomments.forms import ThreadedCommentForm
 from utils import JingoTemplateLoader
 template_loader = JingoTemplateLoader()
 
-DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 24)
+DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 15)
 DEMOS_LAST_NEW_COMMENT_ID = 'demos_last_new_comment_id'
 
 # bug 657779: migrated from plain tags to tech:* tags for these:
