@@ -4,10 +4,8 @@
     <div id="gallery-sort">
       <p class="count">{{ ngettext('{count} Demo', '{count} Demos', count) | f(count=paginator.count) }}</p>
       <ul class="sort">
-        {% if false %}{# TODO: Implement up and coming sort index #}
-            <li><strong title="{{_('You are viewing up and coming demos')}}">{{_('Up and Coming')}}</strong></li>
-        {% endif %}
         {% set sort_orders = (
+            ( 'upandcoming', _('Sort demos by most recent likes and views'), _('You are viewing demos by most recent likes and views'), _('Up and Coming') ),
             ( 'launches', _('Sort demos by most views'), _('You are viewing demos by most views'), _('Most Viewed') ),
             ( 'likes', _('Sort demos by most likes'), _('You are viewing demos by most likes'), _('Most Liked') ),
             ( 'created', _('Sort demos by most recently submitted'), _('You are viewing demos by most recently submitted'), _('Most Recent') ),

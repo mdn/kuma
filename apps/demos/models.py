@@ -418,7 +418,7 @@ class SubmissionManager(models.Manager):
         elif sort == 'likes':
             return queryset.order_by('-likes_total')
         elif sort == 'upandcoming':
-            return queryset.order_by('-launches_recent','-likes_recent')
+            return queryset.order_by('-likes_recent','-launches_recent')
         else:
             return queryset.order_by('-created')
         
