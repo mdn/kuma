@@ -1,4 +1,5 @@
 from django.forms import fields
+from django import forms
 
 # Monkey patch preserves the old values, so we can pick up any changes
 # in CharField.widget_attrs and Field.widget_attrs
@@ -10,9 +11,9 @@ charfield_widget_attrs = fields.CharField.widget_attrs
 def required_field_attrs(self, widget):
     """This function is for use on the base Field class."""
     attrs = field_widget_attrs(self, widget)
-    if self.required and not 'required' in attrs:
-        attrs['required'] = 'required'
-    return attrs
+    if ( not isinstance(widget, forms.FileInput) and 
+            self.required and not 'required' in attrs ):
+        return attrs
 
 
 def required_char_field_attrs(self, widget, *args, **kwargs):
