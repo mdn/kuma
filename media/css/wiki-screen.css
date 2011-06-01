@@ -1,0 +1,523 @@
+/*----------------------------------------------------------------------------
+Screen CSS file for MDN wiki (kuma)
+Created by Craig Cook - focalcurve.com
+        on 17 May, 2011
+
+Colors -
+Orange        #fb9500
+Green         #8dc434
+Blue          #00b6f0
+Red           #ed2024
+Gold          #f8d575
+Off-black     #333
+Dark red      #630a0c
+
+Link          #369
+Hover         #25a
+Visited       #69c
+
+Font sizes -
+16px *  .875 = 14px (base size)
+
+14px * 1.857 = 26px
+14px * 1.714 = 24px
+14px * 1.571 = 22px
+14px * 1.428 = 20px
+14px * 1.285 = 18px
+14px * 1.142 = 16px
+14px *  .928 = 13px
+14px *  .857 = 12px
+14px *  .785 = 11px
+14px *  .714 = 10px
+14px *  .642 = 9px
+-----------------------------------------------------------------------------*/
+
+a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900; }
+
+/*** =External Link Styles *********/
+.article a.external, .article a[rel~="external"] { padding-right: 16px; background: transparent url("/media/img/wiki/icons/link_external.png") 99% 40% no-repeat; }
+.article a[href^="mailto:"], .article .link-mailto { padding-right: 16px; background: url("/media/img/wiki/icons/link_mail.png") 99% 40% no-repeat; }
+.article a[href^="news://"] { padding-right: 18px; background: url("/media/img/wiki/icons/link_news.png") 99% 40% no-repeat; }
+.article a[href^="ftp://"], .article .link-ftp { padding-right: 18px; background: url("/media/img/wiki/icons/link_download.png") 99% 40% no-repeat; }
+.article a[href^="irc://"], .article .link-irc { padding-right: 18px; background: url("/media/img/wiki/icons/link_chat.png") 99% 40% no-repeat; }
+
+.article a.imagelink { background: none; padding-right: 0; }
+
+/*** @Basics *********/
+.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; border-bottom: 1px solid #e0e0dc; }
+.page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
+.page-content ul { list-style: disc; padding-left: 22px; }
+.page-content ul ul { list-style: circle; }
+.page-content ol { padding-left: 22px; }
+.page-content dt { font-style: normal; font-weight: bold; }
+.page-content dd { margin-bottom: .5em; padding-left: 15px; }
+.page-content table { border-color: #ccc; }
+.page-content th, .pageText td { padding: 1px 3px; }
+.page-content thead th { font-family: Georgia, Times, "Times New Roman", serif; }
+.page-content caption { font-weight: bold; }
+.page-content pre { border: 1px dotted #cbc8b9; background: #f6f6f2; padding: 15px; overflow: auto; font: 100% "Courier New", "Andale Mono", monospace; }
+.page-content code, .pageText tt { font: 100% "Courier New", "Andale Mono", monospace; font-weight: inherit; }
+.page-content pre code { font-size: 100%; }
+.page-content strong code { font-weight: inherit; }
+.page-content strong tt { font-weight: inherit; }
+.page-content a code { color: inherit; }
+.page-content img { max-width: 100%; }
+
+/* Increase line-height in wide windows */
+@media screen and (min-width: 990px) { 
+  .page-content { line-height: 1.572; } 
+}
+
+img.lwrap { background: #fff; padding: 0 20px .75em 0; }
+img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
+
+#content-main ul, #content-main ol { padding: 0; }
+#content-main ul li { padding: 0; background: none; }
+
+/* @Layout (wiki is liquid) *********/
+.wrap { position: relative; width: 96%; min-width: 440px; max-width: 1240px; padding: 0 10px; margin: 0 auto; }
+#content { border-top: 0; }
+.page-content { background: #fff; min-height: 300px; }
+
+textarea#wikiArticle { width: 96%; padding: 15px; min-height: 300px; }
+
+/*** @Tools @Nav *********/
+#nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
+#nav-toolbar .crumbs { margin: 0; }
+
+#tool-menus { width: 300px; float: right; }
+#tool-menus ul li.menu { float: right; padding: 0; margin: 0; position: relative; }
+#tool-menus li a { display: block; padding: .6em 20px .7em 8px; background: transparent url("/media/img/wiki/menu-arrow.png") 92% 0 no-repeat; }
+#tool-menus li a:hover, #tool-menus li a:focus, #tool-menus li a:active, #tool-menus li.sfhover > a { background-color: #369; background-position: 92% -100px; color: #fff; text-decoration: none; text-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+#tool-menus li li a, #tool-menus li li strong { display: block; padding: .5em 15px; background: transparent none; }
+#tool-menus li li strong { background-color: #f5f5f1; }
+
+#tools .menu ul { position: absolute; left: -999em; z-index: 9999; width: 180px; background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
+#tools.superfish .menu ul { left: auto; right: 0; z-index: 9999; }
+#tools .menu ul li { width: 180px; margin: 0; font-size: 1.12em; }
+#tools .menu:hover ul, #tool-menus ul .sfhover ul { left: auto; right: 0; }
+
+#nav-toolbar a:link, #nav-toolbar a:visited { color: #6d6d67; }
+#nav-toolbar a:hover, #nav-toolbar a:focus, #nav-toolbar a:active { color: #25a; }
+#nav-toolbar a.disabled:hover, #nav-toolbar a.disabled:focus, #nav-toolbar a.disabled:active { color: #6d6d67; cursor: default; }
+
+.sf-js-enabled .toggle:focus { outline: 0; }
+
+/*** @Breadcrumbs *********/
+#nav-toolbar .crumbs { float: left; }
+#nav-toolbar .crumbs ol { margin: 0; padding: .6em 0 .7em; list-style: none; }
+#nav-toolbar .crumbs li { display: inline; padding-left: 13px; margin-left: 6px; background: url("/media/img/wiki/nav-arrows.png") -15px -698px no-repeat; }
+#nav-toolbar .crumbs li.first, #nav-toolbar .crumbs li.second { display:none; }
+#nav-toolbar .crumbs li.first.last { display: inline; }
+#nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
+
+/*** @User status *********/
+.user-state { width: 235px; float: right; text-align: right; color: #630a0c; margin: 0 0 6px; }
+.user-state a:link, .user-state a:visited { color: #fff; font-style: italic; }
+.user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
+#masthead .user-state { font-size: .785em; }
+
+/* @Footer *********/
+.last-mod { clear: both; text-align: right; font-size: .785em; }
+
+/* @Search *********/
+#doc-search { border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); padding: 4px; margin-bottom: 1em; font-size: .928em; }
+#doc-search p { margin: 0; }
+#doc-search #q-docs { width: 590px; margin-right: 8px; }
+#doc-search #doc-filter { width: 140px; margin-right: 8px; }
+
+/* @Search @Results *********/
+#google-branding { font-size: .785em; float: right; margin-top: -3.75em; opacity: .3; }
+#google-branding .gsc-branding-text { vertical-align: top; padding-right: 2px; }
+
+#search-results .gs-result { margin: 0 0 1.2em; padding: 0 2px 1.2em; border-bottom: 1px dotted #d8d4ca; }
+#search-results .gs-title { font-size: 1em; font-weight: bold; margin: 0 0 .25em; }
+#search-results .gs-snippet { font-size: .857em; margin: 0 0 .25em; }
+#search-results .gs-visibleUrl { font-size: .785em; display: inline; margin-right: 10px; color: #aaa; }
+#search-results .gs-visibleUrl-short { font-weight: bold; }
+#search-results div.gs-watermark { display: none; }
+
+/* @Custom styles *********/
+p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
+div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; }
+div.note { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; }
+div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; color: #6d675f; }
+div.note p, div.tip p { margin-bottom: .75em; }
+
+/* @Page @Title and @Buttons *********/
+#article-head { position: relative; clear: both; overflow: hidden; padding-top: 20px; margin-top: -20px; background: #f6f6f1 url("/media/img/bg-content.png") fixed; }
+
+.title { position: relative; }
+.title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
+.title h1 { float: left; width: 60%; }
+.title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
+.title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
+.title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
+
+.editing .title { float: left; width: 55%; }
+.editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }
+.editing .title h1 em { color: #333; font-style: normal; }
+.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("/media/img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; }
+.editing #btn-properties:hover, .editing #btn-properties:focus { background-color: #25a; }
+
+.editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; }
+.editing #btn-savedraft { font-family: inherit; font-size: 1em; line-height: 1; text-transform: none; color: #333; padding: 0; background: transparent none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+.editing #btn-savedraft:hover, .editing #btn-savedraft:focus { text-decoration: underline; color: #25a; }
+
+.previewing .title { float: left; width: 55%; }
+.previewing .title h1 { width: auto; float: none; color: #768e99; }
+.previewing .title h1 em { color: #333; font-style: normal; }
+.previewing .article-content { margin-top: 1em; border-color: #c7dae9; }
+
+#page-buttons { width: 35%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
+#page-buttons li { display: inline; margin: 0 0 2px 10px; padding: 0; background: none; }
+#page-buttons a { display: inline-block; padding: 8px 10px 6px 32px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+#page-buttons .page-edit a { background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
+#page-buttons .page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
+#page-buttons .page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
+#page-buttons .page-watch a { padding-left: 35px; background: #f2d29e url("/media/img/wiki/button-watch.png") 0 50% repeat-x; }
+#page-buttons .page-watch a:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
+#page-buttons .page-watch a.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
+
+.editing #page-buttons, .previewing #page-buttons { width: 45%; margin: 0 0 10px; }
+
+#page-buttons button { font-size: 15px; padding: 5px 8px 3px; color: #444; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.1); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.1); box-shadow: 1px 1px 0 rgba(0,0,0,.1); }
+.btn-save { 
+  background: #d7eca1; 
+  background: -moz-linear-gradient(top, #d7eca1 0, #cce390 100%); 
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d7eca1), color-stop(100%, #cce390));
+  background: linear-gradient(top, #d7eca1 0, #cce390 100%);
+}
+.btn-save:hover, .btn-save:focus {
+  background: #c3e56d; 
+  background: -moz-linear-gradient(top, #c3e56d 0, #b3d55b 100%); 
+  background: -webkit-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
+  background: linear-gradient(top, #c3e56d 0, #b3d55b 100%);
+}
+.btn-preview { 
+  background: #cce3f4;
+  background: -moz-linear-gradient(top, #cce3f4 0, #c0d7ea 100%); 
+  background: -webkit-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
+  background: linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
+}
+.btn-preview:hover, .btn-preview:focus {
+  background: #abd5f4;
+  background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%); 
+  background: -webkit-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
+  background: linear-gradient(top, #abd5f4 0, #a7cee9 100%);
+}
+.btn-discard, .btn-cancel { 
+  background: #f2d2c6; 
+  background: -moz-linear-gradient(top, #f2d2c6 0, #efc6b7 100%); 
+  background: -webkit-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
+  background: linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
+}
+.btn-discard:hover, .btn-discard:focus, 
+.btn-cancel:hover, .btn-cancel:focus {
+  background: #f8b8a0;
+  background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%); 
+  background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
+  background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
+}
+
+.page-content .talkpage { font-size: .857em; padding: .25em 15px; }
+
+.article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
+.article header .notice p { margin: 0 0 10px; }
+
+input#article-title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
+
+/* @TOC @Table of contents *********/
+#article-nav { float: right; padding: 0 0 1em 20px; background: #fff; width: 230px; position: relative; z-index: 1; }
+#article-nav .page-toc { background: #e4edf7; padding: 16px 18px; margin: 0 0 5px; border: 1px solid #dfe8f2; font-size: .857em; }
+#article-nav .page-toc h2 { margin: 0 0 .75em; border: 0; padding: 0; font: 200 20px/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#article-nav .page-toc ol { margin: 0; padding: 0; list-style: none; }
+#article-nav .page-toc ol li { margin-bottom: .25em; }
+#article-nav .page-toc ol li span { display: none; } /* hide numbers */
+#article-nav .page-toc ol li ol { margin-top: .5em; padding-left: 15px; }
+#article-nav .page-toc ol li ol li { margin-left: 0; }
+
+#article-nav .page-anchors { background: #f1f6fb; margin: 0 0 5px; padding: 6px 18px; border: 1px solid #edf2f7; font-size: .785em; font-style: italic; text-transform: uppercase; }
+#article-nav .page-anchors li { display: inline; padding: 0; margin-right: 12px; background: none; }
+#article-nav .page-anchors a { padding-left: 16px; }
+#article-nav .anchor-tags a { background: transparent url("/media/img/wiki/icons/tag-tiny.png") 0 50% no-repeat; }
+#article-nav .anchor-files a { background: transparent url("/media/img/wiki/icons/attach-tiny.png") 0 50% no-repeat; }
+
+/* @Page alerts **********/
+#deki-page-alerts { float: none; clear: both; font-size: .857em; padding: 6px 6px 6px 8px; background-color: #f6f6f6; border: 1px solid #f3f3f3; margin-bottom: 5px; }
+#deki-page-alerts span.status { font-weight: bold; }
+#deki-page-alerts div.toggle { padding: 0; background-color: transparent; border: 0; margin: 0; }
+#deki-page-alerts form.options { padding: 8px; }
+#deki-page-alerts form.options li.off { background-color: #eee; }
+
+/* @IRC @channels *********/
+.suggestchannels { font-size: .857em; padding: 6px 6px 6px 8px; background-color: #f6f6f6; border: 1px solid #f3f3f3; margin-bottom: 5px; }
+.suggestchannels ul { list-style: none; }
+.suggestchannels li { float: left; width: 50% }
+
+/* @Meta *********/
+.article .page-meta { clear: both; margin-top: 30px; }
+.page-meta section { position: relative; overflow: hidden; background: #f5f5f1; padding: 15px 20px; margin: 0 0 20px; }
+.page-meta h2 { margin: 0 20px 0 0; color: #666; font: 200 20px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.page-meta p.add { width: 190px; position: absolute; right: 20px; top: 12px; text-align: right; margin: 0; }
+.page-meta p.add a, #deki-page-tags-toggleview { display: inline-block; padding: 8px 10px 6px 32px; background-color: #a5d9f3; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+.page-meta p.add a:hover, .page-meta p.add a:focus, .page-meta p.add a:active { background-color: #ade4ff; text-decoration: none; }
+.page-meta p.none { display: inline; }
+.page-meta p.add a.disabled { opacity: .75; }
+
+/*** @Tags *********/
+#page-tags h2 { float: left; }
+#page-tags .add a, #deki-page-tags-toggleview { background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
+#page-tags .add a:hover, #page-tags .add a:focus, #page-tags .add a:active, 
+#page-tags #deki-page-tags-toggleview:hover, #page-tags #deki-page-tags-toggleview:focus, #page-tags #deki-page-tags-toggleview:active { background-color: #ade4ff; text-decoration: none; }
+#page-tags #deki-page-tags-toggleview { position: absolute; right: 20px; top: 12px; }
+#page-tags .add a.disabled, #page-tags #deki-page-tags-toggleview.disabled { opacity: .75; background-color: #c8e6ed; }
+#page-tags ul.tags { margin: 0; list-style: none; }
+#page-tags ul.tags li { padding: 0; background: none; display: inline; margin-right: 8px; }
+#page-tags .pageTagList div.item { padding: 0; }
+#page-tags .taglist a, #page-tags ul.tags a { display: inline-block; padding: 2px 8px; margin-bottom: .5em; background: #f5f5f1 url("/media/img/light-shade.png") 0 .9em repeat-x; color: #333; border: 1px solid #91918e; }
+#page-tags .taglist a:hover, #page-tags .taglist a:focus, #page-tags .taglist a:active, 
+#page-tags ul.tags a:hover, #page-tags ul.tags a:focus, #page-tags ul.tags a:active { background-color: #fff; text-decoration: none; border-color: #aaa; }
+
+#page-tags #deki-page-tags .tagContainer { white-space: normal; }
+#page-tags #deki-page-tags .tagButtons { padding-left: 10px; }
+#page-tags #deki-page-tags .tagData { padding-right: 30px; }
+#page-tags #deki-page-tags { float: left; }
+#page-tags #deki-page-tags table { margin: 0; width: 550px; }
+#page-tags #deki-page-tags .tagAdd { float: right; padding: .25em 10px; background: #e1e1e1 url("/media/img/button-shade.png") 0 .9em repeat-x; color: #333; font: 200 1em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .25em; -webkit-border-radius: .25em; border-radius: .25em; }
+#page-tags #deki-page-tags .col1 { width: 100px; padding-top: .25em; }
+
+#page-tags #deki-page-tags .tag-edit { border: 1px solid #e0e0dc; background: rgba(255,255,255,.5); padding: 10px; }
+#page-tags #deki-page-tags .tag-edit .input-button { font-size: 1em; background-color: #e1e1e1; color: #333; }
+
+#deki-page-tags-edit ul.tags a { background: transparent none; border: 0; padding: 0; color: #369; }
+#deki-page-tags-edit ul.tags a:hover, #deki-page-tags-edit ul.tags a:focus, #deki-page-tags-edit ul.tags a:active { color: #25a; text-decoration: underline; }
+#deki-page-tags-edit ul.tags a.tag-delete { margin-right: 5px; width: 20px; background: transparent url("/media/img/wiki/icons/delete.png") 50% 5px no-repeat; }
+#deki-page-tags-edit ul.tags a.tag-delete:hover, #deki-page-tags-edit ul.tags a.tag-delete:focus, #deki-page-tags-edit ul.tags a.tag-delete:active { background-position: 50% -45px; }
+
+/*** @Attachments / @Files ********/
+#page-files #pageFiles, #page-files #pageGallery { clear: both; margin: 0; }
+#page-files #sessionMsg { margin-top: 1em; }
+#page-files .filescontent td, #page-files .filescontent th { background: transparent; }
+#page-files .add a { background: #a5d9f3 url("/media/img/wiki/button-attach.png") 0 50% repeat-x; }
+#page-files .add a:hover, #page-files .add a:focus, #page-files .add a:active { background-color: #ade4ff; text-decoration: none; }
+#page-files .add a.disabled { opacity: .75; background-color: #c8e6ed; }
+#page-files .nofiles { display: none; }
+#deki-image-gallery-lite .empty { display: none; }
+
+#attachTable { margin-top: 1em; }
+#attachTable table { border-collapse: collapse; border: 1px solid #e0e0dc; border-bottom: 0; }
+#attachTable table th { border-bottom: 1px solid #e0e0dc; padding: 2px; font-size: .857em; text-align: left; font-weight: normal; }
+#attachTable table th.col1 { padding-left: 36px; }
+#attachTable table td { vertical-align: top; border-bottom: 1px solid #e0e0dc; padding: 6px 2px; }
+#attachTable table td.col2 { vertical-align: top; }
+#attachTable a.file-preview { margin-left: 15px; }
+#attachTable a.file-preview:before { content: "["; }
+#attachTable a.file-preview:after { content: "]"; }
+#attachTable a.actionmenu { padding: 0 15px 0 8px; background: transparent url("/media/img/wiki/downarrow.png") 98% 55% no-repeat; color: #333; }
+#attachTable .desctext { font-size: .857em; }
+#attachTable ul.deki-file-menu li { padding: 0; background: none; }
+.deki-file-menu { font-size: .857em; }
+a.deki-file-revisions:hover, a.deki-file-revisions:focus, a.deki-file-revisions:active { text-decoration: none; }
+
+/*** @Attached @Images *********/
+#pageGallery { float: left; clear: both; margin-bottom: 1em; width: 100%; }
+#pageGalleryWrap .preControls { float: left; clear: both; width: 100%; margin: 1em 0 1.7em; }
+#pageGalleryWrap .preControls div.offset form { margin-left: 20px; }
+#pageGalleryWrap .navigation, #pageGalleryWrap .disabled { color: #888; }
+#pageGalleryWrap #pageGallery div.galleryCell { position: relative; margin-bottom: .75em; }
+#pageGalleryWrap a img.image { border: 1px solid; padding: 2px; }
+#pageGalleryWrap a:hover img.image { border-color: #369; }
+#pageGalleryWrap .desctext { margin: .5em 0 0; font: 11px Verdana, Tahoma, sans-serif; }
+#pageGalleryWrap .desctext span.desctext { display: block; }
+#pageGalleryWrap a.actionmenu { border-left: 1px solid #ccc; padding: 0 15px 0 8px; background: transparent url("/media/img/wiki/downarrow.png") 98% 55% no-repeat; color: #333; }
+
+/* @Comments *********/
+#comments div.comments, #comments div.commentForm { padding: 0; }
+#comments div.comments { margin-bottom: 1em; }
+#comments div.commentMore { clear: both; float: none; padding: 6px 0; font-size: .785em; }
+#comments div.comment { position: relative; clear: both; border-bottom: 1px solid #ebeae7; padding: 20px 50px; }
+#comments div.comment.comment-deleted { padding: 10px 50px; }
+#comments div#comment1 { border-top: 1px solid #ebeae7; }
+#comments div.commentNum { position: absolute; left: 5px; top: 13px; font-size: 150%; line-height: 1.2; }
+#comments div.commentNum a { padding: 0; color: #b4afa8; }
+#comments div.commentMetaData { margin-bottom: .5em; font-size: .785em; }
+#comments div.commentText { float: none; padding: 0; width: auto; }
+#comments div.commentPosted { margin: 1em 0 0; font-size: .785em; color: #888; }
+#comments div.commentPosted em { font-style: normal; }
+#comments span.commentUpdated { margin-left: 1em; font-size: .785em; color: #888; }
+#comments span.commentUpdated:before { content: "["; }
+#comments span.commentUpdated:after { content: "]"; }
+#comments div.commentActions { position: absolute; right: 15px; bottom: 18px; font-size: .857em; }
+#comments div.commentActions a { margin-right: 15px; padding: 2px 0 2px 20px; background: transparent url("/media/img/wiki/icons/comment_edit.png") no-repeat; color: #444; }
+#comments div.commentActions form.commentDelete { display: inline; }
+#comments div.commentActions form.commentDelete input { border: 0; padding: 2px 0 2px 20px; background: transparent url("/media/img/wiki/icons/comment_delete.png") no-repeat; color: #444; font-family: inherit; text-transform: none; cursor: pointer; }
+#comments div.commentActions form.commentDelete input:hover { color: #b00; }
+
+#comments .commentForm .commentText { width: 100%; height: 7em; font-family: inherit; font-size: inherit; color: inherit; }
+#comments .commentForm .commentHeader { margin: 1em 0 .25em; color: #666; font: 200 20px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#comments .commentForm .commentSubmit { margin: .5em 0 0; }
+
+/* @Menus (misc dropdowns) *********/
+div.menu, div.dmenu-body { border: 1px solid #eee; border-right: 2px solid #ccc; border-bottom: 2px solid #ccc; padding: 10px 15px 0; background: #fff; }
+div.menu ul, div.dmenu-body ul { margin-bottom: 0; list-style: none; font: 11px Verdana, Tahoma, sans-serif; }
+div.menu li, div.dmenu-body li { margin-bottom: 8px; }
+div.menu a { display: block; padding: 2px 0 2px 22px; background-position: 0 0; background-repeat: no-repeat; color: #444; }
+div.menu a:link, div.menu a:visited, div.menu a:hover, div.menu a:active { color: #444; } 
+div.dmenu-body a { padding: 2px 0; color: #444; }
+div.dmenu-body a:link, div.dmenu-body a:visited, div.dmenu-body a:hover, div.dmenu-body a:active { color: #444; }
+div.dmenu-body span.icon { position: relative; bottom: -2px; padding-right: 5px; background-color: #fff; }
+
+div.menu a.disabled, div.dmenu-body a.disabled { color: #888; cursor: default; background-position: 0 -48px; }
+div.menu a.disabled:hover, div.dmenu-body a.disabled:hover { text-decoration: none; }
+
+#menuFiller { width: 160px; margin-left: -94px; display: block; }
+#menuFiller div.dmenu-body { background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
+#menuFiller div.dmenu-body ul { font-family: inherit; font-size: .785em; }
+
+/* @Tables on Admin and Special pages *********/
+table.table { margin: .5em 0 1em; border-collapse: collapse; border: 1px solid #e0e0dc; border-bottom: 0; width: 100%; font-size: .857em; font-family: inherit; }
+table.table th { border-bottom: 1px solid #e0e0dc; padding: 2px 6px; text-align: left; font-size: 10px; font-weight: normal; }
+table.table td { border-bottom: 1px solid #e0e0dc; padding: 6px; }
+table.table tr.show-no { display: none; }
+table.table .bg2 { background-color: #f7f7f5; }
+table.table tr.group td.col2 { padding-left: 25px; }
+table.table .autocomment a { margin-right: 10px; }
+
+/* @Diff *********/
+.deki-diff { margin-top: 1em; }
+.deki-diff .deki-revision { float: left; width: 45%; padding: 0 2%; }
+.deki-diff .deki-diffmeta { font-size: .857em; color: #888; margin: 0 0 1em; }
+
+/*** @Special search page (this is not the sitesearch in the header) *********/
+#searchForm { margin-bottom: 1em; }
+#searchForm label { margin-right: 15px; }
+#searchForm #lsearchbox { margin-right: 15px; }
+#searchForm #select-language { margin-right: 15px; }
+#searchResults ul { margin: 1em 0; list-style: none; }
+#searchResults ul li { border-bottom: 1px solid #e2e1de; padding: 1em 20px; background-image: none; }
+#searchResults .title { margin: 0 0 .25em -20px; font-size: 130%; }
+#searchResults .itemmatch { margin-bottom: .5em; font-size: 90%; }
+.deki-parsed-query { font-size: .785em; color: #777; }
+
+/* @Code syntax highlighter */
+.pageText .dp-highlighter { font: 100% "Courier New", "Andale Mono", monospace; }
+.pageText .dp-highlighter .tools { font-size: .714em; font-family: "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; }
+.pageText .dp-highlighter .tools a { font-size: inherit; }
+
+/* Misc UI bits */
+#xToolbar { overflow: hidden; z-index: 99; }
+.editable .editIcon { position: relative; font-size: inherit; bottom: .25em; }
+
+/*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
+span.alllinks { display: block; text-align: right; font-size: 90%; }
+
+table.topicpage-table { width: auto; clear: both; }
+table.topicpage-table td { padding: 10px; width: 50%; vertical-align: top; }
+table.topicpage-table small { font-size: 90%; }
+table.standard-table { border: 1px solid #bbb; border-collapse: collapse; }
+table.standard-table td { padding: 5px; border: 1px solid #ccc; text-align: left; vertical-align: top; }
+table.standard-table td.header, table.standard-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; text-align: left; font-weight: bold; }
+table.fullwidth-table { margin-bottom: 1.5em; border: 1px solid #bbb; border-collapse: collapse; width: 100%; background: #fff; }
+table.fullwidth-table td { border: 1px solid #ccc; padding: 5px 15px; text-align: left; vertical-align: top; }
+table.fullwidth-table td.header, table.fullwidth-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; font-weight: bold; font-size: 1.05em; text-align: left; }
+table.features-table { margin-bottom: 20px; border-collapse: collapse; width: auto; }
+table.features-table td { padding-top: 20px; vertical-align: top; }
+table.features-table td img { float: left; margin: -20px 15px 5px 0px; }
+table.features-table td p { margin: 0 3px; font-size: 95%; }
+table.mainpage-table { margin: 0 0 10px 0; border-collapse: collapse; width: auto; }
+table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
+
+.article .prewrong pre { border: 1px dashed #ac6262; background: #fbeded; color: #8a4e4e; }
+.wrong { margin: 0 0 1.5em; padding: 5px; background: #fbeded; border: solid 1px #ac6262; color: #6d675f; }
+.wrong-inline { border: 1px solid #ac6262; padding: 0 3px 0 3px; background: #fbeded; color: #6d675f; }
+.article .wrong-source-code { color: #8a4e4e; }
+.article .right-source-code { color: #537d46; }
+div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 0 10px; background: #fbeded; color: #6d675f; }
+.originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
+.originaldocinfo h2 { font-size: 120%; }
+.licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
+
+div.floatright, table.floatright { float: right; clear: right; margin: 0 0 .5em .5em; }
+div.floatleft, table.floatleft { float: left; margin: 0 .5em .5em 0; }
+div.thumb { margin-bottom: 0.5em; border: 1px solid #fff; }
+div.thumb div { border: 1px solid #ccc; padding: 3px; overflow: hidden; background-color: #f9f9f9; font-size: 94%; text-align: center; }
+div.thumb div a img { border: 1px solid #ccc; }
+div.thumb div div.thumbcaption { border: none; padding: .3em 0 .1em 0; text-align: left; line-height: 1.4; }
+div.magnify { float: right; }
+div.magnify a, div.magnify img { display: block; }
+div.tright { float: right; clear: right; border-width: .5em 0 .8em 1.4em; }
+div.tleft { float: left; margin-right: .5em; border-width: .5em 1.4em .8em 0; }
+
+table.release { border: 1px solid #ccc; width: 100%; font-size: 95%; }
+table.release td { border: 1px solid #ccc; padding: 0 0 15px 25px; }
+tr.releaseHeader td { font-size: 125%;}
+tr.releaseHeader td.OK { background-color: green;}
+tr.releaseHeader td.ERR { background-color: red;}
+tr.releaseHeader td.IP { background-color: yellow;}
+tr.releaseHeader td.TBD {background-color: grey;}
+tr.release td.OK { width: 22%; background: #cfc; }
+tr.release td.ERR { width: 22%; background: #fcc; }
+tr.release td.IP { width: 22%; background: #ffc; }
+tr.release td.TBD { width: 22%; background: #eee; }
+tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: right; }
+.OK { background-color: rgb(153,255,153); }
+.irrelevant { color: rgb(153,153,153); }
+.maybe { background-color: rgb(255,255,204); }
+
+/* @RTL - flip the layout for right-to-left languages *********/
+/* just a jump to the left... */
+.rtl #utility, 
+.rtl .user-state, 
+.rtl #site-search, 
+.rtl #tool-menus, 
+.rtl #tool-menus ul li.menu,  
+.rtl #page-buttons li, 
+.rtl #article-nav { 
+  float: left; 
+}
+
+/* then a step to the right... */
+.rtl #branding, 
+.rtl #nav,
+.rtl #title, 
+.rtl #nav-toolbar .crumbs, 
+.rtl #page-tags h2, 
+.rtl #page-tags #deki-page-tags,
+.rtl #page-tags .tags-edit, 
+.rtl #site-info #legal, 
+.rtl .deki-pagination div, 
+.rtl .pagination span, 
+.rtl .deki-pagination div.info { 
+  float: right; 
+}
+
+.rtl #utility .user-state li { border-left: 0; margin-left: 0; padding-left: 0; border-right: 1px solid; margin-right: 5px; padding-right: 8px; }
+.rtl #utility .user-state li:first-child { padding: 0; margin: 0; border: 0; }
+.rtl #site-search button { float: left; }
+.rtl #site-search-gg { float: left; margin: 2px 0 0 35px; }
+.rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
+.rtl #nav-toolbar .crumbs li.crumb-one { background: url("/media/img/wiki/nav-arrows.png") 0 -798px no-repeat; }
+.rtl #nav-toolbar .crumbs li:last-child { background: none; }
+.rtl #tools.superfish .menu ul { left: 0; right: auto; }
+.rtl #utility .sub-menu, .rtl .compact #nav .sub-menu, .rtl #tools .menu ul { left: auto; right: -999em; }
+.rtl .compact #nav .nav-menu:hover .sub-menu, .rtl .compact #nav .hover .sub-menu, .rtl .compact #nav a:focus + ul { right: auto; }
+.rtl #article-nav { padding: 0 20px 1em 0; }
+.rtl .page-meta h2 { margin: 0 0 0 20px; }
+.rtl #page-tags #deki-page-tags-toggleview, .rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
+.rtl #page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
+.rtl #page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
+.rtl #page-buttons { right: auto; left: 20px; }
+.rtl #site-info #legal { padding: 0 55px 0 0; }
+.rtl #site-info #legal img { left: auto; right: 0; }
+.rtl .user-state { text-align: left; }
+.rtl #utility .sub-menu li { text-align: right; border: 0; padding: 0; margin: 0; }
+.rtl #menuFiller .deki-file-menu { margin-left: 86px; }
+.rtl span.icon img { margin: 0 0 0 3px; }
+.rtl .last-mod, html[dir="rtl"] #footbar p { text-align: left; }
+.rtl .deki-pagination .next, .rtl .pagination .next { text-align: left; float: left !important; }
+.rtl .deki-pagination .prev, .rtl .pagination .prev { text-align: right; float: right !important; }
+.rtl .deki-pagination .prev a:before, .rtl .pagination .prev a:before,
+.rtl .deki-pagination .next a:after, .rtl .pagination .next a:after { content: ""; }
+.rtl .deki-pagination .prev a:after, .rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
+.rtl .deki-pagination .next a:before, .rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
