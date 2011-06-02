@@ -1,5 +1,4 @@
-from django.forms import fields
-from django import forms
+from django.forms import fields, widgets
 
 # Monkey patch preserves the old values, so we can pick up any changes
 # in CharField.widget_attrs and Field.widget_attrs
@@ -11,8 +10,7 @@ charfield_widget_attrs = fields.CharField.widget_attrs
 def required_field_attrs(self, widget):
     """This function is for use on the base Field class."""
     attrs = field_widget_attrs(self, widget)
-    if (not isinstance(widget, forms.FileInput) and 
-        self.required and not 'required' in attrs):
+    if self.required and not 'required' in attrs:
         attrs['required'] = 'required'
     return attrs
 
@@ -25,6 +23,14 @@ def required_char_field_attrs(self, widget, *args, **kwargs):
     original_attrs = charfield_widget_attrs(self, widget) or {}
     attrs.update(original_attrs)
     return attrs
+
+
+def render_file_not_required_with_value(self, name, value, attrs=None):
+    # If the file field has a value, then ensure the empty widget is not marked
+    # as required for HTML5 form validation.
+    if value and 'required' in self.attrs:
+        del self.attrs['required']
+    return super(widgets.FileInput, self).render(name, None, attrs=attrs)
 
 
 class DateWidget(fields.DateField.widget):
@@ -49,3 +55,5 @@ fields.DateField.widget = DateWidget
 fields.TimeField.widget = TimeWidget
 fields.URLField.widget = URLWidget
 fields.EmailField.widget = EmailWidget
+
+widgets.FileInput.render = render_file_not_required_with_value
