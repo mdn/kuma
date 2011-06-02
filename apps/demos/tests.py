@@ -48,6 +48,10 @@ class DemoPackageTest(TestCase):
             'admin_tester', 'admin_tester@tester.com', 'admint_tester')
         self.admin_user.save()
 
+        self.other_user = User.objects.create_user(
+            'visitor', 'visitor@visitor.com', 'visitor')
+        self.other_user.save()
+
         self.submission = self._build_submission()
         self.old_blacklist = demos.models.DEMO_MIMETYPE_BLACKLIST
 
@@ -392,9 +396,27 @@ class DemoPackageTest(TestCase):
             except ValidationError, e:
                 ok_('ZIP file contains an unacceptable file: badfile' in e.messages)
 
-    def test_hidden_demo_package_valid(self):
+    def test_hidden_demo_shows_to_creator_and_admin(self):
         """Demo package with at least index.html in root is valid"""
         s = self.submission
         s.hidden = True
 
+        assert_false(s.allows_hiding_by(self.other_user))
+        assert_false(s.allows_viewing_by(self.other_user))
         ok_(s.allows_hiding_by(self.user))
+        ok_(s.allows_hiding_by(self.admin_user))
+
+    def test_censored_demo_shows_only_in_admin_interface(self):
+        """Demo package with at least index.html in root is valid"""
+        s = self.submission
+        s.censored = True
+        s.save()
+
+        assert_false(s.allows_viewing_by(self.other_user))
+        assert_false(s.allows_viewing_by(self.user))
+        assert_false(s.allows_viewing_by(self.admin_user))
+        try:
+            ok_(False, Submission.objects.get(id=s.id))
+        except Submission.DoesNotExist:
+            ok_(True, 'Submission matching query does not exist')
+        ok_(Submission.admin_manager.get(id=s.id))

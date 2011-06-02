@@ -627,10 +627,11 @@ class Submission(models.Model):
         return False
 
     def allows_viewing_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        if not self.hidden and not self.censored:
-            return True
+        if not self.censored:
+            if user.is_staff or user.is_superuser or user == self.creator:
+                return True
+            if not self.hidden:
+                return True
         return False
 
     def allows_editing_by(self, user):
