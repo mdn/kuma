@@ -33,7 +33,7 @@ ENV_BRANCH = {
 
 GIT_PULL = "git pull -q origin %(branch)s"
 GIT_SUBMODULE_SYNC = "git submodule sync"
-GIT_SUBMODULE_UPDATE = "git submodule update --init --recursive"
+GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
 SVN_UP = "svn update"
 COMPILE_PO = "./compile-mo.sh ."
 
