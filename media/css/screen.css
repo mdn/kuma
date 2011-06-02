@@ -35,22 +35,22 @@ Font sizes -
 /* @Fonts *********/
 @font-face {
 	font-family: "League Gothic";
-  src: url('/media/fonts/League_Gothic-webfont.eot'); /* IE9 */
-  src: url('/media/fonts/League_Gothic-webfont.eot?') format('eot'), /* IE6-8 */
-  	   url('/media/fonts/League_Gothic-webfont.ttf') format('truetype'), /* Older Webkits */
-	   url('/media/fonts/League_Gothic-webfont.svg#webfont') format('svg'), /* Opera */
-       url('/media/fonts/League_Gothic-webfont.woff') format('woff'); /* Modern browsers */
+  src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
+  src: url('../fonts/League_Gothic-webfont.eot?') format('eot'), /* IE6-8 */
+  	   url('../fonts/League_Gothic-webfont.ttf') format('truetype'), /* Older Webkits */
+	     url('../fonts/League_Gothic-webfont.svg#webfont') format('svg'), /* Opera */
+       url('../fonts/League_Gothic-webfont.woff') format('woff'); /* Modern browsers */
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: "Bebas Neue";
-	src: url('/media/fonts/BebasNeue-webfont.eot?'); /* IE9 */
- 	src: url('/media/fonts/BebasNeue-webfont.eot?') format('eot'), /* IE6-8 */
-	     url('/media/fonts/BebasNeue-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('/media/fonts/BebasNeue-webfont.svg#webfont') format('svg'), /* Opera */
-	     url('/media/fonts/BebasNeue-webfont.woff') format('woff'); /* Modern browsers */
+	src: url('../fonts/BebasNeue-webfont.eot?'); /* IE9 */
+ 	src: url('../fonts/BebasNeue-webfont.eot?') format('eot'), /* IE6-8 */
+	     url('../fonts/BebasNeue-webfont.ttf') format('truetype'), /* Older Webkits */
+	     url('../fonts/BebasNeue-webfont.svg#webfont') format('svg'), /* Opera */
+	     url('../fonts/BebasNeue-webfont.woff') format('woff'); /* Modern browsers */
 	font-weight: normal;
 	font-style: normal;
 }
@@ -1168,5 +1168,4 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
-
 

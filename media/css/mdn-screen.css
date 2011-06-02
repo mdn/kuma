@@ -35,10 +35,22 @@ Font sizes -
 /* @Fonts *********/
 @font-face {
 	font-family: "League Gothic";
- 	src: url('../fonts/League_Gothic-webfont.eot?') format('eot'),
-	     url('../fonts/League_Gothic-webfont.woff') format('woff'), 
-	     url('../fonts/League_Gothic-webfont.ttf') format('truetype'), 
-	     url('../fonts/League_Gothic-webfont.svg#webfont') format('svg');
+  src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
+  src: url('../fonts/League_Gothic-webfont.eot?') format('eot'), /* IE6-8 */
+  	   url('../fonts/League_Gothic-webfont.ttf') format('truetype'), /* Older Webkits */
+	     url('../fonts/League_Gothic-webfont.svg#webfont') format('svg'), /* Opera */
+       url('../fonts/League_Gothic-webfont.woff') format('woff'); /* Modern browsers */
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Bebas Neue";
+	src: url('../fonts/BebasNeue-webfont.eot?'); /* IE9 */
+ 	src: url('../fonts/BebasNeue-webfont.eot?') format('eot'), /* IE6-8 */
+	     url('../fonts/BebasNeue-webfont.ttf') format('truetype'), /* Older Webkits */
+	     url('../fonts/BebasNeue-webfont.svg#webfont') format('svg'), /* Opera */
+	     url('../fonts/BebasNeue-webfont.woff') format('woff'); /* Modern browsers */
 	font-weight: normal;
 	font-style: normal;
 }
@@ -66,7 +78,7 @@ form ol, form ul { list-style: none; margin: 0 0 1.286em; }
 abbr.updated, abbr.published { border: 0; cursor: default; }
 
 /* @General elements and content *********/
-html { background: #f6f6f1 url("../img/bg-content.png"); }
+html { background: #f6f6f1 url("../img/bg-content.png") fixed; }
 body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; }
 
 /*** @Links *********/
@@ -78,7 +90,7 @@ body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode
 a.go:after { content: "\00A0\000BB"; font: 1.3em Georgia, Times, "Times New Roman", serif; }
 
 /*** @Buttons *********/
-button, .button, input[type=submit], input[type=button] { padding: .25em .75em .2em; display: inline-block; background: #bd5642 url("../img/button-shade.png") 0 .75em repeat-x; color: #fff; font: 200 1em/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+button, .button, input[type=submit], input[type=button] { padding: .35em .75em .2em; display: inline-block; background: #bd5642 url("../img/button-shade.png") 0 .75em repeat-x; color: #fff; font: 200 1em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
 button:hover, input[type=submit]:hover, input[type=button]:hover, 
 button:focus, input[type=submit]:focus, input[type=button]:focus, 
 .button:hover, .button:focus, .button:active { background-color: #ae4935; color: #fff; cursor: pointer; text-decoration: none; }
@@ -110,9 +122,9 @@ h4, h5, h6 { font-size: 1em; }
 .cols-5 { -moz-column-count: 5; -moz-column-gap: 10px; -webkit-column-count: 5; -webkit-column-gap: 10px; column-count: 5; column-gap: 10px; }
 
 /*** @Forms *********/
-input[type=text], input[type=password], input[type=search], textarea { padding: 6px 8px; background: #fff; border: 1px solid #cbc8b9; }
-input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, textarea:hover,
-input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, textarea:focus { border-color: #b6b2a0; }
+input[type=text], input[type=password], input[type=search], input[type=email], input[type=url], textarea { padding: 6px 8px; background: #fff; border: 1px solid #cbc8b9; }
+input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, input[type=email]:hover, input[type=url]:hover, textarea:hover,
+input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, input[type=email]:focus, input[type=url]:focus, textarea:focus { border-color: #b6b2a0; }
 
 /*** @Section @Colors *********/
 .web, a.web:link, a.web:visited { color: #fb9500; }
@@ -172,7 +184,7 @@ body.section-learning #masthead { border-bottom-color: #f8d575; }
 #branding { position: relative; float: left; width: 595px; min-height: 70px; padding-left: 75px; }
 .major #branding { padding-left: 130px; width: 530px; }
 .compact #branding { width: 140px; margin-top: 5px; height: 40px; min-height: 0; padding: 0; }
-#logo { font: normal 46px/38px "League Gothic", Haettenschweiler, Impact, "Arial Narrow", sans-serif; text-transform: uppercase; color: #fff; letter-spacing: 1px; margin: 5px 0 0; }
+#logo { font: normal 46px/38px "Bebas Neue", "League Gothic", Haettenschweiler, Impact, "Arial Narrow", sans-serif; text-transform: uppercase; color: #fff; letter-spacing: 1px; margin: 5px 0 0; }
 #logo a { color: #fff; text-decoration: none; }
 .major #logo img { top: -17px; left: -8px; }
 #logo img { position: absolute; left: 0; top: -4px; }
@@ -186,7 +198,7 @@ body.section-learning #masthead { border-bottom-color: #f8d575; }
 .compact #nav { clear: none; padding: 0; }
 #nav:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 
-#nav-main { float: left; margin: 0; font: 200 29px/1 Impact, Haettenschweiler, "League Gothic", "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; }
+#nav-main { float: left; margin: 0; font: 200 29px/1 Impact, Haettenschweiler, "Bebas Neue", "League Gothic", "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; }
 .major #nav-main { margin: 18px 0 0; }
 #nav-main li { display: inline-block; margin-right: 15px; }
 #nav-main a { display: inline-block; height: 30px; padding-bottom: 8px; background: url("../img/nav-arrows.png") 50% 50px no-repeat; }
@@ -211,7 +223,7 @@ body.section-mozilla #nav-main-mozilla a, #nav-main .current a.mozilla { backgro
 .compact #nav li { float: left; width: 180px; }
 .compact #nav a.toggle { float: left; margin-left: 10px; position: absolute; top: auto; right: 0; width: 30px; height: 29px; text-indent: -999em; overflow: hidden; background: url("../img/nav-arrows.png") 50% -598px no-repeat; }
 .compact #nav a.toggle:hover, .compact #nav a.toggle:focus, .compact #nav a.toggle:active, .compact #nav .hover a.toggle { background-position: 50% -648px; outline: 0; text-decoration: none; }
-.compact #nav .sub-menu { position: absolute; left: -999em; top: 30px; margin-top: 1px; z-index: 9999; width: 180px; background: #000; border: 1px solid #888; font: 200 30px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; -moz-box-shadow: 2px 2px 0 rgba(0,0,0,.2); -webkit-box-shadow: 2px 2px 0 rgba(0,0,0,.2); box-shadow: 2px 2px 0 rgba(0,0,0,.2); }
+.compact #nav .sub-menu { position: absolute; left: -999em; top: 30px; margin-top: 1px; z-index: 9999; width: 180px; background: #000; border: 1px solid #888; font: 200 30px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; -moz-box-shadow: 2px 2px 0 rgba(0,0,0,.2); -webkit-box-shadow: 2px 2px 0 rgba(0,0,0,.2); box-shadow: 2px 2px 0 rgba(0,0,0,.2); }
 .compact #nav.js .sub-menu { left: 0; display: none; }
 .compact #nav .menu { background: transparent; border: 0; padding: 0; }
 .compact #nav .menu:hover .sub-menu, .compact #nav .hover .sub-menu, .compact #nav a:focus + ul { left: auto; }
@@ -231,7 +243,7 @@ body.section-mozilla #nav-main-mozilla a, #nav-main .current a.mozilla { backgro
 .compact #nav-extra-docs { border-top: 1px solid #888; }
 .compact #nav-extra-docs a, .compact #nav-extra-learning a, .compact #nav-extra-demos a, .compact #nav-extra-forums a { color: #f0f0f0; }
 
-.compact #nav .current { position: relative; float: left; margin: 0; padding: 0 40px 0 15px; font: 200 30px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; text-shadow: 1px 1px 0 rgba(192,39,0,1); white-space: nowrap; }
+.compact #nav .current { position: relative; float: left; margin: 0; padding: 0 40px 0 15px; font: 200 30px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; text-shadow: 1px 1px 0 rgba(192,39,0,1); white-space: nowrap; }
 .compact #nav .current a { color: #f8d575; }
 .compact #nav .current a:hover, .compact #nav .current a:focus, .compact #nav .current a:active { color: #fff; text-decoration: none; }
 
@@ -239,7 +251,7 @@ body.section-mozilla #nav-main-mozilla a, #nav-main .current a.mozilla { backgro
 #utility { width: 255px; float: right; }
 .compact #utility { margin-top: -4px; }
 
-#nav-extra { width: 235px; float: right; margin: 0; vertical-align:sub; font: 200 21px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; }
+#nav-extra { width: 235px; float: right; margin: 0; vertical-align:sub; font: 200 21px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; }
 .major #nav-extra { margin-top: 18px; }
 #nav-extra li { display: inline-block; margin-right: 8px; padding-top: 8px; }
 #nav-extra li:last-child { margin-right: 0; }
@@ -394,7 +406,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #slideshow.js .slide-desc a { color: #9cf; }
 
 #slideshow .slide-desc .more { clear: both; }
-#slideshow .slide-desc .more a { background: #fff; padding: 3px 14px 3px 18px; color: #f33; font: 1.454em Impact, "League Gothic", Haettenschweiler, "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; text-shadow: none; 
+#slideshow .slide-desc .more a { background: #fff; padding: 3px 14px 3px 18px; color: #f33; font: 1.454em Impact, "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; text-shadow: none; 
   -moz-border-radius: .25em; -webkit-border-radius: .25em; border-radius: .25em; 
   -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.5); -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.5); box-shadow: 1px 1px 1px rgba(0,0,0,.5);
 }
@@ -409,7 +421,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #slideshow.js #slide-control li.on a { background: #fff; }
 
 /*** @Highlights *********/
-#home-highlights h2 { color: #770e0f; padding-left: 60px; background: url("../img/icons-headbar.png") 0 -200px no-repeat; font: 200 1.714em/1.7 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#home-highlights h2 { color: #770e0f; padding-left: 60px; background: url("../img/icons-headbar.png") 0 -200px no-repeat; font: 200 1.714em/1.7 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #home-highlights .intro { font: italic .857em Georgia, Times, "Times New Roman", serif; }
 #home-highlights .folder.visible { background: #fbfbfa url("../img/bg-emboss-robodino.png") 50% 20px no-repeat; }
 
@@ -420,7 +432,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 
 #home-highlights #glossary { background: transparent; }
 #home-highlights #glossary li { background-image: none; padding: 0; }
-#home-highlights h4.gloss-title { padding: 8px 18px 8px 60px; min-height: 30px; background: transparent url("../img/icons-sections.png") 0 -100px no-repeat; font: 200 1.571em/1.4 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#home-highlights h4.gloss-title { padding: 8px 18px 8px 60px; min-height: 30px; background: transparent url("../img/icons-sections.png") 0 -100px no-repeat; font: 200 1.571em/1.4 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #home-highlights #glossary ul li { width: 90%; display: inline-table; margin: 0 10px .5em 0; background: transparent url("../img/bullet-tiny.png") 0 .5em no-repeat; padding: 0 0 0 12px; border: 0; }
 #home-highlights #other-sections { margin-top: 2em; }
 #home-highlights #other-sections .section { padding-bottom: 0; }
@@ -428,7 +440,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 /*** @Elsewhere *********/
 #content-elsewhere { margin: 0 0 3em; }
 #content-elsewhere header { margin-bottom: 1em; background: #2f2f2f url("../img/bg-headings.png") 35% -500px no-repeat; overflow: hidden; }
-#content-elsewhere header h2 { margin: 0; color: #fff; width: 450px; float: left; padding: .5em 18px; font: 200 1.571em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#content-elsewhere header h2 { margin: 0; color: #fff; width: 450px; float: left; padding: .5em 18px; font: 200 1.571em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #content-elsewhere #type-legend { margin: 0; color: #efe9e5; width: 412px; padding: 18px 18px 15px; float: right; background: #191919 url("../img/bg-headings.png") -40px -110px no-repeat; font: bold .786em Verdana, Arial, Helvetica, sans-serif; }
 #content-elsewhere #type-legend strong { text-transform: uppercase; font-style: italic; margin-right: 10px; }
 #content-elsewhere #type-legend .type { margin-right: 12px; }
@@ -449,7 +461,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #sections .mdn-section { width: 16.5%; padding: 0 2%; float: left; border-right: 1px solid #dbd8cd; }
 #sections .mdn-section:first-child { padding-left: 0; }
 #sections .mdn-section:last-child { padding-right: 0; border: 0; }
-.mdn-section h3 { font: 200 22px/1 Impact, "League Gothic", Haettenschweiler, "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; }
+.mdn-section h3 { font: 200 22px/1 Impact, "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; }
 .mdn-section h4 { font-size: .786em; }
 .mdn-section h5 { margin: 0 0 .15em; }
 
@@ -457,7 +469,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 .tabbed-on { border: 1px solid #aba9a5; padding-top: 3em; position: relative; }
 .tabbed-on ul.index { position: absolute; top: 0; left: 0; border-bottom: 1px solid #aba9a5; background: rgba(0,0,0,.04) url("../img/light-shade.png") 0 1.5em repeat-x; }
 ul.index { width: 100%; height: 3em; list-style: none; margin: 0; }
-#content-main ul.index li { border: 1px solid #aba9a5; border-bottom: 0; cursor: pointer; float: left; margin-right: -1px; text-align: center; color: #4e4f52; background: #eee url("../img/light-shade.png") 0 1.25em repeat-x; padding: 15px 20px; min-width: 80px; font: 200 1.2em/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#content-main ul.index li { border: 1px solid #aba9a5; border-bottom: 0; cursor: pointer; float: left; margin-right: -1px; text-align: center; color: #4e4f52; background: #eee url("../img/light-shade.png") 0 1.25em repeat-x; padding: 15px 20px; min-width: 80px; font: 200 1.2em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #content-main ul.index li:hover { background: #fff none; }
 #content-main ul.index li.active { background: #fbfbfa none; color: #333; border-bottom: 1px solid #fff; padding-bottom: 11px; }
 #content-main .tabbed-on ul.index li { border-width: 0 1px 0 0; margin-right: 0; }
@@ -470,7 +482,7 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 /* @Sidebar @modules *********/
 .module { background: #fff; border-bottom: 3px solid #cecabc; padding: 18px; margin: 0 0 22px; }
 .module.hot { border-bottom: 2px solid #e9c5bb; background: #fff url("../img/bg-module-hot.png") 80% 100% no-repeat; }
-.module .mod-title { margin: -18px -18px 18px; padding: 15px 18px 12px; background: #2f2f2f url("../img/bg-headings.png") 0 0 no-repeat; color: #fff; font: 200 1.285em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.module .mod-title { margin: -18px -18px 18px; padding: 15px 18px 12px; background: #2f2f2f url("../img/bg-headings.png") 0 0 no-repeat; color: #fff; font: 200 1.285em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .module .mod-title a { color: #a8d4ff; }
 .module ul, .module ol { margin: 0; }
 .mod-intro { font: italic .786em Georgia, Times, "Times New Roman", serif; }
@@ -553,7 +565,7 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
    font-size: 1.5em; font-weight: 200;
 }
 #mdn-firefox4-webdev h3, #mdn-firefox4-webdev h4 {
-    font-family: "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif;
+    font-family: "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif;
     text-transform: uppercase;
 }
 #mdn-firefox4-webdev p { margin-bottom: 0px; }
@@ -567,7 +579,7 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 #mdn-twitter .entry-title { font-weight: normal; margin: 0 0 .75em; }
 #mdn-twitter .entry-meta { margin-top: .75em; }
 #mdn-twitter #follow { margin: 0 -18px -18px; }
-#mdn-twitter #follow a { display: block; padding: 10px 18px 10px 45px; background: #c1cbd3 url("../img/icons-headbar.png") 16px -438px no-repeat; color: #fff; font: 200 1.286em/1.6 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#mdn-twitter #follow a { display: block; padding: 10px 18px 10px 45px; background: #c1cbd3 url("../img/icons-headbar.png") 16px -438px no-repeat; color: #fff; font: 200 1.286em/1.6 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #mdn-twitter #follow a b { color: #245375; font-weight: normal; }
 #mdn-twitter #follow a:hover, #mdn-twitter #follow a:focus, #mdn-twitter #follow a:active { text-decoration: none; background-color: #aebfc9; }
 
@@ -581,9 +593,9 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
   -webkit-box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2); 
   box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2);  
 }
-#content-sub #help h3 { margin: 0 0 5px; color: #fff; font: 200 44px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; text-shadow: 0 5px 0 #924b09; }
+#content-sub #help h3 { margin: 0 0 5px; color: #fff; font: 200 44px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; text-shadow: 0 5px 0 #924b09; }
 #content-sub #help p { margin: 0 0 5px; color: #630; font: bold italic .857em Georgia, Times, "Times New Roman", serif; }
-#content-sub #help .go { display: block; padding: 8px 16px; width: 60%; margin: 10px auto 0; border: 1px solid #e19e20; font: 200 1.285em/1.2 Impact, Haettenschweiler, "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; color: #82460b;
+#content-sub #help .go { display: block; padding: 8px 16px; width: 60%; margin: 10px auto 0; border: 1px solid #e19e20; font: 200 1.285em/1.2 Impact, Haettenschweiler, "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; color: #82460b;
   text-shadow: -1px -1px 1px #fff; 
   background: #f4cb6c;
   background: -moz-linear-gradient(top, #f9e5ac 0, #f2c051 100%); 
@@ -605,7 +617,7 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 #content-sub #contact { background: #cdc9bb; border-bottom-color: #afa894; }
 #content-sub #contact .mod-title { background: transparent none; color: inherit; padding: 0; margin: 0 0 .5em; }
 #contact li { margin-bottom: 1em; }
-#contact label { display: block; margin: 0 0 .25em; font: 200 1.142em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#contact label { display: block; margin: 0 0 .25em; font: 200 1.142em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #contact input, #contact textarea { border: 1px solid #bfbbad; background: #fff; padding: 4px 8px; margin-left: -1px; width: 182px; font-size: .857em; }
 #contact input:hover, #contact input:focus, #contact textarea:hover, #contact textarea:focus { border-color: #8d846f; }
 #contact .fm-submit { text-align: right; }
@@ -639,11 +651,11 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 .boxed .head.section-addons { background-position: 0 -400px; }
 .boxed .head.section-apps, .boxed .head.section-mozilla { background-position: 0 -600px; }
 
-.boxed .head h2, .boxed .head h3 { margin-bottom: 0; color: #000; font: 200 1.857em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.boxed .head h2, .boxed .head h3 { margin-bottom: 0; color: #000; font: 200 1.857em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .boxed .head p { margin: -2px 0 0; font: bold italic .857em/1.1 Georgia, Times, "Times New Roman", serif; }
 
 .boxed .subhead { margin: 0 0 1.4em; }
-.boxed .subhead h2, .boxed .subhead h3 { margin-bottom: 0; color: #000; font: 200 1.714em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.boxed .subhead h2, .boxed .subhead h3 { margin-bottom: 0; color: #000; font: 200 1.714em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .boxed .subhead p { font: italic .857em/1.1 Georgia, Times, "Times New Roman", serif; }
 
 /* @Docs @Landing *********/
@@ -682,7 +694,7 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 #other-sections .section:first-child { border-left: 0; }
 #other-sections .section:last-child { border-right: 0; }
 
-.section h4 a { display: block; padding: 8px 18px 8px 60px; min-height: 30px; margin: -18px -18px 1em; background: transparent url("../img/icons-sections.png") no-repeat; font: 200 2em/1.4 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.section h4 a { display: block; padding: 8px 18px 8px 60px; min-height: 30px; margin: -18px -18px 1em; background: transparent url("../img/icons-sections.png") no-repeat; font: 200 2em/1.4 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .section h4 a.web { background-position: 0 -100px; }
 .section h4 a.mobile { background-position: 0 -300px; }
 .section h4 a.addons { background-position: 0 -500px; }
@@ -697,7 +709,7 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 #latest-forums { width: 410px; float: left; }
 #latest-comments { width: 410px; float: right; }
 
-#content-latest h3 { padding: .5em 18px; margin: -18px -18px 18px; background: #2f2f2f url("../img/bg-headings.png") 90% -400px no-repeat; font: 200 1.571em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; color: #fff; }
+#content-latest h3 { padding: .5em 18px; margin: -18px -18px 18px; background: #2f2f2f url("../img/bg-headings.png") 90% -400px no-repeat; font: 200 1.571em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; color: #fff; }
 #content-latest header p { font: italic .857em Georgia, Times, "Times New Roman", serif; }
 #content-latest .hfeed { margin-bottom: 0; }
 #content-latest .hentry { position: relative; padding: 0 0 18px 55px; min-height: 38px; margin: 0 0 18px; font-size: .786em; border-bottom: 1px dotted #d8d4ca; }
@@ -853,13 +865,13 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 
 .demo-more { width: 670px; float: left; padding: 20px 0 0; }
 .demo-more .moreabout { padding: 20px; margin: 0 0 40px; font-size: .857em; background: #fff; border: 1px solid #cbc8b9; }
-.moreabout h1 { font: 200 1.571em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.moreabout h1 { font: 200 1.571em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 
 #demo-sub { width: 235px; float: right; padding: 20px 0 0 20px; }
 #demo-sub .module .gallery li { padding: 0; background: none; }
 
 #demo-report { padding: 20px; }
-#demo-report h3 { color: #666; margin: 0 0 .5em; font: 200 1.24em/1.2 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+#demo-report h3 { color: #666; margin: 0 0 .5em; font: 200 1.24em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #demo-report ul li { font-size: .786em; background: none; padding: 0; margin: 0 0 .25em; }
 #demo-report ul li:before { content: "\00BB\00A0"; }
 
@@ -1014,7 +1026,7 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 }
 
 #featured-demos header { margin: -60px 190px -10px 100px; padding-left: 90px; background: transparent url("../img/redbanner.png") 0 0 no-repeat; text-align: center; color: #fff; }
-#featured-demos header h2 { padding: 8px 90px 18px 0; margin-right: -90px; background: transparent url("../img/redbanner.png") 100% 0 no-repeat; font: 200 30px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0 #000; }
+#featured-demos header h2 { padding: 8px 90px 18px 0; margin-right: -90px; background: transparent url("../img/redbanner.png") 100% 0 no-repeat; font: 200 30px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0 #000; }
 
 #featured-demos .frame { width: 760px; margin: 0 auto; overflow: hidden; }
 #featured-demos .gallery { width: 760px; margin: 0; }
@@ -1029,7 +1041,7 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 /* @Submission @Form *********/
 .submission .section { position: relative; padding: 3.75em 18px 5px; margin: 0 0 1.286em; font-size: .928em; border: 1px solid #cecbbd; background: #dedcd3; background: rgba(203,200,185,0.5); }
 .submission .section > legend { margin: 0 -18px; padding: 0; }
-.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 18px 18px 0; font: 200 1.714em/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 18px 18px 0; font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .submission .section.notitle { padding-top: 18px; }
 
 .submission li { margin: 0 0 .75em; }
@@ -1063,7 +1075,7 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 ul.sortable { width: 465px; }
 #content ul.sortable li { padding: .25em 2px .25em 24px; margin: 0; background: url("../img/demobox-icons.png") 2px -943px no-repeat; }
 #content ul.sortable li:hover { background-color: #eae8de; cursor: move; }
-ul.sortable .remove { float: right; color: #369; font-size: .857em; font-family: inherit; padding: 0; background: transparent none; text-transform: none; letter-spacing: normal; }
+ul.sortable .remove { float: right; color: #369; font-size: .857em; font-family: inherit; padding: 0; background: transparent none; text-transform: none; letter-spacing: normal; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 ul.sortable .remove:hover, ul.sortable .remove:focus { color: #900; text-decoration: underline; }
 
 #simplemodal-overlay { background: #222; }
@@ -1080,7 +1092,7 @@ body.popup { background: #fff; padding: 20px; min-height: 200px; }
 body.popup #content { min-height: 200px; }
 body.popup #content .wrap { width: 100%; padding: 0; }
 body.popup #content-main { width: 100%; padding: 0; }
-body.popup .page-title { font: 200 1.714em/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; }
+body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; }
 
 #flag-confirm textarea { display: block; width: 96%; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
@@ -1095,7 +1107,7 @@ body.popup .page-title { font: 200 1.714em/1 "League Gothic", Haettenschweiler, 
 .section-learning #page-head p.intro {  font-size: 16px; }
 .section-learning #page-head.landing p { text-align: center; font-size: 20px; }
 .section-learning #page-head p strong { color: #333; }
-.section-learning #page-head .page-title { margin: 0 0 .1em; color: #ab181a; font: 200 72px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(170, 160, 130, 0.5); }
+.section-learning #page-head .page-title { margin: 0 0 .1em; color: #ab181a; font: 200 72px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(170, 160, 130, 0.5); }
 
 #blackboard { width: 940px; padding: 60px 0 0; margin: -20px auto 20px; background: #242424 url("../img/boardframe-top.jpg") center top no-repeat; box-shadow: 0 2px 3px rgba(0,0,0,.25); }
 #blackboard ul { margin: 0; padding: 0 60px 50px 0; overflow: auto; background: url("../img/boardframe-btm.png") center bottom no-repeat; }
@@ -1118,7 +1130,7 @@ body.popup .page-title { font: 200 1.714em/1 "League Gothic", Haettenschweiler, 
 
 #learn-fineprint { clear: both; margin: 20px 20px 40px; font-size: .786em; }
 
-.learn-module h2 { font: 200 36px/1 "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; color: #a36100; padding: 12px 18px 0 68px; margin: -18px -18px 15px; min-height: 56px; background: url("../img/icons-learnlevels.png") no-repeat; }
+.learn-module h2 { font: 200 36px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; color: #a36100; padding: 12px 18px 0 68px; margin: -18px -18px 15px; min-height: 56px; background: url("../img/icons-learnlevels.png") no-repeat; }
 #intro-level { width: 415px; float: left; clear: left; }
 #intro-level h2 { background-position: 0 0; }
 #inter-level, #learn-html #adv-level { width: 415px; float: right; clear: right; }
