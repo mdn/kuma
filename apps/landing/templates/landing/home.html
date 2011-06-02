@@ -42,13 +42,30 @@ try {
 
   <div id="slideshow">
     <ol id="slide-control">
-      <li id="slide1"><a href="#slide-one">{{ _('Aurora') }}</a></li>
-      <li id="slide2"><a href="#slide-two">{{ _('School of Webcraft') }}</a></li>
-      <li id="slide3"><a href="#slide-three">{{ _('HTML5') }}</a></li>
-      <li id="slide4"><a href="#slide-four">{{ _('Firefox 4') }}</a></li>
+      <li id="slide1"><a href="#slide-one">{{ _('Dev Derby') }}</a></li>
+      <li id="slide2"><a href="#slide-two">{{ _('Aurora') }}</a></li>
+      <li id="slide3"><a href="#slide-three">{{ _('School of Webcraft') }}</a></li>
+      <li id="slide4"><a href="#slide-four">{{ _('HTML5') }}</a></li>
       <li id="slide5"><a href="#slide-five">{{ _('Addons Builder Preview') }}</a></li>
     </ol>
     <ol id="slides">
+      <li id="slide-one" class="slide">
+        <img src="{{ MEDIA_URL }}img/features/feature-devderby.jpg" alt="" width="660">
+        <div class="slide-desc">
+          <h3>{{ _('Demo Studio presents') }}</h3>
+          <h2>{{ _('Dev Derby') }}</h2>
+          <p>
+          {% trans %}
+          Got what it takes to showcase the latest Web standards and open technologies? 
+          Submit your demo to our monthly Dev Derby developer challenge for a chance to 
+          win awesome prizes and bragging rights from the winner&#8217;s circle! Upcoming 
+          challenges include CSS Animations, HTML5 &lt;video&gt;, and Touch events on mobile 
+          devices&hellip; so start your engines!
+          {% endtrans %}
+          </p>
+          <p class="more"><a href="/devderby/" class="button">{{ _('More') }}</a></p>
+        </div>
+      </li>
       <li id="slide-two" class="slide">
         <img src="{{ MEDIA_URL }}img/features/feature-aurora.jpg" alt="" width="660">
         <div class="slide-desc">
@@ -56,15 +73,15 @@ try {
           <p>
           {% trans %}
           Experience the very latest features before they go to beta by trying out the
-          new Aurora builds.  Test things out early and help decide what makes it to
-          final release.  Note: Aurora is not for the faint of heart, but that's the
+          new Aurora builds. Test things out early and help decide what makes it to
+          final release. Note: Aurora is not for the faint of heart, but that's the
           price of being on the cutting edge.
           {% endtrans %}
           </p>
           <p class="more"><a href="http://www.mozilla.com/en-US/firefox/channel/" class="button">{{ _('Get Aurora now') }}</a></p>
         </div>
       </li>
-      <li id="slide-two" class="slide">
+      <li id="slide-three" class="slide">
         <img src="{{ MEDIA_URL }}img/features/feature-p2pu.jpg" alt="" width="660">
         <div class="slide-desc">
           <h2>{{ _('School of Webcraft') }}</h2>
@@ -80,7 +97,7 @@ try {
           <p class="more"><a href="http://www.drumbeat.org/p2pu-webcraft" class="button">{{ _('More') }}</a></p>
         </div>
       </li>
-      <li id="slide-three" class="slide">
+      <li id="slide-four" class="slide">
         <img src="{{ MEDIA_URL }}img/features/feature-html5.jpg" alt="" width="660">
         <div class="slide-desc">
           <h2>{{ _('HTML5') }}</h2>
@@ -92,21 +109,6 @@ try {
           {% endtrans %}
           </p>
           <p class="more"><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}" class="button">{{ _('More') }}</a></p>
-        </div>
-      </li>
-      <li id="slide-four" class="slide">
-        <img src="{{ MEDIA_URL }}img/features/feature-firefox4b.jpg" alt="" width="660">
-        <div class="slide-desc">
-          <h2>{{ _('Firefox 4') }}</h2>
-          <p>
-          {% trans fx4_features='https://www.mozilla.com/firefox/rc/features/',
-                   fx4_tech='https://www.mozilla.com/firefox/rc/technology/' %}
-          Test the <a href="{{ fx4_features }}">next version of Firefox</a> and help us make the
-          world's best browser even better. Firefox 4 advances the modern web and we have a
-          <a href="{{ fx4_tech }}">big chart full of check marks</a> to prove it.
-          {% endtrans %}
-          </p>
-          <p class="more"><a href="https://www.mozilla.com/firefox/rc/" class="button">{{ _('More') }}</a></p>
         </div>
       </li>
       <li id="slide-five" class="slide">
