@@ -345,3 +345,11 @@ def hideshow(request, slug, hide=True):
 def terms(request):
     return jingo.render(request, 'demos/terms.html', {})
 
+def devderby_landing(request):
+    """Dev Derby landing page"""
+    return jingo.render(request, 'demos/devderby_landing.html', {})
+
+def devderby_rules(request):
+    """Dev Derby rules page"""
+    return jingo.render(request, 'demos/devderby_rules.html', {})
+
