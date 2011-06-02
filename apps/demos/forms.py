@@ -114,7 +114,7 @@ class SubmissionEditForm(MyModelForm):
             'navbar_optout': forms.Select
         }
         fields = (
-            'title', 'summary', 'description',
+            'title', 'summary', 'description', 'hidden',
             'tech_tags', 'challenge_tags',
             'screenshot_1', 'screenshot_2', 'screenshot_3', 
             'screenshot_4', 'screenshot_5', 

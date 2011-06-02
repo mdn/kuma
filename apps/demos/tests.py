@@ -391,3 +391,10 @@ class DemoPackageTest(TestCase):
                 ok_(False, "There should be a validation exception")
             except ValidationError, e:
                 ok_('ZIP file contains an unacceptable file: badfile' in e.messages)
+
+    def test_hidden_demo_package_valid(self):
+        """Demo package with at least index.html in root is valid"""
+        s = self.submission
+        s.hidden = True
+
+        ok_(s.allows_hiding_by(self.user))
