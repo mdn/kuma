@@ -124,7 +124,7 @@ transform: rotate(18deg);
 #devderby .gallery { margin: 0 -20px 1em -40px; }
 #devderby .gallery li.demo { width: 170px; margin: 0 0 1.4em 25px; padding: 158px 5px 0; }
 
-#devderby .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; padding: 5px; background: #fff; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.2); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.2); box-shadow: 5px 5px 0 rgba(0,0,0,.2); }
+#devderby .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 5px; background: #fff; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.2); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.2); box-shadow: 5px 5px 0 rgba(0,0,0,.2); }
 #devderby .demo .demo-title a:hover img, #devderby .demo .demo-title a:focus img, #devderby .demo .demo-title a:active img { -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.3); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.3); box-shadow: 5px 5px 0 rgba(0,0,0,.3); }
 #devderby .demo .launch { position: absolute; top: 105px; right: 12px; font-size: 1.2em; }
 
@@ -143,7 +143,7 @@ transform: rotate(18deg);
 #prev-winner .title a { color: #000; }
 #prev-winner .author { font-size: 1em; margin: 0 0 .25em; }
 #prev-winner .author img { float: left; margin: 0 15px .5em -80px; }
-#prev-winner .desc { font-size: .857em; }
+#prev-winner .desc { font-size: .857em; min-height: 3em; margin-left: 0.5em; }
 #prev-winner .launch { position: relative; left: -80px; width: 225px; text-align: center; }
 #prev-winner .launch a { display: inline-block; padding: .35em 15px; background: #f9b43a; border: 1px solid #a97a27; font: 14px/1 "Milk", Georgia, Times, serif; text-transform: none; color: #000; text-shadow: -1px -1px 1px rgba(255,255,255,.2); -moz-border-radius: .75em; -webkit-border-radius: .75em; border-radius: .75em; -moz-box-shadow: inset 0 0 4px rgba(200,145,45,.5), 2px 2px 0 rgba(0,0,0,.2); -webkit-box-shadow: inset 0 0 4px rgba(200,145,45,.5), 2px 2px 0 rgba(0,0,0,.2); box-shadow: inset 0 0 4px rgba(200,145,45,.5), 2px 2px 0 rgba(0,0,0,.2); }
 #prev-winner .launch a:hover { background: #ffc358; text-shadow: -1px -1px 1px rgba(255,255,255,.2), 0 0 3px #ff6; text-decoration: none; }

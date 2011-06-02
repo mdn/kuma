@@ -32,6 +32,9 @@ from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
 from . import DEMOS_CACHE_NS_KEY
 
+# TODO: Make these configurable in the DB via an admin page
+from . import DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG, DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
+
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from contentflagging.forms import ContentFlagForm
 
@@ -347,7 +350,28 @@ def terms(request):
 
 def devderby_landing(request):
     """Dev Derby landing page"""
-    return jingo.render(request, 'demos/devderby_landing.html', {})
+
+    sort_order = request.GET.get('sort', 'created')
+
+    # TODO: Make these configurable in the DB via an admin page
+    current_challenge_tag_name = DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG
+    previous_winner_tag_name = DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
+
+    submissions_qs = ( Submission.objects.all_sorted(sort_order)
+        .filter(taggit_tags__name__in=[current_challenge_tag_name])
+        .exclude(hidden=True) )
+
+    previous_winner_qs = ( Submission.objects.all() 
+        .filter(taggit_tags__name__in=[previous_winner_tag_name])
+        .exclude(hidden=True) )
+
+    # TODO: Use an object_list here, in case we need pagination?
+    return jingo.render(request, 'demos/devderby_landing.html', dict(
+        current_challenge_tag_name = current_challenge_tag_name,
+        previous_winner_tag_name = previous_winner_tag_name,
+        submissions_qs = submissions_qs,
+        previous_winner_qs = previous_winner_qs,
+    ))
 
 def devderby_rules(request):
     """Dev Derby rules page"""

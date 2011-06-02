@@ -6,10 +6,8 @@
 
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/devderby.css"/>
-<link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
-        href="{{ url('demos_feed_recent', format='atom') }}" />
-        <link rel="alternate" type="application/atom+xml" title="{{_('Featured demos')}}"
-        href="{{ url('demos_feed_featured', format='atom') }}" />
+<link rel="alternate" type="application/atom+xml" title="{{_('Dev Derby Submissions')}}"
+        href="{{ url('demos_feed_tag', tag=current_challenge_tag_name, format='atom') }}" />
 {% endblock %}
 
 {% block title %}{{ page_title(_('Dev Derby')) }}{% endblock %}
@@ -67,7 +65,7 @@
       </ol>
     </section>
     
-    <section id="current-challenge" class="tabbed">
+    <section id="current-challenge">
       <ul class="index">
         <li class="current"><a href="#tab-challenge">Current Challenge</a></li>
         <li><a href="#tab-submissions">Submissions</a></li>
@@ -86,105 +84,18 @@
       </section>
     
       <section id="tab-submissions" class="block">
-      <!-- If no submissions...
-        <p class="none">Developers must be busy tinkering with their demos. No submissions yet. Be the first!</p>
-        <p class="demo-submit"><a href="demo-submit.php" class="button">Submit Your Demo</a></p>
-      -->
-      
-    <!-- NOTES:
-         First item in each row needs the class "row-first". It's a strictly presentational class that only serves to 
-         clear the floats of the row above, but it's necessary to preserve the layout.
-    -->
-        <ul class="gallery">
-          <li class="demo row-first">
-            <h2 class="demo-title">
-              <a href="demo-detail.php" title="See more about &ldquo;The Incredible Machine&rdquo; by Neil Gauldin">
-                <img src="{{MEDIA_URL}}img/fpo55.png" alt="" width="180" height="135"> The Incredible Machine
-              </a>
-            </h2>
-            <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">Neil Gauldin</a></p>
-            <div class="extra">
-              <ul class="stats">
-                <li class="views" title="This demo has been viewed 20,000 times">20,000</li>
-                <li class="likes" title="3,000 people liked this demo">3,000</li>
-                <li class="comments"><a href="demo-detail.php#comments" title="There are 100 comments for this demo">100</a></li>
-              </ul>
-              <p class="desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-              <p class="launch"><a href="#" class="button" title="Launch &ldquo;The Incredible Machine&rdquo;">Launch</a></p>
-            </div>
-          </li>
-          <li class="demo">
-            <h2 class="demo-title">
-              <a href="demo-detail.php" title="See more about &ldquo;Fantastic Voyage&rdquo; by Alejandra Divens">
-                <img src="{{MEDIA_URL}}img/fpo55.png" alt="" width="180" height="135"> Fantastic Voyage
-              </a>
-            </h2>
-            <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Alejandra Divens">Alejandra Divens</a></p>
-            <div class="extra">
-              <ul class="stats">
-                <li class="views" title="This demo has been viewed 1,234 times">1,234</li>
-                <li class="likes" title="151 people liked this demo">151</li>
-                <li class="comments"><a href="demo-detail.php#comments" title="There are 100 comments for this demo">3</a></li>
-              </ul>
-              <p class="desc">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <p class="launch"><a href="#" class="button" title="Launch &ldquo;Fantastic Voyage&rdquo;">Launch</a></p>
-            </div>
-          </li>
-          <li class="demo">
-            <h2 class="demo-title">
-              <a href="demo-detail.php" title="See more about &ldquo;It's a Mad Mad Mad Mad Mad Mad World&rdquo; by Darryl McConnaughy">
-                <img src="{{MEDIA_URL}}img/fpo55.png" alt="" width="180" height="135"> It&#8217;s a Mad Mad Mad Mad Mad Mad World
-              </a>
-            </h2>
-            <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Darryl McConnaughy">Darryl McConnaughy</a></p>
-            <div class="extra">
-              <ul class="stats">
-                <li class="views" title="This demo hasn't been viewed by anyone yet">0</li>
-                <li class="likes" title="Nobody has liked this demo yet">0</li>
-                <li class="comments"><a href="demo-detail.php#comments" title="There are no comments yet for this demo">0</a></li>
-              </ul>
-              <p class="desc">Morbi in sem quis dui placerat ornare.</p>
-              <p class="launch"><a href="#" class="button" title="Launch &ldquo;It's a Mad Mad Mad Mad Mad Mad World&rdquo;">Launch</a></p>
-            </div>
-          </li>
-          
-          <li class="demo row-first">
-            <h2 class="demo-title">
-              <a href="demo-detail.php" title="See more about &ldquo;Twenty Years to Midnight&rdquo; by Thaddeus Venture">
-                <img src="{{MEDIA_URL}}img/fpo55.png" alt="" width="180" height="135"> Twenty Years to Midnight
-              </a>
-            </h2>
-            <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Thaddeus Venture">Thaddeus Venture</a></p>
-            <div class="extra">
-              <ul class="stats">
-                <li class="views" title="This demo has been viewed 1,234 times">1,234</li>
-                <li class="likes" title="151 people liked this demo">151</li>
-                <li class="comments"><a href="demo-detail.php#comments" title="There are 3 comments for this demo">3</a></li>
-              </ul>
-              <p class="desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-              <p class="launch"><a href="#" class="button" title="Launch &ldquo;Twenty Years to Midnight&rdquo;">Launch</a></p>
-            </div>
-          </li>
-          <li class="demo">
-            <h2 class="demo-title">
-              <a href="demo-detail.php" title="See more about &ldquo;Bloodeye&rdquo; by Jefferson Twilight">
-                <img src="{{MEDIA_URL}}img/fpo55.png" alt="" width="180" height="135"> Bloodeye
-              </a>
-            </h2>
-            <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Jefferson Twilight">Jefferson Twilight</a></p>
-            <div class="extra">
-              <ul class="stats">
-                <li class="views" title="This demo has been viewed 55 times">55</li>
-                <li class="likes" title="7 people liked this demo">7</li>
-                <li class="comments"><a href="demo-detail.php#comments" title="There are no comments yet for this demo">0</a></li>
-              </ul>
-              <p class="desc">Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.</p>
-              <p class="launch"><a href="#" class="button" title="Launch &ldquo;Bloodeye&rdquo;">Launch</a></p>
-            </div>
-          </li>
-    
-        </ul><!-- /.gallery -->
-
+          {% if submissions_qs|count == 0 %}
+          <p class="none">Developers must be busy tinkering with their demos. No submissions yet. Be the first!</p>
+              <p class="demo-submit"><a href="demo-submit.php" class="button">Submit Your Demo</a></p>
+          {% else %}
+                <ul class="gallery">
+                    {% set cols_per_row = 3 %}
+                    {% for submission in submissions_qs %}
+                        {% set extra_class = loop.cycle(' row-first', '', '')%}
+                        {{ submission_thumb(submission, extra_class) }}
+                    {% endfor %}
+                </ul><!-- /.gallery -->
+          {% endif %}
       </section><!-- /#tab-submissions -->
       
       <section id="tab-rules" class="block">
@@ -217,13 +128,18 @@
   </div><!-- /.main -->
       
   <div class="sub">
+    {% if previous_winner_qs|count > 0 %}
+    {% set submission = previous_winner_qs[0] %}
     <section id="prev-winner">
       <h1>Previous Winner</h1>
-      <h2 class="title"><a href="demo-detail.php">The Call of Cthulhu</a></h2>
-      <h3 class="author"><img src="{{MEDIA_URL}}img/blank.gif" alt="" width="70" height="70"> Art Vandelay</h3>
-      <p class="desc">Some brief description of the demo and the challenge that it won.</p>
-      <p class="launch"><a href="demo-detail.php">See the Demo</a></p>
+      <h2 class="title"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a></h2>
+      {# TODO: This should probably be the author's avatar, at some point #}
+      {# <h3 class="author"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="70" height="70"> {{ submission_creator(submission) }}</h3> #}
+      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="70" height="52"></a> {{ submission_creator(submission) }}</h3>
+      <p class="desc">{{ submission.summary }}</p>
+      <p class="launch"><a href="{{ url('demos_detail', slug=submission.slug) }}">See the Demo</a></p>
     </section><!-- /#prev-winner -->
+    {% endif %}
       
     <section id="challenge-prizes">
       <h1>Prizes</h1>
@@ -249,9 +165,9 @@
     <section id="resources">
       <h3>Resources</h3>
       <ul>
-        <li class="res-docs"><a href="http://developer.mozilla.org/docs/">Docs</a></li>
-        <li class="res-demos"><a href="http://developer.mozilla.org/demos/">Demos</a></li>
-        <li class="res-articles"><a href="http://hacks.mozilla.org">Articles</a></li>
+        <li class="res-docs"><a href="{{ url('docs') }}">Docs</a></li>
+        <li class="res-demos"><a href="{{ url('demos') }}">Demos</a></li>
+        <li class="res-articles"><a href="{{ url('learn') }}">Articles</a></li>
       </ul>
     </section>
     
@@ -261,7 +177,7 @@
 </section>
 {% endblock %}
 
-{% block js %}{{ super() }}
+{% block js %}
 <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript">
 // <![CDATA[
