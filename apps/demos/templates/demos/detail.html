@@ -105,7 +105,7 @@
               <iframe style="display: none" id="like_receiver" name="like_receiver"></iframe>
         </li>
 
-        <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">Share It</a>
+        <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">{{_("Share It")}}</a>
           <ul id="share-opts">
             <li class="sharetitle">{{_('Share It')}}</li>
             <li class="twitter"><a href="{{ 'http://twitter.com/share'|urlparams(url=short_url, text=submission.title.encode('utf-8'), via="mozhacks") }}">{{_('Share on Twitter')}}</a></li>
@@ -124,7 +124,9 @@
         <p class="tags">
             {{_('Built using')}} 
             {% for tag in tags_for_object(submission) %}
-                <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+                {% if tag.name.startswith('tech:') %}
+                    <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+                {% endif %}
             {% endfor %}
         </p>
 

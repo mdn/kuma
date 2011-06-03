@@ -113,8 +113,8 @@ TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 
-PROD_DETAILS_DIR = path('lib/product_details_json')
-MDC_PAGES_DIR = path('lib/mdc_pages')
+PROD_DETAILS_DIR = path('../product_details_json')
+MDC_PAGES_DIR = path('../mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -256,6 +256,7 @@ INSTALLED_APPS = (
     'jingo_minify',
     'product_details',
     'tower',
+    'smuggler',
 
     # SUMO
     'users',
@@ -285,6 +286,9 @@ INSTALLED_APPS = (
     # testing.
     'django_nose',
     'test_utils',
+
+    # migrations
+    'south',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
@@ -692,3 +696,14 @@ BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
 DEMO_UPLOADS_ROOT = path('media/uploads/demos')
 # Base URL from where files uploaded for demos will be linked and served
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
+
+# Make sure South stays out of the way during testing
+SOUTH_TESTS_MIGRATE = False
+SKIP_SOUTH_TESTS = True
+
+# Provide migrations for third-party vendor apps
+# TODO: Move migrations for our apps here, rather than living with the app?
+SOUTH_MIGRATION_MODULES = {
+    'taggit': 'migrations.south.taggit',
+}
+

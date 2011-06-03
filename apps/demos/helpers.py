@@ -32,6 +32,8 @@ from devmo.urlresolvers import reverse
 from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR, LOGARITHMIC
 
+from taggit.models import TaggedItem
+
 from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES
 from . import DEMOS_CACHE_NS_KEY
 
@@ -116,8 +118,8 @@ def submission_listing_cache_key(*args, **kw):
 def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url): 
     return locals()
 
-@register.inclusion_tag('demos/elements/tags_list.html')
-def tags_list(): return locals()
+@register.inclusion_tag('demos/elements/tech_tags_list.html')
+def tech_tags_list(): return locals()
 
 # Not cached, because it's small and changes based on current search query string
 @register.inclusion_tag('demos/elements/search_form.html')
@@ -198,12 +200,12 @@ def tag_learn_more(tag):
 
 @register.function
 def tags_for_object(obj):
-    tags = Tag.objects.get_for_object(obj)
+    tags = obj.taggit_tags.all()
     return tags
 
 @register.function
 def tags_used_for_submissions():
-    return Tag.objects.usage_for_model(Submission, counts=True, min_count=1)
+    return TaggedItem.tags_for(Submission)
 
 @register.filter
 def date_diff(timestamp, to=None):

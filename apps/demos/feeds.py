@@ -16,8 +16,6 @@ from django.conf import settings
 
 from devmo.urlresolvers import reverse
 
-from tagging.utils import parse_tag_input
-from tagging.models import Tag, TaggedItem
 from .models import Submission, TAG_DESCRIPTIONS
 
 
@@ -133,7 +131,7 @@ class SubmissionsFeed(Feed):
             args=(submission.slug,)))
 
     def item_categories(self, submission):
-        return parse_tag_input(submission.tags)
+        return submission.taggit_tags.all()
 
     def item_copyright(self, submission):
         # TODO: Translate license name to something meaningful in the feed
@@ -186,9 +184,10 @@ class TagSubmissionsFeed(SubmissionsFeed):
         return tag
 
     def items(self, tag):
-        qs = Submission.objects.exclude(hidden=True)
-        submissions = TaggedItem.objects.get_by_model(qs, [tag])
-        return submissions.order_by('-modified').all()[:MAX_FEED_ITEMS]
+        submissions = ( Submission.objects.filter(taggit_tags__name__in=[tag])
+            .exclude(hidden=True)
+            .order_by('-modified').all()[:MAX_FEED_ITEMS] )
+        return submissions
 
 
 class ProfileSubmissionsFeed(SubmissionsFeed):

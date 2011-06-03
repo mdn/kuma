@@ -6,12 +6,18 @@ from django.conf import settings
 from django.db.models import F
 
 from django.core import urlresolvers
+from django.core.mail import send_mail
 
+from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
 from django.utils.translation import ugettext_lazy as _
+
+from django.template import Context, loader
+
+from devmo.models import UserProfile
 
 from .utils import get_ip, get_unique
 
@@ -31,11 +37,15 @@ FLAG_STATUSES = getattr(settings, "FLAG_STATUSES", (
     ("deleted",  _("Content deleted by moderator")),
 ))
 
+FLAG_NOTIFICATIONS = dict([reason, True] for reason in FLAG_REASONS)
+# to refine flag notifications, change preceding line to False and add
+# individual reasons to the set like so:
+#FLAG_NOTIFICATIONS['inappropriate'] = True
 
 class ContentFlagManager(models.Manager):
     """Manager for ContentFlags"""
 
-    def flag(self, request, object, flag_type, explanation):
+    def flag(self, request, object, flag_type, explanation, recipients=None):
         """Create a flag for a content item, if the unique request hasn't
         already done so before."""
         if flag_type not in dict(FLAG_REASONS):
@@ -44,11 +54,21 @@ class ContentFlagManager(models.Manager):
         user, ip, user_agent, session_key = get_unique(request)
 
         content_type = ContentType.objects.get_for_model(object)
-        
-        return ContentFlag.objects.get_or_create(
+
+        cf = ContentFlag.objects.get_or_create(
                 content_type=content_type, object_pk=object.pk,
                 ip=ip, user_agent=user_agent, user=user, session_key=session_key,
                 defaults=dict(flag_type=flag_type, explanation=explanation,))
+        if recipients:
+            subject = _("{object} Flagged")
+            subject = subject.format(object=object)
+            t = loader.get_template('contentflagging/email/flagged.ltxt')
+            url = '/admin/contentflagging/contentflag/' + str(object.pk)
+            host = Site.objects.get_current().domain
+            content = t.render(Context({'url':url,'host':host,
+                                        'object':object,'flag_type':flag_type}))
+            send_mail(subject, content, settings.DEFAULT_FROM_EMAIL, recipients)
+        return cf
 
 
 class ContentFlag(models.Model):
@@ -56,10 +76,10 @@ class ContentFlag(models.Model):
     objects = ContentFlagManager()
 
     class Meta:
-        ordering = ( '-created', )
+        ordering = ('-created',)
         get_latest_by = 'created'
-        unique_together = ( ('content_type', 'object_pk',
-            'ip','session_key','user_agent','user'), )
+        unique_together = (('content_type', 'object_pk',
+            'ip', 'session_key', 'user_agent', 'user'),)
 
     flag_status = models.CharField(
             _('current status of flag review'),
@@ -81,13 +101,13 @@ class ContentFlag(models.Model):
             'content_type', 'object_pk')
 
     ip = models.CharField(
-            max_length=40, editable=False, 
+            max_length=40, editable=False,
             blank=True, null=True)
     session_key = models.CharField(
-            max_length=40, editable=False, 
+            max_length=40, editable=False,
             blank=True, null=True)
     user_agent = models.CharField(
-            max_length=128, editable=False, 
+            max_length=128, editable=False,
             blank=True, null=True)
     user = models.ForeignKey(
             User, editable=False, blank=True, null=True)
@@ -95,19 +115,19 @@ class ContentFlag(models.Model):
     created = models.DateTimeField(
             _('date submitted'),
             auto_now_add=True, blank=False, editable=False)
-    modified = models.DateTimeField( 
-            _('date last modified'), 
+    modified = models.DateTimeField(
+            _('date last modified'),
             auto_now=True, blank=False)
 
     def __unicode__(self):
         return 'ContentFlag %(flag_type)s -> "%(title)s"' % dict(
                 flag_type=self.flag_type, title=str(self.content_object))
-    
+
     def content_view_link(self):
         """HTML link to the absolute URL for the linked content object"""
         object = self.content_object
-        return ( '<a target="_new" href="%(link)s">View %(title)s</a>' % 
-                dict(link=object.get_absolute_url(), title=object) )
+        return ('<a target="_new" href="%(link)s">View %(title)s</a>' %
+                dict(link=object.get_absolute_url(), title=object))
 
     content_view_link.allow_tags = True
 
@@ -116,10 +136,9 @@ class ContentFlag(models.Model):
         object = self.content_object
         ct = ContentType.objects.get_for_model(object)
         url_name = 'admin:%(app)s_%(model)s_change' % dict(
-            app=ct.app_label, model=ct.model) 
+            app=ct.app_label, model=ct.model)
         link = urlresolvers.reverse(url_name, args=(object.id,))
-        return ( '<a target="_new" href="%(link)s">Edit %(title)s</a>' % 
-                dict(link=link, title=object) )
+        return ('<a target="_new" href="%(link)s">Edit %(title)s</a>' %
+                dict(link=link, title=object))
 
     content_admin_link.allow_tags = True
-

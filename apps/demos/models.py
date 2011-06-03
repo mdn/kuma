@@ -32,7 +32,7 @@ from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify, filesizeformat
 
 from django.contrib.sites.models import Site
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 
 import tagging
 import tagging.fields
@@ -42,6 +42,12 @@ from tagging.utils import parse_tag_input
 from tagging.fields import TagField
 from tagging.models import Tag
 
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
+import south.modelsinspector
+south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
+
 from threadedcomments.models import ThreadedComment, FreeThreadedComment
 
 from actioncounters.fields import ActionCounterField
@@ -50,6 +56,7 @@ from embedutils import VideoEmbedURLField
 
 from . import scale_image
 from . import TAG_DESCRIPTIONS, DEMO_LICENSES
+from . import TAG_NAMESPACE_DEMO_CREATOR_WHITELIST
 
 try:
     from PIL import Image
@@ -125,7 +132,6 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
     'text/x-php',
 ])
 
-
 class ConstrainedTagField(tagging.fields.TagField):
     """Tag field constrained to described tags"""
 
@@ -152,12 +158,15 @@ class ConstrainedTagField(tagging.fields.TagField):
                     _('Tag "%s" is not in the set of described tags') % 
                         (tag_name))
 
-    def formfield(self, **kwargs):
-        from .forms import ConstrainedTagFormField
-        defaults = {'form_class': ConstrainedTagFormField}
-        defaults.update(kwargs)
-        return super(ConstrainedTagField, self).formfield(**defaults)
-
+south.modelsinspector.add_introspection_rules([
+    (
+        [ ConstrainedTagField ],
+        [ ],
+        {
+            'max_tags': ['max_tags', {'default':5}],
+        },
+    )
+], ["^demos.models.ConstrainedTagField"])
 
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
@@ -246,6 +255,16 @@ class ReplacingZipFileField(models.FileField):
 
         return data
 
+south.modelsinspector.add_introspection_rules([
+    (
+        [ ReplacingZipFileField ],
+        [ ],
+        {
+            'max_upload_size': ['max_upload_size', {'default':5}],
+        },
+    )
+], ["^demos.models.ReplacingZipFileField"])
+
 
 class ReplacingImageWithThumbFieldFile(ImageFieldFile):
     
@@ -290,9 +309,9 @@ class ReplacingImageWithThumbField(models.ImageField):
 
     def __init__(self, *args, **kwargs):
         self.full_max_width   = kwargs.pop("full_max_width",  SCREENSHOT_MAXW)
-        self.full_max_height  = kwargs.pop("full_max_width",  SCREENSHOT_MAXH)
+        self.full_max_height  = kwargs.pop("full_max_height",  SCREENSHOT_MAXH)
         self.thumb_max_width  = kwargs.pop("thumb_max_width", THUMBNAIL_MAXW)
-        self.thumb_max_height = kwargs.pop("thumb_max_width", THUMBNAIL_MAXH)
+        self.thumb_max_height = kwargs.pop("thumb_max_height", THUMBNAIL_MAXH)
         super(ReplacingImageWithThumbField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):        
@@ -306,6 +325,19 @@ class ReplacingImageWithThumbField(models.ImageField):
         data.file = scaled_file
 
         return data
+
+south.modelsinspector.add_introspection_rules([
+    (
+        [ ReplacingImageWithThumbField ],
+        [ ],
+        {
+            'full_max_width': ['full_max_width', {'default':SCREENSHOT_MAXW}],
+            'full_max_width': ['full_max_height', {'default':SCREENSHOT_MAXH}],
+            'full_max_width': ['full_max_width', {'default':THUMBNAIL_MAXW}],
+            'full_max_width': ['thumb_max_height', {'default':THUMBNAIL_MAXH}],
+        },
+    )
+], ["^demos.models.ReplacingImageWithThumbField"])
 
 
 class SubmissionManager(models.Manager):
@@ -371,7 +403,7 @@ class SubmissionManager(models.Manager):
         elif sort == 'likes':
             return queryset.order_by('-likes_total')
         elif sort == 'upandcoming':
-            return queryset.order_by('-launches_recent','-likes_recent')
+            return queryset.order_by('-likes_recent','-launches_recent')
         else:
             return queryset.order_by('-created')
         
@@ -395,7 +427,7 @@ class Submission(models.Model):
 
     featured = models.BooleanField()
     hidden = models.BooleanField(
-            _("Hide this demo from others?"), default=True)
+            _("Hide this demo from others?"), default=False)
     censored = models.BooleanField()
 
     navbar_optout = models.BooleanField(
@@ -414,6 +446,8 @@ class Submission(models.Model):
     tags = ConstrainedTagField(
             _('select up to 5 tags that describe your demo'),
             max_tags=5)
+    
+    taggit_tags = TaggableManager()
 
     screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
@@ -525,10 +559,11 @@ class Submission(models.Model):
         return False
 
     def allows_viewing_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        if not self.hidden and not self.censored:
-            return True
+        if not self.censored:
+            if user.is_staff or user.is_superuser or user == self.creator:
+                return True
+            if not self.hidden:
+                return True
         return False
 
     def allows_editing_by(self, user):
@@ -540,6 +575,59 @@ class Submission(models.Model):
         if user.is_staff or user.is_superuser or user == self.creator:
             return True
         return False
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    def allows_tag_namespace_for(self, ns, user):
+        """Decide whether a tag namespace is editable by a user"""
+        if user.is_staff or user.is_superuser:
+            # Staff / superuser can manage any tag namespace
+            return True
+        if user == self.creator and ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
+            # Creator can manage whitelisted namespaces
+            return True
+        return False
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    @classmethod
+    def parse_tag_namespaces(cls, tag_list):
+        """Parse a list of tags out into a dict of lists by namespace"""
+        namespaces = { }
+        for tag in tag_list:
+            ns = (':' in tag) and ('%s:' % tag.rsplit(':', 1)[0]) or ''
+            if ns not in namespaces: namespaces[ns] = []
+            namespaces[ns].append(tag)
+        return namespaces
+
+    # TODO:liberate - Move this to a more generalized tag enhancement package?
+    def resolve_allowed_tags(self, tags_curr, tags_new, request_user=AnonymousUser):
+        """Given a new set of tags and a user, build a list of allowed new tags
+        with changes accepted only for namespaces where editing is allowed for
+        the user. For disallowed namespaces, this object's current tag set will
+        be imposed.
+        
+        No changes are made; the new tag list is just returned.
+        """
+        # Produce namespaced sets of current and incoming new tags.
+        ns_tags_curr = self.parse_tag_namespaces(tags_curr)
+        ns_tags_new  = self.parse_tag_namespaces(tags_new)
+
+        # Produce a union of all namespaces, current and new tag set
+        all_ns = set( ns_tags_curr.keys() + ns_tags_new.keys() )
+
+        # Assemble accepted changed tag set according to permissions
+        tags_out = []
+        for ns in all_ns:
+            if self.allows_tag_namespace_for(ns, request_user):
+                # If the user is allowed this namespace, apply changes by
+                # accepting new tags or lack thereof.
+                if ns in ns_tags_new:
+                    tags_out.extend(ns_tags_new[ns])
+            elif ns in ns_tags_curr:
+                # If the user is not allowed this namespace, carry over
+                # existing tags or lack thereof
+                tags_out.extend(ns_tags_curr[ns])
+
+        return tags_out
 
     @classmethod
     def get_valid_demo_zipfile_entries(cls, zf):
