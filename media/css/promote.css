@@ -11,15 +11,14 @@
 
 #promote-buttons #content { min-height: 40em; border-top: 4px solid #a33500; }
 
-#promote-buttons #page-head { margin: 0; padding: 40px 0 10px; text-align: center; clear: both; }
+#promote-buttons #page-head { margin: 0; padding: 30px 0 10px; text-align: center; clear: both; }
 #promote-buttons #page-head .crumb { font-size: .857em; text-align: left; margin-top: -1.75em; }
 #promote-buttons #page-head .crumb a:before { content: "\00AB\00A0"; }
-#promote-buttons #page-head p { text-align: justify; font-size: .857em; width: 700px; margin: 0 auto 1em; color: #666; }
-#promote-buttons #page-head p.intro { font-size: 16px; }
-#promote-buttons #page-head p strong { color: #333; }
+#promote-buttons #page-head ol { margin: .5em 40px 1em; text-align: left; font-size: .925em; }
+#promote-buttons #page-head ol strong { color: #a33500; }
 #promote-buttons #page-head .page-title { margin: 0 0 .1em; color: #ab181a; font: 200 72px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(170, 160, 130, 0.5); }
 
-#button-builder { position: relative; padding-bottom: 2em; overflow: hidden; }
+#button-builder { position: relative; margin: 0 0 1em; padding-bottom: 2em; overflow: hidden; }
 #button-builder .step { width: 600px; padding: 19px; float: left; margin: 0 0 10px;
   border: 1px solid #d8d4ca; 
   background: #fff;
@@ -28,7 +27,7 @@
   background: linear-gradient(top, rgba(255,255,255,.9) 0, rgba(255,255,255,0) 80%);
 
 }
-#button-builder .step h3 { font: 20px/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: .5px; }
+#button-builder .step h3, #button-preview h3 { font: 20px/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: .5px; }
 #button-builder .step h3 b { float: left; margin: -8px 10px 0 -8px; padding: 4px 3px 4px 5px; width: 24px; height: 24px; text-align: center; font: 20px/20px Georgia, Times, serif; background: #ab181a; color: #fff; -moz-border-radius: 16px; -webkit-border-radius: 16px; border-radius: 16px; text-shadow: 1px 1px 0 rgba(0,0,0,.5); -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.3); -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.3); box-shadow: 1px 1px 1px rgba(0,0,0,.3); }
 #button-builder label { cursor: pointer; }
 #button-build ul { list-style: none; margin: 0 0 1.4em; padding: 0; }
