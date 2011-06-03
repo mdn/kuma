@@ -202,6 +202,16 @@ var buttons = rowsToObjects(
 
 (function($) {
 
+    // Reveal an element by selector, scroll to it if it wasn't visible before.
+    function doReveal(sel) {
+        var was_visible = $(sel).is(':visible');
+        $(sel).fadeIn('fast', function() {
+            if (!was_visible) {
+                $("html,body").animate({scrollTop: $(sel).offset().top}, 200); 
+            }
+        });
+    }
+
     function updateButtonCode (ev) {
 
         // Build a search spec from current selection state.
@@ -212,8 +222,17 @@ var buttons = rowsToObjects(
         };
 
         // Reveal / hide builder steps only if preceding conditions are met.
-        $('#step-color')[ ( spec['design'] ) ? 'fadeIn':'hide' ]();
-        $('#step-topic')[ ( spec['design'] && 'devtoolbox' != spec['design'] && spec['color'] ) ? 'fadeIn':'hide' ]();
+        if (spec['design']) {
+            doReveal('#step-color');
+        } else {
+            $('#step-color').hide();
+        }
+
+        if (spec['design'] && 'devtoolbox' != spec['design'] && spec['color']) {
+            doReveal('#step-topic');
+        } else {
+            $('#step-topic').hide();
+        }
         
         if ( spec['design'] === 'devtoolbox' ) {
           $("#step-code h3 b").text("3");
@@ -241,7 +260,12 @@ var buttons = rowsToObjects(
         }
 
         // Reveal preview only if there's a valid selection.
-        $('#button-preview, #step-code')[ sel ? 'fadeIn':'hide' ]();
+        if (sel) {
+            $('#button-preview').fadeIn();
+            doReveal('#step-code');
+        } else {
+            $('#button-preview, #step-code').hide();
+        }
 
         // Do nothing if, somehow, a valid selection wasn't found.
         if (!sel) { return; }
