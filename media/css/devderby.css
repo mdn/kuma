@@ -98,18 +98,18 @@ transform: rotate(18deg);
 
 /* @Current @Challenge *********/
 #current-challenge { border: 0; padding-top: 4em; position: relative; min-height: 300px; }
-#current-challenge ul.index { width: 100%; height: 3em; list-style: none; margin: 0; position: absolute; top: 0; left: 0; border-bottom: 3px solid #000; background: transparent none; }
-#current-challenge ul.index li { border: 0; float: left; margin: 0; padding: 0; text-align: center; color: #333; background: transparent none; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
-#current-challenge ul.index li:hover { background: transparent none; }
-#current-challenge ul.index li:focus { outline: 0; }
-#current-challenge ul.index a { display: block; color: #333; text-decoration: none; padding: 1.5em 10px; margin-right: 3px; min-width: 80px; }
-#current-challenge ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-decoration: underline; }
-#current-challenge ul.index li.current a { background: transparent url(../img/devderby/chal-tab-arrow.png) center bottom no-repeat; padding-bottom: 22px; }
+#current-challenge ul.tabs { width: 100%; height: 3em; list-style: none; margin: 0; position: absolute; top: 0; left: 0; border-bottom: 3px solid #000; background: transparent none; }
+#current-challenge ul.tabs li { border: 0; float: left; margin: 0; padding: 0; text-align: center; color: #333; background: transparent none; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+#current-challenge ul.tabs li:hover { background: transparent none; }
+#current-challenge ul.tabs li:focus { outline: 0; }
+#current-challenge ul.tabs a { display: block; color: #333; text-decoration: none; padding: 1.5em 10px; margin-right: 3px; min-width: 80px; }
+#current-challenge ul.tabs a:hover, ul.tabs a:focus, ul.tabs a:active { color: #2f2f2f; text-decoration: underline; }
+#current-challenge ul.tabs li.current a { background: transparent url(../img/devderby/chal-tab-arrow.png) center bottom no-repeat; padding-bottom: 22px; }
 
-#current-challenge .block { padding: 1em 40px; border-bottom: 2px dotted #746b60; }
-#current-challenge .block.hidden { position: absolute; left: -999em; height: 0; overflow: hidden; }
+#current-challenge .block { padding: 1em 40px; margin-bottom: 2em; border-bottom: 2px dotted #746b60; }
+#current-challenge .block.block-hidden { position: absolute; top: 4em; left: -999em; height: 0; overflow: hidden; }
 #current-challenge .block:after { content: "."; clear: both; display: block; height: 0; visibility: hidden; }
-.hasJS #current-challenge .block { border: 0; }
+.hasJS #current-challenge .block { margin: 0; border: 0; }
 
 #tab-challenge header { min-height: 70px; padding: .25em 0 .25em 70px; margin: 0 0 1em -15px; background: url("../img/devderby/trophy-one-sm.png") no-repeat; }
 #tab-challenge .title { font: 200 40px/.95 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; color: #000; margin: 0 0 .15em; }
@@ -122,19 +122,19 @@ transform: rotate(18deg);
 #tab-submissions .demo-submit .button:hover, #tab-submissions .demo-submit .button:focus, #tab-submissions .demo-submit .button:active { background-color: #ffc35a; }
 
 #devderby .gallery { margin: 0 -20px 1em -40px; }
-#devderby .gallery li.demo { width: 170px; margin: 0 0 1.4em 25px; padding: 158px 5px 0; }
+#devderby .gallery li.demo { width: 170px; margin: 0 0 1.4em 25px; padding: 150px 5px 0; }
 
 #devderby .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 5px; background: #fff; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.2); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.2); box-shadow: 5px 5px 0 rgba(0,0,0,.2); }
 #devderby .demo .demo-title a:hover img, #devderby .demo .demo-title a:focus img, #devderby .demo .demo-title a:active img { -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.3); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.3); box-shadow: 5px 5px 0 rgba(0,0,0,.3); }
 #devderby .demo .launch { position: absolute; top: 105px; right: 12px; font-size: 1.2em; }
 
 #devderby .demohover { display: none; position: absolute; z-index: 99; margin: -12px -12px 0; padding: 7px; background: #cec6ac; background: rgba(200,190,165,.7); }
-#devderby .demohover .in { position: relative; width: 170px; background: #fff; padding: 163px 10px 1px; }
+#devderby .demohover .in { position: relative; width: 170px; background: #fff; padding: 155px 10px 1px; }
 #devderby .demohover .demo-title { font-size: 1em; }
 #devderby .demohover .demo-title img { position: absolute; top: 5px; left: 5px; padding: 5px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 #devderby .demohover .demo-title a:hover img, #devderby .demohover .demo-title a:focus img, #devderby .demohover .demo-title a:active img { -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 #devderby .demohover .extra { display: block; }
-#devderby .demohover .launch { top: 110px; right: 15px; }
+#devderby .demohover .launch { top: 105px; right: 16px; }
 
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }

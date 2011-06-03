@@ -24,7 +24,7 @@
         <li><em>{{_("Home")}}</em></li>
         <li><a href="#upcoming">{{_("Challenges")}}</a></li>
         <li><a href="{{url('demos_devderby_rules')}}">{{_("Rules")}}</a></li>
-        <li><a href="#tab-judging">{{_("Judging")}}</a></li>
+        <li><a href="#tab-judging" rel="tab">{{_("Judging")}}</a></li>
         <li><a href="#challenge-prizes">{{_("Prizes")}}</a></li>
         <li><a href="#resources">{{_("Resources")}}</a></li>
       </ul>
@@ -68,7 +68,7 @@
     </section>
     
     <section id="current-challenge">
-      <ul class="index">
+      <ul class="tabs">
         <li class="current"><a href="#tab-challenge">{{_("Current Challenge")}}</a></li>
         <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
         <li><a href="#tab-rules">{{_("Rules")}}</a></li>
@@ -189,27 +189,52 @@
 <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript">
 // <![CDATA[
-  function derbyTabs() {
-  	$("#current-challenge .block").addClass("hidden");  
-    // determine the current tab's corresponding block by extracting the id from the href
-  	var currentblock = $("#current-challenge .index li.current a").attr("href").replace( /.*?#(.*)/g, "$1" );
-  	// make that block visible
-  	$("#"+currentblock).removeClass("hidden");
-  	tabSwitch();
+  function derbyTabs(targetblock) {
+    var currentblock;
+  	$("#current-challenge .block").addClass("block-hidden");
+
+    if (targetblock) {
+      currentblock = targetblock.replace( /.*?#(.*)/g, "$1" ); // determine which block to show by extracting the id from the href
+      tabSwitch(currentblock);
+    }
+    else if ( !targetblock && (/.*?#tab-*/.test(window.location)) ) { // if no target is supplied, check the url for a fragment id prefixed with "tab-" (this means inbound links can point directly to a tab)
+      currentblock = window.location.href.replace( /.*?#(.*)/g, "$1" );
+      $("html,body").animate({scrollTop: $("#current-challenge").offset().top - 150}, 0); // HACK: compensate for overshooting the tabs when the page loads
+      tabSwitch(currentblock);
+    }
+    else {
+      currentblock = $("#current-challenge .tabs li.current a").attr("href").replace( /.*?#(.*)/g, "$1" );
+      tabSwitch(currentblock);
+    }
+  	$("#"+currentblock).removeClass("block-hidden"); // make the current block visible
   }
   
-  function tabSwitch() {
-  	$("#current-challenge .index li a").click(function(){
-      $("#current-challenge .index li").removeClass("current");
-      $(this).parents("li").addClass("current");
-      derbyTabs();
-      return false;
-  	});
-  }
+  function tabSwitch(targettab) {
+    var tabs = $("#current-challenge .tabs li a");    
+    if (targettab) {
+      for (var i = 0; i < tabs.length; i++) { // loop through the tabs
+        var tab = $(tabs[i]).attr("href").replace( /.*?#(.*)/g, "$1" ); // strip down the href
+        if ( targettab == tab ) { // if one of them matches our target
+          $("#current-challenge .tabs li").removeClass("current"); // first clean the slate
+          $("#current-challenge .tabs li a[href$=#"+targettab+"]").parents("li").addClass("current"); // then set that tab as current
+        }    
+      }
+    } 
+  };
+  
+  $("#current-challenge .tabs li a").click(function(){
+    $("#current-challenge .tabs li").removeClass("current");
+    $(this).parents("li").addClass("current");
+    derbyTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
+    return false;
+	});
+	
+  $("#nav-derby a[rel=tab]").click(function(){
+    derbyTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
+  });
   
   $(document).ready(function(){
     derbyTabs();
-    $("body").addClass("hasJS");
 
     $("#upcoming li").hover(
       function(){
@@ -220,7 +245,7 @@
       }
     );
   });
-    
+  
 	$(".gallery").ready(function(){
 		$(".gallery").addClass("js");
     $(".gallery .demo").hoverIntent({
