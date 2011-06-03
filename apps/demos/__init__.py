@@ -13,10 +13,16 @@ except ImportError:
     import Image
 
 
+# TODO: Allow these to be managed via DB / admin page?
 DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = getattr(settings, 'DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG', 
-    'devderby:2011:june')
+    'challenge:2011:june')
 DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
-    'system:devderby:winner:2011:june')
+    'system:challenge:winner:2011:june')
+
+# These are tag namespaces whitelisted for demo creators
+TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
+    'tech:', 'challenge:'
+])
 
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
@@ -24,14 +30,14 @@ DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESCRIPTIONS', (
     
     {
-        "tag_name": "system:devderby:winner:2011:june", 
-        "title": _("Winner of the June 2011 Dev Derby Challenge"), 
+        "tag_name": "system:challenge:winner:2011:june", 
+        "title": _("Winner of the June 2011 Dev Derby Challenge - CSS3 Animations"), 
         "description": _("Show us what CSS can really do! Make the Web move with CSS3 Animations."),
         "learn_more": [],
     },
     {
-        "tag_name": "devderby:2011:june", 
-        "title": _("June 2011 Dev Derby Challenge"), 
+        "tag_name": "challenge:2011:june", 
+        "title": _("June 2011 Dev Derby Challenge - CSS3 Animations"), 
         "description": _("Show us what CSS can really do! Make the Web move with CSS3 Animations."),
         "learn_more": [],
     },

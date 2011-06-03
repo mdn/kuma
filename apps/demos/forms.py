@@ -30,9 +30,11 @@ from captcha.fields import ReCaptchaField
 import django.forms.fields
 from django.forms.widgets import CheckboxSelectMultiple
 
-
 import tagging.forms
 from tagging.utils import parse_tag_input
+
+from taggit.utils import parse_tags
+
 
 try:
     from cStringIO import StringIO
@@ -70,40 +72,6 @@ class MyForm(forms.Form):
             help_text_html = u' <p class="help">%s</p>',
             errors_on_separate_row = False)
 
-
-class ConstrainedTagWidget(CheckboxSelectMultiple):
-    """Checkbox select widget for tag descriptions"""
-
-    def __init__(self, attrs=None, choices=()):
-        super(ConstrainedTagWidget, self).__init__(attrs)
-
-        if not choices:
-            choices = ( (x['tag_name'], x['title']) 
-                    for x in TAG_DESCRIPTIONS.values() ) 
-
-        self.choices = list(choices)
-
-    def render(self, name, value, attrs=None, choices=()):
-        if not isinstance(value, (list, tuple)):
-            value = parse_tag_input(value)
-        return super(ConstrainedTagWidget, self).render(
-                name, value, attrs, choices)
-
-
-class ConstrainedTagFormField(tagging.forms.TagField):
-    """Tag field that constrains its input to the set of available
-    TAG_DESCRIPTION entries"""
-
-    widget = ConstrainedTagWidget
-
-    def clean(self, value):
-        # Concatenate the checkboxes into a string usable by the superclass,
-        # but skip superclass' clean() because we'll assume that TAG_DESCRIPTION
-        # tag names don't exceed the intended MAX_TAG_LENGTH
-        if not isinstance(value, (list, tuple)):
-            return value
-        else:
-            return ','.join('"%s"' % x for x in value)
 
 class SubmissionEditForm(MyModelForm):
     """Form accepting demo submissions"""
@@ -154,31 +122,40 @@ class SubmissionEditForm(MyModelForm):
         # Hit up the super class for init
         super(SubmissionEditForm, self).__init__(*args, **kwargs)
 
-        # If we have an instance, try populating the user-accessible namespace
-        # form fields with exiating tags.
         if 'instance' in kwargs and kwargs['instance']:
-            instance = kwargs['instance']
-            tags_orig = ( 
-                ( instance.pk is not None )
+            # If we have an instance, try populating the user-accessible namespace
+            # form fields with exiating tags.
+            tags_incoming = ( 
+                ( self.instance.pk is not None )
                 and [ x.name for x in self.instance.taggit_tags.all() ]
                 or [ ]
             )
+        elif 'tags' in self.initial:
+            # If we have tags in the initial data set, use those to populate
+            # user-accessible namespaces.
+            tags_incoming = parse_tags(self.initial['tags'])
+        else:
+            # No tags for pre-population
+            tags_incoming = []
+
+        # Use any incoming tags to prepopulate the form.
+        if tags_incoming:
             for ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
                 self.initial['%s_tags' % ns[:-1]] = [
-                    x for x in tags_orig if x.startswith(ns)
+                    x for x in tags_incoming if x.startswith(ns)
                 ]
 
     def clean(self):
         cleaned_data = super(SubmissionEditForm, self).clean()
 
         # Establish a set of tags, if none available
-        if 'taggit_tags' not in cleaned_data:
-            cleaned_data['taggit_tags'] = []
+        if 'tags' not in cleaned_data:
+            cleaned_data['tags'] = []
 
         # If there are *_tags fields, append them as tags.
         for k in cleaned_data:
             if k.endswith('_tags'):
-                cleaned_data['taggit_tags'].extend(cleaned_data[k])
+                cleaned_data['tags'].extend(cleaned_data[k])
 
         # If we have an instance, apply the submitted tags as per the permissions.
         if self.instance:
@@ -187,8 +164,8 @@ class SubmissionEditForm(MyModelForm):
                 and [ x.name for x in self.instance.taggit_tags.all() ]
                 or [ ]
             )
-            cleaned_data['taggit_tags'] = self.instance.resolve_allowed_tags(
-                tags_orig, cleaned_data['taggit_tags'], self.request_user 
+            cleaned_data['tags'] = self.instance.resolve_allowed_tags(
+                tags_orig, cleaned_data['tags'], self.request_user 
             )
 
         # If we have a demo_package, try validating it.
@@ -205,7 +182,7 @@ class SubmissionEditForm(MyModelForm):
         rv = super(SubmissionEditForm,self).save(commit)
         if commit:
             # Set the tags, if we have a go to commit.
-            self.instance.taggit_tags.set(*self.cleaned_data['taggit_tags'])
+            self.instance.taggit_tags.set(*self.cleaned_data['tags'])
         return rv
 
 

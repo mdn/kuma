@@ -56,6 +56,7 @@ from embedutils import VideoEmbedURLField
 
 from . import scale_image
 from . import TAG_DESCRIPTIONS, DEMO_LICENSES
+from . import TAG_NAMESPACE_DEMO_CREATOR_WHITELIST
 
 try:
     from PIL import Image
@@ -71,16 +72,6 @@ THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
 
 DEMO_MAX_ZIP_FILESIZE = getattr(settings, 'DEMO_MAX_ZIP_FILESIZE', 60 * 1024 * 1024) # 60MB
 DEMO_MAX_FILESIZE_IN_ZIP = getattr(settings, 'DEMO_MAX_FILESIZE_IN_ZIP', 60 * 1024 * 1024) # 60MB
-
-# These are tag namespaces whitelisted for demo creators
-TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
-    'tech:', 'challenge:'
-])
-
-# These are tag namespaces whitelisted for demo creators
-TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
-    'tech:', 'challenge:'
-])
 
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
@@ -166,12 +157,6 @@ class ConstrainedTagField(tagging.fields.TagField):
                 raise ValidationError(
                     _('Tag "%s" is not in the set of described tags') % 
                         (tag_name))
-
-    def formfield(self, **kwargs):
-        from .forms import ConstrainedTagFormField
-        defaults = {'form_class': ConstrainedTagFormField}
-        defaults.update(kwargs)
-        return super(ConstrainedTagField, self).formfield(**defaults)
 
 south.modelsinspector.add_introspection_rules([
     (

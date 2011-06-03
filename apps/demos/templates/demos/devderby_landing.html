@@ -12,6 +12,8 @@
 
 {% block title %}{{ page_title(_('Dev Derby')) }}{% endblock %}
 
+{% set submit_url = url('demos_submit')|urlparams(tags=[current_challenge_tag_name]|join(' ')) %}
+
 {% block content %}
 <section id="content">
 <div class="wrap">
@@ -19,74 +21,74 @@
   <header id="page-head">
     <nav id="nav-derby">
       <ul>
-        <li><em>Home</em></li>
-        <li><a href="#upcoming">Challenges</a></li>
-        <li><a href="{{url('demos_devderby_rules')}}">Rules</a></li>
-        <li><a href="#tab-judging">Judging</a></li>
-        <li><a href="#challenge-prizes">Prizes</a></li>
-        <li><a href="#resources">Resources</a></li>
+        <li><em>{{_("Home")}}</em></li>
+        <li><a href="#upcoming">{{_("Challenges")}}</a></li>
+        <li><a href="{{url('demos_devderby_rules')}}">{{_("Rules")}}</a></li>
+        <li><a href="#tab-judging">{{_("Judging")}}</a></li>
+        <li><a href="#challenge-prizes">{{_("Prizes")}}</a></li>
+        <li><a href="#resources">{{_("Resources")}}</a></li>
       </ul>
     </nav>
   </header>
 
   <section id="content-main" class="full" role="main">
     <header id="derby-head">
-      <h1>Dev Derby</h1>
-      <h2>Show us what you can do with CSS animations</h2>
-      <p class="info">Join the Dev Derby now and submit your demo to win an Android phone or other prizes.</p>
-      <p class="submit"><a href="demo-submit.php"><b>Submit</b> Your Demo</a></p>
+      <h1>{{_("Dev Derby")}}</h1>
+      <h2>{{_("Show us what you can do with CSS animations")}}</h2>
+      <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
+      <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
     </header>
 
   <div class="main">
     <section id="upcoming">
       <header>
-        <h1>Upcoming Challenges for 2011</h1>
+        <h1>{{_("Upcoming Challenges for 2011")}}</h1>
       </header>
       <ol>
         <li class="first">
-          <h2 class="title">CSS3 Animations</h2>
-          <h3 class="date">June</h3>
-          <h4 class="tagline">Make the Web move</h4>
-          <h5 class="current"><span><b>Current</b> Derby</span></h5>
-          <p class="desc">CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions.</p>
+          <h2 class="title">{{_("CSS3 Animations")}}</h2>
+          <h3 class="date">{{_("June")}}</h3>
+          <h4 class="tagline">{{_("Make the Web move")}}</h4>
+          <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
+          <p class="desc">{{_("CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions.")}}</p>
         </li>
         <li class="second">
-          <h2 class="title">HTML5 &lt;video&gt;</h2>
-          <h3 class="date">July</h3>
-          <h4 class="tagline">Lights, camera, action!</h4>
-          <p class="desc">The HTML5 &lt;video&gt; element lets you embed and control video media directly in web pages, without resorting to plug-ins.</p>
+          <h2 class="title">{{_("HTML5 <video>")}}</h2>
+          <h3 class="date">{{_("July")}}</h3>
+          <h4 class="tagline">{{_("Lights, camera, action!")}}</h4>
+          <p class="desc">{{_("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins.")}}</p>
         </li>
         <li class="third">
-          <h2 class="title">Touch</h2>
-          <h3 class="date">August</h3>
-          <h4 class="tagline">Touch and go</h4>
-          <p class="desc">Touch events let you track the movements of a user's fingers on a touch screen.</p>
+          <h2 class="title">{{_("Touch")}}</h2>
+          <h3 class="date">{{_("August")}}</h3>
+          <h4 class="tagline">{{_("Touch and go")}}</h4>
+          <p class="desc">{{_("Touch events let you track the movements of a user's fingers on a touch screen.")}}</p>
         </li>
       </ol>
     </section>
     
     <section id="current-challenge">
       <ul class="index">
-        <li class="current"><a href="#tab-challenge">Current Challenge</a></li>
-        <li><a href="#tab-submissions">Submissions</a></li>
-        <li><a href="#tab-rules">Rules</a></li>
-        <li><a href="#tab-judging">Judging</a></li>
+        <li class="current"><a href="#tab-challenge">{{_("Current Challenge")}}</a></li>
+        <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
+        <li><a href="#tab-rules">{{_("Rules")}}</a></li>
+        <li><a href="#tab-judging">{{_("Judging")}}</a></li>
       </ul>
       
       <section id="tab-challenge" class="block">
         <header>
-          <h1 class="title">CSS3 Animations</h1>
-          <h2 class="date">June</h2>
+          <h1 class="title">{{_("CSS3 Animations")}}</h1>
+          <h2 class="date">{{_("June")}}</h2>
         </header>
-        <p class="tagline">Show us what CSS can really do! Make the Web move with CSS3 Animations.</p>
-        <p>CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web.  CSS3 Animations let you change property values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3.</p>
-        <p><a href="demo-submit.php">Submit your CSS3 Animations demo</a> for the June Dev Derby today!</p>
+        <p class="tagline">{{_("Show us what CSS can really do! Make the Web move with CSS3 Animations.")}}</p>
+        <p>{{_("CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web.  CSS3 Animations let you change property values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3.")}}</p>
+        <p>{% trans %}<a href="{{ submit_url }}">Submit your CSS3 Animations demo</a> for the June Dev Derby today!{% endtrans %}</p>
       </section>
     
       <section id="tab-submissions" class="block">
           {% if submissions_qs|count == 0 %}
-          <p class="none">Developers must be busy tinkering with their demos. No submissions yet. Be the first!</p>
-              <p class="demo-submit"><a href="demo-submit.php" class="button">Submit Your Demo</a></p>
+              <p class="none">{{_("Developers must be busy tinkering with their demos. No submissions yet. Be the first!")}}</p>
+              <p class="demo-submit"><a href="{{ submit_url }}" class="button">{{_("Submit Your Demo")}}</a></p>
           {% else %}
                 <ul class="gallery">
                     {% set cols_per_row = 3 %}
@@ -99,20 +101,23 @@
       </section><!-- /#tab-submissions -->
       
       <section id="tab-rules" class="block">
-        <p>A summary of the rules can be found below.  For a complete look at the terms of the contest please see the <a href="{{url('demos_devderby_rules')}}">Dev Derby Contest Official Rules</a>.</p>
+      {% trans rules_url=url('demos_devderby_rules') %}
+        <p>A summary of the rules can be found below.  For a complete look at the terms of the contest please see the <a href="{{rules_url}}">Dev Derby Contest Official Rules</a>.</p>
         <ul>
-          <li>Almost anyone can enter (<a href="{{url('demos_devderby_rules')}}">see the rules</a> for exceptions).</li>
+          <li>Almost anyone can enter (<a href="{{rules_url}}">see the rules</a> for exceptions).</li>
           <li>There will be a new contest every month.</li>
-          <li>Your entry must meet certain criteria; <a href="{{url('demos_devderby_rules')}}">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li>
+          <li>Your entry must meet certain criteria; <a href="{{rules_url}}">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li>
           <li>Each contest runs from the first day of the month to the last day of the month (based on <strong>US Pacific time</strong>).</li>
           <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many &ldquo;likes&rdquo; your entry receives.</li>
           <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li>
           <li>You can't win more than once in the same calendar year.</li>
-          <li>Please read the <a href="{{url('demos_devderby_rules')}}">Dev Derby Contest Official Rules</a> before submitting your entry.</li>
+          <li>Please read the <a href="{{rules_url}}">Dev Derby Contest Official Rules</a> before submitting your entry.</li>
         </ul>
+      {% endtrans %}
       </section>
     
       <section id="tab-judging" class="block">
+      {% trans %}
         <p>Entries will be reviewed by the Mozilla team and a panel of expert judges. We will rate the demos on a 1&ndash;5 scale across 4 dimensions:</p>
         <ul>
           <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li>
@@ -122,7 +127,9 @@
         </ul>
         <p>The overall score will be the average of all 4 components (technology, orginality, aesthetics, and practicality). In the event of a tie, the judges will re-evaluate the tied entries to determine the winner.</p>
         <p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby to &ldquo;vote.&rdquo;</p>
+      {% endtrans %}
       </section>
+
     
     </section><!-- /#current-challenge -->
   </div><!-- /.main -->
@@ -131,23 +138,23 @@
     {% if previous_winner_qs|count > 0 %}
     {% set submission = previous_winner_qs[0] %}
     <section id="prev-winner">
-      <h1>Previous Winner</h1>
+      <h1>{{_("Previous Winner")}}</h1>
       <h2 class="title"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a></h2>
       {# TODO: This should probably be the author's avatar, at some point #}
-      {# <h3 class="author"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="70" height="70"> {{ submission_creator(submission) }}</h3> #}
-      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="70" height="52"></a> {{ submission_creator(submission) }}</h3>
+      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="{{ submission.title }}" width="70" height="52"></a> {{ submission_creator(submission) }}</h3>
       <p class="desc">{{ submission.summary }}</p>
-      <p class="launch"><a href="{{ url('demos_detail', slug=submission.slug) }}">See the Demo</a></p>
+      <p class="launch"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{_("See the Demo")}}</a></p>
     </section><!-- /#prev-winner -->
     {% endif %}
       
     <section id="challenge-prizes">
+      {% trans %}
       <h1>Prizes</h1>
-      <img src="{{MEDIA_URL}}img/devderby/prize-androids.png" alt="" width="135" height="150" class="prize"/>
+      <img src="{{MEDIA_URL}}img/devderby/prize-androids.png" alt="Android mobile device" width="135" height="150" class="prize"/>
       <ol>
         <li class="first">
           <h3>Android mobile device</h3>
-          <p>Winner gets an Android mobile device from <a rel="external" href="http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-Phones/">Motorola</a> or <a rel="external" href="http://www.google.com/url?q=http%3A%2F%2Fwww.samsung.com%2Fus%2Fmobile%2Fcell-phones&sa=D&sntz=1&usg=AFQjCNHM0Afc6Zf3_wxLQyMwN9vBE658Tw">Samsung</a>.</p>
+          <p>Winner gets an Android mobile device from <a rel="external" href="http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-Phones/">Motorola</a> or <a rel="external" href="http://www.samsung.com/us/mobile/cell-phones">Samsung</a>.</p>
         </li>
         <li class="second">
           <h3>Rickshaw laptop bag</h3>
@@ -158,16 +165,17 @@
           <p>3rd place gets a limited edition MDN t-shirt to show off their geek cred.</p>
         </li>
       </ol>
+      {% endtrans %}
     </section><!-- /#challenge-prizes -->
   </div><!-- /.sub -->
     
     
     <section id="resources">
-      <h3>Resources</h3>
+      <h3>{{_("Resources")}}</h3>
       <ul>
-        <li class="res-docs"><a href="{{ url('docs') }}">Docs</a></li>
-        <li class="res-demos"><a href="{{ url('demos') }}">Demos</a></li>
-        <li class="res-articles"><a href="{{ url('learn') }}">Articles</a></li>
+        <li class="res-docs"><a href="{{ url('docs') }}">{{_("Docs")}}</a></li>
+        <li class="res-demos"><a href="{{ url('demos') }}">{{_("Demos")}}</a></li>
+        <li class="res-articles"><a href="{{ url('learn') }}">{{_("Articles")}}</a></li>
       </ul>
     </section>
     
