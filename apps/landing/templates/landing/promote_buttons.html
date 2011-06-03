@@ -18,32 +18,18 @@
       {# <nav class="crumb"><a href="{{ url('promote') }}">{{ _('Back to Home') }}</a></nav> #}
       <h1 class="page-title">{{ _('Promote MDN') }}</h1>
       <h2 class="page-subtitle">{{ _('Spread some developer love.') }}</h2>
+      {% trans %}
+      <ol>
+          <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li>
+          <li><strong>Post Buttons:</strong> Copy the source code and paste it anywhere on your website or blog to help people click through to MDN.</li>
+          <li><strong>Feel Good:</strong> Take pride in knowing you're making developers lives just a little bit better by sharing MDN with the world.</li>
+      </ol>
+      {% endtrans %}
     </div> 
   </header>
 
   <section id="content-main" class="full" role="main">
 
-        <section>
-      {% trans %}
-          <p>Whether you've found the docs you were looking for, experience
-          awesome demos, or just wanted to find out more about open source
-          development... help share the MDN experience with others by adding a
-          button to your blog or website today!</p>
-          <p>It's easy to spread the love. Just follow these steps:</p>
-          <ul>
-              <li><strong>Get Buttons:</strong><br />
-                <p>Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</p>
-              </li>
-              <li><strong>Post Buttons:</strong><br />
-                <p>Copy the source code and paste it anywhere on your website or blog to help people click through to MDN.</p>
-              </li>
-              <li><strong>Feel Good:</strong><br />
-              <p>Take pride in knowing you're making developers lives just a little bit better by sharing MDN with the world.</p>
-              </li>
-          </ul>
-      {% endtrans %}
-        </section>
-  
         <form id="button-builder">
             
             <div id="button-preview" class="boxed">
@@ -174,39 +160,39 @@ var buttons = rowsToObjects(
     [
         [ "betterdocs","css","gray","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn1","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn1" ],
         [ "betterdocs","html","gray","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn2","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn2" ],
-        [ "betterdocs","js","gray","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn3","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn3" ],
+        [ "betterdocs","js","gray","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn3","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn3" ],
         [ "betterdocs","web","gray","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn4","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn4" ],
         [ "betterdocs","css","orange","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn5","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn5" ],
         [ "betterdocs","html","orange","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn6","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn6" ],
-        [ "betterdocs","js","orange","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn7","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn7" ],
+        [ "betterdocs","js","orange","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn7","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn7" ],
         [ "betterdocs","web","orange","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn8","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn8" ],
         [ "betterdocs","css","red","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn9","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn9" ],
         [ "betterdocs","html","red","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn10","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn10" ],
-        [ "betterdocs","js","red","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn11","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn11" ],
+        [ "betterdocs","js","red","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn11","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn11" ],
         [ "betterdocs","web","red","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn12","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn12" ],
         [ "devpowered","css","gray","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn13","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn13" ],
         [ "devpowered","html","gray","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn14","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn14" ],
-        [ "devpowered","js","gray","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn15","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn15" ],
+        [ "devpowered","js","gray","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn15","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn15" ],
         [ "devpowered","web","gray","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn16","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn16" ],
         [ "devpowered","css","orange","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn17","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn17" ],
         [ "devpowered","html","orange","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn18","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn18" ],
-        [ "devpowered","js","orange","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn19","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn19" ],
+        [ "devpowered","js","orange","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn19","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn19" ],
         [ "devpowered","web","orange","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn20","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn20" ],
         [ "devpowered","css","red","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn21","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn21" ],
         [ "devpowered","html","red","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn22","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn22" ],
-        [ "devpowered","js","red","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn23","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn23" ],
+        [ "devpowered","js","red","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn23","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn23" ],
         [ "devpowered","web","red","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn24","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn24" ],
         [ "bydev","css","gray","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn25","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn25" ],
         [ "bydev","html","gray","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn26","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn26" ],
-        [ "bydev","js","gray","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn27","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn27" ],
+        [ "bydev","js","gray","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn27","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn27" ],
         [ "bydev","web","gray","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn28","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn28" ],
         [ "bydev","css","orange","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn29","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn29" ],
         [ "bydev","html","orange","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn30","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn30" ],
-        [ "bydev","js","orange","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn31","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn31" ],
+        [ "bydev","js","orange","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn31","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn31" ],
         [ "bydev","web","orange","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn32","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn32" ],
         [ "bydev","css","red","https:\/\/developer.mozilla.org\/docs\/css","\/?WT.mc_id=","mdn33","https:\/\/developer.mozilla.org\/docs\/css\/?WT.mc_id=mdn33" ],
         [ "bydev","html","red","https:\/\/developer.mozilla.org\/docs\/html","\/?WT.mc_id=","mdn34","https:\/\/developer.mozilla.org\/docs\/html\/?WT.mc_id=mdn34" ],
-        [ "bydev","js","red","https:\/\/developer.mozilla.org\/docs\/js","\/?WT.mc_id=","mdn35","https:\/\/developer.mozilla.org\/docs\/js\/?WT.mc_id=mdn35" ],
+        [ "bydev","js","red","https:\/\/developer.mozilla.org\/docs\/javascript","\/?WT.mc_id=","mdn35","https:\/\/developer.mozilla.org\/docs\/javascript\/?WT.mc_id=mdn35" ],
         [ "bydev","web","red","https:\/\/developer.mozilla.org\/docs","\/?WT.mc_id=","mdn36","https:\/\/developer.mozilla.org\/docs\/?WT.mc_id=mdn36" ],
         [ "devtoolbox","---","gray","https:\/\/developer.mozilla.org\/web","\/?WT.mc_id=","mdn37","https:\/\/developer.mozilla.org\/web\/?WT.mc_id=mdn37" ],
         [ "devtoolbox","---","orange","https:\/\/developer.mozilla.org\/web","\/?WT.mc_id=","mdn38","https:\/\/developer.mozilla.org\/web\/?WT.mc_id=mdn38" ],
@@ -215,6 +201,16 @@ var buttons = rowsToObjects(
 );
 
 (function($) {
+
+    // Reveal an element by selector, scroll to it if it wasn't visible before.
+    function doReveal(sel) {
+        var was_visible = $(sel).is(':visible');
+        $(sel).fadeIn('fast', function() {
+            if (!was_visible) {
+                $("html,body").animate({scrollTop: $(sel).offset().top}, 200); 
+            }
+        });
+    }
 
     function updateButtonCode (ev) {
 
@@ -226,8 +222,17 @@ var buttons = rowsToObjects(
         };
 
         // Reveal / hide builder steps only if preceding conditions are met.
-        $('#step-color')[ ( spec['design'] ) ? 'fadeIn':'hide' ]();
-        $('#step-topic')[ ( spec['design'] && 'devtoolbox' != spec['design'] && spec['color'] ) ? 'fadeIn':'hide' ]();
+        if (spec['design']) {
+            doReveal('#step-color');
+        } else {
+            $('#step-color').hide();
+        }
+
+        if (spec['design'] && 'devtoolbox' != spec['design'] && spec['color']) {
+            doReveal('#step-topic');
+        } else {
+            $('#step-topic').hide();
+        }
         
         if ( spec['design'] === 'devtoolbox' ) {
           $("#step-code h3 b").text("3");
@@ -255,7 +260,12 @@ var buttons = rowsToObjects(
         }
 
         // Reveal preview only if there's a valid selection.
-        $('#button-preview, #step-code')[ sel ? 'fadeIn':'hide' ]();
+        if (sel) {
+            $('#button-preview').fadeIn();
+            doReveal('#step-code');
+        } else {
+            $('#button-preview, #step-code').hide();
+        }
 
         // Do nothing if, somehow, a valid selection wasn't found.
         if (!sel) { return; }
