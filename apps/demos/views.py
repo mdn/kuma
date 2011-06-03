@@ -243,7 +243,7 @@ def submit(request):
             if request.user.is_authenticated():
                 new_sub.creator = request.user
             new_sub.save()
-            new_sub.taggit_tags.set(*form.cleaned_data['taggit_tags'])
+            new_sub.taggit_tags.set(*form.cleaned_data['tags'])
 
             ns_key = cache.get(DEMOS_CACHE_NS_KEY)
             if ns_key is None:
