@@ -5,122 +5,123 @@
 {% block title %}{{ page_title(_('Promote MDN')) }}{% endblock %}
 
 {% block extrahead %}
-<style type="text/css">
-#step-design { float: left; }
-#step-design ul { }
-#step-design ul li { display: inline; }
-#step-design ul li input { }
-#step-design ul li.selected img { }
-#step-color { display: none; float: left;  clear: left; padding: 0 0.5em 0 0.5em; }
-#step-topic { display: none; float: left; padding: 0 0.5em 0 0.5em; }
-#step-topic label a { display: block }
-#button-preview { display: none; margin-left: 66%; }    
-</style>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/promote.css" />
 {% endblock %}
 
 {% block content %}
+
+<section id="content">
+<div class="wrap">
+
   <header id="page-head">
     <div class="wrap">
       {# <nav class="crumb"><a href="{{ url('promote') }}">{{ _('Back to Home') }}</a></nav> #}
       <h1 class="page-title">{{ _('Promote MDN') }}</h1>
       <h2 class="page-subtitle">{{ _('Spread some developer love.') }}</h2>
       {% trans %}
-      <p class="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nulla eros. Morbi ultrices ornare adipiscing. Nam ac justo enim.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nulla eros. Morbi ultrices ornare adipiscing. Nam ac justo enim.</p>
       {% endtrans %}
     </div> 
   </header>
 
-<section id="content">
-<div class="wrap">
-
   <section id="content-main" class="full" role="main">
   
-    <div id="" class="">
         <form id="button-builder">
-            <p>Intro copy. Suspendisse ut nulla eros.</p>
+            
+            <div id="button-preview" class="boxed">
+                <h3>{{_('Preview')}}</h3>
+                <div><img id="button-image" src="" width="120" height="240" alt="" /></div>
+            </div>
 
-            <section id="step-design">
-                <h3>{{_('1. Pick your button style')}}</h3>
+            <fieldset id="step-design" class="step">
+                <h3><b>1</b> {{_('Pick your button style')}}</h3>
                 <ul>
                     <li>
-                        <input type="radio" name="button-design" value="betterdocs" id="button-design-betterdocs">
                         <label for="button-design-betterdocs">
+                            <input type="radio" name="button-design" value="betterdocs" id="button-design-betterdocs">
                             <img src="{{ MEDIA_URL }}img/promote/betterdocs_foo.png" alt="{{_('Better Docs')}}" />
                         </label>
                     </li>
                     <li>
-                        <input type="radio" name="button-design" value="devpowered" id="button-design-devpowered">
                         <label for="button-design-devpowered">
+                            <input type="radio" name="button-design" value="devpowered" id="button-design-devpowered">
                             <img src="{{ MEDIA_URL }}img/promote/devpowered_foo.png" alt="{{_('Developer Powered')}}" />
                         </label>
                     </li>
                     <li>
-                        <input type="radio" name="button-design" value="bydev" id="button-design-bydev">
                         <label for="button-design-bydev">
+                            <input type="radio" name="button-design" value="bydev" id="button-design-bydev">
                             <img src="{{ MEDIA_URL }}img/promote/bydev_foo.png" alt="{{_('For Developers, By Developers')}}" />
                         </label>
                     </li>
                     <li>
-                        <input type="radio" name="button-design" value="devtoolbox" id="button-design-devtoolbox">
                         <label for="button-design-devtoolbox">
+                            <input type="radio" name="button-design" value="devtoolbox" id="button-design-devtoolbox">
                             <img src="{{ MEDIA_URL }}img/promote/devtoolbox_foo.png" alt="{{_('Web Developer Toolbox')}}" />
                         </label>
                     </li>
                 </ul>
-            </section>
+            </fieldset>
 
-            <section id="step-color">
-                <h3>{{_('2. Choose a color')}}</h3>
+            <fieldset id="step-color" class="step">
+                <h3><b>2</b> {{_('Choose a color')}}</h3>
                 <ul>
-                    <li><input id="button-color-gray" name="button-color" type="radio" value="gray" />
-                        <label for="button-color-gray">{{_('Gray')}}</label></li>
-                    <li><input id="button-color-orange" name="button-color" type="radio" value="orange" />
-                        <label for="button-color-orange">{{_('Orange')}}</label></li>
-                    <li><input id="button-color-red" name="button-color" type="radio" value="red" />
-                        <label for="button-color-red">{{_('Red')}}</label></li>
+                    <li class="gray">
+                        <label for="button-color-gray">
+                            <input id="button-color-gray" name="button-color" type="radio" value="gray" /> 
+                            {{_('Gray')}}
+                        </label>
+                    </li>
+                    <li class="orange">
+                        <label for="button-color-orange">
+                            <input id="button-color-orange" name="button-color" type="radio" value="orange" />
+                            {{_('Orange')}}
+                        </label>
+                    </li>
+                    <li class="red">
+                        <label for="button-color-red">
+                            <input id="button-color-red" name="button-color" type="radio" value="red" />
+                            {{_('Red')}}
+                        </label>
+                    </li>
                 </ul>
-            </section>
+            </fieldset>
 
-            <section id="step-topic">
-                <h3>{{_('3. Replace <FOO> with')}}</h3>
+            <fieldset id="step-topic" class="step">
+                <h3><b>3</b>{{_('Replace <FOO> with')}}</h3>
                 <ul>
                     <li>
-                        <input id="button-topic-css" name="button-topic" type="radio" value="css" />
                         <label for="button-topic-css">
-                            <span>{{_('CSS')}}</span>
-                            <a href="http://developer.mozilla.org/docs/css">http://developer.mozilla.org/docs/css</a>
+                            <input id="button-topic-css" name="button-topic" type="radio" value="css" />
+                            {{_('CSS')}}
                         </label>
                     </li>
                     <li>
-                        <input id="button-topic-html" name="button-topic" type="radio" value="html" />
                         <label for="button-topic-html">
-                            <span>{{_('HTML')}}</span>
-                            <a href="http://developer.mozilla.org/docs/html">http://developer.mozilla.org/docs/html</a>
+                            <input id="button-topic-html" name="button-topic" type="radio" value="html" />
+                            {{_('HTML')}}
                         </label>
                     </li>
                     <li>
-                        <input id="button-topic-js" name="button-topic" type="radio" value="js" />
                         <label for="button-topic-js">
-                            <span>{{_('JavaScript')}}</span>
-                            <a href="http://developer.mozilla.org/docs/js">http://developer.mozilla.org/docs/js</a>
+                            <input id="button-topic-js" name="button-topic" type="radio" value="js" />
+                            {{_('JavaScript')}}
                         </label>
                     </li>
                     <li>
-                        <input id="button-topic-web" name="button-topic" type="radio" value="web" />
                         <label for="button-topic-web">
-                            <span>{{_('Web')}}</span>
-                            <a href="http://developer.mozilla.org/docs/">http://developer.mozilla.org/docs/</a>
+                            <input id="button-topic-web" name="button-topic" type="radio" value="web" />
+                            {{_('Web')}}
                        </label>
                     </li>
                 </ul>
-            </section>
+            </fieldset>
 
-            <section id="button-preview">
-                <h3>{{_('Your custom button preview:')}}</h3>
-                    <div><img id="button-image" src="" width="" height="" /></div>
-                <h4>{{_('And your source code:')}}</h4>
+            <section id="step-code" class="step">
+                <h3><b>4</b> {{_('Add your custom button to your website')}}</h3>
+                <h4>{{_('Your source code:')}}</h4>
                     <textarea id="button-code" cols="40" rows="7"></textarea>
-                <h4>{{_('Adding that code will take people to:')}}</h4>
+                <h4>{{_('Your button will take people to:')}}</h4>
                     <a id="button-url" href="#">...</a>
             </section>
 
@@ -207,8 +208,18 @@ var buttons = rowsToObjects(
         };
 
         // Reveal / hide builder steps only if preceding conditions are met.
-        $('#step-color')[ ( spec['design'] ) ? 'show':'hide' ]();
-        $('#step-topic')[ ( spec['design'] && 'devtoolbox' != spec['design'] && spec['color'] ) ? 'show':'hide' ]();
+        $('#step-color')[ ( spec['design'] ) ? 'fadeIn':'hide' ]();
+        $('#step-topic')[ ( spec['design'] && 'devtoolbox' != spec['design'] && spec['color'] ) ? 'fadeIn':'hide' ]();
+        
+        if ( spec['design'] === 'devtoolbox' ) {
+          $("#step-code h3 b").text("3");
+        }
+        else {
+          $("#step-code h3 b").text("4");
+        }
+        
+        $('#step-topic ul').removeClass();
+        $('#step-topic ul').addClass(spec['color']);
 
         // Search through known combinations for a match
         var sel = null;
@@ -226,7 +237,7 @@ var buttons = rowsToObjects(
         }
 
         // Reveal preview only if there's a valid selection.
-        $('#button-preview')[ sel ? 'show':'hide' ]();
+        $('#button-preview, #step-code')[ sel ? 'fadeIn':'hide' ]();
 
         // Do nothing if, somehow, a valid selection wasn't found.
         if (!sel) { return; }
@@ -249,6 +260,13 @@ var buttons = rowsToObjects(
 
     }
 
+    $('#button-builder input:radio').click(function(){
+      $(this).parents('ul').children('li').removeClass('selected');
+      $(this).parents('li').addClass('selected');      
+    });
+    $('#button-builder input:radio:checked').parents('li').addClass('selected');
+    
+
     // Update the button code on any change to selectors.
     $('#button-builder input:radio').click(updateButtonCode);
     $('#button-builder select').change(updateButtonCode);
@@ -267,6 +285,23 @@ var buttons = rowsToObjects(
 
     // Focusing on the code textarea selects all for copypasta
     $('#button-code').click(function (ev) { $(ev.target).select(); });
+
+    // Keep the button preview onscreen during scrolling
+    var fixed = false;
+    $(document).scroll(function() {
+    	if( $(this).scrollTop() >= $("#button-builder").offset().top-20 ) {
+    	  if( !fixed ) {
+    	    fixed = true;
+    	    $("#button-preview").css({position:'fixed', top:"20px", marginLeft:"671px"});
+    	  }
+    	} else {
+    	  if( fixed ) {
+    	    fixed = false;
+    	    $("#button-preview").css({position:'static', top:"auto", marginLeft:"0"});
+    	  }
+    	}
+    });
+
 
 })(jQuery);
 
