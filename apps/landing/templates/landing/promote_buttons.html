@@ -18,13 +18,31 @@
       {# <nav class="crumb"><a href="{{ url('promote') }}">{{ _('Back to Home') }}</a></nav> #}
       <h1 class="page-title">{{ _('Promote MDN') }}</h1>
       <h2 class="page-subtitle">{{ _('Spread some developer love.') }}</h2>
-      {% trans %}
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nulla eros. Morbi ultrices ornare adipiscing. Nam ac justo enim.</p>
-      {% endtrans %}
     </div> 
   </header>
 
   <section id="content-main" class="full" role="main">
+
+        <section>
+      {% trans %}
+          <p>Whether you've found the docs you were looking for, experience
+          awesome demos, or just wanted to find out more about open source
+          development... help share the MDN experience with others by adding a
+          button to your blog or website today!</p>
+          <p>It's easy to spread the love. Just follow these steps:</p>
+          <ul>
+              <li><strong>Get Buttons:</strong><br />
+                <p>Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</p>
+              </li>
+              <li><strong>Post Buttons:</strong><br />
+                <p>Copy the source code and paste it anywhere on your website or blog to help people click through to MDN.</p>
+              </li>
+              <li><strong>Feel Good:</strong><br />
+              <p>Take pride in knowing you're making developers lives just a little bit better by sharing MDN with the world.</p>
+              </li>
+          </ul>
+      {% endtrans %}
+        </section>
   
         <form id="button-builder">
             
