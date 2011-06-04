@@ -9,7 +9,10 @@ from pyquery import PyQuery as pq
 import test_utils
 
 class DemoViewsTest(test_utils.TestCase):
-    fixtures = ['apps/demos/fixtures/test_users.json']
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.testuser = User.objects.get(username='testuser')
 
     def test_submit_loggedout(self):
         r = self.client.get(reverse('demos_submit'), follow=True)
@@ -20,8 +23,8 @@ class DemoViewsTest(test_utils.TestCase):
     @patch('dekicompat.backends.DekiUserBackend.authenticate')
     @patch('dekicompat.backends.DekiUserBackend.get_user')
     def test_submit_loggedin(self, authenticate, get_user):
-        authenticate.return_value = User.objects.get(username='testuser')
-        get_user.return_value = User.objects.get(username='testuser')
+        authenticate.return_value = self.testuser
+        get_user.return_value = self.testuser
         self.client.login(authtoken='1')
         r = self.client.get(reverse('demos_submit'), follow=True)
         assert pq(r.content)('form#demo-submit')
