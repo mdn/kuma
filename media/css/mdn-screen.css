@@ -938,6 +938,11 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 .section-demos #page-head.landing .demo-submit .button { float: right; color: #fff; text-shadow: none; font-size: 1.857em; background-color: #689032; background-position: 0 .75em; }
 .section-demos #page-head.landing .demo-submit .button:hover, #page-head.landing .demo-submit .button:focus, #page-head.landing .demo-submit .button:active { background-color: #78a935; }
 
+.section-demos #page-head #devderby-promo { width: 205px; margin: .5em 0; padding: 1px; text-align: center; font-size: .785em; text-shadow: 1px 1px 0 rgba(0,0,0,.1); background: #fff; background: rgba(255,255,255,.75); border: 1px solid #dcd6bb; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; -moz-box-shadow: inset 0 0 8px rgba(240,240,220,.8); -webkit-box-shadow: inset 0 0 8px rgba(240,240,220,.8); box-shadow: inset 0 0 8px rgba(240,240,220,.8); }
+.section-demos #page-head #devderby-promo h2 { font-size: 1.124em; }
+.section-demos #page-head #devderby-promo a { display: block; padding: 5px 9px; color: #333; text-decoration: none; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
+.section-demos #page-head #devderby-promo a:hover, .section-demos #page-head #devderby-promo a:focus, .section-demos #page-head #devderby-promo a:active { background: #fff; color: #369; text-decoration: none; }
+
 #page-head.gallery .main { width: 570px; padding-left: 100px; float: left; }
 #page-head.gallery .page-title img { float: left; margin: .2em 0 0 -100px; }
 #page-head.gallery .learn { width: 195px; float: right; background: #fff; padding: 10px 20px; font-size: .786em; border: 1px solid #cbc8b9; -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
@@ -1070,6 +1075,11 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 
 .submission .fm-submit button { font-size: 26px; background-color: #689032; }
 .submission .fm-submit button:hover, .submission .fm-submit button:focus { background-color: #78a935; }
+
+.submission #devderby-submit { position: relative; background: #fff; background: rgba(255,255,255,.85); border: 1px solid #dcd6bb; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; padding: 3.5em 220px 5px 15px; -moz-box-shadow: inset 0 0 8px rgba(240,240,220,.8); -webkit-box-shadow: inset 0 0 8px rgba(240,240,220,.8); box-shadow: inset 0 0 8px rgba(240,240,220,.8); }
+.submission #devderby-submit legend { width: 0; height: 0; }
+.submission #devderby-submit legend b { width: 395px; display: block; position: relative; top: 1.25em; font-size: 1.124em; }
+.submission #devderby-submit .derby-logo { float: right; margin: -20px -200px 1em 10px; }
 
 .fileslist .add { margin: 0; }
 ul.sortable { width: 465px; }

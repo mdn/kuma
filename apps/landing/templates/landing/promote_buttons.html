@@ -207,7 +207,7 @@ var buttons = rowsToObjects(
         var was_visible = $(sel).is(':visible');
         $(sel).fadeIn('fast', function() {
             if (!was_visible) {
-                $("html,body").animate({scrollTop: $(sel).offset().top}, 200); 
+                $("html,body").animate({scrollTop: $(sel).offset().top}, 500); 
             }
         });
     }
