@@ -97,8 +97,8 @@
 
           <fieldset id="derby-submit" class="inline">
               <legend><b>
-              {% trans %}
-                  Submit your demo to the <a href="{{url('demos_devderby_landing')}}" onclick="window.open(this.href);return false;">Dev Derby</a>!
+              {% trans derby_url = url('demos_devderby_landing') %}
+                  Submit your demo to the <a href="{{ derby_url }}" onclick="window.open(this.href);return false;">Dev Derby</a>!
               {% endtrans %}
               </b></legend>
               <a href="{{url('demos_devderby_landing')}}" onclick="window.open(this.href);return false;">
