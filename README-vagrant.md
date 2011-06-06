@@ -19,8 +19,10 @@ tried. The main barrier to Windows is probably that this Vagrantfile
     # Clone a Kuma repo, switch to my vagrant branch (for now)
     git clone git://github.com/lmorchard/kuma.git
     cd kuma
-    git checkout vagrant
-    
+
+    # Check out the "mdn" branch (for now)    
+    git checkout mdn
+
     # Fire up the VM and install everything, go take a bike ride (approx. 15 min)
     vagrant up
     
