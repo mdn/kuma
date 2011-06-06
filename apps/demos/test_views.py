@@ -8,6 +8,8 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 import test_utils
 
+from tests import save_valid_submission
+
 
 def mockdekiauth(test):
     @patch('dekicompat.backends.DekiUserBackend.authenticate')
@@ -48,3 +50,13 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_license_name ul.errorlist')
         assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
+
+    def test_detail(self):
+        s = save_valid_submission('hello world')
+
+        url = reverse('demos_detail', args=[s.slug])
+        r = self.client.get(url, follow=True)
+        d = pq(r.content)
+        a = d('a[href="%s"]' % url)
+        eq_(s.title, a.text())
+        eq_(s.title, d('h1.page-title').text())

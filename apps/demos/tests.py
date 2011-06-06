@@ -37,6 +37,23 @@ demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 
 from demos.forms import SubmissionEditForm, SubmissionNewForm
 
+
+def save_valid_submission(title):
+    testuser = User.objects.get(username='testuser')
+    s = Submission(title=title, slug='hello-world',
+        description='This is a hello world demo',
+        tags='hello,world,demo,play', creator=testuser)
+    fout = StringIO()
+    zf = zipfile.ZipFile(fout, 'w')
+    zf.writestr('index.html', """<html> </html>""")
+    zf.close()
+    s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+    s.screenshot_1.save('screenshot_1.jpg', ContentFile(open(
+        'apps/demos/fixtures/screenshot_1.png').read()))
+    s.save()
+    return s
+
+
 class DemoPackageTest(TestCase):
 
     def setUp(self):
@@ -72,31 +89,31 @@ class DemoPackageTest(TestCase):
 
         tag_list = [
             'challenge:2011-06-27',
-            'tech:audio', 
-            'tech:canvas', 
+            'tech:audio',
+            'tech:canvas',
             'system:challenge:winner:2011-06-27',
-            'tech:css3', 
+            'tech:css3',
             'lol:butts',
             'tech:files',
             'system:challenge:winner:2011-05-27',
         ]
 
         expected_namespaces = {
-            'challenge:': [ 
-                'challenge:2011-06-27' 
+            'challenge:': [
+                'challenge:2011-06-27'
             ],
-            'tech:': [ 
-                'tech:audio', 
-                'tech:canvas', 
-                'tech:css3', 
-                'tech:files' 
+            'tech:': [
+                'tech:audio',
+                'tech:canvas',
+                'tech:css3',
+                'tech:files'
             ],
-            'system:challenge:winner:': [ 
-                'system:challenge:winner:2011-06-27', 
-                'system:challenge:winner:2011-05-27' 
+            'system:challenge:winner:': [
+                'system:challenge:winner:2011-06-27',
+                'system:challenge:winner:2011-05-27'
             ],
-            'lol:': [ 
-                'lol:butts' 
+            'lol:': [
+                'lol:butts'
             ],
         }
 
@@ -109,7 +126,8 @@ class DemoPackageTest(TestCase):
 
         # Ensure values are as expected
         for ns_key in expected_keys:
-            assert_equal(expected_namespaces[ns_key], result_namespaces[ns_key])
+            assert_equal(expected_namespaces[ns_key],
+                         result_namespaces[ns_key])
 
     def test_tag_namespace_permissions(self):
         """Tag set changes should be constrained by namespace permissions"""
@@ -123,30 +141,32 @@ class DemoPackageTest(TestCase):
         ]
 
         # Attempted tag changes.
-        tags_in = [ 
-            'tech:audio', 'tech:video', 
-            'system:alpha', 'system:beta', 
+        tags_in = [
+            'tech:audio', 'tech:video',
+            'system:alpha', 'system:beta',
         ]
 
         # Owner is whitelisted to only affect tech:* tags, so system:* and
-        # geo:* should remain untouched. 
-        expected_tags = [ 
-            'tech:audio', 'tech:video', 
+        # geo:* should remain untouched.
+        expected_tags = [
+            'tech:audio', 'tech:video',
             'system:hoopy', 'system:frood',
-            'geo:tags', 'geo:other', 
+            'geo:tags', 'geo:other',
         ]
         expected_tags.sort()
-        result_tags = s.resolve_allowed_tags(tags_orig, tags_in, request_user=self.user)
+        result_tags = s.resolve_allowed_tags(
+            tags_orig, tags_in, request_user=self.user)
         result_tags.sort()
         assert_equal(expected_tags, result_tags)
 
         # An admin user should be able to affect any tags.
         expected_tags = [
-            'tech:audio', 'tech:video', 
-            'system:alpha', 'system:beta', 
+            'tech:audio', 'tech:video',
+            'system:alpha', 'system:beta',
         ]
         expected_tags.sort()
-        result_tags = s.resolve_allowed_tags(tags_orig, tags_in, request_user=self.admin_user)
+        result_tags = s.resolve_allowed_tags(
+            tags_orig, tags_in, request_user=self.admin_user)
         result_tags.sort()
         assert_equal(expected_tags, result_tags)
 
@@ -264,7 +284,7 @@ class DemoPackageTest(TestCase):
 
     def test_process_demo_package(self):
         """Calling process_demo_package() should result in a directory of demo files"""
-        
+
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
 
@@ -281,10 +301,10 @@ class DemoPackageTest(TestCase):
 
         zf.writestr('css/main.css',
             'h1 { color: red }')
-        
+
         zf.writestr('js/main.js',
             'alert("HELLO WORLD");')
-        
+
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
@@ -299,17 +319,17 @@ class DemoPackageTest(TestCase):
         s.process_demo_package()
 
         path = s.demo_package.path.replace('.zip', '')
-        
+
         ok_(isdir(path))
         ok_(isfile('%s/index.html' % path))
         ok_(isfile('%s/css/main.css' % path))
         ok_(isfile('%s/js/main.js' % path))
-        
+
         rmtree(path)
 
     def test_demo_html_normalized(self):
         """Ensure a demo.html in zip file is normalized to index.html when unpacked"""
-        
+
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
         zf.writestr('demo.html', """<html></html""")
@@ -329,12 +349,12 @@ class DemoPackageTest(TestCase):
         s.process_demo_package()
 
         path = s.demo_package.path.replace('.zip', '')
-        
+
         ok_(isdir(path))
         ok_(isfile('%s/index.html' % path))
         ok_(isfile('%s/css/main.css' % path))
         ok_(isfile('%s/js/main.js' % path))
-        
+
         rmtree(path)
 
     def test_demo_file_size_limit(self):
@@ -359,7 +379,7 @@ class DemoPackageTest(TestCase):
             ok_('ZIP file contains a file that is too large: bigfile.txt' in e.messages)
 
         unlink(s.demo_package.path)
-        
+
     def test_demo_file_type_blacklist(self):
         """Demo package cannot contain files whose detected types are blacklisted"""
 
@@ -370,14 +390,14 @@ class DemoPackageTest(TestCase):
 
         # TODO: Need more file types?
         types = (
-            ( [ 'text/plain' ], 'Hi there, I am bad' ),
+            (['text/plain'], 'Hi there, I am bad'),
             #( [ 'application/xml' ], '<?xml version="1.0"?><hi>I am bad</hi>' ),
-            ( [ 'application/zip', 'application/x-zip' ], sub_fout.getvalue() ),
+            (['application/zip', 'application/x-zip'], sub_fout.getvalue()),
             #( [ 'image/x-ico' ], open('media/img/favicon.ico','r').read() ),
         )
 
         for blist, fdata in types:
-            logging.debug("BLIST %s" % ( blist, ))
+            logging.debug("BLIST %s" % (blist,))
             demos.models.DEMO_MIMETYPE_BLACKLIST = blist
 
             s = self.submission
