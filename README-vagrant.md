@@ -3,8 +3,8 @@
 This is an attempt to describe the bootstrap process to get Kuma running in a
 Vagrant-managed virtual machine. 
 
-This could possibly be made to work under Linux and Windows, but I haven't
-tried. The main barrier to Windows is probably that this Vagrantfile
+This is known to work on Mac OS X. It could possibly be made to work under Linux and Windows, but I haven't
+tried. Bug reports and suggestions are welcome. The main barrier to Windows is probably that this Vagrantfile
 [uses NFS to share the current working directory][nfs] for performance reasons. 
 
 [nfs]: http://vagrantup.com/docs/nfs.html
