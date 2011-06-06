@@ -115,11 +115,11 @@ exec { "pip-install":
 exec { 
     "mysql-python-install":
         command => "/usr/bin/pip install mysql-python",
-        creates => "/usr/lib64/python2.6/site-packages/MySQLdb/__init__.py",
+        creates => "/usr/lib/python2.6/site-packages/MySQLdb/__init__.py",
         require => [ Exec["pip-install"], Package["mysql-devel"] ];
     "lxml-install":
         command => "/usr/bin/pip install lxml",
-        creates => "/usr/lib64/python2.6/site-packages/lxml/__init__.py",
+        creates => "/usr/lib/python2.6/site-packages/lxml/__init__.py",
         require => [ Exec["pip-install"], Package["libxml2-devel", "libxslt-devel"] ];
     "django-devserver":
         command => "/usr/bin/pip install django-devserver",
@@ -131,7 +131,7 @@ exec {
         require => [ Exec["pip-install"] ];
     "django-debug-toolbar":
         command => "/usr/bin/pip install -e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar",
-        creates => "/usr/lib/python2.6/site-packages/debug_toolbar/__init__.py",
+        creates => "/usr/lib/python2.6/site-packages/django-debug-toolbar.egg-link",
         require => [ Exec["pip-install"] ];
 }
 
