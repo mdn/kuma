@@ -177,9 +177,9 @@ file {
         owner => "root", group => "root", mode => 0644;
     
     # Ensure port 80 and 8000 are open for connections.
-    "/etc/sysconfig/iptables":
-        source => "/vagrant/puppet/files/etc/sysconfig/iptables",
-        owner => "root", group => "root", mode => 0600;
+    #"/etc/sysconfig/iptables":
+    #    source => "/vagrant/puppet/files/etc/sysconfig/iptables",
+    #    owner => "root", group => "root", mode => 0600;
     
     # Ensure MySQL answers on 127.0.0.1, and not just unix socket
     "/etc/my.cnf":
@@ -244,7 +244,7 @@ service {
         enable => true, 
         require => Package['httpd-devel'],
         subscribe => [ 
-            Service['iptables'], 
+            #Service['iptables'], 
             File["/etc/httpd/conf.d/mozilla-kuma-apache.conf"],
             File["/vagrant/settings_local.py"],
             File["/home/vagrant/logs"]
@@ -266,12 +266,12 @@ service {
             File["/etc/dekiwiki/mindtouch.host.conf"], 
             File["/etc/dekiwiki/mindtouch.deki.startup.xml"] 
         ];
-    "iptables": 
-        ensure => running, 
-        enable => true, 
-        hasrestart => true, 
-        hasstatus => true,
-        subscribe  => File["/etc/sysconfig/iptables"];
+    #"iptables": 
+    #    ensure => running, 
+    #    enable => true, 
+    #    hasrestart => true, 
+    #    hasstatus => true,
+    #    subscribe  => File["/etc/sysconfig/iptables"];
 }
 
 exec { 
