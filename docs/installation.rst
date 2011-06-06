@@ -132,6 +132,15 @@ Once you've set up the database, you can generate the schema with Django's
 
 This will generate an empty database, which will get you started!
 
+If you run into a "No such file or directory" error for
+../product_details_json just create this folder:
+
+    mkdir ../product_details_json
+
+and run
+
+    ./manage.py update_product_details
+
 
 Testing it Out
 ==============
