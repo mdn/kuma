@@ -1,7 +1,7 @@
-# Kuma under Vagrant on Mac OS X
+# Kuma in VirtualBox via Vagrant
 
 This is an attempt to describe the bootstrap process to get Kuma running in a
-Vagrant-managed virtual machine on a plain-vanilla Mac OS X machine. 
+Vagrant-managed virtual machine. 
 
 This could possibly be made to work under Linux and Windows, but I haven't
 tried. The main barrier to Windows is probably that this Vagrantfile
