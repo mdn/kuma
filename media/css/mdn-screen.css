@@ -37,9 +37,9 @@ Font sizes -
 	font-family: "League Gothic";
   src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
   src: url('../fonts/League_Gothic-webfont.eot?') format('eot'), /* IE6-8 */
+       url('../fonts/League_Gothic-webfont.woff') format('woff'), /* Modern browsers */
   	   url('../fonts/League_Gothic-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/League_Gothic-webfont.svg#webfont') format('svg'), /* Opera */
-       url('../fonts/League_Gothic-webfont.woff') format('woff'); /* Modern browsers */
+	     url('../fonts/League_Gothic-webfont.svg#webfont') format('svg'); /* Opera */
 	font-weight: normal;
 	font-style: normal;
 }
@@ -48,9 +48,9 @@ Font sizes -
 	font-family: "Bebas Neue";
 	src: url('../fonts/BebasNeue-webfont.eot?'); /* IE9 */
  	src: url('../fonts/BebasNeue-webfont.eot?') format('eot'), /* IE6-8 */
+ 	     url('../fonts/BebasNeue-webfont.woff') format('woff'), /* Modern browsers */
 	     url('../fonts/BebasNeue-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/BebasNeue-webfont.svg#webfont') format('svg'), /* Opera */
-	     url('../fonts/BebasNeue-webfont.woff') format('woff'); /* Modern browsers */
+	     url('../fonts/BebasNeue-webfont.svg#webfont') format('svg'); /* Opera */
 	font-weight: normal;
 	font-style: normal;
 }
