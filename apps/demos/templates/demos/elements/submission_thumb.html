@@ -2,18 +2,20 @@
     <h2 class="demo-title">
         {# TODO: Title seems to interfere with hoverIntent #}
         {% if False %}
-            <a href="{{ submission.get_absolute_url() }}" title="{{ _('See more about {title} by {author}') | f(title=submission.title, author=submission.creator.first_name) }}"></a>
+            <a href="{{ url('demos_detail', slug=submission.slug) }}" title="{{ _('See more about {title} by {author}') | f(title=submission.title, author=submission.creator.first_name) }}"></a>
         {% endif %}
-        <a href="{{ submission.get_absolute_url() }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="200" height="150">{{ submission.title }}</a>
+        <a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="200" height="150">{{ submission.title }}</a>
     </h2>
     <p class="byline vcard">{{ submission_creator(submission) }}</p>
     <div class="extra">
       <ul class="stats">
         {% set launches = submission.launches.total %}
+        {% set launches_recent = submission.launches.recent %}
         {% set likes = submission.likes.total %}
+        {% set likes_recent = submission.likes.recent %}
         {% set comments = submission.comments_total %}
-        <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}">{{ launches }}</li>
-        <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}">{{ likes }}</li>
+        <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}" data-recent="{{ launches_recent }}">{{ launches }}</li>
+        <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}" data-recent="{{ likes_recent }}">{{ likes }}</li>
         <li class="comments"><a href="{{ submission.get_absolute_url() }}#comments" title="{{ ngettext('There is {count} comment for this demo', 'There are {count} comments for this demo', comments) | f(count=comments) }}">{{ comments }}</a></li>
       </ul>
       <p class="desc">{{ submission.summary }}</p>

@@ -32,6 +32,8 @@ from devmo.urlresolvers import reverse
 from tagging.models import Tag, TaggedItem
 from tagging.utils import LINEAR, LOGARITHMIC
 
+from taggit.models import TaggedItem
+
 from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES
 from . import DEMOS_CACHE_NS_KEY
 
@@ -110,14 +112,14 @@ def submission_listing_cache_key(*args, **kw):
     if ns_key is None:
         ns_key = random.randint(1,10000)
         cache.set(DEMOS_CACHE_NS_KEY, ns_key)
-    return 'demos_%s:%s' % (ns_key, hashlib.md5(args[0].get_full_path()).hexdigest())
+    return 'demos_%s:%s' % (ns_key, hashlib.md5(args[0].get_full_path()+args[0].user.username).hexdigest())
 
 @register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
 def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url): 
     return locals()
 
-@register.inclusion_tag('demos/elements/tags_list.html')
-def tags_list(): return locals()
+@register.inclusion_tag('demos/elements/tech_tags_list.html')
+def tech_tags_list(): return locals()
 
 # Not cached, because it's small and changes based on current search query string
 @register.inclusion_tag('demos/elements/search_form.html')
@@ -138,11 +140,6 @@ def gravatar(email, size=72, default=None):
         urllib.urlencode(ns)
     )
     return {'gravatar': {'url': url, 'size': size}}
-
-@register.function
-def urlencode(args):
-    """URL encode a query string from a given dict"""
-    return urllib.urlencode(args)
 
 bitly_api = None
 def _get_bitly_api():
@@ -203,12 +200,12 @@ def tag_learn_more(tag):
 
 @register.function
 def tags_for_object(obj):
-    tags = Tag.objects.get_for_object(obj)
+    tags = obj.taggit_tags.all()
     return tags
 
 @register.function
 def tags_used_for_submissions():
-    return Tag.objects.usage_for_model(Submission, counts=True, min_count=1)
+    return TaggedItem.tags_for(Submission)
 
 @register.filter
 def date_diff(timestamp, to=None):
@@ -347,43 +344,3 @@ def _contextual_locale(context):
     if not localedata.exists(locale):
         locale = settings.LANGUAGE_CODE
     return locale
-
-
-@register.function
-@jinja2.contextfunction
-def datetimeformat(context, value, format='shortdatetime'):
-    """
-    Returns date/time formatted using babel's locale settings. Uses the
-    timezone from settings.py
-    """
-    if not isinstance(value, datetime.datetime):
-        # Expecting date value
-        raise ValueError
-
-    tzinfo = timezone(settings.TIME_ZONE)
-    tzvalue = tzinfo.localize(value)
-    locale = _babel_locale(_contextual_locale(context))
-
-    # If within a day, 24 * 60 * 60 = 86400s
-    if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _lazy(u'Today at %s') % format_time(
-                                    tzvalue, format='short', locale=locale)
-        else:
-            formatted = format_datetime(tzvalue, format='short', locale=locale)
-    elif format == 'longdatetime':
-        formatted = format_datetime(tzvalue, format='long', locale=locale)
-    elif format == 'date':
-        formatted = format_date(tzvalue, locale=locale)
-    elif format == 'time':
-        formatted = format_time(tzvalue, locale=locale)
-    elif format == 'datetime':
-        formatted = format_datetime(tzvalue, locale=locale)
-    else:
-        # Unknown format
-        raise DateTimeFormatError
-
-    return jinja2.Markup('<time datetime="%s">%s</time>' % \
-                         (tzvalue.isoformat(), formatted))
-

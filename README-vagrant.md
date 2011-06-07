@@ -1,10 +1,10 @@
-# Kuma under Vagrant on Mac OS X
+# Kuma in VirtualBox via Vagrant
 
 This is an attempt to describe the bootstrap process to get Kuma running in a
-Vagrant-managed virtual machine on a plain-vanilla Mac OS X machine. 
+Vagrant-managed virtual machine. 
 
-This could possibly be made to work under Linux and Windows, but I haven't
-tried. The main barrier to Windows is probably that this Vagrantfile
+This is known to work on Mac OS X. It could possibly be made to work under Linux and Windows, but I haven't
+tried. Bug reports and suggestions are welcome. The main barrier to Windows is probably that this Vagrantfile
 [uses NFS to share the current working directory][nfs] for performance reasons. 
 
 [nfs]: http://vagrantup.com/docs/nfs.html
@@ -19,8 +19,10 @@ tried. The main barrier to Windows is probably that this Vagrantfile
     # Clone a Kuma repo, switch to my vagrant branch (for now)
     git clone git://github.com/lmorchard/kuma.git
     cd kuma
-    git checkout vagrant
-    
+
+    # Check out the "mdn" branch (for now)    
+    git checkout mdn
+
     # Fire up the VM and install everything, go take a bike ride (approx. 15 min)
     vagrant up
     

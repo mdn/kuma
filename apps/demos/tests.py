@@ -33,15 +33,41 @@ from nose.plugins.attrib import attr
 
 from demos.models import Submission
 import demos.models
-
-import demos.models
 demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
+
+from demos.forms import SubmissionEditForm, SubmissionNewForm
+
+
+def save_valid_submission(title):
+    testuser = User.objects.get(username='testuser')
+    s = Submission(title=title, slug='hello-world',
+        description='This is a hello world demo',
+        tags='hello,world,demo,play', creator=testuser)
+    fout = StringIO()
+    zf = zipfile.ZipFile(fout, 'w')
+    zf.writestr('index.html', """<html> </html>""")
+    zf.close()
+    s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+    s.screenshot_1.save('screenshot_1.jpg', ContentFile(open(
+        'apps/demos/fixtures/screenshot_1.png').read()))
+    s.save()
+    return s
+
 
 class DemoPackageTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user('tester', 'tester@tester.com', 'tester')
+        self.user = User.objects.create_user(
+            'tester', 'tester@tester.com', 'tester')
         self.user.save()
+
+        self.admin_user = User.objects.create_superuser(
+            'admin_tester', 'admin_tester@tester.com', 'admint_tester')
+        self.admin_user.save()
+
+        self.other_user = User.objects.create_user(
+            'visitor', 'visitor@visitor.com', 'visitor')
+        self.other_user.save()
 
         self.submission = self._build_submission()
         self.old_blacklist = demos.models.DEMO_MIMETYPE_BLACKLIST
@@ -55,6 +81,94 @@ class DemoPackageTest(TestCase):
             description='This is a hello world demo',
             tags='hello,world,demo,play', creator=self.user)
         return s
+
+    def test_tag_namespaces(self):
+        """Exercise tag namespace parsing"""
+
+        s = self.submission
+
+        tag_list = [
+            'challenge:2011-06-27',
+            'tech:audio',
+            'tech:canvas',
+            'system:challenge:winner:2011-06-27',
+            'tech:css3',
+            'lol:butts',
+            'tech:files',
+            'system:challenge:winner:2011-05-27',
+        ]
+
+        expected_namespaces = {
+            'challenge:': [
+                'challenge:2011-06-27'
+            ],
+            'tech:': [
+                'tech:audio',
+                'tech:canvas',
+                'tech:css3',
+                'tech:files'
+            ],
+            'system:challenge:winner:': [
+                'system:challenge:winner:2011-06-27',
+                'system:challenge:winner:2011-05-27'
+            ],
+            'lol:': [
+                'lol:butts'
+            ],
+        }
+
+        result_namespaces = Submission.parse_tag_namespaces(tag_list)
+
+        # Ensure keys are as expected
+        expected_keys = expected_namespaces.keys()
+        result_keys = result_namespaces.keys()
+        assert_equal(expected_keys, result_keys)
+
+        # Ensure values are as expected
+        for ns_key in expected_keys:
+            assert_equal(expected_namespaces[ns_key],
+                         result_namespaces[ns_key])
+
+    def test_tag_namespace_permissions(self):
+        """Tag set changes should be constrained by namespace permissions"""
+        s = self.submission
+
+        # Original tag set.
+        tags_orig = [
+            'tech:audio', 'tech:canvas',
+            'system:hoopy', 'system:frood',
+            'geo:tags', 'geo:other',
+        ]
+
+        # Attempted tag changes.
+        tags_in = [
+            'tech:audio', 'tech:video',
+            'system:alpha', 'system:beta',
+        ]
+
+        # Owner is whitelisted to only affect tech:* tags, so system:* and
+        # geo:* should remain untouched.
+        expected_tags = [
+            'tech:audio', 'tech:video',
+            'system:hoopy', 'system:frood',
+            'geo:tags', 'geo:other',
+        ]
+        expected_tags.sort()
+        result_tags = s.resolve_allowed_tags(
+            tags_orig, tags_in, request_user=self.user)
+        result_tags.sort()
+        assert_equal(expected_tags, result_tags)
+
+        # An admin user should be able to affect any tags.
+        expected_tags = [
+            'tech:audio', 'tech:video',
+            'system:alpha', 'system:beta',
+        ]
+        expected_tags.sort()
+        result_tags = s.resolve_allowed_tags(
+            tags_orig, tags_in, request_user=self.admin_user)
+        result_tags.sort()
+        assert_equal(expected_tags, result_tags)
 
     def test_demo_package_no_files(self):
         """Demo package with no files is invalid"""
@@ -170,7 +284,7 @@ class DemoPackageTest(TestCase):
 
     def test_process_demo_package(self):
         """Calling process_demo_package() should result in a directory of demo files"""
-        
+
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
 
@@ -187,10 +301,10 @@ class DemoPackageTest(TestCase):
 
         zf.writestr('css/main.css',
             'h1 { color: red }')
-        
+
         zf.writestr('js/main.js',
             'alert("HELLO WORLD");')
-        
+
         zf.close()
 
         s = Submission(title='Hello world', slug='hello-world',
@@ -205,17 +319,17 @@ class DemoPackageTest(TestCase):
         s.process_demo_package()
 
         path = s.demo_package.path.replace('.zip', '')
-        
+
         ok_(isdir(path))
         ok_(isfile('%s/index.html' % path))
         ok_(isfile('%s/css/main.css' % path))
         ok_(isfile('%s/js/main.js' % path))
-        
+
         rmtree(path)
 
     def test_demo_html_normalized(self):
         """Ensure a demo.html in zip file is normalized to index.html when unpacked"""
-        
+
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
         zf.writestr('demo.html', """<html></html""")
@@ -235,12 +349,12 @@ class DemoPackageTest(TestCase):
         s.process_demo_package()
 
         path = s.demo_package.path.replace('.zip', '')
-        
+
         ok_(isdir(path))
         ok_(isfile('%s/index.html' % path))
         ok_(isfile('%s/css/main.css' % path))
         ok_(isfile('%s/js/main.js' % path))
-        
+
         rmtree(path)
 
     def test_demo_file_size_limit(self):
@@ -265,7 +379,7 @@ class DemoPackageTest(TestCase):
             ok_('ZIP file contains a file that is too large: bigfile.txt' in e.messages)
 
         unlink(s.demo_package.path)
-        
+
     def test_demo_file_type_blacklist(self):
         """Demo package cannot contain files whose detected types are blacklisted"""
 
@@ -276,14 +390,14 @@ class DemoPackageTest(TestCase):
 
         # TODO: Need more file types?
         types = (
-            ( [ 'text/plain' ], 'Hi there, I am bad' ),
+            (['text/plain'], 'Hi there, I am bad'),
             #( [ 'application/xml' ], '<?xml version="1.0"?><hi>I am bad</hi>' ),
-            ( [ 'application/zip', 'application/x-zip' ], sub_fout.getvalue() ),
+            (['application/zip', 'application/x-zip'], sub_fout.getvalue()),
             #( [ 'image/x-ico' ], open('media/img/favicon.ico','r').read() ),
         )
 
         for blist, fdata in types:
-            logging.debug("BLIST %s" % ( blist, ))
+            logging.debug("BLIST %s" % (blist,))
             demos.models.DEMO_MIMETYPE_BLACKLIST = blist
 
             s = self.submission
@@ -301,3 +415,28 @@ class DemoPackageTest(TestCase):
                 ok_(False, "There should be a validation exception")
             except ValidationError, e:
                 ok_('ZIP file contains an unacceptable file: badfile' in e.messages)
+
+    def test_hidden_demo_shows_to_creator_and_admin(self):
+        """Demo package with at least index.html in root is valid"""
+        s = self.submission
+        s.hidden = True
+
+        assert_false(s.allows_hiding_by(self.other_user))
+        assert_false(s.allows_viewing_by(self.other_user))
+        ok_(s.allows_hiding_by(self.user))
+        ok_(s.allows_hiding_by(self.admin_user))
+
+    def test_censored_demo_shows_only_in_admin_interface(self):
+        """Demo package with at least index.html in root is valid"""
+        s = self.submission
+        s.censored = True
+        s.save()
+
+        assert_false(s.allows_viewing_by(self.other_user))
+        assert_false(s.allows_viewing_by(self.user))
+        assert_false(s.allows_viewing_by(self.admin_user))
+        try:
+            ok_(False, Submission.objects.get(id=s.id))
+        except Submission.DoesNotExist:
+            ok_(True, 'Submission matching query does not exist')
+        ok_(Submission.admin_manager.get(id=s.id))

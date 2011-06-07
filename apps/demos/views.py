@@ -18,7 +18,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
 from django.views.generic.list_detail import object_list
-from tagging.views import tagged_object_list
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB)
@@ -27,14 +26,16 @@ from feeder.models import Bundle, Feed
 from django.contrib.auth.models import User
 from devmo.models import UserProfile
 
-from tagging.models import Tag, TaggedItem
-from tagging.utils import LINEAR, LOGARITHMIC
+from taggit.models import Tag
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
 from . import DEMOS_CACHE_NS_KEY
 
-from contentflagging.models import ContentFlag
+# TODO: Make these configurable in the DB via an admin page
+from . import DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG, DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
+
+from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from contentflagging.forms import ContentFlagForm
 
 import threadedcomments.views
@@ -44,12 +45,19 @@ from threadedcomments.forms import ThreadedCommentForm
 from utils import JingoTemplateLoader
 template_loader = JingoTemplateLoader()
 
-DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 24)
+DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 15)
 DEMOS_LAST_NEW_COMMENT_ID = 'demos_last_new_comment_id'
+
+# bug 657779: migrated from plain tags to tech:* tags for these:
+KNOWN_TECH_TAGS = ( 
+    "audio", "canvas", "css3", "device", "files", "fonts", "forms",
+    "geolocation", "javascript", "html5", "indexeddb", "dragndrop",
+    "mobile", "offlinesupport", "svg", "video", "webgl", "websockets",
+    "webworkers", "xhr", "multitouch", 
+)
 
 def home(request):
     """Home page."""
-
     featured_submissions = Submission.objects.order_by('-modified').filter(featured=True)
     if not Submission.allows_listing_hidden_by(request.user):
         featured_submissions = featured_submissions.exclude(hidden=True)
@@ -58,10 +66,14 @@ def home(request):
     if not Submission.allows_listing_hidden_by(request.user):
         submissions = submissions.exclude(hidden=True)
 
-    return jingo.render(request, 'demos/home.html', {
-        'featured_submission_list': featured_submissions.all()[:15],
-        'submission_list': submissions.all()[:15] 
-    })
+    return object_list(request, submissions,
+        extra_context={
+            'featured_submission_list': featured_submissions,
+        },
+        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
+        template_loader=template_loader,
+        template_object_name='submission',
+        template_name='demos/home.html') 
 
 def detail(request, slug):
     """Detail page for a submission"""
@@ -95,13 +107,20 @@ def all(request):
         template_name='demos/listing_all.html') 
 
 def tag(request, tag):
+
+    # HACK: bug 657779 - migrated from plain tags to tech:* tags for these:
+    if tag in KNOWN_TECH_TAGS: tag = 'tech:%s' % tag
+
+    tag_obj = get_object_or_404(Tag, name=tag)
+
     sort_order = request.GET.get('sort', 'created')
     queryset = Submission.objects.all_sorted(sort_order)\
+            .filter(taggit_tags__name__in=[tag])\
             .exclude(hidden=True)
 
-    return tagged_object_list(request,
-        queryset_or_model=queryset, tag=tag,
+    return object_list(request, queryset, 
         paginate_by=DEMOS_PAGE_SIZE, allow_empty=True, 
+        extra_context=dict( tag=tag_obj ),
         template_loader=template_loader,
         template_object_name='submission',
         template_name='demos/listing_tag.html')
@@ -131,9 +150,10 @@ def profile_detail(request, username):
         deki_user = None
 
     sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.all_sorted(sort_order)\
-            .exclude(hidden=True)\
-            .filter(creator=user)
+    show_hidden = user == request.user
+    queryset = Submission.objects.all_sorted(sort_order).filter(creator=user)
+    if not show_hidden:
+        queryset = queryset.exclude(hidden=True)
     return object_list(request, queryset,
         extra_context=dict( 
             profile_user=user, 
@@ -148,27 +168,21 @@ def like(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
     if request.method == "POST":
         submission.likes.increment(request)
-    if request.GET.get('iframe', False):
-        # Use iframe event to update like button display to current state
-        event = ( (submission.likes.get_total_for_request(request) > 0) 
-            and 'liked' or 'unliked' )
-        return jingo.render(request, 'demos/iframe_utils.html', dict(
-            submission=submission, event=event
-        ))
-    return HttpResponseRedirect(reverse(
-        'demos.views.detail', args=(submission.slug,)))
+    return _like_feedback(request, submission, 'liked')
 
 def unlike(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
     if request.method == "POST":
         submission.likes.decrement(request)
+    return _like_feedback(request, submission, 'unliked')
+
+def _like_feedback(request, submission, event):
     if request.GET.get('iframe', False):
-        # Use iframe event to update like button display to current state
-        event = ( (submission.likes.get_total_for_request(request) > 0) 
-            and 'liked' or 'unliked' )
-        return jingo.render(request, 'demos/iframe_utils.html', dict(
+        response = jingo.render(request, 'demos/iframe_utils.html', dict(
             submission=submission, event=event
         ))
+        response['x-frame-options'] = 'SAMEORIGIN'
+        return response
     return HttpResponseRedirect(reverse(
         'demos.views.detail', args=(submission.slug,)))
 
@@ -180,14 +194,22 @@ def flag(request, slug):
     else:
         form = ContentFlagForm(request.POST, request.FILES)
         if form.is_valid():
+            flag_type=form.cleaned_data['flag_type']
+            recipients = None
+            if flag_type in FLAG_NOTIFICATIONS and FLAG_NOTIFICATIONS[flag_type]:
+                recipients = [profile.user.email for profile in UserProfile.objects.filter(content_flagging_email=True)]
             flag, created = ContentFlag.objects.flag(request=request, object=submission,
-                    flag_type=form.cleaned_data['flag_type'],
-                    explanation=form.cleaned_data['explanation'])
+                    flag_type=flag_type,
+                    explanation=form.cleaned_data['explanation'],
+                    recipients=recipients)
             return HttpResponseRedirect(reverse(
                 'demos.views.detail', args=(submission.slug,)))
 
-    return jingo.render(request, 'demos/flag.html', {
+    #TODO liberate?
+    response = jingo.render(request, 'demos/flag.html', {
         'form': form, 'submission': submission })
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 def download(request, slug):
     """Demo download with action counting"""
@@ -211,15 +233,18 @@ def submit(request):
         return jingo.render(request, 'demos/submit_noauth.html', {})
 
     if request.method != "POST":
-        form = SubmissionNewForm()
+        initial = dict( tags=request.GET.get('tags', '') )
+        form = SubmissionNewForm(request_user=request.user, initial=initial)
     else:
-        form = SubmissionNewForm(request.POST, request.FILES)
+        form = SubmissionNewForm(request.POST, request.FILES, request_user=request.user)
         if form.is_valid():
             
             new_sub = form.save(commit=False)
             if request.user.is_authenticated():
                 new_sub.creator = request.user
             new_sub.save()
+            new_sub.taggit_tags.set(*form.cleaned_data['tags'])
+
             ns_key = cache.get(DEMOS_CACHE_NS_KEY)
             if ns_key is None:
                 ns_key = random.randint(1,10000)
@@ -241,13 +266,13 @@ def edit(request, slug):
         return HttpResponseForbidden(_('access denied')+'')
 
     if request.method != "POST":
-        form = SubmissionEditForm(instance=submission)
+        form = SubmissionEditForm(instance=submission, request_user=request.user)
     else:
-        form = SubmissionEditForm(request.POST, request.FILES, instance=submission)
+        form = SubmissionEditForm(request.POST, request.FILES, 
+                instance=submission, request_user=request.user)
         if form.is_valid():
 
-            sub = form.save(commit=False)
-            sub.save()
+            sub = form.save()
             
             # TODO: Process in a cronjob?
             sub.process_demo_package()
@@ -323,3 +348,33 @@ def hideshow(request, slug, hide=True):
 
 def terms(request):
     return jingo.render(request, 'demos/terms.html', {})
+
+def devderby_landing(request):
+    """Dev Derby landing page"""
+
+    sort_order = request.GET.get('sort', 'created')
+
+    # TODO: Make these configurable in the DB via an admin page
+    current_challenge_tag_name = DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG
+    previous_winner_tag_name = DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
+
+    submissions_qs = ( Submission.objects.all_sorted(sort_order)
+        .filter(taggit_tags__name__in=[current_challenge_tag_name])
+        .exclude(hidden=True) )
+
+    previous_winner_qs = ( Submission.objects.all() 
+        .filter(taggit_tags__name__in=[previous_winner_tag_name])
+        .exclude(hidden=True) )
+
+    # TODO: Use an object_list here, in case we need pagination?
+    return jingo.render(request, 'demos/devderby_landing.html', dict(
+        current_challenge_tag_name = current_challenge_tag_name,
+        previous_winner_tag_name = previous_winner_tag_name,
+        submissions_qs = submissions_qs,
+        previous_winner_qs = previous_winner_qs,
+    ))
+
+def devderby_rules(request):
+    """Dev Derby rules page"""
+    return jingo.render(request, 'demos/devderby_rules.html', {})
+

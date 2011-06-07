@@ -7,7 +7,7 @@ assets, migrates the database, and other nifty deployment tasks.
 Options:
   -h, --help            show this help message and exit
   -e ENVIRONMENT, --environment=ENVIRONMENT
-                        Type of environment. One of (prod|dev|stage|mdn_stage|mdn_prod) Example:
+                        Type of environment. One of (dev|stage|prod|mdn_dev|mdn_stage|mdn_prod) Example:
                         update_site.py -e stage
   -v, --verbose         Echo actions before taking them.
 """
@@ -26,12 +26,14 @@ ENV_BRANCH = {
     'dev':   ['base',   'master'],
     'stage': ['master', 'master'],
     'prod':  ['prod',   'master'],
+    'mdn_dev':     ['mdn', 'master'],
     'mdn_stage':   ['mdn', 'master'],
     'mdn_prod':    ['mdn_prod', 'master']
 }
 
 GIT_PULL = "git pull -q origin %(branch)s"
-GIT_SUBMODULE = "git submodule update --init"
+GIT_SUBMODULE_SYNC = "git submodule sync"
+GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
 SVN_UP = "svn update"
 COMPILE_PO = "./compile-mo.sh ."
 
@@ -49,7 +51,8 @@ def update_site(env, debug):
     commands = [
         (CHDIR, here),
         (EXEC,  GIT_PULL % project_branch),
-        (EXEC,  GIT_SUBMODULE),
+        (EXEC,  GIT_SUBMODULE_SYNC),
+        (EXEC,  GIT_SUBMODULE_UPDATE),
     ]
 
     # Update locale dir if applicable
@@ -70,12 +73,18 @@ def update_site(env, debug):
     commands += [
         (CHDIR, os.path.join(here, 'vendor')),
         (EXEC,  GIT_PULL % vendor_branch),
-        (EXEC,  GIT_SUBMODULE),
+        (EXEC,  GIT_SUBMODULE_SYNC),
+        (EXEC,  GIT_SUBMODULE_UPDATE),
         (CHDIR, os.path.join(here)),
-        # kuma can't run all of kitsune's migrations
-        #(EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
-        (EXEC, 'python2.6 manage.py compress_assets'),
+        (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
     ]
+
+    # HACK: Just for now, only the mdn branch has South enabled.
+    # FIXME: Merge mdn up to master and get South running
+    if env.startswith('mdn_'):
+        commands += [ (EXEC, 'python2.6 manage.py migrate'), ]
+
+    commands += [ (EXEC, 'python2.6 manage.py compress_assets'), ]
 
     for cmd, cmd_args in commands:
         if CHDIR == cmd:

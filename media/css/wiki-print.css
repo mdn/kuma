@@ -1,0 +1,74 @@
+/*----------------------------------------------------------------------------
+Print CSS file for Mozilla Developer Network
+Created by Craig Cook - focalcurve.com
+        on 16 July, 2010
+-----------------------------------------------------------------------------*/
+
+/* @Fonts *********/
+@font-face {
+	font-family: "League Gothic";
+	src: url("fonts/League_Gothic-webfont.eot");
+	src: local("LeagueGothicRegular"), 
+	     url("fonts/League_Gothic-webfont.woff") format("woff"), 
+	     url("fonts/League_Gothic-webfont.ttf") format("truetype"), 
+	     url("fonts/League_Gothic-webfont.svg#webfont") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Hidden elements */
+#nav-access, 
+#site-search, 
+#nav, 
+#utility,
+#welcome-bar, 
+#section-head, 
+.user-state, 
+#contact, 
+#help, 
+#slide-control,
+ul.index, 
+#nav-toolbar, 
+#footbar, 
+#masthead { 
+  display: none; 
+}
+
+header, hgroup, nav, section, article, aside, footer { display: block; }
+
+body { width: auto; margin: 0 .5in; font: 12pt/1.286 Georgia, "Times New Roman", Times, serif; color: #000; }
+
+h1, h2, h3, h4, h5, h6 { margin: 0 0 .8em; }
+h1 { font-size: 1.857em; }
+h2 { font-size: 1.428em; }
+h3 { font-size: 1.142em; }
+h4, h5, h6 { font-size: 1em; }
+
+p, ol, ul, dl, table { margin: 0 0 1.4em; }
+abbr, acronym { border: 0; }
+
+:link, :visited { color: #666; text-decoration: underline; }
+
+.cols-2 { -moz-column-count: 2; -moz-column-gap: 10px; -webkit-column-count: 2; -webkit-column-gap: 10px; column-count: 2; column-gap: 10px; }
+.cols-3 { -moz-column-count: 3; -moz-column-gap: 10px; -webkit-column-count: 3; -webkit-column-gap: 10px; column-count: 3; column-gap: 10px; }
+.cols-4 { -moz-column-count: 4; -moz-column-gap: 10px; -webkit-column-count: 4; -webkit-column-gap: 10px; column-count: 4; column-gap: 10px; }
+.cols-5 { -moz-column-count: 5; -moz-column-gap: 10px; -webkit-column-count: 5; -webkit-column-gap: 10px; column-count: 5; column-gap: 10px; }
+
+#content { clear: both; }
+#content-main.full { width: 100%; float: none; padding: 20px 0 0; }
+
+#content-latest, #content-elsewhere { clear: both; border-top: 3px solid #ccc; padding-top: 20px; }
+#latest-forums { width: 48%; float: left; }
+#latest-comments { width: 48%; float: right; }
+#content-elsewhere .mdn-section { width: 18%; margin-right: 1.9%; float: left; }
+
+.global-notice { position: relative; border: 3px solid #e6e1cf; color: #630; padding: 1em 10px 0; margin-bottom: 2em; font-size: .857em; }
+
+.last-mod { font-size: .857em; font-style: italic; text-align: right; }
+
+#site-info { clear: both; border-top: 3px solid #ccc; font-size: .785em; padding: 20px 0; }
+#site-info #legal { position: relative; padding-left: 55px; }
+#site-info #legal img { position: absolute; left: 0; top: -5px; }
+#site-info p { margin: 0 0 .5em; }
+
+#printOptions { margin: 0 auto; }

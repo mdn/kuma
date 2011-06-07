@@ -17,13 +17,10 @@ class DekiCompatTestCase(TestCase):
     """
     TODO: Some tests depend on A Dekiwiki server. Should we mock out 
     urllib2 instead?
-
-    TODO Why doesn't Django see the test fixtures? 
-    Workaround: devmo/fixtures/initial_data.json
-    fixtures = ['dekicompat/users',]
     """
 
-    # Don't use settings.DEKIWIKI_ENDPOINT tests always point at stage9...
+    fixtures = ['test_data.json']
+    # Don't use settings.DEKIWIKI_ENDPOINT tests always point at stage...
     stage_endpoint = 'http://developer-stage9.mozilla.org'
     auth_url = "%s/@api/deki/users/authenticate" % stage_endpoint
     username = 'test6'

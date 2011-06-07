@@ -14,6 +14,9 @@ pyquery==0.5
 translate-toolkit==1.6.0
 pylint==0.20.0
 
+django-extensions 
+django-devserver
+
 -e git://github.com/jbalogh/check.git#egg=check
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar
 -e git://github.com/jbalogh/django-debug-cache-panel#egg=cache_panel

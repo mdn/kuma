@@ -115,28 +115,35 @@ exec { "pip-install":
 exec { 
     "mysql-python-install":
         command => "/usr/bin/pip install mysql-python",
-        creates => "/usr/lib64/python2.6/site-packages/MySQLdb/__init__.py",
+        creates => "/usr/lib/python2.6/site-packages/MySQLdb/__init__.py",
         require => [ Exec["pip-install"], Package["mysql-devel"] ];
     "lxml-install":
         command => "/usr/bin/pip install lxml",
-        creates => "/usr/lib64/python2.6/site-packages/lxml/__init__.py",
+        creates => "/usr/lib/python2.6/site-packages/lxml/__init__.py",
         require => [ Exec["pip-install"], Package["libxml2-devel", "libxslt-devel"] ];
+    "django-devserver":
+        command => "/usr/bin/pip install django-devserver",
+        creates => "/usr/lib/python2.6/site-packages/devserver/__init__.py",
+        require => [ Exec["pip-install"] ];
+    "django-extensions":
+        command => "/usr/bin/pip install django-extensions",
+        creates => "/usr/lib/python2.6/site-packages/django_extensions/__init__.py",
+        require => [ Exec["pip-install"] ];
+    "django-debug-toolbar":
+        command => "/usr/bin/pip install -e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar",
+        creates => "/usr/lib/python2.6/site-packages/django-debug-toolbar.egg-link",
+        require => [ Exec["pip-install"] ];
 }
 
 file { 
     
-    # Let symlinks into home directory be served through apache
-    "/home/vagrant":
+    [ "/home/vagrant", 
+        "/home/vagrant/logs",
+        "/home/vagrant/uploads",
+        "/home/vagrant/product_details_json",
+        "/home/vagrant/mdc_pages"]:
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0755;
-
-    "/home/vagrant/logs":
-        ensure => directory,
-        owner => "vagrant", group => "vagrant", mode => 0777;
-
-    "/home/vagrant/uploads":
-        ensure => directory,
-        owner => "vagrant", group => "vagrant", mode => 0777;
     
     "/vagrant/settings_local.py":
         ensure => file,
@@ -170,9 +177,9 @@ file {
         owner => "root", group => "root", mode => 0644;
     
     # Ensure port 80 and 8000 are open for connections.
-    "/etc/sysconfig/iptables":
-        source => "/vagrant/puppet/files/etc/sysconfig/iptables",
-        owner => "root", group => "root", mode => 0600;
+    #"/etc/sysconfig/iptables":
+    #    source => "/vagrant/puppet/files/etc/sysconfig/iptables",
+    #    owner => "root", group => "root", mode => 0600;
     
     # Ensure MySQL answers on 127.0.0.1, and not just unix socket
     "/etc/my.cnf":
@@ -196,7 +203,7 @@ file {
 
     "/var/www/dekiwiki/.htaccess":
         ensure => link,
-        target => "/vagrant/webroot/.htaccess",
+        target => "/vagrant/configs/htaccess",
         require => Package["mindtouch"],
         owner => "apache", group => "apache", mode => 0644;
     "/var/www/dekiwiki/favicon.ico":
@@ -237,7 +244,7 @@ service {
         enable => true, 
         require => Package['httpd-devel'],
         subscribe => [ 
-            Service['iptables'], 
+            #Service['iptables'], 
             File["/etc/httpd/conf.d/mozilla-kuma-apache.conf"],
             File["/vagrant/settings_local.py"],
             File["/home/vagrant/logs"]
@@ -259,25 +266,19 @@ service {
             File["/etc/dekiwiki/mindtouch.host.conf"], 
             File["/etc/dekiwiki/mindtouch.deki.startup.xml"] 
         ];
-    "iptables": 
-        ensure => running, 
-        enable => true, 
-        hasrestart => true, 
-        hasstatus => true,
-        subscribe  => File["/etc/sysconfig/iptables"];
+    #"iptables": 
+    #    ensure => running, 
+    #    enable => true, 
+    #    hasrestart => true, 
+    #    hasstatus => true,
+    #    subscribe  => File["/etc/sysconfig/iptables"];
 }
 
 exec { 
-    "vendor_lib_git_clone":
-        command => "/usr/bin/git clone git://github.com/mozilla/kuma-lib.git vendor",
-        cwd => "/home/vagrant",
-        creates => "/home/vagrant/vendor",
-        require => [ Package['git'] ];
     "vendor_lib_git_submodule_update":
         command => "/usr/bin/git submodule update --init --recursive",
-        cwd => "/home/vagrant/vendor",
-        creates => "/home/vagrant/vendor/src/django/README",
-        require => [ Exec["vendor_lib_git_clone"] ];
+        cwd => "/vagrant",
+        creates => "/vagrant/vendor/src/django/README";
     "svn_co_deki_mozilla":
         command => "/usr/bin/svn co http://svn.mozilla.org/projects/deki/trunk/mozilla/",
         cwd => "/home/vagrant",
@@ -315,9 +316,8 @@ exec {
             File["/etc/dekiwiki/mindtouch.deki.startup.xml"],
             Exec["setup_mysql_wikidb"]
         ];
-    "kuma_syncdb":
-        cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py syncdb --noinput",
-        unless => "/usr/bin/mysql -uroot kuma -B -e 'show tables' 2>&1 | grep -q 'django_content_type'",
+    "kuma_sql_migrate":
+        cwd => "/vagrant", command => "/usr/bin/python2.6 ./vendor/src/schematic/schematic migrations/",
         require => [
             Service["mysqld"],
             Package["python26-devel", "python26-mod_wsgi", "python26-jinja2",
@@ -325,6 +325,11 @@ exec {
             Exec["mysql-python-install", "lxml-install",
                 "setup_mysql_databases_and_users",
                 "vendor_lib_git_submodule_update"]
+        ];
+    "kuma_south_migrate":
+        cwd => "/vagrant", command => "/usr/bin/python2.6 manage.py migrate",
+        require => [
+            Exec["kuma_sql_migrate"]
         ];
 
     #
@@ -334,12 +339,13 @@ exec {
     "kuma_update_product_details":
         cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_product_details",
         require => [
-            Exec["kuma_syncdb"]
+            Exec["kuma_south_migrate"],
+            File["/home/vagrant/product_details_json"]
         ];
     "kuma_update_feeds":
         cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_feeds",
         require => [
-            Exec["kuma_syncdb"]
+            Exec["kuma_south_migrate"]
         ];
 
     # HACK: Disable SELinux... causing problems, and I don't understand it.

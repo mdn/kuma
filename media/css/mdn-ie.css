@@ -1,0 +1,9 @@
+/*----------------------------------------------------------------------------
+IE (all versions) CSS file for Mozilla Developer Network
+Created by Craig Cook - focalcurve.com
+        on 11 February, 2011
+-----------------------------------------------------------------------------*/
+
+legend { color: #333; }
+.submission .section legend b { top: 0; left: 0; }
+.replaced input { filter:alpha(opacity=0); }

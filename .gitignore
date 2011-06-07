@@ -6,6 +6,7 @@ settings_local.py
 pip-log.txt
 .coverage
 coverage.xml
+nosetests.xml
 build.py
 **-all.css
 **-min.css

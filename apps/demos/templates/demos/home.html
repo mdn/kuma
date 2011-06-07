@@ -30,7 +30,16 @@
       {% endtrans %}
     </div>
     
-    <p class="aside demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>    
+    <p class="aside demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
+    
+    <div id="devderby-promo" class="aside">
+      <a href="{{url('demos_devderby_landing')}}">
+        <img class="derby-logo" src="{{ MEDIA_URL }}img/devderby/logo-devderby-mini.png" alt="" width="138" height="44">
+        <h2>{{_('Join the Dev Derby!')}}</h2>
+        <p>{{_('Submit your demo for a chance to win awesome prizes.')}}</p>
+      </a>
+    </div>
+        
   </header>
   
   {% if featured_submission_list | length %}
@@ -61,14 +70,14 @@
 
 
   <section id="content-main" role="main">
-    {{ submission_listing(request, submission_list, False, None, None,
+    {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
         _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
         url('demos_feed_recent', format='rss') ) }}
   </section><!-- /#content-main -->
   
   <aside id="content-sub" role="complementary">
     {{ search_form() }}
-    {{ tags_list() }}
+    {{ tech_tags_list() }}
   </aside><!-- /#content-sub -->
 
 </div>

@@ -53,8 +53,8 @@
       </li>
       <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">{{_('Share It')}}</a>
         <ul id="share-opts">
-          <li class="twitter"><a href="http://twitter.com/share?{{ urlencode({"url":short_url, "text":submission.title, "via":"mozhacks"}) }}">{{_('Share on Twitter')}}</a></li>
-          <li class="facebook"><a href="http://www.facebook.com/sharer.php?{{ urlencode({"u":full_url, "t":submission.title}) }}">{{_('Share on Facebook')}}</a></li>
+          <li class="twitter"><a href="{{ 'http://twitter.com/share'|urlparams(url=short_url, text=submission.title.encode('utf-8'), via="mozhacks") }}">{{_('Share on Twitter')}}</a></li>
+          <li class="facebook"><a href="{{ 'http://www.facebook.com/sharer.php'|urlparams(u=full_url, t=submission.title.encode('utf-8')) }}">{{_('Share on Facebook')}}</a></li>
           <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
         </ul>
       </li>
