@@ -43,13 +43,13 @@
 #step-color label, #step-topic label { display: block; overflow: hidden; padding: .5em 10px; margin: 2px; text-align: center; font-size: 1.142em; text-transform: uppercase; color: #fff; text-shadow: 0 0 3px rgba(0,0,0,.5), 1px 1px 0 #000; }
 #step-color li:hover, #step-color li.selected, #step-topic li:hover, #step-topic li.selected { border-color: #25a; border-width: 2px; margin: 0 24px 1em 1px; width: 118px; padding: 1px; }
 #step-color li:hover label, #step-color li.selected label, #step-topic li:hover label, #step-topic li.selected label { margin: 0; }
-#step-color .gray label, #step-topic .gray label { background: #443f3e; }
-#step-color .orange label, #step-topic .orange label { background: #f16a22; }
-#step-color .red label, #step-topic .red label { background: #ec2224; }
+#step-color .gray label, #step-topic .Gray label { background: #443f3e; }
+#step-color .orange label, #step-topic .Orange label { background: #f16a22; }
+#step-color .red label, #step-topic .Red label { background: #ec2224; }
 
 #step-topic label { font: normal 18px/1 "Milk", sans-serif; text-transform: none; letter-spacing: 1px; }
 
-#button-code { font: .857em monospace; width: 94%; height: 5em; margin: 0 0 1.4em; } 
+#button-code { font: .857em monospace; width: 94%; height: 6em; margin: 0 0 1.4em; } 
 
 #button-preview { width: 223px; padding: 20px; float: right; border: 1px solid #d8d4ca; }
 #button-preview.fixed { position: fixed; z-index: 99; top: 20px; margin-left: 671px; }
