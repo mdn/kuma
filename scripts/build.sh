@@ -1,5 +1,6 @@
 # This script should be called from within Hudson
-DB = $JOB_NAME
+DB=test_$JOB_NAME
+echo "Using database: $DB"
 cd $WORKSPACE
 VENV=$WORKSPACE/venv
 VENDOR=$WORKSPACE/vendor
@@ -50,7 +51,7 @@ ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 LOG_LEVEL = logging.ERROR
 DATABASES['default']['HOST'] = 'sm-hudson01'
 DATABASES['default']['USER'] = 'hudson'
-DATABASES['default']['TEST_NAME'] = 'test_$DB'
+DATABASES['default']['TEST_NAME'] = '$DB'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
 CACHE_BACKEND = 'caching.backends.locmem://'
