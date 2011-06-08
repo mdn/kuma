@@ -293,8 +293,10 @@ def delete(request, slug):
         submission.delete()
         return HttpResponseRedirect(reverse('demos.views.home'))
 
-    return jingo.render(request, 'demos/delete.html', { 
+    response = jingo.render(request, 'demos/delete.html', { 
         'submission': submission })
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 @login_required
 def new_comment(request, slug, parent_id=None):
