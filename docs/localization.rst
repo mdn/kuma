@@ -276,42 +276,5 @@ Updating strings is pretty easy. Check out the localizations as above, then::
 
     $ python manage.py extract
     $ python manage.py verbatimize --rename
-    $ python manage.py merge
 
-Congratulations! You've now updated the POT and PO files.
-
-Sometimes this can leave a bunch of garbage files with ``.po~`` extensions. You
-should delete these, never commit them::
-
-    $ find . -name "*.po~" -delete
-
-
-Adding a New Locale
--------------------
-
-Adding a new locale is even easier than updating the templates. Say you wanted
-to add ``fa-IR``::
-
-    $ mkdir -p locale/fa-IR/LC_MESSAGES
-    $ python manage.py merge
-
-Done!
-
-
-Compiling MO Files
-==================
-
-gettext is so fast for localization because it doesn't parse text files, it
-reads a binary format. You can easily compile that binary file from the PO
-files in the repository.
-
-We don't store MO files in the repository because they need to change every
-time the corresponding PO file changes, so it's silly and not worth it. They
-are ignored by ``svn:ignore``, but please make sure you don't forcibly add them
-to the repository.
-
-There is a shell script to compile the MO files for you::
-
-    $ ./locale/compile-mo.sh locale
-
-Done!
+Congratulations! You've now updated the POT file.
