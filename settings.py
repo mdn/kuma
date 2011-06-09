@@ -573,8 +573,8 @@ QUESTIONS_MAX_SUGGESTIONS = 5
 QUESTIONS_SUGGESTION_SLOP = 3
 
 # Email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/tmp/kuma-messages'
 
 # Read-only mode setup.
 READ_ONLY = False
