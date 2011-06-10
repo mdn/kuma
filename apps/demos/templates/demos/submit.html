@@ -104,10 +104,11 @@
               <a href="{{url('demos_devderby_landing')}}" onclick="window.open(this.href);return false;">
                 <img class="derby-logo" src="{{ MEDIA_URL }}img/devderby/logo-devderby-sm.png" alt="" width="190" height="60"/>
               </a>
-              <p>Check the appropriate Dev Derby box and make sure you select the relevant technologies above to be considered for the developer challenge.</p>
+              <p>{{_("Check the appropriate Dev Derby box and make sure you select the relevant technologies above to be considered for the developer challenge.")}}</p>
               <ul id="challenge-tags">
                 {{ li_field(form, 'challenge_tags', show_label=False) }}
               </ul>
+              <p><small>{{_("Firefox 5 will introduce support for CSS3 Animations. You should <a href=\"http://www.mozilla.com/en-US/firefox/channel/\">use the Firefox Beta or Aurora channel</a> to test and view your demo (it will not work in Firefox 4).") | safe }}</small></p>
           </fieldset>
 
           {{ li_field(form, 'hidden') }}
