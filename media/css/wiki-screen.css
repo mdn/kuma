@@ -79,7 +79,7 @@ img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
 #content { border-top: 0; }
 .page-content { background: #fff; min-height: 300px; }
 
-textarea#wikiArticle { width: 96%; padding: 15px; min-height: 300px; }
+textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 /*** @Tools @Nav *********/
 #nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
@@ -225,7 +225,7 @@ div.note p, div.tip p { margin-bottom: .75em; }
 .article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
 .article header .notice p { margin: 0 0 10px; }
 
-input#article-title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
+input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
 
 /* @TOC @Table of contents *********/
 #article-nav { float: right; padding: 0 0 1em 20px; background: #fff; width: 230px; position: relative; z-index: 1; }

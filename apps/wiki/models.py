@@ -38,12 +38,7 @@ SIGNIFICANCES = (
 )
 
 CATEGORIES = (
-    (10, _lazy(u'Troubleshooting')),
-    (20, _lazy(u'How to')),
-    (30, _lazy(u'How to contribute')),
-    (40, _lazy(u'Administration')),
-    (50, _lazy(u'Navigation')),
-    (60, _lazy(u'Templates')),
+    (10, _lazy(u'Reference')),
 )
 
 # FF versions used to filter article searches, power {for} tags, etc.:

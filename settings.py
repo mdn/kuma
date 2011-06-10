@@ -383,12 +383,7 @@ MINIFY_BUNDLES = {
             'css/search.css',
         ),
         'wiki': (
-            'css/wiki.css',
-            # The dashboard app uses the wiki bundle because only the wiki app
-            # has the new theme at the moment.
-            'css/dashboards.css',
-            'css/screencast.css',
-            'css/tags.css',
+            'css/wiki-screen.css',
         ),
         'home': (
             'css/home.css',
@@ -422,9 +417,9 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
-            'js/kbox.js',
-            'global/menu.js',
-            'js/main.js',
+            #'js/kbox.js',
+            #'global/menu.js',
+            #'js/main.js',
         ),
         'libs/jqueryui': (
             'js/libs/jqueryui.min.js',
@@ -448,18 +443,11 @@ MINIFY_BUNDLES = {
             'js/gallery.js',
         ),
         'wiki': (
-            'js/markup.js',
             'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
-            'js/libs/jquery.cookie.js',
-            'js/browserdetect.js',
-            'js/libs/swfobject.js',
-            'js/libs/jquery.selectbox-1.2.js',
-            'js/screencast.js',
-            'js/wiki.js',
-            'js/tags.js',
-            'js/dashboards.js',
             'ckeditor/ckeditor.js',
+            'ckeditor/adapters/jquery.js',
+            'js/wiki.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',

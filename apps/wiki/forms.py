@@ -21,6 +21,7 @@ TITLE_SHORT = _lazy(u'The title is too short (%(show_value)s characters). '
 TITLE_LONG = _lazy(u'Please keep the length of the title to %(limit_value)s '
                    u'characters or less. It is currently %(show_value)s '
                    u'characters.')
+TITLE_PLACEHOLDER = _lazy(u'Name Your Article')
 SLUG_REQUIRED = _lazy(u'Please provide a slug.')
 SLUG_INVALID = _lazy(u'The slug provided is not valid.')
 SLUG_SHORT = _lazy(u'The slug is too short (%(show_value)s characters). '
@@ -57,14 +58,14 @@ class DocumentForm(forms.ModelForm):
         tags_field.widget.can_create_tags = can_create_tags
 
     title = StrippedCharField(min_length=5, max_length=255,
-                              widget=forms.TextInput(),
+                              widget=forms.TextInput(attrs={'placeholder':TITLE_PLACEHOLDER}),
                               label=_lazy(u'Title:'),
                               help_text=_lazy(u'Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=3, max_length=255,
-                             widget=forms.TextInput(),
+                             widget=forms.HiddenInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
                              error_messages={'required': SLUG_REQUIRED,
@@ -95,11 +96,13 @@ class DocumentForm(forms.ModelForm):
                                 required=False)
 
     category = forms.ChoiceField(choices=CATEGORIES,
+                                 initial=10,
                                  # Required for non-translations, which is
                                  # enforced in Document.clean().
                                  required=False,
                                  label=_lazy(u'Category:'),
-                                 help_text=_lazy(u'Type of article'))
+                                 help_text=_lazy(u'Type of article'),
+                                 widget=forms.HiddenInput())
 
     tags = tag_forms.TagField(required=False, label=_lazy(u'Topics:'),
                               help_text=_lazy(
@@ -152,7 +155,7 @@ class RevisionForm(forms.ModelForm):
                                  label=_lazy(u'Keywords:'),
                                  help_text=_lazy(u'Affects search results'))
 
-    summary = StrippedCharField(
+    summary = StrippedCharField(required=False,
                 min_length=5, max_length=1000, widget=forms.Textarea(),
                 label=_lazy(u'Search result summary:'),
                 help_text=_lazy(u'Only displayed on search results page'),
