@@ -20,6 +20,7 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
 from wiki.models import Document, Revision, HelpfulVote, SIGNIFICANCES
 from wiki.tasks import send_reviewed_notification
 from wiki.tests import TestCaseBase, document, revision, new_document_data
+from devmo.tests import SkippedTestCase
 
 
 READY_FOR_REVIEW_EMAIL_CONTENT = """
@@ -58,9 +59,9 @@ https://testserver/en-US/kb/%s
 """
 
 
-class DocumentTests(TestCaseBase):
+class DocumentTests(SkippedTestCase):
     """Tests for the Document template"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_document_view(self):
         """Load the document view page and verify the title and content."""
@@ -185,9 +186,9 @@ class DocumentTests(TestCaseBase):
         assert 'Localize' not in doc('#doc-tabs li').text()
 
 
-class RevisionTests(TestCaseBase):
+class RevisionTests(SkippedTestCase):
     """Tests for the Revision template"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_revision_view(self):
         """Load the revision view page and verify the title and content."""
@@ -217,7 +218,7 @@ class RevisionTests(TestCaseBase):
 
 class NewDocumentTests(TestCaseBase):
     """Tests for the New Document template"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
@@ -225,7 +226,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.get(reverse('wiki.new_document'))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#document-form input[name="title"]')))
+        eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
 
     def test_new_document_form_defaults(self):
         """The new document form should have all all 'Relevant to' options
@@ -233,8 +234,8 @@ class NewDocumentTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
         response = self.client.get(reverse('wiki.new_document'))
         doc = pq(response.content)
-        eq_(7, len(doc('input[checked=checked]')))
-        eq_(None, doc('input[name="tags"]').attr('required'))
+        eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
+        eq_("10", doc('input#id_category').attr('value'))
 
     @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
@@ -248,7 +249,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         d = Document.objects.get(title=data['title'])
-        eq_([('http://testserver/en-US/kb/%s/history' % d.slug, 302)],
+        eq_([('http://testserver/en-US/docs/%s/history' % d.slug, 302)],
             response.redirect_chain)
         eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
         eq_(data['category'], d.category)
@@ -291,7 +292,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > ul.errorlist')
+        ul = doc('article.article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide a title.', ul('li').text())
 
@@ -303,7 +304,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > ul.errorlist')
+        ul = doc('article.article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
 
@@ -315,7 +316,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('#document-form > ul.errorlist')
+        ul = doc('article.article > ul.errorlist')
         eq_(1, len(ul))
         assert ('Select a valid choice. 963 is not one of the available '
                 'choices.' in ul('li').text())
@@ -335,19 +336,6 @@ class NewDocumentTests(TestCaseBase):
                                     follow=True)
         self.assertContains(response, 'Please choose a category.')
 
-    def test_new_document_POST_invalid_ff_version(self):
-        """Try to create a new document with an invalid firefox version."""
-        self.client.login(username='admin', password='testpass')
-        data = new_document_data(['tag1', 'tag2'])
-        data['firefox_versions'] = [1337]
-        response = self.client.post(reverse('wiki.new_document'), data,
-                                    follow=True)
-        doc = pq(response.content)
-        ul = doc('#document-form > ul.errorlist')
-        eq_(1, len(ul))
-        eq_('Select a valid choice. 1337 is not one of the available choices.',
-            ul('li').text())
-
     def test_slug_collision_validation(self):
         """Trying to create document with existing locale/slug should
         show validation error."""
@@ -358,7 +346,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        ul = doc('#document-form > ul.errorlist')
+        ul = doc('article.article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Document with this Slug and Locale already exists.',
             ul('li').text())
@@ -373,7 +361,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        ul = doc('#document-form > ul.errorlist')
+        ul = doc('article.article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Document with this Title and Locale already exists.',
             ul('li').text())
@@ -388,9 +376,9 @@ class NewDocumentTests(TestCaseBase):
         eq_('ask', Document.objects.all()[0].slug)
 
 
-class NewRevisionTests(TestCaseBase):
+class NewRevisionTests(SkippedTestCase):
     """Tests for the New Revision template"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(NewRevisionTests, self).setUp()
@@ -530,9 +518,9 @@ class NewRevisionTests(TestCaseBase):
             locale=None)
 
 
-class DocumentEditTests(TestCaseBase):
+class DocumentEditTests(SkippedTestCase):
     """Test the editing of document level fields."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(DocumentEditTests, self).setUp()
@@ -588,9 +576,9 @@ class DocumentEditTests(TestCaseBase):
         eq_(new_title, doc.title)
 
 
-class DocumentListTests(TestCaseBase):
+class DocumentListTests(SkippedTestCase):
     """Tests for the All and Category template"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(DocumentListTests, self).setUp()
@@ -629,9 +617,9 @@ class DocumentListTests(TestCaseBase):
         eq_(1, len(doc('#document-list ul.documents li')))
 
 
-class DocumentRevisionsTests(TestCaseBase):
+class DocumentRevisionsTests(SkippedTestCase):
     """Tests for the Document Revisions template"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_document_revisions_list(self):
         """Verify the document revisions list view."""
@@ -663,9 +651,9 @@ class DocumentRevisionsTests(TestCaseBase):
         eq_('Review', doc('#revision-list div.status:first').text())
 
 
-class ReviewRevisionTests(TestCaseBase):
+class ReviewRevisionTests(SkippedTestCase):
     """Tests for Review Revisions and Translations"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(ReviewRevisionTests, self).setUp()
@@ -879,9 +867,9 @@ class ReviewRevisionTests(TestCaseBase):
             doc('details .warning-box').text())
 
 
-class CompareRevisionTests(TestCaseBase):
+class CompareRevisionTests(SkippedTestCase):
     """Tests for Review Revisions"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(CompareRevisionTests, self).setUp()
@@ -937,9 +925,9 @@ class CompareRevisionTests(TestCaseBase):
         eq_(404, response.status_code)
 
 
-class TranslateTests(TestCaseBase):
+class TranslateTests(SkippedTestCase):
     """Tests for the Translate page"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(TranslateTests, self).setUp()
@@ -1174,9 +1162,9 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     eq_(orig_rev, fred_rev.based_on)
 
 
-class DocumentWatchTests(TestCaseBase):
+class DocumentWatchTests(SkippedTestCase):
     """Tests for un/subscribing to document edit notifications."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(DocumentWatchTests, self).setUp()
@@ -1212,9 +1200,9 @@ class DocumentWatchTests(TestCaseBase):
                'Watch was not destroyed'
 
 
-class LocaleWatchTests(TestCaseBase):
+class LocaleWatchTests(SkippedTestCase):
     """Tests for un/subscribing to a locale's ready for review emails."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(LocaleWatchTests, self).setUp()
@@ -1247,9 +1235,9 @@ class LocaleWatchTests(TestCaseBase):
                                                                 locale='en-US')
 
 
-class ArticlePreviewTests(TestCaseBase):
+class ArticlePreviewTests(SkippedTestCase):
     """Tests for preview view and template."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(ArticlePreviewTests, self).setUp()
@@ -1283,8 +1271,8 @@ class ArticlePreviewTests(TestCaseBase):
         eq_('/es/kb/prueba', link[0].attrib['href'])
 
 
-class HelpfulVoteTests(TestCaseBase):
-    fixtures = ['users.json']
+class HelpfulVoteTests(SkippedTestCase):
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(HelpfulVoteTests, self).setUp()
@@ -1340,9 +1328,9 @@ class HelpfulVoteTests(TestCaseBase):
         assert votes[0].helpful
 
 
-class SelectLocaleTests(TestCaseBase):
+class SelectLocaleTests(SkippedTestCase):
     """Test the locale selection page"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(SelectLocaleTests, self).setUp()
@@ -1358,8 +1346,8 @@ class SelectLocaleTests(TestCaseBase):
             len(doc('#select-locale ul.locales li')))
 
 
-class RelatedDocumentTestCase(TestCaseBase):
-    fixtures = ['users.json', 'wiki/documents.json']
+class RelatedDocumentTestCase(SkippedTestCase):
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_related_order(self):
         calculate_related_documents()
@@ -1374,8 +1362,8 @@ class RelatedDocumentTestCase(TestCaseBase):
         eq_('an article title 2', related[0].text)
 
 
-class RevisionDeleteTestCase(TestCaseBase):
-    fixtures = ['users.json']
+class RevisionDeleteTestCase(SkippedTestCase):
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(RevisionDeleteTestCase, self).setUp()
@@ -1444,9 +1432,9 @@ class RevisionDeleteTestCase(TestCaseBase):
         eq_(prev_revision, d.current_revision)
 
 
-class ApprovedWatchTests(TestCaseBase):
+class ApprovedWatchTests(SkippedTestCase):
     """Tests for un/subscribing to revision approvals."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(ApprovedWatchTests, self).setUp()
@@ -1489,7 +1477,7 @@ def _create_document(title='Test Document', parent=None,
                  is_localizable=True)
     d.save()
     r = Revision(document=d, keywords='key1, key2', summary='lipsum',
-                 content='<div>Lorem Ipsum</div>', creator_id=118577,
+                 content='<div>Lorem Ipsum</div>', creator_id=8,
                  significance=SIGNIFICANCES[0][0], is_approved=True,
                  comment="Good job!")
     r.save()

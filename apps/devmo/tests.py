@@ -7,6 +7,12 @@ import urllib2
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
 
+from nose.plugins.skip import SkipTest
+
+class SkippedTestCase(test_utils.TestCase):
+    def setUp(self):
+        raise SkipTest()
+
 def parse_robots(base_url):
     """ Given a base url, retrieves the robot.txt file and
         returns a list of rules. A rule is a tuple. 

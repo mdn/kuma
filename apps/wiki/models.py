@@ -38,6 +38,7 @@ SIGNIFICANCES = (
 )
 
 CATEGORIES = (
+    (00, _lazy(u'Uncategorized')),
     (10, _lazy(u'Reference')),
 )
 

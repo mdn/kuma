@@ -96,7 +96,7 @@ class DocumentTests(TestCase):
     def test_category_inheritance(self):
         """A document's categories must always be those of its parent."""
         some_category = CATEGORIES[1][0]
-        other_category = CATEGORIES[2][0]
+        other_category = CATEGORIES[0][0]
 
         # Notice if somebody ever changes the default on the category field,
         # which would invalidate our test:
@@ -234,20 +234,20 @@ class DocumentTests(TestCase):
     def test_new_doc_does_not_update_categories(self):
         """Make sure that creating a new document doesn't change the
         category of all the other documents."""
-        d1 = document(category=20)
+        d1 = document(category=10)
         d1.save()
         assert d1.pk
-        d2 = document(category=30)
+        d2 = document(category=00)
         assert not d2.pk
         d2._clean_category()
         d1prime = Document.objects.get(pk=d1.pk)
-        eq_(20, d1prime.category)
+        eq_(10, d1prime.category)
 
 
 class DocumentTestsWithFixture(TestCase):
     """Document tests which need the users fixture"""
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_majorly_outdated(self):
         """Test the is_majorly_outdated method."""
@@ -327,7 +327,7 @@ class DocumentTestsWithFixture(TestCase):
 
 class RedirectCreationTests(TestCase):
     """Tests for automatic creation of redirects when slug or title changes"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.d, self.r = doc_rev()
@@ -406,7 +406,7 @@ class RedirectCreationTests(TestCase):
 
 class RevisionTests(TestCase):
     """Tests for the Revision model"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
@@ -477,7 +477,7 @@ class RevisionTests(TestCase):
 
 
 class RelatedDocumentTests(TestCase):
-    fixtures = ['users.json', 'wiki/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_related_documents_calculated(self):
         d = Document.uncached.get(pk=1)
@@ -507,7 +507,7 @@ class RelatedDocumentTests(TestCase):
 
 
 class GetCurrentOrLatestRevisionTests(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     """Tests for get_current_or_latest_revision."""
     def test_single_approved(self):

@@ -29,7 +29,7 @@ class VersionGroupTests(TestCase):
 class RedirectTests(TestCase):
     """Tests for the REDIRECT wiki directive"""
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_redirect_suppression(self):
         """The document view shouldn't redirect when passed redirect=no."""
@@ -39,18 +39,12 @@ class RedirectTests(TestCase):
                        follow=True)
         self.assertContains(response, 'REDIRECT ')
 
-    def test_home_redirect(self):
-        """Going to /kb/ should redirect to /home/."""
-        resp = self.client.get(reverse('wiki.home', locale='en-US'))
-        self.assertRedirects(resp, reverse('home', locale='en-US'),
-                             status_code=301)
-
 
 class LocaleRedirectTests(TestCase):
     """Tests for fallbacks to en-US and such for slug lookups."""
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_fallback_to_translation(self):
         """If a slug isn't found in the requested locale but is in the default
@@ -82,7 +76,7 @@ class LocaleRedirectTests(TestCase):
 
 
 class ViewTests(TestCase):
-    fixtures = ['users.json', 'search/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_json_view(self):
         url = reverse('wiki.json', force_locale=True)
@@ -101,7 +95,7 @@ class ViewTests(TestCase):
 class DocumentEditingTests(TestCase):
     """Tests for the document-editing view"""
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_retitling(self):
         """When the title of an article is edited, a redirect is made."""
