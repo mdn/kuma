@@ -445,8 +445,6 @@ MINIFY_BUNDLES = {
         'wiki': (
             'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
-            'ckeditor/ckeditor.js',
-            'ckeditor/adapters/jquery.js',
             'js/wiki.js',
         ),
         'customercare': (
@@ -467,7 +465,11 @@ MINIFY_BUNDLES = {
             'js/mdn/init.js',
             'js/mdn/gsearch.js',
             'js/mdn/webtrends.js',
-
+            # Used only on pages with video popups
+            'js/mdn/video-player.js',
+            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+        ),
+        'mdn_home': (
             # Home Page
             # cycle and slideshow only needed on the home page (or any page
             # featuring the slide show widget).
@@ -475,11 +477,6 @@ MINIFY_BUNDLES = {
             'js/mdn/slideshow.js',
             'js/mdn/TabInterface.js',
             'js/mdn/home.js',
-
-            # Used only on pages with video popups
-            'js/mdn/video-player.js',
-
-            'js/mdn/jquery.simplemodal.1.4.1.min.js',
         ),
     },
 }
