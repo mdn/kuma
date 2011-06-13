@@ -635,9 +635,11 @@ class Submission(models.Model):
         if user.is_staff or user.is_superuser:
             # Staff / superuser can manage any tag namespace
             return True
-        if user == self.creator and ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
-            # Creator can manage whitelisted namespaces
-            return True
+        if user == self.creator:
+            # Creator can manage whitelisted namespace prefixes
+            for allowed_ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
+                if ns.startswith(allowed_ns):
+                    return True
         return False
 
     # TODO:liberate - Move this to a more generalized tag enhancement package?
@@ -728,7 +730,6 @@ class Submission(models.Model):
             file_data = zf.read(zi)
             # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
             file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
-            logging.debug("FILE TYPE DETECTED: '%s' /  '%s'" % ( m_mime.from_buffer(file_data), file_mime_type ))
 
             if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
                 raise ValidationError(

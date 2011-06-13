@@ -49,7 +49,7 @@ def save_valid_submission(title):
     zf.close()
     s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
     s.screenshot_1.save('screenshot_1.jpg', ContentFile(open(
-        'apps/demos/fixtures/screenshot_1.png').read()))
+        '%s/fixtures/screenshot_1.png' % ( dirname(__file__), ) ).read()))
     s.save()
     return s
 
@@ -88,7 +88,7 @@ class DemoPackageTest(TestCase):
         s = self.submission
 
         tag_list = [
-            'challenge:2011-06-27',
+            'challenge:2011:june',
             'tech:audio',
             'tech:canvas',
             'system:challenge:winner:2011-06-27',
@@ -99,8 +99,8 @@ class DemoPackageTest(TestCase):
         ]
 
         expected_namespaces = {
-            'challenge:': [
-                'challenge:2011-06-27'
+            'challenge:2011:': [
+                'challenge:2011:june'
             ],
             'tech:': [
                 'tech:audio',
@@ -143,6 +143,7 @@ class DemoPackageTest(TestCase):
         # Attempted tag changes.
         tags_in = [
             'tech:audio', 'tech:video',
+            'challenge:2011:june',
             'system:alpha', 'system:beta',
         ]
 
@@ -150,6 +151,7 @@ class DemoPackageTest(TestCase):
         # geo:* should remain untouched.
         expected_tags = [
             'tech:audio', 'tech:video',
+            'challenge:2011:june',
             'system:hoopy', 'system:frood',
             'geo:tags', 'geo:other',
         ]
@@ -162,6 +164,7 @@ class DemoPackageTest(TestCase):
         # An admin user should be able to affect any tags.
         expected_tags = [
             'tech:audio', 'tech:video',
+            'challenge:2011:june',
             'system:alpha', 'system:beta',
         ]
         expected_tags.sort()
