@@ -329,10 +329,25 @@ TOWER_KEYWORDS = {
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
     'messages': [
-#        ('vendor/**', 'ignore'),
-#        ('apps/forums/**', 'ignore'),
-#        ('apps/questions/**', 'ignore'),
-#        ('apps/chat/**', 'ignore'),
+        ('vendor/**', 'ignore'),
+        ('apps/access/**', 'ignore'),
+        ('apps/chat/**', 'ignore'),
+        ('apps/customercare/**', 'ignore'),
+        ('apps/dashboards/**', 'ignore'),
+        ('apps/flagit/**', 'ignore'),
+        ('apps/forums/**', 'ignore'),
+        ('apps/gallery/**', 'ignore'),
+        ('apps/inproduct/**', 'ignore'),
+        ('apps/kadmin/**', 'ignore'),
+        ('apps/kbforums/**', 'ignore'),
+        ('apps/questions/**', 'ignore'),
+        ('apps/search/**', 'ignore'),
+        ('apps/sumo/**', 'ignore'),
+        ('apps/tags/**', 'ignore'),
+        ('apps/twitter/**', 'ignore'),
+        ('apps/upload/**', 'ignore'),
+        ('apps/users/**', 'ignore'),
+        ('apps/wiki/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
@@ -573,8 +588,8 @@ QUESTIONS_MAX_SUGGESTIONS = 5
 QUESTIONS_SUGGESTION_SLOP = 3
 
 # Email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/tmp/kuma-messages'
 
 # Read-only mode setup.
 READ_ONLY = False

@@ -279,11 +279,12 @@ var buttons = rowsToObjects(
 
         $('#button-url')
             .text(sel.url)
+            .attr('title', sel.alt_text)
             .attr('href', sel.tracked_url);
 
         // Update the button code.
         $('#button-code').val([
-            '<a href="', sel.tracked_url, '">',
+            '<a href="', sel.tracked_url, '" title="', sel.alt_text, '">',
             '<img src="{{ request.build_absolute_uri(MEDIA_URL) }}img/promote/promobutton_', sel.id, '.png" ', 
                 'alt="', sel.alt_text, '" />',
             '</a>'
