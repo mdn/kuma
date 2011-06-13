@@ -1,26 +1,3 @@
-/* @Fonts *********/
-@font-face {
-	font-family: "Carto Bold";
-	src: url('../fonts/CartoGothicStd-Bold-webfont.eot?'); /* IE9 */
- 	src: url('../fonts/CartoGothicStd-Bold-webfont.eot?') format('eot'), /* IE6-8 */
-	     url('../fonts/CartoGothicStd-Bold-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/CartoGothicStd-Bold-webfont.svg#webfont') format('svg'), /* Opera */
-	     url('../fonts/CartoGothicStd-Bold-webfont.woff') format('woff'); /* Modern browsers */
-	font-weight: bold;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "Milk";
-	src: url('../fonts/ABTSmilk.eot?'); /* IE9 */
- 	src: url('../fonts/ABTSmilk.eot?') format('eot'), /* IE6-8 */
-	     url('../fonts/ABTSmilk.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/ABTSmilk.svg#webfont') format('svg'), /* Opera */
-	     url('../fonts/ABTSmilk.woff') format('woff'); /* Modern browsers */
-	font-weight: normal;
-	font-style: normal;
-}
-
 /* @Links *********/
 :link, :visited { color: #369; }
 #devderby a.button { color: #fff; }
@@ -106,8 +83,8 @@ transform: rotate(18deg);
 #current-challenge ul.tabs a:hover, ul.tabs a:focus, ul.tabs a:active { color: #2f2f2f; text-decoration: underline; }
 #current-challenge ul.tabs li.current a { background: transparent url(../img/devderby/chal-tab-arrow.png) center bottom no-repeat; padding-bottom: 22px; }
 
-#current-challenge .block { padding: 1em 40px; margin-bottom: 2em; border-bottom: 2px dotted #746b60; }
-#current-challenge .block.block-hidden { position: absolute; top: 4em; left: -999em; height: 0; overflow: hidden; }
+#current-challenge .block { padding: 1em 40px 3em; margin-bottom: 2em; border-bottom: 2px dotted #746b60; }
+#current-challenge .block.block-hidden { display: none; visibility: hidden; }
 #current-challenge .block:after { content: "."; clear: both; display: block; height: 0; visibility: hidden; }
 .hasJS #current-challenge .block { margin: 0; border: 0; }
 
@@ -124,17 +101,13 @@ transform: rotate(18deg);
 #devderby .gallery { margin: 0 -20px 1em -40px; }
 #devderby .gallery li.demo { width: 170px; margin: 0 0 1.4em 25px; padding: 150px 5px 0; }
 
-#devderby .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 5px; background: #fff; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.2); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.2); box-shadow: 5px 5px 0 rgba(0,0,0,.2); }
-#devderby .demo .demo-title a:hover img, #devderby .demo .demo-title a:focus img, #devderby .demo .demo-title a:active img { -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.3); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.3); box-shadow: 5px 5px 0 rgba(0,0,0,.3); }
+#devderby .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 3px; background: #fff; }
 #devderby .demo .launch { position: absolute; top: 105px; right: 12px; font-size: 1.2em; }
 
-#devderby .demohover { display: none; position: absolute; z-index: 99; margin: -12px -12px 0; padding: 7px; background: #cec6ac; background: rgba(200,190,165,.7); }
-#devderby .demohover .in { position: relative; width: 170px; background: #fff; padding: 155px 10px 1px; }
-#devderby .demohover .demo-title { font-size: 1em; }
-#devderby .demohover .demo-title img { position: absolute; top: 5px; left: 5px; padding: 5px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-#devderby .demohover .demo-title a:hover img, #devderby .demohover .demo-title a:focus img, #devderby .demohover .demo-title a:active img { -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-#devderby .demohover .extra { display: block; }
-#devderby .demohover .launch { top: 105px; right: 16px; }
+.devderby #content .demohover .in { position: relative; width: 166px; padding-top: 157px; }
+.devderby #content .demohover .demo-title img { left: 8px; top: 8px; }
+.devderby #content .demohover .extra { display: block; }
+.devderby #content .demohover .launch { top: 105px; right: 16px; }
 
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }
@@ -143,7 +116,7 @@ transform: rotate(18deg);
 #prev-winner .title a { color: #000; }
 #prev-winner .author { font-size: 1em; margin: 0 0 .25em; }
 #prev-winner .author img { float: left; margin: 0 15px .5em -80px; }
-#prev-winner .desc { font-size: .857em; min-height: 3em; margin-left: 0.5em; }
+#prev-winner .desc { font-size: .857em; }
 #prev-winner .launch { position: relative; left: -80px; width: 225px; text-align: center; }
 #prev-winner .launch a { display: inline-block; padding: .35em 15px; background: #f9b43a; border: 1px solid #a97a27; font: 14px/1 "Milk", Georgia, Times, serif; text-transform: none; color: #000; text-shadow: -1px -1px 1px rgba(255,255,255,.2); -moz-border-radius: .75em; -webkit-border-radius: .75em; border-radius: .75em; -moz-box-shadow: inset 0 0 4px rgba(200,145,45,.5), 2px 2px 0 rgba(0,0,0,.2); -webkit-box-shadow: inset 0 0 4px rgba(200,145,45,.5), 2px 2px 0 rgba(0,0,0,.2); box-shadow: inset 0 0 4px rgba(200,145,45,.5), 2px 2px 0 rgba(0,0,0,.2); }
 #prev-winner .launch a:hover { background: #ffc358; text-shadow: -1px -1px 1px rgba(255,255,255,.2), 0 0 3px #ff6; text-decoration: none; }
