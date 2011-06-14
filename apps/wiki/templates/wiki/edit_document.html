@@ -2,7 +2,6 @@
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
-{% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Edit Article | {document}')|f(document=document.title) %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
@@ -11,73 +10,42 @@
 {% set classes = 'edit' %}
 
 {% block content %}
-  <article id="edit-document" class="main form-page">
-    <h1>{{ _('<em>Editing</em> {title}')|fe(title=document.title) }}</h1>
-    {% if document_form %}
-      <div id="document-form">
-        <details class="h2"{% if disclose_description %} open="open"{% endif %}>
-          <summary>{{ _('Edit Description') }}</summary>
-          {{ errorlist(document_form) }}
-          <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
-            {{ csrf() }}
-            <ul>
-              {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' and (field.name != 'is_localizable' or not document.translations.exists()) %}
-                <li>{{ field|label_with_help }}{{ field|safe }}</li>
-              {% endfor %}
-            </ul>
-            {% if document.translations.exists() %}
-              {{ document_form.is_localizable.as_hidden()|safe }}
-            {% endif %}
-            <div class="relevant-to">
-              <h2>{{ _('Relevant to:') }}</h2>
-              <ul>
-                <li>{{ document_form.firefox_versions.label_tag()|safe }}{{ document_form.firefox_versions|safe }}</li>
-                <li>{{ document_form.operating_systems.label_tag()|safe }}{{ document_form.operating_systems|safe }}</li>
-              </ul>
-            </div>
-            <input type="hidden" name="form" value="doc" />
-            <div class="submit">
-              <input type="submit" value="{{ _('Save') }}">
-            </div>
-          </form>
-        </details>
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="edit-document" class="article" role="main">
+    {{ errorlist(revision_form) }}
+    <form id="wiki-page-edit" class="editing" method="post" action="">
+    {{ csrf() }}
+      <fieldset>
+        <header id="article-head">
+          <div class="title">
+  <h1>{{ _('Editing <em>{title}</em>')|fe(title=document.title) }}</h1>
+            <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
+            <!--
+          <p class="save-state">Draft automatically saved at 14:25. <button id="btn-savedraft" type="submit">Save Draft</button></p>
+          -->
       </div>
-    {% endif %}
+
+      {% include 'wiki/includes/page_buttons.html' %}
+
+        </header>
     {% if revision_form %}
-      <div id="revision-form">
-        <details class="h2" open="open">
-          <summary>{{ _('Edit Content') }}</summary>
-          <p>
-            {% trans url=url('wiki.document', 'support-document-guide') %}For help with writing articles, check out the
-              <a href="{{ url }}">Support Document Guide</a>.{% endtrans %}
-          </p>
-          {{ errorlist(revision_form) }}
-          <form action="" method="post">
-            {{ csrf() }}
-            <ul>
-              {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
-                <li>{{ field|label_with_help }}{{ field|safe }}</li>
-              {% endfor %}
-              <li>
-                {{ revision_form.content.label_tag()|safe }}
-                {{ content_editor(revision_form.content) }}
-              </li>
-            </ul>
-            {{ revision_form.hidden_fields()|join|safe }}
+            {{ revision_form.content|safe }}
             <input type="hidden" name="form" value="rev" />
+            {#
             {% include 'wiki/includes/submit_revision_for_review.html' %}
-          </form>
-        </details>
-      </div>
-    {% endif %}
+            #}
+      {% endif %}
+       </fieldset>
+  </form>
     <div id="preview"></div>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}
   {{ document_tabs(document, document.parent, user, 'edit', settings) }}
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript" src="/media/ckeditor/ckeditor.js"></script>
 {% endblock %}

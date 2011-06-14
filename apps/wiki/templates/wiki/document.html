@@ -14,18 +14,17 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-  <article id="wiki-doc">
-    {% if related %}
-      <section id="related-articles">
-        <h1> {{ _('Related Articles') }}</h1>
-        <ul>
-          {% for art in document.related_documents.all()[0:5] %}
-            <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
-          {% endfor %}
+        <article class="article" role="main">
+      <header id="article-head">
+        <div class="title">
+            <h1 class="page-title">{{ document.title }}</h1>
+        </div>
+        <ul id="page-buttons">
+            <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">Watch</a></li>
+          <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">Edit</a></li>
         </ul>
-      </section>
-    {% endif %}
-    <h1 class="title">{{ document.title }}</h1>
+       </header>
+       {#
     {% if redirected_from %}
       <div id="redirected-from">
         {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
@@ -43,7 +42,26 @@
         {% endtrans %}
       </div>
     {% endif %}
-    <section id="doc-content">
+    #}
+      <div id="wikiArticle" class="page-content boxed">
+      
+        <div id="article-nav"> 
+          <div class="page-toc">
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#Lorum_Ipsum">Lorum Ipsum</a>
+                <ol>
+                  <li><a href="#Dolor_Sit_Amet">Dolor Sit Amet</a></li>
+                </ol>
+              </li>
+              <li><a href="#Another_Heading">Another Heading</a></li>
+            </ol>
+          </div>
+          <ul class="page-anchors">
+            <li class="anchor-tags"><a href="#page-tags">Tags</a></li>
+            <li class="anchor-files"><a href="#page-files">Files</a></li>
+          </ul>
+        </div>
       {% if not fallback_reason %}
         {{ document.html|safe }}
       {% elif fallback_reason == 'no_translation' %}
@@ -67,7 +85,7 @@
       {% else %}
         {{ _("This article doesn't have approved content yet.") }}
       {% endif %}
-    </section>
+    </div>
     <section id="doc-contributors">
       {% trans contributors=user_list(contributors) %}
         Contributors to this page: {{ contributors }}
