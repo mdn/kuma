@@ -49,7 +49,7 @@ def save_valid_submission(title):
     zf.close()
     s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
     s.screenshot_1.save('screenshot_1.jpg', ContentFile(open(
-        '%s/fixtures/screenshot_1.png' % ( dirname(__file__), ) ).read()))
+        '%s/fixtures/screenshot_1.png' % ( dirname(dirname(__file__)), ) ).read()))
     s.save()
     return s
 

@@ -1,5 +1,6 @@
 from hashlib import md5
 
+import logging
 import zipfile
 import tarfile
 
@@ -113,6 +114,8 @@ class SubmissionEditForm(MyModelForm):
         )
     )
 
+    TAGS_FIELD_NAME = 'taggit_tags'
+
     def __init__(self, *args, **kwargs):
 
         # Set the request user, for tag namespace permissions
@@ -130,10 +133,10 @@ class SubmissionEditForm(MyModelForm):
                 and [ x.name for x in self.instance.taggit_tags.all() ]
                 or [ ]
             )
-        elif 'tags' in self.initial:
+        elif self.TAGS_FIELD_NAME in self.initial:
             # If we have tags in the initial data set, use those to populate
             # user-accessible namespaces.
-            tags_incoming = parse_tags(self.initial['tags'])
+            tags_incoming = parse_tags(self.initial[self.TAGS_FIELD_NAME])
         else:
             # No tags for pre-population
             tags_incoming = []
@@ -149,24 +152,24 @@ class SubmissionEditForm(MyModelForm):
         cleaned_data = super(SubmissionEditForm, self).clean()
 
         # Establish a set of tags, if none available
-        if 'tags' not in cleaned_data:
-            cleaned_data['tags'] = []
+        if self.TAGS_FIELD_NAME not in cleaned_data:
+            cleaned_data[self.TAGS_FIELD_NAME] = []
 
         # If there are *_tags fields, append them as tags.
         for k in cleaned_data:
             if k.endswith('_tags'):
-                cleaned_data['tags'].extend(cleaned_data[k])
+                cleaned_data[self.TAGS_FIELD_NAME].extend(cleaned_data[k])
 
-        # If we have an instance, apply the submitted tags as per the permissions.
-        if self.instance:
-            tags_orig = ( 
-                ( self.instance.pk is not None )
-                and [ x.name for x in self.instance.taggit_tags.all() ]
-                or [ ]
-            )
-            cleaned_data['tags'] = self.instance.resolve_allowed_tags(
-                tags_orig, cleaned_data['tags'], self.request_user 
-            )
+        # Filter the incoming tags to accept only those allowed for the requesting user.
+        # TODO: Should this somehow happen at the model and not form level?
+        tags_orig = ( 
+            ( self.instance.pk is not None )
+            and [ x.name for x in self.instance.taggit_tags.all() ]
+            or [ ]
+        )
+        cleaned_data[self.TAGS_FIELD_NAME] = self.instance.resolve_allowed_tags(
+            tags_orig, cleaned_data[self.TAGS_FIELD_NAME], self.request_user 
+        )
 
         # If we have a demo_package, try validating it.
         if 'demo_package' in self.files:
@@ -180,9 +183,17 @@ class SubmissionEditForm(MyModelForm):
 
     def save(self, commit=True):
         rv = super(SubmissionEditForm,self).save(commit)
-        if commit:
-            # Set the tags, if we have a go to commit.
-            self.instance.taggit_tags.set(*self.cleaned_data['tags'])
+        
+        # HACK: Since django.forms.models does this in a hack, we have to mimic
+        # the hack to override it.
+        super_save_m2m = self.save_m2m
+        def save_m2m():
+            if super_save_m2m: super_save_m2m()
+            self.instance.taggit_tags.set(*self.cleaned_data[self.TAGS_FIELD_NAME])
+
+        if commit: save_m2m()
+        else: self.save_m2m = save_m2m
+
         return rv
 
 

@@ -10,7 +10,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 import test_utils
 
-from tests import save_valid_submission
+from test_models import save_valid_submission
 
 
 def mockdekiauth(test):
