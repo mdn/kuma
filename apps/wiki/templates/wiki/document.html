@@ -11,6 +11,9 @@
 {% endif %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article id="wiki-doc">
     {% if related %}
       <section id="related-articles">
@@ -75,6 +78,9 @@
   {% include 'wiki/includes/helpful_form.html' %}
   {% include 'wiki/includes/more_help.html' %}
   #}
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}

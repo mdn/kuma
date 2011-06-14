@@ -7,6 +7,9 @@
 {% set classes = 'review' %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article id="review-revision" class="main">
     <h1>{{ _('Review Revision of {title}')|f(title=document.title) }}</h1>
     <p>{{ _('Reviewing Revision {id} by {user}')|f(id=revision.id, user=revision.creator) }}.
@@ -59,6 +62,9 @@
 
     {% include 'wiki/includes/review_form.html' %}
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}

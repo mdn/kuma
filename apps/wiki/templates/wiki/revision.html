@@ -10,6 +10,9 @@
 {% set classes = 'document' %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article id="wiki-doc">
     <h1 class="title">{{ document.title }}</h1>
     <details class="h2" open="open">
@@ -69,6 +72,9 @@
       </div>
     </details>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 

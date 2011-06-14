@@ -7,6 +7,9 @@
                  (None, _('History'))] %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article id="revision-history" class="main">
     <h1 class="title">{{ _('History of {title}')|fe(title=document.title) }}</h1>
     <div class="choice-list">
@@ -97,6 +100,9 @@
       {% endif %}
     </div>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}
