@@ -137,13 +137,12 @@ exec {
 
 file { 
     
-    [ "/home/vagrant", 
-        "/home/vagrant/logs",
+    [   "/home/vagrant/logs",
         "/home/vagrant/uploads",
         "/home/vagrant/product_details_json",
         "/home/vagrant/mdc_pages"]:
         ensure => directory,
-        owner => "vagrant", group => "vagrant", mode => 0755;
+        owner => "vagrant", group => "vagrant", mode => 0777;
     
     "/vagrant/settings_local.py":
         ensure => file,
@@ -338,12 +337,14 @@ exec {
     #
     "kuma_update_product_details":
         cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_product_details",
+        creates => "/home/vagrant/product_details_json/firefox_versions.json",
         require => [
             Exec["kuma_south_migrate"],
             File["/home/vagrant/product_details_json"]
         ];
     "kuma_update_feeds":
         cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_feeds",
+        onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
         require => [
             Exec["kuma_south_migrate"]
         ];
