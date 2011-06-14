@@ -92,9 +92,8 @@
               <p class="demo-submit"><a href="{{ submit_url }}" class="button">{{_("Submit Your Demo")}}</a></p>
           {% else %}
                 <ul class="gallery">
-                    {% set cols_per_row = 3 %}
+                    {% set extra_class = cycler(' row-first', '', '')%}
                     {% for submission in submissions_qs %}
-                        {% set extra_class = loop.cycle(' row-first', '', '')%}
                         {{ submission_thumb(submission, extra_class) }}
                     {% endfor %}
                 </ul><!-- /.gallery -->
