@@ -1,4 +1,5 @@
 from settings import *
+import logging
 
 INTERNAL_IPS = ('127.0.0.1', '192.168.10.1',)
 
@@ -68,7 +69,12 @@ CACHE_BACKEND = 'locmem://'
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'
 
-LOG_LEVEL = logging.WARNING
-
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
+LOG_LEVEL = logging.DEBUG
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = '/home/vagrant/logs/kuma-django.log',
+)
