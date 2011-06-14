@@ -238,12 +238,13 @@ def submit(request):
     else:
         form = SubmissionNewForm(request.POST, request.FILES, request_user=request.user)
         if form.is_valid():
-            
             new_sub = form.save(commit=False)
-            if request.user.is_authenticated():
-                new_sub.creator = request.user
+            new_sub.creator = request.user
             new_sub.save()
-            new_sub.taggit_tags.set(*form.cleaned_data['tags'])
+            form.save_m2m()
+            
+            # TODO: Process in a cronjob?
+            new_sub.process_demo_package()
 
             ns_key = cache.get(DEMOS_CACHE_NS_KEY)
             if ns_key is None:
@@ -251,9 +252,6 @@ def submit(request):
                 cache.set(DEMOS_CACHE_NS_KEY, ns_key)
             else:
                 cache.incr(DEMOS_CACHE_NS_KEY)
-            
-            # TODO: Process in a cronjob?
-            new_sub.process_demo_package()
 
             return HttpResponseRedirect(reverse(
                     'demos.views.detail', args=(new_sub.slug,)))
