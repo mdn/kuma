@@ -1,7 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
-{% from 'includes/common_macros.html' import search_box %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
 {% set classes = 'document' %}
@@ -72,43 +71,10 @@
       {% endtrans %}
     </section>
   </article>
-  {% if not document.has_voted(request) %}
-    <div id="helpful-vote">
-      <form class="helpful" action="{{ url('wiki.document_vote', document_slug=document.slug) }}" method="post">
-        {{ csrf() }}
-        <p>
-          {{ _('Was this article helpful?') }}
-          <input type="submit" class="btn" name="helpful" value="{{ _('Yes') }}" />
-          <input type="submit" class="btn" name="not-helpful" value="{{ _('No') }}" />
-          <img class="wait" src="{{ settings.MEDIA_URL }}img/customercare/spinner.gif" alt="{{ _('Please wait...') }}" />
-        </p>
-      </form>
-    </div>
-  {% endif %}
-  <div id="more-help">
-    <div class="wrap">
-      <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
-      <ul>
-        {% if related %}
-          <li>
-            {{ _("Here's a list of related articles that might help:") }}
-            <ul>
-              {% for art in related %}
-                <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
-              {% endfor %}
-            </ul>
-          </li>
-        {% endif %}
-        <li>
-          {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
-        </li>
-        <li>
-          <a href="{{ url('wiki.document', 'ask') }}">{{ _('Ask our awesome support community for help') }}</a>
-        </li>
-      </ul>
-      {{ search_box(settings, id=False, prefix=_('Or try searching:')) }}
-    </div>
-  </div>
+  {#
+  {% include 'wiki/includes/helpful_form.html' %}
+  {% include 'wiki/includes/more_help.html' %}
+  #}
 {% endblock %}
 
 {% block side_top %}
