@@ -3,7 +3,7 @@ Vagrant::Config.run do |config|
     # To rebuild from mostly scratch, use this CentOS 5.6 (32 bit) image:
     config.vm.box = "centos-56-32"
     config.vm.box_url = "http://people.mozilla.com/~lorchard/centos-56-32.box"
-    config.vm.share_folder("v-root", "/vagrant", ".")
+    # config.vm.share_folder("v-root", "/vagrant", ".")
 
     # This box works, too, but not under a 32-bit host (eg. Ubuntu 32-bit)
     # config.vm.box = "puppet-centos-55-64"
@@ -21,7 +21,7 @@ Vagrant::Config.run do |config|
 
     # On OS X and Linux you can use an NFS mount; virtualbox shared folders are slow.
     # see also: http://vagrantup.com/docs/nfs.html
-    # config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
+    config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
 
     # Switch someday to this, to more closely match production?
     # config.vm.share_folder("v-root2", "/data/dekiwiki_python/src/developer.mozilla.org/mdn", 
