@@ -55,6 +55,28 @@ Font sizes -
 	font-style: normal;
 }
 
+@font-face {
+	font-family: "Milk";
+	src: url('../fonts/ABTSmilk.eot'); /* IE9 */
+ 	src: url('../fonts/ABTSmilk.eot?') format('eot'), /* IE6-8 */
+ 	     url('../fonts/ABTSmilk.woff') format('woff'), /* Modern browsers */
+	     url('../fonts/ABTSmilk.ttf') format('truetype'), /* Older Webkits */
+	     url('../fonts/ABTSmilk.svg#webfont') format('svg'); /* Opera */
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Museo Sans";
+	src: url('../fonts/MuseoSans_500-webfont.eot'); /* IE9 */
+ 	src: url('../fonts/MuseoSans_500-webfont.eot?') format('eot'), /* IE6-8 */
+ 	     url('../fonts/MuseoSans_500-webfont.woff') format('woff'), /* Modern browsers */
+	     url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'), /* Older Webkits */
+	     url('../fonts/MuseoSans_500-webfont.svg#webfont') format('svg'); /* Opera */
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* @Reset *********/
 header, hgroup, nav, section, article, aside, footer { display: block; }
 html, body, form, fieldset, legend, 
@@ -297,11 +319,6 @@ body.section-mozilla #nav-main-mozilla a, #nav-main .current a.mozilla { backgro
 #site-search-gg * { margin: 0; padding: 0; }
 #site-search-gg img { height: 12px; }
 #site-search-gg .gsc-branding-text { color: #666; vertical-align: top; margin-right: .5em; }
-
-.demo-search { background: #000; padding: 10px; margin: 0 0 20px; border-bottom: 3px solid #cecabc; }
-.demo-search p { margin: 0; }
-.demo-search input { font-size: .857em; color: #666; width: 182px; padding: 3px 3px 3px 28px; background: #fff url("../img/search-icons.png") 5px -97px no-repeat; }
-.demo-search input:focus { color: #000; }
 
 /*** @User status *********/
 .user-state { width: 235px; float: right; text-align: right; color: #630a0c; margin: 0 0 1em; }

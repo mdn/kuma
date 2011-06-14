@@ -115,7 +115,8 @@ def submission_listing_cache_key(*args, **kw):
     return 'demos_%s:%s' % (ns_key, hashlib.md5(args[0].get_full_path()+args[0].user.username).hexdigest())
 
 @register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
-def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url): 
+def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url, 
+        cols_per_row=3, pagination_base_url=''): 
     return locals()
 
 @register.inclusion_tag('demos/elements/tech_tags_list.html')
