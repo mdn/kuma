@@ -3,7 +3,6 @@ head(
   $title = 'Demo Studio | Mozilla Developer Network',
   $pageid = 'demostudio', 
   $bodyclass = 'section-demos landing',
-  $headerclass = 'compact',
   $extraheaders = '
   <link rel="stylesheet" type="text/css" href="./media/css/demos.css"/>
   '
@@ -15,7 +14,17 @@ head(
   <header id="demos-head">
     <h1>Mozilla Demo Studio</h1>
     <ul class="demo-buttons">
-      <li class="learnmore"><a href="#" class="button">Learn More</a></li>
+      <li class="learnmore menu"><a href="#learn-pop" class="button">Learn More</a>
+        <div id="learn-pop" aria-hidden="true">
+          <p>The Mozilla Demo Studio is where developers like you can develop, share, demonstrate, 
+          and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
+          <ul> 
+            <li>View demos that showcase what HTML, CSS, and JavaScript can do.</li>
+            <li>Inspect the source code for those demos so you can see how they work.</li>
+            <li>Read documentation to learn about the open standards and technologies that power the Web.</li>
+          </ul>
+        </div>
+      </li>
       <li class="submit"><a href="demo-submit.php" class="button">Submit a Demo</a></li>
     </ul>
     <p id="derby-cta">
@@ -34,8 +43,8 @@ head(
     </ul>
   
     <div id="demo-main">
-      <strong class="flag">Derby Winner</strong>
       <div class="preview">
+        <strong class="flag">Derby Winner</strong>
         <a href="demo-detail.php">
           <img src="./media/img/fpo2.jpg" alt="" width="435" height="326">
         </a>
@@ -58,7 +67,7 @@ head(
       <div class="preview">
         <h2 class="demo-title">
           <a href="demo-detail.php" title="See more about &ldquo;Fantastic Voyage&rdquo; by Alejandra Divens">
-            <img class="preview" src="./media/img/fpo1.jpg" alt="" width="261" height="195">
+            <img src="./media/img/fpo1.jpg" alt="" width="261" height="195">
             <b>Fantastic Voyage</b>
           </a>
         </h2>
@@ -69,13 +78,22 @@ head(
       <div class="preview">
         <h2 class="demo-title">
           <a href="demo-detail.php" title="See more about &ldquo;Return to the House of Mummies, Part Two&rdquo; by Stephanie Acuba">
-            <img class="preview" src="./media/img/fpo3.jpg" alt="" width="261" height="195">
+            <img src="./media/img/fpo3.jpg" alt="" width="261" height="195">
             <b>Return to the House of Mummies, Part Two</b>
           </a>
         </h2>
       </div>
     </div>
   </section>
+
+<script type="text/javascript" src="./media/js/flickertest.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+	$("#featured-demos").ready(function(){
+		
+	});
+// ]]>
+</script>
 
   <section id="content-main" class="full" role="main">
   
@@ -154,15 +172,22 @@ head(
     });
   });
   
+/* Learn More popup */
+  $("#demos-head .learnmore .button").click(function(){
+    $("#learn-pop").slideToggle(150);
+    $(this).blur();
+    return false;
+  });
 	
 /* Browse by Tech menu */
 	$("#demo-tags").addClass("js");
   $("#demo-tags .button").click(function() {
     $("#tags-list").slideToggle(150);
+    $(this).blur();
     return false;
   });
 
-  $("#tags-list").hover(
+  $("#tags-list, #learn-pop").hover(
     function() {
       $(this).show().removeAttr("aria-hidden");
     },
@@ -175,13 +200,13 @@ head(
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
     if (! $clicked.parents().hasClass("menu"))
-      $("#tags-list").hide().attr("aria-hidden", "true");
+      $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
   });
   
   $("a, input, textarea, button").bind('focus', function(e) {
     var $focused = $(e.target);
     if (! $focused.parents().hasClass("menu"))
-      $("#tags-list").hide().attr("aria-hidden", "true");
+      $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
   });
 
 

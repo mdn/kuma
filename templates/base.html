@@ -43,44 +43,89 @@
     <div class="wrap">
       <div id="branding">
         {% block headerlogo %}
-        <h4 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="" width="62" height="71"> Mozilla Developer Network</a></h4>
-        {% endblock %}
-        {% block headertagline %}
-        <p id="tagline">{{ _('A comprehensive, usable, and accurate resource for everyone developing for the Open Web.') }}</p>
+        <h1 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-compact.png" alt="Mozilla Developer Network" title="Mozilla Developer Network" width="146" height="42"></a></h1>
         {% endblock %}
       </div>
-
-      <div id="utility">
-        {% include "includes/login.html" %}
-
-        <form id="site-search" method="get" action="http://www.google.com/search"
+      
+      <form id="site-search" method="get" action="http://www.google.com/search"
               data-url="{{ url('search') }}">
-          <p>
-            <input type="text" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}" />
-            <button type="submit">{{ _('Search') }}</button>
-          </p>
-          <input type="hidden" name="sitesearch" value="developer.mozilla.org" />
-        </form>
+        <p>
+          <input type="text" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}" />
+          <noscript><button type="submit">{{ _('Search') }}</button></noscript>
+        </p>
+        <input type="hidden" name="sitesearch" value="developer.mozilla.org" />
         <div id="site-search-gg"></div>
-      </div>
+      </form>
 
       {% block headernav %}
-      <nav id="nav">
-        <ul id="nav-main" role="navigation">
-          <li id="nav-main-web"><a href="{{ url('web') }}" class="web">{{ _('Web') }}</a></li>
-          <li id="nav-main-mobile"><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></li>
-          <li id="nav-main-addons"><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></li>
-          <li id="nav-main-mozilla"><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></li>
+      
+      <nav id="nav" role="menubar">
+        <ul id="nav-main">
+          <li id="nav-main-docs" class="menu">
+            <a href="{{ url('docs') }}" class="docs" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
+            <div id="doc-shortcuts" class="sub-menu" aria-hidden="true">
+              <ul>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/DOM')) }}"><abbr title="Document Object Model">{{ _('DOM') }}</abbr></a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">{{ _('Video') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">{{ _('Audio') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/SVG')) }}"><abbr title="Scalable Vector Graphics">{{ _('SVG') }}</abbr></a></li>
+                    <li><a href="{{ devmo_url(_('/en/WebGL')) }}">{{ _('WebGL') }}</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">{{ _('HTML5') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/WebSockets')) }}">{{ _('WebSockets') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Offline_resources_in_Firefox')) }}">{{ _('Offline Cache') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/DOM/Storage')) }}">{{ _('Local Storage') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/IndexedDB')) }}">{{ _('IndexedDB') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_files_from_web_applications')) }}">{{ _('File API') }}</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_gradients')) }}">{{ _('Gradients') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/Using_CSS_transforms')) }}">{{ _('Transforms') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/CSS_transitions')) }}">{{ _('Transitions') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/CSS_animations')) }}">{{ _('Animations') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/Media_queries')) }}">{{ _('Media Queries') }}</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/JavaScript')) }}">{{ _('JavaScript') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/AJAX')) }}">{{ _('AJAX') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/HTML/Canvas')) }}">{{ _('Canvas') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">{{ _('Geolocation') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/DragDrop/Drag_and_Drop')) }}">{{ _('Drag &amp; Drop')|safe }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_web_workers')) }}">{{ _('Web Workers') }}</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <p><strong><a href="{{ url('docs') }}">{{ ('More developer docs, more topics&hellip;')|safe }}</a></strong></p>
+            </div>
+          </li>
+          <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('Demos') }}</a></li>
+          <li id="nav-main-learning" role="menuitem"><a href="{{ url('learn') }}" class="learning">{{ _('Learning') }}</a></li>
+          <li id="nav-main-forums" role="menuitem"><a href="/forums" class="forums">{{ _('Forums') }}</a></li>
         </ul>
-
-        <ul id="nav-extra" role="navigation">
-          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Docs') }}</a></li>
-          <li id="nav-extra-demos"><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
-          <li id="nav-extra-learning"><a href="{{ url('learn') }}">{{ _('Learning') }}</a></li>
-          <li id="nav-extra-community"><a href="/forums">{{ _('Forums') }}</a></li>
-        </ul>
+        
+        <div id="nav-sub" class="menu"><a href="#nav-sub" aria-haspopup="true" class="toggle" title="Explore other parts of MDN">{{ _('Topics') }}</a>
+          <ul class="sub-menu">
+            <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
+            <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
+            <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
+            <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
+          </ul>
+        </div>
       </nav>
       {% endblock %}
+    
+      {% include "includes/login.html" %}
 
     </div>
   </header>
@@ -125,9 +170,56 @@
 $(document).ready(function() {
   // Set up input placeholders.
   $('input[placeholder]').placeholder();
+
+  // Set up nav dropdowns  
+  $("#nav").addClass("js");
+
+  $("#nav-sub .toggle").click(function() {
+    $("#nav-sub .sub-menu").slideToggle(150).removeAttr("aria-hidden");
+    $(this).toggleClass("open");
+    $("#doc-shortcuts").slideUp(100).attr("aria-hidden", "true");
+    $("#nav-main-docs a.docs").removeClass("open");
+    return false;
+  });
+  
+  $("#nav-main-docs a.docs").click(function() {
+    $("#doc-shortcuts").slideToggle(150).removeAttr("aria-hidden");
+    $(this).toggleClass("open");
+    $("#nav-sub .sub-menu").slideUp(100).attr("aria-hidden", "true");
+    $("#nav-sub .toggle").removeClass("open");
+    return false;
+  });
+  
+  // Keep the dropdown visible when it's in use
+  $("#nav-sub .sub-menu, #doc-shortcuts").hover(
+    function() {
+      $(this).show().removeAttr("aria-hidden");
+    },
+    function() {
+      $(this).slideUp('fast').attr("aria-hidden", "true");
+      $("#nav-sub .toggle, #nav-main-docs a").removeClass("open").blur();
+    }
+  );
+
+  // Hide dropdowns when anything else is clicked
+  $(document).bind('click', function(e) {
+    var $clicked = $(e.target);
+    if (! $clicked.parents().hasClass("menu"))
+      $("#nav-sub .sub-menu, #doc-shortcuts").hide().attr("aria-hidden", "true");
+      $("#nav-sub .toggle, #nav-main-docs a.docs").removeClass("open");
+  });
+  
+  // or gets focus
+  $("a, input, textarea, button, :focus").bind('focus', function(e) {
+    var $focused = $(e.target);
+    if (! $focused.parents().hasClass("menu"))
+      $("#nav-sub .sub-menu, #doc-shortcuts").hide().attr("aria-hidden", "true");
+      $("#nav-sub .toggle, #nav-main-docs a.docs").removeClass("open");
+  });
+
 }); 
 
-/* Fake the placeholder attribute since Firefox doesn't support it. */
+/* Fake the placeholder attribute for less capable browsers. */
 jQuery.fn.placeholder = function(new_value) {
   if (new_value) {
     this.attr('placeholder', new_value);
@@ -145,7 +237,6 @@ jQuery.fn.placeholder = function(new_value) {
   return this.focus(function() {
     var $this = $(this),
     text = $this.attr('placeholder');
-
     if ($this.val() == text) {
       $this.val('').removeClass('placeholder');
     }

@@ -26,10 +26,29 @@
 .landing #demos-head { padding-right: 240px; }
 #demos-head h1 { position: absolute; left: 100px; top: 20px; width: 230px; height: 54px; text-indent: -999em; overflow: hidden; background: url("../img/demos/logo-demostudio-lt.png") 0 0 no-repeat; }
 
-#demos-head .demo-buttons { position: relative; z-index: 20; list-style: none; margin: 0; padding: 0; }
-#demos-head .demo-buttons li { display: inline; margin-right: 10px; font-size: .857em; text-transform: uppercase; letter-spacing: .5px; }
-#demos-head .demo-buttons .button { font-family: inherit; font-size: 1em; letter-spacing: .5px; padding: .5em 14px; }
+#demos-head .demo-buttons { position: relative; z-index: 30; list-style: none; margin: 0; padding: 0; }
+#demos-head .demo-buttons li { display: inline; position: relative; margin-right: 10px; font-size: .857em; text-transform: uppercase; letter-spacing: .5px; }
+#demos-head .demo-buttons .button { position: relative; z-index: 35; font-family: inherit; font-size: 1em; letter-spacing: .5px; padding: .5em 14px; }
 #demos-head .demo-buttons .submit a { padding-left: 37px; background-image: url("../img/demos/icn-demoreel.png"); background-position: 8px -48px; background-repeat: no-repeat; }
+
+#demos-head #learn-pop { display: none; width: 330px; margin: -5px auto 1em -185px; padding: 25px 20px 20px; overflow: hidden; color: #fff; font-size: .928em; text-transform: none;
+  position: absolute;
+  left: 50%;
+  z-index: 33;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  background: #000; 
+  background: rgba(0,0,0,.9);
+  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
+  -moz-box-shadow: 0 2px 6px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.5);
+  box-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
+#demos-head #learn-pop ul { list-style-type: square; padding-left: 20px; }
+#demos-head #learn-pop li { margin: 0 0 .25em; font-size: 1em; display: list-item; text-transform: none; }
 
 #derby-cta { position: absolute; z-index: 10; top: 5px; right: 50px; width: 125px; height: 125px; padding: 20px 20px 200px 160px; background: url("../img/demos/bg-searchlight.png") right top no-repeat; }
 #derby-cta a { display: block; width: 125px; height: 105px; padding: 10px 0; text-align: center; color: #fff; color: rgba(255,255,255,.85); text-shadow: 0 0 5px rgba(0,0,0,.5); font: 24px/.8 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 1px; 
