@@ -75,13 +75,13 @@ transform: rotate(18deg);
 
 /* @Current @Challenge *********/
 #current-challenge { border: 0; padding-top: 4em; position: relative; min-height: 300px; }
-#current-challenge ul.tabs { width: 100%; height: 3em; list-style: none; margin: 0; position: absolute; top: 0; left: 0; border-bottom: 3px solid #000; background: transparent none; }
-#current-challenge ul.tabs li { border: 0; float: left; margin: 0; padding: 0; text-align: center; color: #333; background: transparent none; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
-#current-challenge ul.tabs li:hover { background: transparent none; }
-#current-challenge ul.tabs li:focus { outline: 0; }
-#current-challenge ul.tabs a { display: block; color: #333; text-decoration: none; padding: 1.5em 10px; margin-right: 3px; min-width: 80px; }
-#current-challenge ul.tabs a:hover, ul.tabs a:focus, ul.tabs a:active { color: #2f2f2f; text-decoration: underline; }
-#current-challenge ul.tabs li.current a { background: transparent url(../img/devderby/chal-tab-arrow.png) center bottom no-repeat; padding-bottom: 22px; }
+#current-challenge .tabs { width: 100%; height: 3em; list-style: none; margin: 0; position: absolute; top: 0; left: 0; border-bottom: 3px solid #000; background: transparent none; }
+#current-challenge .tabs li { border: 0; float: left; margin: 0; padding: 0; text-align: center; color: #333; background: transparent none; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+#current-challenge .tabs li:hover { background: transparent none; }
+#current-challenge .tabs li:focus { outline: 0; }
+#current-challenge .tabs a { display: block; color: #333; text-decoration: none; padding: 1.5em 10px; margin-right: 3px; min-width: 80px; }
+#current-challenge .tabs a:hover, .tabs a:focus, .tabs a:active { color: #2f2f2f; text-decoration: underline; }
+#current-challenge .tabs li.current a { background: transparent url(../img/devderby/chal-tab-arrow.png) center bottom no-repeat; padding-bottom: 22px; }
 
 #current-challenge .block { padding: 1em 40px 3em; margin-bottom: 2em; border-bottom: 2px dotted #746b60; }
 #current-challenge .block.block-hidden { display: none; visibility: hidden; }
@@ -99,15 +99,16 @@ transform: rotate(18deg);
 #tab-submissions .demo-submit .button:hover, #tab-submissions .demo-submit .button:focus, #tab-submissions .demo-submit .button:active { background-color: #ffc35a; }
 
 #devderby .gallery { margin: 0 -20px 1em -40px; }
-#devderby .gallery li.demo { width: 170px; margin: 0 0 1.4em 25px; padding: 150px 5px 0; }
+#devderby .gallery .demo { width: 170px; margin: 0 0 1.4em 25px; padding: 150px 5px 0; }
+#devderby .gallery .row-first { margin-left: 0; }
 
 #devderby .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 3px; background: #fff; }
 #devderby .demo .launch { position: absolute; top: 105px; right: 12px; font-size: 1.2em; }
 
-.devderby #content .demohover .in { position: relative; width: 166px; padding-top: 157px; }
-.devderby #content .demohover .demo-title img { left: 8px; top: 8px; }
-.devderby #content .demohover .extra { display: block; }
-.devderby #content .demohover .launch { top: 105px; right: 16px; }
+#devderby .demohover .in { position: relative; width: 166px; padding-top: 157px; }
+#devderby .demohover .demo-title img { left: 7px; top: 7px; }
+#devderby .demohover .extra { display: block; }
+#devderby .demohover .launch { top: 105px; right: 16px; }
 
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }

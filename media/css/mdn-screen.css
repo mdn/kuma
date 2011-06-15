@@ -212,7 +212,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main li { position: relative; display: inline-block; margin: 0 0 -6px 12px; }
 #nav-main a { display: inline-block; height: 18px; padding-bottom: 9px; background: url("../img/nav-arrows.png") center bottom no-repeat; }
 #nav a:hover, #nav a:focus, #nav a:active { text-decoration: none; }
-#nav #nav-main a:hover, #nav #nav-main a:focus, #nav #nav-main a:active { padding-bottom: 8px; border-bottom: 1px solid #000; }
+#nav-main a:hover, #nav-main a:focus, #nav-main a:active { padding-bottom: 8px; border-bottom: 1px solid #000; }
 
 #nav-main-docs a.docs { position: relative; z-index: 99; padding-right: 12px; margin-right: -12px; }
 #nav-main-docs { padding-right: 12px; background: url("../img/nav-arrows.png") right -545px no-repeat; }
@@ -267,9 +267,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #doc-shortcuts { display: none; overflow: hidden; clear: both; position: absolute; z-index: 98; top: 27px; left: -230px; width: 420px; padding: 10px 15px; font-size: .857em; background: #000; border: 4px solid #fb9500; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
 #doc-shortcuts ul { list-style: none; margin: 0; overflow: hidden; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
 #doc-shortcuts li { width: 24.9%; float: left; padding: .5em 0; margin: 0; text-align: center; }
-#doc-shortcuts li li { width: 100%; float: none; padding: 0; margin: 0 0 .25em; }
-#doc-shortcuts p { border-top: 1px solid #666; clear: both; padding: .5em 0 0; margin: .5em 0; text-align: right; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
-#doc-shortcuts a { color: #ccc; height: auto; display: inline; padding: 0; background: none; }
+#doc-shortcuts li li { width: 100%; float: none; padding: 0; margin: 0 0 .5em; }
+#doc-shortcuts p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
+#doc-shortcuts li a, #doc-shortcuts p a { color: #ccc; height: auto; display: block; padding: 0; background: none; }
 #doc-shortcuts a:hover, #doc-shortcuts a:focus, #doc-shortcuts a:active { padding: 0; border: 0; color: #fb9500; text-decoration: underline; }
 
 /*** @Language Picker *********/
@@ -318,11 +318,11 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #section-head .intro { float: left; width: 140px; margin: 4px 15px 0 10px; font: bold italic .875em Georgia, Times, "Times New Roman", serif; }
 #section-head h1 { float: left; text-indent: -999em; height: 54px; margin: 0; background: transparent url("../img/logos-sections.png") no-repeat; }
 
-#section-head #logo-web { width: 140px; background-position: 0 -100px; }
-#section-head #logo-mobile { width: 245px; background-position: 0 -200px; }
-#section-head #logo-addons { width: 285px; background-position: 0 -300px; }
-#section-head #logo-apps { width: 170px; background-position: 0 -400px; }
-#section-head #logo-moz { width: 275px; background-position: 0 -500px; }
+#logo-web { width: 140px; background-position: 0 -100px; }
+#logo-mobile { width: 245px; background-position: 0 -200px; }
+#logo-addons { width: 285px; background-position: 0 -300px; }
+#logo-apps { width: 170px; background-position: 0 -400px; }
+#logo-moz { width: 275px; background-position: 0 -500px; }
 
 #section-head .util { float: left; margin: 10px 0 0 30px; font-size: .857em; }
 #section-head .util p { margin: 0 0 .25em; }
@@ -341,40 +341,44 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #welcome-bar h1 b { font-weight: normal; color: #cc3435; }
 #welcome-bar h2 { font-size: 1em; text-align: center; color: #fff; }
 #welcome-bar p { font-size: .857em; line-height: 1.6; margin: 0; text-align: justify; }
-#welcome-bar #welcome-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: 15px; top: 15px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
-#welcome-bar #welcome-close:hover, #welcome-bar #welcome-close:focus { background-position: 0 -600px; }
+#welcome-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: 15px; top: 15px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
+#welcome-close:hover, #welcome-close:focus { background-position: 0 -600px; }
 
-#welcome-open { position: absolute; right: 0; top: -2px; z-index: 20; cursor: pointer; padding: 3px 8px; font: .785em/1 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; color: #444; background: #f8d575 none; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; }
+#welcome-open { position: absolute; right: 10px; top: -2px; z-index: 20; cursor: pointer; padding: 3px 8px; font: .785em/1 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; color: #444; background: #f8d575 none; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; }
 #welcome-open:hover, #welcome-open:focus { color: #000; cursor: pointer; }
 
 /*** @Top @Docs *********/
-#top-docs { background: #fff; margin: 10px 0 30px; padding: 19px; border: 1px solid #e8e8e8; overflow: hidden; box-shadow: 0 2px 2px rgba(0,0,0,.15); }
+#top-docs { background: #fff; margin: 20px 0 40px; padding: 19px; border: 1px solid #e8e8e8; overflow: hidden; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
 #top-docs h1 { text-align: center; font: normal 24px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: .5px; text-transform: uppercase; }
 #top-docs h1 b { font-weight: normal; color: #995c00; }
 #top-docs ul { overflow: hidden; }
 #top-docs li { width: 18%; padding: 0 .95%; float: left; border-left: 1px dotted gray; text-align: center;  }
 #top-docs li:first-child { border: 0; }
 #top-docs li li { width: 100%; float: none; padding: .25em 0; border: 0; font-size: .857em; color: #666; }
-#top-docs li a { font-weight: bold; }
+#top-docs li a { font-weight: bold; display: block; }
 #top-docs .more { clear: both; margin: 1em 0 0; font-size: .857em; color: #666; text-align: center; }
 
 /*** @Promos *********/
-#home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 30px 0; border: 1px solid rgba(0,0,0,.1); color: #fff; font-size: .714em; text-align: center; background: #666 url("../img/bg-thinstripe-dk.png"); -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05); }
-#home-promos .promo:last-child { margin-right: 0; }
-#home-promos .promo a { position: absolute; z-index: 10; display: block; height: 133px; padding: 15px; color: #fff; text-decoration: none;  }
-#home-promos .promo h2 { margin: 0 0 .1em; font: 2.4em/1 "Bebas Neue"; text-transform: uppercase; letter-spacing: .5px; }
-#home-promos .promo div { position: absolute; z-index: 5; height: 163px; width: 218px; background: url("../img/bg-homepromos.png") no-repeat; opacity: .5; -moz-transition: opacity 0.25s ease-in; -webkit-transition: opacity 0.25s ease-in; -o-transition: opacity 0.25s ease-in; transition: opacity 0.25s ease-in; }
-#home-promos a:hover h2, #home-promos a:focus h2, #home-promos a:active h2 { text-decoration: underline; }
-#home-promos .promo:hover div { opacity: 1; -moz-transition: opacity 0.1s ease-in; -webkit-transition: opacity 0.1s ease-in; -o-transition: opacity 0.1s ease-in; transition: opacity 0.1s ease-in; }
+.home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 40px 0; border: 1px solid rgba(0,0,0,.1); color: #fff; font-size: .714em; text-align: center; background: #666 url("../img/bg-thinstripe-dk.png"); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
+.home-promos .promo:last-child { margin-right: 0; }
+.home-promos .promo a { position: absolute; z-index: 10; display: block; height: 133px; padding: 15px; color: #fff; text-decoration: none;  }
+.home-promos .promo h2 { margin: 0 0 .1em; font: 2.4em/1 "Bebas Neue"; text-transform: uppercase; letter-spacing: .5px; }
+.home-promos .promo div { position: absolute; z-index: 5; height: 163px; width: 218px; background: url("../img/bg-homepromos.png") no-repeat; opacity: .5; -moz-transition: opacity, background-position 0.25s ease-in; -webkit-transition: opacity 0.25s ease-in; -o-transition: opacity 0.25s ease-in; transition: opacity 0.25s ease-in; }
+.home-promos a:hover h2, #home-promos a:focus h2, #home-promos a:active h2 { text-decoration: underline; }
+.home-promos .promo:hover div { opacity: 1; -moz-transition: opacity, background-position 0.15s ease-in; -webkit-transition: opacity 0.15s ease-in; -o-transition: opacity 0.15s ease-in; transition: opacity, background-position 0.15s ease-in; }
 
-#home-promos #promo-learn { background-color: #7ea82a; }
-#home-promos #promo-learn div { background-position: 0 bottom; }
-#home-promos #promo-demos { background-color: #e24244; }
-#home-promos #promo-demos div { background-position: -240px bottom; }
-#home-promos #promo-foxdev { background-color: #022856; }
-#home-promos #promo-foxdev div { background-position: -480px bottom; }
-#home-promos #promo-aurora { background-color: #472f64; }
-#home-promos #promo-aurora div { background-position: -720px bottom; }
+#promo-learn { background-color: #7ea82a; }
+#promo-learn div { background-position: 0 90px; }
+#promo-learn:hover div { background-position: 0 80px; }
+#promo-demos { background-color: #e24244; }
+#promo-demos div { background-position: -240px 90px; }
+#promo-demos:hover div { background-position: -240px 80px; }
+#promo-foxdev { background-color: #022856; }
+#promo-foxdev div { background-position: -480px 90px; }
+#promo-foxdev:hover div { background-position: -480px 80px; }
+#promo-aurora { background-color: #472f64; }
+#promo-aurora div { background-position: -720px 90px; }
+#promo-aurora:hover div { background-position: -720px 80px; }
 
 /*** @News *********/
 #home-news { width: 420px; float: left; padding: 0 20px; position: relative; }
@@ -395,15 +399,15 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #home-demos h1 { width: 60%; float: left; margin: 0 0 .8em; font: normal 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: .5px; text-transform: uppercase; }
 #home-demos p.more { width: 35%; float: right; text-align: right; font-size: .857em; margin: .5em 0 0; }
 
-#home #home-demos .gallery .demo { width: 180px; padding: 185px 10px 1px; margin: 0 0 20px 19px; }
-#home #home-demos .gallery .demo.row-first { margin-left: 0; }
-#home #home-demos .demo-title img { width: 180px; max-height: 133px; padding: 9px; border: 1px solid #ccc; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
-#home #home-demos .demo-title a:hover img, #home #home-demos .demo-title a:focus img, #home #home-demos .demo-title a:active img { -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4); box-shadow: 0 1px 2px rgba(0,0,0,.4); }
-#home #home-demos .gallery.js .demo { padding-top: 153px; }
+#home-demos .gallery .demo { width: 180px; padding: 185px 10px 1px; margin: 0 0 20px 19px; }
+#home-demos .gallery .demo.row-first { margin-left: 0; }
+#home-demos .demo-title img { width: 180px; max-height: 133px; padding: 9px; border: 1px solid #ccc; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+#home-demos .demo-title a:hover img, #home #home-demos .demo-title a:focus img, #home #home-demos .demo-title a:active img { -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4); box-shadow: 0 1px 2px rgba(0,0,0,.4); }
+#home-demos .gallery.js .demo { padding-top: 153px; }
 #home-demos .gallery.js .byline { display: none; }
 #home-demos .gallery.js .demo-title { text-indent: -999em; height: 0; margin: 0; }
 
-#home #content .demohover { display: none; position: absolute; z-index: 99; margin: -6px -6px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 0 5px rgba(255,255,255,.75); -webkit-box-shadow: 0 0 5px rgba(255,255,255,.75); box-shadow: 0 0 5px rgba(255,255,255,.75); }
+#home #content .demohover { display: none; position: absolute; z-index: 99; margin: -6px -6px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
 #home #content .demohover .in { position: relative; width: 180px; padding: 165px 15px 9px; background: #fff; background: rgba(255,255,255,.95); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
 #home #content .demohover .demo-title { font-size: 1.285em; }
 #home #content .demohover .demo-title img { width: 180px; max-height: 180px; position: absolute; top: 5px; left: 5px; padding: 10px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
@@ -783,3 +787,5 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
+
+
