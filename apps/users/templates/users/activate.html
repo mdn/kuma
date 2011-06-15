@@ -8,6 +8,9 @@
 {% set classes = 'register' %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article class="main">
     <h1>{{ title }}</h1>
     {% if account %}
@@ -32,4 +35,7 @@
         email or typed in the correct address.{% endtrans %}</p>
     {% endif %}
   </article>
+    </div>
+   </div>
+</section>
 {% endblock content %}
