@@ -172,35 +172,6 @@
     if (! $focused.parents().hasClass("menu"))
       $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
   });
-	
-/* Browse by Tech menu */
-	$("#demo-tags").addClass("js");
-  $("#demo-tags .button").click(function() {
-    $("#tags-list").slideToggle(150);
-    return false;
-  });
-
-  $("#tags-list").hover(
-    function() {
-      $(this).show().removeAttr("aria-hidden");
-    },
-    function() {
-      $(this).slideUp('fast');
-      $("#demo-tags .button").blur();
-    }
-  );
-
-  $(document).bind('click', function(e) {
-    var $clicked = $(e.target);
-    if (! $clicked.parents().hasClass("menu"))
-      $("#tags-list").hide().attr("aria-hidden", "true");
-  });
-  
-  $("a, input, textarea, button").bind('focus', function(e) {
-    var $focused = $(e.target);
-    if (! $focused.parents().hasClass("menu"))
-      $("#tags-list").hide().attr("aria-hidden", "true");
-  });
 
 /* Featured demos */
   $("#featured-demos").addClass("js");
