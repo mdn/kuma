@@ -447,7 +447,7 @@ class Submission(models.Model):
             _('select up to 5 tags that describe your demo'),
             max_tags=5)
     
-    taggit_tags = TaggableManager()
+    taggit_tags = TaggableManager(blank=True)
 
     screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
