@@ -38,7 +38,7 @@ demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 from demos.forms import SubmissionEditForm, SubmissionNewForm
 
 
-def save_valid_submission(title):
+def save_valid_submission(title='hello world'):
     testuser = User.objects.get(username='testuser')
     s = Submission(title=title, slug='hello-world',
         description='This is a hello world demo',
@@ -400,7 +400,6 @@ class DemoPackageTest(TestCase):
         )
 
         for blist, fdata in types:
-            logging.debug("BLIST %s" % (blist,))
             demos.models.DEMO_MIMETYPE_BLACKLIST = blist
 
             s = self.submission

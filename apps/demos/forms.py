@@ -205,3 +205,7 @@ class SubmissionNewForm(SubmissionEditForm):
     captcha = ReCaptchaField(label=_("Show us you're human")) 
     accept_terms = forms.BooleanField(initial=False, required=True)
 
+    def __init__(self, *args, **kwargs):
+        super(SubmissionNewForm, self).__init__(*args, **kwargs)
+        if not settings.RECAPTCHA_PRIVATE_KEY:
+            del self.fields['captcha']
