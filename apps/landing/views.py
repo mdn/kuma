@@ -3,10 +3,15 @@ import jingo
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB)
 from feeder.models import Bundle, Feed
+from demos.models import Submission
 
 
 def home(request):
     """Home page."""
+
+    demos = ( Submission.objects.all_sorted('upandcoming')
+            .exclude(hidden=True) )[:5]
+
     tweets = []
     for section in SECTION_USAGE:
         tweets += Bundle.objects.recent_entries(section.twitter)[:2]
@@ -17,7 +22,7 @@ def home(request):
         updates += Bundle.objects.recent_entries(s.updates)[:1]
 
     return jingo.render(request, 'landing/home.html', {
-        'updates': updates, 'tweets': tweets})
+        'demos': demos, 'updates': updates, 'tweets': tweets})
 
 
 def addons(request):

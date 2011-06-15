@@ -105,7 +105,7 @@ def submission_creator(submission): return locals()
 def profile_link(user, show_gravatar=False, gravatar_size=48): return locals()
 
 @register.inclusion_tag('demos/elements/submission_thumb.html')
-def submission_thumb(submission,extra_class=None): return locals()
+def submission_thumb(submission,extra_class=None,thumb_width="200",thumb_height="150"): return locals()
 
 def submission_listing_cache_key(*args, **kw):
     ns_key = cache.get(DEMOS_CACHE_NS_KEY)
