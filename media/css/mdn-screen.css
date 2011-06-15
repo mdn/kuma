@@ -214,7 +214,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav a:hover, #nav a:focus, #nav a:active { text-decoration: none; }
 #nav #nav-main a:hover, #nav #nav-main a:focus, #nav #nav-main a:active { padding-bottom: 8px; border-bottom: 1px solid #000; }
 
-#nav-main-docs a.docs { position: relative; z-index: 99; }
+#nav-main-docs a.docs { position: relative; z-index: 99; padding-right: 12px; margin-right: -12px; }
 #nav-main-docs { padding-right: 12px; background: url("../img/nav-arrows.png") right -545px no-repeat; }
 #nav-main-docs:hover { background-position: right -645px; }
 
@@ -371,8 +371,9 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #home-promos #promo-learn div { background-position: 0 bottom; }
 #home-promos #promo-demos { background-color: #e24244; }
 #home-promos #promo-demos div { background-position: -240px bottom; }
-#home-promos #promo-foxdev, #home-promos #promo-aurora { background-color: #022856; }
+#home-promos #promo-foxdev { background-color: #022856; }
 #home-promos #promo-foxdev div { background-position: -480px bottom; }
+#home-promos #promo-aurora { background-color: #472f64; }
 #home-promos #promo-aurora div { background-position: -720px bottom; }
 
 /*** @News *********/
@@ -782,5 +783,3 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
-
-
