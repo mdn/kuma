@@ -10,10 +10,10 @@
                entrydate='<time class="updated" datetime="{0}" title="{0}">{1}</time>'|f(
                  entry.last_published|datetime('%Y-%m-%d'), entry.last_published|datetime)|safe %}
       Posted {{ entrydate }} by {{ authorlink }} 
+      {% endtrans %}
       {% if section_headers and entry.section %}
       under <a href="{{ url(entry.section.short) }}" rel="tag">{{ entry.section.pretty }}</a>
       {% endif %}
-      {% endtrans %}
       </p>
     </li>
     {% endwith %}
