@@ -135,28 +135,6 @@
     
 <script type="text/javascript">
 // <![CDATA[
-/* Demo detail boxes */
-  $(document).ready(function(){
-		$(".gallery").addClass("js");
-    $(".gallery .demo").hoverIntent({
-      interval: 250,
-      over: function() {
-        var demo    = $(this), 
-            content = $(this).html(),
-            offs    = $(this).offset();
-        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
-        if (demo.parents("#featured-demos").length) {
-          $("#content").find("div.demohover").addClass("featured");
-        };
-        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
-          $(this).fadeOut(200, function(){ 
-            $(this).remove(); 
-          });
-        });
-      }, 
-      out: function() { /* do nothing */ }
-    });
-  });
 
 /* Learn More popup */
   $("#demos-head .learnmore .button").click(function(){
