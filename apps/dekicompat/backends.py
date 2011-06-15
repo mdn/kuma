@@ -95,12 +95,12 @@ class DekiUser(object):
     """
     Simple data type for deki user info
     """
-    def __init__(self, id, username, fullname, email, gravitar, profile_url=None):
+    def __init__(self, id, username, fullname, email, gravatar, profile_url=None):
         self.id = id
         self.username = username
         self.fullname = fullname
         self.email    = email
-        self.gravitar = gravitar
+        self.gravatar = gravatar
         self.profile_url  = profile_url
         self.is_active    = False
         self.is_staff     = False
@@ -164,7 +164,7 @@ class DekiUser(object):
             elif 'email' == c.nodeName and c.firstChild:
                 deki_user.email = c.firstChild.nodeValue
             elif 'uri.gravatar' == c.nodeName and c.firstChild:
-                deki_user.gravitar = c.firstChild.nodeValue
+                deki_user.gravatar = c.firstChild.nodeValue
             elif 'page.home' == c.nodeName:
                 for sc in c.childNodes:
                     if 'uri.ui' == sc.nodeName and sc.firstChild:
