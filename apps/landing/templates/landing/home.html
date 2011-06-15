@@ -159,7 +159,7 @@
 		  $("#welcome-bar").slideUp("fast").after('<div class="wrap"><button type="button" id="welcome-open">About MDN</button></div>');
 		  $("#welcome-open").click(function(){ 
 		    $("#welcome-bar").slideDown();
-		    $(this).fadeOut("fast").remove(); 
+		    $(this).parents("div.wrap").fadeOut("fast").remove(); 
 		  });
 		});
 	});
