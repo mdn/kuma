@@ -20,8 +20,18 @@
   <header id="demos-head">
     <h1>{{_("Mozilla Demo Studio")}}</h1>
     <ul class="demo-buttons">
-      {# TODO: Need an URL for this link: #}
-      {# <li class="learnmore"><a href="#" class="button">Learn More</a></li> #}
+      <li class="learnmore"><a href="#learn-pop" class="button">{{ _('Learn More') }}</a>
+        <div id="learn-pop" aria-hidden="true">        
+          {% trans %}
+          <p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
+          <ul>
+            <li>View demos that showcase what HTML, CSS, and JavaScript can do.</li>
+            <li>Inspect the source code for those demos so you can see how they work.</li>
+            <li>Read documentation to learn about the open standards and technologies that power the Web.</li>
+          </ul>
+          {% endtrans %}
+        </div>
+      </li>
       <li class="submit"><a href="{{ url('demos_submit') }}" class="button">{{_("Submit a Demo")}}</a></li>
     </ul>
     <p id="derby-cta">
@@ -147,7 +157,43 @@
       out: function() { /* do nothing */ }
     });
   });
+
+/* Learn More popup */
+  $("#demos-head .learnmore .button").click(function(){
+    $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
+    $(this).blur();
+    return false;
+  });
+	
+/* Browse by Tech menu */
+	$("#demo-tags").addClass("js");
+  $("#demo-tags .button").click(function() {
+    $("#tags-list").slideToggle(150).removeAttr("aria-hidden");
+    $(this).blur();
+    return false;
+  });
+
+  $("#tags-list, #learn-pop").hover(
+    function() {
+      $(this).show().removeAttr("aria-hidden");
+    },
+    function() {
+      $(this).slideUp('fast').attr("aria-hidden", "true");
+      $("#demo-tags .button").blur();
+    }
+  );
+
+  $(document).bind('click', function(e) {
+    var $clicked = $(e.target);
+    if (! $clicked.parents().hasClass("menu"))
+      $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
+  });
   
+  $("a, input, textarea, button").bind('focus', function(e) {
+    var $focused = $(e.target);
+    if (! $focused.parents().hasClass("menu"))
+      $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
+  });
 	
 /* Browse by Tech menu */
 	$("#demo-tags").addClass("js");
@@ -177,7 +223,6 @@
     if (! $focused.parents().hasClass("menu"))
       $("#tags-list").hide().attr("aria-hidden", "true");
   });
-
 
 /* Featured demos */
   $("#featured-demos").addClass("js");
