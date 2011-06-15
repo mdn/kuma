@@ -39,7 +39,7 @@
     </p>
   </header>
 
-  {% if featured_submission_list | length %}
+  {% if featured_submission_list | length >= 3 %}
   <section id="featured-demos">
     <header>
       <h2>{{_("Featured Demos")}}</h2>
@@ -50,44 +50,43 @@
   		<li class="nav-next"><a href="#" class="next" title="{{_("See the next demo")}}">{{_("Next")}}</a></li>
     </ul>
   
+    {% set submission = featured_submission_list[1] %}
     <div id="demo-main">
-      <strong class="flag">{{_("Derby Winner")}}</strong>
+      {# <strong class="flag">{{_("Derby Winner")}}</strong> #}
       <div class="preview">
-        <a href="demo-detail.php">
-          <img src="./media/img/fpo2.jpg" alt="" width="435" height="326">
+        <a href="{{ url('demos_detail', slug=submission.slug) }}">
+          <img src="{{ submission.screenshot_1.url }}" alt="" width="435" height="326">
         </a>
         <div class="demo-details">
           <h2 class="demo-title">
-            <a href="demo-detail.php" title="See more about &ldquo;The Incredible Machine&rdquo; by Neil Gauldin">The Incredible Machine</a>  
+              <a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a>  
           </h2>
-          <p class="byline vcard">
-            <a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">
-            <img class="photo avatar" alt="" src="./media/img/blank.gif" width="50" height="50">
-            Neil Gauldin</a>
-          </p>
-          <p class="desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-          <p class="launch"><a href="demo-wrapper.html" class="button" title="Launch &ldquo;The Incredible Machine&rdquo;">Launch</a></p>
+          <p class="byline vcard">{{ profile_link(submission.creator, show_gravatar=True) }}</p>
+          <p class="desc">{{ submission.summary }}</p>
+          <p class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" class="button">{{_("Launch")}}</a></p>
         </div>
       </div>
     </div>
     
+    {% set submission = featured_submission_list[0] %}
     <div id="demo-prev" class="side">
       <div class="preview">
         <h2 class="demo-title">
-          <a href="demo-detail.php" title="See more about &ldquo;Fantastic Voyage&rdquo; by Alejandra Divens">
-            <img class="preview" src="./media/img/fpo1.jpg" alt="" width="261" height="195">
-            <b>Fantastic Voyage</b>
+          <a href="{{ url('demos_detail', slug=submission.slug) }}">
+            <img class="preview" src="{{ submission.screenshot_1.url }}" alt="" width="261" height="195">
+            <b>{{ submission.title }}</b>
           </a>
         </h2>
       </div>
     </div>
     
+    {% set submission = featured_submission_list[2] %}
     <div id="demo-next" class="side">
       <div class="preview">
         <h2 class="demo-title">
-          <a href="demo-detail.php" title="See more about &ldquo;Return to the House of Mummies, Part Two&rdquo; by Stephanie Acuba">
-            <img class="preview" src="./media/img/fpo3.jpg" alt="" width="261" height="195">
-            <b>Return to the House of Mummies, Part Two</b>
+          <a href="{{ url('demos_detail', slug=submission.slug) }}">
+            <img class="preview" src="{{ submission.screenshot_1.url }}" alt="" width="261" height="195">
+            <b>{{ submission.title }}</b>
           </a>
         </h2>
       </div>
@@ -201,6 +200,143 @@
     });
   
   });
+
+/**
+ * Set up featured demos rotation - loads up the JSON feed for featured demos
+ * and does DOM juggling to page through the items.
+ */
+var featured_demos_feed_url =
+    '{{ request.build_absolute_uri(url('demos_feed_featured', format='json')) }}';
+
+// Hide buttons until feed loaded.
+$(".nav-slide .next, .nav-slide .prev").hide(); 
+
+// Load the feed, wire everything up once the data's been received.
+$.getJSON(featured_demos_feed_url, function (demos) {
+
+    // Refrain from wiring up nav, if no items fetched from feed.
+    if (!demos || demos.length == 0) {
+        return;
+    }
+        
+    // Start the current index at 1, since 0 and 2 should already be in prev
+    // and next positions.
+    var curr_idx = 1;
+
+    // Update the main demo from the current index demo.
+    function updateMainFeaturedDemo () {
+        var demo = demos[curr_idx];
+        $('#demo-main')
+            .find('.preview img').attr('src', demo.screenshot).end()
+            .find('.preview a').attr('href', demo.link).end()
+            .find('.demo-title a')
+                .attr('href', demo.link)
+                .text(demo.title)
+            .end()
+            .find('.byline a')
+                .attr('href', demo.author_link)
+                .find('span').text(demo.author_name).end()
+                .find('img').attr('src', demo.author_avatar).end()
+            .end()
+            .find('.desc').text(demo.summary).end()
+            .find('.launch a').attr('href', demo.link + '/launch').end()
+            ;         
+    }
+
+    // Update the previous demo from the previous demo to index, if any
+    function updatePrevFeaturedDemo () {
+        var demo = demos[curr_idx - 1];
+        $('#demo-prev')
+            .find('.preview img').attr('src', demo ? demo.screenshot : '').end()
+            .find('.demo-title a').attr('href', demo ? demo.link : '#').end()
+            .find('.demo-title b').text(demo ? demo.title : '').end()
+            ; 
+    }
+
+    // Update the next demo from the next demo to index, if any
+    function updateNextFeaturedDemo () {
+        var demo = demos[curr_idx + 1];
+        $('#demo-next')
+            .find('.preview img').attr('src', demo ? demo.screenshot : '').end()
+            .find('.demo-title a').attr('href', demo ? demo.link : '#').end()
+            .find('.demo-title b').text(demo ? demo.title : '').end()
+            ; 
+    }
+
+
+    // Show the next button and wire up click handler.
+    var next_btn = $(".nav-slide .next");
+    next_btn.show().click(function() {
+
+        if (curr_idx == demos.length-1) { 
+            // If we're already at the end of the list, do nothing.
+            return; 
+        }
+        curr_idx++; 
+        
+        // Fade out from right-to-left, update on fade out, fade back in if
+        // there's a demo to show
+        $("#demo-next .preview").fadeOut(200, updateNextFeaturedDemo);
+        $("#demo-main .preview").delay(100).fadeOut(200, updateMainFeaturedDemo);
+        if (curr_idx < demos.length-2) {
+            // We have a next demo, so fade both it and the control in.
+            $("#demo-next .preview").delay(200).fadeIn(200);
+            next_btn.fadeIn();
+        } else {
+            // No next demo, so fade out the control.
+            next_btn.fadeOut();
+        }
+        $("#demo-prev .preview").delay(300).fadeOut(200, updatePrevFeaturedDemo);
+        $("#demo-main .preview").delay(400).fadeIn(200);
+        if (curr_idx > 0) {
+            // We have a prev demo, so fade both it and the control in.
+            $("#demo-prev .preview").delay(500).fadeIn(200);
+            prev_btn.fadeIn();
+        } else {
+            // No prev demo, so fade out the control.
+            prev_btn.fadeOut();
+        }
+        
+        return false;
+    });
+
+    // Show the previous button and wire up click handler.
+    var prev_btn = $(".nav-slide .prev");
+    prev_btn.show().click(function() {
+
+        if (curr_idx == 0) { 
+            // If we're already at the start of the list, do nothing.
+            return; 
+        }
+        curr_idx--;
+
+        // Fade out from left-to-right, update on fade out, fade back in if
+        // there's a demo to show
+        $("#demo-prev .preview").fadeOut(200, updatePrevFeaturedDemo);
+        $("#demo-main .preview").delay(100).fadeOut(200, updateMainFeaturedDemo);
+        if (curr_idx > 0) {
+            // We have a prev demo, so fade both it and the control in.
+            $("#demo-prev .preview").delay(200).fadeIn(200);
+            prev_btn.fadeIn();
+        } else {
+            // No prev demo, so fade out the control.
+            prev_btn.fadeOut();
+        }
+        $("#demo-next .preview").delay(300).fadeOut(200, updateNextFeaturedDemo);
+        $("#demo-main .preview").delay(400).fadeIn(200);
+        if (curr_idx < demos.length-2) {
+            // We have a next demo, so fade both it and the control in.
+            $("#demo-next .preview").delay(500).fadeIn(200);
+            next_btn.fadeIn();
+        } else {
+            // No next demo, so fade out the control.
+            next_btn.fadeOut();
+        }
+        
+        return false;
+    });
+
+});
 
 // ]]>
 </script>

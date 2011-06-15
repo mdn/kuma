@@ -58,9 +58,9 @@ KNOWN_TECH_TAGS = (
 
 def home(request):
     """Home page."""
-    featured_submissions = Submission.objects.order_by('-modified').filter(featured=True)
-    if not Submission.allows_listing_hidden_by(request.user):
-        featured_submissions = featured_submissions.exclude(hidden=True)
+    featured_submissions = Submission.objects.filter(featured=True)\
+        .exclude(hidden=True)\
+        .order_by('-modified').all()[:3]
 
     submissions = Submission.objects.all_sorted(request.GET.get('sort', 'created'))
     if not Submission.allows_listing_hidden_by(request.user):
@@ -139,15 +139,7 @@ def search(request):
 
 def profile_detail(request, username):
     user = get_object_or_404(User, username=username)
-    profile = UserProfile.objects.get(user=user)
-
-    try:
-        # HACK: This seems like a dirty violation of the DekiWiki auth package
-        from dekicompat.backends import DekiUserBackend
-        backend = DekiUserBackend()
-        deki_user = backend.get_deki_user(profile.deki_user_id)
-    except:
-        deki_user = None
+    profile = user.get_profile()
 
     sort_order = request.GET.get('sort', 'created')
     show_hidden = user == request.user
@@ -157,7 +149,7 @@ def profile_detail(request, username):
     return object_list(request, queryset,
         extra_context=dict( 
             profile_user=user, 
-            profile_deki_user=deki_user
+            profile=profile
         ),
         paginate_by=25, allow_empty=True,
         template_loader=template_loader,

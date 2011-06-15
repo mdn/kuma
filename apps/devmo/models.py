@@ -1,3 +1,5 @@
+import logging
+
 from django.db import models
 
 from django.contrib.auth.models import User as DjangoUser
@@ -46,3 +48,15 @@ class UserProfile(ModelBase):
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
+
+    def __getattr__(self, name):
+        if not 'deki_user_id' in self.__dict__:
+            raise AttributeError
+        if not 'deki_user' in self.__dict__:
+            from dekicompat.backends import DekiUserBackend
+            self.__dict__['deki_user'] = \
+                DekiUserBackend().get_deki_user(self.__dict__['deki_user_id'])
+        if hasattr(self.__dict__['deki_user'], name):
+            return getattr(self.__dict__['deki_user'], name)
+        raise AttributeError
+
