@@ -183,7 +183,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .aside { width: 235px; float: right; }
 
 /* @Header *********/
-#masthead { background: #000; border-bottom: 4px solid #f8d575; color: #ccc; min-height: 66px; -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+#masthead { background: #000; border-bottom: 4px solid #f8d575; color: #ccc; min-height: 66px; -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
 #masthead .wrap { padding-top: 10px; background: #000; }
 
 .section-docs #masthead { border-bottom-color: #fb9500; }
@@ -250,7 +250,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 /*** @Search *********/
 #site-search { width: 280px; float: left; margin-top: 22px; }
 #site-search p { margin: 0; }
-#site-search #q { float: left; width: 160px; padding: 5px 4px 5px 28px; margin: 0 4px 0 0; background: #fff url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #888; font-size: .786em; }
+#site-search #q { float: left; width: 180px; padding: 5px 4px 5px 28px; margin: -2px 4px 0 0; background: #fff url("../img/search-icons.png") 6px -147px no-repeat; border: 1px solid #666; color: #888; font-size: .857em; }
 #site-search #q:hover, #site-search #q:focus { border-color: #9c0d10; color: #333; }
 #site-search-gg { width: 60px; height: 28px; font-size: .642em; float: left; position: relative; }
 #site-search-gg * { margin: 0; padding: 0; }
@@ -344,6 +344,9 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #welcome-bar #welcome-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: 15px; top: 15px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
 #welcome-bar #welcome-close:hover, #welcome-bar #welcome-close:focus { background-position: 0 -600px; }
 
+#welcome-open { position: absolute; right: 0; top: -2px; z-index: 20; cursor: pointer; padding: 3px 8px; font: .785em/1 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; color: #444; background: #f8d575 none; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; }
+#welcome-open:hover, #welcome-open:focus { color: #000; cursor: pointer; }
+
 /*** @Top @Docs *********/
 #top-docs { background: #fff; margin: 10px 0 30px; padding: 19px; border: 1px solid #e8e8e8; overflow: hidden; box-shadow: 0 2px 2px rgba(0,0,0,.15); }
 #top-docs h1 { text-align: center; font: normal 24px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: .5px; text-transform: uppercase; }
@@ -399,9 +402,11 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #home-demos .gallery.js .byline { display: none; }
 #home-demos .gallery.js .demo-title { text-indent: -999em; height: 0; margin: 0; }
 
-#home #content .demohover { display: none; position: absolute; z-index: 99; margin: -6px -6px 0; }
-#home #content .demohover .in { width: 180px; padding: 165px 15px 9px; }
-#home #content .demohover .demo-title img { width: 180px; max-height: 180px; top: 5px; left: 5px; padding: 10px; }
+#home #content .demohover { display: none; position: absolute; z-index: 99; margin: -6px -6px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 0 5px rgba(255,255,255,.75); -webkit-box-shadow: 0 0 5px rgba(255,255,255,.75); box-shadow: 0 0 5px rgba(255,255,255,.75); }
+#home #content .demohover .in { position: relative; width: 180px; padding: 165px 15px 9px; background: #fff; background: rgba(255,255,255,.95); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
+#home #content .demohover .demo-title { font-size: 1.285em; }
+#home #content .demohover .demo-title img { width: 180px; max-height: 180px; position: absolute; top: 5px; left: 5px; padding: 10px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+#home #content .demohover .extra { display: block; }
 #home #content .demohover .launch { top: 115px; right: 25px; }
 
 #home-demos .demo .flag, #home #content .demohover .flag { display: none; }

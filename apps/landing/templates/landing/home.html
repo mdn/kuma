@@ -152,15 +152,20 @@
 {% block js %}
 {{ super() }}
     
-  <script type="text/javascript">
-  // <![CDATA[
-  	$("#welcome-bar").ready(function(){
-  		$("#welcome-close").click(function(){
-  		  $("#welcome-bar").slideUp("fast");
-  		});
-  	});
-  // ]]>
-  </script>
+<script type="text/javascript">
+// <![CDATA[
+	$("#welcome-bar").ready(function(){
+		$("#welcome-close").click(function(){
+		  $("#welcome-bar").slideUp("fast").after('<div class="wrap"><button type="button" id="welcome-open">About MDN</button></div>');
+		  $("#welcome-open").click(function(){ 
+		    $("#welcome-bar").slideDown();
+		    $(this).fadeOut("fast").remove(); 
+		  });
+		});
+	});
+// ]]>
+</script>
+  
 <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript">
 // <![CDATA[
