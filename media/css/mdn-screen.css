@@ -267,10 +267,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #doc-shortcuts { display: none; overflow: hidden; clear: both; position: absolute; z-index: 98; top: 27px; left: -230px; width: 420px; padding: 10px 15px; font-size: .857em; background: #000; border: 4px solid #fb9500; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
 #doc-shortcuts ul { list-style: none; margin: 0; overflow: hidden; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
 #doc-shortcuts li { width: 24.9%; float: left; padding: .5em 0; margin: 0; text-align: center; }
-#doc-shortcuts li li { width: 100%; float: none; padding: 0; margin: 0 0 .5em; }
-#doc-shortcuts p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
-#doc-shortcuts li a, #doc-shortcuts p a { color: #ccc; height: auto; display: block; padding: 0; background: none; }
-#doc-shortcuts a:hover, #doc-shortcuts a:focus, #doc-shortcuts a:active { padding: 0; border: 0; color: #fb9500; text-decoration: underline; }
+#doc-shortcuts li li { width: 100%; float: none; padding: 0; margin: 0; }
+#doc-shortcuts p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: .785em "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
+#doc-shortcuts a { color: #ccc; height: auto; display: block; padding: .5em 0; border: 0; }
+#doc-shortcuts a:hover, #doc-shortcuts a:focus, #doc-shortcuts a:active { border: 0; padding: .5em 0; color: #fb9500; text-decoration: underline; }
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 1em; }
@@ -354,8 +354,8 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #top-docs ul { overflow: hidden; }
 #top-docs li { width: 18%; padding: 0 .95%; float: left; border-left: 1px dotted gray; text-align: center;  }
 #top-docs li:first-child { border: 0; }
-#top-docs li li { width: 100%; float: none; padding: .25em 0; border: 0; font-size: .857em; color: #666; }
-#top-docs li a { font-weight: bold; display: block; }
+#top-docs li li { width: 100%; float: none; margin: 0; border: 0; font-size: .857em; color: #666; }
+#top-docs li a { font-weight: bold; display: block; padding: .5em 0; }
 #top-docs .more { clear: both; margin: 1em 0 0; font-size: .857em; color: #666; text-align: center; }
 #top-docs li .more { margin: 0; font-size: 1em; color: #666; font-weight: normal; }
 
@@ -808,5 +808,3 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
-
-
