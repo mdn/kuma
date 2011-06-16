@@ -206,7 +206,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav { float: right; margin: 29px 0 0; font: 200 18px/1 "Bebas Neue", "League Gothic", "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #nav:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 #nav a { color: #ccc; }
-#nav a:hover, #nav a:focus, #nav a:active { color: #fff; }
+#nav a:hover, #nav a:focus, #nav a:active { color: #fff; outline: 0; }
 
 #nav-main { float: right; margin: 0; }
 #nav-main li { position: relative; display: inline-block; margin: 0 0 -6px 12px; }
@@ -353,7 +353,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #top-docs h1 { text-align: center; font: normal 24px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: .5px; text-transform: uppercase; }
 #top-docs h1 b { font-weight: normal; color: #995c00; }
 #top-docs ul { overflow: hidden; }
-#top-docs li { width: 18%; padding: 0 .95%; float: left; border-left: 1px dotted gray; text-align: center;  }
+#top-docs li { width: 18%; padding: 0 .9%; float: left; border-left: 1px dotted gray; text-align: center;  }
 #top-docs li:first-child { border: 0; }
 #top-docs li li { width: 100%; float: none; margin: 0; border: 0; font-size: .857em; color: #666; }
 #top-docs li a { font-weight: bold; display: block; padding: .4em 0; }
@@ -361,6 +361,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #top-docs li .more { margin: 0; font-size: 1em; color: #666; font-weight: normal; }
 
 /*** @Promos *********/
+#home-promos { clear: both; overflow: hidden; }
 .home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 40px 0; border: 1px solid rgba(0,0,0,.1); color: #fff; font-size: .714em; text-align: center; background: #666 url("../img/bg-thinstripe-dk.png"); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
 .home-promos .promo:last-child { margin-right: 0; }
 .home-promos .promo a { position: absolute; z-index: 10; display: block; height: 133px; padding: 15px; color: #fff; text-decoration: none;  }
@@ -398,7 +399,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #promo-foxdev { background-color: #022856; background-image: url("../img/bg-thinstripe-dk.png"), url("../img/bg-space-blue.jpg"); }
 #promo-foxdev div { background-position: -480px 90px; }
 #promo-foxdev:hover div { background-position: -480px 80px; }
-#promo-aurora { background-color: #472f64; background-image: url("../img/bg-thinstripe-dk.png"), url("../img/bg-space-purple.jpg"); }
+#promo-aurora { margin-right: 0; background-color: #472f64; background-image: url("../img/bg-thinstripe-dk.png"), url("../img/bg-space-purple.jpg"); }
 #promo-aurora div { background-position: -720px 90px; }
 #promo-aurora:hover div { background-position: -720px 80px; }
 
@@ -406,8 +407,8 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #home-news { width: 420px; float: left; padding: 0 20px; position: relative; }
 #home-news h1 { margin: 0 0 .8em; font: normal 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: .5px; text-transform: uppercase; }
 #home-news:before, #home-news:after { content: ""; display: block; width: 410px; height: 250px; position: absolute; background: #fff; border: 1px solid #cdcdcd; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
-#home-news:before { top: 3.2em; right: 14px; z-index: 6; -moz-transform: rotate(2.5deg); -webkit-transform: rotate(2.5deg); -o-transform: rotate(2.5deg); transform: rotate(2.5deg); }
-#home-news:after { top: 3em; left: 16px; z-index: 5; -moz-transform: rotate(-3deg); -webkit-transform: rotate(-3deg); -o-transform: rotate(-3deg); transform: rotate(-3deg); }
+#home-news:before { top: 3.2em; left: 20px; z-index: 6; -moz-transform: translate(12px) rotate(2.5deg); -webkit-transform: translate(12px) rotate(2.5deg); -o-transform: translate(12px) rotate(2.5deg); transform: translate(12px) rotate(2.5deg); }
+#home-news:after { top: 3.2em; left: 20px; z-index: 5; -moz-transform: translate(-8px) rotate(-3deg); -webkit-transform: translate(-8px) rotate(-3deg); -o-transform: translate(-8px) rotate(-3deg); transform: translate(-8px) rotate(-3deg); }
 #home-news .hfeed { position: relative; z-index: 10; background: #fff; padding: 15px 20px; border: 1px solid #ccc; font-size: .857em; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
 #home-news .hentry { border-bottom: 1px dotted #999; margin: 0 0 1em; padding: 0 0 1em; }
 #home-news .hentry:last-child { border: 0; padding: 0; }
@@ -809,4 +810,5 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
+
 
