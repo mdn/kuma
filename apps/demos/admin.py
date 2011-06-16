@@ -12,6 +12,10 @@ class SubmissionAdmin(admin.ModelAdmin):
     list_display = ( 'title', 'creator', 'featured', 'hidden', 'censored', 'modified', )
     list_editable = ( 'featured', 'hidden', 'censored', )
 
+    # TODO: This is excluded because we've transition to django-taggit tags,
+    # but have not yet removed the django-tagging field.
+    exclude = ( 'tags', )
+
     formfield_overrides = {
         TaggableManager: {
             "widget": TagWidget(attrs={"size":100})

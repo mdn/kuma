@@ -186,7 +186,7 @@ class SubmissionEditForm(MyModelForm):
         
         # HACK: Since django.forms.models does this in a hack, we have to mimic
         # the hack to override it.
-        super_save_m2m = self.save_m2m
+        super_save_m2m = hasattr(self, 'save_m2m') and self.save_m2m or None
         def save_m2m():
             if super_save_m2m: super_save_m2m()
             self.instance.taggit_tags.set(*self.cleaned_data[self.TAGS_FIELD_NAME])
@@ -205,3 +205,7 @@ class SubmissionNewForm(SubmissionEditForm):
     captcha = ReCaptchaField(label=_("Show us you're human")) 
     accept_terms = forms.BooleanField(initial=False, required=True)
 
+    def __init__(self, *args, **kwargs):
+        super(SubmissionNewForm, self).__init__(*args, **kwargs)
+        if not settings.RECAPTCHA_PRIVATE_KEY:
+            del self.fields['captcha']

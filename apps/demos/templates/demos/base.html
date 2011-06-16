@@ -1,4 +1,4 @@
-{% extends "base_compact.html" %}
+{% extends "base.html" %}
 
 {% block headernav_current %}
   <h2 class="current"><a href="{{ url('demos') }}">{{ _('Demos') }}</a></h2>
@@ -6,6 +6,7 @@
 
 {% block site_css %}
     {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/demos.css"/>
 {% endblock %}
 
 {% block site_js %}

@@ -92,9 +92,8 @@
               <p class="demo-submit"><a href="{{ submit_url }}" class="button">{{_("Submit Your Demo")}}</a></p>
           {% else %}
                 <ul class="gallery">
-                    {% set cols_per_row = 3 %}
+                    {% set extra_class = cycler(' row-first', '', '')%}
                     {% for submission in submissions_qs %}
-                        {% set extra_class = loop.cycle(' row-first', '', '')%}
                         {{ submission_thumb(submission, extra_class) }}
                     {% endfor %}
                 </ul><!-- /.gallery -->
@@ -148,7 +147,7 @@
       <h1>{{_("Previous Winner")}}</h1>
       <h2 class="title"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a></h2>
       {# TODO: This should probably be the author's avatar, at some point #}
-      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="{{ submission.title }}" width="70" height="52"></a> {{ submission_creator(submission) }}</h3>
+      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.creator.get_profile().gravatar }}" alt="{{ submission.title }}" width="52" height="52"></a> {{ submission_creator(submission) }}</h3>
       <p class="desc">{{ submission.summary }}</p>
       <p class="launch"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{_("See the Demo")}}</a></p>
     </section><!-- /#prev-winner -->
