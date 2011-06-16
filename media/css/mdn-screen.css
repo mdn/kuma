@@ -212,7 +212,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main li { position: relative; display: inline-block; margin: 0 0 -6px 12px; }
 #nav-main a { display: inline-block; height: 18px; padding-bottom: 9px; background: url("../img/nav-arrows.png") center bottom no-repeat; }
 #nav a:hover, #nav a:focus, #nav a:active { text-decoration: none; }
-#nav-main a:hover, #nav-main a:focus, #nav-main a:active { padding-bottom: 8px; border-bottom: 1px solid #000; }
+#nav #nav-main a:hover, #nav #nav-main a:focus, #nav #nav-main a:active { padding-bottom: 8px; border-bottom: 1px solid #000; }
 
 #nav-main-docs a.docs { position: relative; z-index: 99; padding-right: 12px; margin-right: -12px; }
 #nav-main-docs { padding-right: 12px; background: url("../img/nav-arrows.png") right -545px no-repeat; }
@@ -223,12 +223,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main-learning a:hover, #nav-main-learning a:focus, #nav-main-learning a:active { color: #a7df38; }
 #nav-main-forums a:hover, #nav-main-forums a:focus, #nav-main-forums a:active { color: #0cf; }
 
-.section-docs #nav-main-docs a.docs { padding-bottom: 9px; border: 0; color: #fb9500; background-position: center -130px; }
-.section-demos #nav-main-demos a.demos { padding-bottom: 9px; border: 0; color: #ed2024; background-position: center -430px; }
-.section-learning #nav-main-learning a.learning { padding-bottom: 9px; border: 0; color: #8dc434; background-position: center -230px; }
-.section-forums #nav-main-forums a.forums { padding-bottom: 9px; border: 0; color: #00b6f0; background-position: center -330px; }
+.section-docs #nav-main-docs { background-position: right -645px; }
+.section-docs #nav-main-docs .docs { padding-bottom: 9px; border: 0; color: #fb9500; background-position: center -130px; }
+.section-demos #nav-main-demos .demos { padding-bottom: 9px; border: 0; color: #ed2024; background-position: center -430px; }
+.section-learning #nav-main-learning .learning { padding-bottom: 9px; border: 0; color: #8dc434; background-position: center -230px; }
+.section-forums #nav-main-forums .forums { padding-bottom: 9px; border: 0; color: #00b6f0; background-position: center -330px; }
 
-.section-docs #nav-main-docs a.docs:hover, .section-docs #nav-main-docs a.docs:focus, .section-docs #nav-main-docs a.docs:active { color: #ffae3b; background-position: center -180px; }
+.section-docs #nav-main-docs .docs:hover, .section-docs #nav-main-docs .docs:focus, .section-docs #nav-main-docs .docs:active { color: #ffae3b; background-position: center -180px; }
 .section-demos #nav-main-demos a:hover, .section-demos #nav-main-demos a:focus, .section-demos #nav-main-demos a:active { color: #f33; background-position: center -480px; }
 .section-learning #nav-main-learning a:hover, .section-learning #nav-main-learning a:focus, .section-learning #nav-main-learning a:active { color: #a7df38; background-position: center -280px; }
 .section-forums #nav-main-forums a:hover, .section-forums #nav-main-forums a:focus, .section-forums #nav-main-forums a:active { color: #0cf; background-position: center -380px; }
@@ -245,7 +246,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-sub .toggle.open { height: 24px; padding-bottom: 9px; margin-bottom: -9px; background: url("../img/nav-arrows.png") center -30px no-repeat; }
 #nav-sub .sub-menu a:hover, #nav-sub .sub-menu a:focus, #nav-sub .sub-menu a:active { color: #f8d575; }
 
-#nav-main-docs .open { color: #ffae3b; height: 24px; padding-bottom: 9px; margin-bottom: -9px; background-position: center -80px; }
+#nav #nav-main-docs .open { color: #ffae3b; height: 24px; padding-bottom: 9px; margin-bottom: -9px; background-position: center -80px; }
 
 /*** @Search *********/
 #site-search { width: 280px; float: left; margin-top: 22px; }
@@ -269,8 +270,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #doc-shortcuts li { width: 24.9%; float: left; padding: .5em 0; margin: 0; text-align: center; }
 #doc-shortcuts li li { width: 100%; float: none; padding: 0; margin: 0; }
 #doc-shortcuts p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: .785em "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
-#doc-shortcuts a { color: #ccc; height: auto; display: block; padding: .5em 0; border: 0; }
-#doc-shortcuts a:hover, #doc-shortcuts a:focus, #doc-shortcuts a:active { border: 0; padding: .5em 0; color: #fb9500; text-decoration: underline; }
+#doc-shortcuts a { color: #ccc; height: auto; display: block; padding: .4em 0; border: 0; }
+#nav #doc-shortcuts a:hover, #nav #doc-shortcuts a:focus, #nav #doc-shortcuts a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 1em; }
@@ -355,7 +356,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #top-docs li { width: 18%; padding: 0 .95%; float: left; border-left: 1px dotted gray; text-align: center;  }
 #top-docs li:first-child { border: 0; }
 #top-docs li li { width: 100%; float: none; margin: 0; border: 0; font-size: .857em; color: #666; }
-#top-docs li a { font-weight: bold; display: block; padding: .5em 0; }
+#top-docs li a { font-weight: bold; display: block; padding: .4em 0; }
 #top-docs .more { clear: both; margin: 1em 0 0; font-size: .857em; color: #666; text-align: center; }
 #top-docs li .more { margin: 0; font-size: 1em; color: #666; font-weight: normal; }
 
@@ -808,3 +809,4 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
+
