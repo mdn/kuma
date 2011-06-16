@@ -291,8 +291,8 @@ def preview_revision(request):
     """Create an HTML fragment preview of the posted wiki syntax."""
     wiki_content = request.POST.get('content', '')
     # TODO: Get doc ID from JSON.
-    data = {'content': wiki_to_html(wiki_content, request.locale)}
-    data.update(SHOWFOR_DATA)
+    data = {'content': wiki_content}
+    #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
 

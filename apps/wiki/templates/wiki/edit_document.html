@@ -8,6 +8,7 @@
                  (document.get_absolute_url(), document.title),
                  (None, _('Edit Article'))] %}
 {% set classes = 'edit' %}
+{% block bodyclass %}edit{% endblock %}
 
 {% block content %}
 <section id="content">
@@ -16,7 +17,6 @@
   <article id="edit-document" class="article" role="main">
     {{ errorlist(revision_form) }}
     <form id="wiki-page-edit" class="editing" method="post" action="">
-    {{ csrf() }}
       <fieldset>
         <header id="article-head">
           <div class="title">

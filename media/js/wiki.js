@@ -472,7 +472,7 @@
             var $btn = $(this);
             $btn.attr('disabled', 'disabled');
             $.ajax({
-                url: $(this).data('preview-url'),
+                url: $(this).attr('data-preview-url'),
                 type: 'POST',
                 data: $('#id_content').serialize(),
                 dataType: 'html',

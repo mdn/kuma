@@ -446,6 +446,7 @@ MINIFY_BUNDLES = {
             'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
             'js/wiki.js',
+            'js/main.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',

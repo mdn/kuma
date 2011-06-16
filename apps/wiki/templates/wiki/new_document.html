@@ -6,6 +6,7 @@
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(None, _('New Article'))] %}
 {% set classes = 'new' %}
+{% block bodyclass %}new{% endblock %}
 
 {% block content %}
 <section id="content">
@@ -15,7 +16,6 @@
     {{ errorlist(document_form) }}
     {{ errorlist(revision_form) }}
     <form id="wiki-page-edit" class="editing" method="post" action="">
-      {{ csrf() }}
       <fieldset>
       <header id="article-head">
         <div class="title">
@@ -35,6 +35,7 @@
     </form>
     
     </article>
+    <div id="preview"></div>
     </div>
    </div>
 </section>

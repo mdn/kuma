@@ -36,8 +36,8 @@ urlpatterns = patterns('',
     #(r'^admin/', include('kadmin.urls')),
 
     # Javascript translations.
-    #url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
-    #    {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
+    url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
+        {'domain': 'javascript', 'packages': ['kuma']}, name='jsi18n'),
 
     #url(r'^', include('dashboards.urls')),
 
