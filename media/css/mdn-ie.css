@@ -6,4 +6,8 @@ Created by Craig Cook - focalcurve.com
 
 legend { color: #333; }
 .submission .section legend b { top: 0; left: 0; }
-.replaced input { filter:alpha(opacity=0); }
+
+.replaced input { filter: alpha(opacity=0); }
+#featured-demos .side img { filter: alpha(opacity=60); }
+#simplemodal-overlay { filter: alpha(opacity=15); }
+.home-promos .promo div { filter: alpha(opacity=60); }
