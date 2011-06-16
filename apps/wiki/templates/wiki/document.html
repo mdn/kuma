@@ -44,7 +44,7 @@
     {% endif %}
     #}
       <div id="wikiArticle" class="page-content boxed">
-      
+          {# 
         <div id="article-nav"> 
           <div class="page-toc">
             <h2>Table of Contents</h2>
@@ -61,7 +61,8 @@
             <li class="anchor-tags"><a href="#page-tags">Tags</a></li>
             <li class="anchor-files"><a href="#page-files">Files</a></li>
           </ul>
-        </div>
+      </div>
+      #}
       {% if not fallback_reason %}
         {{ document.html|safe }}
       {% elif fallback_reason == 'no_translation' %}

@@ -643,7 +643,7 @@ def delete_revision(request, document_slug, revision_id):
             document.current_revision = revs[1]
         else:
             document.current_revision = None
-        document.html = document.content_parsed or ''
+        document.html = document.content_cleaned or ''
         document.save()
 
     revision.delete()

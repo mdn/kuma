@@ -5,6 +5,7 @@ from urlparse import urlparse
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
+from bleach import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -21,6 +22,9 @@ from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 
+
+ALLOWED_TAGS = ALLOWED_TAGS + ['span','p']
+ALLOWED_ATTRIBUTES['span'] = ['style',]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
 # the relative severity.
@@ -579,7 +583,7 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            self.document.html = self.content_parsed
+            self.document.html = self.content_cleaned
             self.document.current_revision = self
             self.document.save()
 
@@ -589,10 +593,10 @@ class Revision(ModelBase):
                                       self.id, self.content[:50])
 
     @property
-    def content_parsed(self):
-        from wiki.parser import wiki_to_html
-        return wiki_to_html(self.content, locale=self.document.locale,
-                            doc_id=self.document.id)
+    def content_cleaned(self):
+        from bleach import Bleach
+        bleach = Bleach()
+        return bleach.clean(self.content, attributes=ALLOWED_ATTRIBUTES,tags=ALLOWED_TAGS)
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

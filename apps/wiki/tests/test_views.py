@@ -113,7 +113,7 @@ class DocumentEditingTests(TestCase):
                      'form': 'doc'})
         client.post(reverse('wiki.edit_document', args=[d.slug]), data)
         eq_(new_title, Document.uncached.get(slug=d.slug).title)
-        assert Document.uncached.get(title=old_title).redirect_url()
+        assert "REDIRECT" in Document.uncached.get(title=old_title).html
 
     def test_changing_metadata(self):
         """Changing metadata works as expected."""
