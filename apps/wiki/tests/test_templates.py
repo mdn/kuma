@@ -733,7 +733,7 @@ class ReviewRevisionTests(SkippedTestCase):
 
     def test_review_without_permission(self):
         """Make sure unauthorized users can't review revisions."""
-        self.client.login(username='rrosario', password='testpass')
+        self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.review_revision',
                         {'reject': 'Reject Revision'},
                         args=[self.document.slug, self.revision.id])
@@ -1167,7 +1167,7 @@ class DocumentWatchTests(SkippedTestCase):
     def setUp(self):
         super(DocumentWatchTests, self).setUp()
         self.document = _create_document()
-        self.client.login(username='rrosario', password='testpass')
+        self.client.login(username='testuser', password='testpass')
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
@@ -1183,7 +1183,7 @@ class DocumentWatchTests(SkippedTestCase):
 
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
         # Subscribe
         response = post(self.client, 'wiki.document_watch',
                        args=[self.document.slug])
@@ -1204,7 +1204,7 @@ class LocaleWatchTests(SkippedTestCase):
 
     def setUp(self):
         super(LocaleWatchTests, self).setUp()
-        self.client.login(username='rrosario', password='testpass')
+        self.client.login(username='testuser', password='testpass')
 
     def test_watch_GET_405(self):
         """Watch document with HTTP GET results in 405."""
@@ -1218,7 +1218,7 @@ class LocaleWatchTests(SkippedTestCase):
 
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
 
         # Subscribe
         response = post(self.client, 'wiki.locale_watch')
@@ -1233,13 +1233,13 @@ class LocaleWatchTests(SkippedTestCase):
                                                                 locale='en-US')
 
 
-class ArticlePreviewTests(SkippedTestCase):
+class ArticlePreviewTests(TestCaseBase):
     """Tests for preview view and template."""
     fixtures = ['test_users.json']
 
     def setUp(self):
         super(ArticlePreviewTests, self).setUp()
-        self.client.login(username='rrosario', password='testpass')
+        self.client.login(username='testuser', password='testpass')
 
     def test_preview_GET_405(self):
         """Preview with HTTP GET results in 405."""
@@ -1249,12 +1249,13 @@ class ArticlePreviewTests(SkippedTestCase):
     def test_preview(self):
         """Preview the wiki syntax content."""
         response = post(self.client, 'wiki.preview',
-                        {'content': '=Test Content='})
+                        {'content': '<h1>Test Content</h1>'})
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('Test Content', doc('#doc-content h1').text())
 
     def test_preview_locale(self):
+        raise SkipTest
         """Preview the wiki syntax content."""
         # Create a test document and translation.
         d = _create_document()
@@ -1279,8 +1280,8 @@ class HelpfulVoteTests(SkippedTestCase):
     def test_vote_yes(self):
         """Test voting helpful."""
         d = self.document
-        user = User.objects.get(username='rrosario')
-        self.client.login(username='rrosario', password='testpass')
+        user = User.objects.get(username='testuser')
+        self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.document_vote',
                         {'helpful': 'Yes'}, args=[self.document.slug])
         eq_(200, response.status_code)
@@ -1291,8 +1292,8 @@ class HelpfulVoteTests(SkippedTestCase):
     def test_vote_no(self):
         """Test voting not helpful."""
         d = self.document
-        user = User.objects.get(username='rrosario')
-        self.client.login(username='rrosario', password='testpass')
+        user = User.objects.get(username='testuser')
+        self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.document_vote',
                         {'not-helpful': 'No'}, args=[d.slug])
         eq_(200, response.status_code)
@@ -1371,7 +1372,7 @@ class RevisionDeleteTestCase(SkippedTestCase):
 
     def test_delete_revision_without_permissions(self):
         """Deleting a revision without permissions sends 403."""
-        self.client.login(username='rrosario', password='testpass')
+        self.client.login(username='testuser', password='testpass')
         response = get(self.client, 'wiki.delete_revision',
                        args=[self.d.slug, self.r.id])
         eq_(403, response.status_code)
@@ -1436,7 +1437,7 @@ class ApprovedWatchTests(SkippedTestCase):
 
     def setUp(self):
         super(ApprovedWatchTests, self).setUp()
-        self.client.login(username='rrosario', password='testpass')
+        self.client.login(username='testuser', password='testpass')
 
     def test_watch_GET_405(self):
         """Watch with HTTP GET results in 405."""
@@ -1450,7 +1451,7 @@ class ApprovedWatchTests(SkippedTestCase):
 
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
         locale = 'es'
 
         # Subscribe
