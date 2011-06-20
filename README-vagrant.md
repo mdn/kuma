@@ -17,7 +17,7 @@ tried. Bug reports and suggestions are welcome. The main barrier to Windows is p
     gem install vagrant
         
     # Clone a Kuma repo, switch to my vagrant branch (for now)
-    git clone git://github.com/lmorchard/kuma.git
+    git clone git://github.com/mozilla/kuma.git
     cd kuma
 
     # Fire up the VM and install everything, go take a bike ride (approx. 15 min)
