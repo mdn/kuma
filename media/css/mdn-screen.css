@@ -319,11 +319,11 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #section-head .intro { float: left; width: 140px; margin: 4px 15px 0 10px; font: bold italic .875em Georgia, Times, "Times New Roman", serif; }
 #section-head h1 { float: left; text-indent: -999em; height: 54px; margin: 0; background: transparent url("../img/logos-sections.png") no-repeat; }
 
-#logo-web { width: 140px; background-position: 0 -100px; }
-#logo-mobile { width: 245px; background-position: 0 -200px; }
-#logo-addons { width: 285px; background-position: 0 -300px; }
-#logo-apps { width: 170px; background-position: 0 -400px; }
-#logo-moz { width: 275px; background-position: 0 -500px; }
+#section-head #logo-web { width: 140px; background-position: 0 -100px; }
+#section-head #logo-mobile { width: 245px; background-position: 0 -200px; }
+#section-head #logo-addons { width: 285px; background-position: 0 -300px; }
+#section-head #logo-apps { width: 170px; background-position: 0 -400px; }
+#section-head #logo-moz { width: 275px; background-position: 0 -500px; }
 
 #section-head .util { float: left; margin: 10px 0 0 30px; font-size: .857em; }
 #section-head .util p { margin: 0 0 .25em; }
