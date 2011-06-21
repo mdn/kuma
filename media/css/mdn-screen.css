@@ -358,7 +358,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #top-docs li li { width: 100%; float: none; margin: 0; border: 0; font-size: .857em; color: #666; }
 #top-docs li a { font-weight: bold; display: block; padding: .4em 0; }
 #top-docs .more { clear: both; margin: 1em 0 0; font-size: .857em; color: #666; text-align: center; }
-#top-docs li .more { margin: 0; font-size: 1em; color: #666; font-weight: normal; }
+#top-docs li a.more { margin: 0; font-size: 1em; color: #666; font-weight: normal; }
 
 /*** @Promos *********/
 #home-promos { clear: both; overflow: hidden; }
@@ -377,7 +377,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
   transition-property: opacity, background-position;
   transition-duration: 0.5s;
 }
-.home-promos a:hover h2, #home-promos a:focus h2, #home-promos a:active h2 { text-decoration: underline; }
+.home-promos a:hover h2, .home-promos a:focus h2, .home-promos a:active h2 { text-decoration: underline; }
 .home-promos .promo:hover div { 
   opacity: 1; 
   -moz-transition-property: opacity, background-position; 
