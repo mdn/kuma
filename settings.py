@@ -435,6 +435,7 @@ MINIFY_BUNDLES = {
             'css/mdn-screen.css',
             'css/mdn-video-player.css',
             'css/mdn-forums-sidebar-module.css',
+            'css/mdn-calendar.css',
         ),
     },
     'js': {
@@ -510,6 +511,9 @@ MINIFY_BUNDLES = {
             'js/mdn/video-player.js',
 
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
+
+            'js/mdn/geocode.js',
+            'js/mdn/calendar.js',
         ),
     },
 }

@@ -1,0 +1,30 @@
+    #map_canvas li{list-style:none;padding-bottom:5px;}
+    #map_canvas a{display:block;font-weight:bold;color:#036;padding:5px 0;}
+    tr.odd{background:#ccc;}
+    tr:hover{background:#ddd;}
+    tr.odd:hover{background:#aaa;}
+    td a{color:#369;font-weight:bold;}
+    td a:hover{text-decoration:none;}
+    #map_canvas{height:400px;width:100%}
+    #canvas{position:relative;width:800px;padding:10px;margin:20px auto;
+      -moz-box-shadow:0px 0px 10px rgba(0,0,0,.6);
+      -webkit-box-shadow:0px 0px 10px rgba(0,0,0,.6);
+      box-shadow:0px 0px 10px rgba(0,0,0,.6);
+      -moz-border-radius:10px;
+      -webkit-border-radius:10px;
+      border-radius:10px;
+      background:#fff;
+    }
+    #cal1Container{position:absolute;top:120px;left:15px;
+      -moz-box-shadow:4px 4px 10px rgba(0,0,0,.6);
+      background:#369;
+    }
+    #map_canvas{margin-bottom:20px;
+    }
+    /*
+    h1,.intro{font-size:30px;width:800px;margin:0 auto;color:#666;text-transform:uppercase;}
+    .intro{text-transform:none;font-size:16px;padding:10px;}
+    .intro a{color:#000;font-size:16px;}
+    h2{font-size:18px;color:#333;text-transform:uppercase;margin:10px 5px;}
+    .today{background:#fc6;}
+    */

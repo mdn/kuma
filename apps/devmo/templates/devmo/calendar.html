@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block pageid %}calendar{% endblock %}
+
+{% block title %}{{ page_title(_('Where is Mozilla?')) }}{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+  <section id="content-main" class="full" role="main">
+
+  <h1>{{ _('Where is Mozilla?') }}</h1>
+  <p class="intro">{% trans %}
+  Here you can see where Mozilla will be in the nearer future and what we are going to talk about. If you organise an event and you want a Mozillian to come around, please <a href="https://spreadsheets.google.com/viewform?formkey=dGo5UGpIcG80Rm5wZ1BiTXNTQ2RWaUE6MQ&theme=0AX42CRMsmRFbUy04ZWQwMDYwMS02YjZhLTQ2ZjMtYjcyNy0zYWNlMzlmYTAxNmY&ifq">send us the information via this form</a>. If you are a Mozillian, and speaking at an event that's not listed here, let us know!
+  {% endtrans %}
+  </p>
+<div id="canvas">
+    <div id="map_canvas"></div>
+    <div id="cal1Container"></div>
+    
+    <h2>{{ _('Upcoming conferences') }}</h2>
+    <table id="upcoming" summary="{{ _('Upcoming conferences with Mozilla speakers') }}">
+  <thead>
+    <th scope="col">{{ _('Date') }}</th>
+    <th scope="col">{{ _('Conference') }}</th>
+    <th scope="col">{{ _('Location') }}</th>
+    <th scope="col">{{ _('People present') }}</th>
+    <th scope="col">{{ _('Description') }}</th>
+  </thead>
+  <tbody>
+      {% for event in upcoming_events %}
+      <tr class="odd">
+          <td>{{ event[4] }}</td>
+          <td><a href="{{ event[3] }}">{{ event[1] }}</a></td>
+          <td>{{ event[2] }}</td>
+          <td>{{ event[5]|safe }}</td>
+          <td>{{ event[6]|safe }}</td>
+      </tr>
+      {% endfor %}
+</tbody></table>
+<h2>{{ _('Past conferences') }}</h2>
+<table>
+  <thead>
+    <th scope="col">{{ _('Date') }}</th>
+    <th scope="col">{{ _('Conference') }}</th>
+    <th scope="col">{{ _('Location') }}</th>
+    <th scope="col">{{ _('People present') }}</th>
+    <th scope="col">{{ _('Description') }}</th>
+    <th scope="col">{{ _('Presentation Materials') }}</th>
+  </thead>
+  <tbody>
+      {% for event in past_events %}
+      <tr class="odd">
+          <td>{{ event[4] }}</td>
+          <td><a href="{{ event[3] }}">{{ event[1] }}</a></td>
+          <td>{{ event[2] }}</td>
+          <td>{{ event[5]|safe }}</td>
+          <td>{{ event[6]|safe }}</td>
+          <td>{% if event[8] != "n/a" %}<a href="{{ event[8] }}">Presentation Material</a>{% endif %}</td>
+      </tr>
+      {% endfor %}
+</tbody></table>
+</div>
+  </section><!-- /#content-main -->
+</div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ" type="text/javascript"></script>
+<script src="http://mapstraction.com/mapstraction-js/mapstraction.js"></script>
+{% endblock %}

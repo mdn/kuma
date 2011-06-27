@@ -60,3 +60,31 @@ class UserProfile(ModelBase):
             return getattr(self.__dict__['deki_user'], name)
         raise AttributeError
 
+class Calendar(ModelBase):
+    """The Calendar spreadsheet"""
+
+    shortname = models.CharField(max_length=255)
+    url = models.URLField(
+        help_text='URL of the google doc spreadsheet for events', unique=True)
+
+    def __unicode__(self):
+        return self.shortname
+
+class Event(ModelBase):
+    """An event"""
+
+    date = models.DateField()
+    conference = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    people = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    done = models.BooleanField(default=False)
+    materials = models.URLField()
+    calendar = models.ForeignKey(Calendar)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __unicode__(self):
+        return '%s - %s, %s' % (self.date, self.conference, self.location)
+
