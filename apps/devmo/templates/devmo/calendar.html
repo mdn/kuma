@@ -30,11 +30,15 @@
   <tbody>
       {% for event in upcoming_events %}
       <tr class="odd">
-          <td>{{ event[4] }}</td>
-          <td><a href="{{ event[3] }}">{{ event[1] }}</a></td>
-          <td>{{ event[2] }}</td>
-          <td>{{ event[5]|safe }}</td>
-          <td>{{ event[6]|safe }}</td>
+          <td>{{ event.date }}</td>
+            {% if event.conference_link %}
+          <td><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
+            {% else %}
+          <td>{{ event.conference }}</td>
+            {% endif %}
+          <td>{{ event.location }}</td>
+          <td>{{ event.people|safe }}</td>
+          <td>{{ event.description|safe }}</td>
       </tr>
       {% endfor %}
 </tbody></table>
@@ -51,12 +55,12 @@
   <tbody>
       {% for event in past_events %}
       <tr class="odd">
-          <td>{{ event[4] }}</td>
-          <td><a href="{{ event[3] }}">{{ event[1] }}</a></td>
-          <td>{{ event[2] }}</td>
-          <td>{{ event[5]|safe }}</td>
-          <td>{{ event[6]|safe }}</td>
-          <td>{% if event[8] != "n/a" %}<a href="{{ event[8] }}">Presentation Material</a>{% endif %}</td>
+          <td>{{ event.date }}</td>
+          <td><a href="{{ event[3] }}">{{ event.conference }}</a></td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.people|safe }}</td>
+          <td>{{ event.description|safe }}</td>
+          <td>{% if event.materials and event.materials != "n/a" %}<a href="{{ event.materials }}">Presentation Material</a>{% endif %}</td>
       </tr>
       {% endfor %}
 </tbody></table>

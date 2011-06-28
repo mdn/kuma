@@ -1,4 +1,6 @@
+import csv
 import logging
+import urllib2
 
 from django.db import models
 
@@ -8,6 +10,7 @@ import caching.base
 
 from tower import ugettext as _
 
+
 class ModelBase(caching.base.CachingMixin, models.Model):
     """Common base model for all MDN models: Implements caching."""
 
@@ -15,6 +18,7 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
     class Meta:
         abstract = True
+
 
 class UserProfile(ModelBase):
     """
@@ -60,6 +64,7 @@ class UserProfile(ModelBase):
             return getattr(self.__dict__['deki_user'], name)
         raise AttributeError
 
+
 class Calendar(ModelBase):
     """The Calendar spreadsheet"""
 
@@ -67,19 +72,51 @@ class Calendar(ModelBase):
     url = models.URLField(
         help_text='URL of the google doc spreadsheet for events', unique=True)
 
+    @classmethod
+    def as_unicode(cls, events):
+        for row in events:
+            for idx, cell in enumerate(row):
+                row[idx] = unicode(cell, 'utf-8')
+            yield row
+
+    def reload(self, data=None):
+        events = []
+        u = None
+        try:
+            u = urllib2.urlopen(self.url)
+        except Exception, e:
+            return False
+        data = csv.reader(u) if u else data
+        events = list(Calendar.as_unicode(data))
+        Event.objects.filter(calendar=self).delete()
+        for event_line in events:
+            event = None
+            if len(event_line) > 7:
+                done = event_line[7] == 'yes'
+            event = Event(date=event_line[4], conference=event_line[1],
+                          conference_link=event_line[3],
+                          location=event_line[2], people=event_line[5],
+                          description=event_line[6], done=done, calendar=self)
+            if len(event_line) > 8:
+                event.materials = event_line[8]
+            if event.conference != "Conference":
+                event.save()
+
     def __unicode__(self):
         return self.shortname
+
 
 class Event(ModelBase):
     """An event"""
 
-    date = models.DateField()
+    date = models.CharField(max_length=255)
     conference = models.CharField(max_length=255)
+    conference_link = models.URLField(blank=True, verify_exists=False)
     location = models.CharField(max_length=255)
     people = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     done = models.BooleanField(default=False)
-    materials = models.URLField()
+    materials = models.URLField(blank=True, verify_exists=False)
     calendar = models.ForeignKey(Calendar)
 
     class Meta:
@@ -87,4 +124,3 @@ class Event(ModelBase):
 
     def __unicode__(self):
         return '%s - %s, %s' % (self.date, self.conference, self.location)
-
