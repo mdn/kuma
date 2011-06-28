@@ -1,0 +1,48 @@
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=UTF-8
+X-Robots-Tag: noindex, nofollow, nosnippet
+Content-Disposition: attachment; filename="Mozillapeopleevents.csv"
+Date: Thu, 23 Jun 2011 18:29:51 GMT
+Expires: Thu, 23 Jun 2011 18:29:51 GMT
+Cache-Control: private, max-age=0
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Transfer-Encoding: chunked
+
+Timestamp,Conference,Location,Link,Date,Who is present?,Description,done,Materials post
+,Texas JavaScript,"Austin TX, USA",http://2011.texasjavascript.com/,6/11/2011,Brendan Eich,"Brendan Eich @brendaneich Ecma TC39: The Good, The Bad, and The Ugly",yes,n/a
+6/15/2011 17:25:24,Confoo,Montreal,http://confoo.ca/en/2011/session/anatomy-of-a-large-django-site,March 9-13th 2011,,Close      Share:                 Rating     Slides     View session page   Anatomy of a large Django site
+6/15/2011 17:26:16,DjangoCon.eu,Amsterdam,http://djangocon.eu/talks/18/,June 6-8 2011,,Large Django sites at Mozilla
+6/15/2011 17:30:26,Open Source Bridge,Portland,http://opensourcebridge.org/events/2011/speakers,21-24 June 2011,,Lots of us. http://opensourcebridge.org/sessions/577 http://opensourcebridge.org/sessions/624 http://opensourcebridge.org/sessions/635 
+,State of the browser,"London, England",http://browser.londonwebstandards.org/,3/18/2011,"<a href=""http://paulrouget.com/"">Paul Rouget</a>",Panel with all the browser vendors on newest technologies,yes,n/a
+,NASA Open Source Summit 2011,"Ames Research Center in Mountain View, California",http://www.nasa.gov/open/source/,3/29/11-3/30/11,Pascal Finette,Lessons from Mozilla,yes,http://blog.finette.com/post/4348670453/slides-from-my-talk-at-nasas-open-source-summit
+,Stockholm Web Monkeys,"Stockholm, Sweden",http://groups.google.com/group/stockholm-web-monkeys/browse_thread/thread/b3b990f7dd607ce9,3/30/2011,"<a href=""http://robertnyman.com/"">Robert Nyman</a>","Community meetup where Robert will lead an HTML5 discussion: What's good, what's missing, web browser
+implementation takes",yes,http://www.slideshare.net/robnyman/html5-whats-good-whats-missing-web-browser-implementation-takes
+,Texas JavaScript,"Austin, Texas",http://2011.texasjavascript.com/,6/11/2011,"<a href=""http://brendaneich.com/"">Brendan Eich</a>","Brendan is a featured speaker for ""A day of JavaScript, hacking, and Southern Charm"" presented by Bazaarvoice",yes,n/a
+,Funkas Tillgänglighetsdagar ,"Stockholm, Sweden",http://www.funkanu.se/Tillganglighetsdagar,04/13/11 - 04/14/11,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",Accessibility conference - talking about HTML5 and accessibilty and the clash of innovation vs. accessibility.,yes,n/a
+,CCSCNE,"Springfield, MA",http://www.ccscne.org/2011/,4/15/11-4/16/11,"<a href=""http://stormyscorner.com"">Stormy Peters</a>",Stormy giving a keynote on Communities: Open Source and Education Working Together,yes,n/a
+,W3café accessibilité,"Paris, France",http://fr.amiando.com/W3Cafe_accessibilite.html ,4/16/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",Accessibility and innovation,yes,n/a
+,"<a href=""http://monash.edu.au/"">Monash University</a>",Australia,https://blog.mozilla.com/nnethercote/2011/04/19/a-talk-software-engineering-for-firefox/,4/19/2011,Nicholas Nethercote,Software Engineering for Firefox,yes,https://blog.mozilla.com/nnethercote/2011/04/19/a-talk-software-engineering-for-firefox/
+,,"Vaasa, Finland",http://www.openkvarken.fi/,4/26/2011,"<a href=""http://robertnyman.com/"">Robert Nyman</a>","Open source conference spreading the awareness of open source software, where Robert will inspire people about HTML5 and the Open Web",yes,http://www.slideshare.net/robnyman/using-html5-for-a-great-open-web
+,Philly Emerging Technologies,"Philadelphia, PA, USA",http://phillyemergingtech.com/2011,4/27/11-4/28/11,"<a href=""http://stormyscorner.com"">Stormy Peters</a>","Stormy is giving a keynote titled <a href=""http://phillyemergingtech.com/2011/sessions/would-you-give-it-away"">Would you give it away?</a>",yes,n/a
+,JAX,"Mainz, Germany",http://jax.de/,05/02/11 - 05/03/11,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 Keynote - telling the Java audience about client side technologies ,yes,n/a
+,FOSSCOM,"Patras, Greece",http://lanyrd.com/2011/fosscomm/,05/07/11-05/08-11,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 for use now!,yes,n/a
+,Google IO,"San Francisco, California",http://www.google.com/events/io/2011/,5/10-5/11/11,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 Video,yes,n/a
+,JSDay Italy,"Verona, Italy",http://www.jsday.it/2011/,05/11/11 - 05/12/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",JavaScript - Like a Box of Chocolates,yes,http://www.slideshare.net/robnyman/javascript-like-a-box-of-chocolates-jsday
+,STC Summit,"Sacramento, California",http://summit.stc.org/,5/15/11 - 5/18/11,"<a href=""http://www.bitstampede.com"">Eric Shepherd</a>, <a href=""http://www.janetswisher.com"">Janet Swisher</a",Radically Open Documentation: How open documentation works for Mozilla.,yes,http://www.slideshare.net/janetswisher/radically-open-documentation
+,How HTML5 Will Change the Web,Online,http://concise-conferences.com/1/20110523-html5.html,5/23/2011,"<a href=""http://robertnyman.com"">Robert Nyman</a>",Free online conference about HTML5,yes,n/a
+,Valtech Tech Days,"Stockholm, Sweden",http://www.valtech.se/techdays,5/25/2011,"<a href=""http://robertnyman.com"">Robert Nyman</a>",Exciting things with HTML5,yes
+,Webinale,"Berlin, Germany",http://webinale.de/2011/,5/30/11-6/1/11,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML fuer Alle,yes,http://www.wait-till-i.com/2011/06/02/webinale-html5-und-css3-fuer-alle/
+,Open Help conference,"Cincinnati, Ohio",http://openhelpconference.com/,6/3/11 - 6/5/11,"<a href=""http://www.janetswisher.com"">Janet Swisher</a",Engaging developers in Mozilla documentation,yes,http://www.slideshare.net/janetswisher/engaging-developers-in-mozilla-docs
+,Inspire Conference,"London, England",http://www.theinspireconference.com/,6/7/11 - 6/8/11,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",Mentoring,yes,n/a
+,Web2Day,"Nantes, France",,6/17/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",TBD,no,n/a
+,Converge SE,"Columbia, South Carolina",http://convergese.com/location/,6/24-6/25,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 for all / Using HTML5 Video,no,n/a
+,London Ajax Mobile Event,"London, England",http://www.meetup.com/londonajax/,7/2/2011,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 and CSS3: Exploring Mobile Possibilities,no
+,Highland Fling,"Edinburgh, Scotland",http://thehighlandfling.com/,7/8/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",Moderating,no,n/a
+,GothamJS,"NYC, United States",http://www.gothamjs.com/,7/9/2011,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 APIs: Where no man has gone before,no,n/a
+,Open Web Camp,"Palo Alto, United States",,7/16/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 battles still to be won!,no,n/a
+,Evento Linux,"Lisbon, Portugal",http://www.eventolinux.org/,9/30/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 TBD,no,n/a
+,Adobe MAX 2011,"Los Angeles, United States",http://max.adobe.com/,10/1/11-10/5/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 APIs: Where no man has gone before,no,n/a
+,TECH4AFRICA,"Johannesburg, South Africa",http://www.tech4africa.com/,10/27/11-10/28/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",TBA,no,n/a
+,StarTechConf,"Santiago, Chile",http://www.startechconf.com/,11/4/11-11/5/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 APIs: Where no man has gone before,no,n/a

@@ -5,19 +5,12 @@ import csv
 from devmo.models import Calendar, Event
 
 
-def as_unicode(events):
-    for row in events:
-        for idx, cell in enumerate(row):
-            row[idx] = unicode(cell, 'utf-8')
-        yield row
-
-
 def calendar(request):
     """Developer Engagement Calendar"""
-    u = urllib2.urlopen('https://spreadsheets.google.com/pub?key=0AhphLklK1Ve4dGo5UGpIcG80Rm5wZ1BiTXNTQ2RWaUE&output=csv')
-    events = list(as_unicode(csv.reader(u)))
-    upcoming_events = [event for event in events if (len(event) > 7 and event[7] == 'no')]
-    past_events = [event for event in events if (len(event) > 7 and event[7] == 'yes')]
+    cal = Calendar.objects.get(shortname='devengage_events')
+    events = Event.objects.filter(calendar=cal)
+    upcoming_events = events.filter(done=False)
+    past_events = events.filter(done=True)
 
     return jingo.render(request, 'devmo/calendar.html', {
         'upcoming_events': upcoming_events,
