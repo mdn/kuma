@@ -5,7 +5,7 @@ import csv
 from devmo.models import Calendar, Event
 
 
-def calendar(request):
+def events(request):
     """Developer Engagement Calendar"""
     cal = Calendar.objects.get(shortname='devengage_events')
     events = Event.objects.filter(calendar=cal)
