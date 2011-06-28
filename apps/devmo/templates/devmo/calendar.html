@@ -2,66 +2,75 @@
 
 {% block pageid %}calendar{% endblock %}
 
+{% block bodyclass %}section-community calendar{% endblock %}
+
 {% block title %}{{ page_title(_('Where is Mozilla?')) }}{% endblock %}
 
 {% block content %}
+
 <section id="content">
 <div class="wrap">
-  <section id="content-main" class="full" role="main">
 
-  <h1>{{ _('Where is Mozilla?') }}</h1>
-  <p class="intro">{% trans %}
-  Here you can see where Mozilla will be in the nearer future and what we are going to talk about. If you organise an event and you want a Mozillian to come around, please <a href="https://spreadsheets.google.com/viewform?formkey=dGo5UGpIcG80Rm5wZ1BiTXNTQ2RWaUE6MQ&theme=0AX42CRMsmRFbUy04ZWQwMDYwMS02YjZhLTQ2ZjMtYjcyNy0zYWNlMzlmYTAxNmY&ifq">send us the information via this form</a>. If you are a Mozillian, and speaking at an event that's not listed here, let us know!
-  {% endtrans %}
-  </p>
-<div id="canvas">
-    <div id="map_canvas"></div>
+  <section id="content-main" class="full" role="main">
+    <header id="page-head">
+      <h1 class="page-title">{{ _('Where is Mozilla?') }}</h1>
+      <p>{% trans %}
+      Here you can see where Mozilla will be in the nearer future and what we are going to talk about. If you organize an event and you want a Mozillian to come around, please <a href="https://spreadsheets.google.com/viewform?formkey=dGo5UGpIcG80Rm5wZ1BiTXNTQ2RWaUE6MQ&theme=0AX42CRMsmRFbUy04ZWQwMDYwMS02YjZhLTQ2ZjMtYjcyNy0zYWNlMzlmYTAxNmY&ifq">send us the information via this form</a>. If you are a Mozillian speaking at an event that's not listed here, let us know!
+      {% endtrans %}
+      </p>
+    </header>
+
+    <div id="map_canvas" class="boxed"></div>
     <div id="cal1Container"></div>
     
-    <h2>{{ _('Upcoming conferences') }}</h2>
-    <table id="upcoming" summary="{{ _('Upcoming conferences with Mozilla speakers') }}">
-  <thead>
-    <th scope="col">{{ _('Date') }}</th>
-    <th scope="col">{{ _('Conference') }}</th>
-    <th scope="col">{{ _('Location') }}</th>
-    <th scope="col">{{ _('People present') }}</th>
-    <th scope="col">{{ _('Description') }}</th>
-  </thead>
-  <tbody>
+    <h2>{{ _('Upcoming Conferences') }}</h2>
+    <table id="upcoming" class="events" summary="{{ _('Upcoming conferences featuring Mozilla speakers') }}">
+      <thead>
+        <th scope="col">{{ _('Date') }}</th>
+        <th scope="col">{{ _('Conference') }}</th>
+        <th scope="col">{{ _('Location') }}</th>
+        <th scope="col">{{ _('People present') }}</th>
+        <th scope="col">{{ _('Description') }}</th>
+      </thead>
+      <tbody>
       {% for event in upcoming_events %}
-      <tr class="odd">
+        <tr>
           <td>{{ event[4] }}</td>
           <td><a href="{{ event[3] }}">{{ event[1] }}</a></td>
           <td>{{ event[2] }}</td>
           <td>{{ event[5]|safe }}</td>
           <td>{{ event[6]|safe }}</td>
-      </tr>
+        </tr>
       {% endfor %}
-</tbody></table>
-<h2>{{ _('Past conferences') }}</h2>
-<table>
-  <thead>
-    <th scope="col">{{ _('Date') }}</th>
-    <th scope="col">{{ _('Conference') }}</th>
-    <th scope="col">{{ _('Location') }}</th>
-    <th scope="col">{{ _('People present') }}</th>
-    <th scope="col">{{ _('Description') }}</th>
-    <th scope="col">{{ _('Presentation Materials') }}</th>
-  </thead>
-  <tbody>
-      {% for event in past_events %}
-      <tr class="odd">
+      </tbody>
+    </table>
+
+    <h2>{{ _('Past Conferences') }}</h2>
+    <table id="past" class="events" summary="{{ _('Past conferences that featured Mozilla speakers') }}">
+      <thead>
+        <th scope="col">{{ _('Date') }}</th>
+        <th scope="col">{{ _('Conference') }}</th>
+        <th scope="col">{{ _('Location') }}</th>
+        <th scope="col">{{ _('People present') }}</th>
+        <th scope="col">{{ _('Description') }}</th>
+        <th scope="col">{{ _('Presentation Materials') }}</th>
+      </thead>
+      <tbody>
+        {% for event in past_events %}
+        <tr>
           <td>{{ event[4] }}</td>
           <td><a href="{{ event[3] }}">{{ event[1] }}</a></td>
           <td>{{ event[2] }}</td>
           <td>{{ event[5]|safe }}</td>
           <td>{{ event[6]|safe }}</td>
           <td>{% if event[8] != "n/a" %}<a href="{{ event[8] }}">Presentation Material</a>{% endif %}</td>
-      </tr>
-      {% endfor %}
-</tbody></table>
-</div>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
   </section><!-- /#content-main -->
+
 </div>
 </section>
 {% endblock %}

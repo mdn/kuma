@@ -61,8 +61,16 @@
       
       <nav id="nav" role="menubar">
         <ul id="nav-main">
+          <li id="nav-main-topics" class="menu"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="Explore other parts of MDN">{{ _('Topics') }}</a>
+            <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
+              <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
+              <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
+              <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
+              <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
+            </ul>
+          </li>
           <li id="nav-main-docs" class="menu">
-            <a href="{{ url('docs') }}" class="docs" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
+            <a href="{{ url('docs') }}" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
             <div id="doc-shortcuts" class="sub-menu" aria-hidden="true">
               <ul>
                 <li>
@@ -111,17 +119,13 @@
           </li>
           <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('Demos') }}</a></li>
           <li id="nav-main-learning" role="menuitem"><a href="{{ url('learn') }}" class="learning">{{ _('Learning') }}</a></li>
-          <li id="nav-main-forums" role="menuitem"><a href="/forums" class="forums">{{ _('Forums') }}</a></li>
+          <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community">{{ _('Community') }}</a>
+            <ul id="nav-sub-community" class="sub-menu">
+              <li><a href="{{ url('calendar') }}">{{ _('Events') }}</a></li>
+              <li><a href="/forums">{{ _('Forums') }}</a></li>
+              <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
+            </ul>
         </ul>
-        
-        <div id="nav-sub" class="menu"><a href="#nav-sub" aria-haspopup="true" class="toggle" title="Explore other parts of MDN">{{ _('Topics') }}</a>
-          <ul class="sub-menu">
-            <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
-            <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
-            <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
-            <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
-          </ul>
-        </div>
       </nav>
       {% endblock %}
     
