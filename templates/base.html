@@ -71,7 +71,7 @@
           </li>
           <li id="nav-main-docs" class="menu">
             <a href="{{ url('docs') }}" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
-            <div id="doc-shortcuts" class="sub-menu" aria-hidden="true">
+            <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
               <ul>
                 <li>
                   <ul>
@@ -119,7 +119,7 @@
           </li>
           <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('Demos') }}</a></li>
           <li id="nav-main-learning" role="menuitem"><a href="{{ url('learn') }}" class="learning">{{ _('Learning') }}</a></li>
-          <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community">{{ _('Community') }}</a>
+          <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Community') }}</a>
             <ul id="nav-sub-community" class="sub-menu">
               <li><a href="{{ url('devmo.calendar') }}">{{ _('Events') }}</a></li>
               <li><a href="/forums">{{ _('Forums') }}</a></li>
