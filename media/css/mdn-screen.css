@@ -197,7 +197,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .section-mozilla #masthead { border-bottom-color: #f8d575; }
 
 #branding { position: relative; float: left; width: 165px; }
-#logo { margin: 0; font: normal 28px/1 "Bebas Neue", "League Gothic", Haettenschweiler, Impact, "Arial Narrow", sans-serif; text-transform: uppercase; color: #fff; letter-spacing: 1px; margin: 5px 0 0; }
+#logo { margin: 4px 0 -4px; font: normal 28px/1 "Bebas Neue", "League Gothic", Haettenschweiler, Impact, "Arial Narrow", sans-serif; text-transform: uppercase; color: #fff; letter-spacing: 1px; }
 #logo a { color: #fff; text-decoration: none; }
 
 .global-notice { position: relative; border: solid #e6e1cf; border-width: 3px 0; color: #630; background: #eeecdf; background: rgba(245,235,200,.25); padding: 15px 20px 0; margin: 0 0 -1px; font-size: .857em; }
@@ -477,10 +477,10 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 
 /* @Sidebar @modules *********/
 .module { background: #fff; border-bottom: 3px solid #cecabc; padding: 18px; margin: 0 0 22px; }
-.module.hot { border-bottom: 2px solid #e9c5bb; background: #fff url("../img/bg-module-hot.png") 80% 100% no-repeat; overflow: hidden; }
+.module.hot { border-bottom: 2px solid #e9c5bb; background: #fff url("../img/bg-module-hot.png") 80% 100% no-repeat; }
 .module .mod-title { margin: -18px -18px 18px; padding: 15px 18px 12px; background: #2f2f2f url("../img/bg-headings.png") 0 0 no-repeat; color: #fff; font: 200 1.285em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .module .mod-title a { color: #a8d4ff; }
-.module ul, .module ol { margin: 0; }
+.module ul, .module ol { margin: 0; overflow: hidden; }
 .mod-intro { font: italic .786em Georgia, Times, "Times New Roman", serif; }
 
 .module .gallery { list-style: none; margin: 0 -18px 0 0; }
