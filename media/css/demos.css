@@ -106,8 +106,7 @@
 #demo-next { right: 0; }
 #demo-next .demo-title b { right: 35px; }
 
-#featured-demos.js .side .demo-title b {  }
-#featured-demos.js .side .demo-title img { position: absolute; left: 28px; top: 9px; }
+.hasJS #featured-demos .side .demo-title img { position: absolute; left: 28px; top: 9px; }
 
 /* @Next and @Prev demos *********/
 #featured-demos .nav-slide a { opacity: .85; position: absolute; z-index: 30; top: 285px; width: 65px; height: 65px; text-indent: -999em; overflow: hidden; background: transparent url("../img/demos/nav-slide.png") no-repeat; }
@@ -123,7 +122,7 @@
 
 #search-browse #demo-tags { width: 45%; float: right; position: relative; }
 #search-browse #demo-tags .button { position: relative; z-index: 100; width: 200px; font-family: inherit; font-size: .857em; letter-spacing: .5px; padding: .5em 14px; -moz-box-shadow: 0 0 10px rgba(0,0,0,.75); -webkit-box-shadow: 0 0 10px rgba(0,0,0,.75); box-shadow: 0 0 10px rgba(0,0,0,.75); }
-.js #tags-list { display: none; }
+.hasJS #tags-list { display: none; }
 #search-browse #tags-list { width: 210px; margin: -10px auto 1em; padding: 20px 5px 10px; overflow: hidden; 
   position: absolute;
   left: 13%;
@@ -190,7 +189,7 @@
 #demobox .tools .share { position: relative; z-index: 99; }
 
 #share-opts { margin: .75em 0; float: right; width: 210px; }
-#share-opts.js { position: absolute; top: -11px; left: -11px; z-index: 999; float: none; margin: 0; padding: 10px; background: #000; border: 1px solid #808080; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.5); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.5); box-shadow: 5px 5px 0 rgba(0,0,0,.5); }
+.hasJS #share-opts { position: absolute; top: -11px; left: -11px; z-index: 999; float: none; margin: 0; padding: 10px; background: #000; border: 1px solid #808080; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.5); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.5); box-shadow: 5px 5px 0 rgba(0,0,0,.5); }
 #demobox #share-opts li { font-size: .857em; float: none; border-top: 1px dotted #3f3f3f; padding: 7px 0; margin: 0; background: none; }
 #demobox #share-opts .sharetitle { font-size: 16px; color: #666; position: static; padding: 0 0 7px 25px; background: url("../img/demobox-icons.png") 0 -450px no-repeat; border: 0; }
 #demobox #share-opts .twitter a { background-position: 0 -500px; color: #ff4675; }
@@ -210,12 +209,12 @@
 #demobox .stats .likes { background-position: 0 -700px; }
 #demobox .stats .comments { background-position: 0 -750px; }
 
-.screenshots.js { position: absolute; right: 10px; top: 10px; background: #fff; width: 480px; height: 360px; }
+.hasJS .screenshots { position: absolute; right: 10px; top: 10px; background: #fff; width: 480px; height: 360px; }
 
 #demobox .slider { margin: 0; padding: 0; list-style: none; }
 
 .nav-slide { height: 0; margin: 0; padding: 0; display: none; }
-.js .nav-slide { display: block; }
+.hasJS .nav-slide { display: block; }
 
 .nav-slide a { position: absolute; top: 50%; z-index: 10; display: block; margin-top: -60px; height: 120px; width: 60px;
     text-indent: -999em;
@@ -312,8 +311,8 @@
 #comments-list .comment-reply { padding: 20px 0 0 0; }
 #comments-list .comment-reply legend span { display: block; margin: 0 0 .5em; font-size: 1.333em; }
 #comments-list .comment-reply textarea { width: 96%; margin: 0 0 1em; }
-#comments-list.js .comment-reply { display: none; }
-#comments-list.js .comment-reply-revealed { display: block; }
+.hasJS #comments-list .comment-reply { display: none; }
+.hasJS #comments-list .comment-reply-revealed { display: block; }
 
 /* @Demo @Galleries *********/
 #page-head { margin: 20px 0; clear: both; }
@@ -370,7 +369,6 @@
 
 .gallery .demo { position: relative; float: left; width: 200px; margin: 0 0 1.4em 20px; padding: 168px 5px 0; }
 .gallery .demo.row-first { margin-left: 0; clear: left; }
-#featured-demos .js .demo.row-first { clear: none; }
 
 .demo .demo-title { font: normal 1.285em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 .15em; }
 .demo .demo-title a:link, .demo .demo-title a:visited { color: #000; }
@@ -407,7 +405,7 @@
 .demo .launch { position: absolute; top: 120px; right: 12px; font-size: 1.2em; }
 .demo .launch .button { color: #fff; }
 
-.gallery.js .extra { display: none; }
+.hasJS .gallery .extra { display: none; }
 
 .demohover { display: none; position: absolute; z-index: 99; margin: -8px -8px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 0 5px rgba(255,255,255,.75); -webkit-box-shadow: 0 0 5px rgba(255,255,255,.75); box-shadow: 0 0 5px rgba(255,255,255,.75); }
 .demohover .in { position: relative; width: 194px; padding: 175px 12px 1px; background: #fff; background: rgba(255,255,255,.95); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }

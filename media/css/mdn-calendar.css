@@ -11,9 +11,9 @@
 
 #cal1Container { position: absolute; top: 120px; left: 15px; }
 
-.events { font-size: .857em; width: 100%; }
-.events thead { background: #d6d6c6; background: rgba(198,198,175,.5); }
-.events thead th { font-weight: bold; }
-.events td, .events th { padding: .5em 3px; }
-.events tr:nth-child(even) { background: #e4e4d9; background: rgba(198,198,175,.2); }
-.events tbody tr:hover { background: #ebebd9; background: rgba(255,255,255,.5); }
+table.events { font-size: .857em; width: 100%; }
+table.events thead { background: #d6d6c6; background: rgba(198,198,175,.5); }
+table.events thead th { font-weight: bold; }
+table.events td, table.events th { padding: .5em 3px; }
+table.events tr:nth-child(even) { background: #e4e4d9; background: rgba(198,198,175,.2); }
+table.events tbody tr:hover { background: #ebebd9; background: rgba(255,255,255,.5); }
