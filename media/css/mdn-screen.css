@@ -229,8 +229,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 
 #nav-main .menu .sub-menu { position: absolute; z-index: 98; left: -999em; top: 27px; background: #000; list-style: none; width: 80px; font-size: 1em; padding: 10px 6px 4px; border: 4px solid #f8d575; text-align: center; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
 #nav-main .menu .sub-menu li { display: block; float: none; width: 100%; margin: 0 0 .35em; }
-.js #nav-main .menu .sub-menu, #nav-main .menu:hover .sub-menu { left: 50%; margin-left: -50px; }
-.js #nav-main .menu .sub-menu { display: none; }
+.hasJS #nav-main .menu .sub-menu, #nav-main .menu:hover .sub-menu { left: 50%; margin-left: -50px; }
+.hasJS #nav-main .menu .sub-menu { display: none; }
 
 #nav-main .sub-menu a { padding: 0; height: auto; background: none; }
 #nav-main .sub-menu a:hover, #nav-main .sub-menu a:focus, #nav-main .sub-menu a:active { padding: 0; border: 0; }
@@ -264,7 +264,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 
 /*** @Shortcuts to @Docs *********/
 #nav-main #nav-sub-docs { width: 420px; padding: 10px 15px; font-size: .857em; border-color: #fb9500; }
-.js #nav-main #nav-sub-docs, #nav-main .menu:hover #nav-sub-docs { margin-left: -230px; }
+.hasJS #nav-main #nav-sub-docs, #nav-main .menu:hover #nav-sub-docs { margin-left: -230px; }
 #nav-main #nav-sub-docs ul { list-style: none; margin: 0; overflow: hidden; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
 #nav-main #nav-sub-docs li { width: 24.9%; float: left; padding: .5em 0; margin: 0; text-align: center; }
 #nav-main #nav-sub-docs li li { width: 100%; float: none; padding: 0; margin: 0; }
@@ -441,9 +441,9 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #home-demos .gallery .demo.row-first { margin-left: 0; }
 #home-demos .demo-title img { width: 180px; max-height: 133px; padding: 9px; border: 1px solid #ccc; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
 #home-demos .demo-title a:hover img, #home #home-demos .demo-title a:focus img, #home #home-demos .demo-title a:active img { -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4); box-shadow: 0 1px 2px rgba(0,0,0,.4); }
-#home-demos .gallery.js .demo { padding-top: 153px; }
-#home-demos .gallery.js .byline { display: none; }
-#home-demos .gallery.js .demo-title { text-indent: -999em; height: 0; margin: 0; }
+.hasJS #home-demos .gallery .demo { padding-top: 153px; }
+.hasJS #home-demos .gallery .byline { display: none; }
+.hasJS #home-demos .gallery .demo-title { text-indent: -999em; height: 0; margin: 0; }
 
 #home #content .demohover { display: none; position: absolute; z-index: 99; margin: -6px -6px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
 #home #content .demohover .in { position: relative; width: 180px; padding: 165px 15px 9px; background: #fff; background: rgba(255,255,255,.95); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }

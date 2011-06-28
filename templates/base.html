@@ -176,32 +176,22 @@ $(document).ready(function() {
   $('input[placeholder]').placeholder();
 
   // Set up nav dropdowns  
-  $("#nav").addClass("js");
-
-  $("#nav-sub .toggle").click(function() {
-    $("#nav-sub .sub-menu").slideToggle(150).removeAttr("aria-hidden");
+  $("#nav .toggle").click(function() {
+    $("#nav .sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
+    $("#nav .open").removeClass("open");
+    $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
     $(this).toggleClass("open");
-    $("#doc-shortcuts").slideUp(100).attr("aria-hidden", "true");
-    $("#nav-main-docs a.docs").removeClass("open");
-    return false;
-  });
-  
-  $("#nav-main-docs a.docs").click(function() {
-    $("#doc-shortcuts").slideToggle(150).removeAttr("aria-hidden");
-    $(this).toggleClass("open");
-    $("#nav-sub .sub-menu").slideUp(100).attr("aria-hidden", "true");
-    $("#nav-sub .toggle").removeClass("open");
     return false;
   });
   
   // Keep the dropdown visible when it's in use
-  $("#nav-sub .sub-menu, #doc-shortcuts").hover(
+  $("#nav .sub-menu").hover(
     function() {
       $(this).show().removeAttr("aria-hidden");
     },
     function() {
-      $(this).slideUp('fast').attr("aria-hidden", "true");
-      $("#nav-sub .toggle, #nav-main-docs a").removeClass("open").blur();
+      $(this).delay(100).slideUp(150).attr("aria-hidden", "true");
+      $("#nav .toggle").delay(100).removeClass("open").blur();
     }
   );
 
@@ -209,16 +199,16 @@ $(document).ready(function() {
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
     if (! $clicked.parents().hasClass("menu"))
-      $("#nav-sub .sub-menu, #doc-shortcuts").hide().attr("aria-hidden", "true");
-      $("#nav-sub .toggle, #nav-main-docs a.docs").removeClass("open");
+      $("#nav .sub-menu").hide().attr("aria-hidden", "true");
+      $("#nav .toggle").removeClass("open");
   });
   
   // or gets focus
   $("a, input, textarea, button, :focus").bind('focus', function(e) {
     var $focused = $(e.target);
     if (! $focused.parents().hasClass("menu"))
-      $("#nav-sub .sub-menu, #doc-shortcuts").hide().attr("aria-hidden", "true");
-      $("#nav-sub .toggle, #nav-main-docs a.docs").removeClass("open");
+      $("#nav .sub-menu").hide().attr("aria-hidden", "true");
+      $("#nav .toggle").removeClass("open");
   });
 
 }); 
