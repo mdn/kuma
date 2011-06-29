@@ -5,8 +5,7 @@
 #page-head p strong { color: #333; }
 #page-head .page-title { margin: 0 0 .1em; color: #ab181a; font: 200 72px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(170, 160, 130, 0.5); }
 
-#map_canvas { height: 400px; margin-bottom: 2em; }
-#map_canvas > div { margin: 10px; }
+#map_canvas { height: 400px; margin-bottom: 2em; border: 8px solid #fff; }
 #map_canvas li { list-style: none; padding-bottom: 5px; }
 #map_canvas a { display: block; font-weight: bold; color: #036; padding: 5px 0; }
 
