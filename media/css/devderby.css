@@ -7,7 +7,7 @@
 #devderby .sub { padding-top: 265px; width: 315px; float: right; }
 
 /* @Branding *********/
-body#devderby { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; }
+body#devderby { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; min-width: 960px; }
 body#devderby.plain { background: url("../img/devderby/bg-devderby-plain.jpg") center 25px no-repeat; }
 body#devderby #content-main { padding-top: 0; }
 
