@@ -153,8 +153,6 @@ class DemoViewsTest(test_utils.TestCase):
         url = reverse('demos_detail', args=[s.slug])
         r = self.client.get(url)
         d = pq(r.content)
-        a = d('a[href="%s"]' % url)
-        eq_(s.title, a.text())
         eq_(s.title, d('h1.page-title').text())
         edit_link = d('ul.manage a.edit')
         assert not edit_link
