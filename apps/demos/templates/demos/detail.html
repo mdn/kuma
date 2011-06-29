@@ -168,7 +168,7 @@
       {% set show_buttons = ( p_edit or p_delete or p_hide ) %}
 
       {% if show_buttons %}
-      <ul class="manage">
+      <ul id="demo-manage">
 
         {% if p_edit %}
             <li><a href="{{ url('demos_edit', slug=submission.slug) }}" 

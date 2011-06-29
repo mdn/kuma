@@ -110,6 +110,13 @@ transform: rotate(18deg);
 #devderby .demohover .extra { display: block; }
 #devderby .demohover .launch { top: 105px; right: 16px; }
 
+/* @Judges *********/
+.judges { list-style: none; margin: 0 0 1em; font-size: .857em; }
+.judges .vcard { position: relative; min-height: 100px; padding: 20px 0 20px 120px; border-top: 2px dotted #746b60; }
+.judges h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
+.judges .title { text-transform: uppercase; margin: 0 0 .15em; }
+.judges .photo { position: absolute; left: 0; top: 20px; }
+
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }
 #prev-winner h1 { margin: 0 0 1em -100px; color: #000; background: url("../img/devderby/bg-head-banner.png") center top no-repeat; padding: 13px 20px; text-align: center; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
