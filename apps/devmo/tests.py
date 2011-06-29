@@ -129,6 +129,6 @@ class TestCalendar(test_utils.TestCase):
     def test_reload_from_csv_data(self):
         self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
         # check total
-        assert_equal(39, len(Event.objects.all()))
+        assert_equal(33, len(Event.objects.all()))
         # spot-check
         ok_(Event.objects.get(conference='StarTechConf'))

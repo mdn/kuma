@@ -1,15 +1,3 @@
-HTTP/1.1 200 OK
-Content-Type: text/plain; charset=UTF-8
-X-Robots-Tag: noindex, nofollow, nosnippet
-Content-Disposition: attachment; filename="Mozillapeopleevents.csv"
-Date: Thu, 23 Jun 2011 18:29:51 GMT
-Expires: Thu, 23 Jun 2011 18:29:51 GMT
-Cache-Control: private, max-age=0
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Server: GSE
-Transfer-Encoding: chunked
-
 Timestamp,Conference,Location,Link,Date,Who is present?,Description,done,Materials post
 ,Texas JavaScript,"Austin TX, USA",http://2011.texasjavascript.com/,6/11/2011,Brendan Eich,"Brendan Eich @brendaneich Ecma TC39: The Good, The Bad, and The Ugly",yes,n/a
 6/15/2011 17:25:24,Confoo,Montreal,http://confoo.ca/en/2011/session/anatomy-of-a-large-django-site,March 9-13th 2011,,Close      Share:                 Rating     Slides     View session page   Anatomy of a large Django site
@@ -44,5 +32,4 @@ implementation takes",yes,http://www.slideshare.net/robnyman/html5-whats-good-wh
 ,Open Web Camp,"Palo Alto, United States",,7/16/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 battles still to be won!,no,n/a
 ,Evento Linux,"Lisbon, Portugal",http://www.eventolinux.org/,9/30/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 TBD,no,n/a
 ,Adobe MAX 2011,"Los Angeles, United States",http://max.adobe.com/,10/1/11-10/5/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 APIs: Where no man has gone before,no,n/a
-,TECH4AFRICA,"Johannesburg, South Africa",http://www.tech4africa.com/,10/27/11-10/28/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",TBA,no,n/a
 ,StarTechConf,"Santiago, Chile",http://www.startechconf.com/,11/4/11-11/5/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 APIs: Where no man has gone before,no,n/a

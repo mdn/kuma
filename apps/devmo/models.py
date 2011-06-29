@@ -82,11 +82,14 @@ class Calendar(ModelBase):
     def reload(self, data=None):
         events = []
         u = None
-        try:
-            u = urllib2.urlopen(self.url)
-        except Exception, e:
-            return False
+        if not data:
+            try:
+                u = urllib2.urlopen(self.url)
+            except Exception, e:
+                return False
         data = csv.reader(u) if u else data
+        if not data:
+            return False
         events = list(Calendar.as_unicode(data))
         Event.objects.filter(calendar=self).delete()
         for event_line in events:
