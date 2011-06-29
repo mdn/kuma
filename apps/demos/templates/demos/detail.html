@@ -162,18 +162,24 @@
       
       {# only shown to admins and the demo owner #}
       {# TODO: The whole UL should be hidden if none of the conditions are met. Logged-out users get served an empty list, which is invalid HTML and can trigger layout weirdness. #}
+      {% set p_edit = submission.allows_editing_by(request.user) %}
+      {% set p_delete = submission.allows_deletion_by(request.user) %}
+      {% set p_hide = submission.allows_hiding_by(request.user) %}
+      {% set show_buttons = ( p_edit or p_delete or p_hide ) %}
+
+      {% if show_buttons %}
       <ul class="manage">
 
-        {% if submission.allows_editing_by(request.user) %}
+        {% if p_edit %}
             <li><a href="{{ url('demos_edit', slug=submission.slug) }}" 
                 class="button edit">{{_('Edit Demo')}}</a></li>
         {% endif %}
 
-        {% if submission.allows_deletion_by(request.user) %}
+        {% if p_delete %}
             <li><a href="{{ url('demos_delete', slug=submission.slug) }}" 
                 class="button remove modal">{{_("Remove demo")}}</a></li>
         {% endif %}
-        {% if submission.allows_hiding_by(request.user) %}
+        {% if p_hide %}
             {% if submission.hidden %}
                 <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
                     <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
@@ -184,6 +190,7 @@
         {% endif %}
 
       </ul>
+      {% endif %}
 
       {% if submission.description %}
       <section class="moreabout">
