@@ -46,23 +46,23 @@
       </header>
       <ol>
         <li class="first">
-          <h2 class="title">{{_("CSS3 Animations")}}</h2>
-          <h3 class="date">{{_("June")}}</h3>
-          <h4 class="tagline">{{_("Make the Web move")}}</h4>
-          <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-          <p class="desc">{{_("CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions.")}}</p>
-        </li>
-        <li class="second">
           <h2 class="title">{{_("HTML5 <video>")}}</h2>
           <h3 class="date">{{_("July")}}</h3>
           <h4 class="tagline">{{_("Lights, camera, action!")}}</h4>
+          <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
           <p class="desc">{{_("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins.")}}</p>
         </li>
-        <li class="third">
+        <li class="second">
           <h2 class="title">{{_("Touch")}}</h2>
           <h3 class="date">{{_("August")}}</h3>
           <h4 class="tagline">{{_("Touch and go")}}</h4>
           <p class="desc">{{_("Touch events let you track the movements of a user's fingers on a touch screen.")}}</p>
+        </li>
+        <li class="third">
+          <h2 class="title">{{_("History API")}}</h2>
+          <h3 class="date">{{_("September")}}</h3>
+          <h4 class="tagline">{{_("A browser never forgets")}}</h4>
+          <p class="desc">{{_("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked.")}}</p>
         </li>
       </ol>
     </section>
@@ -77,13 +77,38 @@
       
       <section id="tab-challenge" class="block">
         <header>
-          <h1 class="title">{{_("CSS3 Animations")}}</h1>
-          <h2 class="date">{{_("June")}}</h2>
+          <h1 class="title">{{_("HTML5 <video>")}}</h1>
+          <h2 class="date">{{_("July")}}</h2>
         </header>
-        <p class="tagline">{{_("Show us what CSS can really do! Make the Web move with CSS3 Animations.")}}</p>
-        <p>{{_("CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web.  CSS3 Animations let you change property values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3.")}}</p>
-        <p>{{_("NOTE: Firefox 5 will introduce support for CSS3 Animations. You should <a href=\"http://www.mozilla.com/en-US/firefox/channel/\">use the Firefox Beta or Aurora channel</a> for this Dev Derby.  Your demo will not work in Firefox 4.") | safe}}</p>
-        <p>{% trans %}<a href="{{ submit_url }}">Submit your CSS3 Animations demo</a> for the June Dev Derby today!{% endtrans %}</p>
+        <p class="tagline">{{_("Lights! Camera! HTML5 video action!")}}</p>
+        {% trans %}
+            <p>The support for video in HTML5 enables web-based interactive video
+            like nothing else before:</p>
+
+            <ul>
+                <li>No need for plug-ins that users must install and keep updated</li>
+                <li>Video content that integrates with the rest of the web page</li> 
+                <li>Better performance</li>
+                <li>Better accessibility</li>
+                <li>Better maintainability</li>
+            </ul>
+
+            <p>Use CSS to transform, filter, or mask the video container. You can
+                even perform real-time changes to the video content, such as
+                green-screen effects, dynamic content injection, or edge or
+                movement detection.</p>
+
+            <p>You don’t have to code completely from scratch, either. <a href="http://popcornjs.org/">Popcorn.js</a>
+                is an open-source event framework for integrating HTML5 media
+                (audio as well as video) with other web-based content, with a
+                plug-in system for adding web service integrations. Popcorn.js is a
+                project of the <a href="http://webmademovies.org/">Web Made Movies</a> video lab.</p>
+
+            <p>The possibilities are unbounded, so show us what you can do!</p> 
+
+            <p><a href="{{ submit_url }}">Submit your HTML5 video demo</a> for the July Dev Derby today!</p>
+        {% endtrans %}
+
       </section>
     
       <section id="tab-submissions" class="block">

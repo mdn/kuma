@@ -88,6 +88,8 @@
           {{ li_field(form, 'summary') }}
           {{ li_field(form, 'description') }}
 
+          {{ li_field(form, 'hidden') }}
+
           <fieldset class="inline">
               <legend><b>{{_('Select up to five technologies used in your demo.')}}</b></legend>
               <ul id="tech-tags" class="cols-4">
@@ -108,10 +110,7 @@
               <ul id="challenge-tags">
                 {{ li_field(form, 'challenge_tags', show_label=False) }}
               </ul>
-              <p><small>{{_("Firefox 5 will introduce support for CSS3 Animations. You should <a href=\"http://www.mozilla.com/en-US/firefox/channel/\">use the Firefox Beta or Aurora channel</a> to test and view your demo (it will not work in Firefox 4).") | safe }}</small></p>
           </fieldset>
-
-          {{ li_field(form, 'hidden') }}
 
         </ul>
 

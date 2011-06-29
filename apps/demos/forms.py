@@ -23,8 +23,10 @@ from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from . import scale_image
-from .models import Submission, TAG_DESCRIPTIONS, TAG_NAMESPACE_DEMO_CREATOR_WHITELIST
+from . import ( scale_image, TAG_DESCRIPTIONS,
+        TAG_NAMESPACE_DEMO_CREATOR_WHITELIST,
+        DEMOS_DEVDERBY_CHALLENGE_CHOICES )
+from .models import Submission
 
 from captcha.fields import ReCaptchaField
 
@@ -108,13 +110,12 @@ class SubmissionEditForm(MyModelForm):
         widget = CheckboxSelectMultiple,
         required = False,
         choices = (
-            (x['tag_name'], x['title']) 
-            for x in TAG_DESCRIPTIONS.values() 
-            if x['tag_name'].startswith('challenge:')
+            (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title']) 
+            for x in DEMOS_DEVDERBY_CHALLENGE_CHOICES
         )
     )
 
-    TAGS_FIELD_NAME = 'taggit_tags'
+    TAGS_FIELD_NAME = 'tags'
 
     def __init__(self, *args, **kwargs):
 
