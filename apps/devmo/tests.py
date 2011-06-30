@@ -106,6 +106,7 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
 MOZILLA_PEOPLE_EVENTS_CSV = 'apps/devmo/fixtures/Mozillapeopleevents.csv'
 XSS_CSV = 'apps/devmo/fixtures/xss.csv'
 
+
 class TestCalendar(test_utils.TestCase):
 
     def setUp(self):
@@ -136,4 +137,5 @@ class TestCalendar(test_utils.TestCase):
     def test_html_santiziation(self):
         self.cal.reload(data=csv.reader(open(XSS_CSV, 'rb')))
         # spot-check
-        eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich', Event.objects.get(conference="Texas JavaScript").people)
+        eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich',
+            Event.objects.get(conference="Texas JavaScript").people)
