@@ -164,7 +164,7 @@ class DemoViewsTest(test_utils.TestCase):
         url = reverse('demos_detail', args=[s.slug])
         r = self.client.get(url)
         d = pq(r.content)
-        edit_link = d('ul.manage a.edit')
+        edit_link = d('ul#demo-manage a.edit')
         assert edit_link
         edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
         eq_(edit_url, edit_link.attr("href"))
