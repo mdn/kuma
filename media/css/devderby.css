@@ -120,6 +120,7 @@ transform: rotate(18deg);
 #devderby .block .judges h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
 #devderby .block .judges .title { text-transform: uppercase; margin: 0 0 .15em; }
 #devderby .block .judges .photo { position: absolute; left: 0; top: 20px; }
+#devderby .block .judges cite { font-style: italic; }
 
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }
