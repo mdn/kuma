@@ -2,12 +2,12 @@ import csv
 import logging
 import urllib2
 
+from django.contrib.auth.models import User as DjangoUser
 from django.db import models
 
-from django.contrib.auth.models import User as DjangoUser
-
 import caching.base
-
+import html5lib
+from html5lib import sanitizer
 from tower import ugettext as _
 
 
@@ -74,9 +74,10 @@ class Calendar(ModelBase):
 
     @classmethod
     def as_unicode(cls, events):
+        p = html5lib.HTMLParser(tokenizer=sanitizer.HTMLSanitizer)
         for row in events:
             for idx, cell in enumerate(row):
-                row[idx] = unicode(cell, 'utf-8')
+                row[idx] = p.parseFragment(unicode(cell, 'utf-8')).toxml()
             yield row
 
     def reload(self, data=None):
@@ -99,7 +100,7 @@ class Calendar(ModelBase):
             event = Event(date=event_line[4], conference=event_line[1],
                           conference_link=event_line[3],
                           location=event_line[2], people=event_line[5],
-                          description=event_line[6], done=done, calendar=self)
+                          description=event_line[6][:255], done=done, calendar=self)
             if len(event_line) > 8:
                 event.materials = event_line[8]
             if event.conference != "Conference":

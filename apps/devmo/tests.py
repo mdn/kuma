@@ -104,7 +104,7 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
         eq_(prefixer.get_language(), 'fr')
 
 MOZILLA_PEOPLE_EVENTS_CSV = 'apps/devmo/fixtures/Mozillapeopleevents.csv'
-
+XSS_CSV = 'apps/devmo/fixtures/xss.csv'
 
 class TestCalendar(test_utils.TestCase):
 
@@ -132,3 +132,8 @@ class TestCalendar(test_utils.TestCase):
         assert_equal(33, len(Event.objects.all()))
         # spot-check
         ok_(Event.objects.get(conference='StarTechConf'))
+
+    def test_html_santiziation(self):
+        self.cal.reload(data=csv.reader(open(XSS_CSV, 'rb')))
+        # spot-check
+        eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich', Event.objects.get(conference="Texas JavaScript").people)
