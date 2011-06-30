@@ -23,7 +23,9 @@ body#devderby #content-main { padding-top: 0; }
 
 #derby-head { position: relative; padding: 20px 200px 20px 360px; min-height: 130px; }
 .plain #derby-head { padding: 40px 40px 20px 360px; min-height: 80px; }
-#derby-head h1 { position: absolute; top: -25px; left: 0; width: 335px; height: 140px; background: url("../img/devderby/logo-devderby-presents.png") no-repeat; text-indent: -999em; overflow: hidden; }
+#derby-head .presents { width: 140px; position: absolute; left: 0; top: -20px; font-size: .785em; text-align: right; }
+#derby-head .presents a { display: block; text-indent: -999em; text-align: left; width: 122px; height: 34px; overflow: hidden; background: url("../img/demos/logo-demostudio-tiny.png") no-repeat; }
+#derby-head h1 { position: absolute; top: 25px; left: 0; width: 335px; height: 100px; background: url("../img/devderby/logo-devderby.png") no-repeat; text-indent: -999em; overflow: hidden; }
 #derby-head h2 { margin: 0 0 .15em; font: 200 40px/.95 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; color: #000; text-shadow: 0 0 10px #fff; }
 #derby-head .submit { width: 180px; height: 130px; position: absolute; right: 0; top: 15px; background: url("../img/devderby/btn-submit-demo.png") no-repeat; }
 #derby-head .submit a { display: block; position: absolute; top: 6px; left: 14px; width: 90px; height: 90px; padding: 16px 25px 12px 20px; text-align: center; font: normal 34px/.85 "Bebas Neue", sans-serif; color: #fff; 
