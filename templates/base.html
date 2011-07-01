@@ -43,7 +43,7 @@
     <div class="wrap">
       <div id="branding">
         {% block headerlogo %}
-        <h1 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-compact.png" alt="Mozilla Developer Network" title="Mozilla Developer Network" width="146" height="42"></a></h1>
+        <h1 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-compact.png" alt="Mozilla Developer Network" title="Mozilla Developer Network" width="148" height="46"></a></h1>
         {% endblock %}
       </div>
       
@@ -61,9 +61,17 @@
       
       <nav id="nav" role="menubar">
         <ul id="nav-main">
+          <li id="nav-main-topics" class="menu"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="Explore other parts of MDN">{{ _('Topics') }}</a>
+            <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
+              <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
+              <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
+              <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
+              <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
+            </ul>
+          </li>
           <li id="nav-main-docs" class="menu">
-            <a href="{{ url('docs') }}" class="docs" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
-            <div id="doc-shortcuts" class="sub-menu" aria-hidden="true">
+            <a href="{{ url('docs') }}" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
+            <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
               <ul>
                 <li>
                   <ul>
@@ -111,17 +119,13 @@
           </li>
           <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('Demos') }}</a></li>
           <li id="nav-main-learning" role="menuitem"><a href="{{ url('learn') }}" class="learning">{{ _('Learning') }}</a></li>
-          <li id="nav-main-forums" role="menuitem"><a href="/forums" class="forums">{{ _('Forums') }}</a></li>
+          <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Community') }}</a>
+            <ul id="nav-sub-community" class="sub-menu">
+              <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
+              <li><a href="/forums">{{ _('Forums') }}</a></li>
+              <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
+            </ul>
         </ul>
-        
-        <div id="nav-sub" class="menu"><a href="#nav-sub" aria-haspopup="true" class="toggle" title="Explore other parts of MDN">{{ _('Topics') }}</a>
-          <ul class="sub-menu">
-            <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
-            <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
-            <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
-            <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
-          </ul>
-        </div>
       </nav>
       {% endblock %}
     
@@ -172,32 +176,22 @@ $(document).ready(function() {
   $('input[placeholder]').placeholder();
 
   // Set up nav dropdowns  
-  $("#nav").addClass("js");
-
-  $("#nav-sub .toggle").click(function() {
-    $("#nav-sub .sub-menu").slideToggle(150).removeAttr("aria-hidden");
+  $("#nav .toggle").click(function() {
+    $("#nav .sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
+    $("#nav .open").removeClass("open");
+    $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
     $(this).toggleClass("open");
-    $("#doc-shortcuts").slideUp(100).attr("aria-hidden", "true");
-    $("#nav-main-docs a.docs").removeClass("open");
-    return false;
-  });
-  
-  $("#nav-main-docs a.docs").click(function() {
-    $("#doc-shortcuts").slideToggle(150).removeAttr("aria-hidden");
-    $(this).toggleClass("open");
-    $("#nav-sub .sub-menu").slideUp(100).attr("aria-hidden", "true");
-    $("#nav-sub .toggle").removeClass("open");
     return false;
   });
   
   // Keep the dropdown visible when it's in use
-  $("#nav-sub .sub-menu, #doc-shortcuts").hover(
+  $("#nav .sub-menu").hover(
     function() {
       $(this).show().removeAttr("aria-hidden");
     },
     function() {
-      $(this).slideUp('fast').attr("aria-hidden", "true");
-      $("#nav-sub .toggle, #nav-main-docs a").removeClass("open").blur();
+      $(this).delay(100).slideUp(150).attr("aria-hidden", "true");
+      $("#nav .toggle").delay(100).removeClass("open").blur();
     }
   );
 
@@ -205,16 +199,16 @@ $(document).ready(function() {
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
     if (! $clicked.parents().hasClass("menu"))
-      $("#nav-sub .sub-menu, #doc-shortcuts").hide().attr("aria-hidden", "true");
-      $("#nav-sub .toggle, #nav-main-docs a.docs").removeClass("open");
+      $("#nav .sub-menu").hide().attr("aria-hidden", "true");
+      $("#nav .toggle").removeClass("open");
   });
   
   // or gets focus
   $("a, input, textarea, button, :focus").bind('focus', function(e) {
     var $focused = $(e.target);
     if (! $focused.parents().hasClass("menu"))
-      $("#nav-sub .sub-menu, #doc-shortcuts").hide().attr("aria-hidden", "true");
-      $("#nav-sub .toggle, #nav-main-docs a.docs").removeClass("open");
+      $("#nav .sub-menu").hide().attr("aria-hidden", "true");
+      $("#nav .toggle").removeClass("open");
   });
 
 }); 

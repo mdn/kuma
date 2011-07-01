@@ -22,11 +22,13 @@
 /* @Branding *********/
 #demostudio.landing { background: url("../img/demos/bg-demolanding.jpg") center 50px no-repeat; }
 
-#demos-head { position: relative; padding: 40px 40px 15px 360px; min-height: 40px; }
-.landing #demos-head { padding-right: 240px; }
-#demos-head h1 { position: absolute; left: 100px; top: 20px; width: 230px; height: 54px; text-indent: -999em; overflow: hidden; background: url("../img/demos/logo-demostudio-lt.png") 0 0 no-repeat; }
+#demos-head { position: relative; padding: 40px 0 0 260px; min-height: 40px; }
+.landing #demos-head { padding: 40px 240px 15px 360px; }
+#demos-head h1 { position: absolute; left: 0; top: 20px; width: 230px; height: 54px; text-indent: -999em; overflow: hidden; background: url("../img/demos/logo-demostudio-lt.png") 0 0 no-repeat; }
+.landing #demos-head h1 { left: 100px; }
+#demos-head h1 a { display: block; height: 54px; }
 
-#demos-head .demo-buttons { position: relative; z-index: 30; list-style: none; margin: 0; padding: 0; }
+#demos-head .demo-buttons { position: relative; z-index: 30; float: left; list-style: none; margin: 0; padding: 0; }
 #demos-head .demo-buttons li { display: inline; position: relative; margin-right: 10px; font-size: .857em; text-transform: uppercase; letter-spacing: .5px; }
 #demos-head .demo-buttons .button { position: relative; z-index: 35; font-family: inherit; font-size: 1em; letter-spacing: .5px; padding: .5em 14px; }
 #demos-head .demo-buttons .submit a { padding-left: 37px; background-image: url("../img/demos/icn-demoreel.png"); background-position: 8px -48px; background-repeat: no-repeat; }
@@ -72,6 +74,13 @@
 #derby-cta strong { font-weight: normal; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; color: #f1ed0f; }
 #derby-cta strong:before { content: "\203A"; font-size: 1.4em; line-height: 1; margin-right: 2px; }
 
+#demos-head .paging { width: 260px; float: right; text-transform: uppercase; font-size: .857em; text-shadow: 1px 1px 0 rgba(0,0,0,.6); }
+#demos-head .paging a { display: block; color: #fff; background: url("../img/demos/demobox-icons.png") no-repeat; }
+#demos-head .paging .prev { width: 45%; float: left; border: 0; }
+#demos-head .paging .prev a { padding: 7px 0 7px 35px; background-position: 0 -3px; }
+#demos-head .paging .next { width: 45%; float: right; text-align: right; }
+#demos-head .paging .next a { padding: 7px 35px 7px 0; background-position: right -154px; }
+
 /* @Featured demos *********/
 #featured-demos { position: relative;  height: 470px; }
 #featured-demos header h2 { margin: 0; padding: 0 0 22px; text-align: center; background: url("../img/demos/bg-featuredhead.png") center bottom no-repeat; color: #fff; font: 200 40px/.8 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 5px #ffc, 3px 2px 3px rgba(0,0,0,.5); }
@@ -106,10 +115,10 @@
 #demo-next { right: 0; }
 #demo-next .demo-title b { right: 35px; }
 
-#featured-demos.js .side .demo-title b {  }
-#featured-demos.js .side .demo-title img { position: absolute; left: 28px; top: 9px; }
+.hasJS #featured-demos .side .demo-title img { position: absolute; left: 28px; top: 9px; }
 
 /* @Next and @Prev demos *********/
+#featured-demos .nav-slide { margin: 0; padding: 0; list-style: none; height: 0; }
 #featured-demos .nav-slide a { opacity: .85; position: absolute; z-index: 30; top: 285px; width: 65px; height: 65px; text-indent: -999em; overflow: hidden; background: transparent url("../img/demos/nav-slide.png") no-repeat; }
 #featured-demos .nav-slide .next { right: 170px; background-position: 0 0; }
 #featured-demos .nav-slide .next:hover, #featured-demos .nav-slide .next:focus, #featured-demos .nav-slide .next:active { background-position: 0 -100px; }
@@ -123,7 +132,7 @@
 
 #search-browse #demo-tags { width: 45%; float: right; position: relative; }
 #search-browse #demo-tags .button { position: relative; z-index: 100; width: 200px; font-family: inherit; font-size: .857em; letter-spacing: .5px; padding: .5em 14px; -moz-box-shadow: 0 0 10px rgba(0,0,0,.75); -webkit-box-shadow: 0 0 10px rgba(0,0,0,.75); box-shadow: 0 0 10px rgba(0,0,0,.75); }
-.js #tags-list { display: none; }
+.hasJS #tags-list { display: none; }
 #search-browse #tags-list { width: 210px; margin: -10px auto 1em; padding: 20px 5px 10px; overflow: hidden; 
   position: absolute;
   left: 13%;
@@ -153,126 +162,133 @@
 #content-sub .demo-search input:focus { color: #000; }
 
 /* @Demo @Detail *********/
-#demobox { position: relative; overflow: auto; margin: 0 5px 1em 0; padding: 20px 520px 5em 20px; min-height: 290px; background: #000; color: #c0c0c0; 
-  -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.5), 4px 4px 0 rgba(200,190,165,.5);
-  -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.5), 4px 4px 0 rgba(200,190,165,.5);
-  box-shadow: 2px 2px 0 rgba(170,160,130,.5), 4px 4px 0 rgba(200,190,165,.5); 
-}
+#demostudio.detail { background: url("../img/demos/bg-demodetail.jpg") center 55px no-repeat; min-width: 960px; }
+
+#demobox { position: relative; margin-top: -10px; min-height: 420px; padding: 10px 585px 0 0; color: #fff; font-family: "Carto Bold", sans-serif; text-shadow: 1px 1px 0 rgba(0,0,0,.6); background: url("../img/demos/bg-mainscreen.png") right 10px no-repeat; }
 #demobox a { color: #fff; }
-#demobox .page-title { color: #fff; }
-#demobox .byline { font-size: .857em; margin-top: -1.35em; }
-#demobox ul li { list-style: none; padding: 0; background: none; }
+#demobox .demo-info { margin-top: 10px; padding: 15px 30px 0; border-top: 2px solid #6b7684; }
+#demobox h1 { font-size: 2em; line-height: 1.1; margin: 0 0 15px; }
+#demobox .byline { font-size: 1.143em; margin: 0 0 15px; }
+#demobox .demo-desc { line-height: 1.4;  }
 
-#demobox .manage { margin: -.5em 0 1em; }
-#demobox .manage li { display: inline; }
-#demobox form { display: inline; }
-#demobox .manage button { padding: 0; background: transparent none; padding: 0; border: 0; }
-#demobox .manage button span { margin: 0; white-space: nowrap; }
+#demobox .tools { position: relative; margin: 15px 0; padding: 15px 30px 15px 220px; min-height: 40px; border: solid #6b7684; border-width: 2px 0; }
+#demobox .tools:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+#demobox .tools li { float: left; }
+#demobox .launch { width: 160px; position: absolute; left: 30px; }
+#demobox .launch .button { font-family: inherit; font-size: 1em; padding: 12px 10px; width: 90%; text-align: center; }
+#demobox .launch strong { font-weight: normal; }
+#demobox .tools button { font-family: inherit; text-transform: none; letter-spacing: normal; background: transparent none; padding: 0; box-shadow: none; }
 
-#demobox .button { margin-right: 4px; }
-#demobox .button:hover, #demobox .button:focus, #demobox .button:active { background-color: #ae4935; }
-#demobox .button strong { font-weight: normal; }
+#demobox .like span, #demobox .unlike span, #sharetoggle { font: normal 15px/1 Milk, serif; text-shadow: 1px 1px 0 rgba(0,0,0,.6); }
 
-#demobox .edit { color: #2f2f2f; background-color: #a5d9f3; }
-#demobox .edit:hover, #demobox .edit:focus, #demobox .edit:active { color: #000; background-color: #80cdf3; }
+#demobox .like span { padding: 4px 0 4px 30px; background: url("../img/demos/demobox-icons.png") 0 -300px no-repeat; }
+#demobox .unlike span { padding: 4px 0 4px 30px; background: url("../img/demos/demobox-icons.png") 0 -350px no-repeat; }
+#demobox .like:hover span, #demobox .like:focus span, #demobox .unlike:hover span, #demobox .unlike:focus span { text-decoration: underline; }
+#demobox .share a { display: block; padding-left: 30px; background: url("../img/demos/demobox-icons.png") 0 -400px no-repeat; }
+#demobox .share { position: relative; z-index: 99; margin-top: 8px; }
 
-#demobox .remove { color: #2f2f2f; background-color: #f07b7b; }
-#demobox .remove:hover, #demobox .remove:focus, #demobox .remove:active, 
-#demobox button:hover .remove, #demobox button:focus .remove { color: #000; background-color: #f05b5b; }
+#share-opts { margin: .75em 0; float: right; width: 200px; }
+.hasJS #share-opts { position: absolute; top: -11px; left: -15px; z-index: 999; float: none; margin: 0; padding: 11px 15px; 
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  background: #000; 
+  background: rgba(0,0,0,.9);
+  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
+  -moz-box-shadow: 0 2px 6px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.5);
+  box-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
 
-#demobox .tools li { float: left; margin: 10px 10px 0 0; font-size: 1.143em; }
-#demobox .tools .launch { margin-top: -5px; font-size: 1.571em; }
-#demobox .tools button { font-family: inherit; text-transform: none; letter-spacing: normal; background: transparent none; padding: 0; }
-#demobox .tools .like span { padding: 2px 0 2px 26px; background: url("../img/demobox-icons.png") 0 -300px no-repeat; }
-#demobox .tools .unlike span { padding: 2px 0 2px 26px; background: url("../img/demobox-icons.png") 0 -350px no-repeat; }
-#demobox .tools .like:hover span, #demobox .tools .like:focus span, #demobox .tools .unlike:hover span, #demobox .tools .unlike:focus span { text-decoration: underline; }
-#demobox .tools .share a { display: block; padding-left: 25px; background: url("../img/demobox-icons.png") 0 -400px no-repeat; }
-#demobox .tools .share { position: relative; z-index: 99; }
+#demobox .stats { font-size: .857em; list-style: none; margin: 15px 0 0 30px; }
+#demobox .stats li { float: left; margin-right: 8px; padding: 3px 0 3px 27px; background: url("../img/demos/demobox-icons.png") no-repeat; }
+#demobox .stats .views { background-position: 0 -650px; }
+#demobox .stats .likes { background-position: 0 -700px; }
+#demobox .stats .comments { background-position: 0 -750px; }
+#demobox .tags { font-size: .857em; margin: 10px 30px; }
 
-#share-opts { margin: .75em 0; float: right; width: 210px; }
-#share-opts.js { position: absolute; top: -11px; left: -11px; z-index: 999; float: none; margin: 0; padding: 10px; background: #000; border: 1px solid #808080; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.5); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.5); box-shadow: 5px 5px 0 rgba(0,0,0,.5); }
-#demobox #share-opts li { font-size: .857em; float: none; border-top: 1px dotted #3f3f3f; padding: 7px 0; margin: 0; background: none; }
-#demobox #share-opts .sharetitle { font-size: 16px; color: #666; position: static; padding: 0 0 7px 25px; background: url("../img/demobox-icons.png") 0 -450px no-repeat; border: 0; }
+#demobox #share-opts li { float: none; border-top: 1px dotted #3f3f3f; padding: 7px 0; margin: 0; background: none; }
+#demobox #share-opts .sharetitle { display: none; font: normal 15px/1 Milk, serif; color: #999; position: static; padding: 0 0 7px 30px; background: url("../img/demos/demobox-icons.png") 0 -450px no-repeat; border: 0; }
+.hasJS #demobox #share-opts .sharetitle { display: block; }
 #demobox #share-opts .twitter a { background-position: 0 -500px; color: #ff4675; }
 #demobox #share-opts .facebook a { background-position: 0 -550px; color: #54aaff; }
-#demobox #share-opts .link { padding-left: 25px; background: url("../img/demobox-icons.png") 0 -593px no-repeat; }
+#demobox #share-opts .link { padding-left: 25px; background: url("../img/demos/demobox-icons.png") 0 -593px no-repeat; }
 #demobox #shorturl { border: 0; background: #000; color: #ffc145; width: auto; padding: 0; }
 #demobox #shorturl.focus { color: #000; background: #ffc145; }
 
 #share-opts #shorturl ::-moz-selection { color: #000; background: #ffc145; }
 #share-opts #shorturl ::selection { color: #000; background: #ffc145; }
 
-#demobox .demo-meta { position: absolute; left: 0; bottom: 0; padding-left: 20px; font-size: .857em; }
-
-#demobox .stats { float: left; list-style: none; margin: 0 0 0 -20px; padding: .75em 20px; background: #323232; }
-#demobox .stats li { display: inline; margin-right: 8px; padding-left: 25px; background: url("../img/demobox-icons.png") no-repeat; }
-#demobox .stats .views { background-position: 0 -650px; }
-#demobox .stats .likes { background-position: 0 -700px; }
-#demobox .stats .comments { background-position: 0 -750px; }
-
-.screenshots.js { position: absolute; right: 10px; top: 10px; background: #fff; width: 480px; height: 360px; }
-
-#demobox .slider { margin: 0; padding: 0; list-style: none; }
-
-.nav-slide { height: 0; margin: 0; padding: 0; display: none; }
-.js .nav-slide { display: block; }
-
-.nav-slide a { position: absolute; top: 50%; z-index: 10; display: block; margin-top: -60px; height: 120px; width: 60px;
-    text-indent: -999em;
-    text-decoration: none;
-    overflow: hidden;
-    background: #000 url("../img/demobox-icons.png") no-repeat;
-    background-color: rgba(0,0,0,.75);
-    opacity: 0.75;
-    -moz-transition-property: opacity, background-color;
-    -moz-transition-duration: 0.2s;
-    -moz-transition-timing-function: ease-out;
-    -webkit-transition-property: opacity, background-color;
-    -webkit-transition-duration: 0.2s;
-    -webkit-transition-timing-function: ease-out;
+#demobox .flag { position: absolute; top: 8px; left: 392px; z-index: 10; width: 190px; height: 150px; overflow: hidden; }
+#demobox .flag strong { position: absolute; left: -65px; top: 40px; display: inline-block; text-align: center; width: 110px; padding: 4px 80px; background: #d3d011; font: normal 18px/.9 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 2px; color: #333; text-shadow: none; 
+  -moz-box-shadow: 0 3px 0 rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 3px 0 rgba(0,0,0,.5);
+  box-shadow: 0 3px 0 rgba(0,0,0,.5);
+  -moz-transform: rotate(-35deg);
+  -webkit-transform: rotate(-35deg);
+  -o-transform: rotate(-35deg);
+  transform: rotate(-35deg);
 }
-.nav-slide a:hover,
-.nav-slide a:active {
-    outline: 0;
-    opacity: 1;
-    -moz-transition-property: opacity, background-color;
-    -moz-transition-duration: 0.1s;
-    -moz-transition-timing-function: ease-out;
-    -webkit-transition-property: opacity, background-color;
-    -webkit-transition-duration: 0.1s;
-    -webkit-transition-timing-function: ease-out;
+
+#demobox .screenshots { width: 434px; position: absolute; right: 58px; top: 21px; overflow: hidden; }
+#demobox .slider { margin: 0; width: 434px; height: 325px; overflow: hidden; }
+#demobox .slider .panel { margin: 0; }
+
+#demobox .nav-slide { margin: 0; padding: 0; list-style: none; height: 0; }
+#demobox .nav-slide a { opacity: .85; position: absolute; z-index: 30; top: 40%; width: 65px; height: 65px; text-indent: -999em; overflow: hidden; background: transparent url("../img/demos/nav-slide.png") no-repeat; }
+#demobox .nav-slide .next { right: -65px; background-position: 0 0; }
+#demobox .nav-slide .next:hover, #featured-demos .nav-slide .next:focus, #featured-demos .nav-slide .next:active { background-position: 0 -100px; }
+#demobox .nav-slide .prev { left: -65px; background-position: 0 -200px; }
+#demobox .nav-slide .prev:hover, #featured-demos .nav-slide .prev:focus, #featured-demos .nav-slide .prev:active { background-position: 0 -300px; }
+
+#demo-manage li { display: inline; margin: 0 4px 0 0; }
+#demo-manage form { display: inline; margin-left: -3px; }
+#demo-manage button { padding: 0; background: transparent none; box-shadow: none; border: 0; }
+#demo-manage button span { margin: 0; white-space: nowrap; }
+#demo-manage .button { font-size: 1em; border-radius: 4px; box-shadow: 1px 1px 3px rgba(0,0,0,.6); }
+#demo-manage .button:hover, #demo-manage .button:focus, #demo-manage .button:active { background-color: #ae4935; }
+#demo-manage .button strong { font-weight: normal; }
+#demo-manage .edit { color: #2f2f2f; background-color: #a5d9f3; }
+#demo-manage .edit:hover, #demo-manage .edit:focus, #demo-manage .edit:active { color: #000; background-color: #80cdf3; }
+#demo-manage .remove { color: #2f2f2f; background-color: #f07b7b; }
+#demo-manage .remove:hover, #demo-manage .remove:focus, #demo-manage .remove:active, 
+#demo-manage button:hover .remove, #demo-manage button:focus .remove { color: #000; background-color: #f05b5b; }
+
+.demo-more { font: 14px/1.4 "Carto Bold", sans-serif; width: 610px; float: left; color: #666; padding: 20px 0 0; }
+.demo-more .moreabout { padding: 20px 30px; margin: 0 0 40px; background: #fff; border: 1px solid #eee; border-radius: 6px; box-shadow: 1px 1px 3px rgba(0,0,0,.4); }
+.moreabout h1 { color: #333; font-size: 1.571em; text-transform: uppercase; letter-spacing: .5px; }
+
+/* @Sidebar */
+#demo-sub { width: 295px; float: right; padding: 20px 0 0 20px; font-family: "Carto Bold", sans-serif; }
+#demo-sub .module { border-radius: 6px; box-shadow: 1px 1px 3px rgba(0,0,0,.4); border: 0; }
+#demo-sub .module .mod-title { margin: -10px -10px 15px; border-radius: 4px; font: 14px/1 "Carto Bold", sans-serif; text-align: center; 
+  background-image: none; 
+  background: #000; 
+  background: -moz-linear-gradient(top, #333 0, #000 100%); 
+  background: -webkit-linear-gradient(top, #333 0, #000 100%); 
+  background: linear-gradient(top, #333 0, #000 100%);
 }
-.nav-slide a:focus { outline: 0; }
-
-.nav-prev a { background-position: 5px 45px; -moz-border-radius: 0 60px 60px 0; -webkit-border-radius: 0 60px 60px 0; border-radius: 0 60px 60px 0; }
-.screenshots .nav-prev a { left: -60px; display: none; }
-[dir="rtl"] .nav-prev a { -moz-border-radius: 60px 0 0 60px; -webkit-border-radius: 60px 0 0 60px; border-radius: 60px 0 0 60px; }
-
-.nav-next a { background-position: 25px -105px; -moz-border-radius: 60px 0 0 60px; -webkit-border-radius: 60px 0 0 60px; border-radius: 60px 0 0 60px; }
-.screenshots .nav-next a { right: -60px; display: none; }
-[dir="rtl"] .nav-next a { -moz-border-radius: 0 60px 60px 0; -webkit-border-radius: 0 60px 60px 0; border-radius: 0 60px 60px 0; }
-
-.demo-more { width: 670px; float: left; padding: 20px 0 0; }
-.demo-more .moreabout { padding: 20px; margin: 0 0 40px; font-size: .857em; background: #fff; border: 1px solid #cbc8b9; }
-.moreabout h1 { font: 200 1.571em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
-
-#demo-sub { width: 235px; float: right; padding: 20px 0 0 20px; }
+#demo-sub .mod-title a { color: #fff; }
 #demo-sub .module .gallery li { padding: 0; background: none; }
+#demo-sub .module .gallery a:hover img { box-shadow: 1px 1px 2px rgba(0,0,0,.4); }
+#demo-sub a { color: #861215; }
+#demo-sub a:hover, #demo-sub a:focus, #demo-sub a:active { color: #c11317; }
 
 #demo-report { padding: 20px; }
-#demo-report h3 { color: #666; margin: 0 0 .5em; font: 200 1.24em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
-#demo-report ul li { font-size: .786em; background: none; padding: 0; margin: 0 0 .25em; }
-#demo-report ul li:before { content: "\00BB\00A0"; }
+#demo-report h3 { color: #333; margin: 0 0 .5em; text-transform: uppercase; letter-spacing: .5px; }
+#demo-report ul li { list-style: disc; text-transform: uppercase; font-size: .857em; background: none; padding: 0; margin: 0 0 .25em; }
 
-#source .download, #source .browse { border-bottom: 1px dotted #ccc; margin: 0 0 1em; padding: 0 0 1em; }
-#source .download a, #source .browse a { display: block; padding-left: 50px; min-height: 35px; background: url("../img/download-icons.png") no-repeat; }
+#source .download, #source .browse { text-transform: uppercase; border-bottom: 1px solid #999; margin: 0 0 1em; padding: 0 0 1em; }
+#source .download a, #source .browse a { display: block; padding-left: 50px; min-height: 35px; background: url("../img/demos/download-icons.png") no-repeat; }
 #source .download a { background-position: 0 0; }
 #source .download a:hover, #source .download a:focus, #source .download a:active { background-position: 0 -100px; }
 #source .browse a { background-position: 0 -200px; }
 #source .browse a:hover, #source .browse a:focus, #source .browse a:active { background-position: 0 -300px; }
-#source .note { color: #666; font-weight: normal; font-size: .786em; }
-#source a:hover .note, #source a:focus .note, #source a:active .note { color: #25a; }
-#source .license { font-size: .786em; color: #666; padding-left: 50px; min-height: 40px; margin: 0; background: url("../img/download-icons.png") 0 100px no-repeat; }
+#source .note { color: #666; font-weight: normal; font-size: .857em; }
+#source a:hover .note, #source a:focus .note, #source a:active .note { color: #333; }
+#source .license { font-size: .857em; text-transform: uppercase; color: #666; padding-left: 50px; min-height: 40px; margin: 0; background: url("../img/demos/download-icons.png") 0 100px no-repeat; }
 #source .apache { background-position: 0 -400px; }
 #source .bsd { background-position: 0 -500px; }
 #source .gpl { background-position: 0 -600px; }
@@ -280,24 +296,26 @@
 #source .publicdomain { background-position: 0 -800px; }
 
 /* @Comments *********/
-#comments { font-size: .857em; background: #e1e1d6; background: rgba(198,198,175,.3); margin: 0 0 40px; }
-#comments header { padding: 20px; }
-#comments header h1 { font-size: 1.333em; margin: 0 0 .25em; }
-#comments header p { margin: 0; }
+#comments { background: #fff; margin: 0 0 40px; border-radius: 6px; box-shadow: 1px 1px 3px rgba(0,0,0,.4); }
+#comments header { padding: 20px 30px; text-transform: uppercase; }
+#comments header h1 { color: #333; font-size: 1.333em; margin: 0 0 .25em; }
+#comments header p { margin: 0; font-size: .857em; }
+#comments a { color: #861215; }
+#comments a:hover, #comments a:focus, #comments a:active { color: #c11317; }
 
 #comments #comments-list { list-style: none; margin: 0; padding: 0; }
-#comments-list .hentry { position: relative; margin: 0; padding: 20px 20px 20px 85px;  }
-#comments-list .hentry:nth-child(odd) { background: #ecece5; }
-#comments-list .hentry:nth-child(odd) .hentry { background: rgba(198,198,175,.25); }
-#comments-list .entry-title { width: 65%; float: left; }
+#comments-list .hentry { position: relative; margin: 0; padding: 20px 30px 20px 95px;  }
+#comments-list .hentry:nth-child(odd) { background: #eff2f4; }
+#comments-list .hentry:nth-child(odd) .hentry { background: rgba(255,255,255,.5); }
+#comments-list .entry-title { width: 65%; float: left; font-size: .857em; text-transform: uppercase; }
 #comments-list .entry-meta { width: 34%; float: right; text-align: right; color: #666; font-size: .857em; text-transform: uppercase; }
 #comments-list .entry-meta a { color: #666; font-weight: bold; }
-#comments-list .author .photo { position: absolute; left: 20px; }
+#comments-list .author .photo { position: absolute; left: 30px; border: 1px solid; }
 #comments-list .entry-content { padding: 0; border: 0; clear: both; }
 
-#comments #comments-list .replies { list-style: none; margin: 20px -20px 0 -60px; padding: 0; }
+#comments #comments-list .replies { list-style: none; margin: 20px -30px 0 -70px; padding: 0; }
 
-#comments-list .comment-opts { margin: -.5em 0 0; font-size: .857em; text-transform: uppercase; }
+#comments-list .comment-opts { border-top: 1px solid #ddd; border-color: rgba(0,0,0,.1); padding-top: 6px; margin: -.5em 0 0; font-size: .857em; text-transform: uppercase; }
 #comments-list .comment-opts li { display: inline; padding: 0; margin-right: 8px; background: none; }
 #comments-list .comment-opts a { color: #666; }
 #comments-list .comment-opts a:hover, #comments-list .comment-opts a:focus, #comments-list .comment-opts a:active { color: #25a; }
@@ -306,14 +324,14 @@
 #comments-list .comment-opts button:hover span, #comments-list .comment-opts button:focus span { color: #25a; text-decoration: underline; }
 
 #comment-post { padding: 20px 20px 0; }
-#comment-post legend span { display: block; margin: 0 0 .5em; font-size: 1.333em; }
-#comment-post textarea { width: 96%; margin: 0 0 1em; }
+#comment-post legend span { display: block; margin: 0 0 .5em; color: #333; text-transform: uppercase; }
+#comment-post textarea { width: 96%; margin: 0 0 1em; border-color: #6b7684; }
 
 #comments-list .comment-reply { padding: 20px 0 0 0; }
 #comments-list .comment-reply legend span { display: block; margin: 0 0 .5em; font-size: 1.333em; }
-#comments-list .comment-reply textarea { width: 96%; margin: 0 0 1em; }
-#comments-list.js .comment-reply { display: none; }
-#comments-list.js .comment-reply-revealed { display: block; }
+#comments-list .comment-reply textarea { width: 96%; margin: 0 0 1em; border-color: #6b7684; }
+.hasJS #comments-list .comment-reply { display: none; }
+.hasJS #comments-list .comment-reply-revealed { display: block; }
 
 /* @Demo @Galleries *********/
 #page-head { margin: 20px 0; clear: both; }
@@ -370,7 +388,6 @@
 
 .gallery .demo { position: relative; float: left; width: 200px; margin: 0 0 1.4em 20px; padding: 168px 5px 0; }
 .gallery .demo.row-first { margin-left: 0; clear: left; }
-#featured-demos .js .demo.row-first { clear: none; }
 
 .demo .demo-title { font: normal 1.285em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 .15em; }
 .demo .demo-title a:link, .demo .demo-title a:visited { color: #000; }
@@ -396,18 +413,18 @@
 .demo .byline a { color: #666; }
 
 .demo .stats { float: left; clear: both; width: 100%; margin: .25em 0 .75em; list-style: none; font-size: .786em; color: #999; }
-.demo .stats li { display: inline; margin-right: 8px; padding-left: 22px; background: url("../img/demobox-icons.png") no-repeat; }
+.demo .stats li { display: inline; margin-right: 8px; padding-left: 22px; background: url("../img/demos/demobox-icons.png") no-repeat; }
 .demo .stats .views { padding-left: 25px; background-position: 0 -800px; }
 .demo .stats .likes { background-position: 0 -850px; }
 .demo .stats .comments { padding: 0; background: none; }
-.demo .stats .comments a { color: #999; padding-left: 22px; background: url("../img/demobox-icons.png") 0 -900px no-repeat; }
-.demo .stats .comments a:hover, .demo .stats .comments a:focus, .demo .stats .comments a:active { color: #333; background-position: 0 -750px; }  
+.demo .stats .comments a { color: #999; padding-left: 22px; background: url("../img/demos/demobox-icons.png") 0 -900px no-repeat; }
+.demo .stats .comments a:hover, .demo .stats .comments a:focus, .demo .stats .comments a:active { color: #333; }  
 
 .demo .desc { font-size: .786em; margin: 0 0 .75em; }
 .demo .launch { position: absolute; top: 120px; right: 12px; font-size: 1.2em; }
 .demo .launch .button { color: #fff; }
 
-.gallery.js .extra { display: none; }
+.hasJS .gallery .extra { display: none; }
 
 .demohover { display: none; position: absolute; z-index: 99; margin: -8px -8px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 0 5px rgba(255,255,255,.75); -webkit-box-shadow: 0 0 5px rgba(255,255,255,.75); box-shadow: 0 0 5px rgba(255,255,255,.75); }
 .demohover .in { position: relative; width: 194px; padding: 175px 12px 1px; background: #fff; background: rgba(255,255,255,.95); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
@@ -459,7 +476,7 @@
 
 .fileslist .add { margin: 0; }
 ul.sortable { width: 465px; }
-#content ul.sortable li { padding: .25em 2px .25em 24px; margin: 0; background: url("../img/demobox-icons.png") 2px -943px no-repeat; }
+#content ul.sortable li { padding: .25em 2px .25em 24px; margin: 0; background: url("../img/demos/demobox-icons.png") 2px -943px no-repeat; }
 #content ul.sortable li:hover { background-color: #eae8de; cursor: move; }
 ul.sortable .remove { float: right; color: #369; font-size: .857em; font-family: inherit; padding: 0; background: transparent none; text-transform: none; letter-spacing: normal; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 ul.sortable .remove:hover, ul.sortable .remove:focus { color: #900; text-decoration: underline; }

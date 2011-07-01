@@ -33,7 +33,8 @@ from demos.forms import SubmissionNewForm, SubmissionEditForm
 from . import DEMOS_CACHE_NS_KEY
 
 # TODO: Make these configurable in the DB via an admin page
-from . import DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG, DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
+from . import ( DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
+        DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG, DEMOS_DEVDERBY_CHALLENGE_CHOICES )
 
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from contentflagging.forms import ContentFlagForm

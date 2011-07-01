@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import UserProfile
+from .models import UserProfile, Calendar, Event
+
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user_name',)
@@ -11,3 +12,5 @@ class ProfileAdmin(admin.ModelAdmin):
     user_name.short_description = 'username'
 
 admin.site.register(UserProfile, ProfileAdmin)
+admin.site.register(Calendar, admin.ModelAdmin)
+admin.site.register(Event, admin.ModelAdmin)

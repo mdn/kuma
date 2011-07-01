@@ -15,6 +15,7 @@ urlpatterns = patterns('',
    # Home / landing pages:
     ('', include('landing.urls')),
     ('', include('docs.urls')),
+    ('', include('devmo.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
     (r'^demos/', include('demos.urls')),
 

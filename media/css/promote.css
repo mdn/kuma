@@ -9,9 +9,9 @@
 	font-style: normal;
 }
 
-#promote-buttons #content { min-height: 40em; border-top: 4px solid #a33500; }
+#promote-buttons #content { min-height: 40em; }
 
-#promote-buttons #page-head { margin: 0; padding: 30px 0 10px; text-align: center; clear: both; }
+#promote-buttons #page-head { border: 0; margin: 0; padding: 30px 0 10px; text-align: center; clear: both; }
 #promote-buttons #page-head .crumb { font-size: .857em; text-align: left; margin-top: -1.75em; }
 #promote-buttons #page-head .crumb a:before { content: "\00AB\00A0"; }
 #promote-buttons #page-head ol { margin: .5em 40px 1em; text-align: left; font-size: .925em; }

@@ -5,9 +5,11 @@
 /* @Layout *********/
 #devderby .main { width: 620px; float: left; margin-top: 210px; border-right: 4px dotted #746b60; }
 #devderby .sub { padding-top: 265px; width: 315px; float: right; }
+#devderby .block ul { margin-left: 1.5em; }
+#devderby .block ul li { list-style-type: disc; margin-bottom: 0.5em; }
 
 /* @Branding *********/
-body#devderby { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; }
+body#devderby { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; min-width: 960px; }
 body#devderby.plain { background: url("../img/devderby/bg-devderby-plain.jpg") center 25px no-repeat; }
 body#devderby #content-main { padding-top: 0; }
 
@@ -21,7 +23,9 @@ body#devderby #content-main { padding-top: 0; }
 
 #derby-head { position: relative; padding: 20px 200px 20px 360px; min-height: 130px; }
 .plain #derby-head { padding: 40px 40px 20px 360px; min-height: 80px; }
-#derby-head h1 { position: absolute; top: -25px; left: 0; width: 335px; height: 140px; background: url("../img/devderby/logo-devderby-presents.png") no-repeat; text-indent: -999em; overflow: hidden; }
+#derby-head .presents { width: 140px; position: absolute; left: 0; top: -20px; font-size: .785em; text-align: right; }
+#derby-head .presents a { display: block; text-indent: -999em; text-align: left; width: 122px; height: 34px; overflow: hidden; background: url("../img/demos/logo-demostudio-tiny.png") no-repeat; }
+#derby-head h1 { position: absolute; top: 25px; left: 0; width: 335px; height: 100px; background: url("../img/devderby/logo-devderby.png") no-repeat; text-indent: -999em; overflow: hidden; }
 #derby-head h2 { margin: 0 0 .15em; font: 200 40px/.95 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; color: #000; text-shadow: 0 0 10px #fff; }
 #derby-head .submit { width: 180px; height: 130px; position: absolute; right: 0; top: 15px; background: url("../img/devderby/btn-submit-demo.png") no-repeat; }
 #derby-head .submit a { display: block; position: absolute; top: 6px; left: 14px; width: 90px; height: 90px; padding: 16px 25px 12px 20px; text-align: center; font: normal 34px/.85 "Bebas Neue", sans-serif; color: #fff; 
@@ -109,6 +113,14 @@ transform: rotate(18deg);
 #devderby .demohover .demo-title img { left: 7px; top: 7px; }
 #devderby .demohover .extra { display: block; }
 #devderby .demohover .launch { top: 105px; right: 16px; }
+
+/* @Judges *********/
+#devderby .block .judges { list-style: none; margin: 0 0 1em; font-size: .857em; }
+#devderby .block .judges .vcard { list-style: none; margin: 0; position: relative; min-height: 100px; padding: 20px 0 20px 120px; border-top: 2px dotted #746b60; }
+#devderby .block .judges h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
+#devderby .block .judges .title { text-transform: uppercase; margin: 0 0 .15em; }
+#devderby .block .judges .photo { position: absolute; left: 0; top: 20px; }
+#devderby .block .judges cite { font-style: italic; }
 
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }
