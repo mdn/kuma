@@ -118,7 +118,7 @@
 .hasJS #featured-demos .side .demo-title img { position: absolute; left: 28px; top: 9px; }
 
 /* @Next and @Prev demos *********/
-#featured-demos .nav-slide { margin: 0; padding: 0; list-style: none; }
+#featured-demos .nav-slide { margin: 0; padding: 0; list-style: none; height: 0; }
 #featured-demos .nav-slide a { opacity: .85; position: absolute; z-index: 30; top: 285px; width: 65px; height: 65px; text-indent: -999em; overflow: hidden; background: transparent url("../img/demos/nav-slide.png") no-repeat; }
 #featured-demos .nav-slide .next { right: 170px; background-position: 0 0; }
 #featured-demos .nav-slide .next:hover, #featured-demos .nav-slide .next:focus, #featured-demos .nav-slide .next:active { background-position: 0 -100px; }
@@ -236,7 +236,7 @@
 #demobox .slider { margin: 0; width: 434px; height: 325px; overflow: hidden; }
 #demobox .slider .panel { margin: 0; }
 
-#demobox .nav-slide { margin: 0; padding: 0; list-style: none; }
+#demobox .nav-slide { margin: 0; padding: 0; list-style: none; height: 0; }
 #demobox .nav-slide a { opacity: .85; position: absolute; z-index: 30; top: 40%; width: 65px; height: 65px; text-indent: -999em; overflow: hidden; background: transparent url("../img/demos/nav-slide.png") no-repeat; }
 #demobox .nav-slide .next { right: -65px; background-position: 0 0; }
 #demobox .nav-slide .next:hover, #featured-demos .nav-slide .next:focus, #featured-demos .nav-slide .next:active { background-position: 0 -100px; }

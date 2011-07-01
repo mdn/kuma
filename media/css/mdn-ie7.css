@@ -48,7 +48,8 @@ ul.sortable .remove { font-family: sans-serif; margin-top: -1.25em; }
 .section-demos #demos-head #learn-pop { top: 20px; }
 
 #search-browse { position: relative; z-index: 20; }
-
+#search-browse b { width: 80px; text-align: center; float: left; margin-top: -15px; }
+#search-browse .demo-search, #search-browse #demo-tags { margin-top: -15px; }
 
 /* IE doesn't inherit */
 ul.sortable .remove, 
