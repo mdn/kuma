@@ -115,7 +115,10 @@ PROD_LANGUAGES = MDN_LANGUAGES
 
 def lazy_lang_url_map():
     from django.conf import settings
-    langs = DEV_LANGUAGES if (settings.DEV or settings.STAGE) else PROD_LANGUAGES
+    try:
+        langs = DEV_LANGUAGES if (settings.DEV or settings.STAGE) else PROD_LANGUAGES
+    except NameError:
+        langs = PROD_LANGUAGES
     lang_url_map = dict([(i.lower(), i) for i in langs])
     lang_url_map['pt'] = 'pt-PT'
     return lang_url_map
@@ -126,7 +129,10 @@ LANGUAGE_URL_MAP = lazy(lazy_lang_url_map, dict)()
 def lazy_langs():
     from django.conf import settings
     from product_details import product_details
-    langs = DEV_LANGUAGES if (settings.DEV or settings.STAGE) else PROD_LANGUAGES
+    try:
+        langs = DEV_LANGUAGES if (settings.DEV or settings.STAGE) else PROD_LANGUAGES
+    except NameError:
+        langs = PROD_LANGUAGES
     return dict([(lang.lower(), product_details.languages[lang]['native'])
                 for lang in langs])
 
@@ -136,7 +142,11 @@ LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES])
 # DEKI uses different locale keys
 def lazy_language_deki_map():
     from django.conf import settings
-    lang_deki_map = dict([(i, i) for i in (DEV_LANGUAGES if (settings.DEV or settings.STAGE) else PROD_LANGUAGES)])
+    try:
+        langs = DEV_LANGUAGES if (settings.DEV or settings.STAGE) else PROD_LANGUAGES
+    except NameError:
+        langs = PROD_LANGUAGES
+    lang_deki_map = dict([(i, i) for i in langs])
     lang_deki_map['en-US'] = 'en'
     lang_deki_map['zh-CN'] = 'cn'
     lang_deki_map['zh-TW'] = 'zh_tw'
