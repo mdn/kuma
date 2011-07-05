@@ -34,6 +34,7 @@ ENV_BRANCH = {
 GIT_PULL = "git pull -q origin %(branch)s"
 GIT_SUBMODULE_SYNC = "git submodule sync"
 GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
+SVN_REVERT = "svn revert -R ."
 SVN_UP = "svn update"
 COMPILE_PO = "./compile-mo.sh ."
 
@@ -59,6 +60,7 @@ def update_site(env, debug):
     if os.path.exists(os.path.join(here, 'locale', '.svn')):
         commands += [
             (CHDIR, os.path.join(here, 'locale')),
+            (EXEC, SVN_REVERT),
             (EXEC, SVN_UP),
             (EXEC, COMPILE_PO),
             (CHDIR, here),
