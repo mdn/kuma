@@ -114,12 +114,18 @@ transform: rotate(18deg);
 #devderby-home .demohover .launch { top: 95px; right: 16px; }
 
 /* @Judges *********/
-#current-challenge .block .judges { list-style: none; margin: 0 0 1em; font-size: .857em; }
-#current-challenge .block .judges .vcard { list-style: none; margin: 0; position: relative; min-height: 100px; padding: 20px 0 20px 120px; border-top: 2px dotted #746b60; }
-#current-challenge .block .judges h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
-#current-challenge .block .judges .title { text-transform: uppercase; margin: 0 0 .15em; }
-#current-challenge .block .judges .photo { position: absolute; left: 0; top: 20px; }
-#current-challenge .block .judges cite { font-style: italic; }
+#current-challenge .judges { list-style: none; margin: 0 0 1em; font-size: .857em; }
+#current-challenge .judges .vcard { list-style: none; margin: 0; position: relative; min-height: 100px; padding: 20px 0 20px 120px; border-top: 2px dotted #746b60; }
+#current-challenge .judges h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
+#current-challenge .judges .title { text-transform: uppercase; margin: 0 0 .15em; }
+#current-challenge .judges .photo { position: absolute; left: 0; top: 20px; }
+#current-challenge .judges cite { font-style: italic; }
+
+/* @Previous @Challenges *********/
+#current-challenge .previous { list-style: none; margin: 0 0 1em; font-size: .857em; border-bottom: 2px dotted #746b60; }
+#current-challenge .previous li { list-style: none; margin: 0; padding: 20px 0 5px; border-top: 2px dotted #746b60; }
+#current-challenge .previous h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
+#current-challenge .previous h3 span { font-size: 13px; color: #666; margin-right: 8px; }
 
 /* @Previous @Winner *********/
 #prev-winner { position: relative; border-bottom: 4px dotted #746b60; padding: 20px 30px 20px 120px; }

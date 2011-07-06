@@ -203,11 +203,14 @@
 
       <section id="tab-previous" class="block">
         <header>
-            <h3>Previous Dev Derby Challenges</h3>
+            <h2>Previous Dev Derby Challenges</h2>
         </header>
-        <ul class="prose">
+        <ul class="previous">
             {% for tag_name in previous_challenge_tag_names %}
-                <li><a href="{{ url('demos_devderby_tag', tag=tag_name) }}">{{ tag_title(tag_name) }}</a></li>
+                <li>
+                  <h3><a href="{{ url('demos_devderby_tag', tag=tag_name) }}"><span>{{ tag_meta(tag, 'dateline') }}</span> {{ tag_meta(tag, 'short_title') }}</h3>
+                  <p class="desc">CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions.</p>
+                </li>
             {% endfor %}
         </ul>
       </section>
