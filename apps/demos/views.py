@@ -5,7 +5,8 @@ import random
 from django.conf import settings
 from django.core.cache import cache
 
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
+from django.http import ( HttpResponseRedirect, HttpResponse,
+        HttpResponseForbidden, HttpResponseNotFound )
 
 from django.shortcuts import get_object_or_404, render_to_response
 from django.core.urlresolvers import reverse
@@ -34,7 +35,9 @@ from . import DEMOS_CACHE_NS_KEY
 
 # TODO: Make these configurable in the DB via an admin page
 from . import ( DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
-        DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG, DEMOS_DEVDERBY_CHALLENGE_CHOICES )
+        DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG, 
+        DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
+        DEMOS_DEVDERBY_CHALLENGE_CHOICES )
 
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from contentflagging.forms import ContentFlagForm
@@ -108,9 +111,17 @@ def all(request):
         template_name='demos/listing_all.html') 
 
 def tag(request, tag):
+    """Tag view of demos"""
 
     # HACK: bug 657779 - migrated from plain tags to tech:* tags for these:
-    if tag in KNOWN_TECH_TAGS: tag = 'tech:%s' % tag
+    if tag in KNOWN_TECH_TAGS:
+        return HttpResponseRedirect(reverse(
+            'demos.views.tag', args=('tech:%s' % tag,)))
+
+    # Bounce to special-purpose Dev Derby tag page
+    if tag.startswith('challenge:'):
+        return HttpResponseRedirect(reverse(
+            'demos.views.devderby_tag', args=(tag,)))
 
     tag_obj = get_object_or_404(Tag, name=tag)
 
@@ -252,6 +263,7 @@ def submit(request):
     return jingo.render(request, 'demos/submit.html', {'form': form})
 
 def edit(request, slug):
+    """Edit a demo"""
     submission = get_object_or_404(Submission, slug=slug)
     if not submission.allows_editing_by(request.user):
         return HttpResponseForbidden(_('access denied')+'')
@@ -291,7 +303,7 @@ def delete(request, slug):
 
 @login_required
 def new_comment(request, slug, parent_id=None):
-    """ """
+    """Local reimplementation of threadedcomments new_comment"""
     submission = get_object_or_404(Submission, slug=slug)
     model = ThreadedComment
     form_class = ThreadedCommentForm
@@ -328,6 +340,7 @@ def delete_comment(request, slug, object_id):
     })
 
 def hideshow(request, slug, hide=True):
+    """Hide/show a demo"""
     submission = get_object_or_404(Submission, slug=slug)
     if not submission.allows_hiding_by(request.user):
         return HttpResponseForbidden(_('access denied')+'')
@@ -340,6 +353,7 @@ def hideshow(request, slug, hide=True):
             'demos.views.detail', args=(submission.slug,)))
 
 def terms(request):
+    """Terms of use page"""
     return jingo.render(request, 'demos/terms.html', {})
 
 def devderby_landing(request):
@@ -350,6 +364,7 @@ def devderby_landing(request):
     # TODO: Make these configurable in the DB via an admin page
     current_challenge_tag_name = DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG
     previous_winner_tag_name = DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
+    previous_challenge_tag_names = DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS
 
     submissions_qs = ( Submission.objects.all_sorted(sort_order)
         .filter(taggit_tags__name__in=[current_challenge_tag_name])
@@ -363,6 +378,7 @@ def devderby_landing(request):
     return jingo.render(request, 'demos/devderby_landing.html', dict(
         current_challenge_tag_name = current_challenge_tag_name,
         previous_winner_tag_name = previous_winner_tag_name,
+        previous_challenge_tag_names = previous_challenge_tag_names,
         submissions_qs = submissions_qs,
         previous_winner_qs = previous_winner_qs,
     ))
@@ -371,3 +387,44 @@ def devderby_rules(request):
     """Dev Derby rules page"""
     return jingo.render(request, 'demos/devderby_rules.html', {})
 
+def devderby_tag(request, tag):
+
+    if not tag.startswith('challenge:'):
+        return HttpResponseRedirect(reverse(
+            'demos.views.tag', args=(tag,)))
+
+    tag_obj = get_object_or_404(Tag, name=tag)
+
+    # Assemble the demos submitted for the derby
+    sort_order = request.GET.get('sort', 'created')
+    queryset = Submission.objects.all_sorted(sort_order)\
+            .filter(taggit_tags__name__in=[tag])\
+            .exclude(hidden=True)
+
+    # Search for the winners, tag by tag.
+    # TODO: Do this all in one query, and sort here by winner place?
+    winner_demos = []
+    for name in ( 'firstplace', 'secondplace', 'thirdplace' ):
+        
+        # Look for the winner tag using our naming convention, eg.
+        # system:challenge:firstplace:2011:june
+        winner_tag_name = 'system:challenge:%s:%s' % ( 
+            name, tag.replace('challenge:','')
+        )
+
+        # Grab only the first match for this tag. If there are others, we'll
+        # just ignore them.
+        demos = ( Submission.objects.all()
+            .filter(taggit_tags__name__in=[winner_tag_name]) )
+        for demo in demos:
+            winner_demos.append(demo)
+
+    return object_list(request, queryset, 
+        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True, 
+        extra_context=dict( 
+            tag=tag_obj, 
+            winner_demos=winner_demos
+        ),
+        template_loader=template_loader,
+        template_object_name='submission',
+        template_name='demos/devderby_tag.html')

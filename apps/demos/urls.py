@@ -18,8 +18,9 @@ urlpatterns = patterns('demos.views',
 
     url(r'^$', 'home', name='demos'),
     
-    url(r'^devderby/?$',       'devderby_landing', name='demos_devderby_landing'),
-    url(r'^devderby/rules/?$', 'devderby_rules',   name='demos_devderby_rules'),
+    url(r'^devderby/?$',                   'devderby_landing', name='demos_devderby_landing'),
+    url(r'^devderby/tag/(?P<tag>[^/]+)/$', 'devderby_tag',     name='demos_devderby_tag'),
+    url(r'^devderby/rules/?$',             'devderby_rules',   name='demos_devderby_rules'),
 
     url(r'^terms', 'terms', name='demos_terms'),
 

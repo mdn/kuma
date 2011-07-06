@@ -70,10 +70,11 @@
     
     <section id="current-challenge">
       <ul class="tabs">
-        <li class="current"><a href="#tab-challenge">{{_("Current Challenge")}}</a></li>
+        <li class="current"><a href="#tab-challenge">{{_("Current")}}</a></li>
         <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
         <li><a href="#tab-rules">{{_("Rules")}}</a></li>
         <li><a href="#tab-judging">{{_("Judging")}}</a></li>
+        <li><a href="#tab-previous">{{_("Previous")}}</a></li>
       </ul>
       
       <section id="tab-challenge" class="block">
@@ -200,6 +201,16 @@
         {% endtrans %}
       </section>
 
+      <section id="tab-previous" class="block">
+        <header>
+            <h3>Previous Dev Derby Challenges</h3>
+        </header>
+        <ul class="prose">
+            {% for tag_name in previous_challenge_tag_names %}
+                <li><a href="{{ url('demos_devderby_tag', tag=tag_name) }}">{{ tag_title(tag_name) }}</a></li>
+            {% endfor %}
+        </ul>
+      </section>
     
     </section><!-- /#current-challenge -->
   </div><!-- /.main -->

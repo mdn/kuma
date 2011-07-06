@@ -105,7 +105,33 @@ def submission_creator(submission): return locals()
 def profile_link(user, show_gravatar=False, gravatar_size=48, gravatar_default='mm'): return locals()
 
 @register.inclusion_tag('demos/elements/submission_thumb.html')
-def submission_thumb(submission,extra_class=None,thumb_width="200",thumb_height="150"): return locals()
+def submission_thumb(submission,extra_class=None,thumb_width="200",thumb_height="150"): 
+    vars = locals()
+
+    flags = submission.get_flags()
+
+    # Dict of metadata associated with flags for demos
+    # TODO: Move to a constant or DB table? Too much view stuff here?
+    flags_meta = {
+        # flag name      thumb class     flag description
+        'firstplace':  ( 'first-place',  _('First Place') ),
+        'secondplace': ( 'second-place', _('Second Place') ),
+        'thirdplace':  ( 'third-place',  _('Third Place') ),
+        'finalist':    ( 'finalist',     _('Finalist') ),
+        'featured':    ( 'featured',     _('Featured') ),
+    }
+
+    # If there are any flags, pass them onto the template. Special treatment
+    # for the first flag, which takes priority over all others for display in
+    # the thumb.
+    main_flag = ( len(flags) > 0 ) and flags[0] or None
+    vars['all_flags'] = flags
+    vars['main_flag'] = main_flag
+    if main_flag in flags_meta:
+        vars['main_flag_class'] = flags_meta[main_flag][0]
+        vars['main_flag_description'] = flags_meta[main_flag][1]
+
+    return vars
 
 def submission_listing_cache_key(*args, **kw):
     ns_key = cache.get(DEMOS_CACHE_NS_KEY)
@@ -116,7 +142,7 @@ def submission_listing_cache_key(*args, **kw):
 
 @register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
 def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url, 
-        cols_per_row=3, pagination_base_url=''): 
+        cols_per_row=3, pagination_base_url='', show_sorts=True): 
     return locals()
 
 @register.inclusion_tag('demos/elements/tech_tags_list.html')
@@ -166,17 +192,19 @@ def license_title(license_name):
 
 @register.function
 def tag_title(tag):
-    if tag.name in TAG_DESCRIPTIONS:
-        return TAG_DESCRIPTIONS[tag.name]['title']
+    name = ( type(tag) is str ) and tag or tag.name
+    if name in TAG_DESCRIPTIONS:
+        return TAG_DESCRIPTIONS[name]['title']
     else:
-        return tag.name
+        return name
 
 @register.function
 def tag_description(tag):
-    if tag.name in TAG_DESCRIPTIONS:
-        return TAG_DESCRIPTIONS[tag.name]['description']
+    name = ( type(tag) is str ) and tag or tag.name
+    if name in TAG_DESCRIPTIONS:
+        return TAG_DESCRIPTIONS[name]['description']
     else:
-        return tag.name
+        return name
 
 @register.function
 def tag_learn_more(tag):
@@ -184,6 +212,14 @@ def tag_learn_more(tag):
         return TAG_DESCRIPTIONS[tag.name]['learn_more']
     else:
         return []
+
+@register.function
+def tag_meta(tag, other_name):
+    name = ( type(tag) is str ) and tag or tag.name
+    if name in TAG_DESCRIPTIONS:
+        return TAG_DESCRIPTIONS[name][other_name]
+    else:
+        return ''
 
 @register.function
 def tags_for_object(obj):
