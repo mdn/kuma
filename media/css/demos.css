@@ -434,8 +434,6 @@
 .demohover .extra { display: block; }
 .demohover .launch { top: 120px; right: 15px; }
 
-.demohover.featured .demo-title, .demohover.featured .byline { text-align: center; }
-
 /* @Submission @Form *********/
 .submission .section { position: relative; padding: 3.75em 18px 5px; margin: 0 0 1.286em; font-size: .928em; border: 1px solid #cecbbd; background: #dedcd3; background: rgba(203,200,185,0.5); }
 .submission .section > legend { margin: 0 -18px; padding: 0; }
