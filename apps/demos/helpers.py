@@ -177,6 +177,14 @@ def bitly_shorten(url):
         return url
 
 @register.function
+def devderby_tag_to_date_url(tag):
+    """Turn a devderby tag like challenge:2011:june into a date-based URL"""
+    # HACK: Not super happy with this, but it works for now
+    if not tag: return ''
+    parts = tag.split(':')
+    return reverse('demos.views.devderby_by_date', args=( parts[-2], parts[-1] ))
+
+@register.function
 def license_link(license_name):
     if license_name in DEMO_LICENSES:
         return DEMO_LICENSES[license_name]['link']
@@ -218,6 +226,8 @@ def tag_learn_more(tag):
 
 @register.function
 def tag_meta(tag, other_name):
+    """Get metadata for a tag or tag name."""
+    # TODO: Replace usage of tag_{title,description,learn_more}?
     if not tag: return ''
     name = ( type(tag) is str ) and tag or tag.name
     if name in TAG_DESCRIPTIONS and other_name in TAG_DESCRIPTIONS[name]:
