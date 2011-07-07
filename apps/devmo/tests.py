@@ -105,13 +105,13 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
 
 MOZILLA_PEOPLE_EVENTS_CSV = 'apps/devmo/fixtures/Mozillapeopleevents.csv'
 XSS_CSV = 'apps/devmo/fixtures/xss.csv'
-
+BAD_DATE_CSV = 'apps/devmo/fixtures/bad_date.csv'
 
 class TestCalendar(test_utils.TestCase):
 
     def setUp(self):
         self.cal = Calendar.objects.get(shortname='devengage_events')
-        self.event = Event(date="6/17/2011", conference="Web2Day",
+        self.event = Event(date="2011-06-17", conference="Web2Day",
                            location="Nantes, France",
                            people="Christian Heilmann",
                            description="TBD", done="no", calendar=self.cal)
@@ -131,6 +131,13 @@ class TestCalendar(test_utils.TestCase):
         self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
         # check total
         assert_equal(33, len(Event.objects.all()))
+        # spot-check
+        ok_(Event.objects.get(conference='StarTechConf'))
+
+    def test_bad_date_column_skips_row(self):
+        self.cal.reload(data=csv.reader(open(BAD_DATE_CSV, 'rb')))
+        # check total - should still have the good row
+        assert_equal(1, len(Event.objects.all()))
         # spot-check
         ok_(Event.objects.get(conference='StarTechConf'))
 

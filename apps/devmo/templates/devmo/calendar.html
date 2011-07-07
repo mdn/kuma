@@ -22,20 +22,20 @@
 
     <div id="map_canvas" class="boxed"></div>
     <div id="cal1Container"></div>
-    
+
     <h2>{{ _('Upcoming Conferences') }}</h2>
     <table id="upcoming" class="events" summary="{{ _('Upcoming conferences featuring Mozilla speakers') }}">
       <thead>
-        <th scope="col">{{ _('Date') }}</th>
-        <th scope="col">{{ _('Conference') }}</th>
-        <th scope="col">{{ _('Location') }}</th>
-        <th scope="col">{{ _('People present') }}</th>
-        <th scope="col">{{ _('Description') }}</th>
+          <th scope="col">{{ _('Date') }}<div class="sortIndicator"></div></th>
+        <th scope="col">{{ _('Conference') }}<div class="sortIndicator"></div></th>
+        <th scope="col">{{ _('Location') }}<div class="sortIndicator"></div></th>
+        <th scope="col">{{ _('People present') }}<div class="sortIndicator"></div></th>
+        <th scope="col">{{ _('Description') }}<div class="sortIndicator"></div></th>
       </thead>
       <tbody>
       {% for event in upcoming_events %}
       <tr>
-          <td>{{ event.date }}</td>
+          <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
             {% if event.conference_link %}
           <td><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
             {% else %}
@@ -60,7 +60,7 @@
   <tbody>
       {% for event in past_events %}
       <tr>
-          <td>{{ event.date }}</td>
+          <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
           <td><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
           <td>{{ event.location }}</td>
           <td>{{ event.people|safe }}</td>

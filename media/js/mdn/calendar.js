@@ -16,6 +16,7 @@ function initialize() {
     var o = rows[i].innerHTML;
     geocoder.geocode({address:loc.innerHTML},o);
   }
+  $('#upcoming').tablesorter({sortList:[[0,0]]});
 }
 
 function geocode_return(geocoded_location,o) {
