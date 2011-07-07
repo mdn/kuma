@@ -4,12 +4,15 @@ import urllib2
 
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from pyquery import PyQuery as pq
 import test_utils
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
 from devmo.models import Calendar, Event
 
+from sumo.tests import LocalizingClient
+from sumo.urlresolvers import reverse
 
 def parse_robots(base_url):
     """ Given a base url, retrieves the robot.txt file and
@@ -146,3 +149,15 @@ class TestCalendar(test_utils.TestCase):
         # spot-check
         eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich',
             Event.objects.get(conference="Texas JavaScript").people)
+
+class CalendarViewsTest(test_utils.TestCase):
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    def test_events(self):
+        url = reverse('events')
+        r = self.client.get(url)
+        d = pq(r.content)
+        eq_(200, r.status_code)
+        eq_("Where is Mozilla?", d('h1.page-title').text())
