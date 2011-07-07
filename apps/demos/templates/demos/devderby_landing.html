@@ -208,8 +208,8 @@
         <ul class="previous">
             {% for tag_name in previous_challenge_tag_names %}
                 <li>
-                  <h3><a href="{{ url('demos_devderby_tag', tag=tag_name) }}"><span>{{ tag_meta(tag, 'dateline') }}</span> {{ tag_meta(tag, 'short_title') }}</h3>
-                  <p class="desc">CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions.</p>
+                  <h3><a href="{{ url('demos_devderby_tag', tag=tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                  <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
                 </li>
             {% endfor %}
         </ul>
