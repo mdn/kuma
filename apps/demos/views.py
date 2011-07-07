@@ -387,7 +387,15 @@ def devderby_rules(request):
     """Dev Derby rules page"""
     return jingo.render(request, 'demos/devderby_rules.html', {})
 
+def devderby_by_date(request, year, month):
+    """Friendly URL path to devderby tag.
+    see: https://bugzilla.mozilla.org/show_bug.cgi?id=666460#c15
+    """
+    return devderby_tag(request, 'challenge:%s:%s' % ( year, month ))
+
 def devderby_tag(request, tag):
+    """Render a devderby-specific tag page with details on the derby and a
+    showcase of winners, if any."""
 
     if not tag.startswith('challenge:'):
         return HttpResponseRedirect(reverse(

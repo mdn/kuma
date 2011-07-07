@@ -208,7 +208,7 @@
         <ul class="previous">
             {% for tag_name in previous_challenge_tag_names %}
                 <li>
-                  <h3><a href="{{ url('demos_devderby_tag', tag=tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                  <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
                   <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
                 </li>
             {% endfor %}
