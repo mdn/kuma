@@ -1,6 +1,7 @@
     {% set current_sort = request.GET.get('sort', 'created') %} 
     {% set query = request.GET.get('q','') %}
 
+    {% if show_sorts %}
     <div id="gallery-sort">
       <p class="count">{{ ngettext('{count} Demo', '{count} Demos', count) | f(count=paginator.count) }}</p>
       <ul class="sort">
@@ -23,6 +24,7 @@
         {% endfor %}
       </ul>
     </div>
+    {% endif %}
 
     <ul class="gallery">
         {% if cols_per_row == 4 %}

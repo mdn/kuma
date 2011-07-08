@@ -1,6 +1,6 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}devderby{% endblock %}
+{% block pageid %}devderby-home{% endblock %}
 
 {% block bodyclass %}section-demos devderby{% endblock %}
 
@@ -70,10 +70,11 @@
     
     <section id="current-challenge">
       <ul class="tabs">
-        <li class="current"><a href="#tab-challenge">{{_("Current Challenge")}}</a></li>
+        <li class="current"><a href="#tab-challenge">{{_("Current")}}</a></li>
         <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
         <li><a href="#tab-rules">{{_("Rules")}}</a></li>
         <li><a href="#tab-judging">{{_("Judging")}}</a></li>
+        <li><a href="#tab-previous">{{_("Previous")}}</a></li>
       </ul>
       
       <section id="tab-challenge" class="block">
@@ -86,7 +87,7 @@
             <p>The support for video in HTML5 enables web-based interactive video
             like nothing else before:</p>
 
-            <ul>
+            <ul class="prose">
                 <li>No need for plug-ins that users must install and keep updated</li>
                 <li>Video content that integrates with the rest of the web page</li> 
                 <li>Better performance</li>
@@ -129,7 +130,7 @@
       <section id="tab-rules" class="block">
       {% trans rules_url=url('demos_devderby_rules') %}
         <p>A summary of the rules can be found below.  For a complete look at the terms of the contest please see the <a href="{{rules_url}}">Dev Derby Contest Official Rules</a>.</p>
-        <ul>
+        <ul class="prose">
           <li>Almost anyone can enter (<a href="{{rules_url}}">see the rules</a> for exceptions).</li>
           <li>There will be a new contest every month.</li>
           <li>Your entry must meet certain criteria; <a href="{{rules_url}}">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li>
@@ -147,7 +148,7 @@
         <p>Entries will be reviewed by a panel of qualified judges, including
             members of the Mozilla team and outside experts. We will rate the demos
             across 4 dimensions:</p>
-        <ul>
+        <ul class="prose">
             <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li>
             <li><strong>Originality</strong> &ndash; How innovative and unique is the demo?</li>
             <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li>
@@ -200,6 +201,19 @@
         {% endtrans %}
       </section>
 
+      <section id="tab-previous" class="block">
+        <header>
+            <h2>Previous Dev Derby Challenges</h2>
+        </header>
+        <ul class="previous">
+            {% for tag_name in previous_challenge_tag_names %}
+                <li>
+                  <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                  <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+      </section>
     
     </section><!-- /#current-challenge -->
   </div><!-- /.main -->

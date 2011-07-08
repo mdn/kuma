@@ -1,11 +1,11 @@
 <?php include "./inc/template.php"; 
 head(
   $title = 'Dev Derby | Mozilla Developer Network',
-  $pageid = 'devderby',
+  $pageid = 'devderby-home', 
   $bodyclass = 'section-demos devderby',
-  $headerclass = 'compact',
   $extra_headers = '
-  <link rel="stylesheet" type="text/css" href="./css/devderby.css"/>
+  <link rel="stylesheet" type="text/css" href="./media/css/devderby.css"/>
+  <link rel="stylesheet" type="text/css" href="./media/css/demos.css"/>
   '
 ); ?>
 
@@ -19,7 +19,7 @@ head(
         <li><em>Home</em></li>
         <li><a href="#upcoming">Challenges</a></li>
         <li><a href="demo-derby-rules.php">Rules</a></li>
-        <li><a href="#tab-judging">Judging</a></li>
+        <li><a href="#tab-judging" rel="tab">Judging</a></li>
         <li><a href="#challenge-prizes">Prizes</a></li>
         <li><a href="#resources">Resources</a></li>
       </ul>
@@ -28,6 +28,7 @@ head(
 
   <section id="content-main" class="full" role="main">
     <header id="derby-head">
+      <p class="presents"><a href="demos-landing.php">Mozilla Demo Studio</a> presents:</p>
       <h1>Dev Derby</h1>
       <h2>Show us what you can do with CSS animations</h2>
       <p class="info">Join the Dev Derby now and submit your demo to win an Android phone or other prizes.</p>
@@ -62,12 +63,13 @@ head(
       </ol>
     </section>
     
-    <section id="current-challenge" class="tabbed">
-      <ul class="index">
-        <li class="current"><a href="#tab-challenge">Current Challenge</a></li>
+    <section id="current-challenge">
+      <ul class="tabs">
+        <li class="current"><a href="#tab-challenge">Current</a></li>
         <li><a href="#tab-submissions">Submissions</a></li>
         <li><a href="#tab-rules">Rules</a></li>
         <li><a href="#tab-judging">Judging</a></li>
+        <li><a href="#tab-previous">Previous</a></li>
       </ul>
       
       <section id="tab-challenge" class="block">
@@ -94,7 +96,7 @@ head(
           <li class="demo row-first">
             <h2 class="demo-title">
               <a href="demo-detail.php" title="See more about &ldquo;The Incredible Machine&rdquo; by Neil Gauldin">
-                <img src="./img/fpo55.png" alt="" width="180" height="135"> The Incredible Machine
+                <img src="./media/img/fpo55.png" alt="" width="180" height="135"> The Incredible Machine
               </a>
             </h2>
             <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">Neil Gauldin</a></p>
@@ -111,7 +113,7 @@ head(
           <li class="demo">
             <h2 class="demo-title">
               <a href="demo-detail.php" title="See more about &ldquo;Fantastic Voyage&rdquo; by Alejandra Divens">
-                <img src="./img/fpo55.png" alt="" width="180" height="135"> Fantastic Voyage
+                <img src="./media/img/fpo55.png" alt="" width="180" height="135"> Fantastic Voyage
               </a>
             </h2>
             <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Alejandra Divens">Alejandra Divens</a></p>
@@ -128,7 +130,7 @@ head(
           <li class="demo">
             <h2 class="demo-title">
               <a href="demo-detail.php" title="See more about &ldquo;It's a Mad Mad Mad Mad Mad Mad World&rdquo; by Darryl McConnaughy">
-                <img src="./img/fpo55.png" alt="" width="180" height="135"> It&#8217;s a Mad Mad Mad Mad Mad Mad World
+                <img src="./media/img/fpo55.png" alt="" width="180" height="135"> It&#8217;s a Mad Mad Mad Mad Mad Mad World
               </a>
             </h2>
             <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Darryl McConnaughy">Darryl McConnaughy</a></p>
@@ -146,7 +148,7 @@ head(
           <li class="demo row-first">
             <h2 class="demo-title">
               <a href="demo-detail.php" title="See more about &ldquo;Twenty Years to Midnight&rdquo; by Thaddeus Venture">
-                <img src="./img/fpo55.png" alt="" width="180" height="135"> Twenty Years to Midnight
+                <img src="./media/img/fpo55.png" alt="" width="180" height="135"> Twenty Years to Midnight
               </a>
             </h2>
             <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Thaddeus Venture">Thaddeus Venture</a></p>
@@ -163,7 +165,7 @@ head(
           <li class="demo">
             <h2 class="demo-title">
               <a href="demo-detail.php" title="See more about &ldquo;Bloodeye&rdquo; by Jefferson Twilight">
-                <img src="./img/fpo55.png" alt="" width="180" height="135"> Bloodeye
+                <img src="./media/img/fpo55.png" alt="" width="180" height="135"> Bloodeye
               </a>
             </h2>
             <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Jefferson Twilight">Jefferson Twilight</a></p>
@@ -184,7 +186,7 @@ head(
       
       <section id="tab-rules" class="block">
         <p>A summary of the rules can be found below.  For a complete look at the terms of the contest please see the <a href="demo-derby-rules.php">Dev Derby Contest Official Rules</a>.</p>
-        <ul>
+        <ul class="prose">
           <li>Almost anyone can enter (<a href="demo-derby-rules.php">see the rules</a> for exceptions).</li>
           <li>There will be a new contest every month.</li>
           <li>Your entry must meet certain criteria; <a href="demo-derby-rules.php">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li>
@@ -198,7 +200,7 @@ head(
     
       <section id="tab-judging" class="block">
         <p>Entries will be reviewed by the Mozilla team and a panel of expert judges. We will rate the demos on a 1&ndash;5 scale across 4 dimensions:</p>
-        <ul>
+        <ul class="prose">
           <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li>
           <li><strong>Originality</strong> &ndash; How innovative and unique is the demo?</li>
           <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li>
@@ -206,6 +208,50 @@ head(
         </ul>
         <p>The overall score will be the average of all 4 components (technology, orginality, aesthetics, and practicality). In the event of a tie, the judges will re-evaluate the tied entries to determine the winner.</p>
         <p>The judges may also take into account how many &ldquo;likes&rdquo; the entries have received from the community. So make sure to share your demo with others and encourage them to visit Dev Derby to &ldquo;vote.&rdquo;</p>
+      
+        <h2>Expert Judges</h2>
+        <ul class="judges">
+          <li class="vcard">
+             <h3><a href="http://leaverou.me" class="fn url">Lea Verou <img src="./media/img/devderby/judges/leaverou.jpg" alt="" class="photo" width="100" height="100"></a></h3>
+             <h4 class="title">Web developer, Co-founder of Fresset Ltd.</h4>
+             <p class="twitter"><a href="http://twitter.com/leaverou" class="url nickname">@leaverou</a></p>
+             <p>Lea Verou is the lead web developer and designer of Fresset Ltd, which she co-founded in 
+             2008. Fresset owns and manages some of the largest greek community websites. Lea has a 
+             long-standing passion for open web standards, especially CSS and JavaScript. She loves 
+             researching  new ways to use them and shares her findings through her blog, 
+             <a href="http://leaverou.me">leaverou.me</a>. She speaks at a number of the largest web 
+             development conferences and writes for leading industry publications. Lea also co-organized 
+             and occasionally lectures the web development course at the Athens University of Economics 
+             and Business.</p>
+          </li>
+          <li class="vcard">
+             <h3><a href="http://ethanmarcotte.com" class="fn url">Ethan Marcotte <img src="./media/img/devderby/judges/ethanmarcotte.jpg" alt="" class="photo" width="100" height="100" title="Photo by Anton Peck"></a></h3>
+             <h4 class="title">Web designer, author</h4>
+             <p class="twitter"><a href="http://twitter.com/beep" class="url nickname">@beep</a></p>
+             <p><a href="http://ethanmarcotte.com/">Ethan Marcotte</a> is a web designer &amp; developer 
+             who cares deeply about beautiful design, elegant code, and the intersection of the two. Over 
+             the years, Ethan has enjoyed working with such clients as the Sundance Film Festival, Stanford 
+             University, <cite>New&nbsp;York Magazine</cite> and The Today Show. He swears profusely 
+             <a href="http://twitter.com/beep">on Twitter</a>, and would like to be an 
+             <a href="http://unstoppablerobotninja.com/" class="url">unstoppable robot ninja</a> when he grows up. His 
+             most recent book is <cite><a href="http://www.abookapart.com/products/responsive-web-design">Responsive Web Design</a></cite>.</p>
+          </li>
+          <li class="vcard">
+             <h3><a href="http://nimbupani.com" class="fn url">Divya Manian <img src="./media/img/devderby/judges/divyamanian.jpg" alt="" class="photo" width="100" height="100"></a></h3>
+             <h4 class="title">Web Opener at Opera, Open Web Vigilante</h4>
+             <p class="twitter"><a href="http://twitter.com/divya" class="url nickname">@divya</a></p>
+             <p>Divya Manian is a Web Opener for Opera Software in Seattle. She made the jump from 
+             developing device drivers for Motorola phones to designing websites and has not looked 
+             back since. She takes her duties as an Open Web vigilante seriously which has resulted 
+             in collaborative projects such as <a href="http://html5readiness.com">HTML5 Readiness</a> 
+             and <a href="http://html5boilerplate.com">HTML5 Boilerplate</a>.</p>
+          </li> 
+        </ul>
+      
+      </section>
+      
+      <section id="tab-past">
+        <h3>Previous Dev Derby Challenges</h3>
       </section>
     
     </section><!-- /#current-challenge -->
@@ -215,14 +261,14 @@ head(
     <section id="prev-winner">
       <h1>Previous Winner</h1>
       <h2 class="title"><a href="demo-detail.php">The Call of Cthulhu</a></h2>
-      <h3 class="author"><img src="./img/blank.gif" alt="" width="70" height="70"> Art Vandelay</h3>
+      <h3 class="author"><img src="./media/img/blank.gif" alt="" width="70" height="70"> Art Vandelay</h3>
       <p class="desc">Some brief description of the demo and the challenge that it won.</p>
       <p class="launch"><a href="demo-detail.php">See the Demo</a></p>
     </section><!-- /#prev-winner -->
       
     <section id="challenge-prizes">
       <h1>Prizes</h1>
-      <img src="./img/devderby/prize-androids.png" alt="" width="135" height="150" class="prize"/>
+      <img src="./media/img/devderby/prize-androids.png" alt="" width="135" height="150" class="prize"/>
       <ol>
         <li class="first">
           <h3>Android mobile device</h3>
@@ -255,30 +301,56 @@ head(
 </div>
 </section>
 
-<script type="text/javascript" src="./js/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" src="./media/js/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript">
 // <![CDATA[
-  function derbyTabs() {
-  	$("#current-challenge .block").addClass("hidden");  
-    // determine the current tab's corresponding block by extracting the id from the href
-  	var currentblock = $("#current-challenge .index li.current a").attr("href").replace( /.*?#(.*)/g, "$1" );
-  	// make that block visible
-  	$("#"+currentblock).removeClass("hidden");
-  	tabSwitch();
+  function derbyTabs(targetblock) {
+    var currentblock;
+  	$("#current-challenge .block").addClass("block-hidden");
+
+    if (targetblock) {
+      currentblock = targetblock.replace( /.*?#(.*)/g, "$1" ); // determine which block to show by extracting the id from the href
+      tabSwitch(currentblock);
+    }
+    else if ( !targetblock && (/.*?#tab-*/.test(window.location)) ) { // if no target is supplied, check the url for a fragment id prefixed with "tab-" (this means inbound links can point directly to a tab)
+      currentblock = window.location.href.replace( /.*?#(.*)/g, "$1" );
+      $("html,body").animate({scrollTop: $("#current-challenge").offset().top - 150}, 0); // HACK: compensate for overshooting the tabs when the page loads
+      tabSwitch(currentblock);
+    }
+    else {
+      currentblock = $("#current-challenge .tabs li.current a").attr("href").replace( /.*?#(.*)/g, "$1" );
+      tabSwitch(currentblock);
+    }
+  	$("#"+currentblock).removeClass("block-hidden"); // make the current block visible
   }
   
-  function tabSwitch() {
-  	$("#current-challenge .index li a").click(function(){
-      $("#current-challenge .index li").removeClass("current");
-      $(this).parents("li").addClass("current");
-      derbyTabs();
-      return false;
-  	});
-  }
+  function tabSwitch(targettab) {
+    var tabs = $("#current-challenge .tabs li a");    
+    if (targettab) {
+      for (var i = 0; i < tabs.length; i++) { // loop through the tabs
+        var tab = $(tabs[i]).attr("href").replace( /.*?#(.*)/g, "$1" ); // strip down the href
+        if ( targettab == tab ) { // if one of them matches our target
+          $("#current-challenge .tabs li").removeClass("current"); // first clean the slate
+          $("#current-challenge .tabs li a[href$=#"+targettab+"]").parents("li").addClass("current"); // then set that tab as current
+        }    
+      }
+    } 
+  };
+  
+  $("#current-challenge .tabs li a").click(function(){
+    $("#current-challenge .tabs li").removeClass("current");
+    $(this).parents("li").addClass("current");
+    derbyTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
+    return false;
+	});
+	
+  $("#nav-derby a[rel=tab]").click(function(){
+    derbyTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
+  });
   
   $(document).ready(function(){
     derbyTabs();
-    $("body").addClass("hasJS");
+    $("body").addClass("hasJS"); // I think this class is already added by another global script in production, added here for mockup
 
     $("#upcoming li").hover(
       function(){

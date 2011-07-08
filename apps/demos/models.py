@@ -547,6 +547,28 @@ class Submission(models.Model):
     def thumbnail_url(self, index='1'):
         return getattr(self, 'screenshot_%s' % index).url.replace('screenshot','screenshot_thumb')
 
+    def get_flags(self):
+        """Assemble status flags, based on featured status and a set of special
+        tags (eg. for Dev Derby). The flags are assembled in order of display
+        priority, so the first flag on the list (if any) is the most
+        important"""
+        flags = [ ]
+
+        # Iterate through known flags based on tag naming convention. Tag flags
+        # are listed here in order of priority.
+        tag_flags = ( 'firstplace', 'secondplace', 'thirdplace', 'finalist' )
+        for p in tag_flags:
+            for tag in self.taggit_tags.all():
+                # TODO: Is this 'system:challenge' too hard-codey?
+                if tag.name.startswith('system:challenge:%s:' % p):
+                    flags.append(p)
+
+        # Featured is an odd-man-out before we had tags
+        if self.featured:
+            flags.append('featured')
+
+        return flags
+
     # TODO:liberate - Move this to a more generalized tag enhancement package?
     def allows_tag_namespace_for(self, ns, user):
         """Decide whether a tag namespace is editable by a user"""
