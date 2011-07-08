@@ -17,6 +17,7 @@ function initialize() {
     geocoder.geocode({address:loc.innerHTML},o);
   }
   $('#upcoming').tablesorter({sortList:[[0,0]]});
+  $('#past').tablesorter({sortList:[[0,0]]});
 }
 
 function geocode_return(geocoded_location,o) {

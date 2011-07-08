@@ -105,7 +105,15 @@ class Calendar(ModelBase):
                     event_date_string = event_date.strftime("%Y-%m-%d")
                 except:
                     continue
-                event = Event(date=datetime.strptime(event_line[9], "%m/%d/%Y"), conference=event_line[1],
+                if len(event_line) > 10:
+                    try:
+                        event_end_date = datetime.strptime(event_line[10], "%m/%d/%Y")
+                        event_end_date_string = event_end_date.strftime("%Y-%m-%d")
+                    except:
+                        event_end_date = None
+                event = Event(date=event_date,
+                              end_date=event_end_date,
+                              conference=event_line[1],
                               conference_link=event_line[3],
                               location=event_line[2], people=event_line[5],
                               description=event_line[6][:255],
@@ -122,6 +130,7 @@ class Event(ModelBase):
     """An event"""
 
     date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     conference = models.CharField(max_length=255)
     conference_link = models.URLField(blank=True, verify_exists=False)
     location = models.CharField(max_length=255)

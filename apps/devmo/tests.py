@@ -137,6 +137,15 @@ class TestCalendar(test_utils.TestCase):
         # spot-check
         ok_(Event.objects.get(conference='StarTechConf'))
 
+    def test_reload_from_csv_data_blank_end_date(self):
+        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
+        # check total
+        assert_equal(33, len(Event.objects.all()))
+        # spot-check
+        event = Event.objects.get(conference='Monash University')
+        ok_(event)
+        eq_(None, event.end_date)
+
     def test_bad_date_column_skips_row(self):
         self.cal.reload(data=csv.reader(open(BAD_DATE_CSV, 'rb')))
         # check total - should still have the good row

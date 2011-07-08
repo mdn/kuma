@@ -26,7 +26,8 @@
     <h2>{{ _('Upcoming Conferences') }}</h2>
     <table id="upcoming" class="events" summary="{{ _('Upcoming conferences featuring Mozilla speakers') }}">
       <thead>
-          <th scope="col">{{ _('Date') }}<div class="sortIndicator"></div></th>
+          <th scope="col">{{ _('Start Date') }}<div class="sortIndicator"></div></th>
+          <th scope="col">{{ _('End Date') }}<div class="sortIndicator"></div></th>
         <th scope="col">{{ _('Conference') }}<div class="sortIndicator"></div></th>
         <th scope="col">{{ _('Location') }}<div class="sortIndicator"></div></th>
         <th scope="col">{{ _('People present') }}<div class="sortIndicator"></div></th>
@@ -36,6 +37,7 @@
       {% for event in upcoming_events %}
       <tr>
           <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
+          <td>{% if event.end_date %}{{ event.end_date.strftime('%Y-%m-%d') }}{% endif %}</td>
             {% if event.conference_link %}
           <td><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
             {% else %}
@@ -50,17 +52,19 @@
 <h2>{{ _('Past Conferences') }}</h2>
 <table id="past" class="events"  summary="{{ _('Past conferences that featured Mozilla speakers') }}">
   <thead>
-    <th scope="col">{{ _('Date') }}</th>
-    <th scope="col">{{ _('Conference') }}</th>
-    <th scope="col">{{ _('Location') }}</th>
-    <th scope="col">{{ _('People present') }}</th>
-    <th scope="col">{{ _('Description') }}</th>
-    <th scope="col">{{ _('Presentation Materials') }}</th>
+    <th scope="col">{{ _('Start Date') }}<div class="sortIndicator"></div></th>
+    <th scope="col">{{ _('End Date') }}<div class="sortIndicator"></div></th>
+    <th scope="col">{{ _('Conference') }}<div class="sortIndicator"></div></th>
+    <th scope="col">{{ _('Location') }}<div class="sortIndicator"></div></th>
+    <th scope="col">{{ _('People present') }}<div class="sortIndicator"></div></th>
+    <th scope="col">{{ _('Description') }}<div class="sortIndicator"></div></th>
+    <th scope="col">{{ _('Presentation Materials') }}<div class="sortIndicator"></div></th>
   </thead>
   <tbody>
       {% for event in past_events %}
       <tr>
           <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
+          <td>{% if event.end_date %}{{ event.end_date.strftime('%Y-%m-%d') }}{% endif %}</td>
           <td><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
           <td>{{ event.location }}</td>
           <td>{{ event.people|safe }}</td>
