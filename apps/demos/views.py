@@ -60,6 +60,16 @@ KNOWN_TECH_TAGS = (
     "webworkers", "xhr", "multitouch", 
 )
 
+def _invalidate_submission_listing_helper_cache():
+    """Invalidate the cache for submission_listing helper used in templates"""
+    # TODO: Does this belong in helpers.py? Better done with a model save event subscription?
+    ns_key = cache.get(DEMOS_CACHE_NS_KEY)
+    if ns_key is None:
+        ns_key = random.randint(1,10000)
+        cache.set(DEMOS_CACHE_NS_KEY, ns_key)
+    else:
+        cache.incr(DEMOS_CACHE_NS_KEY)
+
 def home(request):
     """Home page."""
     featured_submissions = Submission.objects.filter(featured=True)\
@@ -249,13 +259,7 @@ def submit(request):
             
             # TODO: Process in a cronjob?
             new_sub.process_demo_package()
-
-            ns_key = cache.get(DEMOS_CACHE_NS_KEY)
-            if ns_key is None:
-                ns_key = random.randint(1,10000)
-                cache.set(DEMOS_CACHE_NS_KEY, ns_key)
-            else:
-                cache.incr(DEMOS_CACHE_NS_KEY)
+            _invalidate_submission_listing_helper_cache()
 
             return HttpResponseRedirect(reverse(
                     'demos.views.detail', args=(new_sub.slug,)))
@@ -279,6 +283,7 @@ def edit(request, slug):
             
             # TODO: Process in a cronjob?
             sub.process_demo_package()
+            _invalidate_submission_listing_helper_cache()
             
             return HttpResponseRedirect(reverse(
                     'demos.views.detail', args=(sub.slug,)))
@@ -294,6 +299,7 @@ def delete(request, slug):
 
     if request.method == "POST":
         submission.delete()
+        _invalidate_submission_listing_helper_cache()
         return HttpResponseRedirect(reverse('demos.views.home'))
 
     response = jingo.render(request, 'demos/delete.html', { 
