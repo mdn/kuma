@@ -416,6 +416,18 @@ TOWER_ADD_HEADERS = True
 # Bundles for JS/CSS Minification
 MINIFY_BUNDLES = {
     'css': {
+        'mdn': (
+            'css/mdn-screen.css',
+            'css/mdn-video-player.css',
+            'css/mdn-forums-sidebar-module.css',
+            'css/mdn-calendar.css',
+        ),
+        'demostudio': (
+            'css/demos.css',
+        ),
+        'devderby': (
+            'css/devderby.css',
+        ),
         'common': (
             'css/reset.css',
             'global/headerfooter.css',
@@ -467,14 +479,39 @@ MINIFY_BUNDLES = {
         'monitor': (
             'css/monitor.css',
         ),
-        'mdn': (
-            'css/mdn-screen.css',
-            'css/mdn-video-player.css',
-            'css/mdn-forums-sidebar-module.css',
-            'css/mdn-calendar.css',
-        ),
     },
     'js': {
+        'mdn': (
+            'js/mdn/jquery-1.4.2.min.js',
+            'js/mdn/init.js',
+            'js/mdn/gsearch.js',
+            'js/mdn/webtrends.js',
+
+            # Home Page
+            # cycle and slideshow only needed on the home page (or any page
+            # featuring the slide show widget).
+            'js/mdn/jquery.cycle.js',
+            'js/mdn/slideshow.js',
+            'js/mdn/TabInterface.js',
+            'js/mdn/home.js',
+
+            # Used only on pages with video popups
+            'js/mdn/video-player.js',
+
+            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+
+            'js/libs/jquery.tablesorter.min.js',
+            'js/mdn/geocode.js',
+            'js/mdn/calendar.js',
+        ),
+        'demostudio': (
+            'js/mdn/jquery.hoverIntent.minified.js',
+            'js/mdn/jquery.scrollTo-1.4.2-min.js',
+            'js/mdn/demos.js',
+        ),
+        'demostudio_devderby_landing': (
+            'js/mdn/demos-devderby-landing.js',
+        ),
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
@@ -528,29 +565,6 @@ MINIFY_BUNDLES = {
         ),
         'users': (
             'js/users.js',
-        ),
-        'mdn': (
-            'js/mdn/jquery-1.4.2.min.js',
-            'js/mdn/init.js',
-            'js/mdn/gsearch.js',
-            'js/mdn/webtrends.js',
-
-            # Home Page
-            # cycle and slideshow only needed on the home page (or any page
-            # featuring the slide show widget).
-            'js/mdn/jquery.cycle.js',
-            'js/mdn/slideshow.js',
-            'js/mdn/TabInterface.js',
-            'js/mdn/home.js',
-
-            # Used only on pages with video popups
-            'js/mdn/video-player.js',
-
-            'js/mdn/jquery.simplemodal.1.4.1.min.js',
-
-            'js/libs/jquery.tablesorter.min.js',
-            'js/mdn/geocode.js',
-            'js/mdn/calendar.js',
         ),
     },
 }

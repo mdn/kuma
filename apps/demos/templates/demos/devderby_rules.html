@@ -3,7 +3,7 @@
 {% block bodyclass %}section-demos devderby plain{% endblock %}
 
 {% block extrahead %}
-  <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/css/devderby.css"/>
+    {{ css('devderby') }}
 {% endblock %}
 
 {% block title %}{{ page_title(_('Dev Derby Rules')) }}{% endblock %}
@@ -114,8 +114,4 @@
 
 </div>
 </section>
-{% endblock %}
-
-{% block js %}
-    {{ super() }}
 {% endblock %}

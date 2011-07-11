@@ -105,8 +105,8 @@ transform: rotate(18deg);
 #tab-submissions .gallery .demo { width: 170px; margin: 0 0 1.4em 25px; padding: 150px 5px 0; }
 #tab-submissions .gallery .row-first { margin-left: 0; }
 
-#tab-submissions .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 3px; background: #fff; }
-#tab-submissions .demo .launch { position: absolute; top: 95px; right: 12px; font-size: 1.2em; }
+#devderby-home .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 3px; background: #fff; }
+#devderby-home .demo .launch { position: absolute; top: 95px; right: 12px; font-size: 1.2em; }
 
 #devderby-home .demohover .in { position: relative; width: 166px; padding-top: 157px; }
 #devderby-home .demohover .demo-title img { left: 7px; top: 7px; }
