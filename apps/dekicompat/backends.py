@@ -75,7 +75,7 @@ class DekiUserBackend(object):
             user.username = deki_user.username
             # HACK: Deki has fullname Django has First and last...
             # WACK: but our Dekiwiki instace doesn't let the user edit this data
-            user.first_name = deki_user.fullname
+            user.first_name = deki_user.fullname[:30]
             user.last_name = ''
             user.set_unusable_password()
             user.save()
