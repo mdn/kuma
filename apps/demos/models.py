@@ -229,6 +229,14 @@ class ReplacingFieldZipFile(FieldFile):
     def save(self, name, content, save=True):
         new_filename = generate_filename_and_delete_previous(self, name)
         super(ReplacingFieldZipFile, self).save(new_filename, content, save)
+
+    def _get_size(self):
+        """Override FieldFile size property to return 0 in case of a missing file."""
+        try:
+            return super(ReplacingFieldZipFile, self)._get_size()
+        except OSError, e:
+            return 0
+    size = property(_get_size)
     
 
 class ReplacingZipFileField(models.FileField):
@@ -277,7 +285,8 @@ class ReplacingImageWithThumbFieldFile(ImageFieldFile):
     def thumbnail_url(self):
         if not self.url: return ''
         # HACK: Use legacy thumbnail URL, if new-style file missing.
-        if not self.storage.exists(self.thumbnail_name()):
+        DEV = getattr(settings, 'DEV', False)
+        if not DEV and not self.storage.exists(self.thumbnail_name()):
             return self.url.replace('screenshot', 'screenshot_thumb')
         # HACK: This works, but I'm not proud of it
         parts = self.url.rsplit('.', 1)
