@@ -42,5 +42,21 @@ jQuery("#id_content").ckeditor(function() {
   // Set up CKE
   skin : 'kuma', // Our custom skin
   extraPlugins : 'autogrow', // Expand the editor around the page content
-  startupFocus : true // But the cursor in the editor
+  startupFocus : true, // But the cursor in the editor
+  toolbar: [
+        ['Source','-','Save','NewPage','Preview','-','Templates'],
+        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
+        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+        '/',
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
+        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+        ['BidiLtr', 'BidiRtl' ],
+        ['Link','Unlink','Anchor'],
+        ['Image','Table','HorizontalRule','SpecialChar','Iframe'],
+        '/',
+        ['Styles','Format',],
+        ['TextColor','BGColor'],
+        ['Maximize', 'ShowBlocks','-','About']
+  ],
 });
