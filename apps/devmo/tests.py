@@ -1,6 +1,7 @@
 import csv
 import shlex
 import urllib2
+from os.path import basename, dirname, isfile, isdir
 
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
@@ -106,9 +107,10 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
         prefixer = urlresolvers.Prefixer(req)
         eq_(prefixer.get_language(), 'fr')
 
-MOZILLA_PEOPLE_EVENTS_CSV = 'apps/devmo/fixtures/Mozillapeopleevents.csv'
-XSS_CSV = 'apps/devmo/fixtures/xss.csv'
-BAD_DATE_CSV = 'apps/devmo/fixtures/bad_date.csv'
+APP_DIR = dirname(__file__)
+MOZILLA_PEOPLE_EVENTS_CSV = '%s/fixtures/Mozillapeopleevents.csv' % APP_DIR
+XSS_CSV = '%s/fixtures/xss.csv' % APP_DIR
+BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
 
 class TestCalendar(test_utils.TestCase):
 
