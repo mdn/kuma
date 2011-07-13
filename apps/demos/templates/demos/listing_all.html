@@ -42,13 +42,13 @@
     </ul>
   </header>
 
-  <header id="page-head" class="gallery">
-    <div class="main">
-        <h1 class="page-title">{{_('Browse all demos')}}</h1>
-    </div>
-  </header>
-
   <section id="content-main" role="main" class="full">
+    <header id="page-head" class="gallery">
+      <div class="main">
+          <h1 class="page-title">{{_('Browse all demos')}}</h1>
+      </div>
+    </header>
+
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of all demos'),

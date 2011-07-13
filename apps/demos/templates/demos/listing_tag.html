@@ -43,27 +43,26 @@
     </ul>
   </header>
 
-  <header id="page-head" class="gallery">
-    <div class="main">
-        <h1 class="page-title"><img src="{{MEDIA_URL}}img/icons/{{tag.name.replace('tech:','')}}.png" alt="" width="160" height="160"> {{ tag_title(tag) }}</h1>
-      <p>{{ tag_description(tag) }}</p>
-    </div>
-    
-    {% set learn_more = tag_learn_more(tag) %}
-    {% if learn_more | length %}
-    <div class="learn">
-        <h2>{{_('Learn More')}}</h2>
-      <ul>
-        {% for l_name, l_url in learn_more %}
-            <li><a href="{{l_url}}">{{l_name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
-  </header>
-
   <section id="content-main" role="main" class="full">
+    <header id="page-head" class="gallery">
+      <div class="main">
+          <h1 class="page-title"><img src="{{MEDIA_URL}}img/icons/{{tag.name.replace('tech:','')}}.png" alt="" width="160" height="160"> {{ tag_title(tag) }}</h1>
+        <p>{{ tag_description(tag) }}</p>
+      </div>
+      
+      {% set learn_more = tag_learn_more(tag) %}
+      {% if learn_more | length %}
+      <div class="learn">
+          <h2>{{_('Learn More')}}</h2>
+        <ul>
+          {% for l_name, l_url in learn_more %}
+              <li><a href="{{l_url}}">{{l_name}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </header>
+  
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of {tag_title} demos') | f(tag_title=tag_title(tag)),
