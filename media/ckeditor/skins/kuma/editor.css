@@ -242,5 +242,5 @@ html.cke_skin_kuma_container{visibility:visible;}
 .mdn-buttons-button.h1 {background-position:-6px -6px;}
 .mdn-buttons-button.h2 {background-position:-50px -6px;}
 .mdn-buttons-button.h3 {background-position:-94px -6px;}
-.mdn-buttons-button.pre {background-position:-400px 400px;}
+.mdn-buttons-button.pre, .mdn-buttons-button.code {background-position:-400px 400px;}
 

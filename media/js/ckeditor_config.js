@@ -11,7 +11,7 @@ CKEDITOR.editorConfig = function(config) {
         ['Link','Unlink','Anchor'],
         ['Image','Table','HorizontalRule','SpecialChar','Iframe'],
         '/',
-        ['h1Button', 'h2Button', 'h3Button', 'preButton', '-', 'Styles',],
+        ['h1Button', 'h2Button', 'h3Button', 'preButton', 'codeButton', '-', 'Styles',],
         ['TextColor','BGColor'],
         ['Maximize', 'ShowBlocks','-','About']
   ];
