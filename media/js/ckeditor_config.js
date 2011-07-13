@@ -5,7 +5,7 @@ CKEDITOR.editorConfig = function(config) {
         ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
         '/',
         ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
+        ['NumberedList','BulletedList','DefinitionList','DefinitionTerm','DefinitionDescription','-','Outdent','Indent','Blockquote','CreateDiv'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['BidiLtr', 'BidiRtl' ],
         ['Link','Unlink','Anchor'],
@@ -14,9 +14,9 @@ CKEDITOR.editorConfig = function(config) {
         ['h1Button', 'h2Button', 'h3Button', 'preButton', 'codeButton', '-', 'Styles',],
         ['TextColor','BGColor'],
         ['Maximize', 'ShowBlocks','-','About']
-  ];
+    ];
     config.skin = 'kuma';
     config.startupFocus = true;
     config.toolbar = 'MDN';
-    config.extraPlugins = 'autogrow,mdn-buttons';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons';
 }

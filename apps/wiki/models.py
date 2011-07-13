@@ -23,7 +23,7 @@ from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 
 
-ALLOWED_TAGS = ALLOWED_TAGS + ['span','p','h1','h2','h3','pre','code']
+ALLOWED_TAGS = ALLOWED_TAGS + ['span','p','h1','h2','h3','pre','code','dl','dt','dd']
 ALLOWED_ATTRIBUTES['span'] = ['style',]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
