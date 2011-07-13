@@ -26,16 +26,14 @@ from demos.forms import SubmissionNewForm, SubmissionEditForm
 
 SCREENSHOT_PATH = ( '%s/fixtures/screenshot_1.png' % 
         dirname(dirname(__file__)) )
+TESTUSER_PASSWORD = 'trustno1'
 
 
-def mockdekiauth(test):
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    def test_new(self, authenticate, get_user):
-        authenticate.return_value = self.testuser
-        get_user.return_value = self.testuser
-        self.client.login(authtoken='1')
-        test(self)
+def logged_in(test, *args, **kwargs):
+    def test_new(self):
+        self.client.login(username=self.testuser.username, 
+                password=TESTUSER_PASSWORD)
+        test(self, *args, **kwargs)
     return test_new
 
 def disable_captcha(fn):
@@ -53,6 +51,8 @@ class DemoViewsTest(test_utils.TestCase):
 
     def setUp(self):
         self.testuser = User.objects.get(username='testuser')
+        self.testuser.set_password(TESTUSER_PASSWORD)
+        self.testuser.save()
         self.client = LocalizingClient()
 
     def test_submit_loggedout(self):
@@ -60,12 +60,12 @@ class DemoViewsTest(test_utils.TestCase):
         choices = pq(r.content)('p.choices')
         eq_(choices.find('a.button').length, 2)
 
-    @mockdekiauth
+    @logged_in
     def test_submit_loggedin(self):
         r = self.client.get(reverse('demos_submit'))
         assert pq(r.content)('form#demo-submit')
 
-    @mockdekiauth
+    @logged_in
     def test_submit_post_invalid(self):
         r = self.client.post(reverse('demos_submit'), data={})
         d = pq(r.content)
@@ -78,7 +78,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
 
-    @mockdekiauth
+    @logged_in
     @disable_captcha
     def test_submit_post_valid(self):
 
@@ -113,7 +113,7 @@ class DemoViewsTest(test_utils.TestCase):
         except Submission.DoesNotExist:
             assert False
 
-    @mockdekiauth
+    @logged_in
     def test_edit_invalid(self):
         s = save_valid_submission()
         edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
@@ -124,7 +124,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_summary ul.errorlist')
         assert d('li#field_license_name ul.errorlist')
 
-    @mockdekiauth
+    @logged_in
     def test_edit_valid(self):
         s = save_valid_submission()
         edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
@@ -157,7 +157,7 @@ class DemoViewsTest(test_utils.TestCase):
         edit_link = d('ul.manage a.edit')
         assert not edit_link
 
-    @mockdekiauth
+    @logged_in
     def test_creator_can_edit(self):
         s = save_valid_submission('hello world')
 
@@ -173,7 +173,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert pq(r.content)('form#demo-submit')
         eq_('Save changes', pq(r.content)('p.fm-submit button[type="submit"]').text())
 
-    @mockdekiauth
+    @logged_in
     def test_hidden_field(self):
         s = save_valid_submission('hello world')
 
@@ -181,7 +181,7 @@ class DemoViewsTest(test_utils.TestCase):
         r = self.client.get(edit_url)
         assert pq(r.content)('input[name="hidden"][type="checkbox"]')
 
-    @mockdekiauth
+    @logged_in
     def test_derby_field(self):
         s = save_valid_submission('hello world')
 
