@@ -23,6 +23,7 @@ reasons.
     git clone git://github.com/lmorchard/kuma.git
     cd kuma
     git checkout mdn
+    git submodule update --init --recursive
 
     # Fire up the VM and install everything, take a bike ride (approx. 30 min)
     vagrant up
