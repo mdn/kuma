@@ -92,10 +92,7 @@ def check_devmo_local_page(path):
     http_status_code = None
     try:
         deki_tuple = urlparse.urlparse(settings.DEKIWIKI_ENDPOINT)
-        if deki_tuple.scheme == 'https':
-            conn = httplib.HTTPSConnection(deki_tuple.netloc)
-        else:
-            conn = httplib.HTTPConnection(deki_tuple.netloc)
+        conn = httplib.HTTPSConnection(deki_tuple.netloc)
         conn.request("GET", path)
         resp = conn.getresponse()
         http_status_code = resp.status
