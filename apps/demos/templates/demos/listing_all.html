@@ -1,7 +1,6 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}demos{% endblock %}
-{% block bodyclass %}section-demos{% endblock %}
+{% block bodyclass %}section-demos plain{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Browse all demos'))) }}{% endblock %}
 {% block extrahead %}
     <link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
@@ -10,40 +9,52 @@
 
 {% block content %}
 
-<section id="nav-toolbar">
-<div class="wrap">
-  <nav class="crumbs">
-    <ol role="navigation">
-        <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
-        <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
-      <li><a href="">{{_('Browse all demos')}}</a></li>
-    </ol>
-  </nav>
-  <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
-</div>
-</section>
-
 <section id="content">
 <div class="wrap">
 
-  <header id="page-head">
+  <header id="demos-head">
+    <h1><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a></h1>
+    <ul class="demo-buttons">
+      <li class="submit"><a href="{{ url('demos_submit') }}" class="button"><b></b>{{_("Submit a Demo")}}</a></li>
+      <li class="learnmore"><a href="#learn-pop" class="button">{{ _('Learn More') }}</a>
+        <div id="learn-pop" aria-hidden="true">        
+          {% trans %}
+          <p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
+          <ul>
+            <li>View demos that showcase what HTML, CSS, and JavaScript can do.</li>
+            <li>Inspect the source code for those demos so you can see how they work.</li>
+            <li>Read documentation to learn about the open standards and technologies that power the Web.</li>
+          </ul>
+          {% endtrans %}
+        </div>
+      </li>
+      <li class="tags menu">
+        <a href="#tags-list" class="button" aria-haspopup="true">{{_("Browse by Technology")}}</a>
+        <ul id="tags-list" class="menu" aria-hidden="true">
+            {% for tag in tags_used_for_submissions() %}
+                {% if tag.name.startswith('tech:') %}
+                    <li><a href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+      </li>
+      <li class="search">{{ search_form() }}</li>
+    </ul>
+  </header>
+
+  <header id="page-head" class="gallery">
     <div class="main">
         <h1 class="page-title">{{_('Browse all demos')}}</h1>
     </div>
   </header>
 
-  <section id="content-main" role="main">
+  <section id="content-main" role="main" class="full">
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of all demos'),
         url('demos_feed_recent', format='atom') 
     ) }}
   </section><!-- /#content-main -->
-  
-  <aside id="content-sub" role="complementary">
-    {{ search_form() }}
-    {{ tech_tags_list() }}
-  </aside><!-- /#content-sub -->
 
 </div>
 </section>

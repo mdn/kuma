@@ -20,6 +20,7 @@
   <header id="demos-head">
     <h1>{{_("Mozilla Demo Studio")}}</h1>
     <ul class="demo-buttons">
+      <li class="submit"><a href="{{ url('demos_submit') }}" class="button"><b></b>{{_("Submit a Demo")}}</a></li>
       <li class="learnmore"><a href="#learn-pop" class="button">{{ _('Learn More') }}</a>
         <div id="learn-pop" aria-hidden="true">        
           {% trans %}
@@ -32,7 +33,6 @@
           {% endtrans %}
         </div>
       </li>
-      <li class="submit"><a href="{{ url('demos_submit') }}" class="button">{{_("Submit a Demo")}}</a></li>
     </ul>
     <p id="derby-cta">
       <a href="{{url('demos_devderby_landing')}}">{% trans %}<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn More</strong>{% endtrans %}</a>
@@ -46,8 +46,8 @@
     </header>
 
     <ul class="nav-slide">
-      <li class="nav-prev"><a href="#" class="prev" title="{{_("See the previous demo")}}">{{_("Previous")}}</a></li>
-  		<li class="nav-next"><a href="#" class="next" title="{{_("See the next demo")}}">{{_("Next")}}</a></li>
+      <li class="nav-prev"><a href="#demo-prev" class="prev" title="{{_("See the previous demo")}}">{{_("Previous")}}</a></li>
+  		<li class="nav-next"><a href="#demo-next" class="next" title="{{_("See the next demo")}}">{{_("Next")}}</a></li>
     </ul>
   
     {% set submission = featured_submission_list[1] %}
