@@ -46,7 +46,7 @@ DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
 SLAVE_DATABASES = []
 
 # Dekiwiki has a backend API. protocol://hostname:port
-DEKIWIKI_ENDPOINT = 'http://developer-stage9.mozilla.org'
+DEKIWIKI_ENDPOINT = 'https://developer-stage9.mozilla.org'
 
 # Cache Settings
 CACHE_BACKEND = 'locmem://?timeout=86400'
