@@ -1,4 +1,4 @@
-{% extends "base_major.html" %}
+{% extends "base.html" %}
 
 {% block pageid %}home{% endblock %}
 
@@ -7,240 +7,189 @@
 {% endif %}
 
 {% block content %}
+
 <header id="welcome-bar">
 <div class="wrap">
-  <p class="intro" id="welcome-devmo"><span class="leadin">
-    {# L10n: a.k.a. stands for 'also known as'. Followed by 'DEVMO'. #}
-    {{ _('Welcome to the Mozilla Developer Network, a.k.a.:') }}</span>
-  <strong class="devmo">
-    {# L10n: DEVMO is the nickname for MDN. #}
-    {{ _('DEVMO') }}
-  </strong>
-  <a href="{{ _('http://en.wikipedia.org/wiki/Mozilla_Developer_Center') }}" class="go">
-    {{ _('Learn the history behind Project <em>Devmo</em>')|safe }}</a></p>
 
-  <p class="extra" id="welcome-new"><strong>{{ _('New to MDN?') }}</strong>
-    {{ _('Want to help make our network even better?') }}<br />
-    <a href="/forums/viewtopic.php?f=3&amp;t=5" class="go">{{ _("Here's how to get started") }}</a></p>
+  <h1>{% trans %}It's the Web. <b>You drive.</b>{% endtrans %}</h1>
+  <h2>{{_("Welcome to the Mozilla Developer Network.")}}</h2>
+  <p>{% trans %}We are an open community of developers building resources for a better web, 
+  regardless of brand, browser or platform. Anyone can contribute and each person 
+  who does makes us stronger. Together we can continue to drive innovation on the 
+  Web to serve the greater good. It starts here, with you.{% endtrans %}</p>
+  
+  <button type="button" id="welcome-close">{{_("Close")}}</button>
 
-  <p class="extra" id="welcome-login"><strong>{{ _('Already a member?') }}</strong>
-    {{ _('Customize your profile & fine-tune your participation within MDN.') }}<br />
-  <a href="/forums/ucp.php?mode=login" class="go">{{ _('Log in') }}</a></p>
 </div>
 </header>
-<script type="text/javascript">
-try {
-    if ('localStorage' in window && window['localStorage'] != null) {
-        if (localStorage['/home/devmo_shown_once'] == 'true') {
-            document.getElementById('home').removeChild(
-                document.getElementById('welcome-bar'));
-        } else {
-            localStorage['/home/devmo_shown_once'] = 'true';
-        }
-    }
-} catch (e) {}
-</script>
+
 <section id="content">
-<div class="wrap sidebar">
-  <section id="content-main" role="main">
+<div class="wrap">
 
-  <div id="slideshow">
-    <ol id="slide-control">
-      <li id="slide1"><a href="#slide-one">{{ _('Dev Derby') }}</a></li>
-      <li id="slide2"><a href="#slide-two">{{ _('Aurora') }}</a></li>
-      <li id="slide3"><a href="#slide-three">{{ _('School of Webcraft') }}</a></li>
-      <li id="slide4"><a href="#slide-four">{{ _('HTML5') }}</a></li>
-      <li id="slide5"><a href="#slide-five">{{ _('Addons Builder Preview') }}</a></li>
-    </ol>
-    <ol id="slides">
-      <li id="slide-one" class="slide">
-        <img src="{{ MEDIA_URL }}img/features/feature-devderby.jpg" alt="" width="660">
-        <div class="slide-desc">
-          <h3>{{ _('Demo Studio presents') }}</h3>
-          <h2>{{ _('Dev Derby') }}</h2>
-          <p>
-          {% trans %}
-          Got what it takes to showcase the latest Web standards and open technologies? 
-          Submit your demo to our monthly Dev Derby developer challenge for a chance to 
-          win awesome prizes and bragging rights from the winner&#8217;s circle! Upcoming 
-          challenges include CSS Animations, HTML5 &lt;video&gt;, and Touch events on mobile 
-          devices&hellip; so start your engines!
-          {% endtrans %}
-          </p>
-          <p class="more"><a href="{{url('demos_devderby_landing')}}" class="button">{{ _('More') }}</a></p>
-        </div>
-      </li>
-      <li id="slide-two" class="slide">
-        <img src="{{ MEDIA_URL }}img/features/feature-aurora.jpg" alt="" width="660">
-        <div class="slide-desc">
-          <h2>{{ _('Aurora') }}</h2>
-          <p>
-          {% trans %}
-          Experience the very latest features before they go to beta by trying out the
-          new Aurora builds. Test things out early and help decide what makes it to
-          final release. Note: Aurora is not for the faint of heart, but that's the
-          price of being on the cutting edge.
-          {% endtrans %}
-          </p>
-          <p class="more"><a href="http://www.mozilla.com/en-US/firefox/channel/" class="button">{{ _('Get Aurora now') }}</a></p>
-        </div>
-      </li>
-      <li id="slide-three" class="slide">
-        <img src="{{ MEDIA_URL }}img/features/feature-p2pu.jpg" alt="" width="660">
-        <div class="slide-desc">
-          <h2>{{ _('School of Webcraft') }}</h2>
-          <p>
-          {% trans p2pu='http://p2pu.org/', p2pu_drumbeat='http://www.drumbeat.org/p2pu-webcraft' %}
-          Mozilla and <a href="{{ p2pu }}">P2PU</a> are creating the <a href="{{ p2pu_drumbeat }}">School
-            of Webcraft</a>, a powerful new way to teach and learn web developer skills. Classes
-          are globally accessible, 100% free, and powered entirely by learners, mentors and
-          contributors like you people. Our goal: a vibrant, peer-led system that helps people
-          around the world easily access and build careers on open web technology.
-          {% endtrans %}
-          </p>
-          <p class="more"><a href="http://www.drumbeat.org/p2pu-webcraft" class="button">{{ _('More') }}</a></p>
-        </div>
-      </li>
-      <li id="slide-four" class="slide">
-        <img src="{{ MEDIA_URL }}img/features/feature-html5.jpg" alt="" width="660">
-        <div class="slide-desc">
-          <h2>{{ _('HTML5') }}</h2>
-          <p>
-          {% trans devmo_html5=devmo_url(_('/en/HTML/HTML5')), devmo_fx4dev=devmo_url(_('/en/Firefox_4_for_developers')) %}
-          Mozilla continues to lead the charge in the adoption of HTML5 and other evolving open Web technologies.
-          Find out more about the <a href="{{ devmo_html5 }}">HTML5 spec</a> and the latest enhancements in HTML5, CSS3
-          and other <a href="{{ devmo_fx4dev }}">developer features for Firefox 4</a>.
-          {% endtrans %}
-          </p>
-          <p class="more"><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}" class="button">{{ _('More') }}</a></p>
-        </div>
-      </li>
-      <li id="slide-five" class="slide">
-        <img src="{{ MEDIA_URL }}img/features/feature-addonsbuilder.jpg" alt="" width="660">
-        <div class="slide-desc">
-          <h2>{{ _('Addons Builder Preview') }}</h2>
-          <p>
-          {% trans tutorial='https://builder.mozillalabs.com/tutorial/',
-                   api='https://builder.mozillalabs.com/api/jetpack-core/' %}
-          Use Add-ons Builder to quickly and easily develop an extension for Firefox using common web
-          technologies. There is a <a href="{{ tutorial }}">tutorial</a> to get you started and a
-          <a href="{{ api }}">variety of APIs in the core library</a> to add functionality to Firefox.
-          {% endtrans %}
-          </p>
-          <p class="more"><a href="https://builder.mozillalabs.com/" class="button">{{ _('More') }}</a></p>
-        </div>
-      </li>
-    </ol>
-  </div><!-- /#slideshow -->
-
-    <div id="home-highlights">
-      <div class="tabbed">
-        <h3>{{ _('News & Updates') }}</h3>
-        <p class="intro">{{ _('Highlighted Mozilla Developer News & Updates') }}</p>
-        {{ newsfeed(updates, section_headers=True) }}
-
-        <h3>{{ _('Docs') }}</h3>
-        <h4 class="gloss-title">
-          {% trans web_url=url('web') %}
-          Key Topics for <a href="{{ web_url }}" class="web">Web</a> Developers
-          {% endtrans %}
-        </h4>
-        {% include "docs/glossary.html" %}
-
-        <div id="other-sections">
-          <div class="section">
-            <h4><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></h4>
-            <p>
-            {% trans devmo_mobile=devmo_url(_('/en/Mobile')), devmo_geo=devmo_url(_('/en/Using_geolocation')) %}
-            Learn more about <a href="{{ devmo_mobile }}">Fennec</a> and mobile-specific technologies
-            like <a href="{{ devmo_geo }}">geolocation</a>.</p>
-            {% endtrans %}
-          </div>
-          <div class="section">
-            <h4><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></h4>
-            <p>
-            {% trans builder_url='https://builder.mozillalabs.com/', dev_url='https://addons.mozilla.org/en-US/developers/' %}
-            <a href="{{ builder_url }}">Build your own add-ons</a> and discuss them with the
-            <a href="{{ dev_url }}">add-on developer community</a>.
-            {% endtrans %}
-            </p>
-          </div>
-          <div class="section">
-            <h4><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></h4>
-            <p>
-            {% trans devmo_participate=devmo_url(_('/en/Participating_in_the_Mozilla_project')),
-                     devmo_l10n=devmo_url(_('/en/Localization')), devmo_qa=devmo_url(_('/en/QA')) %}
-              See how you can <a href="{{ devmo_participate }}">participate</a> in
-              <a href="{{ devmo_l10n }}">localization</a>, <a href="{{ devmo_qa }}">quality
-                assurance</a>, and other Mozilla projects.
-            {% endtrans %}
-            </p>
-          </div>
-        </div>
-
-        
-      </div>
-    </div>
-
-  </section>
-
-  <aside id="content-sub" role="complementary">
-    <a href="{{ devmo_url(_('/en/Firefox_4_for_developers')) }}">
-      <div class="module" id="mdn-firefox4-webdev">
-        <h3>Firefox 4</h3>
-        <h4>for Developers</h4>
-        <p>{{ _("See what's new for web developers in the latest version of Firefox") }}</p>
-      </div>
-    </a>
-    <div class="module hot" id="mdn-popular-docs">
-      <h3 class="mod-title">{{ _('Popular Docs') }}</h3>
-      <ul class="hfeed">
-        <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></h4>
-          <p class="entry-content">{{ _('Hypertext Markup Language, the core technology of the web.') }}</p>
+  <section id="content-main" role="main" class="full">
+    
+    <section id="top-docs">
+    <h1>{% trans %}Browse Thousands of Docs for <b>Web Developers</b>{% endtrans %}</h1>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="{{ devmo_url(_('/en/HTML')) }}">HTML</a></li>
+            <li><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">HTML5</a></li>
+            <li><a href="{{ devmo_url(_('/en/CSS')) }}">CSS</a></li>
+            <li><a href="{{ devmo_url(_('/en/JavaScript')) }}">JavaScript</a></li>
+            <li><a href="{{ devmo_url(_('/en/DOM')) }}">DOM</a></li>
+          </ul>
         </li>
-        <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS Reference') }}</a></h4>
-          <p class="entry-content">{{ _('Cascading Style Sheets.') }}</p>
+        <li>
+          <ul> 
+            <li><a href="{{ devmo_url(_('/en/HTML/Canvas')) }}">Canvas</a></li>
+            <li><a href="{{ devmo_url(_('/en/SVG')) }}">SVG</a></li>
+            <li><a href="{{ devmo_url(_('/en/WebGL')) }}">WebGL</a></li>
+            <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">Video</a></li>
+            <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">Audio</a></li>
+          </ul>
         </li>
-        <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/JavaScript')) }}">{{ _('JavaScript') }}</a></h4>
-          <p class="entry-content">{{ _('The scripting language that powers modern web applications.') }}</p>
+        <li>
+          <ul>
+            <li><a href="{{ devmo_url(_('/en/Using_gradients')) }}">Gradients</a></li>
+            <li><a href="{{ devmo_url(_('/en/CSS/Using_CSS_transforms')) }}">Transforms</a></li>
+            <li><a href="{{ devmo_url(_('/en/CSS/CSS_transitions')) }}">Transitions</a></li>
+            <li><a href="{{ devmo_url(_('/en/CSS/CSS_animations')) }}">Animations</a></li>
+            <li><a href="{{ devmo_url(_('/en/CSS/Media_queries')) }}">Media Queries</a></li>
+          </ul>
         </li>
-        <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/DOM')) }}">{{ _('DOM') }}</a></h4>
-          <p class="entry-content">{% trans %}
-            The Document Object Model describes the layout and content of web pages.
-          {% endtrans %}</p>
+        <li>
+          <ul>
+            <li><a href="{{ devmo_url(_('/en/Ajax')) }}">AJAX</a></li>
+            <li><a href="{{ devmo_url(_('/en/WebSockets')) }}">WebSockets</a></li>
+            <li><a href="{{ devmo_url(_('/en/Offline_resources_in_Firefox')) }}">Offline Cache</a></li>
+            <li><a href="{{ devmo_url(_('/en/DOM/Storage')) }}">Local Storage</a></li>
+            <li><a href="{{ devmo_url(_('/en/IndexedDB')) }}">IndexedDB</a></li>
+          </ul>
         </li>
-        <li class="hentry">
-          <h4 class="entry-title"><a href="https://addons.mozilla.org/en-US/developers/">{{ _('Developing Add-ons') }}</a></h4>
-          <p class="entry-content">{% trans %}
-            Creating extensions, themes, and plug-ins for Firefox and Thunderbird.
-          {% endtrans %}</p>
-        </li>
-        <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/mobile')) }}">{{ _('Developing for Mobile') }}</a></h4>
-          <p class="entry-content">{% trans %}
-            Developing add-ons and content for Firefox mobile.
-          {% endtrans %}</p>
-        </li>
-        <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Participating_in_the_Mozilla_project')) }}">{{ _('Participating in the Mozilla Project') }}</a></h4>
-          <p class="entry-content">{% trans %}
-            Everything from filing bugs to fixing them.
-          {% endtrans %}</p>
+        <li>
+          <ul>
+            <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">Geolocation</a></li>
+            <li><a href="{{ devmo_url(_('/en/DragDrop/Drag_and_Drop')) }}">Drag &amp; Drop</a></li>
+            <li><a href="{{ devmo_url(_('/en/Using_files_from_web_applications')) }}">File API</a></li>
+            <li><a href="{{ devmo_url(_('/en/Using_web_workers')) }}">Web Workers</a></li>
+            <li><a href="{{ url('docs') }}" class="more">{{_("and more")}}&hellip;</a></li>
+          </ul>
         </li>
       </ul>
-    </div>
-    <div class="module" id="mdn-forums-sidebar">
-      <h3>{{ _('Be Heard.') }}</h3>
-      <p>Join the MDN forum and share your thoughts on the open web:</p>
-      <a href='/forums'>{{
-        _('Get Started Today!') }}</a>
-    </div>
-  </aside>
+      <p class="more">
+        {% trans mobile_url=url('mobile'), addons_url=url('addons'), mozilla_url=url('mozilla') %}
+            And even more resources for: 
+            <a href="{{ mobile_url }}">Mobile Web Apps</a> &middot; 
+            <a href="{{ addons_url }}">Firefox Add-ons</a> &middot; 
+            <a href="{{ mozilla_url }}">Mozilla Applications</a>
+        {% endtrans %}
+      </p>
+    </section><!-- /#top-docs -->
+    
+    <section id="home-promos" class="home-promos">
+    
+      <div class="promo" id="promo-learn">
+          <a href="{{ url('learn') }}">
+          <h2>{{_("Learn")}}</h2>
+          <p>{{_("Our collection of resources shows you how to use the technologies that power the Web.")}}</p>
+        </a>
+        <div></div>
+      </div>
+      
+      <div class="promo" id="promo-demos">
+          <a href="{{ url('demos') }}">
+          <h2>{{_("Demos")}}</h2>
+          <p>{{_("Check out what developers are doing with the latest Web standards and open technologies.")}}</p>
+        </a>
+        <div></div>
+      </div>
+      
+      <div class="promo" id="promo-foxdev">
+        <a href="{{ devmo_url(_('/en/Firefox_for_developers')) }}">
+          <h2>{{_("Firefox for Devs")}}</h2>
+          <p>{{_("See what's new for Web developers in the latest version of Firefox.")}}</p>
+        </a>
+        <div></div>
+      </div>
+    
+      <div class="promo" id="promo-aurora">
+        <a href="{{_("http://www.mozilla.com/en-US/firefox/channel/")}}">
+          <h2>{{_("Aurora")}}</h2>
+          <p>{{_("Experience the very latest features before they go to beta by trying out the new Aurora builds.")}}</p>
+        </a>
+        <div></div>
+      </div>
+    
+    </section><!-- /#home-promos -->
+    
+    <section id="home-news">
+      <h1>{{_("Latest News & Updates")}}</h1>
+      {{ newsfeed(updates, section_headers=True) }}
+    </section><!-- /#home-news -->
+    
+    <section id="home-demos">
+      <h1>{{_("Awesome Demos")}}</h1>
+      <p class="more"><a href="{{ url('demos') }}">{% trans %}More Demos&hellip;{% endtrans %}</a></p>
+      
+      <ul class="gallery">
+        {% set extra_class = cycler(' row-first', '')%}
+        {% for submission in demos %}
+            {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133") }}
+        {% endfor %}
+        <li class="demo-submit">          
+        <p><a href="{{ url('demos_submit') }}">{% trans %}Have an awesome demo of your own? <strong>Submit It</strong>{% endtrans %}</a></p>
+        </li>
+      </ul>
+    </section><!-- /#home-demos -->
+    
+  </section>
+
 </div>
-</section>{# /#content #}
+</section><!-- /#content -->
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+    
+<script type="text/javascript">
+// <![CDATA[
+	$("#welcome-bar").ready(function(){
+		$("#welcome-close").click(function(){
+		  $("#welcome-bar").slideUp("fast").after('<div class="wrap"><button type="button" id="welcome-open">About MDN</button></div>');
+		  $("#welcome-open").click(function(){ 
+		    $("#welcome-bar").slideDown();
+		    $(this).parents("div.wrap").fadeOut("fast").remove(); 
+		  });
+		});
+	});
+// ]]>
+</script>
+  
+<script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+	$(".gallery").ready(function(){
+		$(".gallery").addClass("js");
+
+    $(".gallery .demo").hoverIntent({
+      interval: 250,
+      over: function() {
+        var content = $(this).html(),
+            demo = $(this), 
+            offs = $(this).offset();
+        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
+        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
+          $(this).fadeOut(200, function(){ 
+            $(this).remove(); 
+          });
+        });
+      }, 
+      out: function() { /* do nothing */ }
+    });
+
+	});
+// ]]>
+</script>
 
 {% endblock %}

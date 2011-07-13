@@ -14,10 +14,26 @@ except ImportError:
 
 
 # TODO: Allow these to be managed via DB / admin page?
+
+# Currently promoted dev derby
 DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = getattr(settings, 'DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG', 
-    'challenge:2011:june')
+    'challenge:2011:july')
+
+# Dev derby choices displayed on submission form
+DEMOS_DEVDERBY_CHALLENGE_CHOICES = getattr(settings, 'DEMOS_DEVDERBY_CHALLENGE_CHOICES', [
+    "challenge:2011:july",
+    "challenge:2011:august",
+    "challenge:2011:september",
+])
+
+# Dev derby tags for previous challenges
+DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS', [
+    "challenge:2011:june",
+])
+
+# Tag used to find most recent winner for dev derby
 DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
-    'system:challenge:winner:2011:june')
+    'system:challenge:firstplace:2011:june')
 
 # These are tag namespaces whitelisted for demo creators
 TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
@@ -28,17 +44,41 @@ DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
 # HACK: For easier L10N, define tag descriptions in code instead of as a DB model
 TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESCRIPTIONS', (
-    
-    {
-        "tag_name": "system:challenge:winner:2011:june", 
-        "title": _("Winner of the June 2011 Dev Derby Challenge - CSS3 Animations"), 
-        "description": _("Show us what CSS can really do! Make the Web move with CSS3 Animations."),
-        "learn_more": [],
-    },
+
     {
         "tag_name": "challenge:2011:june", 
         "title": _("June 2011 Dev Derby Challenge - CSS3 Animations"), 
-        "description": _("Show us what CSS can really do! Make the Web move with CSS3 Animations."),
+        "short_title": _("CSS3 Animations"),
+        "dateline": _("June 2011"),
+        "summary": _("CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."),
+        "description": _("CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."),
+        "learn_more": [],
+    },
+    {
+        "tag_name": "challenge:2011:july", 
+        "title": _("July 2011 Dev Derby Challenge - HTML5 <video>"), 
+        "short_title": _("HTML5 <video>"),
+        "dateline": _("July 2011"),
+        "summary": _("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."),
+        "description": _("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."),
+        "learn_more": [],
+    },
+    {
+        "tag_name": "challenge:2011:august", 
+        "title": _("August 2011 Dev Derby Challenge - Touch on Mobile"), 
+        "short_title": _("Touch on Mobile"),
+        "dateline": _("August 2011"),
+        "summary": _("Touch events let you track the movements of a user's fingers on a touch screen."),
+        "description": _("Touch events let you track the movements of a user's fingers on a touch screen."),
+        "learn_more": [],
+    },
+    {
+        "tag_name": "challenge:2011:september", 
+        "title": _("September 2011 Dev Derby Challenge - History API"), 
+        "short_title": _("History API"),
+        "dateline": _("September 2011"),
+        "summary": _("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."),
+        "description": _("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."),
         "learn_more": [],
     },
 

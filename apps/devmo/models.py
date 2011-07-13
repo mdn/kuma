@@ -1,10 +1,16 @@
-from django.db import models
+import csv
+from datetime import datetime
+import logging
+import urllib2
 
 from django.contrib.auth.models import User as DjangoUser
+from django.db import models
 
 import caching.base
-
+import html5lib
+from html5lib import sanitizer
 from tower import ugettext as _
+
 
 class ModelBase(caching.base.CachingMixin, models.Model):
     """Common base model for all MDN models: Implements caching."""
@@ -13,6 +19,7 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
     class Meta:
         abstract = True
+
 
 class UserProfile(ModelBase):
     """
@@ -46,3 +53,95 @@ class UserProfile(ModelBase):
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
+
+    def __getattr__(self, name):
+        if not 'deki_user_id' in self.__dict__:
+            raise AttributeError
+        if not 'deki_user' in self.__dict__:
+            from dekicompat.backends import DekiUserBackend
+            self.__dict__['deki_user'] = \
+                DekiUserBackend().get_deki_user(self.__dict__['deki_user_id'])
+        if hasattr(self.__dict__['deki_user'], name):
+            return getattr(self.__dict__['deki_user'], name)
+        raise AttributeError
+
+
+class Calendar(ModelBase):
+    """The Calendar spreadsheet"""
+
+    shortname = models.CharField(max_length=255)
+    url = models.URLField(
+        help_text='URL of the google doc spreadsheet for events', unique=True)
+
+    @classmethod
+    def as_unicode(cls, events):
+        p = html5lib.HTMLParser(tokenizer=sanitizer.HTMLSanitizer)
+        for row in events:
+            for idx, cell in enumerate(row):
+                row[idx] = p.parseFragment(unicode(cell, 'utf-8')).toxml()
+            yield row
+
+    def reload(self, data=None):
+        events = []
+        u = None
+        if not data:
+            try:
+                u = urllib2.urlopen(self.url)
+            except Exception, e:
+                return False
+        data = csv.reader(u) if u else data
+        if not data:
+            return False
+        events = list(Calendar.as_unicode(data))
+        Event.objects.filter(calendar=self).delete()
+        for event_line in events:
+            event = None
+            if len(event_line) > 7:
+                done = event_line[7] == 'yes'
+            if event_line[1] != "Conference":
+                # verify date string conversion before adding the event
+                try:
+                    event_date = datetime.strptime(event_line[9], "%m/%d/%Y")
+                    event_date_string = event_date.strftime("%Y-%m-%d")
+                except:
+                    continue
+                if len(event_line) > 10:
+                    try:
+                        event_end_date = datetime.strptime(event_line[10], "%m/%d/%Y")
+                        event_end_date_string = event_end_date.strftime("%Y-%m-%d")
+                    except:
+                        event_end_date = None
+                event = Event(date=event_date,
+                              end_date=event_end_date,
+                              conference=event_line[1],
+                              conference_link=event_line[3],
+                              location=event_line[2], people=event_line[5],
+                              description=event_line[6][:255],
+                              done=done, calendar=self)
+                if len(event_line) > 8:
+                    event.materials = event_line[8]
+                event.save()
+
+    def __unicode__(self):
+        return self.shortname
+
+
+class Event(ModelBase):
+    """An event"""
+
+    date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+    conference = models.CharField(max_length=255)
+    conference_link = models.URLField(blank=True, verify_exists=False)
+    location = models.CharField(max_length=255)
+    people = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    done = models.BooleanField(default=False)
+    materials = models.URLField(blank=True, verify_exists=False)
+    calendar = models.ForeignKey(Calendar)
+
+    class Meta:
+        ordering = ['date']
+
+    def __unicode__(self):
+        return '%s - %s, %s' % (self.date, self.conference, self.location)

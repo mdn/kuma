@@ -1,10 +1,7 @@
- <li class="demo{{extra_class}}">
+<li class="demo{{extra_class.next()}} {{main_flag_class}}">
     <h2 class="demo-title">
-        {# TODO: Title seems to interfere with hoverIntent #}
-        {% if False %}
-            <a href="{{ url('demos_detail', slug=submission.slug) }}" title="{{ _('See more about {title} by {author}') | f(title=submission.title, author=submission.creator.first_name) }}"></a>
-        {% endif %}
-        <a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="200" height="150">{{ submission.title }}</a>
+        <a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="{{thumb_width}}" height="{{thumb_height}}">{{ submission.title }}</a>
+        {% if main_flag %}<strong class="flag">{{ main_flag_description }}</strong>{% endif %}
     </h2>
     <p class="byline vcard">{{ submission_creator(submission) }}</p>
     <div class="extra">

@@ -1,12 +1,12 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}devderby{% endblock %}
+{% block pageid %}devderby-home{% endblock %}
 
 {% block bodyclass %}section-demos devderby{% endblock %}
 
 {% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/devderby.css"/>
-<link rel="alternate" type="application/atom+xml" title="{{_('Dev Derby Submissions')}}"
+    {{ css('devderby') }}
+    <link rel="alternate" type="application/atom+xml" title="{{_('Dev Derby Submissions')}}"
         href="{{ url('demos_feed_tag', tag=current_challenge_tag_name, format='atom') }}" />
 {% endblock %}
 
@@ -33,8 +33,9 @@
 
   <section id="content-main" class="full" role="main">
     <header id="derby-head">
+      <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
       <h1>{{_("Dev Derby")}}</h1>
-      <h2>{{_("Show us what you can do with CSS animations")}}</h2>
+      <h2>{{_("Show us what you can do with HTML5 <video>")}}</h2>
       <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
       <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
     </header>
@@ -46,43 +47,70 @@
       </header>
       <ol>
         <li class="first">
-          <h2 class="title">{{_("CSS3 Animations")}}</h2>
-          <h3 class="date">{{_("June")}}</h3>
-          <h4 class="tagline">{{_("Make the Web move")}}</h4>
-          <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-          <p class="desc">{{_("CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions.")}}</p>
-        </li>
-        <li class="second">
           <h2 class="title">{{_("HTML5 <video>")}}</h2>
           <h3 class="date">{{_("July")}}</h3>
           <h4 class="tagline">{{_("Lights, camera, action!")}}</h4>
+          <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
           <p class="desc">{{_("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins.")}}</p>
         </li>
-        <li class="third">
+        <li class="second">
           <h2 class="title">{{_("Touch")}}</h2>
           <h3 class="date">{{_("August")}}</h3>
           <h4 class="tagline">{{_("Touch and go")}}</h4>
           <p class="desc">{{_("Touch events let you track the movements of a user's fingers on a touch screen.")}}</p>
+        </li>
+        <li class="third">
+          <h2 class="title">{{_("History API")}}</h2>
+          <h3 class="date">{{_("September")}}</h3>
+          <h4 class="tagline">{{_("A browser never forgets")}}</h4>
+          <p class="desc">{{_("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked.")}}</p>
         </li>
       </ol>
     </section>
     
     <section id="current-challenge">
       <ul class="tabs">
-        <li class="current"><a href="#tab-challenge">{{_("Current Challenge")}}</a></li>
+        <li class="current"><a href="#tab-challenge">{{_("Current")}}</a></li>
         <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
         <li><a href="#tab-rules">{{_("Rules")}}</a></li>
         <li><a href="#tab-judging">{{_("Judging")}}</a></li>
+        <li><a href="#tab-previous">{{_("Previous")}}</a></li>
       </ul>
       
       <section id="tab-challenge" class="block">
         <header>
-          <h1 class="title">{{_("CSS3 Animations")}}</h1>
-          <h2 class="date">{{_("June")}}</h2>
+          <h1 class="title">{{_("HTML5 <video>")}}</h1>
+          <h2 class="date">{{_("July")}}</h2>
         </header>
-        <p class="tagline">{{_("Show us what CSS can really do! Make the Web move with CSS3 Animations.")}}</p>
-        <p>{{_("CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web.  CSS3 Animations let you change property values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3.")}}</p>
-        <p>{% trans %}<a href="{{ submit_url }}">Submit your CSS3 Animations demo</a> for the June Dev Derby today!{% endtrans %}</p>
+        <p class="tagline">{{_("Lights! Camera! HTML5 video action!")}}</p>
+        {% trans %}
+            <p>The support for video in HTML5 enables web-based interactive video
+            like nothing else before:</p>
+
+            <ul class="prose">
+                <li>No need for plug-ins that users must install and keep updated</li>
+                <li>Video content that integrates with the rest of the web page</li> 
+                <li>Better performance</li>
+                <li>Better accessibility</li>
+                <li>Better maintainability</li>
+            </ul>
+
+            <p>Use CSS to transform, filter, or mask the video container. You can
+                even perform real-time changes to the video content, such as
+                green-screen effects, dynamic content injection, or edge or
+                movement detection.</p>
+
+            <p>You don’t have to code completely from scratch, either. <a href="http://popcornjs.org/">Popcorn.js</a>
+                is an open-source event framework for integrating HTML5 media
+                (audio as well as video) with other web-based content, with a
+                plug-in system for adding web service integrations. Popcorn.js is a
+                project of the <a href="http://webmademovies.org/">Web Made Movies</a> video lab.</p>
+
+            <p>The possibilities are unbounded, so show us what you can do!</p> 
+
+            <p><a href="{{ submit_url }}">Submit your HTML5 video demo</a> for the July Dev Derby today!</p>
+        {% endtrans %}
+
       </section>
     
       <section id="tab-submissions" class="block">
@@ -91,9 +119,8 @@
               <p class="demo-submit"><a href="{{ submit_url }}" class="button">{{_("Submit Your Demo")}}</a></p>
           {% else %}
                 <ul class="gallery">
-                    {% set cols_per_row = 3 %}
+                    {% set extra_class = cycler(' row-first', '', '')%}
                     {% for submission in submissions_qs %}
-                        {% set extra_class = loop.cycle(' row-first', '', '')%}
                         {{ submission_thumb(submission, extra_class) }}
                     {% endfor %}
                 </ul><!-- /.gallery -->
@@ -103,7 +130,7 @@
       <section id="tab-rules" class="block">
       {% trans rules_url=url('demos_devderby_rules') %}
         <p>A summary of the rules can be found below.  For a complete look at the terms of the contest please see the <a href="{{rules_url}}">Dev Derby Contest Official Rules</a>.</p>
-        <ul>
+        <ul class="prose">
           <li>Almost anyone can enter (<a href="{{rules_url}}">see the rules</a> for exceptions).</li>
           <li>There will be a new contest every month.</li>
           <li>Your entry must meet certain criteria; <a href="{{rules_url}}">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li>
@@ -121,7 +148,7 @@
         <p>Entries will be reviewed by a panel of qualified judges, including
             members of the Mozilla team and outside experts. We will rate the demos
             across 4 dimensions:</p>
-        <ul>
+        <ul class="prose">
             <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li>
             <li><strong>Originality</strong> &ndash; How innovative and unique is the demo?</li>
             <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li>
@@ -133,9 +160,60 @@
             the entries have received from the community. So make sure to share
             your demo with others and encourage them to visit Dev Derby to
             &ldquo;vote.&rdquo;</p>
-      {% endtrans %}
+            
+        <h2>Expert Judges</h2>
+        <ul class="judges">
+          <li class="vcard">
+             <h3><a href="http://leaverou.me" class="fn url">Lea Verou <img src="{{MEDIA_URL}}img/devderby/judges/leaverou.jpg" alt="" class="photo" width="100" height="100"></a></h3>
+             <h4 class="title">Web developer, Co-founder of Fresset Ltd.</h4>
+             <p class="twitter"><a href="http://twitter.com/leaverou" class="url nickname">@leaverou</a></p>
+             <p>Lea Verou is the lead web developer and designer of Fresset Ltd, which she co-founded in 
+             2008. Fresset owns and manages some of the largest greek community websites. Lea has a 
+             long-standing passion for open web standards, especially CSS and JavaScript. She loves 
+             researching  new ways to use them and shares her findings through her blog, 
+             <a href="http://leaverou.me">leaverou.me</a>. She speaks at a number of the largest web 
+             development conferences and writes for leading industry publications. Lea also co-organized 
+             and occasionally lectures the web development course at the Athens University of Economics 
+             and Business.</p>
+          </li>
+          <li class="vcard">
+             <h3><a href="http://ethanmarcotte.com" class="fn url">Ethan Marcotte <img src="{{MEDIA_URL}}img/devderby/judges/ethanmarcotte.jpg" alt="" class="photo" width="100" height="100" title="Photo by Anton Peck"></a></h3>
+             <h4 class="title">Web designer, author</h4>
+             <p class="twitter"><a href="http://twitter.com/beep" class="url nickname">@beep</a></p>
+             <p>Ethan Marcotte is a web designer &amp; developer who cares deeply about beautiful design, 
+             elegant code, and the intersection of the two. Over the years, Ethan has enjoyed working 
+             with such clients as the Sundance Film Festival, Stanford University, <cite>New&nbsp;York Magazine</cite> 
+             and The Today Show. He swears profusely <a href="http://twitter.com/beep">on Twitter</a>, 
+             and would like to be an <a href="http://unstoppablerobotninja.com/" class="url">unstoppable robot ninja</a> 
+             when he grows up. His most recent book is <cite><a href="http://www.abookapart.com/products/responsive-web-design">Responsive Web Design</a></cite>.</p>
+          </li>
+          <li class="vcard">
+             <h3><a href="http://nimbupani.com" class="fn url">Divya Manian <img src="{{MEDIA_URL}}img/devderby/judges/divyamanian.jpg" alt="" class="photo" width="100" height="100"></a></h3>
+             <h4 class="title">Web Opener at Opera, Open Web Vigilante</h4>
+             <p class="twitter"><a href="http://twitter.com/divya" class="url nickname">@divya</a></p>
+             <p>Divya Manian is a Web Opener for Opera Software in Seattle. She made the jump from 
+             developing device drivers for Motorola phones to designing websites and has not looked 
+             back since. She takes her duties as an Open Web vigilante seriously which has resulted 
+             in collaborative projects such as <a href="http://html5readiness.com">HTML5 Readiness</a> 
+             and <a href="http://html5boilerplate.com">HTML5 Boilerplate</a>.</p>
+          </li> 
+        </ul>
+        {% endtrans %}
       </section>
 
+      <section id="tab-previous" class="block">
+        <header>
+            <h2>{{_("Previous Dev Derby Challenges")}}</h2>
+        </header>
+        <ul class="previous">
+            {% for tag_name in previous_challenge_tag_names %}
+                <li>
+                  <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                  <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+      </section>
     
     </section><!-- /#current-challenge -->
   </div><!-- /.main -->
@@ -147,7 +225,7 @@
       <h1>{{_("Previous Winner")}}</h1>
       <h2 class="title"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a></h2>
       {# TODO: This should probably be the author's avatar, at some point #}
-      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="{{ submission.title }}" width="70" height="52"></a> {{ submission_creator(submission) }}</h3>
+      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.creator.get_profile().gravatar }}" alt="{{ submission.title }}" width="52" height="52"></a> {{ submission_creator(submission) }}</h3>
       <p class="desc">{{ submission.summary }}</p>
       <p class="launch"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{_("See the Demo")}}</a></p>
     </section><!-- /#prev-winner -->
@@ -192,85 +270,5 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
-<script type="text/javascript">
-// <![CDATA[
-  function derbyTabs(targetblock) {
-    var currentblock;
-  	$("#current-challenge .block").addClass("block-hidden");
-
-    if (targetblock) {
-      currentblock = targetblock.replace( /.*?#(.*)/g, "$1" ); // determine which block to show by extracting the id from the href
-      tabSwitch(currentblock);
-    }
-    else if ( !targetblock && (/.*?#tab-*/.test(window.location)) ) { // if no target is supplied, check the url for a fragment id prefixed with "tab-" (this means inbound links can point directly to a tab)
-      currentblock = window.location.href.replace( /.*?#(.*)/g, "$1" );
-      $("html,body").animate({scrollTop: $("#current-challenge").offset().top - 150}, 0); // HACK: compensate for overshooting the tabs when the page loads
-      tabSwitch(currentblock);
-    }
-    else {
-      currentblock = $("#current-challenge .tabs li.current a").attr("href").replace( /.*?#(.*)/g, "$1" );
-      tabSwitch(currentblock);
-    }
-  	$("#"+currentblock).removeClass("block-hidden"); // make the current block visible
-  }
-  
-  function tabSwitch(targettab) {
-    var tabs = $("#current-challenge .tabs li a");    
-    if (targettab) {
-      for (var i = 0; i < tabs.length; i++) { // loop through the tabs
-        var tab = $(tabs[i]).attr("href").replace( /.*?#(.*)/g, "$1" ); // strip down the href
-        if ( targettab == tab ) { // if one of them matches our target
-          $("#current-challenge .tabs li").removeClass("current"); // first clean the slate
-          $("#current-challenge .tabs li a[href$=#"+targettab+"]").parents("li").addClass("current"); // then set that tab as current
-        }    
-      }
-    } 
-  };
-  
-  $("#current-challenge .tabs li a").click(function(){
-    $("#current-challenge .tabs li").removeClass("current");
-    $(this).parents("li").addClass("current");
-    derbyTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
-    return false;
-	});
-	
-  $("#nav-derby a[rel=tab]").click(function(){
-    derbyTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
-  });
-  
-  $(document).ready(function(){
-    derbyTabs();
-
-    $("#upcoming li").hover(
-      function(){
-        $(this).children(".desc").fadeIn('fast');
-      },
-      function(){
-        $(this).children(".desc").fadeOut('fast');
-      }
-    );
-  });
-  
-	$(".gallery").ready(function(){
-		$(".gallery").addClass("js");
-    $(".gallery .demo").hoverIntent({
-      interval: 250,
-      over: function() {
-        var content = $(this).html(),
-            demo = $(this), 
-            offs = $(this).offset();
-        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
-        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
-          $(this).fadeOut(200, function(){ 
-            $(this).remove(); 
-          });
-        });
-      }, 
-      out: function() { /* do nothing */ }
-    });
-	});
-
-// ]]>
-</script>
+    {{ js('demostudio_devderby_landing') }}
 {% endblock %}

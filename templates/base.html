@@ -21,9 +21,9 @@
     {{ css(style) }}
   {% endfor %}
   <!--<![endif]-->
-  <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css"><![endif]-->
-  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css"><![endif]-->
-  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css"><![endif]-->
+  <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie.css"><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie7.css"><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie6.css"><![endif]-->
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/mdn-print.css">
   {% endblock %}
 
@@ -46,44 +46,93 @@
     <div class="wrap">
       <div id="branding">
         {% block headerlogo %}
-        <h4 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="" width="62" height="71"> Mozilla Developer Network</a></h4>
-        {% endblock %}
-        {% block headertagline %}
-        <p id="tagline">{{ _('A comprehensive, usable, and accurate resource for everyone developing for the Open Web.') }}</p>
+        <h1 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-compact.png" alt="Mozilla Developer Network" title="Mozilla Developer Network" width="148" height="46"></a></h1>
         {% endblock %}
       </div>
-
-      <div id="utility">
-        {% include "includes/login.html" %}
-
-        <form id="site-search" method="get" action="http://www.google.com/search"
+      
+      <form id="site-search" method="get" action="http://www.google.com/search"
               data-url="{{ url('search') }}">
-          <p>
-            <input type="text" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}" />
-            <button type="submit">{{ _('Search') }}</button>
-          </p>
-          <input type="hidden" name="sitesearch" value="developer.mozilla.org" />
-        </form>
+        <p>
+          <input type="text" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}" />
+          <noscript><button type="submit">{{ _('Search') }}</button></noscript>
+        </p>
+        <input type="hidden" name="sitesearch" value="developer.mozilla.org" />
         <div id="site-search-gg"></div>
-      </div>
+      </form>
 
       {% block headernav %}
-      <nav id="nav">
-        <ul id="nav-main" role="navigation">
-          <li id="nav-main-web"><a href="{{ url('web') }}" class="web">{{ _('Web') }}</a></li>
-          <li id="nav-main-mobile"><a href="{{ url('mobile') }}" class="mobile">{{ _('Mobile') }}</a></li>
-          <li id="nav-main-addons"><a href="{{ url('addons') }}" class="addons">{{ _('Add-ons') }}</a></li>
-          <li id="nav-main-mozilla"><a href="{{ url('mozilla') }}" class="mozilla">{{ _('Mozilla') }}</a></li>
-        </ul>
-
-        <ul id="nav-extra" role="navigation">
-          <li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Docs') }}</a></li>
-          <li id="nav-extra-demos"><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
-          <li id="nav-extra-learning"><a href="{{ url('learn') }}">{{ _('Learning') }}</a></li>
-          <li id="nav-extra-community"><a href="/forums">{{ _('Forums') }}</a></li>
+      
+      <nav id="nav" role="menubar">
+        <ul id="nav-main">
+          <li id="nav-main-topics" class="menu"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="Explore other parts of MDN">{{ _('Topics') }}</a>
+            <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
+              <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
+              <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
+              <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
+              <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
+            </ul>
+          </li>
+          <li id="nav-main-docs" class="menu">
+            <a href="{{ url('docs') }}" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
+            <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
+              <ul>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/DOM')) }}">{{ _('DOM') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">{{ _('Video') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">{{ _('Audio') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/SVG')) }}">{{ _('SVG') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/WebGL')) }}">{{ _('WebGL') }}</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">{{ _('HTML5') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/WebSockets')) }}">{{ _('WebSockets') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Offline_resources_in_Firefox')) }}">{{ _('Offline Cache') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/DOM/Storage')) }}">{{ _('Local Storage') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/IndexedDB')) }}">{{ _('IndexedDB') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_files_from_web_applications')) }}">{{ _('File API') }}</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_gradients')) }}">{{ _('Gradients') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/Using_CSS_transforms')) }}">{{ _('Transforms') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/CSS_transitions')) }}">{{ _('Transitions') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/CSS_animations')) }}">{{ _('Animations') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/CSS/Media_queries')) }}">{{ _('Media Queries') }}</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <li><a href="{{ devmo_url(_('/en/JavaScript')) }}">{{ _('JavaScript') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/AJAX')) }}">{{ _('AJAX') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/HTML/Canvas')) }}">{{ _('Canvas') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">{{ _('Geolocation') }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/DragDrop/Drag_and_Drop')) }}">{{ _('Drag &amp; Drop')|safe }}</a></li>
+                    <li><a href="{{ devmo_url(_('/en/Using_web_workers')) }}">{{ _('Web Workers') }}</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <p><a href="{{ url('docs') }}">{{ ('More docs&hellip;')|safe }}</a></p>
+            </div>
+          </li>
+          <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('Demos') }}</a></li>
+          <li id="nav-main-learning" role="menuitem"><a href="{{ url('learn') }}" class="learning">{{ _('Learning') }}</a></li>
+          <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Community') }}</a>
+            <ul id="nav-sub-community" class="sub-menu">
+              <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
+              <li><a href="/forums">{{ _('Forums') }}</a></li>
+              <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
+            </ul>
         </ul>
       </nav>
       {% endblock %}
+    
+      {% include "includes/login.html" %}
 
     </div>
   </header>
@@ -123,7 +172,7 @@
 <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
 {# js #}
 {% block site_js %}
-<script src="//www.google.com/jsapi" type="text/javascript"></script>
+  <script src="//www.google.com/jsapi" type="text/javascript"></script>
   {{ js('mdn') }}
   {% for script in scripts %}
     {{ js(script) }}

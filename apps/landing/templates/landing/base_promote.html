@@ -1,4 +1,4 @@
-{% extends "base_compact.html" %}
+{% extends "base.html" %}
 
 {% block headernav_current %}
   <h2 class="current"><a href="{{ url('promote') }}">{{ _('Promote') }}</a></h2>
@@ -10,4 +10,4 @@
 <li id="nav-extra-forums"><a href="/forums">{{ _('Forums') }}</a></li>
 {% endblock %}      
 
-{% block bodyclass %}section-promote{% endblock %}
+{% block bodyclass %}section-community{% endblock %}

@@ -34,17 +34,17 @@
   <header id="page-head" class="gallery">
     <div class="main author">
       <h1 class="page-title">
-          {{ gravatar(profile_user.email) }} {{ display_name }}
+        <img src="{{ profile.gravatar }}" class="photo avatar" width="72" height="72" border="0" /> {{ display_name }}
           {% if false %}
             <!-- Only shown for the user and admins -->
             <a href="#" class="button edit">Edit Profile</a>
           {% endif %}
       </h1>
-      {% if profile_deki_user.location %}
-          <p class="loc">{{profile_deki_user.location}}</p>
+      {% if profile.location %}
+          <p class="loc">{{profile.location}}</p>
       {% endif %}
-      {% if profile_deki_user.profile_url %}
-          <p class="web"><a href="{{profile_deki_user.profile_url}}" rel="me external" class="url">{{profile_deki_user.profile_url}}</a></p>
+      {% if profile.profile_url %}
+          <p class="web"><a href="{{profile.profile_url}}" rel="me external" class="url">{{profile.profile_url}}</a></p>
       {% endif %}
     </div>
   </header>

@@ -3,8 +3,8 @@
 {% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
 {% set short_url = full_url | bitly_shorten %}
 
-{% block pageid %}demos-detail{% endblock %}
-{% block bodyclass %}section-demos{% endblock %}
+{% block pageid %}demostudio{% endblock %}
+{% block bodyclass %}section-demos detail{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}{% endblock %}
 
 {% block extrahead %}
@@ -17,77 +17,63 @@
 
 {% block content %}
 
-<section id="nav-toolbar">
-<div class="wrap">
-  <nav class="crumbs">
-    <ol role="navigation">
-        <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
-        <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
-      <li><a href="{{ submission.get_absolute_url() }}">{{submission.title}}</a></li>
-    </ol>
-  </nav>
-  
-  <nav class="paging">
-    <ul role="navigation">
-        {% set prev = submission.previous() %}
-        {% if prev %}
-            <li class="prev"><a href="{{ prev.get_absolute_url() }}" title="{{_('Go to the previous demo, {demo_title}') | f(demo_title=prev.title)}}">{{_('Prev')}}</a></li>
-        {% endif %}
-        {% set next = submission.next() %}
-        {% if next %}
-            <li class="next"><a href="{{ next.get_absolute_url() }}" title="{{_('Go to the next demo, {demo_title}') | f(demo_title=next.title)}}">{{_('Next')}}</a></li>
-        {% endif %}
-    </ul>
-  </nav>
-
-</div>
-</section>
-
 <section id="content">
 <div class="wrap">
+
+  <header id="demos-head">
+    <h1><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a></h1>
+    <ul class="demo-buttons">
+      <li class="learnmore"><a href="#learn-pop" class="button">{{ _('Learn More') }}</a>
+        <div id="learn-pop" aria-hidden="true">        
+          {% trans %}
+          <p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
+          <ul>
+            <li>View demos that showcase what HTML, CSS, and JavaScript can do.</li>
+            <li>Inspect the source code for those demos so you can see how they work.</li>
+            <li>Read documentation to learn about the open standards and technologies that power the Web.</li>
+          </ul>
+          {% endtrans %}
+        </div>
+      </li>
+      <li class="submit"><a href="{{ url('demos_submit') }}" class="button">{{_("Submit a Demo")}}</a></li>
+    </ul>
+    
+    <nav class="paging">
+      <ul role="navigation">
+          {% set prev = submission.previous() %}
+          {% if prev %}
+              <li class="prev"><a href="{{ prev.get_absolute_url() }}" title="{{_('Go to the previous demo, {demo_title}') | f(demo_title=prev.title)}}">{{_('Prev')}}</a></li>
+          {% endif %}
+          {% set next = submission.next() %}
+          {% if next %}
+              <li class="next"><a href="{{ next.get_absolute_url() }}" title="{{_('Go to the next demo, {demo_title}') | f(demo_title=next.title)}}">{{_('Next')}}</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </header>
 
   <section id="content-main" role="main" class="full">
   
     <section id="demobox">
-      <h1 class="page-title">{{submission.title}}</h1>
-      <p class="byline">
-        {% trans creator_link=submission_creator(submission), create_date=datetimeformat(submission.created, 'date')|e %}
-            by {{ creator_link }} on {{ create_date }}
-        {% endtrans %}
-      </p>
+      <div class="demo-info">
+        <h1 class="page-title">{{submission.title}}</h1>
+        <p class="byline">
+          {% trans creator_link=submission_creator(submission), create_date=datetimeformat(submission.created, 'date')|e %}
+            By {{ creator_link }} on {{ create_date }}
+          {% endtrans %}
+        </p>
 
-      <!-- only shown to admins and the demo owner -->
-      <ul class="manage">
+        {# This should only be added for derby winners #}
+        {# <p class="flag"><strong>{{_('You Like')}}</strong></p> #}
 
-        {% if submission.allows_editing_by(request.user) %}
-            <li><a href="{{ url('demos_edit', slug=submission.slug) }}" 
-                class="button edit">{{_('Edit Demo')}}</a></li>
-        {% endif %}
 
-        {% if submission.allows_deletion_by(request.user) %}
-            <li><a href="{{ url('demos_delete', slug=submission.slug) }}" 
-                class="button remove modal">{{_("Remove demo")}}</a></li>
-        {% endif %}
-        {% if submission.allows_hiding_by(request.user) %}
-            {% if submission.hidden %}
-                <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
-                    <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
-            {% else %}
-                <li><form id="demo-hide" method="post" action="{{ url('demos_hide', slug=submission.slug) }}">{{ csrf() }}
-                    <button type="submit"><span class="button remove">{{_("Hide demo")}}</span></button></form></li>
-            {% endif %}
-        {% endif %}
-
-      </ul>
-
-      <div class="demo-desc">
-        <p>{{ submission.summary }}</p>
+        <div class="demo-desc">
+          <p>{{ submission.summary }}</p>
+        </div>
       </div>
-
+      
       <ul class="tools">
-
-          <li><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button launch"><strong>{{_('Launch Demo')}}</strong></a></li>
-
+        <li class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button"><strong>{{_('Launch Demo')}}</strong></a></li>
         <li>
             {% set likes = submission.likes.get_total_for_request(request) %}
             <form id="demo-unlike" target="like_receiver" method="post" 
@@ -153,7 +139,7 @@
         {% for idx in range(1, 6) %}
           {% if submission['screenshot_'~idx] %}
             <li class="panel">
-              <img src="{{ submission['screenshot_'~idx].url }}" alt="" width="480" height="360">
+              <img src="{{ submission['screenshot_'~idx].url }}" alt="" width="434" height="325">
             </li>
           {% endif %}
         {% endfor %}
@@ -173,6 +159,38 @@
     </section><!-- /#demobox -->
     
     <section class="demo-more">
+      
+      {# only shown to admins and the demo owner #}
+      {# TODO: The whole UL should be hidden if none of the conditions are met. Logged-out users get served an empty list, which is invalid HTML and can trigger layout weirdness. #}
+      {% set p_edit = submission.allows_editing_by(request.user) %}
+      {% set p_delete = submission.allows_deletion_by(request.user) %}
+      {% set p_hide = submission.allows_hiding_by(request.user) %}
+      {% set show_buttons = ( p_edit or p_delete or p_hide ) %}
+
+      {% if show_buttons %}
+      <ul id="demo-manage">
+
+        {% if p_edit %}
+            <li><a href="{{ url('demos_edit', slug=submission.slug) }}" 
+                class="button edit">{{_('Edit Demo')}}</a></li>
+        {% endif %}
+
+        {% if p_delete %}
+            <li><a href="{{ url('demos_delete', slug=submission.slug) }}" 
+                class="button remove modal">{{_("Remove demo")}}</a></li>
+        {% endif %}
+        {% if p_hide %}
+            {% if submission.hidden %}
+                <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
+                    <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
+            {% else %}
+                <li><form id="demo-hide" method="post" action="{{ url('demos_hide', slug=submission.slug) }}">{{ csrf() }}
+                    <button type="submit"><span class="button remove">{{_("Hide demo")}}</span></button></form></li>
+            {% endif %}
+        {% endif %}
+
+      </ul>
+      {% endif %}
 
       {% if submission.description %}
       <section class="moreabout">
@@ -300,7 +318,37 @@
 
     </script>
 
-      <script type="text/javascript">
+    <script type="text/javascript">
+      // 'Learn More' popup
+      $("#demos-head .learnmore .button").click(function(){
+        $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
+        $(this).blur();
+        return false;
+      });
+
+      $("#learn-pop").hover(
+        function() {
+          $(this).show().removeAttr("aria-hidden");
+        },
+        function() {
+          $(this).slideUp('fast').attr("aria-hidden", "true");
+          $("#demo-tags .button").blur();
+        }
+      );
+      
+      // Hide bubbles when anything else is clicked
+      $(document).bind('click', function(e) {
+        var $clicked = $(e.target);
+        if (! $clicked.parents().hasClass("share, learnmore"))
+          $("#share-opts").hide();
+      });
+      // Or gains focus
+      $("a, input, textarea, button").bind('focus', function(e) {
+        var $focused = $(e.target);
+        if (! $focused.parents().hasClass("share, learnmore"))
+          $("#share-opts").hide();
+      });
+      
       $("#share-opts").ready(function(){
       	$("#share-opts").addClass("js").hide();
       	
@@ -318,18 +366,6 @@
             $("#sharetoggle").blur();
           }
         );
-      	
-        $(document).bind('click', function(e) {
-          var $clicked = $(e.target);
-          if (! $clicked.parents().hasClass("share"))
-            $("#share-opts").hide();
-        });
-        
-        $("a, input, textarea, button").bind('focus', function(e) {
-          var $focused = $(e.target);
-          if (! $focused.parents().hasClass("share"))
-            $("#share-opts").hide();
-        });
         
         $("#shorturl").focus(function() {
           $(this).select().addClass("focus");
@@ -362,17 +398,16 @@
                       visible: 1
                   });
 
-                  $(".nav-next a").show();
-                  $(".nav-prev a").show();
+                  $(".nav-next a, .nav-prev a").show();
                   
-                  $(".screenshots").hover(
+                  $(".screenshots, .flag").hover(
                     function() {
-                      $(".nav-next a").animate({ right: "0" },{ queue:false });
-                      $(".nav-prev a").animate({ left: "0" },{ queue:false });
+                      $(".nav-next a").animate({ right: "6px" },{ queue:false });
+                      $(".nav-prev a").animate({ left: "6px" },{ queue:false });
                     },
                     function() {
-                      $(".nav-next a").animate({ right: "-60px" },{ queue:false });
-                      $(".nav-prev a").animate({ left: "-60px" },{ queue:false });    
+                      $(".nav-next a").animate({ right: "-65px" },{ queue:false });
+                      $(".nav-prev a").animate({ left: "-65px" },{ queue:false });    
                     }
                   );
             }

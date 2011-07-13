@@ -1,11 +1,11 @@
 <?php include "./inc/template.php"; 
 head(
   $title = 'Dev Derby Rules | Mozilla Developer Network',
-  $pageid = 'devderby', 
+  $pageid = '', 
   $bodyclass = 'section-demos devderby plain',
-  $headerclass = 'compact',
   $extra_headers = '
-  <link rel="stylesheet" type="text/css" href="./css/devderby.css"/>
+  <link rel="stylesheet" type="text/css" href="./media/css/devderby.css"/>
+  <link rel="stylesheet" type="text/css" href="./media/css/demos.css"/>
   '
 ); ?>
 
@@ -28,6 +28,7 @@ head(
 
   <section id="content-main" class="full" role="main">
     <header id="derby-head">
+      <p class="presents"><a href="demos-landing.php">Mozilla Demo Studio</a> presents:</p>
       <h1>Dev Derby</h1>
       <h2>Dev Derby Contest Official Rules</h2>
     </header>

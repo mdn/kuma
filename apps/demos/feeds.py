@@ -1,5 +1,8 @@
 """Feeds for submissions"""
 import datetime
+import hashlib
+import urllib
+import logging
 import validate_jsonp
 
 import jingo
@@ -15,6 +18,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from devmo.urlresolvers import reverse
+from devmo.models import UserProfile
 
 from .models import Submission, TAG_DESCRIPTIONS
 
@@ -47,6 +51,8 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
             item_out = dict( (x, item[x]) for x in (
                 'link', 'title', 'pubdate', 'author_name', 'author_link',
             ))
+
+            item_out['author_avatar'] = item['obj'].creator.get_profile().gravatar
 
             # Linkify the tags used in the feed item
             item_out['categories'] = dict(

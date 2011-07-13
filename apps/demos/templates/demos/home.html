@@ -1,13 +1,13 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}demos{% endblock %}
+{% block pageid %}demostudio{% endblock %}
 
 {% block bodyclass %}section-demos landing{% endblock %}
 
 {% block extrahead %}
-<link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
+    <link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
         href="{{ url('demos_feed_recent', format='atom') }}" />
-        <link rel="alternate" type="application/atom+xml" title="{{_('Featured demos')}}"
+    <link rel="alternate" type="application/atom+xml" title="{{_('Featured demos')}}"
         href="{{ url('demos_feed_featured', format='atom') }}" />
 {% endblock %}
 
@@ -17,122 +17,327 @@
 <section id="content">
 <div class="wrap">
 
-  <header id="page-head" class="landing">
-    <div class="main">
-      <h1 class="page-title">{{_('Mozilla Demo Studio')}}</h1>
-      {% trans %}
-      <p>Welcome to Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
-      <ul>
-        <li>View <strong>demos</strong> that showcase what HTML, CSS, and JavaScript can do.</li>
-        <li>Inspect the <strong>source code</strong> for those demos so you can see how they work.</li>
-        <li>Read <strong>documentation</strong> to learn about the open standards and technologies that power the Web.</li>
-      </ul>
-      {% endtrans %}
-    </div>
-    
-    <p class="aside demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>    
+  <header id="demos-head">
+    <h1>{{_("Mozilla Demo Studio")}}</h1>
+    <ul class="demo-buttons">
+      <li class="learnmore"><a href="#learn-pop" class="button">{{ _('Learn More') }}</a>
+        <div id="learn-pop" aria-hidden="true">        
+          {% trans %}
+          <p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
+          <ul>
+            <li>View demos that showcase what HTML, CSS, and JavaScript can do.</li>
+            <li>Inspect the source code for those demos so you can see how they work.</li>
+            <li>Read documentation to learn about the open standards and technologies that power the Web.</li>
+          </ul>
+          {% endtrans %}
+        </div>
+      </li>
+      <li class="submit"><a href="{{ url('demos_submit') }}" class="button">{{_("Submit a Demo")}}</a></li>
+    </ul>
+    <p id="derby-cta">
+      <a href="{{url('demos_devderby_landing')}}">{% trans %}<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn More</strong>{% endtrans %}</a>
+    </p>
   </header>
-  
-  {% if featured_submission_list | length %}
-  <section id="featured-demos" class="boxed">
+
+  {% if featured_submission_list | length >= 3 %}
+  <section id="featured-demos">
     <header>
-        <h2>{{_('Featured Demos')}}</h2>
+      <h2>{{_("Featured Demos")}}</h2>
     </header>
 
     <ul class="nav-slide">
-        <li class="nav-prev"><a href="#" class="prev" title="{{_('See the previous three demos')}}">{{_('Previous')}}</a></li>
-        <li class="nav-next"><a href="#" class="next" title="{{_('See the next three demos')}}">{{_('Next')}}</a></li>
+      <li class="nav-prev"><a href="#" class="prev" title="{{_("See the previous demo")}}">{{_("Previous")}}</a></li>
+  		<li class="nav-next"><a href="#" class="next" title="{{_("See the next demo")}}">{{_("Next")}}</a></li>
     </ul>
   
-    <div class="frame">
-        {% set cols_per_row = 3 %}
-        <ul class="slider gallery">
-            {% for submission in featured_submission_list %}
-                {% set extra_class = loop.cycle(' row-first panel', ' panel', ' panel')%}
-                {{ submission_thumb(submission, extra_class) }}
-            {% endfor %}
-        </ul>
+    {% set submission = featured_submission_list[1] %}
+    <div id="demo-main">
+      {# <strong class="flag">{{_("Derby Winner")}}</strong> #}
+      <div class="preview">
+        <a href="{{ url('demos_detail', slug=submission.slug) }}">
+          <img src="{{ submission.screenshot_1.url }}" alt="" width="435" height="326">
+        </a>
+        <div class="demo-details">
+          <h2 class="demo-title">
+              <a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a>  
+          </h2>
+          <p class="byline vcard">{{ profile_link(submission.creator, show_gravatar=True) }}</p>
+          <p class="desc">{{ submission.summary }}</p>
+          <p class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" class="button">{{_("Launch")}}</a></p>
+        </div>
+      </div>
+    </div>
+    
+    {% set submission = featured_submission_list[0] %}
+    <div id="demo-prev" class="side">
+      <div class="preview">
+        <h2 class="demo-title">
+          <a href="{{ url('demos_detail', slug=submission.slug) }}">
+            <img class="preview" src="{{ submission.screenshot_1.url }}" alt="" width="261" height="195">
+            <b>{{ submission.title }}</b>
+          </a>
+        </h2>
+      </div>
+    </div>
+    
+    {% set submission = featured_submission_list[2] %}
+    <div id="demo-next" class="side">
+      <div class="preview">
+        <h2 class="demo-title">
+          <a href="{{ url('demos_detail', slug=submission.slug) }}">
+            <img class="preview" src="{{ submission.screenshot_1.url }}" alt="" width="261" height="195">
+            <b>{{ submission.title }}</b>
+          </a>
+        </h2>
+      </div>
     </div>
   </section>
-    <script type="text/javascript">
-        document.getElementById('featured-demos').className += ' js';
-    </script>
-    {% endif %}
+  {% endif %}
 
-
-  <section id="content-main" role="main">
-    {{ submission_listing(request, submission_list, is_paginated, paginator, page_obj,
-        _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
-        url('demos_feed_recent', format='rss') ) }}
-  </section><!-- /#content-main -->
+  <section id="content-main" class="full" role="main">
   
-  <aside id="content-sub" role="complementary">
-    {{ search_form() }}
-    {{ tech_tags_list() }}
-  </aside><!-- /#content-sub -->
+    <div id="search-browse">
+      <form class="demo-search" method="GET" action="{{ url('demos_search') }}">
+        <p>
+          <input type="search" id="search-demos" name="q" placeholder="{{_("Search")}}" />
+          <noscript><button type="submit">{{_("Search")}}</button></noscript>
+        </p>
+      </form>
+      
+      {% trans %}<b>or</b>{% endtrans %}
+      
+      <div id="demo-tags">
+        <a href="#tags-list" class="button">{{_("Browse by Technology")}}</a>
+        <ul id="tags-list" class="menu">
+            {% for tag in tags_used_for_submissions() %}
+                {% if tag.name.startswith('tech:') %}
+                    <li><a href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+      </div> 
+    </div>
+
+    {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
+        _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
+        url('demos_feed_recent', format='rss'), cols_per_row=4,
+        pagination_base_url=url('demos_all') ) }}
+
+  </section><!-- /#content-main -->
 
 </div>
 </section>
 {% endblock %}
 
 {% block js %}
-    {{ super() }}
-
-<script type="text/javascript" src="{{MEDIA_URL}}js/mdn/carousel.js"></script>
-<script type="text/javascript">
-$("#featured-demos").ready(function(){
-
-  var page_len = 3;
-  var demos_len = $('#featured-demos .slider .demo').length;
-
-  // Set up the carousel, if we have enough for multiple pages
-  if (demos_len > page_len) {
-
-      // HACK: Bugfix where carousel goes wonky without a multiple of page_len
-      var page_mod = demos_len % page_len;
-      if (page_mod > 0) {
-        for (var i=0; i<(page_len-page_mod); i++) {
-            $('#featured-demos .slider').append('<li class="demo panel dummy"></li>');
-        }
-      }
-
-      $('.nav-next a').show();
-      $('.nav-prev a').show();
-
-      $("#featured-demos .frame").addClass("js").jCarouselLite({
-          btnNext: ".nav-next a",
-          btnPrev: ".nav-prev a", 
-          visible: page_len,
-          scroll:  page_len
-      });
-  }
-
-});
+{{ super() }}
+    
 <script type="text/javascript">
 // <![CDATA[
-	$(".gallery").ready(function(){
-		$(".gallery").addClass("js");
 
-    $(".gallery .demo:not(.dummy)").hoverIntent({
+/* Learn More popup */
+  $("#demos-head .learnmore .button").click(function(){
+    $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
+    $(this).blur();
+    return false;
+  });
+	
+/* Browse by Tech menu */
+	$("#demo-tags").addClass("js");
+  $("#demo-tags .button").click(function() {
+    $("#tags-list").slideToggle(150).removeAttr("aria-hidden");
+    $(this).blur();
+    return false;
+  });
+
+  $("#tags-list, #learn-pop").hover(
+    function() {
+      $(this).show().removeAttr("aria-hidden");
+    },
+    function() {
+      $(this).slideUp('fast').attr("aria-hidden", "true");
+      $("#demo-tags .button").blur();
+    }
+  );
+
+  $(document).bind('click', function(e) {
+    var $clicked = $(e.target);
+    if (! $clicked.parents().hasClass("menu"))
+      $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
+  });
+  
+  $("a, input, textarea, button").bind('focus', function(e) {
+    var $focused = $(e.target);
+    if (! $focused.parents().hasClass("menu"))
+      $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
+  });
+
+/* Featured demos */
+  $("#featured-demos").addClass("js");
+  $("#featured-demos").ready(function(){
+    $("#demo-main .demo-details, #featured-demos .side .demo-title b").hide().attr("aria-hidden", "true");
+    
+    $("#demo-main .preview").hoverIntent({
+      interval: 150,
+      over: function(){
+        $("#demo-main .demo-details").fadeIn().removeAttr("aria-hidden");
+      },
+      out: function(){
+        $("#demo-main .demo-details").fadeOut("fast").attr("aria-hidden", "true");
+      }
+    });
+    
+    $("#featured-demos .side .preview").hoverIntent({
       interval: 250,
-      over: function() {
-        var content = $(this).html(),
-            demo = $(this), 
-            offs = $(this).offset();
-        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
-        if (demo.parents("#featured-demos").length) {
-          $("#content").find("div.demohover").addClass("featured");
-        };
-        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
-          $(this).fadeOut(200, function(){ 
-            $(this).remove(); 
-          });
-        });
-      }, 
-      out: function() { /* do nothing */ }
+      over: function(){
+        $(this).find("img").animate({ opacity: "1" }, 150);
+        $(this).find(".demo-title b").fadeIn(150).removeAttr("aria-hidden");
+      },
+      out: function(){
+        $(this).find("img").animate({ opacity: ".6" }, 250);
+        $(this).find(".demo-title b").fadeOut(250).attr("aria-hidden", "true");
+      }
+    });
+  
+  });
+
+/**
+ * Set up featured demos rotation - loads up the JSON feed for featured demos
+ * and does DOM juggling to page through the items.
+ */
+var featured_demos_feed_url =
+    '{{ request.build_absolute_uri(url('demos_feed_featured', format='json')) }}';
+
+// Hide buttons until feed loaded.
+$(".nav-slide .next, .nav-slide .prev").hide(); 
+
+// Load the feed, wire everything up once the data's been received.
+$.getJSON(featured_demos_feed_url, function (demos) {
+
+    // Refrain from wiring up nav, if no items fetched from feed.
+    if (!demos || demos.length == 0) {
+        return;
+    }
+        
+    // Start the current index at 1, since 0 and 2 should already be in prev
+    // and next positions.
+    var curr_idx = 1;
+
+    // Update the main demo from the current index demo.
+    function updateMainFeaturedDemo () {
+        var demo = demos[curr_idx];
+        $('#demo-main')
+            .find('.preview img').attr('src', demo.screenshot).end()
+            .find('.preview a').attr('href', demo.link).end()
+            .find('.demo-title a')
+                .attr('href', demo.link)
+                .text(demo.title)
+            .end()
+            .find('.byline a')
+                .attr('href', demo.author_link)
+                .find('span').text(demo.author_name).end()
+                .find('img').attr('src', demo.author_avatar).end()
+            .end()
+            .find('.desc').text(demo.summary).end()
+            .find('.launch a').attr('href', demo.link + '/launch').end()
+            ;         
+    }
+
+    // Update the previous demo from the previous demo to index, if any
+    function updatePrevFeaturedDemo () {
+        var demo = demos[curr_idx - 1];
+        $('#demo-prev')
+            .find('.preview img').attr('src', demo ? demo.screenshot : '').end()
+            .find('.demo-title a').attr('href', demo ? demo.link : '#').end()
+            .find('.demo-title b').text(demo ? demo.title : '').end()
+            ; 
+    }
+
+    // Update the next demo from the next demo to index, if any
+    function updateNextFeaturedDemo () {
+        var demo = demos[curr_idx + 1];
+        $('#demo-next')
+            .find('.preview img').attr('src', demo ? demo.screenshot : '').end()
+            .find('.demo-title a').attr('href', demo ? demo.link : '#').end()
+            .find('.demo-title b').text(demo ? demo.title : '').end()
+            ; 
+    }
+
+
+    // Show the next button and wire up click handler.
+    var next_btn = $(".nav-slide .next");
+    next_btn.show().click(function() {
+
+        if (curr_idx == demos.length-1) { 
+            // If we're already at the end of the list, do nothing.
+            return; 
+        }
+        curr_idx++; 
+        
+        // Fade out from right-to-left, update on fade out, fade back in if
+        // there's a demo to show
+        $("#demo-next .preview").fadeOut(200, updateNextFeaturedDemo);
+        $("#demo-main .preview").delay(100).fadeOut(200, updateMainFeaturedDemo);
+        if (curr_idx < demos.length-2) {
+            // We have a next demo, so fade both it and the control in.
+            $("#demo-next .preview").delay(200).fadeIn(200);
+            next_btn.fadeIn();
+        } else {
+            // No next demo, so fade out the control.
+            next_btn.fadeOut();
+        }
+        $("#demo-prev .preview").delay(300).fadeOut(200, updatePrevFeaturedDemo);
+        $("#demo-main .preview").delay(400).fadeIn(200);
+        if (curr_idx > 0) {
+            // We have a prev demo, so fade both it and the control in.
+            $("#demo-prev .preview").delay(500).fadeIn(200);
+            prev_btn.fadeIn();
+        } else {
+            // No prev demo, so fade out the control.
+            prev_btn.fadeOut();
+        }
+        
+        return false;
     });
 
-	});	
+    // Show the previous button and wire up click handler.
+    var prev_btn = $(".nav-slide .prev");
+    prev_btn.show().click(function() {
+
+        if (curr_idx == 0) { 
+            // If we're already at the start of the list, do nothing.
+            return; 
+        }
+        curr_idx--;
+
+        // Fade out from left-to-right, update on fade out, fade back in if
+        // there's a demo to show
+        $("#demo-prev .preview").fadeOut(200, updatePrevFeaturedDemo);
+        $("#demo-main .preview").delay(100).fadeOut(200, updateMainFeaturedDemo);
+        if (curr_idx > 0) {
+            // We have a prev demo, so fade both it and the control in.
+            $("#demo-prev .preview").delay(200).fadeIn(200);
+            prev_btn.fadeIn();
+        } else {
+            // No prev demo, so fade out the control.
+            prev_btn.fadeOut();
+        }
+        $("#demo-next .preview").delay(300).fadeOut(200, updateNextFeaturedDemo);
+        $("#demo-main .preview").delay(400).fadeIn(200);
+        if (curr_idx < demos.length-2) {
+            // We have a next demo, so fade both it and the control in.
+            $("#demo-next .preview").delay(500).fadeIn(200);
+            next_btn.fadeIn();
+        } else {
+            // No next demo, so fade out the control.
+            next_btn.fadeOut();
+        }
+        
+        return false;
+    });
+
+});
+
 // ]]>
 </script>
 

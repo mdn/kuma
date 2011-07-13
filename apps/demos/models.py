@@ -229,6 +229,14 @@ class ReplacingFieldZipFile(FieldFile):
     def save(self, name, content, save=True):
         new_filename = generate_filename_and_delete_previous(self, name)
         super(ReplacingFieldZipFile, self).save(new_filename, content, save)
+
+    def _get_size(self):
+        """Override FieldFile size property to return 0 in case of a missing file."""
+        try:
+            return super(ReplacingFieldZipFile, self)._get_size()
+        except OSError, e:
+            return 0
+    size = property(_get_size)
     
 
 class ReplacingZipFileField(models.FileField):
@@ -277,7 +285,8 @@ class ReplacingImageWithThumbFieldFile(ImageFieldFile):
     def thumbnail_url(self):
         if not self.url: return ''
         # HACK: Use legacy thumbnail URL, if new-style file missing.
-        if not self.storage.exists(self.thumbnail_name()):
+        DEV = getattr(settings, 'DEV', False)
+        if not DEV and not self.storage.exists(self.thumbnail_name()):
             return self.url.replace('screenshot', 'screenshot_thumb')
         # HACK: This works, but I'm not proud of it
         parts = self.url.rsplit('.', 1)
@@ -447,7 +456,7 @@ class Submission(models.Model):
             _('select up to 5 tags that describe your demo'),
             max_tags=5)
     
-    taggit_tags = TaggableManager()
+    taggit_tags = TaggableManager(blank=True)
 
     screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
@@ -547,34 +556,27 @@ class Submission(models.Model):
     def thumbnail_url(self, index='1'):
         return getattr(self, 'screenshot_%s' % index).url.replace('screenshot','screenshot_thumb')
 
-    @classmethod
-    def allows_listing_hidden_by(cls, user):
-        if user.is_staff or user.is_superuser:
-            return True
-        return False
+    def get_flags(self):
+        """Assemble status flags, based on featured status and a set of special
+        tags (eg. for Dev Derby). The flags are assembled in order of display
+        priority, so the first flag on the list (if any) is the most
+        important"""
+        flags = [ ]
 
-    def allows_hiding_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
+        # Iterate through known flags based on tag naming convention. Tag flags
+        # are listed here in order of priority.
+        tag_flags = ( 'firstplace', 'secondplace', 'thirdplace', 'finalist' )
+        for p in tag_flags:
+            for tag in self.taggit_tags.all():
+                # TODO: Is this 'system:challenge' too hard-codey?
+                if tag.name.startswith('system:challenge:%s:' % p):
+                    flags.append(p)
 
-    def allows_viewing_by(self, user):
-        if not self.censored:
-            if user.is_staff or user.is_superuser or user == self.creator:
-                return True
-            if not self.hidden:
-                return True
-        return False
+        # Featured is an odd-man-out before we had tags
+        if self.featured:
+            flags.append('featured')
 
-    def allows_editing_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
-
-    def allows_deletion_by(self, user):
-        if user.is_staff or user.is_superuser or user == self.creator:
-            return True
-        return False
+        return flags
 
     # TODO:liberate - Move this to a more generalized tag enhancement package?
     def allows_tag_namespace_for(self, ns, user):
@@ -582,9 +584,11 @@ class Submission(models.Model):
         if user.is_staff or user.is_superuser:
             # Staff / superuser can manage any tag namespace
             return True
-        if user == self.creator and ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
-            # Creator can manage whitelisted namespaces
-            return True
+        if ( not self.creator or user == self.creator ):
+           # Creator can manage whitelisted namespace prefixes
+           for allowed_ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
+               if ns.startswith(allowed_ns):
+                   return True
         return False
 
     # TODO:liberate - Move this to a more generalized tag enhancement package?
@@ -628,6 +632,35 @@ class Submission(models.Model):
                 tags_out.extend(ns_tags_curr[ns])
 
         return tags_out
+
+    @classmethod
+    def allows_listing_hidden_by(cls, user):
+        if user.is_staff or user.is_superuser:
+            return True
+        return False
+
+    def allows_hiding_by(self, user):
+        if user.is_staff or user.is_superuser or user == self.creator:
+            return True
+        return False
+
+    def allows_viewing_by(self, user):
+        if not self.censored:
+            if user.is_staff or user.is_superuser or user == self.creator:
+                return True
+            if not self.hidden:
+                return True
+        return False
+
+    def allows_editing_by(self, user):
+        if user.is_staff or user.is_superuser or user == self.creator:
+            return True
+        return False
+
+    def allows_deletion_by(self, user):
+        if user.is_staff or user.is_superuser or user == self.creator:
+            return True
+        return False
 
     @classmethod
     def get_valid_demo_zipfile_entries(cls, zf):
@@ -675,7 +708,6 @@ class Submission(models.Model):
             file_data = zf.read(zi)
             # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
             file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
-            logging.debug("FILE TYPE DETECTED: '%s' /  '%s'" % ( m_mime.from_buffer(file_data), file_mime_type ))
 
             if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
                 raise ValidationError(

@@ -37,7 +37,9 @@ FLAG_STATUSES = getattr(settings, "FLAG_STATUSES", (
     ("deleted",  _("Content deleted by moderator")),
 ))
 
-FLAG_NOTIFICATIONS = dict([reason, True] for reason in FLAG_REASONS)
+FLAG_NOTIFICATIONS = {}
+for reason in FLAG_REASONS:
+    FLAG_NOTIFICATIONS[reason[0]] = True
 # to refine flag notifications, change preceding line to False and add
 # individual reasons to the set like so:
 #FLAG_NOTIFICATIONS['inappropriate'] = True

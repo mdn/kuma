@@ -15,12 +15,13 @@ require_once( "includes/DefaultSettings.php" );
 $wgEmergencyContact = "lorchard@mozilla.com";
 $wgPasswordSender = "lorchard@mozilla.com";
 
-$wgDekiApiKey		= "vG791GpMBOCcQSmMRKkie0GTvcf9NvM4";
+$wgDekiApiKey		= "GFxaNVK37fLPsFEYM7NwdIuNpGIiFTOX";
 
-$wgDBserver = "127.0.0.1";
+$wgDBserver = "localhost";
 $wgDBname = "wikidb";
 $wgDBadminuser = "wikiuser";
-$wgDBadminpassword = "9wHAW21eT3yuQlc3";
+$wgDBadminpassword = "2yeOr7ByBUMBiB4z";
 
 $wgDekiSpecialPages[] = 'special_tagrename';
 $wgDekiSpecialPages[] = 'special_userregistration_mdc';
+?>
