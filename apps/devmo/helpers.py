@@ -96,9 +96,7 @@ def check_devmo_local_page(path):
             conn = httplib.HTTPSConnection(deki_tuple.netloc)
         else:
             conn = httplib.HTTPConnection(deki_tuple.netloc)
-        # Seems odd, but this API resource really does require a doubly-encoded page name
-        # see: http://developer.mindtouch.com/en/ref/MindTouch_API/GET%3Apages%2F%2F%7Bpageid%7D
-        conn.request("GET", '/@api/deki/pages/=%s' % urllib.quote(urllib.quote(path[1:],''),'') )
+        conn.request("GET", path)
         resp = conn.getresponse()
         http_status_code = resp.status
         cache.set('devmo_local_path:%s' % path, http_status_code)
