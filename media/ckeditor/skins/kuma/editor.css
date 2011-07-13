@@ -237,3 +237,10 @@ html.cke_skin_kuma_container{visibility:visible;}
   background: -webkit-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
   background: linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
 }
+
+.cke_skin_kuma .mdn-buttons-button { background: url(/media/img/markup.png) no-repeat; }
+.mdn-buttons-button.h1 {background-position:-6px -6px;}
+.mdn-buttons-button.h2 {background-position:-50px -6px;}
+.mdn-buttons-button.h3 {background-position:-94px -6px;}
+.mdn-buttons-button.pre {background-position:-400px 400px;}
+

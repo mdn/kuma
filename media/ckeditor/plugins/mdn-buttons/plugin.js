@@ -1,7 +1,7 @@
 // See: http://blog.lystor.org.ua/2010/11/ckeditor-plugin-and-toolbar-button-for.html
 
 // the plugin automatically creates button commands for these tags
-CKEDITOR.config.mdnButtons_tags = ['code', 'pre', 'dl', 'dt', 'dd'];
+CKEDITOR.config.mdnButtons_tags = ['pre', 'h1', 'h2', 'h3'];
 
 (function(){
     // make a generic command object that wraps text in <tag>
@@ -30,6 +30,7 @@ CKEDITOR.config.mdnButtons_tags = ['code', 'pre', 'dl', 'dt', 'dd'];
                 editor.ui.addButton(tag+'Button', {
                     label: tag,
                     command: commandName,
+                    className: 'mdn-buttons-button ' + tag,
                     icon: this.path + 'button-' + tag + '.png'
                 });
             }

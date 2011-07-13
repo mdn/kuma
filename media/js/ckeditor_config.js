@@ -4,14 +4,14 @@ CKEDITOR.editorConfig = function(config) {
         ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
         ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
         '/',
-        ['codeButton', 'preButton', 'dlButton', 'dtButton', 'ddButton', '-', 'Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['BidiLtr', 'BidiRtl' ],
         ['Link','Unlink','Anchor'],
         ['Image','Table','HorizontalRule','SpecialChar','Iframe'],
         '/',
-        ['Styles','Format',],
+        ['h1Button', 'h2Button', 'h3Button', 'preButton', '-', 'Styles',],
         ['TextColor','BGColor'],
         ['Maximize', 'ShowBlocks','-','About']
   ];
