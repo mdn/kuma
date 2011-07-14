@@ -31,7 +31,6 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3'];
                     label: tag,
                     command: commandName,
                     className: 'mdn-buttons-button ' + tag,
-                    icon: this.path + 'button-' + tag + '.png'
                 });
             }
         }
