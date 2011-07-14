@@ -18,7 +18,7 @@
 <section id="content">
 <div class="wrap">
 
-      {{ demos_head(request) }}
+    {{ demos_head(request) }}
 
   <section id="content-main" role="main" class="full">
       <header id="page-head" class="gallery">
@@ -36,11 +36,12 @@
             <p class="edit"><a href="#" class="button edit">{{_("Edit Profile")}}</a></p>
           {% endif %}
         </div>
+      </header>
 
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _("Subscribe to a feed of {display_name}'s demos") | f(display_name=display_name),
-        url('demos_feed_profile', format='atom', username=username) 
+        url('demos_feed_profile', format='atom', username=username), cols_per_row=4
     ) }}
 
   </section><!-- /#content-main -->

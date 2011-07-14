@@ -31,7 +31,7 @@
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of search results for "{q}"') | f(q=query),
-        url('demos_feed_search', format='atom') | urlparams(None, q=query) 
+        url('demos_feed_search', format='atom') | urlparams(None, q=query), cols_per_row=4 
     ) }}
   </section>{# /#content-main #}
 

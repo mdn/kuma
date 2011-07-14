@@ -24,7 +24,7 @@
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of all demos'),
-        url('demos_feed_recent', format='atom') 
+        url('demos_feed_recent', format='atom'), cols_per_row=4
     ) }}
   </section><!-- /#content-main -->
 

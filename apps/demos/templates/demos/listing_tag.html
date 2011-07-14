@@ -39,7 +39,7 @@
     {{ submission_listing(
         request, submission_list, is_paginated, paginator, page_obj,
         _('Subscribe to a feed of {tag_title} demos') | f(tag_title=tag_title(tag)),
-        url('demos_feed_tag', format='atom', tag=tag.name) 
+        url('demos_feed_tag', format='atom', tag=tag.name), cols_per_row=4
     ) }}
   </section><!-- /#content-main -->
 
