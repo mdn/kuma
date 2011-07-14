@@ -86,20 +86,23 @@ $('.closeModal').click(function () {
     return false;
 });
 
-
 /* Learn More popup */
 $("#demos-head .learnmore .button").click(function(){
   $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
   $(this).blur();
-  if ($("#tags-list").is(":visible")) { $("#tags-list").hide(); }
+  if ($("#tags-list").is(":visible")) { 
+    $("#tags-list").hide().attr("aria-hidden", "true"); 
+  }
   return false;
 });
 
 /* Browse by Tech menu */
-$("#demos-head .tags .button").click(function() {
+$("#demos-head .tags .button, #demo-tags .button").click(function() {
   $("#tags-list").slideToggle(150).removeAttr("aria-hidden");
   $(this).blur();
-  if ($("#learn-pop").is(":visible")) { $("#learn-pop").hide(); }
+  if ($("#learn-pop").is(":visible")) { 
+    $("#learn-pop").hide().attr("aria-hidden", "true"); 
+  }
   return false;
 });
 
@@ -123,4 +126,3 @@ $("a, input, textarea, button").bind('focus', function(e) {
   if (! $focused.parents().hasClass("menu"))
     $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
 });
-
