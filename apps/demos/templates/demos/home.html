@@ -106,9 +106,9 @@
       
       {% trans %}<b>or</b>{% endtrans %}
       
-      <div id="demo-tags">
+      <div id="demo-tags" class="menu">
         <a href="#tags-list" class="button">{{_("Browse by Technology")}}</a>
-        <ul id="tags-list" class="menu">
+        <ul id="tags-list">
             {% for tag in tags_used_for_submissions() %}
                 {% if tag.name.startswith('tech:') %}
                     <li><a href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a></li>
