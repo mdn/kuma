@@ -11,29 +11,12 @@
 
 {% block content %}
 
-{% if not is_popup %}
-    <section id="nav-toolbar">
-    <div class="wrap">
-
-      <nav class="crumbs">
-        <ol role="navigation">
-            <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
-            <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
-          <li><a href="{{ submission.get_absolute_url() }}">{{submission.title}}</a></li>
-        </ol>
-      </nav>
-      
-      <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
-    </div>
-    </section>
-{% endif %}
-
 <section id="content">
 <div class="wrap">
 
   <section id="content-main" role="main" class="full">
 
-    <form  id="flag-confirm" enctype="multipart/form-data" action="" method="POST" target="_top">
+    <form id="flag-confirm" enctype="multipart/form-data" action="" method="POST" target="_top">
         <h1 class="page-title">{{_('Flag this demo?')}}</h1>
         {{ csrf() }}
         <fieldset>
