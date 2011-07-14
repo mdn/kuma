@@ -10,9 +10,8 @@ class SubmissionAdmin(admin.ModelAdmin):
     change_list_template = 'smuggler/change_list.html'
     list_display = (
         'title', 'creator', 'featured', 'censored', 'modified',
-        'tags'
     )
-    list_editable = ('featured', 'censored', 'tags' )
+    list_editable = ('featured', 'censored', )
 
     # TODO: This is excluded because we've transition to django-taggit tags,
     # but have not yet removed the django-tagging field.
