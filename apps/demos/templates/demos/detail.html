@@ -318,37 +318,7 @@
 
     </script>
 
-    <script type="text/javascript">
-      // 'Learn More' popup
-      $("#demos-head .learnmore .button").click(function(){
-        $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
-        $(this).blur();
-        return false;
-      });
-
-      $("#learn-pop").hover(
-        function() {
-          $(this).show().removeAttr("aria-hidden");
-        },
-        function() {
-          $(this).slideUp('fast').attr("aria-hidden", "true");
-          $("#demo-tags .button").blur();
-        }
-      );
-      
-      // Hide bubbles when anything else is clicked
-      $(document).bind('click', function(e) {
-        var $clicked = $(e.target);
-        if (! $clicked.parents().hasClass("share, learnmore"))
-          $("#share-opts").hide();
-      });
-      // Or gains focus
-      $("a, input, textarea, button").bind('focus', function(e) {
-        var $focused = $(e.target);
-        if (! $focused.parents().hasClass("share, learnmore"))
-          $("#share-opts").hide();
-      });
-      
+    <script type="text/javascript">      
       $("#share-opts").ready(function(){
       	$("#share-opts").addClass("js").hide();
       	

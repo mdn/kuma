@@ -37,9 +37,8 @@ $(".gallery").ready(function(){
         if (demo.parents("#featured-demos").length) {
           $("#content").find("div.demohover").addClass("featured");
         };
-        // $("div.demohover").addClass( $(this).attr("class") ).css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
         $("div.demohover")
-            //.addClass( $(this).attr("class") )
+            .addClass( $(this).attr("class") )
             .css({ left: offs.left, top: offs.top })
             .fadeIn(200)
             .mouseleave(function() {
@@ -92,6 +91,7 @@ $('.closeModal').click(function () {
 $("#demos-head .learnmore .button").click(function(){
   $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
   $(this).blur();
+  if ($("#tags-list").is(":visible")) { $("#tags-list").hide(); }
   return false;
 });
 
@@ -99,6 +99,7 @@ $("#demos-head .learnmore .button").click(function(){
 $("#demos-head .tags .button").click(function() {
   $("#tags-list").slideToggle(150).removeAttr("aria-hidden");
   $(this).blur();
+  if ($("#learn-pop").is(":visible")) { $("#learn-pop").hide(); }
   return false;
 });
 
@@ -108,7 +109,6 @@ $("#tags-list, #learn-pop").hover(
   },
   function() {
     $(this).slideUp('fast').attr("aria-hidden", "true");
-    $("#demo-tags .button").blur();
   }
 );
 

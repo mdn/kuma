@@ -495,8 +495,6 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .module .hentry a { font-weight: bold; }
 .module .hentry .entry-meta { font-size: .857em; font-weight: bold; }
 
-#demo-tags li { font-size: .786em; font-weight: bold; margin: 0 0 .75em; }
-
 /* for module-style boxes in the main content */
 .modules { clear: both; overflow: hidden; }
 .modules .module { width: 275px; float: left; margin-right: 20px; }
