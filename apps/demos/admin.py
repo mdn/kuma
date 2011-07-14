@@ -8,17 +8,18 @@ from taggit.forms import TagWidget, TagField
 
 class SubmissionAdmin(admin.ModelAdmin):
     change_list_template = 'smuggler/change_list.html'
-    
-    list_display = ( 'title', 'creator', 'featured', 'hidden', 'censored', 'modified', )
-    list_editable = ( 'featured', 'hidden', 'censored', )
+    list_display = (
+        'title', 'creator', 'featured', 'censored', 'modified',
+    )
+    list_editable = ('featured', 'censored', )
 
     # TODO: This is excluded because we've transition to django-taggit tags,
     # but have not yet removed the django-tagging field.
-    exclude = ( 'tags', )
+    exclude = ('tags', )
 
     formfield_overrides = {
         TaggableManager: {
-            "widget": TagWidget(attrs={"size":100})
+            "widget": TagWidget(attrs={"size": 100})
         }
     }
 
@@ -26,4 +27,3 @@ class SubmissionAdmin(admin.ModelAdmin):
         return Submission.admin_manager
 
 admin.site.register(Submission, SubmissionAdmin)
-

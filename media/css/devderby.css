@@ -1,3 +1,5 @@
+#devderby #content-main { background: transparent; border-radius: 0; padding: 0 20px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+
 /* @Links *********/
 :link, :visited { color: #369; }
 #devderby a.button { color: #fff; }
@@ -7,11 +9,11 @@
 .devderby .sub { padding-top: 265px; width: 315px; float: right; }
 
 /* @Branding *********/
-body.devderby { background: url("../img/devderby/bg-devderby-plain.jpg") center 25px no-repeat; min-width: 960px; }
-body#devderby-home { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; }
-body.devderby #content-main { padding-top: 0; }
+#devderby.landing { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; }
+#devderby { background: url("../img/devderby/bg-devderby-plain.jpg") center 25px no-repeat; min-width: 960px; }
+#devderby #content-main { padding-top: 0; }
 
-#page-head { padding: 0; margin: 10px 0 0; overflow: hidden; }
+#devderby #page-head { padding: 0; margin: 10px 0 0; overflow: hidden; }
 #page-head #nav-derby { width: 800px; float: right; text-align: right; }
 #page-head #nav-derby ul { margin: 1.5em 20px 0; }
 #page-head #nav-derby li { display: inline-block; margin: 0 10px; list-style: none; background: none; padding: 0; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 2px; }
@@ -108,10 +110,10 @@ transform: rotate(18deg);
 #tab-submissions .demo .demo-title img { position: absolute; top: 0; left: 0; max-width: 170px; max-height: 127px; padding: 3px; background: #fff; }
 #tab-submissions .demo .launch { position: absolute; top: 95px; right: 12px; font-size: 1.2em; }
 
-#devderby-home .demohover .in { position: relative; width: 166px; padding-top: 157px; }
-#devderby-home .demohover .demo-title img { left: 7px; top: 7px; }
-#devderby-home .demohover .extra { display: block; }
-#devderby-home .demohover .launch { top: 95px; right: 16px; }
+#devderby.landing .demohover .in { position: relative; width: 166px; padding-top: 157px; }
+#devderby.landing .demohover .demo-title img { max-width: 170px; max-height: 127px; left: 8px; top: 8px; }
+#devderby.landing .demohover .extra { display: block; }
+#devderby.landing .demohover .launch { top: 100px; right: 16px; }
 
 /* @Judges *********/
 #current-challenge .judges { list-style: none; margin: 0 0 1em; font-size: .857em; }

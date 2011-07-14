@@ -26,7 +26,7 @@
       <deki-path>/var/www/dekiwiki</deki-path>
 
       <!-- Global apikey valid for all wiki instances -->
-      <apikey>vG791GpMBOCcQSmMRKkie0GTvcf9NvM4</apikey>
+      <apikey>GFxaNVK37fLPsFEYM7NwdIuNpGIiFTOX</apikey>
 
       <imagemagick-ignore-list>ico</imagemagick-ignore-list>
       <imagemagick-convert-path>/usr/bin/convert</imagemagick-convert-path>
@@ -69,11 +69,11 @@
 
           <host>*</host>
 
-          <db-server>127.0.0.1</db-server>
+          <db-server>localhost</db-server>
           <db-port>3306</db-port>
           <db-catalog>wikidb</db-catalog>
           <db-user>wikiuser</db-user>
-          <db-password hidden="true">9wHAW21eT3yuQlc3</db-password>
+          <db-password hidden="true">2yeOr7ByBUMBiB4z</db-password>
           <db-options>pooling=true; Connection Timeout=5; Connection Lifetime=30; Protocol=socket; Min Pool Size=2; Max Pool Size=50; Connection Reset=false;character set=utf8;ProcedureCacheSize=25;Use Procedure Bodies=true;</db-options>
 
 	  <!-- Page Subscription -->

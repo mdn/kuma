@@ -6,19 +6,5 @@
 
 {% block site_js %}
     {{ super() }}
-    <script src="{{MEDIA_URL}}js/mdn/demos.js" type="text/javascript"></script>
-{% endblock %}
-
-{% block js %}
-    {{ super() }}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.closeModal').click(function () {
-                if (top.$ && top.$.modal) {
-                    top.$.modal.close();
-                }
-                return false;
-            });
-        });
-    </script>
+    {{ js('demostudio') }}
 {% endblock %}

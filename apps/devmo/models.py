@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 import logging
 import urllib2
 
@@ -97,14 +98,28 @@ class Calendar(ModelBase):
             event = None
             if len(event_line) > 7:
                 done = event_line[7] == 'yes'
-            event = Event(date=event_line[4], conference=event_line[1],
-                          conference_link=event_line[3],
-                          location=event_line[2], people=event_line[5],
-                          description=event_line[6][:255],
-                          done=done, calendar=self)
-            if len(event_line) > 8:
-                event.materials = event_line[8]
-            if event.conference != "Conference":
+            if event_line[1] != "Conference":
+                # verify date string conversion before adding the event
+                try:
+                    event_date = datetime.strptime(event_line[9], "%m/%d/%Y")
+                    event_date_string = event_date.strftime("%Y-%m-%d")
+                except:
+                    continue
+                if len(event_line) > 10:
+                    try:
+                        event_end_date = datetime.strptime(event_line[10], "%m/%d/%Y")
+                        event_end_date_string = event_end_date.strftime("%Y-%m-%d")
+                    except:
+                        event_end_date = None
+                event = Event(date=event_date,
+                              end_date=event_end_date,
+                              conference=event_line[1],
+                              conference_link=event_line[3],
+                              location=event_line[2], people=event_line[5],
+                              description=event_line[6][:255],
+                              done=done, calendar=self)
+                if len(event_line) > 8:
+                    event.materials = event_line[8]
                 event.save()
 
     def __unicode__(self):
@@ -114,7 +129,8 @@ class Calendar(ModelBase):
 class Event(ModelBase):
     """An event"""
 
-    date = models.CharField(max_length=255)
+    date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     conference = models.CharField(max_length=255)
     conference_link = models.URLField(blank=True, verify_exists=False)
     location = models.CharField(max_length=255)
@@ -125,7 +141,7 @@ class Event(ModelBase):
     calendar = models.ForeignKey(Calendar)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['date']
 
     def __unicode__(self):
         return '%s - %s, %s' % (self.date, self.conference, self.location)

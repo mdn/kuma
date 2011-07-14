@@ -1,13 +1,13 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}devderby-past{% endblock %}
+{% block pageid %}devderby{% endblock %}
 {% block bodyclass %}section-demos devderby plain{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=tag_title(tag))) }}{% endblock %}
 {% block extrahead %}
   <link rel="alternate" type="application/atom+xml" 
       title="{{_('Demos tagged {tag}') | f(tag=tag_title(tag)) }}"
       href="{{ url('demos_feed_tag', format='atom', tag=tag.name) }}" />
-  <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/css/devderby.css"/>
+    {{ css('devderby') }}
 {% endblock %}
 
 {% block content %}
@@ -63,29 +63,4 @@
 </div>
 </section>
 
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
-<script type="text/javascript">
-// <![CDATA[
-	$(".gallery").ready(function(){
-    $(".gallery .demo").hoverIntent({
-      interval: 250,
-      over: function() {
-        var content = $(this).html(),
-            demo = $(this), 
-            offs = $(this).offset();
-        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
-        $("div.demohover").addClass( $(this).attr("class") ).css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
-          $(this).fadeOut(200, function(){ 
-            $(this).remove(); 
-          });
-        });
-      }, 
-      out: function() { /* do nothing */ }
-    });
-	});
-// ]]>
-</script>
 {% endblock %}

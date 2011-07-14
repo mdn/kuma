@@ -1,15 +1,19 @@
 import csv
 import shlex
 import urllib2
+from os.path import basename, dirname, isfile, isdir
 
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from pyquery import PyQuery as pq
 import test_utils
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
 from devmo.models import Calendar, Event
 
+from sumo.tests import LocalizingClient
+from sumo.urlresolvers import reverse
 
 def parse_robots(base_url):
     """ Given a base url, retrieves the robot.txt file and
@@ -103,15 +107,16 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
         prefixer = urlresolvers.Prefixer(req)
         eq_(prefixer.get_language(), 'fr')
 
-MOZILLA_PEOPLE_EVENTS_CSV = 'apps/devmo/fixtures/Mozillapeopleevents.csv'
-XSS_CSV = 'apps/devmo/fixtures/xss.csv'
-
+APP_DIR = dirname(__file__)
+MOZILLA_PEOPLE_EVENTS_CSV = '%s/fixtures/Mozillapeopleevents.csv' % APP_DIR
+XSS_CSV = '%s/fixtures/xss.csv' % APP_DIR
+BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
 
 class TestCalendar(test_utils.TestCase):
 
     def setUp(self):
         self.cal = Calendar.objects.get(shortname='devengage_events')
-        self.event = Event(date="6/17/2011", conference="Web2Day",
+        self.event = Event(date="2011-06-17", conference="Web2Day",
                            location="Nantes, France",
                            people="Christian Heilmann",
                            description="TBD", done="no", calendar=self.cal)
@@ -134,8 +139,36 @@ class TestCalendar(test_utils.TestCase):
         # spot-check
         ok_(Event.objects.get(conference='StarTechConf'))
 
+    def test_reload_from_csv_data_blank_end_date(self):
+        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
+        # check total
+        assert_equal(33, len(Event.objects.all()))
+        # spot-check
+        event = Event.objects.get(conference='Monash University')
+        ok_(event)
+        eq_(None, event.end_date)
+
+    def test_bad_date_column_skips_row(self):
+        self.cal.reload(data=csv.reader(open(BAD_DATE_CSV, 'rb')))
+        # check total - should still have the good row
+        assert_equal(1, len(Event.objects.all()))
+        # spot-check
+        ok_(Event.objects.get(conference='StarTechConf'))
+
     def test_html_santiziation(self):
         self.cal.reload(data=csv.reader(open(XSS_CSV, 'rb')))
         # spot-check
         eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich',
             Event.objects.get(conference="Texas JavaScript").people)
+
+class CalendarViewsTest(test_utils.TestCase):
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    def test_events(self):
+        url = reverse('events')
+        r = self.client.get(url)
+        d = pq(r.content)
+        eq_(200, r.status_code)
+        eq_("Where is Mozilla?", d('h1.page-title').text())

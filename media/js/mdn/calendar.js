@@ -11,11 +11,13 @@ function initialize() {
   var x = document.getElementById('upcoming');
   var rows = x.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
   for(var i=0;i<rows.length;i++){
-    var loc = rows[i].getElementsByTagName('td')[2];
+    var loc = rows[i].getElementsByTagName('td')[3];
     dates.push(rows[i].getElementsByTagName('td')[0].innerHTML);
     var o = rows[i].innerHTML;
     geocoder.geocode({address:loc.innerHTML},o);
   }
+  $('#upcoming').tablesorter({sortList:[[0,0]]});
+  $('#past').tablesorter({sortList:[[0,0]]});
 }
 
 function geocode_return(geocoded_location,o) {

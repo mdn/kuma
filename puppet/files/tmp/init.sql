@@ -1,8 +1,12 @@
+-- Open mysql root up to host machine, no password. Seems scary, but maybe
+-- change the password after provisioning
+grant all on *.* to 'root'@'192.168.10.1' identified by '';
+
 drop database if exists wikidb;
 create database wikidb;
-grant all privileges on wikidb.* to wikiuser@'%' identified by '9wHAW21eT3yuQlc3';
-grant all privileges on wikidb.* to wikiuser@localhost identified by '9wHAW21eT3yuQlc3';
-grant all privileges on wikidb.* to wikiuser@10.0.2.15 identified by '9wHAW21eT3yuQlc3';
+grant all privileges on wikidb.* to wikiuser@'%' identified by '2yeOr7ByBUMBiB4z';
+grant all privileges on wikidb.* to wikiuser@localhost identified by '2yeOr7ByBUMBiB4z';
+grant all privileges on wikidb.* to wikiuser@10.0.2.15 identified by '2yeOr7ByBUMBiB4z';
 
 drop database if exists kuma;
 create database kuma;

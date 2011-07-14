@@ -46,7 +46,7 @@ DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
 SLAVE_DATABASES = []
 
 # Dekiwiki has a backend API. protocol://hostname:port
-DEKIWIKI_ENDPOINT = 'http://developer-stage9.mozilla.org'
+DEKIWIKI_ENDPOINT = 'https://developer-stage9.mozilla.org'
 
 # Cache Settings
 CACHE_BACKEND = 'locmem://?timeout=86400'
@@ -89,25 +89,61 @@ SUMO_LANGUAGES = (
 
 # Accepted locales
 MDN_LANGUAGES = ('en-US', 'de', 'el', 'es', 'fr', 'fy-NL', 'ga-IE', 'hr', 'hu', 'id',
-                 'ja', 'ko', 'nl', 'pl', 'ro', 'sl', 'sq', 'th', 'zh-CN', 'zh-TW')
+                 'ja', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'sl', 'sq', 'th', 'zh-CN', 'zh-TW')
 RTL_LANGUAGES = None # ('ar', 'fa', 'fa-IR', 'he')
-LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
 
-# DEKI uses different locale keys
-LANGUAGE_DEKI_MAP = dict([(i, i) for i in MDN_LANGUAGES])
-LANGUAGE_DEKI_MAP['en-US'] = 'en'
-LANGUAGE_DEKI_MAP['zh-CN'] = 'cn'
-LANGUAGE_DEKI_MAP['zh-TW'] = 'zh_tw'
+DEV_POOTLE_PRODUCT_DETAILS_MAP = {
+    'pt': 'pt-PT',
+    'fy': 'fy-NL',
+    'xx-testing': 'x-testing',
+}
+
+try:
+    DEV_LANGUAGES = [
+        loc.replace('_','-') for loc in os.listdir(path('locale'))
+        if os.path.isdir(path('locale', loc)) 
+            and loc not in ['.svn', '.git', 'templates']
+    ]
+    for pootle_dir in DEV_LANGUAGES:
+        if pootle_dir in DEV_POOTLE_PRODUCT_DETAILS_MAP:
+            DEV_LANGUAGES.remove(pootle_dir)
+            DEV_LANGUAGES.append(DEV_POOTLE_PRODUCT_DETAILS_MAP[pootle_dir])
+except OSError:
+    DEV_LANGUAGES = ('en-US',)
+
+PROD_LANGUAGES = MDN_LANGUAGES
+
+def lazy_lang_url_map():
+    from django.conf import settings
+    langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
+    lang_url_map = dict([(i.lower(), i) for i in langs])
+    lang_url_map['pt'] = 'pt-PT'
+    return lang_url_map
+
+LANGUAGE_URL_MAP = lazy(lazy_lang_url_map, dict)()
 
 # Override Django's built-in with our native names
-class LazyLangs(dict):
-    def __new__(self):
-        from product_details import product_details
-        return dict([(lang.lower(), product_details.languages[lang]['native'])
-                     for lang in MDN_LANGUAGES])
+def lazy_langs():
+    from django.conf import settings
+    from product_details import product_details
+    langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
+    return dict([(lang.lower(), product_details.languages[lang]['native'])
+                for lang in langs])
 
+LANGUAGES = lazy(lazy_langs, dict)()
 LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES])
-LANGUAGES = lazy(LazyLangs, dict)()
+
+# DEKI uses different locale keys
+def lazy_language_deki_map():
+    from django.conf import settings
+    langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
+    lang_deki_map = dict([(i, i) for i in langs])
+    lang_deki_map['en-US'] = 'en'
+    lang_deki_map['zh-CN'] = 'cn'
+    lang_deki_map['zh-TW'] = 'zh_tw'
+    return lang_deki_map
+
+LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
 
 TEXT_DOMAIN = 'messages'
 
@@ -380,6 +416,18 @@ TOWER_ADD_HEADERS = True
 # Bundles for JS/CSS Minification
 MINIFY_BUNDLES = {
     'css': {
+        'mdn': (
+            'css/mdn-screen.css',
+            'css/mdn-video-player.css',
+            'css/mdn-forums-sidebar-module.css',
+            'css/mdn-calendar.css',
+        ),
+        'demostudio': (
+            'css/demos.css',
+        ),
+        'devderby': (
+            'css/devderby.css',
+        ),
         'common': (
             'css/reset.css',
             'global/headerfooter.css',
@@ -431,14 +479,39 @@ MINIFY_BUNDLES = {
         'monitor': (
             'css/monitor.css',
         ),
-        'mdn': (
-            'css/mdn-screen.css',
-            'css/mdn-video-player.css',
-            'css/mdn-forums-sidebar-module.css',
-            'css/mdn-calendar.css',
-        ),
     },
     'js': {
+        'mdn': (
+            'js/mdn/jquery-1.4.2.min.js',
+            'js/mdn/init.js',
+            'js/mdn/gsearch.js',
+            'js/mdn/webtrends.js',
+
+            # Home Page
+            # cycle and slideshow only needed on the home page (or any page
+            # featuring the slide show widget).
+            'js/mdn/jquery.cycle.js',
+            'js/mdn/slideshow.js',
+            'js/mdn/TabInterface.js',
+            'js/mdn/home.js',
+
+            # Used only on pages with video popups
+            'js/mdn/video-player.js',
+
+            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+
+            'js/libs/jquery.tablesorter.min.js',
+            'js/mdn/geocode.js',
+            'js/mdn/calendar.js',
+        ),
+        'demostudio': (
+            'js/mdn/jquery.hoverIntent.minified.js',
+            'js/mdn/jquery.scrollTo-1.4.2-min.js',
+            'js/mdn/demos.js',
+        ),
+        'demostudio_devderby_landing': (
+            'js/mdn/demos-devderby-landing.js',
+        ),
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
@@ -492,28 +565,6 @@ MINIFY_BUNDLES = {
         ),
         'users': (
             'js/users.js',
-        ),
-        'mdn': (
-            'js/mdn/jquery-1.4.2.min.js',
-            'js/mdn/init.js',
-            'js/mdn/gsearch.js',
-            'js/mdn/webtrends.js',
-
-            # Home Page
-            # cycle and slideshow only needed on the home page (or any page
-            # featuring the slide show widget).
-            'js/mdn/jquery.cycle.js',
-            'js/mdn/slideshow.js',
-            'js/mdn/TabInterface.js',
-            'js/mdn/home.js',
-
-            # Used only on pages with video popups
-            'js/mdn/video-player.js',
-
-            'js/mdn/jquery.simplemodal.1.4.1.min.js',
-
-            'js/mdn/geocode.js',
-            'js/mdn/calendar.js',
         ),
     },
 }

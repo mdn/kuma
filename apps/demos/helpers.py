@@ -97,6 +97,8 @@ def submission_key(prefix):
 # TOOO: All of these inclusion tags could probably be generated & registered
 # from a dict of function names and inclusion tag args, since the method bodies
 # are all identical. Might be astronaut architecture, though.
+@register.inclusion_tag('demos/elements/demos_head.html')
+def demos_head(request): return locals()
 
 @register.inclusion_tag('demos/elements/submission_creator.html')
 def submission_creator(submission): return locals()

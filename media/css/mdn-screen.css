@@ -495,8 +495,6 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .module .hentry a { font-weight: bold; }
 .module .hentry .entry-meta { font-size: .857em; font-weight: bold; }
 
-#demo-tags li { font-size: .786em; font-weight: bold; margin: 0 0 .75em; }
-
 /* for module-style boxes in the main content */
 .modules { clear: both; overflow: hidden; }
 .modules .module { width: 275px; float: left; margin-right: 20px; }
@@ -827,3 +825,7 @@ transition-property: bottom, opacity, visibility;
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
 
+#flag-confirm label { display: block; }
+#flag-confirm textarea { display: block; width: 96%; height: 8em; }
+#flag-confirm .submit { margin: 1em 0 0; }
+#flag-confirm .submit button { font-size: 1.142em; }

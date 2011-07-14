@@ -13,7 +13,10 @@
 
 table.events { font-size: .857em; width: 100%; }
 table.events thead { background: #d6d6c6; background: rgba(198,198,175,.5); }
-table.events thead th { font-weight: bold; }
+table.events thead th { font-weight: bold; cursor: pointer; }
 table.events td, table.events th { padding: .5em 3px; }
 table.events tr:nth-child(even) { background: #e4e4d9; background: rgba(198,198,175,.2); }
 table.events tbody tr:hover { background: #ebebd9; background: rgba(255,255,255,.5); }
+table.events thead th .sortIndicator { float: right; width: 0; height: 0; padding-top: 5px; border-left: 5px solid transparent; border-right: 5px solid transparent;}
+table.events thead th.headerSortDown .sortIndicator { border-top: 10px solid #336699;}
+table.events thead th.headerSortUp .sortIndicator { border-bottom: 10px solid #336699;}
