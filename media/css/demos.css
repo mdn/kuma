@@ -456,7 +456,7 @@
 
 .submission .section { position: relative; padding: 3.75em 0 0; margin: 0 0 1.286em; font-size: .928em; border-top: 5px double rgba(100,120,130,.25); }
 .submission .section > legend { margin: 0 -18px; padding: 0; }
-.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 18px 0 0; color: #861215; font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 18px 0 0; font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .submission .section.notitle { padding-top: 18px; }
 
 .submission li { margin: 0 0 .75em; }
@@ -538,6 +538,7 @@ body.popup #content .wrap { width: 100%; padding: 0; }
 body.popup #content-main { width: 100%; padding: 0; }
 body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; }
 
+#flag-confirm label { display: block; }
 #flag-confirm textarea { display: block; width: 96%; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
 #flag-confirm .submit button { font-size: 1.142em; }
