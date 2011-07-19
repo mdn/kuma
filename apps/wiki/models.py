@@ -14,17 +14,22 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.http import Http404
 
+from south.modelsinspector import add_introspection_rules
+
 from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
+from utils import OverwritingFileField
 from wiki import TEMPLATE_TITLE_PREFIX
 
 
-ALLOWED_TAGS = ALLOWED_TAGS + ['span','p','h1','h2','h3','pre','code','dl','dt','dd']
-ALLOWED_ATTRIBUTES['span'] = ['style',]
+ALLOWED_TAGS = ALLOWED_TAGS + [
+    'span', 'p', 'h1', 'h2', 'h3', 'pre', 'code', 'dl', 'dt', 'dd'
+]
+ALLOWED_ATTRIBUTES['span'] = ['style', ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
 # the relative severity.
@@ -596,7 +601,9 @@ class Revision(ModelBase):
     def content_cleaned(self):
         from bleach import Bleach
         bleach = Bleach()
-        return bleach.clean(self.content, attributes=ALLOWED_ATTRIBUTES,tags=ALLOWED_TAGS)
+        return bleach.clean(
+            self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS
+        )
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
@@ -641,6 +648,23 @@ class RelatedDocument(ModelBase):
         ordering = ['-in_common']
 
 
+def toolbar_config_upload_to(instance, filename):
+    """upload_to builder for toolbar config files"""
+    if (instance.default and instance.default == True):
+        return 'js/ckeditor_config.js'
+    else:
+        return 'js/ckeditor_config_%s.js' % instance.creator.id
+
+
+class EditorToolbar(ModelBase):
+    creator = models.ForeignKey(User, related_name='created_toolbars')
+    default = models.BooleanField(default=False)
+    config_file = OverwritingFileField(upload_to=toolbar_config_upload_to)
+
+    def __unicode__(self):
+        return self.config_file.name
+
+
 def get_current_or_latest_revision(document, reviewed_only=True):
     """Returns current revision if there is one, else the last created
     revision."""
@@ -655,3 +679,5 @@ def get_current_or_latest_revision(document, reviewed_only=True):
             rev = revs[0]
 
     return rev
+
+add_introspection_rules([], ["^utils\.OverwritingFileField"])
