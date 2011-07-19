@@ -659,10 +659,11 @@ def toolbar_config_upload_to(instance, filename):
 class EditorToolbar(ModelBase):
     creator = models.ForeignKey(User, related_name='created_toolbars')
     default = models.BooleanField(default=False)
-    config_file = OverwritingFileField(upload_to=toolbar_config_upload_to)
+    name = models.CharField(max_length=100)
+    code = models.TextField(max_length=2000)
 
     def __unicode__(self):
-        return self.config_file.name
+        return self.name
 
 
 def get_current_or_latest_revision(document, reviewed_only=True):

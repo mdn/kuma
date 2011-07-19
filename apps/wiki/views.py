@@ -24,7 +24,8 @@ from wiki import DOCUMENTS_PER_PAGE
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
-from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
+from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
+                         CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          get_current_or_latest_revision)
@@ -283,6 +284,14 @@ def edit_document(request, document_slug, revision_id=None):
                          'document_form': doc_form,
                          'disclose_description': disclose_description,
                          'document': doc})
+
+
+def ckeditor_config(request):
+    """Return ckeditor config from database"""
+    default_config = EditorToolbar.objects.get(name='default', default=True)
+    context = {'editor_config': default_config.code}
+    return jingo.render(request, 'wiki/ckeditor_config.js', context,
+                       mimetype="application/x-javascript")
 
 
 @login_required
