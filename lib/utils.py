@@ -143,16 +143,3 @@ def generate_filename_and_delete_previous(ffile, name, before_delete=None):
         pass
 
     return new_filename
-
-
-class OverwritingFieldFile(FieldFile):
-    def save(self, name, content, save=True):
-        # new_filename = generate_filename_and_delete_previous(self, name)
-        name = self.field.generate_filename(self.instance, name)
-        self.storage.delete(name)
-        super(OverwritingFieldFile, self).save(name, content, save)
-
-
-class OverwritingFileField(models.FileField):
-    """This field causes an uploaded file to replace existing file on disk."""
-    attr_class = OverwritingFieldFile
