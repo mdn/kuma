@@ -83,8 +83,8 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "dateline": _("September 2011"),
         "short_dateline": _("September"),
         "tagline": _("You are HERE."),
-        "summary": _("Geolocation allows the user to provide their physical location to web applications in order to enhance their browsing experience or to enable advanced location-aware features."),
-        "description": _("Geolocation allows the user to provide their physical location to web applications in order to enhance their browsing experience or to enable advanced location-aware features."),
+        "summary": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
+        "description": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "learn_more": [],
     },
 
