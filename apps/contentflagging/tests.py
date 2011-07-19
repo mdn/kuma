@@ -4,12 +4,15 @@ import time
 from django.conf import settings
 from django.db import connection
 
+from django.core.exceptions import MultipleObjectsReturned
+
 from django.contrib.auth.models import AnonymousUser
 
 from django.http import HttpRequest
 from django.test import TestCase
 from django.test.client import Client
 
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 
@@ -17,6 +20,7 @@ from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 
 from .models import ContentFlag
+from .utils import get_ip, get_unique
 
 class DemoPackageTest(TestCase):
 
@@ -47,6 +51,31 @@ class DemoPackageTest(TestCase):
         request.META['REMOTE_ADDR'] = ip
         request.META['HTTP_USER_AGENT'] = user_agent
         return request
+
+    def test_bad_multiple_flags(self):
+        """Force multiple flags, possibly result of race condition, ensure graceful handling"""
+        request = self.mk_request()
+        user, ip, user_agent, session_key = get_unique(request)
+
+        obj_1 = self.user2
+        obj_1_ct = ContentType.objects.get_for_model(obj_1)
+
+        f1 = ContentFlag(content_type=obj_1_ct, object_pk=obj_1.pk,
+                flag_type="Broken thing",
+                ip=ip, user_agent=user_agent, user=user, session_key=session_key)
+        f1.save()
+
+        f2 = ContentFlag(content_type=obj_1_ct, object_pk=obj_1.pk,
+                flag_type="Broken thing",
+                ip=ip, user_agent=user_agent, user=user, session_key=session_key)
+        f2.save()
+
+        try:
+            flag = ContentFlag.objects.flag(request=request, object=self.user2,
+                    flag_type='notworking', explanation="It really not go!")
+            ok_(flag is not None)
+        except MultipleObjectsReturned, e:
+            ok_(False, "MultipleObjectsReturned should not be raised")
 
     def test_basic_flag(self):
         """Exercise flagging with limit of one per unique request per unique object"""
