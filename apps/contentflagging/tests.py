@@ -71,9 +71,10 @@ class DemoPackageTest(TestCase):
         f2.save()
 
         try:
-            flag = ContentFlag.objects.flag(request=request, object=self.user2,
+            flag, created = ContentFlag.objects.flag(request=request, object=self.user2,
                     flag_type='notworking', explanation="It really not go!")
             ok_(flag is not None)
+            ok_(not created)
         except MultipleObjectsReturned, e:
             ok_(False, "MultipleObjectsReturned should not be raised")
 

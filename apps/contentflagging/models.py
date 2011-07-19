@@ -72,7 +72,7 @@ class ContentFlagManager(models.Manager):
             flags = ContentFlag.objects.filter(
                     content_type=content_type, object_pk=object.pk,
                     ip=ip, user_agent=user_agent, user=user, session_key=session_key).all()
-            cf = flags[0]
+            cf = ( flags[0], False )
             for c in flags[1:]: c.delete()
 
         if recipients:
