@@ -31,10 +31,10 @@ from taggit.models import Tag
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
-from . import DEMOS_CACHE_NS_KEY
 
 # TODO: Make these configurable in the DB via an admin page
-from . import ( DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
+from . import ( DEMOS_CACHE_NS_KEY,
+        DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
         DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG, 
         DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
         DEMOS_DEVDERBY_CHALLENGE_CHOICES )
@@ -387,6 +387,7 @@ def devderby_landing(request):
         previous_challenge_tag_names = previous_challenge_tag_names,
         submissions_qs = submissions_qs,
         previous_winner_qs = previous_winner_qs,
+        challenge_choices = DEMOS_DEVDERBY_CHALLENGE_CHOICES,
     ))
 
 def devderby_rules(request):
