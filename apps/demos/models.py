@@ -438,6 +438,9 @@ class Submission(models.Model):
     hidden = models.BooleanField(
             _("Hide this demo from others?"), default=False)
     censored = models.BooleanField()
+    censored_url = models.URLField(
+            _("Redirect URL for censorship."),
+            verify_exists=False, blank=True, null=True)
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),

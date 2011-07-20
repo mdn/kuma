@@ -91,7 +91,9 @@ def home(request):
 
 def detail(request, slug):
     """Detail page for a submission"""
-    submission = get_object_or_404(Submission, slug=slug)
+    submission = get_object_or_404(Submission.admin_manager, slug=slug)
+    if submission.censored and submission.censored_url:
+        return HttpResponseRedirect(submission.censored_url)
     if not submission.allows_viewing_by(request.user):
         return HttpResponseForbidden(_('access denied')+'')
 
