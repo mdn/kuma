@@ -66,6 +66,7 @@ urlpatterns = patterns('docs.views',
 
 urlpatterns += patterns('wiki.views',
     # Un/Subscribe to locale 'ready for review' notifications.
+    url(r'^/ckeditor_config.js$', 'ckeditor_config', name='wiki.ckeditor_config'),
     url(r'^/watch-ready-for-review$', 'watch_locale',
         name='wiki.locale_watch'),
     url(r'^/unwatch-ready-for-review$', 'unwatch_locale',

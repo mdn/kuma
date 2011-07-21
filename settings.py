@@ -608,7 +608,7 @@ SEARCH_CACHE_PERIOD = 15
 MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 # Default storage engine - ours does not preserve filenames
-DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
+#DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
 
 # Auth and permissions related constants
 LOGIN_URL = '/users/login'

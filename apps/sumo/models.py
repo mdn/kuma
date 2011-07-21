@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 import caching.base
+from south.modelsinspector import add_introspection_rules
 
 # Our apps should subclass ManagerBase instead of models.Manager or
 # caching.base.CachingManager directly.
@@ -53,3 +54,5 @@ class LocaleField(models.CharField):
         return super(LocaleField, self).__init__(
             max_length=max_length, default=default, choices=choices,
             *args, **kwargs)
+
+add_introspection_rules([], ["^sumo\.models\.LocaleField"])
