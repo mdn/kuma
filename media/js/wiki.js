@@ -28,6 +28,7 @@
         }
 
         if ($('body').is('.edit, .new, .translate')) {
+            initSaveAndEditButtons();
             initArticlePreview();
             initTitleAndSlugCheck();
         }
@@ -626,6 +627,79 @@
                 }
             });
         }
+    }
+
+    //
+    // Initialize logic for save and save-and-edit buttons.
+    // 
+    function initSaveAndEditButtons () {
+
+        var STORAGE_NAME = 'wiki-page-edit';
+
+        if (typeof(window.sessionStorage) != 'undefined') {
+            // If there's previous content preserved, load it into the textarea
+            var prev_ct = window.sessionStorage.getItem(STORAGE_NAME);
+            if (prev_ct) {
+                $('#wiki-page-edit textarea[name=content]').val(prev_ct);
+                window.sessionStorage.setItem(STORAGE_NAME, '');
+            }
+        }
+        
+        // Save button submits to top-level
+        $('#btn-save').click(function () {
+            if (typeof(window.sessionStorage) != 'undefined') {
+                // Clear any preserved content.
+                window.sessionStorage.setItem(STORAGE_NAME, '');
+            }
+            $('#wiki-page-edit')
+                .attr('action', '')
+                .removeAttr('target');
+            return true;
+        });
+
+        // Save-and-edit submits to a hidden iframe, style the button with a
+        // loading anim.
+        $('#btn-save-and-edit').click(function () {
+            if (typeof(window.sessionStorage) != 'undefined') {
+                // Preserve editor content, because saving to the iframe can
+                // yield things like 403 / login-required errors that bust out
+                // of the frame
+                window.sessionStorage.setItem(STORAGE_NAME, 
+                    $('#wiki-page-edit textarea[name=content]').val());
+            }
+            // Redirect the editor form to the iframe.
+            $('#wiki-page-edit')
+                .attr('action', '?iframe=1')
+                .attr('target', 'save-and-edit-target');
+            // Change the button to a loading state style
+            $(this).addClass('loading');
+            return true;
+        });
+
+        $('#save-and-edit-target').load(function () {
+            if (typeof(window.sessionStorage) != 'undefined') {
+                // Dig into the iframe on load and look for "OK". If found,
+                // then it should be safe to throw away the preserved content.
+                // 
+                // Otherwise, the iframe probably loaded a 403 or
+                // login-required error, so we should leave the content
+                // preserved.
+                var if_doc = $('#save-and-edit-target')[0].contentDocument;
+                if (typeof(if_doc) != 'undefined') {
+                    if ('OK' == (''+if_doc.body.innerHTML).trim()) {
+                        window.sessionStorage.setItem(STORAGE_NAME, '');
+                    }
+                }
+            }
+            // Stop loading state on button
+            $('#btn-save-and-edit').removeClass('loading');
+            // Re-enable the form; it gets disabled to prevent double-POSTs
+            $('#wiki-page-edit')
+                .data('disabled', false)
+                .removeClass('disabled');
+            return true;
+        });
+
     }
 
     $(document).ready(init);

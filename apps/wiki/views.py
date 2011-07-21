@@ -242,6 +242,9 @@ def edit_document(request, document_slug, revision_id=None):
             # You can't do anything on this page, so get lost.
             raise PermissionDenied
     else:  # POST
+
+        is_iframe_target = request.GET.get('iframe', False)
+
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
         which_form = request.POST.get('form')
@@ -259,6 +262,11 @@ def edit_document(request, document_slug, revision_id=None):
                     # Do we need to rebuild the KB?
                     _maybe_schedule_rebuild(doc_form)
 
+                    if is_iframe_target:
+                        response = HttpResponse('OK')
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
+
                     return HttpResponseRedirect(
                         urlparams(reverse('wiki.edit_document',
                                           args=[doc.slug]),
@@ -272,6 +280,12 @@ def edit_document(request, document_slug, revision_id=None):
                 rev_form.instance.document = doc  # for rev_form.clean()
                 if rev_form.is_valid():
                     _save_rev_and_notify(rev_form, user, doc)
+
+                    if is_iframe_target:
+                        response = HttpResponse('OK')
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
+
                     return HttpResponseRedirect(
                         reverse('wiki.document_revisions',
                                 args=[document_slug]))

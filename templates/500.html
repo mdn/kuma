@@ -14,3 +14,8 @@ and an administrator was notified. We apologize for the inconvenience!</p>
 <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
 Thanks!</p>
 {% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('framebuster') }}
+{% endblock %}

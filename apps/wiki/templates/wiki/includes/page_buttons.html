@@ -1,11 +1,17 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-<ul id="page-buttons">
-    <li><button type="submit" id="btn-save" class="btn-save">{{ _('Save Changes') }}</button></li>
-  <li><button type="button" id="btn-preview" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}</button></li>
 {% if document %}
     {% set discard_href = url('wiki.document', document.slug) %}
 {% else %}
     {% set discard_href = url('wiki.new_document') %}
 {% endif %}
+<ul id="page-buttons">
+  {% if document %}
+    <li>
+      <iframe id="save-and-edit-target" name="save-and-edit-target"></iframe>
+      <button type="submit" id="btn-save-and-edit" class="btn-save"><span>{{ _('Save and Keep Editing') }}</span></button>
+    </li>
+  {% endif %}
+  <li><button type="submit" id="btn-save" class="btn-save">{{ _('Save Changes') }}</button></li>
+  <li><button type="button" id="btn-preview" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}</button></li>
   <li><a href="{{ discard_href }}" id="btn-discard" class="btn-discard">{{ _('Discard Changes') }}</a></li>
 </ul>

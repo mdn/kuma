@@ -559,6 +559,9 @@ MINIFY_BUNDLES = {
             'js/mdn/TabInterface.js',
             'js/mdn/home.js',
         ),
+        'framebuster': (
+            'js/framebuster.js',
+        )
     },
 }
 

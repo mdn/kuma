@@ -20,25 +20,25 @@
       <fieldset>
         <header id="article-head">
           <div class="title">
-  <h1>{{ _('Editing <em>{title}</em>')|fe(title=document.title) }}</h1>
+            <h1>{{ _('Editing <em>{title}</em>')|fe(title=document.title) }}</h1>
             <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
             <!--
           <p class="save-state">Draft automatically saved at 14:25. <button id="btn-savedraft" type="submit">Save Draft</button></p>
           -->
-      </div>
+          </div>
 
-      {% include 'wiki/includes/page_buttons.html' %}
+          {% include 'wiki/includes/page_buttons.html' %}
 
         </header>
-    {% if revision_form %}
+        {% if revision_form %}
             {{ revision_form.content|safe }}
             <input type="hidden" name="form" value="rev" />
             {#
             {% include 'wiki/includes/submit_revision_for_review.html' %}
             #}
-      {% endif %}
-       </fieldset>
-  </form>
+        {% endif %}
+      </fieldset>
+    </form>
     <div id="preview"></div>
   </article>
     </div>
