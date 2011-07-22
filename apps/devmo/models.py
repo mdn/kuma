@@ -11,6 +11,12 @@ import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
 
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
+import south.modelsinspector
+south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
+
 
 class ModelBase(caching.base.CachingMixin, models.Model):
     """Common base model for all MDN models: Implements caching."""
@@ -42,8 +48,17 @@ class UserProfile(ModelBase):
                                'invalid': _('This URL has an invalid format. '
                                             'Valid URLs look like '
                                             'http://example.com/my_page.')})
-    # Duplicates phpBB's location field, but it's days are numbered
-    location = models.CharField(max_length=255, default='', blank=True)
+    title = models.CharField(_('Title'), max_length=255, default='',
+                             blank=True)
+    fullname = models.CharField(_('Name'), max_length=255, default='',
+                                blank=True)
+    organization = models.CharField(_('Organization'), max_length=255,
+                                    default='', blank=True)
+    location = models.CharField(_('Location'), max_length=255, default='',
+                                blank=True)
+    bio = models.TextField(_('About Me'), blank=True)
+    interests = TaggableManager(_('Interests'), blank=True)
+
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)
     user = models.ForeignKey(DjangoUser, null=True, editable=False, blank=True)
@@ -64,6 +79,13 @@ class UserProfile(ModelBase):
         if hasattr(self.__dict__['deki_user'], name):
             return getattr(self.__dict__['deki_user'], name)
         raise AttributeError
+
+    def allows_editing_by(self, user):
+        if user == self.user:
+            return True
+        if user.is_staff or user.is_superuser:
+            return True
+        return False
 
 
 class Calendar(ModelBase):
@@ -107,8 +129,10 @@ class Calendar(ModelBase):
                     continue
                 if len(event_line) > 10:
                     try:
-                        event_end_date = datetime.strptime(event_line[10], "%m/%d/%Y")
-                        event_end_date_string = event_end_date.strftime("%Y-%m-%d")
+                        event_end_date = datetime.strptime(event_line[10],
+                                                           "%m/%d/%Y")
+                        event_end_date_string = event_end_date.strftime(
+                                                           "%Y-%m-%d")
                     except:
                         event_end_date = None
                 event = Event(date=event_date,

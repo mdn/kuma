@@ -323,12 +323,12 @@ INSTALLED_APPS = (
     #'chat',
     #'inproduct',
 
+    # migrations
+    'south',
+
     # testing.
     'django_nose',
     'test_utils',
-
-    # migrations
-    'south',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'

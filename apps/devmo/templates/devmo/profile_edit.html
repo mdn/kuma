@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block pageid %}{% endblock %}
+
+{% block bodyclass %}profile{% endblock %}
+
+{% block title %}{{ page_title(_('Edit Your Profile')) }}{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('demostudio') }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('demostudio') }}
+{% endblock %}
+
+{% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
+    {% set field = form[field_name] %}
+    <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
+        {% if show_label %}
+            <label for="id_{{field_name}}">{{label or field.label}}</label>
+        {% endif %}
+        {{ field|safe }}
+        {% if note %}
+            <p class="note">{{ note }}</p>
+        {% endif %}
+        {{ field.errors|safe }}
+    </li>
+{% endmacro %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" class="full">
+
+    <form id="profile-edit" class="submission" method="post" action="">
+        <h1 class="page-title">{{ profile.user.username }}</h1>
+      
+      <div class="extra">
+        <figure class="acc-avatar">
+          <img src="./media/img/blank.gif" alt="" width="120" height="120" class="photo avatar">
+          <figcaption>
+            Change your avatar at <a href="http://gravatar.com" rel="external">gravatar.com</a>
+          </figcaption>
+        </figure>
+        
+        <ul>
+            <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">View profile</a></li>
+            <li><a href="#">Change password or email</a></li>
+          {# TODO: Implement account deletion #}
+          {# <li class="delete"><a href="#">Delete my account</a></li> #}
+        </ul>
+      </div>
+      
+      <fieldset class="section notitle" id="personal">
+        <ul>
+          {{ li_field(form, 'fullname') }}
+          {{ li_field(form, 'title') }}
+          {{ li_field(form, 'organization') }}
+          {{ li_field(form, 'location') }}
+
+          {% set field = form['bio'] %}
+          <li class="wordcount{{ ' error' if field.errors }}">
+            <label for="id_bio">About Me <span class="note"><b id="bio_wordcount" class="counter">150</b> words remaining</span></label> 
+            {{ field | safe }}
+          </li>
+
+          {% set field = form['interests'] %}
+          <li class="{{ ' error' if field.errors }}">
+            <label for="pers-interests">Interests (tags)</label>
+            <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
+            {{ field | safe }}
+		        <button type="button">Add</button>
+          	<ul class="int-taglist">
+              <li><a href="#" rel="tag">CSS</a> <a class="del" title="Remove 'CSS' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">CSS3</a> <a class="del" title="Remove 'CSS3' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">JavaScript</a> <a class="del" title="Remove 'JavaScript' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">web standards</a> <a class="del" title="Remove 'web standards' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">monster movies</a> <a class="del" title="Remove 'monster movies' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">bacon</a> <a class="del" title="Remove 'bacon' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">PHP</a> <a class="del" title="Remove 'PHP' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">BBQ</a> <a class="del" title="Remove 'BBQ' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">SOL</a> <a class="del" title="Remove 'SOL' from your interests">remove</a></li>
+            </ul>
+          </li>
+        </ul>
+      </fieldset>
+
+      <fieldset class="section" id="elsewhere">
+        <legend><b>My Other Profiles</b></legend>
+        
+        <ul>
+          <li class="site website">
+            <label for="site_website">Website/blog</label> 
+            <input type="text" id="site_website" name="website" class="url" value="http://">
+          </li>
+          <li class="site twitter">
+            <label for="site_twitter">Twitter</label> 
+            <input type="text" id="site_twitter" name="twitter" class="url" value="http://twitter.com/">
+          </li>
+          <li class="site github">
+            <label for="site_github">GitHub</label> 
+            <input type="text" id="site_github" name="github" class="url" value="http://github.com/">
+          </li>
+          <li class="site stackover">
+            <label for="site_stackover">StackOverflow</label> 
+            <input type="text" id="site_stackover" name="stackover" class="url" value="http://stackoverflow.com/users/">
+          </li>
+          <li class="site linkedin">
+            <label for="site_linkedin">LinkedIn</label> 
+            <input type="text" id="site_linkedin" name="linkedin" class="url" value="http://www.linkedin.com/in/">
+          </li>
+        </ul>
+
+      </fieldset>
+      
+      <p class="fm-submit"><button type="submit">Save Changes</button></p>
+
+    </form>
+
+
+
+  </section><!-- /#content-main -->
+</div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+// <![CDATA[
+$(document).ready(function(){
+  
+  /*
+  $("#elsewhere .site select").change(function(){
+    if (this.value === "website") {
+      $(this).parents().find(".url").val("http://").focus();
+    }
+    else if (this.value === "twitter") {
+      $(this).parents().find(".url").val("http://twitter.com/").focus();
+    }
+    else if (this.value === "github") {
+      $(this).parents().find(".url").val("http://github.com/").focus();
+    }
+    else if (this.value === "stackover") {
+      $(this).parents().find(".url").val("http://stackoverflow.com/users/").focus();
+    }
+    else if (this.value === "linkedin") {
+      $(this).parents().find(".url").val("http://www.linkedin.com/in/").focus();
+    }
+  });
+  */
+
+
+  // word count
+  $('.wordcount').each(function(i,el){
+    function updateWordCount(){
+      var words = $.trim( field.val() ).split(' ');
+      if( words[0] == '' ){ words.length = 0; }
+      currcount = limit - words.length;
+      placeholder.text( currcount );
+      if ( words.length >= limit &&
+           placeholder.parent().css('color') != '#900' )
+      {
+        placeholder.parent().css('color','#900');
+      }
+      else if ( words.length < limit &&
+                placeholder.parent().css('color') == '#900' )
+      {
+        placeholder.parent().css('color','');
+      }
+    }
+    var placeholder = $(el).find('.counter');
+    var limit = parseInt( placeholder.text() );
+    var currcount = 0;
+    var field = $(el).children('textarea');
+    updateWordCount();
+    field.keypress(updateWordCount);
+  })
+
+});	
+// ]]>
+</script>
+{% endblock %}

@@ -1,3 +1,4 @@
+import logging
 import csv
 import shlex
 import urllib2
@@ -5,15 +6,21 @@ from os.path import basename, dirname, isfile, isdir
 
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
+from django.contrib.auth.models import User, AnonymousUser
+
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
-from devmo.models import Calendar, Event
+from devmo.models import Calendar, Event, UserProfile
+
+from dekicompat.backends import DekiUser
 
 from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
+
 
 def parse_robots(base_url):
     """ Given a base url, retrieves the robot.txt file and
@@ -107,10 +114,12 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
         prefixer = urlresolvers.Prefixer(req)
         eq_(prefixer.get_language(), 'fr')
 
+
 APP_DIR = dirname(__file__)
 MOZILLA_PEOPLE_EVENTS_CSV = '%s/fixtures/Mozillapeopleevents.csv' % APP_DIR
 XSS_CSV = '%s/fixtures/xss.csv' % APP_DIR
 BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
+
 
 class TestCalendar(test_utils.TestCase):
 
@@ -161,6 +170,7 @@ class TestCalendar(test_utils.TestCase):
         eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich',
             Event.objects.get(conference="Texas JavaScript").people)
 
+
 class CalendarViewsTest(test_utils.TestCase):
 
     def setUp(self):
@@ -172,3 +182,131 @@ class CalendarViewsTest(test_utils.TestCase):
         d = pq(r.content)
         eq_(200, r.status_code)
         eq_("Where is Mozilla?", d('h1.page-title').text())
+
+
+class ProfileViewsTest(test_utils.TestCase):
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    @attr('profile')
+    @patch('dekicompat.backends.DekiUserBackend.authenticate')
+    @patch('dekicompat.backends.DekiUserBackend.get_user')
+    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+    def test_profile_view(self, authenticate, get_user, get_deki_user):
+        """A user profile can be viewed"""
+        (user, deki_user, profile) = self._create_profile()
+        authenticate.return_value = user
+        get_user.return_value = user
+        # TODO: Why does this break things?
+        #get_deki_user.return_value = deki_user
+
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        eq_(profile.user.username,
+            doc.find('#profile-head.vcard .nickname').text())
+        eq_(profile.fullname,
+            doc.find('#profile-head.vcard .fn').text())
+        eq_(profile.title,
+            doc.find('#profile-head.vcard .title').text())
+        eq_(profile.organization,
+            doc.find('#profile-head.vcard .org').text())
+        eq_(profile.location,
+            doc.find('#profile-head.vcard .loc').text())
+        eq_(profile.bio,
+            doc.find('#profile-head.vcard .bio').text())
+
+    def _create_profile(self):
+        """Create a user, deki_user, and a profile for a test account"""
+        user = User.objects.create_user('tester23', 'tester23@example.com',
+                                        'trustno1')
+
+        deki_user = DekiUser(id=0, username='tester23',
+                             fullname='Tester Twentythree',
+                             email='tester23@example.com',
+                             gravatar='', profile_url=None)
+
+        profile = UserProfile()
+        profile.user = user
+        profile.fullname = "Tester Twentythree"
+        profile.title = "Spaceship Pilot"
+        profile.organization = "UFO"
+        profile.location = "Outer Space"
+        profile.bio = "I am a freaky space alien."
+        profile.save()
+
+        return (user, deki_user, profile)
+
+    @attr('profile_edit')
+    @patch('dekicompat.backends.DekiUserBackend.authenticate')
+    @patch('dekicompat.backends.DekiUserBackend.get_user')
+    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+    def test_profile_edit(self, authenticate, get_user, get_deki_user):
+        (user, deki_user, profile) = self._create_profile()
+
+        authenticate.return_value = user
+        get_user.return_value = user
+        # TODO: Why does this break things?
+        #get_deki_user.return_value = deki_user
+
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        eq_(0, doc.find('#profile-head .edit .button').length)
+
+        self.client.cookies['authtoken'] = 'qwertyuiop'
+
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        edit_button = doc.find('#profile-head .edit .button')
+        eq_(1, edit_button.length)
+
+        url = edit_button.attr('href')
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        eq_(profile.fullname,
+            doc.find('#profile-edit input[name="fullname"]').val())
+        eq_(profile.title,
+            doc.find('#profile-edit input[name="title"]').val())
+        eq_(profile.organization,
+            doc.find('#profile-edit input[name="organization"]').val())
+        eq_(profile.location,
+            doc.find('#profile-edit input[name="location"]').val())
+
+        new_attrs = dict(
+            fullname="Another Name",
+            title="Another title",
+            organization="Another org",
+        )
+
+        r = self.client.post(url, new_attrs, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('#profile-head').length)
+        eq_(new_attrs['fullname'],
+            doc.find('#profile-head .main .fn').text())
+        eq_(new_attrs['title'],
+            doc.find('#profile-head .info .title').text())
+        eq_(new_attrs['organization'],
+            doc.find('#profile-head .info .org').text())
+
+        profile = UserProfile.objects.get(user__username=user.username)
+        eq_(new_attrs['fullname'], profile.fullname)
+        eq_(new_attrs['title'], profile.title)
+        eq_(new_attrs['organization'], profile.organization)
+
+    def _break(self, url, r):
+        logging.debug("URL  %s" % url)
+        logging.debug("STAT %s" % r.status_code)
+        logging.debug("HEAD %s" % r.items())
+        logging.debug("CONT %s" % r.content)
+        ok_(False)
