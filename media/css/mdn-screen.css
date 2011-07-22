@@ -90,7 +90,7 @@ Font sizes -
 
 /* @Reset *********/
 header, hgroup, nav, section, article, aside, footer { display: block; }
-html, body, form, fieldset, legend, 
+html, body, form, fieldset, legend, figure,
 h1, h2, h3, h4, h5, h6, dt, dd { margin: 0; padding: 0; }
 blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q { quotes: "" ""; }
@@ -829,3 +829,63 @@ transition-property: bottom, opacity, visibility;
 #flag-confirm textarea { display: block; width: 96%; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
 #flag-confirm .submit button { font-size: 1.142em; }
+
+/* @Submission @Form *********/
+.submission .section { position: relative; padding: 2.75em 0 0; margin: 0 0 1.286em; font-size: .928em; }
+.submission .section > legend { margin: 0 -18px; padding: 0; }
+.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 0; font-size: 1.234em; }
+.submission .section.notitle { padding-top: 0; }
+
+.submission li { margin: 0 0 .75em; }
+.submission input[type="text"] { width: 450px; }
+.submission input[readonly] { background: transparent; border: 0; }
+.submission textarea { width: 610px; }
+.submission label input { width: auto; padding: 0; }
+.submission .note { font-style: normal; font-weight: normal; font-size: .857em; font-family: inherit; color: #666; }
+.submission p.note { margin: .5em 0; }
+.submission .inline legend b { display: block; margin: 0 0 .5em; }
+.submission .inline li { margin: 0 0 .25em; }
+.submission .inline label { display: inline; font-weight: normal; margin: 0; }
+.submission .disabled { color: #999; color: rgba(0,0,0,.4); }
+.submission .other-value { margin-top: .25em; }
+.submission .other-value label { display: block; }
+
+.submission label, .submission .label { display: block; font-weight: bold; margin: 0 0 .5em; }
+.submission .check label, .submission .check .label { display: inline; }
+
+.submission .fm-submit button { font-size: 1.575em; }
+
+/* @Profile *********/
+#profile-head { position: relative; margin: 0 0 30px; min-height: 130px; padding: 20px 20px 20px 170px; border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); }
+#profile-head .avatar { position: absolute; left: 20px; top: 20px; background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
+#profile-head .page-title, #profile-edit .page-title { margin: 0 0 .25em; padding-right: 160px; }
+#profile-head b { font-size: .77em; font-weight: normal; color: #a19f93; }
+#profile-head .info li { display: inline; margin-right: 10px; }
+#profile-head .info li:before { content: "/"; margin-right: 10px; color: #a19f93; }
+#profile-head .info li:first-child:before { content: ""; margin: 0; }
+#profile-head .bio, #profile-head .links { font-size: .857em; }
+#profile-head .links li { display: inline; margin: 0 12px 10px 0; }
+#profile-head .links a { padding: 1px 0 1px 24px; background: url("../img/icons-links.png") no-repeat; }
+#profile-head .edit { width: 140px; position: absolute; right: 20px; top: 1.8em; text-align: right; }
+
+#profile-head .twitter a, #elsewhere .twitter label { background-position: 0 -50px; }
+#profile-head .github a, #elsewhere .github label { background-position: 0 -100px; }
+#profile-head .stackover a, #elsewhere .stackover label { background-position: 0 -150px; }
+#profile-head .linkedin a, #elsewhere .linkedin label { background-position: 0 -200px; }
+#profile-head .dribbble a, #elsewhere .dribbble label { background-position: 0 -250px; }
+#profile-head .reddit a, #elsewhere .reddit label { background-position: 0 -300px; }
+
+/* @Edit @Profile *********/
+#profile-edit { padding-left: 165px; position: relative; }
+
+#profile-edit .extra { width: 130px; position: absolute; left: 0; top: 0; font-size: .857em; }
+#profile-edit .avatar { background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
+#profile-edit .extra figcaption { margin: .5em 0 1.5em; }
+#profile-edit .extra li { margin: 0 0 .5em; }
+#profile-edit .extra .delete { margin: 1.5em 0; }
+#profile-edit .delete a:hover, #profile-edit .delete a:focus, #profile-edit .delete a:active { color: #900; }
+
+#elsewhere label { display: inline-block; width: 120px; padding-left: 25px; background: url("../img/icons-links.png") 0 0 no-repeat; }
+#elsewhere .url { width: 300px; }
+#elsewhere .remove { width: 15px; height: 15px; padding: 0; margin-left: 8px; text-indent: -999em; overflow: hidden; background: transparent url("../img/icn-delete.png") center 2px no-repeat; box-shadow: none; }
+#elsewhere .remove:hover { background-position: center -48px; }
