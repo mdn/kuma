@@ -881,12 +881,6 @@ transition-property: bottom, opacity, visibility;
 #profile-head .docs a { background-position: 0 -400px; }
 
 .profile-section { clear: both; margin: 0 0 30px; }
-.profile-section header { clear: both; margin: 0 0 20px; border: 0; padding: 8px 20px; color: #fff; background: #000; background: -moz-linear-gradient(top, #333 0, #000 100%); background: -webkit-linear-gradient(top, #333 0, #000 100%); background: linear-gradient(top, #333 0, #000 100%); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
-.profile-section header:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-.profile-section header h2 { float: left; margin: 0 20px -3px 0; font: normal 22px/1.2 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: 2px; }
-.profile-section header a { color: #fff; }
-.profile-section header a:hover, .profile-section header a:focus, .profile-section header a:active { color: #f1ed0f; }
-
 
 #docs-activity header { margin: 0 0 1.5em; }
 #docs-activity header h2 { display: inline; margin-right: 20px; }

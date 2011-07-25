@@ -70,15 +70,15 @@ head(
       <p class="edit"><a href="profile-edit.php" class="button">Edit Profile</a></p>
     </section>
 
-    <section id="profile-demos">
-      <div id="gallery-sort">
-        <p class="count">7 Demos <a class="button positive" href="demo-submit.php">Submit a Demo</a></p>
+    <section id="profile-demos" class="profile-section">
+      <header id="gallery-sort">
+        <h2 class="count">7 Demos <a class="button positive" href="demo-submit.php">Submit a Demo</a></h2>
         <ul class="sort">
           <li><strong title="You are viewing these demos sorted by most views">Most Viewed</strong></li>
           <li><a href="#" title="Sort demos by most likes">Most Liked</a></li>
           <li><a href="#" title="Sort demos by most recently submitted">Most Recent</a></li>
         </ul>
-      </div>
+      </header>
   
   <!-- NOTES:
        First item in each row needs the class "row-first". It's a strictly presentational class that only serves to 
@@ -168,7 +168,7 @@ head(
       </div>
     </section>
     
-    <section id="docs-activity">
+    <section id="docs-activity" class="profile-section">
       <header>
         <h2>Recent Docs Activity</h2>
         <p class="more"><a href="https://developer.mozilla.org/Special:Contributions?target=Sheppy">See more history</a></p>
