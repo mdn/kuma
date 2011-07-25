@@ -24,13 +24,13 @@ BITLY_USERNAME = 'lmorchard'
 BITLY_API_KEY = "R_2653e6351e31d02988b3da31dac6e2c0"
 
 INSTALLED_APPS = INSTALLED_APPS + (
-#    "django_extensions",
-#    "debug_toolbar",
-#    "devserver",
+    "django_extensions",
+    "debug_toolbar",
+    "devserver",
 )
 
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
-#    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 )
 
 DEBUG_TOOLBAR_CONFIG = {
