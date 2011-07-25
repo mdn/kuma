@@ -856,17 +856,21 @@ transition-property: bottom, opacity, visibility;
 .submission .fm-submit button { font-size: 1.575em; }
 
 /* @Profile *********/
-#profile-head { position: relative; margin: 0 0 30px; min-height: 130px; padding: 20px 20px 20px 170px; border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); }
-#profile-head .avatar { position: absolute; left: 20px; top: 20px; background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
+#profile-head { position: relative; margin: 0 0 30px; padding: 20px; border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); overflow: hidden; }
+#profile-head .main { width: 740px; float: right; }
+#profile-head .extra { width: 130px; float: left; }
+#profile-head .photo { margin: 0 0 1em; background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
 #profile-head .page-title, #profile-edit .page-title { margin: 0 0 .25em; padding-right: 160px; }
 #profile-head b { font-size: .77em; font-weight: normal; color: #a19f93; }
 #profile-head .info li { display: inline; margin-right: 10px; }
 #profile-head .info li:before { content: "/"; margin-right: 10px; color: #a19f93; }
 #profile-head .info li:first-child:before { content: ""; margin: 0; }
 #profile-head .bio, #profile-head .links { font-size: .857em; }
-#profile-head .links li { display: inline; margin: 0 12px 10px 0; }
+#profile-head .interests h2 { font-size: 1em; margin-bottom: .25em; }
+#profile-head .interests li { font-size: .857em; display: inline; margin: 0 10px .5em 0; }
+#profile-head .links li { margin: 0 0 .5em; }
 #profile-head .links a { padding: 1px 0 1px 24px; background: url("../img/icons-links.png") no-repeat; }
-#profile-head .edit { width: 140px; position: absolute; right: 20px; top: 1.8em; text-align: right; }
+#profile-head .edit { width: 140px; position: absolute; right: 20px; top: 25px; text-align: right; margin: 0; }
 
 #profile-head .twitter a, #elsewhere .twitter label { background-position: 0 -50px; }
 #profile-head .github a, #elsewhere .github label { background-position: 0 -100px; }
@@ -874,6 +878,33 @@ transition-property: bottom, opacity, visibility;
 #profile-head .linkedin a, #elsewhere .linkedin label { background-position: 0 -200px; }
 #profile-head .dribbble a, #elsewhere .dribbble label { background-position: 0 -250px; }
 #profile-head .reddit a, #elsewhere .reddit label { background-position: 0 -300px; }
+#profile-head .docs a { background-position: 0 -400px; }
+
+.profile-section { clear: both; margin: 0 0 30px; }
+.profile-section header { clear: both; margin: 0 0 20px; border: 0; padding: 8px 20px; color: #fff; background: #000; background: -moz-linear-gradient(top, #333 0, #000 100%); background: -webkit-linear-gradient(top, #333 0, #000 100%); background: linear-gradient(top, #333 0, #000 100%); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
+.profile-section header:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.profile-section header h2 { float: left; margin: 0 20px -3px 0; font: normal 22px/1.2 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: 2px; }
+.profile-section header a { color: #fff; }
+.profile-section header a:hover, .profile-section header a:focus, .profile-section header a:active { color: #f1ed0f; }
+
+
+#docs-activity header { margin: 0 0 1.5em; }
+#docs-activity header h2 { display: inline; margin-right: 20px; }
+#docs-activity header p { display: inline; }
+table.activity { font-size: .857em; width: 100%; }
+table.activity thead, table.activity tfoot { background: #d6d6c6; background: rgba(198,198,175,.5); }
+table.activity thead th { font-weight: bold; }
+table.activity th.date { width: 120px; }
+table.activity th.page { width: 40%; }
+table.activity td, table.activity th { padding: .5em 3px; vertical-align: top; }
+table.activity tr:nth-child(even) { background: #e4e4d9; background: rgba(198,198,175,.2); }
+table.activity tbody tr:hover { background: #ebebd9; background: rgba(255,255,255,.5); }
+table.activity th h3 { margin: 0 0 .25em; }
+table.activity .actions { font-size: .857em; margin: 0; }
+table.activity .actions li { display: inline; margin: 0 10px .5em 0; }
+table.activity tfoot td { text-align: right; padding: .5em 20px; }
+table.activity tfoot .feed { padding-left: 20px; background: url("../img/icons-links.png") 0 -349px no-repeat; }
+
 
 /* @Edit @Profile *********/
 #profile-edit { padding-left: 165px; position: relative; }
@@ -884,6 +915,11 @@ transition-property: bottom, opacity, visibility;
 #profile-edit .extra li { margin: 0 0 .5em; }
 #profile-edit .extra .delete { margin: 1.5em 0; }
 #profile-edit .delete a:hover, #profile-edit .delete a:focus, #profile-edit .delete a:active { color: #900; }
+
+#profile-edit .int-taglist { margin: .5em 0; width: 540px; font-size: .857em; }
+#profile-edit .int-taglist li { display: inline-block; margin: 0 10px 6px 0; }
+.int-taglist .del { display: inline-block; text-indent: -999em; overflow: hidden; width: 15px; height: 15px; cursor: pointer; margin: 0 0 -3px 0; background: url("../img/icn-delete.png") center -96px no-repeat; }
+.int-taglist .del:hover, .int-taglist .del:focus { background-position: center -146px; }
 
 #elsewhere label { display: inline-block; width: 120px; padding-left: 25px; background: url("../img/icons-links.png") 0 0 no-repeat; }
 #elsewhere .url { width: 300px; }

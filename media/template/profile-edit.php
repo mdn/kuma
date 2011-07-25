@@ -26,7 +26,7 @@ head(
         
         <ul>
           <li><a href="profile.php">View profile</a></li>
-          <li><a href="#">Change password</a></li>
+          <li><a href="#">Change password or email</a></li>
           <li class="delete"><a href="#">Delete my account</a></li>
         </ul>
       </div>
@@ -39,11 +39,28 @@ head(
           <li><label for="pers-location">Location</label> <input type="text" id="pers-location" name="location" value="San Francisco, CA"></li>
           <li class="wordcount">
             <label for="acc-bio">About Me <span class="note"><b id="bio_wordcount" class="counter">150</b> words remaining</span></label> 
-            <textarea id="acc-bio" name="bio" cols="50" rows="6">
+            <textarea id="acc-bio" name="bio" cols="50" rows="7">
 The details of my life are quite inconsequential... very well, where do I begin? My father was a relentlessly self-improving boulangerie owner from Belgium with low grade narcolepsy and a penchant for buggery. My mother was a fifteen year old French prostitute named Chloe with webbed feet. My father would womanize, he would drink. He would make outrageous claims like he invented the question mark. Sometimes he would accuse chestnuts of being lazy. The sort of general malaise that only the genius possess and the insane lament.
 
 My childhood was typical. Summers in Rangoon, luge lessons. In the spring we'd make meat helmets. When I was insolent I was placed in a burlap bag and beaten with reeds- pretty standard really.
             </textarea>          
+          </li>
+          <li>
+            <label for="pers-interests">Interests (tags)</label>
+            <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
+            <input type="text" name="interests" id="pers-interests">
+		        <button type="button">Add</button>
+          	<ul class="int-taglist">
+              <li><a href="#" rel="tag">CSS</a> <a class="del" title="Remove 'CSS' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">CSS3</a> <a class="del" title="Remove 'CSS3' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">JavaScript</a> <a class="del" title="Remove 'JavaScript' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">web standards</a> <a class="del" title="Remove 'web standards' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">monster movies</a> <a class="del" title="Remove 'monster movies' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">bacon</a> <a class="del" title="Remove 'bacon' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">PHP</a> <a class="del" title="Remove 'PHP' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">BBQ</a> <a class="del" title="Remove 'BBQ' from your interests">remove</a></li>
+              <li><a href="#" rel="tag">SOL</a> <a class="del" title="Remove 'SOL' from your interests">remove</a></li>
+            </ul>
           </li>
         </ul>
       </fieldset>
@@ -77,15 +94,15 @@ My childhood was typical. Summers in Rangoon, luge lessons. In the spring we'd m
 <!--
         <p class="site">
           <select name="site1_site">
-            <option value="" selected disabled>-- select --</option>
-            <option value="website">Personal Website</option>
+            <option value="" selected disabled>- select -</option>
+            <option value="website">Website/blog</option>
             <option value="twitter">Twitter</option>
             <option value="github">GitHub</option>
             <option value="stackover">StackOverflow</option>
             <option value="linkedin">LinkedIn</option>
           </select>
-          <input type="text" class="url" name="site1_url" value="itsneil.com">
-          <button type="button" class="remove" title="Delete this profile link">Delete</button>
+          <input type="text" class="url" name="site1_url">
+          <button type="button" class="remove" title="Delete this profile link" onclick="$(this).parents('.site').slideUp('fast');">Delete</button>
         </p>
 -->
 
@@ -103,23 +120,25 @@ My childhood was typical. Summers in Rangoon, luge lessons. In the spring we'd m
 // <![CDATA[
 $(document).ready(function(){
   
+/*
   $("#elsewhere .site select").change(function(){
     if (this.value === "website") {
-      $(this).parents().find(".url").val("http://").focus();
+      $(this).parents(".site").find(".url").val("http://").focus();
     }
     else if (this.value === "twitter") {
-      $(this).parents().find(".url").val("http://twitter.com/").focus();
+      $(this).parents(".site").find(".url").val("http://twitter.com/").focus();
     }
     else if (this.value === "github") {
-      $(this).parents().find(".url").val("http://github.com/").focus();
+      $(this).parents(".site").find(".url").val("http://github.com/").focus();
     }
     else if (this.value === "stackover") {
-      $(this).parents().find(".url").val("http://stackoverflow.com/users/").focus();
+      $(this).parents(".site").find(".url").val("http://stackoverflow.com/users/").focus();
     }
     else if (this.value === "linkedin") {
-      $(this).parents().find(".url").val("http://www.linkedin.com/in/").focus();
+      $(this).parents(".site").find(".url").val("http://www.linkedin.com/in/").focus();
     }
   });
+*/
 
 
   // word count

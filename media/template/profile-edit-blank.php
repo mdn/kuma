@@ -25,8 +25,8 @@ head(
         </figure>
         
         <ul>
-          <li><a href="profile.php">View profile</a></li>
-          <li><a href="#">Change password</a></li>
+          <li><a href="profile-blank.php">View profile</a></li>
+          <li><a href="#">Change password or email</a></li>
           <li class="delete"><a href="#">Delete my account</a></li>
         </ul>
       </div>
@@ -39,7 +39,13 @@ head(
           <li><label for="pers-location">Location</label> <input type="text" id="pers-location" name="location"></li>
           <li class="wordcount">
             <label for="acc-bio">About Me <span class="note"><b id="bio_wordcount" class="counter">150</b> words remaining</span></label> 
-            <textarea id="acc-bio" name="bio" cols="50" rows="6"></textarea>          
+            <textarea id="acc-bio" name="bio" cols="50" rows="7"></textarea>          
+          </li>
+          <li>
+            <label for="pers-interests">Interests (tags)</label>
+            <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
+            <input type="text" name="interests" id="pers-interests">
+		        <button type="button">Add</button>
           </li>
         </ul>
       </fieldset>
