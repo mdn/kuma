@@ -44,7 +44,7 @@ head(
     </section>
 
     <section id="profile-demos" class="profile-section">
-      <header id="gallery-sort">
+      <header class="gallery-head">
         <h2 class="count">No Demos</h2>
       </header>
       <p class="none">You haven't submitted any web technology demos. Build something awesome and <a class="button positive" href="demo-submit.php">Submit a Demo</a></p>

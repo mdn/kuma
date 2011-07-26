@@ -71,7 +71,7 @@ head(
     </section>
 
     <section id="profile-demos" class="profile-section">
-      <header id="gallery-sort">
+      <header class="gallery-head">
         <h2 class="count">7 Demos <a class="button positive" href="demo-submit.php">Submit a Demo</a></h2>
         <ul class="sort">
           <li><strong title="You are viewing these demos sorted by most views">Most Viewed</strong></li>
@@ -157,7 +157,7 @@ head(
         </li>
       </ul>
       
-      <div id="gallery-foot">
+      <div class="gallery-foot">
         <p class="showing">1&ndash;4 of 7</p>
         <ul class="paging">
           <!-- No first or prev when we're on the first page, no next or last when we're on the last page -->

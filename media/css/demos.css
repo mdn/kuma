@@ -364,39 +364,39 @@
 #page-head.gallery .author .edit { width: 140px; position: absolute; right: 30px; top: 30px; text-align: right; }
 #page-head.gallery .author .edit .button { color: #fff; }
 
-#gallery-sort { clear: both; margin: 0 0 20px; border: 0; padding: 8px 20px; color: #fff; background: #000; background: -moz-linear-gradient(top, #333 0, #000 100%); background: -webkit-linear-gradient(top, #333 0, #000 100%); background: linear-gradient(top, #333 0, #000 100%); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
-#gallery-sort:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-#gallery-sort .count { float: left; padding-left: 40px; margin: 0 20px -3px 0; background: url("../img/demos/icn-demoreel.png") 0 0 no-repeat; font: normal 22px/1.2 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: 2px; }
-#gallery-sort .count .button { font-size: .636em; margin-left: 15px; position: relative; top: -2px; }
-#gallery-sort .sort { float: right; margin: .35em 0 0; font-size: .786em; text-transform: uppercase; letter-spacing: 1px; }
-#gallery-sort .sort li { display: inline; padding: 0; margin: 0 0 0 20px; background: none; }
-#gallery-sort .sort a { color: #fff; padding-bottom: 6px; }
-#gallery-sort .sort a:hover, #gallery-sort .sort a:focus, #gallery-sort .sort a:active { color: #f1ed0f; background: url("../img/demos/sort-arrow.png") center bottom no-repeat; }
-#gallery-sort .sort strong { font-weight: normal; color: #f1ed0f; padding-bottom: 6px; background: url("../img/demos/sort-arrow.png") center bottom no-repeat; }
+.gallery-head { clear: both; margin: 0 0 20px; border: 0; padding: 8px 20px; color: #fff; background: #000; background: -moz-linear-gradient(top, #333 0, #000 100%); background: -webkit-linear-gradient(top, #333 0, #000 100%); background: linear-gradient(top, #333 0, #000 100%); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
+.gallery-head:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.gallery-head .count { float: left; padding-left: 40px; margin: 0 20px -3px 0; background: url("../img/demos/icn-demoreel.png") 0 0 no-repeat; font: normal 22px/1.2 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: 2px; }
+.gallery-head .count .button { font-size: .636em; margin-left: 15px; position: relative; top: -2px; }
+.gallery-head .sort { float: right; margin: .35em 0 0; font-size: .786em; text-transform: uppercase; letter-spacing: 1px; }
+.gallery-head .sort li { display: inline; padding: 0; margin: 0 0 0 20px; background: none; }
+.gallery-head .sort a { color: #fff; padding-bottom: 6px; }
+.gallery-head .sort a:hover, #gallery-sort .sort a:focus, #gallery-sort .sort a:active { color: #f1ed0f; background: url("../img/demos/sort-arrow.png") center bottom no-repeat; }
+.gallery-head .sort strong { font-weight: normal; color: #f1ed0f; padding-bottom: 6px; background: url("../img/demos/sort-arrow.png") center bottom no-repeat; }
 
-#gallery-foot { margin: 20px 0; padding: 10px 15px; clear: both; padding: 8px 20px; color: #fff; background: #000; background: -moz-linear-gradient(top, #333 0, #000 100%); background: -webkit-linear-gradient(top, #333 0, #000 100%); background: linear-gradient(top, #333 0, #000 100%); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
-#gallery-foot:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-#gallery-foot .showing { float: left; width: 15%; font-size: .857em; color: #fff; margin: 0; }
-#gallery-foot .feed { float: right; width: 15%; text-align: right; font-size: .857em; margin: 0; }
-#gallery-foot .feed a { padding-left: 20px; color: #fff; background: url("../img/icons-welcome.png") 0 -499px no-repeat; }
+.gallery-foot { margin: 20px 0; padding: 10px 15px; clear: both; padding: 8px 20px; color: #fff; background: #000; background: -moz-linear-gradient(top, #333 0, #000 100%); background: -webkit-linear-gradient(top, #333 0, #000 100%); background: linear-gradient(top, #333 0, #000 100%); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
+.gallery-foot:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.gallery-foot .showing { float: left; width: 15%; font-size: .857em; color: #fff; margin: 0; }
+.gallery-foot .feed { float: right; width: 15%; text-align: right; font-size: .857em; margin: 0; }
+.gallery-foot .feed a { padding-left: 20px; color: #fff; background: url("../img/icons-welcome.png") 0 -499px no-repeat; }
 
-#gallery-foot .paging { text-align: center; float: left; width: 69.8%; margin: -3px auto 0; }
-#gallery-foot .paging li { display: inline; padding-left: 12px; margin-left: 8px; background: none; border-left: 1px solid #666; }
-#gallery-foot .paging li:first-child { border: 0; }  
-#gallery-foot li.prev { padding-right: 0; border-right: 0; margin-right: 0; }
-#gallery-foot .paging a { color: #fff; text-transform: uppercase; }
-#gallery-foot .paging a:hover, #gallery-foot .paging a:focus, #gallery-foot .paging a:active { color: #f1ed0f; }
+.gallery-foot .paging { text-align: center; float: left; width: 69.8%; margin: -3px auto 0; }
+.gallery-foot .paging li { display: inline; padding-left: 12px; margin-left: 8px; background: none; border-left: 1px solid #666; }
+.gallery-foot .paging li:first-child { border: 0; }  
+.gallery-foot li.prev { padding-right: 0; border-right: 0; margin-right: 0; }
+.gallery-foot .paging a { color: #fff; text-transform: uppercase; }
+.gallery-foot .paging a:hover, #gallery-foot .paging a:focus, #gallery-foot .paging a:active { color: #f1ed0f; }
 
-#gallery-foot .paging a { background-image: url("../img/demos/paging-arrows.png"); background-repeat: no-repeat; }
-#gallery-foot .paging li.prev { border-right: 1px solid #666; padding-right: 13px; margin-right: 10px; }
-#gallery-foot .paging li.prev a { padding-left: 13px; background-position: 0 -96px; }
-#gallery-foot .paging li.prev a:hover, #gallery-foot .paging li.prev a:focus, #gallery-foot .paging li.prev a:active { background-position: 0 -146px; }
-#gallery-foot .paging li.next a { padding-right: 13px; background-position: 100% 5px; }
-#gallery-foot .paging li.next a:hover, #gallery-foot .paging li.next a:focus, #gallery-foot .paging li.next a:active { background-position: 100% -45px; }
-#gallery-foot .paging li.first a { display: inline-block; width: 20px; margin-right: -8px; text-indent: -999em; background-position: 100% -295px; }
-#gallery-foot .paging li.first a:hover, .paging li.first a:focus, .paging li.first a:active { background-position: 100% -345px; }
-#gallery-foot .paging li.last a { display: inline-block; width: 20px; margin-left: -8px; text-indent: -999em; background-position: 0 -195px; }
-#gallery-foot .paging li.last a:hover, .paging li.last a:focus, .paging li.last a:active { background-position: 0 -245px; }
+.gallery-foot .paging a { background-image: url("../img/demos/paging-arrows.png"); background-repeat: no-repeat; }
+.gallery-foot .paging li.prev { border-right: 1px solid #666; padding-right: 13px; margin-right: 10px; }
+.gallery-foot .paging li.prev a { padding-left: 13px; background-position: 0 -96px; }
+.gallery-foot .paging li.prev a:hover, #gallery-foot .paging li.prev a:focus, #gallery-foot .paging li.prev a:active { background-position: 0 -146px; }
+.gallery-foot .paging li.next a { padding-right: 13px; background-position: 100% 5px; }
+.gallery-foot .paging li.next a:hover, #gallery-foot .paging li.next a:focus, #gallery-foot .paging li.next a:active { background-position: 100% -45px; }
+.gallery-foot .paging li.first a { display: inline-block; width: 20px; margin-right: -8px; text-indent: -999em; background-position: 100% -295px; }
+.gallery-foot .paging li.first a:hover, .paging li.first a:focus, .paging li.first a:active { background-position: 100% -345px; }
+.gallery-foot .paging li.last a { display: inline-block; width: 20px; margin-left: -8px; text-indent: -999em; background-position: 0 -195px; }
+.gallery-foot .paging li.last a:hover, .paging li.last a:focus, .paging li.last a:active { background-position: 0 -245px; }
 
 .gallery { list-style: none; }
 .gallery:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }

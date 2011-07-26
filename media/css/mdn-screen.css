@@ -837,7 +837,7 @@ transition-property: bottom, opacity, visibility;
 .submission .section.notitle { padding-top: 0; }
 
 .submission li { margin: 0 0 .75em; }
-.submission input[type="email"], .submission input[type="text"] { width: 450px; }
+.submission input[type="text"] { width: 450px; }
 .submission input[readonly] { background: transparent; border: 0; }
 .submission textarea { width: 610px; }
 .submission label input { width: auto; padding: 0; }
