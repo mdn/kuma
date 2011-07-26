@@ -1,5 +1,8 @@
 from urllib2 import build_opener, HTTPError
+import urllib2
+import urlparse
 from xml.dom import minidom
+from xml.sax.saxutils import escape as xml_escape
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -7,6 +10,14 @@ from django.contrib.auth.models import User
 import commonware
 
 from devmo.models import UserProfile
+
+# HACK: Using thread local to retain the authtoken used for Deki API requests
+# on login
+try:
+    from threading import local
+except ImportError:
+    from django.utils._threading_local import local
+_thread_locals = local()
 
 log = commonware.log.getLogger('mdn.dekicompat')
 
@@ -29,17 +40,26 @@ class DekiUserBackend(object):
         auth_cookie = 'authtoken="%s"' % authtoken
         opener.addheaders = [('Cookie', auth_cookie),]
         resp = opener.open(DekiUserBackend.profile_url)
-        deki_user = DekiUser.parse_user_info(resp.read())
+        deki_user = DekiUser.parse_user_info(resp.read(), authtoken)
         if deki_user:
-            log.info("MONITOR Dekiwiki Auth Success")
+            # HACK: Retain authenticated authtoken for future Deki API
+            # requests.
+            _thread_locals.deki_api_authtoken = authtoken
+            user = self.get_or_create_user(deki_user)
             return self.get_or_create_user(deki_user)
         else:
-            log.info("MONITOR Dekiwiki Failed")
             return None
 
     def get_deki_user(self, deki_user_id):
         """Fetch details for a given Dekiwiki profile by user ID"""
         opener = build_opener()
+        authtoken = getattr(_thread_locals, 'deki_api_authtoken', None)
+        if authtoken:
+            # HACK: Use retained authenticated authtoken for future Deki API
+            # requests. This gets us extra user details for the logged-in
+            # user, such as email address.
+            auth_cookie = 'authtoken="%s"' % authtoken
+            opener.addheaders = [('Cookie', auth_cookie),]
         resp = opener.open(DekiUserBackend.profile_by_id_url % deki_user_id)
         return DekiUser.parse_user_info(resp.read())
 
@@ -64,31 +84,33 @@ class DekiUserBackend(object):
               parse_user_info
         """
         try:
+            # Try fetching an existing profile mapped to deki user
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
             user = profile.user
-            log.info("MONITOR Dekiwiki Profile Loaded")
-            log.debug("User account already exists %d", user.id)
-        except UserProfile.DoesNotExist:
-            log.debug("First time seeing deki user id#%d username=%s, creating account locally", deki_user.id, deki_user.username)
-            user, created = User.objects.get_or_create(username=deki_user.username)
 
+        except UserProfile.DoesNotExist: 
+            # No existing profile, so try creating a new profile and user
+            user, created = User.objects.get_or_create(username=deki_user.username)
             user.username = deki_user.username
-            # HACK: Deki has fullname Django has First and last...
-            # WACK: but our Dekiwiki instace doesn't let the user edit this data
-            user.first_name = deki_user.fullname[:30]
-            user.last_name = ''
             user.set_unusable_password()
             user.save()
-            profile = UserProfile(deki_user_id = deki_user.id, user=user)
+            profile = UserProfile(deki_user_id=deki_user.id, user=user)
             profile.save()
-            log.info("MONITOR Dekiwiki Profile Saved")
-            log.debug("Saved profile %s", str(profile))
+            
         user.deki_user = deki_user
 
-        # Items we don't store in our DB (API read keeps it fresh)
-        user.is_superuser = deki_user.is_superuser
-        user.is_staff = deki_user.is_staff
-        user.is_active = deki_user.is_active
+        # Sync these attributes from Deki -> Django (for now)
+        sync_attrs = ('is_superuser', 'is_staff', 'is_active', 'email')
+        needs_save = False
+        for sa in sync_attrs:
+            deki_val = getattr(deki_user, sa, None)
+            if getattr(user, sa, None) != deki_val:
+                setattr(user, sa, deki_val)
+                needs_save = True
+
+        if needs_save:
+            user.save()
+
         return user
 
 class DekiUser(object):
@@ -106,8 +128,41 @@ class DekiUser(object):
         self.is_staff     = False
         self.is_superuser = False
 
+    def change_email(self, new_email, authtoken=None):
+        """Given a new email address, attempt to change it for this user via
+        the Deki API"""
+        # No email change without authtoken
+        authtoken = authtoken or getattr(_thread_locals, 
+                                         'deki_api_authtoken', None)
+        if not authtoken:
+            return
+
+        import httplib
+        try:
+            auth_cookie = 'authtoken="%s"' % authtoken
+            body = "<user><email>%s</email></user>" % (xml_escape(new_email))
+
+            deki_tuple = urlparse.urlparse(settings.DEKIWIKI_ENDPOINT)
+            if deki_tuple.scheme == 'https':
+                conn = httplib.HTTPSConnection(deki_tuple.netloc)
+            else:
+                conn = httplib.HTTPConnection(deki_tuple.netloc)
+            conn.request("PUT", '/@api/deki/users/%s' % self.id, body, {
+                'Content-Type': 'text/xml', 
+                'Cookie': auth_cookie
+            })
+            resp = conn.getresponse()
+            http_status_code = resp.status
+            out = resp.read()
+            conn.close()
+
+        except httplib.HTTPException:
+            return False
+
+        return True
+
     @staticmethod
-    def parse_user_info(xmlstring):
+    def parse_user_info(xmlstring, authtoken=None):
         """
         Parses XML and creates a DekiUser instance.
         If the user is Anonymous returns None.
@@ -152,7 +207,6 @@ class DekiUser(object):
         if not userEl:
             return None
         deki_user.id = int(userEl.getAttribute('id'))
-        log.debug("Seeing user id %d", deki_user.id)
 
         deki_user.xml = xmlstring
 
@@ -182,4 +236,5 @@ class DekiUser(object):
         if 'Anonymous' == deki_user.username:
             return None
         else:
+            deki_user.authtoken = authtoken
             return deki_user

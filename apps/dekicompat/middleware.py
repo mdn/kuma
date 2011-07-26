@@ -26,12 +26,10 @@ class DekiUserMiddleware(object):
         """
         try:
             auth_token = request.COOKIES['authtoken']
-            log.debug("middleware seeing authtoken=%s", auth_token)
         except KeyError:
             # If specified header doesn't exist then return (leaving
             # request.user set to AnonymousUser by the
             # AuthenticationMiddleware).
-            log.debug("middleware no authtoken cookie, skipping")
             return
         # TODO(aok) Session or other cache?
         if not auth_token:

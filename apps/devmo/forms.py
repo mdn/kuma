@@ -14,3 +14,5 @@ class UserProfileEditForm(forms.ModelForm):
         model = UserProfile
         fields = ('fullname', 'title', 'organization', 'location', 'bio',
                   'interests')
+
+    email = forms.EmailField(label=_('Email'), required=True)

@@ -283,6 +283,7 @@ class ProfileViewsTest(test_utils.TestCase):
             doc.find('#profile-edit input[name="location"]').val())
 
         new_attrs = dict(
+            email="tester23@example.com",
             fullname="Another Name",
             title="Another title",
             organization="Another org",

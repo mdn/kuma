@@ -41,15 +41,15 @@
       
       <div class="extra">
         <figure class="acc-avatar">
-          <img src="./media/img/blank.gif" alt="" width="120" height="120" class="photo avatar">
+          <img src="{{ profile.gravatar }}" alt="" width="120" height="120" class="photo avatar">
           <figcaption>
-            Change your avatar at <a href="http://gravatar.com" rel="external">gravatar.com</a>
+              Change your avatar at <a href="http://gravatar.com" rel="external">gravatar.com</a>
           </figcaption>
         </figure>
         
         <ul>
             <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">View profile</a></li>
-            <li><a href="/Special:Preferences">Change password or email</a></li>
+            <li><a href="/Special:Preferences">Change password</a></li>
           {# TODO: Implement account deletion #}
           {# <li class="delete"><a href="#">Delete my account</a></li> #}
         </ul>
@@ -57,6 +57,7 @@
       
       <fieldset class="section notitle" id="personal">
         <ul>
+          {{ li_field(form, 'email') }}
           {{ li_field(form, 'fullname') }}
           {{ li_field(form, 'title') }}
           {{ li_field(form, 'organization') }}

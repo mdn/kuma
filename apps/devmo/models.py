@@ -1,7 +1,10 @@
 import csv
 from datetime import datetime
+
 import logging
 import urllib2
+import urllib
+import hashlib
 
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
@@ -39,6 +42,10 @@ class UserProfile(ModelBase):
     django.contrib.auth.models.User object. This may be relaxed
     once Dekiwiki isn't the definitive db for user info.
     """
+
+    class Meta:
+        db_table = 'user_profiles'
+
     # This could be a ForeignKey, except wikidb might be
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
@@ -63,20 +70,39 @@ class UserProfile(ModelBase):
     content_flagging_email = models.BooleanField(default=False)
     user = models.ForeignKey(DjangoUser, null=True, editable=False, blank=True)
 
-    class Meta:
-        db_table = 'user_profiles'
+    def _get_gravatar_url(self, secure=False, size=220, rating='pg',
+                          default='/media/img/avatar-large.gif'):
+        base_url = (secure and 'https://secure.gravatar.com' or
+            'http://www.gravatar.com')
+        m = hashlib.md5(self.email)
+        return '%(base_url)s/avatar/%(hash)s?%(params)s' % dict(
+            base_url=base_url, hash=m.hexdigest(),
+            params=urllib.urlencode(dict(
+                s=size, d=default, r=rating
+            ))
+        )
+
+    gravatar = property(_get_gravatar_url)
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
 
     def __getattr__(self, name):
+        """Proxy attribute access to DekuUser instance where they're not
+        defined on this model."""
+        if name in self.__dict__:
+            # If we've already got this, return it.
+            return self.__dict__[name]
         if not 'deki_user_id' in self.__dict__:
+            # Need a deki_user_id to start with
             raise AttributeError
         if not 'deki_user' in self.__dict__:
+            # Need to find the DekiUser corresponding to the ID
             from dekicompat.backends import DekiUserBackend
             self.__dict__['deki_user'] = \
                 DekiUserBackend().get_deki_user(self.__dict__['deki_user_id'])
         if hasattr(self.__dict__['deki_user'], name):
+            # Finally, look for the attribute on the DekiUser
             return getattr(self.__dict__['deki_user'], name)
         raise AttributeError
 
