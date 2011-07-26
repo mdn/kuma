@@ -71,7 +71,7 @@ class UserProfile(ModelBase):
     user = models.ForeignKey(DjangoUser, null=True, editable=False, blank=True)
 
     def _get_gravatar_url(self, secure=False, size=220, rating='pg',
-                          default='/media/img/avatar-large.gif'):
+            default='http://developer.mozilla.org/media/img/avatar.png'):
         base_url = (secure and 'https://secure.gravatar.com' or
             'http://www.gravatar.com')
         m = hashlib.md5(self.email)
