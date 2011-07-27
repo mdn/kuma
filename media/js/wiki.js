@@ -726,7 +726,10 @@
         if (typeof(window.localStorage) != 'undefined') {
             var prev_draft = window.localStorage.getItem(DRAFT_NAME);
             if (prev_draft){
-                if (confirm("Load previous draft?", "Draft detected")){
+                // draft matches server so discard draft
+                if ($.trim(prev_draft) == $('#wiki-page-edit textarea[name=content]').val().trim()) {
+                    window.localStorage.setItem(DRAFT_NAME, null);
+                } else if (confirm("Load previous draft?", "Draft detected")){
                     $('#wiki-page-edit textarea[name=content]').val(prev_draft);
                     updateDraftState('loaded');
                 }
