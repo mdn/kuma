@@ -7,6 +7,7 @@
 
 (function ($) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
+    var DRAFT_NAME, DRAFT_TIMEOUT_ID;
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
@@ -31,6 +32,7 @@
             initSaveAndEditButtons();
             initArticlePreview();
             initTitleAndSlugCheck();
+            initDrafting();
         }
         // CKEDITOR.replace('id_content');
         // Marky.createFullToolbar('.editor-tools', '#id_content');
@@ -702,7 +704,41 @@
 
     }
 
+    function updateDraftState(action) {
+        var now = new Date();
+        nowString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        $('#draft-action').text(action);
+        $('#draft-time').attr('title', now.toISOString()).text(nowString);
+    }
+
+    function saveDraft() {
+        var now;
+        if (typeof(window.localStorage) != 'undefined') {
+            window.localStorage.setItem(DRAFT_NAME, $('#wiki-page-edit textarea[name=content]').val());
+            updateDraftState('saved');
+        }
+    }
+
+    function initDrafting() {
+        var article_slug, editor, now;
+        article_slug = $('#id_slug').val();
+        DRAFT_NAME = 'draft-' + (article_slug ? article_slug : 'new');
+        if (typeof(window.localStorage) != 'undefined') {
+            var prev_draft = window.localStorage.getItem(DRAFT_NAME);
+            if (prev_draft){
+                if (confirm("Load previous draft?", "Draft detected")){
+                    $('#wiki-page-edit textarea[name=content]').val(prev_draft);
+                    updateDraftState('loaded');
+                }
+            }
+        }
+        editor = $('#id_content').ckeditorGet();
+        editor.on('key', function() {
+                window.clearTimeout(DRAFT_TIMEOUT_ID);
+                DRAFT_TIMEOUT_ID = window.setTimeout(saveDraft, 3000);
+        });
+    }
+
     $(document).ready(init);
 
 }(jQuery));
-

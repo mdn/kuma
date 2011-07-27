@@ -22,9 +22,8 @@
           <div class="title">
             <h1>{{ _('Editing <em>{title}</em>')|fe(title=document.title) }}</h1>
             <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
-            <!--
-          <p class="save-state">Draft automatically saved at 14:25. <button id="btn-savedraft" type="submit">Save Draft</button></p>
-          -->
+            {{ document_form.slug|safe }}
+            <p class="save-state" id="draft-status">Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time></p>
           </div>
 
           {% include 'wiki/includes/page_buttons.html' %}
