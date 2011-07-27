@@ -74,6 +74,7 @@
             <label for="pers-interests">Interests (tags)</label>
             <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
             {{ field | safe }}
+            <input type="text" name="interests" id="pers-interests">
 		        <button type="button">Add</button>
           	<ul class="int-taglist">
               <li><a href="#" rel="tag">CSS</a> <a class="del" title="Remove 'CSS' from your interests">remove</a></li>
@@ -94,26 +95,14 @@
         <legend><b>My Other Profiles</b></legend>
         
         <ul>
-          <li class="site website">
-            <label for="site_website">Website/blog</label> 
-            <input type="text" id="site_website" name="website" class="url" value="http://">
-          </li>
-          <li class="site twitter">
-            <label for="site_twitter">Twitter</label> 
-            <input type="text" id="site_twitter" name="twitter" class="url" value="http://twitter.com/">
-          </li>
-          <li class="site github">
-            <label for="site_github">GitHub</label> 
-            <input type="text" id="site_github" name="github" class="url" value="http://github.com/">
-          </li>
-          <li class="site stackover">
-            <label for="site_stackover">StackOverflow</label> 
-            <input type="text" id="site_stackover" name="stackover" class="url" value="http://stackoverflow.com/users/">
-          </li>
-          <li class="site linkedin">
-            <label for="site_linkedin">LinkedIn</label> 
-            <input type="text" id="site_linkedin" name="linkedin" class="url" value="http://www.linkedin.com/in/">
-          </li>
+            {% for site in profile.website_choices %}
+                {% set name = site[0] %}
+                {% set meta = site[1] %}
+                {{ li_field(form, 
+                    'websites_{name}' | f(name=name),
+                    classes="site {name}" | f(name=name), 
+                    label=meta['label']) }}
+            {% endfor %}
         </ul>
 
       </fieldset>

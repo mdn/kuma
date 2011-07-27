@@ -69,12 +69,15 @@
         </figure>
         
         <ul class="links">
-          <li class="web"><a href="#" rel="me external" class="url">Website</a></li>
-          <li class="twitter"><a href="#"rel="me external" class="url">@neilhimself</a></li>
-          <li class="github"><a href="#"rel="me external" class="url">GitHub</a></li>
-          <li class="stackover"><a href="#"rel="me external" class="url">StackOverflow</a></li>
-          <li class="linkedin"><a href="#"rel="me external" class="url">LinkedIn</a></li>
-          <li class="docs"><a href="#" rel="me">Docs user page</a></li>
+        {% for site in profile.website_choices %}
+            {% set site_name = site[0] %}
+            {% set site_meta = site[1] %}
+            {% set href = profile.websites[site_name] %}
+            {% if href %}
+                <li class="{{site_name}}"><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
+            {% endif %}
+          {% endfor %}
+          <li class="docs"><a href="/User:{{profile.user.username}}" rel="me">Docs user page</a></li>
         </ul>
       </div>
 

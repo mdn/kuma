@@ -14,6 +14,8 @@ import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
 
+from jsonfield import JSONField
+
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
@@ -43,6 +45,32 @@ class UserProfile(ModelBase):
     once Dekiwiki isn't the definitive db for user info.
     """
 
+    # Website fields defined for the profile form
+    # TODO: Someday this will probably need to allow arbitrary per-profile
+    # entries, and these will just be suggestions.
+    website_choices = [
+        ('website', dict(
+            label=_('Website'),
+            prefix='http://',
+        )),
+        ('twitter', dict(
+            label=_('Twitter'),
+            prefix='http://twitter.com/',
+        )),
+        ('github', dict(
+            label=_('GitHub'),
+            prefix='http://github.com/',
+        )),
+        ('stackoverflow', dict(
+            label=_('StackOverflow'),
+            prefix='http://stackoverflow.com/users/',
+        )),
+        ('linkedin', dict(
+            label=_('LinkedIn'),
+            prefix='http://www.linkedin.com/in/',
+        )),
+    ]
+
     class Meta:
         db_table = 'user_profiles'
 
@@ -70,11 +98,41 @@ class UserProfile(ModelBase):
     content_flagging_email = models.BooleanField(default=False)
     user = models.ForeignKey(DjangoUser, null=True, editable=False, blank=True)
 
-    def _get_gravatar_url(self, secure=False, size=220, rating='pg',
+    # HACK: Grab-bag field for future expansion in profiles
+    # We can store arbitrary data in here and later migrate to relational
+    # tables if the data ever needs to be indexed & queried. Otherwise,
+    # this keeps things nicely denormalized. Ideally, access to this field
+    # should be gated through accessors on the model to make that transition
+    # easier.
+    misc = JSONField(blank=True, null=True)
+
+    @property
+    def websites(self):
+        if 'websites' not in self.misc:
+            self.misc['websites'] = {}
+        return self.misc['websites']
+
+    @websites.setter
+    def websites(self, value):
+        self.misc['websites'] = value
+
+    _deki_user = None
+
+    @property
+    def deki_user(self):
+        if not self._deki_user:
+            # Need to find the DekiUser corresponding to the ID
+            from dekicompat.backends import DekiUserBackend
+            self._deki_user = (DekiUserBackend()
+                    .get_deki_user(self.deki_user_id))
+        return self._deki_user
+
+    def gravatar_url(self, secure=True, size=220, rating='pg',
             default='http://developer.mozilla.org/media/img/avatar.png'):
+        """Produce a gravatar image URL from email address."""
         base_url = (secure and 'https://secure.gravatar.com' or
             'http://www.gravatar.com')
-        m = hashlib.md5(self.email)
+        m = hashlib.md5(self.user.email)
         return '%(base_url)s/avatar/%(hash)s?%(params)s' % dict(
             base_url=base_url, hash=m.hexdigest(),
             params=urllib.urlencode(dict(
@@ -82,29 +140,12 @@ class UserProfile(ModelBase):
             ))
         )
 
-    gravatar = property(_get_gravatar_url)
+    @property
+    def gravatar(self):
+        return self.gravatar_url()
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
-
-    def __getattr__(self, name):
-        """Proxy attribute access to DekuUser instance where they're not
-        defined on this model."""
-        if name in self.__dict__:
-            # If we've already got this, return it.
-            return self.__dict__[name]
-        if not 'deki_user_id' in self.__dict__:
-            # Need a deki_user_id to start with
-            raise AttributeError
-        if not 'deki_user' in self.__dict__:
-            # Need to find the DekiUser corresponding to the ID
-            from dekicompat.backends import DekiUserBackend
-            self.__dict__['deki_user'] = \
-                DekiUserBackend().get_deki_user(self.__dict__['deki_user_id'])
-        if hasattr(self.__dict__['deki_user'], name):
-            # Finally, look for the attribute on the DekiUser
-            return getattr(self.__dict__['deki_user'], name)
-        raise AttributeError
 
     def allows_editing_by(self, user):
         if user == self.user:

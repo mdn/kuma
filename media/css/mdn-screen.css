@@ -837,7 +837,7 @@ transition-property: bottom, opacity, visibility;
 .submission .section.notitle { padding-top: 0; }
 
 .submission li { margin: 0 0 .75em; }
-.submission input[type="text"] { width: 450px; }
+.submission input[type="url"], .submission input[type="email"], .submission input[type="text"] { width: 450px; }
 .submission input[readonly] { background: transparent; border: 0; }
 .submission textarea { width: 610px; }
 .submission label input { width: auto; padding: 0; }
@@ -874,7 +874,7 @@ transition-property: bottom, opacity, visibility;
 
 #profile-head .twitter a, #elsewhere .twitter label { background-position: 0 -50px; }
 #profile-head .github a, #elsewhere .github label { background-position: 0 -100px; }
-#profile-head .stackover a, #elsewhere .stackover label { background-position: 0 -150px; }
+#profile-head .stackoverflow a, #elsewhere .stackoverflow label { background-position: 0 -150px; }
 #profile-head .linkedin a, #elsewhere .linkedin label { background-position: 0 -200px; }
 #profile-head .dribbble a, #elsewhere .dribbble label { background-position: 0 -250px; }
 #profile-head .reddit a, #elsewhere .reddit label { background-position: 0 -300px; }

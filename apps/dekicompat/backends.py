@@ -21,15 +21,18 @@ _thread_locals = local()
 
 log = commonware.log.getLogger('mdn.dekicompat')
 
+
 class DekiUserBackend(object):
     """
-    This backend is to be used in conjunction with the 
+    This backend is to be used in conjunction with the
     ``DekiUserMiddleware`` to authenticate via Dekiwiki.
 
-    Tips for faking out Django/Dekiwiki https://intranet.mozilla.org/Webdev:MDN:DjangoAuth    
+    Tips for faking out Django/Dekiwiki
+    https://intranet.mozilla.org/Webdev:MDN:DjangoAuth
     """
     profile_url = "%s/@api/deki/users/current" % settings.DEKIWIKI_ENDPOINT
-    profile_by_id_url = "%s/@api/deki/users/%s" % ( settings.DEKIWIKI_ENDPOINT, '%s' )
+    profile_by_id_url = ("%s/@api/deki/users/%s" %
+        (settings.DEKIWIKI_ENDPOINT, '%s'))
 
     def authenticate(self, authtoken):
         """
@@ -38,7 +41,7 @@ class DekiUserBackend(object):
         user = None
         opener = build_opener()
         auth_cookie = 'authtoken="%s"' % authtoken
-        opener.addheaders = [('Cookie', auth_cookie),]
+        opener.addheaders = [('Cookie', auth_cookie), ]
         resp = opener.open(DekiUserBackend.profile_url)
         deki_user = DekiUser.parse_user_info(resp.read(), authtoken)
         if deki_user:
@@ -48,7 +51,12 @@ class DekiUserBackend(object):
             user = self.get_or_create_user(deki_user)
             return self.get_or_create_user(deki_user)
         else:
+            self.flush()
             return None
+
+    def flush(self):
+        """Flush any cached data"""
+        _thread_locals.deki_api_authtoken = None
 
     def get_deki_user(self, deki_user_id):
         """Fetch details for a given Dekiwiki profile by user ID"""
@@ -59,7 +67,7 @@ class DekiUserBackend(object):
             # requests. This gets us extra user details for the logged-in
             # user, such as email address.
             auth_cookie = 'authtoken="%s"' % authtoken
-            opener.addheaders = [('Cookie', auth_cookie),]
+            opener.addheaders = [('Cookie', auth_cookie), ]
         resp = opener.open(DekiUserBackend.profile_by_id_url % deki_user_id)
         return DekiUser.parse_user_info(resp.read())
 
@@ -77,7 +85,7 @@ class DekiUserBackend(object):
 
     def get_or_create_user(self, deki_user):
         """
-        Grab the User via their UserProfile and deki_user_id. 
+        Grab the User via their UserProfile and deki_user_id.
         If non exists, create both.
 
         NOTE: Changes to this method may require changes to
@@ -88,15 +96,16 @@ class DekiUserBackend(object):
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
             user = profile.user
 
-        except UserProfile.DoesNotExist: 
+        except UserProfile.DoesNotExist:
             # No existing profile, so try creating a new profile and user
-            user, created = User.objects.get_or_create(username=deki_user.username)
+            user, created = (User.objects
+                             .get_or_create(username=deki_user.username))
             user.username = deki_user.username
             user.set_unusable_password()
             user.save()
             profile = UserProfile(deki_user_id=deki_user.id, user=user)
             profile.save()
-            
+
         user.deki_user = deki_user
 
         # Sync these attributes from Deki -> Django (for now)
@@ -113,26 +122,28 @@ class DekiUserBackend(object):
 
         return user
 
+
 class DekiUser(object):
     """
     Simple data type for deki user info
     """
-    def __init__(self, id, username, fullname, email, gravatar, profile_url=None):
+    def __init__(self, id, username, fullname, email, gravatar,
+                 profile_url=None):
         self.id = id
         self.username = username
         self.fullname = fullname
-        self.email    = email
+        self.email = email
         self.gravatar = gravatar
-        self.profile_url  = profile_url
-        self.is_active    = False
-        self.is_staff     = False
+        self.profile_url = profile_url
+        self.is_active = False
+        self.is_staff = False
         self.is_superuser = False
 
     def change_email(self, new_email, authtoken=None):
         """Given a new email address, attempt to change it for this user via
         the Deki API"""
         # No email change without authtoken
-        authtoken = authtoken or getattr(_thread_locals, 
+        authtoken = authtoken or getattr(_thread_locals,
                                          'deki_api_authtoken', None)
         if not authtoken:
             return
@@ -148,7 +159,7 @@ class DekiUser(object):
             else:
                 conn = httplib.HTTPConnection(deki_tuple.netloc)
             conn.request("PUT", '/@api/deki/users/%s' % self.id, body, {
-                'Content-Type': 'text/xml', 
+                'Content-Type': 'text/xml',
                 'Cookie': auth_cookie
             })
             resp = conn.getresponse()
@@ -174,29 +185,11 @@ class DekiUser(object):
 
         TODO: Flesh out with more properties as needed.
         In the future we can support is_active, groups, etc.
-
-        Example output form Deki:
-<user id="115908">
-    <nick>Anonymous</nick>
-    <username>Anonymous</username>
-    <fullname/>
-    <email/>
-    <hash.email>d41d8cd98f00b204e9800998ecf8427e</hash.email>
-    <uri.gravatar>http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e.png</uri.gravatar>
-    <date.created>2005-03-15T23:42:24Z</date.created>
-    <status>active</status>
-    <date.lastlogin>2010-12-05T21:27:31Z</date.lastlogin>
-    <language/>
-    <timezone/>
-    <service.authentication href="http://dekiwiki/@api/deki/site/services/1" id="1"/>
-    <permissions.user><operations mask="15">LOGIN,BROWSE,READ,SUBSCRIBE</operations><role href="http://dekiwiki/@api/deki/site/roles/3" id="3">Viewer</role></permissions.user>
-    <permissions.effective><operations mask="15">LOGIN,BROWSE,READ,SUBSCRIBE</operations></permissions.effective>
-    <groups/>
-    <properties count="0" href="http://dekiwiki/@api/deki/users/115908/properties"/>
-</user>
         """
         xmldoc = minidom.parseString(xmlstring)
-        deki_user = DekiUser(-1, 'Anonymous', '', '', 'http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e.png')        
+        deki_user = DekiUser(-1, 'Anonymous', '', '',
+                'http://www.gravatar.com/avatar/' +
+                'd41d8cd98f00b204e9800998ecf8427e.png')
 
         userEl = None
 

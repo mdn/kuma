@@ -38,17 +38,33 @@ def profile_edit(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
     if not profile.allows_editing_by(request.user):
         return HttpResponseForbidden()
+
     if request.method != "POST":
-        form = UserProfileEditForm(instance=profile,
-                                   initial=dict(email=profile.user.email))
+        initial = dict(email=profile.user.email)
+        for name, meta in UserProfile.website_choices:
+            val = profile.websites.get(name, '') or meta['prefix']
+            initial['websites_%s' % name] = val
+        form = UserProfileEditForm(instance=profile, initial=initial)
+
     else:
         form = UserProfileEditForm(request.POST, request.FILES,
                                    instance=profile,
                                    initial=dict(email=profile.user.email))
         if form.is_valid():
             profile_new = form.save(commit=False)
+
+            # Gather up all websites defined by the model, save them.
+            sites = dict()
+            for name, meta in profile.website_choices:
+                field_name = 'websites_%s' % name
+                field_value = form.cleaned_data.get(field_name, '')
+                if field_value:
+                    sites[name] = field_value
+            profile_new.websites = sites
+
             profile_new.save()
 
+            # Change the email address, if necessary.
             if form.cleaned_data['email'] != profile.user.email:
                 profile.user.email = form.cleaned_data['email']
                 profile.user.save()
