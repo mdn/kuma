@@ -92,7 +92,8 @@ class UserProfile(ModelBase):
     location = models.CharField(_('Location'), max_length=255, default='',
                                 blank=True)
     bio = models.TextField(_('About Me'), blank=True)
-    interests = TaggableManager(_('Interests'), blank=True)
+
+    tags = TaggableManager(_('Tags'), blank=True)
 
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)

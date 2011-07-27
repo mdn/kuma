@@ -9,11 +9,16 @@
 {% block site_css %}
     {{ super() }}
     {{ css('demostudio') }}
+    {{ css('jqueryui/jqueryui') }}
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+    {{ css('tagit') }}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
+    {{ js('libs/jqueryui') }}
     {{ js('demostudio') }}
+    {{ js('libs/tagit') }}
 {% endblock %}
 
 {% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
@@ -74,19 +79,6 @@
             <label for="pers-interests">Interests (tags)</label>
             <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
             {{ field | safe }}
-            <input type="text" name="interests" id="pers-interests">
-		        <button type="button">Add</button>
-          	<ul class="int-taglist">
-              <li><a href="#" rel="tag">CSS</a> <a class="del" title="Remove 'CSS' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">CSS3</a> <a class="del" title="Remove 'CSS3' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">JavaScript</a> <a class="del" title="Remove 'JavaScript' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">web standards</a> <a class="del" title="Remove 'web standards' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">monster movies</a> <a class="del" title="Remove 'monster movies' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">bacon</a> <a class="del" title="Remove 'bacon' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">PHP</a> <a class="del" title="Remove 'PHP' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">BBQ</a> <a class="del" title="Remove 'BBQ' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">SOL</a> <a class="del" title="Remove 'SOL' from your interests">remove</a></li>
-            </ul>
           </li>
         </ul>
       </fieldset>
@@ -121,28 +113,24 @@
 {% block js %}
 <script type="text/javascript">
 // <![CDATA[
-$(document).ready(function(){
-  
-  /*
-  $("#elsewhere .site select").change(function(){
-    if (this.value === "website") {
-      $(this).parents().find(".url").val("http://").focus();
-    }
-    else if (this.value === "twitter") {
-      $(this).parents().find(".url").val("http://twitter.com/").focus();
-    }
-    else if (this.value === "github") {
-      $(this).parents().find(".url").val("http://github.com/").focus();
-    }
-    else if (this.value === "stackover") {
-      $(this).parents().find(".url").val("http://stackoverflow.com/users/").focus();
-    }
-    else if (this.value === "linkedin") {
-      $(this).parents().find(".url").val("http://www.linkedin.com/in/").focus();
-    }
-  });
-  */
 
+$('#id_interests').ready(function () {
+
+    var interests_tags = {{ INTEREST_SUGGESTIONS | jsonencode }};
+
+    $('#id_interests')
+        .after('<ul id="tagit-interests"></ul>')
+        .hide();
+
+    $('#tagit-interests').tagit({
+        availableTags: interests_tags,
+        singleField: true,
+        singleFieldNode: $('#id_interests')
+    });
+
+});
+
+$(document).ready(function(){
 
   // word count
   $('.wordcount').each(function(i,el){

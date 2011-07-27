@@ -193,6 +193,46 @@ class ProfileViewsTest(test_utils.TestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
+    @attr("edit_interests")
+    @patch('dekicompat.backends.DekiUserBackend.authenticate')
+    @patch('dekicompat.backends.DekiUserBackend.get_user')
+    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+    def test_profile_edit_interests(self, authenticate, get_user,
+                                   get_deki_user):
+        (user, deki_user, profile) = self._create_profile()
+
+        authenticate.return_value = user
+        get_user.return_value = user
+
+        self.client.cookies['authtoken'] = 'qwertyuiop'
+
+        url = reverse('devmo.views.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        form = dict()
+        for fn in ('email', 'fullname', 'title', 'organization', 'location',
+                'bio', 'interests'):
+            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+
+        test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
+
+        form['interests'] = ', '.join(test_tags)
+
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        result_tags = [t.name.replace('profile:interest:', '')
+                for t in p.tags.all()]
+        result_tags.sort()
+        test_tags.sort()
+        eq_(test_tags, result_tags)
+
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""
         user = User.objects.create_user('tester23', 'tester23@example.com',

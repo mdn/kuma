@@ -42,6 +42,11 @@ class UserProfileEditForm(forms.ModelForm):
     # Email is on the form, but is handled in the view separately
     email = forms.EmailField(label=_('Email'), required=True)
 
+    interests = forms.CharField(label=_('Interests'),
+                                max_length=255, required=False)
+    expert_in = forms.CharField(label=_('Expert in'),
+                                max_length=255, required=False)
+
     def __init__(self, *args, **kwargs):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
 

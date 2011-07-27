@@ -38,29 +38,18 @@
         <p>{{ profile.bio | nl2br }}</p>
       </div>
         
+        {% set tags = profile.tags.all() %}
+        {% if tags | length %}
         <div class="interests">
           <h2>Interests</h2>
         	<ul class="int-taglist">
-            <li><a href="#" rel="tag">CSS</a></li>
-            <li><a href="#" rel="tag">CSS3</a></li>
-            <li><a href="#" rel="tag">JavaScript</a></li>
-            <li><a href="#" rel="tag">web standards</a></li>
-            <li><a href="#" rel="tag">monster movies</a></li>
-            <li><a href="#" rel="tag">bacon</a></li>
-            <li><a href="#" rel="tag">HTML</a></li>
-            <li><a href="#" rel="tag">HTML5</a></li>
-            <li><a href="#" rel="tag">open source</a></li>
-            <li><a href="#" rel="tag">PHP</a></li>
-            <li><a href="#" rel="tag">BBQ</a></li>
-            <li><a href="#" rel="tag">SOL</a></li>
-            <li><a href="#" rel="tag">Cambot</a></li>
-            <li><a href="#" rel="tag">Gypsy</a></li>
-            <li><a href="#" rel="tag">Tom Servo</a></li>
-            <li><a href="#" rel="tag">Crooooooooow</a></li>
-            {% if False %}
-            {% endif %}
+                {% for tag in profile.tags.all() %}
+                    <li><span rel="tag">{{ tag.name.replace('profile:interest:','') }}</span></li>
+                {% endfor %}
           </ul>
         </div>
+        {% endif %}
+
       </div>
       
       <div class="extra">
