@@ -41,7 +41,17 @@ SECTIONS_TWITTER = dict((section.twitter, section)
 SECTIONS_UPDATES = dict((section.updates, section)
                         for section in _sections)
 
-INTEREST_SUGGESTIONS = ["audio", "canvas", "css3", "device", "files", "fonts",
+
+# TODO: Make this dynamic, editable from admin interface
+INTEREST_SUGGESTIONS = [
+    "audio", "canvas", "css3", "device", "files", "fonts",
     "forms", "geolocation", "javascript", "html5", "indexeddb", "dragndrop",
     "mobile", "offlinesupport", "svg", "video", "webgl", "websockets",
-    "webworkers", "xhr", "multitouch", ]
+    "webworkers", "xhr", "multitouch",
+
+    "front-end development",
+    "web development",
+    "tech writing",
+    "user experience",
+    "design",
+]
