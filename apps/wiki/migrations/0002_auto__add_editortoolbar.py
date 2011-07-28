@@ -13,7 +13,9 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('creator', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_toolbars', to=orm['auth.User'])),
             ('default', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('config_file', self.gf('utils.OverwritingFileField')(max_length=100)),
+            # HACK: This custom field no longer exists, so use its superclass instead.
+            #('config_file', self.gf('utils.OverwritingFileField')(max_length=100)),
+            ('config_file', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
         ))
         db.send_create_signal('wiki', ['EditorToolbar'])
 
@@ -101,7 +103,9 @@ class Migration(SchemaMigration):
         },
         'wiki.editortoolbar': {
             'Meta': {'object_name': 'EditorToolbar'},
-            'config_file': ('utils.OverwritingFileField', [], {'max_length': '100'}),
+            # HACK: This custom field no longer exists, so use its superclass instead
+            #'config_file': ('utils.OverwritingFileField', [], {'max_length': '100'}),
+            'config_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_toolbars'", 'to': "orm['auth.User']"}),
             'default': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})

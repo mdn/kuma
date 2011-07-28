@@ -40,7 +40,9 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         
         # Adding field 'EditorToolbar.config_file'
-        db.add_column('wiki_editortoolbar', 'config_file', self.gf('utils.OverwritingFileField')(default='js/ckeditor_config.js', max_length=100), keep_default=False)
+        # HACK: This custom field no longer exists, so use its superclass instead.
+        # db.add_column('wiki_editortoolbar', 'config_file', self.gf('utils.OverwritingFileField')(default='js/ckeditor_config.js', max_length=100), keep_default=False)
+        db.add_column('wiki_editortoolbar', 'config_file', self.gf('django.db.models.fields.files.FileField')(default='js/ckeditor_config.js', max_length=100), keep_default=False)
 
         # Deleting field 'EditorToolbar.name'
         db.delete_column('wiki_editortoolbar', 'name')
