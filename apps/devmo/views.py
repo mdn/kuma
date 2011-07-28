@@ -42,6 +42,12 @@ def profile_edit(request, username):
     if not profile.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
+    # Map of form field names to tag namespaces
+    field_to_tag_ns = (
+        ('interests', 'profile:interest:'),
+        ('expert_in', 'profile:expert:')
+    )
+
     if request.method != "POST":
 
         initial = dict(email=profile.user.email)
@@ -51,21 +57,10 @@ def profile_edit(request, username):
             val = profile.websites.get(name, '') or meta['prefix']
             initial['websites_%s' % name] = val
 
-        # Form fields to receive tags filtered by prefix.
-        tags_accum = {
-            ('interests', 'profile:interest:'): [],
-            ('expert_in', 'profile:expert:'): []
-        }
-
-        # Collect the prefixed tags, sans prefix.
-        for t in profile.tags.all():
-            for k, v in tags_accum.items():
-                if t.name.startswith(k[1]):
-                    tags_accum[k].append(t.name.replace(k[1], ''))
-
-        # Build the initial form values based on tags.
-        for k, v in tags_accum.items():
-            initial[k[0]] = ', '.join(v)
+        # Form fields to receive tags filtered by namespace.
+        for field, ns in field_to_tag_ns:
+            initial[field] = ', '.join(t.name.replace(ns,'') 
+                                       for t in profile.tags.all_ns(ns))
 
         # Finally, set up the form.
         form = UserProfileEditForm(instance=profile, initial=initial)
@@ -89,17 +84,10 @@ def profile_edit(request, username):
             # related resources...
             profile_new.save()
 
-            # Selectively edit the profile:interest: and profile:expert: tags
-            # for the profile.
-            orig_tags = profile_new.tags.all()
-            new_tags = [t.name for t in orig_tags
-                        if not t.name.startswith('profile:interest:')
-                        and not t.name.startswith('profile:expert:')]
-            new_tags.extend('profile:interest:%s' % t for t in
-                parse_tags(form.cleaned_data.get('interests', '')))
-            new_tags.extend('profile:expert:%s' % t for t in
-                parse_tags(form.cleaned_data.get('expert_in', '')))
-            profile_new.tags.set(*new_tags)
+            # Update tags from form fields
+            for field, tag_ns in field_to_tag_ns:
+                profile_new.tags.set_ns(tag_ns, 
+                    *parse_tags(form.cleaned_data.get(field, '')))
 
             # Change the email address, if necessary.
             if form.cleaned_data['email'] != profile.user.email:

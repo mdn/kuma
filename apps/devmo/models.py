@@ -19,6 +19,8 @@ from jsonfield import JSONField
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
+from taggit_extras.managers import NamespacedTaggableManager
+
 import south.modelsinspector
 south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
@@ -93,7 +95,7 @@ class UserProfile(ModelBase):
                                 blank=True)
     bio = models.TextField(_('About Me'), blank=True)
 
-    tags = TaggableManager(_('Tags'), blank=True)
+    tags = NamespacedTaggableManager(_('Tags'), blank=True)
 
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)

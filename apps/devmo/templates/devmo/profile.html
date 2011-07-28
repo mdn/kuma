@@ -38,13 +38,14 @@
         <p>{{ profile.bio | nl2br }}</p>
       </div>
         
-        {% set tags = profile.tags.all() %}
+        {% set tag_ns = 'profile:interest:' %}     
+        {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
         <div class="interests">
           <h2>Interests</h2>
-        	<ul class="int-taglist">
-                {% for tag in profile.tags.all() %}
-                    <li><span rel="tag">{{ tag.name.replace('profile:interest:','') }}</span></li>
+          <ul class="int-taglist">
+                {% for tag in tags%}
+                    <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
                 {% endfor %}
           </ul>
         </div>
