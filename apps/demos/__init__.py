@@ -35,11 +35,6 @@ DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVI
 DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
     'system:challenge:firstplace:2011:june')
 
-# These are tag namespaces whitelisted for demo creators
-TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
-    'tech:', 'challenge:'
-])
-
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
 # HACK: For easier L10N, define tag descriptions in code instead of as a DB model
@@ -59,26 +54,32 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "title": _("July 2011 Dev Derby Challenge - HTML5 <video>"), 
         "short_title": _("HTML5 <video>"),
         "dateline": _("July 2011"),
+        "short_dateline": _("July"),
+        "tagline": _("Lights, camera, action!"),
         "summary": _("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."),
         "description": _("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins."),
         "learn_more": [],
     },
     {
         "tag_name": "challenge:2011:august", 
-        "title": _("August 2011 Dev Derby Challenge - Touch on Mobile"), 
-        "short_title": _("Touch on Mobile"),
+        "title": _("August 2011 Dev Derby Challenge - History API"), 
+        "short_title": _("History API"),
         "dateline": _("August 2011"),
-        "summary": _("Touch events let you track the movements of a user's fingers on a touch screen."),
-        "description": _("Touch events let you track the movements of a user's fingers on a touch screen."),
+        "short_dateline": _("August"),
+        "tagline": _("A browser never forgets"),
+        "summary": _("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."),
+        "description": _("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."),
         "learn_more": [],
     },
     {
         "tag_name": "challenge:2011:september", 
-        "title": _("September 2011 Dev Derby Challenge - History API"), 
-        "short_title": _("History API"),
+        "title": _("September 2011 Dev Derby Challenge - Geolocation"), 
+        "short_title": _("Geolocation"),
         "dateline": _("September 2011"),
-        "summary": _("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."),
-        "description": _("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked."),
+        "short_dateline": _("September"),
+        "tagline": _("You are HERE."),
+        "summary": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
+        "description": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "learn_more": [],
     },
 

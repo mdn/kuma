@@ -37,9 +37,8 @@ $(".gallery").ready(function(){
         if (demo.parents("#featured-demos").length) {
           $("#content").find("div.demohover").addClass("featured");
         };
-        // $("div.demohover").addClass( $(this).attr("class") ).css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
         $("div.demohover")
-            //.addClass( $(this).attr("class") )
+            .addClass( $(this).attr("class") )
             .css({ left: offs.left, top: offs.top })
             .fadeIn(200)
             .mouseleave(function() {
@@ -85,4 +84,45 @@ $('.closeModal').click(function () {
         top.$.modal.close();
     }
     return false;
+});
+
+/* Learn More popup */
+$("#demos-head .learnmore .button").click(function(){
+  $("#learn-pop").slideToggle(150).removeAttr("aria-hidden");
+  $(this).blur();
+  if ($("#tags-list").is(":visible")) { 
+    $("#tags-list").hide().attr("aria-hidden", "true"); 
+  }
+  return false;
+});
+
+/* Browse by Tech menu */
+$("#demos-head .tags .button, #demo-tags .button").click(function() {
+  $("#tags-list").slideToggle(150).removeAttr("aria-hidden");
+  $(this).blur();
+  if ($("#learn-pop").is(":visible")) { 
+    $("#learn-pop").hide().attr("aria-hidden", "true"); 
+  }
+  return false;
+});
+
+$("#tags-list, #learn-pop").hover(
+  function() {
+    $(this).show().removeAttr("aria-hidden");
+  },
+  function() {
+    $(this).slideUp('fast').attr("aria-hidden", "true");
+  }
+);
+
+$(document).bind('click', function(e) {
+  var $clicked = $(e.target);
+  if (! $clicked.parents().hasClass("menu"))
+    $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
+});
+
+$("a, input, textarea, button").bind('focus', function(e) {
+  var $focused = $(e.target);
+  if (! $focused.parents().hasClass("menu"))
+    $("#tags-list, #learn-pop").hide().attr("aria-hidden", "true");
 });

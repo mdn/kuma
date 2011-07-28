@@ -5,28 +5,22 @@
 {% set login_url=( '/Special:UserLogin?returntotitle={submit_url}' | f(submit_url=url('demos_submit')) ) | e %}
 
 {% block pageid %}demos-submit{% endblock %}
-{% block bodyclass %}section-demos{% endblock %}
+{% block bodyclass %}section-demos plain{% endblock %}
 {% block title %}
     {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Submit a New Demo'))) }}
 {% endblock %}
 
 {% block content %}
-<section id="nav-toolbar">
-<div class="wrap">
-  <nav class="crumbs">
-    <ol role="navigation">
-      <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
-      <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
-      <li><a href="{{ url('demos_submit') }}">{{_("Submit a New Demo")}}</a></li>
-    </ol>
-  </nav>
-</div>
-</section>
 
 <section id="content">
 <div class="wrap">
 
+  <header id="demos-head">
+    <h1><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a></h1>
+  </header>
+
   <section id="content-main" role="main">
+    <header id="page-head" class="form">
       <h1 class="page-title">{{_("Submit a New Demo")}}</h1>
 
     {% trans %}
@@ -34,10 +28,11 @@
         experimenting with the latest technologies, we invite you to submit your own 
         demos to share with (or show off to) other web developers.</p>
     {% endtrans %}
+    </header>
 
     <div class="modules">
       <div id="before-begin" class="module notes">
-          <h3 class="mod-title">{{_('Before You Begin')}}</h3>
+        <h3 class="mod-title">{{_('Before You Begin')}}</h3>
         {% trans %}
         <ul>
           <li>You must be prepared to <strong>provide the source code</strong> for your demo. Demos are hosted on the Demo Studio's servers.</li>

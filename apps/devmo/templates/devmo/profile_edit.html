@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block pageid %}{% endblock %}
+
+{% block bodyclass %}profile{% endblock %}
+
+{% block title %}{{ page_title(_('Edit Your Profile')) }}{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('demostudio') }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('libs/jqueryui') }}
+    {{ js('demostudio') }}
+    {{ js('libs/tagit') }}
+{% endblock %}
+
+{% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
+    {% set field = form[field_name] %}
+    <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
+        {% if show_label %}
+            <label for="id_{{field_name}}">{{label or field.label}}</label>
+        {% endif %}
+        {{ field|safe }}
+        {% if note %}
+            <p class="note">{{ note }}</p>
+        {% endif %}
+        {{ field.errors|safe }}
+    </li>
+{% endmacro %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" class="full">
+
+    <form id="profile-edit" class="submission" method="post" action="">
+        <h1 class="page-title">{{ profile.user.username }}</h1>
+      
+      <div class="extra">
+        <figure class="acc-avatar">
+          <img src="{{ profile.gravatar }}" alt="" width="120" height="120" class="photo avatar">
+          <figcaption>
+              Change your avatar at <a href="http://gravatar.com" rel="external">gravatar.com</a>
+          </figcaption>
+        </figure>
+        
+        <ul>
+            <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">View profile</a></li>
+            <li><a href="/Special:Preferences">Change password</a></li>
+          {# TODO: Implement account deletion #}
+          {# <li class="delete"><a href="#">Delete my account</a></li> #}
+        </ul>
+      </div>
+      
+      <fieldset class="section notitle" id="personal">
+        <ul>
+          {{ li_field(form, 'email') }}
+          {{ li_field(form, 'fullname') }}
+          {{ li_field(form, 'title') }}
+          {{ li_field(form, 'organization') }}
+          {{ li_field(form, 'location') }}
+
+          {% set field = form['bio'] %}
+          <li class="wordcount{{ ' error' if field.errors }}">
+            <label for="id_bio">About Me <span class="note"><b id="bio_wordcount" class="counter">150</b> words remaining</span></label> 
+            {{ field | safe }}
+          </li>
+
+          {% set field = form['interests'] %}
+          <li class="{{ ' error' if field.errors }}">
+            <label for="pers-interests">Interests (tags)</label>
+            <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
+            {{ field | safe }}
+          </li>
+        </ul>
+      </fieldset>
+
+      <fieldset class="section" id="elsewhere">
+        <legend><b>My Other Profiles</b></legend>
+        
+        <ul>
+            {% for site in profile.website_choices %}
+                {% set name = site[0] %}
+                {% set meta = site[1] %}
+                {{ li_field(form, 
+                    'websites_{name}' | f(name=name),
+                    classes="site {name}" | f(name=name), 
+                    label=meta['label']) }}
+            {% endfor %}
+        </ul>
+
+      </fieldset>
+      
+      <p class="fm-submit"><button type="submit">Save Changes</button></p>
+
+    </form>
+
+
+
+  </section><!-- /#content-main -->
+</div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+// <![CDATA[
+
+$('#id_interests').ready(function () {
+
+    var interests_tags = {{ INTEREST_SUGGESTIONS | jsonencode }};
+
+    $('#id_interests')
+        .after('<ul id="tagit-interests"></ul>')
+        .hide();
+
+    $('#tagit-interests').tagit({
+        availableTags: interests_tags,
+        singleField: true,
+        singleFieldNode: $('#id_interests')
+    });
+
+});
+
+$(document).ready(function(){
+
+  // word count
+  $('.wordcount').each(function(i,el){
+    function updateWordCount(){
+      var words = $.trim( field.val() ).split(' ');
+      if( words[0] == '' ){ words.length = 0; }
+      currcount = limit - words.length;
+      placeholder.text( currcount );
+      if ( words.length >= limit &&
+           placeholder.parent().css('color') != '#900' )
+      {
+        placeholder.parent().css('color','#900');
+      }
+      else if ( words.length < limit &&
+                placeholder.parent().css('color') == '#900' )
+      {
+        placeholder.parent().css('color','');
+      }
+    }
+    var placeholder = $(el).find('.counter');
+    var limit = parseInt( placeholder.text() );
+    var currcount = 0;
+    var field = $(el).children('textarea');
+    updateWordCount();
+    field.keypress(updateWordCount);
+  })
+
+});	
+// ]]>
+</script>
+{% endblock %}

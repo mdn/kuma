@@ -1,7 +1,10 @@
 import csv
 from datetime import datetime
+
 import logging
 import urllib2
+import urllib
+import hashlib
 
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
@@ -10,6 +13,16 @@ import caching.base
 import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
+
+from jsonfield import JSONField
+
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
+from taggit_extras.managers import NamespacedTaggableManager
+
+import south.modelsinspector
+south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
@@ -33,6 +46,36 @@ class UserProfile(ModelBase):
     django.contrib.auth.models.User object. This may be relaxed
     once Dekiwiki isn't the definitive db for user info.
     """
+
+    # Website fields defined for the profile form
+    # TODO: Someday this will probably need to allow arbitrary per-profile
+    # entries, and these will just be suggestions.
+    website_choices = [
+        ('website', dict(
+            label=_('Website'),
+            prefix='http://',
+        )),
+        ('twitter', dict(
+            label=_('Twitter'),
+            prefix='http://twitter.com/',
+        )),
+        ('github', dict(
+            label=_('GitHub'),
+            prefix='http://github.com/',
+        )),
+        ('stackoverflow', dict(
+            label=_('StackOverflow'),
+            prefix='http://stackoverflow.com/users/',
+        )),
+        ('linkedin', dict(
+            label=_('LinkedIn'),
+            prefix='http://www.linkedin.com/in/',
+        )),
+    ]
+
+    class Meta:
+        db_table = 'user_profiles'
+
     # This could be a ForeignKey, except wikidb might be
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
@@ -42,28 +85,77 @@ class UserProfile(ModelBase):
                                'invalid': _('This URL has an invalid format. '
                                             'Valid URLs look like '
                                             'http://example.com/my_page.')})
-    # Duplicates phpBB's location field, but it's days are numbered
-    location = models.CharField(max_length=255, default='', blank=True)
+    title = models.CharField(_('Title'), max_length=255, default='',
+                             blank=True)
+    fullname = models.CharField(_('Name'), max_length=255, default='',
+                                blank=True)
+    organization = models.CharField(_('Organization'), max_length=255,
+                                    default='', blank=True)
+    location = models.CharField(_('Location'), max_length=255, default='',
+                                blank=True)
+    bio = models.TextField(_('About Me'), blank=True)
+
+    tags = NamespacedTaggableManager(_('Tags'), blank=True)
+
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)
     user = models.ForeignKey(DjangoUser, null=True, editable=False, blank=True)
 
-    class Meta:
-        db_table = 'user_profiles'
+    # HACK: Grab-bag field for future expansion in profiles
+    # We can store arbitrary data in here and later migrate to relational
+    # tables if the data ever needs to be indexed & queried. Otherwise,
+    # this keeps things nicely denormalized. Ideally, access to this field
+    # should be gated through accessors on the model to make that transition
+    # easier.
+    misc = JSONField(blank=True, null=True)
+
+    @property
+    def websites(self):
+        if 'websites' not in self.misc:
+            self.misc['websites'] = {}
+        return self.misc['websites']
+
+    @websites.setter
+    def websites(self, value):
+        self.misc['websites'] = value
+
+    _deki_user = None
+
+    @property
+    def deki_user(self):
+        if not self._deki_user:
+            # Need to find the DekiUser corresponding to the ID
+            from dekicompat.backends import DekiUserBackend
+            self._deki_user = (DekiUserBackend()
+                    .get_deki_user(self.deki_user_id))
+        return self._deki_user
+
+    def gravatar_url(self, secure=True, size=220, rating='pg',
+            default='http://developer.mozilla.org/media/img/avatar.png'):
+        """Produce a gravatar image URL from email address."""
+        base_url = (secure and 'https://secure.gravatar.com' or
+            'http://www.gravatar.com')
+        m = hashlib.md5(self.user.email)
+        return '%(base_url)s/avatar/%(hash)s?%(params)s' % dict(
+            base_url=base_url, hash=m.hexdigest(),
+            params=urllib.urlencode(dict(
+                s=size, d=default, r=rating
+            ))
+        )
+
+    @property
+    def gravatar(self):
+        return self.gravatar_url()
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
 
-    def __getattr__(self, name):
-        if not 'deki_user_id' in self.__dict__:
-            raise AttributeError
-        if not 'deki_user' in self.__dict__:
-            from dekicompat.backends import DekiUserBackend
-            self.__dict__['deki_user'] = \
-                DekiUserBackend().get_deki_user(self.__dict__['deki_user_id'])
-        if hasattr(self.__dict__['deki_user'], name):
-            return getattr(self.__dict__['deki_user'], name)
-        raise AttributeError
+    def allows_editing_by(self, user):
+        if user == self.user:
+            return True
+        if user.is_staff or user.is_superuser:
+            return True
+        return False
 
 
 class Calendar(ModelBase):
@@ -107,8 +199,10 @@ class Calendar(ModelBase):
                     continue
                 if len(event_line) > 10:
                     try:
-                        event_end_date = datetime.strptime(event_line[10], "%m/%d/%Y")
-                        event_end_date_string = event_end_date.strftime("%Y-%m-%d")
+                        event_end_date = datetime.strptime(event_line[10],
+                                                           "%m/%d/%Y")
+                        event_end_date_string = event_end_date.strftime(
+                                                           "%Y-%m-%d")
                     except:
                         event_end_date = None
                 event = Event(date=event_date,

@@ -37,6 +37,5 @@ lockfile==0.8
 
 # Demo Room dependencies
 -e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
-django-tagging==0.3.1
 django-threadedcomments==0.5.2
 -e git://github.com/ahupp/python-magic.git#egg=python-magic

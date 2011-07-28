@@ -90,7 +90,7 @@ Font sizes -
 
 /* @Reset *********/
 header, hgroup, nav, section, article, aside, footer { display: block; }
-html, body, form, fieldset, legend, 
+html, body, form, fieldset, legend, figure,
 h1, h2, h3, h4, h5, h6, dt, dd { margin: 0; padding: 0; }
 blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q { quotes: "" ""; }
@@ -159,8 +159,8 @@ ul.prose ul li { background-image: url("../img/bullet-sub.png"); }
 .community { color: #00b6f0; } /* blue */
 
 /*** @Forms *********/
-#content-main form ul li { padding: 0; background: none; }
-#content-main form ol { padding: 0; }
+form ul li { padding: 0; background: none; }
+form ol { padding: 0; }
 
 input[type=text], input[type=password], input[type=search], input[type=email], input[type=url], textarea { padding: 6px 8px; background: #fff; border: 1px solid #cbc8b9; }
 input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, input[type=email]:hover, input[type=url]:hover, textarea:hover,
@@ -495,8 +495,6 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .module .hentry a { font-weight: bold; }
 .module .hentry .entry-meta { font-size: .857em; font-weight: bold; }
 
-#demo-tags li { font-size: .786em; font-weight: bold; margin: 0 0 .75em; }
-
 /* for module-style boxes in the main content */
 .modules { clear: both; overflow: hidden; }
 .modules .module { width: 275px; float: left; margin-right: 20px; }
@@ -827,3 +825,105 @@ transition-property: bottom, opacity, visibility;
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
 
+#flag-confirm label { display: block; }
+#flag-confirm textarea { display: block; width: 96%; height: 8em; }
+#flag-confirm .submit { margin: 1em 0 0; }
+#flag-confirm .submit button { font-size: 1.142em; }
+
+/* @Submission @Form *********/
+.submission .section { position: relative; padding: 2.75em 0 0; margin: 0 0 1.286em; font-size: .928em; }
+.submission .section > legend { margin: 0 -18px; padding: 0; }
+.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 0; font-size: 1.234em; }
+.submission .section.notitle { padding-top: 0; }
+
+.submission li { margin: 0 0 .75em; }
+.submission input[type="url"], .submission input[type="email"], .submission input[type="text"] { width: 450px; }
+.submission input[readonly] { background: transparent; border: 0; }
+.submission textarea { width: 610px; }
+.submission label input { width: auto; padding: 0; }
+.submission .note { font-style: normal; font-weight: normal; font-size: .857em; font-family: inherit; color: #666; }
+.submission p.note { margin: .5em 0; }
+.submission .inline legend b { display: block; margin: 0 0 .5em; }
+.submission .inline li { margin: 0 0 .25em; }
+.submission .inline label { display: inline; font-weight: normal; margin: 0; }
+.submission .disabled { color: #999; color: rgba(0,0,0,.4); }
+.submission .other-value { margin-top: .25em; }
+.submission .other-value label { display: block; }
+
+.submission label, .submission .label { display: block; font-weight: bold; margin: 0 0 .5em; }
+.submission .check label, .submission .check .label { display: inline; }
+
+.submission .fm-submit button { font-size: 1.575em; }
+
+/* @Profile *********/
+#profile-head { position: relative; margin: 0 0 30px; padding: 20px; border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); overflow: hidden; }
+#profile-head .main { width: 740px; float: right; }
+#profile-head .extra { width: 130px; float: left; }
+#profile-head .photo { margin: 0 0 1em; background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
+#profile-head .page-title, #profile-edit .page-title { margin: 0 0 .25em; padding-right: 160px; }
+#profile-head b { font-size: .77em; font-weight: normal; color: #a19f93; }
+#profile-head .info li { display: inline; margin-right: 10px; }
+#profile-head .info li:before { content: "/"; margin-right: 10px; color: #a19f93; }
+#profile-head .info li:first-child:before { content: ""; margin: 0; }
+#profile-head .bio, #profile-head .links { font-size: .857em; }
+#profile-head .interests h2 { font-size: 1em; margin-bottom: .25em; }
+#profile-head .interests li { font-size: .857em; display: inline; margin: 0 10px .5em 0; }
+#profile-head .links li { margin: 0 0 .5em; }
+#profile-head .links a { padding: 1px 0 1px 24px; background: url("../img/icons-links.png") no-repeat; }
+#profile-head .edit { width: 140px; position: absolute; right: 20px; top: 25px; text-align: right; margin: 0; }
+
+#profile-head .twitter a, #elsewhere .twitter label { background-position: 0 -50px; }
+#profile-head .github a, #elsewhere .github label { background-position: 0 -100px; }
+#profile-head .stackoverflow a, #elsewhere .stackoverflow label { background-position: 0 -150px; }
+#profile-head .linkedin a, #elsewhere .linkedin label { background-position: 0 -200px; }
+#profile-head .dribbble a, #elsewhere .dribbble label { background-position: 0 -250px; }
+#profile-head .reddit a, #elsewhere .reddit label { background-position: 0 -300px; }
+#profile-head .docs a { background-position: 0 -400px; }
+
+.profile-section { clear: both; margin: 0 0 30px; }
+
+#docs-activity header { margin: 0 0 1.5em; }
+#docs-activity header h2 { display: inline; margin-right: 20px; }
+#docs-activity header p { display: inline; }
+table.activity { font-size: .857em; width: 100%; }
+table.activity thead, table.activity tfoot { background: #e4e4d9; background: rgba(198,198,175,.30); }
+table.activity thead th { font-weight: bold; }
+table.activity th.date { width: 120px; }
+table.activity th.page { width: 40%; }
+table.activity td, table.activity th { padding: .5em 3px; vertical-align: top; }
+table.activity tr:nth-child(even) { background: #e4e4d9; background: rgba(198,198,175,.2); }
+table.activity tbody tr:hover { background: #ebebd9; background: rgba(255,255,255,.5); }
+table.activity th h3 { margin: 0 0 .25em; }
+table.activity .actions { font-size: .857em; margin: 0; }
+table.activity .actions li { display: inline; margin: 0 10px .5em 0; }
+table.activity tfoot td { text-align: right; padding: .5em 20px; }
+table.activity tfoot .feed { padding-left: 20px; background: url("../img/icons-links.png") 0 -349px no-repeat; }
+
+/* @Edit @Profile *********/
+#profile-edit { padding-left: 165px; position: relative; }
+#profile-edit .extra { width: 130px; position: absolute; left: 0; top: 0; font-size: .857em; }
+#profile-edit .avatar { background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
+#profile-edit .extra figcaption { margin: .5em 0 1.5em; }
+#profile-edit .extra li { margin: 0 0 .5em; }
+#profile-edit .extra .delete { margin: 1.5em 0; }
+#profile-edit .delete a:hover, #profile-edit .delete a:focus, #profile-edit .delete a:active { color: #900; }
+
+#profile-edit ul.tagit { width: 610px; background: #fff; border: 1px solid #cbc8b9; padding: 6px 8px; }
+ul.tagit li { display: inline-block; margin: 0 10px 10px 0; }
+ul.tagit .tagit-choice { border: 1px solid #dbd9d1; padding: 3px 4px 4px 10px; background: #f9f9f9; border-radius: 2px; }
+ul.tagit .tagit-new input { width: auto; border: 0; padding: 0; background: transparent; }
+.tagit-choice .close { margin-left: 4px; }
+.tagit-choice .close .text-icon { display: none; }
+.tagit-choice .close .ui-icon-close { display: inline-block; margin-left: 3px; text-indent: -999em; overflow: hidden; width: 15px; height: 15px; cursor: pointer; margin: 0 0 -3px 0; background: url("../img/icn-delete.png") center -96px no-repeat; }
+.tagit-choice .close:hover .ui-icon-close, .tagit-choice .close:focus .ui-icon-close, .tagit-choice .close:active .ui-icon-close { background-position: center -146px; }
+
+.ui-autocomplete { position: absolute; cursor: default; padding-top: 2px; background: #fff; border: 1px solid #e3e3e3; border-top: 0; -moz-box-shadow: 1px 1px 1px rgba(0,0,0,.08); -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.08); box-shadow: 1px 1px 1px rgba(0,0,0,.08); }
+.ui-menu { list-style: none; padding: 0; margin: 0; float: left; }
+.ui-menu .ui-menu-item { margin: 0; padding: 0; zoom: 1; float: left; clear: left; width: 100%; font-size: .928em; }
+.ui-menu .ui-menu-item a { text-decoration: none; display: block; line-height: 1.5; zoom: 1; }
+.ui-menu .ui-state-hover, .ui-menu .ui-state-focus, .ui-menu .ui-state-highlight, .ui-menu .ui-state-active { background: #e4e4d9; background: rgba(198,198,175,.2); }
+
+#elsewhere label { display: inline-block; width: 120px; padding-left: 25px; background: url("../img/icons-links.png") 0 0 no-repeat; }
+#elsewhere .url { width: 300px; }
+#elsewhere .remove { width: 15px; height: 15px; padding: 0; margin-left: 8px; text-indent: -999em; overflow: hidden; background: transparent url("../img/icn-delete.png") center 2px no-repeat; box-shadow: none; }
+#elsewhere .remove:hover { background-position: center -48px; }

@@ -1,8 +1,8 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}devderby-home{% endblock %}
+{% block pageid %}devderby{% endblock %}
 
-{% block bodyclass %}section-demos devderby{% endblock %}
+{% block bodyclass %}section-demos devderby landing{% endblock %}
 
 {% block extrahead %}
     {{ css('devderby') }}
@@ -47,23 +47,23 @@
       </header>
       <ol>
         <li class="first">
-          <h2 class="title">{{_("HTML5 <video>")}}</h2>
-          <h3 class="date">{{_("July")}}</h3>
-          <h4 class="tagline">{{_("Lights, camera, action!")}}</h4>
+          <h2 class="title">{{tag_meta(challenge_choices[0], "short_title")}}</h2>
+          <h3 class="date">{{tag_meta(challenge_choices[0], "short_dateline")}}</h3>
+          <h4 class="tagline">{{tag_meta(challenge_choices[0], "tagline")}}</h4>
           <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-          <p class="desc">{{_("The HTML5 <video> element lets you embed and control video media directly in web pages, without resorting to plug-ins.")}}</p>
+          <p class="desc">{{tag_meta(challenge_choices[0], "summary")}}</p>
         </li>
         <li class="second">
-          <h2 class="title">{{_("Touch")}}</h2>
-          <h3 class="date">{{_("August")}}</h3>
-          <h4 class="tagline">{{_("Touch and go")}}</h4>
-          <p class="desc">{{_("Touch events let you track the movements of a user's fingers on a touch screen.")}}</p>
+          <h2 class="title">{{tag_meta(challenge_choices[1], "short_title")}}</h2>
+          <h3 class="date">{{tag_meta(challenge_choices[1], "short_dateline")}}</h3>
+          <h4 class="tagline">{{tag_meta(challenge_choices[1], "tagline")}}</h4>
+          <p class="desc">{{tag_meta(challenge_choices[1], "summary")}}</p>
         </li>
         <li class="third">
-          <h2 class="title">{{_("History API")}}</h2>
-          <h3 class="date">{{_("September")}}</h3>
-          <h4 class="tagline">{{_("A browser never forgets")}}</h4>
-          <p class="desc">{{_("The History API in modern browsers enables live changes to the document without breaking the back button and allows apps to be bookmarked.")}}</p>
+          <h2 class="title">{{tag_meta(challenge_choices[2], "short_title")}}</h2>
+          <h3 class="date">{{tag_meta(challenge_choices[2], "short_dateline")}}</h3>
+          <h4 class="tagline">{{tag_meta(challenge_choices[2], "tagline")}}</h4>
+          <p class="desc">{{tag_meta(challenge_choices[2], "summary")}}</p>
         </li>
       </ol>
     </section>

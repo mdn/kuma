@@ -1,7 +1,7 @@
 {% extends "demos/base.html" %}
 {% set obj = submission %}
 
-{% block pageid %}demos-submit{% endblock %}
+{% block pageid %}submit{% endblock %}
 {% block bodyclass %}section-demos{% endblock %}
 {% block title %}
     {% if edit %}
@@ -35,26 +35,15 @@
 {% endmacro %}
 
 {% block content %}
-<section id="nav-toolbar">
-<div class="wrap">
-  <nav class="crumbs">
-    <ol role="navigation">
-      <li><a href="{{ url('home') }}">{{_('MDN')}}</a></li>
-      <li><a href="{{ url('demos') }}">{{_('Demo Studio')}}</a></li>
-      <li><a href="">{% if edit %}
-            {{_("Edit {demo_title}") | f(demo_title=submission.title)}}
-        {% else %}
-            {{_("Submit a New Demo")}}
-        {% endif %}</a></li>
-    </ol>
-  </nav>
-</div>
-</section>
-
 <section id="content">
 <div class="wrap">
 
+  <header id="demos-head">
+    <h1><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a></h1>
+  </header>
+
   <section id="content-main" role="main">
+    <header id="page-head" class="form">
       <h1 class="page-title">
         {% if edit %}
             {{_("Edit {demo_title}") | f(demo_title=submission.title)}}
@@ -72,6 +61,7 @@
         Demo Studio successfully.</p>
     {% endtrans %}
     {% endif %}
+    </header>
 
     <form enctype="multipart/form-data" action="" method="POST" id="demo-submit" class="submission">
       {{ csrf() }}

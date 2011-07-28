@@ -62,6 +62,11 @@ def urlencode(txt):
     """Url encode a path."""
     return urllib.quote_plus(txt)
 
+@register.filter
+def jsonencode(data):
+    from django.utils import simplejson
+    return jinja2.Markup(simplejson.dumps(data))
+
 @register.function
 @jinja2.contextfunction
 def devmo_url(context, path):

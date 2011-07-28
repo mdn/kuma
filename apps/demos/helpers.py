@@ -29,9 +29,6 @@ from django.utils.tzinfo import LocalTimezone
 from django.core.urlresolvers import reverse as django_reverse
 from devmo.urlresolvers import reverse
 
-from tagging.models import Tag, TaggedItem
-from tagging.utils import LINEAR, LOGARITHMIC
-
 from taggit.models import TaggedItem
 
 from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES
@@ -97,6 +94,8 @@ def submission_key(prefix):
 # TOOO: All of these inclusion tags could probably be generated & registered
 # from a dict of function names and inclusion tag args, since the method bodies
 # are all identical. Might be astronaut architecture, though.
+@register.inclusion_tag('demos/elements/demos_head.html')
+def demos_head(request): return locals()
 
 @register.inclusion_tag('demos/elements/submission_creator.html')
 def submission_creator(submission): return locals()

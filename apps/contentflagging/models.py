@@ -5,6 +5,8 @@ from django.db import models
 from django.conf import settings
 from django.db.models import F
 
+from django.core.exceptions import MultipleObjectsReturned
+
 from django.core import urlresolvers
 from django.core.mail import send_mail
 
@@ -57,10 +59,22 @@ class ContentFlagManager(models.Manager):
 
         content_type = ContentType.objects.get_for_model(object)
 
-        cf = ContentFlag.objects.get_or_create(
-                content_type=content_type, object_pk=object.pk,
-                ip=ip, user_agent=user_agent, user=user, session_key=session_key,
-                defaults=dict(flag_type=flag_type, explanation=explanation,))
+        try:
+            cf = ContentFlag.objects.get_or_create(
+                    content_type=content_type, object_pk=object.pk,
+                    ip=ip, user_agent=user_agent, user=user, session_key=session_key,
+                    defaults=dict(flag_type=flag_type, explanation=explanation,))
+
+        except MultipleObjectsReturned, e:
+            # HACK: There seems to be a race condition in get_or_create. :(
+            # Happens very rarely, but when it does, seems like the best thing
+            # to do is try to clean up?
+            flags = ContentFlag.objects.filter(
+                    content_type=content_type, object_pk=object.pk,
+                    ip=ip, user_agent=user_agent, user=user, session_key=session_key).all()
+            cf = ( flags[0], False )
+            for c in flags[1:]: c.delete()
+
         if recipients:
             subject = _("{object} Flagged")
             subject = subject.format(object=object)

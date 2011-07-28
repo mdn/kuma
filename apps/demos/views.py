@@ -31,10 +31,10 @@ from taggit.models import Tag
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
-from . import DEMOS_CACHE_NS_KEY
 
 # TODO: Make these configurable in the DB via an admin page
-from . import ( DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
+from . import ( DEMOS_CACHE_NS_KEY,
+        DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
         DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG, 
         DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
         DEMOS_DEVDERBY_CHALLENGE_CHOICES )
@@ -91,7 +91,9 @@ def home(request):
 
 def detail(request, slug):
     """Detail page for a submission"""
-    submission = get_object_or_404(Submission, slug=slug)
+    submission = get_object_or_404(Submission.admin_manager, slug=slug)
+    if submission.censored and submission.censored_url:
+        return HttpResponseRedirect(submission.censored_url)
     if not submission.allows_viewing_by(request.user):
         return HttpResponseForbidden(_('access denied')+'')
 
@@ -247,8 +249,7 @@ def submit(request):
         return jingo.render(request, 'demos/submit_noauth.html', {})
 
     if request.method != "POST":
-        initial = dict( tags=request.GET.get('tags', '') )
-        form = SubmissionNewForm(request_user=request.user, initial=initial)
+        form = SubmissionNewForm(request_user=request.user)
     else:
         form = SubmissionNewForm(request.POST, request.FILES, request_user=request.user)
         if form.is_valid():
@@ -387,6 +388,7 @@ def devderby_landing(request):
         previous_challenge_tag_names = previous_challenge_tag_names,
         submissions_qs = submissions_qs,
         previous_winner_qs = previous_winner_qs,
+        challenge_choices = DEMOS_DEVDERBY_CHALLENGE_CHOICES,
     ))
 
 def devderby_rules(request):

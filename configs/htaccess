@@ -17,6 +17,7 @@ RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|s
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?learn.*)$    /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?promote.*)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?events.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?profiles.*)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(admin(/.*)?)$                                                                 /mwsgi/$1 [PT,L]
 
 # For debug_toolbar, mainly on dev VMs

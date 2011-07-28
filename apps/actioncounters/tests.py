@@ -4,12 +4,15 @@ import time
 from django.conf import settings
 from django.db import connection
 
+from django.core.exceptions import MultipleObjectsReturned
+
 from django.contrib.auth.models import AnonymousUser
 
 from django.http import HttpRequest
 from django.test import TestCase
 from django.test.client import Client
 
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 
@@ -18,7 +21,8 @@ from nose.plugins.attrib import attr
 
 from django.db import models
 
-from .models import TestModel
+from .utils import get_ip, get_unique
+from .models import TestModel, ActionCounterUnique
 from .fields import ActionCounterField
 
 
@@ -54,6 +58,31 @@ class ActionCountersTest(TestCase):
         request.META['REMOTE_ADDR'] = ip
         request.META['HTTP_USER_AGENT'] = user_agent
         return request
+
+    def test_bad_multiple_counters(self):
+        """Force multiple counters, possibly result of race condition, ensure graceful handling"""
+        request = self.mk_request()
+        user, ip, user_agent, session_key = get_unique(request)
+
+        obj_1 = self.obj_1
+        obj_1_ct = ContentType.objects.get_for_model(obj_1)
+
+        u1 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
+                name="likes", total=1, ip=ip, user_agent=user_agent, user=user,
+                session_key=session_key)
+        u1.save()
+
+        u2 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
+                name="likes", total=1, ip=ip, user_agent=user_agent, user=user,
+                session_key=session_key)
+        u2.save()
+
+        try:
+            (u, created) = ActionCounterUnique.objects.get_unique_for_request(obj_1, 
+                    'likes', request)
+            eq_(False, created)
+        except MultipleObjectsReturned, e:
+            ok_(False, "MultipleObjectsReturned should not be raised")
 
     def test_basic_action_increment(self):
         """Action attempted with several different kinds of unique identifiers"""
