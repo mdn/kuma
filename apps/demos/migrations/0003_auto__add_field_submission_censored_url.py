@@ -82,7 +82,10 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
             'source_code_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'summary': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'tags': ('demos.models.ConstrainedTagField', [], {}),
+            # HACK: This custom field has gone away entirely, so using its
+            # superclass as a stand-in
+            #'tags': ('demos.models.ConstrainedTagField', [], {}),
+            'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
