@@ -6,7 +6,7 @@
 
 .block .demo-submit { margin-top: .5em; }
 .block .demo-submit .button { color: #fff; text-shadow: none; font-size: 1.428em; background-color: #f9b43a; background-position: 0 .75em; text-shadow: 1px 1px 0 rgba(0,0,0,.2); -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
-.block .demo-submit .button:hover, #tab-submissions .demo-submit .button:focus, #tab-submissions .demo-submit .button:active { background-color: #ffc35a; }
+.block .demo-submit .button:hover, .block .demo-submit .button:focus, .block .demo-submit .button:active { background-color: #ffc35a; }
 
 /* @Layout *********/
 .devderby .main { width: 620px; float: left; margin-top: 210px; border-right: 4px dotted #746b60; }

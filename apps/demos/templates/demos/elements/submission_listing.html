@@ -44,7 +44,7 @@
         }
     </script>
     
-    <div id="gallery-foot">
+    <div class="gallery-foot">
         {% if page_obj %}
             <p class="showing">{{_('{start}&ndash;{end} of {total}') | f(start=page_obj.start_index(),end=page_obj.end_index(),total=paginator.count) | safe }}</p>
         {% endif %}
