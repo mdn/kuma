@@ -12,7 +12,8 @@ from sumo.urlresolvers import reverse
 from sumo.tests import LocalizingClient
 
 from mock import patch
-from nose.tools import eq_
+from nose.tools import eq_, assert_equal, with_setup, assert_false, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
@@ -80,6 +81,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
 
+    @attr('demo_submit')
     @mockdekiauth
     @disable_captcha
     def test_submit_post_valid(self):
@@ -114,6 +116,11 @@ class DemoViewsTest(test_utils.TestCase):
             eq_('Test submission', obj.title)
         except Submission.DoesNotExist:
             assert False
+
+        result_tags = [t.name for t in obj.taggit_tags.all_ns('tech:')]
+        result_tags.sort()
+        eq_(['tech:audio', 'tech:video', 'tech:websockets'], result_tags)
+
 
     @mockdekiauth
     def test_edit_invalid(self):

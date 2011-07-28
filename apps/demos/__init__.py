@@ -35,11 +35,6 @@ DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVI
 DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
     'system:challenge:firstplace:2011:june')
 
-# These are tag namespaces whitelisted for demo creators
-TAG_NAMESPACE_DEMO_CREATOR_WHITELIST = getattr(settings, 'TAG_NAMESPACE_DEMO_CREATOR_WHITELIST', [
-    'tech:', 'challenge:'
-])
-
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
 # HACK: For easier L10N, define tag descriptions in code instead of as a DB model
