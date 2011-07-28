@@ -886,7 +886,7 @@ transition-property: bottom, opacity, visibility;
 #docs-activity header h2 { display: inline; margin-right: 20px; }
 #docs-activity header p { display: inline; }
 table.activity { font-size: .857em; width: 100%; }
-table.activity thead, table.activity tfoot { background: #d6d6c6; background: rgba(198,198,175,.5); }
+table.activity thead, table.activity tfoot { background: #e4e4d9; background: rgba(198,198,175,.30); }
 table.activity thead th { font-weight: bold; }
 table.activity th.date { width: 120px; }
 table.activity th.page { width: 40%; }
@@ -899,10 +899,8 @@ table.activity .actions li { display: inline; margin: 0 10px .5em 0; }
 table.activity tfoot td { text-align: right; padding: .5em 20px; }
 table.activity tfoot .feed { padding-left: 20px; background: url("../img/icons-links.png") 0 -349px no-repeat; }
 
-
 /* @Edit @Profile *********/
 #profile-edit { padding-left: 165px; position: relative; }
-
 #profile-edit .extra { width: 130px; position: absolute; left: 0; top: 0; font-size: .857em; }
 #profile-edit .avatar { background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
 #profile-edit .extra figcaption { margin: .5em 0 1.5em; }
@@ -910,19 +908,14 @@ table.activity tfoot .feed { padding-left: 20px; background: url("../img/icons-l
 #profile-edit .extra .delete { margin: 1.5em 0; }
 #profile-edit .delete a:hover, #profile-edit .delete a:focus, #profile-edit .delete a:active { color: #900; }
 
-#profile-edit .int-taglist { margin: .5em 0; width: 540px; font-size: .857em; }
-#profile-edit .int-taglist li { display: inline-block; margin: 0 10px 6px 0; }
-.int-taglist .del { display: inline-block; text-indent: -999em; overflow: hidden; width: 15px; height: 15px; cursor: pointer; margin: 0 0 -3px 0; background: url("../img/icn-delete.png") center -96px no-repeat; }
-.int-taglist .del:hover, .int-taglist .del:focus { background-position: center -146px; }
-
-
-#profile-edit #id_interests, #profile-edit #tagit-interests { width: 610px; }
-#profile-edit #tagit-interests li.tagit-choice { margin-top: 5px; padding: 0em 1.125em 0em 0.5em; }
-#profile-edit #tagit-interests li .tagit-label { color: #000; font-weight: normal; font-family: inherit; font-size: 1em; padding-right: 0.25em; }
-#profile-edit #tagit-interests li a.close span.ui-icon-close {
-    background: url("../img/icn-delete.png") no-repeat scroll center -96px transparent;
-    cursor: pointer; display: inline-block; height: 15px; overflow: hidden; text-indent: -999em; width: 15px;
-}
+#profile-edit ul.tagit { width: 610px; background: #fff; border: 1px solid #cbc8b9; padding: 6px 8px; }
+ul.tagit li { display: inline-block; margin: 0 10px 10px 0; }
+ul.tagit .tagit-choice { border: 1px solid #dbd9d1; padding: 3px 4px 4px 10px; background: #f9f9f9; border-radius: 2px; }
+ul.tagit .tagit-new input { width: auto; border: 0; padding: 0; background: transparent; }
+.tagit-choice .close { margin-left: 4px; }
+.tagit-choice .close .text-icon { display: none; }
+.tagit-choice .close .ui-icon-close { display: inline-block; margin-left: 3px; text-indent: -999em; overflow: hidden; width: 15px; height: 15px; cursor: pointer; margin: 0 0 -3px 0; background: url("../img/icn-delete.png") center -96px no-repeat; }
+.tagit-choice .close:hover .ui-icon-close, .tagit-choice .close:focus .ui-icon-close, .tagit-choice .close:active .ui-icon-close { background-position: center -146px; }
 
 #elsewhere label { display: inline-block; width: 120px; padding-left: 25px; background: url("../img/icons-links.png") 0 0 no-repeat; }
 #elsewhere .url { width: 300px; }
