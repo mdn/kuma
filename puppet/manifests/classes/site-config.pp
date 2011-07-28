@@ -29,10 +29,6 @@ class mysql_config {
             ensure => file,
             source => "$PROJ_DIR/puppet/files/tmp/init.sql",
             owner => "vagrant", group => "vagrant", mode => 0644;
-        "/tmp/wikidb.sql":
-            ensure => file,
-            source => "$PROJ_DIR/puppet/files/tmp/wikidb.sql",
-            owner => "vagrant", group => "vagrant", mode => 0644;
     }
     service { "mysqld": 
         ensure => running, 
@@ -47,15 +43,6 @@ class mysql_config {
             require => [ 
                 File["/tmp/init.sql"],
                 Service["mysqld"] 
-            ];
-        # HACK: Kind of icky, but I just took a snapshot of a configured deki install
-        "setup_mysql_wikidb":
-            command => "/usr/bin/mysql -u root wikidb < /tmp/wikidb.sql",
-            unless => "/usr/bin/mysql -uroot wikidb -B -e 'show tables' 2>&1 | grep -q 'pages'",
-            require => [ 
-                File["/tmp/wikidb.sql"],
-                Service["mysqld"], 
-                Exec["setup_mysql_databases_and_users"] 
             ];
     }
 }
@@ -73,6 +60,9 @@ class kuma_config {
             target => "/home/vagrant/uploads",
             ensure => link, 
             require => [ File["/home/vagrant/uploads"] ];
+        "/vagrant/webroot/.htaccess":
+            ensure => link,
+            target => "$PROJ_DIR/configs/htaccess";
     }
     exec { 
         "kuma_sql_migrate":

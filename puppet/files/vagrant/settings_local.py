@@ -8,6 +8,8 @@ DEV = True
 TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 
+SESSION_COOKIE_SECURE = False
+
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
 

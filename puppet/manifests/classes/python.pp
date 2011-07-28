@@ -17,10 +17,10 @@ class python_prereqs {
 
 class python_modules {
     exec { 
-        "pip-install-compiled":
+        "pip-install-modules":
             cwd => '/tmp', 
             timeout => 3600, # Too long, but this can take awhile
-            command => "/usr/bin/pip install -r $PROJ_DIR/requirements/compiled.txt";
+            command => "/usr/bin/pip install -r $PROJ_DIR/requirements/dev.txt -r $PROJ_DIR/requirements/compiled.txt";
     }
 }
 

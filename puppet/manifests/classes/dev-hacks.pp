@@ -1,8 +1,8 @@
 # Ensure some handy dev tools are available.
 class dev_tools {
     package { 
-        [ "git", "subversion-devel", "vim-enhanced", "man", "man-pages",
-            "nfs-utils", "nfs-utils-lib", "telnet", "nc" ]:
+        [ "git", "mercurial", "subversion-devel", "vim-enhanced", "man",
+            "man-pages", "nfs-utils", "nfs-utils-lib", "telnet", "nc" ]:
             ensure => installed;
     }
 }
