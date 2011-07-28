@@ -35,7 +35,7 @@
     <header id="derby-head">
       <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
       <h1>{{_("Dev Derby")}}</h1>
-      <h2>{{_("Show us what you can do with HTML5 <video>")}}</h2>
+      <h2>{{_("Show us what you can do with the History API")}}</h2>
       <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
       <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
     </header>
@@ -79,36 +79,20 @@
       
       <section id="tab-challenge" class="block">
         <header>
-          <h1 class="title">{{_("HTML5 <video>")}}</h1>
-          <h2 class="date">{{_("July")}}</h2>
+          <h1 class="title">{{_("History API")}}</h1>
+          <h2 class="date">{{_("August")}}</h2>
         </header>
-        <p class="tagline">{{_("Lights! Camera! HTML5 video action!")}}</p>
+        <p class="tagline">{{_("A browser never forgets.")}}</p>
         {% trans %}
-            <p>The support for video in HTML5 enables web-based interactive video
-            like nothing else before:</p>
+          <p>Creating a great user experience for web apps is a challenge. When you use JavaScript 
+          to avoid page loads on most interactions (good), you break the user's expectation that 
+          the Back button and bookmarks will return to a previous state (not so good). With the 
+          HTML5 History API, you can manipulate the contents of the browser history, so that you 
+          can both meet users' expectations about browser behavior, and provide a responsive app.</p>
 
-            <ul class="prose">
-                <li>No need for plug-ins that users must install and keep updated</li>
-                <li>Video content that integrates with the rest of the web page</li> 
-                <li>Better performance</li>
-                <li>Better accessibility</li>
-                <li>Better maintainability</li>
-            </ul>
+          <p>What kind of "time-travel" or "alternative history" can you dream up with the History API?</p>
 
-            <p>Use CSS to transform, filter, or mask the video container. You can
-                even perform real-time changes to the video content, such as
-                green-screen effects, dynamic content injection, or edge or
-                movement detection.</p>
-
-            <p>You don’t have to code completely from scratch, either. <a href="http://popcornjs.org/">Popcorn.js</a>
-                is an open-source event framework for integrating HTML5 media
-                (audio as well as video) with other web-based content, with a
-                plug-in system for adding web service integrations. Popcorn.js is a
-                project of the <a href="http://webmademovies.org/">Web Made Movies</a> video lab.</p>
-
-            <p>The possibilities are unbounded, so show us what you can do!</p> 
-
-            <p><a href="{{ submit_url }}">Submit your HTML5 video demo</a> for the July Dev Derby today!</p>
+          <p><a href="{{ submit_url }}">Submit your History API demo</a> for the August Dev Derby today!</p>
         {% endtrans %}
 
       </section>

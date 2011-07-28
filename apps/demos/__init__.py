@@ -21,14 +21,15 @@ DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = getattr(settings, 'DEMOS_DEVDERBY_CURRENT
 
 # Dev derby choices displayed on submission form
 DEMOS_DEVDERBY_CHALLENGE_CHOICES = getattr(settings, 'DEMOS_DEVDERBY_CHALLENGE_CHOICES', [
-    "challenge:2011:july",
     "challenge:2011:august",
     "challenge:2011:september",
+    "challenge:2011:october",
 ])
 
 # Dev derby tags for previous challenges
 DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS', [
     "challenge:2011:june",
+    "challenge:2011:july",
 ])
 
 # Tag used to find most recent winner for dev derby
@@ -80,6 +81,17 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "tagline": _("You are HERE."),
         "summary": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "description": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
+        "learn_more": [],
+    },
+    {
+        "tag_name": "challenge:2011:october", 
+        "title": _("October 2011 Dev Derby Challenge - To Be Determined"), 
+        "short_title": _("TBD"),
+        "dateline": _("October 2011"),
+        "short_dateline": _("October"),
+        "tagline": _("To be determined."),
+        "summary": _("We haven't picked a topic for the October Dev Derby yet. Check back soon!"),
+        "description": _("We haven't picked a topic for the October Dev Derby yet. Check back soon!"),
         "learn_more": [],
     },
 
