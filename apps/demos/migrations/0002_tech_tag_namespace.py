@@ -4,8 +4,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 
-from tagging.utils import parse_tag_input
-from taggit.utils import edit_string_for_tags
+from taggit.utils import edit_string_for_tags, parse_tags
 from taggit.models import TaggedItem, GenericTaggedItemBase
 from taggit.managers import _TaggableManager
 
@@ -21,7 +20,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Convert from django-tagging tags to tech:* tags under django-taggit"
         for demo in orm.Submission.objects.all():
-            tags = parse_tag_input(demo.tags)
+            tags = parse_tags(demo.tags)
             # HACK: South gets confused by taggit_tags field, so we have to conjure it up here
             taggit_tags = _TaggableManager(through=TaggedItem, model=orm.Submission, instance=demo)
             taggit_tags.set(*(
@@ -110,7 +109,10 @@ class Migration(DataMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
             'source_code_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'summary': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'tags': ('demos.models.ConstrainedTagField', [], {}),
+            # HACK: This custom field has gone away entirely, so using its
+            # superclass as a stand-in
+            #'tags': ('demos.models.ConstrainedTagField', [], {}),
+            'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         }

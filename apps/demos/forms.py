@@ -23,18 +23,14 @@ from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from . import ( scale_image, TAG_DESCRIPTIONS,
-        TAG_NAMESPACE_DEMO_CREATOR_WHITELIST,
-        DEMOS_DEVDERBY_CHALLENGE_CHOICES )
+from . import (scale_image, TAG_DESCRIPTIONS,
+        DEMOS_DEVDERBY_CHALLENGE_CHOICES)
 from .models import Submission
 
 from captcha.fields import ReCaptchaField
 
 import django.forms.fields
 from django.forms.widgets import CheckboxSelectMultiple
-
-import tagging.forms
-from tagging.utils import parse_tag_input
 
 from taggit.utils import parse_tags
 
@@ -115,8 +111,6 @@ class SubmissionEditForm(MyModelForm):
         )
     )
 
-    TAGS_FIELD_NAME = 'tags'
-
     def __init__(self, *args, **kwargs):
 
         # Set the request user, for tag namespace permissions
@@ -126,51 +120,15 @@ class SubmissionEditForm(MyModelForm):
         # Hit up the super class for init
         super(SubmissionEditForm, self).__init__(*args, **kwargs)
 
-        if 'instance' in kwargs and kwargs['instance']:
-            # If we have an instance, try populating the user-accessible namespace
-            # form fields with exiating tags.
-            tags_incoming = ( 
-                ( self.instance.pk is not None )
-                and [ x.name for x in self.instance.taggit_tags.all() ]
-                or [ ]
-            )
-        elif self.TAGS_FIELD_NAME in self.initial:
-            # If we have tags in the initial data set, use those to populate
-            # user-accessible namespaces.
-            tags_incoming = parse_tags(self.initial[self.TAGS_FIELD_NAME])
-        else:
-            # No tags for pre-population
-            tags_incoming = []
-
-        # Use any incoming tags to prepopulate the form.
-        if tags_incoming:
-            for ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
-                self.initial['%s_tags' % ns[:-1]] = [
-                    x for x in tags_incoming if x.startswith(ns)
-                ]
+        # Initialize form with namespaced tags.
+        instance = kwargs.get('instance', None)
+        if instance:
+            for ns in ('tech', 'challenge'):
+                self.initial['%s_tags' % ns] = [t.name 
+                    for t in instance.taggit_tags.all_ns('%s:' % ns)]
 
     def clean(self):
         cleaned_data = super(SubmissionEditForm, self).clean()
-
-        # Establish a set of tags, if none available
-        if self.TAGS_FIELD_NAME not in cleaned_data:
-            cleaned_data[self.TAGS_FIELD_NAME] = []
-
-        # If there are *_tags fields, append them as tags.
-        for k in cleaned_data:
-            if k.endswith('_tags'):
-                cleaned_data[self.TAGS_FIELD_NAME].extend(cleaned_data[k])
-
-        # Filter the incoming tags to accept only those allowed for the requesting user.
-        # TODO: Should this somehow happen at the model and not form level?
-        tags_orig = ( 
-            ( self.instance.pk is not None )
-            and [ x.name for x in self.instance.taggit_tags.all() ]
-            or [ ]
-        )
-        cleaned_data[self.TAGS_FIELD_NAME] = self.instance.resolve_allowed_tags(
-            tags_orig, cleaned_data[self.TAGS_FIELD_NAME], self.request_user 
-        )
 
         # If we have a demo_package, try validating it.
         if 'demo_package' in self.files:
@@ -190,7 +148,9 @@ class SubmissionEditForm(MyModelForm):
         super_save_m2m = hasattr(self, 'save_m2m') and self.save_m2m or None
         def save_m2m():
             if super_save_m2m: super_save_m2m()
-            self.instance.taggit_tags.set(*self.cleaned_data[self.TAGS_FIELD_NAME])
+            for ns in ('tech', 'challenge'):
+                self.instance.taggit_tags.set_ns('%s:' % ns,
+                    *self.cleaned_data.get('%s_tags' % ns, []))
 
         if commit: save_m2m()
         else: self.save_m2m = save_m2m

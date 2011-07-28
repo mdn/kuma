@@ -286,7 +286,6 @@ INSTALLED_APPS = (
     # DEMOS
     'demos',
     'captcha',
-    'tagging',
     'contentflagging',
     'actioncounters',
     'threadedcomments',
@@ -323,12 +322,12 @@ INSTALLED_APPS = (
     #'chat',
     #'inproduct',
 
+    # migrations
+    'south',
+
     # testing.
     'django_nose',
     'test_utils',
-
-    # migrations
-    'south',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
@@ -436,7 +435,8 @@ MINIFY_BUNDLES = {
         ),
         # TODO: remove dependency on jquery ui CSS and use our own
         'jqueryui/jqueryui': (
-            'css/jqueryui/jqueryui.css',
+            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            #'css/jqueryui/jqueryui.css',
         ),
         'forums': (
             'css/forums.css',
@@ -479,6 +479,9 @@ MINIFY_BUNDLES = {
         'monitor': (
             'css/monitor.css',
         ),
+        'tagit': (
+            'css/jquery.tagit.css',
+        ),
     },
     'js': {
         'mdn': (
@@ -520,7 +523,11 @@ MINIFY_BUNDLES = {
             'js/main.js',
         ),
         'libs/jqueryui': (
-            'js/libs/jqueryui.min.js',
+            #'js/libs/jqueryui.min.js',
+            'js/libs/jquery-ui-1.8.14.custom.min.js',
+        ),
+        'libs/tagit': (
+            'js/libs/tag-it.js',
         ),
         'questions': (
             'js/markup.js',

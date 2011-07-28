@@ -91,7 +91,9 @@ def home(request):
 
 def detail(request, slug):
     """Detail page for a submission"""
-    submission = get_object_or_404(Submission, slug=slug)
+    submission = get_object_or_404(Submission.admin_manager, slug=slug)
+    if submission.censored and submission.censored_url:
+        return HttpResponseRedirect(submission.censored_url)
     if not submission.allows_viewing_by(request.user):
         return HttpResponseForbidden(_('access denied')+'')
 
@@ -247,8 +249,7 @@ def submit(request):
         return jingo.render(request, 'demos/submit_noauth.html', {})
 
     if request.method != "POST":
-        initial = dict( tags=request.GET.get('tags', '') )
-        form = SubmissionNewForm(request_user=request.user, initial=initial)
+        form = SubmissionNewForm(request_user=request.user)
     else:
         form = SubmissionNewForm(request.POST, request.FILES, request_user=request.user)
         if form.is_valid():

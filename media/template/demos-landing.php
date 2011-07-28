@@ -137,8 +137,8 @@ head(
       </div> 
     </div>
 
-    <div id="gallery-sort">
-      <p class="count">11,024 Demos</p>
+    <div class="gallery-sort">
+      <h2 class="count">11,024 Demos</h2>
       <ul class="sort">
         <li><strong title="You are viewing the most recent demos">Recent</strong></li>
         <li><a href="#" title="Sort demos by popularity">Popular</a></li>
@@ -459,7 +459,7 @@ head(
       </li>
     </ul>
     
-    <div id="gallery-foot">
+    <div class="gallery-foot">
       <p class="showing">1&ndash;9 of 11,024</p>
       <ul class="paging">
         <li class="next"><a href="#" title="Go to the next page">Next</a></li>

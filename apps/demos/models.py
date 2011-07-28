@@ -34,15 +34,8 @@ from django.template.defaultfilters import slugify, filesizeformat
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User, AnonymousUser
 
-import tagging
-import tagging.fields
-import tagging.models
-
-from tagging.utils import parse_tag_input
-from tagging.fields import TagField
-from tagging.models import Tag
-
 from taggit.managers import TaggableManager
+from taggit_extras.managers import NamespacedTaggableManager
 from taggit.models import TaggedItemBase
 
 import south.modelsinspector
@@ -54,9 +47,7 @@ from actioncounters.fields import ActionCounterField
 
 from embedutils import VideoEmbedURLField
 
-from . import scale_image
-from . import TAG_DESCRIPTIONS, DEMO_LICENSES
-from . import TAG_NAMESPACE_DEMO_CREATOR_WHITELIST
+from . import scale_image, TAG_DESCRIPTIONS, DEMO_LICENSES
 
 try:
     from PIL import Image
@@ -131,42 +122,6 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
     'text/x-perl',
     'text/x-php',
 ])
-
-class ConstrainedTagField(tagging.fields.TagField):
-    """Tag field constrained to described tags"""
-
-    def __init__(self, *args, **kwargs):
-        if 'max_tags' not in kwargs:
-            self.max_tags = 5
-        else:
-            self.max_tags = kwargs['max_tags']
-            del kwargs['max_tags']
-        super(ConstrainedTagField, self).__init__(*args, **kwargs)
-
-    def validate(self, value, instance):
-
-        if not isinstance(value, (list, tuple)):
-            value = parse_tag_input(value)
-
-        if len(value) > self.max_tags:
-            raise ValidationError(_('Maximum of %s tags allowed') % 
-                    (self.max_tags))
-
-        for tag_name in value:
-            if not tag_name in TAG_DESCRIPTIONS:
-                raise ValidationError(
-                    _('Tag "%s" is not in the set of described tags') % 
-                        (tag_name))
-
-south.modelsinspector.add_introspection_rules([
-    (
-        [ ConstrainedTagField ],
-        [ ],
-        {
-            'max_tags': ['max_tags', {'default':5}],
-        },
-    )
-], ["^demos.models.ConstrainedTagField"])
 
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
@@ -438,6 +393,9 @@ class Submission(models.Model):
     hidden = models.BooleanField(
             _("Hide this demo from others?"), default=False)
     censored = models.BooleanField()
+    censored_url = models.URLField(
+            _("Redirect URL for censorship."),
+            verify_exists=False, blank=True, null=True)
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
@@ -452,11 +410,7 @@ class Submission(models.Model):
     launches = ActionCounterField()
     likes = ActionCounterField()
 
-    tags = ConstrainedTagField(
-            _('select up to 5 tags that describe your demo'),
-            max_tags=5)
-    
-    taggit_tags = TaggableManager(blank=True)
+    taggit_tags = NamespacedTaggableManager(blank=True)
 
     screenshot_1 = ReplacingImageWithThumbField(
             _('Screenshot #1'),
@@ -565,7 +519,7 @@ class Submission(models.Model):
 
         # Iterate through known flags based on tag naming convention. Tag flags
         # are listed here in order of priority.
-        tag_flags = ( 'firstplace', 'secondplace', 'thirdplace', 'finalist' )
+        tag_flags = ('firstplace', 'secondplace', 'thirdplace', 'finalist')
         for p in tag_flags:
             for tag in self.taggit_tags.all():
                 # TODO: Is this 'system:challenge' too hard-codey?
@@ -577,61 +531,6 @@ class Submission(models.Model):
             flags.append('featured')
 
         return flags
-
-    # TODO:liberate - Move this to a more generalized tag enhancement package?
-    def allows_tag_namespace_for(self, ns, user):
-        """Decide whether a tag namespace is editable by a user"""
-        if user.is_staff or user.is_superuser:
-            # Staff / superuser can manage any tag namespace
-            return True
-        if ( not self.creator or user == self.creator ):
-           # Creator can manage whitelisted namespace prefixes
-           for allowed_ns in TAG_NAMESPACE_DEMO_CREATOR_WHITELIST:
-               if ns.startswith(allowed_ns):
-                   return True
-        return False
-
-    # TODO:liberate - Move this to a more generalized tag enhancement package?
-    @classmethod
-    def parse_tag_namespaces(cls, tag_list):
-        """Parse a list of tags out into a dict of lists by namespace"""
-        namespaces = { }
-        for tag in tag_list:
-            ns = (':' in tag) and ('%s:' % tag.rsplit(':', 1)[0]) or ''
-            if ns not in namespaces: namespaces[ns] = []
-            namespaces[ns].append(tag)
-        return namespaces
-
-    # TODO:liberate - Move this to a more generalized tag enhancement package?
-    def resolve_allowed_tags(self, tags_curr, tags_new, request_user=AnonymousUser):
-        """Given a new set of tags and a user, build a list of allowed new tags
-        with changes accepted only for namespaces where editing is allowed for
-        the user. For disallowed namespaces, this object's current tag set will
-        be imposed.
-        
-        No changes are made; the new tag list is just returned.
-        """
-        # Produce namespaced sets of current and incoming new tags.
-        ns_tags_curr = self.parse_tag_namespaces(tags_curr)
-        ns_tags_new  = self.parse_tag_namespaces(tags_new)
-
-        # Produce a union of all namespaces, current and new tag set
-        all_ns = set( ns_tags_curr.keys() + ns_tags_new.keys() )
-
-        # Assemble accepted changed tag set according to permissions
-        tags_out = []
-        for ns in all_ns:
-            if self.allows_tag_namespace_for(ns, request_user):
-                # If the user is allowed this namespace, apply changes by
-                # accepting new tags or lack thereof.
-                if ns in ns_tags_new:
-                    tags_out.extend(ns_tags_new[ns])
-            elif ns in ns_tags_curr:
-                # If the user is not allowed this namespace, carry over
-                # existing tags or lack thereof
-                tags_out.extend(ns_tags_curr[ns])
-
-        return tags_out
 
     @classmethod
     def allows_listing_hidden_by(cls, user):

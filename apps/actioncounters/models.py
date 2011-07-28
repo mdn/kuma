@@ -6,6 +6,8 @@ from django.db import models
 from django.conf import settings
 from django.db.models import F
 
+from django.core.exceptions import MultipleObjectsReturned
+
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
@@ -39,25 +41,40 @@ class ActionCounterUniqueManager(models.Manager):
         existence."""
         content_type = ContentType.objects.get_for_model(object)
         user, ip, user_agent, session_key = get_unique(request)
-        if create:
-            return self.get_or_create(
-                    content_type=content_type, object_pk=object.pk, 
-                    name=action_name,
-                    ip=ip, user_agent=user_agent, user=user,
-                    session_key=session_key,
-                    defaults=dict( total=0 ))
-        else:
-            try:
-                return ( 
-                    self.get(
+        try:
+
+            if create:
+                return self.get_or_create(
                         content_type=content_type, object_pk=object.pk, 
                         name=action_name,
                         ip=ip, user_agent=user_agent, user=user,
-                        session_key=session_key,), 
-                    False 
-                )
-            except ActionCounterUnique.DoesNotExist:
-                return ( None, False )
+                        session_key=session_key,
+                        defaults=dict( total=0 ))
+            else:
+                try:
+                    return ( 
+                        self.get(
+                            content_type=content_type, object_pk=object.pk, 
+                            name=action_name,
+                            ip=ip, user_agent=user_agent, user=user,
+                            session_key=session_key,), 
+                        False 
+                    )
+                except ActionCounterUnique.DoesNotExist:
+                    return ( None, False )
+        
+        except MultipleObjectsReturned:
+            # HACK: There seems to be a race condition in get_or_create. :(
+            # Happens very rarely, but when it does, seems like the best thing
+            # to do is try to clean up?
+            counters = self.filter(
+                content_type=content_type, object_pk=object.pk, 
+                name=action_name,
+                ip=ip, user_agent=user_agent, user=user,
+                session_key=session_key)
+            counter = counters[0]
+            for c in counters[1:]: c.delete()
+            return ( counter, False )
 
 
 class ActionCounterUnique(models.Model):

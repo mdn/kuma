@@ -2,8 +2,8 @@
     {% set query = request.GET.get('q','') %}
 
     {% if show_sorts %}
-    <div id="gallery-sort">
-      <p class="count">{{ ngettext('{count} Demo', '{count} Demos', count) | f(count=paginator.count) }}</p>
+    <div class="gallery-head">
+      <h2 class="count">{{ ngettext('{count} Demo', '{count} Demos', count) | f(count=paginator.count) }}</h2>
       <ul class="sort">
         {% set sort_orders = (
             ( 'upandcoming', _('Sort demos by most recent likes and views'), _('You are viewing demos by most recent likes and views'), _('Up and Coming') ),
@@ -44,7 +44,7 @@
         }
     </script>
     
-    <div id="gallery-foot">
+    <div class="gallery-foot">
         {% if page_obj %}
             <p class="showing">{{_('{start}&ndash;{end} of {total}') | f(start=page_obj.start_index(),end=page_obj.end_index(),total=paginator.count) | safe }}</p>
         {% endif %}

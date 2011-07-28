@@ -12,7 +12,8 @@ from sumo.urlresolvers import reverse
 from sumo.tests import LocalizingClient
 
 from mock import patch
-from nose.tools import eq_
+from nose.tools import eq_, assert_equal, with_setup, assert_false, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
@@ -24,8 +25,8 @@ from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
 
 
-SCREENSHOT_PATH = ( '%s/fixtures/screenshot_1.png' % 
-        dirname(dirname(__file__)) )
+SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
+        dirname(dirname(__file__)))
 
 
 def mockdekiauth(test):
@@ -38,6 +39,7 @@ def mockdekiauth(test):
         test(self)
     return test_new
 
+
 def disable_captcha(fn):
     """Disable captcha requirement during call of the decorated function"""
     def wrap(self):
@@ -47,6 +49,7 @@ def disable_captcha(fn):
         settings.RECAPTCHA_PRIVATE_KEY = old_key
         return rv
     return wrap
+
 
 class DemoViewsTest(test_utils.TestCase):
     fixtures = ['test_users.json']
@@ -78,6 +81,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
 
+    @attr('demo_submit')
     @mockdekiauth
     @disable_captcha
     def test_submit_post_valid(self):
@@ -87,11 +91,11 @@ class DemoViewsTest(test_utils.TestCase):
         zf = zipfile.ZipFile(zf_fout, 'w')
         zf.writestr('index.html', """<html></html>""")
         zf.close()
-    
+
         # Create a new file for input
         zf_fin = StringIO(zf_fout.getvalue())
         zf_fin.name = 'demo.zip'
-        
+
         r = self.client.post(reverse('demos_submit'), data=dict(
             title='Test submission',
             summary='This is a test demo submission',
@@ -106,12 +110,17 @@ class DemoViewsTest(test_utils.TestCase):
         eq_(302, r.status_code)
         assert 'Location' in r
         assert 'test-submission' in r['Location']
-    
+
         try:
             obj = Submission.objects.get(slug='test-submission')
             eq_('Test submission', obj.title)
         except Submission.DoesNotExist:
             assert False
+
+        result_tags = [t.name for t in obj.taggit_tags.all_ns('tech:')]
+        result_tags.sort()
+        eq_(['tech:audio', 'tech:video', 'tech:websockets'], result_tags)
+
 
     @mockdekiauth
     def test_edit_invalid(self):
@@ -157,6 +166,27 @@ class DemoViewsTest(test_utils.TestCase):
         edit_link = d('ul.manage a.edit')
         assert not edit_link
 
+    def test_detail_censored(self):
+        s = save_valid_submission('hello world')
+        s.censored = True
+        s.save()
+
+        url = reverse('demos_detail', args=[s.slug])
+        r = self.client.get(url)
+        d = pq(r.content)
+        eq_('Permission Denied', d('h1.page-title').text())
+
+    def test_detail_censored_url(self):
+        s = save_valid_submission('hello world')
+        s.censored = True
+        s.censored_url = "http://developer.mozilla.org"
+        s.save()
+
+        url = reverse('demos_detail', args=[s.slug])
+        r = self.client.get(url)
+        eq_(302, r.status_code)
+        eq_("http://developer.mozilla.org", r['Location'])
+
     @mockdekiauth
     def test_creator_can_edit(self):
         s = save_valid_submission('hello world')
@@ -171,7 +201,8 @@ class DemoViewsTest(test_utils.TestCase):
 
         r = self.client.get(edit_url)
         assert pq(r.content)('form#demo-submit')
-        eq_('Save changes', pq(r.content)('p.fm-submit button[type="submit"]').text())
+        eq_('Save changes',
+            pq(r.content)('p.fm-submit button[type="submit"]').text())
 
     @mockdekiauth
     def test_hidden_field(self):
