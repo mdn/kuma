@@ -23,10 +23,7 @@ from sumo.urlresolvers import reverse
 
 from nose.plugins.skip import SkipTest
 
-
-class SkippedTestCase(test_utils.TestCase):
-    def setUp(self):
-        raise SkipTest()
+from . import SkippedTestCase
 
 
 def parse_robots(base_url):

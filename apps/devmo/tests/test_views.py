@@ -23,21 +23,17 @@ from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
 
 
+TESTUSER_PASSWORD = 'trustno1'
+
+
 class ProfileViewsTest(test_utils.TestCase):
 
     def setUp(self):
         self.client = LocalizingClient()
 
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    def test_profile_view(self, authenticate, get_user, get_deki_user):
+    def test_profile_view(self):
         """A user profile can be viewed"""
         (user, deki_user, profile) = self._create_profile()
-        authenticate.return_value = user
-        get_user.return_value = user
-        # TODO: Why does this break things?
-        #get_deki_user.return_value = deki_user
 
         url = reverse('devmo.views.profile_view',
                       args=(user.username,))
@@ -57,16 +53,9 @@ class ProfileViewsTest(test_utils.TestCase):
         eq_(profile.bio,
             doc.find('#profile-head.vcard .bio').text())
 
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    def test_profile_edit(self, authenticate, get_user, get_deki_user):
+    @attr('current')
+    def test_profile_edit(self):
         (user, deki_user, profile) = self._create_profile()
-
-        authenticate.return_value = user
-        get_user.return_value = user
-        # TODO: Why does this break things?
-        #get_deki_user.return_value = deki_user
 
         url = reverse('devmo.views.profile_view',
                       args=(user.username,))
@@ -75,7 +64,8 @@ class ProfileViewsTest(test_utils.TestCase):
 
         eq_(0, doc.find('#profile-head .edit .button').length)
 
-        self.client.cookies['authtoken'] = 'qwertyuiop'
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
 
         url = reverse('devmo.views.profile_view',
                       args=(user.username,))
@@ -121,20 +111,11 @@ class ProfileViewsTest(test_utils.TestCase):
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
 
-    @attr("edit_websites")
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    def test_profile_edit_websites(self, authenticate, get_user,
-                                   get_deki_user):
+    def test_profile_edit_websites(self):
         (user, deki_user, profile) = self._create_profile()
 
-        authenticate.return_value = user
-        get_user.return_value = user
-        # TODO: Why does this break things?
-        #get_deki_user.return_value = deki_user
-
-        self.client.cookies['authtoken'] = 'qwertyuiop'
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
 
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
@@ -193,18 +174,11 @@ class ProfileViewsTest(test_utils.TestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
-    @attr("edit_interests")
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    def test_profile_edit_interests(self, authenticate, get_user,
-                                   get_deki_user):
+    def test_profile_edit_interests(self):
         (user, deki_user, profile) = self._create_profile()
 
-        authenticate.return_value = user
-        get_user.return_value = user
-
-        self.client.cookies['authtoken'] = 'qwertyuiop'
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
 
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
