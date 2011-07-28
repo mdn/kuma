@@ -9,22 +9,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Submission.tags'
         db.delete_column('demos_submission', 'tags')
 
 
     def backwards(self, orm):
-       
-        # This backwards migration relies on both the django-tagging app and
-        # the ConstrainedTagField custom field being restored to the project. 
-        #
-        # Since these were removed as part of the forwards migration, their
-        # lack will cause this migration to fail.
-        
-        from demos.models import ConstrainedTagField
-        db.add_column('demos_submission', 'tags',
-                      ConstrainedTagField(default=''), keep_default=False)
+        db.add_column('demos_submission', 'tags', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
 
     models = {
