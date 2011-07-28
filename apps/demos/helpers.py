@@ -29,9 +29,6 @@ from django.utils.tzinfo import LocalTimezone
 from django.core.urlresolvers import reverse as django_reverse
 from devmo.urlresolvers import reverse
 
-from tagging.models import Tag, TaggedItem
-from tagging.utils import LINEAR, LOGARITHMIC
-
 from taggit.models import TaggedItem
 
 from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES

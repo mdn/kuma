@@ -34,14 +34,6 @@ from django.template.defaultfilters import slugify, filesizeformat
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User, AnonymousUser
 
-import tagging
-import tagging.fields
-import tagging.models
-
-from tagging.utils import parse_tag_input
-from tagging.fields import TagField
-from tagging.models import Tag
-
 from taggit.managers import TaggableManager
 from taggit_extras.managers import NamespacedTaggableManager
 from taggit.models import TaggedItemBase

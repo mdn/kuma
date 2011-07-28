@@ -32,9 +32,6 @@ from captcha.fields import ReCaptchaField
 import django.forms.fields
 from django.forms.widgets import CheckboxSelectMultiple
 
-import tagging.forms
-from tagging.utils import parse_tag_input
-
 from taggit.utils import parse_tags
 
 

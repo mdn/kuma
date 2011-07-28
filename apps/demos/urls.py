@@ -2,8 +2,6 @@ from django.conf.urls.defaults import *
 
 from django.views.generic.list_detail import object_list
 
-from tagging.views import tagged_object_list
-
 from demos.models import Submission
 
 from .feeds import RecentSubmissionsFeed, FeaturedSubmissionsFeed
