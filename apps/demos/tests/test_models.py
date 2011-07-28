@@ -42,7 +42,7 @@ def save_valid_submission(title='hello world'):
     testuser = User.objects.get(username='testuser')
     s = Submission(title=title, slug='hello-world',
         description='This is a hello world demo',
-        tags='hello,world,demo,play', creator=testuser)
+        creator=testuser)
     fout = StringIO()
     zf = zipfile.ZipFile(fout, 'w')
     zf.writestr('index.html', """<html> </html>""")
@@ -79,7 +79,7 @@ class DemoPackageTest(TestCase):
     def _build_submission(self):
         s = Submission(title='Hello world', slug='hello-world',
             description='This is a hello world demo',
-            tags='hello,world,demo,play', creator=self.user)
+            creator=self.user)
         return s
 
     def test_demo_package_no_files(self):
@@ -88,7 +88,7 @@ class DemoPackageTest(TestCase):
         s = Submission(title='Hello world', slug='hello-world',
             description='This is a hello world demo',
             video_url='http://www.youtube.com/watch?v=dQw4w9WgXcQ',
-            tags='hello,world,demo,play', creator=self.user)
+            creator=self.user)
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
@@ -221,7 +221,7 @@ class DemoPackageTest(TestCase):
 
         s = Submission(title='Hello world', slug='hello-world',
             description='This is a hello world demo',
-            tags='hello,world,demo,play', creator=self.user)
+            creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()
@@ -251,7 +251,7 @@ class DemoPackageTest(TestCase):
 
         s = Submission(title='Hello world', slug='hello-world',
             description='This is a hello world demo',
-            tags='hello,world,demo,play', creator=self.user)
+            creator=self.user)
 
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
         s.demo_package.close()

@@ -286,7 +286,6 @@ INSTALLED_APPS = (
     # DEMOS
     'demos',
     'captcha',
-    'tagging',
     'contentflagging',
     'actioncounters',
     'threadedcomments',

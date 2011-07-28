@@ -249,8 +249,7 @@ def submit(request):
         return jingo.render(request, 'demos/submit_noauth.html', {})
 
     if request.method != "POST":
-        initial = dict( tags=request.GET.get('tags', '') )
-        form = SubmissionNewForm(request_user=request.user, initial=initial)
+        form = SubmissionNewForm(request_user=request.user)
     else:
         form = SubmissionNewForm(request.POST, request.FILES, request_user=request.user)
         if form.is_valid():

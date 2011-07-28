@@ -131,42 +131,6 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
     'text/x-php',
 ])
 
-class ConstrainedTagField(tagging.fields.TagField):
-    """Tag field constrained to described tags"""
-
-    def __init__(self, *args, **kwargs):
-        if 'max_tags' not in kwargs:
-            self.max_tags = 5
-        else:
-            self.max_tags = kwargs['max_tags']
-            del kwargs['max_tags']
-        super(ConstrainedTagField, self).__init__(*args, **kwargs)
-
-    def validate(self, value, instance):
-
-        if not isinstance(value, (list, tuple)):
-            value = parse_tag_input(value)
-
-        if len(value) > self.max_tags:
-            raise ValidationError(_('Maximum of %s tags allowed') % 
-                    (self.max_tags))
-
-        for tag_name in value:
-            if not tag_name in TAG_DESCRIPTIONS:
-                raise ValidationError(
-                    _('Tag "%s" is not in the set of described tags') % 
-                        (tag_name))
-
-south.modelsinspector.add_introspection_rules([
-    (
-        [ ConstrainedTagField ],
-        [ ],
-        {
-            'max_tags': ['max_tags', {'default':5}],
-        },
-    )
-], ["^demos.models.ConstrainedTagField"])
-
 def get_root_for_submission(instance):
     """Build a root path for demo submission files"""
     c_name = instance.creator.username
@@ -454,10 +418,6 @@ class Submission(models.Model):
     launches = ActionCounterField()
     likes = ActionCounterField()
 
-    tags = ConstrainedTagField(
-            _('select up to 5 tags that describe your demo'),
-            max_tags=5)
-    
     taggit_tags = NamespacedTaggableManager(blank=True)
 
     screenshot_1 = ReplacingImageWithThumbField(
