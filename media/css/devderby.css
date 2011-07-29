@@ -50,9 +50,9 @@ transform: rotate(18deg);
 
 #upcoming ol { list-style: none; margin: 0 auto; padding: 0; position: relative; width: 550px; min-height: 390px; }
 #upcoming li { float: left; position: relative; }
-#upcoming .first { width: 200px; top: 0; margin-left: 175px; }
-#upcoming .second { width: 150px; margin-left: -370px; top: 35px; }
-#upcoming .third { width: 150px; margin-left: 20px; top: 35px; }
+#upcoming .first { width: 200px; margin-left: 175px; bottom: 20px; }
+#upcoming .second { width: 150px; margin-left: -370px; bottom: 45px; }
+#upcoming .third { width: 150px; margin-left: 20px; bottom: 45px; }
 
 #upcoming .title { text-align: center; margin: 0 0 .15em; font: 200 30px/.95 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; color: #000; text-shadow: 0 0 20px #f1e8cf, 0 0 10px #fff, 1px 1px 0 rgba(0,0,0,.1); }
 #upcoming .date { text-align: center; margin: 0; font: bold 1em/1 "Carto Bold", sans-serif; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px #f1e8cf, 0 0 5px #fff; }
