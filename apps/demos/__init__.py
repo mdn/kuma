@@ -85,13 +85,13 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
     },
     {
         "tag_name": "challenge:2011:october", 
-        "title": _("October 2011 Dev Derby Challenge - To Be Determined"), 
-        "short_title": _("TBD"),
+        "title": _("October 2011 Dev Derby Challenge - CSS Media Queries"), 
+        "short_title": _("CSS Media Queries"),
         "dateline": _("October 2011"),
         "short_dateline": _("October"),
-        "tagline": _("To be determined."),
-        "summary": _("We haven't picked a topic for the October Dev Derby yet. Check back soon!"),
-        "description": _("We haven't picked a topic for the October Dev Derby yet. Check back soon!"),
+        "tagline": _("Sizes does matter"),
+        "summary": _("CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."),
+        "description": _("CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."),
         "learn_more": [],
     },
 
