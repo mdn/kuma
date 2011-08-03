@@ -7,12 +7,12 @@ TODO:
 - Permissions for tag namespaces (eg. system:* is superuser-only)
 - Machine tag assists
 """
-
+from django.db.models.fields import BLANK_CHOICE_DASH
 from django.contrib.auth.models import User, AnonymousUser
 
 from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import (TaggedItem, GenericTaggedItemBase,
-                           TaggedItemBase)
+                           TaggedItemBase, Tag)
 from taggit.utils import (parse_tags, edit_string_for_tags,
                           require_instance_manager)
 from taggit.forms import TagField
@@ -20,6 +20,14 @@ from taggit.forms import TagField
 
 class NamespacedTaggableManager(TaggableManager):
     """TaggableManager with tag namespace support"""
+
+    # HACK: Yes, I really do want to allow tags in admin change lists
+    flatchoices = None
+
+    # HACK: This is expensive, too, but should help with list_filter in admin
+    def get_choices(self, include_blank=True, blank_choice=BLANK_CHOICE_DASH):
+        return [(t.id, t.name) for t in Tag.objects.all()]
+
     def __get__(self, instance, model):
         if instance is not None and instance.pk is None:
             raise ValueError("%s objects need to have a primary key value "
@@ -31,6 +39,12 @@ class NamespacedTaggableManager(TaggableManager):
 
 
 class _NamespacedTaggableManager(_TaggableManager):
+    
+    def __unicode__(self):
+        """Return the list of tags as an editable string.
+        Expensive: Does a DB query for the tags"""
+        # HACK: Yes, I really do want to allow tags in admin change lists
+        return edit_string_for_tags(self.all())
 
     def all_ns(self, namespace=None):
         """Fetch tags by namespace, or collate all into namespaces"""
