@@ -39,8 +39,8 @@ Vagrant::Config.run do |config|
     # uncomment to enable VM GUI console, mainly for troubleshooting
     #config.vm.boot_mode = :gui
 
-    # Add to /etc/hosts: 192.168.10.50 dev-kuma.developer.mozilla.org
-    config.vm.network("192.168.10.50")
+    # Add to /etc/hosts: 192.168.10.55 dev.developer.mozilla.org
+    config.vm.network("192.168.10.55")
 
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
