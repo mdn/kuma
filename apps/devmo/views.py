@@ -3,6 +3,8 @@ import urllib2
 import csv
 import logging
 
+from django.conf import settings
+from django.core.paginator import Paginator, InvalidPage
 from django.shortcuts import get_object_or_404
 from django.http import (HttpResponseRedirect, HttpResponse,
                          HttpResponseForbidden, HttpResponseNotFound)
@@ -10,6 +12,8 @@ from django.http import (HttpResponseRedirect, HttpResponse,
 from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags, edit_string_for_tags
+
+from demos.models import Submission
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
@@ -31,8 +35,23 @@ def events(request):
 
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
+    user = profile.user
+
+    DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
+    sort_order = request.GET.get('sort', 'created')
+    page_number = request.GET.get('page', 1)
+    show_hidden = (user == request.user) or user.is_superuser
+
+    demos = Submission.objects.all_sorted(sort_order).filter(creator=profile.user)
+    if not show_hidden:
+        demos = demos.exclude(hidden=True)
+
+    demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
+    demos_page = demos_paginator.page(page_number)
+
     return jingo.render(request, 'devmo/profile.html', dict(
-        profile=profile
+        profile=profile, demos=demos, demos_paginator=demos_paginator,
+        demos_page=demos_page
     ))
 
 

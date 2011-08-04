@@ -3,7 +3,7 @@
 
     {% if show_sorts %}
     <div class="gallery-head">
-      <h2 class="count">{{ ngettext('{count} Demo', '{count} Demos', count) | f(count=paginator.count) }}</h2>
+        <h2 class="count">{{ ngettext('{count} Demo', '{count} Demos', paginator.count) | f(count=paginator.count) }}{% if show_submit %} <a class="button positive" href="{{ url('demos.views.submit') }}">Submit a Demo</a>{% endif %}</h2>
       <ul class="sort">
         {% set sort_orders = (
             ( 'upandcoming', _('Sort demos by most recent likes and views'), _('You are viewing demos by most recent likes and views'), _('Up and Coming') ),

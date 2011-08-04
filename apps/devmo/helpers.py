@@ -16,7 +16,7 @@ import jinja2
 import pytz
 
 import utils
-from .urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 
 # Yanking filters from Django.
@@ -91,7 +91,7 @@ def get_localized_devmo_path(path, locale):
     m = get_locale_path_match(path)
     devmo_url_dict = m.groupdict()
     devmo_locale, devmo_path = devmo_url_dict['locale'], devmo_url_dict['path']
-    devmo_local_path = '/' + settings.LANGUAGE_DEKI_MAP[locale] + '/' + devmo_path
+    devmo_local_path = '/' + settings.LANGUAGE_DEKI_MAP.get(locale,'en') + '/' + devmo_path
     return devmo_locale, devmo_path, devmo_local_path
 
 def check_devmo_local_page(path):
