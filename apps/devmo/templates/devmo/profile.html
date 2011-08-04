@@ -80,21 +80,23 @@
       {% endif %}
     </section>
 
-    <section id="profile-demos" class="profile-section">
-        {% if demos | length > 0 %} 
+    {% if demos | length > 0 %} 
+        <section id="profile-demos" class="profile-section">
             {{ submission_listing(
                 request, demos, demos_page.has_other_pages(), demos_paginator, demos_page,
                 _("Subscribe to a feed of {display_name}'s demos") | f(display_name=display_name),
                 url('demos_feed_profile', format='atom', username=username), cols_per_row=4,
                 show_submit=True
             ) }}
-        {% else %}
+        </section>
+    {% elif profile.user == request.user %}
+        <section id="profile-demos" class="profile-section">
           <header class="gallery-head">
             <h2 class="count">No Demos</h2>
           </header>
           <p class="none">{% trans submit_url=url('demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a class="button positive" href="{{submit_url}}">Submit a Demo</a>{% endtrans %}</p>
-        {% endif %}
-    </section>
+        </section>
+    {% endif %}
 
     {% if False %}
     <section id="profile-demos" class="profile-section">
