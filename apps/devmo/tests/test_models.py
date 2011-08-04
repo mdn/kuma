@@ -57,12 +57,20 @@ class TestCalendar(test_utils.TestCase):
 
     def test_reload_from_csv_data_blank_end_date(self):
         self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
-        # check total
-        assert_equal(33, len(Event.objects.all()))
-        # spot-check
         event = Event.objects.get(conference='Monash University')
         ok_(event)
-        eq_(None, event.end_date)
+        eq_(event.date, event.end_date)
+
+    def test_reload_end_date_determines_done(self):
+        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
+        # no matter what done column says, events should be done
+        # by virtue of the end date
+        event = Event.objects.get(conference='Confoo')
+        ok_(event)
+        eq_(True, event.done)
+        event = Event.objects.get(conference='TECH4AFRICA')
+        ok_(event)
+        eq_(False, event.done)
 
     def test_bad_date_column_skips_row(self):
         self.cal.reload(data=csv.reader(open(BAD_DATE_CSV, 'rb')))

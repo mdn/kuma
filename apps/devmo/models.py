@@ -186,35 +186,55 @@ class Calendar(ModelBase):
             return False
         events = list(Calendar.as_unicode(data))
         Event.objects.filter(calendar=self).delete()
+
+        # use column indices from header names so re-ordering
+        # columns doesn't blow us up
+        header_line = events.pop(0)
+        done_idx = header_line.index("Done")
+        conference_idx = header_line.index("Conference")
+        link_idx = header_line.index("Link")
+        people_idx = header_line.index("Who")
+        end_date_idx = header_line.index("End Date")
+        start_date_idx = header_line.index("Start Date")
+        location_idx = header_line.index("Location")
+        description_idx = header_line.index("Description")
+        materials_idx = header_line.index("Materials URL")
+
+        today = datetime.today()
+
         for event_line in events:
             event = None
-            if len(event_line) > 7:
-                done = event_line[7] == 'yes'
-            if event_line[1] != "Conference":
-                # verify date string conversion before adding the event
-                try:
-                    event_date = datetime.strptime(event_line[9], "%m/%d/%Y")
-                    event_date_string = event_date.strftime("%Y-%m-%d")
-                except:
-                    continue
-                if len(event_line) > 10:
-                    try:
-                        event_end_date = datetime.strptime(event_line[10],
-                                                           "%m/%d/%Y")
-                        event_end_date_string = event_end_date.strftime(
-                                                           "%Y-%m-%d")
-                    except:
-                        event_end_date = None
-                event = Event(date=event_date,
-                              end_date=event_end_date,
-                              conference=event_line[1],
-                              conference_link=event_line[3],
-                              location=event_line[2], people=event_line[5],
-                              description=event_line[6][:255],
-                              done=done, calendar=self)
-                if len(event_line) > 8:
-                    event.materials = event_line[8]
-                event.save()
+            if len(event_line) > materials_idx:
+                materials = event_line[materials_idx]
+            # skip rows with bad Start Date
+            try:
+                event_date = datetime.strptime(
+                    event_line[start_date_idx], "%m/%d/%Y")
+                event_date_string = event_date.strftime("%Y-%m-%d")
+            except:
+                continue
+            try:
+                event_end_date = datetime.strptime(event_line[end_date_idx],
+                                                   "%m/%d/%Y")
+                event_end_date_string = event_end_date.strftime(
+                                                   "%Y-%m-%d")
+            except:
+                event_end_date = event_date
+            done = False
+            if event_end_date < today:
+                done = True
+
+            event = Event(date=event_date,
+                          end_date=event_end_date,
+                          conference=event_line[conference_idx],
+                          conference_link=event_line[link_idx],
+                          location=event_line[location_idx],
+                          people=event_line[people_idx],
+                          description=event_line[description_idx],
+                          done=done,
+                          materials=materials,
+                          calendar=self)
+            event.save()
 
     def __unicode__(self):
         return self.shortname
@@ -228,8 +248,8 @@ class Event(ModelBase):
     conference = models.CharField(max_length=255)
     conference_link = models.URLField(blank=True, verify_exists=False)
     location = models.CharField(max_length=255)
-    people = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    people = models.TextField()
+    description = models.TextField()
     done = models.BooleanField(default=False)
     materials = models.URLField(blank=True, verify_exists=False)
     calendar = models.ForeignKey(Calendar)
