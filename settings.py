@@ -446,6 +446,7 @@ MINIFY_BUNDLES = {
             'css/search.css',
         ),
         'wiki': (
+            'css/wiki.css',
             'css/wiki-screen.css',
         ),
         'home': (
