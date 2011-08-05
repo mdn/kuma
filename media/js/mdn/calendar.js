@@ -18,5 +18,5 @@ $(function() {
     });
     $('#map_canvas').gMap({longitude: 1, latitude: 10, markers: markers, zoom: 2});
     $('#upcoming').tablesorter({sortList:[[0,0]]});
-    $('#past').tablesorter({sortList:[[0,0]]});
+    $('#past').tablesorter({sortList:[[0,1]]});
 });
