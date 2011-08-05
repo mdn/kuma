@@ -36,16 +36,16 @@
       <tbody>
       {% for event in upcoming_events %}
       <tr>
-          <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
+          <td class="date">{{ event.date.strftime('%Y-%m-%d') }}</td>
           <td>{% if event.end_date %}{{ event.end_date.strftime('%Y-%m-%d') }}{% endif %}</td>
             {% if event.conference_link %}
-          <td><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
+          <td class="conference"><a href="{{ event.conference_link }}">{{ event.conference }}</a></td>
             {% else %}
-          <td>{{ event.conference }}</td>
+          <td class="conference">{{ event.conference }}</td>
             {% endif %}
-          <td>{{ event.location }}</td>
-          <td>{{ event.people|safe }}</td>
-          <td>{{ event.description|safe }}</td>
+          <td class="location">{{ event.location }}</td>
+          <td class="people">{{ event.people|safe }}</td>
+          <td class="description">{{ event.description|safe }}</td>
       </tr>
       {% endfor %}
 </tbody></table>
@@ -82,5 +82,5 @@
 
 {% block js %}
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ" type="text/javascript"></script>
-<script src="http://mapstraction.com/mapstraction-js/mapstraction.js"></script>
+<script src="/media/js/libs/jquery.gmap-1.1.0-min.js"></script>
 {% endblock %}

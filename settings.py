@@ -504,7 +504,6 @@ MINIFY_BUNDLES = {
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
 
             'js/libs/jquery.tablesorter.min.js',
-            'js/mdn/geocode.js',
             'js/mdn/calendar.js',
         ),
         'demostudio': (
