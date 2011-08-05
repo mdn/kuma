@@ -73,7 +73,7 @@
 
           {% set field = form['interests'] %}
           <li class="{{ ' error' if field.errors }}">
-            <label for="pers-interests">Interests (tags)</label>
+            <strong class="label">Interests (tags)</strong>
             <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
             {{ field | safe }}
           </li>

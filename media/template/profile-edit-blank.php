@@ -33,6 +33,7 @@ head(
       
       <fieldset class="section notitle" id="personal">
         <ul>
+          <li><label for="pers-email">E-mail</label> <input type="email" id="pers-email" name="email" value="neil@itsneal.com"></li>
           <li><label for="pers-displayname">Name</label> <input type="text" id="pers-displayname" name="display_name"></li>
           <li><label for="pers-title">Title</label> <input type="text" id="pers-title" name="title"></label></li>
           <li><label for="pers-company">Company</label> <input type="text" id="pers-company" name="company"></label></li>
@@ -42,10 +43,18 @@ head(
             <textarea id="acc-bio" name="bio" cols="50" rows="7"></textarea>          
           </li>
           <li>
-            <label for="pers-interests">Interests (tags)</label>
+            <strong class="label">Interests (tags)</strong>
             <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
-            <input type="text" name="interests" id="pers-interests">
-		        <button type="button">Add</button>
+            <input style="display: none;" id="id_interests" name="interests" value="" maxlength="255" type="text">
+            <ul class="tagit" id="tagit-interests">
+              <li class="tagit-new">
+                <input aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" class="ui-widget-content ui-autocomplete-input" type="text">
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong class="label">Areas of Expertise</strong>
+            <p class="note">Add your interests first, then declare yourself an expert in selected topics.</p>
           </li>
         </ul>
       </fieldset>

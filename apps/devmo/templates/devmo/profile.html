@@ -44,9 +44,9 @@
         {% set tag_ns = 'profile:interest:' %}     
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
-        <div class="interests">
+        <div class="tags">
           <h2>Interests</h2>
-          <ul class="int-taglist">
+          <ul class="int-taglist taglist">
                 {% for tag in tags%}
                     <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
                 {% endfor %}

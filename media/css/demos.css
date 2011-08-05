@@ -515,9 +515,6 @@ ul.sortable .remove:hover, ul.sortable .remove:focus { color: #900; text-decorat
 #simplemodal-container { background: #222; padding: 6px; overflow: hidden; }
 #simplemodal-wrap { overflow: hidden; }
 
-.errorlist { color: #7D0D0F; }
-.errorlist li { font-style: italic; }
-
 #simplemodal-overlay { background: #fff; opacity: 0.15; }
 #simplemodal-container { padding: 18px; background: #aaa082; background: rgba(170,160,130,.75); }
 
