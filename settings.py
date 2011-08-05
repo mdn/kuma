@@ -502,7 +502,9 @@ MINIFY_BUNDLES = {
             'js/mdn/video-player.js',
 
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
-
+        ),
+        'events': (
+            'js/libs/jquery.gmap-1.1.0.min.js',
             'js/libs/jquery.tablesorter.min.js',
             'js/mdn/calendar.js',
         ),
