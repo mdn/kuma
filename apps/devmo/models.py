@@ -397,9 +397,6 @@ class UserDocsActivityFeedItem(object):
 
     @property
     def current_title(self):
-        # FIXME: There seem to be a rare few paes for which this fails, like
-        # Template: pages. But, the API feed appears to have no discriminating
-        # data to tell how to fix the URL
         if 'MOVE' == self.rc_type:
             return self.rc_moved_to_title
         else:
@@ -407,12 +404,7 @@ class UserDocsActivityFeedItem(object):
 
     @property
     def view_url(self):
-        # FIXME: There seem to be a rare few paes for which this fails, like
-        # Template: pages. But, the API feed appears to have no discriminating
-        # data to tell how to fix the URL
-        return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
-            title=self.current_title,
-        )))
+        return '%s/%s' % (self.base_url, self.current_title)
 
     @property
     def edit_url(self):
