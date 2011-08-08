@@ -70,13 +70,13 @@
                 <li class="{{site_name}}"><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
             {% endif %}
           {% endfor %}
-          <li class="docs"><a href="/User:{{profile.user.username}}" rel="me">Docs user page</a></li>
+          <li class="docs"><a href="/User:{{profile.user.username}}" rel="me">{{_("Docs user page")}}</a></li>
         </ul>
       </div>
 
       <!-- Only shown for the user and admins -->
       {% if profile.allows_editing_by(request.user) %}
-          <p class="edit"><a href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">Edit Profile</a></p>
+          <p class="edit"><a href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">{{_("Edit Profile")}}</a></p>
       {% endif %}
     </section>
 
@@ -98,96 +98,68 @@
         </section>
     {% endif %}
 
-    {% if False %}
-    <section id="docs-activity" class="profile-section">
-      <header>
-        <h2>Recent Docs Activity</h2>
-        <p class="more"><a href="https://developer.mozilla.org/Special:Contributions?target=Sheppy">See more history</a></p>
-      </header>
-      
-      <table class="activity">
-        <thead>
-          <th scope="col" class="page">Page</th>
-          <th scope="col" class="date">Date</th>
-          <th scope="col" class="summary">Edit summary</th>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/FileReader">en/DOM/element.removeEventListener</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 19, 2011 <br>6:36 AM</td>
-            <td>1 words added, 53 words removed</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/document.doctype">en/DOM/document.doctype</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 16, 2011 <br>11:33 AM</td>
-            <td>Removed tags: !DOCTYPE, DOCTYPE, DTD, ECMAScript, PUBLIC, SYSTEM, TEASER, W3C, create</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/document">en/DOM/document</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 15, 2011 <br>5:47 PM</td>
-            <td>5 words added</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/TouchEvent">en/DOM/TouchEvent</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 15, 2011 <br>1:43 PM</td>
-            <td>28 words added</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="https://developer.mozilla.org/en/Firefox_6_for_developers">en/Firefox 6 for developers</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 14, 2011 <Br>11:17 AM</td>
-            <td>clean up a tad; 11 words added, 28 words removed</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="3">
-              <a href="https://developer.mozilla.org/index.php?title=Special:Contributions&feed=rss&target=Sheppy" rel="alternate" class="feed">RSS</a>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </section>
+    {% if docs_feed_items | length > 0 %}
+        <section id="docs-activity" class="profile-section">
+          <header>
+            <h2>{{_("Recent Docs Activity")}}</h2>
+            <p class="more"><a href="/Special:Contributions?target={{profile.user.username | urlencode}}">{{_("See more history")}}</a></p>
+          </header>
+          <table class="activity">
+            <thead>
+              <th scope="col" class="page">{{_("Page")}}</th>
+              <th scope="col" class="date">{{_("Date")}}</th>
+              <th scope="col" class="summary">{{_("Edit summary")}}</th>
+            </thead>
+            <tbody>
+              {% for item in docs_feed_items %}
+              <tr>
+                <th scope="row">
+                    <h3>
+                        {% if item.view_url %}
+                          <a href="{{ item.view_url }}">{{ item.rc_title }}</a>
+                        {% else %}
+                          <span>{{ item.rc_title }}</span>
+                        {% endif %}
+                    </h3>
+                    <ul class="actions">
+                        {% if item.edit_url %}
+                            <li><a href="{{ item.edit_url }}" class="edit">{{_("Edit page")}}</a></li>
+                        {% endif %}
+                        {% if item.diff_url %}
+                            <li><a href="{{ item.diff_url }}" class="diff">{{_("View complete diff")}}</a></li>
+                        {% endif %}
+                        {% if item.history_url %}
+                            <li><a href="{{ item.history_url }}" class="history">{{_("View page history")}}</a></li>
+                        {% endif %}
+                    </ul>
+                </th>
+                <td>{{ item.rc_timestamp.strftime('%B %d, %Y') }}<br>
+                    {{ item.rc_timestamp.strftime('%I:%M %p') }}</td>
+                <td>{{ item.rc_comment }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3">
+                    <a href="/index.php?title=Special:Contributions&feed=rss&target={{profile.user.username | urlencode}}" rel="alternate" class="feed">{{_("Feed")}}</a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+    {% elif profile.user == request.user %}
+        <section id="docs-activity" class="profile-section">
+          <header>
+              <h2>{{_('Recent Docs Activity')}}</h2>
+          </header>
+          {% trans %}
+              <p class="none">You haven't contributed to any MDN docs. <a href="https://developer.mozilla.org/docs">Pitch in!</a></p>
+          {% endtrans %}
+        </section>
     {% endif %}
 
   </section><!-- /#content-main -->
 </div>
 </section>
-{% endblock %}
-
-{% block js %}
 {% endblock %}
