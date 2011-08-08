@@ -16,12 +16,13 @@
         initDetailsTags();
 
         if ($('body').is('.document') || $('body').is('.home')) {  // Document page
-            initForTags();
-            updateShowforSelectors();
+            //initForTags();
+            //updateShowforSelectors();
             initHelpfulVote();
         } else if ($('body').is('.review')) { // Review pages
-            initForTags();
-            updateShowforSelectors();
+            //initForTags();
+            //updateShowforSelectors();
+            initApproveReject();
         }
 
         if ($('body').is('.home')) {
@@ -256,7 +257,7 @@
                     $browserMenu.val($this.val());
                 }
             });
-            updateShowforSelectors();
+            //updateShowforSelectors();
         }
 
         // Select the right item from the browser or OS menu, taking cues from
@@ -275,7 +276,7 @@
             }
             if (initial) {
                 $menu.val(initial);  // does not fire change event
-                updateShowforSelectors();
+                //updateShowforSelectors();
             }
             return isManual;
         }
@@ -484,8 +485,8 @@
                     $preview.html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
                     document.location.hash = 'preview';
-                    initForTags();
-                    updateShowforSelectors();
+                    //initForTags();
+                    //updateShowforSelectors();
                     $preview.find('.kbox').kbox();
                     k.initVideo();
                     $btn.removeAttr('disabled');
@@ -740,6 +741,19 @@
                 window.clearTimeout(DRAFT_TIMEOUT_ID);
                 DRAFT_TIMEOUT_ID = window.setTimeout(saveDraft, 3000);
         });
+    }
+
+    function initApproveReject() {
+        $('#btn-approve').click(function() {
+            $('#approve-modal').show();
+            $('#reject-modal').hide();
+        });
+        $('#approve-modal').hide();
+        $('#btn-reject').click(function() {
+            $('#reject-modal').show();
+            $('#approve-modal').hide();
+        });
+        $('#reject-modal').hide();
     }
 
     $(document).ready(init);

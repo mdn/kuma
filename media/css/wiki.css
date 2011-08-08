@@ -782,6 +782,7 @@ div.revision-info li {
 
 #doc-source textarea {
     height: 400px;
+    width: 100%;
 }
 
 /* Review revision */
