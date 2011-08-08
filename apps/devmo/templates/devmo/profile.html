@@ -80,10 +80,11 @@
       {% endif %}
     </section>
 
-    {% if demos | length > 0 %} 
+    {% if demos_page.object_list | length > 0 %} 
         <section id="profile-demos" class="profile-section">
             {{ submission_listing(
-                request, demos, demos_page.has_other_pages(), demos_paginator, demos_page,
+                request, demos_page.object_list, demos_page.has_other_pages(),
+                demos_paginator, demos_page,
                 _("Subscribe to a feed of {display_name}'s demos") | f(display_name=display_name),
                 url('demos_feed_profile', format='atom', username=username), cols_per_row=4,
                 show_submit=True
