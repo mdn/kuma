@@ -154,8 +154,8 @@
           <header>
               <h2>{{_('Recent Docs Activity')}}</h2>
           </header>
-          {% trans %}
-              <p class="none">You haven't contributed to any MDN docs. <a href="https://developer.mozilla.org/docs">Pitch in!</a></p>
+          {% trans docs_url=url('docs.views.docs') %}
+              <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
           {% endtrans %}
         </section>
     {% endif %}
