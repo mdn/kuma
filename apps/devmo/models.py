@@ -287,6 +287,7 @@ class UserDocsActivityFeedItem(object):
     RC_TIMESTAMP_FORMAT = '%Y%m%d%H%M%S'
 
     # This list grabbed from DekiWiki C# source
+    # https://svn.mindtouch.com/source/public/dekiwiki/trunk/src/services/mindtouch.deki.data/types.cs
     RC_TYPES = {
         "0": "EDIT",
         "1": "NEW",
@@ -295,6 +296,7 @@ class UserDocsActivityFeedItem(object):
         "4": "MOVE_OVER_REDIRECT",
         "5": "PAGEDELETED",
         "6": "PAGERESTORED",
+        "7": "COPY",
         "40": "COMMENT_CREATE",
         "41": "COMMENT_UPDATE",
         "42": "COMMENT_DELETE",
@@ -305,6 +307,48 @@ class UserDocsActivityFeedItem(object):
         "55": "GRANTS_REMOVED",
         "56": "RESTRICTION_UPDATED",
         "60": "USER_CREATED",
+    }
+
+    # See: https://svn.mindtouch.com/source/public/dekiwiki/trunk/web/includes/Defines.php
+    # TODO: Merge these dicts to id->prefix?
+    RC_NAMESPACE_NAMES = {
+        "0": "NS_MAIN",
+        "1": "NS_TALK",
+        "2": "NS_USER",
+        "3": "NS_USER_TALK",
+        "4": "NS_PROJECT",
+        "5": "NS_PROJECT_TALK",
+        "6": "NS_IMAGE",
+        "7": "NS_IMAGE_TALK",
+        "8": "NS_MEDIAWIKI",
+        "9": "NS_MEDIAWIKI_TALK",
+        "10": "NS_TEMPLATE",
+        "11": "NS_TEMPLATE_TALK",
+        "12": "NS_HELP",
+        "13": "NS_HELP_TALK",
+        "14": "NS_CATEGORY",
+        "15": "NS_CATEGORY_TALK",
+        "16": "NS_ATTACHMENT",
+    }
+    RC_NAMESPACE_PREFIXES = {
+        "NS_ADMIN": "Admin",
+        "NS_MEDIA": "Media",
+        "NS_SPECIAL": "Special",
+        "NS_MAIN": "",
+        "NS_TALK": "Talk",
+        "NS_USER": "User",
+        "NS_USER_TALK": "User_talk",
+        "NS_PROJECT": "Project",
+        "NS_PROJECT_TALK": "Project_talk",
+        "NS_IMAGE_TALK": "Image_comments",
+        "NS_MEDIAWIKI": "MediaWiki",
+        "NS_TEMPLATE": "Template",
+        "NS_TEMPLATE_TALK": "Template_talk",
+        "NS_HELP": "Help",
+        "NS_HELP_TALK": "Help_talk",
+        "NS_CATEGORY": "Category",
+        "NS_CATEGORY_TALK": "Category_comments",
+        "NS_ATTACHMENT": "File",
     }
 
     def __init__(self, data, base_url=''):
@@ -328,6 +372,28 @@ class UserDocsActivityFeedItem(object):
     def rc_type(self):
         """Attempt to convert rc_type into a more descriptive name"""
         return self.RC_TYPES.get(self.__dict__['rc_type'], 'UNKNOWN')
+
+    def _add_prefix_to_title(self, title):
+        """Mindtouch keeps the prefix text separate from the page title, so
+        we'll need to re-add it."""
+        ns_id = self.RC_NAMESPACE_NAMES[self.rc_namespace]
+        prefix = self.RC_NAMESPACE_PREFIXES[ns_id]
+        if prefix:
+            return '%s:%s' % (self.RC_NAMESPACE_PREFIXES[ns_id], title)
+        else:
+            return title
+
+    @property
+    def rc_title(self):
+        """Include the wiki namespace prefix in the title"""
+        title = self.__dict__['rc_title']
+        return self._add_prefix_to_title(title)
+
+    @property
+    def rc_moved_to_title(self):
+        """Include the wiki namespace prefix in the moved-to title"""
+        title = self.__dict__['rc_moved_to_title']
+        return self._add_prefix_to_title(title)
 
     @property
     def current_title(self):
