@@ -376,8 +376,8 @@ class UserDocsActivityFeedItem(object):
     def _add_prefix_to_title(self, title):
         """Mindtouch keeps the prefix text separate from the page title, so
         we'll need to re-add it."""
-        ns_id = self.RC_NAMESPACE_NAMES[self.rc_namespace]
-        prefix = self.RC_NAMESPACE_PREFIXES[ns_id]
+        ns_id = self.RC_NAMESPACE_NAMES.get(self.rc_namespace, '')
+        prefix = self.RC_NAMESPACE_PREFIXES.get(ns_id, '')
         if prefix:
             return '%s:%s' % (self.RC_NAMESPACE_PREFIXES[ns_id], title)
         else:
