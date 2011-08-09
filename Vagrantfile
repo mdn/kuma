@@ -39,7 +39,7 @@ Vagrant::Config.run do |config|
     # uncomment to enable VM GUI console, mainly for troubleshooting
     #config.vm.boot_mode = :gui
 
-    # Add to /etc/hosts: 192.168.10.55 dev.developer.mozilla.org
+    # Add to /etc/hosts: 192.168.10.55 developer-kumadev.mozilla.org
     config.vm.network("192.168.10.55")
 
     config.vm.provision :puppet do |puppet|
