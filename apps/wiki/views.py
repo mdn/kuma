@@ -302,8 +302,12 @@ def edit_document(request, document_slug, revision_id=None):
 
 def ckeditor_config(request):
     """Return ckeditor config from database"""
-    default_config = EditorToolbar.objects.get(name='default', default=True)
-    context = {'editor_config': default_config.code}
+    default_config = EditorToolbar.objects.filter(name='default').all()
+    if len(default_config) > 0:
+        code = default_config[0].code
+    else:
+        code = ''
+    context = {'editor_config': code}
     return jingo.render(request, 'wiki/ckeditor_config.js', context,
                        mimetype="application/x-javascript")
 
