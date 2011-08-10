@@ -4,7 +4,7 @@
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
 {% set classes = 'document' %}
-
+{% block bodyclass %}document{% endblock %}
 {% if document.parent %}
   {# If there is a parent doc, use it's URL for switching locales. #}
   {% set localizable_url = url('wiki.document', document.parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) %}

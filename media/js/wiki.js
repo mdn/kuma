@@ -19,6 +19,7 @@
             //initForTags();
             //updateShowforSelectors();
             initHelpfulVote();
+            initSections();
         } else if ($('body').is('.review')) { // Review pages
             //initForTags();
             //updateShowforSelectors();
@@ -35,8 +36,39 @@
             initTitleAndSlugCheck();
             initDrafting();
         }
-        // CKEDITOR.replace('id_content');
-        // Marky.createFullToolbar('.editor-tools', '#id_content');
+    }
+
+    function initSections() {
+        var editLink = '<span style="clear: both;">&nbsp;<a class="section-edit" href="#">Edit</a></span>';
+        var section_count = 0;
+        $('#wikiArticle h1,h2,h3').each(function(){
+            section_count++;
+            var section_id = 'section_' + section_count;
+            var node_name = $(this).context.nodeName;
+            var stop_selector = node_name;
+            var section_elements, edit_link;
+            if (node_name == 'H2') {
+                stop_selector = 'H1,H2';
+            } else if (node_name == 'H3') {
+                stop_selector = 'H1,H2,H3';
+            }
+            section_elements = $(this).nextUntil(stop_selector);
+            $(section_elements).wrapAll('<div class="section-edit" id="' + section_id + '"/>');
+            $(this).append(editLink);
+            edit_link = $('a.section-edit', this);
+            edit_link.click(function(){
+                CKEDITOR.replace(section_id,{customConfig : '/docs/ckeditor_config.js'});
+            });
+            $(this).hover(
+                function(){
+                    edit_link.show();
+                },
+                function(){
+                    edit_link.hide();
+                }
+            );
+        });
+        $('a.section-edit').hide();
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
