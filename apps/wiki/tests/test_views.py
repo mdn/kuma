@@ -2,12 +2,13 @@ import json
 
 from django.conf import settings
 
-from nose.tools import eq_
+from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
-from wiki.models import VersionMetadata, Document
+from wiki.models import VersionMetadata, Document, Revision
 from wiki.tests import doc_rev, document, new_document_data, revision
 from wiki.views import _version_groups
 
@@ -161,3 +162,54 @@ class DocumentEditingTests(TestCase):
         response = self.client.get(url)
         input = pq(response.content)('#id_based_on')[0]
         eq_(int(input.value), en_r.pk)
+
+    @attr('review_tags')
+    def test_review_tags(self):
+        """Review tags can be managed on document revisions"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Create a new doc with one review tag
+        data = new_document_data()
+        data.update({'review_tags':['technical']})
+        response = client.post(reverse('wiki.new_document'), data)
+
+        # Ensure there's now a doc with that expected tag in its newest
+        # revision
+        doc = Document.objects.get(slug="a-test-article")
+        rev = doc.revisions.order_by('-id').all()[0]
+        review_tags = [x.name for x in rev.review_tags.all()]
+        eq_(['technical'], review_tags)
+
+        # Now, post an update with two tags
+        data.update({
+            'form': 'rev',
+            'review_tags': ['editorial', 'technical'],
+        })
+        response = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+
+        # Ensure the doc's newest revision has both tags.
+        doc = Document.objects.get(slug="a-test-article")
+        rev = doc.revisions.order_by('-id').all()[0]
+        review_tags = [x.name for x in rev.review_tags.all()]
+        review_tags.sort()
+        eq_(['editorial', 'technical'], review_tags)
+        
+        # Now, ensure that warning boxes appear for the review tags.
+        response = client.get(reverse('wiki.document', args=[doc.slug]), data)
+        page = pq(response.content)
+        eq_(1, page.find('.warning.review-technical').length)
+        eq_(1, page.find('.warning.review-editorial').length)
+
+        # Post an edit that removes one of the tags.
+        data.update({
+            'form': 'rev',
+            'review_tags': ['editorial',],
+        })
+        response = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+
+        # Ensure only one of the tags' warning boxes appears, now.
+        response = client.get(reverse('wiki.document', args=[doc.slug]), data)
+        page = pq(response.content)
+        eq_(0, page.find('.warning.review-technical').length)
+        eq_(1, page.find('.warning.review-editorial').length)

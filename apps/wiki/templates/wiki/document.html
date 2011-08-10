@@ -48,11 +48,11 @@
       {% if document.current_revision %}
         {% for tag in document.current_revision.review_tags.all() %}
           {% if 'technical' == tag.name %}
-            <div class="warning">{% trans %}
+            <div class="warning review-technical">{% trans %}
               <p>This article is in need of a technical review.</p>
             {% endtrans %}</div>
           {% elif 'editorial' == tag.name %}
-            <div class="warning">{% trans %}
+            <div class="warning review-editorial">{% trans %}
               <p>This article is in need of an editorial review.</p>
             {% endtrans %}</div>
           {% endif %}
