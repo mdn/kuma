@@ -287,9 +287,12 @@ def edit_document(request, document_slug, revision_id=None):
                         response['x-frame-options'] = 'SAMEORIGIN'
                         return response
 
+                    if rev_form.instance.is_approved:
+                        view = 'wiki.document'
+                    else:
+                        view = 'wiki.document_revisions'
                     return HttpResponseRedirect(
-                        reverse('wiki.document_revisions',
-                                args=[document_slug]))
+                        reverse(view, args=[document_slug]))
             else:
                 raise PermissionDenied
 
