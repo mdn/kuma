@@ -19,7 +19,8 @@
             //initForTags();
             //updateShowforSelectors();
             initHelpfulVote();
-            initSections();
+            addSectionDivs();
+            addEditLinks();
         } else if ($('body').is('.review')) { // Review pages
             //initForTags();
             //updateShowforSelectors();
@@ -38,15 +39,14 @@
         }
     }
 
-    function initSections() {
-        var editLink = '<span style="clear: both;">&nbsp;<a class="section-edit" href="#">Edit</a></span>';
+    function addSectionDivs() {
         var section_count = 0;
-        $('#wikiArticle h1,h2,h3').each(function(){
+        $('h1,h2,h3', $('#wikiArticle')).each(function(){
             section_count++;
             var section_id = 'section_' + section_count;
             var node_name = $(this).context.nodeName;
             var stop_selector = node_name;
-            var section_elements, edit_link;
+            var section_elements;
             if (node_name == 'H2') {
                 stop_selector = 'H1,H2';
             } else if (node_name == 'H3') {
@@ -54,21 +54,30 @@
             }
             section_elements = $(this).nextUntil(stop_selector);
             $(section_elements).wrapAll('<div class="section-edit" id="' + section_id + '"/>');
-            $(this).append(editLink);
-            edit_link = $('a.section-edit', this);
-            edit_link.click(function(){
-                CKEDITOR.replace(section_id,{customConfig : '/docs/ckeditor_config.js'});
-            });
-            $(this).hover(
-                function(){
-                    edit_link.show();
-                },
-                function(){
-                    edit_link.hide();
-                }
-            );
+        })
+    }
+
+    function addEditLinks() {
+        var edit_link_markup = '<span style="clear: both;" class="section-edit">&nbsp;<a class="section-edit" href="#">Edit</a></span>';
+        $('h1,h2,h3', $('#wikiArticle')).each(function(){
+            $(this).append(edit_link_markup);
         });
-        $('a.section-edit').hide();
+        $('a.section-edit').each(function(){
+            var section_id = $(this).closest('h1,h2,h3').next('div.section-edit').attr('id');
+            $(this).click(function(){
+                removeEditLinks();
+                var cke = CKEDITOR.replace(section_id,{customConfig : '/docs/ckeditor_config.js'});
+                cke.on('blur', function() {
+                    cke.updateElement();
+                    cke.destroy();
+                    addEditLinks();
+                });
+            });
+        });
+    }
+
+    function removeEditLinks() {
+        $('span.section-edit').remove();
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
