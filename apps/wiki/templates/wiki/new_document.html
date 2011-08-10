@@ -29,7 +29,12 @@
 
       </header>
 
-        {{ revision_form.content|safe }}
+      {{ revision_form.content|safe }}
+
+      <section>
+        <h4>Review needed?</h4>
+        {{ revision_form.review_tags|safe }}
+      </section>
       
     </fieldset>
     </form>

@@ -24,6 +24,9 @@ from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 
+from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
+from taggit.managers import TaggableManager
+
 
 ALLOWED_TAGS = ALLOWED_TAGS + [
     'span', 'p', 'h1', 'h2', 'h3', 'pre', 'code', 'dl', 'dt', 'dd'
@@ -99,6 +102,13 @@ REDIRECT_HTML = '<p>REDIRECT <a '  # how a redirect looks as rendered HTML
 REDIRECT_CONTENT = 'REDIRECT [[%s]]'
 REDIRECT_TITLE = _lazy(u'%(old)s Redirect %(number)i')
 REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
+
+# TODO: Put this under the control of Constance / Waffle?
+# Flags used to signify revisions in need of review
+REVIEW_FLAG_TAGS = ( 
+    ('technical', _('Technical - code samples, APIs, or technologies')),
+    ('editorial', _('Editorial - prose, grammar, or content')),
+)
 
 
 class TitleCollision(Exception):
@@ -498,6 +508,33 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         return EditDocumentEvent.is_notifying(user, self)
 
 
+class ReviewTag(TagBase):
+    """A tag indicating review status, mainly for revisions"""
+    class Meta:
+        verbose_name = _("Review Tag")
+        verbose_name_plural = _("Review Tags")
+
+
+class ReviewTaggedRevision(ItemBase):
+    """Through model, just for review tags on revisions"""
+    content_object = models.ForeignKey('Revision')
+    tag = models.ForeignKey(ReviewTag)
+
+    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
+    # don't like. But, it seems to be the only way to get *both* a custom tag
+    # *and* a custom through model.
+    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
+    @classmethod
+    def tags_for(cls, model, instance=None):
+        if instance is not None:
+            return cls.tag_model().objects.filter(**{
+                'reviewtaggedrevision__content_object': instance
+            })
+        return cls.tag_model().objects.filter(**{
+            'reviewtaggedrevision__content_object__isnull': False
+        }).distinct()
+
+
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
     document = models.ForeignKey(Document, related_name='revisions')
@@ -508,6 +545,10 @@ class Revision(ModelBase):
     # have the language expertise to translate keywords, so we put them in the
     # Revision so the translators can handle them:
     keywords = models.CharField(max_length=255, blank=True)
+
+    # Tags are (ab)used as status flags and for searches, but the through model
+    # should constrain things from getting expensive.
+    review_tags = TaggableManager(through=ReviewTaggedRevision)
 
     created = models.DateTimeField(default=datetime.now)
     reviewed = models.DateTimeField(null=True)

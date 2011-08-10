@@ -3,16 +3,18 @@ import re
 
 from django import forms
 from django.utils.encoding import smart_str
+from django.forms.widgets import CheckboxSelectMultiple
 
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
 from sumo.form_fields import StrippedCharField
 from tags import forms as tag_forms
+
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                      GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
-                     CATEGORIES)
+                     CATEGORIES, REVIEW_FLAG_TAGS)
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -181,6 +183,11 @@ class RevisionForm(forms.ModelForm):
 
     comment = StrippedCharField(required=False, label=_lazy(u'Comment:'))
 
+    review_tags = forms.MultipleChoiceField(
+        label=_("Tag this revision for review?"),
+        widget=CheckboxSelectMultiple, required=False,
+        choices=REVIEW_FLAG_TAGS)
+
     class Meta(object):
         model = Revision
         fields = ('keywords', 'summary', 'content', 'comment', 'based_on')
@@ -188,6 +195,9 @@ class RevisionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RevisionForm, self).__init__(*args, **kwargs)
         self.fields['based_on'].widget = forms.HiddenInput()
+        if self.instance and self.instance.pk:
+            self.initial['review_tags'] = [x.name 
+                for x in self.instance.review_tags.all()]
 
     def save(self, creator, document, **kwargs):
         """Persist me, and return the saved Revision.
@@ -202,6 +212,7 @@ class RevisionForm(forms.ModelForm):
         new_rev.document = document
         new_rev.creator = creator
         new_rev.save()
+        new_rev.review_tags.set(*self.cleaned_data['review_tags'])
         return new_rev
 
 
