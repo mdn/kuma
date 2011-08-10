@@ -45,17 +45,19 @@
     #}
     
       {# There's no .has() method on review_tags; need to iterate for now #}
-      {% for tag in document.current_revision.review_tags.all() %}
-        {% if 'technical' == tag.name %}
-          <div class="warning">{% trans %}
-            <p>This article is in need of a technical review.</p>
-          {% endtrans %}</div>
-        {% elif 'editorial' == tag.name %}
-          <div class="warning">{% trans %}
-            <p>This article is in need of an editorial review.</p>
-          {% endtrans %}</div>
-        {% endif %}
-      {% endfor %}
+      {% if document.current_revision %}
+        {% for tag in document.current_revision.review_tags.all() %}
+          {% if 'technical' == tag.name %}
+            <div class="warning">{% trans %}
+              <p>This article is in need of a technical review.</p>
+            {% endtrans %}</div>
+          {% elif 'editorial' == tag.name %}
+            <div class="warning">{% trans %}
+              <p>This article is in need of an editorial review.</p>
+            {% endtrans %}</div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
 
       <div id="wikiArticle" class="page-content boxed">
           {# 
