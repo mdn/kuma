@@ -262,7 +262,8 @@ class DocumentTestsWithFixture(TestCase):
 
         # Add a parent revision of MAJOR significance:
         r = revision(document=trans_doc.parent,
-                     significance=MAJOR_SIGNIFICANCE)
+                     significance=MAJOR_SIGNIFICANCE,
+                     is_approved=False)
         r.save()
         assert not trans_doc.is_majorly_outdated()
 
@@ -430,7 +431,7 @@ class RevisionTests(TestCase):
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
 
         # Creating another approved revision keeps initial content
-        r = revision(document=d, content='Fail to replace html')
+        r = revision(document=d, content='Fail to replace html', is_approved=False)
         r.save()
 
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
