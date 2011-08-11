@@ -109,6 +109,10 @@
       {% endtrans %}
     </section>
   </article>
+  <form id="wiki-page-edit" class="editing" method="post" action="{{ url('wiki.edit_document', document_slug=document.slug) }}">
+      <input type="hidden" name="form" id="form" value="rev" />
+      <input type="hidden" name="content" id="content" value="" />
+  </form>
   {#
   {% include 'wiki/includes/helpful_form.html' %}
   {% include 'wiki/includes/more_help.html' %}

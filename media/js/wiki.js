@@ -57,6 +57,10 @@
         })
     }
 
+    function removeSectionDivs() {
+        $('div.section-edit').children().unwrap();
+    }
+
     function addEditLinks() {
         var edit_link_markup = '<span style="clear: both;" class="section-edit">&nbsp;<a class="section-edit" href="#">Edit</a></span>';
         $('h1,h2,h3', $('#wikiArticle')).each(function(){
@@ -70,6 +74,7 @@
                 cke.on('blur', function() {
                     cke.updateElement();
                     cke.destroy();
+                    postEditDocument();
                     addEditLinks();
                 });
             });
@@ -78,6 +83,12 @@
 
     function removeEditLinks() {
         $('span.section-edit').remove();
+    }
+
+    function postEditDocument() {
+        removeSectionDivs();
+        $('input#content').val($('#wikiArticle').html());
+        $('form#wiki-page-edit').submit();
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
