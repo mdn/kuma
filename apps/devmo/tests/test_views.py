@@ -1,6 +1,8 @@
+import datetime
 import logging
 import csv
 import shlex
+import time
 import urllib2
 from os.path import basename, dirname, isfile, isdir
 
@@ -16,6 +18,7 @@ from devmo.helpers import devmo_url
 from devmo import urlresolvers
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
 from devmo.forms import UserProfileEditForm
+from devmo.cron import devmo_calendar_reload
 
 from dekicompat.backends import DekiUser
 
@@ -291,3 +294,36 @@ class ProfileViewsTest(test_utils.TestCase):
         logging.debug("HEAD %s" % r.items())
         logging.debug("CONT %s" % r.content)
         ok_(False)
+
+def get_datetime_from_string(string, string_format):
+    new_datetime = datetime.datetime.fromtimestamp(time.mktime(time.strptime(string, string_format)))
+    return new_datetime
+
+def check_event_date(row):
+    prev_end_datetime = datetime.datetime.today()
+    datetime_format = "%Y-%m-%d"
+    if (row.prev()):
+        prev_datetime_str = row.prev().find('td').eq(1).text()
+        prev_end_datetime = get_datetime_from_string(prev_datetime_str, datetime_format)
+    row_datetime_str = row.find('td').eq(1).text()
+    row_datetime = get_datetime_from_string(row_datetime_str, datetime_format)
+    logging.debug(row_datetime)
+    logging.debug(prev_end_datetime)
+    ok_(row_datetime < prev_end_datetime)
+
+class EventsViewsTest(test_utils.TestCase):
+
+    def setUp(self):
+        self.client = LocalizingClient()
+        devmo_calendar_reload()
+
+    def test_events(self):
+        url = reverse('devmo.views.events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+
+        # past events ordered newest to oldest
+        # rows = doc.find('table#past tr')
+        # prev_end_datetime = datetime.datetime.today()
+        # rows.each(check_event_date)
