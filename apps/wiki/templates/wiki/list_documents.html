@@ -9,6 +9,19 @@
 {% endif %}
 {% set crumbs = [(None, title)] %}
 
+{% block extrahead %}
+  {% if category %}
+      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+          href="{{ url('wiki.feeds.recent_documents', format='atom', category=category) }}" />
+  {% elif tag %}
+      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+          href="{{ url('wiki.feeds.recent_documents', format='atom', tag=tag) }}" />
+  {% else %}
+      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+          href="{{ url('wiki.feeds.recent_documents', format='atom') }}" />
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">

@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, url, include
 
 from kbforums.feeds import ThreadsFeed, PostsFeed
 from sumo.views import redirect_to
+from wiki.feeds import DocumentsRecentFeed, DocumentsReviewFeed
 
 
 # These patterns inherit from /discuss
@@ -66,7 +67,8 @@ urlpatterns = patterns('docs.views',
 
 urlpatterns += patterns('wiki.views',
     # Un/Subscribe to locale 'ready for review' notifications.
-    url(r'^/ckeditor_config.js$', 'ckeditor_config', name='wiki.ckeditor_config'),
+    url(r'^/ckeditor_config.js$', 'ckeditor_config',
+        name='wiki.ckeditor_config'),
     url(r'^/watch-ready-for-review$', 'watch_locale',
         name='wiki.locale_watch'),
     url(r'^/unwatch-ready-for-review$', 'unwatch_locale',
@@ -85,6 +87,18 @@ urlpatterns += patterns('wiki.views',
     url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
     url(r'^/category/(?P<category>\d+)$', 'list_documents',
         name='wiki.category'),
+    url(r'^/needs-review/(?P<tag>[^/]+)$', 'list_documents_for_review',
+        name='wiki.list_review_tag'),
+    url(r'^/needs-review/?', 'list_documents_for_review',
+        name='wiki.list_review'),
+
+    url(r'^/feeds/(?P<format>[^/]+)/all/?',
+        DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
+    url(r'^/feeds/(?P<format>[^/]+)/needs-review/(?P<tag>[^/]+)',
+        DocumentsReviewFeed(), name="wiki.feeds.list_review_tag"),
+    url(r'^/feeds/(?P<format>[^/]+)/needs-review/?',
+        DocumentsReviewFeed(), name="wiki.feeds.list_review"),
+
     url(r'^/tag/(?P<tag>[^/]+)$', 'list_documents', name='wiki.tag'),
     (r'^/(?P<document_slug>[^/]+)', include(document_patterns)),
 )

@@ -201,6 +201,31 @@ class DocumentEditingTests(TestCase):
         eq_(1, page.find('.warning.review-technical').length)
         eq_(1, page.find('.warning.review-editorial').length)
 
+        # Ensure the page appears on the listing pages
+        response = client.get(reverse('wiki.list_review'))
+        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+                                         doc.title).length)
+        response = client.get(reverse('wiki.list_review_tag',
+                                      args=('technical',)))
+        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+                                         doc.title).length)
+        response = client.get(reverse('wiki.list_review_tag',
+                                      args=('editorial',)))
+        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+                                         doc.title).length)
+        
+        # Also, ensure that the page appears in the proper feeds
+        # HACK: Too lazy to parse the XML. Lazy lazy.
+        response = client.get(reverse('wiki.feeds.list_review',
+                                      args=('atom',)))
+        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        response = client.get(reverse('wiki.feeds.list_review_tag',
+                                      args=('atom', 'technical', )))
+        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        response = client.get(reverse('wiki.feeds.list_review_tag',
+                                      args=('atom', 'editorial', )))
+        ok_('<entry><title>%s</title>' % doc.title in response.content)
+
         # Post an edit that removes one of the tags.
         data.update({
             'form': 'rev',
@@ -213,3 +238,28 @@ class DocumentEditingTests(TestCase):
         page = pq(response.content)
         eq_(0, page.find('.warning.review-technical').length)
         eq_(1, page.find('.warning.review-editorial').length)
+
+        # Ensure the page appears on the listing pages
+        response = client.get(reverse('wiki.list_review'))
+        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+                                         doc.title).length)
+        response = client.get(reverse('wiki.list_review_tag',
+                                      args=('technical',)))
+        eq_(0, pq(response.content).find("ul.documents li a:contains('%s')" %
+                                         doc.title).length)
+        response = client.get(reverse('wiki.list_review_tag',
+                                      args=('editorial',)))
+        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+                                         doc.title).length)
+
+        # Also, ensure that the page appears in the proper feeds
+        # HACK: Too lazy to parse the XML. Lazy lazy.
+        response = client.get(reverse('wiki.feeds.list_review',
+                                      args=('atom',)))
+        ok_('<entry><title>%s</title>' % doc.title in response.content)
+        response = client.get(reverse('wiki.feeds.list_review_tag',
+                                      args=('atom', 'technical', )))
+        ok_('<entry><title>%s</title>' % doc.title not in response.content)
+        response = client.get(reverse('wiki.feeds.list_review_tag',
+                                      args=('atom', 'editorial', )))
+        ok_('<entry><title>%s</title>' % doc.title in response.content)

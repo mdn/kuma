@@ -25,6 +25,7 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
+                         ReviewTag,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
@@ -159,9 +160,7 @@ def revision(request, document_slug, revision_id):
 @require_GET
 def list_documents(request, category=None, tag=None):
     """List wiki documents."""
-    docs = Document.objects.filter(locale=request.locale).order_by('title')
     if category:
-        docs = docs.filter(category=category)
         try:
             category_id = int(category)
         except ValueError:
@@ -171,15 +170,27 @@ def list_documents(request, category=None, tag=None):
         except KeyError:
             raise Http404
 
-    if tag:
-        tagobj = get_object_or_404(Tag, slug=tag)
-        docs = docs.filter(tags__in=[tagobj.name])
-
+    tag_obj = tag and get_object_or_404(Tag, slug=tag) or None
+    docs = Document.objects.filter_for_list(locale=request.locale,
+                                             category=category,
+                                             tag=tag_obj)
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
                         {'documents': docs,
                          'category': category,
                          'tag': tag})
+
+
+@require_GET
+def list_documents_for_review(request, tag=None):
+    """Lists wiki documents with revisions flagged for review"""
+    tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
+    docs = paginate(request, Document.objects.filter_for_review(tag=tag_obj),
+                    per_page=DOCUMENTS_PER_PAGE)
+    return jingo.render(request, 'wiki/list_documents_for_review.html',
+                        {'documents': docs,
+                         'tag': tag_obj,
+                         'tag_name': tag})
 
 
 @login_required

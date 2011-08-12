@@ -19,10 +19,12 @@ from south.modelsinspector import add_introspection_rules
 from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
-from sumo.models import ModelBase, LocaleField
+from sumo.models import ManagerBase, ModelBase, LocaleField
 from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
+
+import caching.base
 
 from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
 from taggit.managers import TaggableManager
@@ -105,7 +107,7 @@ REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
 
 # TODO: Put this under the control of Constance / Waffle?
 # Flags used to signify revisions in need of review
-REVIEW_FLAG_TAGS = ( 
+REVIEW_FLAG_TAGS = (
     ('technical', _('Technical - code samples, APIs, or technologies')),
     ('editorial', _('Editorial - prose, grammar, or content')),
 )
@@ -141,8 +143,38 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
+class DocumentManager(ManagerBase):
+    """Manager for Documents, assists for queries"""
+
+    def filter_for_list(self, locale=None, category=None, tag=None,
+                        tag_name=None):
+        docs = self.order_by('title')
+        if locale:
+            docs = docs.filter(locale=locale)
+        if category:
+            docs = docs.filter(category=category)
+        if tag:
+            docs = docs.filter(tags__in=[tag.name])
+        if tag_name:
+            docs = docs.filter(tags__name=tag_name)
+        return docs
+
+    def filter_for_review(self, tag=None, tag_name=None):
+        """Filter for documents with current revision flagged for review"""
+        bq = 'current_revision__review_tags__%s'
+        if tag_name:
+            q = {bq % 'name': tag_name}
+        elif tag:
+            q = {bq % 'in': [tag]}
+        else:
+            q = {bq % 'name__isnull': False}
+        return self.filter(**q).distinct()
+
+
 class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     """A localized knowledgebase document, not revision-specific."""
+    objects = DocumentManager()
+
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
@@ -527,12 +559,10 @@ class ReviewTaggedRevision(ItemBase):
     @classmethod
     def tags_for(cls, model, instance=None):
         if instance is not None:
-            return cls.tag_model().objects.filter(**{
-                'reviewtaggedrevision__content_object': instance
-            })
-        return cls.tag_model().objects.filter(**{
-            'reviewtaggedrevision__content_object__isnull': False
-        }).distinct()
+            return ReviewTag.objects.filter(
+                reviewtaggedrevision__content_object=instance)
+        return ReviewTag.objects.filter(
+            reviewtaggedrevision__content_object__isnull=False).distinct()
 
 
 class Revision(ModelBase):
