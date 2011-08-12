@@ -19,8 +19,7 @@
             //initForTags();
             //updateShowforSelectors();
             initHelpfulVote();
-            addSectionDivs();
-            addEditLinks();
+            initSectionEditing();
         } else if ($('body').is('.review')) { // Review pages
             //initForTags();
             //updateShowforSelectors();
@@ -37,6 +36,28 @@
             initTitleAndSlugCheck();
             initDrafting();
         }
+    }
+
+    function initSectionEditing() {
+        addSectionDivs();
+        addEditLinks();
+        CKEDITOR.plugins.registered['save']=
+        {
+           init : function( editor )
+           {
+              var command = editor.addCommand( 'save',
+                 {
+                    modes : { wysiwyg:1, source:1 },
+                    exec : function( editor ) {
+                        editor.updateElement();
+                        editor.destroy();
+                        postEditDocument();
+                    }
+                 }
+              );
+              editor.ui.addButton( 'Save',{label : 'My Save',command : 'save'});
+           }
+        };
     }
 
     function addSectionDivs() {
@@ -74,7 +95,6 @@
                 cke.on('blur', function() {
                     cke.updateElement();
                     cke.destroy();
-                    postEditDocument();
                     addEditLinks();
                 });
             });
