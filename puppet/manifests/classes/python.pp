@@ -20,7 +20,11 @@ class python_modules {
         "pip-install-modules":
             cwd => '/tmp', 
             timeout => 3600, # Too long, but this can take awhile
-            command => "/usr/bin/pip install -r $PROJ_DIR/requirements/dev.txt -r $PROJ_DIR/requirements/compiled.txt";
+            command => "/usr/bin/pip install -r $PROJ_DIR/requirements/compiled.txt";
+        "pip-install-dev":
+            cwd => '/tmp', 
+            timeout => 3600, # Too long, but this can take awhile
+            command => "/usr/bin/pip install -r $PROJ_DIR/requirements/dev.txt";
     }
 }
 

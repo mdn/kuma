@@ -72,10 +72,13 @@ SECRET_KEY = 'jenny8675309'
 
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
-LOG_LEVEL = logging.DEBUG
+# Uncomment for logging to a file in home directory. May need some file
+# permission twiddling, though, depending on what's been run as root lately
 
-logging.basicConfig(
-    level = logging.DEBUG,
-    format = '%(asctime)s %(levelname)s %(message)s',
-    filename = '/home/vagrant/logs/kuma-django.log',
-)
+#LOG_LEVEL = logging.DEBUG
+#
+#logging.basicConfig(
+#    level = logging.DEBUG,
+#    format = '%(asctime)s %(levelname)s %(message)s',
+#    filename = '/home/vagrant/logs/kuma-django.log',
+#)
