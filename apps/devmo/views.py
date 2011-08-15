@@ -1,7 +1,6 @@
 import jingo
 import urllib2
 import csv
-import logging
 
 from django.conf import settings
 from django.core.paginator import Paginator, InvalidPage
@@ -71,7 +70,7 @@ def profile_edit(request, username):
     # Map of form field names to tag namespaces
     field_to_tag_ns = (
         ('interests', 'profile:interest:'),
-        ('expert_in', 'profile:expert:')
+        ('expertise', 'profile:expertise:')
     )
 
     if request.method != "POST":
@@ -112,8 +111,8 @@ def profile_edit(request, username):
 
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
-                profile_new.tags.set_ns(tag_ns, 
-                    *parse_tags(form.cleaned_data.get(field, '')))
+                tags = parse_tags(form.cleaned_data.get(field, ''))
+                profile_new.tags.set_ns(tag_ns, *tags)
 
             # Change the email address, if necessary.
             if form.cleaned_data['email'] != profile.user.email:

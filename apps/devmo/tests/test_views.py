@@ -231,7 +231,7 @@ class ProfileViewsTest(test_utils.TestCase):
     @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
     @patch('dekicompat.backends.DekiUserBackend.get_user')
     @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    def test_profile_edit_interests(self, authenticate, get_user,
+    def test_profile_edit_tags(self, authenticate, get_user,
                                    get_deki_user):
         (user, deki_user, profile) = self._create_profile()
 
@@ -262,10 +262,33 @@ class ProfileViewsTest(test_utils.TestCase):
         p = UserProfile.objects.get(user=user)
 
         result_tags = [t.name.replace('profile:interest:', '')
-                for t in p.tags.all()]
+                for t in p.tags.all_ns('profile:interest:')]
         result_tags.sort()
         test_tags.sort()
         eq_(test_tags, result_tags)
+
+        test_expertise = ['css', 'canvas']
+        form['expertise'] = ', '.join(test_expertise)
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        result_tags = [t.name.replace('profile:expertise:', '')
+                for t in p.tags.all_ns('profile:expertise')]
+        result_tags.sort()
+        test_expertise.sort()
+        eq_(test_expertise, result_tags)
+
+        # Now, try some expertise tags not covered in interests
+        test_expertise = ['css', 'canvas', 'mobile', 'movies']
+        form['expertise'] = ', '.join(test_expertise)
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('.error #id_expertise').length)
 
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""

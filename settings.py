@@ -503,6 +503,9 @@ MINIFY_BUNDLES = {
 
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
         ),
+        'profile': (
+            'js/mdn/profile.js',
+        ),
         'events': (
             'js/libs/jquery.gmap-1.1.0.js',
             'js/libs/jquery.tablesorter.min.js',
