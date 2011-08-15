@@ -37,11 +37,11 @@ reasons.
     vagrant ssh
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
 
-    # Add dev-kuma.developer.mozilla.org to /etc/hosts
-    echo '192.168.10.50 developer-kumadev.mozilla.org' >> /etc/hosts
+    # Add developer-mdndev.mozilla.org to /etc/hosts
+    echo '192.168.10.50 developer-mdndev.mozilla.org' >> /etc/hosts
 
     # Everything should be working now.
-    curl 'http://developer-kumadev.mozilla.org'
+    curl 'http://developer-mdndev.mozilla.org'
 
     # Edit files as usual on your host machine; the current directory is
     # mounted via NFS at /vagrant within the VM.
