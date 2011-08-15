@@ -20,7 +20,7 @@ reasons.
     sudo gem install vagrant
         
     # Clone a Kuma repo, switch to "mdn" branch (for now)
-    git clone git://github.com/lmorchard/kuma.git
+    git clone git://github.com/mozilla/kuma.git
     cd kuma
     git checkout mdn
     git submodule update --init --recursive
