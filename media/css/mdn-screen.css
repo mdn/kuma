@@ -927,3 +927,7 @@ ul.tagit .tagit-new input { width: auto; border: 0; padding: 0; background: tran
 #elsewhere .url { width: 300px; }
 #elsewhere .remove { width: 15px; height: 15px; padding: 0; margin-left: 8px; text-indent: -999em; overflow: hidden; background: transparent url("../img/icn-delete.png") center 2px no-repeat; box-shadow: none; }
 #elsewhere .remove:hover { background-position: center -48px; }
+#elsewhere .errorlist { margin-left: 150px; width: 500px; }
+
+/* @Error pages *********/
+.beast { float: right; margin: 20px 0 20px 20px; }
