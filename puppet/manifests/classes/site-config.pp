@@ -65,19 +65,19 @@ class kuma_config {
             target => "$PROJ_DIR/configs/htaccess";
     }
     exec { 
-        "kuma_sql_migrate":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./vendor/src/schematic/schematic migrations/",
-            require => [ Service["mysqld"], File["/home/vagrant/logs"] ];
-        "kuma_south_migrate":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 manage.py migrate",
-            require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_product_details":
             cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_product_details",
             creates => "/home/vagrant/product_details_json/firefox_versions.json",
             require => [
-                Exec["kuma_south_migrate"],
                 File["/home/vagrant/product_details_json"]
             ];
+        "kuma_sql_migrate":
+            cwd => "/vagrant", command => "/usr/bin/python2.6 ./vendor/src/schematic/schematic migrations/",
+            require => [ Exec["kuma_update_product_details"],
+                Service["mysqld"], File["/home/vagrant/logs"] ];
+        "kuma_south_migrate":
+            cwd => "/vagrant", command => "/usr/bin/python2.6 manage.py migrate",
+            require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_feeds":
             cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
