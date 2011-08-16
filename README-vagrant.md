@@ -36,6 +36,9 @@ reasons.
     # This can take a long while, since there's over 500MB of data
     vagrant ssh
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
+    # Then, apply the main manifest again, to ensure the database gets
+    # updated by current migrations
+    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn.pp
 
     # Add developer-mdndev.mozilla.org to /etc/hosts
     echo '192.168.10.50 developer-mdndev.mozilla.org' >> /etc/hosts

@@ -75,7 +75,7 @@
 
     // Convert interests text field into a tag-it widget
     $('#id_interests').ready(function () {
-        $('#id_interests') //.hide()
+        $('#id_interests').hide()
             .after('<ul id="tagit-interests"></ul>')
             .change(rebuildExpertiseTaglist);
         $('#tagit-interests').tagit({
@@ -91,7 +91,7 @@
     // Convert the expertise text field into tag list with checkboxes sync'd to
     // interests
     $('#id_expertise').ready(function () {
-        $('#id_expertise') //.hide()
+        $('#id_expertise').hide()
             .after('<ul id="tags-expertise" class="taglist"></ul>')
         $('#tags-expertise')
             .click(updateFieldFromTaglist);
