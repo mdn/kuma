@@ -324,12 +324,12 @@ var buttons = rowsToObjects(
     	if( $(this).scrollTop() >= $("#button-builder").offset().top-20 ) {
     	  if( !fixed ) {
     	    fixed = true;
-    	    $("#button-preview").css({position:'fixed', top:"20px", marginLeft:"671px"});
+    	    $("#button-preview").addClass("fixed");
     	  }
     	} else {
     	  if( fixed ) {
     	    fixed = false;
-    	    $("#button-preview").css({position:'static', top:"auto", marginLeft:"0"});
+    	    $("#button-preview").removeClass("fixed");
     	  }
     	}
     });
