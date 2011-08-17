@@ -718,7 +718,7 @@ section.boxed:after, div.boxed:after { content: "."; display: block; clear: both
 .articles-list .hfeed { margin: 0; }
 #content-main .articles-list .hfeed li.hentry { padding: 0 1px 1em; margin: 0 0 1em; background: none; border-bottom: 1px dotted #2f2f2f; }
 #content-main .articles-list .hfeed li.hentry:last-child { border: 0; margin: 0; }
-.articles-list .entry-title { margin-bottom: .25em; }
+.articles-list .entry-title { font-size: 1.142em; margin-bottom: .25em; }
 .articles-list .entry-summary { font-size: .857em; margin-bottom: 0; }
 .articles-list .entry-meta { margin: 1.3em 0 0; font-size: .786em; }
 .articles-list .entry-meta a { font-weight: bold; }
