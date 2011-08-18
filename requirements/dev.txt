@@ -1,8 +1,6 @@
 #
 # This pulls in requirements specific for development.
 
--r prod.txt
-
 Werkzeug==0.5.1
 ipython==0.10
 sqlparse==0.1.1

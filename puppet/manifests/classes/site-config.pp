@@ -21,7 +21,6 @@ class apache_config {
 class mysql_config {
     # Ensure MySQL answers on 127.0.0.1, and not just unix socket
     file { 
-        "/home/vagrant": mode => 0755;
         "/etc/my.cnf":
             source => "$PROJ_DIR/puppet/files/etc/my.cnf",
             owner => "root", group => "root", mode => 0644;
@@ -88,20 +87,28 @@ class kuma_config {
     }
     exec { 
         "kuma_update_product_details":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_product_details",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./manage.py update_product_details",
             creates => "/home/vagrant/product_details_json/firefox_versions.json",
             require => [
                 File["/home/vagrant/product_details_json"]
             ];
         "kuma_sql_migrate":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./vendor/src/schematic/schematic migrations/",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysqld"], File["/home/vagrant/logs"] ];
         "kuma_south_migrate":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 manage.py migrate",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python manage.py migrate",
             require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_feeds":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_feeds",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
     }

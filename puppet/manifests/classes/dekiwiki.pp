@@ -133,7 +133,12 @@ class dekiwiki_config {
             command => "/usr/bin/svn co http://svn.mozilla.org/projects/deki/trunk/mozilla/",
             cwd => "/home/vagrant",
             creates => "/home/vagrant/mozilla",
-            require => [ Exec['mindtouch_install'], Package['subversion-devel'] ];
+            require => [ Exec['mindtouch_install'] ];
+        # Ensure the deki SVN assets are kept up to date
+        "svn_up_deki_mozilla":
+            command => "/usr/bin/svn up",
+            cwd => "/home/vagrant/mozilla",
+            require => [ Exec["svn_co_deki_mozilla"] ];
         "link_dekiwiki_resources":
             command => "/bin/ln -s /home/vagrant/mozilla/resources/resources.custom*.txt /var/www/dekiwiki/resources/",
             creates => "/var/www/dekiwiki/resources/resources.custom.de.txt",
