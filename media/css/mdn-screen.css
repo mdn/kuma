@@ -419,6 +419,10 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #promo-aurora div { background-position: -720px 90px; }
 #promo-aurora:hover div { background-position: -720px 80px; }
 
+.home-extra #webfwd-promo { margin: -15px 0 1.5em; }
+.home-extra .col-1 { width: 420px; float: left; }
+.home-extra .col-2 { width: 420px; float: right; }
+
 /*** @News *********/
 #home-news { width: 420px; float: left; padding: 0 20px; position: relative; }
 #home-news h1 { margin: 0 0 .8em; font: normal 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: .5px; text-transform: uppercase; }
@@ -494,6 +498,10 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .module .hentry h5, .module .hentry h4, .module .hentry p { margin: 0 0 .2em; }
 .module .hentry a { font-weight: bold; }
 .module .hentry .entry-meta { font-size: .857em; font-weight: bold; }
+
+#content-sub .banner { margin: 0 0 1.5em; }
+#content-sub .banner a img { border: 2px solid #dcd8c9; margin-left: -2px; -moz-transition: border-color 0.15s ease; -webkit-transition: border-color 0.15s ease; transition: border-color 0.15s ease; }
+#content-sub .banner a:hover img { border-color: #bfcfd7; -moz-transition: border-color 0.15s ease; -webkit-transition: border-color 0.15s ease; transition: border-color 0.15s ease; }
 
 /* for module-style boxes in the main content */
 .modules { clear: both; overflow: hidden; }
