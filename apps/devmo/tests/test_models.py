@@ -33,6 +33,7 @@ BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
 
 
 class TestCalendar(test_utils.TestCase):
+    fixtures = ['devmo_calendar.json']
 
     def setUp(self):
         self.cal = Calendar.objects.get(shortname='devengage_events')
