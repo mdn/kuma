@@ -470,7 +470,6 @@ class Calendar(ModelBase):
         # use column indices from header names so re-ordering
         # columns doesn't blow us up
         header_line = events.pop(0)
-        done_idx = header_line.index("Done")
         conference_idx = header_line.index("Conference")
         link_idx = header_line.index("Link")
         people_idx = header_line.index("Who")
@@ -484,6 +483,7 @@ class Calendar(ModelBase):
 
         for event_line in events:
             event = None
+            materials = ''
             if len(event_line) > materials_idx:
                 materials = event_line[materials_idx]
             # skip rows with bad Start Date
