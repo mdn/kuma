@@ -33,7 +33,6 @@ BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
 
 
 class TestCalendar(test_utils.TestCase):
-    fixtures = ['devmo_calendar.json']
 
     def setUp(self):
         self.cal = Calendar.objects.get(shortname='devengage_events')
@@ -171,6 +170,14 @@ class TestUserProfile(test_utils.TestCase):
             if 'MOVE' == item.rc_type:
                 eq_(item.rc_moved_to_title, item.current_title)
 
+    @attr('docs_activity')
+    def test_irc_nickname(self):
+        """We've added IRC nickname as a profile field. Make sure it shows up."""
+        (user, deki_user, profile) = self._create_profile()
+        profile_from_db = UserProfile.objects.get(user=user)
+        ok_(hasattr(profile_from_db, 'irc_nickname'))
+        ok_(profile_from_db.irc_nickname == 'ircuser')
+
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""
         user = User.objects.create_user('tester23', 'tester23@example.com',
@@ -188,6 +195,7 @@ class TestUserProfile(test_utils.TestCase):
         profile.organization = "UFO"
         profile.location = "Outer Space"
         profile.bio = "I am a freaky space alien."
+        profile.irc_nickname = "ircuser"
         profile.save()
 
         return (user, deki_user, profile)
