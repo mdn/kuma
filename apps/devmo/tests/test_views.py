@@ -340,6 +340,7 @@ def check_event_date(row):
     ok_(row_datetime < prev_end_datetime)
 
 class EventsViewsTest(test_utils.TestCase):
+    fixtures = ['devmo_calendar.json']
 
     def setUp(self):
         self.client = LocalizingClient()
