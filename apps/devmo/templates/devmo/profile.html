@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% set display_name = profile.name | default(profile.user.username, true) %}
+{% set username  = profile.user.username %}
+
 {% block pageid %}{% endblock %}
 
 {% block bodyclass %}profile{% endblock %}
@@ -41,12 +44,25 @@
         {% set tag_ns = 'profile:interest:' %}     
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
-        <div class="interests">
-          <h2>Interests</h2>
-          <ul class="int-taglist">
-                {% for tag in tags%}
-                    <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
-                {% endfor %}
+        <div class="tags">
+          <h2>{{_("Interests")}}</h2>
+          <ul class="int-taglist taglist">
+            {% for tag in tags%}
+                <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        
+        {% set tag_ns = 'profile:expertise:' %}     
+        {% set tags = profile.tags.all_ns(tag_ns) %}
+        {% if tags | length %}
+        <div class="tags">
+          <h2>{{_("Areas of Expertise")}}</h2>
+          <ul class="exp-taglist taglist">
+            {% for tag in tags%}
+                <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
+            {% endfor %}
           </ul>
         </div>
         {% endif %}
@@ -67,204 +83,97 @@
                 <li class="{{site_name}}"><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
             {% endif %}
           {% endfor %}
-          <li class="docs"><a href="/User:{{profile.user.username}}" rel="me">Docs user page</a></li>
+          <li class="docs"><a href="/User:{{profile.user.username}}" rel="me">{{_("Docs user page")}}</a></li>
         </ul>
       </div>
 
       <!-- Only shown for the user and admins -->
       {% if profile.allows_editing_by(request.user) %}
-          <p class="edit"><a href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">Edit Profile</a></p>
+          <p class="edit"><a href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">{{_("Edit Profile")}}</a></p>
       {% endif %}
     </section>
 
-    {% if False %}
-    <section id="profile-demos" class="profile-section">
-      <header class="gallery-head">
-        <h2 class="count">7 Demos <a class="button positive" href="demo-submit.php">Submit a Demo</a></h2>
-        <ul class="sort">
-          <li><strong title="You are viewing these demos sorted by most views">Most Viewed</strong></li>
-          <li><a href="#" title="Sort demos by most likes">Most Liked</a></li>
-          <li><a href="#" title="Sort demos by most recently submitted">Most Recent</a></li>
-        </ul>
-      </header>
-  
-  <!-- NOTES:
-       First item in each row needs the class "row-first". It's a strictly presentational class that only serves to 
-       clear the floats of the row above, but it's necessary to preserve the layout.
-  -->
-      <ul class="gallery">
-        <li class="demo row-first">
-          <h2 class="demo-title">
-            <a href="demo-detail.php" title="See more about &ldquo;The Incredible Machine&rdquo; by Neil Gauldin">
-              <img src="./media/img/fpo55.png" alt="" width="200" height="150"> The Incredible Machine
-            </a>
-          </h2>
-          <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">Neil Gauldin</a></p>
-          <div class="extra">
-            <ul class="stats">
-              <li class="views" title="This demo has been viewed 20,000 times">20,000</li>
-              <li class="likes" title="3,000 people liked this demo">3,000</li>
-              <li class="comments"><a href="demo-detail.php#comments" title="There are 100 comments for this demo">100</a></li>
-            </ul>
-            <p class="desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <p class="launch"><a href="#" class="button" title="Launch &ldquo;The Incredible Machine&rdquo;">Launch</a></p>
-          </div>
-        </li>
-        <li class="demo featured">
-          <h2 class="demo-title">
-            <a href="demo-detail.php" title="See more about &ldquo;Fantastic Voyage&rdquo; by Neil Gauldin">
-              <img src="./media/img/fpo55.png" alt="" width="200" height="150"> Fantastic Voyage
-            </a>
-            <strong class="flag">Featured</strong>
-          </h2>
-          <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">Neil Gauldin</a></p>
-          <div class="extra">
-            <ul class="stats">
-              <li class="views" title="This demo has been viewed 1,234 times">1,234</li>
-              <li class="likes" title="151 people liked this demo">151</li>
-              <li class="comments"><a href="demo-detail.php#comments" title="There are 3 comments for this demo">3</a></li>
-            </ul>
-            <p class="desc">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p class="launch"><a href="#" class="button" title="Launch &ldquo;Fantastic Voyage&rdquo;">Launch</a></p>
-          </div>
-        </li>
-        <li class="demo">
-          <h2 class="demo-title">
-            <a href="demo-detail.php" title="See more about &ldquo;It's a Mad Mad Mad Mad Mad Mad World&rdquo; by Neil Gauldin">
-              <img src="./media/img/fpo55.png" alt="" width="200" height="150"> It&#8217;s a Mad Mad Mad Mad Mad Mad World
-            </a>
-          </h2>
-          <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">Neil Gauldin</a></p>
-          <div class="extra">
-            <ul class="stats">
-              <li class="views" title="This demo hasn't been viewed by anyone yet">0</li>
-              <li class="likes" title="Nobody has liked this demo yet">0</li>
-              <li class="comments"><a href="demo-detail.php#comments" title="There are no comments yet for this demo">0</a></li>
-            </ul>
-            <p class="desc">Morbi in sem quis dui placerat ornare.</p>
-            <p class="launch"><a href="#" class="button" title="Launch &ldquo;It's a Mad Mad Mad Mad Mad Mad World&rdquo;">Launch</a></p>
-          </div>
-        </li>
-        <li class="demo featured">
-          <h2 class="demo-title">
-            <a href="demo-detail.php" title="See more about &ldquo;Twenty Years to Midnight&rdquo; by Neil Gauldin">
-              <img src="./media/img/fpo55.png" alt="" width="200" height="150"> Twenty Years to Midnight
-            </a>
-            <strong class="flag">Featured</strong>
-          </h2>
-          <p class="byline vcard"><a href="demo-gallery-author.php" class="url fn" title="See more demos by Neil Gauldin">Neil Gauldin</a></p>
-          <div class="extra">
-            <ul class="stats">
-              <li class="views" title="This demo has been viewed 1,234 times">1,234</li>
-              <li class="likes" title="151 people liked this demo">151</li>
-              <li class="comments"><a href="demo-detail.php#comments" title="There are 3 comments for this demo">3</a></li>
-            </ul>
-            <p class="desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <p class="launch"><a href="#" class="button" title="Launch &ldquo;Twenty Years to Midnight&rdquo;">Launch</a></p>
-          </div>
-        </li>
-      </ul>
-      
-      <div class="gallery-foot">
-        <p class="showing">1&ndash;4 of 7</p>
-        <ul class="paging">
-          <!-- No first or prev when we're on the first page, no next or last when we're on the last page -->
-          <li class="next"><a href="#" title="Go to the next page">Next</a></li>
-          <li class="last"><a href="#" title="Go to the last page">Last</a></li>
-        </ul>
-        <p class="feed"><a href="#" rel="alternate" title="Subscribe to a feed of Neil Gauldin's demos">RSS</a></p>
-      </div>
-    </section>
-    
-    <section id="docs-activity" class="profile-section">
-      <header>
-        <h2>Recent Docs Activity</h2>
-        <p class="more"><a href="https://developer.mozilla.org/Special:Contributions?target=Sheppy">See more history</a></p>
-      </header>
-      
-      <table class="activity">
-        <thead>
-          <th scope="col" class="page">Page</th>
-          <th scope="col" class="date">Date</th>
-          <th scope="col" class="summary">Edit summary</th>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/FileReader">en/DOM/element.removeEventListener</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 19, 2011 <br>6:36 AM</td>
-            <td>1 words added, 53 words removed</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/document.doctype">en/DOM/document.doctype</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 16, 2011 <br>11:33 AM</td>
-            <td>Removed tags: !DOCTYPE, DOCTYPE, DTD, ECMAScript, PUBLIC, SYSTEM, TEASER, W3C, create</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/document">en/DOM/document</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 15, 2011 <br>5:47 PM</td>
-            <td>5 words added</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="http://developer.mozilla.org/en/DOM/TouchEvent">en/DOM/TouchEvent</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 15, 2011 <br>1:43 PM</td>
-            <td>28 words added</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <h3><a href="https://developer.mozilla.org/en/Firefox_6_for_developers">en/Firefox 6 for developers</a></h3>
-              <ul class="actions">
-                <li><a href="#">Edit page</a></li>
-                <li><a href="#">View complete diff</a></li>
-                <li><a href="#">View page history</a></li>
-              </ul>
-            </th>
-            <td>July 14, 2011 <Br>11:17 AM</td>
-            <td>clean up a tad; 11 words added, 28 words removed</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="3">
-              <a href="https://developer.mozilla.org/index.php?title=Special:Contributions&feed=rss&target=Sheppy" rel="alternate" class="feed">RSS</a>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </section>
+    {% if demos_page.object_list | length > 0 %} 
+        <section id="profile-demos" class="profile-section">
+            {{ submission_listing(
+                request, demos_page.object_list, demos_page.has_other_pages(),
+                demos_paginator, demos_page,
+                _("Subscribe to a feed of {display_name}'s demos") | f(display_name=display_name),
+                url('demos_feed_profile', format='atom', username=username), cols_per_row=4,
+                show_submit=True
+            ) }}
+        </section>
+    {% elif profile.user == request.user %}
+        <section id="profile-demos" class="profile-section">
+          <header class="gallery-head">
+            <h2 class="count">No Demos</h2>
+          </header>
+          <p class="none">{% trans submit_url=url('demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a class="button positive" href="{{submit_url}}">Submit a Demo</a>{% endtrans %}</p>
+        </section>
+    {% endif %}
+
+    {% if docs_feed_items | length > 0 %}
+        <section id="docs-activity" class="profile-section">
+          <header>
+            <h2>{{_("Recent Docs Activity")}}</h2>
+            <p class="more"><a href="/Special:Contributions?target={{profile.user.username | urlencode}}">{{_("See more history")}}</a></p>
+          </header>
+          <table class="activity">
+            <thead>
+              <th scope="col" class="page">{{_("Page")}}</th>
+              <th scope="col" class="date">{{_("Date")}}</th>
+              <th scope="col" class="summary">{{_("Edit summary")}}</th>
+            </thead>
+            <tbody>
+              {% for item in docs_feed_items %}
+              <tr>
+                <th scope="row">
+                    <h3>
+                        {% if item.view_url %}
+                          <a href="{{ item.view_url }}">{{ item.rc_title }}</a>
+                        {% else %}
+                          <span>{{ item.rc_title }}</span>
+                        {% endif %}
+                    </h3>
+                    <ul class="actions">
+                        {% if item.edit_url %}
+                            <li><a href="{{ item.edit_url }}" class="edit">{{_("Edit page")}}</a></li>
+                        {% endif %}
+                        {% if item.diff_url %}
+                            <li><a href="{{ item.diff_url }}" class="diff">{{_("View complete diff")}}</a></li>
+                        {% endif %}
+                        {% if item.history_url %}
+                            <li><a href="{{ item.history_url }}" class="history">{{_("View page history")}}</a></li>
+                        {% endif %}
+                    </ul>
+                </th>
+                <td>{{ item.rc_timestamp.strftime('%B %d, %Y') }}<br>
+                    {{ item.rc_timestamp.strftime('%I:%M %p') }}</td>
+                <td>{{ item.rc_comment }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3">
+                    <a href="/index.php?title=Special:Contributions&feed=rss&target={{profile.user.username | urlencode}}" rel="alternate" class="feed">{{_("Feed")}}</a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+    {% elif profile.user == request.user %}
+        <section id="docs-activity" class="profile-section">
+          <header>
+              <h2>{{_('Recent Docs Activity')}}</h2>
+          </header>
+          {% trans docs_url=url('docs.views.docs') %}
+              <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
+          {% endtrans %}
+        </section>
     {% endif %}
 
   </section><!-- /#content-main -->
 </div>
 </section>
-{% endblock %}
-
-{% block js %}
 {% endblock %}

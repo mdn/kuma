@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from sumo_locales import LOCALES
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 LOG_LEVEL = logging.WARN
@@ -502,9 +502,13 @@ MINIFY_BUNDLES = {
             'js/mdn/video-player.js',
 
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
-
+        ),
+        'profile': (
+            'js/mdn/profile.js',
+        ),
+        'events': (
+            'js/libs/jquery.gmap-1.1.0.js',
             'js/libs/jquery.tablesorter.min.js',
-            'js/mdn/geocode.js',
             'js/mdn/calendar.js',
         ),
         'demostudio': (

@@ -1,8 +1,9 @@
 import jingo
 import urllib2
 import csv
-import logging
 
+from django.conf import settings
+from django.core.paginator import Paginator, InvalidPage
 from django.shortcuts import get_object_or_404
 from django.http import (HttpResponseRedirect, HttpResponse,
                          HttpResponseForbidden, HttpResponseNotFound)
@@ -11,9 +12,15 @@ from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags, edit_string_for_tags
 
+from demos.models import Submission
+
 from . import INTEREST_SUGGESTIONS
-from .models import Calendar, Event, UserProfile
+from .models import Calendar, Event, UserProfile, UserDocsActivityFeed
 from .forms import UserProfileEditForm
+
+
+DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
+        'DOCS_ACTIVITY_MAX_ITEMS', 15)
 
 
 def events(request):
@@ -31,8 +38,26 @@ def events(request):
 
 def profile_view(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
+    user = profile.user
+
+    DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
+    sort_order = request.GET.get('sort', 'created')
+    page_number = request.GET.get('page', 1)
+    show_hidden = (user == request.user) or user.is_superuser
+
+    demos = Submission.objects.all_sorted(sort_order).filter(creator=profile.user)
+    if not show_hidden:
+        demos = demos.exclude(hidden=True)
+
+    demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
+    demos_page = demos_paginator.page(page_number)
+
+    docs_feed_items = (UserDocsActivityFeed(user.username)
+                       .items[:DOCS_ACTIVITY_MAX_ITEMS])
+
     return jingo.render(request, 'devmo/profile.html', dict(
-        profile=profile
+        profile=profile, demos=demos, demos_paginator=demos_paginator,
+        demos_page=demos_page, docs_feed_items=docs_feed_items
     ))
 
 
@@ -45,7 +70,7 @@ def profile_edit(request, username):
     # Map of form field names to tag namespaces
     field_to_tag_ns = (
         ('interests', 'profile:interest:'),
-        ('expert_in', 'profile:expert:')
+        ('expertise', 'profile:expertise:')
     )
 
     if request.method != "POST":
@@ -86,8 +111,8 @@ def profile_edit(request, username):
 
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
-                profile_new.tags.set_ns(tag_ns, 
-                    *parse_tags(form.cleaned_data.get(field, '')))
+                tags = parse_tags(form.cleaned_data.get(field, ''))
+                profile_new.tags.set_ns(tag_ns, *tags)
 
             # Change the email address, if necessary.
             if form.cleaned_data['email'] != profile.user.email:

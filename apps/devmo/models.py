@@ -1,15 +1,23 @@
 import csv
-from datetime import datetime
+from datetime import datetime, tzinfo
+import time
 
 import logging
 import urllib2
 import urllib
 import hashlib
 
+import pytz
+
+from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
+from django.core.cache import cache
 
 import caching.base
+import xml.sax
+from xml.sax.handler import ContentHandler
+
 import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
@@ -23,6 +31,16 @@ from taggit_extras.managers import NamespacedTaggableManager
 
 import south.modelsinspector
 south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
+
+
+DEKIWIKI_ENDPOINT = getattr(settings,
+        'DEKIWIKI_ENDPOINT', 'https://developer.mozilla.org')
+USER_DOCS_ACTIVITY_FEED_CACHE_PREFIX = getattr(settings,
+        'USER_DOCS_ACTIVITY_FEED_CACHE_PREFIX', 'dekiuserdocsfeed')
+USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT = getattr(settings,
+        'USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT', 900)
+USER_DOCS_ACTIVITY_FEED_TIMEZONE = getattr(settings,
+        'USER_DOCS_ACTIVITY_FEED_TIMEZONE', 'America/Phoenix')
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
@@ -158,6 +176,268 @@ class UserProfile(ModelBase):
         return False
 
 
+class UserDocsActivityFeed(object):
+    """Fetches, parses, and caches a user activity feed from Mindtouch"""
+
+    def __init__(self, username, base_url=''):
+        self.username = username
+        self.base_url = base_url
+        self._items = None
+
+    def feed_url_for_user(self):
+        """Build the API URL for a user docs activity feed"""
+        return '%s/@api/deki/users/=%s/feed?format=raw' % (
+            DEKIWIKI_ENDPOINT, urllib.quote_plus(self.username))
+
+    def fetch_user_feed(self):
+        """Fetch a user feed from DekiWiki"""
+        return urllib.urlopen(self.feed_url_for_user()).read()
+
+    @property
+    def items(self):
+        """On-demand items property, fetches and parses feed data with
+        caching"""
+        # If there's no feed data in the object, try getting it.
+        if not self._items:
+
+            # Try getting the parsed feed data from cache
+            url = self.feed_url_for_user()
+            cache_key = '%s:%s' % (
+                USER_DOCS_ACTIVITY_FEED_CACHE_PREFIX,
+                hashlib.md5(url).hexdigest())
+            items = cache.get(cache_key)
+
+            # If no cached feed data, try fetching & parsing it.
+            if not items:
+                data = self.fetch_user_feed()
+                parser = UserDocsActivityFeedParser(base_url=self.base_url)
+                parser.parseString(data)
+                items = parser.items
+                cache.set(cache_key, items,
+                          USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT)
+
+            # We've got feed data now.
+            self._items = items
+
+        return self._items
+
+
+class UserDocsActivityFeedParser(ContentHandler):
+    """XML SAX parser for Mindtouch user activity feed.
+    eg. https://developer.mozilla.org/@api/deki/users/=Sheppy/feed?format=raw
+    <table>
+        <change>
+            <rc_id>...</rc_id>
+            <rc_comment>...</rc_comment>
+            ...
+        </change>
+        <change>
+            ...
+        </change>
+    </table>
+    """
+
+    def __init__(self, base_url):
+        self.items = []
+        self.in_current = False
+        self.base_url = base_url
+
+    def parseString(self, data):
+        xml.sax.parseString(data, self, self.error)
+
+    def error(self):
+        pass
+
+    def startDocument(self):
+        self.items = []
+
+    def startElement(self, name, attrs):
+        self.cdata = []
+        if 'change' == name:
+            # <change> is the start of a set of properties, so start blank.
+            self.curr = {}
+            self.in_current = True
+
+    def characters(self, content):
+        self.cdata.append(content)
+
+    def endElement(self, name):
+        if 'table' == name:
+            # </table> is synonmous with endDocument, so ignore.
+            return
+        elif 'change' == name:
+            # The end of a <change> item signals the completion of collecting a set
+            # of properties.
+            self.items.append(UserDocsActivityFeedItem(self.curr,
+                                                       self.base_url))
+            self.in_current = False
+        elif self.in_current:
+            # Treat child tags of <current> tags as properties to collect
+            self.curr[name] = ''.join(self.cdata)
+            self.cdata = []
+
+    def endDocument(self):
+        pass
+
+
+class UserDocsActivityFeedItem(object):
+    """Wrapper for a user docs activity feed item"""
+
+    # Timestamp is 20110820122346
+    RC_TIMESTAMP_FORMAT = '%Y%m%d%H%M%S'
+
+    # This list grabbed from DekiWiki C# source
+    # https://svn.mindtouch.com/source/public/dekiwiki/trunk/src/services/mindtouch.deki.data/types.cs
+    RC_TYPES = {
+        "0": "EDIT",
+        "1": "NEW",
+        "2": "MOVE",
+        "3": "LOG",
+        "4": "MOVE_OVER_REDIRECT",
+        "5": "PAGEDELETED",
+        "6": "PAGERESTORED",
+        "7": "COPY",
+        "40": "COMMENT_CREATE",
+        "41": "COMMENT_UPDATE",
+        "42": "COMMENT_DELETE",
+        "50": "FILE",
+        "51": "PAGEMETA",
+        "52": "TAGS",
+        "54": "GRANTS_ADDED",
+        "55": "GRANTS_REMOVED",
+        "56": "RESTRICTION_UPDATED",
+        "60": "USER_CREATED",
+    }
+
+    # See: https://svn.mindtouch.com/source/public/dekiwiki/trunk/web/includes/Defines.php
+    # TODO: Merge these dicts to id->prefix?
+    RC_NAMESPACE_NAMES = {
+        "0": "NS_MAIN",
+        "1": "NS_TALK",
+        "2": "NS_USER",
+        "3": "NS_USER_TALK",
+        "4": "NS_PROJECT",
+        "5": "NS_PROJECT_TALK",
+        "6": "NS_IMAGE",
+        "7": "NS_IMAGE_TALK",
+        "8": "NS_MEDIAWIKI",
+        "9": "NS_MEDIAWIKI_TALK",
+        "10": "NS_TEMPLATE",
+        "11": "NS_TEMPLATE_TALK",
+        "12": "NS_HELP",
+        "13": "NS_HELP_TALK",
+        "14": "NS_CATEGORY",
+        "15": "NS_CATEGORY_TALK",
+        "16": "NS_ATTACHMENT",
+    }
+    RC_NAMESPACE_PREFIXES = {
+        "NS_ADMIN": "Admin",
+        "NS_MEDIA": "Media",
+        "NS_SPECIAL": "Special",
+        "NS_MAIN": "",
+        "NS_TALK": "Talk",
+        "NS_USER": "User",
+        "NS_USER_TALK": "User_talk",
+        "NS_PROJECT": "Project",
+        "NS_PROJECT_TALK": "Project_talk",
+        "NS_IMAGE_TALK": "Image_comments",
+        "NS_MEDIAWIKI": "MediaWiki",
+        "NS_TEMPLATE": "Template",
+        "NS_TEMPLATE_TALK": "Template_talk",
+        "NS_HELP": "Help",
+        "NS_HELP_TALK": "Help_talk",
+        "NS_CATEGORY": "Category",
+        "NS_CATEGORY_TALK": "Category_comments",
+        "NS_ATTACHMENT": "File",
+    }
+
+    def __init__(self, data, base_url=''):
+        self.__dict__ = data
+        self.base_url = base_url
+
+    @property
+    def rc_timestamp(self):
+        """Parse rc_timestamp into datestamp() with proper time zone"""
+        tt = list(time.strptime(self.__dict__['rc_timestamp'],
+                                self.RC_TIMESTAMP_FORMAT)[0:6])
+        tt.extend([0, pytz.timezone(USER_DOCS_ACTIVITY_FEED_TIMEZONE)])
+        return datetime(*tt)
+
+    @property
+    def rc_revision(self):
+        """Make rc_revision into an int"""
+        return int(self.__dict__['rc_revision'])
+
+    @property
+    def rc_type(self):
+        """Attempt to convert rc_type into a more descriptive name"""
+        return self.RC_TYPES.get(self.__dict__['rc_type'], 'UNKNOWN')
+
+    def _add_prefix_to_title(self, title):
+        """Mindtouch keeps the prefix text separate from the page title, so
+        we'll need to re-add it."""
+        ns_id = self.RC_NAMESPACE_NAMES.get(self.rc_namespace, '')
+        prefix = self.RC_NAMESPACE_PREFIXES.get(ns_id, '')
+        if prefix:
+            return '%s:%s' % (self.RC_NAMESPACE_PREFIXES[ns_id], title)
+        else:
+            return title
+
+    @property
+    def rc_title(self):
+        """Include the wiki namespace prefix in the title"""
+        title = self.__dict__['rc_title']
+        return self._add_prefix_to_title(title)
+
+    @property
+    def rc_moved_to_title(self):
+        """Include the wiki namespace prefix in the moved-to title"""
+        title = self.__dict__['rc_moved_to_title']
+        return self._add_prefix_to_title(title)
+
+    @property
+    def current_title(self):
+        if 'MOVE' == self.rc_type:
+            return self.rc_moved_to_title
+        else:
+            return self.rc_title
+
+    @property
+    def view_url(self):
+        return '%s/%s' % (self.base_url, self.current_title)
+
+    @property
+    def edit_url(self):
+        if not self.rc_type in ('EDIT', 'MOVE', 'TAGS', 'NEW', 'FILE'):
+            return None
+        return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
+            title=self.current_title,
+            action='edit',
+        )))
+
+    @property
+    def history_url(self):
+        if not self.rc_type in ('EDIT', 'MOVE', 'TAGS', 'FILE'):
+            return None
+        return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
+            title=self.current_title,
+            action='history',
+        )))
+
+    @property
+    def diff_url(self):
+        if not self.rc_type in ('EDIT',):
+            return None
+        if not self.rc_revision > 1:
+            return None
+        return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
+            title=self.current_title,
+            action='diff',
+            revision=self.rc_revision - 1,
+            diff=self.rc_revision,
+        )))
+
+
 class Calendar(ModelBase):
     """The Calendar spreadsheet"""
 
@@ -186,35 +466,55 @@ class Calendar(ModelBase):
             return False
         events = list(Calendar.as_unicode(data))
         Event.objects.filter(calendar=self).delete()
+
+        # use column indices from header names so re-ordering
+        # columns doesn't blow us up
+        header_line = events.pop(0)
+        conference_idx = header_line.index("Conference")
+        link_idx = header_line.index("Link")
+        people_idx = header_line.index("Who")
+        end_date_idx = header_line.index("End Date")
+        start_date_idx = header_line.index("Start Date")
+        location_idx = header_line.index("Location")
+        description_idx = header_line.index("Description")
+        materials_idx = header_line.index("Materials URL")
+
+        today = datetime.today()
+
         for event_line in events:
             event = None
-            if len(event_line) > 7:
-                done = event_line[7] == 'yes'
-            if event_line[1] != "Conference":
-                # verify date string conversion before adding the event
-                try:
-                    event_date = datetime.strptime(event_line[9], "%m/%d/%Y")
-                    event_date_string = event_date.strftime("%Y-%m-%d")
-                except:
-                    continue
-                if len(event_line) > 10:
-                    try:
-                        event_end_date = datetime.strptime(event_line[10],
-                                                           "%m/%d/%Y")
-                        event_end_date_string = event_end_date.strftime(
-                                                           "%Y-%m-%d")
-                    except:
-                        event_end_date = None
-                event = Event(date=event_date,
-                              end_date=event_end_date,
-                              conference=event_line[1],
-                              conference_link=event_line[3],
-                              location=event_line[2], people=event_line[5],
-                              description=event_line[6][:255],
-                              done=done, calendar=self)
-                if len(event_line) > 8:
-                    event.materials = event_line[8]
-                event.save()
+            materials = ''
+            if len(event_line) > materials_idx:
+                materials = event_line[materials_idx]
+            # skip rows with bad Start Date
+            try:
+                event_date = datetime.strptime(
+                    event_line[start_date_idx], "%m/%d/%Y")
+                event_date_string = event_date.strftime("%Y-%m-%d")
+            except:
+                continue
+            try:
+                event_end_date = datetime.strptime(event_line[end_date_idx],
+                                                   "%m/%d/%Y")
+                event_end_date_string = event_end_date.strftime(
+                                                   "%Y-%m-%d")
+            except:
+                event_end_date = event_date
+            done = False
+            if event_end_date < today:
+                done = True
+
+            event = Event(date=event_date,
+                          end_date=event_end_date,
+                          conference=event_line[conference_idx],
+                          conference_link=event_line[link_idx],
+                          location=event_line[location_idx],
+                          people=event_line[people_idx],
+                          description=event_line[description_idx],
+                          done=done,
+                          materials=materials,
+                          calendar=self)
+            event.save()
 
     def __unicode__(self):
         return self.shortname
@@ -228,8 +528,8 @@ class Event(ModelBase):
     conference = models.CharField(max_length=255)
     conference_link = models.URLField(blank=True, verify_exists=False)
     location = models.CharField(max_length=255)
-    people = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    people = models.TextField()
+    description = models.TextField()
     done = models.BooleanField(default=False)
     materials = models.URLField(blank=True, verify_exists=False)
     calendar = models.ForeignKey(Calendar)

@@ -6,8 +6,11 @@ assets, migrates the database, and other nifty deployment tasks.
 
 Options:
   -h, --help            show this help message and exit
-  -e ENVIRONMENT, --environment=ENVIRONMENT
-                        Type of environment. One of (dev|stage|prod|mdn_dev|mdn_stage|mdn_prod) Example:
+  -e ENVIRONMENT,
+  --environment=ENVIRONMENT
+                        Type of environment. One of
+                        (dev|stage|prod|mdn_dev|mdn_stage|mdn_prod)
+                        Example:
                         update_site.py -e stage
   -v, --verbose         Echo actions before taking them.
 """
@@ -19,7 +22,7 @@ from optparse import  OptionParser
 
 # Constants
 PROJECT = 0
-VENDOR  = 1
+VENDOR = 1
 
 ENV_BRANCH = {
     # 'environment': [PROJECT_BRANCH, VENDOR_BRANCH],
@@ -31,6 +34,7 @@ ENV_BRANCH = {
     'mdn_prod':    ['mdn_prod', 'master']
 }
 
+RM_SETTINGS_PYC = "rm -f settings*.pyc"
 GIT_PULL = "git pull -q origin %(branch)s"
 GIT_SUBMODULE_SYNC = "git submodule sync"
 GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
@@ -51,9 +55,10 @@ def update_site(env, debug):
 
     commands = [
         (CHDIR, here),
-        (EXEC,  GIT_PULL % project_branch),
-        (EXEC,  GIT_SUBMODULE_SYNC),
-        (EXEC,  GIT_SUBMODULE_UPDATE),
+        (EXEC, RM_SETTINGS_PYC),
+        (EXEC, GIT_PULL % project_branch),
+        (EXEC, GIT_SUBMODULE_SYNC),
+        (EXEC, GIT_SUBMODULE_UPDATE),
     ]
 
     # Update locale dir if applicable

@@ -19,7 +19,7 @@
 #promote-buttons #page-head .page-title { margin: 0 0 .1em; color: #ab181a; font: 200 72px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(170, 160, 130, 0.5); }
 
 #button-builder { position: relative; margin: 0 0 1em; padding-bottom: 2em; overflow: hidden; }
-#button-builder .step { width: 600px; padding: 19px; float: left; margin: 0 0 10px;
+#button-builder .step { width: 620px; padding: 19px; float: left; margin: 0 0 10px;
   border: 1px solid #d8d4ca; 
   background: #fff;
   background: -moz-linear-gradient(top, rgba(255,255,255,.9) 0, rgba(255,255,255,0) 80%); 
@@ -40,9 +40,9 @@
 
 #step-color li, #step-topic li { float: left; width: 120px; margin: 0 25px 1em 2px; padding: 2px; border: 1px solid #d8d4ca; box-shadow: 2px 2px 2px rgba(0,0,0,.1); }
 #step-color input, #step-topic input { position: absolute; left: -999em; }
-#step-color label, #step-topic label { display: block; overflow: hidden; padding: .5em 10px; margin: 2px; text-align: center; font-size: 1.142em; text-transform: uppercase; color: #fff; text-shadow: 0 0 3px rgba(0,0,0,.5), 1px 1px 0 #000; }
-#step-color li:hover, #step-color li.selected, #step-topic li:hover, #step-topic li.selected { border-color: #25a; border-width: 2px; margin: 0 24px 1em 1px; width: 118px; padding: 1px; }
-#step-color li:hover label, #step-color li.selected label, #step-topic li:hover label, #step-topic li.selected label { margin: 0; }
+#step-color label, #step-topic label { display: block; overflow: hidden; padding: .5em 10px; text-align: center; font-size: 1.142em; text-transform: uppercase; color: #fff; text-shadow: 0 0 3px rgba(0,0,0,.5), 1px 1px 0 #000; }
+#step-color li:hover, #step-color li.selected, #step-topic li:hover, #step-topic li.selected { border-color: #25a; border-width: 2px; margin: 0 25px 1em 2px; width: 118px; padding: 2px; }
+#step-color li:hover label, #step-color li.selected label, #step-topic li:hover label, #step-topic li.selected label { margin: -1px; }
 #step-color .gray label, #step-topic .Gray label { background: #443f3e; }
 #step-color .orange label, #step-topic .Orange label { background: #f16a22; }
 #step-color .red label, #step-topic .Red label { background: #ec2224; }
@@ -51,6 +51,6 @@
 
 #button-code { font: .857em monospace; width: 94%; height: 6em; margin: 0 0 1.4em; } 
 
-#button-preview { width: 223px; padding: 20px; float: right; border: 1px solid #d8d4ca; }
-#button-preview.fixed { position: fixed; z-index: 99; top: 20px; margin-left: 671px; }
+#button-preview { width: 210px; padding: 20px; float: right; border: 1px solid #d8d4ca; }
+#button-preview.fixed { position: fixed; z-index: 99; top: 20px; margin-left: 684px; }
 #button-image { display: block; margin: 1em auto 1.4em; }

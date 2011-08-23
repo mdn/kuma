@@ -57,7 +57,7 @@ def _error_page(request, status):
 handler404 = lambda r: _error_page(r, 404)
 handler500 = lambda r: _error_page(r, 500)
 
-if settings.DEBUG:
+if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
     urlpatterns += patterns('',
         (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',

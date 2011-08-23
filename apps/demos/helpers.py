@@ -141,7 +141,7 @@ def submission_listing_cache_key(*args, **kw):
 
 @register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
 def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url, 
-        cols_per_row=3, pagination_base_url='', show_sorts=True): 
+        cols_per_row=3, pagination_base_url='', show_sorts=True, show_submit=False): 
     return locals()
 
 @register.inclusion_tag('demos/elements/tech_tags_list.html')

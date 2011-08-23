@@ -122,26 +122,38 @@
       </div>
     
     </section><!-- /#home-promos -->
-    
-    <section id="home-news">
-      <h1>{{_("Latest News & Updates")}}</h1>
-      {{ newsfeed(updates, section_headers=True) }}
-    </section><!-- /#home-news -->
-    
-    <section id="home-demos">
-      <h1>{{_("Awesome Demos")}}</h1>
-      <p class="more"><a href="{{ url('demos') }}">{% trans %}More Demos&hellip;{% endtrans %}</a></p>
+
+    <div class="home-extra">
+      <div class="col-1">
+        <figure id="webfwd-promo" class="promo banner">
+          <a href="http://webfwd.org" rel="external">
+            <img src="{{MEDIA_URL}}img/webfwd-promo-banner.png" width="456" height="161" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">
+          </a>
+        </figure>
       
-      <ul class="gallery">
-        {% set extra_class = cycler(' row-first', '')%}
-        {% for submission in demos %}
-            {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133") }}
-        {% endfor %}
-        <li class="demo-submit">          
-        <p><a href="{{ url('demos_submit') }}">{% trans %}Have an awesome demo of your own? <strong>Submit It</strong>{% endtrans %}</a></p>
-        </li>
-      </ul>
-    </section><!-- /#home-demos -->
+        <section id="home-news">
+          <h1>{{_("Latest News & Updates")}}</h1>
+          {{ newsfeed(updates, section_headers=True) }}
+        </section><!-- /#home-news -->
+      </div>
+        
+      <div class="col-2">
+        <section id="home-demos">
+          <h1>{{_("Awesome Demos")}}</h1>
+          <p class="more"><a href="{{ url('demos') }}">{% trans %}More Demos&hellip;{% endtrans %}</a></p>
+          
+          <ul class="gallery">
+            {% set extra_class = cycler(' row-first', '')%}
+            {% for submission in demos %}
+                {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133") }}
+            {% endfor %}
+            <li class="demo-submit">          
+            <p><a href="{{ url('demos_submit') }}">{% trans %}Have an awesome demo of your own? <strong>Submit It</strong>{% endtrans %}</a></p>
+            </li>
+          </ul>
+        </section><!-- /#home-demos -->
+      </div>
+    </div>
     
   </section>
 

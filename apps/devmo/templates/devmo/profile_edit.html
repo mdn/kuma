@@ -16,6 +16,7 @@
     {{ js('libs/jqueryui') }}
     {{ js('demostudio') }}
     {{ js('libs/tagit') }}
+    {{ js('profile') }}
 {% endblock %}
 
 {% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
@@ -73,10 +74,20 @@
 
           {% set field = form['interests'] %}
           <li class="{{ ' error' if field.errors }}">
-            <label for="pers-interests">Interests (tags)</label>
+            <strong class="label">Interests (tags)</strong>
             <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
             {{ field | safe }}
+            {{ field.errors|safe }}
           </li>
+
+          {% set field = form['expertise'] %}
+          <li class="{{ ' error' if field.errors }}">
+            <strong class="label">Areas of Expertise</strong>
+            <p class="note">Add your interests first, then declare yourself an expert in selected topics.</p>
+            {{ field | safe }}
+            {{ field.errors|safe }}
+          </li>
+
         </ul>
       </fieldset>
 
@@ -110,52 +121,7 @@
 {% block js %}
 <script type="text/javascript">
 // <![CDATA[
-
-$('#id_interests').ready(function () {
-
-    var interests_tags = {{ INTEREST_SUGGESTIONS | jsonencode }};
-
-    $('#id_interests')
-        .after('<ul id="tagit-interests"></ul>')
-        .hide();
-
-    $('#tagit-interests').tagit({
-        availableTags: interests_tags,
-        singleField: true,
-        singleFieldNode: $('#id_interests')
-    });
-
-});
-
-$(document).ready(function(){
-
-  // word count
-  $('.wordcount').each(function(i,el){
-    function updateWordCount(){
-      var words = $.trim( field.val() ).split(' ');
-      if( words[0] == '' ){ words.length = 0; }
-      currcount = limit - words.length;
-      placeholder.text( currcount );
-      if ( words.length >= limit &&
-           placeholder.parent().css('color') != '#900' )
-      {
-        placeholder.parent().css('color','#900');
-      }
-      else if ( words.length < limit &&
-                placeholder.parent().css('color') == '#900' )
-      {
-        placeholder.parent().css('color','');
-      }
-    }
-    var placeholder = $(el).find('.counter');
-    var limit = parseInt( placeholder.text() );
-    var currcount = 0;
-    var field = $(el).children('textarea');
-    updateWordCount();
-    field.keypress(updateWordCount);
-  })
-
-});	
+    var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS | jsonencode }};
 // ]]>
 </script>
 {% endblock %}

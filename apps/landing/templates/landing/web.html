@@ -21,7 +21,7 @@
     <ul>
       <li class="util-twitter"><a href="http://twitter.com/mozhacks">{{ _('Twitter') }}</a></li>
       <li class="util-rss"><a href="http://hacks.mozilla.org/feed/">{{ _('Subscribe') }}</a></li>
-      <li class="util-discuss"><a href="/forums/viewforum.php?f=4">{{ _('Join the Web discussions!') }}</a></li>
+      <li class="util-discuss"><a href="{{ url('discussion') }}">{{ _('Join the Web discussions!') }}</a></li>
     </ul>
   </div>
 </div>
@@ -123,6 +123,12 @@
   </section>{# /#content-main #}
 
   <aside id="content-sub" role="complementary">
+    <figure class="promo banner">
+      <a href="http://webfwd.org" rel="external">
+        <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">
+      </a>
+    </figure>
+
     {{ twitter(tweets, title=_('Correspondence on Twitter from the Web developer community.')) }}
   </aside>{# /#content-sub #}
 

@@ -20,7 +20,7 @@ reasons.
     sudo gem install vagrant
         
     # Clone a Kuma repo, switch to "mdn" branch (for now)
-    git clone git://github.com/lmorchard/kuma.git
+    git clone git://github.com/mozilla/kuma.git
     cd kuma
     git checkout mdn
     git submodule update --init --recursive
@@ -36,12 +36,15 @@ reasons.
     # This can take a long while, since there's over 500MB of data
     vagrant ssh
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
+    # Then, apply the main manifest again, to ensure the database gets
+    # updated by current migrations
+    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn.pp
 
-    # Add dev-kuma.developer.mozilla.org to /etc/hosts
-    echo '192.168.10.50 dev-kuma.developer.mozilla.org' >> /etc/hosts
+    # Add developer-mdndev.mozilla.org to /etc/hosts
+    echo '192.168.10.50 developer-mdndev.mozilla.org' >> /etc/hosts
 
     # Everything should be working now.
-    curl 'http://dev-kuma.developer.mozilla.org'
+    curl 'http://developer-mdndev.mozilla.org'
 
     # Edit files as usual on your host machine; the current directory is
     # mounted via NFS at /vagrant within the VM.

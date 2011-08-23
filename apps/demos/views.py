@@ -162,23 +162,8 @@ def search(request):
         template_name='demos/listing_search.html') 
 
 def profile_detail(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = user.get_profile()
-
-    sort_order = request.GET.get('sort', 'created')
-    show_hidden = user == request.user
-    queryset = Submission.objects.all_sorted(sort_order).filter(creator=user)
-    if not show_hidden:
-        queryset = queryset.exclude(hidden=True)
-    return object_list(request, queryset,
-        extra_context=dict( 
-            profile_user=user, 
-            profile=profile
-        ),
-        paginate_by=25, allow_empty=True,
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/profile_detail.html') 
+    return HttpResponseRedirect(reverse(
+        'devmo.views.profile_view', args=(username,)))
 
 def like(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
