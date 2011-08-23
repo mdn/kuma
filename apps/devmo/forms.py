@@ -36,7 +36,7 @@ class UserProfileEditForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('fullname', 'title', 'organization', 'location', 'bio',
-                  'interests')
+                  'irc_nickname', 'interests')
 
     # Email is on the form, but is handled in the view separately
     email = forms.EmailField(label=_('Email'), required=True)
