@@ -8,14 +8,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding field 'UserProfile.irc_handle'
-        db.add_column('user_profiles', 'irc_handle', self.gf('django.db.models.fields.CharField')(default='', max_length=255, blank=True), keep_default=False)
+        # Adding field 'UserProfile.irc_nickname'
+        db.add_column('user_profiles', 'irc_nickname', self.gf('django.db.models.fields.CharField')(default='', max_length=255, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Deleting field 'UserProfile.irc_handle'
-        db.delete_column('user_profiles', 'irc_handle')
+        # Deleting field 'UserProfile.irc_nickname'
+        db.delete_column('user_profiles', 'irc_nickname')
 
 
     models = {
@@ -83,7 +83,7 @@ class Migration(SchemaMigration):
             'fullname': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'homepage': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'irc_handle': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
+            'irc_nickname': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'misc': ('jsonfield.JSONField', [], {'null': 'True', 'blank': 'True'}),
             'organization': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
