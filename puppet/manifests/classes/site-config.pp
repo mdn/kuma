@@ -33,6 +33,10 @@ class mysql_config {
             ensure => file,
             source => "$PROJ_DIR/puppet/files/tmp/wikidb.sql",
             owner => "vagrant", group => "vagrant", mode => 0644;
+        "/tmp/phpbb.sql":
+            ensure => file,
+            source => "$PROJ_DIR/puppet/files/tmp/phpbb.sql",
+            owner => "vagrant", group => "vagrant", mode => 0644;
     }
     service { "mysqld": 
         ensure => running, 
@@ -57,6 +61,14 @@ class mysql_config {
                 Service["mysqld"], 
                 Exec["setup_mysql_databases_and_users"] 
             ];
+#        "setup_mysql_phpbb":
+#            command => "/usr/bin/mysql -u root phpbb < /tmp/phpbb.sql",
+            # unless => "/usr/bin/mysql -uroot wikidb -B -e 'show tables' 2>&1 | grep -q 'pages'",
+#            require => [ 
+#                File["/tmp/phpbb.sql"],
+#                Service["mysqld"], 
+#                Exec["setup_mysql_databases_and_users"] 
+#            ];
     }
 }
 

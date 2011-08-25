@@ -16,10 +16,10 @@ class dev {
         hacks:  before => Stage[pre];
         pre:    before => Stage[basics];
         basics: before => Stage[langs];
-        langs:  before => Stage[deki];
-        deki:   before => Stage[main];
-        deki_post:  require => Stage[main];
-        hacks_post: require => Stage[deki_post];
+        langs:  before => Stage[vendors];
+        vendors:   before => Stage[main];
+        vendors_post:  require => Stage[main];
+        hacks_post: require => Stage[vendors_post];
     }
 
     class {
@@ -36,10 +36,12 @@ class dev {
         python: stage => langs;
         php:    stage => langs;
 
-        dekiwiki: stage => deki;
+        phpbb: stage => vendors;
+        dekiwiki: stage => vendors;
 
         site_config: ;
-        dekiwiki_config: stage => deki_post;
+        dekiwiki_config: stage => vendors_post;
+        phpbb_config: stage=> vendors_post;
         dev_hacks_post: stage => hacks_post;
 
     }
