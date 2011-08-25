@@ -487,6 +487,7 @@ class Calendar(ModelBase):
 
         for event_line in events:
             event = None
+            materials = None
             if len(event_line) > materials_idx:
                 materials = event_line[materials_idx]
             # skip rows with bad Start Date
