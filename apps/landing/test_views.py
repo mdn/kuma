@@ -42,3 +42,12 @@ class LearnViewsTest(test_utils.TestCase):
         url = reverse('landing.views.learn_javascript')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+
+    def test_dev_mdc_link(self):
+        url = reverse('landing.views.home')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+
+        dev_mdc_link = doc.find('a#dev-mdc-link')
+        ok_(dev_mdc_link)
