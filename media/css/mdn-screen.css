@@ -949,3 +949,5 @@ li.tag-expert label:hover { border-color: #bbb; }
 /* @Error pages *********/
 .beast { float: right; margin: 20px 0 20px 20px; }
 
+/* @Discussion @Forum-Archive page *********/
+#forum_archive_iframe { width: 940px; padding: 0; margin: 0; border: 0; height: 400px;}
