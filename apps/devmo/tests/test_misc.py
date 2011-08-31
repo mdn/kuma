@@ -57,7 +57,6 @@ class TestDevMoRobots(test_utils.TestCase):
             ("Crawl-delay", "5"),
             ("Sitemap", "sitemap.xml"),
             ("Request-rate", "1/5"),
-            ("Disallow", "/@api/deki/*"),
             ("Disallow", "/*feed=rss"),
             ("Disallow", "/*type=feed"),
             ("Disallow", "/skins"),
