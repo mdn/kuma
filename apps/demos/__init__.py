@@ -17,7 +17,7 @@ except ImportError:
 
 # Currently promoted dev derby
 DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = getattr(settings, 'DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG', 
-    'challenge:2011:august')
+    'challenge:2011:september')
 
 # Dev derby choices displayed on submission form
 DEMOS_DEVDERBY_CHALLENGE_CHOICES = getattr(settings, 'DEMOS_DEVDERBY_CHALLENGE_CHOICES', [
@@ -35,7 +35,7 @@ DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVI
 
 # Tag used to find most recent winner for dev derby
 DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
-    'system:challenge:firstplace:2011:july')
+    'system:challenge:firstplace:2011:august')
 
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
