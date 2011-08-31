@@ -21,20 +21,21 @@ DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = getattr(settings, 'DEMOS_DEVDERBY_CURRENT
 
 # Dev derby choices displayed on submission form
 DEMOS_DEVDERBY_CHALLENGE_CHOICES = getattr(settings, 'DEMOS_DEVDERBY_CHALLENGE_CHOICES', [
-    "challenge:2011:august",
     "challenge:2011:september",
     "challenge:2011:october",
+    "challenge:2011:november",
 ])
 
 # Dev derby tags for previous challenges
 DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS', [
-    "challenge:2011:june",
+    "challenge:2011:august",
     "challenge:2011:july",
+    "challenge:2011:june",
 ])
 
 # Tag used to find most recent winner for dev derby
 DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
-    'system:challenge:firstplace:2011:june')
+    'system:challenge:firstplace:2011:july')
 
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
@@ -82,6 +83,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "summary": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "description": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "learn_more": [],
+        "tab_copy": _("""<p>Mobile device users are by now accustomed to "checking in" and getting directions using their devices. The Geolocation API enables web developers to offer features based on the user's location without having to call a native API, much less having to submit an app to a gatekeeper or require the user to install yet another native app.</p>
+<p>With information bout the user's location and movement, you could provide a local guide (say, a muggle's guide to magical London), invent location-based games, or apply global datasets to any location (such as your local weather trends 50 years from now, based on climate change predications).</p>
+<p>Note that the judges may not be able to fully test demos that are specific to remote locations, so a video of such demos is very helpful. Though if we were to get several submissions about Caribbean islands ...</p>"""),
     },
     {
         "tag_name": "challenge:2011:october", 
@@ -92,6 +96,19 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "tagline": _("Size does matter"),
         "summary": _("CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."),
         "description": _("CSS Media Queries allow Web developers to create responsive Web designs, tailoring the user experience for a range of screen sizes, including desktops, tablets, and mobiles."),
+        "learn_more": [],
+        "tab_copy": _("""<p>The range of hardware that can display Web pages is increasing exponentially. Feature phones, smart phones, tablets, e-book readers, game consoles, video players, and high-res widescreen displays now co-exist with the basic laptop and desktop screens of just a few years ago. Older techniques for adapting to device size, such as relying on user agent strings, become impractical with this explosion of diversity. Fortunately, CSS3 media queries enable you to tailor your design based on the physical characteristics of the display device, which is the relevant factor anyway.</p>
+<p>Not just layout, but typography, navigation, and hot spots can all adapt to provide an optimal Web experience for the device of the moment, as the same content shines everywhere.</p>"""),
+    },
+    {
+        "tag_name": "challenge:2011:november", 
+        "title": _("November 2011 Dev Derby Challenge - Canvas"), 
+        "short_title": _("Canvas"),
+        "dateline": _("November 2011"),
+        "short_dateline": _("November"),
+        "tagline": _("The joy of painting"),
+        "summary": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
+        "description": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "learn_more": [],
     },
 
