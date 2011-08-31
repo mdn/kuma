@@ -55,25 +55,17 @@ class ContentFlagManager(models.Manager):
         if flag_type not in dict(FLAG_REASONS):
             return (None, False)
 
-        user, ip, user_agent, session_key = get_unique(request)
-
         content_type = ContentType.objects.get_for_model(object)
+        user, ip, user_agent, unique_hash = get_unique(content_type, object.pk,
+                                                       request=request)
 
-        try:
-            cf = ContentFlag.objects.get_or_create(
-                    content_type=content_type, object_pk=object.pk,
-                    ip=ip, user_agent=user_agent, user=user, session_key=session_key,
-                    defaults=dict(flag_type=flag_type, explanation=explanation,))
-
-        except MultipleObjectsReturned, e:
-            # HACK: There seems to be a race condition in get_or_create. :(
-            # Happens very rarely, but when it does, seems like the best thing
-            # to do is try to clean up?
-            flags = ContentFlag.objects.filter(
-                    content_type=content_type, object_pk=object.pk,
-                    ip=ip, user_agent=user_agent, user=user, session_key=session_key).all()
-            cf = ( flags[0], False )
-            for c in flags[1:]: c.delete()
+        cf = ContentFlag.objects.get_or_create(
+                unique_hash=unique_hash,
+                defaults=dict(content_type=content_type,
+                              object_pk=object.pk, ip=ip,
+                              user_agent=user_agent, user=user,
+                              flag_type=flag_type, 
+                              explanation=explanation))
 
         if recipients:
             subject = _("{object} Flagged")
@@ -94,8 +86,6 @@ class ContentFlag(models.Model):
     class Meta:
         ordering = ('-created',)
         get_latest_by = 'created'
-        unique_together = (('content_type', 'object_pk',
-            'ip', 'session_key', 'user_agent', 'user'),)
 
     flag_status = models.CharField(
             _('current status of flag review'),
@@ -106,6 +96,7 @@ class ContentFlag(models.Model):
     explanation = models.TextField(
             _('please explain what content you feel is inappropriate'),
             max_length=255, blank=True)
+
     content_type = models.ForeignKey(
             ContentType, editable=False,
             verbose_name="content type",
@@ -119,14 +110,17 @@ class ContentFlag(models.Model):
     ip = models.CharField(
             max_length=40, editable=False,
             blank=True, null=True)
-    session_key = models.CharField(
-            max_length=40, editable=False,
-            blank=True, null=True)
     user_agent = models.CharField(
             max_length=128, editable=False,
             blank=True, null=True)
     user = models.ForeignKey(
             User, editable=False, blank=True, null=True)
+
+    # HACK: As it turns out, MySQL doesn't consider two rows with NULL values
+    # in a column as duplicates. So, resorting to calculating a unique hash in
+    # code.
+    unique_hash = models.CharField(max_length=32, editable=False,
+                                   unique=True, db_index=True, null=True)
 
     created = models.DateTimeField(
             _('date submitted'),
@@ -138,6 +132,14 @@ class ContentFlag(models.Model):
     def __unicode__(self):
         return 'ContentFlag %(flag_type)s -> "%(title)s"' % dict(
                 flag_type=self.flag_type, title=str(self.content_object))
+
+    def save(self, *args, **kwargs):
+        # Ensure unique_hash is updated whenever the object is saved
+        user, ip, user_agent, unique_hash = get_unique(
+                self.content_type, self.object_pk,
+                ip=self.ip, user_agent=self.user_agent, user=self.user)
+        self.unique_hash = unique_hash
+        super(ContentFlag, self).save(*args, **kwargs)
 
     def content_view_link(self):
         """HTML link to the absolute URL for the linked content object"""

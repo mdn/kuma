@@ -40,38 +40,44 @@ class DemoPackageTest(TestCase):
         #    logging.debug("SQL %s" % sql)
         pass
 
-    def mk_request(self, user=None, session_key=None, ip='192.168.123.123', 
+    def mk_request(self, user=None, ip='192.168.123.123', 
             user_agent='FakeBrowser 1.0'):
         request = HttpRequest()
         request.user = user and user or AnonymousUser()
-        if session_key:
-            request.session = Session()
-            request.session.session_key = session_key
         request.method = 'GET'
         request.META['REMOTE_ADDR'] = ip
         request.META['HTTP_USER_AGENT'] = user_agent
         return request
 
+    @attr('bad_multiple')
     def test_bad_multiple_flags(self):
         """Force multiple flags, possibly result of race condition, ensure graceful handling"""
         request = self.mk_request()
-        user, ip, user_agent, session_key = get_unique(request)
 
         obj_1 = self.user2
         obj_1_ct = ContentType.objects.get_for_model(obj_1)
+        user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
+                                                       request=request)
 
+        # Create an initial record directly.
         f1 = ContentFlag(content_type=obj_1_ct, object_pk=obj_1.pk,
                 flag_type="Broken thing",
-                ip=ip, user_agent=user_agent, user=user, session_key=session_key)
+                ip=ip, user_agent=user_agent, user=user)
         f1.save()
 
-        f2 = ContentFlag(content_type=obj_1_ct, object_pk=obj_1.pk,
-                flag_type="Broken thing",
-                ip=ip, user_agent=user_agent, user=user, session_key=session_key)
-        f2.save()
-
+        # Adding a duplicate should be prevented at the model level.
         try:
-            flag, created = ContentFlag.objects.flag(request=request, object=self.user2,
+            f2 = ContentFlag(content_type=obj_1_ct, object_pk=obj_1.pk,
+                    flag_type="Broken thing",
+                    ip=ip, user_agent=user_agent, user=user)
+            f2.save()
+        except:
+            pass
+
+        # Try flag, which should turn up the single unique record created
+        # earlier.
+        try:
+            flag, created = ContentFlag.objects.flag(request=request, object=obj_1,
                     flag_type='notworking', explanation="It really not go!")
             ok_(flag is not None)
             ok_(not created)
