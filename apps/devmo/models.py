@@ -440,6 +440,35 @@ class UserDocsActivityFeedItem(object):
             diff=self.rc_revision,
         )))
 
+def parse_date(date_str):
+    try:
+        parsed_date = datetime.strptime(date_str, "%m/%d/%Y")
+        parsed_date.strftime("%Y-%m-%d")
+        return parsed_date
+    except:
+        return None
+
+
+FIELD_MAP = {
+    "date": ["Start Date",None, parse_date],
+    "end_date": ["End Date",None, parse_date],
+    "conference": ["Conference",None],
+    "conference_link": ["Link",None],
+    "location": ["Location",None],
+    "people": ["Attendees",None],
+    "description": ["Description",None],
+    "done": ["Done",None],
+    "materials": ["Materials URL",None],
+}
+
+def parse_header_line(header_line):
+    for field_name in FIELD_MAP.keys():
+        field = FIELD_MAP[field_name]
+        if field[1] == None:
+            try:
+                FIELD_MAP[field_name][1] = header_line.index(field[0])
+            except IndexError:
+                FIELD_MAP[field_name][1] = ''
 
 class Calendar(ModelBase):
     """The Calendar spreadsheet"""
@@ -456,9 +485,24 @@ class Calendar(ModelBase):
                 row[idx] = p.parseFragment(unicode(cell, 'utf-8')).toxml()
             yield row
 
+    @classmethod
+    def parse_row(cls, doc_row):
+        row = {}
+        for field_name in FIELD_MAP.keys():
+            field = FIELD_MAP[field_name]
+            if len(doc_row) > field[1]:
+               field_value = doc_row[field[1]]
+            else:
+                field_value = ''
+            if len(field) >= 3 and callable(field[2]):
+                field_value = field[2](field_value)
+            row[field_name] = field_value
+        return row
+
     def reload(self, data=None):
         events = []
         u = None
+
         if not data:
             try:
                 u = urllib2.urlopen(self.url)
@@ -467,58 +511,35 @@ class Calendar(ModelBase):
         data = csv.reader(u) if u else data
         if not data:
             return False
+
         events = list(Calendar.as_unicode(data))
         Event.objects.filter(calendar=self).delete()
 
         # use column indices from header names so re-ordering
         # columns doesn't blow us up
         header_line = events.pop(0)
-        done_idx = header_line.index("Done")
-        conference_idx = header_line.index("Conference")
-        link_idx = header_line.index("Link")
-        people_idx = header_line.index("Who")
-        end_date_idx = header_line.index("End Date")
-        start_date_idx = header_line.index("Start Date")
-        location_idx = header_line.index("Location")
-        description_idx = header_line.index("Description")
-        materials_idx = header_line.index("Materials URL")
+        parse_header_line(header_line)
 
         today = datetime.today()
 
         for event_line in events:
             event = None
-            materials = ''
-            if len(event_line) > materials_idx:
-                materials = event_line[materials_idx]
-            # skip rows with bad Start Date
+            row = Calendar.parse_row(event_line)
+            if row['date'] == None:
+                continue
+            if row['end_date'] == None:
+                row['end_date'] = row['date']
+            row['done'] = False
+            if row['end_date'] < today:
+                row['done'] = True
+            row['end_date'] = row['end_date'].strftime("%Y-%m-%d")
+            row['date'] = row['date'].strftime("%Y-%m-%d")
+
             try:
-                event_date = datetime.strptime(
-                    event_line[start_date_idx], "%m/%d/%Y")
-                event_date_string = event_date.strftime("%Y-%m-%d")
+                event = Event(calendar=self, **row)
+                event.save()
             except:
                 continue
-            try:
-                event_end_date = datetime.strptime(event_line[end_date_idx],
-                                                   "%m/%d/%Y")
-                event_end_date_string = event_end_date.strftime(
-                                                   "%Y-%m-%d")
-            except:
-                event_end_date = event_date
-            done = False
-            if event_end_date < today:
-                done = True
-
-            event = Event(date=event_date,
-                          end_date=event_end_date,
-                          conference=event_line[conference_idx],
-                          conference_link=event_line[link_idx],
-                          location=event_line[location_idx],
-                          people=event_line[people_idx],
-                          description=event_line[description_idx],
-                          done=done,
-                          materials=materials,
-                          calendar=self)
-            event.save()
 
     def __unicode__(self):
         return self.shortname
