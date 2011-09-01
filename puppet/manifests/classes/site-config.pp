@@ -47,6 +47,9 @@ class mysql_config {
 }
 
 class kuma_config {
+    file { "/home/vagrant":
+        owner => "vagrant", group => "vagrant", mode => 0755;
+    }
     file { 
         [ "/home/vagrant/logs",
             "/home/vagrant/uploads",
