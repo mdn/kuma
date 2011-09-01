@@ -200,7 +200,7 @@ def license_title(license_name):
 @register.function
 def tag_title(tag):
     if not tag: return ''
-    name = ( type(tag) is str ) and tag or tag.name
+    name = (isinstance(tag, basestring)) and tag or tag.name
     if name in TAG_DESCRIPTIONS:
         return TAG_DESCRIPTIONS[name]['title']
     else:
@@ -209,7 +209,7 @@ def tag_title(tag):
 @register.function
 def tag_description(tag):
     if not tag: return ''
-    name = ( type(tag) is str ) and tag or tag.name
+    name = (isinstance(tag, basestring)) and tag or tag.name
     if name in TAG_DESCRIPTIONS:
         return TAG_DESCRIPTIONS[name]['description']
     else:
@@ -218,7 +218,8 @@ def tag_description(tag):
 @register.function
 def tag_learn_more(tag):
     if not tag: return ''
-    if tag.name in TAG_DESCRIPTIONS and 'learn_more' in TAG_DESCRIPTIONS[tag.name]:
+    if (tag.name in TAG_DESCRIPTIONS and 
+            'learn_more' in TAG_DESCRIPTIONS[tag.name]):
         return TAG_DESCRIPTIONS[tag.name]['learn_more']
     else:
         return []
@@ -228,7 +229,7 @@ def tag_meta(tag, other_name):
     """Get metadata for a tag or tag name."""
     # TODO: Replace usage of tag_{title,description,learn_more}?
     if not tag: return ''
-    name = ( type(tag) is str ) and tag or tag.name
+    name = (isinstance(tag, basestring)) and tag or tag.name
     if name in TAG_DESCRIPTIONS and other_name in TAG_DESCRIPTIONS[name]:
         return TAG_DESCRIPTIONS[name][other_name]
     else:

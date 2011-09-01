@@ -4,6 +4,7 @@ import logging
 import os
 import platform
 
+from django.utils import simplejson as json
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -296,6 +297,9 @@ INSTALLED_APPS = (
     'product_details',
     'tower',
     'smuggler',
+    'constance.backends.database',
+    'constance',
+    'waffle',
 
     # SUMO
     #'users',
@@ -789,5 +793,42 @@ SKIP_SOUTH_TESTS = True
 # TODO: Move migrations for our apps here, rather than living with the app?
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
+    # HACK: South treats "database" as the name of constance.backends.database
+    'database': 'migrations.south.constance',
 }
 
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_DATABASE_CACHE_BACKEND = CACHE_BACKEND
+
+# Settings and defaults controllable by Constance in admin
+CONSTANCE_CONFIG = dict(
+
+    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
+        "challenge:2011:september",
+        "Dev derby current challenge"
+    ),
+
+    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG = (
+        "system:challenge:firstplace:2011:august",
+        "Tag used to find most recent winner for dev derby"
+    ),
+
+    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS = (
+        ' '.join([
+            "challenge:2011:september",
+            "challenge:2011:october",
+            "challenge:2011:november",
+        ]),
+        "Dev derby choices displayed on submission form (space-separated tags)"
+    ),
+
+    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = (
+        ' '.join([
+            "challenge:2011:august",
+            "challenge:2011:july",
+            "challenge:2011:june",
+        ]),
+        "Dev derby tags for previous challenges (space-separated tags)"
+    ),
+
+)

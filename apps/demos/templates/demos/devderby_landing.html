@@ -35,7 +35,7 @@
     <header id="derby-head">
       <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
       <h1>{{_("Dev Derby")}}</h1>
-      <h2>{% trans title=tag_meta(challenge_choices[0], "short_title") %}Show us what you can do with {{ title }}{% endtrans %}</h2>
+      <h2>{% trans title=tag_meta(current_challenge_tag_name, "short_title") %}Show us what you can do with {{ title }}{% endtrans %}</h2>
       <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
       <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
     </header>
@@ -47,11 +47,11 @@
       </header>
       <ol>
         <li class="first">
-          <h2 class="title">{{tag_meta(challenge_choices[0], "short_title")}}</h2>
-          <h3 class="date">{{tag_meta(challenge_choices[0], "short_dateline")}}</h3>
-          <h4 class="tagline">{{tag_meta(challenge_choices[0], "tagline")}}</h4>
+          <h2 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h2>
+          <h3 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h3>
+          <h4 class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</h4>
           <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-          <p class="desc">{{tag_meta(challenge_choices[0], "summary")}}</p>
+          <p class="desc">{{tag_meta(current_challenge_tag_name, "summary")}}</p>
         </li>
         <li class="second">
           <h2 class="title">{{tag_meta(challenge_choices[1], "short_title")}}</h2>
@@ -79,12 +79,12 @@
       
       <section id="tab-challenge" class="block">
         <header>
-          <h1 class="title">{{tag_meta(challenge_choices[0], "short_title")}}</h1>
-          <h2 class="date">{{tag_meta(challenge_choices[0], "short_dateline")}}</h2>
+          <h1 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h1>
+          <h2 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h2>
         </header>
-        <p class="tagline">{{tag_meta(challenge_choices[0], "tagline")}}</p>
-        {{tag_meta(challenge_choices[0], "tab_copy")|safe}}
-        {% trans month=tag_meta(challenge_choices[0], "short_dateline") %}
+        <p class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</p>
+        {{tag_meta(current_challenge_tag_name, "tab_copy")|safe}}
+        {% trans month=tag_meta(current_challenge_tag_name, "short_dateline") %}
           <p class="demo-submit"><a href="{{ submit_url }}" class="button">Submit your demo</a> for the {{month}} Dev Derby today!</p>
         {% endtrans %}
 
