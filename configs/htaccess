@@ -5,25 +5,25 @@
 ReWriteEngine On
 RewriteBase /
 
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/?)?)$           /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?docs/?)$     /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?logout/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mobile/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mozilla/?)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?search/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?web/?)$      /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?learn.*)$    /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?promote.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?events.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?profiles.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?discussion.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?forum-archive.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/?)?)$           /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?docs/?)$     /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?logout/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mobile/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mozilla/?)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?search/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?web/?)$      /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?learn.*)$    /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?promote.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?events.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?profiles.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?discussion.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?forum-archive.*)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(admin(/.*)?)$                                                                 /mwsgi/$1 [PT,L]
 
 # For debug_toolbar, mainly on dev VMs
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?__debug__(/.*)?)$ /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?__debug__(/.*)?)$ /mwsgi/$1 [PT,L]
 
    # PeteE: redirect feeds to a feeds disabled page
    RewriteCond %{REQUEST_URI} ^/Special:Article$ [NC]
