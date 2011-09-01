@@ -798,7 +798,7 @@ SOUTH_MIGRATION_MODULES = {
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
-CONSTANCE_DATABASE_CACHE_BACKEND = CACHE_BACKEND
+CONSTANCE_DATABASE_CACHE_BACKEND = None
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
