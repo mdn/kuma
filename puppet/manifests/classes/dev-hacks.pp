@@ -10,6 +10,10 @@ class dev_tools {
 # Do some dirty, dirty things to make development nicer.
 class dev_hacks {
 
+    file { "/home/vagrant":
+        owner => "vagrant", group => "vagrant", mode => 0755;
+    }
+
     file { "$PROJ_DIR/settings_local.py":
         ensure => file,
         source => "$PROJ_DIR/puppet/files/vagrant/settings_local.py";
@@ -24,9 +28,12 @@ class dev_hacks {
                 source => "/vagrant/puppet/files/etc/yum.conf",
                 owner => "root", group => "root", mode => 0644;
             }
+            file { "/vagrant/puppet/cache/yum":
+                ensure => directory
+            }
             exec { "rsync-yum-cache-from-puppet-cache":
                 command => "/usr/bin/rsync -r /vagrant/puppet/cache/yum/ /var/cache/yum/",
-                require => File["/etc/yum.conf"]
+                require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
             }
             
             # Disable SELinux... causing problems, and I don't understand it.
@@ -52,7 +59,8 @@ class dev_hacks_post {
         centos: {
             # Sync a yum cache up to host machine from VM
             exec { "rsync-yum-cache-to-puppet-cache":
-                command => "/usr/bin/rsync -r /var/cache/yum/ /vagrant/puppet/cache/yum/"
+                command => "/usr/bin/rsync -r /var/cache/yum/ /vagrant/puppet/cache/yum/",
+                require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
             }
         }
     }
