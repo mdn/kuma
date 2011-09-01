@@ -43,11 +43,58 @@ class LearnViewsTest(test_utils.TestCase):
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
-    def test_dev_mdc_link(self):
+
+class LandingViewsTest(test_utils.TestCase):
+    fixtures = ['test_data.json', ]
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    def test_home(self):
         url = reverse('landing.views.home')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
-        doc = pq(r.content)
 
+        doc = pq(r.content)
         dev_mdc_link = doc.find('a#dev-mdc-link')
         ok_(dev_mdc_link)
+
+    def test_addons(self):
+        url = reverse('landing.views.addons')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_mozilla(self):
+        url = reverse('landing.views.mozilla')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_mobile(self):
+        url = reverse('landing.views.mobile')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_web(self):
+        url = reverse('landing.views.web')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_search(self):
+        url = reverse('landing.views.search')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_promote_buttons(self):
+        url = reverse('landing.views.promote_buttons')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_discussion(self):
+        url = reverse('landing.views.discussion')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+    def test_forum_archive(self):
+        url = reverse('landing.views.forum_archive')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
