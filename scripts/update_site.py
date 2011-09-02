@@ -36,7 +36,7 @@ ENV_BRANCH = {
 
 RM_SETTINGS_PYC = "rm -f settings*.pyc"
 GIT_PULL = "git pull -q origin %(branch)s"
-GIT_RESET_HARD = "git reset --hard"
+GIT_RESET_HARD = "git reset --hard HEAD"
 GIT_SUBMODULE_SYNC = "git submodule sync"
 GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
 SVN_REVERT = "svn revert -R ."
@@ -56,11 +56,11 @@ def update_site(env, debug):
 
     commands = [
         (CHDIR, here),
-        (EXEC,  RM_SETTINGS_PYC),
-        (EXEC,  GIT_RESET_HARD),
-        (EXEC,  GIT_PULL % project_branch),
-        (EXEC,  GIT_SUBMODULE_SYNC),
-        (EXEC,  GIT_SUBMODULE_UPDATE),
+        (EXEC, RM_SETTINGS_PYC),
+        (EXEC, GIT_RESET_HARD),
+        (EXEC, GIT_PULL % project_branch),
+        (EXEC, GIT_SUBMODULE_SYNC),
+        (EXEC, GIT_SUBMODULE_UPDATE),
     ]
 
     # Update locale dir if applicable
