@@ -18,7 +18,7 @@ from pytz import timezone
 from tower import ugettext_lazy as _lazy, ungettext
 
 import sumo.parser
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class DateTimeFormatError(Exception):
@@ -36,7 +36,7 @@ def paginator(pager):
 def url(viewname, *args, **kwargs):
     """Helper for Django's ``reverse`` in templates."""
     locale = kwargs.pop('locale', None)
-    return reverse(viewname, locale=locale, args=args, kwargs=kwargs)
+    return reverse(viewname, args=args, kwargs=kwargs)
 
 
 @register.filter

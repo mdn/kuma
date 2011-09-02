@@ -1,15 +1,21 @@
 import csv
-from datetime import datetime
+from datetime import datetime, tzinfo
+import time
 
 import logging
 import urllib2
 import urllib
 import hashlib
 
+from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
+from django.core.cache import cache
 
 import caching.base
+import xml.sax
+from xml.sax.handler import ContentHandler
+
 import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
@@ -95,6 +101,9 @@ class UserProfile(ModelBase):
                                 blank=True)
     bio = models.TextField(_('About Me'), blank=True)
 
+    irc_nickname = models.CharField(_('IRC nickname'), max_length=255, default='',
+                                    blank=True)
+
     tags = NamespacedTaggableManager(_('Tags'), blank=True)
 
     # should this user receive contentflagging emails?
@@ -158,6 +167,36 @@ class UserProfile(ModelBase):
         return False
 
 
+def parse_date(date_str):
+    try:
+        parsed_date = datetime.strptime(date_str, "%m/%d/%Y")
+        parsed_date.strftime("%Y-%m-%d")
+        return parsed_date
+    except:
+        return None
+
+
+FIELD_MAP = {
+    "date": ["Start Date",None, parse_date],
+    "end_date": ["End Date",None, parse_date],
+    "conference": ["Conference",None],
+    "conference_link": ["Link",None],
+    "location": ["Location",None],
+    "people": ["Attendees",None],
+    "description": ["Description",None],
+    "done": ["Done",None],
+    "materials": ["Materials URL",None],
+}
+
+def parse_header_line(header_line):
+    for field_name in FIELD_MAP.keys():
+        field = FIELD_MAP[field_name]
+        if field[1] == None:
+            try:
+                FIELD_MAP[field_name][1] = header_line.index(field[0])
+            except IndexError:
+                FIELD_MAP[field_name][1] = ''
+
 class Calendar(ModelBase):
     """The Calendar spreadsheet"""
 
@@ -173,9 +212,24 @@ class Calendar(ModelBase):
                 row[idx] = p.parseFragment(unicode(cell, 'utf-8')).toxml()
             yield row
 
+    @classmethod
+    def parse_row(cls, doc_row):
+        row = {}
+        for field_name in FIELD_MAP.keys():
+            field = FIELD_MAP[field_name]
+            if len(doc_row) > field[1]:
+               field_value = doc_row[field[1]]
+            else:
+                field_value = ''
+            if len(field) >= 3 and callable(field[2]):
+                field_value = field[2](field_value)
+            row[field_name] = field_value
+        return row
+
     def reload(self, data=None):
         events = []
         u = None
+
         if not data:
             try:
                 u = urllib2.urlopen(self.url)
@@ -184,37 +238,35 @@ class Calendar(ModelBase):
         data = csv.reader(u) if u else data
         if not data:
             return False
+
         events = list(Calendar.as_unicode(data))
         Event.objects.filter(calendar=self).delete()
+
+        # use column indices from header names so re-ordering
+        # columns doesn't blow us up
+        header_line = events.pop(0)
+        parse_header_line(header_line)
+
+        today = datetime.today()
+
         for event_line in events:
             event = None
-            if len(event_line) > 7:
-                done = event_line[7] == 'yes'
-            if event_line[1] != "Conference":
-                # verify date string conversion before adding the event
-                try:
-                    event_date = datetime.strptime(event_line[9], "%m/%d/%Y")
-                    event_date_string = event_date.strftime("%Y-%m-%d")
-                except:
-                    continue
-                if len(event_line) > 10:
-                    try:
-                        event_end_date = datetime.strptime(event_line[10],
-                                                           "%m/%d/%Y")
-                        event_end_date_string = event_end_date.strftime(
-                                                           "%Y-%m-%d")
-                    except:
-                        event_end_date = None
-                event = Event(date=event_date,
-                              end_date=event_end_date,
-                              conference=event_line[1],
-                              conference_link=event_line[3],
-                              location=event_line[2], people=event_line[5],
-                              description=event_line[6][:255],
-                              done=done, calendar=self)
-                if len(event_line) > 8:
-                    event.materials = event_line[8]
+            row = Calendar.parse_row(event_line)
+            if row['date'] == None:
+                continue
+            if row['end_date'] == None:
+                row['end_date'] = row['date']
+            row['done'] = False
+            if row['end_date'] < today:
+                row['done'] = True
+            row['end_date'] = row['end_date'].strftime("%Y-%m-%d")
+            row['date'] = row['date'].strftime("%Y-%m-%d")
+
+            try:
+                event = Event(calendar=self, **row)
                 event.save()
+            except:
+                continue
 
     def __unicode__(self):
         return self.shortname
@@ -228,8 +280,8 @@ class Event(ModelBase):
     conference = models.CharField(max_length=255)
     conference_link = models.URLField(blank=True, verify_exists=False)
     location = models.CharField(max_length=255)
-    people = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    people = models.TextField()
+    description = models.TextField()
     done = models.BooleanField(default=False)
     materials = models.URLField(blank=True, verify_exists=False)
     calendar = models.ForeignKey(Calendar)

@@ -47,39 +47,47 @@ class ActionCountersTest(TestCase):
         #    logging.debug("SQL %s" % sql)
         pass
 
-    def mk_request(self, user=None, session_key=None, ip='192.168.123.123', 
+    def mk_request(self, user=None, ip='192.168.123.123', 
             user_agent='FakeBrowser 1.0'):
         request = HttpRequest()
         request.user = user and user or AnonymousUser()
-        if session_key:
-            request.session = Session()
-            request.session.session_key = session_key
         request.method = 'GET'
         request.META['REMOTE_ADDR'] = ip
         request.META['HTTP_USER_AGENT'] = user_agent
         return request
 
+    @attr('bad_multiple')
     def test_bad_multiple_counters(self):
         """Force multiple counters, possibly result of race condition, ensure graceful handling"""
-        request = self.mk_request()
-        user, ip, user_agent, session_key = get_unique(request)
-
+        action_name = "likes"
         obj_1 = self.obj_1
         obj_1_ct = ContentType.objects.get_for_model(obj_1)
 
+        request = self.mk_request()
+        user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
+                                                       action_name, request)
+
+        # Create an initial counter record directly.
         u1 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
-                name="likes", total=1, ip=ip, user_agent=user_agent, user=user,
-                session_key=session_key)
+                name=action_name, total=1, ip=ip, user_agent=user_agent,
+                user=user)
         u1.save()
 
-        u2 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
-                name="likes", total=1, ip=ip, user_agent=user_agent, user=user,
-                session_key=session_key)
-        u2.save()
+        # Adding a duplicate counter should be prevented at the model level.
+        try:
+            u2 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
+                    name=action_name, total=1, ip=ip, user_agent=user_agent,
+                    user=user)
+            u2.save()
+            ok_(False, "This should have triggered an IntegrityError")
+        except:
+            pass
 
+        # Try get_unique_for_request, which should turn up the single unique
+        # record created earlier.
         try:
             (u, created) = ActionCounterUnique.objects.get_unique_for_request(obj_1, 
-                    'likes', request)
+                               action_name, request)
             eq_(False, created)
         except MultipleObjectsReturned, e:
             ok_(False, "MultipleObjectsReturned should not be raised")

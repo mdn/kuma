@@ -1,18 +1,34 @@
-{% extends "generic.html" %}
+{% extends "base.html" %}
+
+{% block bodyclass %}error{% endblock %}
 
 {% block title %}{{ page_title(_('Internal Server Error')) }}{% endblock %}
 
-{% block h1 %}{{ _('Internal Server Error') }}{% endblock %}
+{% block content %}
 
-{% block main_content %}
-<p>An unhandled error occurred in the application. The error has been logged
-and an administrator was notified. We apologize for the inconvenience!</p>
+<section id="content">
+<div class="wrap">
 
-<p>Please start over on the <a href="{{ url('home') }}">home page</a>.</p>
+  <section id="content-main" class="full" role="main">
 
-<p>If you have additional information how to reproduce this problem, please
-<a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
-Thanks!</p>
+    <h1 class="page-title">Internal Server Error</h1>
+    
+    <img src="{{ MEDIA_URL }}img/beast-500.png" alt="" class="beast 500">
+
+    <p>An unhandled error occurred in the application. The error has been logged
+    and an administrator was notified. We apologize for the inconvenience!</p>
+    
+    <p>Please start over on the <a href="{{ url('home') }}">home page</a>.</p>
+    
+    <p>If you have additional information how to reproduce this problem, please
+    <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
+    Thanks!</p>
+    
+  </section>
+
+</div>
+</section>
+
 {% endblock %}
 
 {% block site_js %}

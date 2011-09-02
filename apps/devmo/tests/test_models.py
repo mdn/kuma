@@ -1,8 +1,10 @@
 import logging
+import urllib
 import csv
 import shlex
 import urllib2
 from os.path import basename, dirname, isfile, isdir
+from datetime import datetime
 
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
@@ -14,7 +16,7 @@ from django.contrib.auth.models import User, AnonymousUser
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile
+from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
 
 from dekicompat.backends import DekiUser
 
@@ -29,6 +31,7 @@ BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
 
 
 class TestCalendar(test_utils.TestCase):
+    fixtures = ['devmo_calendar.json']
 
     def setUp(self):
         self.cal = Calendar.objects.get(shortname='devengage_events')
@@ -57,12 +60,20 @@ class TestCalendar(test_utils.TestCase):
 
     def test_reload_from_csv_data_blank_end_date(self):
         self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
-        # check total
-        assert_equal(33, len(Event.objects.all()))
-        # spot-check
         event = Event.objects.get(conference='Monash University')
         ok_(event)
-        eq_(None, event.end_date)
+        eq_(event.date, event.end_date)
+
+    def test_reload_end_date_determines_done(self):
+        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
+        # no matter what done column says, events should be done
+        # by virtue of the end date
+        event = Event.objects.get(conference='Confoo')
+        ok_(event)
+        eq_(True, event.done)
+        event = Event.objects.get(conference='TECH4AFRICA')
+        ok_(event)
+        eq_(False, event.done)
 
     def test_bad_date_column_skips_row(self):
         self.cal.reload(data=csv.reader(open(BAD_DATE_CSV, 'rb')))
@@ -123,6 +134,13 @@ class TestUserProfile(test_utils.TestCase):
         p3 = UserProfile.objects.get(user=user)
         eq_(test_sites, p3.websites)
 
+    def test_irc_nickname(self):
+        """We've added IRC nickname as a profile field. Make sure it shows up."""
+        (user, deki_user, profile) = self._create_profile()
+        profile_from_db = UserProfile.objects.get(user=user)
+        ok_(hasattr(profile_from_db, 'irc_nickname'))
+        ok_(profile_from_db.irc_nickname == 'ircuser')
+
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""
         user = User.objects.create_user('tester23', 'tester23@example.com',
@@ -140,6 +158,7 @@ class TestUserProfile(test_utils.TestCase):
         profile.organization = "UFO"
         profile.location = "Outer Space"
         profile.bio = "I am a freaky space alien."
+        profile.irc_nickname = "ircuser"
         profile.save()
 
         return (user, deki_user, profile)

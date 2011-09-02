@@ -117,11 +117,13 @@ transform: rotate(18deg);
 
 /* @Judges *********/
 #current-challenge .judges { list-style: none; margin: 0 0 1em; font-size: .857em; }
-#current-challenge .judges .vcard { list-style: none; margin: 0; position: relative; min-height: 100px; padding: 20px 0 20px 120px; border-top: 2px dotted #746b60; }
+#current-challenge .judges .vcard { list-style: none; margin: 0; position: relative; min-height: 100px; padding: 15px 0 15px 120px; border-top: 2px dotted #746b60; }
 #current-challenge .judges h3 { font-size: 16px; margin: 0 0 .15em; text-transform: uppercase; }
 #current-challenge .judges .title { text-transform: uppercase; margin: 0 0 .15em; }
-#current-challenge .judges .photo { position: absolute; left: 0; top: 20px; }
+#current-challenge .judges .photo { position: absolute; left: 0; top: 15px; }
 #current-challenge .judges cite { font-style: italic; }
+#current-challenge .judges p { margin: 1.25em 0 0; }
+#current-challenge .judges .twitter { margin-top: 0; }
 
 /* @Previous @Challenges *********/
 #current-challenge .previous { list-style: none; margin: 0 0 1em; font-size: .857em; border-bottom: 2px dotted #746b60; }

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title(_('Forum Archive')) }}{% endblock %}
+
+{% block bodyclass %}section-community landing{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+  <section id="content-main" role="main">
+  <iframe id="forum_archive_iframe" src="{{ MEDIA_URL }}/static/forums" seamless></iframe>
+  </section>
+</div>
+</section>
+{% endblock %}

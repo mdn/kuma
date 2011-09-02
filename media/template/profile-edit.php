@@ -33,6 +33,7 @@ head(
       
       <fieldset class="section notitle" id="personal">
         <ul>
+          <li><label for="pers-email">E-mail</label> <input type="email" id="pers-email" name="email" value="neil@itsneal.com"></li>
           <li><label for="pers-displayname">Name</label> <input type="text" id="pers-displayname" name="display_name" value="Neil Gauldin"></li>
           <li><label for="pers-title">Title</label> <input type="text" id="pers-title" name="title" value="Web Developer"></label></li>
           <li><label for="pers-company">Company</label> <input type="text" id="pers-company" name="company" value="The Collective Group"></label></li>
@@ -48,18 +49,37 @@ My childhood was typical. Summers in Rangoon, luge lessons. In the spring we'd m
           <li>
             <label for="pers-interests">Interests (tags)</label>
             <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
-            <input type="text" name="interests" id="pers-interests">
-		        <button type="button">Add</button>
-          	<ul class="int-taglist">
-              <li><a href="#" rel="tag">CSS</a> <a class="del" title="Remove 'CSS' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">CSS3</a> <a class="del" title="Remove 'CSS3' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">JavaScript</a> <a class="del" title="Remove 'JavaScript' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">web standards</a> <a class="del" title="Remove 'web standards' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">monster movies</a> <a class="del" title="Remove 'monster movies' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">bacon</a> <a class="del" title="Remove 'bacon' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">PHP</a> <a class="del" title="Remove 'PHP' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">BBQ</a> <a class="del" title="Remove 'BBQ' from your interests">remove</a></li>
-              <li><a href="#" rel="tag">SOL</a> <a class="del" title="Remove 'SOL' from your interests">remove</a></li>
+            <input style="display: none;" id="id_interests" name="interests" value="web standards, crooooooow, monster movies, tom servo, BBQ, gypsy" maxlength="255" type="text">
+            <ul class="tagit" id="tagit-interests">
+              <li class="tagit-choice"><span class="tagit-label">web standards</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">crooooooow</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">monster movies</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">tom servo</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">accessibility</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">gypsy</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">CSS</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">HTML</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">front-end development</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">JavaScript</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">CSS3</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-choice"><span class="tagit-label">HTML5</span><a class="close"><span class="text-icon">×</span><span class="ui-icon ui-icon-close"></span></a></li>
+              <li class="tagit-new">
+                <input aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off" id="pers-interests" class="ui-widget-content ui-autocomplete-input" type="text">
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong class="label">Areas of Expertise</strong>
+            <p class="note">Add your interests first, then declare yourself an expert in selected topics.</p>
+            <ul id="tags-expertise" class="taglist">
+              <li class="tag-expert"><label for="expert-accessibility"><input type="checkbox" name="expert:accessibility" id="expert-accessibility"> accessibility</label></li>
+              <li class="tag-expert"><label for="expert-css"><input type="checkbox" name="expert:css" id="expert-css" checked> CSS</label></li>
+              <li class="tag-expert"><label for="expert-frontenddev"><input type="checkbox" name="expert:frontenddev" id="expert-frontenddev" checked> front-end development</label></li>
+              <li class="tag-expert"><label for="expert-webstandards"><input type="checkbox" name="expert:webstandards" id="expert-webstandards"> web standards</label></li>
+              <li class="tag-expert"><label for="expert-html"><input type="checkbox" name="expert:html" id="expert-html" checked> HTML</label></li>
+              <li class="tag-expert"><label for="expert-javascript"><input type="checkbox" name="expert:javascript" id="expert-javascript"> JavaScript</label></li>
+              <li class="tag-expert"><label for="expert-css3"><input type="checkbox" name="expert:css3" id="expert-css3"> CSS3</label></li>
+              <li class="tag-expert"><label for="expert-html5"><input type="checkbox" name="expert:html5" id="expert-html5"> HTML5</label></li>
             </ul>
           </li>
         </ul>
@@ -71,27 +91,30 @@ My childhood was typical. Summers in Rangoon, luge lessons. In the spring we'd m
         <ul>
           <li class="site website">
             <label for="site_website">Website/blog</label> 
-            <input type="text" id="site_website" name="website" class="url" value="http://itsneil.com">
+            <input type="url" id="site_website" name="website" class="url" value="http://itsneil.com">
           </li>
           <li class="site twitter">
             <label for="site_twitter">Twitter</label> 
-            <input type="text" id="site_twitter" name="twitter" class="url" value="http://twitter.com/neilhimself">
+            <input type="url" id="site_twitter" name="twitter" class="url" value="http://twitter.com/neilhimself">
           </li>
-          <li class="site github">
+          <li class="site github error">
             <label for="site_github">GitHub</label> 
-            <input type="text" id="site_github" name="github" class="url" value="http://github.com/neilhimself">
+            <input type="url" id="site_github" name="github" class="url" value="http://www.sleazyspamsite.info">
+            <ul class="errorlist">
+              <li>URL should begin with "http://github.com/"</li>
+            </ul>
           </li>
           <li class="site stackover">
             <label for="site_stackover">StackOverflow</label> 
-            <input type="text" id="site_stackover" name="stackover" class="url" value="http://stackoverflow.com/users/neilhimself">
+            <input type="url" id="site_stackover" name="stackover" class="url" value="http://stackoverflow.com/users/neilhimself">
           </li>
           <li class="site linkedin">
             <label for="site_linkedin">LinkedIn</label> 
-            <input type="text" id="site_linkedin" name="linkedin" class="url" value="http://www.linkedin.com/in/neilhimself">
+            <input type="url" id="site_linkedin" name="linkedin" class="url" value="http://www.linkedin.com/in/neilhimself">
           </li>
         </ul>
         
-<!--
+<!-- Ignore this
         <p class="site">
           <select name="site1_site">
             <option value="" selected disabled>- select -</option>

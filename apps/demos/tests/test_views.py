@@ -8,7 +8,7 @@ import logging
 from django import http, test
 from django.contrib.auth.models import User
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.tests import LocalizingClient
 
 from mock import patch
@@ -124,7 +124,7 @@ class DemoViewsTest(test_utils.TestCase):
     @logged_in
     def test_edit_invalid(self):
         s = save_valid_submission()
-        edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
+        edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.post(edit_url, data=dict())
         d = pq(r.content)
         assert d('form#demo-submit')
@@ -135,7 +135,7 @@ class DemoViewsTest(test_utils.TestCase):
     @logged_in
     def test_edit_valid(self):
         s = save_valid_submission()
-        edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
+        edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.post(edit_url, data=dict(
             title=s.title,
             summary='This is a test demo submission',
@@ -195,7 +195,7 @@ class DemoViewsTest(test_utils.TestCase):
         d = pq(r.content)
         edit_link = d('ul#demo-manage a.edit')
         assert edit_link
-        edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
+        edit_url = reverse('demos_edit', args=[s.slug])
         eq_(edit_url, edit_link.attr("href"))
 
         r = self.client.get(edit_url)
@@ -207,7 +207,7 @@ class DemoViewsTest(test_utils.TestCase):
     def test_hidden_field(self):
         s = save_valid_submission('hello world')
 
-        edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
+        edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         assert pq(r.content)('input[name="hidden"][type="checkbox"]')
 
@@ -215,6 +215,6 @@ class DemoViewsTest(test_utils.TestCase):
     def test_derby_field(self):
         s = save_valid_submission('hello world')
 
-        edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
+        edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         assert pq(r.content)('fieldset#devderby-submit')

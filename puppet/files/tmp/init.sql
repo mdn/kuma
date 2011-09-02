@@ -13,3 +13,9 @@ create database kuma;
 grant all privileges on kuma.* to kuma@'%' identified by 'kuma';
 grant all privileges on kuma.* to kuma@localhost identified by 'kuma';
 grant all privileges on kuma.* to kuma@10.0.2.15 identified by 'kuma';
+
+drop database if exists phpbb;
+create database phpbb;
+grant all privileges on phpbb.* to phpbb@'%' identified by 'phpbb';
+grant all privileges on phpbb.* to phpbb@localhost identified by 'phpbb';
+grant all privileges on phpbb.* to phpbb@10.0.2.15 identified by 'phpbb';

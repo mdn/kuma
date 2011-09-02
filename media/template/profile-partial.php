@@ -25,6 +25,15 @@ head(
         <div class="bio">
           <p>I make websites.</p>
         </div>
+        
+        <div class="tags">
+          <h2>Interests</h2>
+        	<ul class="int-taglist taglist">
+            <li>CSS</li>
+            <li>HTML</li>
+            <li>MST</li>
+          </ul>
+        </div>
       </div>
       
       <div class="extra">

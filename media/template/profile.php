@@ -28,25 +28,34 @@ head(
           <p>My childhood was typical. Summers in Rangoon, luge lessons. In the spring we'd make meat helmets. When I was insolent I was placed in a burlap bag and beaten with reeds- pretty standard really.</p>
         </div>
         
-        <div class="interests">
+        <div class="tags">
           <h2>Interests</h2>
-        	<ul class="int-taglist">
-            <li><a href="#" rel="tag">CSS</a></li>
-            <li><a href="#" rel="tag">CSS3</a></li>
-            <li><a href="#" rel="tag">JavaScript</a></li>
-            <li><a href="#" rel="tag">web standards</a></li>
-            <li><a href="#" rel="tag">monster movies</a></li>
-            <li><a href="#" rel="tag">bacon</a></li>
-            <li><a href="#" rel="tag">HTML</a></li>
-            <li><a href="#" rel="tag">HTML5</a></li>
-            <li><a href="#" rel="tag">open source</a></li>
-            <li><a href="#" rel="tag">PHP</a></li>
-            <li><a href="#" rel="tag">BBQ</a></li>
-            <li><a href="#" rel="tag">SOL</a></li>
-            <li><a href="#" rel="tag">Cambot</a></li>
-            <li><a href="#" rel="tag">Gypsy</a></li>
-            <li><a href="#" rel="tag">Tom Servo</a></li>
-            <li><a href="#" rel="tag">Crooooooooow</a></li>
+        	<ul class="int-taglist taglist">
+            <li>CSS</li>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>web standards</li>
+            <li>monster movies</li>
+            <li>bacon</li>
+            <li>HTML</li>
+            <li>HTML5</li>
+            <li>open source</li>
+            <li>PHP</li>
+            <li>BBQ</li>
+            <li>SOL</li>
+            <li>Cambot</li>
+            <li>Gypsy</li>
+            <li>Tom Servo</li>
+            <li>Crooooooooow</li>
+          </ul>
+        </div>
+        
+        <div class="tags">
+          <h2>Areas of Expertise</h2>
+          <ul class="exp-taglist taglist">
+            <li>CSS</li>
+            <li>HTML</li>
+            <li>JavaScript</li>
           </ul>
         </div>
       </div>
@@ -60,7 +69,7 @@ head(
           <li class="web"><a href="#" rel="me external" class="url">Website</a></li>
           <li class="twitter"><a href="#"rel="me external" class="url">@neilhimself</a></li>
           <li class="github"><a href="#"rel="me external" class="url">GitHub</a></li>
-          <li class="stackover"><a href="#"rel="me external" class="url">StackOverflow</a></li>
+          <li class="stackoverflow"><a href="#"rel="me external" class="url">StackOverflow</a></li>
           <li class="linkedin"><a href="#"rel="me external" class="url">LinkedIn</a></li>
           <li class="docs"><a href="#" rel="me">Docs user page</a></li>
         </ul>

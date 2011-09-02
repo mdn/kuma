@@ -76,6 +76,14 @@ def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return jingo.render(request, 'landing/promote_buttons.html')
 
+def discussion(request):
+    """Discussion landing page."""
+    return jingo.render(request, 'landing/discussion.html')
+
+def forum_archive(request):
+    """Forum Archive from phpbb-static landing page."""
+    return jingo.render(request, 'landing/forum_archive.html')
+
 def common_landing(request, section=None, extra=None):
     """Common code for landing pages."""
     if not section:
