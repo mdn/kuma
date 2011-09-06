@@ -12,6 +12,8 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
+from nose.plugins.skip import SkipTest
+
 from django.contrib.auth.models import User, AnonymousUser
 
 from devmo.helpers import devmo_url
