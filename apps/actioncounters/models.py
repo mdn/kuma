@@ -1,6 +1,7 @@
 """Models for activity counters"""
 
 import logging
+import hashlib
 
 from django.db import models
 from django.conf import settings
@@ -40,45 +41,25 @@ class ActionCounterUniqueManager(models.Manager):
         refrain from creating a new one if the intent is just to check
         existence."""
         content_type = ContentType.objects.get_for_model(object)
-        user, ip, user_agent, session_key = get_unique(request)
-        try:
-
-            if create:
-                return self.get_or_create(
-                        content_type=content_type, object_pk=object.pk, 
-                        name=action_name,
-                        ip=ip, user_agent=user_agent, user=user,
-                        session_key=session_key,
-                        defaults=dict( total=0 ))
-            else:
-                try:
-                    return ( 
-                        self.get(
-                            content_type=content_type, object_pk=object.pk, 
-                            name=action_name,
-                            ip=ip, user_agent=user_agent, user=user,
-                            session_key=session_key,), 
-                        False 
-                    )
-                except ActionCounterUnique.DoesNotExist:
-                    return ( None, False )
-        
-        except MultipleObjectsReturned:
-            # HACK: There seems to be a race condition in get_or_create. :(
-            # Happens very rarely, but when it does, seems like the best thing
-            # to do is try to clean up?
-            counters = self.filter(
-                content_type=content_type, object_pk=object.pk, 
-                name=action_name,
-                ip=ip, user_agent=user_agent, user=user,
-                session_key=session_key)
-            counter = counters[0]
-            for c in counters[1:]: c.delete()
-            return ( counter, False )
+        user, ip, user_agent, unique_hash = get_unique(content_type, object.pk,
+                                                       action_name,
+                                                       request=request)
+        if create:
+            return self.get_or_create(unique_hash=unique_hash,
+                    defaults=dict(content_type=content_type, object_pk=object.pk, 
+                                  name=action_name, ip=ip,
+                                  user_agent=user_agent, user=user,
+                                  total=0))
+        else:
+            try:
+                return (self.get(unique_hash=unique_hash), False)
+            except ActionCounterUnique.DoesNotExist:
+                return (None, False)
 
 
 class ActionCounterUnique(models.Model):
     """Action counter for a unique request / user"""
+    
     objects = ActionCounterUniqueManager()
 
     content_type = models.ForeignKey(
@@ -96,16 +77,28 @@ class ActionCounterUnique(models.Model):
 
     ip = models.CharField(max_length=40, editable=False, 
             db_index=True, blank=True, null=True)
-    session_key = models.CharField(max_length=40, editable=False, 
-            db_index=True, blank=True, null=True)
     user_agent = models.CharField(max_length=128, editable=False, 
             db_index=True, blank=True, null=True)
     user = models.ForeignKey(User, editable=False, 
             db_index=True, blank=True, null=True)
 
+    # HACK: As it turns out, MySQL doesn't consider two rows with NULL values
+    # in a column as duplicates. So, resorting to calculating a unique hash in
+    # code.
+    unique_hash = models.CharField(max_length=32, editable=False,
+                                   unique=True, db_index=True, null=True)
+
     modified = models.DateTimeField( 
             _('date last modified'), 
             auto_now=True, blank=False)
+
+    def save(self, *args, **kwargs):
+        # Ensure unique_hash is updated whenever the object is saved
+        user, ip, user_agent, unique_hash = get_unique(
+                self.content_type, self.object_pk, self.name, 
+                ip=self.ip, user_agent=self.user_agent, user=self.user)
+        self.unique_hash = unique_hash
+        super(ActionCounterUnique, self).save(*args, **kwargs)
 
     def increment(self, min=0, max=1):
         return self._change_total(1, min, max)

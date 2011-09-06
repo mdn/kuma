@@ -125,7 +125,7 @@
           <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Community') }}</a>
             <ul id="nav-sub-community" class="sub-menu">
               <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
-              <li><a href="/forums">{{ _('Forums') }}</a></li>
+              <li><a href="{{ url('discussion') }}">{{ _('Discussions') }}</a></li>
               <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
             </ul>
         </ul>
@@ -146,7 +146,7 @@
   <p>
   {% trans uservoice_url='http://mdn.uservoice.com/forums/51389-mdn-website-feedback-http-developer-mozilla-org' %}
   What do you think of the new MDN? Please <a href="{{ uservoice_url }}">share
-  your feedback</a> with us.
+  your feedback</a> with us. <a id="dev-mdc-link" href="https://lists.mozilla.org/listinfo/dev-mdc">Join our mailing list</a> to discuss ways to help create great documentation.
   {% endtrans %}
   </p>
 </div>
@@ -161,7 +161,7 @@
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
       {% endtrans %}
       &bull; <a href="{{ devmo_url(_('/Project:en/About')) }}">{{ _('About MDN') }}</a> &bull;
-      <a href="http://www.mozilla.org/about/policies/privacy-policy.html">Privacy Policy</a> &bull;
+      <a href="http://www.mozilla.org/about/policies/privacy-policy.html">{{ _('Privacy Policy') }}</a> &bull;
       <a href="/forums/viewtopic.php?f=3&amp;t=5">{{ _('Help') }}</a></p>
     </div>
     {% include "includes/login.html" %}

@@ -4,12 +4,13 @@ import logging
 import os
 import platform
 
+from django.utils import simplejson as json
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 
 from sumo_locales import LOCALES
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 LOG_LEVEL = logging.WARN
@@ -219,7 +220,7 @@ MIDDLEWARE_CLASSES = (
 
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
-    'sumo.middleware.LocaleURLMiddleware',
+    'funfactory.middleware.LocaleURLMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
@@ -292,6 +293,9 @@ INSTALLED_APPS = (
     'product_details',
     'tower',
     'smuggler',
+    'constance.backends.database',
+    'constance',
+    'waffle',
 
     # SUMO
     'users',
@@ -494,9 +498,13 @@ MINIFY_BUNDLES = {
             'js/mdn/video-player.js',
 
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
-
+        ),
+        'profile': (
+            'js/mdn/profile.js',
+        ),
+        'events': (
+            'js/libs/jquery.gmap-1.1.0.js',
             'js/libs/jquery.tablesorter.min.js',
-            'js/mdn/geocode.js',
             'js/mdn/calendar.js',
         ),
         'demostudio': (
@@ -782,5 +790,42 @@ SKIP_SOUTH_TESTS = True
 # TODO: Move migrations for our apps here, rather than living with the app?
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
+    # HACK: South treats "database" as the name of constance.backends.database
+    'database': 'migrations.south.constance',
 }
 
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_DATABASE_CACHE_BACKEND = None
+
+# Settings and defaults controllable by Constance in admin
+CONSTANCE_CONFIG = dict(
+
+    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
+        "challenge:2011:september",
+        "Dev derby current challenge"
+    ),
+
+    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG = (
+        "system:challenge:firstplace:2011:august",
+        "Tag used to find most recent winner for dev derby"
+    ),
+
+    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS = (
+        ' '.join([
+            "challenge:2011:september",
+            "challenge:2011:october",
+            "challenge:2011:november",
+        ]),
+        "Dev derby choices displayed on submission form (space-separated tags)"
+    ),
+
+    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = (
+        ' '.join([
+            "challenge:2011:august",
+            "challenge:2011:july",
+            "challenge:2011:june",
+        ]),
+        "Dev derby tags for previous challenges (space-separated tags)"
+    ),
+
+)

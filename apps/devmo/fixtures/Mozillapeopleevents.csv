@@ -1,5 +1,5 @@
-Timestamp,Conference,Location,Link,Date,Who is present?,Description,done,Materials post,Start Date,End Date
-6/15/2011 17:25:24,Confoo,Montreal,http://confoo.ca/en/2011/session/anatomy-of-a-large-django-site,March 9-13th 2011,,Close      Share:                 Rating     Slides     View session page   Anatomy of a large Django site,,,3/9/2011,3/13/2011
+Timestamp,Conference,Location,Link,Date,Attendees,Description,Done,Materials URL,Start Date,End Date
+6/15/2011 17:25:24,Confoo,Montreal,http://confoo.ca/en/2011/session/anatomy-of-a-large-django-site,March 9-13th 2011,,Close      Share:                 Rating     Slides     View session page   Anatomy of a large Django site,no,,3/9/2011,3/13/2011
 ,State of the browser,"London, England",http://browser.londonwebstandards.org/,3/18/2011,"<a href=""http://paulrouget.com/"">Paul Rouget</a>",Panel with all the browser vendors on newest technologies,yes,n/a,3/18/2011,3/18/2011
 ,NASA Open Source Summit 2011,"Ames Research Center in Mountain View, California",http://www.nasa.gov/open/source/,3/29/11-3/30/11,Pascal Finette,Lessons from Mozilla,yes,http://blog.finette.com/post/4348670453/slides-from-my-talk-at-nasas-open-source-summit,3/29/2011,3/30/2011
 ,Stockholm Web Monkeys,"Stockholm, Sweden",http://groups.google.com/group/stockholm-web-monkeys/browse_thread/thread/b3b990f7dd607ce9,3/30/2011,"<a href=""http://robertnyman.com/"">Robert Nyman</a>","Community meetup where Robert will lead an HTML5 discussion: What's good, what's missing, web browser
@@ -32,5 +32,5 @@ implementation takes",yes,http://www.slideshare.net/robnyman/html5-whats-good-wh
 ,Evento Linux,"Lisbon, Portugal",http://www.eventolinux.org/,9/30/2011,"<a href=""http://wait-till-i.com"">Christian Heilmann</a>",HTML5 TBD,no,n/a,9/30/2011,9/30/2011
 ,Adobe MAX 2011,"Los Angeles, United States",http://max.adobe.com/,10/1/11-10/5/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 - The 2012 of the Web,no,n/a,10/1/2011,10/5/2011
 ,Fronteers 2011,"Amsterdam, Netherlands",http://fronteers.nl/congres/2011,10/6/11-10/7/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 Forms,no,n/a,10/6/2011,10/7/2011
-,TECH4AFRICA,"Johannesburg, South Africa",http://www.tech4africa.com/,10/27/11-10/28/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",TBA,no,n/a,10/27/2011,10/28/2011
+,TECH4AFRICA,"Johannesburg, South Africa",http://www.tech4africa.com/,10/27/11-10/28/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",TBA,yes,n/a,10/27/2011,10/28/2999
 ,StarTechConf,"Santiago, Chile",http://www.startechconf.com/,11/4/11-11/5/11,"<a href=""http://robertnyman.com"">Robert Nyman</a>",HTML5 APIs: Where no man has gone before,no,n/a,11/4/2011,11/5/2011

@@ -1,6 +1,8 @@
+import datetime
 import logging
 import csv
 import shlex
+import time
 import urllib2
 from os.path import basename, dirname, isfile, isdir
 
@@ -16,6 +18,7 @@ from devmo.helpers import devmo_url
 from devmo import urlresolvers
 from devmo.models import Calendar, Event, UserProfile
 from devmo.forms import UserProfileEditForm
+from devmo.cron import devmo_calendar_reload
 
 from dekicompat.backends import DekiUser
 
@@ -24,6 +27,7 @@ from sumo.urlresolvers import reverse
 
 
 TESTUSER_PASSWORD = 'trustno1'
+APP_DIR = dirname(dirname(__file__))
 
 
 class ProfileViewsTest(test_utils.TestCase):
@@ -50,6 +54,8 @@ class ProfileViewsTest(test_utils.TestCase):
             doc.find('#profile-head.vcard .org').text())
         eq_(profile.location,
             doc.find('#profile-head.vcard .loc').text())
+        eq_(profile.irc_nickname,
+            doc.find('#profile-head.vcard .irc').text())
         eq_(profile.bio,
             doc.find('#profile-head.vcard .bio').text())
 
@@ -87,6 +93,8 @@ class ProfileViewsTest(test_utils.TestCase):
             doc.find('#profile-edit input[name="organization"]').val())
         eq_(profile.location,
             doc.find('#profile-edit input[name="location"]').val())
+        eq_(profile.irc_nickname,
+            doc.find('#profile-edit input[name="irc_nickname"]').val())
 
         new_attrs = dict(
             email="tester23@example.com",
@@ -132,7 +140,7 @@ class ProfileViewsTest(test_utils.TestCase):
         # Scrape out the existing significant form field values.
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'bio', 'interests'):
+                'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
         # Fill out the form with websites.
@@ -187,7 +195,7 @@ class ProfileViewsTest(test_utils.TestCase):
 
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'bio', 'interests'):
+                'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
         test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
@@ -202,10 +210,33 @@ class ProfileViewsTest(test_utils.TestCase):
         p = UserProfile.objects.get(user=user)
 
         result_tags = [t.name.replace('profile:interest:', '')
-                for t in p.tags.all()]
+                for t in p.tags.all_ns('profile:interest:')]
         result_tags.sort()
         test_tags.sort()
         eq_(test_tags, result_tags)
+
+        test_expertise = ['css', 'canvas']
+        form['expertise'] = ', '.join(test_expertise)
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        result_tags = [t.name.replace('profile:expertise:', '')
+                for t in p.tags.all_ns('profile:expertise')]
+        result_tags.sort()
+        test_expertise.sort()
+        eq_(test_expertise, result_tags)
+
+        # Now, try some expertise tags not covered in interests
+        test_expertise = ['css', 'canvas', 'mobile', 'movies']
+        form['expertise'] = ', '.join(test_expertise)
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('.error #id_expertise').length)
 
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""
@@ -223,6 +254,7 @@ class ProfileViewsTest(test_utils.TestCase):
         profile.title = "Spaceship Pilot"
         profile.organization = "UFO"
         profile.location = "Outer Space"
+        profile.irc_nickname = "ircuser"
         profile.bio = "I am a freaky space alien."
         profile.save()
 
@@ -234,3 +266,37 @@ class ProfileViewsTest(test_utils.TestCase):
         logging.debug("HEAD %s" % r.items())
         logging.debug("CONT %s" % r.content)
         ok_(False)
+
+def get_datetime_from_string(string, string_format):
+    new_datetime = datetime.datetime.fromtimestamp(time.mktime(time.strptime(string, string_format)))
+    return new_datetime
+
+def check_event_date(row):
+    prev_end_datetime = datetime.datetime.today()
+    datetime_format = "%Y-%m-%d"
+    if (row.prev()):
+        prev_datetime_str = row.prev().find('td').eq(1).text()
+        prev_end_datetime = get_datetime_from_string(prev_datetime_str, datetime_format)
+    row_datetime_str = row.find('td').eq(1).text()
+    row_datetime = get_datetime_from_string(row_datetime_str, datetime_format)
+    logging.debug(row_datetime)
+    logging.debug(prev_end_datetime)
+    ok_(row_datetime < prev_end_datetime)
+
+class EventsViewsTest(test_utils.TestCase):
+    fixtures = ['devmo_calendar.json']
+
+    def setUp(self):
+        self.client = LocalizingClient()
+        devmo_calendar_reload()
+
+    def test_events(self):
+        url = reverse('devmo.views.events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+
+        # past events ordered newest to oldest
+        # rows = doc.find('table#past tr')
+        # prev_end_datetime = datetime.datetime.today()
+        # rows.each(check_event_date)

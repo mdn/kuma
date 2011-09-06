@@ -1,17 +1,33 @@
-{% extends "generic.html" %}
+{% extends "base.html" %}
+
+{% block bodyclass %}error{% endblock %}
 
 {% block title %}{{ page_title(_('Not Found')) }}{% endblock %}
 
-{% block h1 %}{{ _('Not Found') }}{% endblock %}
+{% block content %}
 
-{% block main_content %}
-<p>I'm sorry, I could not find what you were looking for.</p>
+<section id="content">
+<div class="wrap">
 
-<p>Please start over on the <a href="{{ url('home') }}">home page</a>.</p>
+  <section id="content-main" class="full" role="main">
 
-<p>If you were following a broken link, please
-<a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
-Thanks!</p>
+    <h1 class="page-title">Not Found</h1>
+    
+    <img src="{{ MEDIA_URL }}img/beast-404.png" alt="" class="beast 404">
+    
+    <p>We're sorry, we couldn't find what you were looking for.</p>
+    
+    <p>You can <a href="#q">try a search</a> or start over on the <a href="{{ url('home') }}">home page</a>.</p>
+    
+    <p>If you were following a broken link, please
+    <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
+    Thanks!</p>
+    
+  </section>
+
+</div>
+</section>
+
 {% endblock %}
 
 {% block site_js %}

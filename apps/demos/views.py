@@ -27,17 +27,16 @@ from feeder.models import Bundle, Feed
 from django.contrib.auth.models import User
 from devmo.models import UserProfile
 
+import constance.config
+
 from taggit.models import Tag
+
+from taggit_extras.utils import parse_tags, split_strip
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
 
-# TODO: Make these configurable in the DB via an admin page
-from . import ( DEMOS_CACHE_NS_KEY,
-        DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG,
-        DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG, 
-        DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
-        DEMOS_DEVDERBY_CHALLENGE_CHOICES )
+from . import DEMOS_CACHE_NS_KEY
 
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from contentflagging.forms import ContentFlagForm
@@ -162,23 +161,8 @@ def search(request):
         template_name='demos/listing_search.html') 
 
 def profile_detail(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = user.get_profile()
-
-    sort_order = request.GET.get('sort', 'created')
-    show_hidden = user == request.user
-    queryset = Submission.objects.all_sorted(sort_order).filter(creator=user)
-    if not show_hidden:
-        queryset = queryset.exclude(hidden=True)
-    return object_list(request, queryset,
-        extra_context=dict( 
-            profile_user=user, 
-            profile=profile
-        ),
-        paginate_by=25, allow_empty=True,
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/profile_detail.html') 
+    return HttpResponseRedirect(reverse(
+        'devmo.views.profile_view', args=(username,)))
 
 def like(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
@@ -249,7 +233,10 @@ def submit(request):
         return jingo.render(request, 'demos/submit_noauth.html', {})
 
     if request.method != "POST":
-        form = SubmissionNewForm(request_user=request.user)
+        initial = {}
+        if 'tags' in request.GET:
+            initial['challenge_tags'] = parse_tags(request.GET['tags'])
+        form = SubmissionNewForm(initial=initial, request_user=request.user)
     else:
         form = SubmissionNewForm(request.POST, request.FILES, request_user=request.user)
         if form.is_valid():
@@ -368,18 +355,25 @@ def devderby_landing(request):
 
     sort_order = request.GET.get('sort', 'created')
 
-    # TODO: Make these configurable in the DB via an admin page
-    current_challenge_tag_name = DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG
-    previous_winner_tag_name = DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG
-    previous_challenge_tag_names = DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS
+    # Grab current arrangement of challenges from Constance settings
+    current_challenge_tag_name = str(
+            constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+    previous_winner_tag_name = str(
+            constance.config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
+    previous_challenge_tag_names = parse_tags(
+            constance.config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
+            sorted=False)
+    challenge_choices = parse_tags(
+            constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
+            sorted=False)
 
-    submissions_qs = ( Submission.objects.all_sorted(sort_order)
+    submissions_qs = (Submission.objects.all_sorted(sort_order)
         .filter(taggit_tags__name__in=[current_challenge_tag_name])
-        .exclude(hidden=True) )
+        .exclude(hidden=True))
 
-    previous_winner_qs = ( Submission.objects.all() 
+    previous_winner_qs = (Submission.objects.all() 
         .filter(taggit_tags__name__in=[previous_winner_tag_name])
-        .exclude(hidden=True) )
+        .exclude(hidden=True))
 
     # TODO: Use an object_list here, in case we need pagination?
     return jingo.render(request, 'demos/devderby_landing.html', dict(
@@ -388,7 +382,7 @@ def devderby_landing(request):
         previous_challenge_tag_names = previous_challenge_tag_names,
         submissions_qs = submissions_qs,
         previous_winner_qs = previous_winner_qs,
-        challenge_choices = DEMOS_DEVDERBY_CHALLENGE_CHOICES,
+        challenge_choices = challenge_choices,
     ))
 
 def devderby_rules(request):

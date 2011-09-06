@@ -158,6 +158,11 @@ file {
         source => "/vagrant/puppet/files/tmp/wikidb.sql",
         owner => "vagrant", group => "vagrant", mode => 0644;
 
+    "/tmp/phpbb.sql":
+        ensure => file,
+        source => "/vagrant/puppet/files/tmp/phpbb.sql",
+        owner => "vagrant", group => "vagrant", mode => 0644;
+
     # Licence activation file for Open Source mindtouch version
     "/tmp/mindtouch-core.xml":
         ensure => file,
@@ -230,6 +235,14 @@ file {
     "/var/www/dekiwiki/editor/fckeditor/core/editor/plugins/mdc/": 
         target => "/home/vagrant/mozilla/plugins/fckeditor/mdc/",
         ensure => link, require => [ Exec["svn_co_deki_mozilla"], Package["mindtouch"] ];
+
+
+    "/var/www/phpbb/config.php":
+        ensure => file,
+        source => "/vagrant/puppet/files/var/www/phpbb/config.php",
+        require => Package["phpbb"],
+        owner => "apache", group => "apache", mode => 0644;
+
 
     #"/usr/bin/python":
     #    target => "/usr/bin/python2.6",

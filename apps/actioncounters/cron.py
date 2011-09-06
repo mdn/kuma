@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 import cronjobs
 
 # TODO: Figure out a way to do this per-class? Would need to break up some of the SQL calls.
+ACTIONCOUNTERS_ANON_GC_WINDOW = getattr(settings, "ACTIONCOUNTERS_ANON_GC_WINDOW", "2 MONTH")
 ACTIONCOUNTERS_RECENT_COUNT_WINDOW = getattr(settings, "ACTIONCOUNTERS_RECENT_COUNT_WINDOW", "14 DAY")
 
 @cronjobs.register
@@ -26,6 +27,17 @@ def update_actioncounter_counts():
         return updates[key]
 
     cursor = connection.cursor()
+
+    # Garbage collect any counters for anonymous users over a certain age.
+    cursor.execute("""
+        DELETE
+        FROM actioncounters_actioncounterunique 
+        WHERE 
+            user_id IS NULL AND
+            modified < date_sub(now(), INTERVAL %(interval)s)
+    """ % dict(
+        interval=ACTIONCOUNTERS_ANON_GC_WINDOW
+    ))
 
     # Any counters too old for the window should be set to 0
     cursor.execute("""

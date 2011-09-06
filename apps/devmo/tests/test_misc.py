@@ -7,6 +7,7 @@ from os.path import basename, dirname, isfile, isdir
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
+from nose import SkipTest
 from pyquery import PyQuery as pq
 import test_utils
 
@@ -56,6 +57,8 @@ class TestDevMoRobots(test_utils.TestCase):
         together unit, integration, regression, and
         acceptance tests """
     def test_production(self):
+        # Skip this test, because it runs against external sites and breaks.
+        raise SkipTest()        
         rules = [
             ("User-Agent", "*"),
             ("Crawl-delay", "5"),
@@ -71,6 +74,8 @@ class TestDevMoRobots(test_utils.TestCase):
         eq_(parse_robots('https://developer.mozilla.org'), rules)
 
     def test_stage_bug607996(self):
+        # Skip this test, because it runs against external sites and breaks.
+        raise SkipTest()        
         rules = [
             ("User-agent", "*"),
             ("Disallow", "/"),

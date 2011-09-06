@@ -1,31 +1,22 @@
-var mapstraction;
-var geocoder;
-var address;
-var locs = [];
-var dates = [];
-function initialize() {
-  mapstraction = new Mapstraction('map_canvas','google');
-  mapstraction.setCenterAndZoom(new LatLonPoint(50,0), 3);
-  geocoder = new MapstractionGeocoder(geocode_return, 'google');
-  mapstraction.addControls({pan:true,zoom:'small',map_type:true});
-  var x = document.getElementById('upcoming');
-  var rows = x.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-  for(var i=0;i<rows.length;i++){
-    var loc = rows[i].getElementsByTagName('td')[3];
-    dates.push(rows[i].getElementsByTagName('td')[0].innerHTML);
-    var o = rows[i].innerHTML;
-    geocoder.geocode({address:loc.innerHTML},o);
-  }
-  $('#upcoming').tablesorter({sortList:[[0,0]]});
-  $('#past').tablesorter({sortList:[[0,0]]});
-}
-
-function geocode_return(geocoded_location,o) {
-  var marker = new Marker(geocoded_location.point);
-  marker.setInfoBubble('<ul>'+o.replace(/td>/g,'li>')+'</ul>');
-  mapstraction.addMarker(marker);
-}
-
-window.addEventListener('load',function(event){
-  initialize();
-},false);
+$(function() {
+    var markers = [];
+    var address;
+    $('#upcoming tbody tr').each(function(){
+        var html = $(this).children('td.date').html() + "<br/>";
+        html += $(this).children('td.conference').html() + "<br/>";
+        var marker = {
+            address: $(this).children('td.location').text(),
+            icon: {
+                image: "/media/img/icn-tool-mozilla.png",
+                iconsize: [32, 26],
+                iconanchor: [16, 13],
+                infowindowanchor: [24, 0]
+            },
+            html: html,
+        };
+        markers.push(marker);
+    });
+    $('#map_canvas').gMap({longitude: 1, latitude: 10, markers: markers, zoom: 2});
+    $('#upcoming').tablesorter({sortList:[[0,0]]});
+    $('#past').tablesorter({sortList:[[0,1]]});
+});

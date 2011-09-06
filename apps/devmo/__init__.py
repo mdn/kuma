@@ -54,4 +54,6 @@ INTEREST_SUGGESTIONS = [
     "tech writing",
     "user experience",
     "design",
+    "technical review",
+    "editorial review",
 ]

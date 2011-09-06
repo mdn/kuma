@@ -1,6 +1,8 @@
-from django.conf import settings
 import re
 import logging
+import hashlib
+
+from django.conf import settings
 
 # this is not intended to be an all-knowing IP address regex
 IP_RE = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
@@ -37,31 +39,31 @@ def get_ip(request):
     return ip_address
 
 
-def get_unique(request, use_session_key=False):
+def get_unique(content_type, object_pk, request=None, ip=None, user_agent=None, user=None):
     """Extract a set of unique identifiers from the request.
 
     This set will be made up of one of the following combinations, depending 
     on what's available:
 
-    * user, None, None, None
-    * None, None, None, session_key
-    * None, ip, user_agent, None
+    * user, None, None, unique_MD5_hash
+    * None, ip, user_agent, unique_MD5_hash
     """
-    if request.user.is_authenticated():
-        user = request.user
-        ip = user_agent = session_key = None
-    else:
-        user = None
-        session_key = ( 
-                ( use_session_key and hasattr(request, 'session') ) and
-                request.session.session_key or None )
-        if session_key:
+    if request:
+        if request.user.is_authenticated():
+            user = request.user
             ip = user_agent = None
         else:
+            user = None
             ip = get_ip(request)
             user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
 
-    return ( user, ip, user_agent, session_key )
+    # HACK: Build a hash of the fields that should be unique, let MySQL
+    # chew on that for a unique index. Note that any changes to this algo
+    # will create all new unique hashes that don't match any existing ones.
+    hash_text = "\n".join(unicode(x) for x in (
+        content_type.pk, object_pk, ip, user_agent, 
+        (user and user.pk or 'None')
+    ))
+    unique_hash = hashlib.md5(hash_text).hexdigest()
 
-
-
+    return (user, ip, user_agent, unique_hash)
