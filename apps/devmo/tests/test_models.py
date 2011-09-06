@@ -16,7 +16,7 @@ from django.contrib.auth.models import User, AnonymousUser
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
+from devmo.models import Calendar, Event, UserProfile
 
 from dekicompat.backends import DekiUser
 
