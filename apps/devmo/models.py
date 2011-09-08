@@ -183,6 +183,7 @@ FIELD_MAP = {
     "conference_link": ["Link",None],
     "location": ["Location",None],
     "people": ["Attendees",None],
+    "people": ["Who",None],
     "description": ["Description",None],
     "done": ["Done",None],
     "materials": ["Materials URL",None],
@@ -191,11 +192,8 @@ FIELD_MAP = {
 def parse_header_line(header_line):
     for field_name in FIELD_MAP.keys():
         field = FIELD_MAP[field_name]
-        if field[1] == None:
-            try:
-                FIELD_MAP[field_name][1] = header_line.index(field[0])
-            except IndexError:
-                FIELD_MAP[field_name][1] = ''
+        if field[1] == None and field[0] in header_line.index:
+            FIELD_MAP[field_name][1] = header_line.index(field[0])
 
 class Calendar(ModelBase):
     """The Calendar spreadsheet"""

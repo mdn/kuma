@@ -25,10 +25,13 @@ def events(request):
     events = Event.objects.filter(calendar=cal)
     upcoming_events = events.filter(done=False)
     past_events = events.filter(done=True)
+    google_maps_api_key = getattr(settings, 'GOOGLE_MAPS_API_KEY',
+        "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ")
 
     return jingo.render(request, 'devmo/calendar.html', {
         'upcoming_events': upcoming_events,
-        'past_events': past_events
+        'past_events': past_events,
+        'google_maps_api_key': google_maps_api_key
     })
 
 

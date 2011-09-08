@@ -775,6 +775,8 @@ FLAG_REASONS = (
 BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
 BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
 
+GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ"
+
 # demo studio uploads
 # Filesystem path where files uploaded for demos will be written
 DEMO_UPLOADS_ROOT = path('media/uploads/demos')
