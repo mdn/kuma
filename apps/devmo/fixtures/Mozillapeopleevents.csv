@@ -1,4 +1,4 @@
-Timestamp,Conference,Location,Link,Date,Attendees,Description,Done,Materials URL,Start Date,End Date
+Timestamp,Conference,Location,Link,Date,Who,Description,Done,Materials URL,Start Date,End Date
 6/15/2011 17:25:24,Confoo,Montreal,http://confoo.ca/en/2011/session/anatomy-of-a-large-django-site,March 9-13th 2011,,Close      Share:                 Rating     Slides     View session page   Anatomy of a large Django site,no,,3/9/2011,3/13/2011
 ,State of the browser,"London, England",http://browser.londonwebstandards.org/,3/18/2011,"<a href=""http://paulrouget.com/"">Paul Rouget</a>",Panel with all the browser vendors on newest technologies,yes,n/a,3/18/2011,3/18/2011
 ,NASA Open Source Summit 2011,"Ames Research Center in Mountain View, California",http://www.nasa.gov/open/source/,3/29/11-3/30/11,Pascal Finette,Lessons from Mozilla,yes,http://blog.finette.com/post/4348670453/slides-from-my-talk-at-nasas-open-source-summit,3/29/2011,3/30/2011
