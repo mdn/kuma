@@ -75,6 +75,7 @@ class kuma_config {
     file { 
         [ "/home/vagrant/logs",
             "/home/vagrant/uploads",
+            "/home/vagrant/mdc_pages",
             "/home/vagrant/product_details_json" ]:
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0777;
