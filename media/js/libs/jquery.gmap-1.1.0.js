@@ -99,10 +99,13 @@
 			if (opts.scrollwheel == true && opts.controls.length != 0) { $gmap.enableScrollWheelZoom(); }
 									
 			// Loop through marker array
-			for (var j = 0; j < opts.markers.length; j++)
-			{
+			(function (markers) {
+
+				var next = arguments.callee;
+				if (!markers.length) { return; }
+                
 				// Get the options from current marker
-				marker = opts.markers[j];
+				marker = markers.pop();
 								
 				// Create new icon
 				gicon = new GIcon();
@@ -140,6 +143,13 @@
 						// See <http://www.mennovanslooten.nl/blog/post/62> for more information about closures
 						return function(gpoint)
 						{
+							// Queue up processing of the next marker after a
+							// delay, to avoid status: 620 errors.
+							setTimeout(function () { next(markers); }, opts.query_delay);
+
+							// If there's no gpoint, bail out.
+							if (!gpoint) { return; }
+
 							// Create marker
 							gmarker = new GMarker(gpoint, gicon);
 							
@@ -169,9 +179,12 @@
 					// Add marker to map
 					if (gmarker) { $gmap.addOverlay(gmarker); }
 					
+					// Queue up processing of the next marker.	No delay here,
+					// because we're not hitting the geocoder.
+					setTimeout(function () { next(markers); }, 0);
 				}
-				
-			}
+
+			})(opts.markers);
 			
 		});
 		
@@ -190,6 +203,7 @@
 		maptype:				G_NORMAL_MAP,
 		html_prepend:			'<div class="gmap_marker">',
 		html_append:			'</div>',
+		query_delay:			100,
 		icon:
 		{
 			image:				"http://www.google.com/mapfiles/marker.png",
