@@ -79,40 +79,13 @@
       
       <section id="tab-challenge" class="block">
         <header>
-<<<<<<< HEAD
-          <h1 class="title">{{tag_meta(challenge_choices[0], "short_title")}}</h1>
-          <h2 class="date">{{tag_meta(challenge_choices[0], "short_dateline")}}</h2>
-||||||| merged common ancestors
-          <h1 class="title">{{_("History API")}}</h1>
-          <h2 class="date">{{_("August")}}</h2>
-=======
           <h1 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h1>
           <h2 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h2>
->>>>>>> mdn
         </header>
-<<<<<<< HEAD
-        <p class="tagline">{{tag_meta(challenge_choices[0], "tagline")}}</p>
-        {{tag_meta(challenge_choices[0], "tab_copy")|safe}}
-        {% trans month=tag_meta(challenge_choices[0], "short_dateline") %}
-          <p class="demo-submit"><a href="{{ submit_url }}" class="button">Submit your demo</a> for the {{month}} Dev Derby today!</p>
-||||||| merged common ancestors
-        <p class="tagline">{{_("A browser never forgets.")}}</p>
-        {% trans %}
-          <p>Creating a great user experience for web apps is a challenge. When you use JavaScript 
-          to avoid page loads on most interactions (good), you break the user's expectation that 
-          the Back button and bookmarks will return to a previous state (not so good). With the 
-          HTML5 History API, you can manipulate the contents of the browser history, so that you 
-          can both meet users' expectations about browser behavior, and provide a responsive app.</p>
-
-          <p>What kind of "time-travel" or "alternative history" can you dream up with the History API?</p>
-
-          <p class="demo-submit"><a href="{{ submit_url }}" class="button">Submit your demo</a> for the August Dev Derby today!</p>
-=======
         <p class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</p>
         {{tag_meta(current_challenge_tag_name, "tab_copy")|safe}}
         {% trans month=tag_meta(current_challenge_tag_name, "short_dateline") %}
           <p class="demo-submit"><a href="{{ submit_url }}" class="button">Submit your demo</a> for the {{month}} Dev Derby today!</p>
->>>>>>> mdn
         {% endtrans %}
 
       </section>
