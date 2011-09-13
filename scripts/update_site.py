@@ -36,6 +36,7 @@ ENV_BRANCH = {
 
 RM_SETTINGS_PYC = "rm -f settings*.pyc"
 GIT_PULL = "git pull -q origin %(branch)s"
+GIT_RESET_HARD = "git reset --hard HEAD"
 GIT_SUBMODULE_SYNC = "git submodule sync"
 GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
 SVN_REVERT = "svn revert -R ."
@@ -56,6 +57,7 @@ def update_site(env, debug):
     commands = [
         (CHDIR, here),
         (EXEC, RM_SETTINGS_PYC),
+        (EXEC, GIT_RESET_HARD),
         (EXEC, GIT_PULL % project_branch),
         (EXEC, GIT_SUBMODULE_SYNC),
         (EXEC, GIT_SUBMODULE_UPDATE),
@@ -79,7 +81,10 @@ def update_site(env, debug):
 
     commands += [
         (CHDIR, os.path.join(here, 'vendor')),
-        (EXEC,  GIT_PULL % vendor_branch),
+        # This seems like a bad idea - it pulls from master, while the web app
+        # itself has a submodule pointing at a specific vendor-lib commit ID
+        # (EXEC,  GIT_PULL % vendor_branch),
+        (EXEC,  GIT_RESET_HARD),
         (EXEC,  GIT_SUBMODULE_SYNC),
         (EXEC,  GIT_SUBMODULE_UPDATE),
         (CHDIR, os.path.join(here)),

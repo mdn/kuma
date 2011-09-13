@@ -21,7 +21,6 @@ class apache_config {
 class mysql_config {
     # Ensure MySQL answers on 127.0.0.1, and not just unix socket
     file { 
-        "/home/vagrant": mode => 0755;
         "/etc/my.cnf":
             source => "$PROJ_DIR/puppet/files/etc/my.cnf",
             owner => "root", group => "root", mode => 0644;
@@ -32,6 +31,10 @@ class mysql_config {
         "/tmp/wikidb.sql":
             ensure => file,
             source => "$PROJ_DIR/puppet/files/tmp/wikidb.sql",
+            owner => "vagrant", group => "vagrant", mode => 0644;
+        "/tmp/phpbb.sql":
+            ensure => file,
+            source => "$PROJ_DIR/puppet/files/tmp/phpbb.sql",
             owner => "vagrant", group => "vagrant", mode => 0644;
     }
     service { "mysqld": 
@@ -57,6 +60,14 @@ class mysql_config {
                 Service["mysqld"], 
                 Exec["setup_mysql_databases_and_users"] 
             ];
+#        "setup_mysql_phpbb":
+#            command => "/usr/bin/mysql -u root phpbb < /tmp/phpbb.sql",
+            # unless => "/usr/bin/mysql -uroot wikidb -B -e 'show tables' 2>&1 | grep -q 'pages'",
+#            require => [ 
+#                File["/tmp/phpbb.sql"],
+#                Service["mysqld"], 
+#                Exec["setup_mysql_databases_and_users"] 
+#            ];
     }
 }
 
@@ -64,6 +75,7 @@ class kuma_config {
     file { 
         [ "/home/vagrant/logs",
             "/home/vagrant/uploads",
+            "/home/vagrant/mdc_pages",
             "/home/vagrant/product_details_json" ]:
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0777;
@@ -76,20 +88,28 @@ class kuma_config {
     }
     exec { 
         "kuma_update_product_details":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_product_details",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./manage.py update_product_details",
             creates => "/home/vagrant/product_details_json/firefox_versions.json",
             require => [
                 File["/home/vagrant/product_details_json"]
             ];
         "kuma_sql_migrate":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./vendor/src/schematic/schematic migrations/",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysqld"], File["/home/vagrant/logs"] ];
         "kuma_south_migrate":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 manage.py migrate",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python manage.py migrate",
             require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_feeds":
-            cwd => "/vagrant", command => "/usr/bin/python2.6 ./manage.py update_feeds",
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
     }

@@ -64,19 +64,16 @@ DATABASES = {
 
 # Use IP:PORT pairs separated by semicolons.
 CACHE_BACKEND = 'django_pylibmc.memcached://localhost:11211?timeout=3600'
+CONSTANCE_DATABASE_CACHE_BACKEND = CACHE_BACKEND
 
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'
 
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
-# Uncomment for logging to a file in home directory. May need some file
-# permission twiddling, though, depending on what's been run as root lately
-
-#LOG_LEVEL = logging.DEBUG
-#
-#logging.basicConfig(
-#    level = logging.DEBUG,
-#    format = '%(asctime)s %(levelname)s %(message)s',
-#    filename = '/home/vagrant/logs/kuma-django.log',
-#)
+LOG_LEVEL = logging.DEBUG
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = '/home/vagrant/logs/kuma-django.log',
+)

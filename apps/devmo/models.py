@@ -113,6 +113,9 @@ class UserProfile(ModelBase):
                                 blank=True)
     bio = models.TextField(_('About Me'), blank=True)
 
+    irc_nickname = models.CharField(_('IRC nickname'), max_length=255, default='',
+                                    blank=True)
+
     tags = NamespacedTaggableManager(_('Tags'), blank=True)
 
     # should this user receive contentflagging emails?
@@ -437,6 +440,7 @@ class UserDocsActivityFeedItem(object):
             diff=self.rc_revision,
         )))
 
+
 def parse_date(date_str):
     try:
         parsed_date = datetime.strptime(date_str, "%m/%d/%Y")
@@ -447,16 +451,17 @@ def parse_date(date_str):
 
 
 FIELD_MAP = {
-    "date": ["Start Date",None, parse_date],
-    "end_date": ["End Date",None, parse_date],
-    "conference": ["Conference",None],
-    "conference_link": ["Link",None],
-    "location": ["Location",None],
-    "people": ["Attendees",None],
-    "description": ["Description",None],
-    "done": ["Done",None],
-    "materials": ["Materials URL",None],
+    "date": ["Start Date", None, parse_date],
+    "end_date": ["End Date", None, parse_date],
+    "conference": ["Conference", None],
+    "conference_link": ["Link", None],
+    "location": ["Location", None],
+    "people": ["Attendees", None],
+    "description": ["Description", None],
+    "done": ["Done", None],
+    "materials": ["Materials URL", None],
 }
+
 
 def parse_header_line(header_line):
     for field_name in FIELD_MAP.keys():
@@ -466,6 +471,7 @@ def parse_header_line(header_line):
                 FIELD_MAP[field_name][1] = header_line.index(field[0])
             except IndexError:
                 FIELD_MAP[field_name][1] = ''
+
 
 class Calendar(ModelBase):
     """The Calendar spreadsheet"""
@@ -488,7 +494,7 @@ class Calendar(ModelBase):
         for field_name in FIELD_MAP.keys():
             field = FIELD_MAP[field_name]
             if len(doc_row) > field[1]:
-               field_value = doc_row[field[1]]
+                field_value = doc_row[field[1]]
             else:
                 field_value = ''
             if len(field) >= 3 and callable(field[2]):

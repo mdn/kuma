@@ -67,6 +67,8 @@ class ProfileViewsTest(test_utils.TestCase):
             doc.find('#profile-head.vcard .org').text())
         eq_(profile.location,
             doc.find('#profile-head.vcard .loc').text())
+        eq_(profile.irc_nickname,
+            doc.find('#profile-head.vcard .irc').text())
         eq_(profile.bio,
             doc.find('#profile-head.vcard .bio').text())
 
@@ -131,6 +133,8 @@ class ProfileViewsTest(test_utils.TestCase):
             doc.find('#profile-edit input[name="organization"]').val())
         eq_(profile.location,
             doc.find('#profile-edit input[name="location"]').val())
+        eq_(profile.irc_nickname,
+            doc.find('#profile-edit input[name="irc_nickname"]').val())
 
         new_attrs = dict(
             email="tester23@example.com",
@@ -185,7 +189,7 @@ class ProfileViewsTest(test_utils.TestCase):
         # Scrape out the existing significant form field values.
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'bio', 'interests'):
+                'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
         # Fill out the form with websites.
@@ -247,7 +251,7 @@ class ProfileViewsTest(test_utils.TestCase):
 
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'bio', 'interests'):
+                'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
         test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
@@ -306,6 +310,7 @@ class ProfileViewsTest(test_utils.TestCase):
         profile.title = "Spaceship Pilot"
         profile.organization = "UFO"
         profile.location = "Outer Space"
+        profile.irc_nickname = "ircuser"
         profile.bio = "I am a freaky space alien."
         profile.save()
 

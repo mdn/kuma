@@ -13,30 +13,6 @@ except ImportError:
     import Image
 
 
-# TODO: Allow these to be managed via DB / admin page?
-
-# Currently promoted dev derby
-DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = getattr(settings, 'DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG', 
-    'challenge:2011:september')
-
-# Dev derby choices displayed on submission form
-DEMOS_DEVDERBY_CHALLENGE_CHOICES = getattr(settings, 'DEMOS_DEVDERBY_CHALLENGE_CHOICES', [
-    "challenge:2011:september",
-    "challenge:2011:october",
-    "challenge:2011:november",
-])
-
-# Dev derby tags for previous challenges
-DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS', [
-    "challenge:2011:august",
-    "challenge:2011:july",
-    "challenge:2011:june",
-])
-
-# Tag used to find most recent winner for dev derby
-DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG   = getattr(settings, 'DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG',   
-    'system:challenge:firstplace:2011:august')
-
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
 # HACK: For easier L10N, define tag descriptions in code instead of as a DB model
@@ -47,6 +23,8 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "title": _("June 2011 Dev Derby Challenge - CSS3 Animations"), 
         "short_title": _("CSS3 Animations"),
         "dateline": _("June 2011"),
+        "short_dateline": _("June"),
+        "tagline": _("Style and experience"),
         "summary": _("CSS3 Animations let you change property values over time, to animate the appearance or position of elements, with no or minimal JavaScript, and with greater control than transitions."),
         "description": _("CSS3 Animations are a new feature of modern browsers like Firefox, which add even more flexibility and control to the style and experience of the Web. CSS3 Animations let you change property values over time with no or minimal JavaScript, and with greater control than CSS Transitions. Go beyond static properties to animate the appearance and positions of HTML elements. You can achieve these effects without Flash or Silverlight, to make creative dynamic interfaces and engaging animations with CSS3."),
         "learn_more": [],
@@ -110,6 +88,7 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "summary": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "description": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "learn_more": [],
+        "tab_copy": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
     },
 
 

@@ -23,8 +23,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from . import (scale_image, TAG_DESCRIPTIONS,
-        DEMOS_DEVDERBY_CHALLENGE_CHOICES)
+from . import (scale_image, TAG_DESCRIPTIONS)
 from .models import Submission
 
 from captcha.fields import ReCaptchaField
@@ -32,7 +31,9 @@ from captcha.fields import ReCaptchaField
 import django.forms.fields
 from django.forms.widgets import CheckboxSelectMultiple
 
-from taggit.utils import parse_tags
+import constance.config
+
+from taggit_extras.utils import parse_tags, split_strip
 
 
 try:
@@ -106,8 +107,10 @@ class SubmissionEditForm(MyModelForm):
         widget = CheckboxSelectMultiple,
         required = False,
         choices = (
-            (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title']) 
-            for x in DEMOS_DEVDERBY_CHALLENGE_CHOICES
+            (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
+            for x in parse_tags(
+                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
+                sorted=False)
         )
     )
 
