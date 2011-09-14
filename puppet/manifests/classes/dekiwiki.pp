@@ -126,8 +126,6 @@ class dekiwiki_config {
         ];
     }
 
-    file { "/home/vagrant/mdc_pages": mode => 0777 }
-
     exec { 
         "svn_co_deki_mozilla":
             command => "/usr/bin/svn co http://svn.mozilla.org/projects/deki/trunk/mozilla/",
