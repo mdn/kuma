@@ -822,6 +822,9 @@
                 window.clearTimeout(DRAFT_TIMEOUT_ID);
                 DRAFT_TIMEOUT_ID = window.setTimeout(saveDraft, 3000);
         });
+       $('#btn-discard').click(function() {
+           clearDraft(DRAFT_NAME);
+       });
     }
 
     function initApproveReject() {
