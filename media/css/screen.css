@@ -231,7 +231,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main #nav-main-docs:hover { background-position: 100% -645px; }
 #nav-main #nav-main-community:hover { background-position: 100% -1145px; }
 
-#nav-main .menu .sub-menu { position: absolute; z-index: 98; left: -999em; top: 27px; background: #000; list-style: none; width: 80px; font-size: 1em; padding: 10px 6px 4px; border: 4px solid #f8d575; text-align: center; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
+#nav-main .menu .sub-menu { position: absolute; z-index: 1000; left: -999em; top: 27px; background: #000; list-style: none; width: 80px; font-size: 1em; padding: 10px 6px 4px; border: 4px solid #f8d575; text-align: center; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
 #nav-main .menu .sub-menu li { display: block; float: none; width: 100%; margin: 0 0 .35em; }
 .hasJS #nav-main .menu .sub-menu, #nav-main .menu:hover .sub-menu { left: 50%; margin-left: -50px; }
 .hasJS #nav-main .menu .sub-menu { display: none; }
