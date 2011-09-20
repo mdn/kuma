@@ -5,7 +5,7 @@
 
 
 
-(function ($) {
+(function ($, gettext) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
 
@@ -788,7 +788,13 @@
         var now;
         if (typeof(window.localStorage) != 'undefined') {
             window.localStorage.setItem(DRAFT_NAME, $('#wiki-page-edit textarea[name=content]').val());
-            updateDraftState('saved');
+            updateDraftState(gettext('saved'));
+        }
+    }
+
+    function clearDraft(key) {
+        if (typeof(window.localStorage) != 'undefined') {
+           window.localStorage.setItem(key, null);
         }
     }
 
@@ -801,11 +807,14 @@
             if (prev_draft){
                 // draft matches server so discard draft
                 if ($.trim(prev_draft) == $('#wiki-page-edit textarea[name=content]').val().trim()) {
-                    window.localStorage.setItem(DRAFT_NAME, null);
+		    clearDraft(DRAFT_NAME);
                 } else if (confirm("Load previous draft?", "Draft detected")){
                     $('#wiki-page-edit textarea[name=content]').val(prev_draft);
                     updateDraftState('loaded');
-                }
+                } else {
+		    // Cancel should clear the draft
+		    clearDraft(DRAFT_NAME);
+		}
             }
         }
         editor = $('#id_content').ckeditorGet();
@@ -813,6 +822,9 @@
                 window.clearTimeout(DRAFT_TIMEOUT_ID);
                 DRAFT_TIMEOUT_ID = window.setTimeout(saveDraft, 3000);
         });
+       $('#btn-discard').click(function() {
+           clearDraft(DRAFT_NAME);
+       });
     }
 
     function initApproveReject() {
@@ -830,4 +842,4 @@
 
     $(document).ready(init);
 
-}(jQuery));
+ }(jQuery, gettext));
