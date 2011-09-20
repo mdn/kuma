@@ -792,6 +792,12 @@
         }
     }
 
+    function clearDraft(key) {
+        if (typeof(window.localStorage) != 'undefined') {
+           window.localStorage.setItem(key, null);
+        }
+    }
+
     function initDrafting() {
         var article_slug, editor, now;
         article_slug = $('#id_slug').val();
@@ -801,11 +807,14 @@
             if (prev_draft){
                 // draft matches server so discard draft
                 if ($.trim(prev_draft) == $('#wiki-page-edit textarea[name=content]').val().trim()) {
-                    window.localStorage.setItem(DRAFT_NAME, null);
+		    clearDraft(DRAFT_NAME);
                 } else if (confirm("Load previous draft?", "Draft detected")){
                     $('#wiki-page-edit textarea[name=content]').val(prev_draft);
                     updateDraftState('loaded');
-                }
+                } else {
+		    // Cancel should clear the draft
+		    clearDraft(DRAFT_NAME);
+		}
             }
         }
         editor = $('#id_content').ckeditorGet();
