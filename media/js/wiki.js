@@ -5,7 +5,7 @@
 
 
 
-(function ($) {
+(function ($, gettext) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
 
@@ -788,7 +788,7 @@
         var now;
         if (typeof(window.localStorage) != 'undefined') {
             window.localStorage.setItem(DRAFT_NAME, $('#wiki-page-edit textarea[name=content]').val());
-            updateDraftState('saved');
+            updateDraftState(gettext('saved'));
         }
     }
 
@@ -830,4 +830,4 @@
 
     $(document).ready(init);
 
-}(jQuery));
+ }(jQuery, gettext));
