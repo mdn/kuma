@@ -85,10 +85,10 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "short_dateline": _("November"),
         "tagline": _("The joy of painting"),
         "summary": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
-        "description": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
+        "description": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "learn_more": [],
         "tab_copy": _("""<p>The joy of painting.</p>
-        <p>The HTML5 Canvas element and API let you to paint the Web using JavaScript to render and animate 2-D shapes, bitmapped images, and advanced graphical effects. But that's just the beginning. Because it's done with JavaScript, every line, shape or pixel you draw can interact with the rest of the page, other JavaScript APIs, other data, and of course, the user. If you can dream it, you can draw it.</p>"""),
+        <p>The HTML5 Canvas element and API let you paint the Web using JavaScript to render and animate 2-D shapes, bitmapped images, and advanced graphical effects. But that's just the beginning. Because it's done with JavaScript, every line, shape or pixel you draw can interact with the rest of the page, other JavaScript APIs, other data, and of course, the user. If you can dream it, you can draw it.</p>"""),
     },
     {
         "tag_name": "challenge:2011:december",
