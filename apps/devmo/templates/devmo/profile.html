@@ -29,12 +29,12 @@
       <div class="main">
         <h1 class="page-title"><span class="nickname">{{ profile.user.username }}</span> {% if profile.fullname %}<b>(<span class="fn">{{ profile.fullname }}</span>)</b>{% endif %}</h1>
   
-      {% if profile.title or profile.organization or profile.location %}
+      {% if profile.title or profile.organization or profile.location or profile.irc_nickname %}
       <ul class="info">
         {% if profile.title %}<li class="title">{{ profile.title }}</li>{% endif %}
         {% if profile.organization %}<li class="org">{{ profile.organization }}</li>{% endif %}
         {% if profile.location %}<li class="loc">{{ profile.location }}</li>{% endif %}
-        {% if profile.irc_nickname %}<li class="irc">{{ profile.irc_nickname }}</li>{% endif %}
+	{% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
       </ul>
       {% endif %}
   
