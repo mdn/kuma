@@ -111,6 +111,7 @@ class SubmissionEditForm(MyModelForm):
             for x in parse_tags(
                 constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
                 sorted=False)
+            if x in TAG_DESCRIPTIONS
         )
     )
 
