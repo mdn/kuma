@@ -87,7 +87,20 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "summary": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "description": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "learn_more": [],
-        "tab_copy": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
+        "tab_copy": _("""<p>The joy of painting.</p>
+        <p>The HTML5 Canvas element and API let you to paint the Web using JavaScript to render and animate 2-D shapes, bitmapped images, and advanced graphical effects. But that's just the beginning. Because it's done with JavaScript, every line, shape or pixel you draw can interact with the rest of the page, other JavaScript APIs, other data, and of course, the user. If you can dream it, you can draw it.</p>"""),
+    },
+    {
+        "tag_name": "challenge:2011:december",
+        "title": _("December 2011 Dev Derby Challenge - IndexedDB"),
+        "short_title": _("IndexedDB"),
+        "dateline": _("December 2011"),
+        "short_dateline": _("December"),
+        "tagline": _("Take your data with you."),
+        "summary": _("IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."),
+        "description": _("IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."),
+        "learn_more": [],
+        "tab_copy": _(""),
     },
 
 
