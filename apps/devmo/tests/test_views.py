@@ -67,7 +67,7 @@ class ProfileViewsTest(test_utils.TestCase):
             doc.find('#profile-head.vcard .org').text())
         eq_(profile.location,
             doc.find('#profile-head.vcard .loc').text())
-        eq_(profile.irc_nickname,
+        eq_('IRC: ' + profile.irc_nickname,
             doc.find('#profile-head.vcard .irc').text())
         eq_(profile.bio,
             doc.find('#profile-head.vcard .bio').text())
