@@ -304,7 +304,7 @@ INSTALLED_APPS = (
     #'timezones',
     #'access',
     #'sumo',
-    #'search',
+    'search',
     #'forums',
     #'djcelery',
     'notifications',
