@@ -99,6 +99,7 @@ class SearchForm(forms.Form):
 
     user_widget = forms.TextInput(attrs={'placeholder': _lazy('username'),
                                          'class': 'auto-fill'})
+    """
     # Discussion forums fields
     author = forms.CharField(required=False, widget=user_widget)
 
@@ -147,3 +148,4 @@ class SearchForm(forms.Form):
 
     q_tags = forms.CharField(label=_lazy('Tags'), required=False,
                              widget=tag_widget)
+    """

@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    #(r'^search', include('search.urls')),
+    (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
     #(r'^questions', include('questions.urls')),
     #(r'^flagged', include('flagit.urls')),
