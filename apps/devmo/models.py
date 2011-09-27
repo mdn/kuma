@@ -334,24 +334,24 @@ class UserDocsActivityFeedItem(object):
         "16": "NS_ATTACHMENT",
     }
     RC_NAMESPACE_PREFIXES = {
-        "NS_ADMIN": "Admin",
-        "NS_MEDIA": "Media",
-        "NS_SPECIAL": "Special",
-        "NS_MAIN": "",
-        "NS_TALK": "Talk",
-        "NS_USER": "User",
-        "NS_USER_TALK": "User_talk",
-        "NS_PROJECT": "Project",
-        "NS_PROJECT_TALK": "Project_talk",
-        "NS_IMAGE_TALK": "Image_comments",
-        "NS_MEDIAWIKI": "MediaWiki",
-        "NS_TEMPLATE": "Template",
-        "NS_TEMPLATE_TALK": "Template_talk",
-        "NS_HELP": "Help",
-        "NS_HELP_TALK": "Help_talk",
-        "NS_CATEGORY": "Category",
-        "NS_CATEGORY_TALK": "Category_comments",
-        "NS_ATTACHMENT": "File",
+        "NS_ADMIN": u"Admin",
+        "NS_MEDIA": u"Media",
+        "NS_SPECIAL": u"Special",
+        "NS_MAIN": u"",
+        "NS_TALK": u"Talk",
+        "NS_USER": u"User",
+        "NS_USER_TALK": u"User_talk",
+        "NS_PROJECT": u"Project",
+        "NS_PROJECT_TALK": u"Project_talk",
+        "NS_IMAGE_TALK": u"Image_comments",
+        "NS_MEDIAWIKI": u"MediaWiki",
+        "NS_TEMPLATE": u"Template",
+        "NS_TEMPLATE_TALK": u"Template_talk",
+        "NS_HELP": u"Help",
+        "NS_HELP_TALK": u"Help_talk",
+        "NS_CATEGORY": u"Category",
+        "NS_CATEGORY_TALK": u"Category_comments",
+        "NS_ATTACHMENT": u"File",
     }
 
     def __init__(self, data, base_url=''):
@@ -382,7 +382,7 @@ class UserDocsActivityFeedItem(object):
         ns_id = self.RC_NAMESPACE_NAMES.get(self.rc_namespace, '')
         prefix = self.RC_NAMESPACE_PREFIXES.get(ns_id, '')
         if prefix:
-            return '%s:%s' % (self.RC_NAMESPACE_PREFIXES[ns_id], title)
+            return u'%s:%s' % (self.RC_NAMESPACE_PREFIXES[ns_id], title)
         else:
             return title
 
@@ -407,14 +407,14 @@ class UserDocsActivityFeedItem(object):
 
     @property
     def view_url(self):
-        return '%s/%s' % (self.base_url, self.current_title)
+        return u'%s/%s' % (self.base_url, urllib.quote(self.current_title.encode('utf8')))
 
     @property
     def edit_url(self):
         if not self.rc_type in ('EDIT', 'MOVE', 'TAGS', 'NEW', 'FILE'):
             return None
         return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
-            title=self.current_title,
+            title=self.current_title.encode('utf8'),
             action='edit',
         )))
 
@@ -423,7 +423,7 @@ class UserDocsActivityFeedItem(object):
         if not self.rc_type in ('EDIT', 'MOVE', 'TAGS', 'FILE'):
             return None
         return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
-            title=self.current_title,
+            title=self.current_title.encode('utf8'),
             action='history',
         )))
 
@@ -434,7 +434,7 @@ class UserDocsActivityFeedItem(object):
         if not self.rc_revision > 1:
             return None
         return '%s/index.php?%s' % (self.base_url, urllib.urlencode(dict(
-            title=self.current_title,
+            title=self.current_title.encode('utf8'),
             action='diff',
             revision=self.rc_revision - 1,
             diff=self.rc_revision,
