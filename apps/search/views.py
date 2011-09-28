@@ -237,7 +237,7 @@ def search(request):
     # Created filter
     unix_now = int(time.time())
     interval_filters = (
-        ('created', cleaned['created'], cleaned['created_date']),
+#        ('created', cleaned['created'], cleaned['created_date']),
         ('updated', cleaned['updated'], cleaned['updated_date']),
 #        ('question_votes', cleaned['num_voted'], cleaned['num_votes'])
     )
