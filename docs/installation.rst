@@ -57,8 +57,6 @@ Grab the source from Github using::
 
     git clone git://github.com/mozilla/kuma.git
     cd kuma
-    git submodule update --init
-
 
 Installing the Packages
 =======================
