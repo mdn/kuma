@@ -4,7 +4,10 @@
 {% else %}
     {% set discard_href = url('wiki.new_document') %}
 {% endif %}
-<ul id="page-buttons">
+<ul id="page-buttons" 
+    data-new-page-href="{{ url('wiki.new_document') }}"
+    data-new-page-label="{{ _('New Page') }}"
+    data-new-page-msg="{{ _('Discard changes and create a new document?') }}">
   {% if document %}
     <li>
       <iframe id="save-and-edit-target" name="save-and-edit-target"></iframe>
