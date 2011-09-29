@@ -16,3 +16,4 @@ media/uploads
 locale
 xfers/*
 puppet/cache/*
+tmp
