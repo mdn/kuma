@@ -189,8 +189,8 @@ class UserDocsActivityFeed(object):
 
     def feed_url_for_user(self):
         """Build the API URL for a user docs activity feed"""
-        return '%s/@api/deki/users/=%s/feed?format=raw' % (
-            DEKIWIKI_ENDPOINT, urllib.quote_plus(self.username))
+        return u'%s/@api/deki/users/=%s/feed?format=raw' % (
+            DEKIWIKI_ENDPOINT, urllib.quote_plus(self.username.encode('utf-8')))
 
     def fetch_user_feed(self):
         """Fetch a user feed from DekiWiki"""
