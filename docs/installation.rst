@@ -136,7 +136,7 @@ Media
 -----
 
 If you want to see images and have the pages formatted with CSS you need to
-set your settings_local.py with the following:
+set your ``settings_local.py`` with the following::
 
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
