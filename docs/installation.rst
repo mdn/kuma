@@ -141,6 +141,15 @@ and run::
 
     ./manage.py update_product_details
 
+Media
+-----
+
+If you want to see images and have the pages formatted with CSS you need to
+set your settings_local.py with the following:
+
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
+    SERVE_MEDIA = True
 
 Testing it Out
 ==============
