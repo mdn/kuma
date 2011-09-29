@@ -57,6 +57,7 @@ Grab the source from Github using::
 
     git clone git://github.com/mozilla/kuma.git
     cd kuma
+    git submodule update --init --recursive
 
 Installing the Packages
 =======================
@@ -79,14 +80,6 @@ All of the pure-Python requirements are available in a git repository, known as
 a vendor library. This allows them to be available on the Python path without
 needing to be installed in the system, allowing multiple versions for multiple
 projects simultaneously.
-
-To get the vendor library, just::
-
-    git clone --recursive git://github.com/mozilla/kuma-lib.git vendor
-
-This will clone the repository and all its submodules into a directory called
-``vendor``.
-
 
 Configuration
 =============
