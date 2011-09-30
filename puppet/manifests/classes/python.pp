@@ -46,7 +46,7 @@ class python_modules {
     exec { 
          "pip-cache-ownership":
              command => "/bin/chown -R vagrant:vagrant /vagrant/puppet/cache/pip && /bin/chmod ug+rw -R /vagrant/puppet/cache/pip",
-             unless => "/usr/bin/test -w /vagrant/puppet/cache/pip";
+             unless => '/bin/su vagrant -c "/usr/bin/test -w /vagrant/puppet/cache/pip"';
          "pip-install-compiled":
              require => Exec['pip-cache-ownership'],
              user => "vagrant",
