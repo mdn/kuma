@@ -35,6 +35,15 @@ class dev_hacks {
                 command => "/usr/bin/rsync -r /vagrant/puppet/cache/yum/ /var/cache/yum/",
                 require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
             }
+
+            file { "/etc/sysconfig/iptables":
+                source => "/vagrant/puppet/files/etc/sysconfig/iptables",
+                owner => "root", group => "root", mode => 0644;
+            }
+            exec { "iptables-restart":
+                command => '/etc/init.d/iptables restart',
+                require => File['/etc/sysconfig/iptables'];
+            }
             
             # Disable SELinux... causing problems, and I don't understand it.
             # TODO: see http://blog.endpoint.com/2010/02/selinux-httpd-modwsgi-26-rhel-centos-5.html
