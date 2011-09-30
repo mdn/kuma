@@ -90,7 +90,7 @@ SUMO_LANGUAGES = (
 
 # Accepted locales
 MDN_LANGUAGES = ('en-US', 'de', 'el', 'es', 'fr', 'fy-NL', 'ga-IE', 'hr', 'hu', 'id',
-                 'ja', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'sl', 'sq', 'th', 'zh-CN', 'zh-TW')
+                 'ja', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'sq', 'th', 'zh-CN', 'zh-TW')
 RTL_LANGUAGES = None # ('ar', 'fa', 'fa-IR', 'he')
 
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
