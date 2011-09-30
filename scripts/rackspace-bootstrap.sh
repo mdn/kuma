@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Quick bootstrap script for a Centos 5.5 linux host
+# Quick bootstrap script for a Centos 5.6 Rackspace Cloud Server host
 #
 # Example Rackspace Cloud usage: 
 #
@@ -8,7 +8,7 @@
 #       * You can use web-based management, but the command line can be fun.
 #
 #   * Spin up a server:
-#       rscurl.sh -a $RACKSPACE_API_KEY -u $RACKSPACE_USERNAME -c create-server -f 2 -i 51 -n 'kuma-dev-1'
+#       rscurl.sh -a $RACKSPACE_API_KEY -u $RACKSPACE_USERNAME -c create-server -i 77 -f 2 -n 'kuma-dev-1'
 #
 #   * Note the server IP and root password reported by Rackspace.
 #
@@ -16,7 +16,7 @@
 #       rscurl.sh -a $RACKSPACE_API_KEY -u $RACKSPACE_USERNAME -c list-servers
 #
 #   * Once the server is active, kick off the bootstrap:
-#       ssh root@$HOST 'wget --no-check-certificate -O- https://github.com/mozilla/kuma/raw/HEAD/scripts/centos55-bootstrap.sh | bash'
+#       ssh root@$HOST 'wget --no-check-certificate -O- https://github.com/mozilla/kuma/raw/HEAD/scripts/rackspace-bootstrap.sh | bash'
 #
 
 GIT_REPO_URL="git://github.com/mozilla/kuma.git"
