@@ -72,14 +72,6 @@ class mysql_config {
 }
 
 class kuma_config {
-    file { 
-        [ "/home/vagrant/logs",
-            "/home/vagrant/uploads",
-            "/home/vagrant/mdc_pages",
-            "/home/vagrant/product_details_json" ]:
-        ensure => directory,
-        owner => "vagrant", group => "vagrant", mode => 0777;
-    }
     file {
         "/vagrant/media/uploads": 
             target => "/home/vagrant/uploads",

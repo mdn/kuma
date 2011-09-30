@@ -1,0 +1,4 @@
+# Do not remove the following line, or various programs
+# that require network functionality will fail.
+127.0.0.1		kuma-mdn
+::1		localhost6.localdomain6 localhost6
