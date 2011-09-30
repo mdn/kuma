@@ -42,6 +42,7 @@ class dev_hacks {
             }
             exec { "iptables-restart":
                 command => '/etc/init.d/iptables restart',
+                onlyif => "/usr/bin/test -f /etc/init.d/iptables",
                 require => File['/etc/sysconfig/iptables'];
             }
             
