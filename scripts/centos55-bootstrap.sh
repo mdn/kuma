@@ -35,4 +35,4 @@ echo 'unset GIT_DIR && cd .. && git reset --hard' > .git/hooks/post-receive
 chmod +x .git/hooks/post-receive
 
 # Let puppet take it from here...
-puppet /vagrant/puppet/manifests/*.pp
+puppet /vagrant/puppet/manifests/dev-vagrant.pp
