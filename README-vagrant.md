@@ -33,7 +33,7 @@ reasons.
     vagrant provision
 
     # Add developer-kumadev.mozilla.org to /etc/hosts
-    echo '192.168.10.50 developer-kumadev.mozilla.org' >> /etc/hosts
+    echo '192.168.10.55 developer-kumadev.mozilla.org' >> /etc/hosts
 
     # Everything should be working now.
     curl 'http://developer-kumadev.mozilla.org'
