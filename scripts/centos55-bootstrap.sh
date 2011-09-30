@@ -32,6 +32,7 @@ yum install -y git puppet
 # Clone the project from github
 git clone $GIT_REPO_URL /vagrant
 cd /vagrant
+git submodule update --init --recursive
 
 # I like to git push from my laptop to the dev VM, and this makes it easier
 git config --local receive.denyCurrentBranch ignore
