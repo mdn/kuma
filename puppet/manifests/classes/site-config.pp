@@ -69,9 +69,6 @@ class kuma_config {
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0777;
     }
-}
-
-class kuma_config {
     file {
         "/vagrant/media/uploads": 
             target => "/home/vagrant/uploads",
