@@ -25,6 +25,10 @@ GIT_REPO_URL="git://github.com/mozilla/kuma.git"
 rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
 yum install -y git puppet
 
+# Ensure the vagrant user exists
+/usr/sbin/groupadd -g 502 vagrant
+/usr/sbin/useradd -u 500 -g 502 vagrant
+
 # Clone the project from github
 git clone $GIT_REPO_URL /vagrant
 cd /vagrant
@@ -33,6 +37,9 @@ cd /vagrant
 git config --local receive.denyCurrentBranch ignore
 echo 'unset GIT_DIR && cd .. && git reset --hard' > .git/hooks/post-receive
 chmod +x .git/hooks/post-receive
+
+# Make sure vagrant owns what it needs
+chown -R vagrant:vagrant /vagrant /home/vagrant
 
 # Let puppet take it from here...
 puppet /vagrant/puppet/manifests/dev-vagrant.pp
