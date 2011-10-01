@@ -120,6 +120,7 @@ Once you've set up the database, you can generate the schema with Django's
 ``syncdb`` command::
 
     ./manage.py syncdb
+    ./manage.py migrate
 
 This will generate an empty database, which will get you started!
 
