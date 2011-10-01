@@ -16,3 +16,5 @@ media/uploads
 locale
 xfers/*
 puppet/cache/*
+humans.txt
+apps/humans/tmp
