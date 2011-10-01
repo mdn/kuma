@@ -48,6 +48,8 @@ urlpatterns = patterns('',
 
     # Services and sundry.
     #(r'', include('sumo.urls')),
+    (r'^humans.txt$', 'django.views.static.serve',
+        {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
 )
 
 # Handle 404 and 500 errors

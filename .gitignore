@@ -17,3 +17,5 @@ locale
 xfers/*
 puppet/cache/*
 tmp
+humans.txt
+apps/humans/tmp
