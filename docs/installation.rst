@@ -120,6 +120,7 @@ Once you've set up the database, you can generate the schema with Django's
 ``syncdb`` command::
 
     ./manage.py syncdb
+    ./manage.py migrate
 
 This will generate an empty database, which will get you started!
 
@@ -136,7 +137,7 @@ Media
 -----
 
 If you want to see images and have the pages formatted with CSS you need to
-set your settings_local.py with the following:
+set your ``settings_local.py`` with the following::
 
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
