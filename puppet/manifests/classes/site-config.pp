@@ -46,6 +46,20 @@ class mysql_config {
     }
 }
 
+class sphinx_config {
+    exec {
+        "sphinx_reindex":
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./manage.py reindex";
+        "sphinx_start":
+            user => "vagrant",
+            cwd => "/vagrant", 
+            command => "/home/vagrant/kuma-venv/bin/python ./manage.py start_sphinx",
+            require => Exec['sphinx_reindex'];
+    }
+}
+
 class kuma_config {
     file { 
         [ "/home/vagrant/logs",
@@ -93,6 +107,6 @@ class kuma_config {
 }
 
 class site_config {
-    include apache_config, mysql_config, kuma_config
-    Class[apache_config] -> Class[mysql_config] -> Class[kuma_config]
+    include apache_config, mysql_config, sphinx_config, kuma_config
+    Class[apache_config] -> Class[mysql_config] -> Class[sphinx_config] -> Class[kuma_config]
 }
