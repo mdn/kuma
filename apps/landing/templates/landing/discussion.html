@@ -11,15 +11,19 @@
 
   <section id="content-main" role="main">
     <h1 class="page-title">{{ _('Where are the forums?') }}</h1>
-    
-    {% trans %}
+
+    {% set forum_link = '/forums' %}
+    {% if waffle.switch('static_forums') %}
+        {% set forum_link = '/forum-archive/' %}
+    {% endif %}
+    {% trans forum_link=forum_link%}
     <p>Posting a question about a technical problem and never getting an answer 
     is almost more frustrating than the technical problem itself. Because the MDN 
     forums got very little traffic (more than a year after they launched), very 
     few posts got responses. Rather than create more frustration, we have decided 
     to close the forums.</p>
     
-    <p><a href="/forums"><strong>Browse the archive of old posts and responses.</strong></a></p>
+    <p><a href="{{ forum_link }}" id="forum-archive-link"><strong>Browse the archive of old posts and responses.</strong></a></p>
     
     <p>Thanks to everyone who contributed posts and responses!</p>
     
