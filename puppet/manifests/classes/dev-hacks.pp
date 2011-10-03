@@ -70,6 +70,11 @@ class dev_hacks {
 
             file { "/etc/sudoers":
                 source => "/vagrant/puppet/files/etc/sudoers",
+                owner => "root", group => "root", mode => 0440;
+            }
+            
+            file { "/etc/hosts":
+                source => "/vagrant/puppet/files/etc/hosts",
                 owner => "root", group => "root", mode => 0644;
             }
             
