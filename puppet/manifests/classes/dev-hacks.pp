@@ -2,7 +2,7 @@
 class dev_tools {
     package { 
         [ "git", "subversion-devel", "mercurial", "vim-enhanced", "man", "man-pages",
-            "nfs-utils", "nfs-utils-lib", "telnet", "nc", "rsync" ]:
+            "nfs-utils", "nfs-utils-lib", "telnet", "nc", "rsync", "samba" ]:
             ensure => installed;
     }
 }
@@ -44,6 +44,33 @@ class dev_hacks {
                 command => '/etc/init.d/iptables restart',
                 onlyif => "/usr/bin/test -f /etc/init.d/iptables",
                 require => File['/etc/sysconfig/iptables'];
+            }
+
+            file { "/etc/sysconfig/network":
+                source => "/vagrant/puppet/files/etc/sysconfig/network",
+                owner => "root", group => "root", mode => 0644;
+            }
+
+            file { "/etc/samba":
+                ensure => directory,
+                recurse => true,
+                owner => "root", group => "root",
+                source => "/vagrant/puppet/files/etc/samba"
+            }
+
+            file { "/etc/issue":
+                source => "/vagrant/puppet/files/etc/issue",
+                owner => "root", group => "root", mode => 0644;
+            }
+
+            file { "/etc/motd":
+                source => "/vagrant/puppet/files/etc/motd",
+                owner => "root", group => "root", mode => 0644;
+            }
+
+            file { "/etc/sudoers":
+                source => "/vagrant/puppet/files/etc/sudoers",
+                owner => "root", group => "root", mode => 0644;
             }
             
             # Disable SELinux... causing problems, and I don't understand it.
