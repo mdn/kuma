@@ -11,6 +11,7 @@ from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
+from waffle.models import Switch
 
 from django.contrib.auth.models import User, AnonymousUser
 
@@ -93,6 +94,22 @@ class LandingViewsTest(test_utils.TestCase):
         url = reverse('landing.views.discussion')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+
+    def test_discussion_archive_link_waffled(self):
+        url = reverse('landing.views.discussion')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        phpbb_link = doc.find('a#forum-archive-link')
+        eq_('/forums', phpbb_link.attr('href'))
+
+        s = Switch.objects.create(name='static_forums', active=True)
+        s.save()
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        phpbb_link = doc.find('a#forum-archive-link')
+        eq_('/forum-archive/', phpbb_link.attr('href'))
 
     def test_forum_archive(self):
         url = reverse('landing.views.forum_archive')
