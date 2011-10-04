@@ -161,6 +161,9 @@ USE_L10N = True
 # Use the real robots.txt?
 ENGAGE_ROBOTS = False
 
+# Absolute path to the directory for the humans.txt file.
+HUMANSTXT_ROOT = path('.')
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')
@@ -332,6 +335,9 @@ INSTALLED_APPS = (
     # testing.
     'django_nose',
     'test_utils',
+
+    # other
+    'humans',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
