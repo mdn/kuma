@@ -29,7 +29,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
-                         get_current_or_latest_revision)
+                         REVIEW_FLAG_TAGS, get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 
@@ -199,7 +199,7 @@ def new_document(request):
     if request.method == 'GET':
         doc_form = DocumentForm(
             can_create_tags=request.user.has_perm('taggit.add_tag'))
-        rev_form = RevisionForm()
+        rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS])
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
                              'revision_form': rev_form})
