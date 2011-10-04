@@ -57,7 +57,18 @@ class _NamespacedTaggableManager(_TaggableManager):
         if namespace is not None:
             # Namespace requested, so generate filtered set
             # TODO: Do this in the DB query? Might not be worth it.
-            return [t for t in tags if t.name.startswith(namespace)]
+            #
+            # TODO: this is a minimal band-aid fix applied for bug
+            # 679193; rather than properly solve duplicated tags and
+            # case-sensitivity, we just filter out the duplicates
+            # here.
+            seen = []
+            results = []
+            for t in tags:
+                if t.name.startswith(namespace) and t.name.lower() not in seen:
+                    seen.append(t.name.lower())
+                    results.append(t)
+            return results
 
         # No namespace requested, so collate into namespaces
         ns_tags = {}
