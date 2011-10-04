@@ -199,7 +199,7 @@ def new_document(request):
     if request.method == 'GET':
         doc_form = DocumentForm(
             can_create_tags=request.user.has_perm('taggit.add_tag'))
-        rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS])
+        rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
                              'revision_form': rev_form})
