@@ -1,7 +1,7 @@
 # Ensure some handy dev tools are available.
 class dev_tools {
     package { 
-        [ "git", "subversion-devel", "mercurial", "vim-enhanced", "man", "man-pages",
+        [ "gcc-c++", "git", "subversion-devel", "mercurial", "vim-enhanced", "man", "man-pages",
             "nfs-utils", "nfs-utils-lib", "telnet", "nc", "rsync", "samba" ]:
             ensure => installed;
     }
@@ -12,6 +12,14 @@ class dev_hacks {
 
     file { "/home/vagrant":
         owner => "vagrant", group => "vagrant", mode => 0755;
+    }
+
+    file { 
+        [ "/home/vagrant/logs",
+            "/home/vagrant/uploads",
+            "/home/vagrant/product_details_json" ]:
+        ensure => directory,
+        owner => "vagrant", group => "vagrant", mode => 0777;
     }
 
     file { "$PROJ_DIR/settings_local.py":

@@ -22,12 +22,13 @@
 GIT_REPO_URL="git://github.com/mozilla/kuma.git"
 
 # Need the EPEL repo right away, for git and puppet
-rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+rpm -Uvh http://download.fedora.redhat.com/pub/epel/5Server/x86_64/epel-release-5-4.noarch.rpm
+
 yum install -y git puppet
 
-# Ensure the vagrant user exists
+# Ensure the vagrant user exists, with password "vagrant"
 /usr/sbin/groupadd -g 502 vagrant
-/usr/sbin/useradd -u 500 -g 502 vagrant
+/usr/sbin/useradd -u 500 -g 502 -p '$1$bj6IAbmB$5iFUgH3dKx0rimAcn0kWR/' vagrant
 
 # Clone the project from github
 git clone $GIT_REPO_URL /vagrant
