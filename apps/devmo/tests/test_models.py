@@ -143,6 +143,14 @@ class TestUserProfile(test_utils.TestCase):
         url = UserDocsActivityFeed(username=username).feed_url_for_user()
         ok_(url.endswith('/@api/deki/users/=%s/feed?format=raw' % username))
 
+    @attr('bug689203')
+    def test_activity_url_bug689203(self):
+        try:
+            username = u"She\xeappy"
+            url = UserDocsActivityFeed(username=username).feed_url_for_user()
+        except KeyError, e:
+            ok_(False, "No KeyError should be thrown")
+
     @attr('docs_activity')
     @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
     def test_user_docs_activity(self, fetch_user_feed):
