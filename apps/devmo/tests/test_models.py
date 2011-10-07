@@ -134,6 +134,50 @@ class TestUserProfile(test_utils.TestCase):
         p3 = UserProfile.objects.get(user=user)
         eq_(test_sites, p3.websites)
 
+    @attr('docs_activity')
+    def test_user_docs_activity_url(self):
+        """Can build the API URL for a user docs activity feed"""
+        username = "Sheppy"
+        url = UserDocsActivityFeed(username=username).feed_url_for_user()
+        ok_(url.endswith('/@api/deki/users/=%s/feed?format=raw' % username))
+
+    @attr('bug689203')
+    def test_activity_url_bug689203(self):
+        try:
+            username = u"She\xeappy"
+            url = UserDocsActivityFeed(username=username).feed_url_for_user()
+        except KeyError, e:
+            ok_(False, "No KeyError should be thrown")
+
+    @attr('docs_activity')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_user_docs_activity(self, fetch_user_feed):
+        fetch_user_feed.return_value = (open(USER_DOCS_ACTIVITY_FEED_XML, 'r')
+                                        .read())
+        feed = UserDocsActivityFeed(username="Sheppy")
+        items = feed.items
+
+        eq_(100, len(items))
+
+        for item in items:
+
+            ok_(hasattr(item, 'rc_id'))
+            ok_(hasattr(item, 'rc_comment'))
+            ok_(hasattr(item, 'rc_title'))
+            ok_(hasattr(item, 'rc_timestamp'))
+
+            ok_(isinstance(item.rc_timestamp, datetime))
+            ok_(type(item.rc_revision) is int)
+
+            if 'EDIT' == item.rc_type:
+                ok_(item.edit_url is not None)
+            if 'NEW' == item.rc_type:
+                ok_(item.history_url is None)
+                ok_(item.diff_url is None)
+            if 'MOVE' == item.rc_type:
+                eq_(item.rc_moved_to_title, item.current_title)
+
+    @attr('docs_activity')
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field. Make sure it shows up."""
         (user, deki_user, profile) = self._create_profile()
