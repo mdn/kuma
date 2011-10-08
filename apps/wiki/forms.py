@@ -11,6 +11,7 @@ from tower import ugettext as _
 from sumo.form_fields import StrippedCharField
 from tags import forms as tag_forms
 
+import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                      GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
@@ -196,6 +197,11 @@ class RevisionForm(forms.ModelForm):
         super(RevisionForm, self).__init__(*args, **kwargs)
         self.fields['based_on'].widget = forms.HiddenInput()
         if self.instance and self.instance.pk:
+            content = self.instance.content
+            self.initial['content'] = (wiki.content
+                                       .parse(content)
+                                       .injectSectionIDs()
+                                       .serialize())
             self.initial['review_tags'] = [x.name 
                 for x in self.instance.review_tags.all()]
 
