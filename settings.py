@@ -165,12 +165,12 @@ USE_L10N = True
 # Use the real robots.txt?
 ENGAGE_ROBOTS = False
 
-# Absolute path to the directory for the humans.txt file.
-HUMANSTXT_ROOT = path('.')
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')
+
+# Absolute path to the directory for the humans.txt file.
+HUMANSTXT_ROOT = MEDIA_ROOT
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
