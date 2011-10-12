@@ -33,14 +33,20 @@ APP_DIR = dirname(dirname(__file__))
 
 
 class ProfileViewsTest(test_utils.TestCase):
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.client = LocalizingClient()
 
-    def test_profile_view(self):
+    @attr('docs_activity')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_profile_view(self, fetch_user_feed):
         """A user profile can be viewed"""
-        (user, deki_user, profile) = self._create_profile()
+        doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
+        fetch_user_feed.return_value = doc_feed_data
 
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
         url = reverse('devmo.views.profile_view',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
@@ -96,7 +102,7 @@ class ProfileViewsTest(test_utils.TestCase):
         get_user.return_value = user
         doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
         fetch_user_feed.return_value = doc_feed_data
-        
+ 
         url = '%s?page=asdf' % reverse('devmo.views.profile_view',
                                        args=(user.username,))
 
@@ -105,24 +111,15 @@ class ProfileViewsTest(test_utils.TestCase):
         except PageNotAnInteger:
             ok_(False, "Non-numeric page number should not cause an error")
 
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    def test_profile_edit(self, authenticate, get_user, get_deki_user):
-        (user, deki_user, profile) = self._create_profile()
-
-        url = reverse('devmo.views.profile_view',
-                      args=(user.username,))
+    def test_profile_edit(self):
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('devmo.views.profile_view', args=(user.username,))
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
-
         eq_(0, doc.find('#profile-head .edit .button').length)
 
-        self.client.login(username=user.username, 
-                password=TESTUSER_PASSWORD)
-
-        url = reverse('devmo.views.profile_view',
-                      args=(user.username,))
+        self.client.login(username=user.username, password='testpass')
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
@@ -167,12 +164,10 @@ class ProfileViewsTest(test_utils.TestCase):
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
 
+    @attr("edit_websites")
     def test_profile_edit_websites(self):
-        (user, deki_user, profile) = self._create_profile()
-
-        self.client.login(username=user.username, 
-                password=TESTUSER_PASSWORD)
-
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username, password='testpass')
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
@@ -230,29 +225,26 @@ class ProfileViewsTest(test_utils.TestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
-    def test_profile_edit_interests(self):
-        (user, deki_user, profile) = self._create_profile()
-
-        self.client.login(username=user.username, 
-                password=TESTUSER_PASSWORD)
-
+    @attr("edit_interests")
+    def test_profile_edit_tags(self):
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username, password='testpass')
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
+
+        test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
 
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
                 'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
-        test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
-
         form['interests'] = ', '.join(test_tags)
 
         r = self.client.post(url, form, follow=True)
         doc = pq(r.content)
-
         eq_(1, doc.find('#profile-head').length)
 
         p = UserProfile.objects.get(user=user)

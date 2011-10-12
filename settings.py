@@ -244,14 +244,12 @@ MIDDLEWARE_CLASSES = (
     #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
-    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
 # Auth
 AUTHENTICATION_BACKENDS = (
     'users.backends.Sha256Backend',
-    #    'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'users.Profile'
 

@@ -166,6 +166,11 @@ class UserProfile(ModelBase):
             return True
         return False
 
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and not kwargs.get('raw', False):
+        p, created = UserProfile.objects.get_or_create(user=instance)
+
+models.signals.post_save.connect(create_user_profile, sender=DjangoUser)
 
 class UserDocsActivityFeed(object):
     """Fetches, parses, and caches a user activity feed from Mindtouch"""
