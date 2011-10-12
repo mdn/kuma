@@ -5,6 +5,9 @@
 {% set classes = 'register' %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article id="register" class="main">
     <h1>{{ title }}</h1>
     <p>{% trans %}Before you can log in, you need to confirm your email
@@ -13,4 +16,7 @@
       follow the link in the email.{% endtrans %}
     </p>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}

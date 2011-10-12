@@ -44,7 +44,7 @@ urlpatterns = patterns('',
     #url(r'^', include('dashboards.urls')),
 
     # Users
-    #('', include('users.urls')),
+    ('', include('users.urls')),
 
     # Services and sundry.
     #(r'', include('sumo.urls')),

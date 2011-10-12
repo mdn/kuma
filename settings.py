@@ -243,18 +243,12 @@ MIDDLEWARE_CLASSES = (
     #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
-    'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
 # Auth
-#AUTHENTICATION_BACKENDS = (
-#    'users.backends.Sha256Backend',
-#)
-#AUTH_PROFILE_MODULE = 'users.Profile'
-
 AUTHENTICATION_BACKENDS = (
-    'dekicompat.backends.DekiUserBackend',
+    'users.backends.Sha256Backend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
 
@@ -309,7 +303,7 @@ INSTALLED_APPS = (
     'waffle',
 
     # SUMO
-    #'users',
+    'users',
     #ROOT_PACKAGE,
     #'authority',
     #'timezones',

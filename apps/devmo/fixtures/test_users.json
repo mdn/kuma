@@ -4,8 +4,8 @@
         "model": "auth.user", 
         "fields": {
             "username": "testuser", 
-            "first_name": "", 
-            "last_name": "", 
+            "first_name": "Test", 
+            "last_name": "User", 
             "is_active": true, 
             "is_superuser": false, 
             "is_staff": false, 
@@ -13,7 +13,7 @@
             "groups": [], 
             "user_permissions": [], 
             "password": "sha1$015f3$d7a6885afbb3e3ae453f1c68ab205fa0a24c3488", 
-            "email": "", 
+            "email": "testuser@test.com", 
             "date_joined": "2011-06-03 16:12:08"
         }
     },
@@ -25,7 +25,12 @@
             "deki_user_id": 0, 
             "homepage": "http://testuser.com/", 
             "location": "Testville", 
-            "user": 7
+            "user": 7,
+            "fullname": "Test User",
+            "title": "Dr.",
+            "organization": "Web Testers Anonymous",
+            "irc_nickname": "testuser",
+            "bio": "I like to test things."
         }
     }
 ]
