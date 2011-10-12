@@ -1,8 +1,9 @@
 {% extends "demos/base.html" %}
 
 {% set obj = submission %}
-{% set signup_url='/Special:UserRegistration' | e %}
-{% set login_url=( '/Special:UserLogin?returntotitle={submit_url}' | f(submit_url=url('demos_submit')) ) | e %}
+{% set submit_url=url('demos_submit') %}
+{% set signup_url=url('users.register') | e %}
+{% set login_url='%s?next=%s' % (url('users.login'), submit_url) %}
 
 {% block pageid %}demos-submit{% endblock %}
 {% block bodyclass %}section-demos plain{% endblock %}

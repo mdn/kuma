@@ -92,15 +92,16 @@ class TestCalendar(test_utils.TestCase):
 
 
 class TestUserProfile(test_utils.TestCase):
+    fixtures = ['test_users.json']
 
     def setUp(self):
         pass
 
     @attr('websites')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    def test_websites(self, get_deki_user):
+    def test_websites(self):
         """A list of websites can be maintained on a UserProfile"""
-        (user, deki_user, profile) = self._create_profile()
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
 
         # Property should start off as an empty dict()
         sites = profile.websites
@@ -182,10 +183,10 @@ class TestUserProfile(test_utils.TestCase):
     @attr('docs_activity')
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field. Make sure it shows up."""
-        (user, deki_user, profile) = self._create_profile()
+        user = User.objects.get(username='testuser')
         profile_from_db = UserProfile.objects.get(user=user)
         ok_(hasattr(profile_from_db, 'irc_nickname'))
-        ok_(profile_from_db.irc_nickname == 'ircuser')
+        ok_(profile_from_db.irc_nickname == 'testuser')
 
     def test_unicode_email_gravatar(self):
         """Bug 689056: Unicode characters in email addresses shouldn't break

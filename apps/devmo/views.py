@@ -1,4 +1,5 @@
 import jingo
+import logging
 import urllib2
 import csv
 
@@ -7,6 +8,7 @@ from django.core.paginator import Paginator, InvalidPage
 from django.shortcuts import get_object_or_404
 from django.http import (HttpResponseRedirect, HttpResponse,
                          HttpResponseForbidden, HttpResponseNotFound)
+from django.contrib.auth.models import User
 
 from devmo.urlresolvers import reverse
 
@@ -99,6 +101,8 @@ def profile_edit(request, username):
     else:
         form = UserProfileEditForm(request.POST, request.FILES,
                                    instance=profile)
+        logging.debug('form.is_valid(): %s' % form.is_valid())
+        logging.debug('form.errors: %s' % form.errors)
         if form.is_valid():
             profile_new = form.save(commit=False)
 
@@ -124,7 +128,9 @@ def profile_edit(request, username):
             if form.cleaned_data['email'] != profile.user.email:
                 profile.user.email = form.cleaned_data['email']
                 profile.user.save()
-                profile.deki_user.change_email(form.cleaned_data['email'])
+                # TODO: restore this and more - send all django profile
+                # fields to deki
+                # profile.deki_user.change_email(form.cleaned_data['email'])
 
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
