@@ -30,6 +30,8 @@ following things (in addition to Git, of course).
 
 * ``zlib`` and headers.
 
+* ``libmagic`` and headers.
+
 * Several Python packages. See `Installing the Packages`_.
 
 Installation for these is very system dependent. Using a package manager, like
@@ -147,8 +149,8 @@ Testing it Out
 ==============
 
 To start the dev server, run ``./manage.py runserver``, then open up
-``http://localhost:8000``. If everything's working, you should see a somewhat
-empty version of the SUMO home page!
+``http://localhost:8000``. If everything's working, you should see
+the MDN home page!
 
 
 Running the Tests
