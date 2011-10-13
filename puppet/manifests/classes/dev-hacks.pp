@@ -112,6 +112,11 @@ class dev_hacks_post {
             #    command => "/usr/bin/rsync -r /var/cache/yum/ /vagrant/puppet/cache/yum/",
             #    require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
             #}
+            # Clean up the yum cache, for a smaller box.
+            #exec { "purge-local-yum-cache":
+            #    command => "/usr/bin/yum clean packages",
+            #    require => [ Exec['rsync-yum-cache-to-puppet-cache'] ]
+            #}
         }
     }
 }

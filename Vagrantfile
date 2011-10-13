@@ -1,23 +1,23 @@
 #
-# Vagrant setup for Kuma (master branch)
+# Vagrant setup for Kuma
 #
 Vagrant::Config.run do |config|
 
     # This should get you a mostly ready-baked base box
-    config.vm.box = "kuma-master"
-    config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/kuma-master.box"
-    config.package.name = "kuma-master.box"
+    config.vm.box = "kuma"
+    config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/kuma.box"
+    config.package.name = "kuma.box"
 
     # To rebuild from mostly scratch, use this CentOS 5.6 (32 bit) image:
-    #config.vm.box = "centos-56-32"
-    #config.vm.box_url = "http://people.mozilla.com/~lorchard/centos-56-32.box"
+    # config.vm.box = "centos-56-32"
+    # config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/centos-56-32.box"
 
     # Plain old VirtualBox shared folder in use here:
     config.vm.share_folder("v-root", "/vagrant", ".")
 
     # On OS X and Linux you can use an NFS mount; virtualbox shared folders are slow.
     # see also: http://vagrantup.com/docs/nfs.html
-    #config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
+    # config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
 
     # This thing can be a little hungry for memory
     config.vm.customize do |vm|
@@ -32,7 +32,7 @@ Vagrant::Config.run do |config|
     # uncomment to enable VM GUI console, mainly for troubleshooting
     #config.vm.boot_mode = :gui
 
-    # Add to /etc/hosts: 192.168.10.55 developer-kumadev.mozilla.org
+    # Add to /etc/hosts: 192.168.10.55 developer-dev.mozilla.org
     config.vm.network("192.168.10.55")
 
     config.vm.provision :puppet do |puppet|

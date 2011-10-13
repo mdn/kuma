@@ -36,12 +36,10 @@ class dev {
         python: stage => langs;
         php:    stage => langs;
 
-        phpbb: stage => vendors;
         dekiwiki: stage => vendors;
 
         site_config: ;
         dekiwiki_config: stage => vendors_post;
-        phpbb_config: stage=> vendors_post;
         dev_hacks_post: stage => hacks_post;
 
     }

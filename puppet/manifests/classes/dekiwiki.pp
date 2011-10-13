@@ -41,26 +41,27 @@ class dekiwiki {
             require => Exec['princexml_unpack'];
     }
 
-    exec {
-        "mindtouch_download":
-            cwd => "$PROJ_DIR/puppet/cache", 
-            command => "/usr/bin/wget http://repo.mindtouch.com/CentOS_5/noarch/dekiwiki-9.12.3-1.2.noarch.rpm",
-            creates => "$PROJ_DIR/puppet/cache/dekiwiki-9.12.3-1.2.noarch.rpm";
-        "mindtouch_install": 
-            command => "/bin/rpm -Uvh $PROJ_DIR/puppet/cache/dekiwiki-9.12.3-1.2.noarch.rpm",
-            creates => "/var/www/dekiwiki/index.php",
-            require => [ Exec['princexml_install'], Exec['mindtouch_download'] ];
-    }
-
-    # Installs 10.0.8, for which we're not yet ready without a lengthy database migration
-    #package {
-    #    "mindtouch": ensure => installed, 
-    #        require => [ 
-    #            Package['mono-addon-core'], 
-    #            File['repo_mindtouch'], 
-    #            Exec['princexml_install'] 
-    #        ];
+    # This is the older version of Mindtouch we were using
+    #exec {
+    #    "mindtouch_download":
+    #        cwd => "$PROJ_DIR/puppet/cache", 
+    #        command => "/usr/bin/wget http://repo.mindtouch.com/CentOS_5/noarch/dekiwiki-9.12.3-1.2.noarch.rpm",
+    #        creates => "$PROJ_DIR/puppet/cache/dekiwiki-9.12.3-1.2.noarch.rpm";
+    #    "mindtouch_install": 
+    #        command => "/bin/rpm -Uvh $PROJ_DIR/puppet/cache/dekiwiki-9.12.3-1.2.noarch.rpm",
+    #        creates => "/var/www/dekiwiki/index.php",
+    #        require => [ Exec['princexml_install'], Exec['mindtouch_download'] ];
     #}
+
+    # Installs v10, for which we're not yet ready without a lengthy database migration
+    package {
+        "mindtouch": ensure => installed, 
+            require => [ 
+                Package['mono-addon-core'], 
+                File['repo_mindtouch'], 
+                Exec['princexml_install'] 
+            ];
+    }
     
 }
 
@@ -75,7 +76,7 @@ class dekiwiki_config {
             owner => "vagrant", group => "vagrant", mode => 0644;
         "/etc/dekiwiki":
             ensure => directory,
-            owner => "root", group => "root", mode => 0755,
+            owner => "dekiwiki", group => "apache", mode => 0750,
             require => [ Package['httpd-devel'], Package["mysql-server"] ];
         "/etc/dekiwiki/mindtouch.deki.startup.xml":
             ensure => file,
@@ -131,7 +132,7 @@ class dekiwiki_config {
             command => "/usr/bin/svn co http://svn.mozilla.org/projects/deki/trunk/mozilla/",
             cwd => "/home/vagrant",
             creates => "/home/vagrant/mozilla",
-            require => [ Exec['mindtouch_install'] ];
+            require => [ Package['mindtouch'] ];
         # Ensure the deki SVN assets are kept up to date
         "svn_up_deki_mozilla":
             command => "/usr/bin/svn up",
