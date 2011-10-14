@@ -56,6 +56,10 @@ def web(request):
     """Web landing page."""
     return common_landing(request, section=SECTION_WEB)
 
+def apps(request):
+    """Web landing page."""
+    return common_landing(request, section=SECTION_APPS)
+
 def learn(request):
     """Learn landing page."""
     return jingo.render(request, 'landing/learn.html')
