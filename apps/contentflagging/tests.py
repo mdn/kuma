@@ -49,6 +49,19 @@ class DemoPackageTest(TestCase):
         request.META['HTTP_USER_AGENT'] = user_agent
         return request
 
+    @attr('bug694544')
+    def test_bug694544(self):
+        """Bug 694544: unicode character in request details should not break"""
+        try:
+            request = self.mk_request(user_agent=u"Some\xef\xbf\xbdbrowser")
+
+            obj_1 = self.user2
+            obj_1_ct = ContentType.objects.get_for_model(obj_1)
+            user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
+                                                       request=request)
+        except UnicodeDecodeError:
+            ok_(False, "UnicodeDecodeError should not be thrown")
+
     @attr('bad_multiple')
     def test_bad_multiple_flags(self):
         """Force multiple flags, possibly result of race condition, ensure graceful handling"""

@@ -56,6 +56,20 @@ class ActionCountersTest(TestCase):
         request.META['HTTP_USER_AGENT'] = user_agent
         return request
 
+    @attr('bug694544')
+    def test_bug694544(self):
+        """Bug 694544: unicode character in request details should not break"""
+        try:
+            action_name = "likes"
+            obj_1 = self.obj_1
+            obj_1_ct = ContentType.objects.get_for_model(obj_1)
+
+            request = self.mk_request(user_agent=u"Some\xef\xbf\xbdbrowser")
+            user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
+                                                           action_name, request)
+        except UnicodeDecodeError:
+            ok_(False, "UnicodeDecodeError should not be thrown")
+
     @attr('bad_multiple')
     def test_bad_multiple_counters(self):
         """Force multiple counters, possibly result of race condition, ensure graceful handling"""
