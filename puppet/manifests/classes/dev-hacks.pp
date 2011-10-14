@@ -71,10 +71,10 @@ class dev_hacks {
             #    owner => "root", group => "root", mode => 0644;
             #}
 
-            #file { "/etc/motd":
-            #    source => "/vagrant/puppet/files/etc/motd",
-            #    owner => "root", group => "root", mode => 0644;
-            #}
+            file { "/etc/motd":
+                source => "/vagrant/puppet/files/etc/motd",
+                owner => "root", group => "root", mode => 0644;
+            }
 
             #file { "/etc/sudoers":
             #    source => "/vagrant/puppet/files/etc/sudoers",
