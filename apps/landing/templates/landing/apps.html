@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block pageid %}apps{% endblock %}
+
+{% block bodyclass %}section-apps landing{% endblock %}
+
+{% block title %}{{ page_title(_('Apps')) }}{% endblock %}
+
+{% block content %}
+<header id="section-head">
+<div class="wrap">
+  <h1 class="intro">{{ _('Welcome to the <b>Apps Developer Community</b>')|safe }}</h1>
+
+  <div class="util">
+    <p><strong>{{ _('A short snappy tagline') }}</strong></p>
+    <ul>
+      <li class="util-twitter"><a href="http://twitter.com/mozilla">{{ _('Twitter') }}</a></li>
+      <li class="util-rss"><a href="feedurl">{{ _('Subscribe') }}</a></li>
+      <li class="util-discuss"><a href="{{ url('discussion') }}">{{ _('Join the Apps discussions!') }}</a></li>
+    </ul>
+  </div>
+</div>
+</header>
+
+<section id="content">
+<div class="wrap sidebar">
+  <section id="content-main" role="main">
+
+    <section class="boxed">
+      <div id="popular-docs" class="articles-list">
+        <header class="head section-apps">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h2>{{ _('Popular <span class="apps">Apps</span> Documentation')|safe }}</h2>
+        </header>
+
+        <ul class="hfeed">
+          <li class="hentry">
+            <h4 class="entry-title"><a href="#" rel="bookmark">{{ _('Article Title') }}</a></h4>
+            <p class="entry-summary">{{ _('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="#" rel="bookmark">{{ _('Article Title') }}</a></h4>
+            <p class="entry-summary">{{ _('Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="#" rel="bookmark">{{ _('Article Title') }}</a></h4>
+            <p class="entry-summary">{{ _('Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.') }}</p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Extensions')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
+            <p class="entry-summary">{{ _('Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.') }}</p>
+          </li>
+        </ul>
+        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All apps development documentation') }}</a></p>
+      </div>
+
+      <div id="fave-tools">
+        <header class="subhead">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h3>{{ _('Favorite <span class="apps">Apps</span> Tools')|safe }}</h3>
+        </header>
+        <ul class="tools">
+          <li>
+            <h4><a href="https://bugzilla.mozilla.org/">{{ _('Bugzilla') }} <img src="{{ MEDIA_URL }}img/icn-tool-bugzilla.png" alt="" width="65" /></a></h4>
+            <p class="desc">{{ _('The main issue-tracker for Mozilla projects.') }}</p>
+          </li>
+          <li>
+            <h4><a href="http://mxr.mozilla.org/">{{ _('MXR') }} <img src="{{ MEDIA_URL }}img/icn-tool-mozilla.png" alt="" width="65" /></a></h4>
+            <p class="desc">{{ _('A Mozilla source tree browser.') }}</p>
+          </li>
+          <li class="all"><a href="{{ devmo_url(_('/en/Tools')) }}" class="go">{{ _('All application development tools') }}</a></li>
+        </ul>
+      </div>
+
+      <div id="recent-news" class="articles-list">
+        <header class="subhead">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h3>{{ _('Recent <span class="apps">Apps</span> News &amp; Updates')|safe }}</h3>
+        </header>
+
+        {{ newsfeed(updates) }}
+
+        <p class="all"><a href="http://blog.mozilla.com/about_mozilla/archives/" class="go">{{ _('All application development entries') }}</a></p>
+      </div>
+    </section>{# /.boxed #}
+
+  </section>{# /#content-main #}
+
+  <aside id="content-sub" role="complementary">
+    <figure class="promo banner">
+      <a href="http://webfwd.org" rel="external">
+        <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">
+      </a>
+    </figure>
+
+    {{ twitter(tweets, title=_('Correspondence on Twitter from the Mozilla developer community.')) }}
+  </aside>{# /#content-sub #}
+
+</div>
+</section>{# /#content #}
+
+{% endblock %}
