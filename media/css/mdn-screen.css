@@ -331,15 +331,21 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #nav-section .current a { color: #000; font-weight: bold; background-position: 50% -460px; }
 
 /*** @Section @Head *********/
-#section-head { background: #000 url("../img/bg-thinstripe-lt.png"); border-bottom: 4px solid #f8d575; border-top: 4px solid #333; margin-top: -4px; padding: 8px 0 4px; color: #ccc; text-shadow: 1px 1px 0 rgba(0,0,0,.75); -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-#section-head h1.intro { width: 660px; float: left; font: normal 16px/1 "Museo Sans", sans-serif; margin: 0 0 .15em 18px; }
-#section-head h1.intro b { font-size: 32px; font-weight: normal; display: block; margin-top: 8px; color: #f8d475; }
+#section-head { padding: 15px 0; background: #cdc9bb; background: rgba(0,0,0,.12); border-top: 1px solid rgba(0,0,0,.5); }
+#section-head .intro { float: left; width: 140px; margin: 4px 15px 0 10px; font: bold italic .875em Georgia, Times, "Times New Roman", serif; }
+#section-head h1 { float: left; text-indent: -999em; height: 54px; margin: 0; background: transparent url("../img/logos-sections.png") no-repeat; }
 
-#section-head .util { width: 235px; float: right; font-size: .785em; }
+#section-head #logo-web { width: 140px; background-position: 0 -100px; }
+#section-head #logo-mobile { width: 245px; background-position: 0 -200px; }
+#section-head #logo-addons { width: 285px; background-position: 0 -300px; }
+#section-head #logo-apps { width: 170px; background-position: 0 -400px; }
+#section-head #logo-moz { width: 275px; background-position: 0 -500px; }
+
+#section-head .util { float: left; margin: 10px 0 0 30px; font-size: .857em; }
 #section-head .util p { margin: 0 0 .25em; }
 #section-head .util ul { list-style: none; margin: 0; }
 #section-head .util li { float: left; margin-right: 20px; font-style: italic; font-weight: bold; }
-#section-head .util a { color: #fff; display: inline-block; padding: 5px 0 5px 25px; background: url("../img/icons-headbar.png") no-repeat; }
+#section-head .util a { display: inline-block; padding: 5px 0 5px 25px; background: url("../img/icons-headbar.png") no-repeat; }
 #section-head .util-twitter a { background-position: 0 -300px; }
 #section-head .util-rss a { background-position: 0 -350px; }
 #section-head .util-discuss a { background-position: 0 -400px; }
@@ -642,11 +648,16 @@ section.boxed, div.boxed { background: #fff; padding: 18px; margin: 0 4px 26px 0
 }
 section.boxed:after, div.boxed:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 
-.boxed .head { margin: 0 0 1.4em; border-bottom: 3px solid #f8d475; }
+.boxed .head { margin: -18px -18px 1.4em; padding: 14px 18px 14px 75px; min-height: 30px; background: transparent url("../img/icons-sections.png") no-repeat; }
+.boxed .head.section-web { background-position: 0 0; }
+.boxed .head.section-mobile { background-position: 0 -200px; }
+.boxed .head.section-addons { background-position: 0 -400px; }
+.boxed .head.section-apps, .boxed .head.section-mozilla { background-position: 0 -600px; }
+
 .boxed .head h2, .boxed .head h3 { margin-bottom: 0; color: #000; font: 200 1.857em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .boxed .head p { margin: -2px 0 0; font: bold italic .857em/1.1 Georgia, Times, "Times New Roman", serif; }
 
-.boxed .subhead { margin: 0 0 1.4em; border-bottom: 3px solid #f8d475; }
+.boxed .subhead { margin: 0 0 1.4em; }
 .boxed .subhead h2, .boxed .subhead h3 { margin-bottom: 0; color: #000; font: 200 1.714em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .boxed .subhead p { font: italic .857em/1.1 Georgia, Times, "Times New Roman", serif; }
 
