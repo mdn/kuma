@@ -1,7 +1,9 @@
 import json
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 
+import mock
 from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -181,7 +183,9 @@ class DocumentEditingTests(TestCase):
         eq_(int(input.value), en_r.pk)
 
     @attr('review_tags')
-    def test_review_tags(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_review_tags(self, get_current):
+        get_current.return_value.domain = 'su.mo.com'
         """Review tags can be managed on document revisions"""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
