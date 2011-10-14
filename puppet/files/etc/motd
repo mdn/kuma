@@ -1,9 +1,5 @@
+Welcome to Kuma (mdn)
 
-kuma-mdn for webdev
-
-IP Address: 192.168.10.20
-
-Default users:
-    u: root     p: root
-    u: vagrant  p: vagrant
+Run this to start the Django app:
+    ./manage.py runserver_plus 0.0.0.0:8000
 
