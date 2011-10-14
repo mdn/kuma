@@ -5,7 +5,7 @@ from urlparse import urlparse
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
-from bleach import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+import bleach
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -30,9 +30,14 @@ from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
 from taggit.managers import TaggableManager
 
 
-ALLOWED_TAGS = ALLOWED_TAGS + [
-    'span', 'p', 'h1', 'h2', 'h3', 'pre', 'code', 'dl', 'dt', 'dd'
+ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
+    'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
+    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+    'address'
 ]
+ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
@@ -669,8 +674,6 @@ class Revision(ModelBase):
 
     @property
     def content_cleaned(self):
-        from bleach import Bleach
-        bleach = Bleach()
         return bleach.clean(
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS
         )
