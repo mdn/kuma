@@ -1,14 +1,17 @@
+import urllib
+from hashlib import md5
+
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from jinja2 import Markup
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
 from users.helpers import (profile_url, profile_avatar, public_email,
                            display_name, user_list)
-from users.models import Profile
+from devmo.models import UserProfile
 
 
 class HelperTestCase(TestCase):
@@ -19,15 +22,12 @@ class HelperTestCase(TestCase):
     def test_profile_url(self):
         eq_(u'/user/500000', profile_url(self.u))
 
-    def test_profile_avatar_default(self):
-        Profile.objects.create(user=self.u)
-        eq_(settings.DEFAULT_AVATAR, profile_avatar(self.u))
+    def test_profile_default_gravatar(self):
+        ok_(urllib.urlencode({'d': settings.DEFAULT_AVATAR}) in profile_avatar(self.u), "Bad default avatar: %s" % profile_avatar(self.u))
 
     def test_profile_avatar(self):
-        profile = Profile(user=self.u)
-        profile.avatar = 'images/foo.png'
-        profile.save()
-        eq_('%simages/foo.png' % settings.MEDIA_URL, profile_avatar(self.u))
+        self.u.email = 'test@test.com'
+        ok_(md5(self.u.email).hexdigest() in profile_avatar(self.u))
 
     def test_public_email(self):
         eq_(u'<span class="email">'
@@ -39,9 +39,8 @@ class HelperTestCase(TestCase):
 
     def test_display_name(self):
         eq_(u'testuser', display_name(self.u))
-        p = Profile(user=self.u)
-        p.name = u'Test User'
-        p.save()
+        p = self.u.get_profile()
+        p.fullname = u'Test User'
         eq_(u'Test User', display_name(self.u))
 
     def test_user_list(self):

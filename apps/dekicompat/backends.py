@@ -1,6 +1,6 @@
 from urllib2 import build_opener, HTTPError
-import urllib2
 import urlparse
+import requests
 from xml.dom import minidom
 from xml.sax.saxutils import escape as xml_escape
 
@@ -49,7 +49,7 @@ class DekiUserBackend(object):
             # requests.
             _thread_locals.deki_api_authtoken = authtoken
             user = self.get_or_create_user(deki_user)
-            return self.get_or_create_user(deki_user)
+            return user
         else:
             self.flush()
             return None
@@ -122,6 +122,23 @@ class DekiUserBackend(object):
 
         return user
 
+    @staticmethod
+    def mindtouch_login(request):
+        auth_url = "%s/@api/deki/users/authenticate" % (settings.DEKIWIKI_ENDPOINT)
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            r = requests.post(auth_url, auth=(username.encode('utf-8'), password.encode('utf-8')))
+            if r.status_code == 200:
+                authtoken = r.content
+                return authtoken
+            else:
+                # TODO: decide WTF to do here
+                return False
+        except HTTPError:
+            # TODO: decide WTF to do here
+            return False
+
 
 class DekiUser(object):
     """
@@ -164,7 +181,10 @@ class DekiUser(object):
             })
             resp = conn.getresponse()
             http_status_code = resp.status
-            out = resp.read()
+            if http_status_code != 200:
+                # TODO: decide WTF to do here
+                # out = resp.read()
+                pass
             conn.close()
 
         except httplib.HTTPException:

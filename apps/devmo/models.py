@@ -1,8 +1,7 @@
 import csv
-from datetime import datetime, tzinfo
+from datetime import datetime
 import time
 
-import logging
 import urllib2
 import urllib
 import hashlib
@@ -29,6 +28,18 @@ from taggit_extras.managers import NamespacedTaggableManager
 
 import south.modelsinspector
 south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
+
+
+DEKIWIKI_ENDPOINT = getattr(settings,
+        'DEKIWIKI_ENDPOINT', 'https://developer.mozilla.org')
+USER_DOCS_ACTIVITY_FEED_CACHE_PREFIX = getattr(settings,
+        'USER_DOCS_ACTIVITY_FEED_CACHE_PREFIX', 'dekiuserdocsfeed')
+USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT = getattr(settings,
+        'USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT', 900)
+USER_DOCS_ACTIVITY_FEED_TIMEZONE = getattr(settings,
+        'USER_DOCS_ACTIVITY_FEED_TIMEZONE', 'America/Phoenix')
+DEFAULT_AVATAR = getattr(settings,
+        'DEFAULT_AVATAR', 'http://developer.mozilla.org/media/img/avatar.png')
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
@@ -140,7 +151,7 @@ class UserProfile(ModelBase):
         return self._deki_user
 
     def gravatar_url(self, secure=True, size=220, rating='pg',
-            default='http://developer.mozilla.org/media/img/avatar.png'):
+            default=DEFAULT_AVATAR):
         """Produce a gravatar image URL from email address."""
         base_url = (secure and 'https://secure.gravatar.com' or
             'http://www.gravatar.com')
@@ -166,11 +177,13 @@ class UserProfile(ModelBase):
             return True
         return False
 
+
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
         p, created = UserProfile.objects.get_or_create(user=instance)
 
 models.signals.post_save.connect(create_user_profile, sender=DjangoUser)
+
 
 class UserDocsActivityFeed(object):
     """Fetches, parses, and caches a user activity feed from Mindtouch"""
@@ -433,6 +446,7 @@ class UserDocsActivityFeedItem(object):
             diff=self.rc_revision,
         )))
 
+
 def parse_date(date_str):
     try:
         parsed_date = datetime.strptime(date_str, "%m/%d/%Y")
@@ -453,6 +467,7 @@ FIELD_MAP = {
     "done": ["Done",None],
     "materials": ["Materials URL",None],
 }
+
 
 def parse_header_line(header_line):
     for field_name in FIELD_MAP.keys():
@@ -487,7 +502,7 @@ class Calendar(ModelBase):
         for field_name in FIELD_MAP.keys():
             field = FIELD_MAP[field_name]
             if len(doc_row) > field[1]:
-               field_value = doc_row[field[1]]
+                field_value = doc_row[field[1]]
             else:
                 field_value = ''
             if len(field) >= 3 and callable(field[2]):

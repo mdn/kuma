@@ -17,9 +17,8 @@ import jingo
 
 from access.decorators import logout_required, login_required
 from notifications.tasks import claim_watches
-from questions.models import Question, CONFIRMED
 from sumo.decorators import ssl_required
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
@@ -35,7 +34,11 @@ def login(request):
     form = handle_login(request)
 
     if request.user.is_authenticated():
-        return HttpResponseRedirect(next_url)
+        resp = HttpResponseRedirect(next_url)
+        authtoken = request.session.get('mindtouch_authtoken', False)
+        if authtoken:
+            resp.set_cookie('authtoken', authtoken, secure=True)
+        return resp
 
     response = jingo.render(request, 'users/login.html',
                             {'form': form, 'next_url': next_url})
@@ -49,7 +52,9 @@ def logout(request):
     auth.logout(request)
     next_url = _clean_next_url(request) if 'next' in request.GET else ''
 
-    return HttpResponseRedirect(next_url or reverse('home'))
+    resp = HttpResponseRedirect(next_url or reverse('home'))
+    resp.delete_cookie('authtoken')
+    return resp
 
 
 @ssl_required
