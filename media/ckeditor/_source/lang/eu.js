@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['eu'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['eu'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'HTML Iturburua',
@@ -121,6 +121,10 @@ CKEDITOR.lang['eu'] =
 		alignBottom		: 'Behean',
 		invalidHeight	: 'Altuera zenbaki bat izan behar da.',
 		invalidWidth	: 'Zabalera zenbaki bat izan behar da.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, erabilezina</span>'
@@ -175,18 +179,19 @@ CKEDITOR.lang['eu'] =
 		langDirRTL		: 'Eskumatik Ezkerrera (RTL)',
 		acccessKey		: 'Sarbide-gakoa',
 		name			: 'Izena',
-		langCode		: 'Hizkuntzaren Norabidea',
-		tabIndex		: 'Tabulazio Indizea',
-		advisoryTitle	: 'Izenburua',
+		langCode			: 'Hizkuntzaren Norabidea',
+		tabIndex			: 'Tabulazio Indizea',
+		advisoryTitle		: 'Izenburua',
 		advisoryContentType	: 'Eduki Mota (Content Type)',
 		cssClasses		: 'Estilo-orriko Klaseak',
 		charset			: 'Estekatutako Karaktere Multzoa',
 		styles			: 'Estiloa',
-		selectAnchor	: 'Aingura bat hautatu',
+		rel			: 'Relationship', // MISSING
+		selectAnchor		: 'Aingura bat hautatu',
 		anchorName		: 'Aingura izenagatik',
-		anchorId		: 'Elementuaren ID-gatik',
-		emailAddress	: 'ePosta Helbidea',
-		emailSubject	: 'Mezuaren Gaia',
+		anchorId			: 'Elementuaren ID-gatik',
+		emailAddress		: 'ePosta Helbidea',
+		emailSubject		: 'Mezuaren Gaia',
 		emailBody		: 'Mezuaren Gorputza',
 		noAnchors		: '(Ez daude aingurak eskuragarri dokumentuan)',
 		noUrl			: 'Mesedez URL esteka idatzi',
@@ -200,7 +205,8 @@ CKEDITOR.lang['eu'] =
 		menu		: 'Ainguraren Ezaugarriak',
 		title		: 'Ainguraren Ezaugarriak',
 		name		: 'Ainguraren Izena',
-		errorName	: 'Idatzi ainguraren izena'
+		errorName	: 'Idatzi ainguraren izena',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['eu'] =
 		findWhat			: 'Zer bilatu:',
 		replaceWith			: 'Zerekin ordeztu:',
 		notFoundMsg			: 'Idatzitako testua ez da topatu.',
+		findOptions			: 'Find Options', // MISSING
 		matchCase			: 'Maiuskula/minuskula',
 		matchWord			: 'Esaldi osoa bilatu',
 		matchCyclic			: 'Bilaketa ziklikoa',
@@ -412,7 +419,6 @@ CKEDITOR.lang['eu'] =
 		upload		: 'Gora Kargatu',
 		alt			: 'Ordezko Testua',
 		lockRatio	: 'Erlazioa Blokeatu',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Tamaina Berrezarri',
 		border		: 'Ertza',
 		hSpace		: 'HSpace',
@@ -714,6 +720,8 @@ CKEDITOR.lang['eu'] =
 	{
 		title		: 'CKEditor(r)i buruz',
 		dlgTitle	: 'CKEditor(r)i buruz',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'Lizentziari buruzko informazioa gure webgunean:',
 		copy		: 'Copyright &copy; $1. Eskubide guztiak erreserbaturik.'
 	},
@@ -744,9 +752,64 @@ CKEDITOR.lang['eu'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Dokumentuaren Ezarpenak',
+		title : 'Dokumentuaren Ezarpenak',
+		design : 'Design', // MISSING
+		meta : 'Meta Informazioa',
+		chooseColor : 'Choose', // MISSING
+		other : '<other>',
+		docTitle :	'Orriaren Izenburua',
+		charset : 	'Karaktere Multzoaren Kodeketa',
+		charsetOther : 'Beste Karaktere Multzoko Kodeketa',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Erdialdeko Europakoa',
+		charsetCT : 'Txinatar Tradizionala (Big5)',
+		charsetCR : 'Zirilikoa',
+		charsetGR : 'Grekoa',
+		charsetJP : 'Japoniarra',
+		charsetKR : 'Korearra',
+		charsetTR : 'Turkiarra',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Mendebaldeko Europakoa',
+		docType : 'Document Type Goiburua',
+		docTypeOther : 'Beste Document Type Goiburua',
+		xhtmlDec : 'XHTML Ezarpenak',
+		bgColor : 'Atzeko Kolorea',
+		bgImage : 'Atzeko Irudiaren URL-a',
+		bgFixed : 'Korritze gabeko Atzealdea',
+		txtColor : 'Testu Kolorea',
+		margin : 'Orrialdearen marjinak',
+		marginTop : 'Goian',
+		marginLeft : 'Ezkerrean',
+		marginRight : 'Eskuman',
+		marginBottom : 'Behean',
+		metaKeywords : 'Dokumentuaren Gako-hitzak (komarekin bananduta)',
+		metaDescription : 'Dokumentuaren Deskribapena',
+		metaAuthor : 'Egilea',
+		metaCopyright : 'Copyright', // MISSING
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

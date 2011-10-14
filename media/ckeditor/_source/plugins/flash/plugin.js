@@ -7,8 +7,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 {
 	var flashFilenameRegex = /\.swf(?:$|\?)/i;
 
-	var cssifyLength = CKEDITOR.tools.cssLength;
-
 	function isFlashEmbed( element )
 	{
 		var attributes = element.attributes;
@@ -18,19 +16,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function createFakeElement( editor, realElement )
 	{
-		var fakeElement = editor.createFakeParserElement( realElement, 'cke_flash', 'flash', true ),
-			fakeStyle = fakeElement.attributes.style || '';
-
-		var width = realElement.attributes.width,
-			height = realElement.attributes.height;
-
-		if ( typeof width != 'undefined' )
-			fakeStyle = fakeElement.attributes.style = fakeStyle + 'width:' + cssifyLength( width ) + ';';
-
-		if ( typeof height != 'undefined' )
-			fakeStyle = fakeElement.attributes.style = fakeStyle + 'height:' + cssifyLength( height ) + ';';
-
-		return fakeElement;
+		return editor.createFakeParserElement( realElement, 'cke_flash', 'flash', true );
 	}
 
 	CKEDITOR.plugins.add( 'flash',
@@ -107,7 +93,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								var attributes = element.attributes,
 									classId = attributes.classid && String( attributes.classid ).toLowerCase();
 
-								if ( !classId )
+								if ( !classId && !isFlashEmbed( element ) )
 								{
 									// Look for the inner <embed>
 									for ( var i = 0 ; i < element.children.length ; i++ )

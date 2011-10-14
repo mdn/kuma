@@ -16,7 +16,7 @@ CKEDITOR.plugins.add( 'panel',
  * @constant
  * @example
  */
-CKEDITOR.UI_PANEL = 2;
+CKEDITOR.UI_PANEL = 'panel';
 
 CKEDITOR.ui.panel = function( document, definition )
 {
@@ -137,6 +137,13 @@ CKEDITOR.ui.panel.prototype =
 					langCode = parentDiv.getParent().getAttribute( 'lang' ),
 					doc = iframe.getFrameDocument();
 
+				// Make it scrollable on iOS. (#8308)
+				CKEDITOR.env.iOS && parentDiv.setStyles(
+					{
+						'overflow' : 'scroll',
+						'-webkit-overflow-scrolling' : 'touch'
+					});
+
 				var onLoad = CKEDITOR.tools.addFunction( CKEDITOR.tools.bind( function( ev )
 					{
 						this.isLoaded = true;
@@ -244,16 +251,6 @@ CKEDITOR.ui.panel.prototype =
 		block._.focusIndex = -1;
 
 		this._.onKeyDown = block.onKeyDown && CKEDITOR.tools.bind( block.onKeyDown, block );
-
-		block.onMark = function( item )
-		{
-			holder.setAttribute( 'aria-activedescendant', item.getId() + '_option' );
-		};
-
-		block.onUnmark = function()
-		{
-			holder.removeAttribute( 'aria-activedescendant' );
-		};
 
 		block.show();
 
@@ -380,11 +377,12 @@ CKEDITOR.ui.panel.block = CKEDITOR.tools.createClass(
 					return false;
 
 				case 'click' :
+				case 'mouseup' :
 					index = this._.focusIndex;
 					link = index >= 0 && this.element.getElementsByTag( 'a' ).getItem( index );
 
 					if ( link )
-						link.$.click ? link.$.click() : link.$.onclick();
+						link.$[ keyAction ] ? link.$[ keyAction ]() : link.$[ 'on' + keyAction ]();
 
 					return false;
 			}

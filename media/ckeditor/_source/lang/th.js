@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['th'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['th'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'ดูรหัส HTML',
@@ -121,6 +121,10 @@ CKEDITOR.lang['th'] =
 		alignBottom		: 'ชิดด้านล่าง',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -175,18 +179,19 @@ CKEDITOR.lang['th'] =
 		langDirRTL		: 'จากขวามาซ้าย (RTL)',
 		acccessKey		: 'แอคเซส คีย์',
 		name			: 'ชื่อ',
-		langCode		: 'การเขียน-อ่านภาษา',
-		tabIndex		: 'ลำดับของ แท็บ',
-		advisoryTitle	: 'คำเกริ่นนำ',
+		langCode			: 'การเขียน-อ่านภาษา',
+		tabIndex			: 'ลำดับของ แท็บ',
+		advisoryTitle		: 'คำเกริ่นนำ',
 		advisoryContentType	: 'ชนิดของคำเกริ่นนำ',
 		cssClasses		: 'คลาสของไฟล์กำหนดลักษณะการแสดงผล',
 		charset			: 'ลิงค์เชื่อมโยงไปยังชุดตัวอักษร',
 		styles			: 'ลักษณะการแสดงผล',
-		selectAnchor	: 'ระบุข้อมูลของจุดเชื่อมโยง (Anchor)',
+		rel			: 'Relationship', // MISSING
+		selectAnchor		: 'ระบุข้อมูลของจุดเชื่อมโยง (Anchor)',
 		anchorName		: 'ชื่อ',
-		anchorId		: 'ไอดี',
-		emailAddress	: 'อีเมล์ (E-Mail)',
-		emailSubject	: 'หัวเรื่อง',
+		anchorId			: 'ไอดี',
+		emailAddress		: 'อีเมล์ (E-Mail)',
+		emailSubject		: 'หัวเรื่อง',
 		emailBody		: 'ข้อความ',
 		noAnchors		: '(ยังไม่มีจุดเชื่อมโยงภายในหน้าเอกสารนี้)',
 		noUrl			: 'กรุณาระบุที่อยู่อ้างอิงออนไลน์ (URL)',
@@ -200,7 +205,8 @@ CKEDITOR.lang['th'] =
 		menu		: 'รายละเอียด Anchor',
 		title		: 'รายละเอียด Anchor',
 		name		: 'ชื่อ Anchor',
-		errorName	: 'กรุณาระบุชื่อของ Anchor'
+		errorName	: 'กรุณาระบุชื่อของ Anchor',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['th'] =
 		findWhat			: 'ค้นหาคำว่า:',
 		replaceWith			: 'แทนที่ด้วย:',
 		notFoundMsg			: 'ไม่พบคำที่ค้นหา.',
+		findOptions			: 'Find Options', // MISSING
 		matchCase			: 'ตัวโหญ่-เล็ก ต้องตรงกัน',
 		matchWord			: 'ต้องตรงกันทุกคำ',
 		matchCyclic			: 'Match cyclic', // MISSING
@@ -270,8 +277,8 @@ CKEDITOR.lang['th'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -412,7 +419,6 @@ CKEDITOR.lang['th'] =
 		upload		: 'อัพโหลดไฟล์',
 		alt			: 'คำประกอบรูปภาพ',
 		lockRatio	: 'กำหนดอัตราส่วน กว้าง-สูง แบบคงที่',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'กำหนดรูปเท่าขนาดจริง',
 		border		: 'ขนาดขอบรูป',
 		hSpace		: 'ระยะแนวนอน',
@@ -714,6 +720,8 @@ CKEDITOR.lang['th'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -744,9 +752,64 @@ CKEDITOR.lang['th'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'คุณสมบัติของเอกสาร',
+		title : 'คุณสมบัติของเอกสาร',
+		design : 'Design', // MISSING
+		meta : 'ข้อมูลสำหรับเสิร์ชเอนจิ้น',
+		chooseColor : 'Choose', // MISSING
+		other : '<อื่น ๆ>',
+		docTitle :	'ชื่อไตเติ้ล',
+		charset : 	'ชุดตัวอักษร',
+		charsetOther : 'ชุดตัวอักษรอื่นๆ',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Central European', // MISSING
+		charsetCT : 'Chinese Traditional (Big5)', // MISSING
+		charsetCR : 'Cyrillic', // MISSING
+		charsetGR : 'Greek', // MISSING
+		charsetJP : 'Japanese', // MISSING
+		charsetKR : 'Korean', // MISSING
+		charsetTR : 'Turkish', // MISSING
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Western European', // MISSING
+		docType : 'ประเภทของเอกสาร',
+		docTypeOther : 'ประเภทเอกสารอื่นๆ',
+		xhtmlDec : 'รวมเอา  XHTML Declarations ไว้ด้วย',
+		bgColor : 'สีพื้นหลัง',
+		bgImage : 'ที่อยู่อ้างอิงออนไลน์ของรูปพื้นหลัง (Image URL)',
+		bgFixed : 'พื้นหลังแบบไม่มีแถบเลื่อน',
+		txtColor : 'สีตัวอักษร',
+		margin : 'ระยะขอบของหน้าเอกสาร',
+		marginTop : 'ด้านบน',
+		marginLeft : 'ด้านซ้าย',
+		marginRight : 'ด้านขวา',
+		marginBottom : 'ด้านล่าง',
+		metaKeywords : 'คำสำคัญอธิบายเอกสาร (คั่นคำด้วย คอมม่า)',
+		metaDescription : 'ประโยคอธิบายเกี่ยวกับเอกสาร',
+		metaAuthor : 'ผู้สร้างเอกสาร',
+		metaCopyright : 'สงวนลิขสิทธิ์',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

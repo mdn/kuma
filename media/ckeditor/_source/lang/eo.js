@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['eo'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['eo'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Fonto',
@@ -121,6 +121,10 @@ CKEDITOR.lang['eo'] =
 		alignBottom		: 'Malsupre',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -175,18 +179,19 @@ CKEDITOR.lang['eo'] =
 		langDirRTL		: 'De dekstro maldekstren (RTL)',
 		acccessKey		: 'Fulmoklavo',
 		name			: 'Nomo',
-		langCode		: 'Skribdirekto',
-		tabIndex		: 'Taba Ordo',
-		advisoryTitle	: 'Indika Titolo',
+		langCode			: 'Skribdirekto',
+		tabIndex			: 'Taba Ordo',
+		advisoryTitle		: 'Indika Titolo',
 		advisoryContentType	: 'Indika Enhavotipo',
 		cssClasses		: 'Klasoj de Stilfolioj',
 		charset			: 'Signaro de la Ligita Rimedo',
 		styles			: 'Stilo',
-		selectAnchor	: 'Elekti Ankron',
+		rel			: 'Relationship', // MISSING
+		selectAnchor		: 'Elekti Ankron',
 		anchorName		: 'Per Ankronomo',
-		anchorId		: 'Per Elementidentigilo',
-		emailAddress	: 'Retadreso',
-		emailSubject	: 'Temlinio',
+		anchorId			: 'Per Elementidentigilo',
+		emailAddress		: 'Retadreso',
+		emailSubject		: 'Temlinio',
 		emailBody		: 'Mesaĝa korpo',
 		noAnchors		: '<Ne disponeblas ankroj en la dokumento>',
 		noUrl			: 'Bonvolu entajpi la URL-on',
@@ -200,7 +205,8 @@ CKEDITOR.lang['eo'] =
 		menu		: 'Ankraj Atributoj',
 		title		: 'Ankraj Atributoj',
 		name		: 'Ankra Nomo',
-		errorName	: 'Bv tajpi la ankran nomon'
+		errorName	: 'Bv tajpi la ankran nomon',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['eo'] =
 		findWhat			: 'Serĉi:',
 		replaceWith			: 'Anstataŭigi per:',
 		notFoundMsg			: 'La celteksto ne estas trovita.',
+		findOptions			: 'Find Options', // MISSING
 		matchCase			: 'Kongruigi Usklecon',
 		matchWord			: 'Tuta Vorto',
 		matchCyclic			: 'Match cyclic', // MISSING
@@ -270,8 +277,8 @@ CKEDITOR.lang['eo'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -412,7 +419,6 @@ CKEDITOR.lang['eo'] =
 		upload		: 'Alŝuti',
 		alt			: 'Anstataŭiga Teksto',
 		lockRatio	: 'Konservi Proporcion',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Origina Grando',
 		border		: 'Bordero',
 		hSpace		: 'HSpaco',
@@ -714,6 +720,8 @@ CKEDITOR.lang['eo'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -744,9 +752,64 @@ CKEDITOR.lang['eo'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'Dokumentaj Atributoj',
+		title : 'Dokumentaj Atributoj',
+		design : 'Design', // MISSING
+		meta : 'Metadatumoj',
+		chooseColor : 'Choose', // MISSING
+		other : '<other>',
+		docTitle :	'Paĝotitolo',
+		charset : 	'Signara Kodo',
+		charsetOther : 'Alia Signara Kodo',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Central European', // MISSING
+		charsetCT : 'Chinese Traditional (Big5)', // MISSING
+		charsetCR : 'Cyrillic', // MISSING
+		charsetGR : 'Greek', // MISSING
+		charsetJP : 'Japanese', // MISSING
+		charsetKR : 'Korean', // MISSING
+		charsetTR : 'Turkish', // MISSING
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Western European', // MISSING
+		docType : 'Dokumenta Tipo',
+		docTypeOther : 'Alia Dokumenta Tipo',
+		xhtmlDec : 'Inkluzivi XHTML Deklaroj',
+		bgColor : 'Fona Koloro',
+		bgImage : 'URL de Fona Bildo',
+		bgFixed : 'Neruluma Fono',
+		txtColor : 'Teksta Koloro',
+		margin : 'Paĝaj Marĝenoj',
+		marginTop : 'Supra',
+		marginLeft : 'Maldekstra',
+		marginRight : 'Dekstra',
+		marginBottom : 'Malsupra',
+		metaKeywords : 'Ŝlosilvortoj de la Dokumento (apartigita de komoj)',
+		metaDescription : 'Dokumenta Priskribo',
+		metaAuthor : 'Verkinto',
+		metaCopyright : 'Kopirajto',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

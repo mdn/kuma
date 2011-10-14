@@ -86,6 +86,15 @@ if ( !CKEDITOR.env )
 			mobile : ( agent.indexOf( 'mobile' ) > -1 ),
 
 			/**
+			 * Indicates that CKEditor is running on Apple iPhone/iPad/iPod devices.
+			 * @type Boolean
+			 * @example
+			 * if ( CKEDITOR.env.iOS )
+			 *     alert( "I like little apples!" );
+			 */
+			iOS : /(ipad|iphone|ipod)/.test(agent),
+
+			/**
 			 * Indicates that the browser has a custom domain enabled. This has
 			 * been set with "document.domain".
 			 * @returns {Boolean} "true" if a custom domain is enabled.
@@ -103,7 +112,16 @@ if ( !CKEDITOR.env )
 
 				return domain != hostname &&
 					domain != ( '[' + hostname + ']' );	// IPv6 IP support (#5434)
-			}
+			},
+
+			/**
+			 * Indicates that page is running under an encrypted connection.
+			 * @returns {Boolean} "true" if the page has an encrypted connection.
+			 * @example
+			 * if ( CKEDITOR.env.secure )
+			 *     alert( "I'm in SSL!" );
+			 */
+			secure : location.protocol == 'https:'
 		};
 
 		/**
@@ -144,6 +162,16 @@ if ( !CKEDITOR.env )
 			 *     alert( "Now I'm on IE8, for real!" );
 			 */
 			env.ie8Compat = document.documentMode == 8;
+
+			/**
+			 * Indicates that CKEditor is running on Internet Explorer 9's standards mode.
+			 * @name CKEDITOR.env.ie9Compat
+			 * @type Boolean
+			 * @example
+			 * if ( CKEDITOR.env.ie9Compat )
+			 *     alert( "IE9, the beauty of the web!" );
+			 */
+			env.ie9Compat = document.documentMode == 9;
 
 			/**
 			 * Indicates that CKEditor is running on an IE7-like environment, which
@@ -220,7 +248,12 @@ if ( !CKEDITOR.env )
 		 *     alert( "Your browser is pretty cool!" );
 		 */
 		env.isCompatible =
+
+			// White list of mobile devices that supports.
+			env.iOS && version >= 534 ||
+
 			!env.mobile && (
+
 			( env.ie && version >= 6 ) ||
 			( env.gecko && version >= 10801 ) ||
 			( env.opera && version >= 9.5 ) ||

@@ -13,23 +13,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				minWidth : CKEDITOR.env.ie && CKEDITOR.env.quirks ? 368 : 350,
 				minHeight : 240,
 
-				onShow : function()
-				{
-					// Reset the textarea value.
-					this.getContentElement( 'general', 'content' ).getInputElement().setValue( '' );
-				},
-
-				onOk : function()
-				{
-					// Get the textarea value.
-					var text = this.getContentElement( 'general', 'content' ).getInputElement().getValue(),
-						editor = this.getParentEditor();
-
-					setTimeout( function()
-					{
-						editor.fire( 'paste', { 'text' : text } );
-					}, 0 );
-				},
+				onShow : function(){ this.setupContent(); },
+				onOk : function(){ this.commitContent(); },
 
 				contents :
 				[
@@ -60,6 +45,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								focus : function()
 								{
 									this.getElement().focus();
+								},
+								setup : function()
+								{
+									this.setValue( '' );
+								},
+								commit : function()
+								{
+									var value = this.getValue();
+									setTimeout( function()
+									{
+										editor.fire( 'paste', { 'text' : value } );
+									}, 0 );
 								}
 							}
 						]

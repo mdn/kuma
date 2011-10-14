@@ -15,10 +15,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function onSelectionChange( evt )
 	{
-		var editor = evt.editor;
+		if ( evt.editor.readOnly )
+			return null;
 
-		var elementPath = evt.data.path,
-				list = elementPath && elementPath.contains( listNodeNames );
+		var editor = evt.editor,
+			elementPath = evt.data.path,
+			list = elementPath && elementPath.contains( listNodeNames ),
+			firstBlock = elementPath.block || elementPath.blockLimit;
 
 		if ( list )
 				return this.setState( CKEDITOR.TRISTATE_OFF );
@@ -26,8 +29,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		if ( !this.useIndentClasses && this.name == 'indent' )
 			return this.setState( CKEDITOR.TRISTATE_OFF );
 
-		var path = evt.data.path,
-			firstBlock = path.block || path.blockLimit;
 		if ( !firstBlock )
 			return this.setState( CKEDITOR.TRISTATE_DISABLED );
 
@@ -79,7 +80,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function isListItem( node )
 	{
-		return node.type = CKEDITOR.NODE_ELEMENT && node.is( 'li' );
+		return node.type == CKEDITOR.NODE_ELEMENT && node.is( 'li' );
 	}
 
 	indentCommand.prototype = {
@@ -453,7 +454,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * and instead the {@link #indentUnit} and {@link #indentOffset} properties will be used.
  * @name CKEDITOR.config.indentClasses
  * @type Array
- * default null
+ * @default null
  * @example
  * // Use the classes 'Indent1', 'Indent2', 'Indent3'
  * config.indentClasses = ['Indent1', 'Indent2', 'Indent3'];

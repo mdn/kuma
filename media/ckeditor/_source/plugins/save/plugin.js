@@ -12,6 +12,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	var saveCmd =
 	{
 		modes : { wysiwyg:1, source:1 },
+		readOnly : 1,
 
 		exec : function( editor )
 		{

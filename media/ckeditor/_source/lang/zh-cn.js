@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['zh-cn'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['zh-cn'] =
 	editorTitle : '所见即所得编辑器, %1, 按 ALT+0 查看帮助。',
 
 	// ARIA descriptions.
-	toolbar	: '工具栏',
-	editor	: '所见即所得编辑器',
+	toolbars	: '工具栏',
+	editor		: '所见即所得编辑器',
 
 	// Toolbar buttons without dialogs.
 	source			: '源码',
@@ -56,7 +56,7 @@ CKEDITOR.lang['zh-cn'] =
 	superscript		: '上标',
 	horizontalrule	: '插入水平线',
 	pagebreak		: '插入分页符',
-	pagebreakAlt		: 'Page Break', // MISSING
+	pagebreakAlt		: '分页符',
 	unlink			: '取消超链接',
 	undo			: '撤消',
 	redo			: '重做',
@@ -121,6 +121,10 @@ CKEDITOR.lang['zh-cn'] =
 		alignBottom		: '底部',
 		invalidHeight	: '高度必须为数字格式',
 		invalidWidth	: '宽度必须为数字格式',
+		invalidCssLength	: '该字段必须为合式的CSS长度值，包括单位(px, %, in, cm, mm, em, ex, pt 或 pc)',
+		invalidHtmlLength	: '该字段必须为合式的HTML长度值，包括单位(px 或 %)',
+		invalidInlineStyle	: '内联样式必须为格式是以分号分隔的一个或多个“属性名 : 属性值”',
+		cssLengthTooltip	: '该字段必须为合式的CSS长度值，包括单位(px, %, in, cm, mm, em, ex, pt 或 pc)',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, 不可用</span>'
@@ -175,18 +179,19 @@ CKEDITOR.lang['zh-cn'] =
 		langDirRTL		: '从右到左 (RTL)',
 		acccessKey		: '访问键',
 		name			: '名称',
-		langCode		: '语言代码',
-		tabIndex		: 'Tab 键次序',
-		advisoryTitle	: '标题',
+		langCode			: '语言代码',
+		tabIndex			: 'Tab 键次序',
+		advisoryTitle		: '标题',
 		advisoryContentType	: '内容类型',
 		cssClasses		: '样式类名称',
 		charset			: '字符编码',
 		styles			: '行内样式',
-		selectAnchor	: '选择一个锚点',
+		rel			: '关联',
+		selectAnchor		: '选择一个锚点',
 		anchorName		: '按锚点名称',
-		anchorId		: '按锚点 ID',
-		emailAddress	: '地址',
-		emailSubject	: '主题',
+		anchorId			: '按锚点 ID',
+		emailAddress		: '地址',
+		emailSubject		: '主题',
 		emailBody		: '内容',
 		noAnchors		: '(此文档没有可用的锚点)',
 		noUrl			: '请输入超链接地址',
@@ -200,7 +205,8 @@ CKEDITOR.lang['zh-cn'] =
 		menu		: '锚点链接属性',
 		title		: '锚点链接属性',
 		name		: '锚点名称',
-		errorName	: '请输入锚点名称'
+		errorName	: '请输入锚点名称',
+		remove		: '删除锚点'
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['zh-cn'] =
 		findWhat			: '查找:',
 		replaceWith			: '替换:',
 		notFoundMsg			: '指定文本没有找到',
+		findOptions			: '查找选项',
 		matchCase			: '区分大小写',
 		matchWord			: '全字匹配',
 		matchCyclic			: '循环匹配',
@@ -412,7 +419,6 @@ CKEDITOR.lang['zh-cn'] =
 		upload		: '上传',
 		alt			: '替换文本',
 		lockRatio	: '锁定比例',
-		unlockRatio	: '不锁定比例',
 		resetSize	: '原始尺寸',
 		border		: '边框大小',
 		hSpace		: '水平间距',
@@ -714,8 +720,10 @@ CKEDITOR.lang['zh-cn'] =
 	{
 		title		: '关于CKEditor',
 		dlgTitle	: '关于CKEditor',
+		help	: '请访问 $1 以获取帮助.',
+		userGuide : 'CKEditor 用户向导',
 		moreInfo	: '访问我们的网站以获取更多关于协议的信息',
-		copy		: 'Copyright &copy; $1. All rights reserved.'
+		copy		: 'Copyright &copy; $1. 版权所有。'
 	},
 
 	maximize : '全屏',
@@ -725,8 +733,8 @@ CKEDITOR.lang['zh-cn'] =
 	{
 		anchor		: '锚点',
 		flash		: 'Flash 动画',
-		iframe		: 'IFrame', // MISSING
-		hiddenfield	: 'Hidden Field', // MISSING
+		iframe		: 'IFrame',
+		hiddenfield	: '隐藏域',
 		unknown		: '未知对象'
 	},
 
@@ -744,9 +752,64 @@ CKEDITOR.lang['zh-cn'] =
 	toolbarCollapse	: '折叠工具栏',
 	toolbarExpand	: '展开工具栏',
 
+	toolbarGroups :
+	{
+		document : '文档',
+		clipboard : '剪贴板/撤销',
+		editing : '编辑',
+		forms : '表单',
+		basicstyles : '基本格式',
+		paragraph : '段落',
+		links : '链接',
+		insert : '插入',
+		styles : '样式',
+		colors : '颜色',
+		tools : '工具'
+	},
+
 	bidi :
 	{
 		ltr : '文字方向为从左至右',
 		rtl : '文字方向为从右至左'
+	},
+
+	docprops :
+	{
+		label : '页面属性',
+		title : '页面属性',
+		design : '设计',
+		meta : 'Meta 数据',
+		chooseColor : '选择',
+		other : '<其他>',
+		docTitle :	'页面标题',
+		charset : 	'字符编码',
+		charsetOther : '其它字符编码',
+		charsetASCII : 'ASCII',
+		charsetCE : '中欧',
+		charsetCT : '繁体中文 (Big5)',
+		charsetCR : '西里尔文',
+		charsetGR : '希腊文',
+		charsetJP : '日文',
+		charsetKR : '韩文',
+		charsetTR : '土耳其文',
+		charsetUN : 'Unicode (UTF-8)',
+		charsetWE : '西欧',
+		docType : '文档类型',
+		docTypeOther : '其它文档类型',
+		xhtmlDec : '包含 XHTML 声明',
+		bgColor : '背景颜色',
+		bgImage : '背景图像',
+		bgFixed : '不滚动背景图像',
+		txtColor : '文本颜色',
+		margin : '页面边距',
+		marginTop : '上',
+		marginLeft : '左',
+		marginRight : '右',
+		marginBottom : '下',
+		metaKeywords : '页面索引关键字 (用半角逗号[,]分隔)',
+		metaDescription : '页面说明',
+		metaAuthor : '作者',
+		metaCopyright : '版权',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>'
 	}
 };
