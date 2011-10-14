@@ -1,22 +1,18 @@
 {% extends "base.html" %}
 
-{% block pageid %}mozilla{% endblock %}
+{% block pageid %}apps{% endblock %}
 
-{% block extrahead %}
-<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://blog.mozilla.com/about_mozilla/feed/" />
-{% endblock %}
+{% block bodyclass %}section-apps landing{% endblock %}
 
-{% block bodyclass %}section-moz landing{% endblock %}
-
-{% block title %}{{ page_title(_('Mozilla')) }}{% endblock %}
+{% block title %}{{ page_title(_('Apps')) }}{% endblock %}
 
 {% block content %}
 <header id="section-head">
 <div class="wrap">
-  <h1 class="intro">{{ _('Welcome to the <b>Mozilla Developer Community</b>')|safe }}</h1>
+  <h1 class="intro">{{ _('Welcome to the <b>Apps Developer Community</b>')|safe }}</h1> 
   
   <div class="util">
-    <p><strong>{{ _('Are you ready to make browsing better?') }}</strong></p>
+    <p><strong>{{ _('A short and snappy tagline') }}</strong></p>
     <ul>
       <li class="util-twitter"><a href="http://twitter.com/planetmozilla">{{ _('Twitter') }}</a></li>
       <li class="util-rss"><a href="http://blog.mozilla.com/about_mozilla/feed/">{{ _('Subscribe') }}</a></li>
@@ -32,69 +28,60 @@
   
     <section class="boxed">
       <div id="popular-docs" class="articles-list">
-        <header class="head section-mozilla">
+        <header class="head section-apps">
           {# L10n: Please escape HTML entities here, like &amp; #}
-          <h2>{{ _('Popular <span class="mozilla">Mozilla</span> Documentation')|safe }}</h2>
+          <h2>{{ _('Popular Apps Documentation')|safe }}</h2>
         </header>
         
         <ul class="hfeed">
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Developer_Guide')) }}" rel="bookmark">{{ _('Mozilla Developer Guide') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            Whether you're an old hand or just getting started, this is the
-            best way to get started with Mozilla development.
+            Article description.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/The_Mozilla_platform')) }}" rel="bookmark">{{ _('The Mozilla Platform') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            Learn more about the technologies at the core of Mozilla products
-            and services.
+            Article description.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Using_Mozilla_code_in_other_projects')) }}" rel="bookmark">{{ _('Using Mozilla code in other projects') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            There are several ways you can use Mozilla code in your own
-            project. Find everything you need to develop "powered by
-            Mozilla" applications.
+            Article description.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-          <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Debugging')) }}" rel="bookmark">{{ _('Debugging') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            Mozilla developers have come up with not just technologies
-            and features to help you debug code, but have devised tips and
-            techniques that can help too.
+            Article description.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Localization')) }}" rel="bookmark">{{ _('Localization') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            Localization (L10n) is the process of translating software user
-            interfaces from one language to another and adapting it to suit
-            a foreign culture. These resources are about making Mozilla-based
-            applications/extensions localizable.
+            Article description.
             {% endtrans %}
             </p>
           </li>
         </ul>
-        <p class="all"><a href="{{ devmo_url(_('/en/Tools')) }}" class="go">{{ _('All applications development documentation') }}</a></p>
+        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All applications development documentation') }}</a></p>
       </div>
 
       <div id="fave-tools">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
-          <h3>{{ _('Favorite <span class="mozilla">Mozilla</span> Tools')|safe }}</h3>
+          <h3>{{ _('Favorite Apps Tools')|safe }}</h3>
         </header>
         <ul class="tools">
           <li>
@@ -112,12 +99,12 @@
       <div id="recent-news" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
-          <h3>{{ _('Recent <span class="mozilla">Mozilla</span> News &amp; Updates')|safe }}</h3>
+          <h3>{{ _('Recent Apps News &amp; Updates')|safe }}</h3>
         </header>
 
         {{ newsfeed(updates) }}
 
-        <p class="all"><a href="http://blog.mozilla.com/about_mozilla/archives/" class="go">{{ _('All application development entries') }}</a></p>
+        <p class="all"><a href="#" class="go">{{ _('All application development entries') }}</a></p>
       </div>
     </section>{# /.boxed #}
     
