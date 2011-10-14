@@ -31,7 +31,9 @@ CKEDITOR.plugins.add( 'domiterator' );
 
 	var beginWhitespaceRegex = /^[\r\n\t ]+$/,
 		// Ignore bookmark nodes.(#3783)
-		bookmarkGuard = CKEDITOR.dom.walker.bookmark( false, true );
+		bookmarkGuard = CKEDITOR.dom.walker.bookmark( false, true ),
+		whitespacesGuard = CKEDITOR.dom.walker.whitespaces( true ),
+		skipGuard = function( node ) { return bookmarkGuard( node ) && whitespacesGuard( node ); };
 
 	// Get a reference for the next element, bookmark nodes are skipped.
 	function getNextSourceNode( node, startFromSibling, lastNode )
@@ -207,7 +209,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 				// to close the range, otherwise we include the parent within it.
 				if ( range && !closeRange )
 				{
-					while ( !currentNode.getNext( bookmarkGuard ) && !isLast )
+					while ( !currentNode.getNext( skipGuard ) && !isLast )
 					{
 						var parentNode = currentNode.getParent();
 
@@ -215,7 +217,10 @@ CKEDITOR.plugins.add( 'domiterator' );
 								&& !parentPre && { br : 1 } ) )
 						{
 							closeRange = 1;
+							includeNode = 0;
 							isLast = isLast || ( parentNode.equals( lastNode) );
+							// Make sure range includes bookmarks at the end of the block. (#7359)
+							range.setEndAt( parentNode, CKEDITOR.POSITION_BEFORE_END );
 							break;
 						}
 

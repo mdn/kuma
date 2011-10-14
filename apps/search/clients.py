@@ -5,7 +5,7 @@ import os
 from django.conf import settings
 from django.utils.encoding import smart_unicode
 
-from bleach import Bleach
+import bleach
 
 from search import sphinxapi
 
@@ -22,7 +22,6 @@ class SearchClient(object):
     Base-class for search clients
     """
 
-    bleach = Bleach()
     match_mode = sphinxapi.SPH_MATCH_EXTENDED2
     rank_mode = sphinxapi.SPH_RANK_PROXIMITY_BM25
     sort_mode = (sphinxapi.SPH_SORT_RELEVANCE, '')
@@ -124,7 +123,7 @@ class SearchClient(object):
             log.error('Building excerpt timed out!')
             excerpt = ''
 
-        return self.bleach.clean(smart_unicode(excerpt))
+        return bleach.clean(smart_unicode(excerpt))
 
     def set_sort_mode(self, mode, clause=''):
         self.sphinx.SetSortMode(mode, clause)

@@ -53,6 +53,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			'is'	: 1,
 			'it'	: 1,
 			'ja'	: 1,
+			'ka'	: 1,
 			'km'	: 1,
 			'ko'	: 1,
 			'lt'	: 1,
@@ -132,7 +133,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		detect : function( defaultLanguage, probeLanguage )
 		{
 			var languages = this.languages;
-			probeLanguage = probeLanguage || navigator.userLanguage || navigator.language;
+			probeLanguage = probeLanguage || navigator.userLanguage || navigator.language || defaultLanguage;
 
 			var parts = probeLanguage
 					.toLowerCase()

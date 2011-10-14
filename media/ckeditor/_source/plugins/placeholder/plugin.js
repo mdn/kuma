@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	CKEDITOR.plugins.add( 'placeholder',
 	{
 		requires : [ 'dialog' ],
-		lang : [ 'en' ],
+		lang : [ 'en', 'he' ],
 		init : function( editor )
 		{
 			var lang = editor.lang.placeholder;

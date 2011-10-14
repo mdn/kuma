@@ -25,7 +25,10 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 			target.removeClass( "cke_light_background" );
 			dialog.hide();
 
-			editor.insertHtml( value );
+			// We must use "insertText" here to keep text styled.
+			var span = editor.document.createElement( 'span' );
+			span.setHtml( value );
+			editor.insertText( span.getText() );
 		}
 	};
 
@@ -225,7 +228,7 @@ CKEDITOR.dialog.add( 'specialchar', function( editor )
 						}
 						else
 						{
-							var _tmpName = character.toLowerCase().replace( '&', '' ).replace( ';', '' ).replace( '#', '' );
+							var _tmpName = character.replace( '&', '' ).replace( ';', '' ).replace( '#', '' );
 
 							// Use character in case description unavailable.
 							charDesc = lang[ _tmpName ] || character;

@@ -10,7 +10,7 @@ from django.http import HttpResponseBadRequest
 from django.views.decorators.http import require_POST, require_GET
 
 from babel.numbers import format_number
-from bleach import Bleach
+import bleach
 import jingo
 from tower import ugettext as _
 import tweepy
@@ -20,8 +20,6 @@ import twitter
 
 
 log = logging.getLogger('k.customercare')
-
-bleach = Bleach()
 
 MAX_TWEETS = 20
 

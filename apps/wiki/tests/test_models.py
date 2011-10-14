@@ -1,7 +1,12 @@
+import logging
+
 from datetime import datetime, timedelta
 
-from nose.tools import eq_
+from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.plugins.attrib import attr
 from taggit.models import TaggedItem
+
+from pyquery import PyQuery as pq
 
 from django.core.exceptions import ValidationError
 
@@ -14,6 +19,9 @@ from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tests import document, revision, doc_rev, translated_revision
+
+import html5lib
+from html5lib.filters._base import Filter as html5lib_Filter
 
 
 def _objects_eq(manager, list_):
@@ -438,7 +446,7 @@ class RevisionTests(TestCase):
 
     def test_revision_unicode(self):
         """Revision containing unicode characters is saved successfully."""
-        str = u' \r\nFirefox informa\xe7\xf5es \u30d8\u30eb'
+        str = u'Firefox informa\xe7\xf5es \u30d8\u30eb'
         _, r = doc_rev(str)
         eq_(str, r.content)
 

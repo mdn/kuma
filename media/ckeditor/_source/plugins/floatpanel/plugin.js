@@ -51,6 +51,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 
 			this._ =
 			{
+				editor : editor,
 				// The panel that will be floating.
 				panel : panel,
 				parentElement : parentElement,
@@ -101,6 +102,10 @@ CKEDITOR.plugins.add( 'floatpanel',
 
 				this.allowBlur( false );
 				isShowing = 1;
+
+				// Record from where the focus is when open panel.
+				this._.returnFocus = this._.editor.focusManager.hasFocus ? this._.editor : new CKEDITOR.dom.element( CKEDITOR.document.$.activeElement );
+
 
 				var element = this.element,
 					iframe = this._.iframe,
@@ -157,14 +162,17 @@ CKEDITOR.plugins.add( 'floatpanel',
 							// the blur event may get fired even when focusing
 							// inside the window itself, so we must ensure the
 							// target is out of it.
-							var target;
-							if ( CKEDITOR.env.ie && !this.allowBlur()
-								 || ( target = ev.data.getTarget() )
-								      && target.getName && target.getName() != 'iframe' )
+							var target = ev.data.getTarget() ;
+							if ( target.getName && target.getName() != 'iframe' )
 								return;
 
 							if ( this.visible && !this._.activeChild && !isShowing )
+							{
+								// Panel close is caused by user's navigating away the focus, e.g. click outside the panel.
+								// DO NOT restore focus in this case.
+								delete this._.returnFocus;
 								this.hide();
+							}
 						},
 						this );
 
@@ -213,7 +221,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 								// http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug
 								// (#3426)
 								if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && width > 0 )
-									width += ( target.$.offsetWidth || 0 ) - ( target.$.clientWidth || 0 );
+									width += ( target.$.offsetWidth || 0 ) - ( target.$.clientWidth || 0 ) + 3;
 								// A little extra at the end.
 								// If not present, IE6 might break into the next line, but also it looks better this way
 								width += 4 ;
@@ -229,7 +237,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 								// http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug
 								// (#3426)
 								if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && height > 0 )
-									height += ( target.$.offsetHeight || 0 ) - ( target.$.clientHeight || 0 );
+									height += ( target.$.offsetHeight || 0 ) - ( target.$.clientHeight || 0 ) + 3;
 
 								target.setStyle( 'height', height + 'px' );
 
@@ -314,14 +322,27 @@ CKEDITOR.plugins.add( 'floatpanel',
 				isShowing = 0;
 			},
 
-			hide : function()
+			hide : function( returnFocus )
 			{
 				if ( this.visible && ( !this.onHide || this.onHide.call( this ) !== true ) )
 				{
 					this.hideChild();
+					// Blur previously focused element. (#6671)
+					CKEDITOR.env.gecko && this._.iframe.getFrameDocument().$.activeElement.blur();
 					this.element.setStyle( 'display', 'none' );
 					this.visible = 0;
 					this.element.getFirst().removeCustomData( 'activePanel' );
+
+					// Return focus properly. (#6247)
+					var focusReturn = returnFocus !== false && this._.returnFocus;
+					if ( focusReturn )
+					{
+						// Webkit requires focus moved out panel iframe first.
+						if ( CKEDITOR.env.webkit && focusReturn.type )
+							focusReturn.getWindow().$.focus();
+
+						focusReturn.focus();
+					}
 				}
 			},
 
@@ -377,6 +398,8 @@ CKEDITOR.plugins.add( 'floatpanel',
 				if ( activeChild )
 				{
 					delete activeChild.onHide;
+					// Sub panels don't manage focus. (#7881)
+					delete activeChild._.returnFocus;
 					delete this._.activeChild;
 					activeChild.hide();
 				}

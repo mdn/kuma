@@ -18,7 +18,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		( CKEDITOR.env.ie6Compat ?
 		  [
 			'.%1 table.%2,',
-			 '.%1 table.%2 td, .%1 table.%2 th,',
+			 '.%1 table.%2 td, .%1 table.%2 th',
 			 '{',
 				'border : #d3d3d3 1px dotted',
 			 '}'
@@ -40,6 +40,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		preserveState : true,
 		editorFocus : false,
+		readOnly: 1,
 
 		exec : function ( editor )
 		{
@@ -49,8 +50,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		refresh : function( editor )
 		{
-			var funcName = ( this.state == CKEDITOR.TRISTATE_ON ) ? 'addClass' : 'removeClass';
-			editor.document.getBody()[ funcName ]( 'cke_show_borders' );
+			if ( editor.document )
+			{
+				var funcName = ( this.state == CKEDITOR.TRISTATE_ON ) ? 'addClass' : 'removeClass';
+				editor.document.getBody()[ funcName ]( 'cke_show_borders' );
+			}
 		}
 	};
 
@@ -111,7 +115,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									cssClass = attributes[ 'class' ],
 									border = parseInt( attributes.border, 10 );
 
-								if ( !border || border <= 0 )
+								if ( ( !border || border <= 0 ) && ( !cssClass || cssClass.indexOf( showBorderClassName ) == -1 ) )
 									attributes[ 'class' ] = ( cssClass || '' ) + ' ' + showBorderClassName;
 							}
 						}

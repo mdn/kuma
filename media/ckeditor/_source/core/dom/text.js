@@ -67,6 +67,11 @@ CKEDITOR.tools.extend( CKEDITOR.dom.text.prototype,
 			return this.$.nodeValue;
 		},
 
+		setText : function( text )
+		{
+			this.$.nodeValue = text;
+		},
+
 		/**
 		 * Breaks this text node into two nodes at the specified offset,
 		 * keeping both in the tree as siblings. This node then only contains

@@ -261,24 +261,28 @@ CKEDITOR.plugins.add( 'forms',
 
 if ( CKEDITOR.env.ie )
 {
-	CKEDITOR.dom.element.prototype.hasAttribute = function( name )
-	{
-		var $attr = this.$.attributes.getNamedItem( name );
-
-		if ( this.getName() == 'input' )
+	CKEDITOR.dom.element.prototype.hasAttribute = CKEDITOR.tools.override( CKEDITOR.dom.element.prototype.hasAttribute,
+		function( original )
 		{
-			switch ( name )
-			{
-				case 'class' :
-					return this.$.className.length > 0;
-				case 'checked' :
-					return !!this.$.checked;
-				case 'value' :
-					var type = this.getAttribute( 'type' );
-					return type == 'checkbox' || type == 'radio' ? this.$.value != 'on' : this.$.value;
-			}
-		}
+			return function( name )
+				{
+					var $attr = this.$.attributes.getNamedItem( name );
 
-		return !!( $attr && $attr.specified );
-	};
+					if ( this.getName() == 'input' )
+					{
+						switch ( name )
+						{
+							case 'class' :
+								return this.$.className.length > 0;
+							case 'checked' :
+								return !!this.$.checked;
+							case 'value' :
+								var type = this.getAttribute( 'type' );
+								return type == 'checkbox' || type == 'radio' ? this.$.value != 'on' : this.$.value;
+						}
+					}
+
+					return original.apply( this, arguments );
+				};
+		});
 }
