@@ -114,7 +114,7 @@ def profile_edit(request, username):
 
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
-                tags = parse_tags(form.cleaned_data.get(field, ''))
+                tags = [t.lower() for t in parse_tags(form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
             # Change the email address, if necessary.
