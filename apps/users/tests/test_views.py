@@ -8,14 +8,13 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from notifications.tests import watch
-from questions.models import Question, CONFIRMED, UNCONFIRMED
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
 
 
 class RegisterTestCase(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.old_debug = settings.DEBUG
@@ -49,7 +48,7 @@ class RegisterTestCase(TestCase):
                                     {'username': 'newbie',
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
-        eq_('http://testserver/en-US/home', response.redirect_chain[0][0])
+        eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
@@ -71,7 +70,7 @@ class RegisterTestCase(TestCase):
                                     {'username': 'cjkuser',
                                      'password': u_str}, follow=True)
         eq_(200, response.status_code)
-        eq_('http://testserver/ja/home', response.redirect_chain[0][0])
+        eq_('http://testserver/ja/', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):
@@ -100,34 +99,9 @@ class RegisterTestCase(TestCase):
         # Watches are claimed.
         assert user.watch_set.exists()
 
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_new_user_with_questions(self, get_current):
-        """Unconfirmed questions get confirmed with account confirmation."""
-        get_current.return_value.domain = 'su.mo.com'
-        # TODO: remove this test once we drop unconfirmed questions.
-        user = RegistrationProfile.objects.create_inactive_user(
-            'sumouser1234', 'testpass', 'sumouser@test.com')
-
-        # Before we activate, let's create a question.
-        q = Question.objects.create(title='test_question', creator=user,
-                                    content='test', status=UNCONFIRMED,
-                                    confirmation_id='$$$')
-
-        # Activate account.
-        key = RegistrationProfile.objects.all()[0].activation_key
-        url = reverse('users.activate', args=[key])
-        response = self.client.get(url, follow=True)
-        eq_(200, response.status_code)
-
-        q = Question.objects.get(creator=user)
-        # Question is listed on the confirmation page.
-        assert 'test_question' in response.content
-        assert q.get_absolute_url() in response.content
-        eq_(CONFIRMED, q.status)
-
     def test_duplicate_username(self):
         response = self.client.post(reverse('users.register', locale='en-US'),
-                                    {'username': 'jsocol',
+                                    {'username': 'testuser',
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
@@ -152,7 +126,7 @@ class RegisterTestCase(TestCase):
 
 
 class ChangeEmailTestCase(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.client = LocalizingClient()
@@ -162,7 +136,7 @@ class ChangeEmailTestCase(TestCase):
         """Send email to change user's email and then change it."""
         get_current.return_value.domain = 'su.mo.com'
 
-        self.client.login(username='pcraciunoiu', password='testpass')
+        self.client.login(username='testuser', password='testpass')
         # Attempt to change email.
         response = self.client.post(reverse('users.change_email'),
                                     {'email': 'paulc@trololololololo.com'},
@@ -180,13 +154,13 @@ class ChangeEmailTestCase(TestCase):
         response = self.client.get(reverse('users.confirm_email',
                                            args=[ec.activation_key]))
         eq_(200, response.status_code)
-        u = User.objects.get(username='pcraciunoiu')
+        u = User.objects.get(username='testuser')
         eq_('paulc@trololololololo.com', u.email)
 
     def test_user_change_email_same(self):
         """Changing to same email shows validation error."""
-        self.client.login(username='rrosario', password='testpass')
-        user = User.objects.get(username='rrosario')
+        self.client.login(username='testuser', password='testpass')
+        user = User.objects.get(username='testuser')
         user.email = 'valid@email.com'
         user.save()
         response = self.client.post(reverse('users.change_email'),
@@ -197,9 +171,8 @@ class ChangeEmailTestCase(TestCase):
 
     def test_user_change_email_duplicate(self):
         """Changing to same email shows validation error."""
-        self.client.login(username='rrosario', password='testpass')
-        email = 'newvalid@email.com'
-        User.objects.filter(username='pcraciunoiu').update(email=email)
+        self.client.login(username='testuser', password='testpass')
+        email = 'testuser2@test.com'
         response = self.client.post(reverse('users.change_email'),
                                     {'email': email})
         eq_(200, response.status_code)
@@ -212,8 +185,9 @@ class ChangeEmailTestCase(TestCase):
         """If we detect a duplicate email when confirming an email change,
         don't change it and notify the user."""
         get_current.return_value.domain = 'su.mo.com'
-        self.client.login(username='rrosario', password='testpass')
-        old_email = User.objects.get(username='rrosario').email
+        self.client.login(username='testuser', password='testpass')
+        old_email = User.objects.get(username='testuser').email
+        print(old_email)
         new_email = 'newvalid@email.com'
         response = self.client.post(reverse('users.change_email'),
                                     {'email': new_email})
@@ -222,14 +196,16 @@ class ChangeEmailTestCase(TestCase):
         ec = EmailChange.objects.all()[0]
 
         # Before new email is confirmed, give the same email to a user
-        User.objects.filter(username='pcraciunoiu').update(email=new_email)
+        other_user = User.objects.filter(username='testuser2')[0]
+        other_user.email = new_email
+        other_user.save()
 
         # Visit confirmation link and verify email wasn't changed.
         response = self.client.get(reverse('users.confirm_email',
                                            args=[ec.activation_key]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Unable to change email for user rrosario',
-            doc('#main h1').text())
-        u = User.objects.get(username='rrosario')
+        eq_('Unable to change email for user testuser',
+            doc('.main h1').text())
+        u = User.objects.get(username='testuser')
         eq_(old_email, u.email)
