@@ -36,14 +36,6 @@ function commitAdvParams()
 		var attrName = this.att,
 			value = this.getValue();
 
-		// Broadcast Lang Dir change
-		if ( attrName == 'dir' )
-		{
-			var dir = element.getAttribute( attrName );
-			if ( dir != value && element.getParent() )
-				this._.dialog._.editor.fire( 'dirChanged', { node : element, dir : value || element.getDirection( 1 ) } );
-		}
-
 		if ( value )
 			element.setAttribute( attrName, value );
 		else
@@ -140,9 +132,12 @@ CKEDITOR.plugins.add( 'dialogadvtab',
 						label : lang.styles,
 						'default' : '',
 
+						validate : CKEDITOR.dialog.validate.inlineStyle( lang.invalidInlineStyle ),
+						onChange : function(){},
+
 						getStyle : function( name, defaultValue )
 						{
-							var match = this.getValue().match( new RegExp( name + '\\s*:\s*([^;]*)', 'i') );
+							var match = this.getValue().match( new RegExp( name + '\\s*:\\s*([^;]*)', 'i') );
 							return match ? match[ 1 ] : defaultValue;
 						},
 

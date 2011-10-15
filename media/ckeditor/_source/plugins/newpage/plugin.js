@@ -29,6 +29,7 @@ CKEDITOR.plugins.add( 'newpage',
 								name: command.name,
 								command: command
 							} );
+							editor.selectionChange();
 
 						}, 200 );
 					} );
@@ -46,6 +47,7 @@ CKEDITOR.plugins.add( 'newpage',
 });
 /**
  * The HTML to load in the editor when the "new page" command is executed.
+ * @name CKEDITOR.config.newpage_html
  * @type String
  * @default ''
  * @example

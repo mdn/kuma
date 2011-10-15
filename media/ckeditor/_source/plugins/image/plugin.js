@@ -30,7 +30,7 @@ CKEDITOR.plugins.add( 'image',
 			{
 				var element = evt.data.element;
 
-				if ( element.is( 'img' ) && !element.data( 'cke-realelement' ) )
+				if ( element.is( 'img' ) && !element.data( 'cke-realelement' ) && !element.isReadOnly() )
 					evt.data.dialog = 'image';
 			});
 

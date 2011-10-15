@@ -1,3 +1,5 @@
+import logging
+
 from collections import namedtuple
 from datetime import datetime
 from itertools import chain
@@ -5,7 +7,7 @@ from urlparse import urlparse
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
-from bleach import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+import bleach
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -16,6 +18,9 @@ from django.http import Http404
 
 from south.modelsinspector import add_introspection_rules
 
+import html5lib
+from html5lib.filters._base import Filter as html5lib_Filter
+
 from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
@@ -23,6 +28,7 @@ from sumo.models import ManagerBase, ModelBase, LocaleField
 from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
+import wiki.content
 
 import caching.base
 
@@ -30,10 +36,22 @@ from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
 from taggit.managers import TaggableManager
 
 
-ALLOWED_TAGS = ALLOWED_TAGS + [
-    'span', 'p', 'h1', 'h2', 'h3', 'pre', 'code', 'dl', 'dt', 'dd'
+ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
+    'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
+    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+    'address'
 ]
+ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
+ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
+    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
+    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+    'address'
+)))
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
 # the relative severity.
@@ -652,6 +670,11 @@ class Revision(ModelBase):
                                    'to a revision of the default-'
                                    'language document.')
 
+        if self.content:
+            self.content = (wiki.content
+                            .parse(self.content)
+                            .injectSectionIDs()
+                            .serialize())
         super(Revision, self).save(*args, **kwargs)
 
         # When a revision is approved, re-cache the document's html content
@@ -669,8 +692,6 @@ class Revision(ModelBase):
 
     @property
     def content_cleaned(self):
-        from bleach import Bleach
-        bleach = Bleach()
         return bleach.clean(
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS
         )
