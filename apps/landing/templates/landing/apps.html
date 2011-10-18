@@ -26,6 +26,30 @@
 <div class="wrap sidebar">
   <section id="content-main" role="main">
   
+    <form class="fm-subscribe boxed" action="/path/to/handler">
+      <header class="head">
+        <h2>Subscribe to the Apps Developer newsletter</h2>
+      </header>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      
+      <fieldset>
+        <p><label for="sub-email">Your e-mail address</label> <input type="email" name="email" id="sub-email" required="required"></p>
+        <p class="check">
+          <span class="label">Your preferred format</span>
+          <fieldset class="inline">
+            <label for="sub-html"><input type="radio" name="format" value="html" id="sub-html" checked> HTML</label> 
+            <label for="sub-text"><input type="radio" name="format" value="text" id="sub-text"> Plain text</label>
+          </fieldset>
+        </p>
+        <p class="agree">
+          <label for="sub-agree"><input type="checkbox" name="agree" id="sub-agree" required="required"> I agree</label> 
+          to the <a href="http://www.mozilla.org/about/policies/privacy-policy.html">Privacy Policy</a>
+        </p>
+        <p class="fm-submit"><button type="submit" class="button positive">Sign me up!</button></p>
+      </fieldset>
+    </form>
+
+  
     <section class="boxed">
       <div id="popular-docs" class="articles-list">
         <header class="head section-apps">
