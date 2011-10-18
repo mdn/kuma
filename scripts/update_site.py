@@ -34,6 +34,7 @@ ENV_BRANCH = {
     'mdn_prod':    ['mdn_prod', 'master']
 }
 
+PIP_INSTALL_COMPILED = "pip install -q -r requirements/compiled.txt"
 RM_SETTINGS_PYC = "rm -f settings*.pyc"
 GIT_PULL = "git pull -q origin %(branch)s"
 GIT_RESET_HARD = "git reset --hard HEAD"
@@ -56,6 +57,7 @@ def update_site(env, debug):
 
     commands = [
         (CHDIR, here),
+        (EXEC, PIP_INSTALL_COMPILED),
         (EXEC, RM_SETTINGS_PYC),
         (EXEC, GIT_RESET_HARD),
         (EXEC, GIT_PULL % project_branch),
