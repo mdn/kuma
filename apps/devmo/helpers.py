@@ -10,7 +10,7 @@ from django.template import defaultfilters
 from django.utils.html import strip_tags
 from django.utils.encoding import smart_str
 
-from bleach import Bleach
+import bleach
 from jingo import register
 import jinja2
 import pytz
@@ -25,9 +25,6 @@ register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
 
 register.filter(utils.entity_decode)
-
-
-bleach = Bleach()
 
 
 @register.function
