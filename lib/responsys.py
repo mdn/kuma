@@ -1,6 +1,7 @@
 from datetime import date
 
-import pycurl
+from httplib import HTTPSConnection
+from urlparse import urlparse
 
 from django.conf import settings
 from django.utils.http import urlencode
@@ -28,23 +29,25 @@ def subscribe(campaign, address, format='html', source_url='', lang='', country=
     data['%s_DATE' % campaign] = date.today().strftime('%Y-%m-%d')
 
     # views.py asserts setting is available
-    data['_ri_'] = settings.RESPONSYS
+    data['_ri_'] = getattr(settings, 'RESPONSYS',
+        'X0Gzc2X%3DUQpglLjHJlTQTtQ1vQ2rQ0bQQzgQvQy8KVwjpnpgHlpgneHmgJoXX0G' + 
+        'zc2X%3DUQpglLjHJlTQTtQ1vQ2rQ0aQQGQvQwPD')
 
-    if not settings.RESPONSYS_API_URL.lower().startswith('https://'):
+    api_url = getattr(settings, 'RESPONSYS_API_URL',
+                      'https://awesomeness.mozilla.org/pub/rf')
+    if not api_url.lower().startswith('https://'):
         raise Exception('Responsys API URL must start with HTTPS.')
 
-    curl = pycurl.Curl()
-    # Ensure SSL cert validates before sending user data over the wire
-    curl.setopt(pycurl.SSL_VERIFYPEER, 1)
-    curl.setopt(pycurl.SSL_VERIFYHOST, 2)
-    curl.setopt(pycurl.URL, settings.RESPONSYS_API_URL)
-    # Add POST data
-    curl.setopt(pycurl.POST, 1)
-    curl.setopt(pycurl.POSTFIELDS, urlencode(data))
+    u = urlparse(api_url)
+    conn = HTTPSConnection(u.netloc)
+
+    params = urlencode(data)
+    headers = {"Content-type": "application/x-www-form-urlencoded",
+               "Accept": "text/plain"}
+
     try:
-        curl.perform()
+        conn.request('POST', u.path, params, headers)
+        response = conn.getresponse()
+        return response.status == 200
     except Exception, ce:
         raise Exception('Newsletter subscription failed: %s' % ce)
-    else:
-        return curl.getinfo(pycurl.RESPONSE_CODE) == 200
-
