@@ -940,3 +940,16 @@ li.tag-expert label:hover { border-color: #bbb; }
 
 /* @Discussion @Forum-Archive page *********/
 #forum_archive_iframe { width: 940px; padding: 0; margin: 0; border: 0; height: 400px;}
+
+/* @Subscription @Form *********/
+.fm-subscribe fieldset { margin-top: 1em; font-size: .857em; }
+.fm-subscribe p { clear: both; }
+.fm-subscribe input { width: 40%; position: relative; top: -.5em; }
+.fm-subscribe label input { width: auto; position: static; }
+.fm-subscribe label, .fm-subscribe .label { float: left; width: 30%; margin-right: 3%; text-align: right; font-weight: bold; }
+.fm-subscribe .inline { margin: 0; font-size: 1em; }
+.fm-subscribe .inline label, .fm-subscribe .inline .label { float: none; width: auto; font-weight: normal; margin: 0 20px 0 0; text-align: left; }
+.fm-subscribe .check label { display: inline; margin: 0 20px 0 0; font-weight: normal; }
+.fm-subscribe .agree label { display: inline; float: none; margin: 0; font-weight: bold; }
+.fm-subscribe .agree, .fm-subscribe .fm-submit { padding-left: 33%; }
+.fm-subscribe .fm-submit button { font-size: 18px; }
