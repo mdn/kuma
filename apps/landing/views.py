@@ -1,9 +1,17 @@
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+
 import jingo
+from tower import ugettext as _
+from waffle.decorators import waffle_switch
+import responsys
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB)
 from feeder.models import Bundle, Feed
 from demos.models import Submission
+from landing.forms import SubscriptionForm
+from funfactory.urlresolvers import reverse
 
 
 def home(request):
@@ -56,9 +64,21 @@ def web(request):
     """Web landing page."""
     return common_landing(request, section=SECTION_WEB)
 
+@waffle_switch('apps_landing')
 def apps(request):
     """Web landing page."""
-    return common_landing(request, section=SECTION_APPS)
+    return common_landing(request, section=SECTION_APPS, extra={'form': SubscriptionForm()})
+
+@waffle_switch('apps_landing')
+def apps_subscription(request):
+    form = SubscriptionForm(data=request.POST)
+    if form.is_valid():
+        responsys.subscribe('APP_DEV', form.cleaned_data['email'], format=form.cleaned_data['format'])
+        messages.success(request, _('Thank you for subscribing to the Apps developer newsletter.'))
+        return HttpResponseRedirect(reverse('apps'))
+
+    """Web landing page."""
+    return common_landing(request, section=SECTION_APPS, extra={'form': form})
 
 def learn(request):
     """Learn landing page."""
