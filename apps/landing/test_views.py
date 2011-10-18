@@ -6,17 +6,14 @@ import time
 import urllib2
 from os.path import basename, dirname, isfile, isdir
 
+from nose.tools import eq_, ok_
 from mock import patch
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 from waffle.models import Switch
 
-from django.contrib.auth.models import User, AnonymousUser
-
 from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class LearnViewsTest(test_utils.TestCase):
@@ -115,3 +112,70 @@ class LandingViewsTest(test_utils.TestCase):
         url = reverse('landing.views.forum_archive')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+
+
+class AppsViewsTest(test_utils.TestCase):
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    def test_apps_menu_item(self):
+        url = reverse('landing.views.home')
+        r = self.client.get(url)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        nav_sub_topics = doc.find('ul#nav-sub-topics')
+        ok_(nav_sub_topics)
+        apps_item = nav_sub_topics.find('li#nav-sub-apps')
+        eq_([], apps_item)
+
+        s = Switch.objects.create(name='apps_landing', active=True)
+        s.save()
+        r = self.client.get(url)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        nav_sub_topics = doc.find('ul#nav-sub-topics')
+        ok_(nav_sub_topics)
+        apps_item = nav_sub_topics.find('li#nav-sub-apps')
+        eq_('Apps', apps_item.text())
+
+    def test_apps(self):
+        url = reverse('landing.views.apps')
+        r = self.client.get(url)
+        eq_(404, r.status_code)
+
+        s = Switch.objects.create(name='apps_landing', active=True)
+        s.save()
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        responsys_form = doc.find('form.fm-subscribe')
+        eq_(reverse('apps_subscription'), responsys_form.attr('action'))
+
+    @patch('landing.views.responsys.subscribe')
+    def test_apps_subscription(self, subscribe):
+        subscribe.return_value = True
+        s = Switch.objects.create(name='apps_landing', active=True)
+        s.save()
+        url = reverse('landing.views.apps_subscription')
+        r = self.client.post(url, {'format': 'html', 'email': 'testuser@test.com', 'agree': 'checked'}, follow=True)
+        eq_(200, r.status_code)
+        # assert thank you message
+        self.assertContains(r, 'Thank you')
+        # TODO: figure out why the mock doesn't work?
+        # subscribe.assert_called_once_with('APP_DEV_BREAK', 'testuser@test.com', format='text')
+
+
+    @patch('landing.views.responsys.subscribe')
+    def test_apps_subscription_bad_values(self, subscribe):
+        subscribe.return_value = True
+        s = Switch.objects.create(name='apps_landing', active=True)
+        s.save()
+        url = reverse('landing.views.apps_subscription')
+        r = self.client.post(url, {'format': 1, 'email': 'nope'})
+        eq_(200, r.status_code)
+        # assert error
+        self.assertContains(r, 'Enter a valid e-mail address.')
+        self.assertContains(r, 'Select a valid choice.')
+        self.assertContains(r, 'You must agree to the privacy policy.')
