@@ -93,12 +93,14 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
     * Doesn't prefill password on validation error.
     * Allows logging in inactive users (initialize with `only_active=False`).
+    * pass authtoken for mindtouch authentication
     """
     password = forms.CharField(label=_lazy(u"Password"),
                                widget=forms.PasswordInput(render_value=False))
 
-    def __init__(self, request=None, only_active=True, *args, **kwargs):
+    def __init__(self, request=None, only_active=True, authtoken=False, *args, **kwargs):
         self.only_active = only_active
+        self.authtoken = authtoken
         super(AuthenticationForm, self).__init__(request, *args, **kwargs)
 
     def clean(self):
@@ -107,7 +109,8 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
         if username and password:
             self.user_cache = authenticate(username=username,
-                                           password=password)
+                                           password=password,
+                                           authtoken=self.authtoken)
             if self.user_cache is None:
                 raise forms.ValidationError(
                     _('Please enter a correct username and password. Note '

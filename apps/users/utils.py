@@ -9,14 +9,21 @@ def handle_login(request, only_active=True):
     auth.logout(request)
 
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST, only_active=only_active)
+        authtoken = DekiUserBackend.mindtouch_login(request)
+        form = AuthenticationForm(data=request.POST, only_active=only_active, authtoken=authtoken)
         if form.is_valid():
             auth.login(request, form.get_user())
-            authtoken = DekiUserBackend.mindtouch_login(request)
             request.session['mindtouch_authtoken'] = authtoken
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
+        """
+        elif authtoken:
+            dub = DekiUserBackend()
+            u = dub.authenticate(authtoken)
+            auth.login(request, u)
+            pass
+        """
 
         return form
 

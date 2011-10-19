@@ -9,7 +9,8 @@ from pyquery import PyQuery as pq
 
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
-from sumo.urlresolvers import reverse
+from dekicompat.tests import mockdekiauth
+from funfactory.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
 
 
@@ -49,6 +50,21 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_auto_user_from_mindtouch(self, get_current):
+        get_current.return_value.domain = 'su.mo.com'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+
+        # Try to log in as a MindTouch user
+        response = self.client.post(reverse('users.login', locale='en-US'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        eq_(200, response.status_code)
+
+        # Login should have auto-created django user
+        u = User.objects.get(username='testaccount')
+        eq_(True, u.is_active)
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
@@ -187,8 +203,8 @@ class ChangeEmailTestCase(TestCase):
         get_current.return_value.domain = 'su.mo.com'
         self.client.login(username='testuser', password='testpass')
         old_email = User.objects.get(username='testuser').email
-        print(old_email)
         new_email = 'newvalid@email.com'
+        import pdb; pdb.set_trace()
         response = self.client.post(reverse('users.change_email'),
                                     {'email': new_email})
         eq_(200, response.status_code)
