@@ -47,6 +47,9 @@ CONTENT_LONG = _lazy(u'Please keep the length of the content to '
 COMMENT_LONG = _lazy(u'Please keep the length of the comment to '
                      u'%(limit_value)s characters or less. It is currently '
                      u'%(show_value)s characters.')
+TITLE_COLLIDES = _lazy(u'Another document with this title already exists.')
+SLUG_COLLIDES = _lazy(u'Another document with this slug already exists.')
+OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
 
 class DocumentForm(forms.ModelForm):
@@ -154,6 +157,24 @@ class DocumentForm(forms.ModelForm):
 
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
+
+    title = StrippedCharField(min_length=5, max_length=255,
+                              required=False,
+                              widget=forms.TextInput(attrs={'placeholder':TITLE_PLACEHOLDER}),
+                              label=_lazy(u'Title:'),
+                              help_text=_lazy(u'Title of article'),
+                              error_messages={'required': TITLE_REQUIRED,
+                                              'min_length': TITLE_SHORT,
+                                              'max_length': TITLE_LONG})
+    slug = StrippedCharField(min_length=3, max_length=255,
+                             required=False,
+                             widget=forms.TextInput(),
+                             label=_lazy(u'Slug:'),
+                             help_text=_lazy(u'Article URL'),
+                             error_messages={'required': SLUG_REQUIRED,
+                                             'min_length': SLUG_SHORT,
+                                             'max_length': SLUG_LONG})
+    
     keywords = StrippedCharField(required=False,
                                  label=_lazy(u'Keywords:'),
                                  help_text=_lazy(u'Affects search results'))
@@ -191,19 +212,73 @@ class RevisionForm(forms.ModelForm):
 
     class Meta(object):
         model = Revision
-        fields = ('keywords', 'summary', 'content', 'comment', 'based_on')
+        fields = ('title', 'slug', 'keywords', 'summary', 'content', 'comment',
+                  'based_on')
 
     def __init__(self, *args, **kwargs):
+        
+        if 'is_iframe_target' in kwargs:
+            self.is_iframe_target = kwargs['is_iframe_target']
+            del kwargs['is_iframe_target']
+        else:
+            self.is_iframe_target = False
+
         super(RevisionForm, self).__init__(*args, **kwargs)
         self.fields['based_on'].widget = forms.HiddenInput()
+
         if self.instance and self.instance.pk:
+            
+            # Ensure both title and slug are populated from parent document, if
+            # last revision didn't have them
+            if not self.instance.title:
+                self.initial['title'] = self.instance.document.title
+            if not self.instance.slug:
+                self.initial['slug'] = self.instance.document.slug
+
             content = self.instance.content
             self.initial['content'] = (wiki.content
                                        .parse(content)
                                        .injectSectionIDs()
                                        .serialize())
+
             self.initial['review_tags'] = [x.name 
                 for x in self.instance.review_tags.all()]
+
+    def _clean_collidable(self, name):
+        value = self.cleaned_data[name]
+        
+        if self.is_iframe_target:
+            # Since these collidables can change the URL of the page, changes
+            # to them are ignored for an iframe submission
+            return getattr(self.instance.document, name)
+
+        error_message = {'title': TITLE_COLLIDES, 
+                         'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
+        try:
+            existing_doc = Document.uncached.get(locale=self.instance.document.locale,
+                                                 **{name: value} )
+            if self.instance and self.instance.document:
+                if (not existing_doc.redirect_url() and 
+                        existing_doc.pk != self.instance.document.pk):
+                    # There's another document with this value, 
+                    # and we're not a revision of it.
+                    raise forms.ValidationError(error_message)
+            else:
+                # This document-and-revision doesn't exist yet, so there
+                # shouldn't be any collisions at all.
+                raise forms.ValidationError(error_message)
+
+        except Document.DoesNotExist:
+            # No existing document for this value, so we're good here.
+            pass
+
+        return value
+
+    def clean_title(self):
+        return self._clean_collidable('title')
+
+    def clean_slug(self):
+        return self._clean_collidable('slug')
 
     def save(self, creator, document, **kwargs):
         """Persist me, and return the saved Revision.

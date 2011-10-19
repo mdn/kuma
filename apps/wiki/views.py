@@ -213,7 +213,11 @@ def new_document(request):
     if doc_form.is_valid() and rev_form.is_valid():
         doc = doc_form.save(None)
         _save_rev_and_notify(rev_form, request.user, doc)
-        return HttpResponseRedirect(reverse('wiki.document_revisions',
+        if doc.current_revision.is_approved:
+            view = 'wiki.document'
+        else:
+            view = 'wiki.document_revisions'
+        return HttpResponseRedirect(reverse(view,
                                     args=[doc.slug]))
 
     return jingo.render(request, 'wiki/new_document.html',
@@ -286,11 +290,13 @@ def edit_document(request, document_slug, revision_id=None):
                 disclose_description = True
             else:
                 raise PermissionDenied
+
         elif which_form == 'rev':
             if doc.allows_revision_by(user):
-                rev_form = RevisionForm(request.POST)
+                rev_form = RevisionForm(request.POST, is_iframe_target=is_iframe_target)
                 rev_form.instance.document = doc  # for rev_form.clean()
                 if rev_form.is_valid():
+
                     _save_rev_and_notify(rev_form, user, doc)
 
                     if is_iframe_target:
@@ -303,7 +309,7 @@ def edit_document(request, document_slug, revision_id=None):
                     else:
                         view = 'wiki.document_revisions'
                     return HttpResponseRedirect(
-                        reverse(view, args=[document_slug]))
+                        reverse(view, args=[doc.slug]))
             else:
                 raise PermissionDenied
 
@@ -311,6 +317,7 @@ def edit_document(request, document_slug, revision_id=None):
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'disclose_description': disclose_description,
+                         'revision': rev,
                          'document': doc})
 
 

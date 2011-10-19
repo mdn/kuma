@@ -154,6 +154,12 @@ div.note p, div.tip p { margin-bottom: .75em; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
 
+.editing .metadata { float: left; width: 65%; display: none; }
+.editing ul.metadata li { margin: 0pt; padding: 0pt; }
+.editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
+.editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
+
+
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }
 .editing .title h1 em { color: #333; font-style: normal; }
@@ -171,9 +177,9 @@ div.note p, div.tip p { margin-bottom: .75em; }
 
 #page-buttons { width: 35%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
 #page-buttons li { display: inline; margin: 0 0 2px 10px; padding: 0; background: none; }
-#page-buttons a { display: inline-block; padding: 8px 10px 6px 32px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+#page-buttons a { display: inline-block; padding: 8px 10px 6px 10px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); background-color: #ddd; }
 #page-buttons a:hover, #page-buttons a:focus, #page-buttons a:active { text-decoration: none; }
-#page-buttons .page-edit a { background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
+#page-buttons .page-edit a { padding-left: 32px; background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
 #page-buttons .page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
 #page-buttons .page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
 #page-buttons .page-watch a { padding-left: 35px; background: #f2d29e url("/media/img/wiki/button-watch.png") 0 50% repeat-x; }

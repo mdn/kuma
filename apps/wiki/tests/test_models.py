@@ -199,10 +199,6 @@ class DocumentTests(TestCase):
         """Make sure changing a title remembers its old value."""
         self._test_remembering_setter('title')
 
-    def test_redirect_prefix(self):
-        """Test accuracy of the prefix that helps us recognize redirects."""
-        assert wiki_to_html(REDIRECT_CONTENT % 'foo').startswith(REDIRECT_HTML)
-
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
         # Make English rev:
@@ -350,7 +346,8 @@ class RedirectCreationTests(TestCase):
         redirect = Document.uncached.get(slug=self.old_slug)
         # "uncached" isn't necessary, but someday a worse caching layer could
         # make it so.
-        eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
+        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
+        eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
         eq_(REDIRECT_TITLE % dict(old=self.d.title, number=1), redirect.title)
 
     def test_change_title(self):
@@ -358,7 +355,8 @@ class RedirectCreationTests(TestCase):
         self.d.title = 'New Title'
         self.d.save()
         redirect = Document.uncached.get(title=self.old_title)
-        eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
+        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
+        eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
         eq_(REDIRECT_SLUG % dict(old=self.d.slug, number=1), redirect.slug)
 
     def test_change_slug_and_title(self):
@@ -366,7 +364,8 @@ class RedirectCreationTests(TestCase):
         self.d.title = 'New Title'
         self.d.slug = 'new-slug'
         self.d.save()
-        eq_(REDIRECT_CONTENT % self.d.title,
+        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
+        eq_(REDIRECT_CONTENT % attrs,
             Document.uncached.get(
                 slug=self.old_slug,
                 title=self.old_title).current_revision.content)
