@@ -31,6 +31,7 @@
         }
 
         if ($('body').is('.edit, .new, .translate')) {
+            initMetadataEditButton();
             initSaveAndEditButtons();
             initArticlePreview();
             initTitleAndSlugCheck();
@@ -701,6 +702,33 @@
                     }
                 }
             });
+        }
+    }
+
+    //
+    // Initialize logic for metadata edit button.
+    //
+    function initMetadataEditButton () {
+        if ($('#article-head .metadata').length > 0) {
+
+            var show_meta = function (ev) {
+                // Disable and hide the save-and-edit button when editing
+                // metadata, since that can change the URL of the page and
+                // tangle up where the iframe posts.
+                $('#btn-save-and-edit').hide().attr('disabled', 'disabled');
+                $('#article-head .title').hide();
+                $('#article-head .metadata').show();
+                $('#article-head .metadata #id_title').focus();
+            }
+
+            // Properties button reveals the metadata fields
+            $('#btn-properties').click(show_meta);
+            // Form errors reveal the metadata fields, since they're the most
+            // likely culprits
+            $('#edit-document .errorlist').each(show_meta);
+
+        } else {
+            $('#btn-properties').hide();
         }
     }
 

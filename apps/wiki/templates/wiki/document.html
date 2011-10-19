@@ -20,16 +20,18 @@
             <h1 class="page-title">{{ document.title }}</h1>
         </div>
         <ul id="page-buttons">
-            <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">Watch</a></li>
-          <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">Edit</a></li>
+            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.slug) }}">{{_('History')}}</a></li>
+            <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">{{_('Watch')}}</a></li>
+            <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">{{_('Edit')}}</a></li>
         </ul>
        </header>
+        {% if redirected_from %}
+          <div class="warning" id="redirected-from">
+            <p>{{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+          </div>
+        {% endif %}
+
        {#
-    {% if redirected_from %}
-      <div id="redirected-from">
-        {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
-      </div>
-    {% endif %}
     {% if document.is_majorly_outdated() %}
       <div class="warning-box">
         {% trans url=document.parent.get_absolute_url(), title=document.parent.title %}

@@ -1,3 +1,4 @@
+import logging
 import json
 
 from django.conf import settings
@@ -37,7 +38,7 @@ class RedirectTests(TestCase):
 
     def test_redirect_suppression(self):
         """The document view shouldn't redirect when passed redirect=no."""
-        redirect, _ = doc_rev('REDIRECT [[http://smoo/]]')
+        redirect, _ = doc_rev('REDIRECT <a class="redirect" href="http://smoo/">smoo</a>')
         response = self.client.get(
                        redirect.get_absolute_url() + '?redirect=no',
                        follow=True)
@@ -122,10 +123,95 @@ class DocumentEditingTests(TestCase):
         data = new_document_data()
         data.update({'title': new_title,
                      'slug': d.slug,
-                     'form': 'doc'})
+                     'form': 'rev'})
         client.post(reverse('wiki.edit_document', args=[d.slug]), data)
         eq_(new_title, Document.uncached.get(slug=d.slug).title)
         assert "REDIRECT" in Document.uncached.get(title=old_title).html
+
+    def test_retitling_ignored_for_iframe(self):
+        """When the title of an article is edited in an iframe, the change is
+        ignored."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        new_title = 'Some New Title'
+        d, r = doc_rev()
+        old_title = d.title
+        data = new_document_data()
+        data.update({'title': new_title,
+                     'slug': d.slug,
+                     'form': 'rev'})
+        client.post('%s?iframe=1' % reverse('wiki.edit_document', args=[d.slug]), data)
+        eq_(old_title, Document.uncached.get(slug=d.slug).title)
+        assert "REDIRECT" not in Document.uncached.get(title=old_title).html
+
+    @attr('clobber')
+    def test_collision_errors(self):
+        """When an attempt is made to retitle an article and another with that
+        title already exists, there should be form errors"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        exist_title = "Existing doc"
+        exist_slug = "existing-doc"
+
+        # Create a new doc.
+        data = new_document_data()
+        data.update({ "title": exist_title, "slug": exist_slug })
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+
+        # Create another new doc.
+        data = new_document_data()
+        data.update({ "title": 'Some new title', "slug": 'some-new-title' })
+        response = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+
+        # Now, post an update with duplicate slug and title
+        data.update({
+            'form': 'rev',
+            'title': exist_title,
+            'slug': exist_slug
+        })
+        resp = client.post(reverse('wiki.edit_document', args=['some-new-title']), data)
+        eq_(200, resp.status_code)
+        p = pq(resp.content)
+
+        ok_(p.find('.errorlist').length > 0)
+        ok_(p.find('.errorlist a[href="#id_title"]').length > 0)
+        ok_(p.find('.errorlist a[href="#id_slug"]').length > 0)
+
+    @attr('clobber')
+    def test_redirect_can_be_clobbered(self):
+        """When an attempt is made to retitle an article, and another article
+        with that title exists but is a redirect, there should be no errors and
+        the redirect should be replaced."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        exist_title = "Existing doc"
+        exist_slug = "existing-doc"
+
+        # Create a new doc.
+        data = new_document_data()
+        data.update({ "title": exist_title, "slug": exist_slug })
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+
+        # Change title and slug
+        data.update({'form': 'rev', 
+                     'title': "Changed title", 
+                     'slug': "changed-title"})
+        resp = client.post(reverse('wiki.edit_document', args=[exist_slug]), 
+                           data)
+        eq_(302, resp.status_code)
+
+        # Change title and slug back to originals, clobbering the redirect
+        data.update({'form': 'rev', 
+                     'title': exist_title, 
+                     'slug': exist_slug})
+        resp = client.post(reverse('wiki.edit_document', args=["changed-title"]), 
+                           data)
+        eq_(302, resp.status_code)
 
     def test_changing_metadata(self):
         """Changing metadata works as expected."""

@@ -19,24 +19,29 @@
     <form id="wiki-page-edit" class="editing" method="post" action="">
       <fieldset>
         <header id="article-head">
+
           <div class="title">
-            <h1>{{ _('Editing <em>{title}</em>')|fe(title=document.title) }}</h1>
+            <h1>{{ _('Editing <em>{title}</em>')|fe(title=revision.title) }}</h1>
             <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
-            {{ document_form.slug|safe }}
-            <p class="save-state" id="draft-status">Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time></p>
+            <p class="save-state" id="draft-status">{% trans %}Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>{% endtrans %}</p>
           </div>
+
+          {% if revision_form %}
+            <ul class="metadata">
+                <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
+                <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
+                <li><label>{{_('Keywords:')}}</label> {{ revision_form.keywords | safe }}</li>
+            </ul>
+          {% endif %}
 
           {% include 'wiki/includes/page_buttons.html' %}
 
         </header>
         {% if revision_form %}
-            {{ revision_form.content|safe }}
+            {{ revision_form.content | safe }}
             <input type="hidden" name="form" value="rev" />
-            {#
-            {% include 'wiki/includes/submit_revision_for_review.html' %}
-            #}
           <section>
-            <h4>Review needed?</h4>
+          <h4>{{_('Review needed?')}}</h4>
             {{ revision_form.review_tags|safe }}
           </section>
         {% endif %}
@@ -51,4 +56,9 @@
 
 {% block side_top %}
   {{ document_tabs(document, document.parent, user, 'edit', settings) }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('framebuster') }}
 {% endblock %}
