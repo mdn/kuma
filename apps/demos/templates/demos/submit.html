@@ -87,6 +87,7 @@
               </ul>
           </fieldset>
 
+	  {% if form.fields.challenge_tags %}
           <fieldset id="devderby-submit" class="inline">
               <legend><b>
               {% trans derby_url = url('demos_devderby_landing') %}
@@ -101,6 +102,7 @@
                 {{ li_field(form, 'challenge_tags', show_label=False) }}
               </ul>
           </fieldset>
+	  {% endif %}
 
         </ul>
 
@@ -155,7 +157,9 @@
               <input type="file" id="demo_package" name="demo_package" class="filebutton" title="{{_('Upload demo file&hellip;')|safe}}">
           </li>
           {% endif %}
+	  {% if form.fields.demo_package %}
           {{ li_field(form, 'demo_package') }}
+	  {% endif %}
           {{ li_field(form, 'source_code_url') }}
           {{ li_field(form, 'license_name') }}
         </ul>
