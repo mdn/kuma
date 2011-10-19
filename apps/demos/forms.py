@@ -143,7 +143,7 @@ class SubmissionEditForm(MyModelForm):
         if instance:
             if instance.challenge_closed():
                 for fieldname in ('demo_package', 'challenge_tags'):
-                    del self.fields(fieldname)
+                    del self.fields[fieldname]
                 self._old_challenge_tags = instance.taggit_tags.all_ns('challenge:')
             for ns in ('tech', 'challenge'):
                 if '%s_tags' % ns in self.fields:
