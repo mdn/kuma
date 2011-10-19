@@ -1,5 +1,3 @@
-import logging
-
 from collections import namedtuple
 from datetime import datetime
 from itertools import chain
@@ -45,6 +43,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
+ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -118,8 +117,9 @@ OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
                                   GROUPED_OPERATING_SYSTEMS]))
 
 
-REDIRECT_HTML = '<p>REDIRECT <a '  # how a redirect looks as rendered HTML
-REDIRECT_CONTENT = 'REDIRECT [[%s]]'
+# how a redirect looks as rendered HTML
+REDIRECT_HTML = 'REDIRECT <a class="redirect"'
+REDIRECT_CONTENT = 'REDIRECT <a class="redirect" href="%(href)s">%(title)s</a>'
 REDIRECT_TITLE = _lazy(u'%(old)s Redirect %(number)i')
 REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
 
@@ -131,11 +131,17 @@ REVIEW_FLAG_TAGS = (
 )
 
 
-class TitleCollision(Exception):
+class UniqueCollision(Exception):
+    """An attempt to create two pages with the same unique metadata"""
+    def __init__(self, existing):
+        self.existing = existing
+
+
+class TitleCollision(UniqueCollision):
     """An attempt to create two pages of the same title in one locale"""
 
 
-class SlugCollision(Exception):
+class SlugCollision(UniqueCollision):
     """An attempt to create two pages of the same slug in one locale"""
 
 
@@ -243,18 +249,19 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         unique_together = (('parent', 'locale'), ('title', 'locale'),
                            ('slug', 'locale'))
 
-    def _collides(self, attr, value):
-        """Return whether there exists a doc in this locale whose `attr` attr
-        is equal to mine."""
+    def _existing(self, attr, value):
+        """Return an existing doc (if any) in this locale whose `attr` attr is
+        equal to mine."""
         return Document.uncached.filter(locale=self.locale,
-                                        **{attr: value}).exists()
+                                        **{attr: value})
 
     def _raise_if_collides(self, attr, exception):
         """Raise an exception if a page of this title/slug already exists."""
         if self.id is None or hasattr(self, 'old_' + attr):
             # If I am new or my title/slug changed...
-            if self._collides(attr, getattr(self, attr)):
-                raise exception
+            existing = self._existing(attr, getattr(self, attr))
+            if existing.exists():
+                raise exception(existing[0])
 
     def clean(self):
         """Translations can't be localizable."""
@@ -322,7 +329,7 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
             i = 1
             while True:
                 new_value = template % dict(old=getattr(self, attr), number=i)
-                if not self._collides(attr, new_value):
+                if not self._existing(attr, new_value).exists():
                     return new_value
                 i += 1
 
@@ -337,8 +344,16 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     def save(self, *args, **kwargs):
         self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
 
-        self._raise_if_collides('slug', SlugCollision)
-        self._raise_if_collides('title', TitleCollision)
+        try:
+            # Check if the slug or title would collide with an existing doc
+            self._raise_if_collides('slug', SlugCollision)
+            self._raise_if_collides('title', TitleCollision)
+        except UniqueCollision, e:
+            if e.existing.redirect_url() is not None:
+                # If the existing doc is a redirect, delete it and clobber it.
+                e.existing.delete()
+            else:
+                raise e
 
         # These are too important to leave to a (possibly omitted) is_valid
         # call:
@@ -365,7 +380,9 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
                                           category=self.category,
                                           is_localizable=False)
             Revision.objects.create(document=doc,
-                                    content=REDIRECT_CONTENT % self.title,
+                                    content=REDIRECT_CONTENT % dict(
+                                        href=self.get_absolute_url(),
+                                        title=self.title),
                                     is_approved=True,
                                     reviewer=self.current_revision.creator,
                                     creator=self.current_revision.creator)
@@ -461,8 +478,8 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         # If a document starts with REDIRECT_HTML and contains any <a> tags
         # with hrefs, return the href of the first one. This trick saves us
         # from having to parse the HTML every time.
-        if self.html.startswith(REDIRECT_HTML):
-            anchors = PyQuery(self.html)('a[href]')
+        if REDIRECT_HTML in self.html:
+            anchors = PyQuery(self.html)('a[href].redirect')
             if anchors:
                 return anchors[0].get('href')
 
@@ -586,6 +603,12 @@ class ReviewTaggedRevision(ItemBase):
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
     document = models.ForeignKey(Document, related_name='revisions')
+
+    # Title and slug in document are primary, but they're kept here for
+    # revision history.
+    title = models.CharField(max_length=255, null=True, db_index=True)
+    slug = models.CharField(max_length=255, null=True, db_index=True)
+
     summary = models.TextField()  # wiki markup
     content = models.TextField()  # wiki markup
 
@@ -675,12 +698,20 @@ class Revision(ModelBase):
                             .parse(self.content)
                             .injectSectionIDs()
                             .serialize())
+        if not self.title:
+            self.title = self.document.title
+        if not self.slug:
+            self.slug = self.document.slug
+
         super(Revision, self).save(*args, **kwargs)
 
-        # When a revision is approved, re-cache the document's html content
+        # When a revision is approved, update document metadata and re-cache
+        # the document's html content
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
+            self.document.title = self.title
+            self.document.slug = self.slug
             self.document.html = self.content_cleaned
             self.document.current_revision = self
             self.document.save()

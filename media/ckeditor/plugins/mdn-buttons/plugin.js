@@ -39,7 +39,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3'];
 
             // Use the save-and-edit if available, fall back to save
             var save_btn = $('#btn-save-and-edit');
-            if (save_btn.length < 1) {
+            if (save_btn.length < 1 || save_btn.attr('disabled')) {
                 save_btn = $('#btn-save');
             }
 
