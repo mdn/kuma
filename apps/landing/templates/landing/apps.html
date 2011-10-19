@@ -41,6 +41,7 @@
 
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
+      {% if form %}
       <fieldset>
         <p>
           {{ form.email.errors }}
@@ -68,6 +69,7 @@
         </p>
         <p class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></p>
       </fieldset>
+      {% endif %}
     </form>
 
 
