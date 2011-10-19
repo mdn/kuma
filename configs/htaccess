@@ -9,7 +9,7 @@ RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|s
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?docs/?)$     /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?logout/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?users/?)$   /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mobile/?)$   /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mozilla/?)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?search/?)$   /mwsgi/$1 [PT,L]

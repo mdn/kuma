@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 import commonware
 
 from devmo.models import UserProfile
+from users.backends import Sha256Backend
 
 # HACK: Using thread local to retain the authtoken used for Deki API requests
 # on login
@@ -34,11 +35,19 @@ class DekiUserBackend(object):
     profile_by_id_url = ("%s/@api/deki/users/%s" %
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
-    def authenticate(self, authtoken):
+    def authenticate(self, authtoken=None, username=None, password=None):
+        print('authenticate, authtoken, username, password: %s, %s, %s' % (authtoken, username, password))
         """
-        We delegate to dekiwiki via an authtoken.
+        First try django auth, then try deki auth
         """
         user = None
+        s2b = Sha256Backend()
+        user = s2b.authenticate(username=username, password=password)
+        print('authenticate, user from s2b: %s' % user)
+        if user:
+            print('returning %s' % user)
+            return user
+        print('s2b did not authenticate, trying mindtouch')
         opener = build_opener()
         auth_cookie = 'authtoken="%s"' % authtoken
         opener.addheaders = [('Cookie', auth_cookie), ]
@@ -139,6 +148,23 @@ class DekiUserBackend(object):
             # TODO: decide WTF to do here
             return False
 
+    @staticmethod
+    def mindtouch_create_user(request, user):
+        username = request.POST['username']
+        password = request.POST['password']
+        auth_url = "%s/@api/deki/users/?accountpassword=%s" % (settings.DEKIWIKI_ENDPOINT, password)
+        user_xml = '<user><username>%s</username><email>%s</email><fullname>%s</fullname><status>active</status></user>' % (user.username, user.email, user.get_profile().fullname)
+        try:
+            r = requests.post(auth_url, auth=(settings.MINDTOUCH_ADMIN_USER, settings.MINDTOUCH_ADMIN_PASSWORD))
+            if r.status_code == 200:
+                authtoken = r.content
+                return authtoken
+            else:
+                # TODO: decide WTF to do here
+                return False
+        except HTTPError:
+            # TODO: decide WTF to do here
+            return False
 
 class DekiUser(object):
     """
