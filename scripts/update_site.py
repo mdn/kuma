@@ -57,7 +57,6 @@ def update_site(env, debug):
 
     commands = [
         (CHDIR, here),
-        (EXEC, PIP_INSTALL_COMPILED),
         (EXEC, RM_SETTINGS_PYC),
         (EXEC, GIT_RESET_HARD),
         (EXEC, GIT_PULL % project_branch),
