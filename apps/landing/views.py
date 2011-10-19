@@ -7,7 +7,7 @@ from waffle.decorators import waffle_switch
 import responsys
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
-                   SECTION_WEB)
+                   SECTION_WEB, SECTION_MOZILLA)
 from feeder.models import Bundle, Feed
 from demos.models import Submission
 from landing.forms import SubscriptionForm
@@ -46,7 +46,7 @@ def addons(request):
 
 def mozilla(request):
     """Mozilla Applications landing page."""
-    return common_landing(request, section=SECTION_APPS)
+    return common_landing(request, section=SECTION_MOZILLA)
 
 
 def search(request):
