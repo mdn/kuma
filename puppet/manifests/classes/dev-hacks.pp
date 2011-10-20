@@ -39,10 +39,10 @@ class dev_hacks {
             file { "/vagrant/puppet/cache/yum":
                 ensure => directory
             }
-            exec { "rsync-yum-cache-from-puppet-cache":
-                command => "/usr/bin/rsync -r /vagrant/puppet/cache/yum/ /var/cache/yum/",
-                require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
-            }
+            #exec { "rsync-yum-cache-from-puppet-cache":
+            #    command => "/usr/bin/rsync -r /vagrant/puppet/cache/yum/ /var/cache/yum/",
+            #    require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
+            #}
 
             file { "/etc/sysconfig/iptables":
                 source => "/vagrant/puppet/files/etc/sysconfig/iptables",
@@ -59,32 +59,32 @@ class dev_hacks {
                 owner => "root", group => "root", mode => 0644;
             }
 
-            file { "/etc/samba":
-                ensure => directory,
-                recurse => true,
-                owner => "root", group => "root",
-                source => "/vagrant/puppet/files/etc/samba"
-            }
+            #file { "/etc/samba":
+            #    ensure => directory,
+            #    recurse => true,
+            #    owner => "root", group => "root",
+            #    source => "/vagrant/puppet/files/etc/samba"
+            #}
 
-            file { "/etc/issue":
-                source => "/vagrant/puppet/files/etc/issue",
-                owner => "root", group => "root", mode => 0644;
-            }
+            #file { "/etc/issue":
+            #    source => "/vagrant/puppet/files/etc/issue",
+            #    owner => "root", group => "root", mode => 0644;
+            #}
 
             file { "/etc/motd":
                 source => "/vagrant/puppet/files/etc/motd",
                 owner => "root", group => "root", mode => 0644;
             }
 
-            file { "/etc/sudoers":
-                source => "/vagrant/puppet/files/etc/sudoers",
-                owner => "root", group => "root", mode => 0440;
-            }
+            #file { "/etc/sudoers":
+            #    source => "/vagrant/puppet/files/etc/sudoers",
+            #    owner => "root", group => "root", mode => 0440;
+            #}
             
-            file { "/etc/hosts":
-                source => "/vagrant/puppet/files/etc/hosts",
-                owner => "root", group => "root", mode => 0644;
-            }
+            #file { "/etc/hosts":
+            #    source => "/vagrant/puppet/files/etc/hosts",
+            #    owner => "root", group => "root", mode => 0644;
+            #}
             
             # Disable SELinux... causing problems, and I don't understand it.
             # TODO: see http://blog.endpoint.com/2010/02/selinux-httpd-modwsgi-26-rhel-centos-5.html
@@ -108,10 +108,15 @@ class dev_hacks_post {
     case $operatingsystem {
         centos: {
             # Sync a yum cache up to host machine from VM
-            exec { "rsync-yum-cache-to-puppet-cache":
-                command => "/usr/bin/rsync -r /var/cache/yum/ /vagrant/puppet/cache/yum/",
-                require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
-            }
+            #exec { "rsync-yum-cache-to-puppet-cache":
+            #    command => "/usr/bin/rsync -r /var/cache/yum/ /vagrant/puppet/cache/yum/",
+            #    require => [ File["/etc/yum.conf"], File['/vagrant/puppet/cache/yum'] ]
+            #}
+            # Clean up the yum cache, for a smaller box.
+            #exec { "purge-local-yum-cache":
+            #    command => "/usr/bin/yum clean packages",
+            #    require => [ Exec['rsync-yum-cache-to-puppet-cache'] ]
+            #}
         }
     }
 }

@@ -58,10 +58,15 @@ class _NamespacedTaggableManager(_TaggableManager):
             # Namespace requested, so generate filtered set
             # TODO: Do this in the DB query? Might not be worth it.
             #
-            # TODO: this is a minimal band-aid fix applied for bug
-            # 679193; rather than properly solve duplicated tags and
-            # case-sensitivity, we just filter out the duplicates
-            # here.
+            # On databases with case-insensitive collation, we can end
+            # up with duplicate tags (the same tag, differing only by
+            # case, like 'javascript' and 'JavaScript') in some
+            # cases. The most common instance of this is user profile
+            # tags, which are coerced to lowercase on save to avoid
+            # the problem, but because there are a large number of
+            # these duplicates already existing, we do a quick filter
+            # here to ensure we don't return a bunch of dupes that
+            # differ only by case.
             seen = []
             results = []
             for t in tags:

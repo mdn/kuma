@@ -49,7 +49,7 @@ cat > settings_local.py <<SETTINGS
 from settings import *
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 LOG_LEVEL = logging.ERROR
-DATABASES['default']['HOST'] = 'sm-hudson01'
+DATABASES['default']['HOST'] = 'localhost'
 DATABASES['default']['USER'] = 'hudson'
 DATABASES['default']['TEST_NAME'] = '$DB'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'

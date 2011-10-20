@@ -12,3 +12,4 @@ PATH=$PATH:$HOME/bin
 export PATH
 
 . $HOME/kuma-venv/bin/activate
+cd /vagrant

@@ -34,6 +34,7 @@ ENV_BRANCH = {
     'mdn_prod':    ['mdn_prod', 'master']
 }
 
+PIP_INSTALL_COMPILED = "pip install -q -r requirements/compiled.txt"
 RM_SETTINGS_PYC = "rm -f settings*.pyc"
 GIT_PULL = "git pull -q origin %(branch)s"
 GIT_RESET_HARD = "git reset --hard HEAD"

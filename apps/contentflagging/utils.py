@@ -60,7 +60,7 @@ def get_unique(content_type, object_pk, request=None, ip=None, user_agent=None, 
     # HACK: Build a hash of the fields that should be unique, let MySQL
     # chew on that for a unique index. Note that any changes to this algo
     # will create all new unique hashes that don't match any existing ones.
-    hash_text = "\n".join(unicode(x) for x in (
+    hash_text = "\n".join(unicode(x).encode('utf8') for x in (
         content_type.pk, object_pk, ip, user_agent, 
         (user and user.pk or 'None')
     ))
