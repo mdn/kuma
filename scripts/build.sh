@@ -20,6 +20,11 @@ fi
 echo "Activating $VENV"
 source $VENV/bin/activate
 
+PYTHON26=`which python26`
+if [ -z "$PYTHON26" ]; then
+    ln -s $VENV/bin/python $VENV/bin/python26
+fi
+
 pip install -q -r requirements/compiled.txt
 
 # locale - create if necessary
