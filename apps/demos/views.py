@@ -329,9 +329,11 @@ def delete_comment(request, slug, object_id):
         tc.delete()
         return HttpResponseRedirect(reverse(
             'demos.views.detail', args=(submission.slug,)))
-    return jingo.render(request, 'demos/delete_comment.html', { 
+    response = jingo.render(request, 'demos/delete_comment.html', { 
         'comment': tc 
     })
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 def hideshow(request, slug, hide=True):
     """Hide/show a demo"""
