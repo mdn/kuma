@@ -142,8 +142,11 @@
   
     <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
       <h3 class="mod-title">{{ _('Sign up for the Apps newsletter') }}</h3>
-      <p class="mod-intro">We'll let you know as soon as the Firefox Market for web apps opens, share tips for developing web apps, and more.</p>
-
+      <p class="mod-intro">Sign up to the Apps newsletter for early 
+      access to developer resources tools, news, tips and tricks. 
+      Initial 5000 signups will receive early access to the Developer 
+      Preview Release.</p>
+      
       {% if messages %}
       <ul class="messages">
           {% for message in messages %}
