@@ -32,10 +32,14 @@
                         values.push($(this).val());
                     }
                 });
-                field_val_raw = values.join(' ');
-                field_val = URLify(field_val_raw, maxLength) ||
-                            field_val_raw;
-                field.val(field_val);
+
+                s = values.join(' ');
+                // "$" is used for verb delimiter in URLs
+                s = s.replace(/\$/g, ''); 
+                // trim to first num_chars chars
+                s = s.substring(0, num_chars);
+
+                field.val(s);
             };
 
             //rlr: Changed behavior to only run populate on the change event

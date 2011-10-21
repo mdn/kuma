@@ -15,7 +15,7 @@ import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                      GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
-                     CATEGORIES, REVIEW_FLAG_TAGS)
+                     CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS)
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -71,6 +71,7 @@ class DocumentForm(forms.ModelForm):
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=3, max_length=255,
+                             required=False,
                              widget=forms.HiddenInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
@@ -119,8 +120,16 @@ class DocumentForm(forms.ModelForm):
 
     def clean_slug(self):
         slug = self.cleaned_data['slug']
-        if not re.compile(r'^[^/]+$').match(slug):
+        if slug == '':
+            # Default to the title, if missing.
+            slug = self.cleaned_data['title']
+        # Pattern copied from urls.py
+        if not re.compile(r'^[^\$]+$').match(slug):
             raise forms.ValidationError(SLUG_INVALID)
+        # Guard against slugs that match urlpatterns
+        for pat in RESERVED_SLUGS:
+            if re.compile(pat).match(slug):
+                raise forms.ValidationError(SLUG_INVALID)
         return slug
 
     def clean_firefox_versions(self):
