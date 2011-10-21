@@ -33,7 +33,7 @@ class SECTION_WEB:
 
 
 SECTION_USAGE = _sections = (SECTION_WEB, SECTION_MOBILE, SECTION_ADDONS,
-                             SECTION_APPS)
+                             SECTION_APPS, SECTION_MOZILLA)
 
 SECTIONS = dict((section.short, section)
                 for section in _sections)
