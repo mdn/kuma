@@ -17,13 +17,6 @@ def handle_login(request, only_active=True):
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
-        """
-        elif authtoken:
-            dub = DekiUserBackend()
-            u = dub.authenticate(authtoken)
-            auth.login(request, u)
-            pass
-        """
 
         return form
 

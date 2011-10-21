@@ -36,18 +36,14 @@ class DekiUserBackend(object):
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
     def authenticate(self, authtoken=None, username=None, password=None):
-        print('authenticate, authtoken, username, password: %s, %s, %s' % (authtoken, username, password))
         """
         First try django auth, then try deki auth
         """
         user = None
         s2b = Sha256Backend()
         user = s2b.authenticate(username=username, password=password)
-        print('authenticate, user from s2b: %s' % user)
         if user:
-            print('returning %s' % user)
             return user
-        print('s2b did not authenticate, trying mindtouch')
         opener = build_opener()
         auth_cookie = 'authtoken="%s"' % authtoken
         opener.addheaders = [('Cookie', auth_cookie), ]
