@@ -9,7 +9,6 @@ from pyquery import PyQuery as pq
 
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
-from dekicompat.tests import mockdekiauth
 from funfactory.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
 
@@ -28,7 +27,7 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
-        response = self.client.post(reverse('users.register', locale='en-US'),
+        response = self.client.post(reverse('users.register'),
                                     {'username': 'newbie',
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
@@ -45,7 +44,7 @@ class RegisterTestCase(TestCase):
         # Now try to log in
         u.is_active = True
         u.save()
-        response = self.client.post(reverse('users.login', locale='en-US'),
+        response = self.client.post(reverse('users.login'),
                                     {'username': 'newbie',
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
@@ -57,7 +56,7 @@ class RegisterTestCase(TestCase):
         self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
 
         # Try to log in as a MindTouch user
-        response = self.client.post(reverse('users.login', locale='en-US'),
+        response = self.client.post(reverse('users.login'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         eq_(200, response.status_code)
@@ -70,7 +69,7 @@ class RegisterTestCase(TestCase):
     def test_unicode_password(self, get_current):
         u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
         get_current.return_value.domain = 'su.mo.com'
-        response = self.client.post(reverse('users.register', locale='ja'),
+        response = self.client.post(reverse('users.register', prefix='/ja/'),
                                     {'username': 'cjkuser',
                                      'email': 'cjkuser@example.com',
                                      'password': u_str,
@@ -82,7 +81,7 @@ class RegisterTestCase(TestCase):
         assert u.password.startswith('sha256')
 
         # make sure you can login now
-        response = self.client.post(reverse('users.login', locale='ja'),
+        response = self.client.post(reverse('users.login'),
                                     {'username': 'cjkuser',
                                      'password': u_str}, follow=True)
         eq_(200, response.status_code)
@@ -116,7 +115,7 @@ class RegisterTestCase(TestCase):
         assert user.watch_set.exists()
 
     def test_duplicate_username(self):
-        response = self.client.post(reverse('users.register', locale='en-US'),
+        response = self.client.post(reverse('users.register'),
                                     {'username': 'testuser',
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
@@ -125,7 +124,7 @@ class RegisterTestCase(TestCase):
 
     def test_duplicate_email(self):
         User.objects.create(username='noob', email='noob@example.com').save()
-        response = self.client.post(reverse('users.register', locale='en-US'),
+        response = self.client.post(reverse('users.register'),
                                     {'username': 'newbie',
                                      'email': 'noob@example.com',
                                      'password': 'foo',
@@ -133,7 +132,7 @@ class RegisterTestCase(TestCase):
         self.assertContains(response, 'already exists')
 
     def test_no_match_passwords(self):
-        response = self.client.post(reverse('users.register', locale='en-US'),
+        response = self.client.post(reverse('users.register'),
                                     {'username': 'newbie',
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
@@ -204,7 +203,6 @@ class ChangeEmailTestCase(TestCase):
         self.client.login(username='testuser', password='testpass')
         old_email = User.objects.get(username='testuser').email
         new_email = 'newvalid@email.com'
-        import pdb; pdb.set_trace()
         response = self.client.post(reverse('users.change_email'),
                                     {'email': new_email})
         eq_(200, response.status_code)
