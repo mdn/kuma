@@ -15,12 +15,14 @@ from devmo.models import UserProfile
 
 
 class HelperTestCase(TestCase):
+    fixtures = ['test_users.json']
+
     def setUp(self):
         super(HelperTestCase, self).setUp()
-        self.u = User.objects.create(pk=500000, username=u'testuser')
+        self.u = User.objects.get(username=u'testuser')
 
     def test_profile_url(self):
-        eq_(u'/user/500000', profile_url(self.u))
+        eq_(u'/user/7', profile_url(self.u))
 
     def test_profile_default_gravatar(self):
         ok_(urllib.urlencode({'d': settings.DEFAULT_AVATAR}) in profile_avatar(self.u), "Bad default avatar: %s" % profile_avatar(self.u))
@@ -38,19 +40,20 @@ class HelperTestCase(TestCase):
              '&#108;</span>', public_email('not.an.email'))
 
     def test_display_name(self):
-        eq_(u'testuser', display_name(self.u))
-        p = self.u.get_profile()
+        new_user = User.objects.create(pk=40000, username='testuser3')
+        eq_(u'testuser3', display_name(new_user))
+        UserProfile.objects.create(user=new_user) 
+        p = new_user.get_profile()
         p.fullname = u'Test User'
         eq_(u'Test User', display_name(self.u))
 
     def test_user_list(self):
-        User.objects.create(pk=300000, username='testuser2')
         User.objects.create(pk=400000, username='testuser3')
         users = User.objects.all()
         list = user_list(users)
         assert isinstance(list, Markup)
         fragment = pq(list)
         eq_(3, len(fragment('a')))
-        a = fragment('a')[1]
+        a = fragment('a')[2]
         assert a.attrib['href'].endswith('400000')
         eq_('testuser3', a.text)
