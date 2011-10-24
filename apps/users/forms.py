@@ -93,10 +93,11 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
     * Doesn't prefill password on validation error.
     * Allows logging in inactive users (initialize with `only_active=False`).
-    * pass authtoken for mindtouch authentication
+    * authtoken field for deki authtoken cookie
     """
     password = forms.CharField(label=_lazy(u"Password"),
                                widget=forms.PasswordInput(render_value=False))
+    authtoken = forms.CharField(required=False)
 
     def __init__(self, request=None, only_active=True, authtoken=False, *args, **kwargs):
         self.only_active = only_active
@@ -109,8 +110,8 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
         if username and password:
             self.user_cache = authenticate(username=username,
-                                           password=password,
-                                           authtoken=self.authtoken)
+                                           password=password)
+            self.authtoken = self.user_cache.get_profile().deki_authtoken
             if self.user_cache is None:
                 raise forms.ValidationError(
                     _('Please enter a correct username and password. Note '
@@ -125,6 +126,10 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
                       "enabled. Cookies are required for logging in."))
 
         return self.cleaned_data
+
+    def get_authtoken(self):
+        if self.user_cache:
+            return self.authtoken
 
 
 class ProfileForm(forms.ModelForm):
