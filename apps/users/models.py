@@ -17,6 +17,7 @@ from tower import ugettext_lazy as _lazy
 from countries import COUNTRIES
 from sumo.models import ModelBase
 from sumo.urlresolvers import reverse
+from devmo.models import UserProfile
 
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
@@ -149,7 +150,7 @@ class RegistrationManager(ConfirmationManager):
         new_user = User.objects.create_user(username, email, password)
         new_user.is_active = False
         new_user.save()
-        Profile.objects.create(user=new_user)
+        UserProfile.objects.create(user=new_user)
 
         registration_profile = self.create_profile(new_user)
 

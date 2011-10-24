@@ -9,8 +9,64 @@ from pyquery import PyQuery as pq
 
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
-from funfactory.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
+
+
+class LoginTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.old_debug = settings.DEBUG
+        settings.DEBUG = True
+        self.client = LocalizingClient()
+        self.client.logout()
+
+    def tearDown(self):
+        settings.DEBUG = self.old_debug
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_bad_login_fails_both_backends(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='nouser')
+
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'nouser',
+                                     'password': 'nopass'}, follow=True)
+        eq_(200, response.status_code)
+        self.assertContains(response, 'Please enter a correct username and password.')
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testuser',
+                                     'password': 'testpass'}, follow=True)
+        eq_(200, response.status_code)
+        self.assertContains(response, 'Welcome back, testuser')
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_mindtouch_creds_create_user_and_profile_with_authtoken(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+
+        # Try to log in as a MindTouch user
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        eq_(200, response.status_code)
+
+        # Login should have auto-created django user
+        u = User.objects.get(username='testaccount')
+        eq_(True, u.is_active)
+        p = u.get_profile()
+        authtoken = p.deki_authtoken
+        self.assertNotEquals(None, authtoken)
+        self.assertNotEquals('', authtoken)
+
+        # Login page should show welcome back
+        self.assertContains(response, 'Welcome back, testaccount')
 
 
 class RegisterTestCase(TestCase):
@@ -19,6 +75,7 @@ class RegisterTestCase(TestCase):
     def setUp(self):
         self.old_debug = settings.DEBUG
         settings.DEBUG = True
+        self.client = LocalizingClient()
         self.client.logout()
 
     def tearDown(self):
@@ -51,25 +108,10 @@ class RegisterTestCase(TestCase):
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
-    def test_auto_user_from_mindtouch(self, get_current):
-        get_current.return_value.domain = 'su.mo.com'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
-
-        # Try to log in as a MindTouch user
-        response = self.client.post(reverse('users.login'),
-                                    {'username': 'testaccount',
-                                     'password': 'theplanet'}, follow=True)
-        eq_(200, response.status_code)
-
-        # Login should have auto-created django user
-        u = User.objects.get(username='testaccount')
-        eq_(True, u.is_active)
-
-    @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
-        u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
         get_current.return_value.domain = 'su.mo.com'
-        response = self.client.post(reverse('users.register', prefix='/ja/'),
+        u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
+        response = self.client.post(reverse('users.register', locale='ja'),
                                     {'username': 'cjkuser',
                                      'email': 'cjkuser@example.com',
                                      'password': u_str,
@@ -81,7 +123,7 @@ class RegisterTestCase(TestCase):
         assert u.password.startswith('sha256')
 
         # make sure you can login now
-        response = self.client.post(reverse('users.login'),
+        response = self.client.post(reverse('users.login', locale='ja'),
                                     {'username': 'cjkuser',
                                      'password': u_str}, follow=True)
         eq_(200, response.status_code)
