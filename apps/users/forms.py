@@ -111,13 +111,14 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
         if username and password:
             self.user_cache = authenticate(username=username,
                                            password=password)
-            self.authtoken = self.user_cache.get_profile().deki_authtoken
             if self.user_cache is None:
                 raise forms.ValidationError(
                     _('Please enter a correct username and password. Note '
                       'that both fields are case-sensitive.'))
             elif self.only_active and not self.user_cache.is_active:
                 raise forms.ValidationError(_('This account is inactive.'))
+            else:
+                self.authtoken = self.user_cache.get_profile().deki_authtoken
 
         if self.request:
             if not self.request.session.test_cookie_worked():
