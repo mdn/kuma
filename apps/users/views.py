@@ -35,7 +35,7 @@ def login(request):
 
     if request.user.is_authenticated():
         resp = HttpResponseRedirect(next_url)
-        authtoken = request.session.get('mindtouch_authtoken', False)
+        authtoken = request.session.get('deki_authtoken', False)
         if authtoken:
             resp.set_cookie('authtoken', authtoken, secure=True)
         return resp

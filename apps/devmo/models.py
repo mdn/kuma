@@ -97,6 +97,7 @@ class UserProfile(ModelBase):
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
+    deki_authtoken = models.CharField(max_length=255, blank=True)
     homepage = models.URLField(max_length=255, blank=True, default='',
                                verify_exists=False, error_messages={
                                'invalid': _('This URL has an invalid format. '
@@ -182,7 +183,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
         p, created = UserProfile.objects.get_or_create(user=instance)
 
-models.signals.post_save.connect(create_user_profile, sender=DjangoUser)
+#models.signals.post_save.connect(create_user_profile, sender=DjangoUser)
 
 
 class UserDocsActivityFeed(object):
