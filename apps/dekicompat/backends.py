@@ -35,25 +35,32 @@ class DekiUserBackend(object):
     profile_by_id_url = ("%s/@api/deki/users/%s" %
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
-    def authenticate(self, authtoken=None, username=None, password=None):
-        """
-        First try django auth, then try deki auth
-        """
-        user = None
-        s2b = Sha256Backend()
-        user = s2b.authenticate(username=username, password=password)
-        if user:
-            return user
-        opener = build_opener()
-        auth_cookie = 'authtoken="%s"' % authtoken
-        opener.addheaders = [('Cookie', auth_cookie), ]
-        resp = opener.open(DekiUserBackend.profile_url)
-        deki_user = DekiUser.parse_user_info(resp.read(), authtoken)
+    def authenticate(self, username=None, password=None):
+        authtoken = None
+        auth_url = "%s/@api/deki/users/authenticate" % (settings.DEKIWIKI_ENDPOINT)
+        try:
+            r = requests.post(auth_url, auth=(username, password))
+            if r.status_code == 200:
+                authtoken = r.content
+            else:
+                # TODO: decide WTF to do here
+                return None
+        except HTTPError:
+            # TODO: decide WTF to do here
+            return None
+        cookies = dict(authtoken=authtoken)
+        resp = requests.get(DekiUserBackend.profile_url, cookies=cookies)
+        deki_user = DekiUser.parse_user_info(resp.content, authtoken)
         if deki_user:
             # HACK: Retain authenticated authtoken for future Deki API
             # requests.
             _thread_locals.deki_api_authtoken = authtoken
             user = self.get_or_create_user(deki_user)
+            # Store deki authtoken for user to set cookie on request
+            # object
+            profile = user.get_profile()
+            profile.deki_authtoken = authtoken
+            profile.save()
             return user
         else:
             self.flush()
