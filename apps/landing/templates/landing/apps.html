@@ -140,11 +140,12 @@
   <aside id="content-sub" role="complementary">
   
     <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
-      <h3 class="mod-title">{{ _('Sign up for the Apps newsletter') }}</h3>
-      <p class="mod-intro">Sign up for the Apps newsletter for early 
-      access to developer resources, tools, news, tips and tricks. 
-      Initial 5000 signups will receive <strong>early access to the Developer 
-      Preview Release</strong>.</p>
+      <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
+      {% trans %}
+      <p class="mod-intro">Sign up now for the Apps Developer preview and newsletter.
+      First 5000 subscribers get early access to resources, tools, and exclusive info.
+      <strong>Join us!</strong></p>
+      {% endtrans %}
       
       {% if messages %}
       <ul class="messages">
