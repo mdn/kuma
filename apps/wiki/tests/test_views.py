@@ -99,7 +99,8 @@ class ViewTests(TestCase):
         data = json.loads(resp.content)
         eq_('article-title', data['slug'])
 
-        resp = self.client.get(url, {'slug': 'article-title'})
+        url = reverse('wiki.json_slug', args=('article-title',), force_locale=True)
+        resp = self.client.get(url)
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
@@ -233,23 +234,59 @@ class DocumentEditingTests(TestCase):
         eq_(1, d.operating_systems.count())
 
     def test_invalid_slug(self):
-        """Slugs cannot contain /."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
-
+        """Slugs cannot contain "$", but can contain "/"."""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         data = new_document_data()
-        data['slug'] = 'inva/lid'
+
+        data['title'] = 'valid slug'
+        data['slug'] = 'valid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[data['slug']]))
+
+        data['title'] = 'valid with slash'
+        data['slug'] = 'va/lid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[data['slug']]))
+
+        data['title'] = 'invalid with dollars'
+        data['slug'] = 'inva$lid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertContains(response, 'The slug provided is not valid.')
 
-        data['slug'] = 'valid'
-        response = client.post(reverse('wiki.new_document'), data)
-        self.assertRedirects(response, reverse('wiki.document_revisions',
-                                               args=[data['slug']],
-                                               locale='en-US'))
+    def test_invalid_reserved_term_slug(self):
+        """Slugs should not collide with reserved URL patterns"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        data = new_document_data()
+
+        # TODO: This is info derived from urls.py, but unsure how to DRY it
+        reserved_slugs = (
+            'ckeditor_config.js',
+            'watch-ready-for-review',
+            'unwatch-ready-for-review',
+            'watch-approved',
+            'unwatch-approved',
+            '.json',
+            'new',
+            'all',
+            'preview-wiki-content',
+            'category/10',
+            'needs-review/technical',
+            'needs-review/',
+            'feeds/atom/all/',
+            'feeds/atom/needs-review/technical',
+            'feeds/atom/needs-review/',
+            'tag/tasty-pie'
+        )
+
+        for term in reserved_slugs:
+            data['title'] = 'invalid with %s' % term
+            data['slug'] = term
+            response = client.post(reverse('wiki.new_document'), data)
+            self.assertContains(response, 'The slug provided is not valid.')
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the

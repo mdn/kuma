@@ -610,10 +610,13 @@ def unwatch_approved(request):
 
 
 @require_GET
-def json_view(request):
+def json_view(request, document_slug=None):
     """Return some basic document info in a JSON blob."""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
-    if 'title' in request.GET:
+    if document_slug is not None:
+        kwargs['slug'] = document_slug
+        kwargs['locale'] = request.locale
+    elif 'title' in request.GET:
         kwargs['title'] = request.GET['title']
     elif 'slug' in request.GET:
         kwargs['slug'] = request.GET['slug']

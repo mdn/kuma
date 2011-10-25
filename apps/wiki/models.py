@@ -36,6 +36,7 @@ from taggit.managers import TaggableManager
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'table', 'tbody', 'thead', 'tr', 'td',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
@@ -128,6 +129,26 @@ REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
 REVIEW_FLAG_TAGS = (
     ('technical', _('Technical - code samples, APIs, or technologies')),
     ('editorial', _('Editorial - prose, grammar, or content')),
+)
+
+# TODO: This is info derived from urls.py, but unsure how to DRY it
+RESERVED_SLUGS = (
+    'ckeditor_config.js$',
+    'watch-ready-for-review$',
+    'unwatch-ready-for-review$',
+    'watch-approved$',
+    'unwatch-approved$',
+    '.json$',
+    'new$',
+    'all$',
+    'preview-wiki-content$',
+    'category/\d+$',
+    'needs-review/?[^/]+$',
+    'needs-review/?',
+    'feeds/[^/]+/all/?',
+    'feeds/[^/]+/needs-review/[^/]+$',
+    'feeds/[^/]+/needs-review/?',
+    'tag/[^/]+'
 )
 
 

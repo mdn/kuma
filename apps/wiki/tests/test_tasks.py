@@ -32,7 +32,7 @@ Message from the reviewer:
 To view the history of this document, click the following
 link, or paste it into your browser's location bar:
 
-https://testserver/en-US/docs/%s/history
+https://testserver/en-US/docs/%s$history
 """
 
 

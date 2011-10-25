@@ -34,7 +34,7 @@ admin submitted a new revision to the document
 To review this revision, click the following
 link, or paste it into your browser's location bar:
 
-https://testserver/en-US/docs/%s/review/%s
+https://testserver/en-US/docs/%s$review/%s
 """
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
@@ -46,7 +46,7 @@ admin created a new revision to the document
 To view this document's history, click the following
 link, or paste it into your browser's location bar:
 
-https://testserver/en-US/docs/%s/history
+https://testserver/en-US/docs/%s$history
 """
 
 APPROVED_EMAIL_CONTENT = """
