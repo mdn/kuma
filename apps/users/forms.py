@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from tower import ugettext as _, ugettext_lazy as _lazy
 
+from dekicompat.backends import DekiUserBackend
 from sumo.widgets import ImageWidget
 from upload.forms import clean_image_extension
 from upload.utils import check_file_size, FileTooLargeError
@@ -82,6 +83,14 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError(_('A user with that email address '
                                           'already exists.'))
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        # check deki for existing user (it needs = in front of name)
+        deki_user = DekiUserBackend.get_deki_user('='+username)
+        if deki_user is not None:
+            raise forms.ValidationError(_('The username you entered already exists.'))
+        return username
 
     def __init__(self,  request=None, *args, **kwargs):
         super(RegisterForm, self).__init__(request, auto_id='id_for_%s',

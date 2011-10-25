@@ -9,7 +9,7 @@ import logging
 from django import http, test
 from django.contrib.auth.models import User
 
-from funfactory.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 from sumo.tests import LocalizingClient
 
 from mock import patch
@@ -211,7 +211,7 @@ class DemoViewsTest(test_utils.TestCase):
         d = pq(r.content)
         edit_link = d('ul#demo-manage a.edit')
         assert edit_link
-        edit_url = reverse('demos_edit', args=[s.slug])
+        edit_url = reverse('demos_edit', args=[s.slug], locale='en-US')
         eq_(edit_url, edit_link.attr("href"))
 
         r = self.client.get(edit_url)

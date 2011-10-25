@@ -1,3 +1,6 @@
+from time import time
+import requests
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -7,6 +10,7 @@ import mock
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from dekicompat.backends import DekiUserBackend
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -96,13 +100,15 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'newb%s' % now
         response = self.client.post(reverse('users.register'),
-                                    {'username': 'newbie',
+                                    {'username': username,
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         eq_(200, response.status_code)
-        u = User.objects.get(username='newbie')
+        u = User.objects.get(username=username)
         assert u.password.startswith('sha256')
         assert not u.is_active
         eq_(1, len(mail.outbox))
@@ -114,7 +120,42 @@ class RegisterTestCase(TestCase):
         u.is_active = True
         u.save()
         response = self.client.post(reverse('users.login'),
-                                    {'username': 'newbie',
+                                    {'username': username,
+                                     'password': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        eq_('http://testserver/en-US/', response.redirect_chain[0][0])
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_posts_mindtouch_user(self, get_current):
+        get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'n00b%s' % now
+        response = self.client.post(reverse('users.register'),
+                                    {'username': username,
+                                     'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        u = User.objects.get(username=username)
+        assert u.password.startswith('sha256')
+        assert not u.is_active
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Please confirm your') == 0
+        key = RegistrationProfile.objects.all()[0].activation_key
+        assert mail.outbox[0].body.find('activate/%s' % key) > 0
+
+        deki_id = u.get_profile().deki_user_id
+        resp = requests.get(DekiUserBackend.profile_by_id_url % deki_id)
+        eq_(200, resp.status_code)
+        doc = pq(resp.content)
+        eq_(str(deki_id), doc('user').attr('id'))
+        eq_(username, doc('username').text())
+
+        # Now try to log in
+        u.is_active = True
+        u.save()
+        response = self.client.post(reverse('users.login'),
+                                    {'username': username,
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
@@ -122,21 +163,23 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'cjk%s' % now
         u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
         response = self.client.post(reverse('users.register', locale='ja'),
-                                    {'username': 'cjkuser',
+                                    {'username': username,
                                      'email': 'cjkuser@example.com',
                                      'password': u_str,
                                      'password2': u_str}, follow=True)
         eq_(200, response.status_code)
-        u = User.objects.get(username='cjkuser')
+        u = User.objects.get(username=username)
         u.is_active = True
         u.save()
         assert u.password.startswith('sha256')
 
         # make sure you can login now
         response = self.client.post(reverse('users.login', locale='ja'),
-                                    {'username': 'cjkuser',
+                                    {'username': username,
                                      'password': u_str}, follow=True)
         eq_(200, response.status_code)
         eq_('http://testserver/ja/', response.redirect_chain[0][0])
@@ -144,8 +187,10 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'sumo%s' % now
         user = RegistrationProfile.objects.create_inactive_user(
-            'sumouser1234', 'testpass', 'sumouser@test.com')
+            username, 'testpass', 'sumouser@test.com')
         assert not user.is_active
         key = RegistrationProfile.objects.all()[0].activation_key
         url = reverse('users.activate', args=[key])
@@ -157,11 +202,14 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_claim_watches(self, get_current):
         """Claim user watches upon activation."""
+        get_current.return_value.domain = 'su.mo.com'
+
         watch(email='sumouser@test.com', save=True)
 
-        get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'sumo%s' % now
         user = RegistrationProfile.objects.create_inactive_user(
-            'sumouser1234', 'testpass', 'sumouser@test.com')
+            username, 'testpass', 'sumouser@test.com')
         key = RegistrationProfile.objects.all()[0].activation_key
         self.client.get(reverse('users.activate', args=[key]), follow=True)
 
@@ -172,6 +220,14 @@ class RegisterTestCase(TestCase):
         response = self.client.post(reverse('users.register'),
                                     {'username': 'testuser',
                                      'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        self.assertContains(response, 'already exists')
+
+    def test_duplicate_mindtouch_username(self):
+        response = self.client.post(reverse('users.register'),
+                                    {'username': 'testaccount',
+                                     'email': 'testaccount@example.com',
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')

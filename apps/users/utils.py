@@ -1,6 +1,5 @@
 from django.contrib import auth
 
-from dekicompat.backends import DekiUserBackend
 from users.forms import RegisterForm, AuthenticationForm
 from users.models import RegistrationProfile
 
