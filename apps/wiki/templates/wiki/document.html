@@ -3,6 +3,7 @@
 {% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
 {% if document.parent %}

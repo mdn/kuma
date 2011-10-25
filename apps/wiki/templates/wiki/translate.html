@@ -4,6 +4,7 @@
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(url('wiki.category', parent.category), parent.get_category_display()),
                  (parent.get_absolute_url(), parent.title),
                  (None, _('Translate Article'))] %}
