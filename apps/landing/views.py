@@ -11,7 +11,7 @@ from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
 from feeder.models import Bundle, Feed
 from demos.models import Submission
 from landing.forms import SubscriptionForm
-from funfactory.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 
 def home(request):

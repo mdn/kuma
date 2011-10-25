@@ -10,7 +10,6 @@ from django.contrib.auth.models import User
 import commonware
 
 from devmo.models import UserProfile
-from users.backends import Sha256Backend
 
 # HACK: Using thread local to retain the authtoken used for Deki API requests
 # on login
@@ -22,6 +21,7 @@ _thread_locals = local()
 
 log = commonware.log.getLogger('kuma.dekicompat')
 
+MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s</email><fullname>%(fullname)s</fullname><status>%(status)s</status><permissions.user><role>%(role)s</role></permissions.user></user>"""
 
 class DekiUserBackend(object):
     """
@@ -74,17 +74,19 @@ class DekiUserBackend(object):
         """Flush any cached data"""
         _thread_locals.deki_api_authtoken = None
 
-    def get_deki_user(self, deki_user_id):
+    @staticmethod
+    def get_deki_user(deki_user_id):
         """Fetch details for a given Dekiwiki profile by user ID"""
-        opener = build_opener()
         authtoken = getattr(_thread_locals, 'deki_api_authtoken', None)
+        cookies = {}
         if authtoken:
             # HACK: Use retained authenticated authtoken for future Deki API
             # requests. This gets us extra user details for the logged-in
             # user, such as email address.
-            auth_cookie = 'authtoken="%s"' % authtoken
-            opener.addheaders = [('Cookie', auth_cookie), ]
-        resp = opener.open(DekiUserBackend.profile_by_id_url % deki_user_id)
+            cookies = dict(authtoken=authtoken)
+        resp = requests.get(DekiUserBackend.profile_by_id_url % deki_user_id, cookies=cookies)
+        if resp.status_code is 404:
+            return None
         return DekiUser.parse_user_info(resp.read())
 
     def get_user(self, user_id):
@@ -92,7 +94,7 @@ class DekiUserBackend(object):
         try:
             user = User.objects.get(pk=user_id)
             profile = UserProfile.objects.get(user=user)
-            user.deki_user = self.get_deki_user(profile.deki_user_id)
+            user.deki_user = DekiUserBackend.get_deki_user(profile.deki_user_id)
             return user
         except User.DoesNotExist:
             return None
@@ -156,22 +158,15 @@ class DekiUserBackend(object):
             return False
 
     @staticmethod
-    def mindtouch_create_user(request, user):
-        username = request.POST['username']
-        password = request.POST['password']
-        auth_url = "%s/@api/deki/users/?accountpassword=%s" % (settings.DEKIWIKI_ENDPOINT, password)
-        user_xml = '<user><username>%s</username><email>%s</email><fullname>%s</fullname><status>active</status></user>' % (user.username, user.email, user.get_profile().fullname)
-        try:
-            r = requests.post(auth_url, auth=(settings.MINDTOUCH_ADMIN_USER, settings.MINDTOUCH_ADMIN_PASSWORD))
-            if r.status_code == 200:
-                authtoken = r.content
-                return authtoken
-            else:
-                # TODO: decide WTF to do here
-                return False
-        except HTTPError:
+    def post_mindtouch_user(user):
+        user_url = '%s/@api/deki/users?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
+        # post user to mindtouch
+        user_xml = MINDTOUCH_USER_XML % {'username': user.username, 'email': user.email, 'fullname': user.get_profile().fullname, 'status': 'active', 'role': 'Contributor'}
+        resp = requests.post(user_url, data=user_xml, headers={'Content-Type': 'application/xml'})
+        if resp.status_code is not 200:
             # TODO: decide WTF to do here
-            return False
+            pass
+        return DekiUser.parse_user_info(resp.content)
 
 class DekiUser(object):
     """

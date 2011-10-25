@@ -1,4 +1,5 @@
 import hashlib
+from time import time
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -258,9 +259,11 @@ class ResendConfirmationTests(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_resend_confirmation(self, get_current):
         get_current.return_value.domain = 'testserver.com'
+        now = time()
+        username = 'temp%s' % now
 
         RegistrationProfile.objects.create_inactive_user(
-            'testuser', 'testpass', 'testuser@email.com')
+            username, 'testpass', 'testuser@email.com')
         eq_(1, len(mail.outbox))
 
         r = self.client.post(reverse('users.resend_confirmation'),
