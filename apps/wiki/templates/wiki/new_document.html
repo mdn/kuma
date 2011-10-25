@@ -3,6 +3,7 @@
 {% from "layout/errorlist.html" import errorlist %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New Article | Knowledge Base') %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(None, _('New Article'))] %}
 {% set classes = 'new' %}
