@@ -56,6 +56,10 @@ class DekiUserBackend(object):
             # requests.
             _thread_locals.deki_api_authtoken = authtoken
             user = self.get_or_create_user(deki_user)
+            # Set django password equal to the password that authenticated
+            # with MindTouch
+            user.set_password(password)
+            user.save()
             # Store deki authtoken for user to set cookie on request
             # object
             profile = user.get_profile()
