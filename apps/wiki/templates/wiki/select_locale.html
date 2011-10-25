@@ -2,6 +2,7 @@
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Select language | {document}')|f(document=document.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Select language'))] %}
