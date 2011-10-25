@@ -68,6 +68,18 @@ class LoginTestCase(TestCase):
         # Login page should show welcome back
         self.assertContains(response, 'Welcome back, testaccount')
 
+        # subsequent login shouldn't need dekicompat
+        self.client.post(reverse('users.logout'))
+
+        old_endpoint = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = None
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        eq_(200, response.status_code)
+        self.assertContains(response, 'Welcome back, testaccount')
+        settings.DEKIWIKI_ENDPOINT = old_endpoint
+
 
 class RegisterTestCase(TestCase):
     fixtures = ['test_users.json']

@@ -34,6 +34,7 @@ def login(request):
     form = handle_login(request)
 
     if request.user.is_authenticated():
+        print("User authenticated with: %s" % request.user.backend)
         resp = HttpResponseRedirect(next_url)
         authtoken = request.session.get('deki_authtoken', False)
         if authtoken:
