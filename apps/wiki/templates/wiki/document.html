@@ -27,8 +27,12 @@
         </div>
         <ul id="page-buttons">
             <li class="page-history"><a href="{{ url('wiki.document_revisions', document.slug) }}">{{_('History')}}</a></li>
-            <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">{{_('Watch')}}</a></li>
-            <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">{{_('Edit')}}</a></li>
+            {% if request.user.is_authenticated() %}
+              <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">{{_('Watch')}}</a></li>
+            {% endif %}
+            {% if document.allows_editing_by(request.user) %}
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">{{_('Edit')}}</a></li>
+            {% endif %}
         </ul>
        </header>
         {% if redirected_from %}
@@ -67,7 +71,8 @@
         {% endfor %}
       {% endif %}
 
-      <div id="wikiArticle" class="page-content boxed">
+      <div id="wikiArticle" class="page-content boxed"
+          data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
           {# 
         <div id="article-nav"> 
           <div class="page-toc">
@@ -88,7 +93,7 @@
       </div>
       #}
       {% if not fallback_reason %}
-        {{ document.html|safe }}
+        {{ document_html|safe }}
       {% elif fallback_reason == 'no_translation' %}
         <div id="doc-pending-fallback" class="warning-box">
           {% trans help_link=url('wiki.document', 'localize-firefox-help'),
@@ -97,7 +102,7 @@
             <a href="{{ help_link }}">Join us and help get the job done!</a>
           {% endtrans %}
         </div>
-        {{ document.html|safe }}
+        {{ document_html|safe }}
       {% elif fallback_reason == 'translation_not_approved' %}
         <div id="doc-pending-fallback" class="warning-box">
           {# L10n: This is shown for existing, never-approved translations #}
@@ -127,6 +132,13 @@
   #}
     </div>
    </div>
+    {% if document.allows_editing_by(request.user) %}
+      <div class="edited-section-ui template">
+        <a class="save" href="#">{{ _('Save') }}</a>
+        <a class="cancel" href="#">{{ _('Cancel') }}</a>
+        <div class="src"></div>
+      </div>
+    {% endif %}
 </section>
 {% endblock %}
 

@@ -1,9 +1,11 @@
 from datetime import datetime
 import json
 import logging
+from urllib import urlencode
 from string import ascii_letters
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponse, HttpResponseRedirect,
                          Http404, HttpResponseBadRequest)
@@ -32,6 +34,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          REVIEW_FLAG_TAGS, get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
+import wiki.content
 
 
 log = logging.getLogger('k.wiki')
@@ -138,10 +141,41 @@ def document(request, document_slug):
 
     # Get the contributors. (To avoid this query, we could render the
     # the contributors right into the Document's html field.)
-    contributors = set([r.creator for r in doc.revisions.filter(
-                            is_approved=True).select_related('creator')])
+    # HACK: .only() avoids a memcache object-too-large error for large wiki
+    # pages when an attempt is made to cache all revisions
+    contributors = set([r.creator for r in doc.revisions
+                                            .filter(is_approved=True)
+                                            .only('creator')
+                                            .select_related('creator')])
+    # TODO: Port this kitsune feature over, eventually:
+    #     https://github.com/jsocol/kitsune/commit/f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
-    data = {'document': doc, 'redirected_from': redirected_from,
+    # Grab some parameters that affect output
+    section_id = request.GET.get('section', None)
+    show_raw = request.GET.get('raw', False)
+    need_edit_links = request.GET.get('edit_links', False)
+
+    # Start applying some filters to the document HTML
+    tool = wiki.content.parse(doc.html)
+
+    # If a section ID is specified, extract that section.
+    if section_id:
+        tool.extractSection(section_id)
+
+    # If this user can edit the document, inject some section editing links.
+    if (need_edit_links or not show_raw) and doc.allows_editing_by(request.user):
+        tool.injectSectionEditingLinks(doc.slug, doc.locale)
+
+    # if ?raw parameter is supplied, then we respond with raw page source
+    # without template wrapping or edit links. This is also permissive for
+    # iframe inclusion
+    if show_raw:
+        response = HttpResponse(tool.serialize())
+        response['x-frame-options'] = 'Allow'
+        return response
+    
+    data = {'document': doc, 'document_html': tool.serialize(),
+            'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason}
     data.update(SHOWFOR_DATA)
@@ -244,11 +278,15 @@ def edit_document(request, document_slug, revision_id=None):
         rev = doc.current_revision or doc.revisions.order_by('-created',
                                                              '-id')[0]
 
+    section_id = request.GET.get('section', None)
     disclose_description = bool(request.GET.get('opendescription'))
+
     doc_form = rev_form = None
     if doc.allows_revision_by(user):
-        rev_form = RevisionForm(instance=rev, initial={'based_on': rev.id,
-                                                       'comment': ''})
+        rev_form = RevisionForm(instance=rev, 
+                                initial={'based_on': rev.id,
+                                         'comment': ''},
+                                section_id=section_id)
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc),
             can_create_tags=user.has_perm('taggit.add_tag'))
@@ -260,6 +298,8 @@ def edit_document(request, document_slug, revision_id=None):
     else:  # POST
 
         is_iframe_target = request.GET.get('iframe', False)
+        is_raw = request.GET.get('raw', False)
+        need_edit_links = request.GET.get('edit_links', False)
 
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
@@ -293,7 +333,9 @@ def edit_document(request, document_slug, revision_id=None):
 
         elif which_form == 'rev':
             if doc.allows_revision_by(user):
-                rev_form = RevisionForm(request.POST, is_iframe_target=is_iframe_target)
+                rev_form = RevisionForm(request.POST, 
+                                        is_iframe_target=is_iframe_target,
+                                        section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
                 if rev_form.is_valid():
 
@@ -308,14 +350,27 @@ def edit_document(request, document_slug, revision_id=None):
                         view = 'wiki.document'
                     else:
                         view = 'wiki.document_revisions'
-                    return HttpResponseRedirect(
-                        reverse(view, args=[doc.slug]))
+                    
+                    # Construct the redirect URL, adding any needed parameters
+                    url = reverse(view, args=[doc.slug], locale=doc.locale)
+                    params = {}
+                    if is_raw:
+                        params['raw'] = 'true'
+                    if need_edit_links:
+                        params['edit_links'] = 'true'
+                    if section_id:
+                        params['section'] = section_id
+                    if params:
+                        url = '%s?%s' % (url, urlencode(params))
+
+                    return HttpResponseRedirect(url)
             else:
                 raise PermissionDenied
 
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
+                         'section_id': section_id,
                          'disclose_description': disclose_description,
                          'revision': rev,
                          'document': doc})
@@ -349,7 +404,11 @@ def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
-    revs = Revision.objects.filter(document=doc).order_by('-created', '-id')
+    # Grab revisions, but defer summary and content because they can lead to
+    # attempts to cache more than memcached allows.
+    revs = (Revision.objects.filter(document=doc)
+                .defer('summary', 'content')
+                .order_by('-created', '-id'))
 
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs, 'document': doc})

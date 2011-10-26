@@ -203,6 +203,7 @@ class RevisionForm(forms.ModelForm):
         'versions': [(smart_str(c[0][0]), [(v.slug, smart_str(v.name)) for
                                         v in c[1] if v.show_in_ui]) for
                      c in GROUPED_FIREFOX_VERSIONS]}
+
     content = StrippedCharField(
                 min_length=5, max_length=100000,
                 label=_lazy(u'Content:'),
@@ -225,12 +226,15 @@ class RevisionForm(forms.ModelForm):
                   'based_on')
 
     def __init__(self, *args, **kwargs):
-        
-        if 'is_iframe_target' in kwargs:
-            self.is_iframe_target = kwargs['is_iframe_target']
-            del kwargs['is_iframe_target']
-        else:
-            self.is_iframe_target = False
+
+        # Snag some optional kwargs and delete them before calling
+        # super-constructor.
+        for n in ('section_id', 'is_iframe_target'):
+            if n not in kwargs:
+                setattr(self, n, None)
+            else:
+                setattr(self, n, kwargs[n])
+                del kwargs[n]
 
         super(RevisionForm, self).__init__(*args, **kwargs)
         self.fields['based_on'].widget = forms.HiddenInput()
@@ -245,10 +249,11 @@ class RevisionForm(forms.ModelForm):
                 self.initial['slug'] = self.instance.document.slug
 
             content = self.instance.content
-            self.initial['content'] = (wiki.content
-                                       .parse(content)
-                                       .injectSectionIDs()
-                                       .serialize())
+            tool = wiki.content.parse(content)
+            tool.injectSectionIDs()
+            if self.section_id:
+                tool.extractSection(self.section_id)
+            self.initial['content'] = tool.serialize()
 
             self.initial['review_tags'] = [x.name 
                 for x in self.instance.review_tags.all()]
@@ -288,6 +293,22 @@ class RevisionForm(forms.ModelForm):
 
     def clean_slug(self):
         return self._clean_collidable('slug')
+
+    def clean_content(self):
+        """Validate the content, performing any section editing if necessary"""
+        content = self.cleaned_data['content']
+
+        # If we're editing a section, we need to replace the section content
+        # from the current revision.
+        if self.section_id and self.instance and self.instance.document:
+            # Make sure we start with content form the latest revision.
+            full_content = self.instance.document.current_revision.content
+            # Replace the section content with the form content.
+            tool = wiki.content.parse(full_content)
+            tool.replaceSection(self.section_id, content)
+            content = tool.serialize()
+
+        return content
 
     def save(self, creator, document, **kwargs):
         """Persist me, and return the saved Revision.

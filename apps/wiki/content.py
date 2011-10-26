@@ -1,6 +1,17 @@
+from urllib import urlencode
 import bleach
+
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
+
+from tower import ugettext as _
+
+from sumo.urlresolvers import reverse
+
+
+# List of tags supported for section editing. A subset of everything that could
+# be considered an HTML5 section
+SECTION_EDIT_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'section')
 
 
 def parse(src):
@@ -10,12 +21,12 @@ def parse(src):
 class ContentSectionTool(object):
 
     def __init__(self, src=None):
-        
+
         self.tree = html5lib.treebuilders.getTreeBuilder("simpletree")
 
-        self.parser = html5lib.HTMLParser(tree=self.tree, 
+        self.parser = html5lib.HTMLParser(tree=self.tree,
             namespaceHTMLElements=False)
-        
+
         self.serializer = html5lib.serializer.htmlserializer.HTMLSerializer(
             omit_optional_tags=False, quote_attr_values=True,
             escape_lt_in_attrs=True)
@@ -51,6 +62,10 @@ class ContentSectionTool(object):
         self.stream = SectionIDFilter(self.stream)
         return self
 
+    def injectSectionEditingLinks(self, slug, locale):
+        self.stream = SectionEditLinkFilter(self.stream, slug, locale)
+        return self
+
     def extractSection(self, id):
         self.stream = SectionFilter(self.stream, id)
         return self
@@ -63,10 +78,6 @@ class ContentSectionTool(object):
 
 class SectionIDFilter(html5lib_Filter):
     """Filter which ensures section-related elements have unique IDs"""
-
-    NEED_ID_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup',
-                    'article', 'aside', 'nav', 'section', 'blockquote',
-                    'details', 'fieldset', 'figure', 'td')
 
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
@@ -96,13 +107,62 @@ class SectionIDFilter(html5lib_Filter):
 
         # Pass 2: Sprinkle in IDs where they're missing
         for token in buffer:
-            if 'StartTag' == token['type'] and token['name'] in self.NEED_ID_TAGS:
+            if ('StartTag' == token['type'] and
+                    token['name'] in SECTION_EDIT_TAGS):
                 attrs = dict(token['data'])
                 id = attrs.get('id', None)
                 if not id:
                     attrs['id'] = self.gen_id()
                     token['data'] = attrs.items()
             yield token
+
+
+class SectionEditLinkFilter(html5lib_Filter):
+    """Filter which injects editing links for sections with IDs"""
+    # TODO: Am I going filter crazy here? Should this just be a pyquery thing?
+
+    def __init__(self, source, slug, locale):
+        html5lib_Filter.__init__(self, source)
+        self.slug = slug
+        self.locale = locale
+
+    def __iter__(self):
+        input = html5lib_Filter.__iter__(self)
+
+        for token in input:
+
+            yield token
+
+            if ('StartTag' == token['type'] and
+                    token['name'] in SECTION_EDIT_TAGS):
+                attrs = dict(token['data'])
+                id = attrs.get('id', None)
+                if id:
+                    out = (
+                        {'type': 'StartTag', 'name': 'a',
+                         'data': {
+                             'title': _('Edit section'),
+                             'class': 'edit-section',
+                             'data-section-id': id,
+                             'data-section-src-url': '%s?%s' % (
+                                 reverse('wiki.document',
+                                         args=[self.slug],
+                                         locale=self.locale),
+                                 urlencode({'section': id, 'raw': 'true'})
+                              ),
+                              'href': '%s?%s' % (
+                                 reverse('wiki.edit_document',
+                                         args=[self.slug],
+                                         locale=self.locale),
+                                 urlencode({'section': id, 'raw': 'true',
+                                            'edit_links': 'true'})
+                              )
+                         }},
+                        {'type': 'Characters', 'data': _('Edit')},
+                        {'type': 'EndTag', 'name': 'a'}
+                    )
+                    for t in out:
+                        yield t
 
 
 class SectionFilter(html5lib_Filter):
@@ -165,13 +225,13 @@ class SectionFilter(html5lib_Filter):
 
                 # If started an implicit section, these rules apply to
                 # siblings...
-                elif (self.heading is not None and 
+                elif (self.heading is not None and
                         self.open_level - 1 == self.parent_level):
 
                     # The implicit section should stop if we hit another
                     # sibling heading whose rank is equal or higher, since that
                     # starts a new implicit section
-                    if (self._isHeading(token) and 
+                    if (self._isHeading(token) and
                             self._getHeadingRank(token) <= self.heading_rank):
                         self.in_section = False
 
@@ -222,4 +282,3 @@ class SectionFilter(html5lib_Filter):
             # encountered in the stream. Not doing that right now.
             # For now, just assume an hgroup is equivalent to h1
             return 1
-
