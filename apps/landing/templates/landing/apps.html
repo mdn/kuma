@@ -12,11 +12,10 @@
   <h1 class="intro">{{ _('Welcome to the <b>Apps Developer Community</b>')|safe }}</h1>
 
   <div class="util">
-    <p><strong>{{ _('A short and snappy tagline') }}</strong></p>
+    <p><strong>{{ _('Your favorite Web apps: online, offline, anywhere!') }}</strong></p>
     <ul>
       <li class="util-twitter"><a href="http://twitter.com/planetmozilla">{{ _('Twitter') }}</a></li>
       <li class="util-rss"><a href="http://blog.mozilla.com/about_mozilla/feed/">{{ _('Subscribe') }}</a></li>
-      <li class="util-discuss"><a href="{{ url('discussion') }}">{{ _('Join the Mozilla discussions!') }}</a></li>
     </ul>
   </div>
 </div>
@@ -26,11 +25,128 @@
 <div class="wrap sidebar">
   <section id="content-main" role="main">
 
-  <form class="fm-subscribe boxed" action="{{ url('apps_subscription') }}" method="POST">
-      <header class="head">
-      <h2>{{ _('Subscribe to the Apps Developer newsletter') }}</h2>
-      </header>
+    <div class="boxed">
+      <section id="apps-interests" class="articles-list">
+        <header class="head section-apps">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h2>{{ _('What\'s Your Interest?') }}</h2>
+        </header>
 
+        <ul class="hfeed">
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_mobile_app_developers')) }}" rel="bookmark">{{ _('For mobile app developers') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            If you already develop apps for mobile devices, here's how to develop open Web apps.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_Web_developers')) }}" rel="bookmark">{{ _('For Web developers') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            If you already develop Web sites or applications, here's how to make them into installable open Web apps.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Developing_game_apps')) }}" rel="bookmark">{{ _('For Game Developers') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            Want to make a Web app game? Find out about special considerations for games, such as user identity, multi-player interaction, offline use, and in-game purchases.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="https://wiki.mozilla.org/Apps" rel="external bookmark">{{ _('Apps Wiki') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            Check here for current status and activities of the Mozilla Apps project team.
+            {% endtrans %}
+            </p>
+          </li>
+        </ul>
+      </section>
+      
+      <section id="popular-docs" class="articles-list">
+        <header class="head section-apps">
+          {# L10n: Please escape HTML entities here, like &amp; #}
+          <h2>{{ _('Popular Apps Documentation') }}</h2>
+        </header>
+
+        <ul class="hfeed">
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Getting_Started')) }}" rel="bookmark">{{ _('Getting Started') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            This walk-through tutorial will quickly give you an understanding of what it takes to turn an ordinary site into an open Web application.            
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Identity_Integration')) }}" rel="bookmark">{{ _('Identity Integration') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            How to securely identify app users with BrowserID.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/The_Manifest')) }}" rel="bookmark">{{ _('The App Manifest') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            The specification of the structure and content of an application manifest.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Apps_JavaScript_API')) }}" rel="bookmark">{{ _('The App API') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            JavaScript methods that applications can call to install themselves.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/FAQs')) }}" rel="bookmark">{{ _('App FAQs') }}</a></h4>
+          </li>
+        </ul>
+        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All Apps documentation') }}</a></p>
+      </section>
+      
+      <section id="videos">
+        <header class="subhead">
+          <h2>{{ _('Watch Apps Videos')|safe }}</h2>
+        </header>
+        {% include "includes/video_player.html" %}
+        <ul class="hfeed">
+          <li class="hentry">
+            <h3>
+              <a href="https://apps.mozillalabs.com/v/openwebapps.ogv" title="{{ _('Watch this video') }}"
+                 id="openwebapps" class="video_thumbnail">
+                <img src="{{MEDIA_URL}}img/vidthumb-appsoverview.jpg" 
+                   alt="" height="150" width="270">
+                <span>{{ _('An overview of Mozilla Web apps.')}}</span>
+              </a>
+            </h3>
+          </li>
+        </ul>
+      </section>
+
+    </div>{# /.boxed #}
+
+  </section>{# /#content-main #}
+
+  <aside id="content-sub" role="complementary">
+  
+    <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
+      <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
+      {% trans %}
+      <p class="mod-intro">Sign up now for the Apps Developer preview and newsletter.
+      First 5000 subscribers get early access to resources, tools, and exclusive info.
+      <strong>Join us!</strong></p>
+      {% endtrans %}
+      
       {% if messages %}
       <ul class="messages">
           {% for message in messages %}
@@ -39,125 +155,38 @@
       </ul>
       {% endif %}
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
       {% if form %}
       <fieldset>
-        <p>
-          {{ form.email.errors }}
-          <label for="email">{{ form.email.label }}</label>
-          {{ form.email }}
-        </p>
-
-        <p class="check">
-          {{ form.format.errors }}
-          <span class="label">{{ form.format.label }}</span>
-          <fieldset class="inline">
-          {% for c in form.fields.format.choices %}
-              <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" checked>{{ c[1] }}</label>
-          {% endfor %}
-          </fieldset>
-        </p>
-        <p class="agree">
-          {{ form.agree.errors }}
-          <label for="sub-agree">
-              {{ form.agree }} {{form.agree.label }}
-          </label>
-          {% trans privacy_url='http://www.mozilla.org/about/policies/privacy-policy.html' %}
-          to the <a href="{{ privacy_url }}">Privacy Policy</a>
-          {% endtrans %}
-        </p>
-        <p class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></p>
+        <ol>
+          <li>
+            {{ form.email.errors }}
+            <label for="email">{{ form.email.label }}</label>
+            {{ form.email }}
+          </li>
+          <li class="check">
+            {{ form.format.errors }}
+            <span class="label">{{ form.format.label }}</span>
+            <fieldset class="inline">
+            {% for c in form.fields.format.choices %}
+                <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" checked>{{ c[1] }}</label>
+            {% endfor %}
+            </fieldset>
+          </li>
+          <li class="agree">
+            {{ form.agree.errors }}
+            <label for="sub-agree">
+                {{ form.agree }} {{form.agree.label }}
+            </label>
+            {% trans privacy_url='http://www.mozilla.org/about/policies/privacy-policy.html' %}
+            to the <a href="{{ privacy_url }}">Privacy Policy</a>
+            {% endtrans %}
+          </li>
+          <li class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></li>
+        </ol>
       </fieldset>
       {% endif %}
     </form>
-
-
-    <section class="boxed">
-      <div id="popular-docs" class="articles-list">
-        <header class="head section-apps">
-          {# L10n: Please escape HTML entities here, like &amp; #}
-          <h2>{{ _('Popular Apps Documentation') }}</h2>
-        </header>
-
-        <ul class="hfeed">
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Article description.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Article description.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Article description.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Article description.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps')) }}" rel="bookmark">{{ _('Article Title') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Article description.
-            {% endtrans %}
-            </p>
-          </li>
-        </ul>
-        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All applications development documentation') }}</a></p>
-      </div>
-
-      <div id="fave-tools">
-        <header class="subhead">
-          {# L10n: Please escape HTML entities here, like &amp; #}
-          <h3>{{ _('Favorite Apps Tools') }}</h3>
-        </header>
-        <ul class="tools">
-          <li>
-            <h4><a href="https://bugzilla.mozilla.org/">{{ _('Bugzilla') }} <img src="{{ MEDIA_URL }}img/icn-tool-bugzilla.png" alt="" width="65" /></a></h4>
-            <p class="desc">{{ _('The main issue-tracker for Mozilla projects.') }}</p>
-          </li>
-          <li>
-            <h4><a href="http://mxr.mozilla.org/">{{ _('MXR') }} <img src="{{ MEDIA_URL }}img/icn-tool-mozilla.png" alt="" width="65" /></a></h4>
-            <p class="desc">{{ _('A Mozilla source tree browser.') }}</p>
-          </li>
-          <li class="all"><a href="{{ devmo_url(_('/en/Tools')) }}" class="go">{{ _('All application development tools') }}</a></li>
-        </ul>
-      </div>
-
-      <div id="recent-news" class="articles-list">
-        <header class="subhead">
-          {# L10n: Please escape HTML entities here, like &amp; #}
-          <h3>{{ _('Recent Apps News & Updates') }}</h3>
-        </header>
-
-        {{ newsfeed(updates) }}
-
-        <p class="all"><a href="#" class="go">{{ _('All application development entries') }}</a></p>
-      </div>
-    </section>{# /.boxed #}
-
-  </section>{# /#content-main #}
-
-  <aside id="content-sub" role="complementary">
+  
     <figure class="promo banner">
       <a href="http://webfwd.org" rel="external">
         <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">

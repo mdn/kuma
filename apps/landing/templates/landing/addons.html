@@ -30,8 +30,8 @@
 <div class="wrap sidebar">
   <section id="content-main" role="main">
 
-    <section class="boxed">
-      <div id="popular-docs" class="articles-list">
+    <div class="boxed">
+      <section id="popular-docs" class="articles-list">
         <header class="head section-addons">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h2>{{ _('Popular <span class="addons">Add-ons</span> Documentation')|safe }}</h2>
@@ -68,9 +68,9 @@
           </li>
         </ul>
         <p class="all"><a href="https://addons.mozilla.org/en-US/developers/" class="go">{{ _('All add-ons development documentation') }}</a></p>
-      </div>
+      </section>
 
-      <div id="videos">
+      <section id="videos">
         <header class="subhead">
           <h2>{{ _('Watch <span class="addons">Add-on</span> Videos')|safe }}</h2>
         </header>
@@ -90,9 +90,9 @@
             </p>
           </li>
         </ul>      
-      </div>
+      </section>
 
-      <div id="fave-tools">
+      <section id="fave-tools">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Favorite <span class="addons">Add-on</span> Tools')|safe }}</h3>
@@ -112,9 +112,9 @@
           </li>
           <li class="all"><a href="https://addons.mozilla.org/en-US/developers/" class="go">{{ _('All add-on development tools') }}</a></li>
         </ul>
-      </div>
+      </section>
 
-      <div id="recent-news" class="articles-list">
+      <section id="recent-news" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Recent <span class="addons">Add-ons</span> News &amp; Updates')|safe }}</h3>
@@ -123,8 +123,8 @@
         {{ newsfeed(updates) }}
 
         <p class="all"><a href="http://blog.mozilla.com/addons/" class="go">{{ _('All add-ons development entries') }}</a></p>
-      </div>
-    </section>{# /.boxed #}
+      </section>
+    </div>{# /.boxed #}
 
   </section>{# /#content-main #}
 
