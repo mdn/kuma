@@ -22,7 +22,7 @@ class HelperTestCase(TestCase):
         self.u = User.objects.get(username=u'testuser')
 
     def test_profile_url(self):
-        eq_(u'/user/7', profile_url(self.u))
+        eq_(u'/profiles/testuser/', profile_url(self.u))
 
     def test_profile_default_gravatar(self):
         ok_(urllib.urlencode({'d': settings.DEFAULT_AVATAR}) in profile_avatar(self.u), "Bad default avatar: %s" % profile_avatar(self.u))
@@ -55,5 +55,5 @@ class HelperTestCase(TestCase):
         fragment = pq(list)
         eq_(3, len(fragment('a')))
         a = fragment('a')[2]
-        assert a.attrib['href'].endswith('400000')
+        assert a.attrib['href'].endswith('testuser3/')
         eq_('testuser3', a.text)

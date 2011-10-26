@@ -10,7 +10,7 @@ from devmo.models import UserProfile
 @register.function
 def profile_url(user):
     """Return a URL to the user's profile."""
-    return reverse('users.profile', args=[user.pk])
+    return reverse('devmo_profile_view', args=[user.username])
 
 
 @register.function
