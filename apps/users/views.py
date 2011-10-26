@@ -24,6 +24,7 @@ from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm)
 from users.models import Profile, RegistrationProfile, EmailChange
+from devmo.models import UserProfile
 from users.utils import handle_login, handle_register
 
 
@@ -158,7 +159,7 @@ def confirm_change_email(request, activation_key):
 
 
 def profile(request, user_id):
-    user_profile = get_object_or_404(Profile, user__id=user_id)
+    user_profile = get_object_or_404(UserProfile, user__id=user_id)
     return jingo.render(request, 'users/profile.html',
                         {'profile': user_profile})
 
