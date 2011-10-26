@@ -6,7 +6,7 @@ from pyquery import PyQuery as pq
 
 from sumo.helpers import urlparams
 from sumo.tests import TestCase, get, LocalizingClient, post
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from gallery.models import Image, Video
 from gallery.tests import image, video
 from gallery.utils import get_draft_title

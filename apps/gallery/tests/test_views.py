@@ -12,7 +12,7 @@ from gallery.tests import image, video
 from gallery.utils import get_draft_title
 from gallery.views import _get_media_info
 from sumo.tests import post, LocalizingClient, TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 TEST_IMG = 'apps/upload/tests/media/test.jpg'

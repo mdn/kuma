@@ -16,7 +16,7 @@ import jinja2
 import pytz
 
 import utils
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 # Yanking filters from Django.

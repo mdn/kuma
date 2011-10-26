@@ -6,7 +6,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
 from sumo.models import ModelBase, LocaleField
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 def multi_raw(query, params, models):

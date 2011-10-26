@@ -18,7 +18,7 @@ from gallery import ITEMS_PER_PAGE, DRAFT_TITLE_PREFIX
 from gallery.forms import ImageForm, VideoForm
 from gallery.models import Image, Video
 from gallery.utils import upload_image, upload_video, check_media_permissions
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import paginate
 from upload.tasks import generate_thumbnail
 from upload.utils import FileTooLargeError

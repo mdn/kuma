@@ -15,7 +15,7 @@ from kbforums.feeds import ThreadsFeed, PostsFeed
 from kbforums.forms import (ReplyForm, NewThreadForm,
                             EditThreadForm, EditPostForm)
 from kbforums.models import Thread, Post
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import paginate
 from wiki.models import Document
 

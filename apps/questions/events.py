@@ -7,7 +7,7 @@ from tower import ugettext as _
 
 from notifications.events import InstanceEvent
 from questions.models import Question
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class QuestionEvent(InstanceEvent):

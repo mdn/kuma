@@ -11,7 +11,7 @@ from nose.tools import assert_raises, eq_
 from pyquery import PyQuery as pq
 
 from questions.models import Question
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class ReadOnlyModeTest(test_utils.TestCase):

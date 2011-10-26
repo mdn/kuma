@@ -2,7 +2,7 @@ from nose.tools import eq_
 import test_utils
 import pyquery
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import paginate
 from sumo.helpers import paginator
 

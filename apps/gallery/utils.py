@@ -5,7 +5,7 @@ from django.core.files import File
 from gallery import DRAFT_TITLE_PREFIX
 from gallery.forms import ImageUploadFormAsync, VideoUploadFormAsync
 from gallery.models import Image, Video
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from upload.utils import upload_media, check_file_size
 from upload.tasks import _scale_dimensions
 

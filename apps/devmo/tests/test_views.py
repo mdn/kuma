@@ -23,7 +23,7 @@ from devmo.cron import devmo_calendar_reload
 from dekicompat.backends import DekiUser
 
 from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 APP_DIR = dirname(dirname(__file__))

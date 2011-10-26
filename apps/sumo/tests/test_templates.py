@@ -4,7 +4,7 @@ import jingo
 from test_utils import RequestFactory
 
 from sumo.tests import LocalizingClient, TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 def setup():

@@ -5,7 +5,7 @@ from django.utils.feedgenerator import Atom1Feed
 
 from tower import ugettext as _
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from taggit.models import Tag
 from sumo.helpers import urlparams
 

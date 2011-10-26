@@ -8,7 +8,7 @@ from django.template import Context, loader
 from tower import ugettext as _
 
 from notifications.events import InstanceEvent, Event
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from wiki.models import Document
 
 

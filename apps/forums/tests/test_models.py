@@ -7,7 +7,7 @@ from nose.tools import eq_
 from forums.events import NewPostEvent, NewThreadEvent
 from forums.models import Forum, Thread, Post
 from forums.tests import ForumTestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.helpers import urlparams
 
 

@@ -1,6 +1,6 @@
 from nose.tools import eq_
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.tests import LocalizingClient
 
 from .test_search import SphinxTestCase

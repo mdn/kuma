@@ -20,7 +20,7 @@ from devmo.models import Calendar, Event, UserProfile
 from dekicompat.backends import DekiUser
 
 from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 def parse_robots(base_url):

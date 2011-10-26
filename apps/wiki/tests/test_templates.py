@@ -11,7 +11,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 from taggit.models import Tag
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get, attrs_eq
 from wiki.cron import calculate_related_documents

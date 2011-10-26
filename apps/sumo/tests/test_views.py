@@ -5,7 +5,7 @@ from nose.tools import eq_
 from test_utils import RequestFactory
 
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.views import redirect_to
 
 

@@ -7,7 +7,7 @@ import kbforums
 from notifications.models import NotificationsMixin
 from sumo.helpers import urlparams, wiki_to_html
 from sumo.models import ModelBase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from wiki.models import Document
 
 

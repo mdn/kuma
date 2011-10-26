@@ -3,7 +3,7 @@ from django.conf import settings
 from jinja2 import escape, Markup
 from jingo import register
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from users.models import Profile
 
 

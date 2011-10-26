@@ -14,7 +14,7 @@ import celery.task
 import jingo
 from PIL import Image
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 log = logging.getLogger('k.services')

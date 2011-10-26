@@ -17,7 +17,7 @@ from questions.models import Question, Answer, QuestionVote
 from questions.tests import TestCaseBase, TaggingTestCaseBase, tags_eq
 from questions.views import UNAPPROVED_TAG, NO_TAG
 from questions.tasks import cache_top_contributors
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import get, post, attrs_eq
 from upload.models import ImageAttachment

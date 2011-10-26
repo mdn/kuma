@@ -14,7 +14,7 @@ from celery.messaging import establish_connection
 from multidb.pinning import pin_this_thread, unpin_this_thread
 from tower import ugettext as _
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import chunked
 from wiki.models import Document, SlugCollision, TitleCollision
 

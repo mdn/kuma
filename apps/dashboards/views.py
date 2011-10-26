@@ -12,7 +12,7 @@ from dashboards.readouts import (overview_rows, READOUTS, L10N_READOUTS,
                                  CONTRIBUTOR_READOUTS)
 from sumo_locales import LOCALES
 from sumo.parser import get_object_fallback
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import smart_int
 from wiki.events import (ApproveRevisionInLocaleEvent,
                          ReviewableRevisionInLocaleEvent)
