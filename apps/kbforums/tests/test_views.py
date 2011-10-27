@@ -6,7 +6,7 @@ from kbforums.models import Thread
 from kbforums.tests import KBForumTestCase
 from kbforums.events import NewThreadEvent, NewPostEvent
 from sumo.tests import get, post
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from wiki.models import Document
 
 

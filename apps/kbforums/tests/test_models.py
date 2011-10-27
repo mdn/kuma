@@ -7,7 +7,7 @@ from nose.tools import eq_
 from kbforums.events import NewPostEvent, NewThreadEvent
 from kbforums.models import Thread, Post
 from kbforums.tests import KBForumTestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.helpers import urlparams
 from wiki.models import Document
 

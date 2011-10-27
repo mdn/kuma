@@ -16,7 +16,7 @@ from tower import ugettext_lazy as _lazy
 
 from countries import COUNTRIES
 from sumo.models import ModelBase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')

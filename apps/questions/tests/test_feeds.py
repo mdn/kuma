@@ -7,7 +7,7 @@ from nose.tools import eq_
 from taggit.models import Tag
 from pyquery import PyQuery as pq
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.helpers import urlparams
 from questions.feeds import QuestionsFeed, TaggedQuestionsFeed
 from questions.models import Question

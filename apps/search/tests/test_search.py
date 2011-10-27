@@ -23,7 +23,7 @@ from search.clients import (WikiClient, QuestionsClient,
                             DiscussionClient, SearchError)
 from search.utils import start_sphinx, stop_sphinx, reindex, crc32
 from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from wiki.models import Document
 
 

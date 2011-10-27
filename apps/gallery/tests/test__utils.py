@@ -7,7 +7,7 @@ from gallery.models import Image, Video
 from gallery.tests import image, video
 from gallery.utils import create_image, create_video, check_media_permissions
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from upload.tests import check_file_info
 
 

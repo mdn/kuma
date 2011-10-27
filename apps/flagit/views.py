@@ -10,7 +10,7 @@ from tower import ugettext as _
 
 from access.decorators import permission_required, login_required
 from flagit.models import FlaggedObject
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 @require_POST

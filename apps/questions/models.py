@@ -18,7 +18,7 @@ from questions.tasks import update_question_votes, update_answer_pages
 from sumo.helpers import urlparams
 from sumo.models import ModelBase
 from sumo.parser import wiki_to_html
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from tags.models import BigVocabTaggableMixin
 from tags.utils import add_existing_tag
 from upload.models import ImageAttachment

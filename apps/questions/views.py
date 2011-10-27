@@ -38,7 +38,7 @@ from questions.question_config import products
 from search.clients import WikiClient, QuestionsClient, SearchError
 from search.utils import locale_or_default, sphinx_locale
 from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import paginate
 from tags.utils import add_existing_tag
 from upload.models import ImageAttachment

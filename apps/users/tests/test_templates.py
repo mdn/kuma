@@ -15,7 +15,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post
 from users.models import Profile, RegistrationProfile

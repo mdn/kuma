@@ -6,7 +6,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase, LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from wiki.models import VersionMetadata, Document
 from wiki.tests import doc_rev, document, new_document_data, revision
 from wiki.views import _version_groups

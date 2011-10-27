@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from access import has_perm, perm_is_defined_on
 from notifications.models import NotificationsMixin
 from sumo.helpers import urlparams, wiki_to_html
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.models import ModelBase
 import forums
 

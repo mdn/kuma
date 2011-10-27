@@ -10,7 +10,7 @@ from pyquery import PyQuery as pq
 from notifications.tests import watch
 from questions.models import Question, CONFIRMED, UNCONFIRMED
 from sumo.tests import TestCase, LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
 
 

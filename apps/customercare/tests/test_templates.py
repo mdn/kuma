@@ -2,7 +2,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from customercare.tests import cc_category, cc_response
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.tests import TestCase
 
 

@@ -17,7 +17,7 @@ from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ModelBase, LocaleField
-from sumo.urlresolvers import reverse, split_path
+from funfactory.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 

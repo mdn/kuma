@@ -5,7 +5,7 @@ import test_utils
 from access.helpers import has_perm, has_perm_or_owns
 from forums.models import Forum, Thread
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class ForumTestPermissions(TestCase):

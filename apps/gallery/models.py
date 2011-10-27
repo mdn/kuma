@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from sumo.models import ModelBase, LocaleField
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class Media(ModelBase):

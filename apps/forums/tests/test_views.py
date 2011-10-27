@@ -7,7 +7,7 @@ from forums.models import Forum, Thread
 from forums.tests import ForumTestCase
 from forums.events import NewThreadEvent, NewPostEvent
 from sumo.tests import get, post
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class PostPermissionsTests(ForumTestCase):

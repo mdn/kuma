@@ -21,7 +21,7 @@ from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
 from dekicompat.backends import DekiUser
 
 from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 APP_DIR = dirname(dirname(__file__))

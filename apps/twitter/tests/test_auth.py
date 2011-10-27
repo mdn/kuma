@@ -1,5 +1,5 @@
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class TwitterMiddlewareTests(TestCase):

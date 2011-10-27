@@ -9,7 +9,7 @@ from django.utils.decorators import available_attrs
 from django.utils.http import urlquote
 
 import access
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,

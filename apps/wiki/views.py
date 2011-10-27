@@ -18,7 +18,7 @@ from tower import ugettext as _
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
 from wiki import DOCUMENTS_PER_PAGE
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,

@@ -6,7 +6,7 @@ import test_utils
 import access
 from forums.models import Forum, Thread
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class AccessTests(TestCase):

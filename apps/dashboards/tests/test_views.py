@@ -2,7 +2,7 @@ from nose.tools import eq_
 
 from dashboards.readouts import CONTRIBUTOR_READOUTS
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 class LocalizationDashTests(TestCase):

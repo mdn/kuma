@@ -10,7 +10,7 @@ from nose.tools import eq_
 from test_utils import TestCase  # So others can import it from here
 
 import sumo
-from sumo.urlresolvers import reverse, split_path
+from funfactory.urlresolvers import reverse, split_path
 
 
 get = lambda c, v, **kw: c.get(reverse(v, **kw), follow=True)

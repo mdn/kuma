@@ -16,7 +16,7 @@ from sumo.helpers import (datetimeformat, DateTimeFormatError,
                           collapse_linebreaks, url, json, timesince,
                           label_with_help, urlparams, yesno, number)
 from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 
 
 def render(s, context={}):

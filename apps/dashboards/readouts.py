@@ -8,7 +8,7 @@ import jingo
 from tower import ugettext as _, ugettext_lazy as _lazy
 
 from dashboards.models import THIS_WEEK, ALL_TIME, PERIODS
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from wiki.models import Document, MEDIUM_SIGNIFICANCE, MAJOR_SIGNIFICANCE
 
 

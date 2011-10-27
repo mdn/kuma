@@ -16,7 +16,7 @@ from forums.events import NewPostEvent, NewThreadEvent
 from forums.feeds import ThreadsFeed, PostsFeed
 from forums.forms import ReplyForm, NewThreadForm, EditThreadForm, EditPostForm
 from forums.models import Forum, Thread, Post
-from sumo.urlresolvers import reverse
+from funfactory.urlresolvers import reverse
 from sumo.utils import paginate
 
 log = logging.getLogger('k.forums')
