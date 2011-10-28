@@ -12,7 +12,7 @@ from django.core.exceptions import ValidationError
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
-from wiki.content import (SectionIDFilter)
+from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -64,9 +64,8 @@ class ContentSectionToolTests(TestCase):
         eq_('i-already-have-an-id', result_doc.find('.hasid').attr('id'))
 
         # Then, ensure all elements in need of an ID now all have unique IDs.
-        NEED_ID_TAGS = SectionIDFilter.NEED_ID_TAGS
-        ok_(len(NEED_ID_TAGS) > 0)
-        els = result_doc.find(', '.join(NEED_ID_TAGS))
+        ok_(len(SECTION_EDIT_TAGS) > 0)
+        els = result_doc.find(', '.join(SECTION_EDIT_TAGS))
         seen_ids = set()
         for i in range(0, len(els)):
             id = els.eq(i).attr('id')
