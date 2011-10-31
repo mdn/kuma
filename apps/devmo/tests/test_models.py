@@ -1,9 +1,5 @@
-import logging
-import urllib
 import csv
-import shlex
-import urllib2
-from os.path import basename, dirname, isfile, isdir
+from os.path import dirname
 from datetime import datetime
 
 from mock import patch
@@ -12,16 +8,13 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile
+from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
 
 from dekicompat.backends import DekiUser
-
-from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
 
 
 APP_DIR = dirname(dirname(__file__))
@@ -195,6 +188,15 @@ class TestUserProfile(test_utils.TestCase):
             g = profile.gravatar
         except UnicodeEncodeError:
             ok_(False, "There should be no UnicodeEncodeError")
+
+    def test_locale_timezone_fields(self):
+        """We've added locale and timezone fields. Verify defaults."""
+        user = User.objects.get(username='testuser')
+        profile_from_db = UserProfile.objects.get(user=user)
+        ok_(hasattr(profile_from_db, 'locale'))
+        ok_(profile_from_db.locale == 'en-US')
+        ok_(hasattr(profile_from_db, 'timezone'))
+        ok_(str(profile_from_db.timezone) == 'US/Pacific')
 
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""
