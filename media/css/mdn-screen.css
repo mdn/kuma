@@ -581,34 +581,19 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 #mdn-twitter #follow a:hover, #mdn-twitter #follow a:focus, #mdn-twitter #follow a:active { text-decoration: none; background-color: #aebfc9; }
 
 /*** @Help us *********/
-#content-sub #help { border: 3px solid #f8d575; text-align: center;
-  background: #f6ac22;
-  background: -moz-linear-gradient(top, #e39c1d 0, #f6ac22 20%); 
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e39c1d), color-stop(20%, #f6ac22));
+#content-sub .help { border: 3px solid #f8d575;
+  background: #f2a81d;
+  background: -moz-linear-gradient(top, #e39c1d 0, #f2a81d 20%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e39c1d), color-stop(20%, #f2a81d));
   background: linear-gradient(top, #e39c1d 0, #f6ac22 20%);
-  -moz-box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2); 
-  -webkit-box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2); 
-  box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2);  
+  -moz-box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2);
+  -webkit-box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2);
+  box-shadow: 0 3px 0 #bf8c4f, inset 0 2px 2px rgba(0,0,0,.2);
 }
-#content-sub #help h3 { margin: 0 0 5px; color: #fff; font: 200 44px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; text-shadow: 0 5px 0 #924b09; }
-#content-sub #help p { margin: 0 0 5px; color: #630; font: bold italic .857em Georgia, Times, "Times New Roman", serif; }
-#content-sub #help .go { display: block; padding: 8px 16px; width: 60%; margin: 10px auto 0; border: 1px solid #e19e20; font: 200 1.285em/1.2 Impact, Haettenschweiler, "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; color: #82460b;
-  text-shadow: -1px -1px 1px #fff; 
-  background: #f4cb6c;
-  background: -moz-linear-gradient(top, #f9e5ac 0, #f2c051 100%); 
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f9e5ac), color-stop(100%, #f2c051));
-  background: linear-gradient(top, #f9e5ac 0, #f2c051 100%);
-  -moz-box-shadow: 0 3px 0 #924b09; 
-  -webkit-box-shadow: 0 3px 0 #924b09; 
-  box-shadow: 0 3px 0 #924b09; 
-}
-#content-sub #help .go:after { content: ""; }
-#content-sub #help .go:hover, #content-sub #help .go:focus, #content-sub #help .go:active { text-decoration: none; color: #894302;
-  background: #ffd063;
-  background: -moz-linear-gradient(top, #fff0c4 0, #f7c75e 100%); 
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f9e5ac), color-stop(100%, #f2c051));
-  background: linear-gradient(top, #f9e5ac 0, #f2c051 100%);
-}
+#content-sub .help h3 { margin: 0 0 .15em; color: #fff; text-align: center; font: 200 32px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; text-shadow: 0 5px 0 #924b09; }
+#content-sub .help p { margin: 0 0 .5em; color: #630; font: bold italic .857em Georgia, Times, "Times New Roman", serif; }
+#content-sub .help .go { color: #fff; font-size: 1.142em; line-height: 1; text-shadow: 0 2px 1px #924b09; display: inline-block; padding: 4px 6px; margin: 0 -6px; -moz-transition: ease .5s background; -webkit-transition: ease .5s background; transition: ease .5s background; }
+#content-sub .help .go:hover, #content-sub .help .go:focus { text-decoration: none; background: #e2921f; background: rgba(146,75,9,.2); border-radius: 5px; -moz-transition: ease .15s background; -webkit-transition: ease .5s background; transition: ease .5s background; }
 
 /*** @Contact form *********/
 #content-sub #contact { background: #cdc9bb; border-bottom-color: #afa894; }
