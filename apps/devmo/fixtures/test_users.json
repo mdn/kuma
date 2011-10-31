@@ -25,6 +25,8 @@
             "deki_user_id": 0,
             "homepage": "http://testuser.com/",
             "location": "Testville",
+            "locale": "en-US",
+            "timezone": "US/Pacific",
             "user": 7,
             "fullname": "Test User",
             "title": "Dr.",

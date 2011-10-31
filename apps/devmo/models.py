@@ -7,6 +7,7 @@ import urllib
 import hashlib
 
 import pytz
+from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 
 from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
@@ -20,11 +21,11 @@ from xml.sax.handler import ContentHandler
 import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
+from tower import ugettext_lazy as _lazy
 
 from jsonfield import JSONField
 
-from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
+from sumo.models import LocaleField
 
 from taggit_extras.managers import NamespacedTaggableManager
 
@@ -55,15 +56,11 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
 class UserProfile(ModelBase):
     """
-    Want to track some data that isn't in dekiwiki's db?
-    This is the proper grab bag for user profile info.
-
-    Also, dekicompat middleware and backends use this
-    class to find Django user objects.
-
     The UserProfile *must* exist for each
     django.contrib.auth.models.User object. This may be relaxed
     once Dekiwiki isn't the definitive db for user info.
+
+    timezone and language fields are syndicated to Dekiwiki
     """
 
     # Website fields defined for the profile form
@@ -100,6 +97,9 @@ class UserProfile(ModelBase):
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
     deki_authtoken = models.CharField(max_length=255, blank=True)
+    timezone = TimeZoneField(null=True, blank=True,
+                                   verbose_name=_lazy(u'Timezone'))
+    locale = LocaleField(db_index=True, verbose_name=_lazy(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
                                verify_exists=False, error_messages={
                                'invalid': _('This URL has an invalid format. '
@@ -187,6 +187,20 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 #models.signals.post_save.connect(create_user_profile, sender=DjangoUser)
 
+# from https://github.com/brosner/django-timezones/pull/13
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules(rules=[(
+                                    (TimeZoneField, ), # Class(es) these apply to
+                                    [], # Positional arguments (not used)
+                                    { # Keyword argument
+                                        "max_length": ["max_length", { "default": MAX_TIMEZONE_LENGTH }],
+                                    }
+                                )],
+                                patterns=['timezones\.fields\.'])
+    add_introspection_rules([], ['sumo.models.LocaleField'])
+except ImportError:
+    pass
 
 class UserDocsActivityFeed(object):
     """Fetches, parses, and caches a user activity feed from Mindtouch"""
@@ -520,7 +534,7 @@ class Calendar(ModelBase):
         if not data:
             try:
                 u = urllib2.urlopen(self.url)
-            except Exception, e:
+            except Exception:
                 return False
         data = csv.reader(u) if u else data
         if not data:
