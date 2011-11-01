@@ -9,6 +9,8 @@
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
 
+    var current_editor;
+
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
@@ -38,78 +40,168 @@
             initDrafting();
         }
     }
+    
+    var HEADERS = [ 'HGROUP', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ];
 
-    function initSectionEditing() {
-        addSectionDivs();
-        addEditLinks();
-        CKEDITOR.plugins.registered['save']=
-        {
-           init : function( editor )
-           {
-              var command = editor.addCommand( 'save',
-                 {
-                    modes : { wysiwyg:1, source:1 },
-                    exec : function( editor ) {
-                        editor.updateElement();
-                        editor.destroy();
-                        postEditDocument();
-                    }
-                 }
-              );
-              editor.ui.addButton( 'Save',{label : 'My Save',command : 'save'});
-           }
-        };
-    }
-
-    function addSectionDivs() {
-        var section_count = 0;
-        $('h1,h2,h3', $('#wikiArticle')).each(function(){
-            section_count++;
-            var section_id = 'section_' + section_count;
-            var node_name = $(this).context.nodeName;
-            var stop_selector = node_name;
-            var section_elements;
-            if (node_name == 'H2') {
-                stop_selector = 'H1,H2';
-            } else if (node_name == 'H3') {
-                stop_selector = 'H1,H2,H3';
+    /**
+     * Set up for inline section editing.
+     */
+    function initSectionEditing () {
+        // If we don't have a #wikiArticle, bail out.
+        var wiki_article = $('body.document #wikiArticle');
+        if (!wiki_article.length) { return; }
+        
+        // Wire up the wiki article with an event delegation handler
+        wiki_article.click(function (ev) {
+            var target = $(ev.target);
+            if (target.is('a.edit-section')) { 
+                // Caught a section edit link click.
+                return handleSectionEditClick(ev, target);
             }
-            section_elements = $(this).nextUntil(stop_selector);
-            $(section_elements).wrapAll('<div class="section-edit" id="' + section_id + '"/>');
-        })
-    }
-
-    function removeSectionDivs() {
-        $('div.section-edit').children().unwrap();
-    }
-
-    function addEditLinks() {
-        var edit_link_markup = '<span style="clear: both;" class="section-edit">&nbsp;<a class="section-edit" href="#">Edit</a></span>';
-        $('h1,h2,h3', $('#wikiArticle')).each(function(){
-            $(this).append(edit_link_markup);
-        });
-        $('a.section-edit').each(function(){
-            var section_id = $(this).closest('h1,h2,h3').next('div.section-edit').attr('id');
-            $(this).click(function(){
-                removeEditLinks();
-                var cke = CKEDITOR.replace(section_id,{customConfig : '/docs/ckeditor_config.js'});
-                cke.on('blur', function() {
-                    cke.updateElement();
-                    cke.destroy();
-                    addEditLinks();
-                });
-            });
+            if (target.is('.edited-section-ui.current .save')) {
+                // Caught a section edit save click.
+                saveSectionEdit();
+                return false;
+            }
+            if (target.is('.edited-section-ui.current .cancel')) {
+                // Caught a section edit cancel click.
+                cancelSectionEdit();
+                return false;
+            }
         });
     }
 
-    function removeEditLinks() {
-        $('span.section-edit').remove();
+    /**
+     * Handle a click on a section editing link.
+     */
+    function handleSectionEditClick (ev, link) {
+        // Any modifiers while clicking an edit link reverts to default
+        // behavior (eg. open in new window)
+        if (ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey) {
+            return;
+        }
+
+        // Look up some details about the section refered to by the link
+        var section_id = link.attr('data-section-id'),
+            section_edit_url = link.attr('href'),
+            section_src_url = link.attr('data-section-src-url'),
+            section_el = $('#'+section_id),
+            section_tag = section_el[0].tagName.toUpperCase();
+
+        // Bail if the referenced section element doesn't exist.
+        if (!section_el.length) { return; }
+        
+        // Bail if the referenced section element is not a header.
+        if (-1 == HEADERS.indexOf(section_tag)) { return; }
+
+        // If there's a current editor, cancel it.
+        if ($('.edited-section-ui.current').length) {
+            if (!cancelSectionEdit()) {
+                // The user cancelled the cancellation, so just ignore the
+                // section edit click.
+                return false; 
+            }
+        }
+
+        // Bail if the referenced section already appears to an edit in
+        // progress. But, cancel the link click
+        if (section_el.parents('div.edited-section').length) { 
+            return false;
+        }
+
+        // Build a stop selector from headers equal to or higher in rank
+        var stop_pos = HEADERS.indexOf(section_tag)+1,
+            stop_selector = HEADERS.slice(0, stop_pos).join(',');
+
+        // Scoop up all the elements considered part of the section, wrap them
+        // in a container while editing. Style it as loading, initially.
+        var section_kids = section_el.nextUntil(stop_selector).andSelf();
+        section_kids.wrapAll('<div class="edited-section edited-section-loading" ' +
+                                   'id="edited-section"/>');
+
+        // Start loading the current section source, launch editor when loaded.
+        $.get(section_src_url, function (html_data) {
+            launchSectionEditor(section_id, section_edit_url, html_data);
+        });
+
+        return false;
     }
 
-    function postEditDocument() {
-        removeSectionDivs();
-        $('input#content').val($('#wikiArticle').html());
-        $('form#wiki-page-edit').submit();
+    /**
+     * Launch the section editor with HTML data.
+     */
+    function launchSectionEditor (section_id, section_edit_url, html_data) {
+        // Clone and setup the editing UI from template
+        var ui = $('.edited-section-ui.template').clone()
+            .removeClass('template').addClass('current')
+            .find('.src').html(html_data).end();
+        // Inject the source block, and remove the edit block loading style.
+        $('#edited-section')
+            .before(ui)
+            .removeClass('edited-section-loading');
+        // Fire up the CKEditor, stash it in the UI's data store
+        $('.edited-section-ui.current')
+            .data('edit_url', section_edit_url)
+            .data('editor',
+                CKEDITOR.replace(ui.find('.src')[0], {
+                    customConfig : '/docs/ckeditor_config.js'
+                }))
+            .find('.save').data('save_cb', saveSectionEdit).end();
+    }
+
+    /**
+     * Cancel any current section editing.
+     */
+    function cancelSectionEdit () {
+        // Make sure the user wants this to happen.
+        var msg = $('#wikiArticle').attr('data-cancel-edit-message'),
+            rv = window.confirm(msg);
+        if (!rv) { return false; }
+        // We're sure, so clean up without committing.
+        cleanupSectionEdit();
+        return true;
+    }
+
+    /**
+     * Save the results of section editing.
+     */
+    function saveSectionEdit () {
+        var ui = $('.edited-section-ui.current'),
+            edit_url = ui.data('edit_url'), 
+            editor = ui.data('editor');
+            
+        ui.addClass('edited-section-ui-saving');
+        editor.updateElement();
+        var src = $('.edited-section-ui.current .src').html();
+
+        $.ajax({
+            type: 'POST', url: edit_url,
+            data: { 
+                'form': 'rev',
+                'content': src
+            },
+            error: function (xhr, status, err) {
+                window.alert("Error saving section, please try again.");
+                ui.removeClass('.edited-section-ui-saving');
+                console.log("ERROR! " + err);
+            },
+            success: function (data, status, xhr) {
+                $('#edited-section').html(data)
+                cleanupSectionEdit();
+            }
+        });
+    }
+
+    /**
+     * Clean up the changes made to support inline section editing.
+     */
+    function cleanupSectionEdit () {
+        $('.edited-section-ui.current').each(function () {
+            var ui = $(this);
+            ui.data('editor').destroy();
+            ui.remove();
+        });
+        $('#edited-section').children().unwrap();
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
