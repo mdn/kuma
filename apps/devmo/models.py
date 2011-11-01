@@ -156,7 +156,7 @@ class UserProfile(ModelBase):
         """Produce a gravatar image URL from email address."""
         base_url = (secure and 'https://secure.gravatar.com' or
             'http://www.gravatar.com')
-        m = hashlib.md5(self.user.email)
+        m = hashlib.md5(self.user.email.encode('utf8'))
         return '%(base_url)s/avatar/%(hash)s?%(params)s' % dict(
             base_url=base_url, hash=m.hexdigest(),
             params=urllib.urlencode(dict(

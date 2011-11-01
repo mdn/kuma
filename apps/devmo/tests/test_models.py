@@ -187,6 +187,16 @@ class TestUserProfile(test_utils.TestCase):
         ok_(hasattr(profile_from_db, 'irc_nickname'))
         ok_(profile_from_db.irc_nickname == 'ircuser')
 
+    def test_unicode_email_gravatar(self):
+        """Bug 689056: Unicode characters in email addresses shouldn't break
+        gravatar URLs"""
+        (user, deki_user, profile) = self._create_profile()
+        user.email = u"Someguy Dude\xc3\xaas Lastname"
+        try:
+            g = profile.gravatar
+        except UnicodeEncodeError:
+            ok_(False, "There should be no UnicodeEncodeError")
+
     def _create_profile(self):
         """Create a user, deki_user, and a profile for a test account"""
         user = User.objects.create_user('tester23', 'tester23@example.com',
