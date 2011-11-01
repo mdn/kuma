@@ -13,6 +13,7 @@ from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
 from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
+from wiki.tests import normalize_html
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -20,22 +21,6 @@ from html5lib.filters._base import Filter as html5lib_Filter
 
 class ContentSectionToolTests(TestCase):
     
-    def _normalize(self, input):
-        """Normalize HTML5 input, discarding parts not significant for
-        equivalence in tests"""
-
-        class WhitespaceRemovalFilter(html5lib_Filter):
-            def __iter__(self):
-                for token in html5lib_Filter.__iter__(self):
-                    if 'SpaceCharacters' == token['type']:
-                        continue
-                    yield token
-
-        return (wiki.content
-                .parse(unicode(input))
-                .filter(WhitespaceRemovalFilter)
-                .serialize())
-
     def test_section_ids(self):
 
         doc_src = """
@@ -92,7 +77,7 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .extractSection(id="s1")
                   .serialize())
-        eq_(self._normalize(expected), self._normalize(result))
+        eq_(normalize_html(expected), normalize_html(result))
 
     def test_contained_implicit_section_extract(self):
         doc_src = """
@@ -133,7 +118,7 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .extractSection(id="s5")
                   .serialize())
-        eq_(self._normalize(expected), self._normalize(result))
+        eq_(normalize_html(expected), normalize_html(result))
 
     def test_explicit_section_extract(self):
         doc_src = """
@@ -177,7 +162,7 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .extractSection(id="parent-s5")
                   .serialize())
-        eq_(self._normalize(expected), self._normalize(result))
+        eq_(normalize_html(expected), normalize_html(result))
 
     def test_multilevel_implicit_section_extract(self):
         doc_src = """
@@ -211,7 +196,7 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .extractSection(id="s4")
                   .serialize())
-        eq_(self._normalize(expected), self._normalize(result))
+        eq_(normalize_html(expected), normalize_html(result))
 
     def test_morelevels_implicit_section_extract(self):
         doc_src = """
@@ -258,7 +243,7 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .extractSection(id="s8")
                   .serialize())
-        eq_(self._normalize(expected), self._normalize(result))
+        eq_(normalize_html(expected), normalize_html(result))
 
     def test_basic_section_replace(self):
         doc_src = """
@@ -290,4 +275,33 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .replaceSection(id="s2", replace_src=replace_src)
                   .serialize())
-        eq_(self._normalize(expected), self._normalize(result))
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_section_edit_links(self):
+        doc_src = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h2 id="s2">Head 2</h2>
+            <p>test</p>
+            <p>test</p>
+            <h3 id="s3">Head 3</h3>
+            <p>test</p>
+            <p>test</p>
+        """
+        expected = """
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s1" href="/en-US/docs/some-slug$edit?raw=true&amp;section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h2 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s2" href="/en-US/docs/some-slug$edit?raw=true&amp;section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h2>
+            <p>test</p>
+            <p>test</p>
+            <h3 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s3" href="/en-US/docs/some-slug$edit?raw=true&amp;section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h3>
+            <p>test</p>
+            <p>test</p>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .injectSectionEditingLinks('some-slug', 'en-US')
+                  .serialize())
+        eq_(normalize_html(expected), normalize_html(result))

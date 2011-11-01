@@ -119,7 +119,6 @@ class SectionIDFilter(html5lib_Filter):
 
 class SectionEditLinkFilter(html5lib_Filter):
     """Filter which injects editing links for sections with IDs"""
-    # TODO: Am I going filter crazy here? Should this just be a pyquery thing?
 
     def __init__(self, source, slug, locale):
         html5lib_Filter.__init__(self, source)

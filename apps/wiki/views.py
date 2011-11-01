@@ -141,7 +141,7 @@ def document(request, document_slug):
 
     # Get the contributors. (To avoid this query, we could render the
     # the contributors right into the Document's html field.)
-    # HACK: .only() avoids a memcache object-too-large error for large wiki
+    # NOTE: .only() avoids a memcache object-too-large error for large wiki
     # pages when an attempt is made to cache all revisions
     contributors = set([r.creator for r in doc.revisions
                                             .filter(is_approved=True)
