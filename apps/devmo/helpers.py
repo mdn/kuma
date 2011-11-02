@@ -57,7 +57,7 @@ def cleank(txt):
 @register.filter
 def urlencode(txt):
     """Url encode a path."""
-    return urllib.quote_plus(txt)
+    return urllib.quote_plus(txt.encode('utf8'))
 
 @register.filter
 def jsonencode(data):

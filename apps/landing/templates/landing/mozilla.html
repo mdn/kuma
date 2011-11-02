@@ -20,7 +20,6 @@
     <ul>
       <li class="util-twitter"><a href="http://twitter.com/planetmozilla">{{ _('Twitter') }}</a></li>
       <li class="util-rss"><a href="http://blog.mozilla.com/about_mozilla/feed/">{{ _('Subscribe') }}</a></li>
-      <li class="util-discuss"><a href="{{ url('discussion') }}">{{ _('Join the Mozilla discussions!') }}</a></li>
     </ul>
   </div>
 </div>
@@ -30,8 +29,8 @@
 <div class="wrap sidebar">
   <section id="content-main" role="main">
   
-    <section class="boxed">
-      <div id="popular-docs" class="articles-list">
+    <div class="boxed">
+      <section id="popular-docs" class="articles-list">
         <header class="head section-mozilla">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h2>{{ _('Popular <span class="mozilla">Mozilla</span> Documentation')|safe }}</h2>
@@ -89,9 +88,9 @@
           </li>
         </ul>
         <p class="all"><a href="{{ devmo_url(_('/en/Tools')) }}" class="go">{{ _('All applications development documentation') }}</a></p>
-      </div>
+      </section>
 
-      <div id="fave-tools">
+      <section id="fave-tools">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Favorite <span class="mozilla">Mozilla</span> Tools')|safe }}</h3>
@@ -107,9 +106,9 @@
           </li>
           <li class="all"><a href="{{ devmo_url(_('/en/Tools')) }}" class="go">{{ _('All application development tools') }}</a></li>
         </ul>
-      </div>
+      </section>
       
-      <div id="recent-news" class="articles-list">
+      <section id="recent-news" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Recent <span class="mozilla">Mozilla</span> News &amp; Updates')|safe }}</h3>
@@ -118,8 +117,8 @@
         {{ newsfeed(updates) }}
 
         <p class="all"><a href="http://blog.mozilla.com/about_mozilla/archives/" class="go">{{ _('All application development entries') }}</a></p>
-      </div>
-    </section>{# /.boxed #}
+      </section>
+    </div>{# /.boxed #}
     
   </section>{# /#content-main #}
   
@@ -130,7 +129,7 @@
       </a>
     </figure>
   
-    {{ twitter(tweets, title=_('Correspondence on Twitter from the Mozilla developer community.')) }}
+    {{ twitter(tweets, title=_('Tweets from the Mozilla developer community.')) }}
   </aside>{# /#content-sub #}
 
 </div>

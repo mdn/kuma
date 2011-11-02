@@ -30,8 +30,8 @@
 <div class="wrap sidebar">
   <section id="content-main" role="main">
 
-    <section class="boxed">
-      <div id="popular-docs" class="articles-list">
+    <div class="boxed">
+      <section id="popular-docs" class="articles-list">
         <header class="head section-mobile">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h2>{{ _('Popular <span class="mobile">Mobile</span> Documentation')|safe }}</h2>
@@ -85,9 +85,9 @@
           </li>
         </ul>
         <p class="all"><a href="{{ devmo_url(_('/en/Mobile')) }}" class="go">{{ _('All mobile development documentation') }}</a></p>
-      </div>
+      </section>
       
-      <div id="videos">
+      <section id="videos">
         <header class="subhead">
           <h2>{{ _('Watch <span class="mobile">Mobile</span> Videos')|safe }}</h2>
         </header>
@@ -127,9 +127,9 @@
             </p>
           </li>
         </ul>
-      </div>
+      </section>
 
-      <div id="fave-articles" class="articles-list">
+      <section id="fave-articles" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h2>{{ _('Favorite <span class="mobile">Mobile</span> Articles')|safe }}</h2>
@@ -172,9 +172,9 @@
             </p>
           </li>
         </ul>
-      </div>
+      </section>
 
-      <div id="recent-news" class="articles-list">
+      <section id="recent-news" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Recent <span class="mobile">Mobile</span> News &amp; Updates')|safe }}</h3>
@@ -183,8 +183,8 @@
         {{ newsfeed(updates) }}
 
         <p class="all"><a href="http://planet.firefox.com/mobile/" class="go">{{ _('All mobile development entries') }}</a></p>
-      </div>
-    </section>{# /.boxed #}
+      </section>
+    </div>{# /.boxed #}
 
   </section>{# /#content-main #}
 
@@ -196,7 +196,7 @@
       </a>
     </figure>
    
-    {{ twitter(tweets, title=_('Correspondence on Twitter from the Mobile developer community.')) }}
+    {{ twitter(tweets, title=_('Tweets from the Mobile developer community.')) }}
   </aside>{# /#content-sub #}
 
 </div>

@@ -20,7 +20,6 @@
     <ul>
       <li class="util-twitter"><a href="http://twitter.com/mozhacks">{{ _('Twitter') }}</a></li>
       <li class="util-rss"><a href="http://hacks.mozilla.org/feed/">{{ _('Subscribe') }}</a></li>
-      <li class="util-discuss"><a href="{{ url('discussion') }}">{{ _('Join the Web discussions!') }}</a></li>
     </ul>
   </div>
 </div>
@@ -30,8 +29,8 @@
 <div class="wrap sidebar">
   <section id="content-main" role="main">
 
-    <section class="boxed">
-      <div id="popular-docs" class="articles-list">
+    <div class="boxed">
+      <section id="popular-docs" class="articles-list">
         <header class="head section-web">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h2>{{ _('Awesome <span class="web">Web</span> Demos')|safe }}</h2>
@@ -51,9 +50,9 @@
             <p class="entry-summary">{{ _('Learn more about developer features and the latest technologies through articles and demos on the Hacks Blog.') }}</p>
           </li>
         </ul>
-      </div>
+      </section>
 
-      <div id="popular-docs" class="articles-list">
+      <section id="popular-docs" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Popular <span class="web">Web</span> Documentation')|safe }}</h3>
@@ -78,9 +77,9 @@
           </li>
         </ul>
         <p class="all"><a href="{{ devmo_url(_('/en/Web_Development')) }}" class="go">{{ _('All web development documentation') }}</a></p>
-      </div>
+      </section>
 
-      <div id="fave-tools">
+      <section id="fave-tools">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Favorite <span class="web">Web</span> Developer Tools')|safe }}</h3>
@@ -105,9 +104,9 @@
           </li>
           <li class="all"><a href="https://addons.mozilla.org/{{ LANG }}/firefox/extensions/web-development/" class="go">{{ _('All web development tools') }}</a></li>
         </ul>
-      </div>
+      </section>
 
-      <div id="recent-news" class="articles-list">
+      <section id="recent-news" class="articles-list">
         <header class="subhead">
           {# L10n: Please escape HTML entities here, like &amp; #}
           <h3>{{ _('Recent <span class="web">Web</span> News &amp; Updates')|safe }}</h3>
@@ -116,19 +115,29 @@
         {{ newsfeed(updates) }}
 
         <p class="all"><a href="http://hacks.mozilla.org" class="go">{{ _('All web development entries') }}</a></p>
-      </div>
-    </section>{# /.boxed #}
+      </section>
+    </div>{# /.boxed #}
 
   </section>{# /#content-main #}
 
   <aside id="content-sub" role="complementary">
+  
+    <div class="module help">
+      <h3>{{ _('Help on Mozilla Websites!') }}</h3>
+      {% trans mdn_getinvolved_href="https://wiki.mozilla.org/Webdev/MDN/GetInvolved", webdev_getinvolved_href="https://blog.mozilla.com/webdev/get-involved/"%}
+      <p>Did you know Mozilla's websites are open-source? We want you to build sites like MDN with us. Thank you for helping us help you help us all.</p>
+      <p><a href="{{ mdn_getinvolved_href }}" class="go">Get involved with MDN</a></p>
+      <p><a href="{{ webdev_getinvolved_href }}" class="go">Get involved with Mozilla Webdev</a></p>
+      {% endtrans %}
+    </div>
+
     <figure class="promo banner">
       <a href="http://webfwd.org" rel="external">
         <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">
       </a>
     </figure>
 
-    {{ twitter(tweets, title=_('Correspondence on Twitter from the Web developer community.')) }}
+    {{ twitter(tweets, title=_('Tweets from the Web developer community.')) }}
   </aside>{# /#content-sub #}
 
 </div>
