@@ -173,11 +173,16 @@ class SubmissionEditForm(MyModelForm):
             self.instance.taggit_tags.set_ns('tech:', *self.cleaned_data.get('tech_tags', []))
             # Look for a dev derby tag first in cleaned_data; if it
             # doesn't exist there, see if we stashed away the tags
-            # from the instance; if not, fall back to empty list.
-            challenge_tags = self.cleaned_data.get('challenge_tags',
-                                                   getattr(self, '_old_challenge_tags', []))
+            # from the instance; if not, fall back to empty list. This
+            # is slightly verbose because we do have to handle the
+            # legacy case of multiple challenge tags even though we
+            # now only allow one per demo.
+            if 'challenge_tags' in self.cleaned_data:
+                challenge_tags = list(self.cleaned_data['challenge_tags'])
+            else:
+                challenge_tags = getattr(self, '_old_challenge_tags', [])
             if challenge_tags:
-                self.instance.taggit_tags.set_ns('challenge:', *[challenge_tags])
+                self.instance.taggit_tags.set_ns('challenge:', *challenge_tags)
 
         if commit: save_m2m()
         else: self.save_m2m = save_m2m
