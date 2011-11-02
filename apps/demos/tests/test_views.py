@@ -1,5 +1,6 @@
 from django.conf import settings
 
+import datetime
 import zipfile
 import os
 from os.path import basename, dirname, isfile, isdir
@@ -21,6 +22,7 @@ from StringIO import StringIO
 
 from test_models import save_valid_submission
 
+from demos import challenge_utils
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
 
@@ -48,6 +50,15 @@ def disable_captcha(fn):
         return rv
     return wrap
 
+
+def make_challenge_tag():
+    """
+    Create a dev derby challenge tag corresponding to the current
+    month. Does not include the 'challenge:' namespace, so this tag is
+    safe to feed to set_ns().
+    
+    """
+    return datetime.date.today().strftime('%Y:%B').lower()
 
 class DemoViewsTest(test_utils.TestCase):
     fixtures = ['test_users.json']
@@ -214,7 +225,52 @@ class DemoViewsTest(test_utils.TestCase):
     @logged_in
     def test_derby_field(self):
         s = save_valid_submission('hello world')
-
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         assert pq(r.content)('fieldset#devderby-submit')
+
+    def test_challenge_tag_to_date_parts(self):
+        tag = 'challenge:2011:october'
+        eq_(challenge_utils.challenge_tag_to_date_parts(tag), (2011, 10))
+
+    def test_challenge_tag_to_end_date(self):
+        tag = 'challenge:2011:october'
+        eq_(challenge_utils.challenge_tag_to_end_date(tag),
+            datetime.date(2011, 10, 31))
+        tag = 'challenge:2011:february'
+        eq_(challenge_utils.challenge_tag_to_end_date(tag),
+            datetime.date(2011, 2, 28))
+        tag = 'challenge:2012:february'
+        eq_(challenge_utils.challenge_tag_to_end_date(tag),
+            datetime.date(2012, 2, 29))
+
+    def test_challenge_closed(self):
+        open_tag = 'challenge:%s' % make_challenge_tag()
+        closed_dt = datetime.date.today() - datetime.timedelta(days=32)
+        closed_tag = 'challenge:%s' % closed_dt.strftime('%Y:%B').lower()
+        assert not challenge_utils.challenge_closed([open_tag])
+        assert challenge_utils.challenge_closed([closed_tag])
+
+    def test_challenge_closed_model(self):
+        s = save_valid_submission('hellow world')
+        assert not s.challenge_closed()
+        s.taggit_tags.set_ns('challenge:', make_challenge_tag())
+        assert not s.challenge_closed()
+        closed_dt = datetime.date.today() - datetime.timedelta(days=32)
+        s.taggit_tags.set_ns('challenge:', closed_dt.strftime('%Y:%B').lower())
+        assert s.challenge_closed()
+
+    def test_derby_before_deadline(self):
+        s = save_valid_submission('hello world')
+        s.taggit_tags.set_ns('challenge:', make_challenge_tag())
+        form = SubmissionEditForm(instance=s)
+        assert 'demo_package' in form.fields
+        assert 'challenge_tags' in form.fields
+
+    def test_derby_after_deadline(self):
+        s = save_valid_submission('hello world')
+        closed_dt = datetime.date.today() - datetime.timedelta(days=32)
+        s.taggit_tags.set_ns('challenge:', closed_dt.strftime('%Y:%B').lower())
+        form = SubmissionEditForm(instance=s)
+        assert 'demo_package' not in form.fields
+        assert 'challenge_tags' not in form.fields

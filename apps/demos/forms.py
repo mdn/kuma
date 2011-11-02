@@ -118,8 +118,7 @@ class SubmissionEditForm(MyModelForm):
     def __init__(self, *args, **kwargs):
 
         # Set the request user, for tag namespace permissions
-        self.request_user = kwargs.get('request_user', AnonymousUser)
-        del kwargs['request_user']
+        self.request_user = kwargs.pop('request_user', AnonymousUser)
 
         # Hit up the super class for init
         super(SubmissionEditForm, self).__init__(*args, **kwargs)

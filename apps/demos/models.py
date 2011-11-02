@@ -16,7 +16,7 @@ from django.conf import settings
 
 from django.utils.encoding import smart_unicode, smart_str
 
-from demos import utils
+from demos import challenge_utils
 from devmo.urlresolvers import reverse
 
 from django.core.exceptions import ValidationError
@@ -516,8 +516,8 @@ class Submission(models.Model):
     def challenge_closed(self):
         challenge_tags = self.taggit_tags.all_ns('challenge:')
         if not challenge_tags:
-            return True
-        return utils.challenge_closed(challenge_tags)
+            return False
+        return challenge_utils.challenge_closed(challenge_tags)
 
     @classmethod
     def allows_listing_hidden_by(cls, user):
