@@ -8,7 +8,7 @@ from .feeds import RecentSubmissionsFeed, FeaturedSubmissionsFeed
 from .feeds import TagSubmissionsFeed, ProfileSubmissionsFeed
 from .feeds import SearchSubmissionsFeed
 
-from lib.utils import JingoTemplateLoader
+from utils import JingoTemplateLoader
 template_loader = JingoTemplateLoader()
 
 

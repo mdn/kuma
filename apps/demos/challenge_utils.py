@@ -25,7 +25,7 @@ MONTH_END_MAP = dict(zip(range(1, 13), MONTH_DAYS))
 
 
 def challenge_tag_to_date_parts(tag):
-    year, month = tag.split(':')[1:]
+    year, month = str(tag).split(':')[1:]
     return int(year), MONTH_MAP[month]
 
 
