@@ -12,8 +12,11 @@ from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
+
+import wiki.content
 from wiki.models import VersionMetadata, Document, Revision
-from wiki.tests import doc_rev, document, new_document_data, revision
+from wiki.tests import (doc_rev, document, new_document_data, revision,
+                        normalize_html)
 from wiki.views import _version_groups
 
 
@@ -245,14 +248,22 @@ class DocumentEditingTests(TestCase):
         self.assertRedirects(response, reverse('wiki.document',
                                                args=[data['slug']]))
 
+        # Slashes should be fine
         data['title'] = 'valid with slash'
         data['slug'] = 'va/lid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response, reverse('wiki.document',
                                                args=[data['slug']]))
 
+        # Dollar sign is reserved for verbs
         data['title'] = 'invalid with dollars'
         data['slug'] = 'inva$lid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertContains(response, 'The slug provided is not valid.')
+
+        # Question mark is reserved for query params
+        data['title'] = 'invalid with questions'
+        data['slug'] = 'inva?lid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertContains(response, 'The slug provided is not valid.')
 
@@ -407,3 +418,103 @@ class DocumentEditingTests(TestCase):
         response = client.get(reverse('wiki.feeds.list_review_tag',
                                       args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
+
+
+class SectionEditingResourceTests(TestCase):
+    fixtures = ['test_users.json']
+
+    def test_raw_source(self):
+        """The raw source for a document can be requested"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        response = client.get('%s?raw=true' %
+                              reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    def test_raw_with_editing_links_source(self):
+        """The raw source for a document can be requested, with section editing
+        links"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        expected = """
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?raw=true&amp;section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?raw=true&amp;section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?raw=true&amp;section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """ % {'slug': d.slug}
+        response = client.get('%s?raw=true&edit_links=true' %
+                              reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    def test_raw_section_source(self):
+        """The raw source for a document section can be requested"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        expected = """
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        response = client.get('%s?section=s2&raw=true' %
+                              reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))

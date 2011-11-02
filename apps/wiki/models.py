@@ -35,8 +35,11 @@ from taggit.managers import TaggableManager
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
-    'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
-    'table', 'tbody', 'thead', 'tr', 'td',
+    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
+    'dl', 'dt', 'dd',
+    'img', 
+    'input',
+    'table', 'tbody', 'thead', 'tr', 'th', 'td',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
@@ -44,9 +47,10 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
+ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is', 'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
-    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',

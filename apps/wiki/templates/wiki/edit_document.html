@@ -23,11 +23,13 @@
 
           <div class="title">
             <h1>{{ _('Editing <em>{title}</em>')|fe(title=revision.title) }}</h1>
-            <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
+            {% if not section_id %}
+                <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
+            {% endif %}
             <p class="save-state" id="draft-status">{% trans %}Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>{% endtrans %}</p>
           </div>
 
-          {% if revision_form %}
+          {% if revision_form and not section_id %}
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>

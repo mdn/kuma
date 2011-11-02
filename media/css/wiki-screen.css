@@ -154,11 +154,33 @@ div.note p, div.tip p { margin-bottom: .75em; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
 
+.template { display: none; }
+
+a.edit-section { background: none repeat scroll 0% 0% #FFFFFF; border: 1px solid #CCCCCC; box-shadow: 2px 2px 0pt rgba(170, 160, 130, 0.5), 2px 2px 0pt rgba(200, 190, 165, 0.5); display: block; font: 200 15px/1 "Bebas Neue","League Gothic",Haettenschweiler,sans-serif; left: -4.5ex; margin: 0.125em 0 0 0; padding: 0.25em 0.25em; position: absolute; text-align: right; width: 5ex; }
+a.edit-section:after { content: "\00a0\27a4"; }
+a.edit-section:hover, a.edit-section:active, a.edit-section:focus { text-decoration: none; }
+
+.edited-section { display: none; }
+.edited-section a.edit-section { display: none; }
+.edited-section-loading { display: block; opacity: 0.25; }
+.edited-section-loading a.edit-section { display: block; }
+.edited-section-loading a.edit-section:after { content: "\00a0\26a1"; }
+
+.edited-section-ui { position: relative; }
+.edited-section-ui .save,.edited-section-ui .cancel { position: absolute; left: -7.5ex; background: none repeat scroll 0% 0% #FFFFFF; border: 1px solid #CCCCCC; box-shadow: 2px 2px 0pt rgba(170, 160, 130, 0.5), 2px 2px 0pt rgba(200, 190, 165, 0.5); display: block; font: 200 15px/1 "Bebas Neue","League Gothic",Haettenschweiler,sans-serif; margin: 0pt; padding: 0.25em 0.25em; position: absolute; text-align: right; width: 5ex; }
+.edited-section-ui a.save:hover, .edited-section-ui a.cancel:hover, .edited-section-ui a.save:active, .edited-section-ui a.cancel:active, .edited-section-ui a.save:focus, .edited-section-ui a.cancel:focus { text-decoration: none; }
+.edited-section-ui .save { background: #dfd; top: 0em; }
+.edited-section-ui .save:after { content: "\00a0\2714"; }
+.edited-section-ui .cancel { background: #fdd; top: 2.5em; }
+.edited-section-ui .cancel:after { content: "\00a0\2718"; }
+
+.edited-section-ui-saving { opacity: 0.5; }
+.edited-section-ui-saving .save, .edited-section-ui-saving .cancel{ display: none; }
+
 .editing .metadata { float: left; width: 65%; display: none; }
 .editing ul.metadata li { margin: 0pt; padding: 0pt; }
 .editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
-
 
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }

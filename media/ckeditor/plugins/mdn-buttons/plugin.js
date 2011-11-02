@@ -37,17 +37,28 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3'];
                 });
             }
 
-            // Use the save-and-edit if available, fall back to save
+            // Use the save-and-edit if available, fall back to save, then fall
+            // back to an inline section editor save button
             var save_btn = $('#btn-save-and-edit');
             if (save_btn.length < 1 || save_btn.attr('disabled')) {
                 save_btn = $('#btn-save');
+            }
+            if (save_btn.length < 1) {
+                save_btn = $('.edited-section-ui.current .save');
+            }
+
+            // If the jquery data for the save button offers a callback, use
+            // it. Otherwise, just try clicking the button.
+            var save_cb = save_btn.data('save_cb');
+            if (!save_cb) {
+                save_cb = function () { save_btn.click(); }
             }
 
             // Define the command and button for "Save"
             editor.addCommand(pluginName + '-save', {
                 exec: function (editor, data) {
                     editor.updateElement();
-                    save_btn.click();
+                    save_cb();
                 }
             });
             editor.ui.addButton('mdnSave', {
@@ -62,8 +73,15 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3'];
             // Define command and button for "New Page"
             editor.addCommand(pluginName + '-newpage', {
                 exec: function (editor, data) {
+                    // Treat this as cancellation for inline editor
+                    var cancel_btn = $('.edited-section-ui.current .cancel');
+                    if (cancel_btn.length) {
+                        return cancel_btn.click();
+                    }
+                    // Otherwise, try treating as a new wiki page
                     var msg = pb.attr('data-new-page-msg'),
                         href = pb.attr('data-new-page-href');
+                    if (!msg || !href) { return; }
                     if (window.confirm(msg)) {
                         window.location.href = href;
                     }
