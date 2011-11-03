@@ -18,7 +18,11 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
+import constance.config
+
 from StringIO import StringIO
+
+from taggit_extras.utils import parse_tags
 
 from test_models import save_valid_submission
 
@@ -228,6 +232,23 @@ class DemoViewsTest(test_utils.TestCase):
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         assert pq(r.content)('fieldset#devderby-submit')
+
+    @mockdekiauth
+    def test_edit_with_challenge_tag(self):
+        s = save_valid_submission('hello world')
+        edit_url = reverse('demos_edit', args=[s.slug])
+        r = self.client.post(edit_url, data=dict(
+            title=s.title,
+            summary='This is a test edit',
+            description='Some description goes here',
+            tech_tags=('tech:audio',),
+            challenge_tags=parse_tags(constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
+            license_name='gpl',
+            accept_terms='1',
+        ))
+        eq_(r.status_code, 302)
+        r = self.client.get(edit_url)
+        eq_(r.status_code, 200)
 
     def test_challenge_tag_to_date_parts(self):
         tag = 'challenge:2011:october'

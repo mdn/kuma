@@ -178,7 +178,7 @@ class SubmissionEditForm(MyModelForm):
             # legacy case of multiple challenge tags even though we
             # now only allow one per demo.
             if 'challenge_tags' in self.cleaned_data:
-                challenge_tags = list(self.cleaned_data['challenge_tags'])
+                challenge_tags = [self.cleaned_data['challenge_tags']]
             else:
                 challenge_tags = getattr(self, '_old_challenge_tags', [])
             if challenge_tags:
