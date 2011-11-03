@@ -45,7 +45,10 @@ def profile_view(request, username):
 
     DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
     sort_order = request.GET.get('sort', 'created')
-    page_number = request.GET.get('page', 1)
+    try:
+        page_number = int(request.GET.get('page', 1))
+    except ValueError:
+        page_number = 1
     show_hidden = (user == request.user) or user.is_superuser
 
     demos = Submission.objects.all_sorted(sort_order).filter(creator=profile.user)
