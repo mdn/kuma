@@ -61,8 +61,54 @@ class ProfileViewsTest(test_utils.TestCase):
         eq_(profile.bio,
             doc.find('#profile-head.vcard .bio').text())
 
+        # There should be 15 doc activity items in the page.
+        feed_trs = doc.find('#docs-activity table.activity tbody tr')
+        eq_(15, feed_trs.length)
+
+        # Check to find all the items expected from the feed
+        feed = UserDocsActivityFeed(username="Sheppy")
+        for idx in range(0, 15):
+            item = feed.items[idx]
+            item_el = feed_trs.eq(idx)
+            eq_(item.current_title, item_el.find('h3').text())
+            eq_(item.view_url, item_el.find('h3 a').attr('href'))
+            if item.edit_url:
+                eq_(item.edit_url,
+                    item_el.find('.actions a.edit').attr('href'))
+            if item.diff_url:
+                eq_(item.diff_url,
+                    item_el.find('.actions a.diff').attr('href'))
+            if item.history_url:
+                eq_(item.history_url,
+                    item_el.find('.actions a.history').attr('href'))
+
     @attr('current')
-    def test_profile_edit(self):
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+    @patch('dekicompat.backends.DekiUserBackend.get_user')
+    @patch('dekicompat.backends.DekiUserBackend.authenticate')
+    def test_bug_698971(self, authenticate, get_user, get_deki_user,
+                        fetch_user_feed):
+        """A non-numeric page number should not cause an error"""
+        (user, deki_user, profile) = self._create_profile()
+
+        authenticate.return_value = user
+        get_user.return_value = user
+        doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
+        fetch_user_feed.return_value = doc_feed_data
+        
+        url = '%s?page=asdf' % reverse('devmo.views.profile_view',
+                                       args=(user.username,))
+
+        try:
+            r = self.client.get(url, follow=True)
+        except PageNotAnInteger:
+            ok_(False, "Non-numeric page number should not cause an error")
+
+    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+    @patch('dekicompat.backends.DekiUserBackend.get_user')
+    @patch('dekicompat.backends.DekiUserBackend.authenticate')
+    def test_profile_edit(self, authenticate, get_user, get_deki_user):
         (user, deki_user, profile) = self._create_profile()
 
         url = reverse('devmo.views.profile_view',
