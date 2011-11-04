@@ -97,9 +97,8 @@ class UserProfile(ModelBase):
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
     deki_authtoken = models.CharField(max_length=255, blank=True)
-    timezone = TimeZoneField(null=True, blank=True,
-                                   verbose_name=_lazy(u'Timezone'))
-    locale = LocaleField(db_index=True, verbose_name=_lazy(u'Language'))
+    timezone = TimeZoneField(null=True, blank=True, verbose_name=_lazy(u'Timezone'))
+    locale = LocaleField(null=True, blank=True, db_index=True, verbose_name=_lazy(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
                                verify_exists=False, error_messages={
                                'invalid': _('This URL has an invalid format. '
@@ -179,6 +178,26 @@ class UserProfile(ModelBase):
         if user.is_staff or user.is_superuser:
             return True
         return False
+
+    @property
+    def mindtouch_language(self):
+        if not self.locale:
+            return ''
+        return settings.LANGUAGE_DEKI_MAP[self.locale]
+
+    @property
+    def mindtouch_timezone(self):
+        if not self.timezone:
+            return ''
+        base_seconds = self.timezone._utcoffset.days * 86400
+        offset_seconds = self.timezone._utcoffset.seconds
+        offset_hours = (base_seconds + offset_seconds) / 3600
+        return "%03d:00" % offset_hours
+
+    def save(self, *args, **kwargs):
+        super(UserProfile, self).save(*args, **kwargs)
+        from dekicompat.backends import DekiUserBackend
+        DekiUserBackend.put_mindtouch_user(self.user)
 
 
 def create_user_profile(sender, instance, created, **kwargs):

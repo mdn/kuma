@@ -14,7 +14,7 @@ from devmo.helpers import devmo_url
 from devmo import urlresolvers
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
 
-from dekicompat.backends import DekiUser
+from dekicompat.backends import DekiUser, DekiUserBackend
 
 
 APP_DIR = dirname(dirname(__file__))
@@ -198,24 +198,12 @@ class TestUserProfile(test_utils.TestCase):
         ok_(hasattr(profile_from_db, 'timezone'))
         ok_(str(profile_from_db.timezone) == 'US/Pacific')
 
-    def _create_profile(self):
-        """Create a user, deki_user, and a profile for a test account"""
-        user = User.objects.create_user('tester23', 'tester23@example.com',
-                                        'trustno1')
+    def test_mindtouch_timezone(self):
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+        eq_("-08:00", profile.mindtouch_timezone)
 
-        deki_user = DekiUser(id=0, username='tester23',
-                             fullname='Tester Twentythree',
-                             email='tester23@example.com',
-                             gravatar='', profile_url=None)
-
-        profile = UserProfile()
-        profile.user = user
-        profile.fullname = "Tester Twentythree"
-        profile.title = "Spaceship Pilot"
-        profile.organization = "UFO"
-        profile.location = "Outer Space"
-        profile.bio = "I am a freaky space alien."
-        profile.irc_nickname = "ircuser"
-        profile.save()
-
-        return (user, deki_user, profile)
+    def test_mindtouch_language(self):
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+        eq_("en", profile.mindtouch_language)
