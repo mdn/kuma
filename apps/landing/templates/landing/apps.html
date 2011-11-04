@@ -79,15 +79,15 @@
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Getting_Started')) }}" rel="bookmark">{{ _('Getting Started') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            This walk-through tutorial will quickly give you an understanding of what it takes to turn an ordinary site into an open Web application.            
+            This walk-through can quickly give you an understanding of what it takes to turn an ordinary site into an open Web application.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Identity_Integration')) }}" rel="bookmark">{{ _('Identity Integration') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Using_apps_offline')) }}" rel="bookmark">{{ _('Using apps offline') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            How to securely identify app users with BrowserID.
+            How to design apps so that they can be cached and used without an Internet connection.
             {% endtrans %}
             </p>
           </li>
@@ -142,9 +142,10 @@
     <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
       <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
       {% trans %}
-      <p class="mod-intro">Sign up now for the Apps Developer preview and newsletter.
-      First 5000 subscribers get early access to resources, tools, and exclusive info.
-      <strong>Join us!</strong></p>
+      <p class="mod-intro">Sign up now for the monthly Apps Developer newsletter. 
+      First 5000 subscribers will gain early access to the Developer Preview Release 
+      of the upcoming apps market-place. <strong>Join us!</strong>
+      </p>
       {% endtrans %}
       
       {% if messages %}
@@ -193,7 +194,7 @@
       </a>
     </figure>
 
-    {{ twitter(tweets, title=_('Correspondence on Twitter from the Mozilla developer community.')) }}
+    {{ twitter(tweets, title=_('Tweets from the Apps developer community.')) }}
   </aside>{# /#content-sub #}
 
 </div>

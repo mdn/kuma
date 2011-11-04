@@ -121,13 +121,23 @@
   </section>{# /#content-main #}
 
   <aside id="content-sub" role="complementary">
+  
+    <div class="module help">
+      <h3>{{ _('Help on Mozilla Websites!') }}</h3>
+      {% trans mdn_getinvolved_href="https://wiki.mozilla.org/Webdev/MDN/GetInvolved", webdev_getinvolved_href="https://blog.mozilla.com/webdev/get-involved/"%}
+      <p>Did you know Mozilla's websites are open-source? We want you to build sites like MDN with us. Thank you for helping us help you help us all.</p>
+      <p><a href="{{ mdn_getinvolved_href }}" class="go">Get involved with MDN</a></p>
+      <p><a href="{{ webdev_getinvolved_href }}" class="go">Get involved with Mozilla Webdev</a></p>
+      {% endtrans %}
+    </div>
+
     <figure class="promo banner">
       <a href="http://webfwd.org" rel="external">
         <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">
       </a>
     </figure>
 
-    {{ twitter(tweets, title=_('Correspondence on Twitter from the Web developer community.')) }}
+    {{ twitter(tweets, title=_('Tweets from the Web developer community.')) }}
   </aside>{# /#content-sub #}
 
 </div>

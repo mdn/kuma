@@ -11,6 +11,7 @@ import test_utils
 from django.contrib.auth.models import User
 
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
+from devmo.tests import create_profile
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
@@ -178,6 +179,16 @@ class TestUserProfile(test_utils.TestCase):
         profile_from_db = UserProfile.objects.get(user=user)
         ok_(hasattr(profile_from_db, 'irc_nickname'))
         ok_(profile_from_db.irc_nickname == 'testuser')
+
+    def test_unicode_email_gravatar(self):
+        """Bug 689056: Unicode characters in email addresses shouldn't break
+        gravatar URLs"""
+        (user, deki_user, profile) = create_profile()
+        user.email = u"Someguy Dude\xc3\xaas Lastname"
+        try:
+            g = profile.gravatar
+        except UnicodeEncodeError:
+            ok_(False, "There should be no UnicodeEncodeError")
 
     def test_locale_timezone_fields(self):
         """We've added locale and timezone fields. Verify defaults."""
