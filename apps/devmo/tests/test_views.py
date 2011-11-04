@@ -1,28 +1,26 @@
 import datetime
 import logging
-import csv
-import shlex
+import requests
 import time
-import urllib2
 from os.path import basename, dirname, isfile, isdir
 
+import mock
 from mock import patch
+from nose import SkipTest
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
-from django.contrib.auth.models import User, AnonymousUser
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 
-from devmo.helpers import devmo_url
-from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
-from devmo.forms import UserProfileEditForm
+from dekicompat.backends import DekiUserBackend
+from devmo.models import UserProfile, UserDocsActivityFeed
 from devmo.cron import devmo_calendar_reload
 
-from dekicompat.backends import DekiUser
-
-from sumo.tests import LocalizingClient
+from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 
 
@@ -31,11 +29,17 @@ USER_DOCS_ACTIVITY_FEED_XML = ('%s/fixtures/user_docs_activity_feed.xml' %
                                APP_DIR)
 
 
-class ProfileViewsTest(test_utils.TestCase):
+class ProfileViewsTest(TestCase):
     fixtures = ['test_users.json']
 
     def setUp(self):
+        self.old_debug = settings.DEBUG
+        settings.DEBUG = True
         self.client = LocalizingClient()
+        self.client.logout()
+
+    def tearDown(self):
+        settings.DEBUG = self.old_debug
 
     @attr('docs_activity')
     @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
@@ -182,7 +186,7 @@ class ProfileViewsTest(test_utils.TestCase):
         # Scrape out the existing significant form field values.
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'irc_nickname', 'bio', 'interests'):
+                   'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
         # Fill out the form with websites.
@@ -277,27 +281,54 @@ class ProfileViewsTest(test_utils.TestCase):
 
         eq_(1, doc.find('.error #id_expertise').length)
 
-    def _create_profile(self):
-        """Create a user, deki_user, and a profile for a test account"""
-        user = User.objects.create_user('tester23', 'tester23@example.com',
-                                        'trustno1')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_profile_edit_language_saves_to_mindtouch(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+        # log in as a MindTouch user to create django user & profile
+        response = self.client.post(reverse('users.login', locale='en-US'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        eq_(200, response.status_code)
+        user = User.objects.get(username='testaccount')
 
-        deki_user = DekiUser(id=0, username='tester23',
-                             fullname='Tester Twentythree',
-                             email='tester23@example.com',
-                             gravatar='', profile_url=None)
+        # use profile edit to change language
+        url = reverse('devmo.views.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
 
-        profile = UserProfile()
-        profile.user = user
-        profile.fullname = "Tester Twentythree"
-        profile.title = "Spaceship Pilot"
-        profile.organization = "UFO"
-        profile.location = "Outer Space"
-        profile.irc_nickname = "ircuser"
-        profile.bio = "I am a freaky space alien."
-        profile.save()
+        # Scrape out the existing significant form field values.
+        form = dict()
+        for fn in ('email', 'fullname', 'title', 'organization', 'location',
+                   'locale', 'timezone', 'irc_nickname', 'bio', 'interests'):
+            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
 
-        return (user, deki_user, profile)
+        # Fill out the form with websites.
+        form.update({'locale': 'nl'})
+        form.update({'timezone': 'Europe/Amsterdam'})
+
+        # Submit the form, verify redirect to profile detail
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        # Verify locale saved in the profile.
+        eq_('nl', p.locale)
+
+        # Verify the saved locale appears in the editing form
+        url = reverse('devmo.views.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        ok_('nl', doc.find('#profile-edit select#id_locale option[value="nl"][selected="selected"]'))
+
+        raise SkipTest("Skip the rest until we sort out staging MindTouch data consistency issues")
+        r = requests.get(DekiUserBackend.profile_by_id_url % '=testaccount')
+        doc = pq(r.content)
+        eq_('nl', doc.find('language').text())
 
     def _break(self, url, r):
         logging.debug("URL  %s" % url)
@@ -333,8 +364,8 @@ class EventsViewsTest(test_utils.TestCase):
         url = reverse('devmo.views.events')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
-        doc = pq(r.content)
 
+        # doc = pq(r.content)
         # past events ordered newest to oldest
         # rows = doc.find('table#past tr')
         # prev_end_datetime = datetime.datetime.today()

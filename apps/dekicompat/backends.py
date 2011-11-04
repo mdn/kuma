@@ -21,7 +21,7 @@ _thread_locals = local()
 
 log = commonware.log.getLogger('mdn.dekicompat')
 
-MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s</email><fullname>%(fullname)s</fullname><status>%(status)s</status><permissions.user><role>%(role)s</role></permissions.user></user>"""
+MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s</email><fullname>%(fullname)s</fullname><status>%(status)s</status><language>%(language)s</language><timezone>%(timezone)s</timezone><permissions.user><role>%(role)s</role></permissions.user></user>"""
 
 class DekiUserBackend(object):
     """
@@ -158,11 +158,28 @@ class DekiUserBackend(object):
             return False
 
     @staticmethod
+    def generate_mindtouch_user_xml(user):
+        user_xml = MINDTOUCH_USER_XML % {'username': user.username, 'email': user.email, 'fullname': user.get_profile().fullname, 'status': 'active', 'language': user.get_profile().mindtouch_language, 'timezone': user.get_profile().mindtouch_timezone, 'role': 'Contributor'}
+        return user_xml
+
+    @staticmethod
     def post_mindtouch_user(user):
         user_url = '%s/@api/deki/users?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
-        # post user to mindtouch
-        user_xml = MINDTOUCH_USER_XML % {'username': user.username, 'email': user.email, 'fullname': user.get_profile().fullname, 'status': 'active', 'role': 'Contributor'}
-        resp = requests.post(user_url, data=user_xml, headers={'Content-Type': 'application/xml'})
+        user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
+        headers = {'Content-Type': 'application/xml',}
+        resp = requests.post(user_url, data=user_xml, headers=headers)
+        if resp.status_code is not 200:
+            # TODO: decide WTF to do here
+            pass
+        return DekiUser.parse_user_info(resp.content)
+
+    @staticmethod
+    def put_mindtouch_user(user):
+        deki_user_id = user.get_profile().deki_user_id or ''
+        user_url = '%s/@api/deki/users/%s?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, deki_user_id,  settings.DEKIWIKI_APIKEY)
+        user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
+        headers = {'Content-Type': 'application/xml',}
+        resp = requests.put(user_url, data=user_xml, headers=headers)
         if resp.status_code is not 200:
             # TODO: decide WTF to do here
             pass
