@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from tower import ugettext_lazy as _
@@ -42,6 +43,8 @@ class UserProfileEditForm(forms.ModelForm):
                                 max_length=255, required=False)
     expertise = forms.CharField(label=_('Expertise'),
                                 max_length=255, required=False)
+    locale = forms.ChoiceField(required=False,
+                             choices=settings.LANGUAGE_CHOICES)
 
     def __init__(self, *args, **kwargs):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
@@ -60,7 +63,10 @@ class UserProfileEditForm(forms.ModelForm):
         expertise = set(parse_tags(cleaned_data['expertise']))
 
         if len(expertise) > 0 and not expertise.issubset(interests):
-            raise forms.ValidationError(_("Areas of expertise must be a " 
+            raise forms.ValidationError(_("Areas of expertise must be a "
                 "subset of interests"))
 
         return cleaned_data['expertise']
+
+    def clean_timezone(self):
+        pass
