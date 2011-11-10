@@ -746,6 +746,13 @@ class Revision(ModelBase):
                                       self.document.title,
                                       self.id, self.content[:50])
 
+    def get_section_content(self, section_id):
+        """Convenience method to extract the content for a single section"""
+        return(wiki.content
+            .parse(self.content)
+            .extractSection(section_id)
+            .serialize())
+        
     @property
     def content_cleaned(self):
         return bleach.clean(

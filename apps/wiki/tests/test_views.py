@@ -18,6 +18,7 @@ from wiki.models import VersionMetadata, Document, Revision
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html)
 from wiki.views import _version_groups
+from wiki.forms import MIDAIR_COLLISION
 
 
 class VersionGroupTests(TestCase):
@@ -149,7 +150,7 @@ class DocumentEditingTests(TestCase):
         assert "REDIRECT" not in Document.uncached.get(title=old_title).html
 
     @attr('clobber')
-    def test_collision_errors(self):
+    def test_title_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
         client = LocalizingClient()
@@ -419,6 +420,46 @@ class DocumentEditingTests(TestCase):
                                       args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
+    @attr('midair')
+    def test_edit_midair_collision(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Post a new document.
+        data = new_document_data()
+        resp = client.post(reverse('wiki.new_document'), data)
+        doc = Document.objects.get(slug=data['slug'])
+
+        # Edit #1 starts...
+        resp = client.get(reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 starts...
+        resp = client.get(reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 submits successfully
+        data.update({
+            'form': 'rev',
+            'content': 'This edit got there first',
+            'current_rev': rev_id2
+        })
+        resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        eq_(302, resp.status_code)
+
+        # Edit #1 submits, but receives a mid-aired notification
+        data.update({
+            'form': 'rev',
+            'content': 'This edit gets mid-aired',
+            'current_rev': rev_id1
+        })
+        resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        eq_(200, resp.status_code)
+        ok_(unicode(MIDAIR_COLLISION) in resp.content)
+        page = pq(resp.content)
+
 
 class SectionEditingResourceTests(TestCase):
     fixtures = ['test_users.json']
@@ -477,13 +518,13 @@ class SectionEditingResourceTests(TestCase):
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?raw=true&amp;section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?raw=true&amp;section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?raw=true&amp;section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
             <p>test</p>
             <p>test</p>
         """ % {'slug': d.slug}
@@ -518,3 +559,215 @@ class SectionEditingResourceTests(TestCase):
                               reverse('wiki.document', args=[d.slug]))
         eq_(normalize_html(expected), 
             normalize_html(response.content))
+
+    @attr('midair')
+    @attr('rawsection')
+    def test_raw_section_edit(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        replace = """
+            <h1 id="s2">Replace</h1>
+            <p>replace</p>
+        """
+        expected = """
+            <h1 id="s2">Replace</h1>
+            <p>replace</p>
+        """
+        response = client.post('%s?section=s2&raw=true' %
+                               reverse('wiki.edit_document', args=[d.slug]),
+                               {"form": "rev",
+                                "content": replace},
+                               follow=True)
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Replace</h1>
+            <p>replace</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        response = client.get('%s?raw=true' %
+                               reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    @attr('midair')
+    def test_midair_section_merge(self):
+        """If a page was changed while someone was editing, but the changes
+        didn't affect the specific section being edited, then ignore the midair
+        warning"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        doc, rev = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        replace_1 = """
+            <h1 id="s1">replace</h1>
+            <p>replace</p>
+        """
+        replace_2 = """
+            <h1 id="s2">replace</h1>
+            <p>replace</p>
+        """
+        expected = """
+            <h1 id="s1">replace</h1>
+            <p>replace</p>
+
+            <h1 id="s2">replace</h1>
+            <p>replace</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        data = {
+            'form': 'rev',
+            'content': rev.content
+        }
+
+        # Edit #1 starts...
+        resp = client.get('%s?section=s1' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 starts...
+        resp = client.get('%s?section=s2' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 submits successfully
+        data.update({
+            'form': 'rev',
+            'content': replace_2,
+            'current_rev': rev_id2
+        })
+        resp = client.post('%s?section=s2&raw=true' %
+                            reverse('wiki.edit_document', args=[doc.slug]),
+                            data)
+        eq_(302, resp.status_code)
+
+        # Edit #1 submits, but since it's a different section, there's no
+        # mid-air collision
+        data.update({
+            'form': 'rev',
+            'content': replace_1,
+            'current_rev': rev_id1
+        })
+        resp = client.post('%s?section=s1&raw=true' %
+                           reverse('wiki.edit_document', args=[doc.slug]),
+                           data)
+        # No conflict, but we should get a 205 Reset as an indication that the
+        # page needs a refresh.
+        eq_(205, resp.status_code)
+
+        # Finally, make sure that all the edits landed
+        response = client.get('%s?raw=true' %
+                               reverse('wiki.document', args=[doc.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+        # Also, ensure that the revision is slipped into the headers
+        eq_(unicode(Document.uncached.get(slug=doc.slug).current_revision.id),
+            unicode(response['x-kuma-revision']))
+
+
+    @attr('midair')
+    def test_midair_section_collision(self):
+        """If both a revision and the edited section has changed, then a
+        section edit is a collision."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        doc, rev = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        replace_1 = """
+            <h1 id="s2">replace</h1>
+            <p>replace</p>
+        """
+        replace_2 = """
+            <h1 id="s2">first replace</h1>
+            <p>first replace</p>
+        """
+        data = {
+            'form': 'rev',
+            'content': rev.content
+        }
+
+        # Edit #1 starts...
+        resp = client.get('%s?section=s2' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 starts...
+        resp = client.get('%s?section=s2' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 submits successfully
+        data.update({
+            'form': 'rev',
+            'content': replace_2,
+            'current_rev': rev_id2
+        })
+        resp = client.post('%s?section=s2&raw=true' %
+                            reverse('wiki.edit_document', args=[doc.slug]),
+                            data)
+        eq_(302, resp.status_code)
+
+        # Edit #1 submits, but since it's the same section, there's a collision
+        data.update({
+            'form': 'rev',
+            'content': replace_1,
+            'current_rev': rev_id1
+        })
+        resp = client.post('%s?section=s2&raw=true' %
+                           reverse('wiki.edit_document', args=[doc.slug]),
+                           data)
+        # With the raw API, we should get a 409 Conflict on collision.
+        eq_(409, resp.status_code)

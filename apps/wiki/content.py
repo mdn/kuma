@@ -153,7 +153,7 @@ class SectionEditLinkFilter(html5lib_Filter):
                                  reverse('wiki.edit_document',
                                          args=[self.slug],
                                          locale=self.locale),
-                                 urlencode({'section': id, 'raw': 'true',
+                                 urlencode({'section': id,
                                             'edit_links': 'true'})
                               )
                          }},

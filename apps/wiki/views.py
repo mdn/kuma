@@ -171,6 +171,7 @@ def document(request, document_slug):
     # iframe inclusion
     if show_raw:
         response = HttpResponse(tool.serialize())
+        response['x-kuma-revision'] = doc.current_revision.id
         response['x-frame-options'] = 'Allow'
         return response
     
@@ -285,6 +286,7 @@ def edit_document(request, document_slug, revision_id=None):
     if doc.allows_revision_by(user):
         rev_form = RevisionForm(instance=rev, 
                                 initial={'based_on': rev.id,
+                                         'current_rev': rev.id,
                                          'comment': ''},
                                 section_id=section_id)
     if doc.allows_editing_by(user):
@@ -319,7 +321,13 @@ def edit_document(request, document_slug, revision_id=None):
                     _maybe_schedule_rebuild(doc_form)
 
                     if is_iframe_target:
-                        response = HttpResponse('OK')
+                        # TODO: Does this really need to be a template? Just
+                        # shoehorning data into a single HTML element.
+                        response = HttpResponse("""
+                            <span id="iframe-response"
+                                  data-status="OK"
+                                  data-current-revision="%s">OK</span>
+                        """ % doc.current_revision.id)
                         response['x-frame-options'] = 'SAMEORIGIN'
                         return response
 
@@ -332,17 +340,60 @@ def edit_document(request, document_slug, revision_id=None):
                 raise PermissionDenied
 
         elif which_form == 'rev':
-            if doc.allows_revision_by(user):
+            if not doc.allows_revision_by(user):
+                raise PermissionDenied
+            else:
                 rev_form = RevisionForm(request.POST, 
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
-                if rev_form.is_valid():
 
+                # Come up with the original revision to which these changes
+                # would be applied.
+                orig_rev_id = request.POST.get('current_rev', False)
+                if False == orig_rev_id:
+                    orig_rev = None
+                else:
+                    orig_rev = Revision.objects.get(pk=orig_rev_id)
+
+                # Get the document's actual current revision.
+                curr_rev = doc.current_revision
+
+                if not rev_form.is_valid():
+
+                    # Was there a mid-air collision?
+                    if 'current_rev' in rev_form._errors:
+                        # Jump out to a function to escape indentation hell
+                        return _edit_document_collision(request,
+                                                        orig_rev, curr_rev,
+                                                        is_iframe_target,
+                                                        is_raw,
+                                                        rev_form, doc_form,
+                                                        section_id, 
+                                                        rev, doc)
+
+                else:
                     _save_rev_and_notify(rev_form, user, doc)
 
                     if is_iframe_target:
-                        response = HttpResponse('OK')
+                        # TODO: Does this really need to be a template? Just
+                        # shoehorning data into a single HTML element.
+                        response = HttpResponse("""
+                            <span id="iframe-response"
+                                  data-status="OK"
+                                  data-current-revision="%s">OK</span>
+                        """ % doc.current_revision.id)
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
+
+                    if (is_raw and orig_rev is not None and 
+                            curr_rev.id != orig_rev.id):
+                        # If this is the raw view, and there was an original
+                        # revision, but the original revision differed from the
+                        # current revision at start of editing, we should tell
+                        # the client to refresh the page.
+                        response = HttpResponse('RESET')
+                        response.status_code = 205
                         response['x-frame-options'] = 'SAMEORIGIN'
                         return response
 
@@ -356,16 +407,22 @@ def edit_document(request, document_slug, revision_id=None):
                     params = {}
                     if is_raw:
                         params['raw'] = 'true'
-                    if need_edit_links:
-                        params['edit_links'] = 'true'
-                    if section_id:
-                        params['section'] = section_id
+                        if need_edit_links:
+                            # Only need to carry over ?edit_links with ?raw,
+                            # because they're on by default in the normal UI
+                            params['edit_links'] = 'true'
+                        if section_id:
+                            # If a section was edited, and we're using the raw
+                            # content API, constrain to that section.
+                            params['section'] = section_id
                     if params:
                         url = '%s?%s' % (url, urlencode(params))
+                    if not is_raw and section_id:
+                        # If a section was edited, jump to the section anchor
+                        # if we're not getting raw content.
+                        url = '%s#%s' % (url, section_id)
 
                     return HttpResponseRedirect(url)
-            else:
-                raise PermissionDenied
 
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
@@ -374,6 +431,52 @@ def edit_document(request, document_slug, revision_id=None):
                          'disclose_description': disclose_description,
                          'revision': rev,
                          'document': doc})
+
+
+def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
+                             is_raw, rev_form, doc_form, section_id, rev, doc):
+    """Handle when a mid-air collision is detected upon submission"""
+
+    # Process the content as if it were about to be saved, so that the
+    # html_diff is close as possible.
+    content = (wiki.content
+                .parse(request.POST['content'])
+                .injectSectionIDs()
+                .serialize())
+
+    # Process the original content for a diff, extracting a section if we're
+    # editing one.
+    tool = wiki.content.parse(curr_rev.content)
+    tool.injectSectionIDs()
+    if section_id:
+        tool.extractSection(section_id)
+    curr_content = tool.serialize()
+
+    if is_raw:
+        # When dealing with the raw content API, we need to signal the conflict
+        # differently so the client-side can escape out to a conflict
+        # resolution UI. 
+        response = HttpResponse('CONFLICT')
+        response.status_code = 409
+        response['x-frame-options'] = 'SAMEORIGIN'
+        return response
+
+    # Make this response iframe-friendly so we can hack around the
+    # save-and-edit iframe button
+    response = jingo.render(request, 'wiki/edit_document.html',
+                            {'collision': True,
+                             'revision_form': rev_form,
+                             'document_form': doc_form,
+                             'content': content,
+                             'current_content': curr_content,
+                             'section_id': section_id,
+                             'original_revision': orig_rev,
+                             'current_revision': curr_rev,
+                             'revision': rev,
+                             'document': doc})
+
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 
 def ckeditor_config(request):
