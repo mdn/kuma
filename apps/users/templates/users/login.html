@@ -4,8 +4,14 @@
 {% set classes = 'login' %}
 
 {% block content %}
-  <article id="login" class="main">
-    <h1>{{ _('Log In') }}</h1>
-    {% include "users/login_form.html" %}
-  </article>
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+        <article id="login" class="main">
+            <h1>{{ _('Log In') }}</h1>
+            {% include "users/login_form.html" %}
+        </article>
+    </div>
+   </div>
+</section>
 {% endblock %}

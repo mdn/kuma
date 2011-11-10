@@ -18,7 +18,7 @@ from pytz import timezone
 from tower import ugettext_lazy as _lazy, ungettext
 
 import sumo.parser
-from funfactory.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 
 class DateTimeFormatError(Exception):

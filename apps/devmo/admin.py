@@ -3,19 +3,19 @@ from django.contrib import admin
 from devmo.urlresolvers import reverse
 
 from taggit_extras.managers import NamespacedTaggableManager
-from taggit.forms import TagWidget, TagField
+from taggit.forms import TagWidget
 
 from .models import UserProfile, Calendar, Event
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    
+
     list_display = ('user_name', 'related_user', 'fullname', 'title',
                     'organization', 'location','content_flagging_email',
                     'tags', )
 
     list_editable = ('content_flagging_email', 'tags', )
-    
+
     search_fields = ('user__username', 'homepage', 'title', 'fullname',
                      'organization', 'location', 'bio', 'misc', 
                      'user__email', 'tags__name', )

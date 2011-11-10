@@ -31,9 +31,9 @@
         <li><a href="/logout">Log out</a> to try again.</li>
         {% endtrans %}
       {% else %}
-        {% trans returnto=request.get_full_path() %}
-        <li><a href="/Special:UserLogin?returntotitle={{ returnto }}">Log in</a> to try again.</li>
-        <li><a href="/Special:UserRegistration">Register</a> to edit docs and submit demos.</li>
+        {% trans %}
+        <li><a href="{{ url('users.login') }}">Log in</a> to try again.</li>
+        <li><a href="{{ url('users.register') }}">Register</a> to edit docs and submit demos.</li>
         {% endtrans %}
       {% endif %}
         {% trans %}

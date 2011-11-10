@@ -7,7 +7,7 @@ from users.tests import profile
 
 
 class ProfileTestCase(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_user_get_profile(self):
         """user.get_profile() returns what you'd expect."""

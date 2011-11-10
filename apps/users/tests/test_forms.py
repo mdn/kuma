@@ -12,41 +12,41 @@ from users.tests import TestCaseBase
 
 class AuthenticationFormTests(TestCaseBase):
     """AuthenticationForm tests."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_only_active(self):
         # Verify with active user
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
         assert user.is_active
-        form = AuthenticationForm(data={'username': 'rrosario',
+        form = AuthenticationForm(data={'username': 'testuser',
                                         'password': 'testpass'})
         assert form.is_valid()
 
         # Verify with inactive user
         user.is_active = False
         user.save()
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
         assert not user.is_active
-        form = AuthenticationForm(data={'username': 'rrosario',
+        form = AuthenticationForm(data={'username': 'testuser',
                                         'password': 'testpass'})
         assert not form.is_valid()
 
     def test_allow_inactive(self):
         # Verify with active user
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
         assert user.is_active
         form = AuthenticationForm(only_active=False,
-                                  data={'username': 'rrosario',
+                                  data={'username': 'testuser',
                                         'password': 'testpass'})
         assert form.is_valid()
 
         # Verify with inactive user
         user.is_active = False
         user.save()
-        user = User.objects.get(username='rrosario')
+        user = User.objects.get(username='testuser')
         assert not user.is_active
         form = AuthenticationForm(only_active=False,
-                                  data={'username': 'rrosario',
+                                  data={'username': 'testuser',
                                         'password': 'testpass'})
         assert form.is_valid()
 
