@@ -4,13 +4,13 @@ from jinja2 import escape, Markup
 from jingo import register
 
 from sumo.urlresolvers import reverse
-from users.models import Profile
+from devmo.models import UserProfile
 
 
 @register.function
 def profile_url(user):
     """Return a URL to the user's profile."""
-    return reverse('users.profile', args=[user.pk])
+    return reverse('devmo_profile_view', args=[user.username])
 
 
 @register.function
@@ -18,9 +18,9 @@ def profile_avatar(user):
     """Return a URL to the user's avatar."""
     try:  # This is mostly for tests.
         profile = user.get_profile()
-    except Profile.DoesNotExist:
+    except UserProfile.DoesNotExist:
         return settings.DEFAULT_AVATAR
-    return profile.avatar.url if profile.avatar else settings.DEFAULT_AVATAR
+    return profile.gravatar if profile.gravatar else settings.DEFAULT_AVATAR
 
 
 @register.function
@@ -28,9 +28,9 @@ def display_name(user):
     """Return a display name if set, else the username."""
     try:  # Also mostly for tests.
         profile = user.get_profile()
-    except Profile.DoesNotExist:
+    except UserProfile.DoesNotExist:
         return user.username
-    return profile.name if profile.name else user.username
+    return profile.fullname if profile.fullname else user.username
 
 
 @register.filter

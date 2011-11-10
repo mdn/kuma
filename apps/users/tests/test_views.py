@@ -1,3 +1,6 @@
+from time import time
+import requests
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -7,19 +10,88 @@ import mock
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
+from dekicompat.backends import DekiUserBackend
 from notifications.tests import watch
-from questions.models import Question, CONFIRMED, UNCONFIRMED
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
 
 
-class RegisterTestCase(TestCase):
-    fixtures = ['users.json']
+class LoginTestCase(TestCase):
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.old_debug = settings.DEBUG
         settings.DEBUG = True
+        self.client = LocalizingClient()
+        self.client.logout()
+
+    def tearDown(self):
+        settings.DEBUG = self.old_debug
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_bad_login_fails_both_backends(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='nouser')
+
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'nouser',
+                                     'password': 'nopass'}, follow=True)
+        eq_(200, response.status_code)
+        self.assertContains(response, 'Please enter a correct username and password.')
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testuser',
+                                     'password': 'testpass'}, follow=True)
+        eq_(200, response.status_code)
+        self.assertContains(response, 'Welcome back, testuser')
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_mindtouch_creds_create_user_and_profile_with_authtoken(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+
+        # Try to log in as a MindTouch user
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        eq_(200, response.status_code)
+
+        # Login should have auto-created django user
+        u = User.objects.get(username='testaccount')
+        eq_(True, u.is_active)
+        p = u.get_profile()
+        authtoken = p.deki_authtoken
+        self.assertNotEquals(None, authtoken)
+        self.assertNotEquals('', authtoken)
+
+        # Login page should show welcome back
+        self.assertContains(response, 'Welcome back, testaccount')
+
+        # subsequent login shouldn't need dekicompat
+        self.client.post(reverse('users.logout'))
+
+        old_endpoint = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = None
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        eq_(200, response.status_code)
+        self.assertContains(response, 'Welcome back, testaccount')
+        settings.DEKIWIKI_ENDPOINT = old_endpoint
+
+
+class RegisterTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.old_debug = settings.DEBUG
+        settings.DEBUG = True
+        self.client = LocalizingClient()
         self.client.logout()
 
     def tearDown(self):
@@ -28,13 +100,15 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
-        response = self.client.post(reverse('users.register', locale='en-US'),
-                                    {'username': 'newbie',
+        now = time()
+        username = 'newb%s' % now
+        response = self.client.post(reverse('users.register'),
+                                    {'username': username,
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         eq_(200, response.status_code)
-        u = User.objects.get(username='newbie')
+        u = User.objects.get(username=username)
         assert u.password.startswith('sha256')
         assert not u.is_active
         eq_(1, len(mail.outbox))
@@ -45,39 +119,78 @@ class RegisterTestCase(TestCase):
         # Now try to log in
         u.is_active = True
         u.save()
-        response = self.client.post(reverse('users.login', locale='en-US'),
-                                    {'username': 'newbie',
+        response = self.client.post(reverse('users.login'),
+                                    {'username': username,
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
-        eq_('http://testserver/en-US/home', response.redirect_chain[0][0])
+        eq_('http://testserver/en-US/', response.redirect_chain[0][0])
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_posts_mindtouch_user(self, get_current):
+        get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'n00b%s' % now
+        response = self.client.post(reverse('users.register'),
+                                    {'username': username,
+                                     'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        u = User.objects.get(username=username)
+        assert u.password.startswith('sha256')
+        assert not u.is_active
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Please confirm your') == 0
+        key = RegistrationProfile.objects.all()[0].activation_key
+        assert mail.outbox[0].body.find('activate/%s' % key) > 0
+
+        deki_id = u.get_profile().deki_user_id
+        resp = requests.get(DekiUserBackend.profile_by_id_url % deki_id)
+        eq_(200, resp.status_code)
+        doc = pq(resp.content)
+        eq_(str(deki_id), doc('user').attr('id'))
+        eq_(username, doc('username').text())
+
+        # Now try to log in
+        u.is_active = True
+        u.save()
+        response = self.client.post(reverse('users.login'),
+                                    {'username': username,
+                                     'password': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
-        u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
         get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'cjk%s' % now
+        u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
         response = self.client.post(reverse('users.register', locale='ja'),
-                                    {'username': 'cjkuser',
+                                    {'username': username,
                                      'email': 'cjkuser@example.com',
                                      'password': u_str,
                                      'password2': u_str}, follow=True)
         eq_(200, response.status_code)
-        u = User.objects.get(username='cjkuser')
+        u = User.objects.get(username=username)
         u.is_active = True
         u.save()
         assert u.password.startswith('sha256')
 
         # make sure you can login now
         response = self.client.post(reverse('users.login', locale='ja'),
-                                    {'username': 'cjkuser',
+                                    {'username': username,
                                      'password': u_str}, follow=True)
         eq_(200, response.status_code)
-        eq_('http://testserver/ja/home', response.redirect_chain[0][0])
+        eq_('http://testserver/ja/', response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'sumo%s' % now
         user = RegistrationProfile.objects.create_inactive_user(
-            'sumouser1234', 'testpass', 'sumouser@test.com')
+            username, 'testpass', 'sumouser@test.com')
         assert not user.is_active
         key = RegistrationProfile.objects.all()[0].activation_key
         url = reverse('users.activate', args=[key])
@@ -89,53 +202,39 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_claim_watches(self, get_current):
         """Claim user watches upon activation."""
+        get_current.return_value.domain = 'su.mo.com'
+
         watch(email='sumouser@test.com', save=True)
 
-        get_current.return_value.domain = 'su.mo.com'
+        now = time()
+        username = 'sumo%s' % now
         user = RegistrationProfile.objects.create_inactive_user(
-            'sumouser1234', 'testpass', 'sumouser@test.com')
+            username, 'testpass', 'sumouser@test.com')
         key = RegistrationProfile.objects.all()[0].activation_key
         self.client.get(reverse('users.activate', args=[key]), follow=True)
 
         # Watches are claimed.
         assert user.watch_set.exists()
 
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_new_user_with_questions(self, get_current):
-        """Unconfirmed questions get confirmed with account confirmation."""
-        get_current.return_value.domain = 'su.mo.com'
-        # TODO: remove this test once we drop unconfirmed questions.
-        user = RegistrationProfile.objects.create_inactive_user(
-            'sumouser1234', 'testpass', 'sumouser@test.com')
-
-        # Before we activate, let's create a question.
-        q = Question.objects.create(title='test_question', creator=user,
-                                    content='test', status=UNCONFIRMED,
-                                    confirmation_id='$$$')
-
-        # Activate account.
-        key = RegistrationProfile.objects.all()[0].activation_key
-        url = reverse('users.activate', args=[key])
-        response = self.client.get(url, follow=True)
-        eq_(200, response.status_code)
-
-        q = Question.objects.get(creator=user)
-        # Question is listed on the confirmation page.
-        assert 'test_question' in response.content
-        assert q.get_absolute_url() in response.content
-        eq_(CONFIRMED, q.status)
-
     def test_duplicate_username(self):
-        response = self.client.post(reverse('users.register', locale='en-US'),
-                                    {'username': 'jsocol',
+        response = self.client.post(reverse('users.register'),
+                                    {'username': 'testuser',
                                      'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        self.assertContains(response, 'already exists')
+
+    def test_duplicate_mindtouch_username(self):
+        response = self.client.post(reverse('users.register'),
+                                    {'username': 'testaccount',
+                                     'email': 'testaccount@example.com',
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')
 
     def test_duplicate_email(self):
         User.objects.create(username='noob', email='noob@example.com').save()
-        response = self.client.post(reverse('users.register', locale='en-US'),
+        response = self.client.post(reverse('users.register'),
                                     {'username': 'newbie',
                                      'email': 'noob@example.com',
                                      'password': 'foo',
@@ -143,7 +242,7 @@ class RegisterTestCase(TestCase):
         self.assertContains(response, 'already exists')
 
     def test_no_match_passwords(self):
-        response = self.client.post(reverse('users.register', locale='en-US'),
+        response = self.client.post(reverse('users.register'),
                                     {'username': 'newbie',
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
@@ -152,7 +251,7 @@ class RegisterTestCase(TestCase):
 
 
 class ChangeEmailTestCase(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.client = LocalizingClient()
@@ -162,7 +261,7 @@ class ChangeEmailTestCase(TestCase):
         """Send email to change user's email and then change it."""
         get_current.return_value.domain = 'su.mo.com'
 
-        self.client.login(username='pcraciunoiu', password='testpass')
+        self.client.login(username='testuser', password='testpass')
         # Attempt to change email.
         response = self.client.post(reverse('users.change_email'),
                                     {'email': 'paulc@trololololololo.com'},
@@ -180,13 +279,13 @@ class ChangeEmailTestCase(TestCase):
         response = self.client.get(reverse('users.confirm_email',
                                            args=[ec.activation_key]))
         eq_(200, response.status_code)
-        u = User.objects.get(username='pcraciunoiu')
+        u = User.objects.get(username='testuser')
         eq_('paulc@trololololololo.com', u.email)
 
     def test_user_change_email_same(self):
         """Changing to same email shows validation error."""
-        self.client.login(username='rrosario', password='testpass')
-        user = User.objects.get(username='rrosario')
+        self.client.login(username='testuser', password='testpass')
+        user = User.objects.get(username='testuser')
         user.email = 'valid@email.com'
         user.save()
         response = self.client.post(reverse('users.change_email'),
@@ -197,9 +296,8 @@ class ChangeEmailTestCase(TestCase):
 
     def test_user_change_email_duplicate(self):
         """Changing to same email shows validation error."""
-        self.client.login(username='rrosario', password='testpass')
-        email = 'newvalid@email.com'
-        User.objects.filter(username='pcraciunoiu').update(email=email)
+        self.client.login(username='testuser', password='testpass')
+        email = 'testuser2@test.com'
         response = self.client.post(reverse('users.change_email'),
                                     {'email': email})
         eq_(200, response.status_code)
@@ -212,8 +310,8 @@ class ChangeEmailTestCase(TestCase):
         """If we detect a duplicate email when confirming an email change,
         don't change it and notify the user."""
         get_current.return_value.domain = 'su.mo.com'
-        self.client.login(username='rrosario', password='testpass')
-        old_email = User.objects.get(username='rrosario').email
+        self.client.login(username='testuser', password='testpass')
+        old_email = User.objects.get(username='testuser').email
         new_email = 'newvalid@email.com'
         response = self.client.post(reverse('users.change_email'),
                                     {'email': new_email})
@@ -222,14 +320,16 @@ class ChangeEmailTestCase(TestCase):
         ec = EmailChange.objects.all()[0]
 
         # Before new email is confirmed, give the same email to a user
-        User.objects.filter(username='pcraciunoiu').update(email=new_email)
+        other_user = User.objects.filter(username='testuser2')[0]
+        other_user.email = new_email
+        other_user.save()
 
         # Visit confirmation link and verify email wasn't changed.
         response = self.client.get(reverse('users.confirm_email',
                                            args=[ec.activation_key]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Unable to change email for user rrosario',
-            doc('#main h1').text())
-        u = User.objects.get(username='rrosario')
+        eq_('Unable to change email for user testuser',
+            doc('.main h1').text())
+        u = User.objects.get(username='testuser')
         eq_(old_email, u.email)

@@ -228,7 +228,7 @@ MIDDLEWARE_CLASSES = (
 
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
-    'funfactory.middleware.LocaleURLMiddleware',
+    'sumo.middleware.LocaleURLMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
@@ -244,17 +244,12 @@ MIDDLEWARE_CLASSES = (
     #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
-    'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
 # Auth
-#AUTHENTICATION_BACKENDS = (
-#    'users.backends.Sha256Backend',
-#)
-#AUTH_PROFILE_MODULE = 'users.Profile'
-
 AUTHENTICATION_BACKENDS = (
+    'users.backends.Sha256Backend',
     'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
@@ -310,7 +305,7 @@ INSTALLED_APPS = (
     'waffle',
 
     # SUMO
-    #'users',
+    'users',
     #ROOT_PACKAGE,
     #'authority',
     #'timezones',

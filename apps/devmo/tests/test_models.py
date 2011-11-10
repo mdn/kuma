@@ -1,9 +1,5 @@
-import logging
-import urllib
 import csv
-import shlex
-import urllib2
-from os.path import basename, dirname, isfile, isdir
+from os.path import dirname
 from datetime import datetime
 
 from mock import patch
@@ -12,16 +8,12 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 
-from devmo.helpers import devmo_url
-from devmo import urlresolvers
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
+from devmo.tests import create_profile
 
-from dekicompat.backends import DekiUser
-
-from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
+from dekicompat.backends import DekiUser, DekiUserBackend
 
 
 APP_DIR = dirname(dirname(__file__))
@@ -92,15 +84,16 @@ class TestCalendar(test_utils.TestCase):
 
 
 class TestUserProfile(test_utils.TestCase):
+    fixtures = ['test_users.json']
 
     def setUp(self):
         pass
 
     @attr('websites')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    def test_websites(self, get_deki_user):
+    def test_websites(self):
         """A list of websites can be maintained on a UserProfile"""
-        (user, deki_user, profile) = self._create_profile()
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
 
         # Property should start off as an empty dict()
         sites = profile.websites
@@ -182,39 +175,36 @@ class TestUserProfile(test_utils.TestCase):
     @attr('docs_activity')
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field. Make sure it shows up."""
-        (user, deki_user, profile) = self._create_profile()
+        user = User.objects.get(username='testuser')
         profile_from_db = UserProfile.objects.get(user=user)
         ok_(hasattr(profile_from_db, 'irc_nickname'))
-        ok_(profile_from_db.irc_nickname == 'ircuser')
+        ok_(profile_from_db.irc_nickname == 'testuser')
 
     def test_unicode_email_gravatar(self):
         """Bug 689056: Unicode characters in email addresses shouldn't break
         gravatar URLs"""
-        (user, deki_user, profile) = self._create_profile()
+        (user, deki_user, profile) = create_profile()
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
             g = profile.gravatar
         except UnicodeEncodeError:
             ok_(False, "There should be no UnicodeEncodeError")
 
-    def _create_profile(self):
-        """Create a user, deki_user, and a profile for a test account"""
-        user = User.objects.create_user('tester23', 'tester23@example.com',
-                                        'trustno1')
+    def test_locale_timezone_fields(self):
+        """We've added locale and timezone fields. Verify defaults."""
+        user = User.objects.get(username='testuser')
+        profile_from_db = UserProfile.objects.get(user=user)
+        ok_(hasattr(profile_from_db, 'locale'))
+        ok_(profile_from_db.locale == 'en-US')
+        ok_(hasattr(profile_from_db, 'timezone'))
+        ok_(str(profile_from_db.timezone) == 'US/Pacific')
 
-        deki_user = DekiUser(id=0, username='tester23',
-                             fullname='Tester Twentythree',
-                             email='tester23@example.com',
-                             gravatar='', profile_url=None)
+    def test_mindtouch_timezone(self):
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+        eq_("-08:00", profile.mindtouch_timezone)
 
-        profile = UserProfile()
-        profile.user = user
-        profile.fullname = "Tester Twentythree"
-        profile.title = "Spaceship Pilot"
-        profile.organization = "UFO"
-        profile.location = "Outer Space"
-        profile.bio = "I am a freaky space alien."
-        profile.irc_nickname = "ircuser"
-        profile.save()
-
-        return (user, deki_user, profile)
+    def test_mindtouch_language(self):
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+        eq_("en", profile.mindtouch_language)

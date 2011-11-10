@@ -4,7 +4,7 @@ from sumo.tests import LocalizingClient, TestCase
 
 from django.contrib.auth.models import User
 
-from users.models import Profile
+from devmo.models import UserProfile
 
 
 class TestCaseBase(TestCase):
@@ -17,13 +17,7 @@ class TestCaseBase(TestCase):
 
 def profile(user, **kwargs):
     """Return a saved profile for a given user."""
-    defaults = {'user': user, 'name': 'Test K. User', 'bio': 'Some bio.',
-                'website': 'http://support.mozilla.com',
-                'timezone': None, 'country': 'US', 'city': 'Mountain View'}
-    defaults.update(kwargs)
-
-    p = Profile(**defaults)
-    p.save()
+    p = UserProfile.objects.get(user=user)
     return p
 
 

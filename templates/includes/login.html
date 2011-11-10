@@ -1,13 +1,8 @@
 {% if user.is_authenticated() %}
     {% set username = request.user.username %}
     <p class="user-state"><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('Welcome back, {username}') | f(username=username) }}</a> |
-    <a href="/logout?returntotitle={{request.path|urlencode}}">{{ _('Log out') }}</a></p>
+    <a href="/users/logout">{{ _('Log out') }}</a></p>
 {% else %}
-  {% if not PHPBB_LOGGED_IN %}
-    <p class="user-state"><a href="{{ devmo_url('/Special:UserRegistration') }}">{{ _('Join MDN') }}</a> | 
-    <a href="/Special:UserLogin?returntotitle={{request.path|urlencode}}">{{ _('Log in') }}</a></p>
-  {% else %}
-    <p class="user-state"><a href="/forums/ucp.php">{{ _('Welcome back') }}</a> |
-    <a href="/forums/ucp.php?mode=logout&amp;sid={{ PHPBB_SID }}">{{ _('Log out') }}</a></p>
-  {% endif %}
+    <p class="user-state"><a href="/users/login">{{ _('Log in') }}</a> |
+    <a href="/users/register">{{ _('Become an MDN member') }}</a></p>
 {% endif %}

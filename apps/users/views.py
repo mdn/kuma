@@ -17,7 +17,6 @@ import jingo
 
 from access.decorators import logout_required, login_required
 from notifications.tasks import claim_watches
-from questions.models import Question, CONFIRMED
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
@@ -25,6 +24,7 @@ from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm)
 from users.models import Profile, RegistrationProfile, EmailChange
+from devmo.models import UserProfile
 from users.utils import handle_login, handle_register
 
 
@@ -35,7 +35,11 @@ def login(request):
     form = handle_login(request)
 
     if request.user.is_authenticated():
-        return HttpResponseRedirect(next_url)
+        resp = HttpResponseRedirect(next_url)
+        authtoken = request.session.get('deki_authtoken', False)
+        if authtoken:
+            resp.set_cookie('authtoken', authtoken, secure=True)
+        return resp
 
     return jingo.render(request, 'users/login.html',
                         {'form': form, 'next_url': next_url})
@@ -47,7 +51,9 @@ def logout(request):
     auth.logout(request)
     next_url = _clean_next_url(request) if 'next' in request.GET else ''
 
-    return HttpResponseRedirect(next_url or reverse('home'))
+    resp = HttpResponseRedirect(next_url or reverse('home'))
+    resp.delete_cookie('authtoken')
+    return resp
 
 
 @ssl_required
@@ -72,9 +78,9 @@ def activate(request, activation_key):
         # Claim anonymous watches belonging to this email
         claim_watches.delay(account)
 
-        my_questions = Question.uncached.filter(creator=account)
+        # my_questions = Question.uncached.filter(creator=account)
         # TODO: remove this after dropping unconfirmed questions.
-        my_questions.update(status=CONFIRMED)
+        # my_questions.update(status=CONFIRMED)
     return jingo.render(request, 'users/activate.html',
                         {'account': account, 'questions': my_questions,
                          'form': form})
@@ -153,7 +159,7 @@ def confirm_change_email(request, activation_key):
 
 
 def profile(request, user_id):
-    user_profile = get_object_or_404(Profile, user__id=user_id)
+    user_profile = get_object_or_404(UserProfile, user__id=user_id)
     return jingo.render(request, 'users/profile.html',
                         {'profile': user_profile})
 

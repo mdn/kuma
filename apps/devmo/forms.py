@@ -1,11 +1,9 @@
 from django import forms
-from django.core.exceptions import ValidationError
 from django.conf import settings
-from django.contrib.auth import authenticate, forms as auth_forms
-from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from tower import ugettext_lazy as _
-from taggit.utils import parse_tags, edit_string_for_tags
+from taggit.utils import parse_tags
 
 from devmo.models import UserProfile
 
@@ -35,8 +33,8 @@ class UserProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('fullname', 'title', 'organization', 'location', 'bio',
-                  'irc_nickname', 'interests')
+        fields = ('fullname', 'title', 'organization', 'location',
+                  'locale', 'timezone', 'bio', 'irc_nickname', 'interests')
 
     # Email is on the form, but is handled in the view separately
     email = forms.EmailField(label=_('Email'), required=True)
@@ -45,6 +43,8 @@ class UserProfileEditForm(forms.ModelForm):
                                 max_length=255, required=False)
     expertise = forms.CharField(label=_('Expertise'),
                                 max_length=255, required=False)
+    locale = forms.ChoiceField(required=False,
+                             choices=settings.LANGUAGE_CHOICES)
 
     def __init__(self, *args, **kwargs):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
@@ -63,7 +63,10 @@ class UserProfileEditForm(forms.ModelForm):
         expertise = set(parse_tags(cleaned_data['expertise']))
 
         if len(expertise) > 0 and not expertise.issubset(interests):
-            raise forms.ValidationError(_("Areas of expertise must be a " 
+            raise forms.ValidationError(_("Areas of expertise must be a "
                 "subset of interests"))
 
         return cleaned_data['expertise']
+
+    def clean_timezone(self):
+        pass
