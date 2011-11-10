@@ -1,11 +1,3 @@
-import datetime
-import logging
-import csv
-import shlex
-import time
-import urllib2
-from os.path import basename, dirname, isfile, isdir
-
 from nose.tools import eq_, ok_
 from mock import patch
 from pyquery import PyQuery as pq
@@ -13,7 +5,7 @@ import test_utils
 from waffle.models import Switch
 
 from sumo.tests import LocalizingClient
-from funfactory.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 
 class LearnViewsTest(test_utils.TestCase):
@@ -151,7 +143,7 @@ class AppsViewsTest(test_utils.TestCase):
         eq_(200, r.status_code)
         doc = pq(r.content)
         responsys_form = doc.find('form.fm-subscribe')
-        eq_(reverse('apps_subscription'), responsys_form.attr('action'))
+        eq_(reverse('apps_subscription', locale='en-US'), responsys_form.attr('action'))
 
     @patch('landing.views.responsys.subscribe')
     def test_apps_subscription(self, subscribe):

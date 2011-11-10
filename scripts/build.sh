@@ -74,10 +74,10 @@ export FORCE_DB='yes sir'
 
 # with-coverage excludes sphinx so it doesn't conflict with real builds.
 if [[ $2 = 'with-coverage' ]]; then
-    coverage run manage.py test actioncounters contentflagging dekicompat demos devmo landing -v 2 --noinput
+    coverage run manage.py test actioncounters contentflagging dekicompat demos devmo landing users -v 2 --noinput
     coverage xml $(find apps lib -name '*.py')
 else
-    python manage.py test actioncounters contentflagging dekicompat demos devmo landing -v 2 --noinput
+    python manage.py test actioncounters contentflagging dekicompat demos devmo landing users -v 2 --noinput
 fi
 
 echo 'shazam!'

@@ -11,6 +11,7 @@ def handle_login(request, only_active=True):
         form = AuthenticationForm(data=request.POST, only_active=only_active)
         if form.is_valid():
             auth.login(request, form.get_user())
+            request.session['deki_authtoken'] = form.get_authtoken()
 
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()

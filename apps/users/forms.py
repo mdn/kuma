@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from tower import ugettext as _, ugettext_lazy as _lazy
 
+from dekicompat.backends import DekiUserBackend
 from sumo.widgets import ImageWidget
 from upload.forms import clean_image_extension
 from upload.utils import check_file_size, FileTooLargeError
@@ -83,6 +84,14 @@ class RegisterForm(forms.ModelForm):
                                           'already exists.'))
         return email
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        # check deki for existing user (it needs = in front of name)
+        deki_user = DekiUserBackend.get_deki_user('='+username)
+        if deki_user is not None:
+            raise forms.ValidationError(_('The username you entered already exists.'))
+        return username
+
     def __init__(self,  request=None, *args, **kwargs):
         super(RegisterForm, self).__init__(request, auto_id='id_for_%s',
                                            *args, **kwargs)
@@ -93,12 +102,15 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
 
     * Doesn't prefill password on validation error.
     * Allows logging in inactive users (initialize with `only_active=False`).
+    * authtoken field for deki authtoken cookie
     """
     password = forms.CharField(label=_lazy(u"Password"),
                                widget=forms.PasswordInput(render_value=False))
+    authtoken = forms.CharField(required=False)
 
-    def __init__(self, request=None, only_active=True, *args, **kwargs):
+    def __init__(self, request=None, only_active=True, authtoken=False, *args, **kwargs):
         self.only_active = only_active
+        self.authtoken = authtoken
         super(AuthenticationForm, self).__init__(request, *args, **kwargs)
 
     def clean(self):
@@ -114,6 +126,8 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
                       'that both fields are case-sensitive.'))
             elif self.only_active and not self.user_cache.is_active:
                 raise forms.ValidationError(_('This account is inactive.'))
+            else:
+                self.authtoken = self.user_cache.get_profile().deki_authtoken
 
         if self.request:
             if not self.request.session.test_cookie_worked():
@@ -122,6 +136,10 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
                       "enabled. Cookies are required for logging in."))
 
         return self.cleaned_data
+
+    def get_authtoken(self):
+        if self.user_cache:
+            return self.authtoken
 
 
 class ProfileForm(forms.ModelForm):

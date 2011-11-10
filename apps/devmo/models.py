@@ -1,13 +1,13 @@
 import csv
-from datetime import datetime, tzinfo
+from datetime import datetime
 import time
 
-import logging
 import urllib2
 import urllib
 import hashlib
 
 import pytz
+from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 
 from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
@@ -21,11 +21,11 @@ from xml.sax.handler import ContentHandler
 import html5lib
 from html5lib import sanitizer
 from tower import ugettext as _
+from tower import ugettext_lazy as _lazy
 
 from jsonfield import JSONField
 
-from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
+from sumo.models import LocaleField
 
 from taggit_extras.managers import NamespacedTaggableManager
 
@@ -41,6 +41,8 @@ USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT = getattr(settings,
         'USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT', 900)
 USER_DOCS_ACTIVITY_FEED_TIMEZONE = getattr(settings,
         'USER_DOCS_ACTIVITY_FEED_TIMEZONE', 'America/Phoenix')
+DEFAULT_AVATAR = getattr(settings,
+        'DEFAULT_AVATAR', 'http://developer.mozilla.org/media/img/avatar.png')
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
@@ -54,15 +56,11 @@ class ModelBase(caching.base.CachingMixin, models.Model):
 
 class UserProfile(ModelBase):
     """
-    Want to track some data that isn't in dekiwiki's db?
-    This is the proper grab bag for user profile info.
-
-    Also, dekicompat middleware and backends use this
-    class to find Django user objects.
-
     The UserProfile *must* exist for each
     django.contrib.auth.models.User object. This may be relaxed
     once Dekiwiki isn't the definitive db for user info.
+
+    timezone and language fields are syndicated to Dekiwiki
     """
 
     # Website fields defined for the profile form
@@ -98,6 +96,9 @@ class UserProfile(ModelBase):
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
+    deki_authtoken = models.CharField(max_length=255, blank=True)
+    timezone = TimeZoneField(null=True, blank=True, verbose_name=_lazy(u'Timezone'))
+    locale = LocaleField(null=True, blank=True, db_index=True, verbose_name=_lazy(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
                                verify_exists=False, error_messages={
                                'invalid': _('This URL has an invalid format. '
@@ -152,7 +153,7 @@ class UserProfile(ModelBase):
         return self._deki_user
 
     def gravatar_url(self, secure=True, size=220, rating='pg',
-            default='http://developer.mozilla.org/media/img/avatar.png'):
+            default=DEFAULT_AVATAR):
         """Produce a gravatar image URL from email address."""
         base_url = (secure and 'https://secure.gravatar.com' or
             'http://www.gravatar.com')
@@ -178,6 +179,47 @@ class UserProfile(ModelBase):
             return True
         return False
 
+    @property
+    def mindtouch_language(self):
+        if not self.locale:
+            return ''
+        return settings.LANGUAGE_DEKI_MAP[self.locale]
+
+    @property
+    def mindtouch_timezone(self):
+        if not self.timezone:
+            return ''
+        base_seconds = self.timezone._utcoffset.days * 86400
+        offset_seconds = self.timezone._utcoffset.seconds
+        offset_hours = (base_seconds + offset_seconds) / 3600
+        return "%03d:00" % offset_hours
+
+    def save(self, *args, **kwargs):
+        super(UserProfile, self).save(*args, **kwargs)
+        from dekicompat.backends import DekiUserBackend
+        DekiUserBackend.put_mindtouch_user(self.user)
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and not kwargs.get('raw', False):
+        p, created = UserProfile.objects.get_or_create(user=instance)
+
+#models.signals.post_save.connect(create_user_profile, sender=DjangoUser)
+
+# from https://github.com/brosner/django-timezones/pull/13
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules(rules=[(
+                                    (TimeZoneField, ), # Class(es) these apply to
+                                    [], # Positional arguments (not used)
+                                    { # Keyword argument
+                                        "max_length": ["max_length", { "default": MAX_TIMEZONE_LENGTH }],
+                                    }
+                                )],
+                                patterns=['timezones\.fields\.'])
+    add_introspection_rules([], ['sumo.models.LocaleField'])
+except ImportError:
+    pass
 
 class UserDocsActivityFeed(object):
     """Fetches, parses, and caches a user activity feed from Mindtouch"""
@@ -440,6 +482,7 @@ class UserDocsActivityFeedItem(object):
             diff=self.rc_revision,
         )))
 
+
 def parse_date(date_str):
     try:
         parsed_date = datetime.strptime(date_str, "%m/%d/%Y")
@@ -460,6 +503,7 @@ FIELD_MAP = {
     "done": ["Done",None],
     "materials": ["Materials URL",None],
 }
+
 
 def parse_header_line(header_line):
     for field_name in FIELD_MAP.keys():
@@ -494,7 +538,7 @@ class Calendar(ModelBase):
         for field_name in FIELD_MAP.keys():
             field = FIELD_MAP[field_name]
             if len(doc_row) > field[1]:
-               field_value = doc_row[field[1]]
+                field_value = doc_row[field[1]]
             else:
                 field_value = ''
             if len(field) >= 3 and callable(field[2]):
@@ -509,7 +553,7 @@ class Calendar(ModelBase):
         if not data:
             try:
                 u = urllib2.urlopen(self.url)
-            except Exception, e:
+            except Exception:
                 return False
         data = csv.reader(u) if u else data
         if not data:

@@ -1,33 +1,35 @@
+import urllib
+from hashlib import md5
+
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from jinja2 import Markup
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
 from users.helpers import (profile_url, profile_avatar, public_email,
                            display_name, user_list)
-from users.models import Profile
+from devmo.models import UserProfile
 
 
 class HelperTestCase(TestCase):
+    fixtures = ['test_users.json']
+
     def setUp(self):
         super(HelperTestCase, self).setUp()
-        self.u = User.objects.create(pk=500000, username=u'testuser')
+        self.u = User.objects.get(username=u'testuser')
 
     def test_profile_url(self):
-        eq_(u'/user/500000', profile_url(self.u))
+        eq_(u'/profiles/testuser/', profile_url(self.u))
 
-    def test_profile_avatar_default(self):
-        Profile.objects.create(user=self.u)
-        eq_(settings.DEFAULT_AVATAR, profile_avatar(self.u))
+    def test_profile_default_gravatar(self):
+        ok_(urllib.urlencode({'d': settings.DEFAULT_AVATAR}) in profile_avatar(self.u), "Bad default avatar: %s" % profile_avatar(self.u))
 
     def test_profile_avatar(self):
-        profile = Profile(user=self.u)
-        profile.avatar = 'images/foo.png'
-        profile.save()
-        eq_('%simages/foo.png' % settings.MEDIA_URL, profile_avatar(self.u))
+        self.u.email = 'test@test.com'
+        ok_(md5(self.u.email).hexdigest() in profile_avatar(self.u))
 
     def test_public_email(self):
         eq_(u'<span class="email">'
@@ -38,20 +40,20 @@ class HelperTestCase(TestCase):
              '&#108;</span>', public_email('not.an.email'))
 
     def test_display_name(self):
-        eq_(u'testuser', display_name(self.u))
-        p = Profile(user=self.u)
-        p.name = u'Test User'
-        p.save()
+        new_user = User.objects.create(pk=40000, username='testuser3')
+        eq_(u'testuser3', display_name(new_user))
+        UserProfile.objects.create(user=new_user) 
+        p = new_user.get_profile()
+        p.fullname = u'Test User'
         eq_(u'Test User', display_name(self.u))
 
     def test_user_list(self):
-        User.objects.create(pk=300000, username='testuser2')
         User.objects.create(pk=400000, username='testuser3')
         users = User.objects.all()
         list = user_list(users)
         assert isinstance(list, Markup)
         fragment = pq(list)
         eq_(3, len(fragment('a')))
-        a = fragment('a')[1]
-        assert a.attrib['href'].endswith('400000')
+        a = fragment('a')[2]
+        assert a.attrib['href'].endswith('testuser3/')
         eq_('testuser3', a.text)
