@@ -93,6 +93,29 @@ class ProfileViewsTest(test_utils.TestCase):
                 eq_(item.history_url,
                     item_el.find('.actions a.history').attr('href'))
 
+    @attr('current')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+    @patch('dekicompat.backends.DekiUserBackend.get_user')
+    @patch('dekicompat.backends.DekiUserBackend.authenticate')
+    def test_bug_698971(self, authenticate, get_user, get_deki_user,
+                        fetch_user_feed):
+        """A non-numeric page number should not cause an error"""
+        (user, deki_user, profile) = self._create_profile()
+
+        authenticate.return_value = user
+        get_user.return_value = user
+        doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
+        fetch_user_feed.return_value = doc_feed_data
+        
+        url = '%s?page=asdf' % reverse('devmo.views.profile_view',
+                                       args=(user.username,))
+
+        try:
+            r = self.client.get(url, follow=True)
+        except PageNotAnInteger:
+            ok_(False, "Non-numeric page number should not cause an error")
+
     @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
     @patch('dekicompat.backends.DekiUserBackend.get_user')
     @patch('dekicompat.backends.DekiUserBackend.authenticate')
