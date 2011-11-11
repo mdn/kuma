@@ -164,6 +164,7 @@ class DekiUserBackend(object):
 
     @staticmethod
     def post_mindtouch_user(user):
+        # post a new mindtouch user
         user_url = '%s/@api/deki/users?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml',}
@@ -175,6 +176,7 @@ class DekiUserBackend(object):
 
     @staticmethod
     def put_mindtouch_user(user):
+        # update an existing mindtouch user
         deki_user_id = user.get_profile().deki_user_id or ''
         user_url = '%s/@api/deki/users/%s?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, deki_user_id,  settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
