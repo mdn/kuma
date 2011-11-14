@@ -325,7 +325,7 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         ok_('nl', doc.find('#profile-edit select#id_locale option[value="nl"][selected="selected"]'))
 
-        raise SkipTest("Skip the rest until we sort out staging MindTouch data consistency issues")
+        # raise SkipTest("Skip the rest until we sort out staging MindTouch data consistency issues")
         r = requests.get(DekiUserBackend.profile_by_id_url % '=testaccount')
         doc = pq(r.content)
         eq_('nl', doc.find('language').text())
