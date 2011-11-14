@@ -36,38 +36,27 @@ class DekiUserBackend(object):
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
     def authenticate(self, username=None, password=None):
-        authtoken = None
-        auth_url = "%s/@api/deki/users/authenticate" % (settings.DEKIWIKI_ENDPOINT)
-        try:
-            r = requests.post(auth_url, auth=(username, password))
-            if r.status_code == 200:
-                authtoken = r.content
+        authtoken = DekiUserBackend.mindtouch_login(
+            username=username,
+            password=password)
+        if authtoken:
+            cookies = dict(authtoken=authtoken)
+            resp = requests.get(DekiUserBackend.profile_url, cookies=cookies)
+            deki_user = DekiUser.parse_user_info(resp.content, authtoken)
+            if deki_user:
+                # HACK: Retain authenticated authtoken for future Deki API
+                # requests.
+                _thread_locals.deki_api_authtoken = authtoken
+                user = self.get_or_create_user(deki_user)
+                # Set django password equal to the password that authenticated
+                # with MindTouch
+                user.set_password(password)
+                user.save()
+                return user
             else:
-                # TODO: decide WTF to do here
+                self.flush()
                 return None
-        except HTTPError:
-            # TODO: decide WTF to do here
-            return None
-        cookies = dict(authtoken=authtoken)
-        resp = requests.get(DekiUserBackend.profile_url, cookies=cookies)
-        deki_user = DekiUser.parse_user_info(resp.content, authtoken)
-        if deki_user:
-            # HACK: Retain authenticated authtoken for future Deki API
-            # requests.
-            _thread_locals.deki_api_authtoken = authtoken
-            user = self.get_or_create_user(deki_user)
-            # Set django password equal to the password that authenticated
-            # with MindTouch
-            user.set_password(password)
-            user.save()
-            # Store deki authtoken for user to set cookie on request
-            # object
-            profile = user.get_profile()
-            profile.deki_authtoken = authtoken
-            profile.save()
-            return user
         else:
-            self.flush()
             return None
 
     def flush(self):
@@ -141,10 +130,8 @@ class DekiUserBackend(object):
         return user
 
     @staticmethod
-    def mindtouch_login(request):
+    def mindtouch_login(username, password):
         auth_url = "%s/@api/deki/users/authenticate" % (settings.DEKIWIKI_ENDPOINT)
-        username = request.POST['username']
-        password = request.POST['password']
         try:
             r = requests.post(auth_url, auth=(username.encode('utf-8'), password.encode('utf-8')))
             if r.status_code == 200:

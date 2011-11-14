@@ -96,7 +96,6 @@ class UserProfile(ModelBase):
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
-    deki_authtoken = models.CharField(max_length=255, blank=True)
     timezone = TimeZoneField(null=True, blank=True, verbose_name=_lazy(u'Timezone'))
     locale = LocaleField(null=True, blank=True, db_index=True, verbose_name=_lazy(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',

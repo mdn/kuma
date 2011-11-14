@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from dekicompat.backends import DekiUserBackend
@@ -51,7 +51,7 @@ class LoginTestCase(TestCase):
         self.assertContains(response, 'Welcome back, testuser')
 
     @mock.patch_object(Site.objects, 'get_current')
-    def test_mindtouch_creds_create_user_and_profile_with_authtoken(self, get_current):
+    def test_mindtouch_creds_create_user_and_profile(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
         self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
 
@@ -64,25 +64,10 @@ class LoginTestCase(TestCase):
         # Login should have auto-created django user
         u = User.objects.get(username='testaccount')
         eq_(True, u.is_active)
-        p = u.get_profile()
-        authtoken = p.deki_authtoken
-        self.assertNotEquals(None, authtoken)
-        self.assertNotEquals('', authtoken)
+        ok_(u.get_profile())
 
         # Login page should show welcome back
         self.assertContains(response, 'Welcome back, testaccount')
-
-        # subsequent login shouldn't need dekicompat
-        self.client.post(reverse('users.logout'))
-
-        old_endpoint = settings.DEKIWIKI_ENDPOINT
-        settings.DEKIWIKI_ENDPOINT = None
-        response = self.client.post(reverse('users.login'),
-                                    {'username': 'testaccount',
-                                     'password': 'theplanet'}, follow=True)
-        eq_(200, response.status_code)
-        self.assertContains(response, 'Welcome back, testaccount')
-        settings.DEKIWIKI_ENDPOINT = old_endpoint
 
 
 class RegisterTestCase(TestCase):
