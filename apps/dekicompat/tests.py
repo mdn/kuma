@@ -49,16 +49,12 @@ class DekiCompatTestCase(TestCase):
 
     @mockdekiauth
     def test_good_mindtouch_login(self):
-        request = Request(self.__class__.auth_url)
-        request.POST = {'username': 'user', 'password': 'pass'}
-        authtoken = DekiUserBackend.mindtouch_login(request)
+        authtoken = DekiUserBackend.mindtouch_login('user', 'pass')
         eq_('authtoken_value', authtoken)
 
     @attr('fixme')
     def test_unicode_mindtouch_login(self):
         raise SkipTest()
-        request = Request(self.__class__.auth_url)
         u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
-        request.POST = {'username': 'user', 'password': u_str}
-        authtoken = DekiUserBackend.mindtouch_login(request)
+        authtoken = DekiUserBackend.mindtouch_login('user', u_str)
         eq_('authtoken_value', authtoken)

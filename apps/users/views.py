@@ -36,9 +36,12 @@ def login(request):
 
     if request.user.is_authenticated():
         resp = HttpResponseRedirect(next_url)
-        authtoken = request.session.get('deki_authtoken', False)
+        from dekicompat.backends import DekiUserBackend
+        authtoken = DekiUserBackend.mindtouch_login(
+            form.cleaned_data.get('username'),
+            form.cleaned_data.get('password'))
         if authtoken:
-            resp.set_cookie('authtoken', authtoken, secure=True)
+            resp.set_cookie('authtoken', authtoken)
         return resp
 
     response = jingo.render(request, 'users/login.html',
