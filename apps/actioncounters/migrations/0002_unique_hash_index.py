@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         db.delete_column('actioncounters_actioncounterunique', 'session_key')
 
         # Adding field 'ActionCounterUnique.unique_hash'
-        db.add_column('actioncounters_actioncounterunique', 'unique_hash', self.gf('django.db.models.fields.CharField')(blank=True, max_length=32, null=True, db_index=True), keep_default=False)
+        db.add_column('actioncounters_actioncounterunique', 'unique_hash', self.gf('django.db.models.fields.CharField')(blank=True, max_length=32, unique=True, null=True, db_index=True), keep_default=False)
 
 
     def backwards(self, orm):
