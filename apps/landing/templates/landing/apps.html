@@ -141,12 +141,11 @@
   
     <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
       <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
-      {% trans %}
-      <p class="mod-intro">Sign up now for the monthly Apps Developer newsletter. 
-      First 5000 subscribers will gain early access to the Developer Preview Release 
-      of the upcoming apps market-place. <strong>Join us!</strong>
-      </p>
-      {% endtrans %}
+      <p class="mod-intro">{% trans %}
+          Sign up now for the monthly Apps Developer newsletter. The first 5,000
+          subscribers will gain access to the Developer Preview of the Mozilla Apps
+          market. <strong>Join us!</strong>
+      {% endtrans %}</p>
       
       {% if messages %}
       <ul class="messages">
@@ -190,7 +189,7 @@
   
     <figure class="promo banner">
       <a href="http://webfwd.org" rel="external">
-        <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="Web Fwd: Mozilla's accelerator for open Web projects. Learn more.">
+        <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="{{ _("Web Fwd: Mozilla's accelerator for open Web projects. Learn more.") }}">
       </a>
     </figure>
 

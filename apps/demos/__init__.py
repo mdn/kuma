@@ -87,7 +87,7 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "summary": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "description": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "learn_more": [],
-        "tab_copy": _("""<p>The joy of painting.</p>
+        "tab_copy": _("""
         <p>The HTML5 Canvas element and API let you paint the Web using JavaScript to render and animate 2-D shapes, bitmapped images, and advanced graphical effects. But that's just the beginning. Because it's done with JavaScript, every line, shape or pixel you draw can interact with the rest of the page, other JavaScript APIs, other data, and of course, the user. If you can dream it, you can draw it.</p>"""),
     },
     {
@@ -99,6 +99,18 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "tagline": _("Take your data with you."),
         "summary": _("IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."),
         "description": _("IndexedDB lets web applications store significant amounts of structured data locally, for faster access, online or offline."),
+        "learn_more": [],
+        "tab_copy": _("IndexedDB lets Web applications store significant amounts of structured data locally, for faster access, online or offline. You can store data using key-value pairs, where the values are whole objects, without having to serialize them (as you do with document-oriented databases) or coerce them into a relational structure (as with relational databases). "),
+    },
+    {
+        "tag_name": "challenge:2012:january",
+        "title": _("January 2012 Dev Derby Challenge - Orientation"),
+        "short_title": _("Orientation"),
+        "dateline": _("January 2012"),
+        "short_dateline": _("January"),
+        "tagline": _("Which way is up?"),
+        "summary": _("Orientation features in HTML5 enable Web developers to create more interactive and engaging experiences by accessing the motion and orientation data of devices with accelerometers."),
+        "description": _("Orientation features in HTML5 enable Web developers to create more interactive and engaging experiences by accessing the motion and orientation data of devices with accelerometers."),
         "learn_more": [],
         "tab_copy": _(""),
     },

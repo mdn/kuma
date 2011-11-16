@@ -107,7 +107,7 @@
     {% elif profile.user == request.user %}
         <section id="profile-demos" class="profile-section">
           <header class="gallery-head">
-            <h2 class="count">No Demos</h2>
+            <h2 class="count">{{_("No Demos")}}</h2>
           </header>
           <p class="none">{% trans submit_url=url('demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a class="button positive" href="{{submit_url}}">Submit a Demo</a>{% endtrans %}</p>
         </section>

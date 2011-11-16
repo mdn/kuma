@@ -186,7 +186,7 @@
      <p class="fm-submit"> 
         {% if not edit %}
             <button type="submit" name="action_create">{{ _("Submit demo") }}</button>
-            or <a href="{{ url('demos') }}">{{_('Discard Demo')}}</a>
+            {{_('or')}} <a href="{{ url('demos') }}">{{_('Discard Demo')}}</a>
         {% else %}
             <button type="submit" name="action_edit">{{ _("Save changes") }}</button>
             or <a href="{{ url('demos_detail', slug=submission.slug) }}">{{_('Discard Changes')}}</a>
