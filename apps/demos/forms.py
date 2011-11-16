@@ -29,7 +29,7 @@ from .models import Submission
 from captcha.fields import ReCaptchaField
 
 import django.forms.fields
-from django.forms.widgets import CheckboxSelectMultiple
+from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
 
 import constance.config
 
@@ -102,9 +102,9 @@ class SubmissionEditForm(MyModelForm):
         )
     )
 
-    challenge_tags = forms.MultipleChoiceField(
-        label = "Dev Derby Challenge tags",
-        widget = CheckboxSelectMultiple,
+    challenge_tags = forms.ChoiceField(
+        label = "Dev Derby Challenge tag",
+        widget = RadioSelect,
         required = False,
         choices = (
             (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
@@ -118,18 +118,36 @@ class SubmissionEditForm(MyModelForm):
     def __init__(self, *args, **kwargs):
 
         # Set the request user, for tag namespace permissions
-        self.request_user = kwargs.get('request_user', AnonymousUser)
-        del kwargs['request_user']
+        self.request_user = kwargs.pop('request_user', AnonymousUser)
 
         # Hit up the super class for init
         super(SubmissionEditForm, self).__init__(*args, **kwargs)
 
-        # Initialize form with namespaced tags.
+        # If this is being used to edit a submission, we need to do
+        # the following:
+        #
+        # 1. Populate the tech tags.
+        #
+        # 2. If the deadline has passed for the challenge this is
+        #    entered in, remove the 'demo_package' field since they
+        #    can't upload a new package past the deadline.
+        #
+        # 3. If the deadline has passed, remove the field for choosing
+        #    which derby they're entered in. Otherwise, populate it so
+        #    they can choose to change it.
+        #
+        # 4. Make sure we stash away the existing challenge tags, and
+        #    ensure they're preserved across the edit.
         instance = kwargs.get('instance', None)
         if instance:
+            if instance.challenge_closed():
+                for fieldname in ('demo_package', 'challenge_tags'):
+                    del self.fields[fieldname]
+                self._old_challenge_tags = [unicode(tag) for tag in instance.taggit_tags.all_ns('challenge:')]
             for ns in ('tech', 'challenge'):
-                self.initial['%s_tags' % ns] = [t.name 
-                    for t in instance.taggit_tags.all_ns('%s:' % ns)]
+                if '%s_tags' % ns in self.fields:
+                    self.initial['%s_tags' % ns] = [t.name 
+                        for t in instance.taggit_tags.all_ns('%s:' % ns)]
 
     def clean(self):
         cleaned_data = super(SubmissionEditForm, self).clean()
@@ -152,9 +170,19 @@ class SubmissionEditForm(MyModelForm):
         super_save_m2m = hasattr(self, 'save_m2m') and self.save_m2m or None
         def save_m2m():
             if super_save_m2m: super_save_m2m()
-            for ns in ('tech', 'challenge'):
-                self.instance.taggit_tags.set_ns('%s:' % ns,
-                    *self.cleaned_data.get('%s_tags' % ns, []))
+            self.instance.taggit_tags.set_ns('tech:', *self.cleaned_data.get('tech_tags', []))
+            # Look for a dev derby tag first in cleaned_data; if it
+            # doesn't exist there, see if we stashed away the tags
+            # from the instance; if not, fall back to empty list. This
+            # is slightly verbose because we do have to handle the
+            # legacy case of multiple challenge tags even though we
+            # now only allow one per demo.
+            if 'challenge_tags' in self.cleaned_data:
+                challenge_tags = [self.cleaned_data['challenge_tags']]
+            else:
+                challenge_tags = getattr(self, '_old_challenge_tags', [])
+            if challenge_tags:
+                self.instance.taggit_tags.set_ns('challenge:', *challenge_tags)
 
         if commit: save_m2m()
         else: self.save_m2m = save_m2m
