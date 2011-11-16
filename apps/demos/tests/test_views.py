@@ -296,3 +296,51 @@ class DemoViewsTest(test_utils.TestCase):
         form = SubmissionEditForm(instance=s)
         assert 'demo_package' not in form.fields
         assert 'challenge_tags' not in form.fields
+
+    @mockdekiauth
+    def test_derby_tag_saving(self):
+        """
+        There's some tricky bits in the handling of editing and saving
+        challenge tags; this test just exercises a cycle of edit/save
+        a couple times in a row to make sure we don't go foul in
+        there.
+        
+        """
+        s = save_valid_submission('hello world')
+        closed_dt = datetime.date.today() - datetime.timedelta(days=32)
+        s.taggit_tags.set_ns('challenge:', closed_dt.strftime('%Y:%B').lower())
+        edit_url = reverse('demos_edit', args=[s.slug])
+        r = self.client.get(edit_url)
+        eq_(r.status_code, 200)
+        
+        r = self.client.post(edit_url, data=dict(
+            title=s.title,
+            summary='This is a test demo submission',
+            description='Some description goes here',
+            tech_tags=('tech:audio', 'tech:video', 'tech:websockets',),
+            license_name='gpl',
+            accept_terms='1',
+        ))
+
+        eq_(302, r.status_code)
+        assert 'Location' in r
+        assert 'hello-world' in r['Location']
+
+        r = self.client.get(edit_url)
+        eq_(r.status_code, 200)
+
+        r = self.client.post(edit_url, data=dict(
+            title=s.title,
+            summary='This is a test demo submission',
+            description='Some description goes here',
+            tech_tags=('tech:audio', 'tech:video', 'tech:websockets',),
+            license_name='gpl',
+            accept_terms='1',
+        ))
+
+        eq_(302, r.status_code)
+        assert 'Location' in r
+        assert 'hello-world' in r['Location']
+
+        r = self.client.get(edit_url)
+        eq_(r.status_code, 200)
