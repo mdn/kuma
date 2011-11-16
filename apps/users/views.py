@@ -18,6 +18,7 @@ import jingo
 from access.decorators import logout_required, login_required
 from notifications.tasks import claim_watches
 from questions.models import Question, CONFIRMED
+from session_csrf import anonymous_csrf
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
@@ -28,6 +29,7 @@ from users.models import Profile, RegistrationProfile, EmailChange
 from users.utils import handle_login, handle_register
 
 
+@anonymous_csrf
 @ssl_required
 def login(request):
     """Try to log the user in."""

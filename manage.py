@@ -47,5 +47,9 @@ import log_settings
 import safe_django_forms
 safe_django_forms.monkeypatch()
 
+import session_csrf
+session_csrf.monkeypatch()
+
+
 if __name__ == "__main__":
     execute_manager(settings)
