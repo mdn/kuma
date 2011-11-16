@@ -99,5 +99,5 @@ RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|s
 	RewriteCond %{REQUEST_URI} !/block_862be.html
 	RewriteCond %{REQUEST_URI} !/block_f90c2.html
 	RewriteCond %{QUERY_STRING} ^$ [OR] %{REQUEST_URI} ^/Special:Search
-	RewriteRule ^(.*)$ index.php?title=$1 [L,QSA,NE]
+	RewriteRule ^(.*)$ index.php?mt=1&title=$1 [L,QSA,NE]
 
