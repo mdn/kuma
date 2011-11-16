@@ -46,15 +46,15 @@
         <figure class="acc-avatar">
           <img src="{{ profile.gravatar }}" alt="" width="120" height="120" class="photo avatar">
           <figcaption>
-              Change your avatar at <a href="http://gravatar.com" rel="external">gravatar.com</a>
+              {{ _('Change your avatar at') }}<a href="http://gravatar.com" rel="external">gravatar.com</a>
           </figcaption>
         </figure>
         
         <ul>
-            <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">View profile</a></li>
-            <li><a href="/Special:Preferences">Change password</a></li>
+            <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">{{ _('View profile') }}</a></li>
+            <li><a href="/Special:Preferences">{{ _('Change password') }}</a></li>
           {# TODO: Implement account deletion #}
-          {# <li class="delete"><a href="#">Delete my account</a></li> #}
+          {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
         </ul>
       </div>
       
@@ -69,22 +69,22 @@
 
           {% set field = form['bio'] %}
           <li class="wordcount{{ ' error' if field.errors }}">
-            <label for="id_bio">About Me <span class="note"><b id="bio_wordcount" class="counter">150</b> words remaining</span></label> 
+            <label for="id_bio">{{ _('About Me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label> 
             {{ field | safe }}
           </li>
 
           {% set field = form['interests'] %}
           <li class="{{ ' error' if field.errors }}">
-            <strong class="label">Interests (tags)</strong>
-            <p class="note">Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".</p>
+            <strong class="label">{{ _('Interests (tags)') }}</strong>
+            <p class="note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
             {{ field | safe }}
             {{ field.errors|safe }}
           </li>
 
           {% set field = form['expertise'] %}
           <li class="{{ ' error' if field.errors }}">
-            <strong class="label">Areas of Expertise</strong>
-            <p class="note">Add your interests first, then declare yourself an expert in selected topics.</p>
+            <strong class="label">{{ _('Areas of Expertise') }}</strong>
+            <p class="note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
             {{ field | safe }}
             {{ field.errors|safe }}
           </li>
@@ -93,7 +93,7 @@
       </fieldset>
 
       <fieldset class="section" id="elsewhere">
-        <legend><b>My Other Profiles</b></legend>
+        <legend><b>{{ _('My Other Profiles') }}</b></legend>
         
         <ul>
             {% for site in profile.website_choices %}
@@ -108,7 +108,7 @@
 
       </fieldset>
       
-      <p class="fm-submit"><button type="submit">Save Changes</button></p>
+      <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>
 
     </form>
 

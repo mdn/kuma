@@ -61,7 +61,7 @@
 
       <nav id="nav" role="menubar">
         <ul id="nav-main">
-          <li id="nav-main-topics" class="menu"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="Explore other parts of MDN">{{ _('Topics') }}</a>
+          <li id="nav-main-topics" class="menu"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="{{ _('Explore other parts of MDN') }}">{{ _('Topics') }}</a>
             <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
               <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
     {% if waffle.switch('apps_landing') %}
