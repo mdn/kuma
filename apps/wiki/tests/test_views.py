@@ -457,8 +457,9 @@ class DocumentEditingTests(TestCase):
         })
         resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
         eq_(200, resp.status_code)
-        ok_(unicode(MIDAIR_COLLISION) in resp.content)
-        page = pq(resp.content)
+
+        ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
+            "Midair collision message should appear")
 
 
 class SectionEditingResourceTests(TestCase):
