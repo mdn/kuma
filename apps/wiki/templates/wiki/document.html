@@ -20,7 +20,10 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-        <article class="article" role="main">
+      <article class="article" role="main" 
+          data-current-revision="{{ document.current_revision.id }}"
+          data-refresh-message="{{ _('Your changes were merged. However, something else has been edited, so this page will be refreshed to reflect the changes.') }}"
+          data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
       <header id="article-head">
         <div class="title">
             <h1 class="page-title">{{ document.title }}</h1>
@@ -71,8 +74,7 @@
         {% endfor %}
       {% endif %}
 
-      <div id="wikiArticle" class="page-content boxed"
-          data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
+      <div id="wikiArticle" class="page-content boxed">
           {# 
         <div id="article-nav"> 
           <div class="page-toc">
@@ -138,6 +140,14 @@
         <a class="cancel" href="#">{{ _('Cancel') }}</a>
         <div class="src"></div>
       </div>
+      {# This form gets filled out and used by the inline editor when a
+         conflict is detected. It needs to be server side in order to get supplied
+         with a CSRF token. #}
+      <form class="conflict-bouncer template" method="POST" action="">
+        <input type="hidden" name="form" value="rev">
+        <input type="hidden" name="current_rev" value="">
+        <input type="hidden" name="content" value="">
+      </form>
     {% endif %}
 </section>
 {% endblock %}
