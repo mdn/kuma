@@ -51,6 +51,8 @@ TITLE_COLLIDES = _lazy(u'Another document with this title already exists.')
 SLUG_COLLIDES = _lazy(u'Another document with this slug already exists.')
 OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
+MIDAIR_COLLISION = _lazy(u'This document was modified while you were editing it.')
+
 
 class DocumentForm(forms.ModelForm):
     """Form to create/edit a document."""
@@ -223,6 +225,9 @@ class RevisionForm(forms.ModelForm):
         widget=CheckboxSelectMultiple, required=False,
         choices=REVIEW_FLAG_TAGS)
 
+    current_rev = forms.CharField(required=False,
+                                  widget=forms.HiddenInput())
+
     class Meta(object):
         model = Revision
         fields = ('title', 'slug', 'keywords', 'summary', 'content', 'comment',
@@ -312,6 +317,44 @@ class RevisionForm(forms.ModelForm):
             content = tool.serialize()
 
         return content
+
+    def clean_current_rev(self):
+        """If a current revision is supplied in the form, compare it against
+        what the document claims is the current revision. If there's a
+        difference, then an edit has occurred since the form was constructed
+        and we treat it as a mid-air collision."""
+        current_rev = self.cleaned_data.get('current_rev', None)
+
+        if not current_rev:
+            # If there's no current_rev, just bail.
+            return current_rev
+        
+        try:
+            doc_current_rev = self.instance.document.current_revision.id
+            if unicode(current_rev) != unicode(doc_current_rev):
+
+                if self.section_id and self.instance and self.instance.document:
+                    # This is a section edit. So, even though the revision has
+                    # changed, it still might not be a collision if the section
+                    # in particular hasn't changed.
+                    orig_ct = (Revision.objects.get(pk=current_rev)
+                               .get_section_content(self.section_id))
+                    curr_ct = (self.instance.document.current_revision
+                               .get_section_content(self.section_id))
+                    if orig_ct != curr_ct:
+                        # Oops. Looks like the section did actually get
+                        # changed, so yeah this is a collision.
+                        raise forms.ValidationError(MIDAIR_COLLISION)
+                    
+                    return current_rev
+
+                else:
+                    # No section edit, so this is a flat-out collision.
+                    raise forms.ValidationError(MIDAIR_COLLISION)
+        
+        except Document.DoesNotExist:
+            # If there's no document yet, just bail.
+            return current_rev
 
     def save(self, creator, document, **kwargs):
         """Persist me, and return the saved Revision.

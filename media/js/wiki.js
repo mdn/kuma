@@ -37,7 +37,7 @@
             initSaveAndEditButtons();
             initArticlePreview();
             initTitleAndSlugCheck();
-            initDrafting();
+            // initDrafting();
         }
     }
     
@@ -154,7 +154,8 @@
      */
     function cancelSectionEdit () {
         // Make sure the user wants this to happen.
-        var msg = $('#wikiArticle').attr('data-cancel-edit-message'),
+        var msg = $('#content-main > article')
+                    .attr('data-cancel-edit-message'),
             rv = window.confirm(msg);
         if (!rv) { return false; }
         // We're sure, so clean up without committing.
@@ -168,26 +169,67 @@
     function saveSectionEdit () {
         var ui = $('.edited-section-ui.current'),
             edit_url = ui.data('edit_url'), 
-            editor = ui.data('editor');
+            editor = ui.data('editor'),
+            article = $('#content-main > article'),
+            current_rev = article.attr('data-current-revision'),
+            refresh_msg = article.attr('data-refresh-message');
             
         ui.addClass('edited-section-ui-saving');
         editor.updateElement();
         var src = $('.edited-section-ui.current .src').html();
 
         $.ajax({
-            type: 'POST', url: edit_url,
+            type: 'POST', url: edit_url + '&raw=1',
             data: { 
                 'form': 'rev',
-                'content': src
+                'content': src,
+                'current_rev': current_rev
             },
             error: function (xhr, status, err) {
+
+                if ('409' == xhr.status) {
+                    // We detected a conflict, most likely from a mid-air edit
+                    // collision. So, use the hidden conflict-bouncer form to
+                    // transition to a full-page resolution UI.
+                    $('form.conflict-bouncer')
+                        .attr('action', edit_url)
+                        .find('input[name=current_rev]')
+                            .val(current_rev).end()
+                        .find('input[name=content]')
+                            .val(src).end()
+                        .submit();
+                    return;
+                }
+
+                // Anything else error-wise is probably recoverable.
                 window.alert("Error saving section, please try again.");
                 ui.removeClass('.edited-section-ui-saving');
-                console.log("ERROR! " + err);
+
             },
             success: function (data, status, xhr) {
+
+                if ('205' == xhr.status) {
+                    // There wasn't a conflict after the edit, but something
+                    // else on the page changed. So, we should refresh rather
+                    // than just updating the edited section. That will help
+                    // prevent conflicts in future section edits and alert the
+                    // user that someone else is touching the page.
+                    window.alert(refresh_msg);
+                    window.location.reload();
+                    return;
+                }
+
+                // Looks like we were the only editor so far, so carry on and
+                // update the content inline.
                 $('#edited-section').html(data)
                 cleanupSectionEdit();
+
+                // Also, since this should have been the only change, we can
+                // update the local current revision ID to what the server
+                // reported in a header.
+                article.attr('data-current-revision', 
+                             xhr.getResponseHeader('x-kuma-revision'))
+            
             }
         });
     }
@@ -870,20 +912,40 @@
             $(this).addClass('loading');
             return true;
         });
+        $('#btn-save-and-edit').show();
 
         $('#save-and-edit-target').load(function () {
             if (typeof(window.sessionStorage) != 'undefined') {
-                // Dig into the iframe on load and look for "OK". If found,
-                // then it should be safe to throw away the preserved content.
-                // 
-                // Otherwise, the iframe probably loaded a 403 or
-                // login-required error, so we should leave the content
-                // preserved.
                 var if_doc = $('#save-and-edit-target')[0].contentDocument;
                 if (typeof(if_doc) != 'undefined') {
-                    if ('OK' == (''+if_doc.body.innerHTML).trim()) {
+
+                    var ir = $('#iframe-response', if_doc);
+                    if ('OK' == ir.attr('data-status')) {
+
+                        // Dig into the iframe on load and look for "OK". If found,
+                        // then it should be safe to throw away the preserved content.
                         window.sessionStorage.setItem(STORAGE_NAME, '');
+
+                        // We also need to update the form's current_rev to
+                        // avoid triggering a conflict, since we just saved in
+                        // the background.
+                        $('#wiki-page-edit input[name=current_rev]').val(
+                            ir.attr('data-current-revision'));
+                        
+                    } else if ($('#wiki-page-edit', if_doc).hasClass('conflict')) {
+                        // HACK: If we detect a conflict in the iframe while
+                        // doing save-and-edit, force a full-on save in order
+                        // to surface the issue. There's no easy way to bust
+                        // the iframe otherwise, since this was a POST.
+                        $('#wiki-page-edit')
+                            .attr('action', '')
+                            .attr('target', '');
+                        $('#btn-save').click();
+                    
                     }
+                    
+                    // Anything else that happens (eg. 403 errors) should have
+                    // framebusting code to escape the hidden iframe.
                 }
             }
             // Stop loading state on button
