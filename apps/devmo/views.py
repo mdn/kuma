@@ -101,6 +101,12 @@ def profile_edit(request, username):
         logging.debug('form.is_valid(): %s' % form.is_valid())
         logging.debug('form.errors: %s' % form.errors)
         if form.is_valid():
+            # Change the email address first so profile save
+            # to mindtouch includes updated email
+            if form.cleaned_data['email'] != profile.user.email:
+                profile.user.email = form.cleaned_data['email']
+                profile.user.save()
+
             profile_new = form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
@@ -120,14 +126,6 @@ def profile_edit(request, username):
             for field, tag_ns in field_to_tag_ns:
                 tags = [t.lower() for t in parse_tags(form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
-
-            # Change the email address, if necessary.
-            if form.cleaned_data['email'] != profile.user.email:
-                profile.user.email = form.cleaned_data['email']
-                profile.user.save()
-                # TODO: restore this and more - send all django profile
-                # fields to deki
-                # profile.deki_user.change_email(form.cleaned_data['email'])
 
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
