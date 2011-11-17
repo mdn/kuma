@@ -52,7 +52,7 @@
         
         <ul>
             <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">View profile</a></li>
-            <li><a href="/Special:Preferences">Change password</a></li>
+            <li><a href="{{ url('users.pw_change') }}">Change password</a></li>
           {# TODO: Implement account deletion #}
           {# <li class="delete"><a href="#">Delete my account</a></li> #}
         </ul>
