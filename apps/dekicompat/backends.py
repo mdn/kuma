@@ -175,24 +175,6 @@ class DekiUserBackend(object):
             pass
         return DekiUser.parse_user_info(resp.content)
 
-    @staticmethod
-    def set_mindtouch_password(user, old_password, new_password):
-        deki_user_id = user.get_profile().deki_user_id or ''
-        deki_user = DekiUserBackend.get_deki_user(deki_user_id)
-        pw_url = '%s/@api/deki/users/=%s/password?currentpassword=%s' % (
-            settings.DEKIWIKI_ENDPOINT,
-            deki_user.username,
-            old_password)
-        headers = {'Content-Type': 'text/plain',}
-        resp = requests.put(pw_url,
-                            data=new_password,
-                            headers=headers,
-                            auth=(deki_user.username, old_password))
-        if resp.status_code is 200:
-            authtoken = resp.content
-            return authtoken
-        else:
-            return False
 
 class DekiUser(object):
     """
