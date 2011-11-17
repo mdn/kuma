@@ -468,7 +468,7 @@
 .section-demos .submission .section.notitle { padding-top: 18px; }
 
 /* @Sidebar @modules *********/
-.section-demos .module { padding: 18px; background-color: #fff; background-color: rgba(255,255,255,.8); border: 0; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.4); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.4); box-shadow: 1px 1px 4px rgba(0,0,0,.4); }
+.section-demos .module { padding: 18px; background: #c0c4c8; background: rgba(255,255,255,.6); border: 0; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.4); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.4); box-shadow: 1px 1px 4px rgba(0,0,0,.4); }
 .section-demos .mod-title { margin: -10px -10px 15px; border-radius: 4px; padding: .75em 10px; color: #fff; text-align: center; font: 1.124em/1 "Carto Bold", sans-serif; text-transform: uppercase;
   background-image: none; 
   background: #000; 
@@ -477,9 +477,12 @@
   background: linear-gradient(top, #333 0, #000 100%);
 }
 
-#prepare-demo { width: 200px; float: right;  margin-right: -270px; }
+#demo-submit .aside { width: 200px; float: right; margin-right: -270px; background: #c0c4c8; background: rgba(255,255,255,.6); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }
 .submission #prepare-demo li { margin: 0 0 10px; padding: 0 0 10px; background: none; border-bottom: 1px dotted #b9b6a7; }
 #prepare-demo li:last-child { padding: 0; border: 0; margin: 0; }
+
+#update-profile { width: 200px; position: absolute; right: 0; top: 100px; border: 1px solid #cecfd2; background: #c0c4c8 url(../img/avatar-peep.png) left 120% no-repeat; background: rgba(255,255,255,.6) url(../img/avatar-peep.png) left 120% no-repeat; -moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px; }
+#update-profile p { margin-bottom: 0; text-shadow: 1px 1px 0 rgba(255,255,255,.25); }
 
 .replaced input[type="file"] { position: relative; z-index: 2; opacity: 0; cursor: default; }
 .replaced .replacement { position: absolute; z-index: 1; margin: -2em 0 .5em; }
