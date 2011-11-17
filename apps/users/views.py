@@ -25,6 +25,7 @@ from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
+from dekicompat.backends import DekiUserBackend
 from users.utils import handle_login, handle_register
 
 
@@ -36,10 +37,10 @@ def login(request):
 
     if request.user.is_authenticated():
         resp = HttpResponseRedirect(next_url)
-        from dekicompat.backends import DekiUserBackend
         authtoken = DekiUserBackend.mindtouch_login(
             form.cleaned_data.get('username'),
-            form.cleaned_data.get('password'))
+            form.cleaned_data.get('password'),
+            force=True)
         if authtoken:
             resp.set_cookie('authtoken', authtoken)
         return resp

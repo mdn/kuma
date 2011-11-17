@@ -25,11 +25,8 @@ MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s<
 
 class DekiUserBackend(object):
     """
-    This backend is to be used in conjunction with the
-    ``DekiUserMiddleware`` to authenticate via Dekiwiki.
-
-    Tips for faking out Django/Dekiwiki
-    https://intranet.mozilla.org/Webdev:MDN:DjangoAuth
+    This backend authenticates via Dekiwiki. Should only activate
+    if django login fails.
     """
     profile_url = "%s/@api/deki/users/current" % settings.DEKIWIKI_ENDPOINT
     profile_by_id_url = ("%s/@api/deki/users/%s" %
@@ -108,6 +105,7 @@ class DekiUserBackend(object):
             user, created = (User.objects
                              .get_or_create(username=deki_user.username))
             user.username = deki_user.username
+            user.email = deki_user.email
             user.set_unusable_password()
             user.save()
             profile = UserProfile(deki_user_id=deki_user.id, user=user)
@@ -130,10 +128,13 @@ class DekiUserBackend(object):
         return user
 
     @staticmethod
-    def mindtouch_login(username, password):
+    def mindtouch_login(username, password, force=False):
         auth_url = "%s/@api/deki/users/authenticate" % (settings.DEKIWIKI_ENDPOINT)
+        if force:
+            auth_url = "%s/@api/deki/users/authenticate?apikey=%s" % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
+            password = ''
         try:
-            r = requests.post(auth_url, auth=(username.encode('utf-8'), password.encode('utf-8')))
+            r = requests.post(auth_url, auth=(username.encode('utf-8'), password))
             if r.status_code == 200:
                 authtoken = r.content
                 return authtoken
@@ -173,6 +174,25 @@ class DekiUserBackend(object):
             # TODO: decide WTF to do here
             pass
         return DekiUser.parse_user_info(resp.content)
+
+    @staticmethod
+    def set_mindtouch_password(user, old_password, new_password):
+        deki_user_id = user.get_profile().deki_user_id or ''
+        deki_user = DekiUserBackend.get_deki_user(deki_user_id)
+        pw_url = '%s/@api/deki/users/=%s/password?currentpassword=%s' % (
+            settings.DEKIWIKI_ENDPOINT,
+            deki_user.username,
+            old_password)
+        headers = {'Content-Type': 'text/plain',}
+        resp = requests.put(pw_url,
+                            data=new_password,
+                            headers=headers,
+                            auth=(deki_user.username, old_password))
+        if resp.status_code is 200:
+            authtoken = resp.content
+            return authtoken
+        else:
+            return False
 
 class DekiUser(object):
     """
