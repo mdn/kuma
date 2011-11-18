@@ -63,6 +63,15 @@
     {% endif %}
     </header>
 
+    <aside id="update-profile" class="module aside">
+      <h1 class="mod-title">{{_('Update Your Profile')}}</h1>
+      {% trans %}
+      <p>Share your developer interests and areas of expertise with the MDN 
+      community. We'll be able to bring you a better, more customized experience 
+      and you will have a place to show off the amazing work you do.</p>
+      {% endtrans %}
+    </aside>
+
     <form enctype="multipart/form-data" action="" method="POST" id="demo-submit" class="submission">
       {{ csrf() }}
       <fieldset class="section">

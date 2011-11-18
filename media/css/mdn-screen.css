@@ -89,7 +89,7 @@ Font sizes -
 }
 
 /* @Reset *********/
-header, hgroup, nav, section, article, aside, footer { display: block; }
+header, hgroup, nav, section, article, aside, footer, figure { display: block; }
 html, body, form, fieldset, legend, figure,
 h1, h2, h3, h4, h5, h6, dt, dd { margin: 0; padding: 0; }
 blockquote:before, blockquote:after, q:before, q:after { content: ""; }
@@ -332,7 +332,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 
 /*** @Section @Head *********/
 #section-head { background: #000 url("../img/bg-thinstripe-lt.png"); border-bottom: 4px solid #f8d575; border-top: 4px solid #333; margin-top: -4px; padding: 8px 0 4px; color: #ccc; text-shadow: 1px 1px 0 rgba(0,0,0,.75); -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-#section-head h1.intro { width: 660px; float: left; font: normal 16px/1 "Museo Sans", sans-serif; margin: 0 0 .15em 18px; }
+#section-head h1.intro { width: 660px; float: left; font: normal 16px/1 "Museo Sans", sans-serif; margin: 0 0 .25em 18px; }
 #section-head h1.intro b { font-size: 32px; font-weight: normal; display: block; margin-top: 8px; color: #f8d475; }
 
 #section-head .util { width: 235px; float: right; font-size: .785em; }
@@ -348,7 +348,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 /*** @Welcome *********/
 #welcome-bar { background: #000 url("../img/bg-thinstripe-lt.png"); border-bottom: 4px solid #f8d575; border-top: 4px solid #333; margin-top: -4px; color: #ccc; text-shadow: 1px 1px 0 rgba(0,0,0,.75); -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
 #welcome-bar .wrap { padding: 25px 160px; width: 620px; }
-#welcome-bar h1 { font: normal 42px/1 "Museo Sans", sans-serif; text-align: center; color: #f8d475; margin: 0 0 .15em; }
+#welcome-bar h1 { font: normal 42px/1 "Museo Sans", sans-serif; text-align: center; color: #f8d475; margin: 0 0 .3em; }
 #welcome-bar h1 b { font-weight: normal; color: #cc3435; }
 #welcome-bar h2 { font-size: 1em; text-align: center; color: #fff; }
 #welcome-bar p { font-size: .857em; line-height: 1.6; margin: 0; text-align: justify; }
@@ -414,6 +414,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 1em; }
 #promo-aurora:hover div { background-position: -720px 80px; }
 
 .home-extra #webfwd-promo { margin: -15px 0 1.5em; }
+.home-extra .promo { margin: 0 0 1.5em; }
 .home-extra .col-1 { width: 420px; float: left; }
 .home-extra .col-2 { width: 420px; float: right; }
 
