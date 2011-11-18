@@ -21,6 +21,9 @@
 		{
 			// Create map and set initial options
 			$gmap = new GMap2(this);
+
+			// Expose the map object via jQuery element data
+			$(this).data('gmap', $gmap);
 			
 			// Create new object to geocode addresses
 			$geocoder = new GClientGeocoder();
