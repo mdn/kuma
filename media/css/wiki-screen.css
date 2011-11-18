@@ -358,6 +358,10 @@ a.deki-file-revisions:hover, a.deki-file-revisions:focus, a.deki-file-revisions:
 #comments .commentForm .commentHeader { margin: 1em 0 .25em; color: #666; font: 200 20px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #comments .commentForm .commentSubmit { margin: .5em 0 0; }
 
+/* @Doc @Listings *********/
+#document-list .documents { list-style: disc; margin-left: 20px; }
+#document-list .documents li { margin: 0 0 .5em; }
+
 /* @Menus (misc dropdowns) *********/
 div.menu, div.dmenu-body { border: 1px solid #eee; border-right: 2px solid #ccc; border-bottom: 2px solid #ccc; padding: 10px 15px 0; background: #fff; }
 div.menu ul, div.dmenu-body ul { margin-bottom: 0; list-style: none; font: 11px Verdana, Tahoma, sans-serif; }

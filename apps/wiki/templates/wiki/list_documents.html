@@ -10,10 +10,10 @@
 {% set crumbs = [(None, title)] %}
 
 {% block content %}
-  <article id="document-list" class="main">
+  <div id="document-list" class="boxed">
     <h1>{{ title }}</h1>
     {% if documents.object_list %}
-      <ul class="documents">
+      <ul class="documents cols-3">
         {% for doc in documents.object_list %}
           <li><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></li>
         {% endfor %}
@@ -22,5 +22,5 @@
     {% else %}
       <p>{{ _('There are no articles.') }}</p>
     {% endif %}
-  </article>
+  </div>
 {% endblock %}
