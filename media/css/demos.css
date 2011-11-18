@@ -481,7 +481,7 @@
 .submission #prepare-demo li { margin: 0 0 10px; padding: 0 0 10px; background: none; border-bottom: 1px dotted #b9b6a7; }
 #prepare-demo li:last-child { padding: 0; border: 0; margin: 0; }
 
-#update-profile { width: 200px; position: absolute; right: 0; top: 100px; border: 1px solid #cecfd2; background: #c0c4c8 url(../img/avatar-peep.png) left 120% no-repeat; background: rgba(255,255,255,.6) url(../img/avatar-peep.png) left 120% no-repeat; -moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px; }
+#update-profile { width: 200px; position: absolute; right: 10px; top: 100px; border: 1px solid #cecfd2; background: #c0c4c8 url(../img/avatar-peep.png) left 120% no-repeat; background: rgba(255,255,255,.6) url(../img/avatar-peep.png) left 120% no-repeat; -moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px; }
 #update-profile p { margin-bottom: 0; text-shadow: 1px 1px 0 rgba(255,255,255,.25); }
 
 .replaced input[type="file"] { position: relative; z-index: 2; opacity: 0; cursor: default; }
