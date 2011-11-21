@@ -1,6 +1,6 @@
 <li class="demo{{extra_class.next()}} {{main_flag_class}}">
     <h2 class="demo-title">
-        <a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.screenshot_1.thumbnail_url() }}" alt="" width="{{thumb_width}}" height="{{thumb_height}}">{{ submission.title }}</a>
+        <a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.thumbnail_url(1) }}" alt="" width="{{thumb_width}}" height="{{thumb_height}}">{{ submission.title }}</a>
         {% if main_flag %}<strong class="flag">{{ main_flag_description }}</strong>{% endif %}
     </h2>
     <p class="byline vcard">{{ submission_creator(submission) }}</p>

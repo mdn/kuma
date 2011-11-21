@@ -10,7 +10,7 @@
 {% block extrahead %}
     <meta property="og:title" content="{{ submission.title }}"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_1.url) }}"/>    
+    <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_url(1)) }}"/>    
     <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
     <meta property="og:description" content="{{ submission.summary }}"/>
 {% endblock %}
@@ -137,9 +137,10 @@
             <li class="panel">{{ submission.video_url.embed_html }}</li>
         {% endif %}
         {% for idx in range(1, 6) %}
-          {% if submission['screenshot_'~idx] %}
+          {% set screenshot_url = submission.screenshot_url(idx) %}
+          {% if screenshot_url %}
             <li class="panel">
-              <img src="{{ submission['screenshot_'~idx].url }}" alt="" width="434" height="325">
+              <img src="{{ screenshot_url }}" alt="" width="434" height="325">
             </li>
           {% endif %}
         {% endfor %}
@@ -272,7 +273,7 @@
         <ul class="gallery">
           {% for more_submission in more_by %}
             {% if more_submission.id != submission.id %}
-                <li><a href="{{ more_submission.get_absolute_url() }}"><img src="{{ more_submission.screenshot_1.thumbnail_url() }}" alt="{{ more_submission.title }}" title="{{ more_submission.title }}" width="80" height="60"></a></li>
+                <li><a href="{{ more_submission.get_absolute_url() }}"><img src="{{ more_submission.thumbnail_url(1) }}" alt="{{ more_submission.title }}" title="{{ more_submission.title }}" width="80" height="60"></a></li>
             {% endif %}
           {% endfor %}
         </ul>
