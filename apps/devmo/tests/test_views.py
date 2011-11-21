@@ -11,6 +11,7 @@ from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
+from devmo.tests import create_profile
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -99,7 +100,7 @@ class ProfileViewsTest(TestCase):
     def test_bug_698971(self, authenticate, get_user, get_deki_user,
                         fetch_user_feed):
         """A non-numeric page number should not cause an error"""
-        (user, deki_user, profile) = self._create_profile()
+        (user, deki_user, profile) = create_profile()
 
         authenticate.return_value = user
         get_user.return_value = user

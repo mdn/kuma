@@ -7,6 +7,7 @@ from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
+from devmo.tests import create_profile
 
 from django.contrib.auth.models import User
 
@@ -182,7 +183,7 @@ class TestUserProfile(test_utils.TestCase):
     def test_unicode_email_gravatar(self):
         """Bug 689056: Unicode characters in email addresses shouldn't break
         gravatar URLs"""
-        (user, deki_user, profile) = self._create_profile()
+        (user, deki_user, profile) = create_profile()
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
             g = profile.gravatar
