@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from wiki.models import Document
+from wiki.models import Document, Revision, EditorToolbar
 
 
 class DocumentAdmin(admin.ModelAdmin):
@@ -14,3 +14,5 @@ class DocumentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Document, DocumentAdmin)
+admin.site.register(Revision, admin.ModelAdmin)
+admin.site.register(EditorToolbar, admin.ModelAdmin)

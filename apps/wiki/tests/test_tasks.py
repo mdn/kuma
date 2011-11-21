@@ -32,12 +32,12 @@ Message from the reviewer:
 To view the history of this document, click the following
 link, or paste it into your browser's location bar:
 
-https://testserver/en-US/kb/%s/history
+https://testserver/en-US/docs/%s$history
 """
 
 
 class RebuildTestCase(TestCase):
-    fixtures = ['users.json', 'wiki/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json']
     rf = RequestFactory()
     ALWAYS_EAGER = celery.conf.ALWAYS_EAGER
 
@@ -91,7 +91,7 @@ class RebuildTestCase(TestCase):
 
 class ReviewMailTestCase(TestCaseBase):
     """Test that the review mail gets sent."""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def _approve_and_send(self, revision, reviewer, message):
         revision.reviewer = reviewer

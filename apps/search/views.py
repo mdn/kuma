@@ -65,13 +65,13 @@ def search(request):
         fx = map(int, r.getlist('fx')) or [v.id for v in FIREFOX_VERSIONS]
     except ValueError:
         fx = [v.id for v in FIREFOX_VERSIONS]
-    r.setlist('fx', fx)
+    #r.setlist('fx', fx)
 
     try:
         os = map(int, r.getlist('os')) or [o.id for o in OPERATING_SYSTEMS]
     except ValueError:
         os = [o.id for o in OPERATING_SYSTEMS]
-    r.setlist('os', os)
+    #r.setlist('os', os)
 
     # Basic form
     if a == '0':
@@ -163,6 +163,7 @@ def search(request):
                 })
     # End of wiki filters
 
+    """
     # Support questions specific filters
     if cleaned['w'] & constants.WHERE_SUPPORT:
 
@@ -231,14 +232,15 @@ def search(request):
                 'filter': 'forum_id',
                 'value': cleaned['forum'],
             })
-
+    """
     # Filters common to support and discussion forums
     # Created filter
     unix_now = int(time.time())
     interval_filters = (
-        ('created', cleaned['created'], cleaned['created_date']),
+#        ('created', cleaned['created'], cleaned['created_date']),
         ('updated', cleaned['updated'], cleaned['updated_date']),
-        ('question_votes', cleaned['num_voted'], cleaned['num_votes']))
+#        ('question_votes', cleaned['num_voted'], cleaned['num_votes'])
+    )
     for filter_name, filter_option, filter_date in interval_filters:
         if filter_option == constants.INTERVAL_BEFORE:
             before = {

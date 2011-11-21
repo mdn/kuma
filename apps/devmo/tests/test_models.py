@@ -12,6 +12,9 @@ from devmo.tests import create_profile
 from django.contrib.auth.models import User
 
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
+from devmo.helpers import devmo_url
+from devmo import urlresolvers
+from devmo.models import Calendar, Event, UserProfile
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 

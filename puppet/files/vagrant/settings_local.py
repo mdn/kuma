@@ -8,6 +8,8 @@ DEV = True
 TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 
+SESSION_COOKIE_SECURE = False
+
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
 
@@ -79,3 +81,7 @@ logging.basicConfig(
     format = '%(asctime)s %(levelname)s %(message)s',
     filename = '/home/vagrant/logs/kuma-django.log',
 )
+
+SPHINX_INDEXER = '/usr/local/bin/indexer'
+SPHINX_SEARCHD = '/usr/local/bin/searchd'
+SEARCH_CACHE_PERIOD = 0 

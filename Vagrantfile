@@ -1,12 +1,12 @@
 #
-# Vagrant setup for Kuma (mdn branch)
+# Vagrant setup for Kuma
 #
 Vagrant::Config.run do |config|
 
     # This should get you a mostly ready-baked base box
-    config.vm.box = "kuma-mdn"
-    config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/kuma-mdn.box"
-    config.package.name = "kuma-mdn.box"
+    config.vm.box = "kuma"
+    config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/kuma.box"
+    config.package.name = "kuma.box"
 
     # To rebuild from mostly scratch, use this CentOS 5.6 (32 bit) image:
     # config.vm.box = "centos-56-32"
@@ -32,12 +32,12 @@ Vagrant::Config.run do |config|
     # uncomment to enable VM GUI console, mainly for troubleshooting
     #config.vm.boot_mode = :gui
 
-    # Add to /etc/hosts: 192.168.10.50 developer-mdndev.mozilla.org
-    config.vm.network("192.168.10.50")
+    # Add to /etc/hosts: 192.168.10.55 developer-dev.mozilla.org
+    config.vm.network("192.168.10.55")
 
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
-        puppet.manifest_file = "dev-vagrant-mdn.pp"
+        puppet.manifest_file = "dev-vagrant.pp"
     end
 
 end

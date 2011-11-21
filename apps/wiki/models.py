@@ -5,6 +5,7 @@ from urlparse import urlparse
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
+import bleach
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -13,14 +14,48 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.http import Http404
 
+from south.modelsinspector import add_introspection_rules
+
+import html5lib
+from html5lib.filters._base import Filter as html5lib_Filter
+
 from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
-from sumo.models import ModelBase, LocaleField
+from sumo.models import ManagerBase, ModelBase, LocaleField
 from sumo.urlresolvers import reverse, split_path
 from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
+import wiki.content
 
+import caching.base
+
+from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
+from taggit.managers import TaggableManager
+
+
+ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
+    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
+    'dl', 'dt', 'dd',
+    'img', 
+    'input',
+    'table', 'tbody', 'thead', 'tr', 'th', 'td',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
+    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+    'address'
+]
+ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
+ALLOWED_ATTRIBUTES['span'] = ['style', ]
+ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is', 'title', 'style']
+ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
+ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
+    'div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
+    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+    'address'
+)))
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
 # the relative severity.
@@ -38,12 +73,8 @@ SIGNIFICANCES = (
 )
 
 CATEGORIES = (
-    (10, _lazy(u'Troubleshooting')),
-    (20, _lazy(u'How to')),
-    (30, _lazy(u'How to contribute')),
-    (40, _lazy(u'Administration')),
-    (50, _lazy(u'Navigation')),
-    (60, _lazy(u'Templates')),
+    (00, _lazy(u'Uncategorized')),
+    (10, _lazy(u'Reference')),
 )
 
 # FF versions used to filter article searches, power {for} tags, etc.:
@@ -91,17 +122,51 @@ OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
                                   GROUPED_OPERATING_SYSTEMS]))
 
 
-REDIRECT_HTML = '<p>REDIRECT <a '  # how a redirect looks as rendered HTML
-REDIRECT_CONTENT = 'REDIRECT [[%s]]'
+# how a redirect looks as rendered HTML
+REDIRECT_HTML = 'REDIRECT <a class="redirect"'
+REDIRECT_CONTENT = 'REDIRECT <a class="redirect" href="%(href)s">%(title)s</a>'
 REDIRECT_TITLE = _lazy(u'%(old)s Redirect %(number)i')
 REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
 
+# TODO: Put this under the control of Constance / Waffle?
+# Flags used to signify revisions in need of review
+REVIEW_FLAG_TAGS = (
+    ('technical', _('Technical - code samples, APIs, or technologies')),
+    ('editorial', _('Editorial - prose, grammar, or content')),
+)
 
-class TitleCollision(Exception):
+# TODO: This is info derived from urls.py, but unsure how to DRY it
+RESERVED_SLUGS = (
+    'ckeditor_config.js$',
+    'watch-ready-for-review$',
+    'unwatch-ready-for-review$',
+    'watch-approved$',
+    'unwatch-approved$',
+    '.json$',
+    'new$',
+    'all$',
+    'preview-wiki-content$',
+    'category/\d+$',
+    'needs-review/?[^/]+$',
+    'needs-review/?',
+    'feeds/[^/]+/all/?',
+    'feeds/[^/]+/needs-review/[^/]+$',
+    'feeds/[^/]+/needs-review/?',
+    'tag/[^/]+'
+)
+
+
+class UniqueCollision(Exception):
+    """An attempt to create two pages with the same unique metadata"""
+    def __init__(self, existing):
+        self.existing = existing
+
+
+class TitleCollision(UniqueCollision):
     """An attempt to create two pages of the same title in one locale"""
 
 
-class SlugCollision(Exception):
+class SlugCollision(UniqueCollision):
     """An attempt to create two pages of the same slug in one locale"""
 
 
@@ -127,8 +192,38 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
+class DocumentManager(ManagerBase):
+    """Manager for Documents, assists for queries"""
+
+    def filter_for_list(self, locale=None, category=None, tag=None,
+                        tag_name=None):
+        docs = self.order_by('title')
+        if locale:
+            docs = docs.filter(locale=locale)
+        if category:
+            docs = docs.filter(category=category)
+        if tag:
+            docs = docs.filter(tags__in=[tag.name])
+        if tag_name:
+            docs = docs.filter(tags__name=tag_name)
+        return docs
+
+    def filter_for_review(self, tag=None, tag_name=None):
+        """Filter for documents with current revision flagged for review"""
+        bq = 'current_revision__review_tags__%s'
+        if tag_name:
+            q = {bq % 'name': tag_name}
+        elif tag:
+            q = {bq % 'in': [tag]}
+        else:
+            q = {bq % 'name__isnull': False}
+        return self.filter(**q).distinct()
+
+
 class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     """A localized knowledgebase document, not revision-specific."""
+    objects = DocumentManager()
+
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
@@ -179,18 +274,19 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         unique_together = (('parent', 'locale'), ('title', 'locale'),
                            ('slug', 'locale'))
 
-    def _collides(self, attr, value):
-        """Return whether there exists a doc in this locale whose `attr` attr
-        is equal to mine."""
+    def _existing(self, attr, value):
+        """Return an existing doc (if any) in this locale whose `attr` attr is
+        equal to mine."""
         return Document.uncached.filter(locale=self.locale,
-                                        **{attr: value}).exists()
+                                        **{attr: value})
 
     def _raise_if_collides(self, attr, exception):
         """Raise an exception if a page of this title/slug already exists."""
         if self.id is None or hasattr(self, 'old_' + attr):
             # If I am new or my title/slug changed...
-            if self._collides(attr, getattr(self, attr)):
-                raise exception
+            existing = self._existing(attr, getattr(self, attr))
+            if existing.exists():
+                raise exception(existing[0])
 
     def clean(self):
         """Translations can't be localizable."""
@@ -258,7 +354,7 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
             i = 1
             while True:
                 new_value = template % dict(old=getattr(self, attr), number=i)
-                if not self._collides(attr, new_value):
+                if not self._existing(attr, new_value).exists():
                     return new_value
                 i += 1
 
@@ -273,8 +369,16 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     def save(self, *args, **kwargs):
         self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
 
-        self._raise_if_collides('slug', SlugCollision)
-        self._raise_if_collides('title', TitleCollision)
+        try:
+            # Check if the slug or title would collide with an existing doc
+            self._raise_if_collides('slug', SlugCollision)
+            self._raise_if_collides('title', TitleCollision)
+        except UniqueCollision, e:
+            if e.existing.redirect_url() is not None:
+                # If the existing doc is a redirect, delete it and clobber it.
+                e.existing.delete()
+            else:
+                raise e
 
         # These are too important to leave to a (possibly omitted) is_valid
         # call:
@@ -301,7 +405,9 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
                                           category=self.category,
                                           is_localizable=False)
             Revision.objects.create(document=doc,
-                                    content=REDIRECT_CONTENT % self.title,
+                                    content=REDIRECT_CONTENT % dict(
+                                        href=self.get_absolute_url(),
+                                        title=self.title),
                                     is_approved=True,
                                     reviewer=self.current_revision.creator,
                                     creator=self.current_revision.creator)
@@ -397,8 +503,8 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         # If a document starts with REDIRECT_HTML and contains any <a> tags
         # with hrefs, return the href of the first one. This trick saves us
         # from having to parse the HTML every time.
-        if self.html.startswith(REDIRECT_HTML):
-            anchors = PyQuery(self.html)('a[href]')
+        if REDIRECT_HTML in self.html:
+            anchors = PyQuery(self.html)('a[href].redirect')
             if anchors:
                 return anchors[0].get('href')
 
@@ -494,9 +600,40 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         return EditDocumentEvent.is_notifying(user, self)
 
 
+class ReviewTag(TagBase):
+    """A tag indicating review status, mainly for revisions"""
+    class Meta:
+        verbose_name = _("Review Tag")
+        verbose_name_plural = _("Review Tags")
+
+
+class ReviewTaggedRevision(ItemBase):
+    """Through model, just for review tags on revisions"""
+    content_object = models.ForeignKey('Revision')
+    tag = models.ForeignKey(ReviewTag)
+
+    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
+    # don't like. But, it seems to be the only way to get *both* a custom tag
+    # *and* a custom through model.
+    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
+    @classmethod
+    def tags_for(cls, model, instance=None):
+        if instance is not None:
+            return ReviewTag.objects.filter(
+                reviewtaggedrevision__content_object=instance)
+        return ReviewTag.objects.filter(
+            reviewtaggedrevision__content_object__isnull=False).distinct()
+
+
 class Revision(ModelBase):
     """A revision of a localized knowledgebase document"""
     document = models.ForeignKey(Document, related_name='revisions')
+
+    # Title and slug in document are primary, but they're kept here for
+    # revision history.
+    title = models.CharField(max_length=255, null=True, db_index=True)
+    slug = models.CharField(max_length=255, null=True, db_index=True)
+
     summary = models.TextField()  # wiki markup
     content = models.TextField()  # wiki markup
 
@@ -505,6 +642,10 @@ class Revision(ModelBase):
     # Revision so the translators can handle them:
     keywords = models.CharField(max_length=255, blank=True)
 
+    # Tags are (ab)used as status flags and for searches, but the through model
+    # should constrain things from getting expensive.
+    review_tags = TaggableManager(through=ReviewTaggedRevision)
+
     created = models.DateTimeField(default=datetime.now)
     reviewed = models.DateTimeField(null=True)
     significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
@@ -512,7 +653,7 @@ class Revision(ModelBase):
     reviewer = models.ForeignKey(User, related_name='reviewed_revisions',
                                  null=True)
     creator = models.ForeignKey(User, related_name='created_revisions')
-    is_approved = models.BooleanField(default=False, db_index=True)
+    is_approved = models.BooleanField(default=True, db_index=True)
 
     # The default locale's rev that was current when the Edit button was hit to
     # create this revision. Used to determine whether localizations are out of
@@ -577,13 +718,26 @@ class Revision(ModelBase):
                                    'to a revision of the default-'
                                    'language document.')
 
+        if self.content:
+            self.content = (wiki.content
+                            .parse(self.content)
+                            .injectSectionIDs()
+                            .serialize())
+        if not self.title:
+            self.title = self.document.title
+        if not self.slug:
+            self.slug = self.document.slug
+
         super(Revision, self).save(*args, **kwargs)
 
-        # When a revision is approved, re-cache the document's html content
+        # When a revision is approved, update document metadata and re-cache
+        # the document's html content
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            self.document.html = self.content_parsed
+            self.document.title = self.title
+            self.document.slug = self.slug
+            self.document.html = self.content_cleaned
             self.document.current_revision = self
             self.document.save()
 
@@ -592,11 +746,18 @@ class Revision(ModelBase):
                                       self.document.title,
                                       self.id, self.content[:50])
 
+    def get_section_content(self, section_id):
+        """Convenience method to extract the content for a single section"""
+        return(wiki.content
+            .parse(self.content)
+            .extractSection(section_id)
+            .serialize())
+        
     @property
-    def content_parsed(self):
-        from wiki.parser import wiki_to_html
-        return wiki_to_html(self.content, locale=self.document.locale,
-                            doc_id=self.document.id)
+    def content_cleaned(self):
+        return bleach.clean(
+            self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS
+        )
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
@@ -641,6 +802,24 @@ class RelatedDocument(ModelBase):
         ordering = ['-in_common']
 
 
+def toolbar_config_upload_to(instance, filename):
+    """upload_to builder for toolbar config files"""
+    if (instance.default and instance.default == True):
+        return 'js/ckeditor_config.js'
+    else:
+        return 'js/ckeditor_config_%s.js' % instance.creator.id
+
+
+class EditorToolbar(ModelBase):
+    creator = models.ForeignKey(User, related_name='created_toolbars')
+    default = models.BooleanField(default=False)
+    name = models.CharField(max_length=100)
+    code = models.TextField(max_length=2000)
+
+    def __unicode__(self):
+        return self.name
+
+
 def get_current_or_latest_revision(document, reviewed_only=True):
     """Returns current revision if there is one, else the last created
     revision."""
@@ -655,3 +834,5 @@ def get_current_or_latest_revision(document, reviewed_only=True):
             rev = revs[0]
 
     return rev
+
+add_introspection_rules([], ["^utils\.OverwritingFileField"])

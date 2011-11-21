@@ -1,4 +1,5 @@
 from nose.tools import eq_, ok_
+from nose.plugins.skip import SkipTest
 from mock import patch
 from pyquery import PyQuery as pq
 import test_utils
@@ -70,6 +71,7 @@ class LandingViewsTest(test_utils.TestCase):
         eq_(200, r.status_code)
 
     def test_search(self):
+        raise SkipTest('Search test disabled until we switch to kuma wiki')
         url = reverse('landing.views.search')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)

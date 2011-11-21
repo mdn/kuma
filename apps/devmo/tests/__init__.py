@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 
+import test_utils
+from nose.plugins.skip import SkipTest
+
 from dekicompat.backends import DekiUser
 from devmo.models import UserProfile
 
@@ -26,3 +29,7 @@ def create_profile():
     profile.save()
 
     return (user, deki_user, profile)
+
+class SkippedTestCase(test_utils.TestCase):
+    def setUp(self):
+        raise SkipTest()

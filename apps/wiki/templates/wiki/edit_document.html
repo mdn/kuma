@@ -2,78 +2,137 @@
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
-{% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Edit Article | {document}')|f(document=document.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('Edit Article'))] %}
 {% set classes = 'edit' %}
+{% block bodyclass %}edit{% endblock %}
 
 {% block content %}
-  <article id="edit-document" class="main form-page">
-    <h1>{{ _('<em>Editing</em> {title}')|fe(title=document.title) }}</h1>
-    {% if document_form %}
-      <div id="document-form">
-        <details class="h2"{% if disclose_description %} open="open"{% endif %}>
-          <summary>{{ _('Edit Description') }}</summary>
-          {{ errorlist(document_form) }}
-          <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
-            {{ csrf() }}
-            <ul>
-              {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' and (field.name != 'is_localizable' or not document.translations.exists()) %}
-                <li>{{ field|label_with_help }}{{ field|safe }}</li>
-              {% endfor %}
-            </ul>
-            {% if document.translations.exists() %}
-              {{ document_form.is_localizable.as_hidden()|safe }}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="edit-document" class="article" role="main">
+    <form id="wiki-page-edit" class="editing" method="post" action="">
+      <fieldset>
+
+        {{ errorlist(revision_form) }}
+
+        {% if collision %}
+        <section class="collision-compare">
+          <p>{% trans %}
+            Please review the differences between your changes and the changes
+            saved since you started editing. You may save again, but try to
+            resolve any conflicts by hand so that the changes made since you
+            started are not lost.
+          {% endtrans %}</p>
+
+          <div class="revision-diff">
+            <header>
+              <div>
+                  <h3>{{ _('Your Changes') }}</h3>
+                </h3>
+                <p>{{ _('Revision {id} by {user} on {date}')|fe(id=original_revision.id, user=original_revision.creator, date=datetimeformat(original_revision.created, format='longdatetime')) }}</p>
+              </div>
+              <div>
+                <h3>
+                    <a href="{{ url('wiki.revision', current_revision.document.slug, current_revision.id) }}">
+                      {{ _('Current Revision:')|f(num=current_revision.id) }}
+                    </a>
+                </h3>
+                <p>{{ _('Revision {id} by {user} on {date}')|fe(id=current_revision.id, user=current_revision.creator, date=datetimeformat(current_revision.created, format='longdatetime')) }}</p>
+              </div>
+            </header>
+
+            {% set title = request.POST['title'] %}
+            {% set slug = request.POST['slug'] %}
+            {% set keywords = request.POST['request'] %}
+            {% set summary = request.POST['summary'] %}
+
+            {% if title and current_revision.title and title != current_revision.title %}
+                <h4>{{ _('Title:') }}</h4>
+                <div><p>{{ title }}</p></div>
+                <div><p>{{ current_revision.title }}</p></div>
             {% endif %}
-            <div class="relevant-to">
-              <h2>{{ _('Relevant to:') }}</h2>
-              <ul>
-                <li>{{ document_form.firefox_versions.label_tag()|safe }}{{ document_form.firefox_versions|safe }}</li>
-                <li>{{ document_form.operating_systems.label_tag()|safe }}{{ document_form.operating_systems|safe }}</li>
-              </ul>
-            </div>
-            <input type="hidden" name="form" value="doc" />
-            <div class="submit">
-              <input type="submit" value="{{ _('Save') }}">
-            </div>
-          </form>
-        </details>
-      </div>
-    {% endif %}
-    {% if revision_form %}
-      <div id="revision-form">
-        <details class="h2" open="open">
-          <summary>{{ _('Edit Content') }}</summary>
-          <p>
-            {% trans url=url('wiki.document', 'support-document-guide') %}For help with writing articles, check out the
-              <a href="{{ url }}">Support Document Guide</a>.{% endtrans %}
-          </p>
-          {{ errorlist(revision_form) }}
-          <form action="" method="post">
-            {{ csrf() }}
-            <ul>
-              {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
-                <li>{{ field|label_with_help }}{{ field|safe }}</li>
-              {% endfor %}
-              <li>
-                {{ revision_form.content.label_tag()|safe }}
-                {{ content_editor(revision_form.content) }}
-              </li>
+
+            {% if slug and current_revision.slug and slug != current_revision.slug %}
+                <h4>{{ _('Slug:') }}</h4>
+                <div><p>{{ slug }}</p></div>
+                <div><p>{{ current_revision.slug }}</p></div>
+            {% endif %}
+
+            {% if keywords and current_revision.keywords and keywords != current_revision.keywords %}
+                <h4>{{ _('Keywords:') }}</h4>
+                <div><p>{{ keywords }}</p></div>
+                <div><p>{{ current_revision.keywords }}</p></div>
+            {% endif %}
+
+            {% if summary and current_revision.summary and summary != current_revision.summary %}
+                <h4>{{ _('Search results summary:') }}</h4>
+                <div><p>{{ summary }}</p></div>
+                <div><p>{{ current_revision.summary }}</p></div>
+            {% endif %}
+
+            {% if content and current_revision.content and content != current_revision.content %}
+                <h4>{{ _('Content:') }}</h4>
+                {{ diff_table(content, current_content) }}
+            {% endif %}
+
+          </div>
+        </section>
+        {% endif %}
+
+        <header id="article-head">
+
+          <div class="title">
+            <h1>{{ _('Editing <em>{title}</em>')|fe(title=revision.title) }}</h1>
+            {% if not section_id %}
+                <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
+            {% endif %}
+            <p class="save-state" id="draft-status">{% trans %}Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>{% endtrans %}</p>
+          </div>
+
+          {% if revision_form and not section_id %}
+            <ul class="metadata">
+                <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
+                <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
+                <li><label>{{_('Keywords:')}}</label> {{ revision_form.keywords | safe }}</li>
             </ul>
-            {{ revision_form.hidden_fields()|join|safe }}
+          {% endif %}
+
+          {% if not collision %}
+            {{ revision_form.current_rev | safe }}
+          {% endif %}
+
+          {% include 'wiki/includes/page_buttons.html' %}
+
+        </header>
+    
+        {% if revision_form %}
+            {{ revision_form.content | safe }}
             <input type="hidden" name="form" value="rev" />
-            {% include 'wiki/includes/submit_revision_for_review.html' %}
-          </form>
-        </details>
-      </div>
-    {% endif %}
+          <section>
+          <h4>{{_('Review needed?')}}</h4>
+            {{ revision_form.review_tags|safe }}
+          </section>
+        {% endif %}
+      </fieldset>
+    </form>
     <div id="preview"></div>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}
   {{ document_tabs(document, document.parent, user, 'edit', settings) }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('framebuster') }}
 {% endblock %}

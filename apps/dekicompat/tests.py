@@ -14,7 +14,7 @@ import commonware
 
 from dekicompat.backends import DekiUserBackend
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 
 def mockdekiauth(test):

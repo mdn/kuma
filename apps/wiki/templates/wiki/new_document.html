@@ -3,43 +3,46 @@
 {% from "layout/errorlist.html" import errorlist %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New Article | Knowledge Base') %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(None, _('New Article'))] %}
 {% set classes = 'new' %}
+{% block bodyclass %}new{% endblock %}
 
 {% block content %}
-  <article id="edit-document" class="main form-page">
-    <h1>{{ _('Create a New Knowledge Base Article') }}</h1>
-    <div id="document-form">
-      {{ errorlist(document_form) }}
-      {{ errorlist(revision_form) }}
-      <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
-        {{ csrf() }}
-        <ul>
-          {% for field in document_form.visible_fields() if field.name != 'firefox_versions' and field.name != 'operating_systems' and (field.name != 'is_localizable' or settings.WIKI_DEFAULT_LANGUAGE == request.locale) %}
-            <li>{{ field|label_with_help }}{{ field|safe }}</li>
-          {% endfor %}
-        </ul>
-        <div class="relevant-to">
-          <h2>{{ _('Relevant to:') }}</h2>
-          <ul>
-            <li>{{ document_form.firefox_versions.label_tag()|safe }}{{ document_form.firefox_versions|safe }}</li>
-            <li>{{ document_form.operating_systems.label_tag()|safe }}{{ document_form.operating_systems|safe }}</li>
-          </ul>
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+    <article class="article" role="main">
+    {{ errorlist(document_form) }}
+    {{ errorlist(revision_form) }}
+    <form id="wiki-page-edit" class="editing" method="post" action="">
+      <fieldset>
+      <header id="article-head">
+        <div class="title">
+            {{ document_form.title|safe }}
+            {{ document_form.slug|safe }}
+            {{ document_form.category|safe }}
+            <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
         </div>
-        <ul>
-          {% for field in revision_form.visible_fields() if field.name != 'comment' and field.name != 'content' %}
-            <li>{{ field|label_with_help }}{{ field|safe }}</li>
-          {% endfor %}
-          <li>
-            {{ revision_form.content.label_tag()|safe }}
-            {{ content_editor(revision_form.content) }}
-          </li>
-        </ul>
-        {{ revision_form.hidden_fields()|join|safe }}
-        {% include 'wiki/includes/submit_revision_for_review.html' %}
-      </form>
-    </div>
+
+        {% include 'wiki/includes/page_buttons.html' %}
+
+      </header>
+
+      {{ revision_form.content|safe }}
+
+      <section>
+        <h4>Review needed?</h4>
+        {{ revision_form.review_tags|safe }}
+      </section>
+      
+    </fieldset>
+    </form>
+    
+    </article>
     <div id="preview"></div>
-  </article>
+    </div>
+   </div>
+</section>
 {% endblock %}

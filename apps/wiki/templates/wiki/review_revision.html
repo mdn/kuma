@@ -2,12 +2,17 @@
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Review Revision {id} | {document}')|f(document=document.title, id=revision.id) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title), (None, 'Review Revision')] %}
 {% set classes = 'review' %}
+{% block bodyclass %}review{% endblock %}
 
 {% block content %}
-  <article id="review-revision" class="main">
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="review-revision" role="main">
     <h1>{{ _('Review Revision of {title}')|f(title=document.title) }}</h1>
     <p>{{ _('Reviewing Revision {id} by {user}')|f(id=revision.id, user=revision.creator) }}.
     <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
@@ -59,6 +64,9 @@
 
     {% include 'wiki/includes/review_form.html' %}
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}

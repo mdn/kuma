@@ -19,12 +19,21 @@ from django.contrib.sites.models import Site
 
 from dekicompat.backends import DekiUserBackend
 from devmo.models import UserProfile, UserDocsActivityFeed
+from nose.plugins.skip import SkipTest
+
+from django.contrib.auth.models import User, AnonymousUser
+
+from devmo.helpers import devmo_url
+from devmo import urlresolvers
+from devmo.models import Calendar, Event, UserProfile
+from devmo.forms import UserProfileEditForm
 from devmo.cron import devmo_calendar_reload
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 
 
+TESTUSER_PASSWORD = 'trustno1'
 APP_DIR = dirname(dirname(__file__))
 USER_DOCS_ACTIVITY_FEED_XML = ('%s/fixtures/user_docs_activity_feed.xml' %
                                APP_DIR)
@@ -92,18 +101,12 @@ class ProfileViewsTest(TestCase):
                 eq_(item.history_url,
                     item_el.find('.actions a.history').attr('href'))
 
-    @attr('current')
     @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
     def test_bug_698971(self, authenticate, get_user, get_deki_user,
                         fetch_user_feed):
         """A non-numeric page number should not cause an error"""
         (user, deki_user, profile) = create_profile()
 
-        authenticate.return_value = user
-        get_user.return_value = user
         doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
         fetch_user_feed.return_value = doc_feed_data
  
@@ -123,7 +126,11 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         eq_(0, doc.find('#profile-head .edit .button').length)
 
-        self.client.login(username=user.username, password='testpass')
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
@@ -168,10 +175,11 @@ class ProfileViewsTest(TestCase):
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
 
-    @attr("edit_websites")
     def test_profile_edit_websites(self):
         user = User.objects.get(username='testuser')
-        self.client.login(username=user.username, password='testpass')
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
+
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
@@ -229,10 +237,11 @@ class ProfileViewsTest(TestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
-    @attr("edit_interests")
-    def test_profile_edit_tags(self):
+    def test_profile_edit_interests(self):
         user = User.objects.get(username='testuser')
-        self.client.login(username=user.username, password='testpass')
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
+
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)

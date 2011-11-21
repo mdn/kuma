@@ -20,6 +20,11 @@ fi
 echo "Activating $VENV"
 source $VENV/bin/activate
 
+PYTHON26=`which python26`
+if [ -z "$PYTHON26" ]; then
+    ln -s $VENV/bin/python $VENV/bin/python26
+fi
+
 pip install -q -r requirements/compiled.txt
 
 # locale - create if necessary
@@ -74,10 +79,12 @@ export FORCE_DB='yes sir'
 
 # with-coverage excludes sphinx so it doesn't conflict with real builds.
 if [[ $2 = 'with-coverage' ]]; then
-    coverage run manage.py test actioncounters contentflagging dekicompat demos devmo landing users -v 2 --noinput
+    # Add 'search' app back in, someday
+    coverage run manage.py test actioncounters contentflagging dekicompat demos devmo landing users wiki -v 2 --noinput
     coverage xml $(find apps lib -name '*.py')
 else
-    python manage.py test actioncounters contentflagging dekicompat demos devmo landing users -v 2 --noinput
+    # Add 'search' app back in, someday
+    python manage.py test actioncounters contentflagging dekicompat demos devmo landing users wiki -v 2 --noinput
 fi
 
 echo 'shazam!'

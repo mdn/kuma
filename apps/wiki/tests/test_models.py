@@ -1,7 +1,12 @@
+import logging
+
 from datetime import datetime, timedelta
 
-from nose.tools import eq_
+from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.plugins.attrib import attr
 from taggit.models import TaggedItem
+
+from pyquery import PyQuery as pq
 
 from django.core.exceptions import ValidationError
 
@@ -14,6 +19,9 @@ from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tests import document, revision, doc_rev, translated_revision
+
+import html5lib
+from html5lib.filters._base import Filter as html5lib_Filter
 
 
 def _objects_eq(manager, list_):
@@ -96,7 +104,7 @@ class DocumentTests(TestCase):
     def test_category_inheritance(self):
         """A document's categories must always be those of its parent."""
         some_category = CATEGORIES[1][0]
-        other_category = CATEGORIES[2][0]
+        other_category = CATEGORIES[0][0]
 
         # Notice if somebody ever changes the default on the category field,
         # which would invalidate our test:
@@ -191,10 +199,6 @@ class DocumentTests(TestCase):
         """Make sure changing a title remembers its old value."""
         self._test_remembering_setter('title')
 
-    def test_redirect_prefix(self):
-        """Test accuracy of the prefix that helps us recognize redirects."""
-        assert wiki_to_html(REDIRECT_CONTENT % 'foo').startswith(REDIRECT_HTML)
-
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
         # Make English rev:
@@ -234,20 +238,20 @@ class DocumentTests(TestCase):
     def test_new_doc_does_not_update_categories(self):
         """Make sure that creating a new document doesn't change the
         category of all the other documents."""
-        d1 = document(category=20)
+        d1 = document(category=10)
         d1.save()
         assert d1.pk
-        d2 = document(category=30)
+        d2 = document(category=00)
         assert not d2.pk
         d2._clean_category()
         d1prime = Document.objects.get(pk=d1.pk)
-        eq_(20, d1prime.category)
+        eq_(10, d1prime.category)
 
 
 class DocumentTestsWithFixture(TestCase):
     """Document tests which need the users fixture"""
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_majorly_outdated(self):
         """Test the is_majorly_outdated method."""
@@ -262,7 +266,8 @@ class DocumentTestsWithFixture(TestCase):
 
         # Add a parent revision of MAJOR significance:
         r = revision(document=trans_doc.parent,
-                     significance=MAJOR_SIGNIFICANCE)
+                     significance=MAJOR_SIGNIFICANCE,
+                     is_approved=False)
         r.save()
         assert not trans_doc.is_majorly_outdated()
 
@@ -327,7 +332,7 @@ class DocumentTestsWithFixture(TestCase):
 
 class RedirectCreationTests(TestCase):
     """Tests for automatic creation of redirects when slug or title changes"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def setUp(self):
         self.d, self.r = doc_rev()
@@ -341,7 +346,8 @@ class RedirectCreationTests(TestCase):
         redirect = Document.uncached.get(slug=self.old_slug)
         # "uncached" isn't necessary, but someday a worse caching layer could
         # make it so.
-        eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
+        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
+        eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
         eq_(REDIRECT_TITLE % dict(old=self.d.title, number=1), redirect.title)
 
     def test_change_title(self):
@@ -349,7 +355,8 @@ class RedirectCreationTests(TestCase):
         self.d.title = 'New Title'
         self.d.save()
         redirect = Document.uncached.get(title=self.old_title)
-        eq_(REDIRECT_CONTENT % self.d.title, redirect.current_revision.content)
+        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
+        eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
         eq_(REDIRECT_SLUG % dict(old=self.d.slug, number=1), redirect.slug)
 
     def test_change_slug_and_title(self):
@@ -357,7 +364,8 @@ class RedirectCreationTests(TestCase):
         self.d.title = 'New Title'
         self.d.slug = 'new-slug'
         self.d.save()
-        eq_(REDIRECT_CONTENT % self.d.title,
+        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
+        eq_(REDIRECT_CONTENT % attrs,
             Document.uncached.get(
                 slug=self.old_slug,
                 title=self.old_title).current_revision.content)
@@ -406,7 +414,7 @@ class RedirectCreationTests(TestCase):
 
 class RevisionTests(TestCase):
     """Tests for the Revision model"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
@@ -430,14 +438,14 @@ class RevisionTests(TestCase):
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
 
         # Creating another approved revision keeps initial content
-        r = revision(document=d, content='Fail to replace html')
+        r = revision(document=d, content='Fail to replace html', is_approved=False)
         r.save()
 
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
 
     def test_revision_unicode(self):
         """Revision containing unicode characters is saved successfully."""
-        str = u' \r\nFirefox informa\xe7\xf5es \u30d8\u30eb'
+        str = u'Firefox informa\xe7\xf5es \u30d8\u30eb'
         _, r = doc_rev(str)
         eq_(str, r.content)
 
@@ -477,7 +485,7 @@ class RevisionTests(TestCase):
 
 
 class RelatedDocumentTests(TestCase):
-    fixtures = ['users.json', 'wiki/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_related_documents_calculated(self):
         d = Document.uncached.get(pk=1)
@@ -507,7 +515,7 @@ class RelatedDocumentTests(TestCase):
 
 
 class GetCurrentOrLatestRevisionTests(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     """Tests for get_current_or_latest_revision."""
     def test_single_approved(self):

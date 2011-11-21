@@ -3,31 +3,48 @@
 {% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'document' %}
-
+{% block bodyclass %}document{% endblock %}
 {% if document.parent %}
   {# If there is a parent doc, use it's URL for switching locales. #}
   {% set localizable_url = url('wiki.document', document.parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) %}
 {% endif %}
 
+{% block extrahead %}
+  <link rel="alternate" type="application/json" 
+    href="{{ url('wiki.json_slug', document.slug) }}">
+{% endblock %}
+
 {% block content %}
-  <article id="wiki-doc" class="main">
-    {% if related %}
-      <section id="related-articles">
-        <h1> {{ _('Related Articles') }}</h1>
-        <ul>
-          {% for art in document.related_documents.all()[0:5] %}
-            <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
-          {% endfor %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+      <article class="article" role="main" 
+          data-current-revision="{{ document.current_revision.id }}"
+          data-refresh-message="{{ _('Your changes were merged. However, something else has been edited, so this page will be refreshed to reflect the changes.') }}"
+          data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
+      <header id="article-head">
+        <div class="title">
+            <h1 class="page-title">{{ document.title }}</h1>
+        </div>
+        <ul id="page-buttons">
+            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.slug) }}">{{_('History')}}</a></li>
+            {% if request.user.is_authenticated() %}
+              <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">{{_('Watch')}}</a></li>
+            {% endif %}
+            {% if document.allows_editing_by(request.user) %}
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">{{_('Edit')}}</a></li>
+            {% endif %}
         </ul>
-      </section>
-    {% endif %}
-    <h1 class="title">{{ document.title }}</h1>
-    {% if redirected_from %}
-      <div id="redirected-from">
-        {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
-      </div>
-    {% endif %}
+       </header>
+        {% if redirected_from %}
+          <div class="warning" id="redirected-from">
+            <p>{{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+          </div>
+        {% endif %}
+
+       {#
     {% if document.is_majorly_outdated() %}
       <div class="warning-box">
         {% trans url=document.parent.get_absolute_url(), title=document.parent.title %}
@@ -40,9 +57,45 @@
         {% endtrans %}
       </div>
     {% endif %}
-    <section id="doc-content">
+    #}
+    
+      {# There's no .has() method on review_tags; need to iterate for now #}
+      {% if document.current_revision %}
+        {% for tag in document.current_revision.review_tags.all() %}
+          {% if 'technical' == tag.name %}
+            <div class="warning review-technical">{% trans %}
+              <p>This article is in need of a technical review.</p>
+            {% endtrans %}</div>
+          {% elif 'editorial' == tag.name %}
+            <div class="warning review-editorial">{% trans %}
+              <p>This article is in need of an editorial review.</p>
+            {% endtrans %}</div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      <div id="wikiArticle" class="page-content boxed">
+          {# 
+        <div id="article-nav"> 
+          <div class="page-toc">
+            <h2>Table of Contents</h2>
+            <ol>
+              <li><a href="#Lorum_Ipsum">Lorum Ipsum</a>
+                <ol>
+                  <li><a href="#Dolor_Sit_Amet">Dolor Sit Amet</a></li>
+                </ol>
+              </li>
+              <li><a href="#Another_Heading">Another Heading</a></li>
+            </ol>
+          </div>
+          <ul class="page-anchors">
+            <li class="anchor-tags"><a href="#page-tags">Tags</a></li>
+            <li class="anchor-files"><a href="#page-files">Files</a></li>
+          </ul>
+      </div>
+      #}
       {% if not fallback_reason %}
-        {{ document.html|safe }}
+        {{ document_html|safe }}
       {% elif fallback_reason == 'no_translation' %}
         <div id="doc-pending-fallback" class="warning-box">
           {% trans help_link=url('wiki.document', 'localize-firefox-help'),
@@ -51,7 +104,7 @@
             <a href="{{ help_link }}">Join us and help get the job done!</a>
           {% endtrans %}
         </div>
-        {{ document.html|safe }}
+        {{ document_html|safe }}
       {% elif fallback_reason == 'translation_not_approved' %}
         <div id="doc-pending-fallback" class="warning-box">
           {# L10n: This is shown for existing, never-approved translations #}
@@ -64,50 +117,39 @@
       {% else %}
         {{ _("This article doesn't have approved content yet.") }}
       {% endif %}
-    </section>
+    </div>
     <section id="doc-contributors">
       {% trans contributors=user_list(contributors) %}
         Contributors to this page: {{ contributors }}
       {% endtrans %}
     </section>
   </article>
-  {% if not document.has_voted(request) %}
-    <div id="helpful-vote">
-      <form class="helpful" action="{{ url('wiki.document_vote', document_slug=document.slug) }}" method="post">
-        {{ csrf() }}
-        <p>
-          {{ _('Was this article helpful?') }}
-          <input type="submit" class="btn" name="helpful" value="{{ _('Yes') }}" />
-          <input type="submit" class="btn" name="not-helpful" value="{{ _('No') }}" />
-          <img class="wait" src="{{ settings.MEDIA_URL }}img/customercare/spinner.gif" alt="{{ _('Please wait...') }}" />
-        </p>
+  <form id="wiki-page-edit" class="editing" method="post" action="{{ url('wiki.edit_document', document_slug=document.slug) }}">
+      <input type="hidden" name="form" id="form" value="rev" />
+      <input type="hidden" name="content" id="content" value="" />
+  </form>
+  {#
+  {% include 'wiki/includes/helpful_form.html' %}
+  {% include 'wiki/includes/more_help.html' %}
+  #}
+    </div>
+   </div>
+    {% if document.allows_editing_by(request.user) %}
+      <div class="edited-section-ui template">
+        <a class="save" href="#">{{ _('Save') }}</a>
+        <a class="cancel" href="#">{{ _('Cancel') }}</a>
+        <div class="src"></div>
+      </div>
+      {# This form gets filled out and used by the inline editor when a
+         conflict is detected. It needs to be server side in order to get supplied
+         with a CSRF token. #}
+      <form class="conflict-bouncer template" method="POST" action="">
+        <input type="hidden" name="form" value="rev">
+        <input type="hidden" name="current_rev" value="">
+        <input type="hidden" name="content" value="">
       </form>
-    </div>
-  {% endif %}
-  <div id="more-help">
-    <div class="wrap">
-      <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
-      <ul>
-        {% if related %}
-          <li>
-            {{ _("Here's a list of related articles that might help:") }}
-            <ul>
-              {% for art in related %}
-                <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
-              {% endfor %}
-            </ul>
-          </li>
-        {% endif %}
-        <li>
-          {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
-        </li>
-        <li>
-          <a href="{{ url('wiki.document', 'ask') }}">{{ _('Ask our awesome support community for help') }}</a>
-        </li>
-      </ul>
-      {{ search_box(settings, id=False, prefix=_('Or try searching:')) }}
-    </div>
-  </div>
+    {% endif %}
+</section>
 {% endblock %}
 
 {% block side_top %}

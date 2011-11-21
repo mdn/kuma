@@ -28,6 +28,12 @@
         <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime')) }}</p>
       </div>
     </header>
+    <h4>{{ _('Title:') }}</h4>
+    <div><p>{{ revision_from.title }}</p></div>
+    <div><p>{{ revision_to.title }}</p></div>
+    <h4>{{ _('Slug:') }}</h4>
+    <div><p>{{ revision_from.slug }}</p></div>
+    <div><p>{{ revision_to.slug }}</p></div>
     <h4>{{ _('Keywords:') }}</h4>
     <div>
       <p>{{ revision_from.keywords }}</p>

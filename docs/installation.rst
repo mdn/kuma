@@ -30,6 +30,8 @@ following things (in addition to Git, of course).
 
 * ``zlib`` and headers.
 
+* ``libmagic`` and headers.
+
 * Several Python packages. See `Installing the Packages`_.
 
 Installation for these is very system dependent. Using a package manager, like
@@ -57,8 +59,7 @@ Grab the source from Github using::
 
     git clone git://github.com/mozilla/kuma.git
     cd kuma
-    git submodule update --init
-
+    git submodule update --init --recursive
 
 Installing the Packages
 =======================
@@ -81,14 +82,6 @@ All of the pure-Python requirements are available in a git repository, known as
 a vendor library. This allows them to be available on the Python path without
 needing to be installed in the system, allowing multiple versions for multiple
 projects simultaneously.
-
-To get the vendor library, just::
-
-    git clone --recursive git://github.com/mozilla/kuma-lib.git vendor
-
-This will clone the repository and all its submodules into a directory called
-``vendor``.
-
 
 Configuration
 =============
@@ -129,16 +122,35 @@ Once you've set up the database, you can generate the schema with Django's
 ``syncdb`` command::
 
     ./manage.py syncdb
+    ./manage.py migrate
 
 This will generate an empty database, which will get you started!
 
+If you run into a "No such file or directory" error for
+../product_details_json just create this folder::
+
+    mkdir ../product_details_json
+
+and run::
+
+    ./manage.py update_product_details
+
+Media
+-----
+
+If you want to see images and have the pages formatted with CSS you need to
+set your ``settings_local.py`` with the following::
+
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
+    SERVE_MEDIA = True
 
 Testing it Out
 ==============
 
 To start the dev server, run ``./manage.py runserver``, then open up
-``http://localhost:8000``. If everything's working, you should see a somewhat
-empty version of the SUMO home page!
+``http://localhost:8000``. If everything's working, you should see
+the MDN home page!
 
 
 Running the Tests

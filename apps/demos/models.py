@@ -44,6 +44,8 @@ south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
 from threadedcomments.models import ThreadedComment, FreeThreadedComment
 
+from utils import generate_filename_and_delete_previous
+
 from actioncounters.fields import ActionCounterField
 
 from embedutils import VideoEmbedURLField
@@ -149,28 +151,6 @@ def mk_slug_upload_to(field_fn):
             base=get_root_for_submission(instance), field_fn=field_fn)
     return upload_to
 
-def generate_filename_and_delete_previous(ffile, name, before_delete=None):
-    """Generate a new filename for a file upload field; delete the previously
-    uploaded file."""
-
-    new_filename = ffile.field.generate_filename(ffile.instance, name)
-
-    try:
-        # HACK: Speculatively re-fetching the original object makes me feel
-        # wasteful and dirty. But, I can't think of another way to get
-        # to the original field's value. Should be cached, though.
-        # see also - http://code.djangoproject.com/ticket/11663#comment:10
-        orig_instance   = ffile.instance.__class__.objects.get(id=ffile.instance.id)
-        orig_field_file = getattr(orig_instance, ffile.field.name)
-        orig_filename   = orig_field_file.name
-        
-        if orig_filename and new_filename != orig_filename:
-            if before_delete: before_delete(orig_field_file)
-            orig_field_file.delete()
-    except ffile.instance.__class__.DoesNotExist:
-        pass
-
-    return new_filename
 
 
 class ReplacingFieldZipFile(FieldFile):

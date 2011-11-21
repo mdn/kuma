@@ -1,9 +1,11 @@
 from datetime import datetime
 import json
 import logging
+from urllib import urlencode
 from string import ascii_letters
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponse, HttpResponseRedirect,
                          Http404, HttpResponseBadRequest)
@@ -24,12 +26,15 @@ from wiki import DOCUMENTS_PER_PAGE
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
-from wiki.models import (Document, Revision, HelpfulVote, CATEGORIES,
+from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
+                         ReviewTag,
+                         CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
-                         get_current_or_latest_revision)
+                         REVIEW_FLAG_TAGS, get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
+import wiki.content
 
 
 log = logging.getLogger('k.wiki')
@@ -136,10 +141,42 @@ def document(request, document_slug):
 
     # Get the contributors. (To avoid this query, we could render the
     # the contributors right into the Document's html field.)
-    contributors = set([r.creator for r in doc.revisions.filter(
-                            is_approved=True).select_related('creator')])
+    # NOTE: .only() avoids a memcache object-too-large error for large wiki
+    # pages when an attempt is made to cache all revisions
+    contributors = set([r.creator for r in doc.revisions
+                                            .filter(is_approved=True)
+                                            .only('creator')
+                                            .select_related('creator')])
+    # TODO: Port this kitsune feature over, eventually:
+    #     https://github.com/jsocol/kitsune/commit/f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
-    data = {'document': doc, 'redirected_from': redirected_from,
+    # Grab some parameters that affect output
+    section_id = request.GET.get('section', None)
+    show_raw = request.GET.get('raw', False)
+    need_edit_links = request.GET.get('edit_links', False)
+
+    # Start applying some filters to the document HTML
+    tool = wiki.content.parse(doc.html)
+
+    # If a section ID is specified, extract that section.
+    if section_id:
+        tool.extractSection(section_id)
+
+    # If this user can edit the document, inject some section editing links.
+    if (need_edit_links or not show_raw) and doc.allows_editing_by(request.user):
+        tool.injectSectionEditingLinks(doc.slug, doc.locale)
+
+    # if ?raw parameter is supplied, then we respond with raw page source
+    # without template wrapping or edit links. This is also permissive for
+    # iframe inclusion
+    if show_raw:
+        response = HttpResponse(tool.serialize())
+        response['x-kuma-revision'] = doc.current_revision.id
+        response['x-frame-options'] = 'Allow'
+        return response
+    
+    data = {'document': doc, 'document_html': tool.serialize(),
+            'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason}
     data.update(SHOWFOR_DATA)
@@ -158,9 +195,7 @@ def revision(request, document_slug, revision_id):
 @require_GET
 def list_documents(request, category=None, tag=None):
     """List wiki documents."""
-    docs = Document.objects.filter(locale=request.locale).order_by('title')
     if category:
-        docs = docs.filter(category=category)
         try:
             category_id = int(category)
         except ValueError:
@@ -170,15 +205,27 @@ def list_documents(request, category=None, tag=None):
         except KeyError:
             raise Http404
 
-    if tag:
-        tagobj = get_object_or_404(Tag, slug=tag)
-        docs = docs.filter(tags__in=[tagobj.name])
-
+    tag_obj = tag and get_object_or_404(Tag, slug=tag) or None
+    docs = Document.objects.filter_for_list(locale=request.locale,
+                                             category=category,
+                                             tag=tag_obj)
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
                         {'documents': docs,
                          'category': category,
                          'tag': tag})
+
+
+@require_GET
+def list_documents_for_review(request, tag=None):
+    """Lists wiki documents with revisions flagged for review"""
+    tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
+    docs = paginate(request, Document.objects.filter_for_review(tag=tag_obj),
+                    per_page=DOCUMENTS_PER_PAGE)
+    return jingo.render(request, 'wiki/list_documents_for_review.html',
+                        {'documents': docs,
+                         'tag': tag_obj,
+                         'tag_name': tag})
 
 
 @login_required
@@ -187,7 +234,7 @@ def new_document(request):
     if request.method == 'GET':
         doc_form = DocumentForm(
             can_create_tags=request.user.has_perm('taggit.add_tag'))
-        rev_form = RevisionForm()
+        rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
                              'revision_form': rev_form})
@@ -201,7 +248,11 @@ def new_document(request):
     if doc_form.is_valid() and rev_form.is_valid():
         doc = doc_form.save(None)
         _save_rev_and_notify(rev_form, request.user, doc)
-        return HttpResponseRedirect(reverse('wiki.document_revisions',
+        if doc.current_revision.is_approved:
+            view = 'wiki.document'
+        else:
+            view = 'wiki.document_revisions'
+        return HttpResponseRedirect(reverse(view,
                                     args=[doc.slug]))
 
     return jingo.render(request, 'wiki/new_document.html',
@@ -228,11 +279,16 @@ def edit_document(request, document_slug, revision_id=None):
         rev = doc.current_revision or doc.revisions.order_by('-created',
                                                              '-id')[0]
 
+    section_id = request.GET.get('section', None)
     disclose_description = bool(request.GET.get('opendescription'))
+
     doc_form = rev_form = None
     if doc.allows_revision_by(user):
-        rev_form = RevisionForm(instance=rev, initial={'based_on': rev.id,
-                                                       'comment': ''})
+        rev_form = RevisionForm(instance=rev, 
+                                initial={'based_on': rev.id,
+                                         'current_rev': rev.id,
+                                         'comment': ''},
+                                section_id=section_id)
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc),
             can_create_tags=user.has_perm('taggit.add_tag'))
@@ -242,6 +298,11 @@ def edit_document(request, document_slug, revision_id=None):
             # You can't do anything on this page, so get lost.
             raise PermissionDenied
     else:  # POST
+
+        is_iframe_target = request.GET.get('iframe', False)
+        is_raw = request.GET.get('raw', False)
+        need_edit_links = request.GET.get('edit_links', False)
+
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
         which_form = request.POST.get('form')
@@ -259,6 +320,17 @@ def edit_document(request, document_slug, revision_id=None):
                     # Do we need to rebuild the KB?
                     _maybe_schedule_rebuild(doc_form)
 
+                    if is_iframe_target:
+                        # TODO: Does this really need to be a template? Just
+                        # shoehorning data into a single HTML element.
+                        response = HttpResponse("""
+                            <span id="iframe-response"
+                                  data-status="OK"
+                                  data-current-revision="%s">OK</span>
+                        """ % doc.current_revision.id)
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
+
                     return HttpResponseRedirect(
                         urlparams(reverse('wiki.edit_document',
                                           args=[doc.slug]),
@@ -266,23 +338,157 @@ def edit_document(request, document_slug, revision_id=None):
                 disclose_description = True
             else:
                 raise PermissionDenied
+
         elif which_form == 'rev':
-            if doc.allows_revision_by(user):
-                rev_form = RevisionForm(request.POST)
-                rev_form.instance.document = doc  # for rev_form.clean()
-                if rev_form.is_valid():
-                    _save_rev_and_notify(rev_form, user, doc)
-                    return HttpResponseRedirect(
-                        reverse('wiki.document_revisions',
-                                args=[document_slug]))
-            else:
+            if not doc.allows_revision_by(user):
                 raise PermissionDenied
+            else:
+                rev_form = RevisionForm(request.POST, 
+                                        is_iframe_target=is_iframe_target,
+                                        section_id=section_id)
+                rev_form.instance.document = doc  # for rev_form.clean()
+
+                # Come up with the original revision to which these changes
+                # would be applied.
+                orig_rev_id = request.POST.get('current_rev', False)
+                if False == orig_rev_id:
+                    orig_rev = None
+                else:
+                    orig_rev = Revision.objects.get(pk=orig_rev_id)
+
+                # Get the document's actual current revision.
+                curr_rev = doc.current_revision
+
+                if not rev_form.is_valid():
+
+                    # Was there a mid-air collision?
+                    if 'current_rev' in rev_form._errors:
+                        # Jump out to a function to escape indentation hell
+                        return _edit_document_collision(request,
+                                                        orig_rev, curr_rev,
+                                                        is_iframe_target,
+                                                        is_raw,
+                                                        rev_form, doc_form,
+                                                        section_id, 
+                                                        rev, doc)
+
+                else:
+                    _save_rev_and_notify(rev_form, user, doc)
+
+                    if is_iframe_target:
+                        # TODO: Does this really need to be a template? Just
+                        # shoehorning data into a single HTML element.
+                        response = HttpResponse("""
+                            <span id="iframe-response"
+                                  data-status="OK"
+                                  data-current-revision="%s">OK</span>
+                        """ % doc.current_revision.id)
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
+
+                    if (is_raw and orig_rev is not None and 
+                            curr_rev.id != orig_rev.id):
+                        # If this is the raw view, and there was an original
+                        # revision, but the original revision differed from the
+                        # current revision at start of editing, we should tell
+                        # the client to refresh the page.
+                        response = HttpResponse('RESET')
+                        response.status_code = 205
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
+
+                    if rev_form.instance.is_approved:
+                        view = 'wiki.document'
+                    else:
+                        view = 'wiki.document_revisions'
+                    
+                    # Construct the redirect URL, adding any needed parameters
+                    url = reverse(view, args=[doc.slug], locale=doc.locale)
+                    params = {}
+                    if is_raw:
+                        params['raw'] = 'true'
+                        if need_edit_links:
+                            # Only need to carry over ?edit_links with ?raw,
+                            # because they're on by default in the normal UI
+                            params['edit_links'] = 'true'
+                        if section_id:
+                            # If a section was edited, and we're using the raw
+                            # content API, constrain to that section.
+                            params['section'] = section_id
+                    if params:
+                        url = '%s?%s' % (url, urlencode(params))
+                    if not is_raw and section_id:
+                        # If a section was edited, jump to the section anchor
+                        # if we're not getting raw content.
+                        url = '%s#%s' % (url, section_id)
+
+                    return HttpResponseRedirect(url)
 
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
+                         'section_id': section_id,
                          'disclose_description': disclose_description,
+                         'revision': rev,
                          'document': doc})
+
+
+def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
+                             is_raw, rev_form, doc_form, section_id, rev, doc):
+    """Handle when a mid-air collision is detected upon submission"""
+
+    # Process the content as if it were about to be saved, so that the
+    # html_diff is close as possible.
+    content = (wiki.content
+                .parse(request.POST['content'])
+                .injectSectionIDs()
+                .serialize())
+
+    # Process the original content for a diff, extracting a section if we're
+    # editing one.
+    tool = wiki.content.parse(curr_rev.content)
+    tool.injectSectionIDs()
+    if section_id:
+        tool.extractSection(section_id)
+    curr_content = tool.serialize()
+
+    if is_raw:
+        # When dealing with the raw content API, we need to signal the conflict
+        # differently so the client-side can escape out to a conflict
+        # resolution UI. 
+        response = HttpResponse('CONFLICT')
+        response.status_code = 409
+        response['x-frame-options'] = 'SAMEORIGIN'
+        return response
+
+    # Make this response iframe-friendly so we can hack around the
+    # save-and-edit iframe button
+    response = jingo.render(request, 'wiki/edit_document.html',
+                            {'collision': True,
+                             'revision_form': rev_form,
+                             'document_form': doc_form,
+                             'content': content,
+                             'current_content': curr_content,
+                             'section_id': section_id,
+                             'original_revision': orig_rev,
+                             'current_revision': curr_rev,
+                             'revision': rev,
+                             'document': doc})
+
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
+
+
+def ckeditor_config(request):
+    """Return ckeditor config from database"""
+    default_config = EditorToolbar.objects.filter(name='default').all()
+    if len(default_config) > 0:
+        code = default_config[0].code
+    else:
+        code = ''
+    context = {'editor_config': code}
+    return jingo.render(request, 'wiki/ckeditor_config.js', context,
+                       mimetype="application/x-javascript")
 
 
 @login_required
@@ -291,8 +497,8 @@ def preview_revision(request):
     """Create an HTML fragment preview of the posted wiki syntax."""
     wiki_content = request.POST.get('content', '')
     # TODO: Get doc ID from JSON.
-    data = {'content': wiki_to_html(wiki_content, request.locale)}
-    data.update(SHOWFOR_DATA)
+    data = {'content': wiki_content}
+    #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
 
@@ -301,7 +507,11 @@ def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
         Document, locale=request.locale, slug=document_slug)
-    revs = Revision.objects.filter(document=doc).order_by('-created', '-id')
+    # Grab revisions, but defer summary and content because they can lead to
+    # attempts to cache more than memcached allows.
+    revs = (Revision.objects.filter(document=doc)
+                .defer('summary', 'content')
+                .order_by('-created', '-id'))
 
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs, 'document': doc})
@@ -562,10 +772,13 @@ def unwatch_approved(request):
 
 
 @require_GET
-def json_view(request):
+def json_view(request, document_slug=None):
     """Return some basic document info in a JSON blob."""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
-    if 'title' in request.GET:
+    if document_slug is not None:
+        kwargs['slug'] = document_slug
+        kwargs['locale'] = request.locale
+    elif 'title' in request.GET:
         kwargs['title'] = request.GET['title']
     elif 'slug' in request.GET:
         kwargs['slug'] = request.GET['slug']
@@ -643,7 +856,7 @@ def delete_revision(request, document_slug, revision_id):
             document.current_revision = revs[1]
         else:
             document.current_revision = None
-        document.html = document.content_parsed or ''
+        document.html = document.content_cleaned or ''
         document.save()
 
     revision.delete()

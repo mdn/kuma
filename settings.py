@@ -13,7 +13,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_mdn'
+SYSLOG_TAG = 'http_app_kuma'
 LOGGING = {
            'loggers': {},
 }
@@ -51,7 +51,7 @@ DEKIWIKI_APIKEY = 'SET IN LOCAL SETTINGS'
 
 # Cache Settings
 CACHE_BACKEND = 'locmem://?timeout=86400'
-CACHE_PREFIX = 'mdn:'
+CACHE_PREFIX = 'kuma:'
 CACHE_COUNT_TIMEOUT = 60  # seconds
 
 # Addresses email comes from
@@ -211,7 +211,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'sumo.context_processors.for_data',
 
     'devmo.context_processors.i18n',
-    'devmo.context_processors.phpbb_logged_in',
+#    'devmo.context_processors.phpbb_logged_in',
 
     'jingo_minify.helpers.build_ids',
 )
@@ -245,6 +245,7 @@ MIDDLEWARE_CLASSES = (
     #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
+    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
@@ -253,7 +254,7 @@ AUTHENTICATION_BACKENDS = (
     'users.backends.Sha256Backend',
     'dekicompat.backends.DekiUserBackend',
 )
-AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+AUTH_PROFILE_MODULE = 'users.Profile'
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
@@ -312,6 +313,7 @@ INSTALLED_APPS = (
     #'timezones',
     #'access',
     #'sumo',
+    # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
     #'search',
     #'forums',
     #'djcelery',
@@ -324,7 +326,7 @@ INSTALLED_APPS = (
     'wiki',
     #'kbforums',
     #'dashboards',
-    #'gallery',
+    'gallery',
     #'customercare',
     #'twitter',
     #'chat',
@@ -462,11 +464,7 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'css/wiki.css',
-            # The dashboard app uses the wiki bundle because only the wiki app
-            # has the new theme at the moment.
-            'css/dashboards.css',
-            'css/screencast.css',
-            'css/tags.css',
+            'css/wiki-screen.css',
         ),
         'home': (
             'css/home.css',
@@ -533,9 +531,9 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
-            'js/kbox.js',
-            'global/menu.js',
-            'js/main.js',
+            #'js/kbox.js',
+            #'global/menu.js',
+            #'js/main.js',
         ),
         'libs/jqueryui': (
             #'js/libs/jqueryui.min.js',
@@ -563,17 +561,9 @@ MINIFY_BUNDLES = {
             'js/gallery.js',
         ),
         'wiki': (
-            'js/markup.js',
-            'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
-            'js/libs/jquery.cookie.js',
-            'js/browserdetect.js',
-            'js/libs/swfobject.js',
-            'js/libs/jquery.selectbox-1.2.js',
-            'js/screencast.js',
             'js/wiki.js',
-            'js/tags.js',
-            'js/dashboards.js',
+            'js/main.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',
@@ -588,6 +578,18 @@ MINIFY_BUNDLES = {
         'users': (
             'js/users.js',
         ),
+        'mdn_home': (
+            # Home Page
+            # cycle and slideshow only needed on the home page (or any page
+            # featuring the slide show widget).
+            'js/mdn/jquery.cycle.js',
+            'js/mdn/slideshow.js',
+            'js/mdn/TabInterface.js',
+            'js/mdn/home.js',
+        ),
+        'framebuster': (
+            'js/framebuster.js',
+        )
     },
 }
 
@@ -634,7 +636,7 @@ SEARCH_CACHE_PERIOD = 15
 MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
 # Default storage engine - ours does not preserve filenames
-DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
+#DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
 
 # Auth and permissions related constants
 LOGIN_URL = '/users/login'

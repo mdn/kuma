@@ -28,8 +28,9 @@ class SearchForm(forms.Form):
             raise ValidationError('Basic search requires a query string.')
 
         # Validate created and updated dates
-        date_fields = (('created', 'created_date'),
-                       ('updated', 'updated_date'))
+        date_fields = (('updated', 'updated_date'),
+                        #('created', 'created_date'),
+                        )
         for field_option, field_date in date_fields:
             if c[field_date] != '':
                 try:
@@ -85,27 +86,32 @@ class SearchForm(forms.Form):
         initial=[o.id for o in OPERATING_SYSTEMS],
         coerce_only=True)
 
+    """
     # Support questions and discussion forums fields
     created = forms.TypedChoiceField(
         required=False, coerce=int, empty_value=0,
         label=_lazy('Created'), choices=constants.DATE_LIST)
 
     created_date = forms.CharField(required=False)
+    """
 
     updated = forms.TypedChoiceField(
         required=False, coerce=int, empty_value=0,
         label=_lazy('Last updated'), choices=constants.DATE_LIST)
     updated_date = forms.CharField(required=False)
 
+    """
     user_widget = forms.TextInput(attrs={'placeholder': _lazy('username'),
                                          'class': 'auto-fill'})
     # Discussion forums fields
     author = forms.CharField(required=False, widget=user_widget)
+    """
 
     sortby = forms.TypedChoiceField(
         required=False, coerce=int, empty_value=0,
         label=_lazy('Sort results by'), choices=constants.SORTBY_FORUMS)
 
+    """
     thread_type = TypedMultipleChoiceField(
         required=False, coerce=int, widget=forms.CheckboxSelectMultiple,
         label=_lazy('Thread type'), choices=constants.DISCUSSION_STATUS_LIST,
@@ -147,3 +153,4 @@ class SearchForm(forms.Form):
 
     q_tags = forms.CharField(label=_lazy('Tags'), required=False,
                              widget=tag_widget)
+    """

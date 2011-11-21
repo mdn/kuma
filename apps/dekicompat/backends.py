@@ -19,7 +19,7 @@ except ImportError:
     from django.utils._threading_local import local
 _thread_locals = local()
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s</email><fullname>%(fullname)s</fullname><status>%(status)s</status><language>%(language)s</language><timezone>%(timezone)s</timezone><permissions.user><role>%(role)s</role></permissions.user></user>"""
 

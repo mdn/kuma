@@ -1,0 +1,25 @@
+{% from 'includes/common_macros.html' import search_box %}
+  <div id="more-help">
+    <div class="wrap">
+      <h2>{{ _("Couldn't find what you were looking for?") }}</h2>
+      <ul>
+        {% if related %}
+          <li>
+            {{ _("Here's a list of related articles that might help:") }}
+            <ul>
+              {% for art in related %}
+                <li><a href="{{ art.get_absolute_url() }}">{{ art.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+        <li>
+          {{ _('Browse other articles about <a href="{url}">{category}</a>')|fe(url=url('wiki.category', document.category), category=document.get_category_display()) }}
+        </li>
+        <li>
+          <a href="{{ url('wiki.document', 'ask') }}">{{ _('Ask our awesome support community for help') }}</a>
+        </li>
+      </ul>
+      {{ search_box(settings, id=False, prefix=_('Or try searching:')) }}
+    </div>
+  </div>

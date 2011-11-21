@@ -8,6 +8,7 @@ from pyquery import PyQuery as pq
 from gallery.models import Video
 from gallery.tests import image, video
 from sumo.tests import TestCase
+from devmo.tests import SkippedTestCase
 import sumo.tests.test_parser
 from wiki.parser import (WikiParser, ForParser, PATTERNS, RECURSION_MESSAGE,
                          _build_template_params as _btp,
@@ -27,7 +28,7 @@ def doc_parse_markup(content, markup, title='Template:test'):
     return (doc, p)
 
 
-class SimpleSyntaxTestCase(TestCase):
+class SimpleSyntaxTestCase(SkippedTestCase):
     """Simple syntax regexing, like {note}...{/note}, {key Ctrl+K}"""
     fixtures = ['users.json']
 
@@ -138,7 +139,7 @@ class SimpleSyntaxTestCase(TestCase):
         eq_('hi!', doc('em span.menu').text())
 
 
-class TestWikiTemplate(TestCase):
+class TestWikiTemplate(SkippedTestCase):
     fixtures = ['users.json']
 
     def test_template(self):
@@ -330,7 +331,7 @@ class TestWikiTemplate(TestCase):
             boo.content_parsed)
 
 
-class TestWikiInclude(TestCase):
+class TestWikiInclude(SkippedTestCase):
     fixtures = ['users.json']
 
     def test_revision_include(self):
@@ -397,7 +398,7 @@ class TestWikiInclude(TestCase):
             '').replace('\n', ''))
 
 
-class TestWikiVideo(TestCase):
+class TestWikiVideo(SkippedTestCase):
     """Video hook."""
     fixtures = ['users.json']
 
@@ -480,7 +481,7 @@ def parsed_eq(want, to_parse):
     eq_(want, p.parse(to_parse).strip().replace('\n', ''))
 
 
-class ForWikiTests(TestCase):
+class ForWikiTests(SkippedTestCase):
     """Tests for the wiki implementation of the {for} directive, which
     arranges for certain parts of the page to show only when viewed on certain
     OSes or browser versions"""
@@ -628,7 +629,7 @@ def strip_eq(want, text):
     eq_(want, ForParser.strip_fors(text)[0])
 
 
-class ForParserTests(TestCase):
+class ForParserTests(SkippedTestCase):
     """Tests for the ForParser
 
     These are unit tests for ForParser, and ForWikiTests are

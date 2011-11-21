@@ -2,7 +2,7 @@
 {% macro errorlist(form) -%}
   {% if form.errors %}
     <ul class="errorlist">
-      {% for field in form.visible_fields() %}
+      {% for field in form %}
         {% for error in field.errors %}
           <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
         {% endfor %}
