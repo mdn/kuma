@@ -10,6 +10,7 @@ import mock
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
+from dekicompat.tests import mock_post_mindtouch_user
 from dekicompat.backends import DekiUserBackend
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
@@ -82,6 +83,7 @@ class RegisterTestCase(TestCase):
     def tearDown(self):
         settings.DEBUG = self.old_debug
 
+    @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
@@ -110,6 +112,7 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
+    @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_posts_mindtouch_user(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
@@ -129,12 +132,13 @@ class RegisterTestCase(TestCase):
         key = RegistrationProfile.objects.all()[0].activation_key
         assert mail.outbox[0].body.find('activate/%s' % key) > 0
 
-        deki_id = u.get_profile().deki_user_id
-        resp = requests.get(DekiUserBackend.profile_by_id_url % deki_id)
-        eq_(200, resp.status_code)
-        doc = pq(resp.content)
-        eq_(str(deki_id), doc('user').attr('id'))
-        eq_(username, doc('username').text())
+        if not settings.DEKIWIKI_MOCK:
+            deki_id = u.get_profile().deki_user_id
+            resp = requests.get(DekiUserBackend.profile_by_id_url % deki_id)
+            eq_(200, resp.status_code)
+            doc = pq(resp.content)
+            eq_(str(deki_id), doc('user').attr('id'))
+            eq_(username, doc('username').text())
 
         # Now try to log in
         u.is_active = True
@@ -145,6 +149,7 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
+    @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
@@ -169,6 +174,7 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/ja/', response.redirect_chain[0][0])
 
+    @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
@@ -184,6 +190,7 @@ class RegisterTestCase(TestCase):
         user = User.objects.get(pk=user.pk)
         assert user.is_active
 
+    @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_claim_watches(self, get_current):
         """Claim user watches upon activation."""

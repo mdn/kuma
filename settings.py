@@ -48,6 +48,7 @@ SLAVE_DATABASES = []
 # Dekiwiki has a backend API. protocol://hostname:port
 DEKIWIKI_ENDPOINT = 'https://developer-stage9.mozilla.org'
 DEKIWIKI_APIKEY = 'SET IN LOCAL SETTINGS'
+DEKIWIKI_MOCK = True
 
 # Cache Settings
 CACHE_BACKEND = 'locmem://?timeout=86400'
