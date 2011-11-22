@@ -147,13 +147,20 @@ class DekiUserBackend(object):
 
     @staticmethod
     def generate_mindtouch_user_xml(user):
-        user_xml = MINDTOUCH_USER_XML % {'username': user.username, 'email': user.email, 'fullname': user.get_profile().fullname, 'status': 'active', 'language': user.get_profile().mindtouch_language, 'timezone': user.get_profile().mindtouch_timezone, 'role': 'Contributor'}
+        user_xml = MINDTOUCH_USER_XML % {'username': user.username,
+                    'email': user.email,
+                    'fullname': user.get_profile().fullname,
+                    'status': 'active',
+                    'language': user.get_profile().mindtouch_language,
+                    'timezone': user.get_profile().mindtouch_timezone,
+                    'role': 'Contributor'}
         return user_xml
 
     @staticmethod
     def post_mindtouch_user(user):
         # post a new mindtouch user
-        user_url = '%s/@api/deki/users?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
+        user_url = '%s/@api/deki/users?apikey=%s' % (settings.DEKIWIKI_ENDPOINT,
+                                                     settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml',}
         resp = requests.post(user_url, data=user_xml, headers=headers)
@@ -166,7 +173,9 @@ class DekiUserBackend(object):
     def put_mindtouch_user(user):
         # update an existing mindtouch user
         deki_user_id = user.get_profile().deki_user_id or ''
-        user_url = '%s/@api/deki/users/%s?apikey=%s' % (settings.DEKIWIKI_ENDPOINT, deki_user_id,  settings.DEKIWIKI_APIKEY)
+        user_url = '%s/@api/deki/users/%s?apikey=%s' % (settings.DEKIWIKI_ENDPOINT,
+                                                        deki_user_id,
+                                                        settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml',}
         resp = requests.put(user_url, data=user_xml, headers=headers)

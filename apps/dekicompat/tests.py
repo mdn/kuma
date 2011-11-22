@@ -12,7 +12,9 @@ from test_utils import TestCase
 
 import commonware
 
-from dekicompat.backends import DekiUserBackend
+from django.conf import settings
+
+from dekicompat.backends import DekiUser, DekiUserBackend
 
 log = commonware.log.getLogger('kuma.dekicompat')
 
@@ -26,6 +28,18 @@ def mockdekiauth(test):
         mock_post.return_value = resp
         test(self)
     return test_new
+
+
+def mock_post_mindtouch_user(test):
+    if settings.DEKIWIKI_MOCK:
+        @mock.patch('dekicompat.backends.DekiUserBackend.post_mindtouch_user')
+        def test_new(self, post_mindtouch_user):
+            testaccount_fixture = open('apps/dekicompat/fixtures/testaccount.xml')
+            post_mindtouch_user.return_value = DekiUser.parse_user_info(testaccount_fixture.read())
+            test(self)
+        return test_new
+    else:
+        return test
 
 
 class DekiCompatTestCase(TestCase):

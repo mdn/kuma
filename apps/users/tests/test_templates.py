@@ -13,6 +13,8 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
+from dekicompat.tests import mock_post_mindtouch_user
+
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post
@@ -256,6 +258,7 @@ class PasswordChangeTests(TestCaseBase):
 
 
 class ResendConfirmationTests(TestCaseBase):
+    @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_resend_confirmation(self, get_current):
         get_current.return_value.domain = 'testserver.com'
