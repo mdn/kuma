@@ -69,11 +69,11 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
 
             # Include screenshot as an absolute URL.
             item_out['screenshot'] = request.build_absolute_uri(
-                item['obj'].screenshot_1.url)
+                item['obj'].screenshot_url(1))
 
             # HACK: This .replace() should probably be done in the model
             item_out['thumbnail'] = request.build_absolute_uri(
-                item['obj'].screenshot_1.url).replace('screenshot', 'screenshot_thumb')
+                item['obj'].thumbnail_url(1))
 
             #TODO: What else might be useful in a JSON feed of demo submissions?
             # Comment, like, view counts may change too much for caching to be useful
