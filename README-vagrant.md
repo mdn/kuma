@@ -37,8 +37,6 @@ reasons.
     # production site. This can take a long while, since there's over 500MB
     vagrant ssh
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
-    # Then, apply the main manifest again, to ensure the database gets
-    # updated by current migrations
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
     # Add developer-dev.mozilla.org to /etc/hosts

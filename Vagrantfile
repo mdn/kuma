@@ -8,6 +8,11 @@ Vagrant::Config.run do |config|
     config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/kuma.box"
     config.package.name = "kuma.box"
 
+    # Here's a box built with a not-too-old import included
+    # config.vm.box = "kuma-with-data"
+    # config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/kuma-with-data.box"
+    # config.package.name = "kuma-with-data.box"
+
     # To rebuild from mostly scratch, use this CentOS 5.6 (32 bit) image:
     # config.vm.box = "centos-56-32"
     # config.vm.box_url = "http://people.mozilla.com/~lorchard/vm/centos-56-32.box"

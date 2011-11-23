@@ -1,7 +1,18 @@
 USE kuma;
 
-DROP TABLE `devmo_event` CASCADE;
-DROP TABLE `devmo_calendar` CASCADE;
+-- Brute force cleaning to make way for South migrations
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `devmo_event` CASCADE;
+DROP TABLE IF EXISTS `devmo_calendar` CASCADE;
+DROP TABLE IF EXISTS `wiki_document` CASCADE;
+DROP TABLE IF EXISTS `wiki_revision` CASCADE;
+DROP TABLE IF EXISTS `wiki_firefoxversion` CASCADE; 
+DROP TABLE IF EXISTS `wiki_operatingsystem` CASCADE;
+DROP TABLE IF EXISTS `wiki_helpfulvote` CASCADE;
+DROP TABLE IF EXISTS `wiki_relateddocument` CASCADE;
+DROP TABLE IF EXISTS `wiki_editortoolbar` CASCADE;
+DROP TABLE IF EXISTS `wiki_reviewtaggedrevision` CASCADE;
+DROP TABLE IF EXISTS `wiki_reviewtag` CASCADE;
 
 USE wikidb;
 
@@ -122,7 +133,7 @@ SET user_name='Admin',
     user_service_id=1,
     user_builtin=1,
     user_create_timestamp='0001-01-01 00:00:00'
-WHERE user_id=1;
+WHERE user_id=10611;
 
 -- User ID 115908 is apparently the Anonymous user in current data dumps
 UPDATE `users` 
