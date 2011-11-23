@@ -499,7 +499,7 @@ class Submission(models.Model):
         """Fetch the screenshot thumbnail URL for a given index, swallowing
         errors"""
         try:
-            return getattr(self, 'screenshot_%s' % index).thumbnail_url
+            return getattr(self, 'screenshot_%s' % index).thumbnail_url()
         except:
             return ''
 
