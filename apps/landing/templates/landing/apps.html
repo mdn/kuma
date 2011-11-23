@@ -26,6 +26,25 @@
   <section id="content-main" role="main">
 
     <div class="boxed">
+      <section id="videos">
+        <header class="subhead">
+          <h2>{{ _('Watch Apps Videos')|safe }}</h2>
+        </header>
+        {% include "includes/video_player.html" %}
+        <ul class="hfeed">
+          <li class="hentry">
+            <h3>
+              <a href="https://apps.mozillalabs.com/v/openwebapps.ogv" title="{{ _('Watch this video') }}"
+                 id="Apps-Intro" class="video_thumbnail">
+                <img src="{{MEDIA_URL}}img/vidthumb-appsoverview.jpg" 
+                   alt="" height="150" width="270">
+                <span>{{ _('An overview of Mozilla Web apps.')}}</span>
+              </a>
+            </h3>
+          </li>
+        </ul>
+      </section>
+
       <section id="apps-interests" class="articles-list">
         <header class="head section-apps">
           {# L10n: Please escape HTML entities here, like &amp; #}
@@ -114,25 +133,6 @@
         <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All Apps documentation') }}</a></p>
       </section>
       
-      <section id="videos">
-        <header class="subhead">
-          <h2>{{ _('Watch Apps Videos')|safe }}</h2>
-        </header>
-        {% include "includes/video_player.html" %}
-        <ul class="hfeed">
-          <li class="hentry">
-            <h3>
-              <a href="https://apps.mozillalabs.com/v/openwebapps.ogv" title="{{ _('Watch this video') }}"
-                 id="Apps-Intro" class="video_thumbnail">
-                <img src="{{MEDIA_URL}}img/vidthumb-appsoverview.jpg" 
-                   alt="" height="150" width="270">
-                <span>{{ _('An overview of Mozilla Web apps.')}}</span>
-              </a>
-            </h3>
-          </li>
-        </ul>
-      </section>
-
     </div>{# /.boxed #}
 
   </section>{# /#content-main #}
@@ -142,7 +142,7 @@
     <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
       <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
       <p class="mod-intro">{% trans %}
-          Sign up now for the monthly Apps Developer newsletter. The first 5,000
+          Sign up now for the monthly Apps Developer newsletter. The first 3,000
           subscribers will gain access to the Developer Preview of the Mozilla Apps
           market. <strong>Join us!</strong>
       {% endtrans %}</p>
