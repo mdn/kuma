@@ -79,11 +79,6 @@ class LandingViewsTest(test_utils.TestCase):
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
-    def test_search(self):
-        url = reverse('landing.views.search')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
     def test_promote_buttons(self):
         url = reverse('landing.views.promote_buttons')
         r = self.client.get(url, follow=True)

@@ -20,6 +20,11 @@ fi
 echo "Activating $VENV"
 source $VENV/bin/activate
 
+PYTHON26=`which python26`
+if [ -z "$PYTHON26" ]; then
+    ln -s $VENV/bin/python $VENV/bin/python26
+fi
+
 pip install -q -r requirements/compiled.txt
 
 # locale - create if necessary
@@ -49,7 +54,7 @@ cat > settings_local.py <<SETTINGS
 from settings import *
 ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
 LOG_LEVEL = logging.ERROR
-DATABASES['default']['HOST'] = 'sm-hudson01'
+DATABASES['default']['HOST'] = 'localhost'
 DATABASES['default']['USER'] = 'hudson'
 DATABASES['default']['TEST_NAME'] = '$DB'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
@@ -74,10 +79,10 @@ export FORCE_DB='yes sir'
 
 # with-coverage excludes sphinx so it doesn't conflict with real builds.
 if [[ $2 = 'with-coverage' ]]; then
-    coverage run manage.py test actioncounters contentflagging demos devmo landing wiki -v 2 --noinput
+    coverage run manage.py test actioncounters contentflagging demos devmo landing search wiki -v 2 --noinput
     coverage xml $(find apps lib -name '*.py')
 else
-    python manage.py test actioncounters contentflagging demos devmo landing wiki -v 2 --noinput
+    python manage.py test actioncounters contentflagging demos devmo landing search wiki -v 2 --noinput
 fi
 
 echo 'shazam!'

@@ -4,7 +4,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * @fileOverview Defines the {@link CKEDITOR.lang} object, for the English
+ * @fileOverview Defines the {@link CKEDITOR.lang} object for the English
  *		language. This is the base file for all translations.
  */
 
@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['en'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['en'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.',
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar',
-	editor	: 'Rich Text Editor',
+	toolbars	: 'Editor toolbars',
+	editor		: 'Rich Text Editor',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Source',
@@ -121,6 +121,10 @@ CKEDITOR.lang['en'] =
 		alignBottom		: 'Bottom',
 		invalidHeight	: 'Height must be a number.',
 		invalidWidth	: 'Width must be a number.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).',
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).',
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.',
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>'
@@ -175,18 +179,19 @@ CKEDITOR.lang['en'] =
 		langDirRTL		: 'Right to Left (RTL)',
 		acccessKey		: 'Access Key',
 		name			: 'Name',
-		langCode		: 'Language Code',
-		tabIndex		: 'Tab Index',
-		advisoryTitle	: 'Advisory Title',
+		langCode			: 'Language Code',
+		tabIndex			: 'Tab Index',
+		advisoryTitle		: 'Advisory Title',
 		advisoryContentType	: 'Advisory Content Type',
 		cssClasses		: 'Stylesheet Classes',
 		charset			: 'Linked Resource Charset',
 		styles			: 'Style',
-		selectAnchor	: 'Select an Anchor',
+		rel			: 'Relationship',
+		selectAnchor		: 'Select an Anchor',
 		anchorName		: 'By Anchor Name',
-		anchorId		: 'By Element Id',
-		emailAddress	: 'E-Mail Address',
-		emailSubject	: 'Message Subject',
+		anchorId			: 'By Element Id',
+		emailAddress		: 'E-Mail Address',
+		emailSubject		: 'Message Subject',
 		emailBody		: 'Message Body',
 		noAnchors		: '(No anchors available in the document)',
 		noUrl			: 'Please type the link URL',
@@ -200,7 +205,8 @@ CKEDITOR.lang['en'] =
 		menu		: 'Edit Anchor',
 		title		: 'Anchor Properties',
 		name		: 'Anchor Name',
-		errorName	: 'Please type the anchor name'
+		errorName	: 'Please type the anchor name',
+		remove		: 'Remove Anchor'
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['en'] =
 		findWhat			: 'Find what:',
 		replaceWith			: 'Replace with:',
 		notFoundMsg			: 'The specified text was not found.',
+		findOptions			: 'Find Options',
 		matchCase			: 'Match case',
 		matchWord			: 'Match whole word',
 		matchCyclic			: 'Match cyclic',
@@ -270,8 +277,8 @@ CKEDITOR.lang['en'] =
 		invalidBorder	: 'Border size must be a number.',
 		invalidWidth	: 'Table width must be a number.',
 		invalidHeight	: 'Table height must be a number.',
-		invalidCellSpacing	: 'Cell spacing must be a number.',
-		invalidCellPadding	: 'Cell padding must be a number.',
+		invalidCellSpacing	: 'Cell spacing must be a positive number.',
+		invalidCellPadding	: 'Cell padding must be a positive number.',
 
 		cell :
 		{
@@ -412,7 +419,6 @@ CKEDITOR.lang['en'] =
 		upload		: 'Upload',
 		alt			: 'Alternative Text',
 		lockRatio	: 'Lock Ratio',
-		unlockRatio	: 'Unlock Ratio',
 		resetSize	: 'Reset Size',
 		border		: 'Border',
 		hSpace		: 'HSpace',
@@ -714,6 +720,8 @@ CKEDITOR.lang['en'] =
 	{
 		title		: 'About CKEditor',
 		dlgTitle	: 'About CKEditor',
+		help	: 'Check $1 for help.',
+		userGuide : 'CKEditor User\'s Guide',
 		moreInfo	: 'For licensing information please visit our web site:',
 		copy		: 'Copyright &copy; $1. All rights reserved.'
 	},
@@ -744,9 +752,64 @@ CKEDITOR.lang['en'] =
 	toolbarCollapse	: 'Collapse Toolbar',
 	toolbarExpand	: 'Expand Toolbar',
 
+	toolbarGroups :
+	{
+		document : 'Document',
+		clipboard : 'Clipboard/Undo',
+		editing : 'Editing',
+		forms : 'Forms',
+		basicstyles : 'Basic Styles',
+		paragraph : 'Paragraph',
+		links : 'Links',
+		insert : 'Insert',
+		styles : 'Styles',
+		colors : 'Colors',
+		tools : 'Tools'
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right',
 		rtl : 'Text direction from right to left'
+	},
+
+	docprops :
+	{
+		label : 'Document Properties',
+		title : 'Document Properties',
+		design : 'Design',
+		meta : 'Meta Tags',
+		chooseColor : 'Choose',
+		other : 'Other...',
+		docTitle :	'Page Title',
+		charset : 	'Character Set Encoding',
+		charsetOther : 'Other Character Set Encoding',
+		charsetASCII : 'ASCII',
+		charsetCE : 'Central European',
+		charsetCT : 'Chinese Traditional (Big5)',
+		charsetCR : 'Cyrillic',
+		charsetGR : 'Greek',
+		charsetJP : 'Japanese',
+		charsetKR : 'Korean',
+		charsetTR : 'Turkish',
+		charsetUN : 'Unicode (UTF-8)',
+		charsetWE : 'Western European',
+		docType : 'Document Type Heading',
+		docTypeOther : 'Other Document Type Heading',
+		xhtmlDec : 'Include XHTML Declarations',
+		bgColor : 'Background Color',
+		bgImage : 'Background Image URL',
+		bgFixed : 'Non-scrolling (Fixed) Background',
+		txtColor : 'Text Color',
+		margin : 'Page Margins',
+		marginTop : 'Top',
+		marginLeft : 'Left',
+		marginRight : 'Right',
+		marginBottom : 'Bottom',
+		metaKeywords : 'Document Indexing Keywords (comma separated)',
+		metaDescription : 'Document Description',
+		metaAuthor : 'Author',
+		metaCopyright : 'Copyright',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>'
 	}
 };

@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['gu'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['gu'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'મૂળ કે પ્રાથમિક દસ્તાવેજ',
@@ -121,6 +121,10 @@ CKEDITOR.lang['gu'] =
 		alignBottom		: 'નીચે',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -175,18 +179,19 @@ CKEDITOR.lang['gu'] =
 		langDirRTL		: 'જમણે થી ડાબે (RTL)',
 		acccessKey		: 'ઍક્સેસ કી',
 		name			: 'નામ',
-		langCode		: 'ભાષા લેખવાની પદ્ધતિ',
-		tabIndex		: 'ટૅબ ઇન્ડેક્સ',
-		advisoryTitle	: 'મુખ્ય મથાળું',
+		langCode			: 'ભાષા લેખવાની પદ્ધતિ',
+		tabIndex			: 'ટૅબ ઇન્ડેક્સ',
+		advisoryTitle		: 'મુખ્ય મથાળું',
 		advisoryContentType	: 'મુખ્ય કન્ટેન્ટ પ્રકાર',
 		cssClasses		: 'સ્ટાઇલ-શીટ ક્લાસ',
 		charset			: 'લિંક રિસૉર્સ કૅરિક્ટર સેટ',
 		styles			: 'સ્ટાઇલ',
-		selectAnchor	: 'ઍંકર પસંદ કરો',
+		rel			: 'Relationship', // MISSING
+		selectAnchor		: 'ઍંકર પસંદ કરો',
 		anchorName		: 'ઍંકર નામથી પસંદ કરો',
-		anchorId		: 'ઍંકર એલિમન્ટ Id થી પસંદ કરો',
-		emailAddress	: 'ઈ-મેલ સરનામું',
-		emailSubject	: 'ઈ-મેલ વિષય',
+		anchorId			: 'ઍંકર એલિમન્ટ Id થી પસંદ કરો',
+		emailAddress		: 'ઈ-મેલ સરનામું',
+		emailSubject		: 'ઈ-મેલ વિષય',
 		emailBody		: 'સંદેશ',
 		noAnchors		: '(ડૉક્યુમન્ટમાં ઍંકરની સંખ્યા)',
 		noUrl			: 'લિંક  URL ટાઇપ કરો',
@@ -200,7 +205,8 @@ CKEDITOR.lang['gu'] =
 		menu		: 'ઍંકરના ગુણ',
 		title		: 'ઍંકરના ગુણ',
 		name		: 'ઍંકરનું નામ',
-		errorName	: 'ઍંકરનું નામ ટાઈપ કરો'
+		errorName	: 'ઍંકરનું નામ ટાઈપ કરો',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['gu'] =
 		findWhat			: 'આ શોધો',
 		replaceWith			: 'આનાથી બદલો',
 		notFoundMsg			: 'તમે શોધેલી ટેક્સ્ટ નથી મળી',
+		findOptions			: 'Find Options', // MISSING
 		matchCase			: 'કેસ સરખા રાખો',
 		matchWord			: 'બઘા શબ્દ સરખા રાખો',
 		matchCyclic			: 'Match cyclic', // MISSING
@@ -270,8 +277,8 @@ CKEDITOR.lang['gu'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -412,7 +419,6 @@ CKEDITOR.lang['gu'] =
 		upload		: 'અપલોડ',
 		alt			: 'ઑલ્ટર્નટ ટેક્સ્ટ',
 		lockRatio	: 'લૉક ગુણોત્તર',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'રીસેટ સાઇઝ',
 		border		: 'બોર્ડર',
 		hSpace		: 'સમસ્તરીય જગ્યા',
@@ -714,6 +720,8 @@ CKEDITOR.lang['gu'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -744,9 +752,64 @@ CKEDITOR.lang['gu'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : 'ડૉક્યુમન્ટ ગુણ/પ્રૉપર્ટિઝ',
+		title : 'ડૉક્યુમન્ટ ગુણ/પ્રૉપર્ટિઝ',
+		design : 'Design', // MISSING
+		meta : 'મેટાડૅટા',
+		chooseColor : 'Choose', // MISSING
+		other : '<other>',
+		docTitle :	'પેજ મથાળું/ટાઇટલ',
+		charset : 	'કેરેક્ટર સેટ એન્કોડિંગ',
+		charsetOther : 'અન્ય કેરેક્ટર સેટ એન્કોડિંગ',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'મધ્ય યુરોપિઅન (Central European)',
+		charsetCT : 'ચાઇનીઝ (Chinese Traditional Big5)',
+		charsetCR : 'સિરીલિક (Cyrillic)',
+		charsetGR : 'ગ્રીક (Greek)',
+		charsetJP : 'જાપાનિઝ (Japanese)',
+		charsetKR : 'કોરીયન (Korean)',
+		charsetTR : 'ટર્કિ (Turkish)',
+		charsetUN : 'યૂનિકોડ (UTF-8)',
+		charsetWE : 'પશ્ચિમ યુરોપિઅન (Western European)',
+		docType : 'ડૉક્યુમન્ટ પ્રકાર શીર્ષક',
+		docTypeOther : 'અન્ય ડૉક્યુમન્ટ પ્રકાર શીર્ષક',
+		xhtmlDec : 'XHTML સૂચના સમાવિષ્ટ કરવી',
+		bgColor : 'બૅકગ્રાઉન્ડ રંગ',
+		bgImage : 'બૅકગ્રાઉન્ડ ચિત્ર URL',
+		bgFixed : 'સ્ક્રોલ ન થાય તેવું બૅકગ્રાઉન્ડ',
+		txtColor : 'શબ્દનો રંગ',
+		margin : 'પેજ માર્જિન',
+		marginTop : 'ઉપર',
+		marginLeft : 'ડાબી',
+		marginRight : 'જમણી',
+		marginBottom : 'નીચે',
+		metaKeywords : 'ડૉક્યુમન્ટ ઇન્ડેક્સ સંકેતશબ્દ (અલ્પવિરામ (,) થી અલગ કરો)',
+		metaDescription : 'ડૉક્યુમન્ટ વર્ણન',
+		metaAuthor : 'લેખક',
+		metaCopyright : 'કૉપિરાઇટ',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

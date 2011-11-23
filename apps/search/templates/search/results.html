@@ -4,6 +4,9 @@
                ('WT.oss_r', num_results)) %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
 <article id="search-results" class="main">
   <div id="basic-search" class="search-refine">
     <form role="search" method="get" action="search">
@@ -43,6 +46,8 @@
 
   </div>
 
-  <p>{{ _("Can't find what you're looking for? <a href='{0}'>Ask a support question instead!</a>")|fe(url('wiki.document', 'ask')) }}</p>
 </article>
+    </div>
+   </div>
+</section>
 {% endblock %}

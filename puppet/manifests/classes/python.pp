@@ -43,13 +43,18 @@ class python_virtualenv {
 }
 
 class python_modules {
-     exec { 
+    exec { 
+         "pip-cache-ownership":
+             command => "/bin/chown -R vagrant:vagrant /vagrant/puppet/cache/pip && /bin/chmod ug+rw -R /vagrant/puppet/cache/pip",
+             unless => '/bin/su vagrant -c "/usr/bin/test -w /vagrant/puppet/cache/pip"';
          "pip-install-compiled":
+             require => Exec['pip-cache-ownership'],
              user => "vagrant",
              cwd => '/tmp', 
              timeout => 600, # Too long, but this can take awhile
              command => "/home/vagrant/kuma-venv/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r $PROJ_DIR/requirements/compiled.txt";
          "pip-install-dev":
+             require => Exec['pip-cache-ownership'],
              user => "vagrant",
              cwd => '/tmp', 
              timeout => 600, # Too long, but this can take awhile

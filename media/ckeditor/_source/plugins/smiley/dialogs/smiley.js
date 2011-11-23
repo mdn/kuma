@@ -183,6 +183,7 @@ CKEDITOR.dialog.add( 'smiley', function( editor )
 	var smileySelector =
 	{
 		type : 'html',
+		id : 'smileySelector',
 		html : html.join( '' ),
 		onLoad : function( event )
 		{

@@ -79,3 +79,7 @@ logging.basicConfig(
     format = '%(asctime)s %(levelname)s %(message)s',
     filename = '/home/vagrant/logs/kuma-django.log',
 )
+
+SPHINX_INDEXER = '/usr/local/bin/indexer'
+SPHINX_SEARCHD = '/usr/local/bin/searchd'
+SEARCH_CACHE_PERIOD = 0 

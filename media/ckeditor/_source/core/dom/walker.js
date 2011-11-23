@@ -338,7 +338,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	CKEDITOR.dom.element.prototype.isBlockBoundary = function( customNodeNames )
 	{
-		var nodeNameMatches = CKEDITOR.tools.extend( {}, CKEDITOR.dtd.$block, customNodeNames || {} );
+		var nodeNameMatches = customNodeNames ?
+			CKEDITOR.tools.extend( {}, CKEDITOR.dtd.$block, customNodeNames || {} ) :
+			CKEDITOR.dtd.$block;
 
 		// Don't consider floated formatting as block boundary, fall back to dtd check in that case. (#6297)
 		return this.getComputedStyle( 'float' ) == 'none' && blockBoundaryDisplayMatch[ this.getComputedStyle( 'display' ) ]

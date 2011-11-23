@@ -3,6 +3,7 @@
 {% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
 {# L10n: {t} is the title of the document. {c} is the category. #}
 {% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
 {% if document.parent %}
@@ -10,26 +11,40 @@
   {% set localizable_url = url('wiki.document', document.parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) %}
 {% endif %}
 
+{% block extrahead %}
+  <link rel="alternate" type="application/json" 
+    href="{{ url('wiki.json_slug', document.slug) }}">
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-        <article class="article" role="main">
+      <article class="article" role="main" 
+          data-current-revision="{{ document.current_revision.id }}"
+          data-refresh-message="{{ _('Your changes were merged. However, something else has been edited, so this page will be refreshed to reflect the changes.') }}"
+          data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
       <header id="article-head">
         <div class="title">
             <h1 class="page-title">{{ document.title }}</h1>
         </div>
         <ul id="page-buttons">
-            <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">Watch</a></li>
-          <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">Edit</a></li>
+            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.slug) }}">{{_('History')}}</a></li>
+            {% if request.user.is_authenticated() %}
+              <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">{{_('Watch')}}</a></li>
+            {% endif %}
+            {% if document.allows_editing_by(request.user) %}
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">{{_('Edit')}}</a></li>
+            {% endif %}
         </ul>
        </header>
+        {% if redirected_from %}
+          <div class="warning" id="redirected-from">
+            <p>{{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+          </div>
+        {% endif %}
+
        {#
-    {% if redirected_from %}
-      <div id="redirected-from">
-        {{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}
-      </div>
-    {% endif %}
     {% if document.is_majorly_outdated() %}
       <div class="warning-box">
         {% trans url=document.parent.get_absolute_url(), title=document.parent.title %}
@@ -80,7 +95,7 @@
       </div>
       #}
       {% if not fallback_reason %}
-        {{ document.html|safe }}
+        {{ document_html|safe }}
       {% elif fallback_reason == 'no_translation' %}
         <div id="doc-pending-fallback" class="warning-box">
           {% trans help_link=url('wiki.document', 'localize-firefox-help'),
@@ -89,7 +104,7 @@
             <a href="{{ help_link }}">Join us and help get the job done!</a>
           {% endtrans %}
         </div>
-        {{ document.html|safe }}
+        {{ document_html|safe }}
       {% elif fallback_reason == 'translation_not_approved' %}
         <div id="doc-pending-fallback" class="warning-box">
           {# L10n: This is shown for existing, never-approved translations #}
@@ -119,6 +134,21 @@
   #}
     </div>
    </div>
+    {% if document.allows_editing_by(request.user) %}
+      <div class="edited-section-ui template">
+        <a class="save" href="#">{{ _('Save') }}</a>
+        <a class="cancel" href="#">{{ _('Cancel') }}</a>
+        <div class="src"></div>
+      </div>
+      {# This form gets filled out and used by the inline editor when a
+         conflict is detected. It needs to be server side in order to get supplied
+         with a CSRF token. #}
+      <form class="conflict-bouncer template" method="POST" action="">
+        <input type="hidden" name="form" value="rev">
+        <input type="hidden" name="current_rev" value="">
+        <input type="hidden" name="content" value="">
+      </form>
+    {% endif %}
 </section>
 {% endblock %}
 

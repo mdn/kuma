@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['ko'] =
@@ -34,8 +34,8 @@ CKEDITOR.lang['ko'] =
 	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: '소스',
@@ -121,6 +121,10 @@ CKEDITOR.lang['ko'] =
 		alignBottom		: '아래',
 		invalidHeight	: 'Height must be a number.', // MISSING
 		invalidWidth	: 'Width must be a number.', // MISSING
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
@@ -175,18 +179,19 @@ CKEDITOR.lang['ko'] =
 		langDirRTL		: '오른쪽에서 왼쪽 (RTL)',
 		acccessKey		: '엑세스 키',
 		name			: 'Name',
-		langCode		: '쓰기 방향',
-		tabIndex		: '탭 순서',
-		advisoryTitle	: 'Advisory Title',
+		langCode			: '쓰기 방향',
+		tabIndex			: '탭 순서',
+		advisoryTitle		: 'Advisory Title',
 		advisoryContentType	: 'Advisory Content Type',
 		cssClasses		: 'Stylesheet Classes',
 		charset			: 'Linked Resource Charset',
 		styles			: 'Style',
-		selectAnchor	: '책갈피 선택',
+		rel			: 'Relationship', // MISSING
+		selectAnchor		: '책갈피 선택',
 		anchorName		: '책갈피 이름',
-		anchorId		: '책갈피 ID',
-		emailAddress	: '이메일 주소',
-		emailSubject	: '제목',
+		anchorId			: '책갈피 ID',
+		emailAddress		: '이메일 주소',
+		emailSubject		: '제목',
 		emailBody		: '내용',
 		noAnchors		: '(문서에 책갈피가 없습니다.)',
 		noUrl			: '링크 URL을 입력하십시요.',
@@ -200,7 +205,8 @@ CKEDITOR.lang['ko'] =
 		menu		: '책갈피 속성',
 		title		: '책갈피 속성',
 		name		: '책갈피 이름',
-		errorName	: '책갈피 이름을 입력하십시요.'
+		errorName	: '책갈피 이름을 입력하십시요.',
+		remove		: 'Remove Anchor' // MISSING
 	},
 
 	// List style dialog
@@ -236,6 +242,7 @@ CKEDITOR.lang['ko'] =
 		findWhat			: '찾을 문자열:',
 		replaceWith			: '바꿀 문자열:',
 		notFoundMsg			: '문자열을 찾을 수 없습니다.',
+		findOptions			: 'Find Options', // MISSING
 		matchCase			: '대소문자 구분',
 		matchWord			: '온전한 단어',
 		matchCyclic			: 'Match cyclic', // MISSING
@@ -270,8 +277,8 @@ CKEDITOR.lang['ko'] =
 		invalidBorder	: 'Border size must be a number.', // MISSING
 		invalidWidth	: 'Table width must be a number.', // MISSING
 		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		invalidCellSpacing	: 'Cell spacing must be a positive number.', // MISSING
+		invalidCellPadding	: 'Cell padding must be a positive number.', // MISSING
 
 		cell :
 		{
@@ -412,7 +419,6 @@ CKEDITOR.lang['ko'] =
 		upload		: '업로드',
 		alt			: '이미지 설명',
 		lockRatio	: '비율 유지',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: '원래 크기로',
 		border		: '테두리',
 		hSpace		: '수평여백',
@@ -714,6 +720,8 @@ CKEDITOR.lang['ko'] =
 	{
 		title		: 'About CKEditor', // MISSING
 		dlgTitle	: 'About CKEditor', // MISSING
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'For licensing information please visit our web site:', // MISSING
 		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
 	},
@@ -744,9 +752,64 @@ CKEDITOR.lang['ko'] =
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
 	toolbarExpand	: 'Expand Toolbar', // MISSING
 
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
 	bidi :
 	{
 		ltr : 'Text direction from left to right', // MISSING
 		rtl : 'Text direction from right to left' // MISSING
+	},
+
+	docprops :
+	{
+		label : '문서 속성',
+		title : '문서 속성',
+		design : 'Design', // MISSING
+		meta : '메타데이터',
+		chooseColor : 'Choose', // MISSING
+		other : '<기타>',
+		docTitle :	'페이지명',
+		charset : 	'캐릭터셋 인코딩',
+		charsetOther : '다른 캐릭터셋 인코딩',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Central European', // MISSING
+		charsetCT : 'Chinese Traditional (Big5)', // MISSING
+		charsetCR : 'Cyrillic', // MISSING
+		charsetGR : 'Greek', // MISSING
+		charsetJP : 'Japanese', // MISSING
+		charsetKR : 'Korean', // MISSING
+		charsetTR : 'Turkish', // MISSING
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Western European', // MISSING
+		docType : '문서 헤드',
+		docTypeOther : '다른 문서헤드',
+		xhtmlDec : 'XHTML 문서정의 포함',
+		bgColor : '배경색상',
+		bgImage : '배경이미지 URL',
+		bgFixed : '스크롤되지않는 배경',
+		txtColor : '글자 색상',
+		margin : '페이지 여백',
+		marginTop : '위',
+		marginLeft : '왼쪽',
+		marginRight : '오른쪽',
+		marginBottom : '아래',
+		metaKeywords : '문서 키워드 (콤마로 구분)',
+		metaDescription : '문서 설명',
+		metaAuthor : '작성자',
+		metaCopyright : '저작권',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
 	}
 };

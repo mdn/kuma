@@ -60,8 +60,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					// So we have to take care to include a td we've entered only when we've
 					// walked into its children.
 
-					var parent = node.getParent();
-					if ( parent && cellNodeRegex.test( parent.getName() ) && !parent.getCustomData( 'selected_cell' ) )
+					var parent = node.getAscendant( 'td' ) || node.getAscendant( 'th' );
+					if ( parent && !parent.getCustomData( 'selected_cell' ) )
 					{
 						CKEDITOR.dom.element.setMarker( database, parent, 'selected_cell', true );
 						retval.push( parent );
@@ -135,7 +135,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				width = map[0].length;
 
 		var newRow = doc.createElement( 'tr' );
-		for ( var i = 0; i < width; i++ )
+		for ( var i = 0; cloneRow[ i ] && i < width; i++ )
 		{
 			var cell;
 			// Check whether there's a spanning row here, do not break it.
@@ -215,7 +215,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// 1. Into next sibling row if any;
 			// 2. Into previous sibling row if any;
 			// 3. Into table's parent element if it's the very last row.
-			var cursorPosition =  new CKEDITOR.dom.element( rows[ startRowIndex ] || rows[ startRowIndex - 1 ] || table.$.parentNode );
+			var cursorPosition =  new CKEDITOR.dom.element( rows[ endRowIndex + 1 ] || ( startRowIndex > 0 ? rows[  startRowIndex - 1 ] : null ) || table.$.parentNode );
 
 			for ( i = rowsToDelete.length ; i >= 0 ; i-- )
 				deleteRows( rowsToDelete[ i ] );
@@ -341,16 +341,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					row = new CKEDITOR.dom.element( table.$.rows[ j ] ),
 					cell = new CKEDITOR.dom.element( mapRow[ i ] );
 
-				if ( cell.$.colSpan == 1 )
-					cell.remove();
-				// Reduce the col spans.
-				else
-					cell.$.colSpan -= 1;
+				if ( cell.$ )
+				{
+					if ( cell.$.colSpan == 1 )
+						cell.remove();
+					// Reduce the col spans.
+					else
+						cell.$.colSpan -= 1;
 
-				j += cell.$.rowSpan - 1;
+					j += cell.$.rowSpan - 1;
 
-				if ( !row.$.cells.length )
-					rowsToDelete.push( row );
+					if ( !row.$.cells.length )
+						rowsToDelete.push( row );
+				}
 			}
 		}
 
@@ -795,18 +798,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						if ( !table )
 							return;
 
-						// Maintain the selection point at where the table was deleted.
-						selection.selectElement( table );
-						var range = selection.getRanges()[0];
-						range.collapse();
-						selection.selectRanges( [ range ] );
-
 						// If the table's parent has only one child remove it as well (unless it's the body or a table cell) (#5416, #6289)
 						var parent = table.getParent();
 						if ( parent.getChildCount() == 1 && !parent.is( 'body', 'td', 'th' ) )
-							parent.remove();
-						else
-							table.remove();
+							table = parent;
+
+						var range = new CKEDITOR.dom.range( editor.document );
+						range.moveToPosition( table, CKEDITOR.POSITION_BEFORE_START );
+						table.remove();
+						range.select();
 					}
 				} );
 

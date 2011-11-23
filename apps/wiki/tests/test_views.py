@@ -1,7 +1,10 @@
+import logging
 import json
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 
+import mock
 from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -9,9 +12,13 @@ from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
+
+import wiki.content
 from wiki.models import VersionMetadata, Document, Revision
-from wiki.tests import doc_rev, document, new_document_data, revision
+from wiki.tests import (doc_rev, document, new_document_data, revision,
+                        normalize_html)
 from wiki.views import _version_groups
+from wiki.forms import MIDAIR_COLLISION
 
 
 class VersionGroupTests(TestCase):
@@ -35,7 +42,7 @@ class RedirectTests(TestCase):
 
     def test_redirect_suppression(self):
         """The document view shouldn't redirect when passed redirect=no."""
-        redirect, _ = doc_rev('REDIRECT [[http://smoo/]]')
+        redirect, _ = doc_rev('REDIRECT <a class="redirect" href="http://smoo/">smoo</a>')
         response = self.client.get(
                        redirect.get_absolute_url() + '?redirect=no',
                        follow=True)
@@ -96,7 +103,8 @@ class ViewTests(TestCase):
         data = json.loads(resp.content)
         eq_('article-title', data['slug'])
 
-        resp = self.client.get(url, {'slug': 'article-title'})
+        url = reverse('wiki.json_slug', args=('article-title',), force_locale=True)
+        resp = self.client.get(url)
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
@@ -120,10 +128,95 @@ class DocumentEditingTests(TestCase):
         data = new_document_data()
         data.update({'title': new_title,
                      'slug': d.slug,
-                     'form': 'doc'})
+                     'form': 'rev'})
         client.post(reverse('wiki.edit_document', args=[d.slug]), data)
         eq_(new_title, Document.uncached.get(slug=d.slug).title)
         assert "REDIRECT" in Document.uncached.get(title=old_title).html
+
+    def test_retitling_ignored_for_iframe(self):
+        """When the title of an article is edited in an iframe, the change is
+        ignored."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        new_title = 'Some New Title'
+        d, r = doc_rev()
+        old_title = d.title
+        data = new_document_data()
+        data.update({'title': new_title,
+                     'slug': d.slug,
+                     'form': 'rev'})
+        client.post('%s?iframe=1' % reverse('wiki.edit_document', args=[d.slug]), data)
+        eq_(old_title, Document.uncached.get(slug=d.slug).title)
+        assert "REDIRECT" not in Document.uncached.get(title=old_title).html
+
+    @attr('clobber')
+    def test_title_slug_collision_errors(self):
+        """When an attempt is made to retitle an article and another with that
+        title already exists, there should be form errors"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        exist_title = "Existing doc"
+        exist_slug = "existing-doc"
+
+        # Create a new doc.
+        data = new_document_data()
+        data.update({ "title": exist_title, "slug": exist_slug })
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+
+        # Create another new doc.
+        data = new_document_data()
+        data.update({ "title": 'Some new title', "slug": 'some-new-title' })
+        response = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+
+        # Now, post an update with duplicate slug and title
+        data.update({
+            'form': 'rev',
+            'title': exist_title,
+            'slug': exist_slug
+        })
+        resp = client.post(reverse('wiki.edit_document', args=['some-new-title']), data)
+        eq_(200, resp.status_code)
+        p = pq(resp.content)
+
+        ok_(p.find('.errorlist').length > 0)
+        ok_(p.find('.errorlist a[href="#id_title"]').length > 0)
+        ok_(p.find('.errorlist a[href="#id_slug"]').length > 0)
+
+    @attr('clobber')
+    def test_redirect_can_be_clobbered(self):
+        """When an attempt is made to retitle an article, and another article
+        with that title exists but is a redirect, there should be no errors and
+        the redirect should be replaced."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        exist_title = "Existing doc"
+        exist_slug = "existing-doc"
+
+        # Create a new doc.
+        data = new_document_data()
+        data.update({ "title": exist_title, "slug": exist_slug })
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+
+        # Change title and slug
+        data.update({'form': 'rev', 
+                     'title': "Changed title", 
+                     'slug': "changed-title"})
+        resp = client.post(reverse('wiki.edit_document', args=[exist_slug]), 
+                           data)
+        eq_(302, resp.status_code)
+
+        # Change title and slug back to originals, clobbering the redirect
+        data.update({'form': 'rev', 
+                     'title': exist_title, 
+                     'slug': exist_slug})
+        resp = client.post(reverse('wiki.edit_document', args=["changed-title"]), 
+                           data)
+        eq_(302, resp.status_code)
 
     def test_changing_metadata(self):
         """Changing metadata works as expected."""
@@ -145,23 +238,67 @@ class DocumentEditingTests(TestCase):
         eq_(1, d.operating_systems.count())
 
     def test_invalid_slug(self):
-        """Slugs cannot contain /."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
-
+        """Slugs cannot contain "$", but can contain "/"."""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         data = new_document_data()
-        data['slug'] = 'inva/lid'
+
+        data['title'] = 'valid slug'
+        data['slug'] = 'valid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[data['slug']]))
+
+        # Slashes should be fine
+        data['title'] = 'valid with slash'
+        data['slug'] = 'va/lid'
+        response = client.post(reverse('wiki.new_document'), data)
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[data['slug']]))
+
+        # Dollar sign is reserved for verbs
+        data['title'] = 'invalid with dollars'
+        data['slug'] = 'inva$lid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertContains(response, 'The slug provided is not valid.')
 
-        data['slug'] = 'valid'
+        # Question mark is reserved for query params
+        data['title'] = 'invalid with questions'
+        data['slug'] = 'inva?lid'
         response = client.post(reverse('wiki.new_document'), data)
-        self.assertRedirects(response, reverse('wiki.document_revisions',
-                                               args=[data['slug']],
-                                               locale='en-US'))
+        self.assertContains(response, 'The slug provided is not valid.')
+
+    def test_invalid_reserved_term_slug(self):
+        """Slugs should not collide with reserved URL patterns"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        data = new_document_data()
+
+        # TODO: This is info derived from urls.py, but unsure how to DRY it
+        reserved_slugs = (
+            'ckeditor_config.js',
+            'watch-ready-for-review',
+            'unwatch-ready-for-review',
+            'watch-approved',
+            'unwatch-approved',
+            '.json',
+            'new',
+            'all',
+            'preview-wiki-content',
+            'category/10',
+            'needs-review/technical',
+            'needs-review/',
+            'feeds/atom/all/',
+            'feeds/atom/needs-review/technical',
+            'feeds/atom/needs-review/',
+            'tag/tasty-pie'
+        )
+
+        for term in reserved_slugs:
+            data['title'] = 'invalid with %s' % term
+            data['slug'] = term
+            response = client.post(reverse('wiki.new_document'), data)
+            self.assertContains(response, 'The slug provided is not valid.')
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
@@ -181,7 +318,9 @@ class DocumentEditingTests(TestCase):
         eq_(int(input.value), en_r.pk)
 
     @attr('review_tags')
-    def test_review_tags(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_review_tags(self, get_current):
+        get_current.return_value.domain = 'su.mo.com'
         """Review tags can be managed on document revisions"""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
@@ -280,3 +419,356 @@ class DocumentEditingTests(TestCase):
         response = client.get(reverse('wiki.feeds.list_review_tag',
                                       args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
+
+    @attr('midair')
+    def test_edit_midair_collision(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Post a new document.
+        data = new_document_data()
+        resp = client.post(reverse('wiki.new_document'), data)
+        doc = Document.objects.get(slug=data['slug'])
+
+        # Edit #1 starts...
+        resp = client.get(reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 starts...
+        resp = client.get(reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 submits successfully
+        data.update({
+            'form': 'rev',
+            'content': 'This edit got there first',
+            'current_rev': rev_id2
+        })
+        resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        eq_(302, resp.status_code)
+
+        # Edit #1 submits, but receives a mid-aired notification
+        data.update({
+            'form': 'rev',
+            'content': 'This edit gets mid-aired',
+            'current_rev': rev_id1
+        })
+        resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        eq_(200, resp.status_code)
+
+        ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
+            "Midair collision message should appear")
+
+
+class SectionEditingResourceTests(TestCase):
+    fixtures = ['test_users.json']
+
+    def test_raw_source(self):
+        """The raw source for a document can be requested"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        response = client.get('%s?raw=true' %
+                              reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    def test_raw_with_editing_links_source(self):
+        """The raw source for a document can be requested, with section editing
+        links"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        expected = """
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """ % {'slug': d.slug}
+        response = client.get('%s?raw=true&edit_links=true' %
+                              reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    def test_raw_section_source(self):
+        """The raw source for a document section can be requested"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        expected = """
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        response = client.get('%s?section=s2&raw=true' %
+                              reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    @attr('midair')
+    @attr('rawsection')
+    def test_raw_section_edit(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        replace = """
+            <h1 id="s2">Replace</h1>
+            <p>replace</p>
+        """
+        expected = """
+            <h1 id="s2">Replace</h1>
+            <p>replace</p>
+        """
+        response = client.post('%s?section=s2&raw=true' %
+                               reverse('wiki.edit_document', args=[d.slug]),
+                               {"form": "rev",
+                                "content": replace},
+                               follow=True)
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Replace</h1>
+            <p>replace</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        response = client.get('%s?raw=true' %
+                               reverse('wiki.document', args=[d.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+    @attr('midair')
+    def test_midair_section_merge(self):
+        """If a page was changed while someone was editing, but the changes
+        didn't affect the specific section being edited, then ignore the midair
+        warning"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        doc, rev = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        replace_1 = """
+            <h1 id="s1">replace</h1>
+            <p>replace</p>
+        """
+        replace_2 = """
+            <h1 id="s2">replace</h1>
+            <p>replace</p>
+        """
+        expected = """
+            <h1 id="s1">replace</h1>
+            <p>replace</p>
+
+            <h1 id="s2">replace</h1>
+            <p>replace</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        data = {
+            'form': 'rev',
+            'content': rev.content
+        }
+
+        # Edit #1 starts...
+        resp = client.get('%s?section=s1' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 starts...
+        resp = client.get('%s?section=s2' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 submits successfully
+        data.update({
+            'form': 'rev',
+            'content': replace_2,
+            'current_rev': rev_id2
+        })
+        resp = client.post('%s?section=s2&raw=true' %
+                            reverse('wiki.edit_document', args=[doc.slug]),
+                            data)
+        eq_(302, resp.status_code)
+
+        # Edit #1 submits, but since it's a different section, there's no
+        # mid-air collision
+        data.update({
+            'form': 'rev',
+            'content': replace_1,
+            'current_rev': rev_id1
+        })
+        resp = client.post('%s?section=s1&raw=true' %
+                           reverse('wiki.edit_document', args=[doc.slug]),
+                           data)
+        # No conflict, but we should get a 205 Reset as an indication that the
+        # page needs a refresh.
+        eq_(205, resp.status_code)
+
+        # Finally, make sure that all the edits landed
+        response = client.get('%s?raw=true' %
+                               reverse('wiki.document', args=[doc.slug]))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+        # Also, ensure that the revision is slipped into the headers
+        eq_(unicode(Document.uncached.get(slug=doc.slug).current_revision.id),
+            unicode(response['x-kuma-revision']))
+
+
+    @attr('midair')
+    def test_midair_section_collision(self):
+        """If both a revision and the edited section has changed, then a
+        section edit is a collision."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        doc, rev = doc_rev("""
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        replace_1 = """
+            <h1 id="s2">replace</h1>
+            <p>replace</p>
+        """
+        replace_2 = """
+            <h1 id="s2">first replace</h1>
+            <p>first replace</p>
+        """
+        data = {
+            'form': 'rev',
+            'content': rev.content
+        }
+
+        # Edit #1 starts...
+        resp = client.get('%s?section=s2' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id1 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 starts...
+        resp = client.get('%s?section=s2' % 
+                          reverse('wiki.edit_document', args=[doc.slug]))
+        page = pq(resp.content)
+        rev_id2 = page.find('input[name="current_rev"]').attr('value')
+
+        # Edit #2 submits successfully
+        data.update({
+            'form': 'rev',
+            'content': replace_2,
+            'current_rev': rev_id2
+        })
+        resp = client.post('%s?section=s2&raw=true' %
+                            reverse('wiki.edit_document', args=[doc.slug]),
+                            data)
+        eq_(302, resp.status_code)
+
+        # Edit #1 submits, but since it's the same section, there's a collision
+        data.update({
+            'form': 'rev',
+            'content': replace_1,
+            'current_rev': rev_id1
+        })
+        resp = client.post('%s?section=s2&raw=true' %
+                           reverse('wiki.edit_document', args=[doc.slug]),
+                           data)
+        # With the raw API, we should get a 409 Conflict on collision.
+        eq_(409, resp.status_code)

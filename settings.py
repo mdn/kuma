@@ -304,7 +304,7 @@ INSTALLED_APPS = (
     #'timezones',
     #'access',
     #'sumo',
-    #'search',
+    'search',
     #'forums',
     #'djcelery',
     'notifications',
@@ -548,7 +548,6 @@ MINIFY_BUNDLES = {
             'js/gallery.js',
         ),
         'wiki': (
-            'js/libs/django/urlify.js',
             'js/libs/django/prepopulate.js',
             'js/wiki.js',
             'js/main.js',
