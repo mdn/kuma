@@ -74,7 +74,7 @@ def apps_subscription(request):
     form = SubscriptionForm(data=request.POST)
     if form.is_valid():
         responsys.subscribe('APP_DEV', form.cleaned_data['email'], format=form.cleaned_data['format'])
-        messages.success(request, _('Thank you for subscribing to the Apps developer newsletter.'))
+        messages.success(request, _('Thank you for subscribing to the Apps Developer newsletter.'))
         return HttpResponseRedirect(reverse('apps'))
 
     """Web landing page."""
