@@ -112,9 +112,6 @@ class dekiwiki_config {
         "/var/www/dekiwiki/deki/plugins/special_page/special_userregistration_mdc/": 
             target => "/home/vagrant/mozilla/plugins/mindtouch/special_userregistration_mdc/",
             ensure => link, require => [ Exec["svn_co_deki_mozilla"] ];
-        "/var/www/dekiwiki/editor/fckeditor/core/editor/plugins/mdc/": 
-            target => "/home/vagrant/mozilla/plugins/fckeditor/mdc/",
-            ensure => link, require => [ Exec["svn_co_deki_mozilla"] ];
     }
 
     service { "dekiwiki":

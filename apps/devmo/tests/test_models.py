@@ -15,6 +15,7 @@ from devmo.helpers import devmo_url
 from devmo import urlresolvers
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
 
+from dekicompat.tests import (mock_post_mindtouch_user, mock_put_mindtouch_user)
 from dekicompat.backends import DekiUser, DekiUserBackend
 
 
@@ -22,6 +23,8 @@ APP_DIR = dirname(dirname(__file__))
 MOZILLA_PEOPLE_EVENTS_CSV = '%s/fixtures/Mozillapeopleevents.csv' % APP_DIR
 XSS_CSV = '%s/fixtures/xss.csv' % APP_DIR
 BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
+USER_DOCS_ACTIVITY_FEED_XML = ('%s/fixtures/user_docs_activity_feed.xml' %
+                               APP_DIR)
 
 
 class TestCalendar(test_utils.TestCase):
@@ -89,7 +92,7 @@ class TestUserProfile(test_utils.TestCase):
     def setUp(self):
         pass
 
-    @attr('websites')
+    @mock_put_mindtouch_user
     def test_websites(self):
         """A list of websites can be maintained on a UserProfile"""
         user = User.objects.get(username='testuser')
@@ -178,14 +181,15 @@ class TestUserProfile(test_utils.TestCase):
         user = User.objects.get(username='testuser')
         profile_from_db = UserProfile.objects.get(user=user)
         ok_(hasattr(profile_from_db, 'irc_nickname'))
-        ok_(profile_from_db.irc_nickname == 'testuser')
+        eq_('testuser', profile_from_db.irc_nickname)
 
     def test_unicode_email_gravatar(self):
         """Bug 689056: Unicode characters in email addresses shouldn't break
         gravatar URLs"""
-        (user, deki_user, profile) = create_profile()
+        user = User.objects.get(username='testuser')
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
+            profile = UserProfile.objects.get(user=user)
             g = profile.gravatar
         except UnicodeEncodeError:
             ok_(False, "There should be no UnicodeEncodeError")

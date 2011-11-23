@@ -47,17 +47,17 @@ class mysql_config {
 }
 
 class sphinx_config {
-    exec {
-        "sphinx_reindex":
-            user => "vagrant",
-            cwd => "/vagrant", 
-            command => "/home/vagrant/kuma-venv/bin/python ./manage.py reindex";
-        "sphinx_start":
-            user => "vagrant",
-            cwd => "/vagrant", 
-            command => "/home/vagrant/kuma-venv/bin/python ./manage.py start_sphinx",
-            require => Exec['sphinx_reindex'];
-    }
+    #exec {
+    #    "sphinx_reindex":
+    #        user => "vagrant",
+    #        cwd => "/vagrant", 
+    #        command => "/home/vagrant/kuma-venv/bin/python ./manage.py reindex";
+    #    "sphinx_start":
+    #        user => "vagrant",
+    #        cwd => "/vagrant", 
+    #        command => "/home/vagrant/kuma-venv/bin/python ./manage.py start_sphinx",
+    #        require => Exec['sphinx_reindex'];
+    #}
 }
 
 class kuma_config {

@@ -254,7 +254,7 @@ AUTHENTICATION_BACKENDS = (
     'users.backends.Sha256Backend',
     'dekicompat.backends.DekiUserBackend',
 )
-AUTH_PROFILE_MODULE = 'users.Profile'
+AUTH_PROFILE_MODULE = 'devmo.UserProfile'
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
@@ -313,6 +313,7 @@ INSTALLED_APPS = (
     #'timezones',
     #'access',
     #'sumo',
+    # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
     'search',
     #'forums',
     #'djcelery',

@@ -17,6 +17,7 @@ PROD_DETAILS_DIR = '/home/vagrant/product_details_json'
 MDC_PAGES_DIR    = '/home/vagrant/mdc_pages'
 
 DEKIWIKI_ENDPOINT = "http://localhost"
+DEKIWIKI_MOCK = True
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAANRj9BHQi5ireVluCwVy0yRSrufPN8BjQWjkoRva24PCQEXS2OhSXu2BEgUH5PmGOmW71r2-tEuOVuQ"
 

@@ -17,8 +17,12 @@ from taggit.utils import parse_tags, edit_string_for_tags
 from demos.models import Submission
 
 from . import INTEREST_SUGGESTIONS
-from .models import Calendar, Event, UserProfile
+from .models import Calendar, Event, UserProfile, UserDocsActivityFeed
 from .forms import UserProfileEditForm
+
+
+DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
+        'DOCS_ACTIVITY_MAX_ITEMS', 15)
 
 
 def events(request):
@@ -56,9 +60,12 @@ def profile_view(request, username):
     demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
     demos_page = demos_paginator.page(page_number)
 
+    docs_feed_items = (UserDocsActivityFeed(user.username)
+                       .items[:DOCS_ACTIVITY_MAX_ITEMS])
+
     return jingo.render(request, 'devmo/profile.html', dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
-        demos_page=demos_page
+        demos_page=demos_page, docs_feed_items=docs_feed_items
     ))
 
 

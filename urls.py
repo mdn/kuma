@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
+    # TODO: Re-enable 'search' app when we switch to kuma wiki - that, or waffle it.
     (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
     #(r'^questions', include('questions.urls')),
