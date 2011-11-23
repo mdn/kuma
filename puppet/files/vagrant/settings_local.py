@@ -17,6 +17,7 @@ PROD_DETAILS_DIR = '/home/vagrant/product_details_json'
 MDC_PAGES_DIR    = '/home/vagrant/mdc_pages'
 
 DEKIWIKI_ENDPOINT = "http://localhost"
+DEKIWIKI_APIKEY = "GFxaNVK37fLPsFEYM7NwdIuNpGIiFTOX"
 DEKIWIKI_MOCK = True
 
 GOOGLE_MAPS_API_KEY = "ABQIAAAANRj9BHQi5ireVluCwVy0yRSrufPN8BjQWjkoRva24PCQEXS2OhSXu2BEgUH5PmGOmW71r2-tEuOVuQ"
@@ -27,6 +28,10 @@ RECAPTCHA_PRIVATE_KEY = '6LdX8cISAAAAACkC1kqYmpeSf-1geTmLzrLnq0t6'
 
 BITLY_USERNAME = 'lmorchard'
 BITLY_API_KEY = "R_2653e6351e31d02988b3da31dac6e2c0"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+#EMAIL_FILE_PATH = '/home/vagrant/logs/kuma-email.log'
 
 INSTALLED_APPS = INSTALLED_APPS + (
     "django_extensions",

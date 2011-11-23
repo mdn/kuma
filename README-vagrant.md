@@ -31,6 +31,12 @@ reasons.
     # If the process fails with an error, try running the Puppet setup again.
     # (Not sure why yet, but usually this just works.)
     vagrant provision
+    
+    # Experimental / Optional: Download and import data extracted from the
+    # production site. This can take a long while, since there's over 500MB
+    vagrant ssh
+    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
+    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
     # Add developer-kumadev.mozilla.org to /etc/hosts
     echo '192.168.10.55 developer-kumadev.mozilla.org' >> /etc/hosts
