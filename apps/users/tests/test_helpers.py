@@ -1,4 +1,5 @@
 import urllib
+import logging
 from hashlib import md5
 
 from django.conf import settings
@@ -6,12 +7,14 @@ from django.contrib.auth.models import User
 
 from jinja2 import Markup
 from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
 from users.helpers import (profile_url, profile_avatar, public_email,
                            display_name, user_list)
 from devmo.models import UserProfile
+from dekicompat.tests import (mock_post_mindtouch_user, mock_put_mindtouch_user)
 
 
 class HelperTestCase(TestCase):
@@ -39,6 +42,7 @@ class HelperTestCase(TestCase):
              '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
              '&#108;</span>', public_email('not.an.email'))
 
+    @mock_put_mindtouch_user
     def test_display_name(self):
         new_user = User.objects.create(pk=40000, username='testuser3')
         eq_(u'testuser3', display_name(new_user))
@@ -53,7 +57,7 @@ class HelperTestCase(TestCase):
         list = user_list(users)
         assert isinstance(list, Markup)
         fragment = pq(list)
-        eq_(3, len(fragment('a')))
-        a = fragment('a')[2]
+        eq_(4, len(fragment('a')))
+        a = fragment('a')[3]
         assert a.attrib['href'].endswith('testuser3/')
         eq_('testuser3', a.text)

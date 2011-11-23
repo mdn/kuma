@@ -37,14 +37,13 @@ class DekiUserBackend(object):
             username=username,
             password=password)
         if authtoken:
-            cookies = dict(authtoken=authtoken)
-            resp = requests.get(DekiUserBackend.profile_url, cookies=cookies)
-            deki_user = DekiUser.parse_user_info(resp.content, authtoken)
+            deki_user = DekiUserBackend.get_deki_user(url=DekiUserBackend.profile_url, 
+                                                      authtoken=authtoken)
             if deki_user:
                 # HACK: Retain authenticated authtoken for future Deki API
                 # requests.
                 _thread_locals.deki_api_authtoken = authtoken
-                user = self.get_or_create_user(deki_user)
+                user = DekiUserBackend.get_or_create_user(deki_user)
                 # Set django password equal to the password that authenticated
                 # with MindTouch
                 user.set_password(password)
@@ -61,16 +60,19 @@ class DekiUserBackend(object):
         _thread_locals.deki_api_authtoken = None
 
     @staticmethod
-    def get_deki_user(deki_user_id):
+    def get_deki_user(deki_user_id=None, url=None, authtoken=None):
         """Fetch details for a given Dekiwiki profile by user ID"""
-        authtoken = getattr(_thread_locals, 'deki_api_authtoken', None)
+        if authtoken is None:
+            authtoken = getattr(_thread_locals, 'deki_api_authtoken', None)
         cookies = {}
         if authtoken:
             # HACK: Use retained authenticated authtoken for future Deki API
             # requests. This gets us extra user details for the logged-in
             # user, such as email address.
             cookies = dict(authtoken=authtoken)
-        resp = requests.get(DekiUserBackend.profile_by_id_url % deki_user_id, cookies=cookies)
+        if url is None:
+            url = DekiUserBackend.profile_by_id_url % deki_user_id
+        resp = requests.get(url, cookies=cookies)
         if resp.status_code is 404:
             return None
         return DekiUser.parse_user_info(resp.read())
@@ -87,7 +89,8 @@ class DekiUserBackend(object):
         except HTTPError:
             return None
 
-    def get_or_create_user(self, deki_user):
+    @staticmethod
+    def get_or_create_user(deki_user):
         """
         Grab the User via their UserProfile and deki_user_id.
         If non exists, create both.

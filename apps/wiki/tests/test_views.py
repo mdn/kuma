@@ -247,14 +247,16 @@ class DocumentEditingTests(TestCase):
         data['slug'] = 'valid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response, reverse('wiki.document',
-                                               args=[data['slug']]))
+                                               args=[data['slug']],
+                                               locale='en-US'))
 
         # Slashes should be fine
         data['title'] = 'valid with slash'
         data['slug'] = 'va/lid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response, reverse('wiki.document',
-                                               args=[data['slug']]))
+                                               args=[data['slug']],
+                                               locale='en-US'))
 
         # Dollar sign is reserved for verbs
         data['title'] = 'invalid with dollars'

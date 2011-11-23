@@ -10,10 +10,11 @@ from django.utils.http import int_to_base36
 
 import mock
 from nose.tools import eq_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from dekicompat.tests import mock_post_mindtouch_user
+from dekicompat.tests import (mock_post_mindtouch_user, mock_put_mindtouch_user)
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -258,7 +259,9 @@ class PasswordChangeTests(TestCaseBase):
 
 
 class ResendConfirmationTests(TestCaseBase):
+
     @mock_post_mindtouch_user
+    @mock_put_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_resend_confirmation(self, get_current):
         get_current.return_value.domain = 'testserver.com'

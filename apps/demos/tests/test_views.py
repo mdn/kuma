@@ -234,7 +234,7 @@ class DemoViewsTest(test_utils.TestCase):
         r = self.client.get(edit_url)
         assert pq(r.content)('fieldset#devderby-submit')
 
-    @mockdekiauth
+    @logged_in
     def test_edit_with_challenge_tag(self):
         s = save_valid_submission('hello world')
         edit_url = reverse('demos_edit', args=[s.slug])
@@ -297,7 +297,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert 'demo_package' not in form.fields
         assert 'challenge_tags' not in form.fields
 
-    @mockdekiauth
+    @logged_in
     def test_derby_tag_saving(self):
         """
         There's some tricky bits in the handling of editing and saving
