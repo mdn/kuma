@@ -350,21 +350,36 @@ class DemoViewsTest(test_utils.TestCase):
     def test_bug_702156(self):
         """Demo with missing screenshots should not cause exceptions in
         views"""
-        # Create the new submission and delete the screenshot. Should be
-        # disallowed by form validation, but somehow it happens and we
-        # shouldn't have any errors because of it.
+        # Create the submission...
         s = save_valid_submission('hello world')
         s.taggit_tags.set_ns('tech:', 'javascript')
+        s.featured = True
+        s.save()
+
+        # Ensure the new screenshot and thumbnail URL code works when there's a
+        # screenshot present.
+        try:
+            r = self.client.get(reverse('demos_all'))
+            r = self.client.get(reverse('demos_tag', args=['tech:javascript']))
+            r = self.client.get(reverse('demos_detail', args=[s.slug]))
+            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
+            r = self.client.get(reverse('demos_feed_featured', args=['json']))
+        except:
+            ok_(False, "No exceptions should have been thrown")
+
+        # Forcibly delete the screenshot - should not be possible from
+        # user-facing UI per form validation, but we should at least not throw
+        # exceptions.
         s.screenshot_1.storage.delete(s.screenshot_1.name)
         s.screenshot_1 = None
         s.save()
 
+        # Big bucks, no whammies...
         try:
-            # Run through a gauntlet of pages that shouldn't throw an
-            # exception, but did before the fix for bug 702156
             r = self.client.get(reverse('demos_all'))
             r = self.client.get(reverse('demos_tag', args=['tech:javascript']))
-            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
             r = self.client.get(reverse('demos_detail', args=[s.slug]))
+            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
+            r = self.client.get(reverse('demos_feed_featured', args=['json']))
         except:
             ok_(False, "No exceptions should have been thrown")
