@@ -508,8 +508,20 @@ class Submission(models.Model):
         except Submission.DoesNotExist:
             return None
 
+    def screenshot_url(self, index='1'):
+        """Fetch the screenshot URL for a given index, swallowing errors"""
+        try:
+            return getattr(self, 'screenshot_%s' % index).url
+        except:
+            return ''
+
     def thumbnail_url(self, index='1'):
-        return getattr(self, 'screenshot_%s' % index).url.replace('screenshot','screenshot_thumb')
+        """Fetch the screenshot thumbnail URL for a given index, swallowing
+        errors"""
+        try:
+            return getattr(self, 'screenshot_%s' % index).thumbnail_url
+        except:
+            return ''
 
     def get_flags(self):
         """Assemble status flags, based on featured status and a set of special

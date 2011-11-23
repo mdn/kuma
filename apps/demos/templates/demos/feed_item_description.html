@@ -1,6 +1,6 @@
 <div>
     <div class="screenshot">
-        <a href="{{ request.build_absolute_uri(url('demos_detail', slug=submission.slug)) }}"><img src="{{request.build_absolute_uri(submission.screenshot_1.url)}}" width="320" height="240" alt="{{ submission.title }}" /></a>
+        <a href="{{ request.build_absolute_uri(url('demos_detail', slug=submission.slug)) }}"><img src="{{request.build_absolute_uri(submission.screenshot_url(1))}}" width="320" height="240" alt="{{ submission.title }}" /></a>
     </div>
     <p class="summary">{{ submission.summary }}</p>
     <dl>
