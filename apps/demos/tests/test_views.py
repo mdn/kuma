@@ -236,6 +236,22 @@ class DemoViewsTest(test_utils.TestCase):
         assert pq(r.content)('fieldset#devderby-submit')
 
     @mockdekiauth
+    def test_edit_no_tags(self):
+        s = save_valid_submission('hello world')
+        edit_url = reverse('demos_edit', args=[s.slug])
+        r = self.client.post(edit_url, data=dict(
+            title=s.title,
+            summary='This is a test edit',
+            description='Some description goes here',
+            license_name='gpl',
+            accept_terms='1',
+        ))
+        eq_(r.status_code, 302)
+        r = self.client.get(edit_url)
+        eq_(r.status_code, 200)
+        
+
+    @mockdekiauth
     def test_edit_with_challenge_tag(self):
         s = save_valid_submission('hello world')
         edit_url = reverse('demos_edit', args=[s.slug])

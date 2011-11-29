@@ -140,10 +140,11 @@ class SubmissionEditForm(MyModelForm):
         #    ensure they're preserved across the edit.
         instance = kwargs.get('instance', None)
         if instance:
-            if instance.challenge_closed():
-                for fieldname in ('demo_package', 'challenge_tags'):
-                    del self.fields[fieldname]
-                self._old_challenge_tags = [unicode(tag) for tag in instance.taggit_tags.all_ns('challenge:')]
+            if instance.is_derby_submission():
+                if instance.challenge_closed():
+                    for fieldname in ('demo_package', 'challenge_tags'):
+                        del self.fields[fieldname]
+                    self._old_challenge_tags = [unicode(tag) for tag in instance.taggit_tags.all_ns('challenge:')]
             for ns in ('tech', 'challenge'):
                 if '%s_tags' % ns in self.fields:
                     self.initial['%s_tags' % ns] = [t.name 
@@ -177,7 +178,10 @@ class SubmissionEditForm(MyModelForm):
             # is slightly verbose because we do have to handle the
             # legacy case of multiple challenge tags even though we
             # now only allow one per demo.
-            if 'challenge_tags' in self.cleaned_data:
+            if 'challenge_tags' in self.cleaned_data and self.cleaned_data['challenge_tags']:
+                # We have to do the check like this because otherwise
+                # we get false positive from challenge_tags being an
+                # empty string.
                 challenge_tags = [self.cleaned_data['challenge_tags']]
             else:
                 challenge_tags = getattr(self, '_old_challenge_tags', [])
