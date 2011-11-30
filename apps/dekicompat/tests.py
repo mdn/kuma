@@ -81,6 +81,19 @@ def mock_get_deki_user(test):
         return test
 
 
+def mock_get_deki_user_by_email(test):
+    if settings.DEKIWIKI_MOCK:
+        @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
+        def test_new(self, get_deki_user_by_email):
+            testaccount_fixture = open(TESTACCOUNT_FIXTURE_XML)
+            user_info = DekiUser.parse_user_info(testaccount_fixture.read())
+            get_deki_user_by_email.return_value = user_info
+            test(self)
+        return test_new
+    else:
+        return test
+
+
 def mock_missing_get_deki_user(test):
     if settings.DEKIWIKI_MOCK:
         @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user')

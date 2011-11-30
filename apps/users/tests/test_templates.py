@@ -16,6 +16,7 @@ from test_utils import RequestFactory
 
 from dekicompat.tests import (mock_post_mindtouch_user,
                               mock_put_mindtouch_user,
+                              mock_get_deki_user_by_email,
                               mock_get_deki_user)
 
 from sumo.urlresolvers import reverse
@@ -179,6 +180,7 @@ class PasswordReset(TestCaseBase):
         assert mail.outbox[0].body.find('pwreset/%s' % self.uidb36) > 0
 
     @mock_get_deki_user
+    @mock_get_deki_user_by_email
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_only_user(self, get_current):
         get_current.return_value.domain = 'testserver.com'

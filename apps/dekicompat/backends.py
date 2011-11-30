@@ -99,7 +99,6 @@ class DekiUserBackend(object):
         else:
             return None
 
-
     def get_user(self, user_id):
         """Get a user for a given ID, used by auth for session-cached login"""
         try:
