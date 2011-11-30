@@ -3,7 +3,7 @@ import urlparse
 
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth.forms import (PasswordResetForm, SetPasswordForm,
+from django.contrib.auth.forms import (SetPasswordForm,
                                        PasswordChangeForm)
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -22,7 +22,8 @@ from sumo.urlresolvers import reverse
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
-                         AuthenticationForm, EmailChangeForm)
+                         AuthenticationForm, EmailChangeForm,
+                         PasswordResetForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend

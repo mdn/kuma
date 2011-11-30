@@ -7,6 +7,8 @@ pip-log.txt
 .coverage
 coverage.xml
 nosetests.xml
+.noserc
+.noseids
 build.py
 **-all.css
 **-min.css

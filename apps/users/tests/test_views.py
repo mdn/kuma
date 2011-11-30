@@ -10,7 +10,8 @@ import mock
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from dekicompat.tests import mock_post_mindtouch_user
+from dekicompat.tests import (mock_post_mindtouch_user,
+                              mock_get_deki_user)
 from dekicompat.backends import DekiUserBackend
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
@@ -51,6 +52,7 @@ class LoginTestCase(TestCase):
         eq_(200, response.status_code)
         self.assertContains(response, 'Welcome back, testuser')
 
+    @mock_get_deki_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_mindtouch_creds_create_user_and_profile(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
