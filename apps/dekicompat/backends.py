@@ -1,4 +1,5 @@
-from urllib2 import build_opener, HTTPError
+from urllib import urlencode
+from urllib2 import HTTPError
 import urlparse
 import requests
 from xml.dom import minidom
@@ -6,6 +7,8 @@ from xml.sax.saxutils import escape as xml_escape
 
 from django.conf import settings
 from django.contrib.auth.models import User
+
+from pyquery import PyQuery as pq
 
 import commonware
 
@@ -30,6 +33,8 @@ class DekiUserBackend(object):
     """
     profile_url = "%s/@api/deki/users/current" % settings.DEKIWIKI_ENDPOINT
     profile_by_id_url = ("%s/@api/deki/users/%s" %
+        (settings.DEKIWIKI_ENDPOINT, '%s'))
+    users_by_email = ("%s/@api/deki/users?%s" %
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
     def authenticate(self, username=None, password=None):
@@ -71,11 +76,29 @@ class DekiUserBackend(object):
             # user, such as email address.
             cookies = dict(authtoken=authtoken)
         if url is None:
-            url = DekiUserBackend.profile_by_id_url % deki_user_id
+            url = DekiUserBackend.profile_by_id_url % (str(deki_user_id) + 
+                    '?apikey=' + settings.DEKIWIKI_APIKEY)
         resp = requests.get(url, cookies=cookies)
         if resp.status_code is 404:
             return None
         return DekiUser.parse_user_info(resp.read())
+
+    @staticmethod
+    def get_deki_user_by_email(deki_user_email):
+        """get_deki_user after an email query"""
+        deki_user_id = None
+        email_url = DekiUserBackend.users_by_email % urlencode(
+            {'usernameemailfilter': deki_user_email,
+            'apikey': settings.DEKIWIKI_APIKEY})
+        resp = requests.get(email_url)
+        if resp.status_code is 200:
+            doc = pq(resp.content)
+            deki_user_id = doc('user').attr('id')
+        if deki_user_id:
+            return DekiUserBackend.get_deki_user(deki_user_id)
+        else:
+            return None
+
 
     def get_user(self, user_id):
         """Get a user for a given ID, used by auth for session-cached login"""

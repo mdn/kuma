@@ -16,6 +16,7 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user,
                               mock_put_mindtouch_user,
                               mock_post_mindtouch_user)
+
 from dekicompat.backends import DekiUserBackend
 from devmo.tests import mock_fetch_user_feed
 from notifications.tests import watch

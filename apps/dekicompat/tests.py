@@ -21,7 +21,8 @@ from dekicompat.backends import DekiUser, DekiUserBackend
 
 from devmo.models import UserProfile
 
-log = commonware.log.getLogger('kuma.dekicompat')
+
+log = commonware.log.getLogger('mdn.dekicompat')
 
 
 APP_DIR = dirname(__file__)

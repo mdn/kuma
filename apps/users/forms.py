@@ -133,6 +133,26 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
         return self.cleaned_data
 
 
+class PasswordResetForm(auth_forms.PasswordResetForm):
+    """Overrides the default django form.
+    * Checks mindtouch for an email address
+    * Creates django user & profile if needed
+    """
+    def clean_email(self):
+        try:
+            return super(PasswordResetForm, self).clean_email()
+        except forms.ValidationError as e:
+            email = self.cleaned_data["email"]
+            deki_user = DekiUserBackend.get_deki_user_by_email(email)
+            if deki_user is None:
+                raise e
+            else:
+                user = DekiUserBackend.get_or_create_user(deki_user)
+                self.users_cache = User.objects.filter(email__iexact=email)
+                return user.email
+            raise e
+
+
 class ProfileForm(forms.ModelForm):
     """The form for editing the user's profile."""
 
