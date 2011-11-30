@@ -13,7 +13,9 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from dekicompat.tests import mock_post_mindtouch_user
+from dekicompat.tests import (mock_post_mindtouch_user,
+                              mock_get_deki_user_by_email,
+                              mock_get_deki_user)
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -174,6 +176,23 @@ class PasswordReset(TestCaseBase):
         eq_(1, len(mail.outbox))
         assert mail.outbox[0].subject.find('Password reset') == 0
         assert mail.outbox[0].body.find('pwreset/%s' % self.uidb36) > 0
+
+    @mock_get_deki_user
+    @mock_get_deki_user_by_email
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_deki_only_user(self, get_current):
+        get_current.return_value.domain = 'testserver.com'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+
+        r = self.client.post(reverse('users.pw_reset'),
+                             {'email': 'testaccount+update3@testaccount.com'})
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US/users/pwresetsent', r['location'])
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Password reset') == 0
+
+        u = User.objects.get(username='testaccount')
+        assert mail.outbox[0].body.find('pwreset/%s' % int_to_base36(u.id)) > 0
 
     def _get_reset_url(self):
         return reverse('users.pw_reset_confirm',

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from os.path import dirname
+import logging
+
 from urllib2 import Request
 from requests.models import Response
 import re
@@ -16,7 +19,14 @@ from django.conf import settings
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
+from devmo.models import UserProfile
+
 log = commonware.log.getLogger('mdn.dekicompat')
+
+APP_DIR = dirname(__file__)
+# Need to make test account fixture XML filename relative to this file, since
+# working dir of running tests is not always the same.
+TESTACCOUNT_FIXTURE_XML = ('%s/fixtures/testaccount.xml' % APP_DIR)
 
 
 def mockdekiauth(test):
@@ -34,13 +44,38 @@ def mock_post_mindtouch_user(test):
     if settings.DEKIWIKI_MOCK:
         @mock.patch('dekicompat.backends.DekiUserBackend.post_mindtouch_user')
         def test_new(self, post_mindtouch_user):
-            testaccount_fixture = open('apps/dekicompat/fixtures/testaccount.xml')
-            post_mindtouch_user.return_value = DekiUser.parse_user_info(testaccount_fixture.read())
+            testaccount_fixture = open(TESTACCOUNT_FIXTURE_XML)
+            user_info = DekiUser.parse_user_info(testaccount_fixture.read())
+            post_mindtouch_user.return_value = user_info
             test(self)
         return test_new
     else:
         return test
 
+
+def mock_get_deki_user(test):
+    if settings.DEKIWIKI_MOCK:
+        @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user')
+        def test_new(self, get_deki_user):
+            testaccount_fixture = open(TESTACCOUNT_FIXTURE_XML)
+            user_info = DekiUser.parse_user_info(testaccount_fixture.read())
+            get_deki_user.return_value = user_info
+            test(self)
+        return test_new
+    else:
+        return test
+
+def mock_get_deki_user_by_email(test):
+    if settings.DEKIWIKI_MOCK:
+        @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
+        def test_new(self, get_deki_user_by_email):
+            testaccount_fixture = open(TESTACCOUNT_FIXTURE_XML)
+            user_info = DekiUser.parse_user_info(testaccount_fixture.read())
+            get_deki_user_by_email.return_value = user_info
+            test(self)
+        return test_new
+    else:
+        return test
 
 class DekiCompatTestCase(TestCase):
     fixtures = ['test_users.json']
