@@ -202,6 +202,11 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 
 .global-notice { position: relative; border: solid #e6e1cf; border-width: 3px 0; color: #630; background: #eeecdf; background: rgba(245,235,200,.25); padding: 15px 20px 0; margin: 0 0 -1px; font-size: .857em; }
 
+.notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; box-shadow: 1px 1px 0 rgba(0,0,0,.1); }
+.notice p, .notice ul { margin-bottom: 10px; }
+.notice.success { background: #effdfb; border-color: #beede5; }
+.notice.error { border-color: #e1a696; }
+
 /*** @Main @Nav *********/
 #nav { float: right; margin: 29px 0 0; font: 200 18px/1 "Bebas Neue", "League Gothic", "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #nav:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
