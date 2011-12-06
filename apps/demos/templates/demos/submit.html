@@ -111,6 +111,9 @@
               <ul id="challenge-tags">
                 {{ li_field(form, 'challenge_tags', show_label=False) }}
               </ul>
+                <div class="notice">
+                    <p>Each Derby ends at 11:59:59 p.m. PT on the last day of its month.</p>
+                </div>
           </fieldset>
 	  {% endif %}
 
@@ -152,21 +155,21 @@
         </ul>
         {% endtrans %}
       </div>
-      
+
       <fieldset class="section">
         <legend><b>{{_('Provide the Source Code')}}</b></legend>
+        {% if form.fields.demo_package %}
         {% trans %}
-            <p>Upload a ZIP file of your source code, in which the main page of your 
+            <p>Upload a ZIP file of your source code, in which the main page of your
             demo is named <code>index.html</code> in the root directory.</p>
         {% endtrans %}
-        
+        {% else %}
+            <div class="notice">
+                <p>You cannot edit your source code since the Dev Derby submission
+                deadline has passed, but you may add or update the link and license.</p>
+            </div>
+        {% endif %}
         <ul>
-          {% if false %}{# @@TODO #}
-          <li>
-              <label for="demo_package">{{_('Source code ZIP file')}}</label> 
-              <input type="file" id="demo_package" name="demo_package" class="filebutton" title="{{_('Upload demo file&hellip;')|safe}}">
-          </li>
-          {% endif %}
 	  {% if form.fields.demo_package %}
           {{ li_field(form, 'demo_package') }}
 	  {% endif %}
