@@ -26,6 +26,25 @@
   <section id="content-main" role="main">
 
     <div class="boxed">
+      <section id="videos">
+        <header class="subhead">
+          <h2>{{ _('Watch Apps Videos')|safe }}</h2>
+        </header>
+        {% include "includes/video_player.html" %}
+        <ul class="hfeed">
+          <li class="hentry">
+            <h3>
+              <a href="https://apps.mozillalabs.com/v/openwebapps.ogv" title="{{ _('Watch this video') }}"
+                 id="Apps-Intro" class="video_thumbnail">
+                <img src="{{MEDIA_URL}}img/vidthumb-appsoverview.jpg" 
+                   alt="" height="150" width="270">
+                <span>{{ _('An overview of Mozilla Web apps.')}}</span>
+              </a>
+            </h3>
+          </li>
+        </ul>
+      </section>
+
       <section id="apps-interests" class="articles-list">
         <header class="head section-apps">
           {# L10n: Please escape HTML entities here, like &amp; #}
@@ -37,23 +56,23 @@
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_mobile_app_developers')) }}" rel="bookmark">{{ _('For mobile app developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            If you already develop apps for mobile devices, here's how to develop open Web apps.
+            If you already develop apps for mobile devices, here's how to develop open web apps.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_Web_developers')) }}" rel="bookmark">{{ _('For Web developers') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_Web_developers')) }}" rel="bookmark">{{ _('For web developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            If you already develop Web sites or applications, here's how to make them into installable open Web apps.
+            If you already develop Web sites or applications, here's how to make them into installable open web apps.
             {% endtrans %}
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Developing_game_apps')) }}" rel="bookmark">{{ _('For Game Developers') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Developing_game_apps')) }}" rel="bookmark">{{ _('For game Developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            Want to make a Web app game? Find out about special considerations for games, such as user identity, multi-player interaction, offline use, and in-game purchases.
+            Want to make a Web app game? Find out about special considerations for games, such as user identity, multi-player interaction, and offline use.
             {% endtrans %}
             </p>
           </li>
@@ -61,7 +80,19 @@
             <h4 class="entry-title"><a href="https://wiki.mozilla.org/Apps" rel="external bookmark">{{ _('Apps Wiki') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            Check here for current status and activities of the Mozilla Apps project team.
+            Check here for current status and activities of the Mozilla apps project team.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title">{{ _('Try apps yourself') }}</h4>
+            <p class="entry-summary">
+            {% trans
+                extension_href='https://addons.mozilla.org/firefox/addon/open-web-apps-for-firefox',
+                android_href='https://people.mozilla.com/~anarayanan/Soup.apk',
+                demos_href='https://apps.mozillalabs.com/appdir/'%}
+            To install and run apps, you can install the app runtime <a href="{{ extension_href }}">Firefox extension</a> for desktop systems,
+            or <a href="{{ android_href }}">native Android application</a>. Then try some <a href="{{ demos_href }}">demo apps</a>.
             {% endtrans %}
             </p>
           </li>
@@ -111,28 +142,9 @@
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/FAQs')) }}" rel="bookmark">{{ _('App FAQs') }}</a></h4>
           </li>
         </ul>
-        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All Apps documentation') }}</a></p>
+        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All apps documentation') }}</a></p>
       </section>
       
-      <section id="videos">
-        <header class="subhead">
-          <h2>{{ _('Watch Apps Videos')|safe }}</h2>
-        </header>
-        {% include "includes/video_player.html" %}
-        <ul class="hfeed">
-          <li class="hentry">
-            <h3>
-              <a href="https://apps.mozillalabs.com/v/openwebapps.ogv" title="{{ _('Watch this video') }}"
-                 id="Apps-Intro" class="video_thumbnail">
-                <img src="{{MEDIA_URL}}img/vidthumb-appsoverview.jpg" 
-                   alt="" height="150" width="270">
-                <span>{{ _('An overview of Mozilla Web apps.')}}</span>
-              </a>
-            </h3>
-          </li>
-        </ul>
-      </section>
-
     </div>{# /.boxed #}
 
   </section>{# /#content-main #}
@@ -142,7 +154,7 @@
     <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
       <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
       <p class="mod-intro">{% trans %}
-          Sign up now for the monthly Apps Developer newsletter. The first 5,000
+          Sign up now for the monthly Apps Developer newsletter. The first 3,000
           subscribers will gain access to the Developer Preview of the Mozilla Apps
           market. <strong>Join us!</strong>
       {% endtrans %}</p>

@@ -525,6 +525,9 @@ class Submission(models.Model):
 
         return flags
 
+    def is_derby_submission(self):
+        return bool(self.taggit_tags.all_ns('challenge:'))
+
     def challenge_closed(self):
         challenge_tags = self.taggit_tags.all_ns('challenge:')
         if not challenge_tags:

@@ -24,7 +24,6 @@ from devmo.models import UserProfile
 
 log = commonware.log.getLogger('mdn.dekicompat')
 
-
 APP_DIR = dirname(__file__)
 # Need to make test account fixture XML filename relative to this file, since
 # working dir of running tests is not always the same.
