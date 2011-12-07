@@ -1,7 +1,7 @@
-{% load i18n %}{# L10n: This is an email.  Whitespace matters! #}{% blocktrans %}
+{% load i18n %}{# L10n: This is an email.  Whitespace matters! #}{% blocktrans with user.username as username %}
 {{ domain }} Password Reset
 
-A request was received to reset the password for this account on
+A request was received to reset the password for user '{{ username }}' on
 {{ site_name }}. To change this password please click on the following link,
 or paste it into your browser's location bar:
 

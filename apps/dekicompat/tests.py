@@ -19,8 +19,6 @@ from django.conf import settings
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
-from devmo.models import UserProfile
-
 
 log = commonware.log.getLogger('mdn.dekicompat')
 
@@ -28,6 +26,8 @@ APP_DIR = dirname(__file__)
 # Need to make test account fixture XML filename relative to this file, since
 # working dir of running tests is not always the same.
 TESTACCOUNT_FIXTURE_XML = ('%s/fixtures/testaccount.xml' % APP_DIR)
+MULTI_ACCOUNT_FIXTURE_XML = ('%s/fixtures/email_multiple_users.xml' % APP_DIR)
+SINGLE_ACCOUNT_FIXTURE_XML = ('%s/fixtures/email_single_user.xml' % APP_DIR)
 
 
 def mockdekiauth(test):
@@ -67,11 +67,11 @@ def mock_put_mindtouch_user(test):
         return test
 
 
-def mock_get_deki_user(test):
+def mock_get_deki_user(test, fixture_file=TESTACCOUNT_FIXTURE_XML):
     if settings.DEKIWIKI_MOCK:
         @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user')
         def test_new(self, get_deki_user):
-            testaccount_fixture = open(TESTACCOUNT_FIXTURE_XML)
+            testaccount_fixture = open(fixture_file)
             user_info = DekiUser.parse_user_info(testaccount_fixture.read())
             get_deki_user.return_value = user_info
             test(self)
@@ -80,11 +80,11 @@ def mock_get_deki_user(test):
         return test
 
 
-def mock_get_deki_user_by_email(test):
+def mock_get_deki_user_by_email(test, fixture_file=TESTACCOUNT_FIXTURE_XML):
     if settings.DEKIWIKI_MOCK:
         @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
         def test_new(self, get_deki_user_by_email):
-            testaccount_fixture = open(TESTACCOUNT_FIXTURE_XML)
+            testaccount_fixture = open(fixture_file)
             user_info = DekiUser.parse_user_info(testaccount_fixture.read())
             get_deki_user_by_email.return_value = user_info
             test(self)

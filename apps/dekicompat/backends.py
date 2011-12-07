@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib import urlencode
 from urllib2 import HTTPError
 import urlparse
@@ -84,16 +85,31 @@ class DekiUserBackend(object):
         return DekiUser.parse_user_info(resp.read())
 
     @staticmethod
+    def get_deki_user_id(resp):
+        deki_user_id = None
+        if resp.status_code is 200:
+            doc = pq(resp.content)
+            if len(doc('user')) > 1:
+                most_recent_login = datetime(2000, 1, 1)
+                deki_user_id = None
+                for user in doc('user'):
+                    last_login = datetime.strptime(user.find('date.lastlogin').text,
+                                                   "%Y-%m-%dT%H:%M:%SZ")
+                    if last_login > most_recent_login:
+                        most_recent_login = last_login
+                        deki_user_id = pq(user).attr('id')
+            else:
+                deki_user_id = doc('user').attr('id')
+        return deki_user_id
+
+    @staticmethod
     def get_deki_user_by_email(deki_user_email):
         """get_deki_user after an email query"""
-        deki_user_id = None
         email_url = DekiUserBackend.users_by_email % urlencode(
             {'usernameemailfilter': deki_user_email,
             'apikey': settings.DEKIWIKI_APIKEY})
         resp = requests.get(email_url)
-        if resp.status_code is 200:
-            doc = pq(resp.content)
-            deki_user_id = doc('user').attr('id')
+        deki_user_id = DekiUserBackend.get_deki_user_id(resp)
         if deki_user_id:
             return DekiUserBackend.get_deki_user(deki_user_id)
         else:

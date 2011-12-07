@@ -14,7 +14,9 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from dekicompat.tests import (mock_post_mindtouch_user,
+from dekicompat.tests import (MULTI_ACCOUNT_FIXTURE_XML,
+                              SINGLE_ACCOUNT_FIXTURE_XML,
+                              mock_post_mindtouch_user,
                               mock_put_mindtouch_user,
                               mock_get_deki_user_by_email,
                               mock_get_deki_user)
@@ -195,6 +197,25 @@ class PasswordReset(TestCaseBase):
 
         u = User.objects.get(username='testaccount')
         assert mail.outbox[0].body.find('pwreset/%s' % int_to_base36(u.id)) > 0
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_deki_email_multi_user(self, get_current):
+        get_current.return_value.domain = 'testserver.com'
+        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+
+        r = self.client.post(reverse('users.pw_reset'),
+                             {'email': 'f487e0b2f7b637e4e7d5dd0ff76b0447@mozilla.com'})
+        eq_(302, r.status_code)
+        eq_('http://testserver/en-US/users/pwresetsent', r['location'])
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Password reset') == 0
+
+        u = User.objects.get(username='Ibn el haithem')
+        assert mail.outbox[0].body.find('pwreset/%s' % int_to_base36(u.id)) > 0
+
+    test_deki_email_multi_user = mock_get_deki_user(
+        test_deki_email_multi_user,
+        fixture_file=SINGLE_ACCOUNT_FIXTURE_XML)
 
     def _get_reset_url(self):
         return reverse('users.pw_reset_confirm',
