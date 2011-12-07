@@ -16,8 +16,10 @@ reasons.
     # Open a terminal window.
     
     # Install vagrant, see vagrantup.com
+    # NOTE: Currently, vagrant v0.8.8 appears to fail with this setup, so we
+    # need to revert to 0.8.7
     sudo gem update
-    sudo gem install vagrant
+    sudo gem install vagrant --version=0.8.7
         
     # Fire up the VM and install everything, go take a bike ride (approx. 15 min)
     # Clone a Kuma repo, switch to "mdn" branch (for now)
@@ -32,18 +34,19 @@ reasons.
     # If the process fails with an error, try running the Puppet setup again.
     # (This sometimes fixes transient or ordering problems)
     vagrant provision
-    
-    # Experimental / Optional: Download and import data extracted from the
-    # production site. This can take a long while, since there's over 500MB
-    vagrant ssh
-    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
-    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
     # Add developer-dev.mozilla.org to /etc/hosts
     echo '192.168.10.55 developer-dev.mozilla.org' >> /etc/hosts
 
     # Everything should be working now.
     curl 'http://developer-dev.mozilla.org'
+    
+    # Experimental / Optional: Download and import data extracted from the
+    # production site. This can take a long while, since there's over 500MB
+    vagrant ssh
+    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
+    mysql -uroot < /vagrant/puppet/files/tmp/postimport.sql
+    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
     # Edit files as usual on your host machine; the current directory is
     # mounted via NFS at /vagrant within the VM.
