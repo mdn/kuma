@@ -10,8 +10,12 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
+import waffle
+from waffle.models import Flag, Sample, Switch
+
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
+from . import TestCaseBase
 
 import wiki.content
 from wiki.models import VersionMetadata, Document, Revision
@@ -21,7 +25,7 @@ from wiki.views import _version_groups
 from wiki.forms import MIDAIR_COLLISION
 
 
-class VersionGroupTests(TestCase):
+class VersionGroupTests(TestCaseBase):
     def test_version_groups(self):
         """Make sure we correctly set up browser/version mappings for the JS"""
         versions = [VersionMetadata(1, 'Firefox 4.0', 'Firefox 4.0', 'fx4',
@@ -35,7 +39,7 @@ class VersionGroupTests(TestCase):
         eq_(want, _version_groups(versions))
 
 
-class RedirectTests(TestCase):
+class RedirectTests(TestCaseBase):
     """Tests for the REDIRECT wiki directive"""
 
     fixtures = ['test_users.json']
@@ -49,7 +53,7 @@ class RedirectTests(TestCase):
         self.assertContains(response, 'REDIRECT ')
 
 
-class LocaleRedirectTests(TestCase):
+class LocaleRedirectTests(TestCaseBase):
     """Tests for fallbacks to en-US and such for slug lookups."""
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
 
@@ -92,7 +96,7 @@ class LocaleRedirectTests(TestCase):
         return en_doc, de_doc
 
 
-class ViewTests(TestCase):
+class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_json_view(self):
@@ -110,7 +114,7 @@ class ViewTests(TestCase):
         eq_('an article title', data['title'])
 
 
-class DocumentEditingTests(TestCase):
+class DocumentEditingTests(TestCaseBase):
     """Tests for the document-editing view"""
 
     fixtures = ['test_users.json']
@@ -464,7 +468,7 @@ class DocumentEditingTests(TestCase):
             "Midair collision message should appear")
 
 
-class SectionEditingResourceTests(TestCase):
+class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']
 
     def test_raw_source(self):
@@ -774,3 +778,33 @@ class SectionEditingResourceTests(TestCase):
                            data)
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)
+
+    @attr('kumawiki')
+    def test_kumawiki_waffle_flag(self):
+
+        # Turn off the new wiki for everyone
+        self.kumawiki_flag.everyone = False
+        self.kumawiki_flag.save()
+        
+        client = LocalizingClient()
+
+        resp = client.get(reverse('wiki.all_documents'))
+        eq_(404, resp.status_code)
+        
+        resp = client.get(reverse('docs'))
+        page = pq(resp.content)
+        eq_(0, page.find('#kumawiki_preview').length)
+
+        client.login(username='admin', password='testpass')
+
+        # Turn on the wiki for just superusers, ignore everyone else
+        self.kumawiki_flag.superusers = True
+        self.kumawiki_flag.everyone = None
+        self.kumawiki_flag.save()
+
+        resp = client.get(reverse('wiki.all_documents'))
+        eq_(200, resp.status_code)
+        
+        resp = client.get(reverse('docs'))
+        page = pq(resp.content)
+        eq_(1, page.find('#kumawiki_preview').length)

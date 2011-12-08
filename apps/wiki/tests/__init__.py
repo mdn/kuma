@@ -5,6 +5,9 @@ from django.template.defaultfilters import slugify
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
 
+import waffle
+from waffle.models import Flag, Sample, Switch
+
 from sumo.tests import LocalizingClient, TestCase, get_user
 import wiki.content
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
@@ -15,6 +18,12 @@ class TestCaseBase(TestCase):
     def setUp(self):
         super(TestCaseBase, self).setUp()
         self.client = LocalizingClient()
+        
+        self.kumawiki_flag = Flag.objects.create(name='kumawiki',
+                                                 everyone=True)
+
+    def tearDown(self):
+        self.kumawiki_flag.delete()
 
 
 # Model makers. These make it clearer and more concise to create objects in
