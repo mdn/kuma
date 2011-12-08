@@ -13,6 +13,8 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods)
 
+from waffle.decorators import waffle_flag
+
 import jingo
 from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
@@ -79,6 +81,7 @@ SHOWFOR_DATA = {
 }
 
 
+@waffle_flag('kumawiki')
 @require_GET
 def document(request, document_slug):
     """View a wiki document."""
@@ -183,6 +186,7 @@ def document(request, document_slug):
     return jingo.render(request, 'wiki/document.html', data)
 
 
+@waffle_flag('kumawiki')
 def revision(request, document_slug, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
@@ -192,6 +196,7 @@ def revision(request, document_slug, revision_id):
     return jingo.render(request, 'wiki/revision.html', data)
 
 
+@waffle_flag('kumawiki')
 @require_GET
 def list_documents(request, category=None, tag=None):
     """List wiki documents."""
@@ -216,6 +221,7 @@ def list_documents(request, category=None, tag=None):
                          'tag': tag})
 
 
+@waffle_flag('kumawiki')
 @require_GET
 def list_documents_for_review(request, tag=None):
     """Lists wiki documents with revisions flagged for review"""
@@ -228,6 +234,7 @@ def list_documents_for_review(request, tag=None):
                          'tag_name': tag})
 
 
+@waffle_flag('kumawiki')
 @login_required
 def new_document(request):
     """Create a new wiki document."""
@@ -260,6 +267,7 @@ def new_document(request):
                          'revision_form': rev_form})
 
 
+@waffle_flag('kumawiki')
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in
                  # Document.allows_editing_by.
@@ -479,6 +487,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return response
 
 
+@waffle_flag('kumawiki')
 def ckeditor_config(request):
     """Return ckeditor config from database"""
     default_config = EditorToolbar.objects.filter(name='default').all()
@@ -491,6 +500,7 @@ def ckeditor_config(request):
                        mimetype="application/x-javascript")
 
 
+@waffle_flag('kumawiki')
 @login_required
 @require_POST
 def preview_revision(request):
@@ -502,6 +512,7 @@ def preview_revision(request):
     return jingo.render(request, 'wiki/preview.html', data)
 
 
+@waffle_flag('kumawiki')
 @require_GET
 def document_revisions(request, document_slug):
     """List all the revisions of a given document."""
@@ -517,6 +528,7 @@ def document_revisions(request, document_slug):
                         {'revisions': revs, 'document': doc})
 
 
+@waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.review_revision')
 def review_revision(request, document_slug, revision_id):
@@ -564,6 +576,7 @@ def review_revision(request, document_slug, revision_id):
     return jingo.render(request, template, data)
 
 
+@waffle_flag('kumawiki')
 @require_GET
 def compare_revisions(request, document_slug):
     """Compare two wiki document revisions.
@@ -586,6 +599,7 @@ def compare_revisions(request, document_slug):
                          'revision_to': revision_to})
 
 
+@waffle_flag('kumawiki')
 @login_required
 def select_locale(request, document_slug):
     """Select a locale to translate the document to."""
@@ -594,6 +608,7 @@ def select_locale(request, document_slug):
     return jingo.render(request, 'wiki/select_locale.html', {'document': doc})
 
 
+@waffle_flag('kumawiki')
 @require_http_methods(['GET', 'POST'])
 @login_required
 def translate(request, document_slug, revision_id=None):
@@ -708,6 +723,7 @@ def translate(request, document_slug, revision_id=None):
                          'disclose_description': disclose_description})
 
 
+@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def watch_document(request, document_slug):
@@ -718,6 +734,7 @@ def watch_document(request, document_slug):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
+@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def unwatch_document(request, document_slug):
@@ -728,6 +745,7 @@ def unwatch_document(request, document_slug):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
+@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def watch_locale(request):
@@ -738,6 +756,7 @@ def watch_locale(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
+@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def unwatch_locale(request):
@@ -747,6 +766,7 @@ def unwatch_locale(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
+@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def watch_approved(request):
@@ -759,6 +779,7 @@ def watch_approved(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
+@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def unwatch_approved(request):
@@ -771,6 +792,7 @@ def unwatch_approved(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
+@waffle_flag('kumawiki')
 @require_GET
 def json_view(request, document_slug=None):
     """Return some basic document info in a JSON blob."""
@@ -797,6 +819,7 @@ def json_view(request, document_slug=None):
     return HttpResponse(data, mimetype='application/json')
 
 
+@waffle_flag('kumawiki')
 @require_POST
 def helpful_vote(request, document_slug):
     """Vote for Helpful/Not Helpful document"""
@@ -829,6 +852,7 @@ def helpful_vote(request, document_slug):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
+@waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.delete_revision')
 def delete_revision(request, document_slug, revision_id):

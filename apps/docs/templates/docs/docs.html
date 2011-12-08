@@ -23,6 +23,7 @@
     </form>
 
     <section class="section-intro boxed">
+    
       <header class="head section-web">
         {# L10n: Please escape HTML entities here, like &amp; #}
         <h2>{{ _('Popular Topics for <span class="web">Web</span> Developers')|safe }}</h2>
@@ -60,6 +61,21 @@
         <p>{{ _('A comprehensive list of terms to help Web developers find the documentation they need.') }}</p>
       </header>
       {% include "docs/glossary.html" %}
+
+      {% if waffle.flag('kumawiki') %}
+      <header class="subhead">
+        <h2>New Wiki Feature Preview</h2>
+      </header>
+      <ul>
+        <li>
+            <ul class="cols-4">
+                <li><a href="{{ url('wiki.new_document') }}">New page</a></li>
+                <li><a href="{{ url('wiki.all_documents') }}">List all pages</a></li>
+                <li><a href="{{ url('wiki.list_review') }}">Pages for review</a></li>
+            </ul>
+        </li>
+      </ul>
+      {% endif %}
 
     </section>{# /.section-intro #}
 
@@ -120,6 +136,7 @@
       </ul>
     </div>
 
+    {% if waffle.flag('kumawiki') %}
     {% set review_flags = (
         ('technical', _('Needs Technical Review')),
         ('editorial', _('Needs Editorial Review')),
@@ -139,6 +156,7 @@
         </div>
         {% endif %}
     {% endfor %}
+    {% endif %}
 
     <div class="module hfeed" id="doc-of-the-day">
       <h3 class="mod-title">{{ _('Doc Of The Day') }}</h3>

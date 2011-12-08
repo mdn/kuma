@@ -14,7 +14,6 @@ authority.autodiscover()
 urlpatterns = patterns('',
    # Home / landing pages:
     ('', include('landing.urls')),
-    ('', include('docs.urls')),
     ('', include('devmo.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
     (r'^demos/', include('demos.urls')),
@@ -23,14 +22,17 @@ urlpatterns = patterns('',
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    # TODO: Re-enable 'search' app when we switch to kuma wiki - that, or waffle it.
     (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
     #(r'^questions', include('questions.urls')),
     #(r'^flagged', include('flagit.urls')),
     #(r'^upload', include('upload.urls')),
+
+    # Docs landing page and next-gen kuma wiki
+    ('', include('docs.urls')),
     (r'^docs', include('wiki.urls')),
-    (r'^gallery', include('gallery.urls')),
+    
+    #(r'^gallery', include('gallery.urls')),
     #(r'^army-of-awesome', include('customercare.urls')),
     #(r'^chat', include('chat.urls')),
     #(r'^1', include('inproduct.urls')),
