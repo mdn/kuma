@@ -12,14 +12,18 @@ from tower import ugettext as _
 
 from feeder.models import Entry
 
+from wiki.models import Document, REVIEW_FLAG_TAGS
 
-log = commonware.log.getLogger('mdn.docs')
+log = commonware.log.getLogger('kuma.docs')
+
+MAX_REVIEW_DOCS = 5
+
 
 def docs(request):
     """Docs landing page."""
 
     # Doc of the day
-    dotd = cached(_get_popular_item, 'mdn_docs_dotd', 24*60*60)
+    dotd = cached(_get_popular_item, 'kuma_docs_dotd', 24*60*60)
 
     # Recent updates
     entries = Entry.objects.filter(feed__shortname='mdc-latest')
@@ -39,7 +43,16 @@ def docs(request):
         if len(active_docs) == 5:
             break
 
-    data = {'active_docs': active_docs, 'dotd': dotd}
+    review_flag_docs = dict()
+    for tag, description in REVIEW_FLAG_TAGS:
+        review_flag_docs[tag] = (Document.objects
+            .filter_for_review(tag_name=tag)
+            .order_by('-current_revision__created')
+            .all()[:MAX_REVIEW_DOCS])
+
+    data = {'active_docs': active_docs, 
+            'review_flag_docs': review_flag_docs,
+            'dotd': dotd}
     return jingo.render(request, 'docs/docs.html', data)
 
 

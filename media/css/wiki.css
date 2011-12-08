@@ -782,6 +782,7 @@ div.revision-info li {
 
 #doc-source textarea {
     height: 400px;
+    width: 100%;
 }
 
 /* Review revision */
@@ -830,12 +831,13 @@ body.review #content-fields textarea {
 /* Revision diffs */
 div.revision-diff div {
     display: inline-block;
-    width: 364px;
+    /* width: 364px; */
+    width: 49.7%;
 }
 
 div.revision-diff h3 {
     font-weight: bold;
-    margin: 20px 0 0;
+    margin: 5px 0 0;
 }
 
 div.revision-diff h4 {

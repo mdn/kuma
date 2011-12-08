@@ -29,3 +29,8 @@
 </section>
 
 {% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('framebuster') }}
+{% endblock %}

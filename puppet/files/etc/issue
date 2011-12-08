@@ -1,11 +1,11 @@
 CentOS release 5.7 (Final)
 Kernel \r on an \m
 
-kuma-mdn for webdev
+developer-dev.mozilla.org
+Kuma / MDN for webdev
 
-IP Address: 192.168.10.20
+IP Address: 192.168.10.55
 
 Default users:
-    u: root     p: root
     u: vagrant  p: vagrant
 

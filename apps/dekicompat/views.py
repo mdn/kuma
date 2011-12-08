@@ -4,7 +4,7 @@ from django.utils.http import urlencode
 
 import commonware
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 def logout(request):
     """ Clear Django user from session and let Dekiwiki do it's thang...

@@ -3,6 +3,7 @@
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
 {% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
@@ -10,12 +11,23 @@
 {% set classes = 'document' %}
 
 {% block content %}
-  <article id="wiki-doc" class="main">
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="wiki-doc">
     <h1 class="title">{{ document.title }}</h1>
     <details class="h2" open="open">
       <summary>{{ _('Revision Information') }}</summary>
       <div class="revision-info">
         <ul>
+          <li>
+            <mark>{{ _('Revision slug:') }}</mark>
+            <span>{{ revision.slug }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Revision title:') }}</mark>
+            <span>{{ revision.title }}</span>
+          </li>
           <li>
             <mark>{{ _('Revision id:') }}</mark>
             <span>{{ revision.id }}</span>
@@ -69,6 +81,9 @@
       </div>
     </details>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 

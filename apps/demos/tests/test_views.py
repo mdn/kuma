@@ -33,16 +33,14 @@ from demos.forms import SubmissionNewForm, SubmissionEditForm
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
         dirname(dirname(__file__)))
+TESTUSER_PASSWORD = 'trustno1'
 
 
-def mockdekiauth(test):
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    def test_new(self, authenticate, get_user):
-        authenticate.return_value = self.testuser
-        get_user.return_value = self.testuser
-        self.client.login(authtoken='1')
-        test(self)
+def logged_in(test, *args, **kwargs):
+    def test_new(self):
+        self.client.login(username=self.testuser.username, 
+                password=TESTUSER_PASSWORD)
+        test(self, *args, **kwargs)
     return test_new
 
 
@@ -71,6 +69,8 @@ class DemoViewsTest(test_utils.TestCase):
 
     def setUp(self):
         self.testuser = User.objects.get(username='testuser')
+        self.testuser.set_password(TESTUSER_PASSWORD)
+        self.testuser.save()
         self.client = LocalizingClient()
 
     def test_submit_loggedout(self):
@@ -78,13 +78,13 @@ class DemoViewsTest(test_utils.TestCase):
         choices = pq(r.content)('p.choices')
         eq_(choices.find('a.button').length, 2)
 
+    @logged_in
     def test_submit_loggedin(self):
-        self.client.login(username='testuser', password='testpass')
         r = self.client.get(reverse('demos_submit'))
         assert pq(r.content)('form#demo-submit')
 
+    @logged_in
     def test_submit_post_invalid(self):
-        self.client.login(username='testuser', password='testpass')
         r = self.client.post(reverse('demos_submit'), data={})
         d = pq(r.content)
         assert d('form#demo-submit')
@@ -96,7 +96,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
 
-    @attr('demo_submit')
+    @logged_in
     @disable_captcha
     def test_submit_post_valid(self):
 
@@ -110,7 +110,6 @@ class DemoViewsTest(test_utils.TestCase):
         zf_fin = StringIO(zf_fout.getvalue())
         zf_fin.name = 'demo.zip'
 
-        self.client.login(username='testuser', password='testpass')
         r = self.client.post(reverse('demos_submit'), data=dict(
             title='Test submission',
             summary='This is a test demo submission',
@@ -137,9 +136,9 @@ class DemoViewsTest(test_utils.TestCase):
         eq_(['tech:audio', 'tech:video', 'tech:websockets'], result_tags)
 
 
+    @logged_in
     def test_edit_invalid(self):
         s = save_valid_submission()
-        self.client.login(username='testuser', password='testpass')
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.post(edit_url, data=dict())
         d = pq(r.content)
@@ -148,9 +147,9 @@ class DemoViewsTest(test_utils.TestCase):
         assert d('li#field_summary ul.errorlist')
         assert d('li#field_license_name ul.errorlist')
 
+    @logged_in
     def test_edit_valid(self):
         s = save_valid_submission()
-        self.client.login(username='testuser', password='testpass')
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.post(edit_url, data=dict(
             title=s.title,
@@ -202,10 +201,10 @@ class DemoViewsTest(test_utils.TestCase):
         eq_(302, r.status_code)
         eq_("http://developer.mozilla.org", r['Location'])
 
+    @logged_in
     def test_creator_can_edit(self):
         s = save_valid_submission('hello world')
 
-        self.client.login(username='testuser', password='testpass')
         url = reverse('demos_detail', args=[s.slug])
         r = self.client.get(url)
         d = pq(r.content)
@@ -219,23 +218,23 @@ class DemoViewsTest(test_utils.TestCase):
         eq_('Save changes',
             pq(r.content)('p.fm-submit button[type="submit"]').text())
 
+    @logged_in
     def test_hidden_field(self):
         s = save_valid_submission('hello world')
 
-        self.client.login(username='testuser', password='testpass')
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         assert pq(r.content)('input[name="hidden"][type="checkbox"]')
 
+    @logged_in
     def test_derby_field(self):
         s = save_valid_submission('hello world')
 
-        self.client.login(username='testuser', password='testpass')
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         assert pq(r.content)('fieldset#devderby-submit')
 
-    @mockdekiauth
+    @logged_in
     def test_edit_no_tags(self):
         s = save_valid_submission('hello world')
         edit_url = reverse('demos_edit', args=[s.slug])
@@ -249,9 +248,8 @@ class DemoViewsTest(test_utils.TestCase):
         eq_(r.status_code, 302)
         r = self.client.get(edit_url)
         eq_(r.status_code, 200)
-        
 
-    @mockdekiauth
+    @logged_in
     def test_edit_with_challenge_tag(self):
         s = save_valid_submission('hello world')
         edit_url = reverse('demos_edit', args=[s.slug])
@@ -314,7 +312,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert 'demo_package' not in form.fields
         assert 'challenge_tags' not in form.fields
 
-    @mockdekiauth
+    @logged_in
     def test_derby_tag_saving(self):
         """
         There's some tricky bits in the handling of editing and saving

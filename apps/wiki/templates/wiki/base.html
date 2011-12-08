@@ -1,8 +1,13 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "base.html" %}
 {% if not styles %}
-  {% set styles = ('wiki', 'jqueryui/jqueryui') %}
+  {% set styles = ('wiki',) %}
 {% endif %}
 {% if not scripts %}
-  {% set scripts = ('wiki', 'libs/jqueryui') %}
+  {% set scripts = ('wiki',) %}
 {% endif %}
+{% block js %}
+  <script src="{{ MEDIA_URL }}ckeditor/ckeditor.js"></script>
+  <script src="{{ MEDIA_URL }}ckeditor/adapters/jquery.js"></script>
+  <script src="{{ MEDIA_URL }}js/wiki_ckeditor.js"></script>
+{% endblock %}

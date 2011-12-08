@@ -8,11 +8,17 @@ from django.core import mail
 
 import mock
 from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
-from dekicompat.tests import (mock_post_mindtouch_user,
-                              mock_get_deki_user)
+from dekicompat.tests import (mock_mindtouch_login,
+                              mock_missing_get_deki_user,
+                              mock_get_deki_user,
+                              mock_put_mindtouch_user,
+                              mock_post_mindtouch_user)
+
 from dekicompat.backends import DekiUserBackend
+from devmo.tests import mock_fetch_user_feed
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -52,7 +58,9 @@ class LoginTestCase(TestCase):
         eq_(200, response.status_code)
         self.assertContains(response, 'Welcome back, testuser')
 
+    @mock_mindtouch_login
     @mock_get_deki_user
+    @mock_put_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_mindtouch_creds_create_user_and_profile(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
@@ -85,6 +93,8 @@ class RegisterTestCase(TestCase):
     def tearDown(self):
         settings.DEBUG = self.old_debug
 
+    @mock_missing_get_deki_user
+    @mock_put_mindtouch_user
     @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user(self, get_current):
@@ -114,6 +124,8 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
+    @mock_missing_get_deki_user
+    @mock_put_mindtouch_user
     @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_posts_mindtouch_user(self, get_current):
@@ -151,7 +163,9 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
+    @mock_missing_get_deki_user
     @mock_post_mindtouch_user
+    @mock_put_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_unicode_password(self, get_current):
         get_current.return_value.domain = 'su.mo.com'
@@ -176,6 +190,7 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/ja/', response.redirect_chain[0][0])
 
+    @mock_put_mindtouch_user
     @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_activation(self, get_current):
@@ -192,6 +207,7 @@ class RegisterTestCase(TestCase):
         user = User.objects.get(pk=user.pk)
         assert user.is_active
 
+    @mock_put_mindtouch_user
     @mock_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_claim_watches(self, get_current):
@@ -210,6 +226,7 @@ class RegisterTestCase(TestCase):
         # Watches are claimed.
         assert user.watch_set.exists()
 
+    @mock_get_deki_user
     def test_duplicate_username(self):
         response = self.client.post(reverse('users.register'),
                                     {'username': 'testuser',
@@ -218,6 +235,7 @@ class RegisterTestCase(TestCase):
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')
 
+    @mock_get_deki_user
     def test_duplicate_mindtouch_username(self):
         response = self.client.post(reverse('users.register'),
                                     {'username': 'testaccount',
@@ -226,6 +244,7 @@ class RegisterTestCase(TestCase):
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')
 
+    @mock_get_deki_user
     def test_duplicate_email(self):
         User.objects.create(username='noob', email='noob@example.com').save()
         response = self.client.post(reverse('users.register'),
@@ -235,6 +254,7 @@ class RegisterTestCase(TestCase):
                                      'password2': 'foo'}, follow=True)
         self.assertContains(response, 'already exists')
 
+    @mock_get_deki_user
     def test_no_match_passwords(self):
         response = self.client.post(reverse('users.register'),
                                     {'username': 'newbie',

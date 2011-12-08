@@ -2,9 +2,15 @@ from datetime import datetime
 
 from django.template.defaultfilters import slugify
 
-from sumo.tests import LocalizingClient, TestCase, get_user
-from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
+import html5lib
+from html5lib.filters._base import Filter as html5lib_Filter
 
+import waffle
+from waffle.models import Flag, Sample, Switch
+
+from sumo.tests import LocalizingClient, TestCase, get_user
+import wiki.content
+from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 
 class TestCaseBase(TestCase):
     """Base TestCase for the wiki app test cases."""
@@ -12,6 +18,12 @@ class TestCaseBase(TestCase):
     def setUp(self):
         super(TestCaseBase, self).setUp()
         self.client = LocalizingClient()
+        
+        self.kumawiki_flag = Flag.objects.create(name='kumawiki',
+                                                 everyone=True)
+
+    def tearDown(self):
+        self.kumawiki_flag.delete()
 
 
 # Model makers. These make it clearer and more concise to create objects in
@@ -94,3 +106,20 @@ def new_document_data(tags=None):
         'summary': 'lipsum',
         'content': 'lorem ipsum dolor sit amet',
     }
+
+
+def normalize_html(input):
+    """Normalize HTML5 input, discarding parts not significant for
+    equivalence in tests"""
+
+    class WhitespaceRemovalFilter(html5lib_Filter):
+        def __iter__(self):
+            for token in html5lib_Filter.__iter__(self):
+                if 'SpaceCharacters' == token['type']:
+                    continue
+                yield token
+
+    return (wiki.content
+            .parse(unicode(input))
+            .filter(WhitespaceRemovalFilter)
+            .serialize())

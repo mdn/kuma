@@ -17,14 +17,27 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
+from dekicompat.tests import (mock_mindtouch_login,
+                              mock_get_deki_user,
+                              mock_put_mindtouch_user,
+                              mock_post_mindtouch_user)
 from dekicompat.backends import DekiUserBackend
 from devmo.models import UserProfile, UserDocsActivityFeed
+
+from django.contrib.auth.models import User, AnonymousUser
+
+from devmo.helpers import devmo_url
+from devmo import urlresolvers
+from devmo.models import Calendar, Event, UserProfile
+from devmo.forms import UserProfileEditForm
 from devmo.cron import devmo_calendar_reload
+from devmo.tests import mock_fetch_user_feed
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 
 
+TESTUSER_PASSWORD = 'testpass'
 APP_DIR = dirname(dirname(__file__))
 USER_DOCS_ACTIVITY_FEED_XML = ('%s/fixtures/user_docs_activity_feed.xml' %
                                APP_DIR)
@@ -43,12 +56,9 @@ class ProfileViewsTest(TestCase):
         settings.DEBUG = self.old_debug
 
     @attr('docs_activity')
-    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
-    def test_profile_view(self, fetch_user_feed):
+    @mock_fetch_user_feed
+    def test_profile_view(self):
         """A user profile can be viewed"""
-        doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
-        fetch_user_feed.return_value = doc_feed_data
-
         profile = UserProfile.objects.get(user__username='testuser')
         user = profile.user
         url = reverse('devmo.views.profile_view',
@@ -92,20 +102,11 @@ class ProfileViewsTest(TestCase):
                 eq_(item.history_url,
                     item_el.find('.actions a.history').attr('href'))
 
-    @attr('current')
-    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
-    @patch('dekicompat.backends.DekiUserBackend.get_deki_user')
-    @patch('dekicompat.backends.DekiUserBackend.get_user')
-    @patch('dekicompat.backends.DekiUserBackend.authenticate')
-    def test_bug_698971(self, authenticate, get_user, get_deki_user,
-                        fetch_user_feed):
+    @mock_put_mindtouch_user
+    @mock_fetch_user_feed
+    def test_bug_698971(self):
         """A non-numeric page number should not cause an error"""
         (user, deki_user, profile) = create_profile()
-
-        authenticate.return_value = user
-        get_user.return_value = user
-        doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
-        fetch_user_feed.return_value = doc_feed_data
  
         url = '%s?page=asdf' % reverse('devmo.views.profile_view',
                                        args=(user.username,))
@@ -115,6 +116,8 @@ class ProfileViewsTest(TestCase):
         except PageNotAnInteger:
             ok_(False, "Non-numeric page number should not cause an error")
 
+    @mock_put_mindtouch_user
+    @mock_fetch_user_feed
     def test_profile_edit(self):
         profile = UserProfile.objects.get(user__username='testuser')
         user = profile.user
@@ -123,7 +126,11 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         eq_(0, doc.find('#profile-head .edit .button').length)
 
-        self.client.login(username=user.username, password='testpass')
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
@@ -168,10 +175,13 @@ class ProfileViewsTest(TestCase):
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
 
-    @attr("edit_websites")
+    @mock_put_mindtouch_user
+    @mock_fetch_user_feed
     def test_profile_edit_websites(self):
         user = User.objects.get(username='testuser')
-        self.client.login(username=user.username, password='testpass')
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
+
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
@@ -189,6 +199,7 @@ class ProfileViewsTest(TestCase):
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
                    'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+        form['email'] = 'test@example.com'
 
         # Fill out the form with websites.
         form.update(dict(('websites_%s' % k, v)
@@ -229,10 +240,13 @@ class ProfileViewsTest(TestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
-    @attr("edit_interests")
-    def test_profile_edit_tags(self):
+    @mock_put_mindtouch_user
+    @mock_fetch_user_feed
+    def test_profile_edit_interests(self):
         user = User.objects.get(username='testuser')
-        self.client.login(username=user.username, password='testpass')
+        self.client.login(username=user.username, 
+                password=TESTUSER_PASSWORD)
+
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
@@ -244,6 +258,7 @@ class ProfileViewsTest(TestCase):
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
                 'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+        form['email'] = 'test@example.com'
 
         form['interests'] = ', '.join(test_tags)
 
@@ -282,21 +297,34 @@ class ProfileViewsTest(TestCase):
 
         eq_(1, doc.find('.error #id_expertise').length)
 
+    @mock_mindtouch_login
+    @mock_get_deki_user
+    @mock_put_mindtouch_user
+    @mock_fetch_user_feed
     @mock.patch_object(Site.objects, 'get_current')
     def test_profile_edit_language_saves_to_mindtouch(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+
+        try:
+            user = User.objects.get(username='testaccount')
+            user.delete()
+        except User.DoesNotExist:
+            pass
+
         # log in as a MindTouch user to create django user & profile
+        
         response = self.client.post(reverse('users.login', locale='en-US'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         eq_(200, response.status_code)
         user = User.objects.get(username='testaccount')
+        profile = UserProfile.objects.get(user=user)
 
         # use profile edit to change language
         url = reverse('devmo.views.profile_edit',
                       args=(user.username,))
         r = self.client.get(url, follow=True)
+        eq_(200, r.status_code, 'Profile should be found.')
         doc = pq(r.content)
 
         # Scrape out the existing significant form field values.
@@ -326,10 +354,12 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         ok_('nl', doc.find('#profile-edit select#id_locale option[value="nl"][selected="selected"]'))
 
-        raise SkipTest("Skip the rest until we sort out staging MindTouch data consistency issues")
+        # TODO: Mock this part out...
+        """
         r = requests.get(DekiUserBackend.profile_by_id_url % '=testaccount')
         doc = pq(r.content)
         eq_('nl', doc.find('language').text())
+        """
 
     def _break(self, url, r):
         logging.debug("URL  %s" % url)

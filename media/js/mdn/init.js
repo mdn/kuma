@@ -1,3 +1,5 @@
+/* Global initialization script */
+
 /* Fake the placeholder attribute since Firefox doesn't support it. */
 jQuery.fn.placeholder = function(new_value) {
 

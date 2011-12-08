@@ -1,7 +1,19 @@
+from os.path import dirname
+
+import mock
+
 from django.contrib.auth.models import User
+
+import test_utils
+from nose.plugins.skip import SkipTest
 
 from dekicompat.backends import DekiUser
 from devmo.models import UserProfile
+
+
+APP_DIR = dirname(dirname(__file__))
+USER_DOCS_ACTIVITY_FEED_XML = ('%s/fixtures/user_docs_activity_feed.xml' %
+                               APP_DIR)
 
 def create_profile():
     """Create a user, deki_user, and a profile for a test account"""
@@ -26,3 +38,17 @@ def create_profile():
     profile.save()
 
     return (user, deki_user, profile)
+
+
+def mock_fetch_user_feed(test):
+    @mock.patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_new(self, fetch_user_feed):
+        doc_feed_data = open(USER_DOCS_ACTIVITY_FEED_XML, 'r').read()
+        fetch_user_feed.return_value = doc_feed_data
+        test(self)
+    return test_new
+
+
+class SkippedTestCase(test_utils.TestCase):
+    def setUp(self):
+        raise SkipTest()

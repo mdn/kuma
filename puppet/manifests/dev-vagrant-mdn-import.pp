@@ -41,7 +41,7 @@ class postimport_fixes {
     exec { "import_postdump":
         cwd => "$PROJ_DIR/puppet/cache",
         timeout => 3600, # Too long, but this can take awhile
-        command => "/bin/cat ../files/tmp/postimport.sql | /usr/bin/mysql -uroot wikidb";
+        command => "/bin/cat ../files/tmp/postimport.sql | /usr/bin/mysql -uroot";
     }
 }
 

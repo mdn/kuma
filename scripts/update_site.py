@@ -90,15 +90,10 @@ def update_site(env, debug):
         (EXEC,  GIT_SUBMODULE_UPDATE),
         (CHDIR, os.path.join(here)),
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
+        (EXEC, 'python2.6 manage.py migrate'),
+        (EXEC, 'python2.6 manage.py compress_assets'),
     ]
-
-    # HACK: Just for now, only the mdn branch has South enabled.
-    # FIXME: Merge mdn up to master and get South running
-    if env.startswith('mdn_'):
-        commands += [ (EXEC, 'python2.6 manage.py migrate'), ]
-
-    commands += [ (EXEC, 'python2.6 manage.py compress_assets'), ]
-
+ 
     for cmd, cmd_args in commands:
         if CHDIR == cmd:
             if debug:

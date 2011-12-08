@@ -7,6 +7,8 @@ import tempfile
 import commonware.log
 import lockfile
 
+from django.db import models
+from django.db.models.fields.files import FieldFile
 
 log = commonware.log.getLogger('mdn.basket')
 htmlparser = HTMLParser.HTMLParser()
@@ -42,9 +44,9 @@ def locked(prefix):
 def cached_property(*args, **kw):
     # Handles invocation as a direct decorator or
     # with intermediate keyword arguments.
-    if args: # @cached_property
+    if args:  # @cached_property
         return CachedProperty(args[0])
-    else: # @cached_property(name=..., writable=...)
+    else:  # @cached_property(name=..., writable=...)
         return lambda f: CachedProperty(f, **kw)
 
 
@@ -92,6 +94,7 @@ def entity_decode(str):
 
 import jingo
 
+
 class JingoTemplateLoaderWrapper():
 
     def __init__(self, template):
@@ -103,6 +106,7 @@ class JingoTemplateLoaderWrapper():
             context_dict.update(d)
         return self.template.render(context_dict)
 
+
 class JingoTemplateLoader():
     """Quick & dirty adaptor to load jinja2 templates via jingo"""
     is_usable = True
@@ -113,3 +117,29 @@ class JingoTemplateLoader():
         template = jingo.env.get_template(template_name)
         return JingoTemplateLoaderWrapper(template)
 
+
+def generate_filename_and_delete_previous(ffile, name, before_delete=None):
+    """Generate a new filename for a file upload field; delete the previously
+    uploaded file."""
+
+    new_filename = ffile.field.generate_filename(ffile.instance, name)
+
+    try:
+        # HACK: Speculatively re-fetching the original object makes me feel
+        # wasteful and dirty. But, I can't think of another way to get
+        # to the original field's value. Should be cached, though.
+        # see also - http://code.djangoproject.com/ticket/11663#comment:10
+        orig_instance = ffile.instance.__class__.objects.get(
+            id=ffile.instance.id
+        )
+        orig_field_file = getattr(orig_instance, ffile.field.name)
+        orig_filename = orig_field_file.name
+
+        if orig_filename and new_filename != orig_filename:
+            if before_delete:
+                before_delete(orig_field_file)
+            orig_field_file.delete()
+    except ffile.instance.__class__.DoesNotExist:
+        pass
+
+    return new_filename

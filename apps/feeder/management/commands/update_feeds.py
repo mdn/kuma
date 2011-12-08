@@ -27,7 +27,7 @@ class Command(NoArgsCommand):
                     default=False, help='Fetch even disabled feeds.'),
     )
 
-    @locked('mdn_feeder_lock')
+    @locked('kuma_feeder_lock')
     def handle_noargs(self, **options):
         """
         Locked command handler to avoid running this command more than once

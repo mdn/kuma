@@ -46,8 +46,10 @@ def login(request):
             resp.set_cookie('authtoken', authtoken)
         return resp
 
-    return jingo.render(request, 'users/login.html',
-                        {'form': form, 'next_url': next_url})
+    response = jingo.render(request, 'users/login.html',
+                            {'form': form, 'next_url': next_url})
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 
 @ssl_required
