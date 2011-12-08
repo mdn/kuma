@@ -1,0 +1,12 @@
+# Default config for Vagrant
+#
+# Don't change this; use vagrantconfig_local.yaml to override these settings
+# instead.
+
+nfs: false
+gui: false
+ip_address: 192.168.10.55
+memory_size: 768
+box: "kuma"
+box_url: "http://people.mozilla.com/~lorchard/vm/kuma.box"
+package_name: "kuma.box"
