@@ -89,7 +89,7 @@ def _rebuild_kb_chunk(data, **kwargs):
         message = None
         try:
             document = Document.objects.get(pk=pk)
-            document.html = document.current_revision.content_parsed
+            document.html = document.current_revision.content_cleaned
             document.save()
         except Document.DoesNotExist:
             message = 'Missing document: %d' % pk

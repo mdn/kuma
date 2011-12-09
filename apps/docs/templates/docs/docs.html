@@ -23,6 +23,7 @@
     </form>
 
     <section class="section-intro boxed">
+    
       <header class="head section-web">
         {# L10n: Please escape HTML entities here, like &amp; #}
         <h2>{{ _('Popular Topics for <span class="web">Web</span> Developers')|safe }}</h2>
@@ -60,6 +61,21 @@
         <p>{{ _('A comprehensive list of terms to help Web developers find the documentation they need.') }}</p>
       </header>
       {% include "docs/glossary.html" %}
+
+      {% if waffle.flag('kumawiki') %}
+      <header id="kumawiki_preview" class="subhead">
+        <h2>New Wiki Feature Preview</h2>
+      </header>
+      <ul>
+        <li>
+            <ul class="cols-4">
+                <li><a href="{{ url('wiki.new_document') }}">New page</a></li>
+                <li><a href="{{ url('wiki.all_documents') }}">List all pages</a></li>
+                <li><a href="{{ url('wiki.list_review') }}">Pages for review</a></li>
+            </ul>
+        </li>
+      </ul>
+      {% endif %}
 
     </section>{# /.section-intro #}
 
@@ -119,6 +135,28 @@
         {% endfor %}
       </ul>
     </div>
+
+    {% if waffle.flag('kumawiki') %}
+    {% set review_flags = (
+        ('technical', _('Needs Technical Review')),
+        ('editorial', _('Needs Editorial Review')),
+    ) %}
+    {% for tag, title in review_flags %}
+        {% if tag in review_flag_docs and review_flag_docs[tag] | length > 0 %}
+        <div class="module hot" id="review-{{ tag }}">
+          <h3 class="mod-title">{{ title }}</h3>
+          <ul class="hfeed">
+            {% for doc in review_flag_docs[tag] %}
+            <li class="hentry">
+              <h4 class="entry-title"><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></h4>
+              <p class="entry-meta">{{ _('Last edited by:') }} <a href="{{ url('devmo.views.profile_view', username=doc.current_revision.creator.username) }}" class="author vcard">{{ doc.current_revision.creator }}</a></p>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
 
     <div class="module hfeed" id="doc-of-the-day">
       <h3 class="mod-title">{{ _('Doc Of The Day') }}</h3>

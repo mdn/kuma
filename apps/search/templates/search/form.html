@@ -5,15 +5,13 @@
 {% endif %}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
 <article id="search-page" class="main">
   {% if advanced != '0' %}
   <div id="search-tabs">
     <span id="where" style="display: none">{{ search_form.w.data or '' }}</span>
-    <ul>
-      <li><a title="{{ _('Search the Knowledge Base') }}" class="tablink" href="#kb">{{ _('Knowledge Base') }}</a></li>
-      <li><a title="{{ _('Search the Support Questions') }}" class="tablink" href="#support">{{ _('Support Questions') }}</a></li>
-      <li><a title="{{ _('Search the Discussion Forums') }}" class="tablink" href="#discussion">{{ _('Discussion Forums') }}</a></li>
-    </ul>
     <div id="tab-wrapper">
     <form id="kb" method="get">
       <div class="container">
@@ -64,141 +62,6 @@
         <input type="submit" value="{{ _('Search', 'button') }}" />
       </div>
     </form>{# kb #}
-    <form method="get" id="support">
-      <div class="container">
-        <label for="support_q">{{ _('Post contains') }}</label>
-        <input name="q" class="auto-fill" id="support_q" placeholder="{{ _('crashes on youtube') }}" value="{{ search_form.q.data or '' }}" type="text" />
-      </div>
-
-      <div class="container">
-        {{ search_form.is_locked.label_tag()|safe }}
-        <div class="is_locked radios">
-          {{ search_form.is_locked|safe }}
-        </div>
-      </div>
-
-      <div class="container">
-        {{ search_form.is_solved.label_tag()|safe }}
-        <div class="is_solved radios">
-          {{ search_form.is_solved|safe }}
-        </div>
-      </div>
-
-      <div class="container">
-        {{ search_form.has_answers.label_tag()|safe }}
-        <div class="has_answer radios">
-          {{ search_form.has_answers|safe }}
-        </div>
-      </div>
-
-      <div class="container">
-        {{ search_form.has_helpful.label_tag()|safe }}
-        <div class="has_helpful radios">
-          {{ search_form.has_helpful|safe }}
-        </div>
-      </div>
-
-      <div class="container showhide-input">
-        {{ search_form.num_voted.label_tag()|safe }}
-        {{ search_form.num_voted|safe }}
-        <input name="num_votes" class="numeric" type="text"
-               value="{{ search_form.num_votes.data or '' }}"
-               title="{{ _('Number of votes. Must be an integer.') }}" />
-      </div>
-
-      <div class="container">
-        {{ search_form.asked_by.label_tag()|safe }}
-        {{ search_form.asked_by|safe }}
-      </div>
-
-      <div class="container">
-        {{ search_form.answered_by.label_tag()|safe }}
-        {{ search_form.answered_by|safe }}
-      </div>
-
-      <div class="container">
-        {{ search_form.q_tags.label_tag()|safe }}
-        {{ search_form.q_tags|safe }}
-        <div class="search-tips-small">
-          {{ _('Note: Searching for "tag1, tag2" returns questions tagged with both tag1 and tag2') }}
-        </div>
-      </div>
-
-      <div class="container showhide-input">
-        {{ search_form.created.label_tag()|safe }}
-        {{ search_form.created|safe }}
-        <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
-      </div>
-
-      <div class="container showhide-input">
-        {{ search_form.updated.label_tag()|safe }}
-        {{ search_form.updated|safe }}
-        <input name="updated_date" type="text" value="{{ search_form.updated_date.data or '' }}" class="datepicker" title="{{ _('Updated date. Format: mm/dd/yy') }}" />
-      </div>
-
-      <div class="container">
-        {{ search_form.sortby.label_tag()|safe }}
-        {{ search_form.sortby|safe }}
-      </div>
-
-      {% for hidden in search_form.hidden_fields() if not hidden.name == 'w' %}
-        {{ hidden|safe }}
-      {% endfor %}
-      <input type="hidden" value="2" name="w" />
-
-      <div class="submit-search">
-        <input type="submit" value="{{ _('Search', 'button') }}" />
-      </div>
-    </form>{# support #}
-    <form method="get" id="discussion">
-      <div class="container">
-        <label for="discussion_q">{{ _('Thread contains') }}</label>
-        <input name="q" class="auto-fill" id="discussion_q" placeholder="{{ _('crashes on youtube') }}" value="{{ search_form.q.data or '' }}" type="text" />
-      </div>
-
-      <div class="container">
-        {{ search_form.thread_type.label_tag()|safe }}
-        <div class="thread-type checkboxes">
-          {{ search_form.thread_type|safe }}
-        </div>
-      </div>
-
-      <div class="container">
-        {{ search_form.author.label_tag()|safe }}
-        {{ search_form.author|safe }}
-      </div>
-
-      <div class="container showhide-input">
-        {{ search_form.created.label_tag()|safe }}
-        {{ search_form.created|safe }}
-        <input name="created_date" type="text" value="{{ search_form.created_date.data or '' }}" class="datepicker" title="{{ _('Created date. Format: mm/dd/yy') }}" />
-      </div>
-
-      <div class="container showhide-input">
-        {{ search_form.updated.label_tag()|safe }}
-        {{ search_form.updated|safe }}
-        <input name="updated_date" type="text" value="{{ search_form.updated_date.data or '' }}" class="datepicker" title="{{ _('Updated date. Format: mm/dd/yy') }}" />
-      </div>
-
-      <div class="container">
-        {{ search_form.sortby.label_tag()|safe }}
-        {{ search_form.sortby|safe }}
-      </div>
-
-      <div class="container">
-        {{ search_form.forum.label_tag()|safe }}
-        {{ search_form.forum|safe }}
-      </div>
-
-      {% for hidden in search_form.hidden_fields() if not hidden.name == 'w' %}
-        {{ hidden|safe }}
-      {% endfor %}
-      <input type="hidden" value="4" name="w" />
-
-      <div class="submit-search">
-        <input type="submit" value="{{ _('Search', 'button') }}" />
-      </div>
-    </form>{# discussion #}
     </div>{# tab-wrapper #}
   </div>{# search-tabs #}
 
@@ -209,4 +72,7 @@
     <a href="{{ url('search')|urlparams(a=2, q=search_form.q.data) }}">{{ _('Use advanced search') }}</a>
   {% endif %}
 </article>
+    </div>
+   </div>
+</section>
 {% endblock %}

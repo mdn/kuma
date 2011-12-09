@@ -1,5 +1,5 @@
 #
-# Dev server for MDN - includes Django, Dekiwiki
+# Dev server for MDN
 #
 
 import "classes/*.pp"
@@ -14,7 +14,8 @@ class dev {
 
     stage {
         hacks:  before => Stage[pre];
-        pre:    before => Stage[basics];
+        pre:    before => Stage[tools];
+        tools:  before => Stage[basics];
         basics: before => Stage[langs];
         langs:  before => Stage[vendors];
         vendors:   before => Stage[main];
@@ -28,10 +29,12 @@ class dev {
 
         repos: stage => pre;
 
-        dev_tools: stage => basics;
+        dev_tools: stage => tools;
+
         apache:    stage => basics;
         mysql:     stage => basics;
         memcache:  stage => basics;
+        sphinx:    stage => basics;
 
         python: stage => langs;
         php:    stage => langs;

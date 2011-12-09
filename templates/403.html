@@ -25,30 +25,25 @@
       {% endtrans %}
     {% endif %}
 
-    <ul class="prose">
-    {% if user.username %}
-    {% trans %}
-    <li><a href="/logout">Log out</a> to try again.</li>
-    {% endtrans %}
-    {% else %}
-    {% trans %}
-    <li><a href="{{ url('users.login') }}">Log in</a> to try again.</li>
-    <li><a href="{{ url('users.register') }}">Register</a> to edit docs and submit demos.</li>
-    {% endtrans %}
-    {% endif %}
-    {% trans %}
-    <li><a href="/demos">View demos</a> or <a href="/docs">browse docs</a></li>
-    {% endtrans %}
-    </ul>
-    
-    {% trans %}
-    <p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human error. If so, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug</a> for my human operators.</p>
-    {% endtrans %}
-    
-    {% trans %}
-    <p class="attrib"><small><a href="http://theoatmeal.com/comics/state_web_summer#tumblr">Tumbeasts</a> by Matthew Inman of <a href="http://theoatmeal.com">The Oatmeal</a></small></p>
-    {% endtrans %}
+      <ul class="prose">
+      {% if user.username %}
+        {% trans logout_url=url('users.logout') %}
+          <li><a href="{{ logout_url }}">Log out</a> to try again.</li>
+        {% endtrans %}
+      {% else %}
+        {% trans login_url=('{base_url}?next={next}' | f(base_url=url('users.login'), next=request.get_full_path())), register_url=url('users.register') %}
+          <li><a href="{{ login_url }}">Log in</a> to try again.</li>
+          <li><a href="{{ register_url }}">Register</a> to edit docs and submit demos.</li>
+        {% endtrans %}
+      {% endif %}
+        {% trans demos_url=url('demos'), docs_url=url('docs') %}
+          <li><a href="{{ demos_url }}">View demos</a> or <a href="{{ docs_url }}">browse docs</a></li>
+        {% endtrans %}
+      </ul>
 
+      {% trans %}
+      <p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human error. If so, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug</a> for my human operators.</p>
+      {% endtrans %}
   
   </section>
 

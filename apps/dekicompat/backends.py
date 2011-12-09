@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib import urlencode
 from urllib2 import HTTPError
 import urlparse
@@ -22,7 +23,7 @@ except ImportError:
     from django.utils._threading_local import local
 _thread_locals = local()
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = commonware.log.getLogger('kuma.dekicompat')
 
 MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s</email><fullname>%(fullname)s</fullname><status>%(status)s</status><language>%(language)s</language><timezone>%(timezone)s</timezone><permissions.user><role>%(role)s</role></permissions.user></user>"""
 
@@ -42,9 +43,8 @@ class DekiUserBackend(object):
             username=username,
             password=password)
         if authtoken:
-            cookies = dict(authtoken=authtoken)
-            resp = requests.get(DekiUserBackend.profile_url, cookies=cookies)
-            deki_user = DekiUser.parse_user_info(resp.content, authtoken)
+            deki_user = DekiUserBackend.get_deki_user(url=DekiUserBackend.profile_url, 
+                                                      authtoken=authtoken)
             if deki_user:
                 # HACK: Retain authenticated authtoken for future Deki API
                 # requests.
@@ -66,37 +66,54 @@ class DekiUserBackend(object):
         _thread_locals.deki_api_authtoken = None
 
     @staticmethod
-    def get_deki_user(deki_user_id):
+    def get_deki_user(deki_user_id=None, url=None, authtoken=None):
         """Fetch details for a given Dekiwiki profile by user ID"""
-        authtoken = getattr(_thread_locals, 'deki_api_authtoken', None)
+        if authtoken is None:
+            authtoken = getattr(_thread_locals, 'deki_api_authtoken', None)
         cookies = {}
         if authtoken:
             # HACK: Use retained authenticated authtoken for future Deki API
             # requests. This gets us extra user details for the logged-in
             # user, such as email address.
             cookies = dict(authtoken=authtoken)
-        profile_url = DekiUserBackend.profile_by_id_url % (str(deki_user_id) + '?apikey=' + settings.DEKIWIKI_APIKEY)
-        resp = requests.get(profile_url, cookies=cookies)
+        if url is None:
+            url = DekiUserBackend.profile_by_id_url % (str(deki_user_id) + 
+                    '?apikey=' + settings.DEKIWIKI_APIKEY)
+        resp = requests.get(url, cookies=cookies)
         if resp.status_code is 404:
             return None
         return DekiUser.parse_user_info(resp.read())
 
     @staticmethod
+    def get_deki_user_id(resp):
+        deki_user_id = None
+        if resp.status_code is 200:
+            doc = pq(resp.content)
+            if len(doc('user')) > 1:
+                most_recent_login = datetime(2000, 1, 1)
+                deki_user_id = None
+                for user in doc('user'):
+                    last_login = datetime.strptime(user.find('date.lastlogin').text,
+                                                   "%Y-%m-%dT%H:%M:%SZ")
+                    if last_login > most_recent_login:
+                        most_recent_login = last_login
+                        deki_user_id = pq(user).attr('id')
+            else:
+                deki_user_id = doc('user').attr('id')
+        return deki_user_id
+
+    @staticmethod
     def get_deki_user_by_email(deki_user_email):
         """get_deki_user after an email query"""
-        deki_user_id = None
         email_url = DekiUserBackend.users_by_email % urlencode(
             {'usernameemailfilter': deki_user_email,
             'apikey': settings.DEKIWIKI_APIKEY})
         resp = requests.get(email_url)
-        if resp.status_code is 200:
-            doc = pq(resp.content)
-            deki_user_id = doc('user').attr('id')
+        deki_user_id = DekiUserBackend.get_deki_user_id(resp)
         if deki_user_id:
             return DekiUserBackend.get_deki_user(deki_user_id)
         else:
             return None
-
 
     def get_user(self, user_id):
         """Get a user for a given ID, used by auth for session-cached login"""

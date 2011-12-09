@@ -2,12 +2,16 @@
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Revision History | {document}')|fe(document=document.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
                  (document.get_absolute_url(), document.title),
                  (None, _('History'))] %}
 
 {% block content %}
-  <article id="revision-history" class="main">
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="revision-history" role="main">
     <h1 class="title">{{ _('History of {title}')|fe(title=document.title) }}</h1>
     <div class="choice-list">
       <label>{{ _('Revision history for:') }}</label>
@@ -97,6 +101,9 @@
       {% endif %}
     </div>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}

@@ -12,7 +12,11 @@ from devmo.tests import create_profile
 from django.contrib.auth.models import User
 
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
+from devmo.helpers import devmo_url
+from devmo import urlresolvers
+from devmo.models import Calendar, Event, UserProfile
 
+from dekicompat.tests import (mock_post_mindtouch_user, mock_put_mindtouch_user)
 from dekicompat.backends import DekiUser, DekiUserBackend
 
 
@@ -89,7 +93,7 @@ class TestUserProfile(test_utils.TestCase):
     def setUp(self):
         pass
 
-    @attr('websites')
+    @mock_put_mindtouch_user
     def test_websites(self):
         """A list of websites can be maintained on a UserProfile"""
         user = User.objects.get(username='testuser')
@@ -178,14 +182,15 @@ class TestUserProfile(test_utils.TestCase):
         user = User.objects.get(username='testuser')
         profile_from_db = UserProfile.objects.get(user=user)
         ok_(hasattr(profile_from_db, 'irc_nickname'))
-        ok_(profile_from_db.irc_nickname == 'testuser')
+        eq_('testuser', profile_from_db.irc_nickname)
 
     def test_unicode_email_gravatar(self):
         """Bug 689056: Unicode characters in email addresses shouldn't break
         gravatar URLs"""
-        (user, deki_user, profile) = create_profile()
+        user = User.objects.get(username='testuser')
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
+            profile = UserProfile.objects.get(user=user)
             g = profile.gravatar
         except UnicodeEncodeError:
             ok_(False, "There should be no UnicodeEncodeError")

@@ -79,7 +79,7 @@ img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
 #content { border-top: 0; }
 .page-content { background: #fff; min-height: 300px; }
 
-textarea#wikiArticle { width: 96%; padding: 15px; min-height: 300px; }
+textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 /*** @Tools @Nav *********/
 #nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
@@ -145,7 +145,7 @@ div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0
 div.note p, div.tip p { margin-bottom: .75em; }
 
 /* @Page @Title and @Buttons *********/
-#article-head { position: relative; clear: both; overflow: hidden; padding-top: 20px; margin-top: -20px; background: #f6f6f1 url("/media/img/bg-content.png") fixed; }
+#article-head { position: relative; clear: both; overflow: hidden; padding-top: 0px; margin-top: 0px; background: #f6f6f1 url("/media/img/bg-content.png") fixed; }
 
 .title { position: relative; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
@@ -153,6 +153,34 @@ div.note p, div.tip p { margin-bottom: .75em; }
 .title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
+
+.template { display: none; }
+
+a.edit-section { background: none repeat scroll 0% 0% #FFFFFF; border: 1px solid #CCCCCC; box-shadow: 2px 2px 0pt rgba(170, 160, 130, 0.5), 2px 2px 0pt rgba(200, 190, 165, 0.5); display: block; font: 200 15px/1 "Bebas Neue","League Gothic",Haettenschweiler,sans-serif; left: -4.5ex; margin: 0.125em 0 0 0; padding: 0.25em 0.25em; position: absolute; text-align: right; width: 5ex; }
+a.edit-section:after { content: "\00a0\27a4"; }
+a.edit-section:hover, a.edit-section:active, a.edit-section:focus { text-decoration: none; }
+
+.edited-section { display: none; }
+.edited-section a.edit-section { display: none; }
+.edited-section-loading { display: block; opacity: 0.25; }
+.edited-section-loading a.edit-section { display: block; }
+.edited-section-loading a.edit-section:after { content: "\00a0\26a1"; }
+
+.edited-section-ui { position: relative; }
+.edited-section-ui .save,.edited-section-ui .cancel { position: absolute; left: -7.5ex; background: none repeat scroll 0% 0% #FFFFFF; border: 1px solid #CCCCCC; box-shadow: 2px 2px 0pt rgba(170, 160, 130, 0.5), 2px 2px 0pt rgba(200, 190, 165, 0.5); display: block; font: 200 15px/1 "Bebas Neue","League Gothic",Haettenschweiler,sans-serif; margin: 0pt; padding: 0.25em 0.25em; position: absolute; text-align: right; width: 5ex; }
+.edited-section-ui a.save:hover, .edited-section-ui a.cancel:hover, .edited-section-ui a.save:active, .edited-section-ui a.cancel:active, .edited-section-ui a.save:focus, .edited-section-ui a.cancel:focus { text-decoration: none; }
+.edited-section-ui .save { background: #dfd; top: 0em; }
+.edited-section-ui .save:after { content: "\00a0\2714"; }
+.edited-section-ui .cancel { background: #fdd; top: 2.5em; }
+.edited-section-ui .cancel:after { content: "\00a0\2718"; }
+
+.edited-section-ui-saving { opacity: 0.5; }
+.edited-section-ui-saving .save, .edited-section-ui-saving .cancel{ display: none; }
+
+.editing .metadata { float: left; width: 65%; display: none; }
+.editing ul.metadata li { margin: 0pt; padding: 0pt; }
+.editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
+.editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
 
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }
@@ -169,10 +197,11 @@ div.note p, div.tip p { margin-bottom: .75em; }
 .previewing .title h1 em { color: #333; font-style: normal; }
 .previewing .article-content { margin-top: 1em; border-color: #c7dae9; }
 
-#page-buttons { width: 35%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
+#page-buttons { width: 35%; text-align: right; margin: 0; position: absolute; right: 4px; top: 0px; }
 #page-buttons li { display: inline; margin: 0 0 2px 10px; padding: 0; background: none; }
-#page-buttons a { display: inline-block; padding: 8px 10px 6px 32px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
-#page-buttons .page-edit a { background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
+#page-buttons a { display: inline-block; padding: 8px 10px 6px 10px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); background-color: #ddd; }
+#page-buttons a:hover, #page-buttons a:focus, #page-buttons a:active { text-decoration: none; }
+#page-buttons .page-edit a { padding-left: 32px; background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
 #page-buttons .page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
 #page-buttons .page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
 #page-buttons .page-watch a { padding-left: 35px; background: #f2d29e url("/media/img/wiki/button-watch.png") 0 50% repeat-x; }
@@ -193,6 +222,15 @@ div.note p, div.tip p { margin-bottom: .75em; }
   background: -moz-linear-gradient(top, #c3e56d 0, #b3d55b 100%); 
   background: -webkit-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
   background: linear-gradient(top, #c3e56d 0, #b3d55b 100%);
+}
+#btn-save-and-edit { display: none; }
+#btn-save-and-edit.loading span {
+    padding-left: 20px; 
+    margin-left: -5px;
+    background: url(../img/wiki/save-and-keep-editing-arrows.gif) no-repeat 0px 1px;
+}
+#page-buttons iframe#save-and-edit-target { 
+    visibility: hidden; height: 1px; width: 1px; 
 }
 .btn-preview { 
   background: #cce3f4;
@@ -225,7 +263,7 @@ div.note p, div.tip p { margin-bottom: .75em; }
 .article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
 .article header .notice p { margin: 0 0 10px; }
 
-input#article-title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
+input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
 
 /* @TOC @Table of contents *********/
 #article-nav { float: right; padding: 0 0 1em 20px; background: #fff; width: 230px; position: relative; z-index: 1; }

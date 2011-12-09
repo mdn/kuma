@@ -60,15 +60,22 @@ class mysql_config {
                 Service["mysqld"], 
                 Exec["setup_mysql_databases_and_users"] 
             ];
-#        "setup_mysql_phpbb":
-#            command => "/usr/bin/mysql -u root phpbb < /tmp/phpbb.sql",
-            # unless => "/usr/bin/mysql -uroot wikidb -B -e 'show tables' 2>&1 | grep -q 'pages'",
-#            require => [ 
-#                File["/tmp/phpbb.sql"],
-#                Service["mysqld"], 
-#                Exec["setup_mysql_databases_and_users"] 
-#            ];
     }
+    
+}
+
+class sphinx_config {
+    #exec {
+    #    "sphinx_reindex":
+    #        user => "vagrant",
+    #        cwd => "/vagrant", 
+    #        command => "/home/vagrant/kuma-venv/bin/python ./manage.py reindex";
+    #    "sphinx_start":
+    #        user => "vagrant",
+    #        cwd => "/vagrant", 
+    #        command => "/home/vagrant/kuma-venv/bin/python ./manage.py start_sphinx",
+    #        require => Exec['sphinx_reindex'];
+    #}
 }
 
 class kuma_config {
@@ -77,6 +84,9 @@ class kuma_config {
             target => "/home/vagrant/uploads",
             ensure => link, 
             require => [ File["/home/vagrant/uploads"] ];
+        "/vagrant/webroot/.htaccess":
+            ensure => link,
+            target => "$PROJ_DIR/configs/htaccess";
     }
     exec { 
         "kuma_update_product_details":
@@ -108,6 +118,6 @@ class kuma_config {
 }
 
 class site_config {
-    include apache_config, mysql_config, kuma_config
-    Class[apache_config] -> Class[mysql_config] -> Class[kuma_config]
+    include apache_config, mysql_config, sphinx_config, kuma_config
+    Class[apache_config] -> Class[mysql_config] -> Class[sphinx_config] -> Class[kuma_config]
 }

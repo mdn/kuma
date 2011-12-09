@@ -7,6 +7,9 @@
     <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc" />
     <meta name="google-site-verification" content="TH9rA27HbfjO_XqYWTIPrW1E7E7Dtgsh7ULzHi3UTVA" />
 {% endblock %}
+{% if not scripts %}
+  {% set scripts = ('mdn_home',) %}
+{% endif %}
 
 {% block content %}
 

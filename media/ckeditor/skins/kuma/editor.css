@@ -23,7 +23,7 @@ span.cke_skin_kuma{background:#fff;padding:9px;}
 .cke_skin_kuma .cke_wrapper{background-color:transparent;display:block;_display:inline-block;}
 .cke_shared .cke_skin_kuma .cke_wrapper{padding-bottom:0;}
 .cke_skin_kuma .cke_browser_ie6 .cke_wrapper,.cke_skin_kuma .cke_browser_iequirks .cke_wrapper{background-image:none;}
-.cke_skin_kuma .cke_editor{display:inline-table;width:100%;}
+.cke_skin_kuma .cke_editor{display:inline-table;width:100%;margin:0}
 .cke_skin_kuma .cke_browser_webkit .cke_editor{display:table;}
 .cke_skin_kuma .ltr .cke_browser_ie iframe{margin-right:-10px;}
 .cke_skin_kuma .rtl .cke_browser_ie iframe{margin-left:-10px;}
@@ -70,7 +70,7 @@ a:hover.cke_colorauto,a:hover.cke_colormore,a:focus.cke_colorauto,a:focus.cke_co
 .cke_skin_kuma .cke_browser_webkit .cke_toolbox,.cke_skin_kuma .cke_browser_webkit .cke_toolbox>span{white-space:normal;}
 .cke_skin_kuma .cke_toolbox{clear:both;padding:5px;background:#e6e6e6}
 .cke_skin_kuma .cke_toolbox:after{content:".";display:block;clear:both;height:0;visibility:hidden;}
-.cke_skin_kuma a.cke_toolbox_collapser,.cke_skin_kuma a:hover.cke_toolbox_collapser{background-color:#e6e6e6;background-image:url(images/sprites.png);_background-image:url(images/sprites_ie6.png);background-position:3px -1366px;background-repeat:no-repeat;width:11px;height:11px;border:1px outset #D3D3D3;cursor:pointer;float:right;margin:-48px 5px 2px 2px;}
+.cke_skin_kuma a.cke_toolbox_collapser,.cke_skin_kuma a:hover.cke_toolbox_collapser{background-color:#e6e6e6;background-image:url(images/sprites.png);_background-image:url(images/sprites_ie6.png);background-position:3px -1366px;background-repeat:no-repeat;width:11px;height:11px;border:1px outset #D3D3D3;cursor:pointer;float:right;margin:-20px 5px 2px 2px;}
 .cke_skin_kuma .cke_rtl a.cke_toolbox_collapser,.cke_skin_kuma .cke_rtl a:hover.cke_toolbox_collapser{float:left;}.cke_skin_kuma a.cke_toolbox_collapser span{display:none;}.cke_skin_kuma .cke_hc a.cke_toolbox_collapser span{font-size:10px;font-weight:bold;font-family:Arial;display:inline;}
 .cke_skin_kuma a.cke_toolbox_collapser_min,.cke_skin_kuma a:hover.cke_toolbox_collapser_min{background-image:url(images/sprites.png);_background-image:url(images/sprites_ie6.png);background-position:4px -1387px;background-repeat:no-repeat;margin:2px 4px;}
 .cke_skin_kuma .cke_rtl a.cke_toolbox_collapser_min,.cke_skin_kuma .cke_rtl a:hover.cke_toolbox_collapser_min{background-position:4px -1408px;}
@@ -232,8 +232,24 @@ a:hover.cke_colorauto,a:hover.cke_colormore,a:focus.cke_colorauto,a:focus.cke_co
 html .cke_skin_kuma{visibility:inherit;}
 html.cke_skin_kuma_container{visibility:visible;}
 
+.cke_skin_kuma .cke_top {
+  background: -moz-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%); 
+  background: -webkit-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
+  background: linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
+}
+.cke_skin_kuma .cke_toolbox {
+}
+/*
 .cke_skin_kuma .cke_toolbox { padding-bottom: 35px; margin: -9px -9px 0; border: solid #fff; border-width: 9px 9px 0; 
   background: -moz-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%); 
   background: -webkit-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
   background: linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
 }
+*/
+
+.cke_skin_kuma .mdn-buttons-button { background: url(/media/img/markup.png) no-repeat; }
+.mdn-buttons-button.h1 {background-position:-6px -6px;}
+.mdn-buttons-button.h2 {background-position:-50px -6px;}
+.mdn-buttons-button.h3 {background-position:-94px -6px;}
+.mdn-buttons-button.pre {background: url(/media/ckeditor/plugins/mdn-buttons/button-pre.png) no-repeat center center;} 
+.mdn-buttons-button.code {background: url(/media/ckeditor/plugins/mdn-buttons/button-code.png) no-repeat center center;} 

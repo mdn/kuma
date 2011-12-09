@@ -3,8 +3,13 @@
  * Scripts for the wiki app.
  */
 
-(function ($) {
+
+
+(function ($, gettext) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
+    var DRAFT_NAME, DRAFT_TIMEOUT_ID;
+
+    var current_editor;
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
@@ -13,12 +18,14 @@
         initDetailsTags();
 
         if ($('body').is('.document') || $('body').is('.home')) {  // Document page
-            initForTags();
-            updateShowforSelectors();
+            //initForTags();
+            //updateShowforSelectors();
             initHelpfulVote();
+            initSectionEditing();
         } else if ($('body').is('.review')) { // Review pages
-            initForTags();
-            updateShowforSelectors();
+            //initForTags();
+            //updateShowforSelectors();
+            initApproveReject();
         }
 
         if ($('body').is('.home')) {
@@ -26,11 +33,217 @@
         }
 
         if ($('body').is('.edit, .new, .translate')) {
+            initMetadataEditButton();
+            initSaveAndEditButtons();
             initArticlePreview();
             initTitleAndSlugCheck();
+            // initDrafting();
+        }
+    }
+    
+    var HEADERS = [ 'HGROUP', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ];
+
+    /**
+     * Set up for inline section editing.
+     */
+    function initSectionEditing () {
+        // If we don't have a #wikiArticle, bail out.
+        var wiki_article = $('body.document #wikiArticle');
+        if (!wiki_article.length) { return; }
+        
+        // Wire up the wiki article with an event delegation handler
+        wiki_article.click(function (ev) {
+            var target = $(ev.target);
+            if (target.is('a.edit-section')) { 
+                // Caught a section edit link click.
+                return handleSectionEditClick(ev, target);
+            }
+            if (target.is('.edited-section-ui.current .save')) {
+                // Caught a section edit save click.
+                saveSectionEdit();
+                return false;
+            }
+            if (target.is('.edited-section-ui.current .cancel')) {
+                // Caught a section edit cancel click.
+                cancelSectionEdit();
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Handle a click on a section editing link.
+     */
+    function handleSectionEditClick (ev, link) {
+        // Any modifiers while clicking an edit link reverts to default
+        // behavior (eg. open in new window)
+        if (ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey) {
+            return;
         }
 
-        Marky.createFullToolbar('.editor-tools', '#id_content');
+        // Look up some details about the section refered to by the link
+        var section_id = link.attr('data-section-id'),
+            section_edit_url = link.attr('href'),
+            section_src_url = link.attr('data-section-src-url'),
+            section_el = $('#'+section_id),
+            section_tag = section_el[0].tagName.toUpperCase();
+
+        // Bail if the referenced section element doesn't exist.
+        if (!section_el.length) { return; }
+        
+        // Bail if the referenced section element is not a header.
+        if (-1 == HEADERS.indexOf(section_tag)) { return; }
+
+        // If there's a current editor, cancel it.
+        if ($('.edited-section-ui.current').length) {
+            if (!cancelSectionEdit()) {
+                // The user cancelled the cancellation, so just ignore the
+                // section edit click.
+                return false; 
+            }
+        }
+
+        // Bail if the referenced section already appears to an edit in
+        // progress. But, cancel the link click
+        if (section_el.parents('div.edited-section').length) { 
+            return false;
+        }
+
+        // Build a stop selector from headers equal to or higher in rank
+        var stop_pos = HEADERS.indexOf(section_tag)+1,
+            stop_selector = HEADERS.slice(0, stop_pos).join(',');
+
+        // Scoop up all the elements considered part of the section, wrap them
+        // in a container while editing. Style it as loading, initially.
+        var section_kids = section_el.nextUntil(stop_selector).andSelf();
+        section_kids.wrapAll('<div class="edited-section edited-section-loading" ' +
+                                   'id="edited-section"/>');
+
+        // Start loading the current section source, launch editor when loaded.
+        $.get(section_src_url, function (html_data) {
+            launchSectionEditor(section_id, section_edit_url, html_data);
+        });
+
+        return false;
+    }
+
+    /**
+     * Launch the section editor with HTML data.
+     */
+    function launchSectionEditor (section_id, section_edit_url, html_data) {
+        // Clone and setup the editing UI from template
+        var ui = $('.edited-section-ui.template').clone()
+            .removeClass('template').addClass('current')
+            .find('.src').html(html_data).end();
+        // Inject the source block, and remove the edit block loading style.
+        $('#edited-section')
+            .before(ui)
+            .removeClass('edited-section-loading');
+        // Fire up the CKEditor, stash it in the UI's data store
+        $('.edited-section-ui.current')
+            .data('edit_url', section_edit_url)
+            .data('editor',
+                CKEDITOR.replace(ui.find('.src')[0], {
+                    customConfig : '/docs/ckeditor_config.js'
+                }))
+            .find('.save').data('save_cb', saveSectionEdit).end();
+    }
+
+    /**
+     * Cancel any current section editing.
+     */
+    function cancelSectionEdit () {
+        // Make sure the user wants this to happen.
+        var msg = $('#content-main > article')
+                    .attr('data-cancel-edit-message'),
+            rv = window.confirm(msg);
+        if (!rv) { return false; }
+        // We're sure, so clean up without committing.
+        cleanupSectionEdit();
+        return true;
+    }
+
+    /**
+     * Save the results of section editing.
+     */
+    function saveSectionEdit () {
+        var ui = $('.edited-section-ui.current'),
+            edit_url = ui.data('edit_url'), 
+            editor = ui.data('editor'),
+            article = $('#content-main > article'),
+            current_rev = article.attr('data-current-revision'),
+            refresh_msg = article.attr('data-refresh-message');
+            
+        ui.addClass('edited-section-ui-saving');
+        editor.updateElement();
+        var src = $('.edited-section-ui.current .src').html();
+
+        $.ajax({
+            type: 'POST', url: edit_url + '&raw=1',
+            data: { 
+                'form': 'rev',
+                'content': src,
+                'current_rev': current_rev
+            },
+            error: function (xhr, status, err) {
+
+                if ('409' == xhr.status) {
+                    // We detected a conflict, most likely from a mid-air edit
+                    // collision. So, use the hidden conflict-bouncer form to
+                    // transition to a full-page resolution UI.
+                    $('form.conflict-bouncer')
+                        .attr('action', edit_url)
+                        .find('input[name=current_rev]')
+                            .val(current_rev).end()
+                        .find('input[name=content]')
+                            .val(src).end()
+                        .submit();
+                    return;
+                }
+
+                // Anything else error-wise is probably recoverable.
+                window.alert("Error saving section, please try again.");
+                ui.removeClass('.edited-section-ui-saving');
+
+            },
+            success: function (data, status, xhr) {
+
+                if ('205' == xhr.status) {
+                    // There wasn't a conflict after the edit, but something
+                    // else on the page changed. So, we should refresh rather
+                    // than just updating the edited section. That will help
+                    // prevent conflicts in future section edits and alert the
+                    // user that someone else is touching the page.
+                    window.alert(refresh_msg);
+                    window.location.reload();
+                    return;
+                }
+
+                // Looks like we were the only editor so far, so carry on and
+                // update the content inline.
+                $('#edited-section').html(data)
+                cleanupSectionEdit();
+
+                // Also, since this should have been the only change, we can
+                // update the local current revision ID to what the server
+                // reported in a header.
+                article.attr('data-current-revision', 
+                             xhr.getResponseHeader('x-kuma-revision'))
+            
+            }
+        });
+    }
+
+    /**
+     * Clean up the changes made to support inline section editing.
+     */
+    function cleanupSectionEdit () {
+        $('.edited-section-ui.current').each(function () {
+            var ui = $(this);
+            ui.data('editor').destroy();
+            ui.remove();
+        });
+        $('#edited-section').children().unwrap();
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
@@ -251,7 +464,7 @@
                     $browserMenu.val($this.val());
                 }
             });
-            updateShowforSelectors();
+            //updateShowforSelectors();
         }
 
         // Select the right item from the browser or OS menu, taking cues from
@@ -270,7 +483,7 @@
             }
             if (initial) {
                 $menu.val(initial);  // does not fire change event
-                updateShowforSelectors();
+                //updateShowforSelectors();
             }
             return isManual;
         }
@@ -470,7 +683,7 @@
             var $btn = $(this);
             $btn.attr('disabled', 'disabled');
             $.ajax({
-                url: $(this).data('preview-url'),
+                url: $(this).attr('data-preview-url'),
                 type: 'POST',
                 data: $('#id_content').serialize(),
                 dataType: 'html',
@@ -479,8 +692,8 @@
                     $preview.html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
                     document.location.hash = 'preview';
-                    initForTags();
-                    updateShowforSelectors();
+                    //initForTags();
+                    //updateShowforSelectors();
                     $preview.find('.kbox').kbox();
                     k.initVideo();
                     $btn.removeAttr('disabled');
@@ -626,7 +839,189 @@
         }
     }
 
+    //
+    // Initialize logic for metadata edit button.
+    //
+    function initMetadataEditButton () {
+        if ($('#article-head .metadata').length > 0) {
+
+            var show_meta = function (ev) {
+                // Disable and hide the save-and-edit button when editing
+                // metadata, since that can change the URL of the page and
+                // tangle up where the iframe posts.
+                $('#btn-save-and-edit').hide().attr('disabled', 'disabled');
+                $('#article-head .title').hide();
+                $('#article-head .metadata').show();
+                $('#article-head .metadata #id_title').focus();
+            }
+
+            // Properties button reveals the metadata fields
+            $('#btn-properties').click(show_meta);
+            // Form errors reveal the metadata fields, since they're the most
+            // likely culprits
+            $('#edit-document .errorlist').each(show_meta);
+
+        } else {
+            $('#btn-properties').hide();
+        }
+    }
+
+    //
+    // Initialize logic for save and save-and-edit buttons.
+    // 
+    function initSaveAndEditButtons () {
+
+        var STORAGE_NAME = 'wiki-page-edit';
+
+        if (typeof(window.sessionStorage) != 'undefined') {
+            // If there's previous content preserved, load it into the textarea
+            var prev_ct = window.sessionStorage.getItem(STORAGE_NAME);
+            if (prev_ct) {
+                $('#wiki-page-edit textarea[name=content]').val(prev_ct);
+                window.sessionStorage.setItem(STORAGE_NAME, '');
+            }
+        }
+        
+        // Save button submits to top-level
+        $('#btn-save').click(function () {
+            if (typeof(window.sessionStorage) != 'undefined') {
+                // Clear any preserved content.
+                window.sessionStorage.setItem(STORAGE_NAME, '');
+            }
+            $('#wiki-page-edit')
+                .attr('action', '')
+                .removeAttr('target');
+            return true;
+        });
+
+        // Save-and-edit submits to a hidden iframe, style the button with a
+        // loading anim.
+        $('#btn-save-and-edit').click(function () {
+            if (typeof(window.sessionStorage) != 'undefined') {
+                // Preserve editor content, because saving to the iframe can
+                // yield things like 403 / login-required errors that bust out
+                // of the frame
+                window.sessionStorage.setItem(STORAGE_NAME, 
+                    $('#wiki-page-edit textarea[name=content]').val());
+            }
+            // Redirect the editor form to the iframe.
+            $('#wiki-page-edit')
+                .attr('action', '?iframe=1')
+                .attr('target', 'save-and-edit-target');
+            // Change the button to a loading state style
+            $(this).addClass('loading');
+            return true;
+        });
+        $('#btn-save-and-edit').show();
+
+        $('#save-and-edit-target').load(function () {
+            if (typeof(window.sessionStorage) != 'undefined') {
+                var if_doc = $('#save-and-edit-target')[0].contentDocument;
+                if (typeof(if_doc) != 'undefined') {
+
+                    var ir = $('#iframe-response', if_doc);
+                    if ('OK' == ir.attr('data-status')) {
+
+                        // Dig into the iframe on load and look for "OK". If found,
+                        // then it should be safe to throw away the preserved content.
+                        window.sessionStorage.setItem(STORAGE_NAME, '');
+
+                        // We also need to update the form's current_rev to
+                        // avoid triggering a conflict, since we just saved in
+                        // the background.
+                        $('#wiki-page-edit input[name=current_rev]').val(
+                            ir.attr('data-current-revision'));
+                        
+                    } else if ($('#wiki-page-edit', if_doc).hasClass('conflict')) {
+                        // HACK: If we detect a conflict in the iframe while
+                        // doing save-and-edit, force a full-on save in order
+                        // to surface the issue. There's no easy way to bust
+                        // the iframe otherwise, since this was a POST.
+                        $('#wiki-page-edit')
+                            .attr('action', '')
+                            .attr('target', '');
+                        $('#btn-save').click();
+                    
+                    }
+                    
+                    // Anything else that happens (eg. 403 errors) should have
+                    // framebusting code to escape the hidden iframe.
+                }
+            }
+            // Stop loading state on button
+            $('#btn-save-and-edit').removeClass('loading');
+            // Re-enable the form; it gets disabled to prevent double-POSTs
+            $('#wiki-page-edit')
+                .data('disabled', false)
+                .removeClass('disabled');
+            return true;
+        });
+
+    }
+
+    function updateDraftState(action) {
+        var now = new Date();
+        nowString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        $('#draft-action').text(action);
+        $('#draft-time').attr('title', now.toISOString()).text(nowString);
+    }
+
+    function saveDraft() {
+        var now;
+        if (typeof(window.localStorage) != 'undefined') {
+            window.localStorage.setItem(DRAFT_NAME, $('#wiki-page-edit textarea[name=content]').val());
+            updateDraftState(gettext('saved'));
+        }
+    }
+
+    function clearDraft(key) {
+        if (typeof(window.localStorage) != 'undefined') {
+           window.localStorage.setItem(key, null);
+        }
+    }
+
+    function initDrafting() {
+        var article_slug, editor, now;
+        article_slug = $('#id_slug').val();
+        DRAFT_NAME = 'draft-' + (article_slug ? article_slug : 'new');
+        if (typeof(window.localStorage) != 'undefined') {
+            var prev_draft = window.localStorage.getItem(DRAFT_NAME);
+            if (prev_draft){
+                // draft matches server so discard draft
+                if ($.trim(prev_draft) == $('#wiki-page-edit textarea[name=content]').val().trim()) {
+		    clearDraft(DRAFT_NAME);
+                } else if (confirm("Load previous draft?", "Draft detected")){
+                    $('#wiki-page-edit textarea[name=content]').val(prev_draft);
+                    updateDraftState('loaded');
+                } else {
+		    // Cancel should clear the draft
+		    clearDraft(DRAFT_NAME);
+		}
+            }
+        }
+        editor = $('#id_content').ckeditorGet();
+        editor.on('key', function() {
+                window.clearTimeout(DRAFT_TIMEOUT_ID);
+                DRAFT_TIMEOUT_ID = window.setTimeout(saveDraft, 3000);
+        });
+       $('#btn-discard').click(function() {
+           clearDraft(DRAFT_NAME);
+       });
+    }
+
+    function initApproveReject() {
+        $('#btn-approve').click(function() {
+            $('#approve-modal').show();
+            $('#reject-modal').hide();
+        });
+        $('#approve-modal').hide();
+        $('#btn-reject').click(function() {
+            $('#reject-modal').show();
+            $('#approve-modal').hide();
+        });
+        $('#reject-modal').hide();
+    }
+
     $(document).ready(init);
 
-}(jQuery));
-
+ }(jQuery, gettext));

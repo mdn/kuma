@@ -172,10 +172,14 @@
 </div>
 </footer>
 
+<script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
 {# js #}
 {% block site_js %}
   <script src="//www.google.com/jsapi" type="text/javascript"></script>
   {{ js('mdn') }}
+  {% for script in scripts %}
+    {{ js(script) }}
+  {% endfor %}
 {% endblock %}
 {% block js %}{% endblock %}
 {# end js #}

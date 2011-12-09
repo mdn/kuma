@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from jinja2 import escape, Markup
 from jingo import register
@@ -18,7 +19,7 @@ def profile_avatar(user):
     """Return a URL to the user's avatar."""
     try:  # This is mostly for tests.
         profile = user.get_profile()
-    except UserProfile.DoesNotExist:
+    except ObjectDoesNotExist:
         return settings.DEFAULT_AVATAR
     return profile.gravatar if profile.gravatar else settings.DEFAULT_AVATAR
 
@@ -28,7 +29,7 @@ def display_name(user):
     """Return a display name if set, else the username."""
     try:  # Also mostly for tests.
         profile = user.get_profile()
-    except UserProfile.DoesNotExist:
+    except ObjectDoesNotExist:
         return user.username
     return profile.fullname if profile.fullname else user.username
 

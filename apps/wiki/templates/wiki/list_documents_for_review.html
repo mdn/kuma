@@ -1,0 +1,40 @@
+{% extends "wiki/base.html" %}
+{% block extrahead %}
+  {% if tag %}
+    <link rel="alternate" type="application/atom+xml" title="{{_('Documents for {tag} review') | f(tag=tag)}}"
+      href="{{ url('wiki.feeds.list_review_tag', format='atom', tag=tag) }}" />
+  {% else %}
+    <link rel="alternate" type="application/atom+xml" title="{{_('Documents for review')}}"
+      href="{{ url('wiki.feeds.list_review', format='atom') }}" />
+  {% endif %}
+{% endblock %}
+{% if tag %}
+  {% set title = _('Articles in Need of Review Tagged: {tag}')|f(tag=tag) %}
+{% else %}
+  {% set title = _('All Articles in Need of Review') %}
+{% endif %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+{% set crumbs = [(None, title)] %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="document-list" class="main">
+    <h1>{{ title }}</h1>
+    {% if documents.object_list %}
+      <ul class="documents">
+        {% for doc in documents.object_list %}
+          <li><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {{ documents|paginator }}
+    {% else %}
+      <p>{{ _('There are no articles.') }}</p>
+    {% endif %}
+  </article>
+    </div>
+   </div>
+</section>
+{% endblock %}
+{# vim: set ts=2 et sts=2 sw=2: #}

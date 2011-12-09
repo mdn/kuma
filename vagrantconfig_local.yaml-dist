@@ -1,0 +1,19 @@
+# Local configuration for Vagrant
+
+# On OS X and Linux you can use an NFS mount; virtualbox shared folders are slow.
+# see also: http://vagrantup.com/docs/nfs.html
+nfs: true
+gui: true
+
+# Add to /etc/hosts: 192.168.10.55 developer-dev.mozilla.org
+ip_address: 192.168.10.55
+
+# This can get you a base box with MDN data already imported
+# box: "kuma-with-data"
+# box_url: "http://people.mozilla.com/~lorchard/vm/kuma-with-data.box"
+# package_name: "kuma-with-data.box"
+
+# Here be dragons: Use this base box to rebuild from scratch atop an almost
+# bare OS.
+# box: "centos-56-32"
+# box_url: "http://people.mozilla.com/~lorchard/vm/centos-56-32.box"

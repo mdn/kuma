@@ -1,5 +1,6 @@
 from django.db import models
 
+from south.modelsinspector import add_ignored_fields
 from taggit.managers import TaggableManager
 
 from tags.forms import TagField
@@ -28,3 +29,5 @@ class BigVocabTaggableMixin(models.Model):
 
     class Meta:
         abstract = True
+
+add_ignored_fields(["tags\.models\.BigVocabTaggableManager"])

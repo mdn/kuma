@@ -7,20 +7,42 @@
 {% else %}
   {% set title = _('All Articles') %}
 {% endif %}
+{% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(None, title)] %}
 
+{% block extrahead %}
+  {% if category %}
+      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+          href="{{ url('wiki.feeds.recent_documents', format='atom', category=category) }}" />
+  {% elif tag %}
+      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+          href="{{ url('wiki.feeds.recent_documents', format='atom', tag=tag) }}" />
+  {% else %}
+      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+          href="{{ url('wiki.feeds.recent_documents', format='atom') }}" />
+  {% endif %}
+{% endblock %}
+
 {% block content %}
-  <div id="document-list" class="boxed">
-    <h1>{{ title }}</h1>
-    {% if documents.object_list %}
-      <ul class="documents cols-3">
-        {% for doc in documents.object_list %}
-          <li><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></li>
-        {% endfor %}
-      </ul>
-      {{ documents|paginator }}
-    {% else %}
-      <p>{{ _('There are no articles.') }}</p>
-    {% endif %}
-  </div>
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+
+      <div id="document-list" class="boxed">
+        <h1>{{ title }}</h1>
+        {% if documents.object_list %}
+          <ul class="documents cols-3">
+            {% for doc in documents.object_list %}
+              <li><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {{ documents|paginator }}
+        {% else %}
+          <p>{{ _('There are no articles.') }}</p>
+        {% endif %}
+      </div>
+
+    </div>
+   </div>
+</section>
 {% endblock %}

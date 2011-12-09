@@ -14,7 +14,6 @@ authority.autodiscover()
 urlpatterns = patterns('',
    # Home / landing pages:
     ('', include('landing.urls')),
-    ('', include('docs.urls')),
     ('', include('devmo.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
     (r'^demos/', include('demos.urls')),
@@ -23,12 +22,16 @@ urlpatterns = patterns('',
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    #(r'^search', include('search.urls')),
+    (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
     #(r'^questions', include('questions.urls')),
     #(r'^flagged', include('flagit.urls')),
     #(r'^upload', include('upload.urls')),
-    #(r'^kb', include('wiki.urls')),
+
+    # Docs landing page and next-gen kuma wiki
+    ('', include('docs.urls')),
+    (r'^docs', include('wiki.urls')),
+    
     #(r'^gallery', include('gallery.urls')),
     #(r'^army-of-awesome', include('customercare.urls')),
     #(r'^chat', include('chat.urls')),
@@ -38,8 +41,8 @@ urlpatterns = patterns('',
     #(r'^admin/', include('kadmin.urls')),
 
     # Javascript translations.
-    #url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
-    #    {'domain': 'javascript', 'packages': ['kitsune']}, name='jsi18n'),
+    url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
+        {'domain': 'javascript', 'packages': ['kuma']}, name='jsi18n'),
 
     #url(r'^', include('dashboards.urls')),
 

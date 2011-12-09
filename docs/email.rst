@@ -8,7 +8,7 @@ you should double check one thing first: are there any rows in the
 **real users**. The script in ``scripts/anonymize.sql`` will truncate this
 table. Simply run it against your Kitsune database::
 
-    mysql -ukitsune -p kitsune < scripts/anonymize.sql
+    mysql -ukuma -p kuma < scripts/anonymize.sql
 
 
 Sending Email

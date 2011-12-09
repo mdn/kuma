@@ -50,7 +50,7 @@ class FixtureMissingError(Exception):
     """Raise this if a fixture is missing"""
 
 
-def get_user(username='jsocol'):
+def get_user(username='testuser'):
     """Return a django user or raise FixtureMissingError"""
     try:
         return User.objects.get(username=username)

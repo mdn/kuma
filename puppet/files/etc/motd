@@ -1,4 +1,4 @@
-Welcome to Kuma (mdn)
+Welcome to Kuma (developer-dev.mozilla.org)
 
 Run this to start the Django app:
     ./manage.py runserver_plus 0.0.0.0:8000
