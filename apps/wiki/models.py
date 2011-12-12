@@ -206,6 +206,9 @@ class DocumentManager(ManagerBase):
             docs = docs.filter(tags__in=[tag.name])
         if tag_name:
             docs = docs.filter(tags__name=tag_name)
+        # Leave out the html, since that leads to huge cache objects and we
+        # never use the content in lists.
+        docs = docs.defer('html')
         return docs
 
     def filter_for_review(self, tag=None, tag_name=None):

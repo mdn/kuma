@@ -70,6 +70,13 @@ DATABASES = {
         'PASSWORD': 'kuma',
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
     },
+    'wikidb': {
+        'NAME': 'wikidb',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'USER': 'wikiuser',
+        'PASSWORD': '2yeOr7ByBUMBiB4z',
+    },
 }
 
 # Use IP:PORT pairs separated by semicolons.
