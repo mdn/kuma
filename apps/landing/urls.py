@@ -5,8 +5,8 @@ urlpatterns = patterns('landing.views',
     url(r'^addons/?$', 'addons', name='addons'),
     url(r'^mozilla/?$', 'mozilla', name='mozilla'),
     url(r'^mobile/?$', 'mobile', name='mobile'),
-    # TODO: Disabled until switch-over to Kuma wiki. Waffle me?
-    # url(r'^search/?$', 'search', name='search'),
+    # TODO: Enabled until switchover to self-hosted kuma wiki search. Waffle me?
+    url(r'^search/?$', 'search', name='search'),
     url(r'^web/?$', 'web', name='web'),
     url(r'^apps/?$', 'apps', name='apps'),
     url(r'^apps/subscription/?$', 'apps_subscription', name='apps_subscription'),
