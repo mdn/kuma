@@ -215,6 +215,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #    'devmo.context_processors.phpbb_logged_in',
 
     'jingo_minify.helpers.build_ids',
+
+    'django_browserid.context_processors.browserid_form',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -252,6 +254,7 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
+    'django_browserid.auth.BrowserIDBackend',
     'users.backends.Sha256Backend',
     'dekicompat.backends.DekiUserBackend',
 )
@@ -282,6 +285,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    
+    # BrowserID
+    'django_browserid',
     
     # MDN
     'dekicompat',
@@ -844,3 +850,13 @@ CONSTANCE_CONFIG = dict(
     ),
 
 )
+
+BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
+BROWSERID_CREATE_USER = True
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL_FAILURE = '/'
+
+SITE_URL = 'https://developer.mozilla.org'
+PROTOCOL = 'https://'
+DOMAIN = 'developer.mozilla.org'

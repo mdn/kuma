@@ -1,5 +1,6 @@
 import os
 import urlparse
+import logging
 
 from django.conf import settings
 from django.contrib import auth
@@ -8,10 +9,15 @@ from django.contrib.auth.forms import (SetPasswordForm,
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect, Http404
-from django.views.decorators.http import require_http_methods, require_GET
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.views.decorators.http import (require_http_methods, require_GET,
+                                          require_POST)
 from django.shortcuts import get_object_or_404
 from django.utils.http import base36_to_int
+
+from django_browserid.forms import BrowserIDForm
+from django_browserid.auth import get_audience
+from django_browserid import auth as browserid_auth
 
 import jingo
 
@@ -30,6 +36,68 @@ from dekicompat.backends import DekiUserBackend
 from users.utils import handle_login, handle_register
 
 
+def _redirect_with_mindtouch_login(next_url, username, password=None):
+    resp = HttpResponseRedirect(next_url)
+    authtoken = DekiUserBackend.mindtouch_login(username, password,
+                                                force=True)
+    if authtoken:
+        resp.set_cookie('authtoken', authtoken)
+    return resp
+
+
+@ssl_required
+@require_POST
+def browserid_verify(request):
+    """Process browserid assertions."""
+    redirect_to = request.REQUEST.get('next', 
+            getattr(settings, 'LOGIN_REDIRECT_URL', '/'))
+    redirect_to_failure = getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', '/')
+
+    next_url = redirect_to
+    success_resp = HttpResponseRedirect(redirect_to)
+    failure_resp = HttpResponseRedirect(redirect_to_failure)
+
+    # If the form's not valid, then this is a failure.
+    form = BrowserIDForm(data=request.POST)
+    if not form.is_valid():
+        return failure_resp
+
+    # If the BrowserID assersion is not valid, then this is a failure.
+    assertion = form.cleaned_data['assertion']
+    backend = browserid_auth.BrowserIDBackend()
+    result = backend.verify(assertion, get_audience(request))
+    if not result:
+        return failure_resp
+
+    # So far, so good: We have a verified email address.
+    email = result['email']
+
+    # Look for first most recently used Django account, use if found.
+    users = User.objects.filter(email=email).order_by('-last_login')
+    if len(users) > 0:
+        user = users[0]
+        user.backend = 'django_browserid.auth.BrowserIDBackend'
+        auth.login(request, user)
+        logging.debug("DJANGO ACCOUNT FOUND %s" % user)
+        return _redirect_with_mindtouch_login(redirect_to, user.username)
+        
+    # If no Django account, look for a MindTouch account by email. If found,
+    # auto-create the user and log it in.
+    deki_user = DekiUserBackend.get_deki_user_by_email(email)
+    if deki_user:
+        user = DekiUserBackend.get_or_create_user(deki_user)
+        user.backend = 'django_browserid.auth.BrowserIDBackend'
+        auth.login(request, user)
+        logging.debug("DEKI ACCOUNT FOUND, DJANGO CREATED %s" % user)
+        return _redirect_with_mindtouch_login(redirect_to, user.username)
+
+    # Need to retain the verified email in a session, bounce to
+    # create-or-legacy-login page
+    return HttpResponse("NEED TO SIGN UP, YO!")
+
+    return failure_resp
+
+
 @ssl_required
 def login(request):
     """Try to log the user in."""
@@ -37,14 +105,9 @@ def login(request):
     form = handle_login(request)
 
     if request.user.is_authenticated():
-        resp = HttpResponseRedirect(next_url)
-        authtoken = DekiUserBackend.mindtouch_login(
+        return _redirect_with_mindtouch_login(next_url,
             form.cleaned_data.get('username'),
-            form.cleaned_data.get('password'),
-            force=True)
-        if authtoken:
-            resp.set_cookie('authtoken', authtoken)
-        return resp
+            form.cleaned_data.get('password'))
 
     response = jingo.render(request, 'users/login.html',
                             {'form': form, 'next_url': next_url})

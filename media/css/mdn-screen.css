@@ -289,7 +289,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #site-search-gg .gsc-branding-text { width: 60px; display: block; color: #666; position: absolute; top: 0; }
 
 /*** @User status *********/
-.user-state { width: 235px; float: right; text-align: right; color: #666; margin: 0 0 1em; }
+.user-state { width: 265px; float: right; text-align: right; color: #666; margin: 0 0 1em; }
 .user-state a:link, .user-state a:visited { color: #ccc; }
 .user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
 #masthead .user-state { font-size: .786em; margin-bottom: 6px; position: absolute; right: 10px; top: 8px; }

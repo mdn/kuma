@@ -3,6 +3,14 @@
     <p class="user-state"><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('Welcome back, {username}') | f(username=username) }}</a> |
     <a href="{{ url('users.logout') }}">{{ _('Log out') }}</a></p>
 {% else %}
-    <p class="user-state"><a href="{{ url('users.login') }}">{{ _('Log in') }}</a> |
-    <a href="{{ url('users.register') }}">{{ _('Become an MDN member') }}</a></p>
+    <div class="user-state">
+        <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
+            <a href="#" class="browserid-signin" style="display: none" title="{{_('Sign In with BrowserID')}}"><img src="{{MEDIA_URL}}img/sign_in.png" /></a>
+            {{ browserid_form }}
+        </form>
+        <span class="legacy-login">
+            <a href="{{ url('users.login') }}">{{ _('Log in') }}</a> |
+            <a href="{{ url('users.register') }}">{{ _('Become an MDN member') }}</a>
+        </span>
+    </div>
 {% endif %}

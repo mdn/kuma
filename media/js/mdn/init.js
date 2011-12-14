@@ -97,3 +97,17 @@ jQuery.fn.placeholder = function(new_value) {
   });
 
 // }); 
+
+$(document).ready(function () {
+    $('.legacy-login').hide();
+    $('.browserid-signin').show().click(function (e) {
+        e.preventDefault();
+        navigator.id.getVerifiedEmail(function(assertion) {
+            if (assertion) {
+                var $e = $('#id_assertion');
+                $e.val(assertion.toString());
+                $e.parent().submit();
+            }
+        });
+    });
+});
