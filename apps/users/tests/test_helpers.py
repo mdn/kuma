@@ -57,7 +57,7 @@ class HelperTestCase(TestCase):
         list = user_list(users)
         assert isinstance(list, Markup)
         fragment = pq(list)
-        eq_(4, len(fragment('a')))
-        a = fragment('a')[3]
+        eq_(5, len(fragment('a')))
+        a = fragment('a')[4]
         assert a.attrib['href'].endswith('testuser3/')
         eq_('testuser3', a.text)

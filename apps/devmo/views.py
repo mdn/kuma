@@ -104,12 +104,6 @@ def profile_edit(request, username):
         logging.debug('form.is_valid(): %s' % form.is_valid())
         logging.debug('form.errors: %s' % form.errors)
         if form.is_valid():
-            # Change the email address first so profile save
-            # to mindtouch includes updated email
-            if form.cleaned_data['email'] != profile.user.email:
-                profile.user.email = form.cleaned_data['email']
-                profile.user.save()
-
             profile_new = form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
