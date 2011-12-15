@@ -188,13 +188,16 @@ class DekiUserBackend(object):
 
     @staticmethod
     def generate_mindtouch_user_xml(user):
+        role = 'Contributor'
+        if user.is_staff and user.is_superuser:
+            role = 'Admin'
         user_xml = MINDTOUCH_USER_XML % {'username': user.username,
                     'email': user.email,
                     'fullname': user.get_profile().fullname,
                     'status': 'active',
                     'language': user.get_profile().mindtouch_language,
                     'timezone': user.get_profile().mindtouch_timezone,
-                    'role': 'Contributor'}
+                    'role': role}
         return user_xml
 
     @staticmethod

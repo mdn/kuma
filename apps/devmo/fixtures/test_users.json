@@ -68,5 +68,68 @@
             "irc_nickname": "testuser2",
             "bio": "I like to test things.2"
         }
+    },
+    {
+        "pk": 9,
+        "model": "auth.user",
+        "fields": {
+            "username": "testuser01",
+            "first_name": "Test",
+            "last_name": "User01",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2011-06-03 16:12:08",
+            "groups": [],
+            "user_permissions": [],
+            "password": "sha1$015f3$d7a6885afbb3e3ae453f1c68ab205fa0a24c3488",
+            "email": "testuser01@test.com",
+            "date_joined": "2011-06-03 16:12:08"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "devmo.userprofile",
+        "fields": {
+            "content_flagging_email": false,
+            "deki_user_id": 234792,
+            "homepage": "http://testuser01.com/",
+            "location": "Testville01",
+            "user": 9,
+            "fullname": "Test User01",
+            "title": "Dr.01",
+            "organization": "Web Testers Anonymous01",
+            "irc_nickname": "testuser01",
+            "bio": "I like to test things.01"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2011-06-03 16:12:08",
+            "groups": [],
+            "user_permissions": [],
+            "password": "sha1$015f3$d7a6885afbb3e3ae453f1c68ab205fa0a24c3488",
+            "email": "",
+            "date_joined": "2011-06-03 16:12:08"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "devmo.userprofile",
+        "fields": {
+            "content_flagging_email": false,
+            "deki_user_id": 0,
+            "homepage": "http://adminuser.com/",
+            "location": "Adminville",
+            "user": 10
+        }
     }
 ]
