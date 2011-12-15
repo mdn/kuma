@@ -41,6 +41,10 @@ jQuery.fn.placeholder = function(new_value) {
     }).blur();
 };
 
+// HACK: This ready() call is commented out, because all of our JS is at the
+// end of the page where the DOM is pretty much ready anyway. This shaves a few
+// dozen ms off page setup time.
+//
 // $(document).ready(function() {
     $('body').addClass('hasJS');
 
@@ -96,18 +100,15 @@ jQuery.fn.placeholder = function(new_value) {
       $("#nav .toggle").removeClass("open");
   });
 
-// }); 
+  // If found, wire up the BrowserID sign in button
+  $('.browserid-signin').click(function (e) {
+      navigator.id.getVerifiedEmail(function(assertion) {
+          if (!assertion) { return; }
+          $('#id_assertion')
+              .val(assertion.toString())
+              .parent().submit();
+      });
+      return false;
+  });
 
-$(document).ready(function () {
-    $('.legacy-login').hide();
-    $('.browserid-signin').show().click(function (e) {
-        e.preventDefault();
-        navigator.id.getVerifiedEmail(function(assertion) {
-            if (assertion) {
-                var $e = $('#id_assertion');
-                $e.val(assertion.toString());
-                $e.parent().submit();
-            }
-        });
-    });
-});
+// }); 

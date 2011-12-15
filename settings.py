@@ -216,6 +216,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'jingo_minify.helpers.build_ids',
 
+    'constance.context_processors.config',
     'django_browserid.context_processors.browserid_form',
 )
 
@@ -847,6 +848,13 @@ CONSTANCE_CONFIG = dict(
             "challenge:2011:june",
         ]),
         "Dev derby tags for previous challenges (space-separated tags)"
+    ),
+
+    BROWSERID_LOCALES = (
+        ' '.join([
+            'en-us',
+        ]),
+        'Space-separated locales for which BrowserID sign-in should be enabled'
     ),
 
 )

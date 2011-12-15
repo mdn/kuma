@@ -4,13 +4,17 @@
     <a href="{{ url('users.logout') }}">{{ _('Log out') }}</a></p>
 {% else %}
     <div class="user-state">
-        <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
-            <a href="#" class="browserid-signin" style="display: none" title="{{_('Sign In with BrowserID')}}"><img src="{{MEDIA_URL}}img/sign_in.png" /></a>
-            {{ browserid_form }}
-        </form>
-        <span class="legacy-login">
-            <a href="{{ url('users.login') }}">{{ _('Log in') }}</a> |
-            <a href="{{ url('users.register') }}">{{ _('Become an MDN member') }}</a>
-        </span>
+        {# Show BrowserID only for supported locales #}
+        {% if LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
+            <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
+                <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign In with BrowserID')}}"><img src="{{MEDIA_URL}}img/sign_in.png" /></a>
+                {{ browserid_form }}
+            </form>
+        {% else %}
+            <span class="legacy-login">
+                <a href="{{ url('users.login') }}">{{ _('Log in') }}</a> |
+                <a href="{{ url('users.register') }}">{{ _('Become an MDN member') }}</a>
+            </span>
+        {% endif %}
     </div>
 {% endif %}

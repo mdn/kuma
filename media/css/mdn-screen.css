@@ -293,6 +293,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .user-state a:link, .user-state a:visited { color: #ccc; }
 .user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
 #masthead .user-state { font-size: .786em; margin-bottom: 6px; position: absolute; right: 10px; top: 8px; }
+/* Hide the BrowserID sign in button until the JS behind it is ready */
+.user-state .browserid-signin { display: none; margin-right: 0.375em; }
+.hasJS .user-state .browserid-signin { display: block; }
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 1em; }

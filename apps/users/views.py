@@ -71,24 +71,24 @@ def browserid_verify(request):
 
     # So far, so good: We have a verified email address.
     email = result['email']
+    user = None
 
     # Look for first most recently used Django account, use if found.
     users = User.objects.filter(email=email).order_by('-last_login')
     if len(users) > 0:
         user = users[0]
-        user.backend = 'django_browserid.auth.BrowserIDBackend'
-        auth.login(request, user)
-        logging.debug("DJANGO ACCOUNT FOUND %s" % user)
-        return _redirect_with_mindtouch_login(redirect_to, user.username)
         
     # If no Django account, look for a MindTouch account by email. If found,
     # auto-create the user and log it in.
     deki_user = DekiUserBackend.get_deki_user_by_email(email)
     if deki_user:
         user = DekiUserBackend.get_or_create_user(deki_user)
+
+    # If we got a user from either the Django or MT paths, complete login for
+    # Django and MT and redirect.
+    if user:
         user.backend = 'django_browserid.auth.BrowserIDBackend'
         auth.login(request, user)
-        logging.debug("DEKI ACCOUNT FOUND, DJANGO CREATED %s" % user)
         return _redirect_with_mindtouch_login(redirect_to, user.username)
 
     # Need to retain the verified email in a session, bounce to
