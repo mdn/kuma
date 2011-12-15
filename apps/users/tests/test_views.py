@@ -1,4 +1,5 @@
 from time import time
+import logging
 import requests
 
 from django.conf import settings
@@ -18,6 +19,7 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend
+from dekicompat.tests import mock_get_deki_user_by_email
 from devmo.tests import mock_fetch_user_feed
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
@@ -347,3 +349,84 @@ class ChangeEmailTestCase(TestCase):
             doc('.main h1').text())
         u = User.objects.get(username='testuser')
         eq_(old_email, u.email)
+
+
+class BrowserIDTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        # Ensure @ssl_required goes unenforced.
+        settings.DEBUG = True 
+        # Set up some easily-testable redirects.
+        settings.LOGIN_REDIRECT_URL = 'SUCCESS'
+        settings.LOGIN_REDIRECT_URL_FAILURE = 'FAILURE'
+        # BrowserID will squawk if this isn't set
+        settings.SITE_URL = 'http://testserver'
+        self.client = LocalizingClient()
+
+    def test_invalid_post(self):
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'))
+        eq_(302, resp.status_code)
+        ok_('FAILURE' in resp['Location'])
+
+    @mock.patch('users.views._verify_browserid')
+    def test_invalid_assertion(self, _verify_browserid):
+        _verify_browserid.return_value = None
+
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'bad data'})
+        eq_(302, resp.status_code)
+        ok_('FAILURE' in resp['Location'])
+
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_django_user(self, _verify_browserid):
+        _verify_browserid.return_value = {'email':'testuser2@test.com'}
+
+        # Posting the fake assertion to browserid_verify should work, with the
+        # actual verification method mocked out.
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('SUCCESS' in resp['Location'])
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+        eq_('django_browserid.auth.BrowserIDBackend',
+            self.client.session.get('_auth_user_backend', ''))
+
+    @attr('current')
+    @mock_get_deki_user_by_email
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_mindtouch_user(self, _verify_browserid):
+        mt_email = 'testaccount+update3@testaccount.com'
+        _verify_browserid.return_value = {'email':mt_email}
+
+        # Probably overkill but let's be sure we're testing the right thing.
+        try:
+            user = User.objects.get(email=mt_email)
+            ok_(False, "The MindTouch user shouldn't exist in Django yet.")
+        except User.DoesNotExist:
+            pass
+
+        # Posting the fake assertion to browserid_verify should work, with the
+        # actual verification method mocked out.
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('SUCCESS' in resp['Location'])
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+        eq_('django_browserid.auth.BrowserIDBackend',
+            self.client.session.get('_auth_user_backend', ''))
+
+        # And, after all the above, there should be a Django user now.
+        try:
+            user = User.objects.get(email=mt_email)
+            pass
+        except User.DoesNotExist:
+            ok_(False, "The MindTouch user should exist in Django now.")

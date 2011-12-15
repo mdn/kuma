@@ -36,6 +36,18 @@ from dekicompat.backends import DekiUserBackend
 from users.utils import handle_login, handle_register
 
 
+def _verify_browserid(form, request):
+    """Verify submitted BrowserID assertion.
+
+    This is broken out into a standalone function because it will probably
+    change in the near future if the django-browserid API changes, and it's
+    handy to mock out in tests this way."""
+    assertion = form.cleaned_data['assertion']
+    backend = browserid_auth.BrowserIDBackend()
+    result = backend.verify(assertion, get_audience(request))
+    return result
+
+
 def _redirect_with_mindtouch_login(next_url, username, password=None):
     resp = HttpResponseRedirect(next_url)
     authtoken = DekiUserBackend.mindtouch_login(username, password,
@@ -63,13 +75,11 @@ def browserid_verify(request):
         return failure_resp
 
     # If the BrowserID assersion is not valid, then this is a failure.
-    assertion = form.cleaned_data['assertion']
-    backend = browserid_auth.BrowserIDBackend()
-    result = backend.verify(assertion, get_audience(request))
+    result = _verify_browserid(form, request)
     if not result:
         return failure_resp
 
-    # So far, so good: We have a verified email address.
+    # So far, so good: We have a verified email address. But, no user, yet.
     email = result['email']
     user = None
 
@@ -93,7 +103,7 @@ def browserid_verify(request):
 
     # Need to retain the verified email in a session, bounce to
     # create-or-legacy-login page
-    return HttpResponse("NEED TO SIGN UP, YO!")
+    return HttpResponse("TO BE CONTINUED, IN BUG 706519.")
 
     return failure_resp
 
