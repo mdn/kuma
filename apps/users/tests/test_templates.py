@@ -189,7 +189,7 @@ class PasswordReset(TestCaseBase):
         self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
 
         r = self.client.post(reverse('users.pw_reset'),
-                             {'email': 'testaccount+update3@testaccount.com'})
+                             {'email': 'testaccount@testaccount.com'})
         eq_(302, r.status_code)
         eq_('http://testserver/en-US/users/pwresetsent', r['location'])
         eq_(1, len(mail.outbox))

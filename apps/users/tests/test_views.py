@@ -23,6 +23,7 @@ from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
+from users.tests import get_deki_user_doc
 
 
 class LoginTestCase(TestCase):
@@ -148,9 +149,7 @@ class RegisterTestCase(TestCase):
 
         if not settings.DEKIWIKI_MOCK:
             deki_id = u.get_profile().deki_user_id
-            resp = requests.get(DekiUserBackend.profile_by_id_url % deki_id)
-            eq_(200, resp.status_code)
-            doc = pq(resp.content)
+            doc = get_deki_user_doc(u)
             eq_(str(deki_id), doc('user').attr('id'))
             eq_(username, doc('username').text())
 
@@ -295,6 +294,40 @@ class ChangeEmailTestCase(TestCase):
         eq_(200, response.status_code)
         u = User.objects.get(username='testuser')
         eq_('paulc@trololololololo.com', u.email)
+
+    @mock_get_deki_user
+    @mock_put_mindtouch_user
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_user_change_email_updates_mindtouch(self, get_current):
+        """Send email to change user's email and then change it."""
+        get_current.return_value.domain = 'su.mo.com'
+
+        self.client.login(username='testuser01', password='testpass')
+        # Attempt to change email.
+        response = self.client.post(reverse('users.change_email'),
+                                    {'email': 'testuser01+changed@test.com'},
+                                    follow=True)
+        eq_(200, response.status_code)
+
+        # Be notified to click a confirmation link.
+        eq_(1, len(mail.outbox))
+        assert mail.outbox[0].subject.find('Please confirm your') == 0
+        ec = EmailChange.objects.all()[0]
+        assert ec.activation_key in mail.outbox[0].body
+        eq_('testuser01+changed@test.com', ec.email)
+
+        # Visit confirmation link to change email.
+        response = self.client.get(reverse('users.confirm_email',
+                                           args=[ec.activation_key]))
+        eq_(200, response.status_code)
+        u = User.objects.get(username='testuser01')
+        eq_('testuser01+changed@test.com', u.email)
+
+        if not settings.DEKIWIKI_MOCK:
+            deki_id = u.get_profile().deki_user_id
+            doc = get_deki_user_doc(u)
+            eq_(str(deki_id), doc('user').attr('id'))
+            eq_('testuser01+changed@test.com', doc('user').find('email').text())
 
     def test_user_change_email_same(self):
         """Changing to same email shows validation error."""

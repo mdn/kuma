@@ -9,7 +9,7 @@
     <div id="content-main" class="full">
   <article id="pw-reset" class="main">
     <h1>{{ title }}</h1>
-    <p>{% trans profile_url=url('users.edit_profile') %}You have successfully changed your password.
+    <p>{% trans profile_url=url('devmo.views.profile_edit', username=user.username) %}You have successfully changed your password.
       <a href="{{ profile_url }}">Go back to edit profile page.</a>{% endtrans %}
     </p>
   </article>
