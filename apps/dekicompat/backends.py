@@ -1,3 +1,5 @@
+import logging
+
 from datetime import datetime
 from urllib import urlencode
 from urllib2 import HTTPError
@@ -211,13 +213,14 @@ class DekiUserBackend(object):
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod
-    def put_mindtouch_user(user):
-        # update an existing mindtouch user
-        deki_user_id = user.get_profile().deki_user_id or ''
+    def put_mindtouch_user(user=None, deki_user_id=None, user_xml=None):
+        if user:
+            # update an existing mindtouch user
+            deki_user_id = user.get_profile().deki_user_id or ''
+            user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         user_url = '%s/@api/deki/users/%s?apikey=%s' % (settings.DEKIWIKI_ENDPOINT,
                                                         deki_user_id,
                                                         settings.DEKIWIKI_APIKEY)
-        user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml',}
         resp = requests.put(user_url, data=user_xml, headers=headers)
         if resp.status_code is not 200:

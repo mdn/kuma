@@ -2,6 +2,7 @@ from os.path import dirname
 
 import mock
 
+from django.conf import settings
 from django.contrib.auth.models import User
 
 import test_utils

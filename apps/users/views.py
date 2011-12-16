@@ -29,11 +29,17 @@ from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
-                         PasswordResetForm)
+                         PasswordResetForm, BrowserIDRegisterForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend
 from users.utils import handle_login, handle_register
+
+
+SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
+                                 'browserid_verified_email')
+SESSION_REDIRECT_TO = getattr(settings, 'BROWSERID_SESSION_REDIRECT_TO',
+                              'browserid_redirect_to')
 
 
 def _verify_browserid(form, request):
@@ -60,13 +66,16 @@ def _redirect_with_mindtouch_login(next_url, username, password=None):
 @ssl_required
 @require_POST
 def browserid_verify(request):
-    """Process browserid assertions."""
-    redirect_to = request.REQUEST.get('next', 
-            getattr(settings, 'LOGIN_REDIRECT_URL', '/'))
-    redirect_to_failure = getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', '/')
+    """Process a submitted BrowserID assertion.
+    
+    If valid, try to find either a Django or MindTouch user that matches the
+    verified email address. If neither is found, we bounce to a profile
+    creation page (ie. browserid_register)."""
+    redirect_to = (_clean_next_url(request) or
+            getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
+    redirect_to_failure = (_clean_next_url(request) or
+            getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', reverse('home')))
 
-    next_url = redirect_to
-    success_resp = HttpResponseRedirect(redirect_to)
     failure_resp = HttpResponseRedirect(redirect_to_failure)
 
     # If the form's not valid, then this is a failure.
@@ -101,11 +110,73 @@ def browserid_verify(request):
         auth.login(request, user)
         return _redirect_with_mindtouch_login(redirect_to, user.username)
 
-    # Need to retain the verified email in a session, bounce to
-    # create-or-legacy-login page
-    return HttpResponse("TO BE CONTINUED, IN BUG 706519.")
+    # Retain the verified email in a session, redirect to registration page.
+    request.session[SESSION_VERIFIED_EMAIL] = email
+    request.session[SESSION_REDIRECT_TO] = redirect_to
+    return HttpResponseRedirect(reverse('users.browserid_register'))
 
-    return failure_resp
+
+@ssl_required
+def browserid_register(request):
+    """Handle user creation when assertion is valid, but no existing user"""
+    redirect_to = request.session.get(SESSION_REDIRECT_TO,
+        getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
+    email = request.session.get(SESSION_VERIFIED_EMAIL, None)
+
+    if not email:
+        # This is pointless without a verified email.
+        return HttpResponseRedirect(redirect_to)
+
+    # Set up the initial forms
+    register_form = BrowserIDRegisterForm()
+    login_form = AuthenticationForm()
+
+    if request.method == 'POST':
+
+        # If the profile creation form was submitted...
+        if 'register' == request.POST.get('action', None):
+            register_form = BrowserIDRegisterForm(request.POST)
+            if register_form.is_valid():
+                # If the registration form is valid, then create a new Django
+                # user, a new MindTouch user, and link the two together.
+                username = register_form.cleaned_data['username']
+                
+                user = User.objects.create(username=username, email=email)
+                user.set_unusable_password()
+                user.save()
+
+                profile = UserProfile.objects.create(user=user)
+                deki_user = DekiUserBackend.post_mindtouch_user(user)
+                profile.deki_user_id = deki_user.id
+                profile.save()
+
+                user.backend = 'django_browserid.auth.BrowserIDBackend'
+                auth.login(request, user)
+
+                # Bounce to the newly created profile page, since the user
+                # might want to review & edit.
+                return HttpResponseRedirect(profile.get_absolute_url())
+
+        else:
+            # If login was valid, then set to the verified email
+            login_form = handle_login(request)
+            if login_form.is_valid():
+                if request.user.is_authenticated():
+                    # Change email to new verified email, for next time
+                    user = request.user
+                    user.email = email
+                    user.save()
+                    return _redirect_with_mindtouch_login(redirect_to,
+                        login_form.cleaned_data.get('username'),
+                        login_form.cleaned_data.get('password'))
+
+    # HACK: Pretend the session was modified. Otherwise, the data disappears
+    # for the next request.
+    request.session.modified = True
+
+    return jingo.render(request, 'users/browserid_register.html',
+                        {'login_form': login_form, 
+                         'register_form': register_form})
 
 
 @ssl_required

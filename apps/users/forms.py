@@ -97,6 +97,37 @@ class RegisterForm(forms.ModelForm):
                                            *args, **kwargs)
 
 
+class BrowserIDRegisterForm(forms.ModelForm):
+    """A user registration form that only requires a username, since BrowserID
+    supplies the email address and no password is necessary."""
+    username = forms.RegexField(
+        label=_lazy(u'Username:'), max_length=30, min_length=4,
+        regex=r'^[\w.@+-]+$',
+        help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
+                         'and @/./+/-/_ only.'),
+        error_messages={'invalid': USERNAME_INVALID,
+                        'required': USERNAME_REQUIRED,
+                        'min_length': USERNAME_SHORT,
+                        'max_length': USERNAME_LONG})
+
+    class Meta(object):
+        model = User
+        fields = ('username',)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        # check deki for existing user (it needs = in front of name)
+        deki_user = DekiUserBackend.get_deki_user('='+username)
+        if deki_user is not None:
+            raise forms.ValidationError(_('The username you entered already exists.'))
+        return username
+
+    def __init__(self,  request=None, *args, **kwargs):
+        super(BrowserIDRegisterForm, self).__init__(request, 
+                                                    auto_id='id_for_%s',
+                                                    *args, **kwargs)
+
+
 class AuthenticationForm(auth_forms.AuthenticationForm):
     """Overrides the default django form.
 
