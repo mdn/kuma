@@ -92,13 +92,15 @@ def browserid_verify(request):
     email = result['email']
     user = None
 
+    # TODO: This user lookup and create stuff probably belongs in the model:
+
     # Look for first most recently used Django account, use if found.
     users = User.objects.filter(email=email).order_by('-last_login')
     if len(users) > 0:
         user = users[0]
         
     # If no Django account, look for a MindTouch account by email. If found,
-    # auto-create the user and log it in.
+    # auto-create the user.
     deki_user = DekiUserBackend.get_deki_user_by_email(email)
     if deki_user:
         user = DekiUserBackend.get_or_create_user(deki_user)
@@ -139,6 +141,7 @@ def browserid_register(request):
             if register_form.is_valid():
                 # If the registration form is valid, then create a new Django
                 # user, a new MindTouch user, and link the two together.
+                # TODO: This all belongs in model classes
                 username = register_form.cleaned_data['username']
                 
                 user = User.objects.create(username=username, email=email)

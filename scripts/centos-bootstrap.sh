@@ -45,4 +45,4 @@ chmod +x .git/hooks/post-receive
 chown -R vagrant:vagrant /vagrant /home/vagrant
 
 # Let puppet take it from here...
-puppet /vagrant/puppet/manifests/dev-vagrant-mdn.pp
+puppet /vagrant/puppet/manifests/dev-vagrant.pp
