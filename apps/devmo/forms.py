@@ -59,7 +59,8 @@ class UserProfileEditForm(forms.ModelForm):
         """Enforce expertise as a subset of interests"""
         cleaned_data = self.cleaned_data
 
-        interests = set(parse_tags(cleaned_data['interests']))
+        # bug 709938 - don't assume interests passed validation
+        interests = set(parse_tags(cleaned_data.get('interests','')))
         expertise = set(parse_tags(cleaned_data['expertise']))
 
         if len(expertise) > 0 and not expertise.issubset(interests):

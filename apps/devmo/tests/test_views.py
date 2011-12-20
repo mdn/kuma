@@ -297,6 +297,34 @@ class ProfileViewsTest(TestCase):
 
         eq_(1, doc.find('.error #id_expertise').length)
 
+    @mock_put_mindtouch_user
+    @mock_fetch_user_feed
+    def test_bug_709938_interests(self):
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('devmo.views.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,vector,meme,heuristics,harmony,mathesis universalis,symmetry,mathematics,computer graphics,field,chemistry,religion,astronomy,physics,biology,literature,spirituality,Art,Philosophy,Psychology,Business,Music,Computer Science']
+
+        form = dict()
+        for fn in ('email', 'fullname', 'title', 'organization', 'location',
+                'irc_nickname', 'bio', 'interests'):
+            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+        form['email'] = 'test@example.com'
+
+        form['interests'] = test_tags
+
+        r = self.client.post(url, form, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_(1, doc.find('ul.errorlist li').length)
+        assert 'Ensure this value has at most 255 characters' in doc.find('ul.errorlist li').text()
+
     @mock_mindtouch_login
     @mock_get_deki_user
     @mock_put_mindtouch_user
