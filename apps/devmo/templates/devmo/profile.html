@@ -54,8 +54,8 @@
           </ul>
         </div>
         {% endif %}
-        
-        {% set tag_ns = 'profile:expertise:' %}     
+
+        {% set tag_ns = 'profile:expertise:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
         <div class="tags">
