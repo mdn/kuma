@@ -175,7 +175,7 @@ class DekiUserBackend(object):
             auth_url = "%s/@api/deki/users/authenticate?apikey=%s" % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
             password = ''
         try:
-            r = requests.post(auth_url, auth=(username.encode('utf-8'), password))
+            r = requests.post(auth_url, auth=(username.encode('utf-8'), password.encode('utf-8')))
             if r.status_code == 200:
                 authtoken = r.content
                 return authtoken
