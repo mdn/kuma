@@ -1,5 +1,6 @@
 import os
 import urlparse
+import logging
 
 from django.conf import settings
 from django.contrib import auth
@@ -8,10 +9,15 @@ from django.contrib.auth.forms import (SetPasswordForm,
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect, Http404
-from django.views.decorators.http import require_http_methods, require_GET
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.views.decorators.http import (require_http_methods, require_GET,
+                                          require_POST)
 from django.shortcuts import get_object_or_404
 from django.utils.http import base36_to_int
+
+from django_browserid.forms import BrowserIDForm
+from django_browserid.auth import get_audience
+from django_browserid import auth as browserid_auth
 
 import jingo
 
@@ -23,11 +29,157 @@ from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
-                         PasswordResetForm)
+                         PasswordResetForm, BrowserIDRegisterForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend
 from users.utils import handle_login, handle_register
+
+
+SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
+                                 'browserid_verified_email')
+SESSION_REDIRECT_TO = getattr(settings, 'BROWSERID_SESSION_REDIRECT_TO',
+                              'browserid_redirect_to')
+
+
+def _verify_browserid(form, request):
+    """Verify submitted BrowserID assertion.
+
+    This is broken out into a standalone function because it will probably
+    change in the near future if the django-browserid API changes, and it's
+    handy to mock out in tests this way."""
+    assertion = form.cleaned_data['assertion']
+    backend = browserid_auth.BrowserIDBackend()
+    result = backend.verify(assertion, get_audience(request))
+    return result
+
+
+def _redirect_with_mindtouch_login(next_url, username, password=None):
+    resp = HttpResponseRedirect(next_url)
+    authtoken = DekiUserBackend.mindtouch_login(username, password,
+                                                force=True)
+    if authtoken:
+        resp.set_cookie('authtoken', authtoken)
+    return resp
+
+
+@ssl_required
+@require_POST
+def browserid_verify(request):
+    """Process a submitted BrowserID assertion.
+    
+    If valid, try to find either a Django or MindTouch user that matches the
+    verified email address. If neither is found, we bounce to a profile
+    creation page (ie. browserid_register)."""
+    redirect_to = (_clean_next_url(request) or
+            getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
+    redirect_to_failure = (_clean_next_url(request) or
+            getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', reverse('home')))
+
+    failure_resp = HttpResponseRedirect(redirect_to_failure)
+
+    # If the form's not valid, then this is a failure.
+    form = BrowserIDForm(data=request.POST)
+    if not form.is_valid():
+        return failure_resp
+
+    # If the BrowserID assersion is not valid, then this is a failure.
+    result = _verify_browserid(form, request)
+    if not result:
+        return failure_resp
+
+    # So far, so good: We have a verified email address. But, no user, yet.
+    email = result['email']
+    user = None
+
+    # TODO: This user lookup and create stuff probably belongs in the model:
+
+    # Look for first most recently used Django account, use if found.
+    users = User.objects.filter(email=email).order_by('-last_login')
+    if len(users) > 0:
+        user = users[0]
+        
+    # If no Django account, look for a MindTouch account by email. If found,
+    # auto-create the user.
+    deki_user = DekiUserBackend.get_deki_user_by_email(email)
+    if deki_user:
+        user = DekiUserBackend.get_or_create_user(deki_user)
+
+    # If we got a user from either the Django or MT paths, complete login for
+    # Django and MT and redirect.
+    if user:
+        user.backend = 'django_browserid.auth.BrowserIDBackend'
+        auth.login(request, user)
+        return _redirect_with_mindtouch_login(redirect_to, user.username)
+
+    # Retain the verified email in a session, redirect to registration page.
+    request.session[SESSION_VERIFIED_EMAIL] = email
+    request.session[SESSION_REDIRECT_TO] = redirect_to
+    return HttpResponseRedirect(reverse('users.browserid_register'))
+
+
+@ssl_required
+def browserid_register(request):
+    """Handle user creation when assertion is valid, but no existing user"""
+    redirect_to = request.session.get(SESSION_REDIRECT_TO,
+        getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
+    email = request.session.get(SESSION_VERIFIED_EMAIL, None)
+
+    if not email:
+        # This is pointless without a verified email.
+        return HttpResponseRedirect(redirect_to)
+
+    # Set up the initial forms
+    register_form = BrowserIDRegisterForm()
+    login_form = AuthenticationForm()
+
+    if request.method == 'POST':
+
+        # If the profile creation form was submitted...
+        if 'register' == request.POST.get('action', None):
+            register_form = BrowserIDRegisterForm(request.POST)
+            if register_form.is_valid():
+                # If the registration form is valid, then create a new Django
+                # user, a new MindTouch user, and link the two together.
+                # TODO: This all belongs in model classes
+                username = register_form.cleaned_data['username']
+                
+                user = User.objects.create(username=username, email=email)
+                user.set_unusable_password()
+                user.save()
+
+                profile = UserProfile.objects.create(user=user)
+                deki_user = DekiUserBackend.post_mindtouch_user(user)
+                profile.deki_user_id = deki_user.id
+                profile.save()
+
+                user.backend = 'django_browserid.auth.BrowserIDBackend'
+                auth.login(request, user)
+
+                # Bounce to the newly created profile page, since the user
+                # might want to review & edit.
+                return HttpResponseRedirect(profile.get_absolute_url())
+
+        else:
+            # If login was valid, then set to the verified email
+            login_form = handle_login(request)
+            if login_form.is_valid():
+                if request.user.is_authenticated():
+                    # Change email to new verified email, for next time
+                    user = request.user
+                    user.email = email
+                    user.save()
+                    return _redirect_with_mindtouch_login(redirect_to,
+                        login_form.cleaned_data.get('username'),
+                        login_form.cleaned_data.get('password'))
+
+    # HACK: Pretend the session was modified. Otherwise, the data disappears
+    # for the next request.
+    request.session.modified = True
+
+    return jingo.render(request, 'users/browserid_register.html',
+                        {'login_form': login_form, 
+                         'register_form': register_form})
 
 
 @ssl_required
@@ -37,14 +189,9 @@ def login(request):
     form = handle_login(request)
 
     if request.user.is_authenticated():
-        resp = HttpResponseRedirect(next_url)
-        authtoken = DekiUserBackend.mindtouch_login(
+        return _redirect_with_mindtouch_login(next_url,
             form.cleaned_data.get('username'),
-            form.cleaned_data.get('password'),
-            force=True)
-        if authtoken:
-            resp.set_cookie('authtoken', authtoken)
-        return resp
+            form.cleaned_data.get('password'))
 
     response = jingo.render(request, 'users/login.html',
                             {'form': form, 'next_url': next_url})

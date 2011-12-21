@@ -130,6 +130,10 @@ class UserProfile(ModelBase):
     # easier.
     misc = JSONField(blank=True, null=True)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('devmo.views.profile_view', [self.user.username])
+
     @property
     def websites(self):
         if 'websites' not in self.misc:

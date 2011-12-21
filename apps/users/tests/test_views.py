@@ -1,4 +1,5 @@
 from time import time
+import logging
 import requests
 
 from django.conf import settings
@@ -14,15 +15,19 @@ from pyquery import PyQuery as pq
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_missing_get_deki_user,
                               mock_get_deki_user,
+                              mock_get_deki_user_by_email,
+                              mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
-                              mock_post_mindtouch_user)
+                              mock_post_mindtouch_user,
+                              TESTACCOUNT_FIXTURE_XML)
 
-from dekicompat.backends import DekiUserBackend
+from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from devmo.tests import mock_fetch_user_feed
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
+from users.views import SESSION_VERIFIED_EMAIL
 from users.tests import get_deki_user_doc
 
 
@@ -65,6 +70,20 @@ class LoginTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_mindtouch_creds_create_user_and_profile(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
+
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: Ensure that expected user details are in MindTouch when not
+            # mocking the API
+            mt_email = 'testaccount+update3@testaccount.com'
+            user_xml = MINDTOUCH_USER_XML % dict(username="testaccount",
+                    email=mt_email, fullname="None", status="active",
+                    language="", timezone="-08:00", role="Contributor")
+            DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
+                                               user_xml=user_xml)
+            passwd_url = '%s/@api/deki/users/%s/password?apikey=%s' % (
+                settings.DEKIWIKI_ENDPOINT, '=testaccount', settings.DEKIWIKI_APIKEY)
+            resp = requests.put(passwd_url, data='theplanet')
+
         self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
 
         # Try to log in as a MindTouch user
@@ -72,6 +91,11 @@ class LoginTestCase(TestCase):
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         eq_(200, response.status_code)
+        
+        # Ensure there are no validation errors
+        page = pq(response.content)
+        eq_(0, page.find('.errorlist').length,
+            "There should be no validation errors in login")
 
         # Login should have auto-created django user
         u = User.objects.get(username='testaccount')
@@ -380,3 +404,243 @@ class ChangeEmailTestCase(TestCase):
             doc('.main h1').text())
         u = User.objects.get(username='testuser')
         eq_(old_email, u.email)
+
+
+class BrowserIDTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        # Ensure @ssl_required goes unenforced.
+        settings.DEBUG = True 
+        # Set up some easily-testable redirects.
+        settings.LOGIN_REDIRECT_URL = 'SUCCESS'
+        settings.LOGIN_REDIRECT_URL_FAILURE = 'FAILURE'
+        # BrowserID will squawk if this isn't set
+        settings.SITE_URL = 'http://testserver'
+        self.client = LocalizingClient()
+
+    def test_invalid_post(self):
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'))
+        eq_(302, resp.status_code)
+        ok_('FAILURE' in resp['Location'])
+
+    @mock.patch('users.views._verify_browserid')
+    def test_invalid_assertion(self, _verify_browserid):
+        _verify_browserid.return_value = None
+
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'bad data'})
+        eq_(302, resp.status_code)
+        ok_('FAILURE' in resp['Location'])
+
+    @mock_get_deki_user_by_email
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_django_user(self, _verify_browserid):
+        _verify_browserid.return_value = {'email':'testuser2@test.com'}
+
+        # Posting the fake assertion to browserid_verify should work, with the
+        # actual verification method mocked out.
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('SUCCESS' in resp['Location'])
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+        eq_('django_browserid.auth.BrowserIDBackend',
+            self.client.session.get('_auth_user_backend', ''))
+
+    @mock_get_deki_user_by_email
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_mindtouch_user(self, _verify_browserid):
+        mt_email = 'testaccount@testaccount.com'
+        _verify_browserid.return_value = {'email':mt_email}
+
+        # Probably overkill but let's be sure we're testing the right thing.
+        try:
+            user = User.objects.get(email=mt_email)
+            ok_(False, "The MindTouch user shouldn't exist in Django yet.")
+        except User.DoesNotExist:
+            pass
+
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: Ensure that expected user details are in MindTouch when not
+            # mocking the API
+            user_xml = MINDTOUCH_USER_XML % dict(username="testaccount",
+                    email=mt_email, fullname="None", status="active",
+                    language="", timezone="-08:00", role="Contributor")
+            DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
+                                               user_xml=user_xml)
+
+        deki_user = DekiUserBackend.get_deki_user_by_email(mt_email)
+        ok_(deki_user is not None, "The MindTouch user should exist")
+
+        # Posting the fake assertion to browserid_verify should work, with the
+        # actual verification method mocked out.
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('SUCCESS' in resp['Location'])
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+        eq_('django_browserid.auth.BrowserIDBackend',
+            self.client.session.get('_auth_user_backend', ''))
+
+        # And, after all the above, there should be a Django user now.
+        try:
+            user = User.objects.get(email=mt_email)
+        except User.DoesNotExist:
+            ok_(False, "The MindTouch user should exist in Django now.")
+
+    @mock_missing_get_deki_user_by_email
+    @mock_missing_get_deki_user
+    @mock_post_mindtouch_user
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_new_account_creation(self, 
+                                                       _verify_browserid):
+        new_username = 'neverbefore'
+        new_email = 'never.before.seen@example.com'
+        _verify_browserid.return_value = {'email':new_email}
+        
+        try:
+            user = User.objects.get(email=new_email)
+            ok_(False, "User for email should not yet exist")
+        except User.DoesNotExist:
+            pass
+
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: When not mocking the MindTouch API, ensure that there's no
+            # leftover user with the same name & email as what we want to
+            # register
+            import random
+            rand_num = random.randint(0, 1000000)
+            user_xml = MINDTOUCH_USER_XML % dict(
+                    username="%s_%s" % (new_username, rand_num),
+                    email="%s_%s" % (rand_num, new_email),
+                    fullname="", status="inactive",
+                    language="", timezone="-08:00",
+                    role="Contributor")
+            DekiUserBackend.put_mindtouch_user(
+                    deki_user_id='=%s'%new_username, user_xml=user_xml)
+
+        # Sign in with a verified email, but with no existing account
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+
+        # This should be a redirect to the BrowserID registration page.
+        redir_url = resp['Location']
+        reg_url = reverse('users.browserid_register', locale='en-US')
+        ok_(reg_url in redir_url)
+
+        # And, as part of the redirect, the verified email address should be in
+        # our session now.
+        ok_(SESSION_VERIFIED_EMAIL in self.client.session.keys())
+        verified_email = self.client.session[SESSION_VERIFIED_EMAIL]
+        eq_(new_email, verified_email)
+
+        # Grab the redirect, assert that there's a create_user form present
+        resp = self.client.get(redir_url)
+        page = pq(resp.content)
+        form = page.find('form#create_user')
+        eq_(1, form.length)
+
+        # There should be no error lists on first load
+        eq_(0, page.find('.errorlist').length)
+
+        # Submit the create_user form, with a chosen username
+        resp = self.client.post(redir_url, {'username': 'neverbefore',
+                                            'action': 'register'})
+
+        # The submission should result in a redirect to the new user's profile
+        eq_(302, resp.status_code)
+        redir_url = resp['Location']
+        profile_url = reverse('devmo_profile_view', args=[new_username])
+        ok_(profile_url in redir_url)
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+        eq_('django_browserid.auth.BrowserIDBackend',
+            self.client.session.get('_auth_user_backend', ''))
+        
+        # Ensure that the user was created, and with the submitted username and
+        # verified email address
+        try:
+            user = User.objects.get(email=new_email)
+            eq_(new_username, user.username)
+            eq_(new_email, user.email)
+        except User.DoesNotExist:
+            ok_(False, "New user should have been created")
+
+    @mock_missing_get_deki_user_by_email
+    @mock_post_mindtouch_user
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock_get_deki_user
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_existing_account_login(self, 
+                                                         _verify_browserid):
+        new_email = 'mynewemail@example.com'
+        _verify_browserid.return_value = {'email':new_email}
+        
+        try:
+            user = User.objects.get(email=new_email)
+            ok_(False, "User for email should not yet exist")
+        except User.DoesNotExist:
+            pass
+
+        # Sign in with a verified email, but with no existing account
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+
+        # This should be a redirect to the BrowserID registration page.
+        redir_url = resp['Location']
+        reg_url = reverse('users.browserid_register', locale='en-US')
+        ok_(reg_url in redir_url)
+
+        # And, as part of the redirect, the verified email address should be in
+        # our session now.
+        ok_(SESSION_VERIFIED_EMAIL in self.client.session.keys())
+        verified_email = self.client.session[SESSION_VERIFIED_EMAIL]
+        eq_(new_email, verified_email)
+
+        # Grab the redirect, assert that there's a create_user form present
+        resp = self.client.get(redir_url)
+        page = pq(resp.content)
+        form = page.find('form#existing_user')
+        eq_(1, form.length)
+
+        # There should be no error lists on first load
+        eq_(0, page.find('.errorlist').length)
+
+        # Submit the existing_user form, with a chosen username
+        resp = self.client.post(redir_url, {'username': 'testuser',
+                                            'password': 'testpass',
+                                            'action': 'login'})
+
+        # A successful login should result in a redirect to success.
+        eq_(302, resp.status_code)
+        ok_('SUCCESS' in resp['Location'])
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+
+        # And, after all the above, there should be a Django user now.
+        try:
+            user = User.objects.get(email=new_email)
+        except User.DoesNotExist:
+            ok_(False, "The MindTouch user should exist in Django now.")
