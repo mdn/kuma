@@ -12,6 +12,10 @@ detail_patterns = patterns('',
 )
 
 users_patterns = patterns('',
+    url(r'^/browserid_verify$', views.browserid_verify,
+        name='users.browserid_verify'),
+    url(r'^/browserid_register$', views.browserid_register,
+        name='users.browserid_register'),
     url(r'^/login$', views.login, name='users.login'),
     url(r'^/logout$', views.logout, name='users.logout'),
     url(r'^/register$', views.register, name='users.register'),

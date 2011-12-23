@@ -85,9 +85,20 @@ LOG_LEVEL = logging.DEBUG
 logging.basicConfig(
     level = logging.DEBUG,
     format = '%(asctime)s %(levelname)s %(message)s',
-    filename = '/home/vagrant/logs/kuma-django.log',
+    # filename = '/home/vagrant/logs/kuma-django.log',
 )
 
 SPHINX_INDEXER = '/usr/local/bin/indexer'
 SPHINX_SEARCHD = '/usr/local/bin/searchd'
 SEARCH_CACHE_PERIOD = 0 
+
+SITE_URL = 'http://developer-dev.mozilla.org'
+PROTOCOL = 'http://'
+DOMAIN = 'developer-dev.mozilla.org'
+
+# See: https://github.com/mozilla/django-browserid/issues/8 (TODO)
+BROWSERID_DISABLE_CERT_CHECK = True
+BROWSERID_CACERT_FILE = None
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL_FAILURE = '/'

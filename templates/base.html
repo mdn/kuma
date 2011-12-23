@@ -176,6 +176,7 @@
 {# js #}
 {% block site_js %}
   <script src="//www.google.com/jsapi" type="text/javascript"></script>
+  <script src="https://browserid.org/include.js" type="text/javascript"></script>
   {{ js('mdn') }}
   {% for script in scripts %}
     {{ js(script) }}

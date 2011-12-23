@@ -71,6 +71,12 @@ def devmo_url(context, path):
         Look for a wiki page in the current locale first,
         then default to given path
     """
+    # HACK: If DEKIWIKI_MOCK is True, just skip hitting the API. This can speed
+    # up a lot of tests without adding decorators, and should never be true in
+    # production.
+    if getattr(settings, 'DEKIWIKI_MOCK', False):
+        return path
+
     current_locale = context['request'].locale
     m = get_locale_path_match(path)
     if not m:
