@@ -349,6 +349,7 @@ INSTALLED_APPS = (
 
     # other
     'humans',
+    'soapbox',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
