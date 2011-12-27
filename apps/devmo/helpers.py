@@ -14,9 +14,10 @@ import bleach
 from jingo import register
 import jinja2
 import pytz
+from soapbox.models import Message
 
 import utils
-from sumo.urlresolvers import reverse
+from sumo.urlresolvers import split_path
 
 
 # Yanking filters from Django.
@@ -120,3 +121,12 @@ def check_devmo_local_page(path):
 def get_locale_path_match(path):
     locale_regexp = "/(?P<locale>\w+)/(?P<path>.*)"
     return re.match(locale_regexp, path, re.IGNORECASE)
+
+@register.function
+def get_soapbox_messages(url):
+    _, path = split_path(url)
+    return Message.objects.match(path)
+
+@register.inclusion_tag('devmo/elements/soapbox_messages.html')
+def soapbox_messages(soapbox_messages):
+    return {'soapbox_messages': soapbox_messages}

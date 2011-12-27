@@ -17,6 +17,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
+from soapbox.models import Message
+
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user,
                               mock_put_mindtouch_user,
@@ -429,3 +431,53 @@ class EventsViewsTest(test_utils.TestCase):
         # rows = doc.find('table#past tr')
         # prev_end_datetime = datetime.datetime.today()
         # rows.each(check_event_date)
+
+class SoapboxViewsTest(test_utils.TestCase):
+    fixtures = ['devmo_calendar.json']
+
+    def test_global_home(self):
+        m = Message(message="Global", is_global=True, is_active=True, url="/")
+        m.save()
+
+        url = reverse('home')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_(m.message, doc.find('div.global-notice').text())
+
+        url = reverse('events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_(m.message, doc.find('div.global-notice').text())
+
+    def test_subsection(self):
+        m = Message(message="Events", is_global=False, is_active=True, url="/events/")
+        m.save()
+
+        url = reverse('events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_(m.message, doc.find('div.global-notice').text())
+
+        url = reverse('home')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_([], doc.find('div.global-notice'))
+
+    def test_inactive(self):
+        m = Message(message="Events", is_global=False, is_active=False, url="/events/")
+        m.save()
+
+        url = reverse('events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_([], doc.find('div.global-notice'))
