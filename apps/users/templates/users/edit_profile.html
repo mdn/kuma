@@ -6,11 +6,11 @@
 {% block content %}
   <article id="edit-profile" class="main">
     <h1>{{ title }}</h1>
-    <form method="post" action="">
+    <form class="boxed" method="post" action="">
       {{ csrf() }}
       <ul>
         <li id="edit-profile-avatar">
-          <label>{{ _('Avatar:') }}</label>
+          <label>{{ _('Avatar') }}</label>
           <img src="{{ profile_avatar(profile.user) }}">
           <ul>
             <li>
@@ -24,19 +24,17 @@
           </ul>
         </li>
         <li>
-          <label>{{ _('Password:') }}</label>
+          <label>{{ _('Password') }}</label>
           <a href="{{ url('users.pw_change') }}">{{ _('Change') }}</a>
         </li>
         <li>
-          <label>{{ _('Email:') }}</label>
+          <label>{{ _('Email') }}</label>
           {{ user.email }}
           <a href="{{ url('users.change_email') }}">{{ _('Change') }}</a>
         </li>
         {{ form.as_ul()|safe }}
+        <li class="submit"><button type="submit">{{ _('Update') }}</button></li>
       </ul>
-      <div class="submit">
-        <input type="submit" value="{{ _('Update') }}" />
-      </div>
     </form>
   </article>
 {% endblock %}

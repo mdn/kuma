@@ -7,63 +7,69 @@
 {% block content %}
 <section id="content">
   <div class="wrap">
-    <div id="content-main" class="full">
-  <article id="browser_register" class="main">
+    <section id="content-main" role="main">
+      <article id="browser_register" class="main">
+  
+        <h1>{{ _('BrowserID is here!') }}</h1>
+        <p>{% trans browserid_href='https://browserid.org/' %}
+        MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
+        a safe and simple way to sign in without a password.
+        {% endtrans %}</p> 
+    
+    
+        <form id="create_user" class="boxed" method="post" action="">
+          <h2>{{ _('New MDN Members') }}</h2>
+          <p>{% trans %}
+            We couldn't find an MDN profile for your BrowserID. If you're new here, 
+            you can pick a display name now.
+          {% endtrans %}</p>
+          {{ errorlist(register_form) }}
+          
+          {{ csrf() }}
+          <input type="hidden" name="action" value="register">
+          <fieldset>
+            <ul>
+              <li>
+                <label for="id_username">{{ _('Display name') }}</label>
+                {{ register_form.username|safe }}
+              </li>
+              <li class="submit">
+                <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
+              </li>
+            </ul>
+          </fieldset>
+        </form>
+    
+        <form id="existing_user" class="boxed" method="post" action="">
+          <h2>{{ _('Returning MDN Members') }}</h2>
+          <p>{% trans %}
+            If you previously had an MDN account, try logging in here to use your 
+            existing MDN profile. You'll be able to sign in with your BrowserID from 
+            now on.
+          {% endtrans %}</p>
+          {{ errorlist(login_form) }}
+          
+          {{ csrf() }}
+          <input type="hidden" name="action" value="login">
+          <fieldset>
+            <ul>
+              <li>
+                <label for="id_username">{{ _('Username') }}</label>
+                {{ login_form.username|safe }}
+              </li>
+              <li>
+                <label for="id_password">{{ _('Password') }}</label>
+                {{ login_form.password|safe }}
+              </li>
+              <li class="submit">
+                <button type="submit">{{ _('Log In') }}</button>
+              </li>
+            </ul>
+          </fieldset>
+        </form>
 
-    <section class="create">
-      <h1>{{ _('New profile') }}</h1>
-      <p>{% trans %}
-        We couldn't find an MDN profile for your BrowserID. If you're
-        new here, you can pick a name:
-      {% endtrans %}</p>
-      {{ errorlist(register_form) }}
-      <form id="create_user" method="post" action="">
-        {{ csrf() }}
-        <input type="hidden" name="action" value="register" />
-        <fieldset>
-          <ul>
-            <li>
-              <label for="id_username">{{ _('Username:') }}</label>
-              {{ register_form.username|safe }}
-            </li>
-          </ul>
-        </fieldset>
-        <div class="submit">
-          <button name="create">{{ _('Create a new profile') }}</button>
-        </div>
-      </form>
+      </article>
     </section>
-
-    <section class="Existing">
-      <h1>{{ _('Existing profile') }}</h1>
-      <p>{% trans %}
-        If you remember a username and password that worked before we started
-        using BrowserID, try logging in here to use your existing MDN profile:
-      {% endtrans %}</p>
-      {{ errorlist(login_form) }}
-      <form id="existing_user" method="post" action="">
-        {{ csrf() }}
-        <input type="hidden" name="action" value="login" />
-        <fieldset>
-          <ul>
-            <li>
-              <label for="id_username">{{ _('Username:') }}</label>
-              {{ login_form.username|safe }}
-            </li>
-            <li>
-              <label for="id_password">{{ _('Password:') }}</label>
-              {{ login_form.password|safe }}
-            </li>
-          </ul>
-        </fieldset>
-        <div class="submit">
-          <input type="submit" value="{{ _('Log In with Existing Profile') }}" />
-        </div>
-      </form>
-    </section>
-
-  </article>
-    </div>
-   </div>
+  </div>
 </section>
 {% endblock %}

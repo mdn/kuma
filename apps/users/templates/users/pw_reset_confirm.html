@@ -11,7 +11,7 @@
   <article id="pw-reset" class="main">
     {% if validlink %}
       <h1>{{ title }}</h1>
-      <form method="post" action="">
+      <form class="boxed" method="post" action="">
         {{ csrf() }}
         <fieldset>
           {{ errorlist(form) }}
@@ -24,15 +24,15 @@
               <label for="id_new_password2">{{ _('Confirm password') }}</label>
               {{ form.new_password2|safe }}
             </li>
+            <li class="submit">
+              <button type="submit">{{ _('Update') }}</button>
+            </li>
           </ul>
         </fieldset>
-        <div class="submit">
-          <input type="submit" value="{{ _('Update') }}" />
-        </div>
       </form>
     {% else %}
       <h1>{{ _('Password reset unsuccessful') }}</h1>
-      <p>{{ _('The password reset link was invalid, possibly because it has already been used.  Please request a new password reset.') }}</p>
+      <p>{{ _('The password reset link was invalid, possibly because it has already been used. Please request a new password reset.') }}</p>
     {% endif %}
   </article>
     </div>

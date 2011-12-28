@@ -1,25 +1,25 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% from "layout/errorlist.html" import errorlist %}
-{{ errorlist(form) }}
-<form method="post" action="{{ url('users.login') }}">
+
+<form method="post" class="boxed" action="{{ url('users.login') }}">
   {{ csrf() }}
   <input type="hidden" name="next" value="{{ next_url }}" />
   <fieldset>
+  {{ errorlist(form) }}
     <ul>
       <li>
-        <label for="id_username">{{ _('Username:') }}</label>
+        <label for="id_username">{{ _('Username') }}</label>
         {{ form.username|safe }}
       </li>
       <li>
-        <label for="id_password">{{ _('Password:') }}</label>
+        <label for="id_password">{{ _('Password') }}</label>
         {{ form.password|safe }}
       </li>
+      <li class="submit"><button type="submit">{{ _('Log in') }}</button></li>
     </ul>
   </fieldset>
-  <div class="submit">
-    <input type="submit" value="{{ _('Log in') }}" />
-  </div>
 </form>
+
 <div id="login-help">
   <h3>{{ _('Login Problems?') }}</h3>
   <ul>

@@ -305,13 +305,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
 .user-state form { display: inline; }
 #masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 145px; top: 12px; }
-#siteinfo .user-state { margin-bottom: .5em; }
+#site-info .user-state { margin-bottom: .5em; }
 
 a.browserid-signin:link, a.browserid-signin:visited { padding: 1px 10px 1px 28px; color: #fff; background: #555 url("../img/btn-browserid.png") -1px 50% no-repeat; border-radius: 3px; border: 1px outset rgba(50,50,50,.5); }
 a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { background-color: #666; }
 
 /*** @Language Picker *********/
-footer .languages { float: right; text-align: right; margin: 0 0 1em; }
+footer .languages { float: right; text-align: right; margin: -.25em 0 1em; }
 
 /*** @Toolbar *********/
 #nav-toolbar { font-size: .786em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 3px 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
@@ -633,12 +633,13 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 #footbar a:link, #footbar a:visited, 
 #site-info a:link, #site-info a:visited { color: #eb9f81; }
 #footbar a:hover, #footbar a:focus, #footbar a:active, 
-#site-info a:hover, #site-info a:focus, #site-info a:active { color: #fff; }
+#site-info a:hover, #site-info a:focus, #site-info a:active, 
+#site-info a.browserid-signin { color: #fff; }
 
 #site-info { background: #000; padding: 30px 0 50px; border-top: 1px solid #5d0900; color: #f1f1ec; font-size: .786em; }
 #site-info .wrap { background: #000; }
 #site-info #legal { position: relative; width: 615px; float: left; padding-left: 55px; }
-#site-info #legal img { position: absolute; left: -3px; top: -10px; }
+#site-info #legal img { position: absolute; left: -3px; top: -6px; }
 #site-info p { margin: 0 0 .5em; }
 
 /* @Boxes *********/
