@@ -56,13 +56,13 @@ def get_unique(content_type, object_pk, name, request=None, ip=None, user_agent=
         else:
             user = None
             ip = get_ip(request)
-            user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
+            user_agent = request.META.get('HTTP_USER_AGENT', '')[:255].decode('latin1', 'ignore')
 
     # HACK: Build a hash of the fields that should be unique, let MySQL
     # chew on that for a unique index. Note that any changes to this algo
     # will create all new unique hashes that don't match any existing ones.
     hash_text = "\n".join(unicode(x).encode('utf8') for x in (
-        content_type.pk, object_pk, name, ip, user_agent.decode('latin'), 
+        content_type.pk, object_pk, name, ip, user_agent, 
         (user and user.pk or 'None')
     ))
     unique_hash = hashlib.md5(hash_text).hexdigest()
