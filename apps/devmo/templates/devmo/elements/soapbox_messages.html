@@ -1,0 +1,9 @@
+{% if soapbox_messages|count > 0 %}
+  <div class="global-notice">
+    <div class="wrap">
+      {% for message in soapbox_messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

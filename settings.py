@@ -286,24 +286,24 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    
+
     # BrowserID
     'django_browserid',
-    
+
     # MDN
     'dekicompat',
     'devmo',
     'docs',
     'feeder',
     'landing',
-    
+
     # DEMOS
     'demos',
     'captcha',
     'contentflagging',
     'actioncounters',
     'threadedcomments',
-    
+
     # util
     'cronjobs',
     'jingo_minify',
@@ -313,6 +313,7 @@ INSTALLED_APPS = (
     'constance.backends.database',
     'constance',
     'waffle',
+    'soapbox',
 
     # SUMO
     'users',
