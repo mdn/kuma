@@ -64,7 +64,7 @@ class ActionCountersTest(TestCase):
             obj_1 = self.obj_1
             obj_1_ct = ContentType.objects.get_for_model(obj_1)
 
-            request = self.mk_request(user_agent=u"Some\xef\xbf\xbdbrowser")
+            request = self.mk_request(user_agent="Some\xef\xbf\xbdbrowser")
             user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
                                                            action_name, request)
         except UnicodeDecodeError:
