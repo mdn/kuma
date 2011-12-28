@@ -27,7 +27,18 @@ _thread_locals = local()
 
 log = commonware.log.getLogger('kuma.dekicompat')
 
-MINDTOUCH_USER_XML = """<user><username>%(username)s</username><email>%(email)s</email><fullname>%(fullname)s</fullname><status>%(status)s</status><language>%(language)s</language><timezone>%(timezone)s</timezone><permissions.user><role>%(role)s</role></permissions.user></user>"""
+MINDTOUCH_USER_XML = """<user>
+<username>%(username)s</username>
+<email>%(email)s</email>
+<fullname>%(fullname)s</fullname>
+<status>%(status)s</status>
+<language>%(language)s</language>
+<timezone>%(timezone)s</timezone>
+<permissions.user>
+    <role>%(role)s</role>
+</permissions.user>
+</user>"""
+
 
 class DekiUserBackend(object):
     """
@@ -45,8 +56,9 @@ class DekiUserBackend(object):
             username=username,
             password=password)
         if authtoken:
-            deki_user = DekiUserBackend.get_deki_user(url=DekiUserBackend.profile_url, 
-                                                      authtoken=authtoken)
+            deki_user = DekiUserBackend.get_deki_user(
+                url=DekiUserBackend.profile_url,
+                authtoken=authtoken)
             if deki_user:
                 # HACK: Retain authenticated authtoken for future Deki API
                 # requests.
@@ -79,7 +91,7 @@ class DekiUserBackend(object):
             # user, such as email address.
             cookies = dict(authtoken=authtoken)
         if url is None:
-            url = DekiUserBackend.profile_by_id_url % (str(deki_user_id) + 
+            url = DekiUserBackend.profile_by_id_url % (str(deki_user_id) +
                     '?apikey=' + settings.DEKIWIKI_APIKEY)
         resp = requests.get(url, cookies=cookies)
         if resp.status_code is 404:
@@ -95,8 +107,9 @@ class DekiUserBackend(object):
                 most_recent_login = datetime(2000, 1, 1)
                 deki_user_id = None
                 for user in doc('user'):
-                    last_login = datetime.strptime(user.find('date.lastlogin').text,
-                                                   "%Y-%m-%dT%H:%M:%SZ")
+                    last_login = datetime.strptime(
+                        user.find('date.lastlogin').text,
+                        "%Y-%m-%dT%H:%M:%SZ")
                     if last_login > most_recent_login:
                         most_recent_login = last_login
                         deki_user_id = pq(user).attr('id')
@@ -122,7 +135,8 @@ class DekiUserBackend(object):
         try:
             user = User.objects.get(pk=user_id)
             profile = UserProfile.objects.get(user=user)
-            user.deki_user = DekiUserBackend.get_deki_user(profile.deki_user_id)
+            user.deki_user = DekiUserBackend.get_deki_user(
+                profile.deki_user_id)
             return user
         except User.DoesNotExist:
             return None
@@ -172,12 +186,16 @@ class DekiUserBackend(object):
 
     @staticmethod
     def mindtouch_login(username, password, force=False):
-        auth_url = "%s/@api/deki/users/authenticate" % (settings.DEKIWIKI_ENDPOINT)
+        auth_url = "%s/@api/deki/users/authenticate" % (
+            settings.DEKIWIKI_ENDPOINT)
         if force:
-            auth_url = "%s/@api/deki/users/authenticate?apikey=%s" % (settings.DEKIWIKI_ENDPOINT, settings.DEKIWIKI_APIKEY)
+            auth_url = "%s/@api/deki/users/authenticate?apikey=%s" % (
+                settings.DEKIWIKI_ENDPOINT,
+                settings.DEKIWIKI_APIKEY)
             password = ''
         try:
-            r = requests.post(auth_url, auth=(username.encode('utf-8'), password))
+            r = requests.post(auth_url, auth=(username.encode('utf-8'),
+                                              password.encode('utf-8')))
             if r.status_code == 200:
                 authtoken = r.content
                 return authtoken
@@ -205,10 +223,11 @@ class DekiUserBackend(object):
     @staticmethod
     def post_mindtouch_user(user):
         # post a new mindtouch user
-        user_url = '%s/@api/deki/users?apikey=%s' % (settings.DEKIWIKI_ENDPOINT,
-                                                     settings.DEKIWIKI_APIKEY)
+        user_url = '%s/@api/deki/users?apikey=%s' % (
+            settings.DEKIWIKI_ENDPOINT,
+            settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
-        headers = {'Content-Type': 'application/xml',}
+        headers = {'Content-Type': 'application/xml'}
         resp = requests.post(user_url, data=user_xml, headers=headers)
         if resp.status_code is not 200:
             # TODO: decide WTF to do here
@@ -216,15 +235,15 @@ class DekiUserBackend(object):
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod
-    def put_mindtouch_user(user=None, deki_user_id=None, user_xml=None):
-        if user:
-            # update an existing mindtouch user
-            deki_user_id = user.get_profile().deki_user_id or ''
-            user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
-        user_url = '%s/@api/deki/users/%s?apikey=%s' % (settings.DEKIWIKI_ENDPOINT,
-                                                        deki_user_id,
-                                                        settings.DEKIWIKI_APIKEY)
-        headers = {'Content-Type': 'application/xml',}
+    def put_mindtouch_user(user):
+        # update an existing mindtouch user
+        deki_user_id = user.get_profile().deki_user_id or ''
+        user_url = '%s/@api/deki/users/%s?apikey=%s' % (
+            settings.DEKIWIKI_ENDPOINT,
+            deki_user_id,
+            settings.DEKIWIKI_APIKEY)
+        user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
+        headers = {'Content-Type': 'application/xml'}
         resp = requests.put(user_url, data=user_xml, headers=headers)
         if resp.status_code is not 200:
             # TODO: decide WTF to do here
