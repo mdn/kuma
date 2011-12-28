@@ -62,7 +62,8 @@ class LoginTestCase(TestCase):
                                     {'username': 'testuser',
                                      'password': 'testpass'}, follow=True)
         eq_(200, response.status_code)
-        self.assertContains(response, 'Welcome back, testuser')
+        doc = pq(response.content)
+        eq_('testuser', doc.find('ul.user-state a:first').text())
 
     @mock_mindtouch_login
     @mock_get_deki_user
@@ -103,7 +104,8 @@ class LoginTestCase(TestCase):
         ok_(u.get_profile())
 
         # Login page should show welcome back
-        self.assertContains(response, 'Welcome back, testaccount')
+        doc = pq(response.content)
+        eq_('testaccount', doc.find('ul.user-state a:first').text())
 
 
 class RegisterTestCase(TestCase):
