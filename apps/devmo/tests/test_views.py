@@ -1,13 +1,10 @@
 import datetime
 import logging
-import requests
 import time
-from os.path import basename, dirname, isfile, isdir
+from os.path import dirname
 
 import mock
-from mock import patch
-from nose import SkipTest
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
@@ -16,20 +13,15 @@ from devmo.tests import create_profile
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core.paginator import PageNotAnInteger
+
+from soapbox.models import Message
 
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user,
-                              mock_put_mindtouch_user,
-                              mock_post_mindtouch_user)
-from dekicompat.backends import DekiUserBackend
+                              mock_put_mindtouch_user)
 from devmo.models import UserProfile, UserDocsActivityFeed
 
-from django.contrib.auth.models import User, AnonymousUser
-
-from devmo.helpers import devmo_url
-from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile
-from devmo.forms import UserProfileEditForm
 from devmo.cron import devmo_calendar_reload
 from devmo.tests import mock_fetch_user_feed
 
@@ -107,12 +99,12 @@ class ProfileViewsTest(TestCase):
     def test_bug_698971(self):
         """A non-numeric page number should not cause an error"""
         (user, deki_user, profile) = create_profile()
- 
+
         url = '%s?page=asdf' % reverse('devmo.views.profile_view',
                                        args=(user.username,))
 
         try:
-            r = self.client.get(url, follow=True)
+            self.client.get(url, follow=True)
         except PageNotAnInteger:
             ok_(False, "Non-numeric page number should not cause an error")
 
@@ -126,7 +118,7 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         eq_(0, doc.find('#profile-head .edit .button').length)
 
-        self.client.login(username=user.username, 
+        self.client.login(username=user.username,
                 password=TESTUSER_PASSWORD)
 
         url = reverse('devmo.views.profile_view',
@@ -179,7 +171,7 @@ class ProfileViewsTest(TestCase):
     @mock_fetch_user_feed
     def test_profile_edit_websites(self):
         user = User.objects.get(username='testuser')
-        self.client.login(username=user.username, 
+        self.client.login(username=user.username,
                 password=TESTUSER_PASSWORD)
 
         url = reverse('devmo.views.profile_edit',
@@ -244,7 +236,7 @@ class ProfileViewsTest(TestCase):
     @mock_fetch_user_feed
     def test_profile_edit_interests(self):
         user = User.objects.get(username='testuser')
-        self.client.login(username=user.username, 
+        self.client.login(username=user.username,
                 password=TESTUSER_PASSWORD)
 
         url = reverse('devmo.views.profile_edit',
@@ -309,7 +301,12 @@ class ProfileViewsTest(TestCase):
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
-        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,vector,meme,heuristics,harmony,mathesis universalis,symmetry,mathematics,computer graphics,field,chemistry,religion,astronomy,physics,biology,literature,spirituality,Art,Philosophy,Psychology,Business,Music,Computer Science']
+        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
+                     u'vector,meme,heuristics,harmony,mathesis universalis,'
+                     u'symmetry,mathematics,computer graphics,field,chemistry,'
+                     u'religion,astronomy,physics,biology,literature,'
+                     u'spirituality,Art,Philosophy,Psychology,Business,Music,'
+                     u'Computer Science']
 
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
@@ -323,7 +320,8 @@ class ProfileViewsTest(TestCase):
         eq_(200, r.status_code)
         doc = pq(r.content)
         eq_(1, doc.find('ul.errorlist li').length)
-        assert 'Ensure this value has at most 255 characters' in doc.find('ul.errorlist li').text()
+        assert ('Ensure this value has at most 255 characters'
+                in doc.find('ul.errorlist li').text())
 
     @mock_mindtouch_login
     @mock_get_deki_user
@@ -340,13 +338,13 @@ class ProfileViewsTest(TestCase):
             pass
 
         # log in as a MindTouch user to create django user & profile
-        
         response = self.client.post(reverse('users.login', locale='en-US'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         eq_(200, response.status_code)
         user = User.objects.get(username='testaccount')
         profile = UserProfile.objects.get(user=user)
+        ok_(profile)
 
         # use profile edit to change language
         url = reverse('devmo.views.profile_edit',
@@ -380,7 +378,8 @@ class ProfileViewsTest(TestCase):
                       args=(user.username,))
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
-        ok_('nl', doc.find('#profile-edit select#id_locale option[value="nl"][selected="selected"]'))
+        ok_('nl', doc.find('#profile-edit select#id_locale option[value="nl"]'
+                           '[selected="selected"]'))
 
         # TODO: Mock this part out...
         """
@@ -396,21 +395,26 @@ class ProfileViewsTest(TestCase):
         logging.debug("CONT %s" % r.content)
         ok_(False)
 
+
 def get_datetime_from_string(string, string_format):
-    new_datetime = datetime.datetime.fromtimestamp(time.mktime(time.strptime(string, string_format)))
+    new_datetime = datetime.datetime.fromtimestamp(time.mktime(
+        time.strptime(string, string_format)))
     return new_datetime
+
 
 def check_event_date(row):
     prev_end_datetime = datetime.datetime.today()
     datetime_format = "%Y-%m-%d"
     if (row.prev()):
         prev_datetime_str = row.prev().find('td').eq(1).text()
-        prev_end_datetime = get_datetime_from_string(prev_datetime_str, datetime_format)
+        prev_end_datetime = get_datetime_from_string(prev_datetime_str,
+                                                     datetime_format)
     row_datetime_str = row.find('td').eq(1).text()
     row_datetime = get_datetime_from_string(row_datetime_str, datetime_format)
     logging.debug(row_datetime)
     logging.debug(prev_end_datetime)
     ok_(row_datetime < prev_end_datetime)
+
 
 class EventsViewsTest(test_utils.TestCase):
     fixtures = ['devmo_calendar.json']
@@ -429,3 +433,56 @@ class EventsViewsTest(test_utils.TestCase):
         # rows = doc.find('table#past tr')
         # prev_end_datetime = datetime.datetime.today()
         # rows.each(check_event_date)
+
+
+class SoapboxViewsTest(test_utils.TestCase):
+    fixtures = ['devmo_calendar.json']
+
+    def test_global_home(self):
+        m = Message(message="Global", is_global=True, is_active=True, url="/")
+        m.save()
+
+        url = reverse('home')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_(m.message, doc.find('div.global-notice').text())
+
+        url = reverse('events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_(m.message, doc.find('div.global-notice').text())
+
+    def test_subsection(self):
+        m = Message(message="Events", is_global=False, is_active=True,
+                    url="/events/")
+        m.save()
+
+        url = reverse('events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_(m.message, doc.find('div.global-notice').text())
+
+        url = reverse('home')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_([], doc.find('div.global-notice'))
+
+    def test_inactive(self):
+        m = Message(message="Events", is_global=False, is_active=False,
+                    url="/events/")
+        m.save()
+
+        url = reverse('events')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+
+        doc = pq(r.content)
+        eq_([], doc.find('div.global-notice'))

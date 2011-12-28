@@ -286,24 +286,24 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    
+
     # BrowserID
     'django_browserid',
-    
+
     # MDN
     'dekicompat',
     'devmo',
     'docs',
     'feeder',
     'landing',
-    
+
     # DEMOS
     'demos',
     'captcha',
     'contentflagging',
     'actioncounters',
     'threadedcomments',
-    
+
     # util
     'cronjobs',
     'jingo_minify',
@@ -313,6 +313,7 @@ INSTALLED_APPS = (
     'constance.backends.database',
     'constance',
     'waffle',
+    'soapbox',
 
     # SUMO
     'users',
@@ -539,6 +540,7 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
+            'js/libs/jquery.gritter.js',
             #'js/kbox.js',
             #'global/menu.js',
             #'js/main.js',
