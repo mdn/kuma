@@ -308,10 +308,12 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #site-info .user-state { margin-bottom: .5em; }
 
 a.browserid-signin:link, a.browserid-signin:visited { padding: 1px 10px 1px 28px; color: #fff; background: #555 url("../img/btn-browserid.png") -1px 50% no-repeat; border-radius: 3px; border: 1px outset rgba(50,50,50,.5); }
-a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { background-color: #666; }
+a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-signin:active { background-color: #666; }
+
+#login a.browserid-signin { font-size: 20px; border-radius: 5px; padding: 3px 15px 3px 32px; }
 
 /*** @Language Picker *********/
-footer .languages { float: right; text-align: right; margin: -.25em 0 1em; }
+footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 
 /*** @Toolbar *********/
 #nav-toolbar { font-size: .786em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 3px 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
