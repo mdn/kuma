@@ -2,14 +2,27 @@
 {% extends "users/base.html" %}
 {% set title = _('Log In') %}
 {% set classes = 'login' %}
+{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block content %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
         <article id="login" class="main">
+        {% if use_browserid %}
+            <h1>{{ _('Sign In with BrowserID') }}</h1> 
+            <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
+              <p>{% trans browserid_href='https://browserid.org/' %}
+              MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
+              a safe and simple way to sign in without a password.
+              {% endtrans %}</p>
+              {{ browserid_form }}
+              <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
+            </form>
+        {% else %}
             <h1>{{ _('Log In') }}</h1>
             {% include "users/login_form.html" %}
+        {% endif %}
         </article>
     </div>
    </div>

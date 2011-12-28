@@ -8,21 +8,23 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-  <article id="register" class="main">
-    <h1>{{ _('Register') }}</h1>
-    {{ errorlist(form) }}
-    <form method="post" action="">
-      {{ csrf() }}
-      <ul>
-        {% for field in form %}
-          <li>{{ field|label_with_help }} {{ field|safe }}</li>
-        {% endfor %}
-      </ul>
-      <div class="submit">
-        <input type="submit" value="{{ _('Register') }}" />
-      </div>
-    </form>
-  </article>
+      <article id="register" class="main">
+        <h1>{{ _('Register') }}</h1>
+        <p>{% trans %}
+          When you join MDN you'll be able to edit docs, submit demos, and participate in our Dev Derby.
+        {% endtrans %}</p>
+        
+        <form class="boxed" method="post" action="">
+          {{ csrf() }}
+          {{ errorlist(form) }}
+          <ul>
+            {% for field in form %}
+              <li>{{ field|label_with_help }} {{ field|safe }}</li>
+            {% endfor %}
+            <li class="submit"><button type="submit">{{ _('Register') }}</button></li>
+          </ul>
+        </form>
+      </article>
     </div>
    </div>
 </section>

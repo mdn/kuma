@@ -8,29 +8,27 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-  <article id="pw-reset" class="main">
-    <h1>{{ title }}</h1>
-    <form method="post" action="">
-      {{ csrf() }}
-      <fieldset>
-        <p class="instruct">
+      <article id="pw-reset" class="main">
+        <h1>{{ title }}</h1>
+        <p>
           {% trans %} Forgotten your password? Enter your email address below,
           and we'll send you instructions for setting a new one.
           {% endtrans %}
         </p>
-        {{ errorlist(form) }}
-        <ul>
-          <li>
-            <label for="id_email">{{ _('Email Address:') }}</label>
-            {{ form.email|safe }}
-          </li>
-        </ul>
-      </fieldset>
-      <div class="submit">
-        <input type="submit" value="{{ _('Send password reset link') }}" />
-      </div>
-    </form>
-  </article>
+        <form class="boxed" method="post" action="">
+          {{ csrf() }}
+          <fieldset>
+            {{ errorlist(form) }}
+            <ul>
+              <li>
+                <label for="id_email">{{ _('Email Address') }}</label>
+                {{ form.email|safe }}
+              </li>
+              <li class="submit"><button type="submit">{{ _('Send password reset link') }}</button></li>
+            </ul>
+          </fieldset>
+        </form>
+      </article>
     </div>
    </div>
 </section>

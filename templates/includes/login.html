@@ -1,29 +1,27 @@
 {% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
+<ul class="user-state">
 {% if user.is_authenticated() %}
     {% set username = request.user.username %}
-    <p class="user-state"><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('Welcome back, {username}') | f(username=username) }}</a> |
+      <li><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('{username}') | f(username=username) }}</a></li>
     {# Use "Sign out" language as inverse of BrowserID's "Sign in", but don't
        mess with other locales' already translated string #}
     {% if use_browserid %}
-        <a href="{{ url('users.logout') }}">{{ _('Sign out') }}</a></p>
+      <li><a href="{{ url('users.logout') }}">{{ _('Sign out') }}</a></li>
     {% else %}
-        <a href="{{ url('users.logout') }}">{{ _('Log out') }}</a></p>
+      <li><a href="{{ url('users.logout') }}">{{ _('Log out') }}</a></li>
     {% endif %}
 {% else %}
-    <div class="user-state">
-        {# Show BrowserID only for supported locales #}
-        {% if use_browserid %}
-            <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
-                {{ browserid_form }}
-                {# TODO: This sign_in.png should be made locallizable, eg. use
-                   sliding-doors CSS with blank button PNGs and overlay the text. #}
-                <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign In with BrowserID')}}"><img src="{{MEDIA_URL}}img/sign_in.png" /></a>
-            </form>
-        {% else %}
-            <span class="legacy-login">
-                <a href="{{ url('users.login') }}">{{ _('Log in') }}</a> |
-                <a href="{{ url('users.register') }}">{{ _('Become an MDN member') }}</a>
-            </span>
-        {% endif %}
-    </div>
+    {# Show BrowserID only for supported locales #}
+    {% if use_browserid %}
+      <li>
+          <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
+              {{ browserid_form }}
+              <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
+          </form>
+      </li>
+    {% else %}
+      <li><a href="{{ url('users.register') }}">{{ _('Join MDN') }}</a></li>
+      <li><a href="{{ url('users.login') }}">{{ _('Log in') }}</a></li>
+    {% endif %}
 {% endif %}
+</ul>

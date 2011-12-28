@@ -6,14 +6,14 @@
 {% block content %}
   <article id="change-avatar" class="main">
     <h1>{{ title }}</h1>
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="post" class="boxed" action="" enctype="multipart/form-data">
       {{ csrf() }}
       <ul>
         {{ form.as_ul()|safe }}
+        <li class="submit">
+          <button type="submit">{{ _('Upload', 'avatar') }}</button>
+        </li>
       </ul>
-      <div class="submit">
-        <input type="submit" value="{{ _('Upload', 'avatar') }}" />
-      </div>
     </form>
   </article>
 {% endblock %}

@@ -42,7 +42,7 @@ class RegisterForm(forms.ModelForm):
 
     """
     username = forms.RegexField(
-        label=_lazy(u'Username:'), max_length=30, min_length=4,
+        label=_lazy(u'Username'), max_length=30, min_length=4,
         regex=r'^[\w.@+-]+$',
         help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
                          'and @/./+/-/_ only.'),
@@ -50,15 +50,15 @@ class RegisterForm(forms.ModelForm):
                         'required': USERNAME_REQUIRED,
                         'min_length': USERNAME_SHORT,
                         'max_length': USERNAME_LONG})
-    email = forms.EmailField(label=_lazy(u'Email address:'),
+    email = forms.EmailField(label=_lazy(u'Email address'),
                              error_messages={'required': EMAIL_REQUIRED,
                                              'min_length': EMAIL_SHORT,
                                              'max_length': EMAIL_LONG})
-    password = forms.CharField(label=_lazy(u'Password:'),
+    password = forms.CharField(label=_lazy(u'Password'),
                                widget=forms.PasswordInput(
                                    render_value=False),
                                error_messages={'required': PASSWD_REQUIRED})
-    password2 = forms.CharField(label=_lazy(u'Repeat password:'),
+    password2 = forms.CharField(label=_lazy(u'Repeat password'),
                                 widget=forms.PasswordInput(
                                     render_value=False),
                                 error_messages={'required': PASSWD2_REQUIRED},
@@ -104,7 +104,7 @@ class BrowserIDRegisterForm(forms.ModelForm):
     """A user registration form that only requires a username, since BrowserID
     supplies the email address and no password is necessary."""
     username = forms.RegexField(
-        label=_lazy(u'Username:'), max_length=30, min_length=4,
+        label=_lazy(u'Username'), max_length=30, min_length=4,
         regex=r'^[\w.@+-]+$',
         help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
                          'and @/./+/-/_ only.'),
@@ -243,13 +243,13 @@ class AvatarForm(forms.ModelForm):
 
 class EmailConfirmationForm(forms.Form):
     """A simple form that requires an email address."""
-    email = forms.EmailField(label=_lazy(u'Email address:'))
+    email = forms.EmailField(label=_lazy(u'Email address'))
 
 
 class EmailChangeForm(forms.Form):
     """A simple form that requires an email address and validates that it is
     not the current user's email."""
-    email = forms.EmailField(label=_lazy(u'Email address:'))
+    email = forms.EmailField(label=_lazy(u'Email address'))
 
     def __init__(self, user, *args, **kwargs):
         super(EmailChangeForm, self).__init__(*args, **kwargs)
