@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 from os.path import dirname
-import logging
 
-from urllib2 import Request
 from requests.models import Response
 import re
 
 import mock
-from nose import SkipTest
-from nose.plugins.attrib import attr
 from nose.tools import eq_
 
 from test_utils import TestCase
@@ -82,7 +78,8 @@ def mock_get_deki_user(test, fixture_file=TESTACCOUNT_FIXTURE_XML):
 
 def mock_get_deki_user_by_email(test, fixture_file=TESTACCOUNT_FIXTURE_XML):
     if settings.DEKIWIKI_MOCK:
-        @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
+        @mock.patch('dekicompat.backends.DekiUserBackend'
+                    '.get_deki_user_by_email')
         def test_new(self, get_deki_user_by_email):
             testaccount_fixture = open(fixture_file)
             user_info = DekiUser.parse_user_info(testaccount_fixture.read())
@@ -113,7 +110,7 @@ def mock_mindtouch_login(test):
         return test_new
     else:
         return test
-    
+
 
 class DekiCompatTestCase(TestCase):
     fixtures = ['test_users.json']
