@@ -12,9 +12,10 @@ class TestUrlEncode(test_utils.TestCase):
         throw a KeyError when filtered through URL encoding"""
         try:
             s = u"Someguy Dude\xc3\xaas Lastname"
-            u = urlencode(s)
+            urlencode(s)
         except KeyError:
             ok_(False, "There should be no KeyError")
+
 
 class TestSoapbox(test_utils.TestCase):
 
@@ -26,10 +27,12 @@ class TestSoapbox(test_utils.TestCase):
         eq_(m.message, get_soapbox_messages("/fr/demos/")[0].message)
 
     def test_subsection_message(self):
-        m = Message(message="Derby", is_global=False, is_active=True, url="/demos/devderby")
+        m = Message(message="Derby", is_global=False, is_active=True,
+                    url="/demos/devderby")
         m.save()
         eq_(0, len(get_soapbox_messages("/")))
         eq_(0, len(get_soapbox_messages("/demos")))
         eq_(0, len(get_soapbox_messages("/en-US/demos")))
-        eq_(m.message, get_soapbox_messages("/en-US/demos/devderby")[0].message)
+        eq_(m.message, get_soapbox_messages(
+            "/en-US/demos/devderby")[0].message)
         eq_(m.message, get_soapbox_messages("/de/demos/devderby")[0].message)
