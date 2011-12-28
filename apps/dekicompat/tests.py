@@ -150,8 +150,8 @@ class DekiCompatTestCase(TestCase):
         authtoken = DekiUserBackend.mindtouch_login('user', 'pass')
         eq_('authtoken_value', authtoken)
 
+    @mockdekiauth
     def test_unicode_mindtouch_login(self):
-        raise SkipTest()
         u_str = u'\xe5\xe5\xee\xe9\xf8\xe7\u6709\u52b9'
         authtoken = DekiUserBackend.mindtouch_login('user', u_str)
         eq_('authtoken_value', authtoken)

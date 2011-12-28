@@ -29,6 +29,7 @@ EMAIL_LONG = _lazy(u'Email address is too long (%(show_value)s characters). '
                    'It must be %(limit_value)s characters or less.')
 PASSWD_REQUIRED = _lazy(u'Password is required.')
 PASSWD2_REQUIRED = _lazy(u'Please enter your password twice.')
+PASSWD_UTF8 = _lazy(u'To use this password, you need to initiate a password reset. Please use the "forgot my password" link below.')
 
 
 class RegisterForm(forms.ModelForm):
@@ -146,8 +147,12 @@ class AuthenticationForm(auth_forms.AuthenticationForm):
         password = self.cleaned_data.get('password')
 
         if username and password:
-            self.user_cache = authenticate(username=username,
+            try:
+                self.user_cache = authenticate(username=username,
                                            password=password)
+            except UnicodeEncodeError:
+                raise forms.ValidationError(PASSWD_UTF8)
+
             if self.user_cache is None:
                 raise forms.ValidationError(
                     _('Please enter a correct username and password. Note '
