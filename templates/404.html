@@ -2,6 +2,10 @@
 
 {% block bodyclass %}error{% endblock %}
 
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/err404.css">
+{% endblock %}
+
 {% block title %}{{ page_title(_('Not Found')) }}{% endblock %}
 
 {% block content %}
@@ -13,7 +17,11 @@
 
     <h1 class="page-title">Not Found</h1>
     
-    <img src="{{ MEDIA_URL }}img/beast-404.png" alt="" class="beast 404">
+    <div id="beastainer">
+			<img id="beast404le" src="{{ MEDIA_URL }}img/beast-404_LE.png" alt="">
+			<img id="beast404re" src="{{ MEDIA_URL }}img/beast-404_RE.png" alt="">
+			<img class="beast 404" src="{{ MEDIA_URL }}img/beast-404.png" alt="">
+    </div>
     
     <p>We're sorry, we couldn't find what you were looking for.</p>
     
