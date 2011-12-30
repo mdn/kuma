@@ -646,3 +646,53 @@ class BrowserIDTestCase(TestCase):
             user = User.objects.get(email=new_email)
         except User.DoesNotExist:
             ok_(False, "The MindTouch user should exist in Django now.")
+
+
+    @mock_get_deki_user_by_email
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_changing_email(self, _verify_browserid):
+        # just need to be authenticated, not necessarily BrowserID
+        self.client.login(username='testuser', password='testpass')
+
+        _verify_browserid.return_value = {'email':'testuser+changed@test.com'}
+
+        # posting a valid assertion to browserid_verify changes email
+        # if the client is already logged-in
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('profiles/testuser/edit' in resp['Location'])
+
+        resp = self.client.get(reverse('devmo_profile_edit', locale='en-US',
+                                       args=['testuser',]))
+        eq_(200, resp.status_code)
+        doc = pq(resp.content)
+        ok_('testuser+changed@test.com' in doc.find('li#field_email').text())
+
+
+    @mock_get_deki_user_by_email
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_doesnt_steal_email(self, _verify_browserid):
+        # just need to be authenticated, not necessarily BrowserID
+        self.client.login(username='testuser', password='testpass')
+
+        _verify_browserid.return_value = {'email':'testuser2@test.com'}
+
+        # posting a valid assertion to browserid_verify doesn't change email
+        # if the new email already belongs to another user
+        resp = self.client.post(reverse('users.browserid_verify', 
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('change_email' in resp['Location'])
+
+        resp = self.client.get(reverse('devmo_profile_edit', locale='en-US',
+                                       args=['testuser',]))
+        eq_(200, resp.status_code)
+        doc = pq(resp.content)
+        ok_('testuser@test.com' in doc.find('li#field_email').text())

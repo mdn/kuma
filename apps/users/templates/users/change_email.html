@@ -3,30 +3,58 @@
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _('Change Email Address') %}
 {% set classes = 'password' %}
+{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block content %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
       <article id="pw-reset" class="main">
-        <h1>{{ title }}</h1>
-        <p>
-          {% trans %}
-            You will need to confirm the newly set email address to complete
-            the change.
-          {% endtrans %}
-        </p>
-        <form class="boxed" method="post" action="">
-          {{ csrf() }}
-          <fieldset>
-            <ul>
-              {{ form.as_ul()|safe }}
-              <li class="submit">
-                <button type="submit">{{ _('Change my email') }}</button>
-              </li>
-            </ul>
-          </fieldset>
-        </form>
+        {% if use_browserid %}
+          <h1>{{ _('Change email with BrowserID') }}</h1>
+            <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
+              <input type="hidden" name="next" value="{{ next_url }}" />
+              {{ errorlist(form) }}
+              <p>{% trans browserid_href='https://browserid.org/' %}
+              MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
+              a safe and simple way to sign in without a password.
+              {% endtrans %}</p>
+              <p>{% trans %}
+              To change your MDN email, simply sign in below with the new email 
+              address.
+              {% endtrans %}</p>
+              {{ browserid_form }}
+              <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
+              {% if messages %}
+                <ul class="messages errorlist">
+                  {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                      {{ message }}
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </form>
+        {% else %}
+          <h1>{{ title }}</h1>
+          <p>
+            {% trans %}
+              You will need to confirm the newly set email address to complete
+              the change.
+            {% endtrans %}
+          </p>
+          <form class="boxed" method="post" action="">
+            {{ csrf() }}
+            <fieldset>
+              <ul>
+                {{ form.as_ul()|safe }}
+                <li class="submit">
+                  <button type="submit">{{ _('Change my email') }}</button>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        {% endif %}
       </article>
     </div>
    </div>

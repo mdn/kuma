@@ -8,6 +8,7 @@ from django.contrib.auth.forms import (SetPasswordForm,
                                        PasswordChangeForm)
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.http import (require_http_methods, require_GET,
@@ -62,6 +63,13 @@ def _redirect_with_mindtouch_login(next_url, username, password=None):
         resp.set_cookie('authtoken', authtoken)
     return resp
 
+def _get_latest_user_with_email(email):
+    users = User.objects.filter(email=email).order_by('-last_login')
+    if len(users) > 0:
+        return users[0]
+    else:
+        return None
+
 
 @ssl_required
 @require_POST
@@ -93,17 +101,27 @@ def browserid_verify(request):
     user = None
 
     # TODO: This user lookup and create stuff probably belongs in the model:
-
-    # Look for first most recently used Django account, use if found.
-    users = User.objects.filter(email=email).order_by('-last_login')
-    if len(users) > 0:
-        user = users[0]
-        
-    # If no Django account, look for a MindTouch account by email. If found,
-    # auto-create the user.
-    deki_user = DekiUserBackend.get_deki_user_by_email(email)
-    if deki_user:
-        user = DekiUserBackend.get_or_create_user(deki_user)
+    # If user is authenticated, change their email
+    if request.user.is_authenticated():
+        user = _get_latest_user_with_email(email)
+        # If a user with the email already exists, don't change
+        if user and user != request.user:
+            messages.error(request, 'That email already belongs to another user.')
+            return HttpResponseRedirect(reverse('users.change_email'))
+        else:
+            user = request.user
+            user.email = email
+            user.save()
+            redirect_to = reverse('devmo_profile_edit', args=[user.username,])
+    else:
+        # Look for first most recently used Django account, use if found.
+        user = _get_latest_user_with_email(email)
+        # If no Django account, look for a MindTouch account by email. If found,
+        # auto-create the user.
+        if not user:
+            deki_user = DekiUserBackend.get_deki_user_by_email(email)
+            if deki_user:
+                user = DekiUserBackend.get_or_create_user(deki_user)
 
     # If we got a user from either the Django or MT paths, complete login for
     # Django and MT and redirect.
