@@ -1,5 +1,4 @@
 from time import time
-import logging
 import requests
 
 from django.conf import settings
@@ -9,7 +8,6 @@ from django.core import mail
 
 import mock
 from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from dekicompat.tests import (mock_mindtouch_login,
@@ -18,11 +16,9 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user_by_email,
                               mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
-                              mock_post_mindtouch_user,
-                              TESTACCOUNT_FIXTURE_XML)
+                              mock_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
-from devmo.tests import mock_fetch_user_feed
 from notifications.tests import watch
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -46,13 +42,15 @@ class LoginTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_bad_login_fails_both_backends(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='nouser')
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username='nouser')
 
         response = self.client.post(reverse('users.login'),
                                     {'username': 'nouser',
                                      'password': 'nopass'}, follow=True)
         eq_(200, response.status_code)
-        self.assertContains(response, 'Please enter a correct username and password.')
+        self.assertContains(response, 'Please enter a correct username and '
+                                      'password.')
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_django_login(self, get_current):
@@ -82,17 +80,19 @@ class LoginTestCase(TestCase):
             DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
                                                user_xml=user_xml)
             passwd_url = '%s/@api/deki/users/%s/password?apikey=%s' % (
-                settings.DEKIWIKI_ENDPOINT, '=testaccount', settings.DEKIWIKI_APIKEY)
-            resp = requests.put(passwd_url, data='theplanet')
+                settings.DEKIWIKI_ENDPOINT, '=testaccount',
+                settings.DEKIWIKI_APIKEY)
+            requests.put(passwd_url, data='theplanet')
 
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username='testaccount')
 
         # Try to log in as a MindTouch user
         response = self.client.post(reverse('users.login'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         eq_(200, response.status_code)
-        
+
         # Ensure there are no validation errors
         page = pq(response.content)
         eq_(0, page.find('.errorlist').length,
@@ -353,7 +353,8 @@ class ChangeEmailTestCase(TestCase):
             deki_id = u.get_profile().deki_user_id
             doc = get_deki_user_doc(u)
             eq_(str(deki_id), doc('user').attr('id'))
-            eq_('testuser01+changed@test.com', doc('user').find('email').text())
+            eq_('testuser01+changed@test.com',
+                doc('user').find('email').text())
 
     def test_user_change_email_same(self):
         """Changing to same email shows validation error."""
@@ -413,7 +414,7 @@ class BrowserIDTestCase(TestCase):
 
     def setUp(self):
         # Ensure @ssl_required goes unenforced.
-        settings.DEBUG = True 
+        settings.DEBUG = True
         # Set up some easily-testable redirects.
         settings.LOGIN_REDIRECT_URL = 'SUCCESS'
         settings.LOGIN_REDIRECT_URL_FAILURE = 'FAILURE'
@@ -422,7 +423,7 @@ class BrowserIDTestCase(TestCase):
         self.client = LocalizingClient()
 
     def test_invalid_post(self):
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'))
         eq_(302, resp.status_code)
         ok_('FAILURE' in resp['Location'])
@@ -431,7 +432,7 @@ class BrowserIDTestCase(TestCase):
     def test_invalid_assertion(self, _verify_browserid):
         _verify_browserid.return_value = None
 
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'bad data'})
         eq_(302, resp.status_code)
@@ -442,11 +443,11 @@ class BrowserIDTestCase(TestCase):
     @mock_mindtouch_login
     @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_django_user(self, _verify_browserid):
-        _verify_browserid.return_value = {'email':'testuser2@test.com'}
+        _verify_browserid.return_value = {'email': 'testuser2@test.com'}
 
         # Posting the fake assertion to browserid_verify should work, with the
         # actual verification method mocked out.
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -463,11 +464,11 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_mindtouch_user(self, _verify_browserid):
         mt_email = 'testaccount@testaccount.com'
-        _verify_browserid.return_value = {'email':mt_email}
+        _verify_browserid.return_value = {'email': mt_email}
 
         # Probably overkill but let's be sure we're testing the right thing.
         try:
-            user = User.objects.get(email=mt_email)
+            User.objects.get(email=mt_email)
             ok_(False, "The MindTouch user shouldn't exist in Django yet.")
         except User.DoesNotExist:
             pass
@@ -486,7 +487,7 @@ class BrowserIDTestCase(TestCase):
 
         # Posting the fake assertion to browserid_verify should work, with the
         # actual verification method mocked out.
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -499,7 +500,7 @@ class BrowserIDTestCase(TestCase):
 
         # And, after all the above, there should be a Django user now.
         try:
-            user = User.objects.get(email=mt_email)
+            User.objects.get(email=mt_email)
         except User.DoesNotExist:
             ok_(False, "The MindTouch user should exist in Django now.")
 
@@ -509,12 +510,12 @@ class BrowserIDTestCase(TestCase):
     @mock_put_mindtouch_user
     @mock_mindtouch_login
     @mock.patch('users.views._verify_browserid')
-    def test_valid_assertion_with_new_account_creation(self, 
+    def test_valid_assertion_with_new_account_creation(self,
                                                        _verify_browserid):
         new_username = 'neverbefore'
         new_email = 'never.before.seen@example.com'
-        _verify_browserid.return_value = {'email':new_email}
-        
+        _verify_browserid.return_value = {'email': new_email}
+
         try:
             user = User.objects.get(email=new_email)
             ok_(False, "User for email should not yet exist")
@@ -534,10 +535,10 @@ class BrowserIDTestCase(TestCase):
                     language="", timezone="-08:00",
                     role="Contributor")
             DekiUserBackend.put_mindtouch_user(
-                    deki_user_id='=%s'%new_username, user_xml=user_xml)
+                    deki_user_id='=%s' % new_username, user_xml=user_xml)
 
         # Sign in with a verified email, but with no existing account
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -576,7 +577,7 @@ class BrowserIDTestCase(TestCase):
         ok_('_auth_user_id' in self.client.session.keys())
         eq_('django_browserid.auth.BrowserIDBackend',
             self.client.session.get('_auth_user_backend', ''))
-        
+
         # Ensure that the user was created, and with the submitted username and
         # verified email address
         try:
@@ -592,19 +593,19 @@ class BrowserIDTestCase(TestCase):
     @mock_mindtouch_login
     @mock_get_deki_user
     @mock.patch('users.views._verify_browserid')
-    def test_valid_assertion_with_existing_account_login(self, 
+    def test_valid_assertion_with_existing_account_login(self,
                                                          _verify_browserid):
         new_email = 'mynewemail@example.com'
-        _verify_browserid.return_value = {'email':new_email}
-        
+        _verify_browserid.return_value = {'email': new_email}
+
         try:
-            user = User.objects.get(email=new_email)
+            User.objects.get(email=new_email)
             ok_(False, "User for email should not yet exist")
         except User.DoesNotExist:
             pass
 
         # Sign in with a verified email, but with no existing account
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -643,10 +644,9 @@ class BrowserIDTestCase(TestCase):
 
         # And, after all the above, there should be a Django user now.
         try:
-            user = User.objects.get(email=new_email)
+            User.objects.get(email=new_email)
         except User.DoesNotExist:
             ok_(False, "The MindTouch user should exist in Django now.")
-
 
     @mock_get_deki_user_by_email
     @mock_put_mindtouch_user
@@ -656,22 +656,21 @@ class BrowserIDTestCase(TestCase):
         # just need to be authenticated, not necessarily BrowserID
         self.client.login(username='testuser', password='testpass')
 
-        _verify_browserid.return_value = {'email':'testuser+changed@test.com'}
+        _verify_browserid.return_value = {'email': 'testuser+changed@test.com'}
 
         # posting a valid assertion to browserid_verify changes email
         # if the client is already logged-in
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
         ok_('profiles/testuser/edit' in resp['Location'])
 
         resp = self.client.get(reverse('devmo_profile_edit', locale='en-US',
-                                       args=['testuser',]))
+                                       args=['testuser', ]))
         eq_(200, resp.status_code)
         doc = pq(resp.content)
         ok_('testuser+changed@test.com' in doc.find('li#field_email').text())
-
 
     @mock_get_deki_user_by_email
     @mock_put_mindtouch_user
@@ -681,18 +680,18 @@ class BrowserIDTestCase(TestCase):
         # just need to be authenticated, not necessarily BrowserID
         self.client.login(username='testuser', password='testpass')
 
-        _verify_browserid.return_value = {'email':'testuser2@test.com'}
+        _verify_browserid.return_value = {'email': 'testuser2@test.com'}
 
         # posting a valid assertion to browserid_verify doesn't change email
         # if the new email already belongs to another user
-        resp = self.client.post(reverse('users.browserid_verify', 
+        resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
         ok_('change_email' in resp['Location'])
 
         resp = self.client.get(reverse('devmo_profile_edit', locale='en-US',
-                                       args=['testuser',]))
+                                       args=['testuser', ]))
         eq_(200, resp.status_code)
         doc = pq(resp.content)
         ok_('testuser@test.com' in doc.find('li#field_email').text())
