@@ -15,10 +15,10 @@
             <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
               <input type="hidden" name="next" value="{{ next_url }}" />
               {{ errorlist(form) }}
-              <p>{% trans browserid_href='https://browserid.org/' %}
+              <p>{% trans browserid_href='https://browserid.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
               MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
-              a safe and simple way to sign in without a password.
-              {% endtrans %}</p>
+              a safe and simple way to sign in without a password. <a href="{{ why_browserid }}" rel="external">Learn more about it.</a>
+              {% endtrans %}</p> 
               {{ browserid_form }}
               <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
             </form>
