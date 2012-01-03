@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block pageid %}{% endblock %}
 
@@ -52,7 +53,9 @@
         
         <ul>
             <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">{{ _('View profile') }}</a></li>
+            {% if not use_browserid %}
             <li><a href="{{ url('users.pw_change') }}">{{ _('Change password') }}</a></li>
+            {% endif %}
           {# TODO: Implement account deletion #}
           {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
         </ul>
