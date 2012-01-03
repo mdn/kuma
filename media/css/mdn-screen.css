@@ -307,10 +307,14 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 145px; top: 12px; }
 #site-info .user-state { margin-bottom: .5em; }
 
+/* @BrowserID *********/
 a.browserid-signin:link, a.browserid-signin:visited { padding: 1px 10px 1px 28px; color: #fff; background: #555 url("../img/btn-browserid.png") -1px 50% no-repeat; border-radius: 3px; border: 1px outset rgba(50,50,50,.5); }
 a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-signin:active { background-color: #666; }
 
 #login a.browserid-signin { font-size: 20px; border-radius: 5px; padding: 3px 15px 3px 32px; }
+
+.user-state .help { padding: 1px .55em; margin: 0 4px; background: #555; border-radius: .95em; border: 1px solid rgba(150,150,150,.5); }
+.user-state .help:hover, .user-state .help:focus, .user-state .help:active { background-color: #666; }
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
