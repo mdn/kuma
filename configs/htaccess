@@ -27,6 +27,9 @@ RewriteRule ^(admin(/.*)?)$                                                     
 # For debug_toolbar, mainly on dev VMs
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?__debug__(/.*)?)$ /mwsgi/$1 [PT,L]
 
+   RewriteCond %{REQUEST_URI} ^/Special:Userlogin$ [NC]
+   RewriteRule (.*) https://developer.mozilla.org/users/login? [L,R]
+
    # PeteE: redirect feeds to a feeds disabled page
    RewriteCond %{REQUEST_URI} ^/Special:Article$ [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
