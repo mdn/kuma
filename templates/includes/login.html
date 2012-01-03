@@ -16,7 +16,8 @@
       <li>
           <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
               {{ browserid_form }}
-              <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
+              <a href="http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla" rel="external" class="help" title="{{ _('Learn about BrowserID') }}">?</a>
+              <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a> 
           </form>
       </li>
     {% else %}
