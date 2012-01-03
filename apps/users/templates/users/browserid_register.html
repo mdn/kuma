@@ -21,7 +21,12 @@
           <h2>{{ _('New MDN Members') }}</h2>
           <p>{% trans %}
             We couldn't find an MDN profile for your BrowserID. If you're new here, 
-            you can pick a display name now.
+            you can pick a display name now and complete your registration.
+          {% endtrans %}</p>
+          <p>{% trans %}
+            You can access everything on the MDN website even without an account, 
+            but when you join you'll be able to edit docs, submit demos, and have 
+            your own profile page.
           {% endtrans %}</p>
           {{ errorlist(register_form) }}
           
