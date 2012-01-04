@@ -35,8 +35,8 @@ from taggit.managers import TaggableManager
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
-    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
-    'dl', 'dt', 'dd',
+    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code',
+    'dl', 'dt', 'dd', 'small', 'sup',
     'img', 
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
