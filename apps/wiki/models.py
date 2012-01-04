@@ -455,7 +455,9 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     operating_systems = _inherited('operating_systems', 'operating_system_set')
 
     def get_absolute_url(self):
-        return reverse('wiki.document', locale=self.locale, args=[self.slug])
+        # FIXME: There should be no way that the slug is empty.
+        slug = self.slug or 'NOSLUG'
+        return reverse('wiki.document', locale=self.locale, args=[slug])
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):
@@ -665,6 +667,12 @@ class Revision(ModelBase):
     # TODO: limit_choices_to={'document__locale':
     # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
 
+    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
+    # so that migrations can be idempotent.
+    mindtouch_old_id = models.IntegerField(
+            help_text="ID for migrated MindTouch revision (-1 for current)",
+            null=True, db_index=True)
+
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old
         value was correct).
@@ -738,11 +746,15 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            self.document.title = self.title
-            self.document.slug = self.slug
-            self.document.html = self.content_cleaned
-            self.document.current_revision = self
-            self.document.save()
+            self.make_current()
+
+    def make_current(self):
+        """Make this revision the current one for the document"""
+        self.document.title = self.title
+        self.document.slug = self.slug
+        self.document.html = self.content_cleaned
+        self.document.current_revision = self
+        self.document.save()
 
     def __unicode__(self):
         return u'[%s] %s #%s: %s' % (self.document.locale,

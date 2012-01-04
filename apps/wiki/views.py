@@ -522,10 +522,16 @@ def document_revisions(request, document_slug):
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
                 .defer('summary', 'content')
-                .order_by('-created', '-id'))
+                .order_by('-id'))
+
+    # Ensure the current revision appears at the top, no matter where it
+    # appears in the order.
+    curr_id = doc.current_revision.id
+    revs_out = [r for r in revs if r.id == curr_id]
+    revs_out.extend([r for r in revs if r.id != curr_id])
 
     return jingo.render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs, 'document': doc})
+                        {'revisions': revs_out, 'document': doc})
 
 
 @waffle_flag('kumawiki')
