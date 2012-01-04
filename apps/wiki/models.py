@@ -756,7 +756,8 @@ class Revision(ModelBase):
     @property
     def content_cleaned(self):
         return bleach.clean(
-            self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS
+            self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
+            strip_comments=False
         )
 
 
