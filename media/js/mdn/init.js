@@ -20,14 +20,14 @@ jQuery.fn.placeholder = function(new_value) {
         var $this = $(this),
             text = $this.attr('placeholder');
 
-        if ($this.val() == text) {
+        if ($this.val() === text) {
             $this.val('').removeClass('placeholder');
         }
     }).blur(function() {
         var $this = $(this),
             text = $this.attr('placeholder');
 
-        if ($this.val() == '') {
+        if ($this.val() === '') {
             $this.val(text).addClass('placeholder');
         }
     }).each(function(){
@@ -53,9 +53,11 @@ jQuery.fn.placeholder = function(new_value) {
 
     // replace no-JS search with our built-in one
     var search = $('#site-search,#doc-search');
-    if (search.length) search.attr('action', search.attr('data-url'))
+    if (search.length) {
+        search.attr('action', search.attr('data-url'))
           .removeAttr('data-url')
           .children('input[name=sitesearch]').remove();
+    }
 
     // Submit locale form on change
     $('form.languages')
@@ -87,17 +89,19 @@ jQuery.fn.placeholder = function(new_value) {
   // Hide dropdowns when anything else is clicked
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
-    if (! $clicked.parents().hasClass("menu"))
+    if (! $clicked.parents().hasClass("menu")){
       $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
       $("#masthead .toggle").removeClass("open");
+    }
   });
   
   // or gets focus
   $("a, input, textarea, button, :focus").bind('focus', function(e) {
     var $focused = $(e.target);
-    if (! $focused.parents().hasClass("menu"))
+    if (! $focused.parents().hasClass("menu")) {
       $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
       $("#masthead .toggle").removeClass("open");
+    }
   });
 
   // If found, wire up the BrowserID sign in button
@@ -110,7 +114,7 @@ jQuery.fn.placeholder = function(new_value) {
               .parent().submit();
       });
       return false;
-    };
+    }
   });
 
 // });
