@@ -17,7 +17,8 @@ from html5lib.filters._base import Filter as html5lib_Filter
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand, NoArgsCommand, CommandError
+from django.core.management.base import (BaseCommand, NoArgsCommand,
+                                         CommandError)
 from django.db import connections, connection, transaction, IntegrityError
 from django.utils import encoding, hashcompat
 
@@ -34,104 +35,132 @@ from dekicompat.backends import DekiUser, DekiUserBackend
 
 log = commonware.log.getLogger('kuma.migration')
 
-HISTORY_LIMIT = 100
-ADMIN_ROLE_IDS = (4, )
 
 class Command(BaseCommand):
-    """Migrate wiki content from MindTouch to Kuma's wiki app"""
+    help = """Migrate content from MindTouch to Kuma"""
+
+    option_list = BaseCommand.option_list + (
+        make_option('--all', action="store_true", dest="all", default=False,
+                    help="Migrate all documents"),
+        make_option('--slug', dest="slug", default=None,
+                    help="Migrate specific page by slug"),
+        make_option('--revisions', dest="revisions", type="int", default=25,
+                    help="Limit revisions migrated per document"),
+        make_option('--viewed', dest="most_viewed", type="int", default=25,
+                    help="Migrate # of most viewed documents"),
+        make_option('--recent', dest="recent", type="int", default=25,
+                    help="Migrate # of recently modified documents"),
+        make_option('--longest', dest="longest", type="int", default=25,
+                    help="Migrate # of longest documents"),
+        make_option('--verbose', action='store_true', dest='verbose',
+                    help="Produce verbose output"),)
 
     def handle(self, *args, **options):
-        log.info("Starting up")
-
+        self.options = options
+        self.admin_role_ids = (4,)
         self.users = {}
         self.wikidb = connections['wikidb']
         self.cur = self.wikidb.cursor()
 
-        pages_rows = []
+        rows = self.gather_pages()
+        log.info("Migrating %s pages to Kuma..." % len(rows))
+        for r in rows:
+            self.update_document(r)
 
-        if True:
-            # Grab the most viewed pages
-            log.info("Migrating most viewed pages...")
-            self.cur.execute("""
-                SELECT p.*, pc.*
-                FROM pages AS p, page_viewcount AS pc 
-                WHERE 
-                    pc.page_id=p.page_id AND
-                    page_namespace = 0
-                ORDER BY p.page_id ASC
-                LIMIT 10
-            """)
-            pages_rows.extend(self._fetchallDicts(self.cur))
+    def gather_pages(self):
+        """Gather rows for pages using the current options"""
+        rows = []
 
-        if True:
-            # Grab the most recently modified
-            log.info("Migrating recently modified pages...")
-            self.cur.execute("""
+        # TODO: Migrate pages from namespaces other than 0
+
+        if self.options['all']:
+            # Migrating all pages trumps any other criteria
+            log.info("Gathering ALL pages from MindTouch...")
+            rows.extend(self._fetchall_sql("""
                 SELECT *
                 FROM pages
                 WHERE page_namespace = 0
-                ORDER BY page_id ASC
-                LIMIT 10
-            """)
-            pages_rows.extend(self._fetchallDicts(self.cur))
+                ORDER BY page_timestamp DESC
+            """))
 
-        if True:
-            # Grab the longest pages
-            log.info("Migrating longest pages...")
-            self.cur.execute("""
-                SELECT * 
-                FROM pages 
-                WHERE page_namespace = 0
-                ORDER BY page_id ASC
-                LIMIT 10
-            """)
-            pages_rows.extend(self._fetchallDicts(self.cur))
+        elif self.options['slug']:
+            # Migrating a single page...
+            log.info("Searching for %s" % self.options['slug'])
+            rows.extend(self._fetchall_sql("""
+                SELECT *
+                FROM pages
+                WHERE
+                    page_namespace = 0 AND
+                    page_title = %s
+                ORDER BY page_timestamp DESC
+            """, self.options['slug']))
 
-        for r in pages_rows:
-            self.updateDocumentFromPagesRow(r)
+        else:
 
-    def updateDocumentFromPagesRow(self, r):
-        log.info("\t%s || %s" % (r['page_title'], r['page_display_name']))
+            if self.options['most_viewed'] > 0:
+                # Grab the most viewed pages
+                log.info("Gathering %s most viewed pages from MindTouch..." %
+                         self.options['most_viewed'])
+                rows.extend(self._fetchall_sql("""
+                    SELECT p.*, pc.*
+                    FROM pages AS p, page_viewcount AS pc 
+                    WHERE 
+                        pc.page_id=p.page_id AND
+                        page_namespace = 0
+                    ORDER BY pc.page_counter DESC
+                    LIMIT %s
+                """, self.options['most_viewed']))
+
+            if self.options['recent'] > 0:
+                # Grab the most recently modified
+                log.info("Gathering %s recently modified pages from MindTouch..." %
+                         self.options['recent'])
+                rows.extend(self._fetchall_sql("""
+                    SELECT *
+                    FROM pages
+                    WHERE page_namespace = 0
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """, self.options['recent']))
+
+            if self.options['longest'] > 0:
+                # Grab the longest pages
+                log.info("Gathering %s longest pages from MindTouch..." %
+                         self.options['longest'])
+                rows.extend(self._fetchall_sql("""
+                    SELECT * 
+                    FROM pages 
+                    WHERE page_namespace = 0
+                    ORDER BY length(page_text) DESC
+                    LIMIT %s
+                """, self.options['longest']))
+
+        return rows
+
+    def update_document(self, r):
+        log.info("\t%s (%s)" % (r['page_title'], r['page_display_name']))
 
         try:
-            doc, created = Document.objects.get_or_create(
-                slug = r['page_title'] or r['page_display_name'],
-                title = r['page_display_name'],
-                defaults = dict(
+            slug = r['page_title'] or r['page_display_name']
+            doc, created = Document.objects.get_or_create(slug=slug,
+                title=r['page_display_name'], defaults=dict(
                     category=CATEGORIES[0][0]
                 ))
 
-            self.updateRevisions(r, doc)
+            if created:
+                log.info("\t\tNew document created. (ID=%s)" % doc.pk)
+            else:
+                log.info("\t\tDocument already exists. (ID=%s)" % doc.pk)
 
-            rev, created = Revision.objects.get_or_create(
-                document = doc,
-                # HACK: Using ID of -1 to indicate the current MindTouch
-                # revision. All revisions of a Kuma document have revisions,
-                # whereas MindTouch only tracks "old" revisions.
-                mindtouch_old_id = -1,
-                defaults = dict(
-                    creator = self.getUserForPage(r),
-                    is_approved = True,
-                    significance = SIGNIFICANCES[0][0],
-                ))
-
-            rev.slug = r['page_title'] or r['page_display_name']
-            rev.title = r['page_display_name']
-            rev.content = r['page_text']
-            rev.comment = r['page_comment']
-
-            # Save, and force to current revision regardless of whatever the
-            # highest revision ID might be.
-            rev.save()
-            rev.make_current()
-
-            log.info("\t\t\t %s :: %s (%s)" % (rev.mindtouch_old_id, rev.pk, "CURRENT"))
+            self.update_past_revisions(r, doc)
+            self.update_current_revision(r, doc)
 
         except TitleCollision, e:
             log.error('\t\tPROBLEM %s' % type(e))
-        
-    def updateRevisions(self, r_page, doc):
-        log.info("\t\tUpdating revisions...")
+
+    def update_past_revisions(self, r_page, doc):
+        """Update past revisions for the given page row and document"""
+        ct_new, ct_existing = 0, 0
         self.cur.execute("""
             SELECT *
             FROM old as o
@@ -139,94 +168,111 @@ class Command(BaseCommand):
                 o.old_page_id = %s
             ORDER BY o.old_revision DESC
             LIMIT %s
-        """, (
-            r_page['page_id'],
-            HISTORY_LIMIT,
-        ))
-        revs = sorted(self._fetchallDicts(self.cur),
+        """, (r_page['page_id'], self.options['revisions'],))
+        revs = sorted(self._fetchall_dicts(self.cur),
                       key=lambda r: r['old_revision'])
         for r in revs:
 
-            # HACK: Convert the flat timestamp into something pythonic
-            ts = datetime.datetime.fromtimestamp(
-                    time.mktime(time.strptime(r['old_timestamp'],
-                                              "%Y%m%d%H%M%S")))
-            # TODO: Timezone necessary here?
+            ts = self.parse_timestamp(r['old_timestamp'])
 
-            rev, created = Revision.objects.get_or_create(
-                document=doc,
-                mindtouch_old_id=r['old_id'],
-                defaults=dict(
-                    slug = doc.slug,
-                    title = doc.title,
-                    creator = self.getUserForRevision(r),
-                    is_approved = True,
-                    significance = SIGNIFICANCES[0][0],
-                    comment = r['old_comment'],
-                    content = r['old_text'],
-                    created = ts,
-                    reviewed = ts,
-                    reviewer = self.getSuperuser(),
-                ))
+            rev, created = Revision.objects.get_or_create(document=doc,
+                mindtouch_old_id=r['old_id'], defaults=dict(
+                    slug=doc.slug, title=doc.title,
+                    creator=self.get_user_for_deki_id(r['old_user']),
+                    is_approved=True,
+                    significance=SIGNIFICANCES[0][0],
+                    content=r['old_text'], comment=r['old_comment'],
+                    created=ts, reviewed=ts,
+                    reviewer=self.get_superuser(),))
 
-            log.info("\t\t\t %s (%s) :: %s (%s)" % (r['old_id'], r['old_revision'], rev.pk, created))
+            if created:
+                ct_new += 1
+            else:
+                ct_existing += 1
 
-    def getUserForPage(self, r):
-        # return User.objects.filter(is_superuser=1)[0]
-        # TODO: Get or create user corresponding to MT account
-        return self.getDjangoUserforDekiUserID(r['page_user_id'])
+        log.info("\t\tPast revisions: %s new, %s existing" %
+                 (ct_new, ct_existing))
 
-    def getUserForRevision(self, r):
-        # return User.objects.filter(is_superuser=1)[0]
-        # TODO: Get or create user corresponding to MT account
-        return self.getDjangoUserforDekiUserID(r['old_user'])
+    def update_current_revision(self, r, doc):
+        # HACK: Using ID of -1 to indicate the current MindTouch revision.
+        # All revisions of a Kuma document have revision records, whereas
+        # MindTouch only tracks "old" revisions.
+        rev, created = Revision.objects.get_or_create(document=doc,
+            mindtouch_old_id=-1, defaults=dict(
+                creator=self.get_user_for_deki_id(r['page_user_id']),
+                is_approved=True,
+                significance=SIGNIFICANCES[0][0],))
 
-    def getDjangoUserforDekiUserID(self, deki_user_id):
-        
+        # Check to see if the current revision is up to date, in which case we
+        # can skip the update and save a little time.
+        page_ts = self.parse_timestamp(r['page_timestamp'])
+        if not created and page_ts <= rev.created:
+            log.info("\t\tCurrent revision already up to date. (ID=%s)" % rev.pk)
+            return
+
+        rev.created = rev.reviewed = page_ts
+        rev.slug = r['page_title'] or r['page_display_name']
+        rev.title = r['page_display_name']
+        rev.content = r['page_text']
+        rev.comment = r['page_comment']
+
+        # Save, and force to current revision.
+        rev.save()
+        rev.make_current()
+
+        if created:
+            log.info("\t\tCurrent revision created. (ID=%s)" % rev.pk)
+        else:
+            log.info("\t\tCurrent revision updated. (ID=%s)" % rev.pk)
+
+    def get_user_for_deki_id(self, deki_user_id):
+        """Given a Deki user ID, come up with a Django user object whether we
+        need to migrate it first or just fetch it."""
         # If we don't already have this Deki user cached, look up or migrate
         if deki_user_id not in self.users:
 
             # Look up the user straight from the database
-            self.cur.execute("""
-                SELECT * 
-                FROM users AS u
-                WHERE
-                    u.user_id = %s
-            """, (deki_user_id,))
-            r = list(self._fetchallDicts(self.cur))[0]
-            deki_user = DekiUser(
-                id = r['user_id'],
-                username = r['user_name'],
-                fullname = r['user_real_name'],
-                email = r['user_email'],
-                gravatar = '')
+            self.cur.execute("SELECT * FROM users AS u WHERE u.user_id = %s",
+                             (deki_user_id,))
+            r = list(self._fetchall_dicts(self.cur))[0]
+            deki_user = DekiUser(id=r['user_id'], username=r['user_name'],
+                                 fullname=r['user_real_name'],
+                                 email=r['user_email'], gravatar='',)
 
             # Scan user grants for admin roles to set Django flags.
-            self.cur.execute("""
-                SELECT *
-                FROM user_grants AS ug
-                WHERE
-                    user_id = %s
-            """, (deki_user_id,))
+            self.cur.execute("""SELECT * FROM user_grants AS ug
+                                WHERE user_id = %s""",
+                             (deki_user_id,))
             is_admin = False
-            for rg in self._fetchallDicts(self.cur):
-                if rg['role_id'] in ADMIN_ROLE_IDS:
+            for rg in self._fetchall_dicts(self.cur):
+                if rg['role_id'] in self.admin_role_ids:
                     is_admin = True
-            
             deki_user.is_superuser = deki_user.is_staff = is_admin
 
             # Finally get/create Django user and cache it.
-            # FIXME: THIS NEGELCTS PASSWORD ON THE DJANGO SIDE! But, we're
-            # probably okay, post-BrowserID
             user = DekiUserBackend.get_or_create_user(deki_user)
             self.users[deki_user_id] = user
 
         return self.users[deki_user_id]
-    
-    def getSuperuser(self):
+
+    def get_superuser(self):
+        """Get the first superuser from Django we can find."""
         return User.objects.filter(is_superuser=1)[0]
 
-    def _fetchallDicts(self, cursor):
+    def parse_timestamp(self, ts):
+        """HACK: Convert a MindTouch timestamp into something pythonic"""
+        # TODO: Timezone necessary here?
+        dt = datetime.datetime.fromtimestamp(
+                    time.mktime(time.strptime(ts, "%Y%m%d%H%M%S")))
+        return dt
+
+    def _fetchall_sql(self, sql, *params):
+        self.cur.execute(sql, params)
+        return self._fetchall_dicts(self.cur)
+
+    def _fetchall_dicts(self, cursor):
+        """Wrapper for cursor.fetchall() that uses the cursor.description to
+        convert each row's list of columns to a dict."""
         names = [x[0] for x in cursor.description]
         return (dict(zip(names, row))
                 for row in cursor.fetchall())

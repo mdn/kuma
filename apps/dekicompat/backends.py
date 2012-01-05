@@ -166,7 +166,7 @@ class DekiUserBackend(object):
             user.set_unusable_password()
             user.save()
             profile = UserProfile(deki_user_id=deki_user.id, user=user)
-            profile.save()
+            profile.save(skip_mindtouch_put=True)
 
         user.deki_user = deki_user
 
