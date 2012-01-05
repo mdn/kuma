@@ -462,6 +462,31 @@ class BrowserIDTestCase(TestCase):
     @mock_put_mindtouch_user
     @mock_mindtouch_login
     @mock.patch('users.views._verify_browserid')
+    def test_explain_popup(self, _verify_browserid):
+        _verify_browserid.return_value = {'email': 'testuser2@test.com'}
+        resp = self.client.get(reverse('home', locale='en-US'))
+        doc = pq(resp.content)
+        eq_(True, 'toggle' in doc.find('li#user-signin').html())
+
+        # Posting the fake assertion to browserid_verify should work, with the
+        # actual verification method mocked out.
+        resp = self.client.post(reverse('users.browserid_verify',
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_('1', resp.cookies.get('browserid_explained').value)
+
+        resp = self.client.get(reverse('users.logout'), locale='en-US')
+
+        # even after logout, cookie should prevent the toggle
+        resp = self.client.get(reverse('home', locale='en-US'))
+        eq_('1', self.client.cookies.get('browserid_explained').value)
+        doc = pq(resp.content)
+        eq_(False, 'toggle' in doc.find('li#user-signin').html())
+
+    @mock_get_deki_user_by_email
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_mindtouch_user(self, _verify_browserid):
         mt_email = 'testaccount@testaccount.com'
         _verify_browserid.return_value = {'email': mt_email}
