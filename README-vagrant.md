@@ -44,7 +44,6 @@ reasons.
     # production site. This can take a long while, since there's over 500MB
     vagrant ssh
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
-    mysql -uroot < /vagrant/puppet/files/tmp/postimport.sql
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
     # Edit files as usual on your host machine; the current directory is
