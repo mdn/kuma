@@ -312,6 +312,11 @@ a.browserid-signin:link, a.browserid-signin:visited { padding: 1px 10px 1px 28px
 a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { background-color: #666; }
 
 #user-signin a.browserid-signin { position: relative; z-index: 100; }
+
+/* Hide the BrowserID sign in button until the JS behind it is ready */
+#user-signin .browserid-signin { display: none; }
+.hasJS #user-signin .browserid-signin { display: inline; }
+
 #browserid-info { position: absolute; z-index: 99; left: -999em; top: 0; margin-top: 25px; 
   width: 300px; 
   color: #ccc; 

@@ -20,7 +20,7 @@
               {% if request.COOKIES.get('browserid_explained', 0) == '1' %}
                 {% set toggle = '' %}
               {% endif %}
-              <a href="https://browserid.org/" target="_blank" class="browserid-signin {{ toggle }}" aria-haspopup="true" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a> 
+              <a href="#" target="_blank" class="browserid-signin {{ toggle }}" aria-haspopup="true" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a> 
               {% if toggle %}
               <div id="browserid-info" class="sub-menu" aria-hidden="true" aria-labelledby="user-signin">
               {% trans browserid_href='https://browserid.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
@@ -30,7 +30,7 @@
                 <p><strong>Returning members:</strong> sign in with BrowserID and you'll be connected to your MDN profile (all your information is still here).</p>
                 <p><strong>New members:</strong> sign in with BrowserID first, then you'll be able to set up your new MDN profile.</p>
               {% endtrans %}
-                <p><a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a></p>
+                <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a></p>
               </div>
               {% endif %}
           </form>
