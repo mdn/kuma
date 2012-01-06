@@ -1,8 +1,9 @@
 # Ensure some handy dev tools are available.
 class dev_tools {
     package { 
-        [ "gcc-c++", "git", "subversion-devel", "mercurial", "vim-enhanced", "man", "man-pages",
-            "nfs-utils", "nfs-utils-lib", "telnet", "nc", "rsync", "samba" ]:
+        [ "gcc-c++", "git", "subversion-devel", "mercurial", "vim-enhanced",
+            "man", "man-pages", "nfs-utils", "nfs-utils-lib", "telnet", "nc",
+            "rsync", "samba", "java-1.6.0-openjdk"]:
             ensure => installed;
     }
 }
