@@ -9,8 +9,8 @@ from xml.dom import minidom
 from xml.sax.saxutils import escape as xml_escape
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
-
 from pyquery import PyQuery as pq
 
 import commonware
@@ -157,7 +157,7 @@ class DekiUserBackend(object):
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
             user = profile.user
 
-        except UserProfile.DoesNotExist:
+        except ObjectDoesNotExist:
             # No existing profile, so try creating a new profile and user
             user, created = (User.objects
                              .get_or_create(username=deki_user.username))

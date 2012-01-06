@@ -52,6 +52,9 @@ class Command(BaseCommand):
                     help="Migrate # of recently modified documents"),
         make_option('--longest', dest="longest", type="int", default=25,
                     help="Migrate # of longest documents"),
+        make_option('--update-revisions', action="store_true",
+                    dest="update_revisions", default=False,
+                    help="Update existing revisions, rather than skipping"),
         make_option('--verbose', action='store_true', dest='verbose',
                     help="Produce verbose output"),)
 
@@ -160,7 +163,9 @@ class Command(BaseCommand):
 
     def update_past_revisions(self, r_page, doc):
         """Update past revisions for the given page row and document"""
-        ct_new, ct_existing = 0, 0
+        ct_new, ct_existing, ct_error = 0, 0, 0
+
+        # Grab all the past revisions from MindTouch
         self.cur.execute("""
             SELECT *
             FROM old as o
@@ -169,29 +174,45 @@ class Command(BaseCommand):
             ORDER BY o.old_revision DESC
             LIMIT %s
         """, (r_page['page_id'], self.options['revisions'],))
-        revs = sorted(self._fetchall_dicts(self.cur),
-                      key=lambda r: r['old_revision'])
-        for r in revs:
+        old_rows = sorted(self._fetchall_dicts(self.cur),
+                          key=lambda r: r['old_revision'], reverse=True)
 
-            ts = self.parse_timestamp(r['old_timestamp'])
+        # Get all the revisions for the Kuma doc and extract IDs of
+        # already-migrated revisions.
+        revs = (Revision.objects.filter(document=doc)
+                    .defer('summary', 'content')
+                    .order_by('-id'))
+        existing_old_ids = set(x.mindtouch_old_id for x in revs)
 
-            rev, created = Revision.objects.get_or_create(document=doc,
-                mindtouch_old_id=r['old_id'], defaults=dict(
+        # Process all the past revisions...
+        for r in old_rows:
+        
+            if r['old_id'] in existing_old_ids:
+                # If this revision has already been migrated, skip update.
+                ct_existing += 1
+                if not self.options['update_revisions']:
+                    continue
+
+            try:
+                ts = self.parse_timestamp(r['old_timestamp'])
+                rev = Revision(document=doc,
+                    mindtouch_old_id=r['old_id'],
                     slug=doc.slug, title=doc.title,
                     creator=self.get_user_for_deki_id(r['old_user']),
                     is_approved=True,
                     significance=SIGNIFICANCES[0][0],
                     content=r['old_text'], comment=r['old_comment'],
                     created=ts, reviewed=ts,
-                    reviewer=self.get_superuser(),))
-
-            if created:
+                    reviewer=self.get_superuser(),)
+                rev.save()
                 ct_new += 1
-            else:
-                ct_existing += 1
+            
+            except Exception, e:
+                log.error("\t\t\tPROBLEM %s" % (type(e),))
+                ct_error += 1
 
-        log.info("\t\tPast revisions: %s new, %s existing" %
-                 (ct_new, ct_existing))
+        log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
+                 (ct_new, ct_existing, ct_error))
 
     def update_current_revision(self, r, doc):
         # HACK: Using ID of -1 to indicate the current MindTouch revision.
