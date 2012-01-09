@@ -265,6 +265,16 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
 
+    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
+    # so that migrations can be idempotent.
+    mindtouch_page_id = models.IntegerField(
+            help_text="ID for migrated MindTouch page",
+            null=True, db_index=True)
+
+    # Last modified time for the document. Should be equal-to or greater than
+    # the current revision's created field
+    modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
+
     # firefox_versions,
     # operating_systems:
     #    defined in the respective classes below. Use them as in

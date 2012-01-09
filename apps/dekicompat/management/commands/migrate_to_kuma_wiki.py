@@ -10,6 +10,7 @@ TODO
 """
 import time
 import datetime
+import itertools
 from optparse import make_option
 
 import html5lib
@@ -40,6 +41,8 @@ class Command(BaseCommand):
     help = """Migrate content from MindTouch to Kuma"""
 
     option_list = BaseCommand.option_list + (
+        make_option('--wipe', action="store_true", dest="wipe", default=False,
+                    help="Wipe all documents before migration"),
         make_option('--all', action="store_true", dest="all", default=False,
                     help="Migrate all documents"),
         make_option('--slug', dest="slug", default=None,
@@ -54,7 +57,10 @@ class Command(BaseCommand):
                     help="Migrate # of longest documents"),
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
-                    help="Update existing revisions, rather than skipping"),
+                    help="Force update to existing revisions"),
+        make_option('--update-documents', action="store_true",
+                    dest="update_documents", default=False,
+                    help="Force update to existing documents"),
         make_option('--verbose', action='store_true', dest='verbose',
                     help="Produce verbose output"),)
 
@@ -62,34 +68,68 @@ class Command(BaseCommand):
         self.options = options
         self.admin_role_ids = (4,)
         self.users = {}
+
         self.wikidb = connections['wikidb']
         self.cur = self.wikidb.cursor()
 
+        self.kumadb = connections['default']
+
+        if self.options['wipe']:
+            self.wipe_documents()
+
+        self.docs_migrated = self.index_migrated_docs()
+        log.info("Found %s docs already migrated" %
+                 len(self.docs_migrated.values()))
+
         rows = self.gather_pages()
-        log.info("Migrating %s pages to Kuma..." % len(rows))
+
+        log.info("Migrating pages to Kuma...")
         for r in rows:
             self.update_document(r)
 
+    def wipe_documents(self):
+        """Delete all documents"""
+        docs = Document.objects.all()
+        ct = 0
+        log.info("Deleting %s documents..." % len(docs))
+        for d in docs:
+            d.delete()
+            ct += 1
+            if 0 == (ct % 10):
+                log.debug("\t%s deleted" % ct)
+
+    def index_migrated_docs(self):
+        """Build an index of Kuma docs already migrated, mapping Mindtouch page
+        ID to document last-modified."""
+        kc = self.kumadb.cursor()
+        kc.execute("""
+            SELECT mindtouch_page_id, modified
+            FROM wiki_document
+            WHERE mindtouch_page_id IS NOT NULL
+        """)
+        return dict((r[0], r[1]) for r in kc)
+
     def gather_pages(self):
         """Gather rows for pages using the current options"""
-        rows = []
+        iters = []
 
         # TODO: Migrate pages from namespaces other than 0
 
         if self.options['all']:
             # Migrating all pages trumps any other criteria
-            log.info("Gathering ALL pages from MindTouch...")
-            rows.extend(self._fetchall_sql("""
-                SELECT *
-                FROM pages
+            where = """
                 WHERE page_namespace = 0
                 ORDER BY page_timestamp DESC
-            """))
+            """
+            self.cur.execute("SELECT count(*) FROM pages %s" % where)
+            log.info("Gathering ALL %s pages from MindTouch..." %
+                     self.cur.fetchone()[0])
+            iters.append(self._query("SELECT * FROM pages %s" % where))
 
         elif self.options['slug']:
             # Migrating a single page...
             log.info("Searching for %s" % self.options['slug'])
-            rows.extend(self._fetchall_sql("""
+            iters.append(self._query("""
                 SELECT *
                 FROM pages
                 WHERE
@@ -104,7 +144,7 @@ class Command(BaseCommand):
                 # Grab the most viewed pages
                 log.info("Gathering %s most viewed pages from MindTouch..." %
                          self.options['most_viewed'])
-                rows.extend(self._fetchall_sql("""
+                iters.append(self._query("""
                     SELECT p.*, pc.*
                     FROM pages AS p, page_viewcount AS pc 
                     WHERE 
@@ -118,7 +158,7 @@ class Command(BaseCommand):
                 # Grab the most recently modified
                 log.info("Gathering %s recently modified pages from MindTouch..." %
                          self.options['recent'])
-                rows.extend(self._fetchall_sql("""
+                iters.append(self._query("""
                     SELECT *
                     FROM pages
                     WHERE page_namespace = 0
@@ -130,7 +170,7 @@ class Command(BaseCommand):
                 # Grab the longest pages
                 log.info("Gathering %s longest pages from MindTouch..." %
                          self.options['longest'])
-                rows.extend(self._fetchall_sql("""
+                iters.append(self._query("""
                     SELECT * 
                     FROM pages 
                     WHERE page_namespace = 0
@@ -138,17 +178,31 @@ class Command(BaseCommand):
                     LIMIT %s
                 """, self.options['longest']))
 
-        return rows
+        return itertools.chain(*iters)
 
+    @transaction.commit_on_success
     def update_document(self, r):
+        """Update Kuma document from given MindTouch page record"""
+        # Check to see if this doc has already been migrated, and if the
+        # exising is doc is up to date.
+        page_ts = self.parse_timestamp(r['page_timestamp'])
+        last_mod = self.docs_migrated.get(r['page_id'], None)
+        if (not self.options['update_documents'] and last_mod is not None 
+                and last_mod >= page_ts):
+            log.debug("\t%s (%s) up to date" %
+                      (r['page_title'], r['page_display_name']))
+            return
+
         log.info("\t%s (%s)" % (r['page_title'], r['page_display_name']))
 
         try:
+            # Ensure that the document exists, and has the MindTouch page ID
             slug = r['page_title'] or r['page_display_name']
             doc, created = Document.objects.get_or_create(slug=slug,
                 title=r['page_display_name'], defaults=dict(
-                    category=CATEGORIES[0][0]
+                    category=CATEGORIES[0][0],
                 ))
+            doc.mindtouch_page_id = r['page_id']
 
             if created:
                 log.info("\t\tNew document created. (ID=%s)" % doc.pk)
@@ -174,7 +228,7 @@ class Command(BaseCommand):
             ORDER BY o.old_revision DESC
             LIMIT %s
         """, (r_page['page_id'], self.options['revisions'],))
-        old_rows = sorted(self._fetchall_dicts(self.cur),
+        old_rows = sorted(self._query_dicts(self.cur),
                           key=lambda r: r['old_revision'], reverse=True)
 
         # Get all the revisions for the Kuma doc and extract IDs of
@@ -255,7 +309,7 @@ class Command(BaseCommand):
             # Look up the user straight from the database
             self.cur.execute("SELECT * FROM users AS u WHERE u.user_id = %s",
                              (deki_user_id,))
-            r = list(self._fetchall_dicts(self.cur))[0]
+            r = list(self._query_dicts(self.cur))[0]
             deki_user = DekiUser(id=r['user_id'], username=r['user_name'],
                                  fullname=r['user_real_name'],
                                  email=r['user_email'], gravatar='',)
@@ -265,7 +319,7 @@ class Command(BaseCommand):
                                 WHERE user_id = %s""",
                              (deki_user_id,))
             is_admin = False
-            for rg in self._fetchall_dicts(self.cur):
+            for rg in self._query_dicts(self.cur):
                 if rg['role_id'] in self.admin_role_ids:
                     is_admin = True
             deki_user.is_superuser = deki_user.is_staff = is_admin
@@ -287,13 +341,12 @@ class Command(BaseCommand):
                     time.mktime(time.strptime(ts, "%Y%m%d%H%M%S")))
         return dt
 
-    def _fetchall_sql(self, sql, *params):
+    def _query(self, sql, *params):
         self.cur.execute(sql, params)
-        return self._fetchall_dicts(self.cur)
+        return self._query_dicts(self.cur)
 
-    def _fetchall_dicts(self, cursor):
+    def _query_dicts(self, cursor):
         """Wrapper for cursor.fetchall() that uses the cursor.description to
         convert each row's list of columns to a dict."""
         names = [x[0] for x in cursor.description]
-        return (dict(zip(names, row))
-                for row in cursor.fetchall())
+        return (dict(zip(names, row)) for row in cursor)
