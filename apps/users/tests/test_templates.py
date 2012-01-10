@@ -20,6 +20,7 @@ from dekicompat.tests import (MULTI_ACCOUNT_FIXTURE_XML,
                               mock_put_mindtouch_user,
                               mock_get_deki_user_by_email,
                               mock_get_deki_user)
+from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -186,7 +187,16 @@ class PasswordReset(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_only_user(self, get_current):
         get_current.return_value.domain = 'testserver.com'
+        mt_email = 'testaccount@testaccount.com'
         self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: Ensure that expected user details are in MindTouch when not
+            # mocking the API
+            user_xml = MINDTOUCH_USER_XML % dict(username="testaccount",
+                    email=mt_email, fullname="None", status="active",
+                    language="", timezone="-08:00", role="Contributor")
+            DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
+                                               user_xml=user_xml)
 
         r = self.client.post(reverse('users.pw_reset'),
                              {'email': 'testaccount@testaccount.com'})

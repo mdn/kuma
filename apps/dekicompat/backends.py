@@ -221,6 +221,10 @@ class DekiUserBackend(object):
         return user_xml
 
     @staticmethod
+    def _req_post(url, data, headers):
+        return requests.post(url, data=data, headers=headers)
+
+    @staticmethod
     def post_mindtouch_user(user):
         # post a new mindtouch user
         user_url = '%s/@api/deki/users?apikey=%s' % (
@@ -228,10 +232,14 @@ class DekiUserBackend(object):
             settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml'}
-        resp = requests.post(user_url, data=user_xml, headers=headers)
+        resp = DekiUserBackend._req_post(user_url, user_xml, headers)
         if resp.status_code is not 200:
-            # TODO: decide WTF to do here
-            pass
+            # HACK: MindTouch fails intermittently, so retry a few times
+            for i in range(6):
+                resp = DekiUserBackend._req_post(
+                    user_url, data=user_xml, headers=headers)
+                if resp.status_code is 200:
+                    break
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod

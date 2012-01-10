@@ -16,7 +16,8 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user_by_email,
                               mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
-                              mock_post_mindtouch_user)
+                              mock_post_mindtouch_user,
+                              mock_req_post)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from notifications.tests import watch
@@ -187,6 +188,21 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
+
+    @mock_missing_get_deki_user
+    @mock_put_mindtouch_user
+    @mock_req_post
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_retries_mindtouch_post(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        now = time()
+        username = 'n00b%s' % now
+        response = self.client.post(reverse('users.register'),
+                                    {'username': username,
+                                     'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        eq_(200, response.status_code)
 
     @mock_missing_get_deki_user
     @mock_post_mindtouch_user
