@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
+from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
@@ -189,6 +190,7 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
+    @attr('retry')
     @mock_missing_get_deki_user
     @mock_put_mindtouch_user
     @mock_perform_post_mindtouch_user
@@ -203,6 +205,7 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
         eq_(200, response.status_code)
+        ok_("Please try again later." in response.content)
 
     @mock_missing_get_deki_user
     @mock_post_mindtouch_user

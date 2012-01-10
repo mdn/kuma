@@ -167,26 +167,32 @@ def browserid_register(request):
         if 'register' == request.POST.get('action', None):
             register_form = BrowserIDRegisterForm(request.POST)
             if register_form.is_valid():
-                # If the registration form is valid, then create a new Django
-                # user, a new MindTouch user, and link the two together.
-                # TODO: This all belongs in model classes
-                username = register_form.cleaned_data['username']
+                try:
+                    # If the registration form is valid, then create a new Django
+                    # user, a new MindTouch user, and link the two together.
+                    # TODO: This all belongs in model classes
+                    username = register_form.cleaned_data['username']
 
-                user = User.objects.create(username=username, email=email)
-                user.set_unusable_password()
-                user.save()
+                    user = User.objects.create(username=username, email=email)
+                    user.set_unusable_password()
+                    user.save()
 
-                profile = UserProfile.objects.create(user=user)
-                deki_user = DekiUserBackend.post_mindtouch_user(user)
-                profile.deki_user_id = deki_user.id
-                profile.save()
+                    profile = UserProfile.objects.create(user=user)
+                    deki_user = DekiUserBackend.post_mindtouch_user(user)
+                    profile.deki_user_id = deki_user.id
+                    profile.save()
 
-                user.backend = 'django_browserid.auth.BrowserIDBackend'
-                auth.login(request, user)
+                    user.backend = 'django_browserid.auth.BrowserIDBackend'
+                    auth.login(request, user)
 
-                # Bounce to the newly created profile page, since the user
-                # might want to review & edit.
-                return HttpResponseRedirect(profile.get_absolute_url())
+                    # Bounce to the newly created profile page, since the user
+                    # might want to review & edit.
+                    return HttpResponseRedirect(profile.get_absolute_url())
+                except Exception:
+                    return jingo.render(request, '500.html',
+                                        {'error_message': "We couldn't "
+                                        "register a new account at this time. "
+                                        "Please try again later."})
 
         else:
             # If login was valid, then set to the verified email

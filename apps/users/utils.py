@@ -1,5 +1,7 @@
 from django.contrib import auth
 
+import jingo
+
 from users.forms import RegisterForm, AuthenticationForm
 from users.models import RegistrationProfile
 
@@ -26,8 +28,14 @@ def handle_register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            RegistrationProfile.objects.create_inactive_user(
-                form.cleaned_data['username'], form.cleaned_data['password'],
-                form.cleaned_data['email'])
+            try:
+                RegistrationProfile.objects.create_inactive_user(
+                    form.cleaned_data['username'], form.cleaned_data['password'],
+                    form.cleaned_data['email'])
+            except Exception:
+                return jingo.render(request, '500.html',
+                                    {'error_message': "We couldn't "
+                                    "register a new account at this time. "
+                                    "Please try again later."})
         return form
     return RegisterForm()
