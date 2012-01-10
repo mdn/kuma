@@ -17,7 +17,7 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
                               mock_post_mindtouch_user,
-                              mock_req_post)
+                              mock_perform_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from notifications.tests import watch
@@ -191,7 +191,7 @@ class RegisterTestCase(TestCase):
 
     @mock_missing_get_deki_user
     @mock_put_mindtouch_user
-    @mock_req_post
+    @mock_perform_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_retries_mindtouch_post(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'

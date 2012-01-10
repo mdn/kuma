@@ -1,5 +1,5 @@
-
 from datetime import datetime
+import time
 from urllib import urlencode
 from urllib2 import HTTPError
 import urlparse
@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from pyquery import PyQuery as pq
 
 import commonware
+import constance.config
 
 from devmo.models import UserProfile
 
@@ -220,7 +221,7 @@ class DekiUserBackend(object):
         return user_xml
 
     @staticmethod
-    def _req_post(url, data, headers):
+    def _perform_post_mindtouch_user(url, data, headers):
         return requests.post(url, data=data, headers=headers)
 
     @staticmethod
@@ -231,14 +232,18 @@ class DekiUserBackend(object):
             settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml'}
-        resp = DekiUserBackend._req_post(user_url, user_xml, headers)
+        resp = DekiUserBackend._perform_post_mindtouch_user(user_url,
+                                                            user_xml,
+                                                            headers)
         if resp.status_code is not 200:
             # HACK: MindTouch fails intermittently, so retry a few times
-            for i in range(6):
-                resp = DekiUserBackend._req_post(
+            for i in range(constance.config.DEKIWIKI_POST_RETRIES):
+                resp = DekiUserBackend._perform_post_mindtouch_user(
                     user_url, data=user_xml, headers=headers)
                 if resp.status_code is 200:
                     break
+                time.sleep(getattr(settings, 'DEKIWIKI_API_RETRY_WAIT', .5)
+                           * i)
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod

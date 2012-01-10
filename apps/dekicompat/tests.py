@@ -50,20 +50,21 @@ def mock_post_mindtouch_user(test):
         return test
 
 
-def mock_req_post(test):
+def mock_perform_post_mindtouch_user(test):
     bad_resp = Response()
     bad_resp.status_code = 500
     bad_resp.content = "<FAIL><failure/></FAIL>"
 
     if settings.DEKIWIKI_MOCK:
-        @mock.patch('dekicompat.backends.DekiUserBackend._req_post')
-        def test_new(self, _req_post):
-            _req_post.return_value = bad_resp
+        @mock.patch('dekicompat.backends.DekiUserBackend.'
+                    '_perform_post_mindtouch_user')
+        def test_new(self, _perform_post_mindtouch_user):
+            _perform_post_mindtouch_user.return_value = bad_resp
             try:
                 test(self)
             except AttributeError:
                 pass
-            eq_(7, _req_post.call_count)
+            eq_(7, _perform_post_mindtouch_user.call_count)
         return test_new
     else:
         return test
