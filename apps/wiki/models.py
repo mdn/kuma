@@ -681,7 +681,9 @@ class Revision(ModelBase):
     # so that migrations can be idempotent.
     mindtouch_old_id = models.IntegerField(
             help_text="ID for migrated MindTouch revision (-1 for current)",
-            null=True, db_index=True)
+            null=True, db_index=True, unique=True)
+    is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
+            help_text="Did this revision come from MindTouch?")
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old

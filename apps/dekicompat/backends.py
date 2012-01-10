@@ -159,9 +159,17 @@ class DekiUserBackend(object):
 
         except ObjectDoesNotExist:
             # No existing profile, so try creating a new profile and user
+
+            # HACK: Usernames in Kuma are limited to 30 characters. There are
+            # around 0.1% of MindTouch users in production (circa 2011) whose
+            # names exceed this length. They're mostly the product of spammers
+            # and security tests but it will still throw MySQL-level errors
+            # during migration.
+            username = deki_user.username[:30]
+
             user, created = (User.objects
-                             .get_or_create(username=deki_user.username))
-            user.username = deki_user.username
+                             .get_or_create(username=username))
+            user.username = username
             user.email = deki_user.email
             user.set_unusable_password()
             user.save()

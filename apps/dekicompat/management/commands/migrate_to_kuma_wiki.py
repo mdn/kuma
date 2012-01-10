@@ -7,6 +7,13 @@ updates, and not duplicate documents or repeated revisions.
 TODO
 * https://bugzilla.mozilla.org/show_bug.cgi?id=710713
 * https://bugzilla.mozilla.org/showdependencytree.cgi?id=710713&hide_resolved=1
+* Performance metrics
+    * documents and revisions per hour
+    * estimated time to completion, given rate so far
+* Document limit - eg. exit after X documents updated, not including skips.
+    * Stick this in a shell script loop so that the script exits occasionally
+      to free memory?
+        * Need to figure out when we're done, then, though.
 """
 import time
 import datetime
@@ -47,13 +54,13 @@ class Command(BaseCommand):
                     help="Migrate all documents"),
         make_option('--slug', dest="slug", default=None,
                     help="Migrate specific page by slug"),
-        make_option('--revisions', dest="revisions", type="int", default=25,
+        make_option('--revisions', dest="revisions", type="int", default=999,
                     help="Limit revisions migrated per document"),
-        make_option('--viewed', dest="most_viewed", type="int", default=25,
+        make_option('--viewed', dest="most_viewed", type="int", default=0,
                     help="Migrate # of most viewed documents"),
-        make_option('--recent', dest="recent", type="int", default=25,
+        make_option('--recent', dest="recent", type="int", default=0,
                     help="Migrate # of recently modified documents"),
-        make_option('--longest', dest="longest", type="int", default=25,
+        make_option('--longest', dest="longest", type="int", default=0,
                     help="Migrate # of longest documents"),
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
@@ -65,14 +72,8 @@ class Command(BaseCommand):
                     help="Produce verbose output"),)
 
     def handle(self, *args, **options):
-        self.options = options
-        self.admin_role_ids = (4,)
-        self.users = {}
-
-        self.wikidb = connections['wikidb']
-        self.cur = self.wikidb.cursor()
-
-        self.kumadb = connections['default']
+        """Main driver for the command"""
+        self.init(options)
 
         if self.options['wipe']:
             self.wipe_documents()
@@ -83,10 +84,21 @@ class Command(BaseCommand):
 
         rows = self.gather_pages()
 
-        log.info("Migrating pages to Kuma...")
         for r in rows:
             self.update_document(r)
 
+    def init(self, options):
+        """Set up connections and options"""
+        self.options = options
+        self.admin_role_ids = (4,)
+        self.user_ids = {}
+
+        self.wikidb = connections['wikidb']
+        self.cur = self.wikidb.cursor()
+
+        self.kumadb = connections['default']
+
+    @transaction.commit_on_success
     def wipe_documents(self):
         """Delete all documents"""
         docs = Document.objects.all()
@@ -103,11 +115,11 @@ class Command(BaseCommand):
         ID to document last-modified."""
         kc = self.kumadb.cursor()
         kc.execute("""
-            SELECT mindtouch_page_id, modified
+            SELECT mindtouch_page_id, id, modified
             FROM wiki_document
             WHERE mindtouch_page_id IS NOT NULL
         """)
-        return dict((r[0], r[1]) for r in kc)
+        return dict((r[0], (r[1], r[2])) for r in kc)
 
     def gather_pages(self):
         """Gather rows for pages using the current options"""
@@ -186,12 +198,12 @@ class Command(BaseCommand):
         # Check to see if this doc has already been migrated, and if the
         # exising is doc is up to date.
         page_ts = self.parse_timestamp(r['page_timestamp'])
-        last_mod = self.docs_migrated.get(r['page_id'], None)
+        last_mod = self.docs_migrated.get(r['page_id'], (None, None))[1]
         if (not self.options['update_documents'] and last_mod is not None 
                 and last_mod >= page_ts):
             log.debug("\t%s (%s) up to date" %
                       (r['page_title'], r['page_display_name']))
-            return
+            return False
 
         log.info("\t%s (%s)" % (r['page_title'], r['page_display_name']))
 
@@ -215,66 +227,101 @@ class Command(BaseCommand):
         except TitleCollision, e:
             log.error('\t\tPROBLEM %s' % type(e))
 
+        return True
+
     def update_past_revisions(self, r_page, doc):
         """Update past revisions for the given page row and document"""
-        ct_new, ct_existing, ct_error = 0, 0, 0
+        ct_saved, ct_existing, ct_error = 0, 0, 0
+
+        wc = self.wikidb.cursor()
+        kc = self.kumadb.cursor()
 
         # Grab all the past revisions from MindTouch
-        self.cur.execute("""
-            SELECT *
-            FROM old as o
-            WHERE
-                o.old_page_id = %s
+        wc.execute("""
+            SELECT * FROM old as o
+            WHERE o.old_page_id = %s
             ORDER BY o.old_revision DESC
             LIMIT %s
         """, (r_page['page_id'], self.options['revisions'],))
-        old_rows = sorted(self._query_dicts(self.cur),
+        old_rows = sorted(self._query_dicts(wc),
                           key=lambda r: r['old_revision'], reverse=True)
 
-        # Get all the revisions for the Kuma doc and extract IDs of
-        # already-migrated revisions.
-        revs = (Revision.objects.filter(document=doc)
-                    .defer('summary', 'content')
-                    .order_by('-id'))
-        existing_old_ids = set(x.mindtouch_old_id for x in revs)
+        # Grab all the MindTouch old_ids from Kuma doc revisions
+        kc.execute("""
+            SELECT mindtouch_old_id, id
+            FROM wiki_revision
+            WHERE document_id=%s
+        """, (doc.pk,))
+        existing_old_ids = dict((r[0], r[1]) for r in kc)
 
         # Process all the past revisions...
+        revs = []
         for r in old_rows:
         
+            # Check if this already exists.
+            existing_id = None
             if r['old_id'] in existing_old_ids:
-                # If this revision has already been migrated, skip update.
-                ct_existing += 1
+                existing_id = existing_old_ids[r['old_id']]
                 if not self.options['update_revisions']:
+                    # If this revision has already been migrated, skip update.
+                    ct_existing += 1
                     continue
 
-            try:
-                ts = self.parse_timestamp(r['old_timestamp'])
-                rev = Revision(document=doc,
-                    mindtouch_old_id=r['old_id'],
-                    slug=doc.slug, title=doc.title,
-                    creator=self.get_user_for_deki_id(r['old_user']),
-                    is_approved=True,
-                    significance=SIGNIFICANCES[0][0],
-                    content=r['old_text'], comment=r['old_comment'],
-                    created=ts, reviewed=ts,
-                    reviewer=self.get_superuser(),)
-                rev.save()
-                ct_new += 1
-            
-            except Exception, e:
-                log.error("\t\t\tPROBLEM %s" % (type(e),))
-                ct_error += 1
+            ts = self.parse_timestamp(r['old_timestamp'])
+            rev_data = [
+                doc.pk,
+                r['old_id'], 1,
+                doc.slug, doc.title,
+                True, SIGNIFICANCES[0][0],
+                '', '',
+                r['old_text'], r['old_comment'],
+                ts, self.get_django_user_id_for_deki_id(r['old_user']),
+                ts, self.get_superuser_id()
+            ]
+            revs.append(rev_data)
+
+            ct_saved += 1
+
+        if len(revs):
+
+            # Build SQL placeholders for the revisions
+            row_placeholders = ",\n".join(
+                "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                for x in revs)
+
+            # Flatten list of revisions data in chronological order, so that we
+            # get roughly time-sequential IDs and a flat list to fill the
+            # placeholders.
+            revs_flat = [col
+                         for rev in sorted(revs, key=lambda x: x[11]) 
+                         for col in rev]
+
+            # Build and execute a giant query to save all the revisions.
+            sql = """
+                REPLACE INTO wiki_revision
+                    (document_id,
+                     mindtouch_old_id, is_mindtouch_migration,
+                     slug, title,
+                     is_approved, significance,
+                     summary, keywords,
+                     content, comment,
+                     created, creator_id,
+                     reviewed, reviewer_id)
+                VALUES 
+                %s
+            """ % row_placeholders
+            kc.execute(sql, revs_flat)
 
         log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
-                 (ct_new, ct_existing, ct_error))
+                 (ct_saved, ct_existing, ct_error))
 
     def update_current_revision(self, r, doc):
-        # HACK: Using ID of -1 to indicate the current MindTouch revision.
+        # HACK: Using old_id of None to indicate the current MindTouch revision.
         # All revisions of a Kuma document have revision records, whereas
         # MindTouch only tracks "old" revisions.
         rev, created = Revision.objects.get_or_create(document=doc,
-            mindtouch_old_id=-1, defaults=dict(
-                creator=self.get_user_for_deki_id(r['page_user_id']),
+            is_mindtouch_migration=True, mindtouch_old_id=None, defaults=dict(
+                creator_id=self.get_django_user_id_for_deki_id(r['page_user_id']),
                 is_approved=True,
                 significance=SIGNIFICANCES[0][0],))
 
@@ -300,11 +347,11 @@ class Command(BaseCommand):
         else:
             log.info("\t\tCurrent revision updated. (ID=%s)" % rev.pk)
 
-    def get_user_for_deki_id(self, deki_user_id):
+    def get_django_user_id_for_deki_id(self, deki_user_id):
         """Given a Deki user ID, come up with a Django user object whether we
         need to migrate it first or just fetch it."""
         # If we don't already have this Deki user cached, look up or migrate
-        if deki_user_id not in self.users:
+        if deki_user_id not in self.user_ids:
 
             # Look up the user straight from the database
             self.cur.execute("SELECT * FROM users AS u WHERE u.user_id = %s",
@@ -326,13 +373,16 @@ class Command(BaseCommand):
 
             # Finally get/create Django user and cache it.
             user = DekiUserBackend.get_or_create_user(deki_user)
-            self.users[deki_user_id] = user
+            self.user_ids[deki_user_id] = user.pk
 
-        return self.users[deki_user_id]
+        return self.user_ids[deki_user_id]
 
-    def get_superuser(self):
+    SUPERUSER_ID = None
+    def get_superuser_id(self):
         """Get the first superuser from Django we can find."""
-        return User.objects.filter(is_superuser=1)[0]
+        if not self.SUPERUSER_ID:
+            self.SUPERUSER_ID = User.objects.filter(is_superuser=1)[0].pk
+        return self.SUPERUSER_ID
 
     def parse_timestamp(self, ts):
         """HACK: Convert a MindTouch timestamp into something pythonic"""

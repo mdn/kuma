@@ -522,7 +522,7 @@ def document_revisions(request, document_slug):
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
                 .defer('summary', 'content')
-                .order_by('-id'))
+                .order_by('-created', '-id'))
 
     # Ensure the current revision appears at the top, no matter where it
     # appears in the order.

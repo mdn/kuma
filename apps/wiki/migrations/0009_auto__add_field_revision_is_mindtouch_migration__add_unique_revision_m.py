@@ -8,14 +8,20 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding field 'Revision.mindtouch_old_id'
-        db.add_column('wiki_revision', 'mindtouch_old_id', self.gf('django.db.models.fields.IntegerField')(null=True, db_index=True, unique=True), keep_default=False)
+        # Adding field 'Revision.is_mindtouch_migration'
+        db.add_column('wiki_revision', 'is_mindtouch_migration', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True), keep_default=False)
+
+        # Adding unique constraint on 'Revision', fields ['mindtouch_old_id']
+        db.create_unique('wiki_revision', ['mindtouch_old_id'])
 
 
     def backwards(self, orm):
         
-        # Deleting field 'Revision.mindtouch_old_id'
-        db.delete_column('wiki_revision', 'mindtouch_old_id')
+        # Removing unique constraint on 'Revision', fields ['mindtouch_old_id']
+        db.delete_unique('wiki_revision', ['mindtouch_old_id'])
+
+        # Deleting field 'Revision.is_mindtouch_migration'
+        db.delete_column('wiki_revision', 'is_mindtouch_migration')
 
 
     models = {
@@ -88,6 +94,8 @@ class Migration(SchemaMigration):
             'is_localizable': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
             'is_template': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'locale': ('sumo.models.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'db_index': 'True'}),
+            'mindtouch_page_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'translations'", 'null': 'True', 'to': "orm['wiki.Document']"}),
             'related_documents': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['wiki.Document']", 'through': "orm['wiki.RelatedDocument']", 'symmetrical': 'False'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
@@ -152,8 +160,9 @@ class Migration(SchemaMigration):
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Document']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_approved': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
+            'is_mindtouch_migration': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
             'keywords': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
-            'mindtouch_old_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
+            'mindtouch_old_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', 'null': 'True', 'db_index': 'True'}),
             'reviewed': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
             'reviewer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'reviewed_revisions'", 'null': 'True', 'to': "orm['auth.User']"}),
             'significance': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
