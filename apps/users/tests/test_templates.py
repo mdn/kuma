@@ -10,12 +10,10 @@ from django.utils.http import int_to_base36
 
 import mock
 from nose.tools import eq_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from dekicompat.tests import (MULTI_ACCOUNT_FIXTURE_XML,
-                              SINGLE_ACCOUNT_FIXTURE_XML,
+from dekicompat.tests import (SINGLE_ACCOUNT_FIXTURE_XML,
                               mock_post_mindtouch_user,
                               mock_put_mindtouch_user,
                               mock_get_deki_user_by_email,
@@ -188,7 +186,9 @@ class PasswordReset(TestCaseBase):
     def test_deki_only_user(self, get_current):
         get_current.return_value.domain = 'testserver.com'
         mt_email = 'testaccount@testaccount.com'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+        self.assertRaises(User.DoesNotExist,
+                          User.objects.get,
+                          username='testaccount')
         if not getattr(settings, 'DEKIWIKI_MOCK', False):
             # HACK: Ensure that expected user details are in MindTouch when not
             # mocking the API
@@ -211,10 +211,13 @@ class PasswordReset(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_email_multi_user(self, get_current):
         get_current.return_value.domain = 'testserver.com'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='Ibn el haithem')
+        self.assertRaises(User.DoesNotExist,
+                          User.objects.get,
+                          username='Ibn el haithem')
 
         r = self.client.post(reverse('users.pw_reset'),
-                             {'email': 'f487e0b2f7b637e4e7d5dd0ff76b0447@mozilla.com'})
+                             {'email': 'f487e0b2f7b637e4e7d5dd0ff76b0447'
+                              '@mozilla.com'})
         eq_(302, r.status_code)
         eq_('http://testserver/en-US/users/pwresetsent', r['location'])
         eq_(1, len(mail.outbox))

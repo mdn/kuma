@@ -49,6 +49,7 @@ def mock_post_mindtouch_user(test):
     else:
         return test
 
+
 def mock_req_post(test):
     bad_resp = Response()
     bad_resp.status_code = 500
@@ -66,6 +67,7 @@ def mock_req_post(test):
         return test_new
     else:
         return test
+
 
 def mock_put_mindtouch_user(test):
     if settings.DEKIWIKI_MOCK:
@@ -109,7 +111,8 @@ def mock_get_deki_user_by_email(test, fixture_file=TESTACCOUNT_FIXTURE_XML):
 
 def mock_missing_get_deki_user_by_email(test):
     if settings.DEKIWIKI_MOCK:
-        @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
+        @mock.patch('dekicompat.backends.DekiUserBackend'
+                    '.get_deki_user_by_email')
         def test_new(self, get_deki_user):
             get_deki_user.return_value = None
             test(self)
