@@ -85,7 +85,10 @@ class Command(BaseCommand):
         rows = self.gather_pages()
 
         for r in rows:
-            self.update_document(r)
+            try:
+                self.update_document(r)
+            except Exception, e:
+                log.error("FAILURE %s" % type(e))
 
     def init(self, options):
         """Set up connections and options"""
