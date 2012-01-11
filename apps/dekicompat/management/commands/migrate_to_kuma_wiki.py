@@ -15,6 +15,7 @@ TODO
       to free memory?
         * Need to figure out when we're done, then, though.
 """
+import re
 import time
 import datetime
 import itertools
@@ -22,6 +23,7 @@ from optparse import make_option
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
+from pyquery import PyQuery as pq
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -48,8 +50,10 @@ class Command(BaseCommand):
     help = """Migrate content from MindTouch to Kuma"""
 
     option_list = BaseCommand.option_list + (
+
         make_option('--wipe', action="store_true", dest="wipe", default=False,
                     help="Wipe all documents before migration"),
+        
         make_option('--all', action="store_true", dest="all", default=False,
                     help="Migrate all documents"),
         make_option('--slug', dest="slug", default=None,
@@ -62,12 +66,18 @@ class Command(BaseCommand):
                     help="Migrate # of recently modified documents"),
         make_option('--longest', dest="longest", type="int", default=0,
                     help="Migrate # of longest documents"),
+        
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
                     help="Force update to existing revisions"),
         make_option('--update-documents', action="store_true",
                     dest="update_documents", default=False,
                     help="Force update to existing documents"),
+
+        make_option('--template-metrics', action="store_true",
+                    dest="template_metrics", default=False,
+                    help="Measure template usage, skip migration"),
+        
         make_option('--verbose', action='store_true', dest='verbose',
                     help="Produce verbose output"),)
 
@@ -78,17 +88,12 @@ class Command(BaseCommand):
         if self.options['wipe']:
             self.wipe_documents()
 
-        self.docs_migrated = self.index_migrated_docs()
-        log.info("Found %s docs already migrated" %
-                 len(self.docs_migrated.values()))
-
         rows = self.gather_pages()
 
-        for r in rows:
-            try:
-                self.update_document(r)
-            except Exception, e:
-                log.error("FAILURE %s" % type(e))
+        if options['template_metrics']:
+            self.handle_template_metrics(rows)
+        else:
+            self.handle_migration(rows)
 
     def init(self, options):
         """Set up connections and options"""
@@ -100,6 +105,38 @@ class Command(BaseCommand):
         self.cur = self.wikidb.cursor()
 
         self.kumadb = connections['default']
+
+    def handle_migration(self, rows):
+        self.docs_migrated = self.index_migrated_docs()
+        log.info("Found %s docs already migrated" %
+                 len(self.docs_migrated.values()))
+        for r in rows:
+            try:
+                self.update_document(r)
+            except Exception, e:
+                log.error("FAILURE %s" % type(e))
+
+    def handle_template_metrics(self, rows):
+        """Parse out DekiScript template calls from pages"""
+        # This regex seems to catch all the DekiScript calls
+        fn_pat = re.compile('^([0-9a-zA-Z_\.]+)')
+
+        # PROCESS ALL THE PAGES!
+        for r in rows:
+
+            if not r['page_text'].strip():
+                # Page empty, so skip it.
+                continue
+
+            doc = pq(r['page_text'])
+            spans = doc.find('span.script')
+            for span in spans:
+                src = unicode(span.text).strip()
+                m = fn_pat.match(src)
+                if not m:
+                    # No matches, so continue
+                    continue
+                print "%s" % m.group(0)
 
     @transaction.commit_on_success
     def wipe_documents(self):
