@@ -82,6 +82,10 @@ class Command(BaseCommand):
         make_option('--template-metrics', action="store_true",
                     dest="template_metrics", default=False,
                     help="Measure template usage, skip migration"),
+        make_option('--list-full-template', action="store_true",
+                    dest="list_full_template", default=False,
+                    help="Print the full template call, rather than"
+                         " just the method used"),
         
         make_option('--verbose', action='store_true', dest='verbose',
                     help="Produce verbose output"),)
@@ -134,6 +138,7 @@ class Command(BaseCommand):
         """Parse out DekiScript template calls from pages"""
         # This regex seems to catch all the DekiScript calls
         fn_pat = re.compile('^([0-9a-zA-Z_\.]+)')
+        wt_pat = re.compile(r"""^wiki.template\(["']([^'"]+)['"]""")
 
         # PROCESS ALL THE PAGES!
         for r in rows:
@@ -146,11 +151,26 @@ class Command(BaseCommand):
             spans = doc.find('span.script')
             for span in spans:
                 src = unicode(span.text).strip()
-                m = fn_pat.match(src)
-                if not m:
-                    # No matches, so continue
-                    continue
-                print "%s" % m.group(0)
+                if self.options['list_full_template']:
+                    print src.encode('utf-8')
+                else:
+                    if src.startswith('wiki.template'):
+                        pat = wt_pat
+                        m = pat.match(src)
+                        if not m: continue
+                        print (u"Template:%s" % m.group(1)).encode('utf-8')
+                    else:
+                        pat = fn_pat
+                        m = pat.match(src)
+                        if not m: continue
+                        out = m.group(1)
+                        if out.startswith('template.'):
+                            out = out.replace('template.', 'Template:')
+                        if out.startswith('Template.'):
+                            out = out.replace('Template.', 'Template:')
+                        if '.' not in out and 'Template:' not in out:
+                            out = u'Template:%s' % out
+                        print out.encode('utf-8')
 
     @transaction.commit_on_success
     def wipe_documents(self):
