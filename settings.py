@@ -861,7 +861,13 @@ CONSTANCE_CONFIG = dict(
 
     DEKIWIKI_POST_RETRIES = (
         6,
-        'Space-separated locales for which BrowserID sign-in should be enabled'
+        'Number of time to retry dekiwiki/MindTouch post before giving up.'
+    ),
+    DEKIWIKI_API_RETRY_WAIT = (
+        .5,
+        'How long to wait between dekiwiki/Mindtouch api request retries. '
+        'We typically multiply this value by the retry number so, e.g., '
+        'the 4th retry waits 4*.5 = 2 seconds.'
     ),
 )
 

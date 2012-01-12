@@ -28,14 +28,8 @@ def handle_register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            try:
-                RegistrationProfile.objects.create_inactive_user(
-                    form.cleaned_data['username'], form.cleaned_data['password'],
-                    form.cleaned_data['email'])
-            except Exception:
-                return jingo.render(request, '500.html',
-                                    {'error_message': "We couldn't "
-                                    "register a new account at this time. "
-                                    "Please try again later."})
+            RegistrationProfile.objects.create_inactive_user(
+                form.cleaned_data['username'], form.cleaned_data['password'],
+                form.cleaned_data['email'])
         return form
     return RegisterForm()

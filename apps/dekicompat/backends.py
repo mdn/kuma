@@ -39,6 +39,8 @@ MINDTOUCH_USER_XML = """<user>
 </permissions.user>
 </user>"""
 
+class MindTouchAPIError(Exception):
+    pass
 
 class DekiUserBackend(object):
     """
@@ -242,8 +244,9 @@ class DekiUserBackend(object):
                     user_url, data=user_xml, headers=headers)
                 if resp.status_code is 200:
                     break
-                time.sleep(getattr(settings, 'DEKIWIKI_API_RETRY_WAIT', .5)
-                           * i)
+                time.sleep(constance.config.DEKIWIKI_API_RETRY_WAIT * i)
+            if resp.status_code is not 200:
+                raise MindTouchAPIError("post_mindtouch_user failed")
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod

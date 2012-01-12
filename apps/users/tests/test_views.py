@@ -191,7 +191,6 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
-    @attr('retry')
     @mock_missing_get_deki_user
     @mock_put_mindtouch_user
     @mock_perform_post_mindtouch_user
@@ -205,10 +204,10 @@ class RegisterTestCase(TestCase):
                                      'email': 'newbie@example.com',
                                      'password': 'foo',
                                      'password2': 'foo'}, follow=True)
-        raise SkipTest("Need to figure out how to test error responses"
-                       " that are swalled by the test client.")
         eq_(200, response.status_code)
         ok_("Please try again later." in response.content)
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=username)
 
     @mock_missing_get_deki_user
     @mock_post_mindtouch_user
@@ -633,6 +632,56 @@ class BrowserIDTestCase(TestCase):
             eq_(new_email, user.email)
         except User.DoesNotExist:
             ok_(False, "New user should have been created")
+
+    @mock_missing_get_deki_user_by_email
+    @mock_missing_get_deki_user
+    @mock_perform_post_mindtouch_user
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_browserid_register_retries_mindtouch(self,
+                                                  _verify_browserid):
+        new_username = 'neverbefore'
+        new_email = 'never.before.seen@example.com'
+        _verify_browserid.return_value = {'email': new_email}
+
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=new_username)
+
+        # Sign in with a verified email, but with no existing account
+        resp = self.client.post(reverse('users.browserid_verify',
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+
+        # This should be a redirect to the BrowserID registration page.
+        redir_url = resp['Location']
+        reg_url = reverse('users.browserid_register', locale='en-US')
+        ok_(reg_url in redir_url)
+
+        # And, as part of the redirect, the verified email address should be in
+        # our session now.
+        ok_(SESSION_VERIFIED_EMAIL in self.client.session.keys())
+        verified_email = self.client.session[SESSION_VERIFIED_EMAIL]
+        eq_(new_email, verified_email)
+
+        # Grab the redirect, assert that there's a create_user form present
+        resp = self.client.get(redir_url)
+        page = pq(resp.content)
+        form = page.find('form#create_user')
+        eq_(1, form.length)
+
+        # There should be no error lists on first load
+        eq_(0, page.find('.errorlist').length)
+
+        # Submit the create_user form, with a chosen username
+        response = self.client.post(redir_url, {'username': 'neverbefore',
+                                            'action': 'register'})
+
+        eq_(200, response.status_code)
+        ok_("Please try again later." in response.content)
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=new_username)
 
     @mock_missing_get_deki_user_by_email
     @mock_post_mindtouch_user
