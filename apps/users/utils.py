@@ -1,5 +1,7 @@
 from django.contrib import auth
 
+import jingo
+
 from users.forms import RegisterForm, AuthenticationForm
 from users.models import RegistrationProfile
 

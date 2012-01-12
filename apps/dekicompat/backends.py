@@ -1,6 +1,5 @@
-import logging
-
 from datetime import datetime
+import time
 from urllib import urlencode
 from urllib2 import HTTPError
 import urlparse
@@ -14,6 +13,7 @@ from django.contrib.auth.models import User
 from pyquery import PyQuery as pq
 
 import commonware
+import constance.config
 
 from devmo.models import UserProfile
 
@@ -39,6 +39,8 @@ MINDTOUCH_USER_XML = """<user>
 </permissions.user>
 </user>"""
 
+class MindTouchAPIError(Exception):
+    pass
 
 class DekiUserBackend(object):
     """
@@ -221,6 +223,10 @@ class DekiUserBackend(object):
         return user_xml
 
     @staticmethod
+    def _perform_post_mindtouch_user(url, data, headers):
+        return requests.post(url, data=data, headers=headers)
+
+    @staticmethod
     def post_mindtouch_user(user):
         # post a new mindtouch user
         user_url = '%s/@api/deki/users?apikey=%s' % (
@@ -228,10 +234,19 @@ class DekiUserBackend(object):
             settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml'}
-        resp = requests.post(user_url, data=user_xml, headers=headers)
+        resp = DekiUserBackend._perform_post_mindtouch_user(user_url,
+                                                            user_xml,
+                                                            headers)
         if resp.status_code is not 200:
-            # TODO: decide WTF to do here
-            pass
+            # HACK: MindTouch fails intermittently, so retry a few times
+            for i in range(constance.config.DEKIWIKI_POST_RETRIES):
+                resp = DekiUserBackend._perform_post_mindtouch_user(
+                    user_url, data=user_xml, headers=headers)
+                if resp.status_code is 200:
+                    break
+                time.sleep(constance.config.DEKIWIKI_API_RETRY_WAIT * i)
+            if resp.status_code is not 200:
+                raise MindTouchAPIError("post_mindtouch_user failed")
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod
