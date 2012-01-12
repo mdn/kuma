@@ -20,14 +20,14 @@ jQuery.fn.placeholder = function(new_value) {
         var $this = $(this),
             text = $this.attr('placeholder');
 
-        if ($this.val() == text) {
+        if ($this.val() === text) {
             $this.val('').removeClass('placeholder');
         }
     }).blur(function() {
         var $this = $(this),
             text = $this.attr('placeholder');
 
-        if ($this.val() == '') {
+        if ($this.val() === '') {
             $this.val(text).addClass('placeholder');
         }
     }).each(function(){
@@ -53,9 +53,11 @@ jQuery.fn.placeholder = function(new_value) {
 
     // replace no-JS search with our built-in one
     var search = $('#site-search,#doc-search');
-    if (search.length) search.attr('action', search.attr('data-url'))
+    if (search.length) {
+        search.attr('action', search.attr('data-url'))
           .removeAttr('data-url')
           .children('input[name=sitesearch]').remove();
+    }
 
     // Submit locale form on change
     $('form.languages')
@@ -65,43 +67,46 @@ jQuery.fn.placeholder = function(new_value) {
 
 
   // Set up nav dropdowns  
-  $("#nav .toggle").click(function() {
-    $("#nav .sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
-    $("#nav .open").removeClass("open");
+  $("#masthead .toggle").click(function() {
+    $("#masthead .sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
+    $("#masthead .open").removeClass("open");
     $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
     $(this).toggleClass("open");
     return false;
   });
   
   // Keep the dropdown visible when it's in use
-  $("#nav .sub-menu").hover(
+  $("#masthead .sub-menu").hover(
     function() {
       $(this).show().removeAttr("aria-hidden");
     },
     function() {
       $(this).delay(100).slideUp(150).attr("aria-hidden", "true");
-      $("#nav .toggle").delay(100).removeClass("open").blur();
+      $("#masthead .toggle").delay(100).removeClass("open").blur();
     }
   );
 
   // Hide dropdowns when anything else is clicked
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
-    if (! $clicked.parents().hasClass("menu"))
-      $("#nav .sub-menu").hide().attr("aria-hidden", "true");
-      $("#nav .toggle").removeClass("open");
+    if (! $clicked.parents().hasClass("menu")){
+      $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
+      $("#masthead .toggle").removeClass("open");
+    }
   });
   
   // or gets focus
   $("a, input, textarea, button, :focus").bind('focus', function(e) {
     var $focused = $(e.target);
-    if (! $focused.parents().hasClass("menu"))
-      $("#nav .sub-menu").hide().attr("aria-hidden", "true");
-      $("#nav .toggle").removeClass("open");
+    if (! $focused.parents().hasClass("menu")) {
+      $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
+      $("#masthead .toggle").removeClass("open");
+    }
   });
 
   // If found, wire up the BrowserID sign in button
   $('.browserid-signin').click(function (e) {
+    if ( !$(this).hasClass('toggle') ) {
       navigator.id.getVerifiedEmail(function(assertion) {
           if (!assertion) { return; }
           $('#id_assertion')
@@ -109,6 +114,7 @@ jQuery.fn.placeholder = function(new_value) {
               .parent().submit();
       });
       return false;
+    }
   });
 
-// }); 
+// });

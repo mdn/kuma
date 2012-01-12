@@ -71,6 +71,11 @@ def _get_latest_user_with_email(email):
         return None
 
 
+def set_browserid_explained(response):
+    response.set_cookie('browserid_explained', 1, max_age=31536000)
+    return response
+
+
 @ssl_required
 @require_POST
 def browserid_verify(request):
@@ -84,7 +89,8 @@ def browserid_verify(request):
     redirect_to_failure = (_clean_next_url(request) or
             getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', reverse('home')))
 
-    failure_resp = HttpResponseRedirect(redirect_to_failure)
+    failure_resp = set_browserid_explained(
+        HttpResponseRedirect(redirect_to_failure))
 
     # If the form's not valid, then this is a failure.
     form = BrowserIDForm(data=request.POST)
@@ -108,7 +114,8 @@ def browserid_verify(request):
         if user and user != request.user:
             messages.error(request, 'That email already belongs to another '
                            'user.')
-            return HttpResponseRedirect(reverse('users.change_email'))
+            return set_browserid_explained(
+                HttpResponseRedirect(reverse('users.change_email')))
         else:
             user = request.user
             user.email = email
@@ -129,12 +136,14 @@ def browserid_verify(request):
     if user:
         user.backend = 'django_browserid.auth.BrowserIDBackend'
         auth.login(request, user)
-        return _redirect_with_mindtouch_login(redirect_to, user.username)
+        return set_browserid_explained(
+            _redirect_with_mindtouch_login(redirect_to, user.username))
 
     # Retain the verified email in a session, redirect to registration page.
     request.session[SESSION_VERIFIED_EMAIL] = email
     request.session[SESSION_REDIRECT_TO] = redirect_to
-    return HttpResponseRedirect(reverse('users.browserid_register'))
+    return set_browserid_explained(
+        HttpResponseRedirect(reverse('users.browserid_register')))
 
 
 @ssl_required

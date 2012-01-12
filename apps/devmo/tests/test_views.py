@@ -19,7 +19,9 @@ from soapbox.models import Message
 
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user,
-                              mock_put_mindtouch_user)
+                              mock_put_mindtouch_user,
+                              mock_post_mindtouch_user)
+from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from devmo.models import UserProfile, UserDocsActivityFeed
 
 from devmo.cron import devmo_calendar_reload
@@ -336,6 +338,20 @@ class ProfileViewsTest(TestCase):
             user.delete()
         except User.DoesNotExist:
             pass
+
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: Ensure that expected user details are in MindTouch when not
+            # mocking the API
+            mt_email = 'testaccount@testaccount.com'
+            user_xml = MINDTOUCH_USER_XML % dict(username="testaccount",
+                    email=mt_email, fullname="None", status="active",
+                    language="", timezone="-08:00", role="Contributor")
+            DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
+                                               user_xml=user_xml)
+            passwd_url = '%s/@api/deki/users/%s/password?apikey=%s' % (
+                settings.DEKIWIKI_ENDPOINT, '=testaccount',
+                settings.DEKIWIKI_APIKEY)
+            requests.put(passwd_url, data='theplanet')
 
         # log in as a MindTouch user to create django user & profile
         response = self.client.post(reverse('users.login', locale='en-US'),
