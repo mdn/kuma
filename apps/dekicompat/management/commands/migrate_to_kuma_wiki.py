@@ -66,6 +66,11 @@ class Command(BaseCommand):
                     help="Migrate # of recently modified documents"),
         make_option('--longest', dest="longest", type="int", default=0,
                     help="Migrate # of longest documents"),
+
+        make_option('--limit', dest="limit", type="int", default=99999,
+                    help="Stop after a migrating a number of documents"),
+        make_option('--skip', dest="skip", type="int", default=0,
+                    help="Skip a number of documents for migration"),
         
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
@@ -110,9 +115,18 @@ class Command(BaseCommand):
         self.docs_migrated = self.index_migrated_docs()
         log.info("Found %s docs already migrated" %
                  len(self.docs_migrated.values()))
+        ct = 0
         for r in rows:
             try:
+                ct += 1
+                if ct <= self.options['skip']:
+                    # Skip rows until past the option value
+                    continue
                 self.update_document(r)
+                if ct > self.options['limit']:
+                    log.info("Reached limit of %s documents migrated" %
+                             self.options['limit'])
+                    return
             except Exception, e:
                 log.error("FAILURE %s" % type(e))
 
