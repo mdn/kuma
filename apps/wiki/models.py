@@ -680,7 +680,7 @@ class Revision(ModelBase):
     # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
     # so that migrations can be idempotent.
     mindtouch_old_id = models.IntegerField(
-            help_text="ID for migrated MindTouch revision (-1 for current)",
+            help_text="ID for migrated MindTouch revision (null for current)",
             null=True, db_index=True, unique=True)
     is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
             help_text="Did this revision come from MindTouch?")
