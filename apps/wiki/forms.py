@@ -72,7 +72,7 @@ class DocumentForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=3, max_length=255,
+    slug = StrippedCharField(min_length=2, max_length=255,
                              required=False,
                              widget=forms.HiddenInput(),
                              label=_lazy(u'Slug:'),
@@ -180,7 +180,7 @@ class RevisionForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=3, max_length=255,
+    slug = StrippedCharField(min_length=2, max_length=255,
                              required=False,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),

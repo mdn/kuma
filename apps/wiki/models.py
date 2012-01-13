@@ -206,6 +206,9 @@ class DocumentManager(ManagerBase):
             docs = docs.filter(tags__in=[tag.name])
         if tag_name:
             docs = docs.filter(tags__name=tag_name)
+        # Leave out the html, since that leads to huge cache objects and we
+        # never use the content in lists.
+        docs = docs.defer('html')
         return docs
 
     def filter_for_review(self, tag=None, tag_name=None):
@@ -261,6 +264,16 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
+
+    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
+    # so that migrations can be idempotent.
+    mindtouch_page_id = models.IntegerField(
+            help_text="ID for migrated MindTouch page",
+            null=True, db_index=True)
+
+    # Last modified time for the document. Should be equal-to or greater than
+    # the current revision's created field
+    modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
     # firefox_versions,
     # operating_systems:
@@ -452,7 +465,9 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     operating_systems = _inherited('operating_systems', 'operating_system_set')
 
     def get_absolute_url(self):
-        return reverse('wiki.document', locale=self.locale, args=[self.slug])
+        # FIXME: There should be no way that the slug is empty.
+        slug = self.slug or 'NOSLUG'
+        return reverse('wiki.document', locale=self.locale, args=[slug])
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):
@@ -662,6 +677,14 @@ class Revision(ModelBase):
     # TODO: limit_choices_to={'document__locale':
     # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
 
+    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
+    # so that migrations can be idempotent.
+    mindtouch_old_id = models.IntegerField(
+            help_text="ID for migrated MindTouch revision (null for current)",
+            null=True, db_index=True, unique=True)
+    is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
+            help_text="Did this revision come from MindTouch?")
+
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old
         value was correct).
@@ -735,11 +758,15 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            self.document.title = self.title
-            self.document.slug = self.slug
-            self.document.html = self.content_cleaned
-            self.document.current_revision = self
-            self.document.save()
+            self.make_current()
+
+    def make_current(self):
+        """Make this revision the current one for the document"""
+        self.document.title = self.title
+        self.document.slug = self.slug
+        self.document.html = self.content_cleaned
+        self.document.current_revision = self
+        self.document.save()
 
     def __unicode__(self):
         return u'[%s] %s #%s: %s' % (self.document.locale,

@@ -8,8 +8,8 @@ from xml.dom import minidom
 from xml.sax.saxutils import escape as xml_escape
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
-
 from pyquery import PyQuery as pq
 
 import commonware
@@ -159,16 +159,24 @@ class DekiUserBackend(object):
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
             user = profile.user
 
-        except UserProfile.DoesNotExist:
+        except ObjectDoesNotExist:
             # No existing profile, so try creating a new profile and user
+
+            # HACK: Usernames in Kuma are limited to 30 characters. There are
+            # around 0.1% of MindTouch users in production (circa 2011) whose
+            # names exceed this length. They're mostly the product of spammers
+            # and security tests but it will still throw MySQL-level errors
+            # during migration.
+            username = deki_user.username[:30]
+
             user, created = (User.objects
-                             .get_or_create(username=deki_user.username))
-            user.username = deki_user.username
+                             .get_or_create(username=username))
+            user.username = username
             user.email = deki_user.email
             user.set_unusable_password()
             user.save()
             profile = UserProfile(deki_user_id=deki_user.id, user=user)
-            profile.save()
+            profile.save(skip_mindtouch_put=True)
 
         user.deki_user = deki_user
 

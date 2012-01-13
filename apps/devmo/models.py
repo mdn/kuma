@@ -198,7 +198,12 @@ class UserProfile(ModelBase):
         return "%03d:00" % offset_hours
 
     def save(self, *args, **kwargs):
+        skip_mindtouch_put = kwargs.get('skip_mindtouch_put', False)
+        if 'skip_mindtouch_put' in kwargs:
+            del kwargs['skip_mindtouch_put']
         super(UserProfile, self).save(*args, **kwargs)
+        if skip_mindtouch_put:
+            return
         from dekicompat.backends import DekiUserBackend
         DekiUserBackend.put_mindtouch_user(self.user)
 
