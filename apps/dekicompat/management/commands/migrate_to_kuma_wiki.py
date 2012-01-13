@@ -313,6 +313,7 @@ class Command(BaseCommand):
 
         except TitleCollision, e:
             log.error('\t\tPROBLEM %s' % type(e))
+            return False
 
         return True
 
