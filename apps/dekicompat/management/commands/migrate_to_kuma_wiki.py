@@ -106,6 +106,10 @@ class Command(BaseCommand):
 
     def init(self, options):
         """Set up connections and options"""
+
+        settings.DATABASES.update(settings.MIGRATION_DATABASES)
+        settings.CACHE_BACKEND = 'dummy://'
+
         self.options = options
         self.admin_role_ids = (4,)
         self.user_ids = {}
