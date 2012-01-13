@@ -136,8 +136,8 @@
    </div>
     {% if document.allows_editing_by(request.user) %}
       <div class="edited-section-ui template">
-        <a class="save" href="#">{{ _('Save') }}</a>
-        <a class="cancel" href="#">{{ _('Cancel') }}</a>
+        <a class="btn-save" href="#">{{ _('Save') }}</a>
+        <a class="btn-cancel" href="#">{{ _('Cancel') }}</a>
         <div class="src"></div>
       </div>
       {# This form gets filled out and used by the inline editor when a
