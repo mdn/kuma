@@ -15,6 +15,7 @@ TODO
       to free memory?
         * Need to figure out when we're done, then, though.
 """
+import sys
 import re
 import time
 import datetime
@@ -123,20 +124,28 @@ class Command(BaseCommand):
         self.docs_migrated = self.index_migrated_docs()
         log.info("Found %s docs already migrated" %
                  len(self.docs_migrated.values()))
+        
         ct = 0
         for r in rows:
             try:
-                ct += 1
-                if ct <= self.options['skip']:
+                if ct < self.options['skip']:
                     # Skip rows until past the option value
                     continue
-                self.update_document(r)
-                if ct > self.options['limit']:
+                if self.update_document(r):
+                    # Something was actually updated and not skipped
+                    ct += 1
+                if ct >= self.options['limit']:
                     log.info("Reached limit of %s documents migrated" %
                              self.options['limit'])
                     return
             except Exception, e:
                 log.error("FAILURE %s" % type(e))
+
+        if ct == 0:
+            # If every document gathered for migration was skipped, then we
+            # basically did nothing. Exit with status 1, so that any script
+            # wrapping us in a loop knows that it can probably stop for awhile.
+            sys.exit("No migrations performed")
 
     def handle_template_metrics(self, rows):
         """Parse out DekiScript template calls from pages"""
