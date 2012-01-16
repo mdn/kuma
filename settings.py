@@ -858,6 +858,16 @@ CONSTANCE_CONFIG = dict(
         'Space-separated locales for which BrowserID sign-in should be enabled'
     ),
 
+    DEKIWIKI_POST_RETRIES = (
+        6,
+        'Number of time to retry dekiwiki/MindTouch post before giving up.'
+    ),
+    DEKIWIKI_API_RETRY_WAIT = (
+        .5,
+        'How long to wait between dekiwiki/Mindtouch api request retries. '
+        'We typically multiply this value by the retry number so, e.g., '
+        'the 4th retry waits 4*.5 = 2 seconds.'
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'

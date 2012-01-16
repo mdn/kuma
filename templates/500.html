@@ -15,11 +15,18 @@
     
     <img src="{{ MEDIA_URL }}img/beast-500.png" alt="" class="beast 500">
 
-    <p>An unhandled error occurred in the application. The error has been logged
-    and an administrator was notified. We apologize for the inconvenience!</p>
-    
-    <p>Please start over on the <a href="{{ url('home') }}">home page</a>.</p>
-    
+    {% if error_message %}
+      <ul class="messages errorlist">
+        <li>
+          {{ error_message }}
+        </li>
+      </ul>
+    {% else %}
+      <p>An unhandled error occurred in the application. The error has been logged
+      and an administrator was notified. We apologize for the inconvenience!</p>
+
+      <p>Please start over on the <a href="{{ url('home') }}">home page</a>.</p>
+    {% endif %}
     <p>If you have additional information how to reproduce this problem, please
     <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Mozilla%20Developer%20Network&component=Website">file a bug.</a>
     Thanks!</p>

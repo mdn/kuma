@@ -7,6 +7,8 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
+from nose import SkipTest
+from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
@@ -16,7 +18,8 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user_by_email,
                               mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
-                              mock_post_mindtouch_user)
+                              mock_post_mindtouch_user,
+                              mock_perform_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from notifications.tests import watch
@@ -187,6 +190,24 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
+
+    @mock_missing_get_deki_user
+    @mock_put_mindtouch_user
+    @mock_perform_post_mindtouch_user
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_retries_mindtouch_post(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        now = time()
+        username = 'n00b%s' % now
+        response = self.client.post(reverse('users.register'),
+                                    {'username': username,
+                                     'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        ok_("Please try again later." in response.content)
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=username)
 
     @mock_missing_get_deki_user
     @mock_post_mindtouch_user
@@ -611,6 +632,56 @@ class BrowserIDTestCase(TestCase):
             eq_(new_email, user.email)
         except User.DoesNotExist:
             ok_(False, "New user should have been created")
+
+    @mock_missing_get_deki_user_by_email
+    @mock_missing_get_deki_user
+    @mock_perform_post_mindtouch_user
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_browserid_register_retries_mindtouch(self,
+                                                  _verify_browserid):
+        new_username = 'neverbefore'
+        new_email = 'never.before.seen@example.com'
+        _verify_browserid.return_value = {'email': new_email}
+
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=new_username)
+
+        # Sign in with a verified email, but with no existing account
+        resp = self.client.post(reverse('users.browserid_verify',
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+
+        # This should be a redirect to the BrowserID registration page.
+        redir_url = resp['Location']
+        reg_url = reverse('users.browserid_register', locale='en-US')
+        ok_(reg_url in redir_url)
+
+        # And, as part of the redirect, the verified email address should be in
+        # our session now.
+        ok_(SESSION_VERIFIED_EMAIL in self.client.session.keys())
+        verified_email = self.client.session[SESSION_VERIFIED_EMAIL]
+        eq_(new_email, verified_email)
+
+        # Grab the redirect, assert that there's a create_user form present
+        resp = self.client.get(redir_url)
+        page = pq(resp.content)
+        form = page.find('form#create_user')
+        eq_(1, form.length)
+
+        # There should be no error lists on first load
+        eq_(0, page.find('.errorlist').length)
+
+        # Submit the create_user form, with a chosen username
+        response = self.client.post(redir_url, {'username': 'neverbefore',
+                                            'action': 'register'})
+
+        eq_(200, response.status_code)
+        ok_("Please try again later." in response.content)
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=new_username)
 
     @mock_missing_get_deki_user_by_email
     @mock_post_mindtouch_user
