@@ -142,7 +142,7 @@ div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0
 div.note p, div.tip p { margin-bottom: .75em; }
 
 /* @Page @Title and @Buttons *********/
-#article-head { position: relative; clear: both; overflow: hidden; padding-top: 20px; margin-top: -20px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#article-head { position: relative; clear: both; overflow: hidden; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
 
 .title { position: relative; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
@@ -171,7 +171,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .edited-section-ui-saving { opacity: 0.5; }
 .edited-section-ui-saving .btn-save, .edited-section-ui-saving .btn-cancel{ display: none; }
 
-.editing .metadata { float: left; width: 65%; display: none; }
+.editing .metadata { float: left; width: 55%; display: none; }
 .editing ul.metadata li { margin: 0pt; padding: 0pt; }
 .editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
@@ -186,15 +186,16 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing #btn-savedraft { font-family: inherit; font-size: 1em; line-height: 1; text-transform: none; color: #333; padding: 0; background: transparent none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 .editing #btn-savedraft:hover, .editing #btn-savedraft:focus { text-decoration: underline; color: #25a; }
 
-.previewing .title { float: left; width: 55%; }
+.previewing .title { float: left; width: 45%; }
 .previewing .title h1 { width: auto; float: none; color: #768e99; }
 .previewing .title h1 em { color: #333; font-style: normal; }
 .previewing .article-content { margin-top: 1em; border-color: #c7dae9; }
 
-#page-buttons { width: 35%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
+#page-buttons { width: 50%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
 #page-buttons li { display: inline; margin: 0 0 2px 10px; padding: 0; background: none; }
-#page-buttons a { display: inline-block; padding: 8px 10px 6px 10px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); background-color: #ddd; }
+#page-buttons a, #page-buttons button { display: inline-block; padding: 6px 8px 3px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); background-color: #ddd; }
 #page-buttons a:hover, #page-buttons a:focus, #page-buttons a:active { text-decoration: none; }
+#page-buttons a { padding: 7px 8px 4px; }
 #page-buttons .page-edit a { padding-left: 32px; background: #a5d9f3 url("../img/wiki/button-edit.png") 0 50% repeat-x; }
 #page-buttons .page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
 #page-buttons .page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
@@ -202,9 +203,6 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #page-buttons .page-watch a:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
 #page-buttons .page-watch a.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
 
-.editing #page-buttons, .previewing #page-buttons { width: 45%; margin: 0 0 10px; }
-
-#page-buttons button { font-size: 15px; padding: 5px 8px 3px; color: #444; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.1); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.1); box-shadow: 1px 1px 0 rgba(0,0,0,.1); }
 .btn-save { 
   background: #d7eca1; 
   background: -moz-linear-gradient(top, #d7eca1 0, #cce390 100%); 
@@ -259,6 +257,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
 
+@media screen and (max-width: 890px) { 
+  #page-buttons a, #page-buttons button { font-size: 14px; }
+}
+
 /* @TOC @Table of contents *********/
 #article-nav { float: right; padding: 0 0 1em 20px; background: #fff; width: 230px; position: relative; z-index: 1; }
 #article-nav .page-toc { background: #e4edf7; padding: 16px 18px; margin: 0 0 5px; border: 1px solid #dfe8f2; font-size: .857em; }
@@ -275,13 +277,6 @@ input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 
 #article-nav .anchor-tags a { background: transparent url("../img/wiki/icons/tag-tiny.png") 0 50% no-repeat; }
 #article-nav .anchor-files a { background: transparent url("../img/wiki/icons/attach-tiny.png") 0 50% no-repeat; }
 
-/* @Page alerts **********/
-#deki-page-alerts { float: none; clear: both; font-size: .857em; padding: 6px 6px 6px 8px; background-color: #f6f6f6; border: 1px solid #f3f3f3; margin-bottom: 5px; }
-#deki-page-alerts span.status { font-weight: bold; }
-#deki-page-alerts div.toggle { padding: 0; background-color: transparent; border: 0; margin: 0; }
-#deki-page-alerts form.options { padding: 8px; }
-#deki-page-alerts form.options li.off { background-color: #eee; }
-
 /* @IRC @channels *********/
 .suggestchannels { font-size: .857em; padding: 6px 6px 6px 8px; background-color: #f6f6f6; border: 1px solid #f3f3f3; margin-bottom: 5px; }
 .suggestchannels ul { list-style: none; }
@@ -297,153 +292,9 @@ input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 
 .page-meta p.none { display: inline; }
 .page-meta p.add a.disabled { opacity: .75; }
 
-/*** @Tags *********/
-#page-tags h2 { float: left; }
-#page-tags .add a, #deki-page-tags-toggleview { background: #a5d9f3 url("../img/wiki/button-edit.png") 0 50% repeat-x; }
-#page-tags .add a:hover, #page-tags .add a:focus, #page-tags .add a:active, 
-#page-tags #deki-page-tags-toggleview:hover, #page-tags #deki-page-tags-toggleview:focus, #page-tags #deki-page-tags-toggleview:active { background-color: #ade4ff; text-decoration: none; }
-#page-tags #deki-page-tags-toggleview { position: absolute; right: 20px; top: 12px; }
-#page-tags .add a.disabled, #page-tags #deki-page-tags-toggleview.disabled { opacity: .75; background-color: #c8e6ed; }
-#page-tags ul.tags { margin: 0; list-style: none; }
-#page-tags ul.tags li { padding: 0; background: none; display: inline; margin-right: 8px; }
-#page-tags .pageTagList div.item { padding: 0; }
-#page-tags .taglist a, #page-tags ul.tags a { display: inline-block; padding: 2px 8px; margin-bottom: .5em; background: #f5f5f1 url("../img/light-shade.png") 0 .9em repeat-x; color: #333; border: 1px solid #91918e; }
-#page-tags .taglist a:hover, #page-tags .taglist a:focus, #page-tags .taglist a:active, 
-#page-tags ul.tags a:hover, #page-tags ul.tags a:focus, #page-tags ul.tags a:active { background-color: #fff; text-decoration: none; border-color: #aaa; }
-
-#page-tags #deki-page-tags .tagContainer { white-space: normal; }
-#page-tags #deki-page-tags .tagButtons { padding-left: 10px; }
-#page-tags #deki-page-tags .tagData { padding-right: 30px; }
-#page-tags #deki-page-tags { float: left; }
-#page-tags #deki-page-tags table { margin: 0; width: 550px; }
-#page-tags #deki-page-tags .tagAdd { float: right; padding: .25em 10px; background: #e1e1e1 url("../img/button-shade.png") 0 .9em repeat-x; color: #333; font: 200 1em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .25em; -webkit-border-radius: .25em; border-radius: .25em; }
-#page-tags #deki-page-tags .col1 { width: 100px; padding-top: .25em; }
-
-#page-tags #deki-page-tags .tag-edit { border: 1px solid #e0e0dc; background: rgba(255,255,255,.5); padding: 10px; }
-#page-tags #deki-page-tags .tag-edit .input-button { font-size: 1em; background-color: #e1e1e1; color: #333; }
-
-#deki-page-tags-edit ul.tags a { background: transparent none; border: 0; padding: 0; color: #369; }
-#deki-page-tags-edit ul.tags a:hover, #deki-page-tags-edit ul.tags a:focus, #deki-page-tags-edit ul.tags a:active { color: #25a; text-decoration: underline; }
-#deki-page-tags-edit ul.tags a.tag-delete { margin-right: 5px; width: 20px; background: transparent url("../img/wiki/icons/delete.png") 50% 5px no-repeat; }
-#deki-page-tags-edit ul.tags a.tag-delete:hover, #deki-page-tags-edit ul.tags a.tag-delete:focus, #deki-page-tags-edit ul.tags a.tag-delete:active { background-position: 50% -45px; }
-
-/*** @Attachments / @Files ********/
-#page-files #pageFiles, #page-files #pageGallery { clear: both; margin: 0; }
-#page-files #sessionMsg { margin-top: 1em; }
-#page-files .filescontent td, #page-files .filescontent th { background: transparent; }
-#page-files .add a { background: #a5d9f3 url("../img/wiki/button-attach.png") 0 50% repeat-x; }
-#page-files .add a:hover, #page-files .add a:focus, #page-files .add a:active { background-color: #ade4ff; text-decoration: none; }
-#page-files .add a.disabled { opacity: .75; background-color: #c8e6ed; }
-#page-files .nofiles { display: none; }
-#deki-image-gallery-lite .empty { display: none; }
-
-#attachTable { margin-top: 1em; }
-#attachTable table { border-collapse: collapse; border: 1px solid #e0e0dc; border-bottom: 0; }
-#attachTable table th { border-bottom: 1px solid #e0e0dc; padding: 2px; font-size: .857em; text-align: left; font-weight: normal; }
-#attachTable table th.col1 { padding-left: 36px; }
-#attachTable table td { vertical-align: top; border-bottom: 1px solid #e0e0dc; padding: 6px 2px; }
-#attachTable table td.col2 { vertical-align: top; }
-#attachTable a.file-preview { margin-left: 15px; }
-#attachTable a.file-preview:before { content: "["; }
-#attachTable a.file-preview:after { content: "]"; }
-#attachTable a.actionmenu { padding: 0 15px 0 8px; background: transparent url("../img/wiki/downarrow.png") 98% 55% no-repeat; color: #333; }
-#attachTable .desctext { font-size: .857em; }
-#attachTable ul.deki-file-menu li { padding: 0; background: none; }
-.deki-file-menu { font-size: .857em; }
-a.deki-file-revisions:hover, a.deki-file-revisions:focus, a.deki-file-revisions:active { text-decoration: none; }
-
-/*** @Attached @Images *********/
-#pageGallery { float: left; clear: both; margin-bottom: 1em; width: 100%; }
-#pageGalleryWrap .preControls { float: left; clear: both; width: 100%; margin: 1em 0 1.7em; }
-#pageGalleryWrap .preControls div.offset form { margin-left: 20px; }
-#pageGalleryWrap .navigation, #pageGalleryWrap .disabled { color: #888; }
-#pageGalleryWrap #pageGallery div.galleryCell { position: relative; margin-bottom: .75em; }
-#pageGalleryWrap a img.image { border: 1px solid; padding: 2px; }
-#pageGalleryWrap a:hover img.image { border-color: #369; }
-#pageGalleryWrap .desctext { margin: .5em 0 0; font: 11px Verdana, Tahoma, sans-serif; }
-#pageGalleryWrap .desctext span.desctext { display: block; }
-#pageGalleryWrap a.actionmenu { border-left: 1px solid #ccc; padding: 0 15px 0 8px; background: transparent url("../img/wiki/downarrow.png") 98% 55% no-repeat; color: #333; }
-
-/* @Comments *********/
-#comments div.comments, #comments div.commentForm { padding: 0; }
-#comments div.comments { margin-bottom: 1em; }
-#comments div.commentMore { clear: both; float: none; padding: 6px 0; font-size: .785em; }
-#comments div.comment { position: relative; clear: both; border-bottom: 1px solid #ebeae7; padding: 20px 50px; }
-#comments div.comment.comment-deleted { padding: 10px 50px; }
-#comments div#comment1 { border-top: 1px solid #ebeae7; }
-#comments div.commentNum { position: absolute; left: 5px; top: 13px; font-size: 150%; line-height: 1.2; }
-#comments div.commentNum a { padding: 0; color: #b4afa8; }
-#comments div.commentMetaData { margin-bottom: .5em; font-size: .785em; }
-#comments div.commentText { float: none; padding: 0; width: auto; }
-#comments div.commentPosted { margin: 1em 0 0; font-size: .785em; color: #888; }
-#comments div.commentPosted em { font-style: normal; }
-#comments span.commentUpdated { margin-left: 1em; font-size: .785em; color: #888; }
-#comments span.commentUpdated:before { content: "["; }
-#comments span.commentUpdated:after { content: "]"; }
-#comments div.commentActions { position: absolute; right: 15px; bottom: 18px; font-size: .857em; }
-#comments div.commentActions a { margin-right: 15px; padding: 2px 0 2px 20px; background: transparent url("../img/wiki/icons/comment_edit.png") no-repeat; color: #444; }
-#comments div.commentActions form.commentDelete { display: inline; }
-#comments div.commentActions form.commentDelete input { border: 0; padding: 2px 0 2px 20px; background: transparent url("../img/wiki/icons/comment_delete.png") no-repeat; color: #444; font-family: inherit; text-transform: none; cursor: pointer; }
-#comments div.commentActions form.commentDelete input:hover { color: #b00; }
-
-#comments .commentForm .commentText { width: 100%; height: 7em; font-family: inherit; font-size: inherit; color: inherit; }
-#comments .commentForm .commentHeader { margin: 1em 0 .25em; color: #666; font: 200 20px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
-#comments .commentForm .commentSubmit { margin: .5em 0 0; }
-
 /* @Doc @Listings *********/
 #document-list .documents { list-style: disc; margin-left: 20px; }
 #document-list .documents li { margin: 0 0 .5em; }
-
-/* @Menus (misc dropdowns) *********/
-div.menu, div.dmenu-body { border: 1px solid #eee; border-right: 2px solid #ccc; border-bottom: 2px solid #ccc; padding: 10px 15px 0; background: #fff; }
-div.menu ul, div.dmenu-body ul { margin-bottom: 0; list-style: none; font: 11px Verdana, Tahoma, sans-serif; }
-div.menu li, div.dmenu-body li { margin-bottom: 8px; }
-div.menu a { display: block; padding: 2px 0 2px 22px; background-position: 0 0; background-repeat: no-repeat; color: #444; }
-div.menu a:link, div.menu a:visited, div.menu a:hover, div.menu a:active { color: #444; } 
-div.dmenu-body a { padding: 2px 0; color: #444; }
-div.dmenu-body a:link, div.dmenu-body a:visited, div.dmenu-body a:hover, div.dmenu-body a:active { color: #444; }
-div.dmenu-body span.icon { position: relative; bottom: -2px; padding-right: 5px; background-color: #fff; }
-
-div.menu a.disabled, div.dmenu-body a.disabled { color: #888; cursor: default; background-position: 0 -48px; }
-div.menu a.disabled:hover, div.dmenu-body a.disabled:hover { text-decoration: none; }
-
-#menuFiller { width: 160px; margin-left: -94px; display: block; }
-#menuFiller div.dmenu-body { background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
-#menuFiller div.dmenu-body ul { font-family: inherit; font-size: .785em; }
-
-/* @Tables on Admin and Special pages *********/
-table.table { margin: .5em 0 1em; border-collapse: collapse; border: 1px solid #e0e0dc; border-bottom: 0; width: 100%; font-size: .857em; font-family: inherit; }
-table.table th { border-bottom: 1px solid #e0e0dc; padding: 2px 6px; text-align: left; font-size: 10px; font-weight: normal; }
-table.table td { border-bottom: 1px solid #e0e0dc; padding: 6px; }
-table.table tr.show-no { display: none; }
-table.table .bg2 { background-color: #f7f7f5; }
-table.table tr.group td.col2 { padding-left: 25px; }
-table.table .autocomment a { margin-right: 10px; }
-
-/* @Diff *********/
-.deki-diff { margin-top: 1em; }
-.deki-diff .deki-revision { float: left; width: 45%; padding: 0 2%; }
-.deki-diff .deki-diffmeta { font-size: .857em; color: #888; margin: 0 0 1em; }
-
-/*** @Special search page (this is not the sitesearch in the header) *********/
-#searchForm { margin-bottom: 1em; }
-#searchForm label { margin-right: 15px; }
-#searchForm #lsearchbox { margin-right: 15px; }
-#searchForm #select-language { margin-right: 15px; }
-#searchResults ul { margin: 1em 0; list-style: none; }
-#searchResults ul li { border-bottom: 1px solid #e2e1de; padding: 1em 20px; background-image: none; }
-#searchResults .title { margin: 0 0 .25em -20px; font-size: 130%; }
-#searchResults .itemmatch { margin-bottom: .5em; font-size: 90%; }
-.deki-parsed-query { font-size: .785em; color: #777; }
-
-/* @Code syntax highlighter */
-.pageText .dp-highlighter { font: 100% "Courier New", "Andale Mono", monospace; }
-.pageText .dp-highlighter .tools { font-size: .714em; font-family: "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; }
-.pageText .dp-highlighter .tools a { font-size: inherit; }
-
-/* Misc UI bits */
-#xToolbar { overflow: hidden; z-index: 99; }
-.editable .editIcon { position: relative; font-size: inherit; bottom: .25em; }
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { display: block; text-align: right; font-size: 90%; }
