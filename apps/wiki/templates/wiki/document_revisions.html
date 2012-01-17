@@ -29,7 +29,7 @@
     <div id="revision-list">
       {% if revisions %}
         <form action="{{ url('wiki.compare_revisions', document.slug) }}" method="get">
-          {% if revisions.count() > 1 %}
+          {% if revisions | length %}
             <div class="compare top">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
             </div>
@@ -51,20 +51,18 @@
                 <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='date') }}</a>
               </div>
               <div class="status">
-                {% if not rev.reviewed %}
-                  {% if not reached_current and user.has_perm('wiki.review_revision') %}
-                    <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
-                  {% else %}
-                    <span class="unreviewed">{{ _('Unreviewed', 'revision') }}</span>
-                  {% endif %}
-                {% else %}
-                  {% if document.current_revision == rev %}
+                {% if document.current_revision.id == rev.id %}
                     <span class="current">{{ _('Current') }}</span>
-                  {% elif rev.is_approved %}
-                    <span class="approved">{{ _('Approved') }}</span>
-                  {% else %}
+                {% elif not rev.is_approved and not rev.reviewed %}
+                    {% if not reached_current and user.has_perm('wiki.review_revision') %}
+                      <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
+                    {% else %}
+                      <span class="unreviewed">{{ _('Unreviewed', 'revision') }}</span>
+                    {% endif %}
+                {% elif rev.is_approved %}
+                  <span class="approved">{{ _('Approved') }}</span>
+                {% else %}
                     <span class="rejected">{{ _('Rejected') }}</span>
-                  {% endif %}
                 {% endif %}
               </div>
               <div class="significance">
@@ -90,7 +88,7 @@
             </li>
             {% if loop.last %}</ul>{% endif %}
           {% endfor %}
-          {% if revisions.count() > 1 %}
+          {% if revisions | length %}
             <div class="compare bottom">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
             </div>
