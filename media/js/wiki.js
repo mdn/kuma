@@ -58,12 +58,12 @@
                 // Caught a section edit link click.
                 return handleSectionEditClick(ev, target);
             }
-            if (target.is('.edited-section-ui.current .save')) {
+            if (target.is('.edited-section-ui.current .btn-save')) {
                 // Caught a section edit save click.
                 saveSectionEdit();
                 return false;
             }
-            if (target.is('.edited-section-ui.current .cancel')) {
+            if (target.is('.edited-section-ui.current .btn-cancel')) {
                 // Caught a section edit cancel click.
                 cancelSectionEdit();
                 return false;
@@ -146,7 +146,7 @@
                 CKEDITOR.replace(ui.find('.src')[0], {
                     customConfig : '/docs/ckeditor_config.js'
                 }))
-            .find('.save').data('save_cb', saveSectionEdit).end();
+            .find('.btn-save').data('save_cb', saveSectionEdit).end();
     }
 
     /**
