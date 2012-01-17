@@ -177,6 +177,20 @@ class TestUserProfile(test_utils.TestCase):
                 eq_(item.rc_moved_to_title, item.current_title)
 
     @attr('docs_activity')
+    @attr('bug715923')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_bug715923_feed_parsing_errors(self, fetch_user_feed):
+        fetch_user_feed.return_value = """
+            THIS IS NOT EVEN XML, SO BROKEN
+        """
+        try:
+            feed = UserDocsActivityFeed(username="Sheppy")
+            items = feed.items
+            eq_(False, items,
+                "On error, items should be False")
+        except Exception, e:
+            ok_(False, "There should be no exception %s" % e)
+
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field. Make sure it shows up."""
         user = User.objects.get(username='testuser')

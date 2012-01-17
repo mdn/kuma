@@ -4,6 +4,7 @@ import time
 from os.path import dirname
 
 import mock
+from mock import patch
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -49,6 +50,24 @@ class ProfileViewsTest(TestCase):
     def tearDown(self):
         settings.DEBUG = self.old_debug
 
+    @attr('docs_activity')
+    @attr('bug715923')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_bug715923_feed_parsing_errors(self, fetch_user_feed):
+        fetch_user_feed.return_value = """
+            THIS IS NOT EVEN XML, SO BROKEN
+        """
+        try:
+            profile = UserProfile.objects.get(user__username='testuser')
+            user = profile.user
+            url = reverse('devmo.views.profile_view',
+                          args=(user.username,))
+            r = self.client.get(url, follow=True)
+            doc = pq(r.content)
+        except Exception, e:
+            raise e
+            ok_(False, "There should be no exception %s" % e)
+    
     @attr('docs_activity')
     @mock_fetch_user_feed
     def test_profile_view(self):
