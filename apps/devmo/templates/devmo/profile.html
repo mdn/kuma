@@ -113,7 +113,10 @@
         </section>
     {% endif %}
  
-    {% if docs_feed_items | length > 0 %}
+    {# TODO: Maybe show a more explicit temporary-failure messge when
+             docs_feed_items is False, rather than just hiding the section? 
+             This will be reimplemented for Kuma, anyway, though. #}
+    {% if docs_feed_items and docs_feed_items | length > 0 %}
         <section id="docs-activity" class="profile-section">
           <header>
             <h2>{{_("Recent Docs Activity")}}</h2>
