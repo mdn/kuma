@@ -524,8 +524,14 @@ def document_revisions(request, document_slug):
                 .defer('summary', 'content')
                 .order_by('-created', '-id'))
 
+    # Ensure the current revision appears at the top, no matter where it
+    # appears in the order.
+    curr_id = doc.current_revision.id
+    revs_out = [r for r in revs if r.id == curr_id]
+    revs_out.extend([r for r in revs if r.id != curr_id])
+
     return jingo.render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs, 'document': doc})
+                        {'revisions': revs_out, 'document': doc})
 
 
 @waffle_flag('kumawiki')
