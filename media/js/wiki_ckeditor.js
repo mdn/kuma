@@ -13,9 +13,9 @@ jQuery("#id_content").ckeditor(function() {
         if( $(this).scrollTop() >= contentTop.top ) {
             if( !fixed ) {
                 fixed = true;
-                $head.css({position:'fixed', top:20, width:"96%"});
-                $tools.css({position:'fixed', top:headHeight+29, width:$("#cke_id_content").width()-10});
-                $("td.cke_top").css({ height: toolHeight+29 });
+                $head.css({position:'fixed', top:19, width:"95%"});
+                $tools.css({position:'fixed', top:headHeight+28, width:$("#cke_id_content").width()-10});
+                $("td.cke_top").css({ height: toolHeight+28 });
                 $("#cke_id_content").css({ marginTop: headHeight });
             }
         } else {

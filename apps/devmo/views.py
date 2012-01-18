@@ -60,8 +60,9 @@ def profile_view(request, username):
     demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
     demos_page = demos_paginator.page(page_number)
 
-    docs_feed_items = (UserDocsActivityFeed(user.username)
-                       .items[:DOCS_ACTIVITY_MAX_ITEMS])
+    docs_feed_items = UserDocsActivityFeed(user.username).items
+    if docs_feed_items is not False:
+        docs_feed_items = docs_feed_items[:DOCS_ACTIVITY_MAX_ITEMS]
 
     return jingo.render(request, 'devmo/profile.html', dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
