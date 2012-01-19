@@ -30,6 +30,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.management.base import (BaseCommand, NoArgsCommand,
                                          CommandError)
+import django.db
 from django.db import connections, connection, transaction, IntegrityError
 from django.utils import encoding, hashcompat
 
@@ -134,6 +135,11 @@ class Command(BaseCommand):
                 if self.update_document(r):
                     # Something was actually updated and not skipped
                     ct += 1
+                
+                # Clear query cache after each document. Lots of queries are
+                # bound to happen, there.
+                django.db.reset_queries()
+
                 if ct >= self.options['limit']:
                     log.info("Reached limit of %s documents migrated" %
                              self.options['limit'])
@@ -196,6 +202,9 @@ class Command(BaseCommand):
             ct += 1
             if 0 == (ct % 10):
                 log.debug("\t%s deleted" % ct)
+                # Clear query cache after each document. Lots of queries are
+                # bound to happen, there.
+                django.db.reset_queries()
 
     def index_migrated_docs(self):
         """Build an index of Kuma docs already migrated, mapping Mindtouch page
