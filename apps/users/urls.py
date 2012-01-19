@@ -41,6 +41,8 @@ users_patterns = patterns('',
 
     url(r'^/resendconfirmation$', views.resend_confirmation,
         name='users.resend_confirmation'),
+    url(r'^/sendemailreminder$', views.send_email_reminder,
+        name='users.send_email_reminder'),
 
     # Change email
     url(r'^change_email$', redirect_to, {'url': 'users.change_email'},

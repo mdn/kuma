@@ -31,11 +31,12 @@ from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
-                         PasswordResetForm, BrowserIDRegisterForm)
+                         PasswordResetForm, BrowserIDRegisterForm,
+                         EmailReminderForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend, MindTouchAPIError
-from users.utils import handle_login, handle_register
+from users.utils import handle_login, handle_register, send_reminder_email
 
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
@@ -171,8 +172,9 @@ def browserid_register(request):
             register_form = BrowserIDRegisterForm(request.POST)
             if register_form.is_valid():
                 try:
-                    # If the registration form is valid, then create a new Django
-                    # user, a new MindTouch user, and link the two together.
+                    # If the registration form is valid, then create a new
+                    # Django user, a new MindTouch user, and link the two
+                    # together.
                     # TODO: This all belongs in model classes
                     username = register_form.cleaned_data['username']
 
@@ -309,6 +311,28 @@ def resend_confirmation(request):
                         {'form': form})
 
 
+def send_email_reminder(request):
+    """Send reminder email."""
+    if request.method == 'POST':
+        form = EmailReminderForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            try:
+                user = User.objects.get(username=username, is_active=True)
+                # TODO: should this be on a model or manager instead?
+                send_reminder_email(user)
+            except User.DoesNotExist:
+                # Don't leak existence of email addresses.
+                pass
+            return jingo.render(request,
+                                'users/send_email_reminder_done.html',
+                                {'username': username})
+    else:
+        form = EmailConfirmationForm()
+    return jingo.render(request, 'users/resend_confirmation.html',
+                        {'form': form})
+
+
 @login_required
 @require_http_methods(['GET', 'POST'])
 def change_email(request):
@@ -385,9 +409,6 @@ def edit_profile(request):
                                                 args=[request.user.id]))
     else:  # request.method == 'GET'
         form = ProfileForm(instance=user_profile)
-
-    # TODO: detect timezone automatically from client side, see
-    # http://rocketscience.itteco.org/2010/03/13/automatic-users-timezone-determination-with-javascript-and-django-timezones/
 
     return jingo.render(request, 'users/edit_profile.html',
                         {'form': form, 'profile': user_profile})
