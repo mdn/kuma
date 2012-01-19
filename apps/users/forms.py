@@ -33,6 +33,19 @@ PASSWD_UTF8 = _lazy(u'To use this password, you need to initiate a password '
                     u'reset. Please use the "forgot my password" link below.')
 
 
+class UsernameField(forms.RegexField):
+    def __init__(self, *args, **kwargs):
+        super(UsernameField, self).__init__(
+            label=_lazy(u'Username'), max_length=30, min_length=4,
+            regex=r'^[\w.@+-]+$',
+            help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
+                             'and @/./+/-/_ only.'),
+            error_messages={'invalid': USERNAME_INVALID,
+                            'required': USERNAME_REQUIRED,
+                            'min_length': USERNAME_SHORT,
+                            'max_length': USERNAME_LONG},
+            *args, **kwargs)
+
 class RegisterForm(forms.ModelForm):
     """A user registration form that requires unique email addresses.
 
@@ -41,15 +54,7 @@ class RegisterForm(forms.ModelForm):
     for usernames.
 
     """
-    username = forms.RegexField(
-        label=_lazy(u'Username'), max_length=30, min_length=4,
-        regex=r'^[\w.@+-]+$',
-        help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
-                         'and @/./+/-/_ only.'),
-        error_messages={'invalid': USERNAME_INVALID,
-                        'required': USERNAME_REQUIRED,
-                        'min_length': USERNAME_SHORT,
-                        'max_length': USERNAME_LONG})
+    username = UsernameField()
     email = forms.EmailField(label=_lazy(u'Email address'),
                              error_messages={'required': EMAIL_REQUIRED,
                                              'min_length': EMAIL_SHORT,
@@ -103,16 +108,7 @@ class RegisterForm(forms.ModelForm):
 class BrowserIDRegisterForm(forms.ModelForm):
     """A user registration form that only requires a username, since BrowserID
     supplies the email address and no password is necessary."""
-    username = forms.RegexField(
-        label=_lazy(u'Username'), max_length=30, min_length=4,
-        regex=r'^[\w.@+-]+$',
-        help_text=_lazy(u'Required. 30 characters or fewer. Letters, digits '
-                         'and @/./+/-/_ only.'),
-        error_messages={'invalid': USERNAME_INVALID,
-                        'required': USERNAME_REQUIRED,
-                        'min_length': USERNAME_SHORT,
-                        'max_length': USERNAME_LONG})
-
+    username = UsernameField()
     class Meta(object):
         model = User
         fields = ('username',)
@@ -244,6 +240,11 @@ class AvatarForm(forms.ModelForm):
 class EmailConfirmationForm(forms.Form):
     """A simple form that requires an email address."""
     email = forms.EmailField(label=_lazy(u'Email address'))
+
+
+class EmailReminderForm(forms.Form):
+    """A simple form that requires a username."""
+    username = UsernameField()
 
 
 class EmailChangeForm(forms.Form):

@@ -31,11 +31,12 @@ from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
-                         PasswordResetForm, BrowserIDRegisterForm)
+                         PasswordResetForm, BrowserIDRegisterForm,
+                         EmailReminderForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend, MindTouchAPIError
-from users.utils import handle_login, handle_register
+from users.utils import handle_login, handle_register, send_reminder_email
 
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
@@ -303,6 +304,28 @@ def resend_confirmation(request):
             return jingo.render(request,
                                 'users/resend_confirmation_done.html',
                                 {'email': email})
+    else:
+        form = EmailConfirmationForm()
+    return jingo.render(request, 'users/resend_confirmation.html',
+                        {'form': form})
+
+
+def send_email_reminder(request):
+    """Send reminder email."""
+    if request.method == 'POST':
+        form = EmailReminderForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            try:
+                user = User.objects.get(username=username, is_active=True)
+                # TODO: should this be on a model or manager instead?
+                send_reminder_email(user)
+            except User.DoesNotExist:
+                # Don't leak existence of email addresses.
+                pass
+            return jingo.render(request,
+                                'users/send_email_reminder_done.html',
+                                {'username': username})
     else:
         form = EmailConfirmationForm()
     return jingo.render(request, 'users/resend_confirmation.html',
