@@ -7,8 +7,6 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
-from nose import SkipTest
-from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 

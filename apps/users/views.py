@@ -172,8 +172,9 @@ def browserid_register(request):
             register_form = BrowserIDRegisterForm(request.POST)
             if register_form.is_valid():
                 try:
-                    # If the registration form is valid, then create a new Django
-                    # user, a new MindTouch user, and link the two together.
+                    # If the registration form is valid, then create a new
+                    # Django user, a new MindTouch user, and link the two
+                    # together.
                     # TODO: This all belongs in model classes
                     username = register_form.cleaned_data['username']
 
@@ -408,9 +409,6 @@ def edit_profile(request):
                                                 args=[request.user.id]))
     else:  # request.method == 'GET'
         form = ProfileForm(instance=user_profile)
-
-    # TODO: detect timezone automatically from client side, see
-    # http://rocketscience.itteco.org/2010/03/13/automatic-users-timezone-determination-with-javascript-and-django-timezones/
 
     return jingo.render(request, 'users/edit_profile.html',
                         {'form': form, 'profile': user_profile})
