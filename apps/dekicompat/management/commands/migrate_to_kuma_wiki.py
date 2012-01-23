@@ -134,6 +134,10 @@ class Command(BaseCommand):
                     help="Stop after a migrating a number of documents"),
         make_option('--skip', dest="skip", type="int", default=0,
                     help="Skip a number of documents for migration"),
+
+        make_option('--maxlength', dest="maxlength", type="int",
+                    default=1000000,
+                    help="Maximum character length for page content"),
         
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
@@ -415,6 +419,13 @@ class Command(BaseCommand):
                 log.debug("\t%s (%s) matched User: content exclusion list" %
                           (slug, r['page_display_name']))
                 return False
+
+        # Check to see if this page's content is too long, skip if so.
+        if len(r['page_text']) > self.options['maxlength']:
+            log.debug("\t%s (%s) skipped, page too long (%s > %s max)" %
+                      (slug, r['page_display_name'],
+                       len(r['page_text']), self.options['maxlength']))
+            return False
 
         log.info("\t%s (%s)" % (slug, r['page_display_name']))
 
