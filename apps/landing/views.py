@@ -1,10 +1,11 @@
+from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
 import jingo
 from tower import ugettext as _
 from waffle.decorators import waffle_switch
-import responsys
+import basket
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB, SECTION_MOZILLA)
@@ -73,8 +74,16 @@ def apps(request):
 def apps_subscription(request):
     form = SubscriptionForm(data=request.POST)
     if form.is_valid():
-        responsys.subscribe('APP_DEV', form.cleaned_data['email'], format=form.cleaned_data['format'])
-        messages.success(request, _('Thank you for subscribing to the Apps Developer newsletter.'))
+        optin = 'N'
+        if request.locale == 'en-US':
+            optin = 'Y'
+        basket.subscribe(email=form.cleaned_data['email'],
+                         newsletters=settings.BASKET_APPS_NEWSLETTER,
+                         format=form.cleaned_data['format'],
+                         lang=request.locale,
+                         optin=optin)
+        messages.success(request,
+            _('Thank you for subscribing to the Apps Developer newsletter.'))
         return HttpResponseRedirect(reverse('apps'))
 
     """Web landing page."""
