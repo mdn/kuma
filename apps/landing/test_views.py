@@ -145,7 +145,8 @@ class AppsViewsTest(test_utils.TestCase):
         eq_(200, r.status_code)
         doc = pq(r.content)
         signup_form = doc.find('form.fm-subscribe')
-        eq_(reverse('apps_subscription', locale='en-US'), signup_form.attr('action'))
+        eq_(reverse('apps_subscription', locale='en-US'),
+            signup_form.attr('action'))
 
     @patch('landing.views.basket.subscribe')
     def test_apps_subscription(self, subscribe):
@@ -153,12 +154,15 @@ class AppsViewsTest(test_utils.TestCase):
         s = Switch.objects.create(name='apps_landing', active=True)
         s.save()
         url = reverse('landing.views.apps_subscription')
-        r = self.client.post(url, {'format': 'html', 'email': 'testuser@test.com', 'agree': 'checked'}, follow=True)
+        r = self.client.post(url,
+                             {'format': 'html',
+                              'email': 'testuser@test.com',
+                              'agree': 'checked'},
+                             follow=True)
         eq_(200, r.status_code)
         # assert thank you message
         self.assertContains(r, 'Thank you')
         eq_(1, subscribe.call_count)
-
 
     @patch('landing.views.basket.subscribe')
     def test_apps_subscription_bad_values(self, subscribe):

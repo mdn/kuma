@@ -18,8 +18,8 @@ from sumo.urlresolvers import reverse
 def home(request):
     """Home page."""
 
-    demos = ( Submission.objects.all_sorted('upandcoming')
-            .exclude(hidden=True) )[:5]
+    demos = (Submission.objects.all_sorted('upandcoming')
+            .exclude(hidden=True))[:5]
 
     tweets = []
     for section in SECTION_USAGE:
@@ -52,8 +52,9 @@ def mozilla(request):
 
 def search(request):
     """Google Custom Search results page."""
-    query = request.GET.get('q', '');
-    return jingo.render(request, 'landing/searchresults.html', {'query': query})
+    query = request.GET.get('q', '')
+    return jingo.render(request, 'landing/searchresults.html',
+                        {'query': query})
 
 
 def mobile(request):
@@ -65,10 +66,13 @@ def web(request):
     """Web landing page."""
     return common_landing(request, section=SECTION_WEB)
 
+
 @waffle_switch('apps_landing')
 def apps(request):
     """Web landing page."""
-    return common_landing(request, section=SECTION_APPS, extra={'form': SubscriptionForm()})
+    return common_landing(request, section=SECTION_APPS,
+                          extra={'form': SubscriptionForm()})
+
 
 @waffle_switch('apps_landing')
 def apps_subscription(request):
@@ -89,33 +93,41 @@ def apps_subscription(request):
     """Web landing page."""
     return common_landing(request, section=SECTION_APPS, extra={'form': form})
 
+
 def learn(request):
     """Learn landing page."""
     return jingo.render(request, 'landing/learn.html')
+
 
 def learn_html(request):
     """HTML landing page."""
     return jingo.render(request, 'landing/learn_html.html')
 
+
 def learn_css(request):
     """CSS landing page."""
     return jingo.render(request, 'landing/learn_css.html')
+
 
 def learn_javascript(request):
     """JavaScript landing page."""
     return jingo.render(request, 'landing/learn_javascript.html')
 
+
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return jingo.render(request, 'landing/promote_buttons.html')
+
 
 def discussion(request):
     """Discussion landing page."""
     return jingo.render(request, 'landing/discussion.html')
 
+
 def forum_archive(request):
     """Forum Archive from phpbb-static landing page."""
     return jingo.render(request, 'landing/forum_archive.html')
+
 
 def common_landing(request, section=None, extra=None):
     """Common code for landing pages."""
