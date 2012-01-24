@@ -244,9 +244,9 @@ def login(request):
 def logout(request):
     """Log the user out."""
     auth.logout(request)
-    next_url = _clean_next_url(request) if 'next' in request.GET else ''
+    next_url = _clean_next_url(request) or reverse('home')
 
-    resp = HttpResponseRedirect(next_url or reverse('home'))
+    resp = HttpResponseRedirect(next_url)
     resp.delete_cookie('authtoken')
     return resp
 
