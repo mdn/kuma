@@ -401,6 +401,15 @@ class Command(BaseCommand):
         ns_name = MT_NS_ID_TO_NAME.get(r['page_namespace'], '')
         slug = '%s%s' % (ns_name, r['page_title'] or r['page_display_name'])
 
+        # Skip this document, if it has a blank timestamp.
+        # The only pages in production that have no timestamp are either in the
+        # Special: namespace (not migrated), or a couple of untitled and empty
+        # pages under the Template: or User: namespaces.
+        if not r['page_timestamp']:
+            log.debug("\t%s (%s) skipped, no timestamp" %
+                      (slug, r['page_display_name']))
+            return False
+
         # Check to see if this doc has already been migrated, and if the
         # exising is doc is up to date.
         page_ts = self.parse_timestamp(r['page_timestamp'])
@@ -448,7 +457,7 @@ class Command(BaseCommand):
 
     def update_past_revisions(self, r_page, doc):
         """Update past revisions for the given page row and document"""
-        ct_saved, ct_existing, ct_error = 0, 0, 0
+        ct_saved, ct_skipped, ct_error = 0, 0, 0
 
         wc = self.wikidb.cursor()
         kc = self.kumadb.cursor()
@@ -481,8 +490,13 @@ class Command(BaseCommand):
                 existing_id = existing_old_ids[r['old_id']]
                 if not self.options['update_revisions']:
                     # If this revision has already been migrated, skip update.
-                    ct_existing += 1
+                    ct_skipped += 1
                     continue
+
+            # Check to see if this revision's content is too long, skip if so.
+            if len(r['old_text']) > self.options['maxlength']:
+                ct_skipped += 1
+                continue
 
             ts = self.parse_timestamp(r['old_timestamp'])
             rev_data = [
@@ -529,9 +543,9 @@ class Command(BaseCommand):
             """ % row_placeholders
             kc.execute(sql, revs_flat)
 
-        self.rev_ct += ct_saved + ct_existing + ct_error
+        self.rev_ct += ct_saved + ct_skipped + ct_error
         log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
-                 (ct_saved, ct_existing, ct_error))
+                 (ct_saved, ct_skipped, ct_error))
 
     def update_current_revision(self, r, doc):
         # HACK: Using old_id of None to indicate the current MindTouch revision.
