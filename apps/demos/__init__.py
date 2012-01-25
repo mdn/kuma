@@ -138,6 +138,18 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "learn_more": [],
         "tab_copy": _(""),
     },
+    {
+        "tag_name": "challenge:2012:april",
+        "title": _("April 2012 Dev Derby Challenge - Audio"),
+        "short_title": _("Audio"),
+        "dateline": _("April 2012"),
+        "short_dateline": _("April"),
+        "tagline": _("Can you hear me now?"),
+        "summary": _("The HTML5 audio element lets you embed sound in webpages without resorting to plugins. The Audio API helps you do even more, from visualizations to real-time effects and beyond."),
+        "description": _("The HTML5 audio element lets you embed sound in webpages without resorting to plugins. The Audio API helps you do even more, from visualizations to real-time effects and beyond."),
+        "learn_more": [],
+        "tab_copy": _(""),
+    },
 
 
     { 
