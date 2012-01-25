@@ -888,3 +888,6 @@ LOGIN_REDIRECT_URL_FAILURE = '/'
 SITE_URL = 'https://developer.mozilla.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer.mozilla.org'
+
+BASKET_URL = 'https://basket.mozilla.com'
+BASKET_APPS_NEWSLETTER = 'app-dev'
