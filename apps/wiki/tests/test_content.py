@@ -18,6 +18,9 @@ from wiki.tests import normalize_html
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
 
+import bleach
+from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+
 
 class ContentSectionToolTests(TestCase):
     
@@ -305,3 +308,38 @@ class ContentSectionToolTests(TestCase):
                   .injectSectionEditingLinks('some-slug', 'en-US')
                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
+
+
+class AllowedHTMLTests(TestCase):
+    def test_allowed_tags(self):
+        simple_tags = (
+            'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
+            'code', 'dl', 'dt', 'dd', 'table',
+            'section', 'header', 'footer',
+            'nav', 'article', 'aside', 'figure', 'dialog', 'hgroup',
+            'mark', 'time', 'meter', 'output', 'progress',
+            'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+            'address'
+            )
+
+        unclose_tags = ('img', 'input', 'br', 'command')
+
+        specials = (
+            # Tables need a full table for bleach's DOM parsing to work properly.
+            "<table><thead><tr><th>foo</th></tr></thead><tbody><tr><td>foo</td></tr></tbody></table>",
+            )
+
+        for tag in simple_tags:
+            html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+
+        for tag in unclose_tags:
+            html_str = '<%s>' % tag
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+            
+        for html_str in specials:
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+
