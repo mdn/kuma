@@ -7,8 +7,6 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
-from nose import SkipTest
-from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
@@ -308,6 +306,38 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo',
                                      'password2': 'bar'}, follow=True)
         self.assertContains(response, 'must match')
+
+
+class ReminderEmailTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_reminder_email(self, get_current):
+        """Should send simple email reminder to user."""
+        get_current.return_value.domain = 'dev.mo.org'
+
+        response = self.client.post(reverse('users.send_email_reminder'),
+                                    {'username': 'testuser'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        eq_(1, len(mail.outbox))
+        email = mail.outbox[0]
+        assert email.subject.find('Email Address Reminder') == 0
+        assert 'testuser' in email.body
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_unknown_user_no_email_sent(self, get_current):
+        """Should send simple email reminder to user."""
+        get_current.return_value.domain = 'dev.mo.org'
+
+        response = self.client.post(reverse('users.send_email_reminder'),
+                                    {'username': 'testuser404'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        eq_(0, len(mail.outbox))
 
 
 class ChangeEmailTestCase(TestCase):

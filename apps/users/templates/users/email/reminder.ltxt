@@ -1,0 +1,7 @@
+{% load i18n %}{# L10n: This is an email.  Whitespace matters! #}{% blocktrans %}
+This email address is used for the {{ username }} account.
+
+Thanks!
+
+The {{ domain }} team
+{% endblocktrans %}

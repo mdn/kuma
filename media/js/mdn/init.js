@@ -68,8 +68,8 @@ jQuery.fn.placeholder = function(new_value) {
 
   // Set up nav dropdowns  
   $("#masthead .toggle").click(function() {
-    $("#masthead .sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
-    $("#masthead .open").removeClass("open");
+    $(this).parents("li.menu").siblings(".menu").children(".sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
+    $(this).parents("li.menu").siblings(".menu").children(".open").removeClass("open");
     $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
     $(this).toggleClass("open");
     return false;
@@ -89,7 +89,7 @@ jQuery.fn.placeholder = function(new_value) {
   // Hide dropdowns when anything else is clicked
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
-    if (! $clicked.parents().hasClass("menu")){
+    if (! $clicked.parents().hasClass("menu")) {
       $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
       $("#masthead .toggle").removeClass("open");
     }

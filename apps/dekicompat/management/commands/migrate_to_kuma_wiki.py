@@ -20,6 +20,7 @@ import re
 import time
 import datetime
 import itertools
+import hashlib
 from optparse import make_option
 
 import html5lib
@@ -30,6 +31,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.management.base import (BaseCommand, NoArgsCommand,
                                          CommandError)
+import django.db
 from django.db import connections, connection, transaction, IntegrityError
 from django.utils import encoding, hashcompat
 
@@ -45,6 +47,66 @@ from dekicompat.backends import DekiUser, DekiUserBackend
 
 
 log = commonware.log.getLogger('kuma.migration')
+
+# See also: https://github.com/mozilla/kuma/blob/mdn/apps/devmo/models.py#L327
+# I'd just import from there, but wanted to do this a little differently 
+MT_NAMESPACES = (
+    ('', 0),
+    ('Talk:', 1),
+    ('User:', 2),
+    ('User_talk:', 3),
+    ('Project:', 4),
+    ('Project_talk:', 5),
+
+    ('Help:', 12),
+    ('Help_talk:', 13),
+    ('Special:', -1),
+    ('Template:', 10),
+    ('Template_talk:', 11),
+)
+MT_NS_NAME_TO_ID = dict(MT_NAMESPACES)
+MT_NS_ID_TO_NAME = dict((x[1], x[0]) for x in MT_NAMESPACES)
+MT_MIGRATED_NS_IDS = (MT_NS_NAME_TO_ID[x] for x in (
+    '', 'Talk:', 'User:', 'User_talk:', 'Project:', 'Project_talk:'
+))
+
+# NOTE: These are MD5 hashes of garbage User page content. The criteria is that
+# the content was found to repeat more than 3 times, and was hand-reviewed by
+# lorchard who determined they were MindTouch default content. Blame him if
+# it's an overenthusiastic list.
+#
+# See also these SQL queries:
+# https://bugzilla.mozilla.org/show_bug.cgi?id=710753#c3
+# https://bugzilla.mozilla.org/show_bug.cgi?id=710753#c4
+
+USER_NS_EXCLUDED_CONTENT_HASHES = """
+7479e8f30d5ab0e9202195a1bddec69d
+698141d0c92776d60d884ebce6d64d82
+ca0c3622cdb213281cf2dc698b15c357
+ce33312f48b8ce8a68c587173e276f3a
+9ba3b75ba5e3ba82cfad83a50186ab35
+e931344938b19ea93865568712c2b2de
+a40f1d06233eef791bcf8b55df46cace
+14d2e3e51d704084503f67eaaf47dc72
+d41d8cd98f00b204e9800998ecf8427e
+74ced08578951e424aff4e7a90f2b48b
+55abb153d6e5d1bc22dae9938074f38d
+43d1c34c5556ebf12e9d0601863eb752
+f53c0981035e2378c8e8692a1e7f9649
+68b329da9893e34099c7d8ad5cb9c940
+8766b3552715bed94c106f6824efb535
+7dbb4512068edc202eda2b853c415cb7
+63f484aade7cfab43340bd001370c132
+f71abdf1a61d4fbcf7a96c484f602434
+baf848927342e7fa737b14277fa566f8
+83c7ff527035fe0dd78c2330e08d6747
+b43e15a05b457a6b79a5c553e0fbd9a7
+3c9a42e7646f29f7c983fd0a8be88ecd
+c2346672e9d426b4b8cac99507220a14
+42c76681cb99f161fecccd2c1e56b4b0
+3e31c2cafadd3ec47a88d0fc446bb929
+0356162b5f5fc96b8d96222a839d05ec
+""".split("\n")
 
 
 class Command(BaseCommand):
@@ -72,6 +134,10 @@ class Command(BaseCommand):
                     help="Stop after a migrating a number of documents"),
         make_option('--skip', dest="skip", type="int", default=0,
                     help="Skip a number of documents for migration"),
+
+        make_option('--maxlength', dest="maxlength", type="int",
+                    default=1000000,
+                    help="Maximum character length for page content"),
         
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
@@ -125,21 +191,59 @@ class Command(BaseCommand):
         log.info("Found %s docs already migrated" %
                  len(self.docs_migrated.values()))
         
-        ct = 0
+        start_ts = ts_now = time.time()
+
+        self.rev_ct = 0
+        ct, skip_ct, error_ct = 0, 0, 0
+
         for r in rows:
+
             try:
+                
                 if ct < self.options['skip']:
                     # Skip rows until past the option value
                     continue
+                
                 if self.update_document(r):
                     # Something was actually updated and not skipped
                     ct += 1
+                else:
+                    # This was a skip.
+                    skip_ct += 1
+                
+                # Clear query cache after each document. Lots of queries are
+                # bound to happen, there.
+                django.db.reset_queries()
+
                 if ct >= self.options['limit']:
                     log.info("Reached limit of %s documents migrated" %
                              self.options['limit'])
-                    return
-            except Exception, e:
-                log.error("FAILURE %s" % type(e))
+                    break
+
+            except TitleCollision, e:
+                log.error('\t\tPROBLEM %s' % type(e))
+                error_ct += 1
+
+            #except Exception, e:
+            #    # Note: This traps *all* errors, so that the migration can get
+            #    # through what it can. This should really produce a problem
+            #    # documents report, though.
+            #    log.error('\t\tPROBLEM %s' % type(e))
+            #    error_ct += 1
+
+            ts_now = time.time()
+            duration = ts_now - start_ts
+            total_ct = ct + skip_ct + error_ct
+            if (total_ct % 10) == 0:
+                log.info("Rate: %s docs/sec, %s secs/doc, %s total in %s seconds" %
+                         ((total_ct+1)/(duration+1), (duration+1)/(total_ct+1),
+                          total_ct, duration))
+                log.info("Rate: %s revs/sec, %s total in %s seconds" %
+                         ((self.rev_ct+1)/(duration+1),
+                          self.rev_ct, duration))
+
+        log.info("Migration finished: %s seconds, %s migrated, %s skipped, %s errors" %
+                 ((time.time() - start_ts), ct, skip_ct, error_ct))
 
         if ct == 0:
             # If every document gathered for migration was skipped, then we
@@ -196,6 +300,9 @@ class Command(BaseCommand):
             ct += 1
             if 0 == (ct % 10):
                 log.debug("\t%s deleted" % ct)
+                # Clear query cache after each document. Lots of queries are
+                # bound to happen, there.
+                django.db.reset_queries()
 
     def index_migrated_docs(self):
         """Build an index of Kuma docs already migrated, mapping Mindtouch page
@@ -211,31 +318,39 @@ class Command(BaseCommand):
     def gather_pages(self):
         """Gather rows for pages using the current options"""
         iters = []
+        ns_list = '(%s)' % (', '.join(str(x) for x in MT_MIGRATED_NS_IDS))
 
         # TODO: Migrate pages from namespaces other than 0
 
         if self.options['all']:
             # Migrating all pages trumps any other criteria
             where = """
-                WHERE page_namespace = 0
+                WHERE page_namespace IN %s
                 ORDER BY page_timestamp DESC
-            """
+            """ % (ns_list)
             self.cur.execute("SELECT count(*) FROM pages %s" % where)
             log.info("Gathering ALL %s pages from MindTouch..." %
                      self.cur.fetchone()[0])
             iters.append(self._query("SELECT * FROM pages %s" % where))
 
         elif self.options['slug']:
+            # Use the slug in namespace 0, or parse apart slug and namespace ID
+            # if a colon is present.
+            ns, slug = 0, self.options['slug']
+            if ':' in slug:
+                ns_name, slug = slug.split(':',1)
+                ns = MT_NS_NAME_TO_ID.get('%s:' % ns_name, 0)
+
             # Migrating a single page...
             log.info("Searching for %s" % self.options['slug'])
             iters.append(self._query("""
                 SELECT *
                 FROM pages
                 WHERE
-                    page_namespace = 0 AND
+                    page_namespace = %s AND
                     page_title = %s
                 ORDER BY page_timestamp DESC
-            """, self.options['slug']))
+            """, ns, slug))
 
         else:
 
@@ -248,10 +363,10 @@ class Command(BaseCommand):
                     FROM pages AS p, page_viewcount AS pc 
                     WHERE 
                         pc.page_id=p.page_id AND
-                        page_namespace = 0
+                        page_namespace IN %s
                     ORDER BY pc.page_counter DESC
                     LIMIT %s
-                """, self.options['most_viewed']))
+                """ % (ns_list, '%s'), self.options['most_viewed']))
 
             if self.options['recent'] > 0:
                 # Grab the most recently modified
@@ -260,10 +375,10 @@ class Command(BaseCommand):
                 iters.append(self._query("""
                     SELECT *
                     FROM pages
-                    WHERE page_namespace = 0
+                    WHERE page_namespace IN %s
                     ORDER BY page_timestamp DESC
                     LIMIT %s
-                """, self.options['recent']))
+                """ % (ns_list, '%s'), self.options['recent']))
 
             if self.options['longest'] > 0:
                 # Grab the longest pages
@@ -272,16 +387,29 @@ class Command(BaseCommand):
                 iters.append(self._query("""
                     SELECT * 
                     FROM pages 
-                    WHERE page_namespace = 0
+                    WHERE page_namespace IN %s
                     ORDER BY length(page_text) DESC
                     LIMIT %s
-                """, self.options['longest']))
+                """ % (ns_list, '%s'), self.options['longest']))
 
         return itertools.chain(*iters)
 
     @transaction.commit_on_success
     def update_document(self, r):
         """Update Kuma document from given MindTouch page record"""
+        # Build the page slug from namespace + title or display name
+        ns_name = MT_NS_ID_TO_NAME.get(r['page_namespace'], '')
+        slug = '%s%s' % (ns_name, r['page_title'] or r['page_display_name'])
+
+        # Skip this document, if it has a blank timestamp.
+        # The only pages in production that have no timestamp are either in the
+        # Special: namespace (not migrated), or a couple of untitled and empty
+        # pages under the Template: or User: namespaces.
+        if not r['page_timestamp']:
+            log.debug("\t%s (%s) skipped, no timestamp" %
+                      (slug, r['page_display_name']))
+            return False
+
         # Check to see if this doc has already been migrated, and if the
         # exising is doc is up to date.
         page_ts = self.parse_timestamp(r['page_timestamp'])
@@ -289,37 +417,47 @@ class Command(BaseCommand):
         if (not self.options['update_documents'] and last_mod is not None 
                 and last_mod >= page_ts):
             log.debug("\t%s (%s) up to date" %
-                      (r['page_title'], r['page_display_name']))
+                      (slug, r['page_display_name']))
             return False
 
-        log.info("\t%s (%s)" % (r['page_title'], r['page_display_name']))
+        # Check to see if this doc's content hash falls in the list of User:
+        # namespace content we want to exclude.
+        if r['page_namespace'] == MT_NS_NAME_TO_ID['User:']:
+            content_hash = hashlib.md5(r['page_text'].encode('utf-8')).hexdigest()
+            if content_hash in USER_NS_EXCLUDED_CONTENT_HASHES:
+                log.debug("\t%s (%s) matched User: content exclusion list" %
+                          (slug, r['page_display_name']))
+                return False
 
-        try:
-            # Ensure that the document exists, and has the MindTouch page ID
-            slug = r['page_title'] or r['page_display_name']
-            doc, created = Document.objects.get_or_create(slug=slug,
-                title=r['page_display_name'], defaults=dict(
-                    category=CATEGORIES[0][0],
-                ))
-            doc.mindtouch_page_id = r['page_id']
-
-            if created:
-                log.info("\t\tNew document created. (ID=%s)" % doc.pk)
-            else:
-                log.info("\t\tDocument already exists. (ID=%s)" % doc.pk)
-
-            self.update_past_revisions(r, doc)
-            self.update_current_revision(r, doc)
-
-        except TitleCollision, e:
-            log.error('\t\tPROBLEM %s' % type(e))
+        # Check to see if this page's content is too long, skip if so.
+        if len(r['page_text']) > self.options['maxlength']:
+            log.debug("\t%s (%s) skipped, page too long (%s > %s max)" %
+                      (slug, r['page_display_name'],
+                       len(r['page_text']), self.options['maxlength']))
             return False
+
+        log.info("\t%s (%s)" % (slug, r['page_display_name']))
+
+        # Ensure that the document exists, and has the MindTouch page ID
+        doc, created = Document.objects.get_or_create(slug=slug,
+            title=r['page_display_name'], defaults=dict(
+                category=CATEGORIES[0][0],
+            ))
+        doc.mindtouch_page_id = r['page_id']
+
+        if created:
+            log.info("\t\tNew document created. (ID=%s)" % doc.pk)
+        else:
+            log.info("\t\tDocument already exists. (ID=%s)" % doc.pk)
+
+        self.update_past_revisions(r, doc)
+        self.update_current_revision(r, doc)
 
         return True
 
     def update_past_revisions(self, r_page, doc):
         """Update past revisions for the given page row and document"""
-        ct_saved, ct_existing, ct_error = 0, 0, 0
+        ct_saved, ct_skipped, ct_error = 0, 0, 0
 
         wc = self.wikidb.cursor()
         kc = self.kumadb.cursor()
@@ -352,8 +490,13 @@ class Command(BaseCommand):
                 existing_id = existing_old_ids[r['old_id']]
                 if not self.options['update_revisions']:
                     # If this revision has already been migrated, skip update.
-                    ct_existing += 1
+                    ct_skipped += 1
                     continue
+
+            # Check to see if this revision's content is too long, skip if so.
+            if len(r['old_text']) > self.options['maxlength']:
+                ct_skipped += 1
+                continue
 
             ts = self.parse_timestamp(r['old_timestamp'])
             rev_data = [
@@ -400,8 +543,9 @@ class Command(BaseCommand):
             """ % row_placeholders
             kc.execute(sql, revs_flat)
 
+        self.rev_ct += ct_saved + ct_skipped + ct_error
         log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
-                 (ct_saved, ct_existing, ct_error))
+                 (ct_saved, ct_skipped, ct_error))
 
     def update_current_revision(self, r, doc):
         # HACK: Using old_id of None to indicate the current MindTouch revision.
@@ -421,10 +565,12 @@ class Command(BaseCommand):
             return
 
         rev.created = rev.reviewed = page_ts
-        rev.slug = r['page_title'] or r['page_display_name']
-        rev.title = r['page_display_name']
+        rev.slug = doc.slug
+        rev.title = doc.title
         rev.content = r['page_text']
-        rev.comment = r['page_comment']
+        
+        # HACK: Some comments end up being too long, but just truncate.
+        rev.comment = r['page_comment'][:255]
 
         # Save, and force to current revision.
         rev.save()
@@ -444,10 +590,19 @@ class Command(BaseCommand):
             # Look up the user straight from the database
             self.cur.execute("SELECT * FROM users AS u WHERE u.user_id = %s",
                              (deki_user_id,))
-            r = list(self._query_dicts(self.cur))[0]
-            deki_user = DekiUser(id=r['user_id'], username=r['user_name'],
-                                 fullname=r['user_real_name'],
-                                 email=r['user_email'], gravatar='',)
+            r = list(self._query_dicts(self.cur))
+
+            if not len(r):
+                # HACK: If, for some reason the user is missing from MindTouch,
+                # just put and use the superuser. Seems to happen mainly for
+                # user #0, which is probably superuser anyway.
+                return self.get_superuser_id()
+
+            # Build a DekiUser object from the database record
+            user = r[0]
+            deki_user = DekiUser(id=user['user_id'], username=user['user_name'],
+                                 fullname=user['user_real_name'],
+                                 email=user['user_email'], gravatar='',)
 
             # Scan user grants for admin roles to set Django flags.
             self.cur.execute("""SELECT * FROM user_grants AS ug
