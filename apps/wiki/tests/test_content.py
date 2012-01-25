@@ -329,6 +329,9 @@ class AllowedHTMLTests(TestCase):
 
     special_attributes = (
         '<command id="foo">',
+        '<img align="left" alt="picture of foo" class="foo" id="foo" src="foo" title="foo">',
+        '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
+        '<div class="foo">foo</div>',
         # TODO: Styles have to be cleaned on a case-by-case basis. We
         # need to enumerate the styles we're going to allow, then feed
         # them to bleach.
