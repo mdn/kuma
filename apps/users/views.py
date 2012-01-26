@@ -79,6 +79,30 @@ def set_browserid_explained(response):
     return response
 
 
+@ssl_required
+@login_required
+@require_POST
+def browserid_change_email(request):
+    """Process a submitted BrowserID assertion to change email."""
+    form = BrowserIDForm(data=request.POST)
+    if not form.is_valid():
+        messages.error(request, form.errors)
+        return HttpResponseRedirect(reverse('users.change_email'))
+    result = _verify_browserid(form, request)
+    email = result['email']
+    user = _get_latest_user_with_email(email)
+    if user and user != request.user:
+        messages.error(request, 'That email already belongs to another '
+                       'user.')
+        return HttpResponseRedirect(reverse('users.change_email'))
+    else:
+        user = request.user
+        user.email = email
+        user.save()
+        return HttpResponseRedirect(reverse('devmo_profile_edit',
+                                            args=[user.username, ]))
+
+
 @csrf_exempt
 @ssl_required
 @require_POST
@@ -110,30 +134,14 @@ def browserid_verify(request):
     email = result['email']
     user = None
 
-    # TODO: This user lookup and create stuff probably belongs in the model:
-    # If user is authenticated, change their email
-    if request.user.is_authenticated():
-        user = _get_latest_user_with_email(email)
-        # If a user with the email already exists, don't change
-        if user and user != request.user:
-            messages.error(request, 'That email already belongs to another '
-                           'user.')
-            return set_browserid_explained(
-                HttpResponseRedirect(reverse('users.change_email')))
-        else:
-            user = request.user
-            user.email = email
-            user.save()
-            redirect_to = reverse('devmo_profile_edit', args=[user.username, ])
-    else:
-        # Look for first most recently used Django account, use if found.
-        user = _get_latest_user_with_email(email)
-        # If no Django account, look for a MindTouch account by email.
-        # If found, auto-create the user.
-        if not user:
-            deki_user = DekiUserBackend.get_deki_user_by_email(email)
-            if deki_user:
-                user = DekiUserBackend.get_or_create_user(deki_user)
+    # Look for first most recently used Django account, use if found.
+    user = _get_latest_user_with_email(email)
+    # If no Django account, look for a MindTouch account by email.
+    # If found, auto-create the user.
+    if not user:
+        deki_user = DekiUserBackend.get_deki_user_by_email(email)
+        if deki_user:
+            user = DekiUserBackend.get_or_create_user(deki_user)
 
     # If we got a user from either the Django or MT paths, complete login for
     # Django and MT and redirect.
