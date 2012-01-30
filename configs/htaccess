@@ -2,6 +2,7 @@
 # Example: ln -s /home/foo/mdn/configs/htaccess /var/www/dekiwiki/.htaccess
 #
 # Make sure AllowOverride has FileInfo
+Header set Access-Control-Allow-Origin "*"
 ReWriteEngine On
 RewriteBase /
 
