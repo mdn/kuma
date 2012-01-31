@@ -16,7 +16,10 @@ DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
 # HACK: For easier L10N, define tag descriptions in code instead of as a DB model
 TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESCRIPTIONS', (
-
+    {
+        "tag_name": "challenge:none",
+        "title": _("None"),
+    },
     {
         "tag_name": "challenge:2011:june",
         "title": _("June 2011 Dev Derby Challenge - CSS3 Animations"),

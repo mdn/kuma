@@ -241,6 +241,10 @@ def tags_for_object(obj):
     return tags
 
 @register.function
+def tech_tags_for_object(obj):
+    return obj.taggit_tags.all_ns('tech')
+
+@register.function
 def tags_used_for_submissions():
     return TaggedItem.tags_for(Submission)
 
