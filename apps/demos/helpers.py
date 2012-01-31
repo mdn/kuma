@@ -1,50 +1,34 @@
 import datetime
-import urllib
-import logging
 import functools
 import hashlib
 import random
 
 from django.core.cache import cache
-#from django.utils.translation import ungettext, ugettext
-from tower import ugettext_lazy as _lazy, ungettext
-
 from django.conf import settings
-
-import jingo
-import jinja2
-from jinja2 import evalcontextfilter, Markup, escape
-from jingo import register, env
-from tower import ugettext as _
-from tower import ugettext, ungettext
-from django.core import urlresolvers
-
-from babel import localedata
-from babel.dates import format_date, format_time, format_datetime
-from babel.numbers import format_decimal
-
-from pytz import timezone
 from django.utils.tzinfo import LocalTimezone
 
-from django.core.urlresolvers import reverse as django_reverse
-from devmo.urlresolvers import reverse
-
+from babel import localedata
+import jingo
+from jingo import register
+import jinja2
+from tower import ugettext as _
+from tower import ugettext, ungettext
 from taggit.models import TaggedItem
+from threadedcomments.models import ThreadedComment
+from threadedcomments.forms import ThreadedCommentForm
+from threadedcomments.templatetags import threadedcommentstags
+import threadedcomments.views
 
 from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES
 from . import DEMOS_CACHE_NS_KEY
-
-from threadedcomments.models import ThreadedComment, FreeThreadedComment
-from threadedcomments.forms import ThreadedCommentForm, FreeThreadedCommentForm
-from threadedcomments.templatetags import threadedcommentstags
-import threadedcomments.views
 
 # Monkeypatch threadedcomments URL reverse() to use devmo's
 from devmo.urlresolvers import reverse
 threadedcommentstags.reverse = reverse
 
 
-TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings, 'TEMPLATE_INCLUDE_CACHE_EXPIRES', 300)
+TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
+                                         'TEMPLATE_INCLUDE_CACHE_EXPIRES', 300)
 
 
 def new_context(context, **kw):
@@ -52,10 +36,12 @@ def new_context(context, **kw):
     c.update(kw)
     return c
 
+
 # TODO:liberate ?
-def register_cached_inclusion_tag(template, key_fn=None, expires=TEMPLATE_INCLUDE_CACHE_EXPIRES):
-    """Decorator for inclusion tags with output caching. 
-    
+def register_cached_inclusion_tag(template, key_fn=None,
+                                  expires=TEMPLATE_INCLUDE_CACHE_EXPIRES):
+    """Decorator for inclusion tags with output caching.
+
     Accepts a string or function to generate a cache key based on the incoming
     parameters, along with an expiration time configurable as
     INCLUDE_CACHE_EXPIRES or an explicit parameter"""
@@ -71,7 +57,7 @@ def register_cached_inclusion_tag(template, key_fn=None, expires=TEMPLATE_INCLUD
                 cache_key = key_fn
             else:
                 cache_key = key_fn(*args, **kw)
-            
+
             out = cache.get(cache_key)
             if out is None:
                 context = f(*args, **kw)
@@ -82,29 +68,41 @@ def register_cached_inclusion_tag(template, key_fn=None, expires=TEMPLATE_INCLUD
 
         return register.function(wrapper)
     return decorator
-   
+
+
 def submission_key(prefix):
     """Produce a cache key function with a prefix, which generates the rest of
     the key based on a submission ID and last-modified timestamp."""
     def k(*args, **kw):
         submission = args[0]
-        return 'submission:%s:%s:%s' % ( prefix, submission.id, submission.modified )
+        return 'submission:%s:%s:%s' % (prefix,
+                                        submission.id,
+                                        submission.modified)
     return k
+
 
 # TOOO: All of these inclusion tags could probably be generated & registered
 # from a dict of function names and inclusion tag args, since the method bodies
 # are all identical. Might be astronaut architecture, though.
 @register.inclusion_tag('demos/elements/demos_head.html')
-def demos_head(request): return locals()
+def demos_head(request):
+    return locals()
+
 
 @register.inclusion_tag('demos/elements/submission_creator.html')
-def submission_creator(submission): return locals()
+def submission_creator(submission):
+    return locals()
+
 
 @register.inclusion_tag('demos/elements/profile_link.html')
-def profile_link(user, show_gravatar=False, gravatar_size=48, gravatar_default='mm'): return locals()
+def profile_link(user, show_gravatar=False, gravatar_size=48,
+                 gravatar_default='mm'):
+    return locals()
+
 
 @register.inclusion_tag('demos/elements/submission_thumb.html')
-def submission_thumb(submission,extra_class=None,thumb_width="200",thumb_height="150"): 
+def submission_thumb(submission, extra_class=None, thumb_width="200",
+                     thumb_height="150"):
     vars = locals()
 
     flags = submission.get_flags()
@@ -113,17 +111,17 @@ def submission_thumb(submission,extra_class=None,thumb_width="200",thumb_height=
     # TODO: Move to a constant or DB table? Too much view stuff here?
     flags_meta = {
         # flag name      thumb class     flag description
-        'firstplace':  ( 'first-place',  _('First Place') ),
-        'secondplace': ( 'second-place', _('Second Place') ),
-        'thirdplace':  ( 'third-place',  _('Third Place') ),
-        'finalist':    ( 'finalist',     _('Finalist') ),
-        'featured':    ( 'featured',     _('Featured') ),
+        'firstplace':  ('first-place',  _('First Place')),
+        'secondplace': ('second-place', _('Second Place')),
+        'thirdplace':  ('third-place',  _('Third Place')),
+        'finalist':    ('finalist',     _('Finalist')),
+        'featured':    ('featured',     _('Featured')),
     }
 
     # If there are any flags, pass them onto the template. Special treatment
     # for the first flag, which takes priority over all others for display in
     # the thumb.
-    main_flag = ( len(flags) > 0 ) and flags[0] or None
+    main_flag = (len(flags) > 0) and flags[0] or None
     vars['all_flags'] = flags
     vars['main_flag'] = main_flag
     if main_flag in flags_meta:
@@ -132,28 +130,43 @@ def submission_thumb(submission,extra_class=None,thumb_width="200",thumb_height=
 
     return vars
 
+
 def submission_listing_cache_key(*args, **kw):
     ns_key = cache.get(DEMOS_CACHE_NS_KEY)
     if ns_key is None:
-        ns_key = random.randint(1,10000)
+        ns_key = random.randint(1, 10000)
         cache.set(DEMOS_CACHE_NS_KEY, ns_key)
-    return 'demos_%s:%s' % (ns_key, hashlib.md5(args[0].get_full_path()+args[0].user.username).hexdigest())
+    full_path = args[0].get_full_path()
+    username = args[0].user.username
+    return 'demos_%s:%s' % (ns_key,
+        hashlib.md5(full_path + username).hexdigest())
 
-@register_cached_inclusion_tag('demos/elements/submission_listing.html', submission_listing_cache_key)
-def submission_listing(request, submission_list, is_paginated, paginator, page_obj, feed_title, feed_url, 
-        cols_per_row=3, pagination_base_url='', show_sorts=True, show_submit=False): 
+
+@register_cached_inclusion_tag('demos/elements/submission_listing.html',
+                               submission_listing_cache_key)
+def submission_listing(request, submission_list, is_paginated, paginator,
+                       page_obj, feed_title, feed_url,
+                       cols_per_row=3, pagination_base_url='', show_sorts=True,
+                       show_submit=False):
     return locals()
 
-@register.inclusion_tag('demos/elements/tech_tags_list.html')
-def tech_tags_list(): return locals()
 
-# Not cached, because it's small and changes based on current search query string
+@register.inclusion_tag('demos/elements/tech_tags_list.html')
+def tech_tags_list():
+    return locals()
+
+
+# Not cached, because it's small and changes based on
+# current search query string
 @register.inclusion_tag('demos/elements/search_form.html')
 @jinja2.contextfunction
 def search_form(context):
     return new_context(**locals())
 
+
 bitly_api = None
+
+
 def _get_bitly_api():
     """Get an instance of the bit.ly API class"""
     global bitly_api
@@ -163,6 +176,7 @@ def _get_bitly_api():
         apikey = getattr(settings, 'BITLY_API_KEY', '')
         bitly_api = bitly.Api(login, apikey)
     return bitly_api
+
 
 @register.filter
 def bitly_shorten(url):
@@ -175,13 +189,17 @@ def bitly_shorten(url):
         # configured, fall back to using the original URL.
         return url
 
+
 @register.function
 def devderby_tag_to_date_url(tag):
     """Turn a devderby tag like challenge:2011:june into a date-based URL"""
     # HACK: Not super happy with this, but it works for now
-    if not tag: return ''
+    if not tag:
+        return ''
     parts = tag.split(':')
-    return reverse('demos.views.devderby_by_date', args=( parts[-2], parts[-1] ))
+    return reverse('demos.views.devderby_by_date',
+                   args=(parts[-2], parts[-1]))
+
 
 @register.function
 def license_link(license_name):
@@ -190,6 +208,7 @@ def license_link(license_name):
     else:
         return license_name
 
+
 @register.function
 def license_title(license_name):
     if license_name in DEMO_LICENSES:
@@ -197,56 +216,68 @@ def license_title(license_name):
     else:
         return license_name
 
+
 @register.function
 def tag_title(tag):
-    if not tag: return ''
+    if not tag:
+        return ''
     name = (isinstance(tag, basestring)) and tag or tag.name
     if name in TAG_DESCRIPTIONS:
         return TAG_DESCRIPTIONS[name]['title']
     else:
         return name
 
+
 @register.function
 def tag_description(tag):
-    if not tag: return ''
+    if not tag:
+        return ''
     name = (isinstance(tag, basestring)) and tag or tag.name
     if name in TAG_DESCRIPTIONS:
         return TAG_DESCRIPTIONS[name]['description']
     else:
         return name
 
+
 @register.function
 def tag_learn_more(tag):
-    if not tag: return ''
-    if (tag.name in TAG_DESCRIPTIONS and 
+    if not tag:
+        return ''
+    if (tag.name in TAG_DESCRIPTIONS and
             'learn_more' in TAG_DESCRIPTIONS[tag.name]):
         return TAG_DESCRIPTIONS[tag.name]['learn_more']
     else:
         return []
 
+
 @register.function
 def tag_meta(tag, other_name):
     """Get metadata for a tag or tag name."""
     # TODO: Replace usage of tag_{title,description,learn_more}?
-    if not tag: return ''
+    if not tag:
+        return ''
     name = (isinstance(tag, basestring)) and tag or tag.name
     if name in TAG_DESCRIPTIONS and other_name in TAG_DESCRIPTIONS[name]:
         return TAG_DESCRIPTIONS[name][other_name]
     else:
         return ''
 
+
 @register.function
 def tags_for_object(obj):
     tags = obj.taggit_tags.all()
     return tags
 
+
 @register.function
 def tech_tags_for_object(obj):
     return obj.taggit_tags.all_ns('tech')
 
+
 @register.function
 def tags_used_for_submissions():
     return TaggedItem.tags_for(Submission)
+
 
 @register.filter
 def date_diff(timestamp, to=None):
@@ -255,46 +286,54 @@ def date_diff(timestamp, to=None):
 
     compare_with = to or datetime.date.today()
     delta = timestamp - compare_with
-    
-    if delta.days == 0: return u"today"
-    elif delta.days == -1: return u"yesterday"
-    elif delta.days == 1: return u"tomorrow"
-    
+
+    if delta.days == 0:
+        return u"today"
+    elif delta.days == -1:
+        return u"yesterday"
+    elif delta.days == 1:
+        return u"tomorrow"
+
     chunks = (
         (365.0, lambda n: ungettext('year', 'years', n)),
         (30.0, lambda n: ungettext('month', 'months', n)),
-        (7.0, lambda n : ungettext('week', 'weeks', n)),
-        (1.0, lambda n : ungettext('day', 'days', n)),
+        (7.0, lambda n: ungettext('week', 'weeks', n)),
+        (1.0, lambda n: ungettext('day', 'days', n)),
     )
-    
+
     for i, (chunk, name) in enumerate(chunks):
         if abs(delta.days) >= chunk:
             count = abs(round(delta.days / chunk, 0))
             break
 
-    date_str = ugettext('%(number)d %(type)s') % {'number': count, 'type': name(count)}
-    
-    if delta.days > 0: return "in " + date_str
-    else: return date_str + " ago"
+    date_str = (ugettext('%(number)d %(type)s') %
+                        {'number': count, 'type': name(count)})
+
+    if delta.days > 0:
+        return "in " + date_str
+    else:
+        return date_str + " ago"
+
 
 # TODO: Maybe just register the template tag functions in the jingo environment
 # directly, rather than building adapter functions?
-
 @register.function
 def get_threaded_comment_flat(content_object, tree_root=0):
     return ThreadedComment.public.get_tree(content_object, root=tree_root)
+
 
 @register.function
 def get_threaded_comment_tree(content_object, tree_root=0):
     """Convert the flat list with depth indices into a true tree structure for
     recursive template display"""
-    root = dict( children=[] )
-    parent_stack = [ root, ]
-    
+    root = dict(children=[])
+    parent_stack = [root, ]
+
     flat = ThreadedComment.public.get_tree(content_object, root=tree_root)
     for comment in flat:
         c = dict(comment=comment, children=[])
-        if comment.depth > len(parent_stack) - 1 and len(parent_stack[-1]['children']):
+        if (comment.depth > len(parent_stack) - 1 and
+            len(parent_stack[-1]['children'])):
             parent_stack.append(parent_stack[-1]['children'][-1])
         while comment.depth < len(parent_stack) - 1:
             parent_stack.pop(-1)
@@ -302,24 +341,31 @@ def get_threaded_comment_tree(content_object, tree_root=0):
 
     return root
 
+
 @register.inclusion_tag('demos/elements/comments_tree.html')
-def comments_tree(request, object, root): return locals()
+def comments_tree(request, object, root):
+    return locals()
+
 
 @register.function
 def get_comment_url(content_object, parent=None):
     return threadedcommentstags.get_comment_url(content_object, parent)
 
+
 @register.function
 def get_threaded_comment_form():
     return ThreadedCommentForm()
+
 
 @register.function
 def auto_transform_markup(comment):
     return threadedcommentstags.auto_transform_markup(comment)
 
+
 @register.function
 def can_delete_comment(comment, user):
     return threadedcomments.views.can_delete_comment(comment, user)
+
 
 @register.filter
 def timesince(d, now=None):
