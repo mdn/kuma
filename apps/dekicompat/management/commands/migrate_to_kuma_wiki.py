@@ -7,13 +7,6 @@ updates, and not duplicate documents or repeated revisions.
 TODO
 * https://bugzilla.mozilla.org/show_bug.cgi?id=710713
 * https://bugzilla.mozilla.org/showdependencytree.cgi?id=710713&hide_resolved=1
-* Performance metrics
-    * documents and revisions per hour
-    * estimated time to completion, given rate so far
-* Document limit - eg. exit after X documents updated, not including skips.
-    * Stick this in a shell script loop so that the script exits occasionally
-      to free memory?
-        * Need to figure out when we're done, then, though.
 """
 import sys
 import re
@@ -37,16 +30,23 @@ from django.utils import encoding, hashcompat
 
 import commonware.log
 
+from sumo.urlresolvers import reverse
+
 from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES,
                          TitleCollision)
 
 import wiki.content
+from wiki.models import REDIRECT_CONTENT
 from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
 
 log = commonware.log.getLogger('kuma.migration')
+
+# Regular expression to match and extract page title from MindTouch redirects
+# eg. #REDIRECT [[en/DOM/Foo]], #REDIRECT[[foo_bar_baz]]
+MT_REDIR_PAT = re.compile(r"""^#REDIRECT ?\[\[([^\]]+)\]\]""")
 
 # See also: https://github.com/mozilla/kuma/blob/mdn/apps/devmo/models.py#L327
 # I'd just import from there, but wanted to do this a little differently 
@@ -129,6 +129,8 @@ class Command(BaseCommand):
                     help="Migrate # of recently modified documents"),
         make_option('--longest', dest="longest", type="int", default=0,
                     help="Migrate # of longest documents"),
+        make_option('--redirects', dest="redirects", type="int", default=0,
+                    help="Migrate # of documents containing redirects"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -353,6 +355,7 @@ class Command(BaseCommand):
             """, ns, slug))
 
         else:
+            # TODO: Refactor these copypasta queries into something DRYer?
 
             if self.options['most_viewed'] > 0:
                 # Grab the most viewed pages
@@ -391,6 +394,23 @@ class Command(BaseCommand):
                     ORDER BY length(page_text) DESC
                     LIMIT %s
                 """ % (ns_list, '%s'), self.options['longest']))
+
+            if self.options['redirects'] > 0:
+                # Grab the redirect pages
+                log.info("Gathering %s redirects from MindTouch..." %
+                         self.options['redirects'])
+                # HACK: Need to use "%%%%" here, just to get one "%". It's
+                # stinky, but it's because this string goes twice through %
+                # formatting - once for page namespace list, and once for SQL
+                # escaping in Django.
+                iters.append(self._query("""
+                    SELECT * FROM pages 
+                    WHERE
+                        page_namespace IN %s AND
+                        page_text LIKE '#REDIRECT%%%%'
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """ % (ns_list, '%s'), self.options['redirects']))
 
         return itertools.chain(*iters)
 
@@ -505,7 +525,8 @@ class Command(BaseCommand):
                 doc.slug, doc.title,
                 True, SIGNIFICANCES[0][0],
                 '', '',
-                r['old_text'], r['old_comment'],
+                self.convert_page_text(r['old_text']),
+                r['old_comment'],
                 ts, self.get_django_user_id_for_deki_id(r['old_user']),
                 ts, self.get_superuser_id()
             ]
@@ -560,14 +581,15 @@ class Command(BaseCommand):
         # Check to see if the current revision is up to date, in which case we
         # can skip the update and save a little time.
         page_ts = self.parse_timestamp(r['page_timestamp'])
-        if not created and page_ts <= rev.created:
+        if (not self.options['update_documents'] and not created and 
+                page_ts <= rev.created):
             log.info("\t\tCurrent revision already up to date. (ID=%s)" % rev.pk)
             return
 
         rev.created = rev.reviewed = page_ts
         rev.slug = doc.slug
         rev.title = doc.title
-        rev.content = r['page_text']
+        rev.content = self.convert_page_text(r['page_text'])
         
         # HACK: Some comments end up being too long, but just truncate.
         rev.comment = r['page_comment'][:255]
@@ -580,6 +602,29 @@ class Command(BaseCommand):
             log.info("\t\tCurrent revision created. (ID=%s)" % rev.pk)
         else:
             log.info("\t\tCurrent revision updated. (ID=%s)" % rev.pk)
+
+    def convert_page_text(self, pt):
+        """Given a page row from MindTouch, do whatever needs doing to convert
+        the page content for Kuma."""
+
+        if pt.startswith('#REDIRECT'):
+            pt = self.convert_redirect(pt)
+
+        # TODO: bug 710728 - Convert and normalize template calls
+        # TODO: bug 710726 - Convert intra-wiki links? 
+
+        return pt
+
+    def convert_redirect(self, pt):
+        """Convert MindTouch-style page redirects to Kuma-style"""
+        m = MT_REDIR_PAT.match(pt)
+        if m:
+            # TODO: Do we need a convert_title function for locale parsing (eg.
+            # as part of bug 710724?)
+            title = m.group(1)
+            href = reverse('wiki.document', args=[title])
+            pt = REDIRECT_CONTENT % dict(href=href, title=title)
+        return pt
 
     def get_django_user_id_for_deki_id(self, deki_user_id):
         """Given a Deki user ID, come up with a Django user object whether we
