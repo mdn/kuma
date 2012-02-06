@@ -107,6 +107,7 @@
       </ul>
 
       <div class="demo-meta">
+        {% if tech_tags_for_object(submission)|length > 0 %}
         <p class="tags">
             {{_('Built using')}} 
             {% for tag in tags_for_object(submission) %}
@@ -115,6 +116,7 @@
                 {% endif %}
             {% endfor %}
         </p>
+        {% endif %}
 
         <ul class="stats">
             {% set launches = submission.launches.total %}

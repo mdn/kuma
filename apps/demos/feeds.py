@@ -20,7 +20,8 @@ from django.conf import settings
 from devmo.urlresolvers import reverse
 from devmo.models import UserProfile
 
-from .models import Submission, TAG_DESCRIPTIONS
+from . import TAG_DESCRIPTIONS
+from .models import Submission
 
 
 MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 15)
