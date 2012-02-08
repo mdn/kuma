@@ -286,8 +286,7 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     # how MySQL uses indexes, we probably don't need individual indexes on
     # title and locale as well as a combined (title, locale) one.
     class Meta(object):
-        unique_together = (('parent', 'locale'), ('title', 'locale'),
-                           ('slug', 'locale'))
+        unique_together = (('parent', 'locale'), ('slug', 'locale'))
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
