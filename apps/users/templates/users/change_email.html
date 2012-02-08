@@ -12,7 +12,7 @@
       <article id="pw-reset" class="main">
         {% if use_browserid %}
           <h1>{{ _('Change email with BrowserID') }}</h1>
-            <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
+            <form class="browserid boxed" action="{{url('users.browserid_change_email')}}" method="POST">
               <input type="hidden" name="next" value="{{ next_url }}" />
               {{ errorlist(form) }}
               <p>{% trans browserid_href='https://browserid.org/' %}

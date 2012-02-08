@@ -784,9 +784,7 @@ class BrowserIDTestCase(TestCase):
 
         _verify_browserid.return_value = {'email': 'testuser+changed@test.com'}
 
-        # posting a valid assertion to browserid_verify changes email
-        # if the client is already logged-in
-        resp = self.client.post(reverse('users.browserid_verify',
+        resp = self.client.post(reverse('users.browserid_change_email',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -808,9 +806,8 @@ class BrowserIDTestCase(TestCase):
 
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
 
-        # posting a valid assertion to browserid_verify doesn't change email
-        # if the new email already belongs to another user
-        resp = self.client.post(reverse('users.browserid_verify',
+        # doesn't change email if the new email already belongs to another user
+        resp = self.client.post(reverse('users.browserid_change_email',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)

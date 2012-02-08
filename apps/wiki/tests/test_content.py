@@ -311,35 +311,58 @@ class ContentSectionToolTests(TestCase):
 
 
 class AllowedHTMLTests(TestCase):
+    simple_tags = (
+        'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
+        'code', 'dl', 'dt', 'dd', 'table',
+        'section', 'header', 'footer',
+        'nav', 'article', 'aside', 'figure', 'dialog', 'hgroup',
+        'mark', 'time', 'meter', 'output', 'progress',
+        'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+        'address'
+        )
+    
+    unclose_tags = ('img', 'input', 'br', 'command')
+
+    special_tags = (
+        "<table><thead><tr><th>foo</th></tr></thead><tbody><tr><td>foo</td></tr></tbody></table>",
+    )
+
+    special_attributes = (
+        '<command id="foo">',
+        '<img align="left" alt="picture of foo" class="foo" id="foo" src="foo" title="foo">',
+        '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
+        '<div class="foo">foo</div>',
+        # TODO: Styles have to be cleaned on a case-by-case basis. We
+        # need to enumerate the styles we're going to allow, then feed
+        # them to bleach.
+        # '<span style="font-size: 24px"></span>',
+    )
+    
     def test_allowed_tags(self):
-        simple_tags = (
-            'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
-            'code', 'dl', 'dt', 'dd', 'table',
-            'section', 'header', 'footer',
-            'nav', 'article', 'aside', 'figure', 'dialog', 'hgroup',
-            'mark', 'time', 'meter', 'output', 'progress',
-            'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-            'address'
-            )
-
-        unclose_tags = ('img', 'input', 'br', 'command')
-
-        specials = (
-            # Tables need a full table for bleach's DOM parsing to work properly.
-            "<table><thead><tr><th>foo</th></tr></thead><tbody><tr><td>foo</td></tr></tbody></table>",
-            )
-
-        for tag in simple_tags:
+        for tag in self.simple_tags:
             html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
 
-        for tag in unclose_tags:
+        for tag in self.unclose_tags:
             html_str = '<%s>' % tag
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
             
-        for html_str in specials:
+        for html_str in self.special_tags:
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
 
+    def test_allowed_attributes(self):
+        for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+                    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+                    'dialog', 'hgroup', 'mark', 'time', 'meter', 'output',
+                    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist',
+                    'address'):
+            html_str = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+
+        for html_str in self.special_attributes:
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))

@@ -39,6 +39,7 @@ def user(save=False, **kwargs):
         u.save()
     return u
 
+
 def get_deki_user_doc(user):
     deki_id = user.get_profile().deki_user_id
     resp = requests.get(DekiUserBackend.profile_by_id_url % (str(deki_id) +

@@ -144,24 +144,27 @@ class AppsViewsTest(test_utils.TestCase):
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
         doc = pq(r.content)
-        responsys_form = doc.find('form.fm-subscribe')
-        eq_(reverse('apps_subscription', locale='en-US'), responsys_form.attr('action'))
+        signup_form = doc.find('form.fm-subscribe')
+        eq_(reverse('apps_subscription', locale='en-US'),
+            signup_form.attr('action'))
 
-    @patch('landing.views.responsys.subscribe')
+    @patch('landing.views.basket.subscribe')
     def test_apps_subscription(self, subscribe):
         subscribe.return_value = True
         s = Switch.objects.create(name='apps_landing', active=True)
         s.save()
         url = reverse('landing.views.apps_subscription')
-        r = self.client.post(url, {'format': 'html', 'email': 'testuser@test.com', 'agree': 'checked'}, follow=True)
+        r = self.client.post(url,
+                             {'format': 'html',
+                              'email': 'testuser@test.com',
+                              'agree': 'checked'},
+                             follow=True)
         eq_(200, r.status_code)
         # assert thank you message
         self.assertContains(r, 'Thank you')
-        # TODO: figure out why the mock doesn't work?
-        # subscribe.assert_called_once_with('APP_DEV_BREAK', 'testuser@test.com', format='text')
+        eq_(1, subscribe.call_count)
 
-
-    @patch('landing.views.responsys.subscribe')
+    @patch('landing.views.basket.subscribe')
     def test_apps_subscription_bad_values(self, subscribe):
         subscribe.return_value = True
         s = Switch.objects.create(name='apps_landing', active=True)

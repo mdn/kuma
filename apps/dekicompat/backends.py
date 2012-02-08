@@ -221,9 +221,9 @@ class DekiUserBackend(object):
         role = 'Contributor'
         if user.is_staff and user.is_superuser:
             role = 'Admin'
-        user_xml = MINDTOUCH_USER_XML % {'username': user.username,
-                    'email': user.email,
-                    'fullname': user.get_profile().fullname,
+        user_xml = MINDTOUCH_USER_XML % {'username': user.username.encode('utf-8'),
+                    'email': user.email.encode('utf-8'),
+                    'fullname': user.get_profile().fullname.encode('utf-8'),
                     'status': 'active',
                     'language': user.get_profile().mindtouch_language,
                     'timezone': user.get_profile().mindtouch_timezone,

@@ -5,7 +5,6 @@ from jinja2 import escape, Markup
 from jingo import register
 
 from sumo.urlresolvers import reverse
-from devmo.models import UserProfile
 
 
 @register.function

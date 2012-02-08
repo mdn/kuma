@@ -594,6 +594,16 @@ class Calendar(ModelBase):
                 row['done'] = True
             row['end_date'] = row['end_date'].strftime("%Y-%m-%d")
             row['date'] = row['date'].strftime("%Y-%m-%d")
+            for field_name in ('conference', 'location', 'people', 'description'):
+                # Sometimes we still get here with non-ASCII data;
+                # that will blow up on attempting to save, so we check
+                # the text-based fields to make sure they decode
+                # cleanly as ASCII, and force-decode them as UTF-8 if
+                # they don't.
+                try:
+                    row[field_name].decode('ascii')
+                except UnicodeDecodeError:
+                    row[field_name] = row[field_name].decode('utf-8', 'ignore')
 
             try:
                 event = Event(calendar=self, **row)

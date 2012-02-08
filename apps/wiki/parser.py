@@ -16,8 +16,7 @@ from tower import ugettext as _, ugettext_lazy as _lazy
 
 from gallery.models import Video
 import sumo.parser
-from sumo.parser import (ALLOWED_ATTRIBUTES, get_object_fallback,
-                         build_hook_params)
+from sumo.parser import get_object_fallback, build_hook_params
 
 
 BLOCK_LEVEL_ELEMENTS = ['table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5',
@@ -399,6 +398,7 @@ class WikiParser(sumo.parser.WikiParser):
         """Handles Template:Template name, formatting the content using given
         args"""
         from wiki.models import Document
+        from wiki.models import ALLOWED_ATTRIBUTES
         params = title.split('|')
         short_title = params.pop(0)
         template_title = 'Template:' + short_title
