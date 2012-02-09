@@ -3,12 +3,17 @@
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _('Register') %}
 {% set classes = 'register' %}
+{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block content %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
       <article id="register" class="main">
+        {% if use_browserid %}
+            <h1>{{ _('Sign In with BrowserID') }}</h1> 
+            {% include "users/browserid_login_form.html" %}
+        {% else %}
         <h1>{{ _('Register') }}</h1>
         <p>{% trans %}
           You can access everything on the MDN website even without an account, but 
@@ -26,6 +31,7 @@
             <li class="submit"><button type="submit">{{ _('Register') }}</button></li>
           </ul>
         </form>
+        {% endif %}
       </article>
     </div>
    </div>
