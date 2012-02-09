@@ -371,20 +371,15 @@ class NewDocumentTests(TestCaseBase):
         eq_('Document with this Slug and Locale already exists.',
             ul('li').text())
 
-    def test_title_collision_validation(self):
-        """Trying to create document with existing locale/slug should
-        show validation error."""
+    def test_title_no_collision(self):
+        """Only slugs and not titles are required to be unique per
+        locale now, so test that we actually allow that."""
         d = _create_document()
         self.client.login(username='admin', password='testpass')
         data = new_document_data()
-        data['title'] = d.title
+        data['slug'] = '%s-once-more-with-feeling' % d.slug
         response = self.client.post(reverse('wiki.new_document'), data)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        ul = doc('article.article > ul.errorlist')
-        eq_(1, len(ul))
-        eq_('Document with this Title and Locale already exists.',
-            ul('li').text())
+        eq_(302, response.status_code)
 
     def test_slug_3_chars(self):
         """Make sure we can create a slug with only 3 characters."""
