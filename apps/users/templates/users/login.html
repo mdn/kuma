@@ -21,7 +21,7 @@
 {% block js %}
 {% if use_browserid %}
 <script type="text/javascript">
-  $('article#login').load($('article#login').attr('data-browserid-signin-html'), bindBrowserIDSignin);
+  $('article.main').load($('article.main').attr('data-browserid-signin-html'), bindBrowserIDSignin);
 </script>
 {% endif %}
 {% endblock %}

@@ -81,13 +81,15 @@ def set_browserid_explained(response):
 
 
 def browserid_header_signin_html(request):
-    if request.locale not in constance.config.BROWSERID_LOCALES:
+    browserid_locales = constance.config.BROWSERID_LOCALES
+    if request.locale.lower() not in browserid_locales.lower():
         raise Http404
     return jingo.render(request, 'users/browserid_header_signin.html')
 
 
 def browserid_signin_html(request):
-    if request.locale not in constance.config.BROWSERID_LOCALES:
+    browserid_locales = constance.config.BROWSERID_LOCALES
+    if request.locale.lower() not in browserid_locales.lower():
         raise Http404
     form = handle_login(request)
     return jingo.render(request, 'users/browserid_signin.html', {'form': form})
