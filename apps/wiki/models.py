@@ -162,10 +162,6 @@ class UniqueCollision(Exception):
         self.existing = existing
 
 
-class TitleCollision(UniqueCollision):
-    """An attempt to create two pages of the same title in one locale"""
-
-
 class SlugCollision(UniqueCollision):
     """An attempt to create two pages of the same slug in one locale"""
 
@@ -271,8 +267,7 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     # how MySQL uses indexes, we probably don't need individual indexes on
     # title and locale as well as a combined (title, locale) one.
     class Meta(object):
-        unique_together = (('parent', 'locale'), ('title', 'locale'),
-                           ('slug', 'locale'))
+        unique_together = (('parent', 'locale'), ('slug', 'locale'))
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
@@ -370,9 +365,8 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
 
         try:
-            # Check if the slug or title would collide with an existing doc
+            # Check if the slug would collide with an existing doc
             self._raise_if_collides('slug', SlugCollision)
-            self._raise_if_collides('title', TitleCollision)
         except UniqueCollision, e:
             if e.existing.redirect_url() is not None:
                 # If the existing doc is a redirect, delete it and clobber it.
