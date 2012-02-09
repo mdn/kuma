@@ -16,7 +16,7 @@ from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
 from sumo.utils import chunked
-from wiki.models import Document, SlugCollision, TitleCollision
+from wiki.models import Document, SlugCollision
 
 
 log = logging.getLogger('k.task')
@@ -97,8 +97,6 @@ def _rebuild_kb_chunk(data, **kwargs):
             message = 'ValidationError for %d: %s' % (pk, e.messages[0])
         except SlugCollision:
             message = 'SlugCollision: %d' % pk
-        except TitleCollision:
-            message = 'TitleCollision: %d' % pk
 
         if message:
             log.debug(message)
