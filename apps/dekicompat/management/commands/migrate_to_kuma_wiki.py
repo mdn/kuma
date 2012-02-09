@@ -77,6 +77,9 @@ MT_MIGRATED_NS_IDS = (MT_NS_NAME_TO_ID[x] for x in (
 # See also these SQL queries:
 # https://bugzilla.mozilla.org/show_bug.cgi?id=710753#c3
 # https://bugzilla.mozilla.org/show_bug.cgi?id=710753#c4
+#
+# And, see also this MySQL transcript listing the content involved:
+# https://bugzilla.mozilla.org/attachment.cgi?id=590867
 
 USER_NS_EXCLUDED_CONTENT_HASHES = """
 7479e8f30d5ab0e9202195a1bddec69d
@@ -200,7 +203,7 @@ class Command(BaseCommand):
         for r in rows:
 
             try:
-                
+
                 if ct < self.options['skip']:
                     # Skip rows until past the option value
                     continue
@@ -289,17 +292,13 @@ class Command(BaseCommand):
     @transaction.commit_on_success
     def wipe_documents(self):
         """Delete all documents"""
-        docs = Document.objects.all()
-        ct = 0
-        log.info("Deleting %s documents..." % len(docs))
-        for d in docs:
-            d.delete()
-            ct += 1
-            if 0 == (ct % 10):
-                log.debug("\t%s deleted" % ct)
-                # Clear query cache after each document. Lots of queries are
-                # bound to happen, there.
-                django.db.reset_queries()
+        log.info("Wiping all Kuma documents and revisions")
+        kc = self.kumadb.cursor()
+        kc.execute("""
+            SET FOREIGN_KEY_CHECKS = 0;
+            TRUNCATE wiki_revision;
+            TRUNCATE wiki_document;
+        """)
 
     def index_migrated_docs(self):
         """Build an index of Kuma docs already migrated, mapping Mindtouch page
@@ -465,12 +464,14 @@ class Command(BaseCommand):
         else:
             log.info("\t\tDocument already exists. (ID=%s)" % doc.pk)
 
-        self.update_past_revisions(r, doc)
-        self.update_current_revision(r, doc)
+        tags = self.get_tags_for_page(r)
+
+        self.update_past_revisions(r, doc, tags)
+        self.update_current_revision(r, doc, tags)
 
         return True
 
-    def update_past_revisions(self, r_page, doc):
+    def update_past_revisions(self, r_page, doc, tags):
         """Update past revisions for the given page row and document"""
         ct_saved, ct_skipped, ct_error = 0, 0, 0
 
@@ -519,7 +520,7 @@ class Command(BaseCommand):
                 r['old_id'], 1,
                 doc.slug, doc.title,
                 True, SIGNIFICANCES[0][0],
-                '', '',
+                '', '', tags,
                 self.convert_page_text(r['old_text']),
                 r['old_comment'],
                 ts, self.get_django_user_id_for_deki_id(r['old_user']),
@@ -533,7 +534,7 @@ class Command(BaseCommand):
 
             # Build SQL placeholders for the revisions
             row_placeholders = ",\n".join(
-                "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 for x in revs)
 
             # Flatten list of revisions data in chronological order, so that we
@@ -550,7 +551,7 @@ class Command(BaseCommand):
                      mindtouch_old_id, is_mindtouch_migration,
                      slug, title,
                      is_approved, significance,
-                     summary, keywords,
+                     summary, keywords, tags,
                      content, comment,
                      created, creator_id,
                      reviewed, reviewer_id)
@@ -563,7 +564,7 @@ class Command(BaseCommand):
         log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
                  (ct_saved, ct_skipped, ct_error))
 
-    def update_current_revision(self, r, doc):
+    def update_current_revision(self, r, doc, tags):
         # HACK: Using old_id of None to indicate the current MindTouch revision.
         # All revisions of a Kuma document have revision records, whereas
         # MindTouch only tracks "old" revisions.
@@ -584,6 +585,7 @@ class Command(BaseCommand):
         rev.created = rev.reviewed = page_ts
         rev.slug = doc.slug
         rev.title = doc.title
+        rev.tags = tags
         rev.content = self.convert_page_text(r['page_text'])
         
         # HACK: Some comments end up being too long, but just truncate.
@@ -620,6 +622,35 @@ class Command(BaseCommand):
             href = reverse('wiki.document', args=[title])
             pt = REDIRECT_CONTENT % dict(href=href, title=title)
         return pt
+        
+    def get_tags_for_page(self, r):
+        """For a given page row, get the list of tags from MindTouch and build
+        a string representation for Kuma revisions."""
+        wc = self.wikidb.cursor()
+        wc.execute("""
+            SELECT t.tag_name
+            FROM tag_map AS tm, tags AS t, pages AS p 
+            WHERE
+                t.tag_id=tm.tagmap_tag_id AND
+                p.page_id=tm.tagmap_page_id AND
+                p.page_id=%s
+        """, (r['page_id'],))
+        
+        # HACK: To prevent MySQL truncation warnings, constrain the imported
+        # tags to 100 chars. Who wants tags that long, anyway?
+        mt_tags = [row[0][:100] for row in wc]
+
+        # To build a string representation, we need to quote or not quote based
+        # on the presence of commas or spaces in the tag name.
+        quoted = []
+        if len(mt_tags):
+            for tag in mt_tags:
+                if u',' in tag or u' ' in tag:
+                    quoted.append('"%s"' % tag)
+                else:
+                    quoted.append(tag)
+
+        return u', '.join(quoted)
 
     def get_django_user_id_for_deki_id(self, deki_user_id):
         """Given a Deki user ID, come up with a Django user object whether we

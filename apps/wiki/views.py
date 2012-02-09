@@ -29,7 +29,7 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
-                         ReviewTag,
+                         DocumentTag, ReviewTag,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
@@ -210,7 +210,9 @@ def list_documents(request, category=None, tag=None):
         except KeyError:
             raise Http404
 
-    tag_obj = tag and get_object_or_404(Tag, slug=tag) or None
+    # Taggit offers a slug - but use name here, because the slugification
+    # stinks and is hard to customize.
+    tag_obj = tag and get_object_or_404(DocumentTag, name=tag) or None
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category,
                                              tag=tag_obj)
@@ -239,8 +241,7 @@ def list_documents_for_review(request, tag=None):
 def new_document(request):
     """Create a new wiki document."""
     if request.method == 'GET':
-        doc_form = DocumentForm(
-            can_create_tags=request.user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm()
         rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
@@ -248,8 +249,7 @@ def new_document(request):
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
-    doc_form = DocumentForm(post_data,
-        can_create_tags=request.user.has_perm('taggit.add_tag'))
+    doc_form = DocumentForm(post_data)
     rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
@@ -298,8 +298,7 @@ def edit_document(request, document_slug, revision_id=None):
                                          'comment': ''},
                                 section_id=section_id)
     if doc.allows_editing_by(user):
-        doc_form = DocumentForm(initial=_document_form_initial(doc),
-            can_create_tags=user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm(initial=_document_form_initial(doc))
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
@@ -319,8 +318,7 @@ def edit_document(request, document_slug, revision_id=None):
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
                 post_data.update({'locale': request.locale})
-                doc_form = DocumentForm(post_data, instance=doc,
-                    can_create_tags=user.has_perm('taggit.add_tag'))
+                doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
@@ -665,8 +663,7 @@ def translate(request, document_slug, revision_id=None):
 
     if user_has_doc_perm:
         doc_initial = _document_form_initial(doc) if doc else None
-        doc_form = DocumentForm(initial=doc_initial,
-            can_create_tags=user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm(initial=doc_initial)
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
         if revision_id:
@@ -685,8 +682,7 @@ def translate(request, document_slug, revision_id=None):
             disclose_description = True
             post_data = request.POST.copy()
             post_data.update({'locale': request.locale})
-            doc_form = DocumentForm(post_data, instance=doc,
-                can_create_tags=user.has_perm('taggit.add_tag'))
+            doc_form = DocumentForm(post_data, instance=doc)
             doc_form.instance.locale = request.locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':

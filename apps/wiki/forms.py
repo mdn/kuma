@@ -11,6 +11,8 @@ from tower import ugettext as _
 from sumo.form_fields import StrippedCharField
 from tags import forms as tag_forms
 
+from taggit.utils import parse_tags, edit_string_for_tags
+
 import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
@@ -56,14 +58,6 @@ MIDAIR_COLLISION = _lazy(u'This document was modified while you were editing it.
 
 class DocumentForm(forms.ModelForm):
     """Form to create/edit a document."""
-    def __init__(self, *args, **kwargs):
-        can_create_tags = kwargs.pop('can_create_tags', False)
-
-        super(DocumentForm, self).__init__(*args, **kwargs)
-
-        # Set up tags field, which is instantiated deep within taggit:
-        tags_field = self.fields['tags']
-        tags_field.widget.can_create_tags = can_create_tags
 
     title = StrippedCharField(min_length=5, max_length=255,
                               widget=forms.TextInput(attrs={'placeholder':TITLE_PLACEHOLDER}),
@@ -113,11 +107,6 @@ class DocumentForm(forms.ModelForm):
                                  help_text=_lazy(u'Type of article'),
                                  widget=forms.HiddenInput())
 
-    tags = tag_forms.TagField(required=False, label=_lazy(u'Topics:'),
-                              help_text=_lazy(
-                                u'Popular articles in each topic '
-                                'are displayed on the front page'))
-
     locale = forms.CharField(widget=forms.HiddenInput())
 
     def clean_slug(self):
@@ -147,8 +136,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'category', 'is_localizable', 'tags',
-                  'locale')
+        fields = ('title', 'slug', 'category', 'is_localizable', 'locale')
 
     def save(self, parent_doc, **kwargs):
         """Persist the Document form, and return the saved Document."""
@@ -189,6 +177,9 @@ class RevisionForm(forms.ModelForm):
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
     
+    tags = StrippedCharField(required=False,
+                             label=_lazy(u'Tags:'))
+
     keywords = StrippedCharField(required=False,
                                  label=_lazy(u'Keywords:'),
                                  help_text=_lazy(u'Affects search results'))
@@ -230,8 +221,8 @@ class RevisionForm(forms.ModelForm):
 
     class Meta(object):
         model = Revision
-        fields = ('title', 'slug', 'keywords', 'summary', 'content', 'comment',
-                  'based_on')
+        fields = ('title', 'slug', 'tags', 'keywords', 'summary', 'content',
+                  'comment', 'based_on')
 
     def __init__(self, *args, **kwargs):
 
