@@ -20,8 +20,7 @@ from xml.sax.handler import ContentHandler
 
 import html5lib
 from html5lib import sanitizer
-from tower import ugettext as _
-from tower import ugettext_lazy as _lazy
+from tower import ugettext_lazy as _
 
 from jsonfield import JSONField
 
@@ -68,23 +67,23 @@ class UserProfile(ModelBase):
     # entries, and these will just be suggestions.
     website_choices = [
         ('website', dict(
-            label=_('Website'),
+            label=_(u'Website'),
             prefix='http://',
         )),
         ('twitter', dict(
-            label=_('Twitter'),
+            label=_(u'Twitter'),
             prefix='http://twitter.com/',
         )),
         ('github', dict(
-            label=_('GitHub'),
+            label=_(u'GitHub'),
             prefix='http://github.com/',
         )),
         ('stackoverflow', dict(
-            label=_('StackOverflow'),
+            label=_(u'StackOverflow'),
             prefix='http://stackoverflow.com/users/',
         )),
         ('linkedin', dict(
-            label=_('LinkedIn'),
+            label=_(u'LinkedIn'),
             prefix='http://www.linkedin.com/in/',
         )),
     ]
@@ -96,27 +95,27 @@ class UserProfile(ModelBase):
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
-    timezone = TimeZoneField(null=True, blank=True, verbose_name=_lazy(u'Timezone'))
-    locale = LocaleField(null=True, blank=True, db_index=True, verbose_name=_lazy(u'Language'))
+    timezone = TimeZoneField(null=True, blank=True, verbose_name=_(u'Timezone'))
+    locale = LocaleField(null=True, blank=True, db_index=True, verbose_name=_(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
                                verify_exists=False, error_messages={
-                               'invalid': _('This URL has an invalid format. '
+                               'invalid': _(u'This URL has an invalid format. '
                                             'Valid URLs look like '
                                             'http://example.com/my_page.')})
-    title = models.CharField(_('Title'), max_length=255, default='',
+    title = models.CharField(_(u'Title'), max_length=255, default='',
                              blank=True)
-    fullname = models.CharField(_('Name'), max_length=255, default='',
+    fullname = models.CharField(_(u'Name'), max_length=255, default='',
                                 blank=True)
-    organization = models.CharField(_('Organization'), max_length=255,
+    organization = models.CharField(_(u'Organization'), max_length=255,
                                     default='', blank=True)
-    location = models.CharField(_('Location'), max_length=255, default='',
+    location = models.CharField(_(u'Location'), max_length=255, default='',
                                 blank=True)
-    bio = models.TextField(_('About Me'), blank=True)
+    bio = models.TextField(_(u'About Me'), blank=True)
 
-    irc_nickname = models.CharField(_('IRC nickname'), max_length=255, default='',
+    irc_nickname = models.CharField(_(u'IRC nickname'), max_length=255, default='',
                                     blank=True)
 
-    tags = NamespacedTaggableManager(_('Tags'), blank=True)
+    tags = NamespacedTaggableManager(_(u'Tags'), blank=True)
 
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)
