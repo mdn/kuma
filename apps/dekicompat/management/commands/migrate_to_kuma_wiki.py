@@ -32,8 +32,7 @@ import commonware.log
 
 from sumo.urlresolvers import reverse
 
-from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES,
-                         TitleCollision)
+from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES)
 
 import wiki.content
 from wiki.models import REDIRECT_CONTENT
@@ -222,16 +221,12 @@ class Command(BaseCommand):
                              self.options['limit'])
                     break
 
-            except TitleCollision, e:
+            except Exception, e:
+                # Note: This traps *all* errors, so that the migration can get
+                # through what it can. This should really produce a problem
+                # documents report, though.
                 log.error('\t\tPROBLEM %s' % type(e))
                 error_ct += 1
-
-            #except Exception, e:
-            #    # Note: This traps *all* errors, so that the migration can get
-            #    # through what it can. This should really produce a problem
-            #    # documents report, though.
-            #    log.error('\t\tPROBLEM %s' % type(e))
-            #    error_ct += 1
 
             ts_now = time.time()
             duration = ts_now - start_ts
