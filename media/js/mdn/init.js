@@ -104,17 +104,27 @@ jQuery.fn.placeholder = function(new_value) {
     }
   });
 
-  // If found, wire up the BrowserID sign in button
-  $('.browserid-signin').click(function (e) {
-    if ( !$(this).hasClass('toggle') ) {
-      navigator.id.getVerifiedEmail(function(assertion) {
-          if (!assertion) { return; }
-          $('#id_assertion')
-              .val(assertion.toString())
-              .parent().submit();
-      });
-      return false;
-    }
+  function bindBrowserIDSignin() {
+    $('.browserid-signin').click(function (e) {
+      if ( !$(this).hasClass('toggle') ) {
+        navigator.id.getVerifiedEmail(function(assertion) {
+            if (!assertion) { return; }
+            $('#id_assertion')
+                .val(assertion.toString())
+                .parent().submit();
+        });
+        return false;
+      }
+    });
+  }
+
+  // And and wire up the BrowserID sign in button
+  $('ul.signed-out').load($('ul.signed-out').attr('data-browserid-header-signin-html'), function() {
+    $('.toggle', $(this)).click(function() {
+        $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aira-hidden");
+        return false;
+    });
+    bindBrowserIDSignin();
   });
 
 // });

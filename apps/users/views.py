@@ -24,6 +24,7 @@ from django_browserid import auth as browserid_auth
 import jingo
 
 from access.decorators import logout_required, login_required
+import constance.config
 from notifications.tasks import claim_watches
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse
@@ -77,6 +78,21 @@ def _get_latest_user_with_email(email):
 def set_browserid_explained(response):
     response.set_cookie('browserid_explained', 1, max_age=31536000)
     return response
+
+
+def browserid_header_signin_html(request):
+    browserid_locales = constance.config.BROWSERID_LOCALES
+    if request.locale.lower() not in browserid_locales.lower():
+        raise Http404
+    return jingo.render(request, 'users/browserid_header_signin.html')
+
+
+def browserid_signin_html(request):
+    browserid_locales = constance.config.BROWSERID_LOCALES
+    if request.locale.lower() not in browserid_locales.lower():
+        raise Http404
+    form = handle_login(request)
+    return jingo.render(request, 'users/browserid_signin.html', {'form': form})
 
 
 @ssl_required

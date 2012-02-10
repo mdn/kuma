@@ -9,16 +9,19 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-        <article id="login" class="main">
-        {% if use_browserid %}
-            <h1>{{ _('Sign In with BrowserID') }}</h1> 
-            {% include "users/browserid_login_form.html" %}
-        {% else %}
+      <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}">
             <h1>{{ _('Log In') }}</h1>
             {% include "users/login_form.html" %}
-        {% endif %}
         </article>
     </div>
    </div>
 </section>
+{% endblock %}
+
+{% block js %}
+{% if use_browserid %}
+<script type="text/javascript">
+  $('article.main').load($('article.main').attr('data-browserid-signin-html'), bindBrowserIDSignin);
+</script>
+{% endif %}
 {% endblock %}
