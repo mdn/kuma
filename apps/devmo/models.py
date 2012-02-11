@@ -96,12 +96,13 @@ class UserProfile(ModelBase):
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
     timezone = TimeZoneField(null=True, blank=True, verbose_name=_(u'Timezone'))
-    locale = LocaleField(null=True, blank=True, db_index=True, verbose_name=_(u'Language'))
+    locale = LocaleField(null=True, blank=True, db_index=True,
+                         verbose_name=_(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
                                verify_exists=False, error_messages={
                                'invalid': _(u'This URL has an invalid format. '
-                                            'Valid URLs look like '
-                                            'http://example.com/my_page.')})
+                                            u'Valid URLs look like '
+                                            u'http://example.com/my_page.')})
     title = models.CharField(_(u'Title'), max_length=255, default='',
                              blank=True)
     fullname = models.CharField(_(u'Name'), max_length=255, default='',
