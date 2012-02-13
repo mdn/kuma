@@ -64,6 +64,23 @@ class LoginTestCase(TestCase):
         doc = pq(response.content)
         eq_('testuser', doc.find('ul.user-state a:first').text())
 
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login_wont_redirect_to_login(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass',
+                                     'next': login_uri},
+                                    follow=True)
+        eq_(200, response.status_code)
+        for redirect_url, code in response.redirect_chain:
+            ok_(login_uri not in redirect_url, "Found %s in redirect_chain"
+                % login_uri)
+        doc = pq(response.content)
+        eq_('testuser', doc.find('ul.user-state a:first').text())
+
     @mock_mindtouch_login
     @mock_get_deki_user
     @mock_put_mindtouch_user

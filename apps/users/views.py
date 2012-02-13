@@ -27,7 +27,7 @@ from access.decorators import logout_required, login_required
 import constance.config
 from notifications.tasks import claim_watches
 from sumo.decorators import ssl_required
-from sumo.urlresolvers import reverse
+from sumo.urlresolvers import reverse, split_path
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
@@ -612,8 +612,11 @@ def _clean_next_url(request):
                 url = u'?'.join([getattr(parsed_url, x) for x in
                                 ('path', 'query') if getattr(parsed_url, x)])
 
-        # Don't redirect right back to login or logout page
-        if parsed_url.path in [settings.LOGIN_URL, settings.LOGOUT_URL]:
-            url = None
+        # Don't redirect right back to login, logout, or register page
+        locale, register_url = split_path(reverse('users.browserid_register'))
+        for looping_url in [settings.LOGIN_URL, settings.LOGOUT_URL,
+                            register_url]:
+            if looping_url in parsed_url.path:
+                url = None
 
     return url
