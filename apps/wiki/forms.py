@@ -53,14 +53,16 @@ TITLE_COLLIDES = _lazy(u'Another document with this title already exists.')
 SLUG_COLLIDES = _lazy(u'Another document with this slug already exists.')
 OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
-MIDAIR_COLLISION = _lazy(u'This document was modified while you were editing it.')
+MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
+                         'editing it.')
 
 
 class DocumentForm(forms.ModelForm):
     """Form to create/edit a document."""
 
     title = StrippedCharField(min_length=5, max_length=255,
-                              widget=forms.TextInput(attrs={'placeholder':TITLE_PLACEHOLDER}),
+                              widget=forms.TextInput(
+                                  attrs={'placeholder': TITLE_PLACEHOLDER}),
                               label=_lazy(u'Title:'),
                               help_text=_lazy(u'Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
@@ -162,7 +164,8 @@ class RevisionForm(forms.ModelForm):
 
     title = StrippedCharField(min_length=5, max_length=255,
                               required=False,
-                              widget=forms.TextInput(attrs={'placeholder':TITLE_PLACEHOLDER}),
+                              widget=forms.TextInput(
+                                  attrs={'placeholder': TITLE_PLACEHOLDER}),
                               label=_lazy(u'Title:'),
                               help_text=_lazy(u'Title of article'),
                               error_messages={'required': TITLE_REQUIRED,
@@ -176,7 +179,7 @@ class RevisionForm(forms.ModelForm):
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
-    
+
     tags = StrippedCharField(required=False,
                              label=_lazy(u'Tags:'))
 
@@ -239,7 +242,7 @@ class RevisionForm(forms.ModelForm):
         self.fields['based_on'].widget = forms.HiddenInput()
 
         if self.instance and self.instance.pk:
-            
+
             # Ensure both title and slug are populated from parent document, if
             # last revision didn't have them
             if not self.instance.title:
@@ -254,26 +257,27 @@ class RevisionForm(forms.ModelForm):
                 tool.extractSection(self.section_id)
             self.initial['content'] = tool.serialize()
 
-            self.initial['review_tags'] = [x.name 
+            self.initial['review_tags'] = [x.name
                 for x in self.instance.review_tags.all()]
 
     def _clean_collidable(self, name):
         value = self.cleaned_data[name]
-        
+
         if self.is_iframe_target:
             # Since these collidables can change the URL of the page, changes
             # to them are ignored for an iframe submission
             return getattr(self.instance.document, name)
 
-        error_message = {'title': TITLE_COLLIDES, 
+        error_message = {'title': TITLE_COLLIDES,
                          'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
         try:
-            existing_doc = Document.uncached.get(locale=self.instance.document.locale,
-                                                 **{name: value} )
+            existing_doc = Document.uncached.get(
+                    locale=self.instance.document.locale,
+                    **{name: value})
             if self.instance and self.instance.document:
-                if (not existing_doc.redirect_url() and 
+                if (not existing_doc.redirect_url() and
                         existing_doc.pk != self.instance.document.pk):
-                    # There's another document with this value, 
+                    # There's another document with this value,
                     # and we're not a revision of it.
                     raise forms.ValidationError(error_message)
             else:
@@ -319,12 +323,13 @@ class RevisionForm(forms.ModelForm):
         if not current_rev:
             # If there's no current_rev, just bail.
             return current_rev
-        
+
         try:
             doc_current_rev = self.instance.document.current_revision.id
             if unicode(current_rev) != unicode(doc_current_rev):
 
-                if self.section_id and self.instance and self.instance.document:
+                if (self.section_id and self.instance and
+                        self.instance.document):
                     # This is a section edit. So, even though the revision has
                     # changed, it still might not be a collision if the section
                     # in particular hasn't changed.
@@ -336,13 +341,13 @@ class RevisionForm(forms.ModelForm):
                         # Oops. Looks like the section did actually get
                         # changed, so yeah this is a collision.
                         raise forms.ValidationError(MIDAIR_COLLISION)
-                    
+
                     return current_rev
 
                 else:
                     # No section edit, so this is a flat-out collision.
                     raise forms.ValidationError(MIDAIR_COLLISION)
-        
+
         except Document.DoesNotExist:
             # If there's no document yet, just bail.
             return current_rev

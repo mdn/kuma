@@ -35,9 +35,10 @@ from taggit.utils import parse_tags
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
-    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code',
+    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'pre', 'code',
     'dl', 'dt', 'dd', 'small', 'sup',
-    'img', 
+    'img',
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -48,9 +49,11 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['div'] = ['class', 'id']
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
-ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is', 'title', 'style']
+ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
+                             'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in
+                          ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -797,11 +800,11 @@ class Revision(ModelBase):
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
         self.document.current_revision = self
-        
+
         # Since Revision stores tags as a string, we need to parse them first
         # before setting on the Document.
         self.document.tags.set(*parse_tags(self.tags))
-        
+
         self.document.save()
 
     def __unicode__(self):
@@ -815,7 +818,7 @@ class Revision(ModelBase):
             .parse(self.content)
             .extractSection(section_id)
             .serialize())
-        
+
     @property
     def content_cleaned(self):
         return bleach.clean(
