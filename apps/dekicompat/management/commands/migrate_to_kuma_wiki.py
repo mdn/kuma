@@ -48,7 +48,7 @@ log = commonware.log.getLogger('kuma.migration')
 MT_REDIR_PAT = re.compile(r"""^#REDIRECT ?\[\[([^\]]+)\]\]""")
 
 # See also: https://github.com/mozilla/kuma/blob/mdn/apps/devmo/models.py#L327
-# I'd just import from there, but wanted to do this a little differently 
+# I'd just import from there, but wanted to do this a little differently
 MT_NAMESPACES = (
     ('', 0),
     ('Talk:', 1),
@@ -77,6 +77,9 @@ MT_MIGRATED_NS_IDS = (MT_NS_NAME_TO_ID[x] for x in (
 # See also these SQL queries:
 # https://bugzilla.mozilla.org/show_bug.cgi?id=710753#c3
 # https://bugzilla.mozilla.org/show_bug.cgi?id=710753#c4
+#
+# And, see also this MySQL transcript listing the content involved:
+# https://bugzilla.mozilla.org/attachment.cgi?id=590867
 
 USER_NS_EXCLUDED_CONTENT_HASHES = """
 7479e8f30d5ab0e9202195a1bddec69d
@@ -115,7 +118,7 @@ class Command(BaseCommand):
 
         make_option('--wipe', action="store_true", dest="wipe", default=False,
                     help="Wipe all documents before migration"),
-        
+
         make_option('--all', action="store_true", dest="all", default=False,
                     help="Migrate all documents"),
         make_option('--slug', dest="slug", default=None,
@@ -139,7 +142,7 @@ class Command(BaseCommand):
         make_option('--maxlength', dest="maxlength", type="int",
                     default=1000000,
                     help="Maximum character length for page content"),
-        
+
         make_option('--update-revisions', action="store_true",
                     dest="update_revisions", default=False,
                     help="Force update to existing revisions"),
@@ -154,7 +157,7 @@ class Command(BaseCommand):
                     dest="list_full_template", default=False,
                     help="Print the full template call, rather than"
                          " just the method used"),
-        
+
         make_option('--verbose', action='store_true', dest='verbose',
                     help="Produce verbose output"),)
 
@@ -191,7 +194,7 @@ class Command(BaseCommand):
         self.docs_migrated = self.index_migrated_docs()
         log.info("Found %s docs already migrated" %
                  len(self.docs_migrated.values()))
-        
+
         start_ts = ts_now = time.time()
 
         self.rev_ct = 0
@@ -200,18 +203,18 @@ class Command(BaseCommand):
         for r in rows:
 
             try:
-                
+
                 if ct < self.options['skip']:
                     # Skip rows until past the option value
                     continue
-                
+
                 if self.update_document(r):
                     # Something was actually updated and not skipped
                     ct += 1
                 else:
                     # This was a skip.
                     skip_ct += 1
-                
+
                 # Clear query cache after each document. Lots of queries are
                 # bound to happen, there.
                 django.db.reset_queries()
@@ -232,14 +235,17 @@ class Command(BaseCommand):
             duration = ts_now - start_ts
             total_ct = ct + skip_ct + error_ct
             if (total_ct % 10) == 0:
-                log.info("Rate: %s docs/sec, %s secs/doc, %s total in %s seconds" %
-                         ((total_ct+1)/(duration+1), (duration+1)/(total_ct+1),
+                log.info("Rate: %s docs/sec, %s secs/doc, "
+                         "%s total in %s seconds" %
+                         ((total_ct + 1) / (duration + 1),
+                          (duration + 1) / (total_ct + 1),
                           total_ct, duration))
                 log.info("Rate: %s revs/sec, %s total in %s seconds" %
-                         ((self.rev_ct+1)/(duration+1),
+                         ((self.rev_ct + 1) / (duration + 1),
                           self.rev_ct, duration))
 
-        log.info("Migration finished: %s seconds, %s migrated, %s skipped, %s errors" %
+        log.info("Migration finished: %s seconds, %s migrated, "
+                 "%s skipped, %s errors" %
                  ((time.time() - start_ts), ct, skip_ct, error_ct))
 
         if ct == 0:
@@ -271,12 +277,14 @@ class Command(BaseCommand):
                     if src.startswith('wiki.template'):
                         pat = wt_pat
                         m = pat.match(src)
-                        if not m: continue
+                        if not m:
+                            continue
                         print (u"Template:%s" % m.group(1)).encode('utf-8')
                     else:
                         pat = fn_pat
                         m = pat.match(src)
-                        if not m: continue
+                        if not m:
+                            continue
                         out = m.group(1)
                         if out.startswith('template.'):
                             out = out.replace('template.', 'Template:')
@@ -289,17 +297,15 @@ class Command(BaseCommand):
     @transaction.commit_on_success
     def wipe_documents(self):
         """Delete all documents"""
-        docs = Document.objects.all()
-        ct = 0
-        log.info("Deleting %s documents..." % len(docs))
-        for d in docs:
-            d.delete()
-            ct += 1
-            if 0 == (ct % 10):
-                log.debug("\t%s deleted" % ct)
-                # Clear query cache after each document. Lots of queries are
-                # bound to happen, there.
-                django.db.reset_queries()
+        log.info("Wiping all Kuma documents and revisions")
+        kc = self.kumadb.cursor()
+        kc.execute("""
+            SET FOREIGN_KEY_CHECKS = 0;
+            TRUNCATE wiki_taggeddocument;
+            TRUNCATE wiki_documenttag;
+            TRUNCATE wiki_revision;
+            TRUNCATE wiki_document;
+        """)
 
     def index_migrated_docs(self):
         """Build an index of Kuma docs already migrated, mapping Mindtouch page
@@ -326,7 +332,7 @@ class Command(BaseCommand):
                 ORDER BY page_timestamp DESC
             """ % (ns_list)
             self.cur.execute("SELECT count(*) FROM pages %s" % where)
-            log.info("Gathering ALL %s pages from MindTouch..." %
+            log.info("Gathering ALL %s pages..." %
                      self.cur.fetchone()[0])
             iters.append(self._query("SELECT * FROM pages %s" % where))
 
@@ -335,7 +341,7 @@ class Command(BaseCommand):
             # if a colon is present.
             ns, slug = 0, self.options['slug']
             if ':' in slug:
-                ns_name, slug = slug.split(':',1)
+                ns_name, slug = slug.split(':', 1)
                 ns = MT_NS_NAME_TO_ID.get('%s:' % ns_name, 0)
 
             # Migrating a single page...
@@ -354,12 +360,12 @@ class Command(BaseCommand):
 
             if self.options['most_viewed'] > 0:
                 # Grab the most viewed pages
-                log.info("Gathering %s most viewed pages from MindTouch..." %
+                log.info("Gathering %s most viewed pages..." %
                          self.options['most_viewed'])
                 iters.append(self._query("""
                     SELECT p.*, pc.*
-                    FROM pages AS p, page_viewcount AS pc 
-                    WHERE 
+                    FROM pages AS p, page_viewcount AS pc
+                    WHERE
                         pc.page_id=p.page_id AND
                         page_namespace IN %s
                     ORDER BY pc.page_counter DESC
@@ -368,7 +374,7 @@ class Command(BaseCommand):
 
             if self.options['recent'] > 0:
                 # Grab the most recently modified
-                log.info("Gathering %s recently modified pages from MindTouch..." %
+                log.info("Gathering %s recently modified pages..." %
                          self.options['recent'])
                 iters.append(self._query("""
                     SELECT *
@@ -380,11 +386,11 @@ class Command(BaseCommand):
 
             if self.options['longest'] > 0:
                 # Grab the longest pages
-                log.info("Gathering %s longest pages from MindTouch..." %
+                log.info("Gathering %s longest pages..." %
                          self.options['longest'])
                 iters.append(self._query("""
-                    SELECT * 
-                    FROM pages 
+                    SELECT *
+                    FROM pages
                     WHERE page_namespace IN %s
                     ORDER BY length(page_text) DESC
                     LIMIT %s
@@ -399,7 +405,7 @@ class Command(BaseCommand):
                 # formatting - once for page namespace list, and once for SQL
                 # escaping in Django.
                 iters.append(self._query("""
-                    SELECT * FROM pages 
+                    SELECT * FROM pages
                     WHERE
                         page_namespace IN %s AND
                         page_text LIKE '#REDIRECT%%%%'
@@ -429,7 +435,7 @@ class Command(BaseCommand):
         # exising is doc is up to date.
         page_ts = self.parse_timestamp(r['page_timestamp'])
         last_mod = self.docs_migrated.get(r['page_id'], (None, None))[1]
-        if (not self.options['update_documents'] and last_mod is not None 
+        if (not self.options['update_documents'] and last_mod is not None
                 and last_mod >= page_ts):
             log.debug("\t%s (%s) up to date" %
                       (slug, r['page_display_name']))
@@ -438,7 +444,8 @@ class Command(BaseCommand):
         # Check to see if this doc's content hash falls in the list of User:
         # namespace content we want to exclude.
         if r['page_namespace'] == MT_NS_NAME_TO_ID['User:']:
-            content_hash = hashlib.md5(r['page_text'].encode('utf-8')).hexdigest()
+            content_hash = (hashlib.md5(r['page_text'].encode('utf-8'))
+                                   .hexdigest())
             if content_hash in USER_NS_EXCLUDED_CONTENT_HASHES:
                 log.debug("\t%s (%s) matched User: content exclusion list" %
                           (slug, r['page_display_name']))
@@ -465,12 +472,14 @@ class Command(BaseCommand):
         else:
             log.info("\t\tDocument already exists. (ID=%s)" % doc.pk)
 
-        self.update_past_revisions(r, doc)
-        self.update_current_revision(r, doc)
+        tags = self.get_tags_for_page(r)
+
+        self.update_past_revisions(r, doc, tags)
+        self.update_current_revision(r, doc, tags)
 
         return True
 
-    def update_past_revisions(self, r_page, doc):
+    def update_past_revisions(self, r_page, doc, tags):
         """Update past revisions for the given page row and document"""
         ct_saved, ct_skipped, ct_error = 0, 0, 0
 
@@ -513,79 +522,81 @@ class Command(BaseCommand):
                 ct_skipped += 1
                 continue
 
+            # Build up a dict of the row for the revision
             ts = self.parse_timestamp(r['old_timestamp'])
-            rev_data = [
-                doc.pk,
-                r['old_id'], 1,
-                doc.slug, doc.title,
-                True, SIGNIFICANCES[0][0],
-                '', '',
-                self.convert_page_text(r['old_text']),
-                r['old_comment'],
-                ts, self.get_django_user_id_for_deki_id(r['old_user']),
-                ts, self.get_superuser_id()
-            ]
+            rev_data = dict(
+                document_id=doc.pk,
+                mindtouch_old_id=r['old_id'],
+                is_mindtouch_migration=1,
+                slug=doc.slug,
+                title=doc.title,
+                tags=tags,
+                is_approved=True,
+                significance=SIGNIFICANCES[0][0],
+                summary='',
+                keywords='',
+                content=self.convert_page_text(r['old_text']),
+                comment=r['old_comment'],
+                created=ts,
+                creator_id=self.get_django_user_id_for_deki_id(r['old_user']),
+                reviewed=ts,
+                reviewer_id=self.get_superuser_id()
+            )
             revs.append(rev_data)
 
             ct_saved += 1
 
         if len(revs):
 
-            # Build SQL placeholders for the revisions
-            row_placeholders = ",\n".join(
-                "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                for x in revs)
+            # Build REPLACE INTO style SQL placeholders for the revisions. eg.:
+            # (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s),
+            # (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s),
+            # (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            col_names = revs[0].keys()
+            one_row = '(%s)' % ', '.join('%s' for x in col_names)
+            placeholders = ",\n".join(one_row for x in revs)
 
             # Flatten list of revisions data in chronological order, so that we
             # get roughly time-sequential IDs and a flat list to fill the
             # placeholders.
-            revs_flat = [col
-                         for rev in sorted(revs, key=lambda x: x[11]) 
-                         for col in rev]
+            revs_flat = [rev[name]
+                         for rev in sorted(revs, key=lambda x: x['created']) 
+                         for name in col_names]
 
             # Build and execute a giant query to save all the revisions.
-            sql = """
-                REPLACE INTO wiki_revision
-                    (document_id,
-                     mindtouch_old_id, is_mindtouch_migration,
-                     slug, title,
-                     is_approved, significance,
-                     summary, keywords,
-                     content, comment,
-                     created, creator_id,
-                     reviewed, reviewer_id)
-                VALUES 
-                %s
-            """ % row_placeholders
+            sql = ("REPLACE INTO wiki_revision (%s) VALUES %s" %
+                   (', '.join(col_names), placeholders))
             kc.execute(sql, revs_flat)
 
         self.rev_ct += ct_saved + ct_skipped + ct_error
         log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
                  (ct_saved, ct_skipped, ct_error))
 
-    def update_current_revision(self, r, doc):
-        # HACK: Using old_id of None to indicate the current MindTouch revision.
+    def update_current_revision(self, r, doc, tags):
+        # HACK: Using old_id of None to indicate current MindTouch revision.
         # All revisions of a Kuma document have revision records, whereas
         # MindTouch only tracks "old" revisions.
+        p_id = r['page_user_id']
         rev, created = Revision.objects.get_or_create(document=doc,
             is_mindtouch_migration=True, mindtouch_old_id=None, defaults=dict(
-                creator_id=self.get_django_user_id_for_deki_id(r['page_user_id']),
+                creator_id=self.get_django_user_id_for_deki_id(p_id),
                 is_approved=True,
                 significance=SIGNIFICANCES[0][0],))
 
         # Check to see if the current revision is up to date, in which case we
         # can skip the update and save a little time.
         page_ts = self.parse_timestamp(r['page_timestamp'])
-        if (not self.options['update_documents'] and not created and 
+        if (not self.options['update_documents'] and not created and
                 page_ts <= rev.created):
-            log.info("\t\tCurrent revision already up to date. (ID=%s)" % rev.pk)
+            log.info("\t\tCurrent revision up to date. (ID=%s)" % rev.pk)
             return
 
         rev.created = rev.reviewed = page_ts
         rev.slug = doc.slug
         rev.title = doc.title
+        rev.tags = tags
         rev.content = self.convert_page_text(r['page_text'])
-        
+
         # HACK: Some comments end up being too long, but just truncate.
         rev.comment = r['page_comment'][:255]
 
@@ -606,7 +617,7 @@ class Command(BaseCommand):
             pt = self.convert_redirect(pt)
 
         # TODO: bug 710728 - Convert and normalize template calls
-        # TODO: bug 710726 - Convert intra-wiki links? 
+        # TODO: bug 710726 - Convert intra-wiki links?
 
         return pt
 
@@ -620,6 +631,35 @@ class Command(BaseCommand):
             href = reverse('wiki.document', args=[title])
             pt = REDIRECT_CONTENT % dict(href=href, title=title)
         return pt
+
+    def get_tags_for_page(self, r):
+        """For a given page row, get the list of tags from MindTouch and build
+        a string representation for Kuma revisions."""
+        wc = self.wikidb.cursor()
+        wc.execute("""
+            SELECT t.tag_name
+            FROM tag_map AS tm, tags AS t, pages AS p
+            WHERE
+                t.tag_id=tm.tagmap_tag_id AND
+                p.page_id=tm.tagmap_page_id AND
+                p.page_id=%s
+        """, (r['page_id'],))
+
+        # HACK: To prevent MySQL truncation warnings, constrain the imported
+        # tags to 100 chars. Who wants tags that long, anyway?
+        mt_tags = [row[0][:100] for row in wc]
+
+        # To build a string representation, we need to quote or not quote based
+        # on the presence of commas or spaces in the tag name.
+        quoted = []
+        if len(mt_tags):
+            for tag in mt_tags:
+                if u',' in tag or u' ' in tag:
+                    quoted.append('"%s"' % tag)
+                else:
+                    quoted.append(tag)
+
+        return u', '.join(quoted)
 
     def get_django_user_id_for_deki_id(self, deki_user_id):
         """Given a Deki user ID, come up with a Django user object whether we
@@ -640,7 +680,8 @@ class Command(BaseCommand):
 
             # Build a DekiUser object from the database record
             user = r[0]
-            deki_user = DekiUser(id=user['user_id'], username=user['user_name'],
+            deki_user = DekiUser(id=user['user_id'],
+                                 username=user['user_name'],
                                  fullname=user['user_real_name'],
                                  email=user['user_email'], gravatar='',)
 
@@ -661,6 +702,7 @@ class Command(BaseCommand):
         return self.user_ids[deki_user_id]
 
     SUPERUSER_ID = None
+
     def get_superuser_id(self):
         """Get the first superuser from Django we can find."""
         if not self.SUPERUSER_ID:

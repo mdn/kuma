@@ -517,7 +517,7 @@ class NewRevisionTests(TestCaseBase):
         eq_(tags, result_tags)
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
-        data['form'] = 'doc'
+        data['form'] = 'rev'
         self.client.post(reverse('wiki.edit_document', args=[self.d.slug]),
                          data)
         result_tags = list(self.d.tags.values_list('name', flat=True))
