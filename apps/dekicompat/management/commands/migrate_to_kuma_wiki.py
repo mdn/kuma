@@ -301,6 +301,8 @@ class Command(BaseCommand):
         kc = self.kumadb.cursor()
         kc.execute("""
             SET FOREIGN_KEY_CHECKS = 0;
+            TRUNCATE wiki_taggeddocument;
+            TRUNCATE wiki_documenttag;
             TRUNCATE wiki_revision;
             TRUNCATE wiki_document;
         """)
