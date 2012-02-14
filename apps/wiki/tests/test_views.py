@@ -323,11 +323,71 @@ class DocumentEditingTests(TestCaseBase):
         input = pq(response.content)('#id_based_on')[0]
         eq_(int(input.value), en_r.pk)
 
+    @attr('tags')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_document_tags(self, get_current):
+        """Document tags can be edited through revisions"""
+        slug = "a-test-article"
+        ts1 = ('JavaScript', 'AJAX', 'DOM')
+        ts2 = ('XML', 'JSON')
+
+        get_current.return_value.domain = 'su.mo.com'
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        def assert_tag_state(yes_tags, no_tags):
+
+            # Ensure the tags are found for the Documents
+            doc = Document.objects.get(slug=slug)
+            doc_tags = [x.name for x in doc.tags.all()]
+            for t in yes_tags:
+                ok_(t in doc_tags)
+            for t in no_tags:
+                ok_(t not in doc_tags)
+
+            # Ensure the tags are found in the Document view
+            response = client.get(reverse('wiki.document', 
+                                          args=[doc.slug]), data)
+            page = pq(response.content)
+            for t in yes_tags:
+                eq_(1, page.find('#page-tags li a:contains("%s")' % t).length,
+                    '%s should NOT appear in document view tags' % t)
+            for t in no_tags:
+                eq_(0, page.find('#page-tags li a:contains("%s")' % t).length,
+                    '%s should appear in document view tags' % t)
+            
+            # Check for the document title in the tag listing
+            for t in yes_tags:
+                response = client.get(reverse('wiki.tag', args=[t]))
+                ok_(doc.title in response.content.decode('utf-8'))
+                response = client.get(reverse('wiki.feeds.recent_documents',
+                                      args=['atom', t]))
+                ok_(doc.title in response.content.decode('utf-8'))
+
+            for t in no_tags:
+                response = client.get(reverse('wiki.tag', args=[t]))
+                ok_(doc.title not in response.content.decode('utf-8'))
+                response = client.get(reverse('wiki.feeds.recent_documents',
+                                      args=['atom', t]))
+                ok_(doc.title not in response.content.decode('utf-8'))
+
+        # Create a new doc with tags
+        data = new_document_data()
+        data.update({'slug': slug, 'tags': ','.join(ts1)})
+        response = client.post(reverse('wiki.new_document'), data)
+        assert_tag_state(ts1, ts2)
+
+        # Now, update the tags.
+        data.update({'form': 'rev', 'tags': ', '.join(ts2)})
+        response = client.post(reverse('wiki.edit_document',
+                                       args=[slug]), data)
+        assert_tag_state(ts2, ts1)
+
     @attr('review_tags')
     @mock.patch_object(Site.objects, 'get_current')
     def test_review_tags(self, get_current):
-        get_current.return_value.domain = 'su.mo.com'
         """Review tags can be managed on document revisions"""
+        get_current.return_value.domain = 'su.mo.com'
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
 

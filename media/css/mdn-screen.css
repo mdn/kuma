@@ -997,3 +997,32 @@ li.tag-expert label:hover { border-color: #bbb; }
 .fm-subscribe .inline input, .fm-subscribe .agree input { width: auto; border: 0; padding: 0; }
 .fm-subscribe .agree label { width: auto; display: inline; font-family: inherit; font-size: 1em; text-transform: none; }
 
+/*** @Tags *********/
+#page-tags h2 { float: left; }
+#page-tags .add a, #deki-page-tags-toggleview { background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
+#page-tags .add a:hover, #page-tags .add a:focus, #page-tags .add a:active, 
+#page-tags #deki-page-tags-toggleview:hover, #page-tags #deki-page-tags-toggleview:focus, #page-tags #deki-page-tags-toggleview:active { background-color: #ade4ff; text-decoration: none; }
+#page-tags #deki-page-tags-toggleview { position: absolute; right: 20px; top: 12px; }
+#page-tags .add a.disabled, #page-tags #deki-page-tags-toggleview.disabled { opacity: .75; background-color: #c8e6ed; }
+#page-tags ul.tags { margin: 0; list-style: none; }
+#page-tags ul.tags li { padding: 0; background: none; display: inline; margin-right: 8px; }
+#page-tags .pageTagList div.item { padding: 0; }
+#page-tags .taglist a, #page-tags ul.tags a { display: inline-block; padding: 2px 8px; margin-bottom: .5em; background: #f5f5f1 url("/media/img/light-shade.png") 0 .9em repeat-x; color: #333; border: 1px solid #91918e; }
+#page-tags .taglist a:hover, #page-tags .taglist a:focus, #page-tags .taglist a:active, 
+#page-tags ul.tags a:hover, #page-tags ul.tags a:focus, #page-tags ul.tags a:active { background-color: #fff; text-decoration: none; border-color: #aaa; }
+
+#page-tags #deki-page-tags .tagContainer { white-space: normal; }
+#page-tags #deki-page-tags .tagButtons { padding-left: 10px; }
+#page-tags #deki-page-tags .tagData { padding-right: 30px; }
+#page-tags #deki-page-tags { float: left; }
+#page-tags #deki-page-tags table { margin: 0; width: 550px; }
+#page-tags #deki-page-tags .tagAdd { float: right; padding: .25em 10px; background: #e1e1e1 url("/media/img/button-shade.png") 0 .9em repeat-x; color: #333; font: 200 1em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .25em; -webkit-border-radius: .25em; border-radius: .25em; }
+#page-tags #deki-page-tags .col1 { width: 100px; padding-top: .25em; }
+
+#page-tags #deki-page-tags .tag-edit { border: 1px solid #e0e0dc; background: rgba(255,255,255,.5); padding: 10px; }
+#page-tags #deki-page-tags .tag-edit .input-button { font-size: 1em; background-color: #e1e1e1; color: #333; }
+
+#deki-page-tags-edit ul.tags a { background: transparent none; border: 0; padding: 0; color: #369; }
+#deki-page-tags-edit ul.tags a:hover, #deki-page-tags-edit ul.tags a:focus, #deki-page-tags-edit ul.tags a:active { color: #25a; text-decoration: underline; }
+#deki-page-tags-edit ul.tags a.tag-delete { margin-right: 5px; width: 20px; background: transparent url("/media/img/wiki/icons/delete.png") 50% 5px no-repeat; }
+#deki-page-tags-edit ul.tags a.tag-delete:hover, #deki-page-tags-edit ul.tags a.tag-delete:focus, #deki-page-tags-edit ul.tags a.tag-delete:active { background-position: 50% -45px; }

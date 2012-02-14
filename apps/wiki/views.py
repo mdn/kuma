@@ -29,7 +29,7 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
-                         ReviewTag,
+                         DocumentTag, ReviewTag,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
@@ -151,7 +151,8 @@ def document(request, document_slug):
                                             .only('creator')
                                             .select_related('creator')])
     # TODO: Port this kitsune feature over, eventually:
-    #     https://github.com/jsocol/kitsune/commit/f1ebb241e4b1d746f97686e65f49e478e28d89f2
+    #     https://github.com/jsocol/kitsune/commit/
+    #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
@@ -166,7 +167,8 @@ def document(request, document_slug):
         tool.extractSection(section_id)
 
     # If this user can edit the document, inject some section editing links.
-    if (need_edit_links or not show_raw) and doc.allows_editing_by(request.user):
+    if ((need_edit_links or not show_raw) and
+            doc.allows_editing_by(request.user)):
         tool.injectSectionEditingLinks(doc.slug, doc.locale)
 
     # if ?raw parameter is supplied, then we respond with raw page source
@@ -177,7 +179,7 @@ def document(request, document_slug):
         response['x-kuma-revision'] = doc.current_revision.id
         response['x-frame-options'] = 'Allow'
         return response
-    
+
     data = {'document': doc, 'document_html': tool.serialize(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
@@ -210,7 +212,9 @@ def list_documents(request, category=None, tag=None):
         except KeyError:
             raise Http404
 
-    tag_obj = tag and get_object_or_404(Tag, slug=tag) or None
+    # Taggit offers a slug - but use name here, because the slugification
+    # stinks and is hard to customize.
+    tag_obj = tag and get_object_or_404(DocumentTag, name=tag) or None
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category,
                                              tag=tag_obj)
@@ -239,17 +243,16 @@ def list_documents_for_review(request, tag=None):
 def new_document(request):
     """Create a new wiki document."""
     if request.method == 'GET':
-        doc_form = DocumentForm(
-            can_create_tags=request.user.has_perm('taggit.add_tag'))
-        rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
+        doc_form = DocumentForm()
+        rev_form = RevisionForm(
+                initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
                              'revision_form': rev_form})
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
-    doc_form = DocumentForm(post_data,
-        can_create_tags=request.user.has_perm('taggit.add_tag'))
+    doc_form = DocumentForm(post_data)
     rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
@@ -292,14 +295,13 @@ def edit_document(request, document_slug, revision_id=None):
 
     doc_form = rev_form = None
     if doc.allows_revision_by(user):
-        rev_form = RevisionForm(instance=rev, 
+        rev_form = RevisionForm(instance=rev,
                                 initial={'based_on': rev.id,
                                          'current_rev': rev.id,
                                          'comment': ''},
                                 section_id=section_id)
     if doc.allows_editing_by(user):
-        doc_form = DocumentForm(initial=_document_form_initial(doc),
-            can_create_tags=user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm(initial=_document_form_initial(doc))
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
@@ -319,8 +321,7 @@ def edit_document(request, document_slug, revision_id=None):
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
                 post_data.update({'locale': request.locale})
-                doc_form = DocumentForm(post_data, instance=doc,
-                    can_create_tags=user.has_perm('taggit.add_tag'))
+                doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
@@ -351,7 +352,7 @@ def edit_document(request, document_slug, revision_id=None):
             if not doc.allows_revision_by(user):
                 raise PermissionDenied
             else:
-                rev_form = RevisionForm(request.POST, 
+                rev_form = RevisionForm(request.POST,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
@@ -372,13 +373,10 @@ def edit_document(request, document_slug, revision_id=None):
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
                         # Jump out to a function to escape indentation hell
-                        return _edit_document_collision(request,
-                                                        orig_rev, curr_rev,
-                                                        is_iframe_target,
-                                                        is_raw,
-                                                        rev_form, doc_form,
-                                                        section_id, 
-                                                        rev, doc)
+                        return _edit_document_collision(
+                                request, orig_rev, curr_rev, is_iframe_target,
+                                is_raw, rev_form, doc_form, section_id,
+                                rev, doc)
 
                 else:
                     _save_rev_and_notify(rev_form, user, doc)
@@ -394,7 +392,7 @@ def edit_document(request, document_slug, revision_id=None):
                         response['x-frame-options'] = 'SAMEORIGIN'
                         return response
 
-                    if (is_raw and orig_rev is not None and 
+                    if (is_raw and orig_rev is not None and
                             curr_rev.id != orig_rev.id):
                         # If this is the raw view, and there was an original
                         # revision, but the original revision differed from the
@@ -409,7 +407,7 @@ def edit_document(request, document_slug, revision_id=None):
                         view = 'wiki.document'
                     else:
                         view = 'wiki.document_revisions'
-                    
+
                     # Construct the redirect URL, adding any needed parameters
                     url = reverse(view, args=[doc.slug], locale=doc.locale)
                     params = {}
@@ -463,7 +461,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     if is_raw:
         # When dealing with the raw content API, we need to signal the conflict
         # differently so the client-side can escape out to a conflict
-        # resolution UI. 
+        # resolution UI.
         response = HttpResponse('CONFLICT')
         response.status_code = 409
         response['x-frame-options'] = 'SAMEORIGIN'
@@ -665,8 +663,7 @@ def translate(request, document_slug, revision_id=None):
 
     if user_has_doc_perm:
         doc_initial = _document_form_initial(doc) if doc else None
-        doc_form = DocumentForm(initial=doc_initial,
-            can_create_tags=user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm(initial=doc_initial)
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
         if revision_id:
@@ -685,8 +682,7 @@ def translate(request, document_slug, revision_id=None):
             disclose_description = True
             post_data = request.POST.copy()
             post_data.update({'locale': request.locale})
-            doc_form = DocumentForm(post_data, instance=doc,
-                can_create_tags=user.has_perm('taggit.add_tag'))
+            doc_form = DocumentForm(post_data, instance=doc)
             doc_form.instance.locale = request.locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':

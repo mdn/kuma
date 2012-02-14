@@ -5,7 +5,8 @@ from wiki.models import Document, Revision, EditorToolbar
 
 class DocumentAdmin(admin.ModelAdmin):
     exclude = ('tags',)
-    list_display = ('id', 'locale', 'slug', 'title', 'category', 'is_localizable')
+    list_display = ('id', 'locale', 'slug', 'title', 'category',
+                    'is_localizable')
     list_display_links = ('id', 'slug',)
     list_filter = ('is_template', 'is_localizable', 'category', 'locale')
     raw_id_fields = ('parent',)
