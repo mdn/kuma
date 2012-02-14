@@ -1,0 +1,282 @@
+{% extends "landing/base_learn.html" %}
+
+{% block pageid %}learn-html5{% endblock %}
+
+{% block title %}{{ page_title(_('HTML5 & Friends')) }}{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+
+  <article id="topics">
+    <header>
+      <h1 class="page-title">HTML5 &amp; Friends</h1>
+      <nav id="topic-tabs">
+        <ul>
+          <li id="tab-html5" class="current"><a href="#topic-html5" rel="tab" title="HTML5">HTML5</a></li>
+          <li id="tab-css3"><a href="#topic-css3" rel="tab" title="CSS3">CSS3</a></li>
+          <li id="tab-semantics"><a href="#topic-semantics" rel="tab" title="Semantics">Semantics</a></li>
+          <li id="tab-connectivity"><a href="#topic-connectivity" rel="tab" title="Connectivity">Connectivity</a></li>
+          <li id="tab-offline"><a href="#topic-offline" rel="tab" title="Offline &amp; Storage">Offline &amp; Storage</a></li>
+          <li id="tab-multimedia"><a href="#topic-multimedia" rel="tab" title="Multimedia">Multimedia</a></li>
+          <li id="tab-performance"><a href="#topic-performance" rel="tab" title="Performance &amp; Integration">Performance &amp; Integration</a></li>
+          <li id="tab-graphics"><a href="#topic-graphics" rel="tab" title="3D, Graphics, &amp; Effects">3D, Graphics, &amp; Effects</a></li>
+          <li id="tab-devices"><a href="#topic-devices" rel="tab" title="Device Access">Device Access</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <div id="topic-content">
+      <section id="topic-html5" class="block">
+        <p><b><a href="https://developer.mozilla.org/en/HTML/HTML5">HTML5</a> is the set of 
+        technology standards that support the next phase in the development of the Web.</b> 
+        From its beginning, Mozilla has championed Web standards to ensure freedom of choice 
+        for those who use the Web and independence for those who build it. Leaders from Mozilla 
+        helped start the evolution of HTML and related standards that is now known as HTML5, 
+        and Mozilla continues to lead in both defining and implementing these standards.</p>
+        
+        <p>The term &ldquo;HTML5&rdquo; has been applied to many things, creating confusion about 
+        exactly what it is and what it can do. Rather than split hairs, we use &ldquo;&amp; friends&rdquo; to 
+        encompass all the &ldquo;new, exciting Web technologies&rdquo; that will enable the next 
+        wave of Web-based innovation.</p>
+      </section>
+      
+      <section id="topic-css3" class="block">
+        <h2>CSS3 Styling</h2>
+        <p><a href="https://developer.mozilla.org/en/CSS">Cascading Style Sheets</a> deliver a wide 
+        range of stylization and effects, enhancing web pages without sacrificing their semantic 
+        structure or performance. CSS3 is the latest 
+        version of the CSS standard, introducing exciting new effects like 
+        <a href="https://developer.mozilla.org/en/CSS/Using_CSS_gradients">dynamic color gradients</a>, 
+        <a href="https://developer.mozilla.org/En/CSS/Using_CSS_transforms">2D and 3D transforms</a>,
+        <a href="https://developer.mozilla.org/en/CSS/Using_CSS_multi-column_layouts">multi-column</a> and 
+        <a href="https://developer.mozilla.org/en/Using_flexbox">flexible layouts</a>, 
+        <a href="https://developer.mozilla.org/en/CSS/calc">calculations</a>, 
+        <a href="https://developer.mozilla.org/en/CSS/CSS_transitions">transitions</a>, 
+        <a href="https://developer.mozilla.org/en/CSS/CSS_animations">animations</a>, and 
+        <a href="https://developer.mozilla.org/en/CSS/Media_queries">media queries</a> to tailor different 
+        styles for different devices.</p> 
+        
+        <p>Not technically part of HTML5, CSS3 is a separate &mdash; though closely connected &mdash; 
+        set of standards, emerging and evolving in tandem with HTML5.</p>
+      </section>
+      
+      <section id="topic-semantics" class="block">
+        <h2>Semantics</h2>
+        <p>HTML5 introduces a number of 
+        <a href="https://developer.mozilla.org/en/Sections_and_Outlines_of_an_HTML5_document">new elements and attributes</a> 
+        to support content in more meaningful ways. 
+        <a href="https://developer.mozilla.org/en/HTML/Forms_in_HTML">New form elements</a> 
+        enhance interactivity with web apps. Together with RDFa, microdata, and microformats, HTML5 is 
+        enabling a more useful, data-driven Web for developers and users alike.</p>
+      </section>
+      
+      <section id="topic-connectivity" class="block">
+        <h2>Connectivity</h2>
+        <p>More efficient connectivity means more real-time chats, faster games, and better 
+        communication. <a href="https://developer.mozilla.org/en/WebSockets">WebSockets</a> and 
+        <a href="https://developer.mozilla.org/en/Server-sent_events">Server-Sent Events</a> 
+        are pushing (pun intended) data between client and server more efficiently than ever before.</p>
+      </section>
+      
+      <section id="topic-performance" class="block">
+        <h2>Performance &amp; Integration</h2>
+        <p>Make apps more seamless and make dynamic content load faster with a variety of techniques 
+        and technologies such as <a href="https://developer.mozilla.org/en/Using_web_workers">Web Workers</a>,  
+        <a href="https://developer.mozilla.org/en/DOM/XMLHttpRequest">XMLHttpRequest Level 2</a> (the technology behind 
+        <a href="https://developer.mozilla.org/en/AJAX">Ajax</a>), and the 
+        <a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history">History API</a>.</p>
+      </section>
+      
+      <section id="topic-offline" class="block">
+        <h2>Offline &amp; Storage</h2>
+        <p>Web apps can still function even if there is no internet connection, thanks 
+        to the <a href="https://developer.mozilla.org/en/Using_the_Application_Cache">HTML5 App Cache</a>, 
+        as well as the <a href="https://developer.mozilla.org/en/DOM/Storage">Local Storage</a>, 
+        <a href="https://developer.mozilla.org/en/IndexedDB">Indexed Database</a>, 
+        and the <a href="https://developer.mozilla.org/en/Using_files_from_web_applications">File API</a> 
+        specifications. Web apps can also load faster and respond more quickly when some of their vital data 
+        is locally stored by the client.</p>
+      </section>
+      
+      <section id="topic-multimedia" class="block">
+        <h2>Multimedia</h2>
+        <p>Incorporating audio or video into a web page has long required an additional plug-in 
+        to add more capabilities to the browser that weren&#8217;t native to the browser itself, but 
+        that&#8217;s changing with HTML5. The new <a href="https://developer.mozilla.org/en/Using_HTML5_audio_and_video">audio and video elements</a> 
+        allow web developers to embed sound and moving pictures into web pages without any 
+        proprietary plug-ins and let media interact with other web content in ways that weren't 
+        previously possible.</p>
+      </section>
+      
+      <section id="topic-graphics" class="block">
+        <h2>3D, Graphics, &amp; Effects</h2>
+        <p>Images on the Web have always been flat and static, created once and then living forever 
+        in a permanent, unchanging, 2-dimensional state. Now <a href="https://developer.mozilla.org/en/SVG">SVG</a> 
+        and <a href="https://developer.mozilla.org/en/HTML/Canvas">canvas</a> can generate dynamic, 
+        interactive drawings, rendered on the fly in the browser. With canvas and 
+        <a href="https://developer.mozilla.org/en/WebGL">WebGL</a>, along with 
+        <a href="https://developer.mozilla.org/en/CSS/Using_CSS_transforms#3D_specific_CSS_properties">CSS3 3D transforms</a>, 
+        flat vector shapes can be brought to 3-dimensional life, adding a new perspective (literally) to web imagery.</p>
+      </section>
+      
+      <section id="topic-devices" class="block">
+        <h2>Device Access</h2>
+        <p>The Web is becoming more mobile every day, with an ever-growing number and variety of devices accessing it. 
+        With new technologies like the <a href="https://developer.mozilla.org/en/Using_geolocation">Geolocation API</a> and 
+        <a href="https://developer.mozilla.org/en/DOM/Touch_events">touch events</a>, web applications can 
+        present rich, device-aware features and experiences to rival native apps on the latest tablets and smartphones. 
+        Incredible device access innovations are being developed and implemented, from audio/video input access to microphones and 
+        cameras, to local data such as contacts &amp; events, and even <a href="https://developer.mozilla.org/en/detecting_device_orientation">tilt orientation</a>.</p>
+      </section>
+      
+    </div>
+
+  </article><!-- /#topics -->
+  
+  <section id="content-main">
+  
+    <div id="html5-demos" class="boxed">
+      <header class="head">
+        <h2>Demos</h2>
+        <p>See examples of the awesomeness you can achieve with HTML5 &amp; friends</p>
+      </header>
+
+        Demo gallery goes here: 6 most recent demos tagged with both 'featured' and 'html5'.
+        
+        <p class="more"><a class="go" href="https://developer.mozilla.org/en-US/demos/tag/tech:html5/">More HTML5 demos</a></p>
+    </div>
+
+  </section><!-- /#content-main -->
+  
+  <aside id="content-sub" role="complementary">
+  
+    <div class="module" id="mdn-docs">
+      <h3 class="mod-title">MDN Docs</h3>
+      <p class="mod-intro">Community docs of HTML5 features and related technologies</p>
+      <ul class="prose">
+        <li><a href="https://developer.mozilla.org/en/HTML">HTML</a></li>
+        <li><a href="https://developer.mozilla.org/en/HTML/HTML5">HTML5</a></li>
+        <li><a href="https://developer.mozilla.org/en/CSS">CSS</a></li>
+        <li><a href="https://developer.mozilla.org/en/Using_HTML5_audio_and_video">HTML5 Audio and Video</a></li>
+        <li><a href="https://developer.mozilla.org/en/HTML/Canvas">Canvas</a></li>
+        <li><a href="https://developer.mozilla.org/en/WebSockets">WebSockets</a></li>
+        <li><a href="https://developer.mozilla.org/en/Using_the_Application_Cache">HTML5 App Cache</a></li>
+        <li><a href="https://developer.mozilla.org/en/DOM/Storage">Local Storage</a></li>
+        <li><a href="https://developer.mozilla.org/en/IndexedDB">Indexed Database</a></li>
+        <li><a href="https://developer.mozilla.org/en/Using_files_from_web_applications">File API</a></li>
+        <li><a href="https://developer.mozilla.org/en/Using_geolocation">Geolocation API</a></li>
+      </ul>
+    </div>
+  
+    <div class="module" id="resources">
+      <h3 class="mod-title">Tools and Resources</h3>
+      <p class="mod-intro">Learn more about HTML5 &amp; friends</p>
+      <ul class="prose">
+        <li><a href="http://developers.whatwg.org/" rel="external">WHATWG's HTML5 Specification</a></li>
+        <li><a href="http://www.w3.org/TR/html5/" rel="external">W3C's HTML5 Specification</a></li>
+        <li><a href="http://dev.w3.org/html5/html-author/" rel="external">W3C's HTML5 Developer Guide</a></li>
+        <li><a href="http://www.html5rocks.com/" rel="external">HTML5 Rocks</a></li>
+        <li><a href="http://html5doctor.com/" rel="external">HTML5 Doctor</a></li>
+        <li><a href="http://html5forwebdesigners.com/" rel="external">HTML5 for Web Designers</a></li>
+        <li><a href="http://html5demos.com/" rel="external">HTML5 Demos</a></li>
+        <li><a href="http://html5gallery.com/" rel="external">HTML5 Gallery</a></li>
+        <li><a href="http://blog.whatwg.org/" rel="external">WHATWG Blog</a></li>
+        <li><a href="http://caniuse.com/" rel="external">Can I Use?</a></li>
+        <li><a href="http://www.w3.org/html/logo/" rel="external">The HTML5 Logo</a></li>
+        <li><a href="http://html5forwebdesigners.com/" rel="external">HTML5 for Web Designers</a></li>
+        <li><a href="http://html5please.us/" rel="external">HTML5 Please</a></li>
+      </ul>
+    </div>
+    
+
+  </aside>
+
+</div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/mdn/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+
+  function topicTabs(targetblock) {
+    var currentblock;
+  	$("#topic-content .block").hide().addClass("block-hidden");
+  	$("#topic-tabs a[rel=tab]").removeAttr("title");
+
+    if (targetblock) {
+      currentblock = targetblock.replace( /.*?#(.*)/g, "$1" ); // determine which block to show by extracting the id from the href
+      tabSwitch(currentblock);
+    }
+    else if ( !targetblock && (/.*?#topic-*/.test(window.location)) ) { // if no target is supplied, check the url for a fragment id prefixed with "tab-" (this means inbound links can point directly to a tab)
+      currentblock = window.location.href.replace( /.*?#(.*)/g, "$1" );
+      $("html,body").animate({scrollTop: $("#topics").offset().top - 150}, 0); // HACK: compensate for overshooting the tabs when the page loads
+      tabSwitch(currentblock);
+    }
+    else {
+      currentblock = $("#topic-tabs .current a").attr("href").replace( /.*?#(.*)/g, "$1" );
+      tabSwitch(currentblock);
+    }
+  	$("#"+currentblock).fadeIn('fast').removeClass("block-hidden"); // make the current block visible
+  }
+
+  function tabSwitch(targettab) {
+    var tabs = $("#topic-tabs a[rel=tab]");    
+    if (targettab) {
+      for (var i = 0; i < tabs.length; i++) { // loop through the tabs
+        var tab = $(tabs[i]).attr("href").replace( /.*?#(.*)/g, "$1" ); // strip down the href
+        if ( targettab == tab ) { // if one of them matches our target
+          $("#topic-tabs li").removeClass("current"); // first clean the slate
+          $("#topic-tabs a[href$=#"+targettab+"]").parents("li").addClass("current"); // then set that tab as current
+        }    
+      }
+    }
+  };
+  
+  $("#topic-tabs a[rel=tab]").click(function(){
+    $("#topic-tabs li").removeClass("current");
+    $(this).blur().parents("li").addClass("current");
+    topicTabs( $(this).attr("href").replace( /.*?#(.*)/g, "$1" ) ); // transmit target
+    return false;
+	});
+
+  $("#topic-tabs a").hover(
+    function(){
+      var content = $(this).text();
+      $(this).parent().append('<span class="label">'+content+'<\/span>');
+      $(this).parent().find("span.label").fadeIn('fast');
+    },
+    function(){
+      $(this).parent().find("span.label").fadeOut('fast').remove();
+    }
+  );
+  
+	$(".gallery").ready(function(){
+		$(".gallery").addClass("js");
+    $(".gallery .demo").hoverIntent({
+      interval: 250,
+      over: function() {
+        var content = $(this).html(),
+            demo = $(this), 
+            offs = $(this).offset();
+        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
+        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
+          $(this).fadeOut(200, function(){ 
+            $(this).remove(); 
+          });
+        });
+      }, 
+      out: function() { /* do nothing */ }
+    });
+	});
+	
+  $(document).ready(function(){
+    topicTabs();
+  });
+    
+// ]]>
+</script>
+{% endblock %}

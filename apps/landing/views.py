@@ -103,6 +103,9 @@ def learn_html(request):
     """HTML landing page."""
     return jingo.render(request, 'landing/learn_html.html')
 
+def learn_html5(request):
+    """HTML5 landing page."""
+    return jingo.render(request, 'landing/learn_html5.html')
 
 def learn_css(request):
     """CSS landing page."""
