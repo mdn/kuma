@@ -4,130 +4,170 @@
 
 {% block title %}{{ page_title(_('HTML5 & Friends')) }}{% endblock %}
 
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/demos.css">
+{% endblock %}
+
 {% block content %}
 <section id="content">
 <div class="wrap">
 
   <article id="topics">
     <header>
-      <h1 class="page-title">HTML5 &amp; Friends</h1>
+      <h1 class="page-title">{{ _('HTML5 & Friends') }}</h1>
       <nav id="topic-tabs">
         <ul>
-          <li id="tab-html5" class="current"><a href="#topic-html5" rel="tab" title="HTML5">HTML5</a></li>
-          <li id="tab-css3"><a href="#topic-css3" rel="tab" title="CSS3">CSS3</a></li>
-          <li id="tab-semantics"><a href="#topic-semantics" rel="tab" title="Semantics">Semantics</a></li>
-          <li id="tab-connectivity"><a href="#topic-connectivity" rel="tab" title="Connectivity">Connectivity</a></li>
-          <li id="tab-offline"><a href="#topic-offline" rel="tab" title="Offline &amp; Storage">Offline &amp; Storage</a></li>
-          <li id="tab-multimedia"><a href="#topic-multimedia" rel="tab" title="Multimedia">Multimedia</a></li>
-          <li id="tab-performance"><a href="#topic-performance" rel="tab" title="Performance &amp; Integration">Performance &amp; Integration</a></li>
-          <li id="tab-graphics"><a href="#topic-graphics" rel="tab" title="3D, Graphics, &amp; Effects">3D, Graphics, &amp; Effects</a></li>
-          <li id="tab-devices"><a href="#topic-devices" rel="tab" title="Device Access">Device Access</a></li>
+          <li id="tab-html5" class="current"><a href="#topic-html5" rel="tab" title="{{ _('HTML5') }}">{{ _('HTML5') }}</a></li>
+          <li id="tab-css3"><a href="#topic-css3" rel="tab" title="{{ _('CSS3') }}">{{ _('CSS3') }}</a></li>
+          <li id="tab-semantics"><a href="#topic-semantics" rel="tab" title="{{ _('Semantics') }}">{{ _('Semantics') }}</a></li>
+          <li id="tab-connectivity"><a href="#topic-connectivity" rel="tab" title="{{ _('Connectivity') }}">{{ _('Connectivity') }}</a></li>
+          <li id="tab-offline"><a href="#topic-offline" rel="tab" title="{{ _('Offline & Storage') }}">{{ _('Offline & Storage') }}</a></li>
+          <li id="tab-multimedia"><a href="#topic-multimedia" rel="tab" title="{{ _('Multimedia') }}">{{ _('Multimedia') }}</a></li>
+          <li id="tab-performance"><a href="#topic-performance" rel="tab" title="{{ _('Performance & Integration') }}">{{ _('Performance & Integration') }}</a></li>
+          <li id="tab-graphics"><a href="#topic-graphics" rel="tab" title="{{ _('3D, Graphics, & Effects') }}">{{ _('3D, Graphics, & Effects') }}</a></li>
+          <li id="tab-devices"><a href="#topic-devices" rel="tab" title="{{ _('Device Access') }}">{{ _('Device Access') }}</a></li>
         </ul>
       </nav>
     </header>
     
     <div id="topic-content">
       <section id="topic-html5" class="block">
-        <p><b><a href="https://developer.mozilla.org/en/HTML/HTML5">HTML5</a> is the set of 
-        technology standards that support the next phase in the development of the Web.</b> 
-        From its beginning, Mozilla has championed Web standards to ensure freedom of choice 
-        for those who use the Web and independence for those who build it. Leaders from Mozilla 
-        helped start the evolution of HTML and related standards that is now known as HTML5, 
-        and Mozilla continues to lead in both defining and implementing these standards.</p>
-        
-        <p>The term &ldquo;HTML5&rdquo; has been applied to many things, creating confusion about 
-        exactly what it is and what it can do. Rather than split hairs, we use &ldquo;&amp; friends&rdquo; to 
-        encompass all the &ldquo;new, exciting Web technologies&rdquo; that will enable the next 
-        wave of Web-based innovation.</p>
+        {% trans html5=devmo_url(_('/en/HTML/HTML5')) %}<p><b><a href="{{ html5 }}">HTML5</a> is the set of
+        technology standards that support the next phase in the development of the Web.</b>
+        From its beginning, Mozilla has championed Web standards to ensure freedom of choice
+        for those who use the Web and independence for those who build it. Leaders from Mozilla
+        helped start the evolution of HTML and related standards that is now known as HTML5,
+        and Mozilla continues to lead in both defining and implementing these standards.</p>{% endtrans %}
+
+        {% trans %}<p>The term &ldquo;HTML5&rdquo; has been applied to many things, creating confusion about
+        exactly what it is and what it can do. Rather than split hairs, we use &ldquo;&amp; friends&rdquo; to
+        encompass all the &ldquo;new, exciting Web technologies&rdquo; that will enable the next
+        wave of Web-based innovation.</p>{% endtrans %}
       </section>
       
       <section id="topic-css3" class="block">
-        <h2>CSS3 Styling</h2>
-        <p><a href="https://developer.mozilla.org/en/CSS">Cascading Style Sheets</a> deliver a wide 
-        range of stylization and effects, enhancing web pages without sacrificing their semantic 
-        structure or performance. CSS3 is the latest 
-        version of the CSS standard, introducing exciting new effects like 
-        <a href="https://developer.mozilla.org/en/CSS/Using_CSS_gradients">dynamic color gradients</a>, 
-        <a href="https://developer.mozilla.org/En/CSS/Using_CSS_transforms">2D and 3D transforms</a>,
-        <a href="https://developer.mozilla.org/en/CSS/Using_CSS_multi-column_layouts">multi-column</a> and 
-        <a href="https://developer.mozilla.org/en/Using_flexbox">flexible layouts</a>, 
-        <a href="https://developer.mozilla.org/en/CSS/calc">calculations</a>, 
-        <a href="https://developer.mozilla.org/en/CSS/CSS_transitions">transitions</a>, 
-        <a href="https://developer.mozilla.org/en/CSS/CSS_animations">animations</a>, and 
-        <a href="https://developer.mozilla.org/en/CSS/Media_queries">media queries</a> to tailor different 
-        styles for different devices.</p> 
-        
-        <p>Not technically part of HTML5, CSS3 is a separate &mdash; though closely connected &mdash; 
-        set of standards, emerging and evolving in tandem with HTML5.</p>
+        <h2>{{ _('CSS3 Styling') }}</h2>
+
+        {% trans
+            CSS=devmo_url(_('/en/CSS')),
+            CSS_gradients=devmo_url(_('/en/CSS/Using_CSS_gradients')),
+            CSS_transforms=devmo_url(_('/en/CSS/Using_CSS_transforms')),
+            CSS_layouts=devmo_url(_('/en/CSS/Using_CSS_multi-column_layouts')),
+            flexbox=devmo_url(_('/en/Using_flexbox')),
+            calc=devmo_url(_('/en/CSS/calc')),
+            transitions=devmo_url(_('/en/CSS/CSS_transitions')),
+            animations=devmo_url(_('/en/CSS/CSS_animations')),
+            Media_queries=devmo_url(_('/en/CSS/Media_queries'))
+        %}<p><a href="{{ CSS }}">Cascading Style Sheets</a> deliver a wide
+        range of stylization and effects, enhancing web pages without sacrificing their semantic
+        structure or performance. CSS3 is the latest
+        version of the CSS standard, introducing exciting new effects like
+        <a href="{{ CSS_gradients }}">dynamic color gradients</a>,
+        <a href="{{ CSS_transforms }}">2D and 3D transforms</a>,
+        <a href="{{ CSS_layouts }}">multi-column</a> and
+        <a href="{{ flexbox }}">flexible layouts</a>,
+        <a href="{{ calc }}">calculations</a>,
+        <a href="{{ transitions }}">transitions</a>,
+        <a href="{{ animations }}">animations</a>, and
+        <a href="{{ Media_queries }}">media queries</a> to tailor different
+        styles for different devices.</p>{% endtrans %}
+
+        {% trans %}<p>Not technically part of HTML5, CSS3 is a separate &mdash; though closely connected &mdash;
+        set of standards, emerging and evolving in tandem with HTML5.</p>{% endtrans %}
       </section>
       
       <section id="topic-semantics" class="block">
-        <h2>Semantics</h2>
-        <p>HTML5 introduces a number of 
-        <a href="https://developer.mozilla.org/en/Sections_and_Outlines_of_an_HTML5_document">new elements and attributes</a> 
-        to support content in more meaningful ways. 
-        <a href="https://developer.mozilla.org/en/HTML/Forms_in_HTML">New form elements</a> 
-        enhance interactivity with web apps. Together with RDFa, microdata, and microformats, HTML5 is 
-        enabling a more useful, data-driven Web for developers and users alike.</p>
+        <h2>{{ _('Semantics') }}</h2>
+        {% trans
+            new_elements=devmo_url(_('/en/Sections_and_Outlines_of_an_HTML5_document')),
+            new_forms=devmo_url(_('/en/HTML/Forms_in_HTML'))
+        %}<p>HTML5 introduces a number of
+        <a href="{{ new_elements }}">new elements and attributes</a>
+        to support content in more meaningful ways.
+        <a href="{{ new_forms }}">New form elements</a>
+        enhance interactivity with web apps. Together with RDFa, microdata, and microformats, HTML5 is
+        enabling a more useful, data-driven Web for developers and users alike.</p>{% endtrans %}
       </section>
       
       <section id="topic-connectivity" class="block">
-        <h2>Connectivity</h2>
-        <p>More efficient connectivity means more real-time chats, faster games, and better 
-        communication. <a href="https://developer.mozilla.org/en/WebSockets">WebSockets</a> and 
-        <a href="https://developer.mozilla.org/en/Server-sent_events">Server-Sent Events</a> 
-        are pushing (pun intended) data between client and server more efficiently than ever before.</p>
+        <h2>{{ _('Connectivity') }}</h2>
+        {% trans
+            websockets=devmo_url(_('/en/WebSockets')),
+            server_events=devmo_url(_('/en/Server-sent_events'))
+        %}<p>More efficient connectivity means more real-time chats, faster games, and better
+        communication. <a href="{{ websockets }}">WebSockets</a> and
+        <a href="{{ server_events }}">Server-Sent Events</a>
+        are pushing (pun intended) data between client and server more efficiently than ever before.</p>{% endtrans %}
       </section>
       
       <section id="topic-performance" class="block">
-        <h2>Performance &amp; Integration</h2>
-        <p>Make apps more seamless and make dynamic content load faster with a variety of techniques 
-        and technologies such as <a href="https://developer.mozilla.org/en/Using_web_workers">Web Workers</a>,  
-        <a href="https://developer.mozilla.org/en/DOM/XMLHttpRequest">XMLHttpRequest Level 2</a> (the technology behind 
-        <a href="https://developer.mozilla.org/en/AJAX">Ajax</a>), and the 
-        <a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history">History API</a>.</p>
+        <h2>{{ _('Performance & Integration') }}</h2>
+        {% trans
+            web_workers=devmo_url(_('/en/Using_web_workers')),
+            xhr=devmo_url(_('/en/DOM/XMLHttpRequest')),
+            ajax=devmo_url(_('/en/AJAX')),
+            history=devmo_url(_('/en/DOM/Manipulating_the_browser_history'))
+        %}<p>Make apps more seamless and make dynamic content load faster with a variety of techniques
+        and technologies such as <a href="{{ web_workers }}">Web Workers</a>,
+        <a href="{{ xhr }}">XMLHttpRequest Level 2</a> (the technology behind
+        <a href="{{ ajax }}">Ajax</a>), and the
+        <a href="{{ history }}">History API</a>.</p>{% endtrans %}
       </section>
       
       <section id="topic-offline" class="block">
-        <h2>Offline &amp; Storage</h2>
-        <p>Web apps can still function even if there is no internet connection, thanks 
-        to the <a href="https://developer.mozilla.org/en/Using_the_Application_Cache">HTML5 App Cache</a>, 
-        as well as the <a href="https://developer.mozilla.org/en/DOM/Storage">Local Storage</a>, 
-        <a href="https://developer.mozilla.org/en/IndexedDB">Indexed Database</a>, 
-        and the <a href="https://developer.mozilla.org/en/Using_files_from_web_applications">File API</a> 
-        specifications. Web apps can also load faster and respond more quickly when some of their vital data 
-        is locally stored by the client.</p>
+        <h2>{{ _('Offline & Storage') }}</h2>
+        {% trans
+            app_cache=devmo_url(_('/en/Using_the_Application_Cache')),
+            local_storage=devmo_url(_('/en/DOM/Storage')),
+            indexed_db=devmo_url(_('/en/IndexedDB')),
+            file_api=devmo_url(_('/en/Using_files_from_web_applications'))
+        %}<p>Web apps can still function even if there is no internet connection, thanks
+        to the <a href="{{ app_cache }}">HTML5 App Cache</a>,
+        as well as the <a href="{{ local_storage }}">Local Storage</a>,
+        <a href="{{ indexed_db }}">Indexed Database</a>,
+        and the <a href="{{ file_api }}">File API</a>
+        specifications. Web apps can also load faster and respond more quickly when some of their vital data
+        is locally stored by the client.</p>{% endtrans %}
       </section>
       
       <section id="topic-multimedia" class="block">
-        <h2>Multimedia</h2>
-        <p>Incorporating audio or video into a web page has long required an additional plug-in 
-        to add more capabilities to the browser that weren&#8217;t native to the browser itself, but 
-        that&#8217;s changing with HTML5. The new <a href="https://developer.mozilla.org/en/Using_HTML5_audio_and_video">audio and video elements</a> 
-        allow web developers to embed sound and moving pictures into web pages without any 
-        proprietary plug-ins and let media interact with other web content in ways that weren't 
-        previously possible.</p>
+        <h2>{{ _('Multimedia') }}</h2>
+        {% trans html5_av=devmo_url(_('/en/Using_HTML5_audio_and_video')) %}<p>Incorporating audio or video into a web page has long required an additional plug-in
+        to add more capabilities to the browser that weren&#8217;t native to the browser itself, but
+        that&#8217;s changing with HTML5. The new <a href="{{ html5_av }}">audio and video elements</a>
+        allow web developers to embed sound and moving pictures into web pages without any
+        proprietary plug-ins and let media interact with other web content in ways that weren't
+        previously possible.</p>{% endtrans %}
       </section>
       
       <section id="topic-graphics" class="block">
-        <h2>3D, Graphics, &amp; Effects</h2>
-        <p>Images on the Web have always been flat and static, created once and then living forever 
-        in a permanent, unchanging, 2-dimensional state. Now <a href="https://developer.mozilla.org/en/SVG">SVG</a> 
-        and <a href="https://developer.mozilla.org/en/HTML/Canvas">canvas</a> can generate dynamic, 
-        interactive drawings, rendered on the fly in the browser. With canvas and 
-        <a href="https://developer.mozilla.org/en/WebGL">WebGL</a>, along with 
-        <a href="https://developer.mozilla.org/en/CSS/Using_CSS_transforms#3D_specific_CSS_properties">CSS3 3D transforms</a>, 
-        flat vector shapes can be brought to 3-dimensional life, adding a new perspective (literally) to web imagery.</p>
+        <h2>{{ _('3D, Graphics, & Effects') }}</h2>
+        {% trans
+            svg=devmo_url(_('/en/SVG')),
+            canvas=devmo_url(_('/en/HTML/Canvas')),
+            webgl=devmo_url(_('/en/WebGL')),
+            css3d=devmo_url(_('/en/CSS/Using_CSS_transforms#3D_specific_CSS_properties'))
+        %}<p>Images on the Web have always been flat and static, created once and then living forever
+        in a permanent, unchanging, 2-dimensional state. Now <a href="{{ svg }}">SVG</a>
+        and <a href="{{ canvas }}">canvas</a> can generate dynamic,
+        interactive drawings, rendered on the fly in the browser. With canvas and
+        <a href="{{ webgl }}">WebGL</a>, along with
+        <a href="{{ css3d }}">CSS3 3D transforms</a>,
+        flat vector shapes can be brought to 3-dimensional life, adding a new perspective (literally) to web imagery.</p>{% endtrans %}
       </section>
       
       <section id="topic-devices" class="block">
-        <h2>Device Access</h2>
-        <p>The Web is becoming more mobile every day, with an ever-growing number and variety of devices accessing it. 
-        With new technologies like the <a href="https://developer.mozilla.org/en/Using_geolocation">Geolocation API</a> and 
-        <a href="https://developer.mozilla.org/en/DOM/Touch_events">touch events</a>, web applications can 
-        present rich, device-aware features and experiences to rival native apps on the latest tablets and smartphones. 
-        Incredible device access innovations are being developed and implemented, from audio/video input access to microphones and 
-        cameras, to local data such as contacts &amp; events, and even <a href="https://developer.mozilla.org/en/detecting_device_orientation">tilt orientation</a>.</p>
+        <h2>{{ _('Device Access') }}</h2>
+        {% trans
+            geolocation=devmo_url(_('/en/Using_geolocation')),
+            touch=devmo_url(_('/en/DOM/Touch_events')),
+            orientation=devmo_url(_('/en/detecting_device_orientation'))
+        %}<p>The Web is becoming more mobile every day, with an ever-growing number and variety of devices accessing it.
+        With new technologies like the <a href="{{ geolocation }}">Geolocation API</a> and
+        <a href="{{ touch }}">touch events</a>, web applications can
+        present rich, device-aware features and experiences to rival native apps on the latest tablets and smartphones.
+        Incredible device access innovations are being developed and implemented, from audio/video input access to microphones and
+        cameras, to local data such as contacts & events, and even <a href="{{ orientation }}">tilt orientation</a>.</p>{% endtrans %}
       </section>
       
     </div>
@@ -138,13 +178,16 @@
   
     <div id="html5-demos" class="boxed">
       <header class="head">
-        <h2>Demos</h2>
-        <p>See examples of the awesomeness you can achieve with HTML5 &amp; friends</p>
+        <h2>{{ _('Demos') }}</h2>
+        <p>{{ _('See examples of the awesomeness you can achieve with HTML5 & friends') }}</p>
       </header>
-
-        Demo gallery goes here: 6 most recent demos tagged with both 'featured' and 'html5'.
-        
-        <p class="more"><a class="go" href="https://developer.mozilla.org/en-US/demos/tag/tech:html5/">More HTML5 demos</a></p>
+      <ul class="gallery">
+        {% set extra_class = cycler(' row-first', '', '') %}
+        {% for submission in demos %}
+          {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133") }}
+        {% endfor %}
+      </ul>
+      <p class="more"><a class="go" href="{{ url('demos') }}">More HTML5 demos</a></p>
     </div>
 
   </section><!-- /#content-main -->
@@ -152,40 +195,40 @@
   <aside id="content-sub" role="complementary">
   
     <div class="module" id="mdn-docs">
-      <h3 class="mod-title">MDN Docs</h3>
-      <p class="mod-intro">Community docs of HTML5 features and related technologies</p>
+      <h3 class="mod-title">{{ _('MDN Docs') }}</h3>
+      <p class="mod-intro">{{ _('Community docs of HTML5 features and related technologies') }}</p>
       <ul class="prose">
-        <li><a href="https://developer.mozilla.org/en/HTML">HTML</a></li>
-        <li><a href="https://developer.mozilla.org/en/HTML/HTML5">HTML5</a></li>
-        <li><a href="https://developer.mozilla.org/en/CSS">CSS</a></li>
-        <li><a href="https://developer.mozilla.org/en/Using_HTML5_audio_and_video">HTML5 Audio and Video</a></li>
-        <li><a href="https://developer.mozilla.org/en/HTML/Canvas">Canvas</a></li>
-        <li><a href="https://developer.mozilla.org/en/WebSockets">WebSockets</a></li>
-        <li><a href="https://developer.mozilla.org/en/Using_the_Application_Cache">HTML5 App Cache</a></li>
-        <li><a href="https://developer.mozilla.org/en/DOM/Storage">Local Storage</a></li>
-        <li><a href="https://developer.mozilla.org/en/IndexedDB">Indexed Database</a></li>
-        <li><a href="https://developer.mozilla.org/en/Using_files_from_web_applications">File API</a></li>
-        <li><a href="https://developer.mozilla.org/en/Using_geolocation">Geolocation API</a></li>
+        <li><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">{{ _('HTML5') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_HTML5_audio_and_video')) }}">{{ _('HTML5 Audio and Video') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/HTML/Canvas')) }}">{{ _('Canvas') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/WebSockets')) }}">{{ _('WebSockets') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_the_Application_Cache')) }}">{{ _('HTML5 App Cache') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/DOM/Storage')) }}">{{ _('Local Storage') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/IndexedDB')) }}">{{ _('Indexed Database') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_files_from_web_applications')) }}">{{ _('File API') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">{{ _('Geolocation API') }}</a></li>
       </ul>
     </div>
   
     <div class="module" id="resources">
-      <h3 class="mod-title">Tools and Resources</h3>
-      <p class="mod-intro">Learn more about HTML5 &amp; friends</p>
+      <h3 class="mod-title">{{ _('Tools and Resources') }}</h3>
+      <p class="mod-intro">{{ _('Learn more about HTML5 & friends') }}</p>
       <ul class="prose">
-        <li><a href="http://developers.whatwg.org/" rel="external">WHATWG's HTML5 Specification</a></li>
-        <li><a href="http://www.w3.org/TR/html5/" rel="external">W3C's HTML5 Specification</a></li>
-        <li><a href="http://dev.w3.org/html5/html-author/" rel="external">W3C's HTML5 Developer Guide</a></li>
-        <li><a href="http://www.html5rocks.com/" rel="external">HTML5 Rocks</a></li>
-        <li><a href="http://html5doctor.com/" rel="external">HTML5 Doctor</a></li>
-        <li><a href="http://html5forwebdesigners.com/" rel="external">HTML5 for Web Designers</a></li>
-        <li><a href="http://html5demos.com/" rel="external">HTML5 Demos</a></li>
-        <li><a href="http://html5gallery.com/" rel="external">HTML5 Gallery</a></li>
-        <li><a href="http://blog.whatwg.org/" rel="external">WHATWG Blog</a></li>
-        <li><a href="http://caniuse.com/" rel="external">Can I Use?</a></li>
-        <li><a href="http://www.w3.org/html/logo/" rel="external">The HTML5 Logo</a></li>
-        <li><a href="http://html5forwebdesigners.com/" rel="external">HTML5 for Web Designers</a></li>
-        <li><a href="http://html5please.us/" rel="external">HTML5 Please</a></li>
+        <li><a href="http://developers.whatwg.org/" rel="external">{{ _("WHATWG's HTML5 Specification") }}</a></li>
+        <li><a href="http://www.w3.org/TR/html5/" rel="external">{{ _("W3C's HTML5 Specification") }}</a></li>
+        <li><a href="http://dev.w3.org/html5/html-author/" rel="external">{{ _("W3C's HTML5 Developer Guide") }}</a></li>
+        <li><a href="http://www.html5rocks.com/" rel="external">{{ _('HTML5 Rocks') }}</a></li>
+        <li><a href="http://html5doctor.com/" rel="external">{{ _('HTML5 Doctor') }}</a></li>
+        <li><a href="http://html5forwebdesigners.com/" rel="external">{{ _('HTML5 for Web Designers') }}</a></li>
+        <li><a href="http://html5demos.com/" rel="external">{{ _('HTML5 Demos') }}</a></li>
+        <li><a href="http://html5gallery.com/" rel="external">{{ _('HTML5 Gallery') }}</a></li>
+        <li><a href="http://blog.whatwg.org/" rel="external">{{ _('WHATWG Blog') }}</a></li>
+        <li><a href="http://caniuse.com/" rel="external">{{ _('Can I Use?') }}</a></li>
+        <li><a href="http://www.w3.org/html/logo/" rel="external">{{ _('The HTML5 Logo') }}</a></li>
+        <li><a href="http://html5forwebdesigners.com/" rel="external">{{ _('HTML5 for Web Designers') }}</a></li>
+        <li><a href="http://html5please.us/" rel="external">{{ _('HTML5 Please') }}</a></li>
       </ul>
     </div>
     

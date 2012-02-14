@@ -105,7 +105,9 @@ def learn_html(request):
 
 def learn_html5(request):
     """HTML5 landing page."""
-    return jingo.render(request, 'landing/learn_html5.html')
+    demos = (Submission.objects.all_sorted()
+             .filter(featured=True, taggit_tags__name__in=['tech:html5']))[:6]
+    return jingo.render(request, 'landing/learn_html5.html', {'demos': demos})
 
 def learn_css(request):
     """CSS landing page."""
