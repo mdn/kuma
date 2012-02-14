@@ -505,7 +505,7 @@ class Command(BaseCommand):
         # Process all the past revisions...
         revs = []
         for r in old_rows:
-
+        
             # Check if this already exists.
             existing_id = None
             if r['old_id'] in existing_old_ids:
@@ -520,51 +520,50 @@ class Command(BaseCommand):
                 ct_skipped += 1
                 continue
 
+            # Build up a dict of the row for the revision
             ts = self.parse_timestamp(r['old_timestamp'])
-            rev_data = [
-                doc.pk,
-                r['old_id'], 1,
-                doc.slug, doc.title,
-                True, SIGNIFICANCES[0][0],
-                '', '', tags,
-                self.convert_page_text(r['old_text']),
-                r['old_comment'],
-                ts, self.get_django_user_id_for_deki_id(r['old_user']),
-                ts, self.get_superuser_id()
-            ]
+            rev_data = dict(
+                document_id=doc.pk,
+                mindtouch_old_id=r['old_id'],
+                is_mindtouch_migration=1,
+                slug=doc.slug,
+                title=doc.title,
+                tags=tags,
+                is_approved=True,
+                significance=SIGNIFICANCES[0][0],
+                summary='',
+                keywords='',
+                content=self.convert_page_text(r['old_text']),
+                comment=r['old_comment'],
+                created=ts,
+                creator_id=self.get_django_user_id_for_deki_id(r['old_user']),
+                reviewed=ts,
+                reviewer_id=self.get_superuser_id()
+            )
             revs.append(rev_data)
 
             ct_saved += 1
 
         if len(revs):
 
-            # Build SQL placeholders for the revisions
-            row_placeholders = ",\n".join(
-                "(%s, %s, %s, %s, %s, %s, %s, %s, "
-                "%s, %s, %s, %s, %s, %s, %s, %s)"
-                for x in revs)
+            # Build REPLACE INTO style SQL placeholders for the revisions. eg.:
+            # (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s),
+            # (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s),
+            # (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            col_names = revs[0].keys()
+            one_row = '(%s)' % ', '.join('%s' for x in col_names)
+            placeholders = ",\n".join(one_row for x in revs)
 
             # Flatten list of revisions data in chronological order, so that we
             # get roughly time-sequential IDs and a flat list to fill the
             # placeholders.
-            revs_flat = [col
-                         for rev in sorted(revs, key=lambda x: x[11])
-                         for col in rev]
+            revs_flat = [rev[name]
+                         for rev in sorted(revs, key=lambda x: x['created']) 
+                         for name in col_names]
 
             # Build and execute a giant query to save all the revisions.
-            sql = """
-                REPLACE INTO wiki_revision
-                    (document_id,
-                     mindtouch_old_id, is_mindtouch_migration,
-                     slug, title,
-                     is_approved, significance,
-                     summary, keywords, tags,
-                     content, comment,
-                     created, creator_id,
-                     reviewed, reviewer_id)
-                VALUES
-                %s
-            """ % row_placeholders
+            sql = ("REPLACE INTO wiki_revision (%s) VALUES %s" %
+                   (', '.join(col_names), placeholders))
             kc.execute(sql, revs_flat)
 
         self.rev_ct += ct_saved + ct_skipped + ct_error
