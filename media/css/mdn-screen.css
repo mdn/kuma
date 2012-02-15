@@ -795,6 +795,42 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #search-results .gs-visibleUrl-short { font-weight: bold; }
 #search-results div.gs-watermark { display: none; }
 
+/*** @Apps landing page *********/
+#apps #content > .wrap { background: url("../img/bg-starburst-five.png") 100% 1px no-repeat; }
+#apps .page-title { margin: 0 0 0 -10px; padding: 10px 0 10px 20px; font: 200 72px/.9 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25); 
+  background: -moz-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  background: -webkit-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  background: -o-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  background: linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  color: #000; /* Old browsers don't support rgba or gradients, so will fall back to black and no background (white is hard to read and a solid background covers the artwork) */
+  color: rgba(255,255,255,1); 
+}
+#apps .intro { font: bold italic 16px Georgia, Times, "Times New Roman", serif; 
+  background: -moz-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  background: -webkit-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  padding: .75em 20px;
+  margin: 3px -10px 1em;
+  text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+#apps .modules:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+#apps .modules .boxed { font-size: .857em; word-wrap: break-word; position: relative; padding-bottom: 3.75em; float: left; width: 254px; margin: 0 30px 2em 0; }
+#apps .modules h2 { color: #000; border-bottom: 3px solid #e44d26; font: 200 22px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+#apps .modules .more { position: absolute; bottom: 20px; margin: 0; font: bold italic 1.12em Georgia, Times, "Times New Roman", serif; }
+#apps #newsletter { margin-right: 0; }
+#apps .boxed .head { border-color: #e44d26; }
+
+#newsletter-sub.modal { width: 260px; margin: 0; border: 0; }
+
+/* @Modal dialogs *********/
+#simplemodal-overlay { background: #fff; opacity: 0.15; }
+#simplemodal-container { padding: 18px; background: #aaa082; background: rgba(170,160,130,.75); overflow: visible; }
+#simplemodal-wrap { overflow: hidden; }
+.simplemodal-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: -7px; top: -7px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; }
+.simplemodal-close:hover, .simplemodal-close:focus { background-position: 0 -600px; }
+
 /* @Learning pages *********/
 .section-learning #content { border: 0; }
 .section-learning #page-head { margin: 0; padding: 40px 0 10px; text-align: center; border-top: 1px solid #a33500; clear: both; }

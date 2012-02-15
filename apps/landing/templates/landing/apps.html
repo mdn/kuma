@@ -7,56 +7,68 @@
 {% block title %}{{ page_title(_('Apps')) }}{% endblock %}
 
 {% block content %}
-<header id="section-head">
-<div class="wrap">
-  <h1 class="intro">{{ _('Welcome to the <b>Apps Developer Community</b>')|safe }}</h1>
-
-  <div class="util">
-    <p><strong>{{ _('Your favorite Web apps: online, offline, anywhere!') }}</strong></p>
-    <ul>
-      <li class="util-twitter"><a href="http://twitter.com/planetmozilla">{{ _('Twitter') }}</a></li>
-      <li class="util-rss"><a href="http://blog.mozilla.com/about_mozilla/feed/">{{ _('Subscribe') }}</a></li>
-    </ul>
-  </div>
-</div>
-</header>
 
 <section id="content">
-<div class="wrap sidebar">
-  <section id="content-main" role="main">
+<div class="wrap">
+  <section id="content-main" class="full" role="main">
+  
+    <header id="page-head">
+    <div class="wrap">
+        <h1 class="page-title">{{ _('Apps')|safe }}</h1> 
+        <p class="intro">{{ _('Build and distribute cross-platform HTML5 apps') }}</p>
+    </div>
+    </header>
+  
+    <section class="modules">
+      <div class="boxed">
+        <h2>{{ _('Getting started') }}</h2>
+        {% trans %}
+        <p>The Mozilla Marketplace lets you build app experiences powered by Web standards like HTML5, CSS3, JavaScript and related APIs.</p>
+        {% endtrans %}
+        <p class="more"><a href="{{ devmo_url(_('/en/Apps/Getting_Started')) }}" class="go">{{ _('Learn more') }}</a></p>
+      </div>
+      
+      <div class="boxed">
+        <h2>{{ _('Follow the project') }}</h2>
+        {% trans 
+            apps_wiki=_('https://wiki.mozilla.org/Apps'),
+            apps_market=_('https://wiki.mozilla.org/AMO:Roadmap/2012')
+        %}
+        <p><a href="{{ apps_wiki }}" rel="external">The Open Web apps project</a> and <a href="{{ apps_market }}" rel="external">Marketplace</a> put you back in control of the app experience.</p> 
+        {% endtrans %}
+        <p class="more"><a href="https://wiki.mozilla.org/Apps" class="go" rel="external">{{ _('Learn more') }}</a></p>
+      </div>
+      
+      <div class="boxed" id="newsletter">
+        <h2>{{ _('Sign up for the newsletter') }}</h2>
+        {% trans %}
+        <p>Mozilla unlocks the power of the Web as the world’s largest marketplace. Learn more about Open Web apps.</p>
+        {% endtrans %}
+        <p class="more"><a href="#newsletter-sub" class="go">{{ _('Sign up now') }}</a></p>
+      </div>
+    </section>
 
     <div class="boxed">
-      <section id="videos">
-        <header class="subhead">
-          <h2>{{ _('Watch Apps Videos')|safe }}</h2>
-        </header>
-        {% include "includes/video_player.html" %}
-        <ul class="hfeed">
-          <li class="hentry">
-            <h3>
-              <a href="https://apps.mozillalabs.com/v/openwebapps.ogv" title="{{ _('Watch this video') }}"
-                 id="Apps-Intro" class="video_thumbnail">
-                <img src="{{MEDIA_URL}}img/vidthumb-appsoverview.jpg" 
-                   alt="" height="150" width="270">
-                <span>{{ _('An overview of Mozilla Web apps.')}}</span>
-              </a>
-            </h3>
-          </li>
-        </ul>
-      </section>
-
-      <section id="apps-interests" class="articles-list">
+      <section class="articles-list">
         <header class="head section-apps">
           {# L10n: Please escape HTML entities here, like &amp; #}
-          <h2>{{ _('What\'s Your Interest?') }}</h2>
+          <h2>{{ _('Resources for Apps Developers') }}</h2>
         </header>
 
         <ul class="hfeed">
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_mobile_app_developers')) }}" rel="bookmark">{{ _('For mobile app developers') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}" rel="bookmark">{{ _('HTML5') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            If you already develop apps for mobile devices, here's how to develop open web apps.
+            Web technologies for building build cross-browser, cross-device app experiences.
+            {% endtrans %}
+            </p>
+          </li>
+          <li class="hentry">
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_mobile_developers')) }}" rel="bookmark">{{ _('For mobile apps developers') }}</a></h4>
+            <p class="entry-summary">
+            {% trans %}
+            If you already develop apps for mobile devices, here's how to develop Open Web apps.
             {% endtrans %}
             </p>
           </li>
@@ -64,53 +76,7 @@
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_Web_developers')) }}" rel="bookmark">{{ _('For web developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            If you already develop Web sites or applications, here's how to make them into installable open web apps.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Developing_game_apps')) }}" rel="bookmark">{{ _('For game Developers') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Want to make a Web app game? Find out about special considerations for games, such as user identity, multi-player interaction, and offline use.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="https://wiki.mozilla.org/Apps" rel="external bookmark">{{ _('Apps Wiki') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            Check here for current status and activities of the Mozilla apps project team.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title">{{ _('Try apps yourself') }}</h4>
-            <p class="entry-summary">
-            {% trans
-                extension_href='https://addons.mozilla.org/en-US/firefox/addon/app-runtime/',
-                android_href='https://apps.mozillalabs.com/bin/Soup-0.1.apk',
-                demos_href='https://apps-preview.mozilla.org/'%}
-            To install and run apps, you can install the app runtime <a href="{{ extension_href }}">Firefox extension</a> for desktop systems,
-            or <a href="{{ android_href }}">native Android application</a>. Then try some <a href="{{ demos_href }}">demo apps</a>.
-            {% endtrans %}
-            </p>
-          </li>
-        </ul>
-      </section>
-      
-      <section id="popular-docs" class="articles-list">
-        <header class="head section-apps">
-          {# L10n: Please escape HTML entities here, like &amp; #}
-          <h2>{{ _('Popular Apps Documentation') }}</h2>
-        </header>
-
-        <ul class="hfeed">
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Getting_Started')) }}" rel="bookmark">{{ _('Getting Started') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            This walk-through can quickly give you an understanding of what it takes to turn an ordinary site into an open Web application.
+            If you already develop Web sites, here's how to make them into installable apps.
             {% endtrans %}
             </p>
           </li>
@@ -118,40 +84,16 @@
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Using_apps_offline')) }}" rel="bookmark">{{ _('Using apps offline') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            How to design apps so that they can be cached and used without an Internet connection.
+            How to design apps so they can be cached and used without an Internet connection.
             {% endtrans %}
             </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/The_Manifest')) }}" rel="bookmark">{{ _('The App Manifest') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            The specification of the structure and content of an application manifest.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Apps_JavaScript_API')) }}" rel="bookmark">{{ _('The App API') }}</a></h4>
-            <p class="entry-summary">
-            {% trans %}
-            JavaScript methods that applications can call to install themselves.
-            {% endtrans %}
-            </p>
-          </li>
-          <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/FAQs')) }}" rel="bookmark">{{ _('App FAQs') }}</a></h4>
           </li>
         </ul>
-        <p class="all"><a href="{{ devmo_url(_('/en/Apps')) }}" class="go">{{ _('All apps documentation') }}</a></p>
       </section>
       
     </div>{# /.boxed #}
-
-  </section>{# /#content-main #}
-
-  <aside id="content-sub" role="complementary">
-  
-    <form class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
+    
+    <form id="newsletter-sub" class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
       <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
       <p class="mod-intro">{% trans %}
           Sign up now for the monthly Apps Developer newsletter. <strong>Join us!</strong>
@@ -196,17 +138,37 @@
       </fieldset>
       {% endif %}
     </form>
-  
-    <figure class="promo banner">
-      <a href="http://webfwd.org" rel="external">
-        <img src="{{MEDIA_URL}}img/webfwd-promo-square.png" width="235" height="205" alt="{{ _("Web Fwd: Mozilla's accelerator for open Web projects. Learn more.") }}">
-      </a>
-    </figure>
 
-    {{ twitter(tweets, title=_('Tweets from the Apps developer community.')) }}
-  </aside>{# /#content-sub #}
+  </section>{# /#content-main #}
 
 </div>
 </section>{# /#content #}
 
+{% endblock %}
+
+{% block js %}
+<script src="{{ MEDIA_URL }}js/mdn/jquery.simplemodal.1.4.1.min.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+
+  $('.modules .boxed').each(function(){
+    var maxHeight = 0;
+    $(this).each(function(){
+      $(this).height('auto');
+      if (maxHeight < $(this).height()) { maxHeight = $(this).height(); }
+    });
+    $('.modules .boxed').each(function(){
+      $(this).height(maxHeight);
+    });
+  });
+
+  $('#newsletter-sub').hide();
+  
+  $('#newsletter .go').click(function(){
+    $("#newsletter-sub").addClass('modal').modal();
+    return false;
+  });
+  
+// ]]>
+</script>
 {% endblock %}
