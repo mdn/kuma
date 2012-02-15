@@ -28,37 +28,42 @@ RewriteRule ^(admin(/.*)?)$                                                     
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?__debug__(/.*)?)$ /mwsgi/$1 [PT,L]
 
    RewriteCond %{REQUEST_URI} ^/Special:Userlogin$ [NC]
-   RewriteRule (.*) https://developer.mozilla.org/users/login? [L,R]
+   RewriteRule (.*) /users/login? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
    RewriteCond %{QUERY_STRING} title=Special:Userlogin [NC]
-   RewriteRule (.*) https://developer.mozilla.org/users/login? [L,R]
+   RewriteCond %{QUERY_STRING} returntotitle=(.*)&? [NC]
+   RewriteRule (.*) /users/login?next=/%1 [L,R]
+
+   RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
+   RewriteCond %{QUERY_STRING} title=Special:Userlogin [NC]
+   RewriteRule (.*) /users/login? [L,R]
 
    # PeteE: redirect feeds to a feeds disabled page
    RewriteCond %{REQUEST_URI} ^/Special:Article$ [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
    RewriteCond %{QUERY_STRING} title=Special:Article [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/Special:Watchlist$ [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
    RewriteCond %{QUERY_STRING} title=Special:Watchlist [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/@api/deki/pages/[0-9]+/feed(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/pages/[0-9]+/feed/new(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/feed(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/feed/new(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/favorites/feed(/)?$ [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
    # END FEEDS DISABLED
 
 	RewriteRule ^patches(.*) data/www/patches$1 [L]

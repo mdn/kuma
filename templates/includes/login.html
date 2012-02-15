@@ -6,7 +6,7 @@
       <li><a href="{{ url('users.logout') }}">{{ _('Sign out') }}</a></li>
   </ul>
 {% else %}
-  <ul class="user-state signed-out" data-browserid-header-signin-html="{{ url('users.browserid_header_signin_html') }}">
+<ul class="user-state signed-out" data-browserid-header-signin-html="{{ url('users.browserid_header_signin_html') }}?next={{ next_url }}">
     <li><a href="{{ url('users.register') }}">{{ _('Join MDN') }}</a></li>
     <li><a href="{{ url('users.login') }}">{{ _('Log in') }}</a></li>
   </ul>
