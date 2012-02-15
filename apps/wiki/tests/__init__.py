@@ -98,7 +98,7 @@ def new_document_data(tags=None):
     return {
         'title': 'A Test Article',
         'slug': 'a-test-article',
-        'tags': tags or [],
+        'tags': ', '.join(tags or []),
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],
         'category': CATEGORIES[0][0],

@@ -64,6 +64,12 @@
                 <div><p>{{ current_revision.slug }}</p></div>
             {% endif %}
 
+            {% if tags and current_revision.tags and tags != current_revision.tags %}
+                <h4>{{ _('Tags:') }}</h4>
+                <div><p>{{ tags }}</p></div>
+                <div><p>{{ current_revision.tags }}</p></div>
+            {% endif %}
+
             {% if keywords and current_revision.keywords and keywords != current_revision.keywords %}
                 <h4>{{ _('Keywords:') }}</h4>
                 <div><p>{{ keywords }}</p></div>
@@ -99,6 +105,7 @@
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
+                <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
                 <li><label>{{_('Keywords:')}}</label> {{ revision_form.keywords | safe }}</li>
             </ul>
           {% endif %}

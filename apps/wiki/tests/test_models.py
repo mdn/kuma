@@ -8,6 +8,8 @@ from taggit.models import TaggedItem
 
 from pyquery import PyQuery as pq
 
+from nose.plugins.attrib import attr
+
 from django.core.exceptions import ValidationError
 
 from sumo import ProgrammingError
@@ -16,7 +18,8 @@ from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
                          REDIRECT_HTML, MAJOR_SIGNIFICANCE, CATEGORIES,
-                         get_current_or_latest_revision)
+                         get_current_or_latest_revision,
+                         TaggedDocument)
 from wiki.parser import wiki_to_html
 from wiki.tests import document, revision, doc_rev, translated_revision
 
@@ -65,10 +68,10 @@ class DocumentTests(TestCase):
         d = document()
         d.save()
         d.tags.add('grape')
-        eq_(1, TaggedItem.objects.count())
+        eq_(1, TaggedDocument.objects.count())
 
         d.delete()
-        eq_(0, TaggedItem.objects.count())
+        eq_(0, TaggedDocument.objects.count())
 
     def _test_m2m_inheritance(self, enum_class, attr, direct_attr):
         """Test a descriptor's handling of parent delegation."""
@@ -410,6 +413,33 @@ class RedirectCreationTests(TestCase):
         self.d.save()
         redirect = Document.uncached.get(slug=self.old_slug)
         eq_(False, redirect.is_localizable)
+
+
+class TaggedDocumentTests(TestCase):
+    """Tests for tags in Documents and Revisions"""
+    fixtures = ['test_users.json']
+
+    @attr('tags')
+    def test_revision_tags(self):
+        """Change tags on Document by creating Revisions"""
+        d, _ = doc_rev('Sample document')
+
+        eq_(0, Document.objects.filter(tags__name='foo').count())
+        eq_(0, Document.objects.filter(tags__name='alpha').count())
+
+        r = revision(document=d, content='Update to document',
+                     is_approved=True, tags="foo, bar, baz")
+        r.save()
+
+        eq_(1, Document.objects.filter(tags__name='foo').count())
+        eq_(0, Document.objects.filter(tags__name='alpha').count())
+
+        r = revision(document=d, content='Another update',
+                     is_approved=True, tags="alpha, beta, gamma")
+        r.save()
+
+        eq_(0, Document.objects.filter(tags__name='foo').count())
+        eq_(1, Document.objects.filter(tags__name='alpha').count())
 
 
 class RevisionTests(TestCase):

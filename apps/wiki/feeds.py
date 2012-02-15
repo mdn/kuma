@@ -144,12 +144,19 @@ class DocumentsRecentFeed(DocumentsFeed):
 
     def get_object(self, request, format, tag=None, category=None):
         super(DocumentsRecentFeed, self).get_object(request, format)
-        self.link = self.request.build_absolute_uri(
-            reverse('wiki.views.list_documents'))
+        self.category = category
+        self.tag = tag
+        if tag:
+            self.title = _('MDN recent changes to documents tagged %s' % tag)
+            self.link = self.request.build_absolute_uri(
+                reverse('wiki.tag', args=(tag,)))
+        else:
+            self.link = self.request.build_absolute_uri(
+                reverse('wiki.views.list_documents'))
 
-    def items(self, tag=None, category=None):
+    def items(self):
         return (Document.objects
-                .filter_for_list(tag_name=tag, category=category)
+                .filter_for_list(tag_name=self.tag, category=self.category)
                 .filter(current_revision__isnull=False)
                 .order_by('-current_revision__created')
                 .all()[:MAX_FEED_ITEMS])
