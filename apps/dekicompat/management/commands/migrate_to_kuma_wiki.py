@@ -110,6 +110,9 @@ c2346672e9d426b4b8cac99507220a14
 0356162b5f5fc96b8d96222a839d05ec
 """.split("\n")
 
+# List of MindTouch locales mapped to Kuma locales.
+MT_TO_KUMA_LOCALE_MAP = getattr(settings, 'MT_TO_KUMA_LOCALE_MAP')
+
 
 class Command(BaseCommand):
     help = """Migrate content from MindTouch to Kuma"""
@@ -133,6 +136,8 @@ class Command(BaseCommand):
                     help="Migrate # of longest documents"),
         make_option('--redirects', dest="redirects", type="int", default=0,
                     help="Migrate # of documents containing redirects"),
+        make_option('--nonen', dest="nonen", type="int", default=0,
+                    help="Migrate # of documents in locales other than en-US"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -158,6 +163,8 @@ class Command(BaseCommand):
                     help="Print the full template call, rather than"
                          " just the method used"),
 
+        make_option('--failfast', action='store_true', dest='failfast',
+                    help="Do not trap exceptions; raise and exit errors"),
         make_option('--verbose', action='store_true', dest='verbose',
                     help="Produce verbose output"),)
 
@@ -201,13 +208,10 @@ class Command(BaseCommand):
         ct, skip_ct, error_ct = 0, 0, 0
 
         for r in rows:
-
             try:
-
                 if ct < self.options['skip']:
                     # Skip rows until past the option value
                     continue
-
                 if self.update_document(r):
                     # Something was actually updated and not skipped
                     ct += 1
@@ -215,8 +219,7 @@ class Command(BaseCommand):
                     # This was a skip.
                     skip_ct += 1
 
-                # Clear query cache after each document. Lots of queries are
-                # bound to happen, there.
+                # Free memory in query cache after each document.
                 django.db.reset_queries()
 
                 if ct >= self.options['limit']:
@@ -225,11 +228,15 @@ class Command(BaseCommand):
                     break
 
             except Exception, e:
-                # Note: This traps *all* errors, so that the migration can get
-                # through what it can. This should really produce a problem
-                # documents report, though.
-                log.error('\t\tPROBLEM %s' % type(e))
-                error_ct += 1
+                if self.options['failfast']:
+                    # If the option is set, then just bail out.
+                    raise
+                else:
+                    # Note: This traps *all* errors, so that the migration can get
+                    # through what it can. This should really produce a problem
+                    # documents report, though.
+                    log.error('\t\tPROBLEM %s' % type(e))
+                    error_ct += 1
 
             ts_now = time.time()
             duration = ts_now - start_ts
@@ -413,22 +420,35 @@ class Command(BaseCommand):
                     LIMIT %s
                 """ % (ns_list, '%s'), self.options['redirects']))
 
+            if self.options['nonen'] > 0:
+                # Grab non-en pages. Might catch a few pages with "en/" in the
+                # title, but not in the page_language.
+                log.info("Gathering %s pages in locales other than en-US..." %
+                         self.options['nonen'])
+                iters.append(self._query("""
+                    SELECT *
+                    FROM pages
+                    WHERE page_namespace IN %s AND
+                          page_language <> 'en'
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """ % (ns_list, '%s'), self.options['nonen']))
+
         return itertools.chain(*iters)
 
     @transaction.commit_on_success
     def update_document(self, r):
         """Update Kuma document from given MindTouch page record"""
         # Build the page slug from namespace + title or display name
-        ns_name = MT_NS_ID_TO_NAME.get(r['page_namespace'], '')
-        slug = '%s%s' % (ns_name, r['page_title'] or r['page_display_name'])
+        locale, slug = self.get_kuma_locale_and_slug_for_page(r)
 
         # Skip this document, if it has a blank timestamp.
         # The only pages in production that have no timestamp are either in the
         # Special: namespace (not migrated), or a couple of untitled and empty
         # pages under the Template: or User: namespaces.
         if not r['page_timestamp']:
-            log.debug("\t%s (%s) skipped, no timestamp" %
-                      (slug, r['page_display_name']))
+            log.debug("\t%s / %s (%s) skipped, no timestamp" %
+                      (locale, slug, r['page_display_name']))
             return False
 
         # Check to see if this doc has already been migrated, and if the
@@ -437,8 +457,8 @@ class Command(BaseCommand):
         last_mod = self.docs_migrated.get(r['page_id'], (None, None))[1]
         if (not self.options['update_documents'] and last_mod is not None
                 and last_mod >= page_ts):
-            log.debug("\t%s (%s) up to date" %
-                      (slug, r['page_display_name']))
+            log.debug("\t%s / %s (%s) up to date" %
+                      (locale, slug, r['page_display_name']))
             return False
 
         # Check to see if this doc's content hash falls in the list of User:
@@ -447,21 +467,22 @@ class Command(BaseCommand):
             content_hash = (hashlib.md5(r['page_text'].encode('utf-8'))
                                    .hexdigest())
             if content_hash in USER_NS_EXCLUDED_CONTENT_HASHES:
-                log.debug("\t%s (%s) matched User: content exclusion list" %
-                          (slug, r['page_display_name']))
+                log.debug("\t%s / %s (%s) matched User: content exclusion list" %
+                          (locale, slug, r['page_display_name']))
                 return False
 
         # Check to see if this page's content is too long, skip if so.
         if len(r['page_text']) > self.options['maxlength']:
-            log.debug("\t%s (%s) skipped, page too long (%s > %s max)" %
-                      (slug, r['page_display_name'],
+            log.debug("\t%s / %s (%s) skipped, page too long (%s > %s max)" %
+                      (locale, slug, r['page_display_name'],
                        len(r['page_text']), self.options['maxlength']))
             return False
 
-        log.info("\t%s (%s)" % (slug, r['page_display_name']))
+        log.info("\t%s / %s (%s)" % (locale, slug, r['page_display_name']))
 
         # Ensure that the document exists, and has the MindTouch page ID
-        doc, created = Document.objects.get_or_create(slug=slug,
+        doc, created = Document.objects.get_or_create(
+            locale=locale, slug=slug,
             title=r['page_display_name'], defaults=dict(
                 category=CATEGORIES[0][0],
             ))
@@ -573,6 +594,7 @@ class Command(BaseCommand):
                  (ct_saved, ct_skipped, ct_error))
 
     def update_current_revision(self, r, doc, tags):
+        """Update the current revision associated with a doc and MT page row"""
         # HACK: Using old_id of None to indicate current MindTouch revision.
         # All revisions of a Kuma document have revision records, whereas
         # MindTouch only tracks "old" revisions.
@@ -660,6 +682,37 @@ class Command(BaseCommand):
                     quoted.append(tag)
 
         return u', '.join(quoted)
+
+    def get_kuma_locale_and_slug_for_page(self, r):
+        """Given a MindTouch page row, derive the Kuma locale and slug."""
+
+        # Come up with a complete slug, along with MT namespace mapped to name.
+        ns_name = MT_NS_ID_TO_NAME.get(r['page_namespace'], '')
+        slug = '%s%s' % (ns_name, r['page_title'] or r['page_display_name'])
+
+        # Start from the default language
+        mt_language = ''
+
+        # If the page is not in a namespace, and it has paths in the slug...
+        if ns_name == '' and '/' in slug:
+            # Treat the first part of the slug path as locale and snip it off.
+            mt_language, new_slug = slug.split('/', 1)
+            if mt_language in MT_TO_KUMA_LOCALE_MAP:
+                # If it's a known language, then use the new slug
+                slug = new_slug
+            else:
+                # Otherwise, we'll preserve the slug and tack the default
+                # locale onto it. (eg. ServerJS/FAQ, CommonJS/FAQ)
+                mt_language = ''
+        
+        if mt_language == '':
+            # Finally, fall back to the explicit page language
+            mt_language = r['page_language']
+
+        # Map from MT language to Kuma locale.
+        locale = MT_TO_KUMA_LOCALE_MAP.get(mt_language.lower(), '')
+
+        return (locale, slug)
 
     def get_django_user_id_for_deki_id(self, deki_user_id):
         """Given a Deki user ID, come up with a Django user object whether we

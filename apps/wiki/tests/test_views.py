@@ -69,7 +69,7 @@ class LocaleRedirectTests(TestCaseBase):
 
         en_doc, de_doc = self._create_en_and_de_docs()
         response = self.client.get(reverse('wiki.document',
-                                           args=[en_doc.slug],
+                                           args=['de/%s' % en_doc.slug],
                                            locale='de'),
                                    follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url())
@@ -81,7 +81,7 @@ class LocaleRedirectTests(TestCaseBase):
         raise SkipTest()
 
         en_doc, de_doc = self._create_en_and_de_docs()
-        url = reverse('wiki.document', args=[en_doc.slug], locale='de')
+        url = reverse('wiki.document', args=['de/%s' % en_doc.slug], locale='de')
         response = self.client.get(url + '?x=y&x=z', follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url() + '?x=y&x=z')
 
@@ -107,7 +107,7 @@ class ViewTests(TestCaseBase):
         data = json.loads(resp.content)
         eq_('article-title', data['slug'])
 
-        url = reverse('wiki.json_slug', args=('article-title',), force_locale=True)
+        url = reverse('wiki.json_slug', args=('en-US/article-title',), force_locale=True)
         resp = self.client.get(url)
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
@@ -133,8 +133,9 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'title': new_title,
                      'slug': d.slug,
                      'form': 'rev'})
-        client.post(reverse('wiki.edit_document', args=[d.slug]), data)
-        eq_(new_title, Document.uncached.get(slug=d.slug).title)
+        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
+        eq_(new_title, Document.uncached.get(slug=d.slug,
+                                             locale=d.locale).title)
         assert "REDIRECT" in Document.uncached.get(title=old_title).html
 
     def test_retitling_ignored_for_iframe(self):
@@ -149,8 +150,10 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'title': new_title,
                      'slug': d.slug,
                      'form': 'rev'})
-        client.post('%s?iframe=1' % reverse('wiki.edit_document', args=[d.slug]), data)
-        eq_(old_title, Document.uncached.get(slug=d.slug).title)
+        client.post('%s?iframe=1' % reverse('wiki.edit_document',
+                                            args=[d.full_path]), data)
+        eq_(old_title, Document.uncached.get(slug=d.slug,
+                                             locale=d.locale).title)
         assert "REDIRECT" not in Document.uncached.get(title=old_title).html
 
     @attr('clobber')
@@ -172,7 +175,7 @@ class DocumentEditingTests(TestCaseBase):
         # Create another new doc.
         data = new_document_data()
         data.update({ "title": 'Some new title', "slug": 'some-new-title' })
-        response = client.post(reverse('wiki.new_document'), data)
+        resp = client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
         # Now, post an update with duplicate slug and title
@@ -181,7 +184,9 @@ class DocumentEditingTests(TestCaseBase):
             'title': exist_title,
             'slug': exist_slug
         })
-        resp = client.post(reverse('wiki.edit_document', args=['some-new-title']), data)
+        resp = client.post(reverse('wiki.edit_document', 
+                                   args=['en-US/some-new-title']),
+                           data)
         eq_(200, resp.status_code)
         p = pq(resp.content)
 
@@ -200,6 +205,9 @@ class DocumentEditingTests(TestCaseBase):
         exist_title = "Existing doc"
         exist_slug = "existing-doc"
 
+        changed_title = 'Changed title'
+        changed_slug = 'changed-title'
+
         # Create a new doc.
         data = new_document_data()
         data.update({ "title": exist_title, "slug": exist_slug })
@@ -208,9 +216,11 @@ class DocumentEditingTests(TestCaseBase):
 
         # Change title and slug
         data.update({'form': 'rev', 
-                     'title': "Changed title", 
-                     'slug': "changed-title"})
-        resp = client.post(reverse('wiki.edit_document', args=[exist_slug]), 
+                     'title': changed_title, 
+                     'slug': changed_slug})
+        resp = client.post(reverse('wiki.edit_document',
+                                    args=['%s/%s' % (data['locale'],
+                                                     exist_slug)]), 
                            data)
         eq_(302, resp.status_code)
 
@@ -218,7 +228,9 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'form': 'rev', 
                      'title': exist_title, 
                      'slug': exist_slug})
-        resp = client.post(reverse('wiki.edit_document', args=["changed-title"]), 
+        resp = client.post(reverse('wiki.edit_document',
+                                    args=["%s/%s" % (data['locale'],
+                                                     changed_slug)]), 
                            data)
         eq_(302, resp.status_code)
 
@@ -231,13 +243,13 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'firefox_versions': [1, 2, 3],
                      'operating_systems': [1, 3],
                      'form': 'doc'})
-        client.post(reverse('wiki.edit_document', args=[d.slug]), data)
+        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
         eq_(3, d.firefox_versions.count())
         eq_(2, d.operating_systems.count())
         data.update({'firefox_versions': [1, 2],
                      'operating_systems': [2],
                      'form': 'doc'})
-        client.post(reverse('wiki.edit_document', args=[data['slug']]), data)
+        client.post(reverse('wiki.edit_document', args=[data['full_path']]), data)
         eq_(2, d.firefox_versions.count())
         eq_(1, d.operating_systems.count())
 
@@ -250,17 +262,19 @@ class DocumentEditingTests(TestCaseBase):
         data['title'] = 'valid slug'
         data['slug'] = 'valid'
         response = client.post(reverse('wiki.new_document'), data)
-        self.assertRedirects(response, reverse('wiki.document',
-                                               args=[data['slug']],
-                                               locale='en-US'))
+        self.assertRedirects(response,
+                reverse('wiki.document', args=['%s/%s' %
+                                               (data['locale'], data['slug'])],
+                                         locale='en-US'))
 
         # Slashes should be fine
         data['title'] = 'valid with slash'
         data['slug'] = 'va/lid'
         response = client.post(reverse('wiki.new_document'), data)
-        self.assertRedirects(response, reverse('wiki.document',
-                                               args=[data['slug']],
-                                               locale='en-US'))
+        self.assertRedirects(response,
+                reverse('wiki.document', args=['%s/%s' % 
+                                               (data['locale'], data['slug'])],
+                                         locale='en-US'))
 
         # Dollar sign is reserved for verbs
         data['title'] = 'invalid with dollars'
@@ -318,7 +332,7 @@ class DocumentEditingTests(TestCaseBase):
         fr_d = document(parent=en_r.document, locale='fr', save=True)
         fr_r = revision(document=fr_d, based_on=en_r, save=True)
         url = reverse('wiki.new_revision_based_on',
-                      locale='fr', args=(fr_d.slug, fr_r.pk,))
+                      locale='fr', args=(fr_d.full_path, fr_r.pk,))
         response = self.client.get(url)
         input = pq(response.content)('#id_based_on')[0]
         eq_(int(input.value), en_r.pk)
@@ -327,7 +341,10 @@ class DocumentEditingTests(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_document_tags(self, get_current):
         """Document tags can be edited through revisions"""
-        slug = "a-test-article"
+        data = new_document_data()
+        locale = data['locale']
+        slug = data['slug']
+        path = '%s/%s' % (locale, slug)
         ts1 = ('JavaScript', 'AJAX', 'DOM')
         ts2 = ('XML', 'JSON')
 
@@ -338,7 +355,7 @@ class DocumentEditingTests(TestCaseBase):
         def assert_tag_state(yes_tags, no_tags):
 
             # Ensure the tags are found for the Documents
-            doc = Document.objects.get(slug=slug)
+            doc = Document.objects.get(locale=locale, slug=slug)
             doc_tags = [x.name for x in doc.tags.all()]
             for t in yes_tags:
                 ok_(t in doc_tags)
@@ -347,7 +364,7 @@ class DocumentEditingTests(TestCaseBase):
 
             # Ensure the tags are found in the Document view
             response = client.get(reverse('wiki.document', 
-                                          args=[doc.slug]), data)
+                                          args=[doc.full_path]), data)
             page = pq(response.content)
             for t in yes_tags:
                 eq_(1, page.find('#page-tags li a:contains("%s")' % t).length,
@@ -372,7 +389,6 @@ class DocumentEditingTests(TestCaseBase):
                 ok_(doc.title not in response.content.decode('utf-8'))
 
         # Create a new doc with tags
-        data = new_document_data()
         data.update({'slug': slug, 'tags': ','.join(ts1)})
         response = client.post(reverse('wiki.new_document'), data)
         assert_tag_state(ts1, ts2)
@@ -380,7 +396,7 @@ class DocumentEditingTests(TestCaseBase):
         # Now, update the tags.
         data.update({'form': 'rev', 'tags': ', '.join(ts2)})
         response = client.post(reverse('wiki.edit_document',
-                                       args=[slug]), data)
+                                       args=[path]), data)
         assert_tag_state(ts2, ts1)
 
     @attr('review_tags')
@@ -408,17 +424,17 @@ class DocumentEditingTests(TestCaseBase):
             'form': 'rev',
             'review_tags': ['editorial', 'technical'],
         })
-        response = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
 
         # Ensure the doc's newest revision has both tags.
-        doc = Document.objects.get(slug="a-test-article")
+        doc = Document.objects.get(locale='en-US', slug="a-test-article")
         rev = doc.revisions.order_by('-id').all()[0]
         review_tags = [x.name for x in rev.review_tags.all()]
         review_tags.sort()
         eq_(['editorial', 'technical'], review_tags)
         
         # Now, ensure that warning boxes appear for the review tags.
-        response = client.get(reverse('wiki.document', args=[doc.slug]), data)
+        response = client.get(reverse('wiki.document', args=[doc.full_path]), data)
         page = pq(response.content)
         eq_(1, page.find('.warning.review-technical').length)
         eq_(1, page.find('.warning.review-editorial').length)
@@ -453,10 +469,10 @@ class DocumentEditingTests(TestCaseBase):
             'form': 'rev',
             'review_tags': ['editorial',],
         })
-        response = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
 
         # Ensure only one of the tags' warning boxes appears, now.
-        response = client.get(reverse('wiki.document', args=[doc.slug]), data)
+        response = client.get(reverse('wiki.document', args=[doc.full_path]), data)
         page = pq(response.content)
         eq_(0, page.find('.warning.review-technical').length)
         eq_(1, page.find('.warning.review-editorial').length)
@@ -497,12 +513,12 @@ class DocumentEditingTests(TestCaseBase):
         doc = Document.objects.get(slug=data['slug'])
 
         # Edit #1 starts...
-        resp = client.get(reverse('wiki.edit_document', args=[doc.slug]))
+        resp = client.get(reverse('wiki.edit_document', args=[doc.full_path]))
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
-        resp = client.get(reverse('wiki.edit_document', args=[doc.slug]))
+        resp = client.get(reverse('wiki.edit_document', args=[doc.full_path]))
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -512,7 +528,7 @@ class DocumentEditingTests(TestCaseBase):
             'content': 'This edit got there first',
             'current_rev': rev_id2
         })
-        resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        resp = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
         eq_(302, resp.status_code)
 
         # Edit #1 submits, but receives a mid-aired notification
@@ -521,7 +537,7 @@ class DocumentEditingTests(TestCaseBase):
             'content': 'This edit gets mid-aired',
             'current_rev': rev_id1
         })
-        resp = client.post(reverse('wiki.edit_document', args=[doc.slug]), data)
+        resp = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
         eq_(200, resp.status_code)
 
         ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
@@ -562,7 +578,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """
         response = client.get('%s?raw=true' %
-                              reverse('wiki.document', args=[d.slug]))
+                              reverse('wiki.document', args=[d.full_path]))
         eq_(normalize_html(expected), 
             normalize_html(response.content))
 
@@ -585,18 +601,18 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s1" href="/en-US/docs/%(slug)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s2" href="/en-US/docs/%(slug)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(slug)s?raw=true&amp;section=s3" href="/en-US/docs/%(slug)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
             <p>test</p>
             <p>test</p>
-        """ % {'slug': d.slug}
+        """ % {'full_path': d.full_path}
         response = client.get('%s?raw=true&edit_links=true' %
-                              reverse('wiki.document', args=[d.slug]))
+                              reverse('wiki.document', args=[d.full_path]))
         eq_(normalize_html(expected), 
             normalize_html(response.content))
 
@@ -623,7 +639,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """
         response = client.get('%s?section=s2&raw=true' %
-                              reverse('wiki.document', args=[d.slug]))
+                              reverse('wiki.document', args=[d.full_path]))
         eq_(normalize_html(expected), 
             normalize_html(response.content))
 
@@ -654,7 +670,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>replace</p>
         """
         response = client.post('%s?section=s2&raw=true' %
-                               reverse('wiki.edit_document', args=[d.slug]),
+                               reverse('wiki.edit_document', args=[d.full_path]),
                                {"form": "rev",
                                 "content": replace},
                                follow=True)
@@ -674,7 +690,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """
         response = client.get('%s?raw=true' %
-                               reverse('wiki.document', args=[d.slug]))
+                               reverse('wiki.document', args=[d.full_path]))
         eq_(normalize_html(expected), 
             normalize_html(response.content))
 
@@ -725,13 +741,13 @@ class SectionEditingResourceTests(TestCaseBase):
 
         # Edit #1 starts...
         resp = client.get('%s?section=s1' % 
-                          reverse('wiki.edit_document', args=[doc.slug]))
+                          reverse('wiki.edit_document', args=[doc.full_path]))
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
         resp = client.get('%s?section=s2' % 
-                          reverse('wiki.edit_document', args=[doc.slug]))
+                          reverse('wiki.edit_document', args=[doc.full_path]))
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -742,7 +758,7 @@ class SectionEditingResourceTests(TestCaseBase):
             'current_rev': rev_id2
         })
         resp = client.post('%s?section=s2&raw=true' %
-                            reverse('wiki.edit_document', args=[doc.slug]),
+                            reverse('wiki.edit_document', args=[doc.full_path]),
                             data)
         eq_(302, resp.status_code)
 
@@ -754,7 +770,7 @@ class SectionEditingResourceTests(TestCaseBase):
             'current_rev': rev_id1
         })
         resp = client.post('%s?section=s1&raw=true' %
-                           reverse('wiki.edit_document', args=[doc.slug]),
+                           reverse('wiki.edit_document', args=[doc.full_path]),
                            data)
         # No conflict, but we should get a 205 Reset as an indication that the
         # page needs a refresh.
@@ -762,14 +778,14 @@ class SectionEditingResourceTests(TestCaseBase):
 
         # Finally, make sure that all the edits landed
         response = client.get('%s?raw=true' %
-                               reverse('wiki.document', args=[doc.slug]))
+                               reverse('wiki.document', args=[doc.full_path]))
         eq_(normalize_html(expected), 
             normalize_html(response.content))
 
         # Also, ensure that the revision is slipped into the headers
-        eq_(unicode(Document.uncached.get(slug=doc.slug).current_revision.id),
+        eq_(unicode(Document.uncached.get(slug=doc.slug, locale=doc.locale)
+                                     .current_revision.id),
             unicode(response['x-kuma-revision']))
-
 
     @attr('midair')
     def test_midair_section_collision(self):
@@ -806,13 +822,13 @@ class SectionEditingResourceTests(TestCaseBase):
 
         # Edit #1 starts...
         resp = client.get('%s?section=s2' % 
-                          reverse('wiki.edit_document', args=[doc.slug]))
+                          reverse('wiki.edit_document', args=[doc.full_path]))
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
         resp = client.get('%s?section=s2' % 
-                          reverse('wiki.edit_document', args=[doc.slug]))
+                          reverse('wiki.edit_document', args=[doc.full_path]))
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -823,7 +839,7 @@ class SectionEditingResourceTests(TestCaseBase):
             'current_rev': rev_id2
         })
         resp = client.post('%s?section=s2&raw=true' %
-                            reverse('wiki.edit_document', args=[doc.slug]),
+                            reverse('wiki.edit_document', args=[doc.full_path]),
                             data)
         eq_(302, resp.status_code)
 
@@ -834,7 +850,7 @@ class SectionEditingResourceTests(TestCaseBase):
             'current_rev': rev_id1
         })
         resp = client.post('%s?section=s2&raw=true' %
-                           reverse('wiki.edit_document', args=[doc.slug]),
+                           reverse('wiki.edit_document', args=[doc.full_path]),
                            data)
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)

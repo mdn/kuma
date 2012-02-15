@@ -405,13 +405,13 @@ class NewRevisionTests(TestCaseBase):
         """
         self.client.logout()
         response = self.client.get(reverse('wiki.edit_document',
-                                           args=[self.d.slug]))
+                                           args=[self.d.full_path]))
         eq_(302, response.status_code)
 
     def test_new_revision_GET_with_perm(self):
         """HTTP GET to new revision URL renders the form."""
         response = self.client.get(reverse('wiki.edit_document',
-                                           args=[self.d.slug]))
+                                           args=[self.d.full_path]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('article#edit-document form#wiki-page-edit textarea[name="content"]')))
@@ -428,7 +428,7 @@ class NewRevisionTests(TestCaseBase):
                      content='<div>The content here</div>', creator_id=7)
         r.save()
         response = self.client.get(reverse('wiki.new_revision_based_on',
-                                           args=[self.d.slug, r.id]))
+                                           args=[self.d.full_path, r.id]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(doc('#id_content')[0].value, r.content)
@@ -453,7 +453,7 @@ class NewRevisionTests(TestCaseBase):
 
         # Edit a document:
         response = self.client.post(
-            reverse('wiki.edit_document', args=[self.d.slug]),
+            reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
              'keywords': 'keyword1 keyword2',
              'based_on': self.d.current_revision.id, 'form': 'rev'})
@@ -495,7 +495,7 @@ class NewRevisionTests(TestCaseBase):
         data = new_document_data(tags)
         data['form'] = 'rev'
         response = self.client.post(reverse('wiki.edit_document',
-                                    args=[self.d.slug]), data)
+                                    args=[self.d.full_path]), data)
         eq_(302, response.status_code)
         eq_(2, self.d.revisions.count())
 
@@ -518,7 +518,7 @@ class NewRevisionTests(TestCaseBase):
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
         data['form'] = 'rev'
-        self.client.post(reverse('wiki.edit_document', args=[self.d.slug]),
+        self.client.post(reverse('wiki.edit_document', args=[self.d.full_path]),
                          data)
         result_tags = list(self.d.tags.values_list('name', flat=True))
         result_tags.sort()
@@ -549,7 +549,8 @@ class DocumentEditTests(TestCaseBase):
         _create_document(title='Document Prueba', parent=self.d,
                              locale='es')
         # Make sure is_localizable hidden field is rendered
-        response = get(self.client, 'wiki.edit_document', args=[self.d.slug])
+        response = get(self.client, 'wiki.edit_document',
+                       args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = pq(response.content)
         #is_localizable = doc('input[name="is_localizable"]')
@@ -562,7 +563,7 @@ class DocumentEditTests(TestCaseBase):
         data.update(form='doc')
         data.update(is_localizable='True')
         response = post(self.client, 'wiki.edit_document', data,
-                        args=[self.d.slug])
+                        args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = Document.uncached.get(pk=self.d.pk)
         eq_(new_title, doc.title)
@@ -574,7 +575,7 @@ class DocumentEditTests(TestCaseBase):
         data.update(slug=new_slug)
         data.update(form='doc')
         response = post(self.client, 'wiki.edit_document', data,
-                        args=[self.d.slug])
+                        args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = Document.uncached.get(pk=self.d.pk)
         eq_(new_slug, doc.slug)
@@ -586,7 +587,7 @@ class DocumentEditTests(TestCaseBase):
         data.update(title=new_title)
         data.update(form='doc')
         response = post(self.client, 'wiki.edit_document', data,
-                        args=[self.d.slug])
+                        args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = Document.uncached.get(pk=self.d.pk)
         eq_(new_title, doc.title)
@@ -953,13 +954,13 @@ class TranslateTests(SkippedTestCase):
     def test_translate_GET_logged_out(self):
         """Try to create a translation while logged out."""
         self.client.logout()
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         response = self.client.get(url)
         eq_(302, response.status_code)
 
     def test_translate_GET_with_perm(self):
         """HTTP GET to translate URL renders the form."""
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         response = self.client.get(url)
         eq_(200, response.status_code)
         doc = pq(response.content)
@@ -970,13 +971,13 @@ class TranslateTests(SkippedTestCase):
         """HTTP GET to translate URL returns 400 when not localizable."""
         self.d.is_localizable = False
         self.d.save()
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         response = self.client.get(url)
         eq_(400, response.status_code)
 
     def test_invalid_document_form(self):
         """Make sure we handle invalid document form without a 500."""
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         data = _translation_data()
         data['slug'] = ''  # Invalid slug
         response = self.client.post(url, data)
@@ -985,7 +986,7 @@ class TranslateTests(SkippedTestCase):
     def test_invalid_revision_form(self):
         """When creating a new translation, an invalid revision form shouldn't
         result in a new Document being created."""
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         data = _translation_data()
         data['content'] = ''  # Content is required
         response = self.client.post(url, data)
@@ -1000,7 +1001,7 @@ class TranslateTests(SkippedTestCase):
         """Create the first translation of a doc to new locale."""
         get_current.return_value.domain = 'testserver'
 
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         data = _translation_data()
         response = self.client.post(url, data)
         eq_(302, response.status_code)
@@ -1043,7 +1044,7 @@ class TranslateTests(SkippedTestCase):
         rev_enUS.save()
 
         # Verify the form renders with correct content
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         response = self.client.get(url)
         doc = pq(response.content)
         eq_(rev_es.content, doc('#id_content').text())
@@ -1077,7 +1078,7 @@ class TranslateTests(SkippedTestCase):
         """Submitting the document form should update document. No new
         revisions should be created."""
         rev_es = self._create_and_approve_first_translation()
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         data = _translation_data()
         new_title = 'Un nuevo titulo'
         data['title'] = new_title
@@ -1096,7 +1097,7 @@ class TranslateTests(SkippedTestCase):
         No document fields should be updated."""
         rev_es = self._create_and_approve_first_translation()
         orig_title = rev_es.document.title
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         data = _translation_data()
         new_title = 'Un nuevo titulo'
         data['title'] = new_title
@@ -1114,7 +1115,7 @@ class TranslateTests(SkippedTestCase):
         """If there are existing but unapproved translations, prefill
         content with latest."""
         self.test_first_translation_to_locale()
-        url = reverse('wiki.translate', locale='es', args=[self.d.slug])
+        url = reverse('wiki.translate', locale='es', args=[self.d.full_path])
         response = self.client.get(url)
         doc = pq(response.content)
         document = Document.objects.filter(locale='es')[0]
@@ -1170,7 +1171,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     # Then Fred saves his edit:
     post_data_copy = {'based_on': orig_rev.id}
     post_data_copy.update(post_data)  # Don't mutate arg.
-    response = client.post(reverse(view, locale=locale, args=[doc.slug]),
+    response = client.post(reverse(view, locale=locale, args=[doc.full_path]),
                            data=post_data_copy)
     ok_(response.status_code in (200, 302))
     fred_rev = Revision.objects.all().order_by('-id')[0]
@@ -1355,7 +1356,7 @@ class SelectLocaleTests(SkippedTestCase):
 
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
-        response = get(self.client, 'wiki.select_locale', args=[self.d.slug])
+        response = get(self.client, 'wiki.select_locale', args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(len(settings.LANGUAGE_CHOICES) - 1,  # All except for 1 (en-US)

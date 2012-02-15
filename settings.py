@@ -100,8 +100,10 @@ SUMO_LANGUAGES = (
 #LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
 
 # Accepted locales
-MDN_LANGUAGES = ('en-US', 'de', 'el', 'es', 'fr', 'fy-NL', 'ga-IE', 'hr', 'hu', 'id',
-                 'ja', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'sq', 'th', 'zh-CN', 'zh-TW')
+MDN_LANGUAGES = ('en-US', 'ar', 'de', 'it', 'el', 'es', 'fa', 'fi', 'fr', 'cs',
+                 'ca', 'fy-NL', 'ga-IE', 'he', 'hr', 'hu', 'id', 'ja', 'ka',
+                 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sq', 'th',
+                 'tr', 'vi', 'zh-CN', 'zh-TW')
 RTL_LANGUAGES = None # ('ar', 'fa', 'fa-IR', 'he')
 
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
@@ -162,6 +164,68 @@ def lazy_language_deki_map():
     return lang_deki_map
 
 LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
+
+# List of MindTouch locales mapped to Kuma locales.
+# 
+# Language in MindTouch pages are first determined from the locale in the page
+# title, with a fallback to the language in the page record.
+#
+# So, first MindTouch locales were inventoried like so:
+#
+#     mysql --skip-column-names -uroot wikidb -B \
+#           -e 'select page_title from pages  where page_namespace=0' \
+#           > page-titles.txt
+#
+#     grep '/' page-titles.txt | cut -d'/' -f1 | sort -f | uniq -ci | sort -rn
+#
+# Then, the database languages were inventoried like so:
+#
+#     select page_language, count(page_id) as ct 
+#     from pages group by page_language order by ct desc;
+#
+# Also worth noting, these are locales configured in the prod Control Panel:
+#
+# en,ar,ca,cs,de,el,es,fa,fi,fr,he,hr,hu,it,ja,
+# ka,ko,nl,pl,pt,ro,ru,th,tr,uk,vi,zh-cn,zh-tw
+# 
+# The Kuma side was picked from elements of the MDN_LANGUAGES list in
+# settings.py, and a few were added to match MindTouch locales.
+#
+# Most of these end up being direct mappings, but it's instructive to go
+# through the mapping exercise.
+
+MT_TO_KUMA_LOCALE_MAP = {
+    "en"    : "en-US",
+    "ja"    : "ja",
+    "pl"    : "pl",
+    "fr"    : "fr",
+    "es"    : "es",
+    ""      : "en-US",
+    "cn"    : "zh-CN",
+    "zh_cn" : "zh-CN",
+    "zh-cn" : "zh-CN",
+    "zh_tw" : "zh-TW",
+    "zh-tw" : "zh-TW",
+    "ko"    : "ko",
+    "pt"    : "pt-PT",
+    "de"    : "de",
+    "it"    : "it",
+    "ca"    : "ca",
+    "cs"    : "cs",
+    "ru"    : "ru",
+    "nl"    : "nl",
+    "hu"    : "hu",
+    "he"    : "he",
+    "el"    : "el",
+    "fi"    : "fi",
+    "tr"    : "tr",
+    "vi"    : "vi",
+    "ro"    : "ro",
+    "ar"    : "ar",
+    "th"    : "th",
+    "fa"    : "fa",
+    "ka"    : "ka",
+}
 
 TEXT_DOMAIN = 'messages'
 
