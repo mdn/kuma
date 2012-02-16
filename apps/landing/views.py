@@ -77,6 +77,7 @@ def apps(request):
 @waffle_switch('apps_landing')
 def apps_subscription(request):
     form = SubscriptionForm(data=request.POST)
+    context = {'form': form}
     if form.is_valid():
         optin = 'N'
         if request.locale == 'en-US':
@@ -88,10 +89,13 @@ def apps_subscription(request):
                          optin=optin)
         messages.success(request,
             _('Thank you for subscribing to the Apps Developer newsletter.'))
-        return HttpResponseRedirect(reverse('apps'))
+        if not request.is_ajax():
+            return HttpResponseRedirect(reverse('apps'))
+        del context['form']
 
-    """Web landing page."""
-    return common_landing(request, section=SECTION_APPS, extra={'form': form})
+    return (jingo.render(request, 'landing/apps_subscribe.html', context)
+            if request.is_ajax() else
+            common_landing(request, section=SECTION_APPS, extra=context))
 
 
 def learn(request):

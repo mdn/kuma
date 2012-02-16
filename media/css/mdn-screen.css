@@ -823,6 +823,7 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #apps .boxed .head { border-color: #e44d26; }
 
 #newsletter-sub.modal { width: 260px; margin: 0; border: 0; }
+#wait-modal, #error-modal { display: none; }
 
 /* @Modal dialogs *********/
 #simplemodal-overlay { background: #fff; opacity: 0.15; }

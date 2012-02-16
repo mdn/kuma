@@ -57,7 +57,7 @@
 
         <ul class="hfeed">
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}" rel="bookmark">{{ _('HTML5') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ url('learn_html5') }}" rel="bookmark">{{ _('HTML5') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
             Web technologies for building build cross-browser, cross-device app experiences.
@@ -92,83 +92,15 @@
       </section>
       
     </div>{# /.boxed #}
-    
-    <form id="newsletter-sub" class="fm-subscribe module" action="{{ url('apps_subscription') }}" method="POST">
-      <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
-      <p class="mod-intro">{% trans %}
-          Sign up now for the monthly Apps Developer newsletter. <strong>Join us!</strong>
-      {% endtrans %}</p>
-      
-      {% if messages %}
-      <ul class="messages">
-          {% for message in messages %}
-          <li {% if message.tags %} class="notice {{ message.tags }}"{% endif %}>{{ message }}</li>
-          {% endfor %}
-      </ul>
-      {% endif %}
 
-      {% if form %}
-      <fieldset>
-        <ol>
-          <li>
-            {{ form.email.errors }}
-            <label for="email">{{ form.email.label }}</label>
-            {{ form.email }}
-          </li>
-          <li class="check">
-            {{ form.format.errors }}
-            <span class="label">{{ form.format.label }}</span>
-            <fieldset class="inline">
-            {% for c in form.fields.format.choices %}
-                <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" checked>{{ c[1] }}</label>
-            {% endfor %}
-            </fieldset>
-          </li>
-          <li class="agree">
-            {{ form.agree.errors }}
-            <label for="sub-agree">
-                {{ form.agree }} {{form.agree.label }}
-            </label>
-            {% trans privacy_url='http://www.mozilla.org/about/policies/privacy-policy.html' %}
-            to the <a href="{{ privacy_url }}">Privacy Policy</a>
-            {% endtrans %}
-          </li>
-          <li class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></li>
-        </ol>
-      </fieldset>
-      {% endif %}
-    </form>
+    {% include "landing/apps_subscribe.html" %}
 
   </section>{# /#content-main #}
 
 </div>
 </section>{# /#content #}
-
 {% endblock %}
 
 {% block js %}
-<script src="{{ MEDIA_URL }}js/mdn/jquery.simplemodal.1.4.1.min.js"></script>
-<script type="text/javascript">
-// <![CDATA[
-
-  $('.modules .boxed').each(function(){
-    var maxHeight = 0;
-    $(this).each(function(){
-      $(this).height('auto');
-      if (maxHeight < $(this).height()) { maxHeight = $(this).height(); }
-    });
-    $('.modules .boxed').each(function(){
-      $(this).height(maxHeight);
-    });
-  });
-
-  $('#newsletter-sub').hide();
-  
-  $('#newsletter .go').click(function(){
-    $("#newsletter-sub").addClass('modal').modal();
-    return false;
-  });
-  
-// ]]>
-</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/apps-newsletter.js"></script>
 {% endblock %}
