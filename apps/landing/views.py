@@ -103,6 +103,7 @@ def learn_html(request):
     """HTML landing page."""
     return jingo.render(request, 'landing/learn_html.html')
 
+@waffle_switch('html5_landing')
 def learn_html5(request):
     """HTML5 landing page."""
     demos = (Submission.objects.all_sorted()
