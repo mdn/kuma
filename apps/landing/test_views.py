@@ -27,7 +27,12 @@ class LearnViewsTest(test_utils.TestCase):
     def test_learn_html5(self):
         url = reverse('landing.views.learn_html5')
         r = self.client.get(url, follow=True)
+        eq_(404, r.status_code)
+        s = Switch.objects.create(name='html5_landing', active=True)
+        s.save()
+        r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+        s.delete()
 
     def test_learn_css(self):
         url = reverse('landing.views.learn_css')
