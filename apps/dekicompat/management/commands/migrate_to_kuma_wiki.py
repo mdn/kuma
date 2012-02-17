@@ -678,12 +678,15 @@ class Command(BaseCommand):
                 # user #0, which is probably superuser anyway.
                 return self.get_superuser_id()
 
-            # Build a DekiUser object from the database record
+            # Build a DekiUser object from the database record, and make sure
+            # it's active.
             user = r[0]
             deki_user = DekiUser(id=user['user_id'],
                                  username=user['user_name'],
                                  fullname=user['user_real_name'],
-                                 email=user['user_email'], gravatar='',)
+                                 email=user['user_email'],
+                                 gravatar='',)
+            deki_user.is_active = True
 
             # Scan user grants for admin roles to set Django flags.
             self.cur.execute("""SELECT * FROM user_grants AS ug
@@ -696,7 +699,8 @@ class Command(BaseCommand):
             deki_user.is_superuser = deki_user.is_staff = is_admin
 
             # Finally get/create Django user and cache it.
-            user = DekiUserBackend.get_or_create_user(deki_user)
+            user = DekiUserBackend.get_or_create_user(deki_user,
+                                                      sync_attrs=[])
             self.user_ids[deki_user_id] = user.pk
 
         return self.user_ids[deki_user_id]
