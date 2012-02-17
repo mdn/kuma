@@ -23,6 +23,11 @@ class LearnViewsTest(test_utils.TestCase):
         url = reverse('landing.views.learn_html')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+        
+    def test_learn_html5(self):
+        url = reverse('landing.views.learn_html5')
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
 
     def test_learn_css(self):
         url = reverse('landing.views.learn_css')
@@ -155,13 +160,32 @@ class AppsViewsTest(test_utils.TestCase):
         s.save()
         url = reverse('landing.views.apps_subscription')
         r = self.client.post(url,
-                             {'format': 'html',
-                              'email': 'testuser@test.com',
-                              'agree': 'checked'},
-                             follow=True)
+                {'format': 'html',
+                 'email': 'testuser@test.com',
+                 'agree': 'checked'},
+            follow=True)
         eq_(200, r.status_code)
         # assert thank you message
         self.assertContains(r, 'Thank you')
+        eq_(1, subscribe.call_count)
+
+    @patch('landing.views.basket.subscribe')
+    def test_apps_subscription_ajax(self, subscribe):
+        subscribe.return_value = True
+        s = Switch.objects.create(name='apps_landing', active=True)
+        s.save()
+        url = reverse('landing.views.apps_subscription')
+        r = self.client.post(url,
+                             {'format': 'html',
+                              'email': 'testuser@test.com',
+                              'agree': 'checked'},
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, r.status_code)
+        # assert thank you message
+        self.assertContains(r, 'Thank you')
+        self.assertNotContains(r, '<html')
+        self.assertNotContains(r, '<head>')
+        self.assertNotContains(r, '<title>')
         eq_(1, subscribe.call_count)
 
     @patch('landing.views.basket.subscribe')

@@ -144,7 +144,7 @@ h4, h5, h6 { font-size: 1em; }
 .page-title + p { margin-top: -1em; }
 #content-main blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 ol.prose { padding-left: 22px; }
-ul.prose li { padding-left: 22px; background: url("../img/bullet.png") 0 .5em no-repeat; }
+ul.prose li { padding-left: 22px; margin: 0 0 .25em; background: url("../img/bullet.png") 0 .5em no-repeat; }
 ul.prose ul li { background-image: url("../img/bullet-sub.png"); }
 
 .cols-2 { -moz-column-count: 2; -moz-column-gap: 10px; -webkit-column-count: 2; -webkit-column-gap: 10px; column-count: 2; column-gap: 10px; }
@@ -431,8 +431,9 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 #home-promos { clear: both; overflow: hidden; }
 .home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 40px 0; border: 1px solid rgba(0,0,0,.1); color: #fff; font-size: .714em; text-align: center; background: #666 url("../img/bg-check-dk.png"); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
 .home-promos .promo:last-child { margin-right: 0; }
-.home-promos .promo a { position: absolute; z-index: 10; display: block; height: 133px; padding: 15px; color: #fff; text-decoration: none;  }
+.home-promos .promo a { position: absolute; left: 0; top: 0; z-index: 10; display: block; height: 133px; width: 188px; padding: 15px; color: #fff; text-decoration: none;  }
 .home-promos .promo h2 { margin: 0 0 .1em; font: 2.4em/1 "Bebas Neue"; text-transform: uppercase; letter-spacing: .5px; }
+.home-promos .promo .more { font-size: 1.3em; }
 .home-promos .promo div { position: absolute; z-index: 5; height: 163px; width: 218px; background: url("../img/bg-homepromos.png") no-repeat; 
   opacity: .6; 
   -moz-transition-property: opacity, background-position; 
@@ -469,6 +470,12 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 #promo-aurora { margin-right: 0; background-color: #472f64; background-image: url("../img/bg-check-dk.png"), url("../img/bg-space-purple.jpg"); }
 #promo-aurora div { background-position: -720px 90px; }
 #promo-aurora:hover div { background-position: -720px 80px; }
+
+#promo-apps { margin-right: 0; background-color: #f05e23; background-image: url("../img/bg-orange-collage.jpg"); }
+#promo-apps div { background-image: none; box-shadow: inset 0 0 50px rgba(150,30,0,1); -moz-transition: box-shadow .2s ease-out; -webkit-transition: box-shadow .2s ease-out; -o-transition: box-shadow .2s ease-out; transition: box-shadow .2s ease-out; }
+#promo-apps .more { -moz-transition: all .2s ease-out; }
+#promo-apps:hover .more { margin-top: -.1em; font-size: 1.4em; text-shadow: 2px 3px 5px rgba(0,0,0,.25); -moz-transition: all .2s ease-in; -webkit-transition: all .2s ease-in; -o-transition: all .2s ease-in; transition: all .2s ease-in; }
+#promo-apps:hover div { box-shadow: inset 0 0 30px rgba(150,30,0,.25); -moz-transition: box-shadow .2s ease-in; -webkit-transition: box-shadow .2s ease-in; -o-transition: box-shadow .2s ease-in; transition: box-shadow .2s ease-in; }
 
 .home-extra #webfwd-promo { margin: -15px 0 1.5em; }
 .home-extra .promo { margin: 0 0 1.5em; }
@@ -538,7 +545,8 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .module .mod-title { margin: -18px -18px 18px; padding: 15px 18px 12px; background: #2f2f2f url("../img/bg-headings.png") 0 0 no-repeat; color: #fff; font: 200 1.285em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .module .mod-title a { color: #a8d4ff; }
 .module ul, .module ol { margin: 0; overflow: hidden; }
-.mod-intro { font: italic .786em Georgia, Times, "Times New Roman", serif; }
+.module .prose { font-size: .857em; }
+.mod-intro { font: italic .857em Georgia, Times, "Times New Roman", serif; }
 
 .module .gallery { list-style: none; margin: 0 -18px 0 0; }
 .module .gallery li { display: inline-block; margin: 0 5px 5px 0; }
@@ -669,13 +677,12 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 #footbar a:link, #footbar a:visited, 
 #site-info a:link, #site-info a:visited { color: #eb9f81; }
 #footbar a:hover, #footbar a:focus, #footbar a:active, 
-#site-info a:hover, #site-info a:focus, #site-info a:active, 
-#site-info a.browserid-signin { color: #fff; }
+#site-info a:hover, #site-info a:focus, #site-info a:active { color: #fff; }
 
 #site-info { background: #000; padding: 30px 0 50px; border-top: 1px solid #5d0900; color: #f1f1ec; font-size: .786em; }
 #site-info .wrap { background: #000; }
 #site-info #legal { position: relative; width: 615px; float: left; padding-left: 55px; }
-#site-info #legal img { position: absolute; left: -3px; top: -6px; }
+#site-info #legal img { position: absolute; left: -3px; top: -10px; }
 #site-info p { margin: 0 0 .5em; }
 
 /* @Boxes *********/
@@ -794,6 +801,43 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #search-results .gs-visibleUrl { font-size: .786em; display: inline; margin-right: 10px; color: #aaa; }
 #search-results .gs-visibleUrl-short { font-weight: bold; }
 #search-results div.gs-watermark { display: none; }
+
+/*** @Apps landing page *********/
+#apps #content > .wrap { background: url("../img/bg-starburst-five.png") 100% 1px no-repeat; }
+#apps .page-title { margin: 0 0 0 -10px; padding: 10px 0 10px 20px; font: 200 72px/.9 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25); 
+  background: -moz-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  background: -webkit-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  background: -o-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  background: linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
+  color: #000; /* Old browsers don't support rgba or gradients, so will fall back to black and no background (white is hard to read and a solid background covers the artwork) */
+  color: rgba(255,255,255,1); 
+}
+#apps .intro { font: bold italic 16px Georgia, Times, "Times New Roman", serif; 
+  background: -moz-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  background: -webkit-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  padding: .75em 20px;
+  margin: 3px -10px 1em;
+  text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+#apps .modules:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+#apps .modules .boxed { font-size: .857em; word-wrap: break-word; position: relative; padding-bottom: 3.75em; float: left; width: 254px; margin: 0 30px 2em 0; }
+#apps .modules h2 { color: #000; border-bottom: 3px solid #e44d26; font: 200 22px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+#apps .modules .more { position: absolute; bottom: 20px; margin: 0; font: bold italic 1.12em Georgia, Times, "Times New Roman", serif; }
+#apps #newsletter { margin-right: 0; }
+#apps .boxed .head { border-color: #e44d26; }
+
+#newsletter-sub.modal { width: 260px; margin: 0; border: 0; }
+#wait-modal, #error-modal { display: none; }
+
+/* @Modal dialogs *********/
+#simplemodal-overlay { background: #fff; opacity: 0.15; }
+#simplemodal-container { padding: 18px; background: #aaa082; background: rgba(170,160,130,.75); overflow: visible; }
+#simplemodal-wrap { overflow: hidden; }
+.simplemodal-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: -7px; top: -7px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; }
+.simplemodal-close:hover, .simplemodal-close:focus { background-position: 0 -600px; }
 
 /* @Learning pages *********/
 .section-learning #content { border: 0; }
@@ -997,32 +1041,88 @@ li.tag-expert label:hover { border-color: #bbb; }
 .fm-subscribe .inline input, .fm-subscribe .agree input { width: auto; border: 0; padding: 0; }
 .fm-subscribe .agree label { width: auto; display: inline; font-family: inherit; font-size: 1em; text-transform: none; }
 
-/*** @Tags *********/
-#page-tags h2 { float: left; }
-#page-tags .add a, #deki-page-tags-toggleview { background: #a5d9f3 url("/media/img/wiki/button-edit.png") 0 50% repeat-x; }
-#page-tags .add a:hover, #page-tags .add a:focus, #page-tags .add a:active, 
-#page-tags #deki-page-tags-toggleview:hover, #page-tags #deki-page-tags-toggleview:focus, #page-tags #deki-page-tags-toggleview:active { background-color: #ade4ff; text-decoration: none; }
-#page-tags #deki-page-tags-toggleview { position: absolute; right: 20px; top: 12px; }
-#page-tags .add a.disabled, #page-tags #deki-page-tags-toggleview.disabled { opacity: .75; background-color: #c8e6ed; }
-#page-tags ul.tags { margin: 0; list-style: none; }
-#page-tags ul.tags li { padding: 0; background: none; display: inline; margin-right: 8px; }
-#page-tags .pageTagList div.item { padding: 0; }
-#page-tags .taglist a, #page-tags ul.tags a { display: inline-block; padding: 2px 8px; margin-bottom: .5em; background: #f5f5f1 url("/media/img/light-shade.png") 0 .9em repeat-x; color: #333; border: 1px solid #91918e; }
-#page-tags .taglist a:hover, #page-tags .taglist a:focus, #page-tags .taglist a:active, 
-#page-tags ul.tags a:hover, #page-tags ul.tags a:focus, #page-tags ul.tags a:active { background-color: #fff; text-decoration: none; border-color: #aaa; }
+/* @HTML5 page *********/
+#learn-html5 #content { background: url("../img/bg-starburst.png") center top no-repeat; }
+#learn-html5 #content-main { float: right; margin-right: -5px; }
+#learn-html5 #content-sub { float: left; padding-left: 10px; }
 
-#page-tags #deki-page-tags .tagContainer { white-space: normal; }
-#page-tags #deki-page-tags .tagButtons { padding-left: 10px; }
-#page-tags #deki-page-tags .tagData { padding-right: 30px; }
-#page-tags #deki-page-tags { float: left; }
-#page-tags #deki-page-tags table { margin: 0; width: 550px; }
-#page-tags #deki-page-tags .tagAdd { float: right; padding: .25em 10px; background: #e1e1e1 url("/media/img/button-shade.png") 0 .9em repeat-x; color: #333; font: 200 1em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .25em; -webkit-border-radius: .25em; border-radius: .25em; }
-#page-tags #deki-page-tags .col1 { width: 100px; padding-top: .25em; }
+#learn-html5 #topics { position: relative; min-height: 24em; padding: 30px 0 0 265px; margin: 0 0 1em; }
+#learn-html5 .page-title { margin: 10px 10px -10px; font: 200 65px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(170, 160, 130, 0.5); }
 
-#page-tags #deki-page-tags .tag-edit { border: 1px solid #e0e0dc; background: rgba(255,255,255,.5); padding: 10px; }
-#page-tags #deki-page-tags .tag-edit .input-button { font-size: 1em; background-color: #e1e1e1; color: #333; }
+#topic-content { margin: 0 0 2em -50px; padding-left: 50px; border-top: 6px solid #e44d26; }
+#topic-content h2 { margin: 0 0 .25em; font: 200 24px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; }
 
-#deki-page-tags-edit ul.tags a { background: transparent none; border: 0; padding: 0; color: #369; }
-#deki-page-tags-edit ul.tags a:hover, #deki-page-tags-edit ul.tags a:focus, #deki-page-tags-edit ul.tags a:active { color: #25a; text-decoration: underline; }
-#deki-page-tags-edit ul.tags a.tag-delete { margin-right: 5px; width: 20px; background: transparent url("/media/img/wiki/icons/delete.png") 50% 5px no-repeat; }
-#deki-page-tags-edit ul.tags a.tag-delete:hover, #deki-page-tags-edit ul.tags a.tag-delete:focus, #deki-page-tags-edit ul.tags a.tag-delete:active { background-position: 50% -45px; }
+#topics .block { padding: 20px 10px 0; position: relative; }
+.hasJS #topics .block:after { content: "\00a0"; display: block; position: absolute; top: -18px; width: 0; height: 0; border-width: 0 13px 13px 13px; border-style: solid; border-color: #e44d26 transparent; }
+#topics .block-hidden { display: none; }
+
+#topics #topic-html5.block:after { border: 0; }
+#topics #topic-css3.block:after { left: 15px; }
+#topics #topic-semantics.block:after { left: 100px; }
+#topics #topic-connectivity.block:after { left: 185px; }
+#topics #topic-offline.block:after { left: 255px; }
+#topics #topic-multimedia.block:after { left: 340px; }
+#topics #topic-performance.block:after { left: 420px; }
+#topics #topic-graphics.block:after { left: 500px; }
+#topics #topic-devices.block:after { left: 580px; }
+#topics #topic-more.block:after { left: 618px; }
+
+#topic-tabs { margin: 0 0 15px; }
+#topic-tabs:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+#topic-tabs li { float: left; position: relative; z-index: 10; width: 65px; margin-right: 15px; }
+#topic-tabs a { display: block; width: 65px; height: 72px; text-indent: -999em; overflow: hidden; background-image: url("../img/html5-icons.png"); background-repeat: no-repeat; -moz-transition: opacity .2s ease-out; -webkit-transition: opacity .2s ease-out; -o-transition: opacity .2s ease-out; transition: opacity .2s ease-out; }
+#topic-tabs a:hover, #topic-tabs a:focus { opacity: .8; -moz-transition: opacity .2s ease-in; -webkit-transition: opacity .2s ease-in; -o-transition: opacity .2s ease-in; transition: opacity .2s ease-in; }
+#topic-tabs #tab-html5 { position: absolute; left: 0; top: 30px; width: 260px; height: 285px; }
+#tab-html5 a { width: 260px; height: 285px; background: url("../img/html5-logo-big.png") center top no-repeat; }
+#topic-tabs #tab-html5 a:hover, #topic-tabs #tab-html5 a:focus { opacity: 1; }
+#tab-css3 a { background-position: 0 0; }
+#tab-css3.current a { background-position: 0 -100px; }
+#tab-semantics a { background-position: -100px 0; }
+#tab-semantics.current a { background-position: -100px -100px; }
+#tab-connectivity a { background-position: -200px 0; }
+#tab-connectivity.current a { background-position: -200px -100px; }
+#tab-offline a { background-position: -300px 0; }
+#tab-offline.current a { background-position: -300px -100px; }
+#tab-multimedia a { background-position: -400px 0; }
+#tab-multimedia.current a { background-position: -400px -100px; }
+#tab-performance a { background-position: -500px 0; }
+#tab-performance.current a { background-position: -500px -100px; }
+#tab-graphics a { background-position: -600px 0; }
+#tab-graphics.current a { background-position: -600px -100px; }
+#tab-devices a { background-position: -700px 0; }
+#tab-devices.current a { background-position: -700px -100px; }
+#tab-more a { background-position: -800px 0; }
+#tab-more.current a { background-position: -800px -100px; }
+
+#topic-tabs .label { position: absolute; display: none; padding: .5em 8px; width: 100px; left: 50%; top: 68px; margin-left: -60px; text-indent: 0; text-align: center; font-size: .857em;
+  background: #fff; 
+  background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 30%, rgba(255,255,255,.8) 100%);
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 30%, rgba(255,255,255,.8) 100%);
+  background: radial-gradient(center, ellipse cover, rgba(255,255,255,1) 30%, rgba(255,255,255,.8) 100%);
+  border: 1px solid rgba(170, 160, 130, 0.25);
+  border-radius: 4px;
+  box-shadow: 0 3px 3px rgba(170, 160, 130, 0.5);
+}
+#topic-tabs #tab-html5 .label { top: 265px; }
+
+#learn-html5 .boxed .head { border-color: #e44d26; }
+#learn-html5 .gallery { margin: 0; }
+#learn-html5 .gallery .demo { width: 200px; padding: 185px 0 1px; margin: 0 0 14px 14px; }
+#learn-html5 .gallery .demo.row-first { margin-left: 0; }
+#learn-html5 .demo-title img { width: 180px; max-height: 135px; padding: 9px; border: 1px solid #ccc; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+#learn-html5 .demo-title a:hover img, #learn-html5 .demo-title a:focus img, #learn-html5 .demo-title a:active img { -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4); box-shadow: 0 1px 2px rgba(0,0,0,.4); }
+#learn-html5 .demo .flag, #learn-html5 #content .demohover .flag { display: none; }
+#learn-html5.hasJS .gallery .demo { padding-top: 153px; }
+#learn-html5.hasJS .gallery .byline { display: none; }
+#learn-html5.hasJS .gallery .demo-title { text-indent: -999em; height: 0; margin: 0; }
+
+#learn-html5 #content .demohover { display: none; position: absolute; z-index: 99; margin: -6px -6px 0; border: 1px solid #ddd; -moz-border-radius: 9px; -webkit-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+#learn-html5 #content .demohover .in { position: relative; width: 180px; padding: 165px 15px 9px; background: #fff; background: rgba(255,255,255,.95); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; }
+#learn-html5 #content .demohover .demo-title { font-size: 1.285em; }
+#learn-html5 #content .demohover .demo-title img { width: 180px; border: 0; max-height: 180px; position: absolute; top: 5px; left: 5px; padding: 10px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+#learn-html5 #content .demohover .extra { display: block; }
+#learn-html5 #content .demohover .launch { top: 115px; right: 25px; }
+
+#learn-html5 .more { margin-top: .5em; text-align: right; }
+#learn-html5 #mdn-docs .mod-title { background-position: 96% -100px; }
+
