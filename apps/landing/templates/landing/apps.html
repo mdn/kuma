@@ -21,29 +21,48 @@
   
     <section class="modules">
       <div class="boxed">
-        <h2>{{ _('Getting started') }}</h2>
-        {% trans %}
-        <p>The Mozilla Marketplace lets you build app experiences powered by Web standards like HTML5, CSS3, JavaScript and related APIs.</p>
-        {% endtrans %}
+        <h2>{{ _('Getting Started') }}</h2>
+        {% if waffle.switch('apps-market-launch') %}
+          {% trans apps_url=devmo_url(_('/en/Apps')) %}
+            <p>The Mozilla Web Apps platform lets you <a href="{{ apps_url }}">build apps</a> powered by Web standards like HTML5, CSS3, JavaScript and related APIs.</p>
+          {% endtrans %}
+        {% else %}
+          {% trans %}
+            <p>The Mozilla Marketplace lets you build app experiences powered by Web standards like HTML5, CSS3, JavaScript and related APIs.</p>
+          {% endtrans %}
+        {% endif %}
         <p class="more"><a href="{{ devmo_url(_('/en/Apps/Getting_Started')) }}" class="go">{{ _('Learn more') }}</a></p>
       </div>
       
       <div class="boxed">
-        <h2>{{ _('Follow the project') }}</h2>
-        {% trans 
-            apps_wiki=_('https://wiki.mozilla.org/Apps'),
-            apps_market=_('https://wiki.mozilla.org/AMO:Roadmap/2012')
-        %}
-        <p><a href="{{ apps_wiki }}" rel="external">The Open Web apps project</a> and <a href="{{ apps_market }}" rel="external">Marketplace</a> put you back in control of the app experience.</p> 
-        {% endtrans %}
+        {% if waffle.switch('apps-market-launch') %}
+          <h2>{{ _('Submit Your Apps') }}</h2>
+          {% trans marketplace_url="http://marketplace.mozilla.org" %}
+            <p>The <a href="{{ marketplace_url }}">Mozilla Marketplace</a> is open. Submit your apps now.</p>
+          {% endtrans %}
+        {% else %}
+          <h2>{{ _('Follow the project') }}</h2>
+          {% trans
+              apps_wiki=_('https://wiki.mozilla.org/Apps'),
+              apps_market=_('https://wiki.mozilla.org/AMO:Roadmap/2012')
+              %}
+            <p><a href="{{ apps_wiki }}" rel="external">The Open Web apps project</a> and <a href="{{ apps_market }}" rel="external">Marketplace</a> put you back in control of the app experience.</p>
+          {% endtrans %}
+        {% endif %}
         <p class="more"><a href="https://wiki.mozilla.org/Apps" class="go" rel="external">{{ _('Learn more') }}</a></p>
       </div>
       
       <div class="boxed" id="newsletter">
         <h2>{{ _('Sign up for the newsletter') }}</h2>
-        {% trans %}
-        <p>Mozilla unlocks the power of the Web as the world’s largest marketplace. Learn more about Open Web apps.</p>
-        {% endtrans %}
+        {% if waffle.switch('apps-market-launch') %}
+          {% trans %}
+            <p>Mozilla unlocks the power of the Web as the world's largest marketplace. Learn more about the Web Apps platform.</p>
+          {% endtrans %}
+        {% else %}
+          {% trans %}
+            <p>Mozilla unlocks the power of the Web as the world's largest marketplace. Learn more about Open Web apps.</p>
+          {% endtrans %}
+        {% endif %}
         <p class="more"><a href="#newsletter-sub" class="go">{{ _('Sign up now') }}</a></p>
       </div>
     </section>
@@ -52,7 +71,7 @@
       <section class="articles-list">
         <header class="head section-apps">
           {# L10n: Please escape HTML entities here, like &amp; #}
-          <h2>{{ _('Resources for Apps Developers') }}</h2>
+          <h2>{{ _('Resources for App Developers') }}</h2>
         </header>
 
         <ul class="hfeed">
@@ -76,7 +95,7 @@
             <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_Web_developers')) }}" rel="bookmark">{{ _('For web developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
-            If you already develop Web sites, here's how to make them into installable apps.
+            If you already develop websites, here's how to make them into installable apps.
             {% endtrans %}
             </p>
           </li>
