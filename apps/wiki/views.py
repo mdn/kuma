@@ -22,7 +22,7 @@ from tower import ugettext as _
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
 from wiki import DOCUMENTS_PER_PAGE
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
@@ -127,6 +127,12 @@ def document(request, document_slug):
     if redirect_url:
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
+        # We want to make sure the UI locale is preserved in this
+        # redirect, so that the locale middleware doesn't have to
+        # redirect again afterward. Simplest way is just to do what
+        # the locale middleware would be doing.
+        prefixer = Prefixer(request=request)
+        url = prefixer.fix(url)
         return HttpResponseRedirect(url)
 
     # Get "redirected from" doc if we were redirected:
