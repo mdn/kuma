@@ -8,12 +8,12 @@
 {% block bodyclass %}document{% endblock %}
 {% if document.parent %}
   {# If there is a parent doc, use it's URL for switching locales. #}
-  {% set localizable_url = url('wiki.document', document.parent.slug, locale=settings.WIKI_DEFAULT_LANGUAGE) %}
+  {% set localizable_url = document.parent.get_absolute_url(settings.WIKI_DEFAULT_LANGUAGE) %}
 {% endif %}
 
 {% block extrahead %}
   <link rel="alternate" type="application/json" 
-    href="{{ url('wiki.json_slug', document.slug) }}">
+    href="{{ url('wiki.json_slug', document.full_path) }}">
 {% endblock %}
 
 {% block content %}
@@ -29,12 +29,12 @@
             <h1 class="page-title">{{ document.title }}</h1>
         </div>
         <ul id="page-buttons">
-            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.slug) }}">{{_('History')}}</a></li>
+            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
             {% if request.user.is_authenticated() %}
-              <li class="page-watch"><a href="{{ url('wiki.document_watch', document.slug) }}">{{_('Watch')}}</a></li>
+              <li class="page-watch"><a href="{{ url('wiki.document_watch', document.full_path) }}">{{_('Watch')}}</a></li>
             {% endif %}
             {% if document.allows_editing_by(request.user) %}
-              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.slug) }}">{{_('Edit')}}</a></li>
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path) }}">{{_('Edit')}}</a></li>
             {% endif %}
         </ul>
        </header>
@@ -119,18 +119,21 @@
       {% endif %}
     </div>
     <section class="page-meta">
+      {% set tags = document.tags.all() %}
+      {% if tags | length %}
       <section id="page-tags">
         <h2>{{ _('Tags') }}</h2>
         <div id="deki-page-tags">
           <ul class="tags">
             <li>
-              {% for tag in document.tags.all() %}
+              {% for tag in tags %}
                 <a class="text" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
               {% endfor %}
             </li>
           </ul>
         </div>
       </section>
+      {% endif %}
       <section id="doc-contributors">
         {% trans contributors=user_list(contributors) %}
           Contributors to this page: {{ contributors }}
@@ -138,7 +141,7 @@
       </section>
     </section>
   </article>
-  <form id="wiki-page-edit" class="editing" method="post" action="{{ url('wiki.edit_document', document_slug=document.slug) }}">
+  <form id="wiki-page-edit" class="editing" method="post" action="{{ url('wiki.edit_document', document_path=document.full_path) }}">
       <input type="hidden" name="form" id="form" value="rev" />
       <input type="hidden" name="content" id="content" value="" />
   </form>
@@ -172,12 +175,12 @@
   {% if user.is_authenticated() and document %}
     <div id="doc-watch">
       {% if document.is_watched_by(user) %}
-        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
+        <form action="{{ url('wiki.document_unwatch', document.full_path) }}" method="post">
           {{ csrf() }}
           <input type="submit" class="link-btn" value="{{ _('Turn off emails.') }}" />
         </form>
       {% else %}
-        <form action="{{ url('wiki.document_watch', document.slug) }}" method="post">
+        <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
           {{ csrf() }}
           <input type="submit" class="link-btn" value="{{ _('Get emailed when this article changes.') }}" />
         </form>
