@@ -95,6 +95,23 @@ class LocaleRedirectTests(TestCaseBase):
         de_rev.save()
         return en_doc, de_doc
 
+    def test_ui_locale(self):
+        """Bug 723242: make sure wiki redirects insert the correct UI
+        locale in the URL, so that the locale middleware doesn't have
+        to redirect again."""
+        en = settings.WIKI_DEFAULT_LANGUAGE
+        target = document(title='Locale Redirect Test Target',
+                          html='<p>Locale Redirect Test Target</p>',
+                          locale=en)
+        target.save()
+        source = document(title='Locale Redirect Test Document',
+                          html='REDIRECT <a class="redirect" href="/docs/en/locale-redirect-test-target/">Locale Redirect Test Target</a>',
+                          locale=en)
+        source.save()
+        url = reverse('wiki.document', args=[source.slug], locale=en)
+        response = self.client.get(url, follow=False)
+        self.assertEqual(response.status_code, 302)
+        assert ('/%s/docs/' % en) in response['Location']
 
 class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
