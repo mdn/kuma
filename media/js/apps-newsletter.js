@@ -15,6 +15,7 @@ var newsletter = {
       dialog.container.fadeIn(200, function () {
         dialog.data.fadeIn(200);
         dialog.container.height('auto');
+        $('#id_email').focus();
       });
     });
   },
@@ -22,7 +23,7 @@ var newsletter = {
     dialog.container.delegate('#newsletter-sub', 'submit', function(e){
       e.preventDefault();
       var $form = $(this);
-      dialog.data.find('fieldset').fadeOut(200, function(){
+      $form.children('fieldset').fadeOut(200, function(){
         $('#wait-modal').fadeIn(200, function(){
           $.ajax({
             url: $form.attr('action'),
