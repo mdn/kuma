@@ -44,8 +44,8 @@ class EditDocumentEvent(InstanceEvent):
 
     def _mails(self, users_and_watches):
         document = self.revision.document
-        log.debug('Sending edited notification email for document (id=%s)' %
-                  document.id)
+        # log.debug('Sending edited notification email for document (id=%s)' %
+        #           document.id)
         subject = _('{title} was edited by {creator}')
         url = reverse('wiki.document_revisions', locale=document.locale,
                       args=[document.slug])
@@ -80,8 +80,8 @@ class ReviewableRevisionInLocaleEvent(_RevisionInLocaleEvent):
     def _mails(self, users_and_watches):
         revision = self.revision
         document = revision.document
-        log.debug('Sending ready for review email for revision (id=%s)' %
-                  revision.id)
+        # log.debug('Sending ready for review email for revision (id=%s)' %
+        #           revision.id)
         subject = _('{title} is ready for review ({creator})')
         url = reverse('wiki.review_revision', locale=document.locale,
                       args=[document.slug, revision.id])

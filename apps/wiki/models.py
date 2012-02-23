@@ -494,10 +494,52 @@ class Document(NotificationsMixin, ModelBase):
     firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
     operating_systems = _inherited('operating_systems', 'operating_system_set')
 
-    def get_absolute_url(self):
-        # FIXME: There should be no way that the slug is empty.
-        slug = self.slug or 'NOSLUG'
-        return reverse('wiki.document', locale=self.locale, args=[slug])
+    @property
+    def full_path(self):
+        """The full path of a document consists of {locale}/{slug}"""
+        return '%s/%s' % (self.locale, self.slug)
+
+    def get_absolute_url(self, ui_locale=None):
+        """Build the absolute URL to this document from its full path"""
+        if not ui_locale:
+            ui_locale = self.locale
+        return reverse('wiki.document', locale=ui_locale, args=[self.full_path])
+
+    @staticmethod
+    def locale_and_slug_from_path(path, request=None):
+        """Given a docs URL path, derive locale and slug for model lookup, and
+        a suggestion of whether this path deserves a redirect"""
+        locale, slug, needs_redirect = '', path, False
+
+        # If there's a slash in the path, then the first segment is likely to
+        # be the locale.
+        if '/' in path:
+            locale, slug = path.split('/', 1)
+
+            if locale in settings.MT_TO_KUMA_LOCALE_MAP:
+                # If this looks like a MindTouch locale, remap it.
+                old_locale = locale
+                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale]
+                # But, we only need a redirect if the locale actually changed.
+                needs_redirect = (locale != old_locale)
+
+            if locale not in settings.MDN_LANGUAGES:
+                # Oops, that doesn't look like a supported locale, so back out.
+                needs_redirect = True
+                locale, slug = '', path
+
+        # No locale by this point? Go with the locale detected from user agent
+        # if we have a request.
+        if locale == '' and request:
+            needs_redirect = True
+            locale = request.locale
+
+        # Still no locale? Go with the site default locale.
+        if locale == '':
+            needs_redirect = True
+            locale = getattr(settings, 'WIKI_DEFAULT_LANGUAGE', 'en-US')
+
+        return (locale, slug, needs_redirect)
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):

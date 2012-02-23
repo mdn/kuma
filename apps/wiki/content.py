@@ -62,8 +62,8 @@ class ContentSectionTool(object):
         self.stream = SectionIDFilter(self.stream)
         return self
 
-    def injectSectionEditingLinks(self, slug, locale):
-        self.stream = SectionEditLinkFilter(self.stream, slug, locale)
+    def injectSectionEditingLinks(self, full_path, locale):
+        self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
         return self
 
     def extractSection(self, id):
@@ -120,9 +120,9 @@ class SectionIDFilter(html5lib_Filter):
 class SectionEditLinkFilter(html5lib_Filter):
     """Filter which injects editing links for sections with IDs"""
 
-    def __init__(self, source, slug, locale):
+    def __init__(self, source, full_path, locale):
         html5lib_Filter.__init__(self, source)
-        self.slug = slug
+        self.full_path = full_path
         self.locale = locale
 
     def __iter__(self):
@@ -145,13 +145,13 @@ class SectionEditLinkFilter(html5lib_Filter):
                              'data-section-id': id,
                              'data-section-src-url': '%s?%s' % (
                                  reverse('wiki.document',
-                                         args=[self.slug],
+                                         args=[self.full_path],
                                          locale=self.locale),
                                  urlencode({'section': id, 'raw': 'true'})
                               ),
                               'href': '%s?%s' % (
                                  reverse('wiki.edit_document',
-                                         args=[self.slug],
+                                         args=[self.full_path],
                                          locale=self.locale),
                                  urlencode({'section': id,
                                             'edit_links': 'true'})

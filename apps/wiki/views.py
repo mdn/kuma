@@ -4,10 +4,16 @@ import logging
 from urllib import urlencode
 from string import ascii_letters
 
+try:
+    from functools import wraps
+except ImportError:
+    from django.utils.functional import wraps
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import (HttpResponse, HttpResponseRedirect,
+                         HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import (require_GET, require_POST,
@@ -81,14 +87,47 @@ SHOWFOR_DATA = {
 }
 
 
+def process_document_path(func, reverse_name='wiki.document'):
+    """Decorator to process document_path into locale and slug, with
+    auto-redirect if necessary."""
+
+    # This function takes generic args and kwargs so it can presume as little
+    # as possible on the view method signature.
+    @wraps(func)
+    def process(request, document_path=None, *args, **kwargs):
+
+        document_slug, document_locale = None, None
+        if document_path:
+            # Parse the document path into locale and slug.
+            document_locale, document_slug, needs_redirect = (Document
+                    .locale_and_slug_from_path(document_path, request))
+
+            if needs_redirect:
+                # This catches old MindTouch locales, missing locale, and a few other
+                # cases to fire off a 301 Moved permanent redirect.
+                redir_path = '%s/%s' % (document_locale, document_slug)
+                url = reverse('wiki.document', locale=request.locale,
+                              args=[redir_path])
+                url = urlparams(url, query_dict=request.GET)
+                return HttpResponsePermanentRedirect(url)
+
+        # Set the kwargs that decorated methods will expect.
+        kwargs['document_slug'] = document_slug
+        kwargs['document_locale'] = document_locale
+        return func(request, *args, **kwargs)
+
+    return process
+
+
 @waffle_flag('kumawiki')
 @require_GET
-def document(request, document_slug):
+@process_document_path
+def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
-        doc = Document.objects.get(locale=request.locale, slug=document_slug)
+        doc = Document.objects.get(locale=document_locale, slug=document_slug)
         if (not doc.current_revision and doc.parent and
             doc.parent.current_revision):
             # This is a translation but its current_revision is None
@@ -104,7 +143,7 @@ def document(request, document_slug):
                                 locale=settings.WIKI_DEFAULT_LANGUAGE,
                                 slug=document_slug)
         # If there's a translation to the requested locale, take it:
-        translation = doc.translated_to(request.locale)
+        translation = doc.translated_to(document_locale)
         if translation and translation.current_revision:
             url = translation.get_absolute_url()
             url = urlparams(url, query_dict=request.GET)
@@ -169,7 +208,7 @@ def document(request, document_slug):
     # If this user can edit the document, inject some section editing links.
     if ((need_edit_links or not show_raw) and
             doc.allows_editing_by(request.user)):
-        tool.injectSectionEditingLinks(doc.slug, doc.locale)
+        tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
@@ -189,7 +228,8 @@ def document(request, document_slug):
 
 
 @waffle_flag('kumawiki')
-def revision(request, document_slug, revision_id):
+@process_document_path
+def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
@@ -263,7 +303,7 @@ def new_document(request):
         else:
             view = 'wiki.document_revisions'
         return HttpResponseRedirect(reverse(view,
-                                    args=[doc.slug]))
+                                    args=[doc.full_path]))
 
     return jingo.render(request, 'wiki/new_document.html',
                         {'document_form': doc_form,
@@ -274,10 +314,11 @@ def new_document(request):
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in
                  # Document.allows_editing_by.
-def edit_document(request, document_slug, revision_id=None):
+@process_document_path
+def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     user = request.user
 
     # If this document has a parent, then the edit is handled by the
@@ -320,7 +361,7 @@ def edit_document(request, document_slug, revision_id=None):
         if which_form == 'doc':
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
-                post_data.update({'locale': request.locale})
+                post_data.update({'locale': document_locale})
                 doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
@@ -342,7 +383,7 @@ def edit_document(request, document_slug, revision_id=None):
 
                     return HttpResponseRedirect(
                         urlparams(reverse('wiki.edit_document',
-                                          args=[doc.slug]),
+                                          args=[doc.full_path]),
                                   opendescription=1))
                 disclose_description = True
             else:
@@ -409,7 +450,7 @@ def edit_document(request, document_slug, revision_id=None):
                         view = 'wiki.document_revisions'
 
                     # Construct the redirect URL, adding any needed parameters
-                    url = reverse(view, args=[doc.slug], locale=doc.locale)
+                    url = reverse(view, args=[doc.full_path], locale=doc.locale)
                     params = {}
                     if is_raw:
                         params['raw'] = 'true'
@@ -512,10 +553,11 @@ def preview_revision(request):
 
 @waffle_flag('kumawiki')
 @require_GET
-def document_revisions(request, document_slug):
+@process_document_path
+def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
@@ -535,7 +577,8 @@ def document_revisions(request, document_slug):
 @waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.review_revision')
-def review_revision(request, document_slug, revision_id):
+@process_document_path
+def review_revision(request, document_slug, document_locale, revision_id):
     """Review a revision of a wiki document."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
@@ -565,7 +608,7 @@ def review_revision(request, document_slug, revision_id):
             schedule_rebuild_kb()
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                                args=[document_slug]))
+                                                args=[document.full_path]))
 
     if doc.parent:  # A translation
         parent_revision = get_current_or_latest_revision(doc.parent)
@@ -582,14 +625,15 @@ def review_revision(request, document_slug, revision_id):
 
 @waffle_flag('kumawiki')
 @require_GET
-def compare_revisions(request, document_slug):
+@process_document_path
+def compare_revisions(request, document_slug, document_locale):
     """Compare two wiki document revisions.
 
     The ids are passed as query string parameters (to and from).
 
     """
     doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     if 'from' not in request.GET or 'to' not in request.GET:
         raise Http404
 
@@ -605,17 +649,19 @@ def compare_revisions(request, document_slug):
 
 @waffle_flag('kumawiki')
 @login_required
-def select_locale(request, document_slug):
+@process_document_path
+def select_locale(request, document_slug, document_locale):
     """Select a locale to translate the document to."""
     doc = get_object_or_404(
-        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     return jingo.render(request, 'wiki/select_locale.html', {'document': doc})
 
 
 @waffle_flag('kumawiki')
 @require_http_methods(['GET', 'POST'])
 @login_required
-def translate(request, document_slug, revision_id=None):
+@process_document_path
+def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
 
     * document_slug is for the default locale
@@ -628,11 +674,11 @@ def translate(request, document_slug, revision_id=None):
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
     user = request.user
 
-    if settings.WIKI_DEFAULT_LANGUAGE == request.locale:
+    if settings.WIKI_DEFAULT_LANGUAGE == document_locale:
         # Don't translate to the default language.
         return HttpResponseRedirect(reverse(
             'wiki.edit_document', locale=settings.WIKI_DEFAULT_LANGUAGE,
-            args=[parent_doc.slug]))
+            args=[parent_doc.full_path]))
 
     if not parent_doc.is_localizable:
         message = _lazy(u'You cannot translate this document.')
@@ -648,7 +694,7 @@ def translate(request, document_slug, revision_id=None):
     disclose_description = bool(request.GET.get('opendescription'))
 
     try:
-        doc = parent_doc.translations.get(locale=request.locale)
+        doc = parent_doc.translations.get(locale=document_locale)
     except Document.DoesNotExist:
         doc = None
         disclose_description = True
@@ -681,9 +727,9 @@ def translate(request, document_slug, revision_id=None):
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
             post_data = request.POST.copy()
-            post_data.update({'locale': request.locale})
+            post_data.update({'locale': document_locale})
             doc_form = DocumentForm(post_data, instance=doc)
-            doc_form.instance.locale = request.locale
+            doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
                 rev_form = RevisionForm(request.POST)
@@ -699,7 +745,7 @@ def translate(request, document_slug, revision_id=None):
 
                 if which_form == 'doc':
                     url = urlparams(reverse('wiki.edit_document',
-                                            args=[doc.slug]),
+                                            args=[doc.full_path]),
                                     opendescription=1)
                     return HttpResponseRedirect(url)
 
@@ -715,23 +761,24 @@ def translate(request, document_slug, revision_id=None):
             if rev_form.is_valid() and not doc_form_invalid:
                 _save_rev_and_notify(rev_form, request.user, doc)
                 url = reverse('wiki.document_revisions',
-                              args=[doc_slug])
+                              args=[doc.full_path])
                 return HttpResponseRedirect(url)
 
     return jingo.render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
-                         'locale': request.locale, 'based_on': based_on_rev,
+                         'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description})
 
 
 @waffle_flag('kumawiki')
 @require_POST
 @login_required
-def watch_document(request, document_slug):
+@process_document_path
+def watch_document(request, document_slug, document_locale):
     """Start watching a document for edits."""
     document = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     EditDocumentEvent.notify(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
 
@@ -739,10 +786,11 @@ def watch_document(request, document_slug):
 @waffle_flag('kumawiki')
 @require_POST
 @login_required
-def unwatch_document(request, document_slug):
+@process_document_path
+def unwatch_document(request, document_slug, document_locale):
     """Stop watching a document for edits."""
     document = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     EditDocumentEvent.stop_notifying(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
 
@@ -796,12 +844,13 @@ def unwatch_approved(request):
 
 @waffle_flag('kumawiki')
 @require_GET
-def json_view(request, document_slug=None):
+@process_document_path
+def json_view(request, document_slug=None, document_locale=None):
     """Return some basic document info in a JSON blob."""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
     if document_slug is not None:
         kwargs['slug'] = document_slug
-        kwargs['locale'] = request.locale
+        kwargs['locale'] = document_locale
     elif 'title' in request.GET:
         kwargs['title'] = request.GET['title']
     elif 'slug' in request.GET:
@@ -823,10 +872,14 @@ def json_view(request, document_slug=None):
 
 @waffle_flag('kumawiki')
 @require_POST
-def helpful_vote(request, document_slug):
+@process_document_path
+def helpful_vote(request, document_slug, document_locale):
     """Vote for Helpful/Not Helpful document"""
+    document_locale, document_slug, needs_redirect = (Document
+            .locale_and_slug_from_path(document_path, request))
+
     document = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
 
     if not document.has_voted(request):
         ua = request.META.get('HTTP_USER_AGENT', '')[:1000]  # 1000 max_length
@@ -857,8 +910,11 @@ def helpful_vote(request, document_slug):
 @waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.delete_revision')
-def delete_revision(request, document_slug, revision_id):
+def delete_revision(request, document_path, revision_id):
     """Delete a revision."""
+    document_locale, document_slug, needs_redirect = (Document
+            .locale_and_slug_from_path(document_path, request))
+
     revision = get_object_or_404(Revision, pk=revision_id,
                                  document__slug=document_slug)
     document = revision.document
@@ -888,7 +944,7 @@ def delete_revision(request, document_slug, revision_id):
     revision.delete()
 
     return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                        args=[document.slug]))
+                                        args=[document.full_path]))
 
 
 def _document_form_initial(document):

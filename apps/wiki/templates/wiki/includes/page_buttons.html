@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% if document %}
-    {% set discard_href = url('wiki.document', document.slug) %}
+    {% set discard_href = url('wiki.document', document.full_path) %}
 {% else %}
     {% set discard_href = url('wiki.new_document') %}
 {% endif %}

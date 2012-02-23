@@ -47,7 +47,6 @@ class FormSectionEditingTests(TestCase):
         eq_(normalize_html(expected), 
             normalize_html(rev_form.initial['content']))
 
-    @attr('current')
     def test_form_save_section(self):
         d, r = doc_rev("""
             <h1 id="s1">Head 1</h1>
