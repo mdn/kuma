@@ -1,0 +1,59 @@
+<form id="newsletter-sub" class="fm-subscribe module modal" action="{{ url('apps_subscription') }}" method="POST">
+  <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
+  <p class="mod-intro">{% trans %}
+    Sign up now for the Apps Developer newsletter for access to resources, tools, and exclusive info. <strong>Join us!</strong>
+  {% endtrans %}</p>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li {% if message.tags %} class="notice {{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div id="wait-modal">
+    <img src="{{ MEDIA_URL }}img/wait-trans.gif" alt="{{ _('Please wait') }}">
+  </div>
+
+  <div id="error-modal">
+    <ul class="messages">
+      <li class="notice error">{{ _('An unknown error has occurred. Please try again later.') }}</li>
+    </ul>
+  </div>
+
+  {% if form %}
+    <fieldset>
+      <ol>
+        <li>
+          {{ form.email.errors }}
+          <label for="email">{{ form.email.label }}</label>
+          {{ form.email }}
+        </li>
+        <li class="check">
+          {{ form.format.errors }}
+          <span class="label">{{ form.format.label }}</span>
+          <fieldset class="inline">
+            {% for c in form.fields.format.choices %}
+              <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" checked>{{ c[1] }}</label>
+            {% endfor %}
+          </fieldset>
+        </li>
+        <li class="agree">
+          {{ form.agree.errors }}
+          <label for="sub-agree">
+            {{ form.agree }} {{form.agree.label }}
+          </label>
+          {% trans privacy_url='http://www.mozilla.org/about/policies/privacy-policy.html' %}
+            to the <a href="{{ privacy_url }}">Privacy Policy</a>
+          {% endtrans %}
+        </li>
+        <li class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></li>
+      </ol>
+    </fieldset>
+  {% else %}
+    <script type="text/javascript">
+      window.setTimeout($.modal.close, 5000);
+    </script>
+  {% endif %}
+</form>

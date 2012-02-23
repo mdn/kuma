@@ -43,8 +43,6 @@ class UserProfileEditForm(forms.ModelForm):
                                 max_length=255, required=False)
     expertise = forms.CharField(label=_('Expertise'),
                                 max_length=255, required=False)
-    locale = forms.ChoiceField(required=False,
-                             choices=settings.LANGUAGE_CHOICES)
 
     def __init__(self, *args, **kwargs):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)

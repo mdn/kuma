@@ -64,7 +64,7 @@
       <fieldset class="section notitle" id="personal">
         <ul>
             <li id="field_email" class="field type_email required">
-                <label for="id_email">Email</label>
+                <label for="id_email">{{ _('Email') }}</label>
                 {{ user.email }} <a href="{{ url('users.change_email') }}">Change</a>
                 <input id="id_email" type="hidden" value="{{ user.email }}" name="email"/>
             </li>

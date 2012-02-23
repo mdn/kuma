@@ -146,7 +146,7 @@ class DekiUserBackend(object):
             return None
 
     @staticmethod
-    def get_or_create_user(deki_user):
+    def get_or_create_user(deki_user, sync_attrs=None):
         """
         Grab the User via their UserProfile and deki_user_id.
         If non exists, create both.
@@ -154,6 +154,9 @@ class DekiUserBackend(object):
         NOTE: Changes to this method may require changes to
               parse_user_info
         """
+        if not sync_attrs:
+            sync_attrs = ('is_superuser', 'is_staff', 'is_active', 'email')
+
         try:
             # Try fetching an existing profile mapped to deki user
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
@@ -181,7 +184,6 @@ class DekiUserBackend(object):
         user.deki_user = deki_user
 
         # Sync these attributes from Deki -> Django (for now)
-        sync_attrs = ('is_superuser', 'is_staff', 'is_active', 'email')
         needs_save = False
         for sa in sync_attrs:
             deki_val = getattr(deki_user, sa, None)
@@ -287,7 +289,7 @@ class DekiUser(object):
         self.email = email
         self.gravatar = gravatar
         self.profile_url = profile_url
-        self.is_active = False
+        self.is_active = True
         self.is_staff = False
         self.is_superuser = False
 

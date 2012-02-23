@@ -5,6 +5,7 @@
 ReWriteEngine On
 RewriteBase /
 
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mwc/?)$      /apps [NC,PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/?)?)$           /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
@@ -23,6 +24,7 @@ RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-P
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?forum-archive.*)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?jsi18n.*)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(admin(/.*)?)$                                                                 /mwsgi/$1 [PT,L]
+
 
 # For debug_toolbar, mainly on dev VMs
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?__debug__(/.*)?)$ /mwsgi/$1 [PT,L]

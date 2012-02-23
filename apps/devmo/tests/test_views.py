@@ -423,6 +423,21 @@ class ProfileViewsTest(TestCase):
         eq_('nl', doc.find('language').text())
         """
 
+    def test_bug_698126_l10n(self):
+        """Test that the form field names are localized"""
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+            password=TESTUSER_PASSWORD)
+
+        url = reverse('devmo.views.profile_edit',
+            args=(user.username,))
+        r = self.client.get(url, follow=True)
+        for field in r.context['form'].fields:
+            # if label is localized it's a lazy proxy object
+            ok_(not isinstance(
+                r.context['form'].fields[field].label, basestring),
+                'Field %s is a string!' % field)
+
     def _break(self, url, r):
         logging.debug("URL  %s" % url)
         logging.debug("STAT %s" % r.status_code)

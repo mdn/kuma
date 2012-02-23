@@ -24,7 +24,6 @@ from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ManagerBase, ModelBase, LocaleField
 from sumo.urlresolvers import reverse, split_path
-from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 import wiki.content
 
@@ -32,12 +31,14 @@ import caching.base
 
 from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
 from taggit.managers import TaggableManager
+from taggit.utils import parse_tags
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
-    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code',
+    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'pre', 'code',
     'dl', 'dt', 'dd', 'small', 'sup',
-    'img', 
+    'img',
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -48,9 +49,11 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['div'] = ['class', 'id']
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
-ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is', 'title', 'style']
+ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
+                             'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in
+                          ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -164,10 +167,6 @@ class UniqueCollision(Exception):
         self.existing = existing
 
 
-class TitleCollision(UniqueCollision):
-    """An attempt to create two pages of the same title in one locale"""
-
-
 class SlugCollision(UniqueCollision):
     """An attempt to create two pages of the same slug in one locale"""
 
@@ -205,7 +204,7 @@ class DocumentManager(ManagerBase):
         if category:
             docs = docs.filter(category=category)
         if tag:
-            docs = docs.filter(tags__in=[tag.name])
+            docs = docs.filter(tags__in=[tag])
         if tag_name:
             docs = docs.filter(tags__name=tag_name)
         # Leave out the html, since that leads to huge cache objects and we
@@ -225,12 +224,43 @@ class DocumentManager(ManagerBase):
         return self.filter(**q).distinct()
 
 
-class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
+class DocumentTag(TagBase):
+    """A tag indexing a document"""
+    class Meta:
+        verbose_name = _("Document Tag")
+        verbose_name_plural = _("Document Tags")
+
+
+class TaggedDocument(ItemBase):
+    """Through model, for tags on Documents"""
+    content_object = models.ForeignKey('Document')
+    tag = models.ForeignKey(DocumentTag)
+
+    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
+    # don't like. But, it seems to be the only way to get *both* a custom tag
+    # *and* a custom through model.
+    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
+    @classmethod
+    def tags_for(cls, model, instance=None):
+        if instance is not None:
+            return DocumentTag.objects.filter(
+                taggeddocument__content_object=instance)
+        return DocumentTag.objects.filter(
+            taggeddocument__content_object__isnull=False).distinct()
+
+
+class Document(NotificationsMixin, ModelBase):
     """A localized knowledgebase document, not revision-specific."""
     objects = DocumentManager()
 
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
+
+    # NOTE: Documents are indexed by tags, but tags are edited in Revisions.
+    # Also, using a custom through table to isolate Document tags from those
+    # used in other models and apps. (Works better than namespaces, for
+    # completion and such.)
+    tags = TaggableManager(through=TaggedDocument)
 
     # Is this document a template or not?
     is_template = models.BooleanField(default=False, editable=False,
@@ -286,8 +316,7 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     # how MySQL uses indexes, we probably don't need individual indexes on
     # title and locale as well as a combined (title, locale) one.
     class Meta(object):
-        unique_together = (('parent', 'locale'), ('title', 'locale'),
-                           ('slug', 'locale'))
+        unique_together = (('parent', 'locale'), ('slug', 'locale'))
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
@@ -385,9 +414,8 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
         self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
 
         try:
-            # Check if the slug or title would collide with an existing doc
+            # Check if the slug would collide with an existing doc
             self._raise_if_collides('slug', SlugCollision)
-            self._raise_if_collides('title', TitleCollision)
         except UniqueCollision, e:
             if e.existing.redirect_url() is not None:
                 # If the existing doc is a redirect, delete it and clobber it.
@@ -659,6 +687,10 @@ class Revision(ModelBase):
     # Revision so the translators can handle them:
     keywords = models.CharField(max_length=255, blank=True)
 
+    # Tags are stored in a Revision as a plain CharField, because Revisions are
+    # not indexed by tags. This data is retained for history tracking.
+    tags = models.CharField(max_length=255, blank=True)
+
     # Tags are (ab)used as status flags and for searches, but the through model
     # should constrain things from getting expensive.
     review_tags = TaggableManager(through=ReviewTaggedRevision)
@@ -768,6 +800,11 @@ class Revision(ModelBase):
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
         self.document.current_revision = self
+
+        # Since Revision stores tags as a string, we need to parse them first
+        # before setting on the Document.
+        self.document.tags.set(*parse_tags(self.tags))
+
         self.document.save()
 
     def __unicode__(self):
@@ -781,7 +818,7 @@ class Revision(ModelBase):
             .parse(self.content)
             .extractSection(section_id)
             .serialize())
-        
+
     @property
     def content_cleaned(self):
         return bleach.clean(

@@ -64,6 +64,23 @@ class LoginTestCase(TestCase):
         doc = pq(response.content)
         eq_('testuser', doc.find('ul.user-state a:first').text())
 
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login_wont_redirect_to_login(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass',
+                                     'next': login_uri},
+                                    follow=True)
+        eq_(200, response.status_code)
+        for redirect_url, code in response.redirect_chain:
+            ok_(login_uri not in redirect_url, "Found %s in redirect_chain"
+                % login_uri)
+        doc = pq(response.content)
+        eq_('testuser', doc.find('ul.user-state a:first').text())
+
     @mock_mindtouch_login
     @mock_get_deki_user
     @mock_put_mindtouch_user
@@ -516,8 +533,6 @@ class BrowserIDTestCase(TestCase):
     def test_explain_popup(self, _verify_browserid):
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
         resp = self.client.get(reverse('home', locale='en-US'))
-        doc = pq(resp.content)
-        eq_(True, 'toggle' in doc.find('li#user-signin').html())
 
         # Posting the fake assertion to browserid_verify should work, with the
         # actual verification method mocked out.
@@ -531,8 +546,6 @@ class BrowserIDTestCase(TestCase):
         # even after logout, cookie should prevent the toggle
         resp = self.client.get(reverse('home', locale='en-US'))
         eq_('1', self.client.cookies.get('browserid_explained').value)
-        doc = pq(resp.content)
-        eq_(False, 'toggle' in doc.find('li#user-signin').html())
 
     @mock_get_deki_user_by_email
     @mock_put_mindtouch_user
