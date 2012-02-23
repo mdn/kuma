@@ -40,6 +40,7 @@
           {% trans marketplace_url="http://marketplace.mozilla.org" %}
             <p>The <a href="{{ marketplace_url }}">Mozilla Marketplace</a> is open. Submit your apps now.</p>
           {% endtrans %}
+          <p class="more"><a href="http://marketplace.mozilla.org" class="go" rel="external">{{ _('Submit now') }}</a></p>
         {% else %}
           <h2>{{ _('Follow the project') }}</h2>
           {% trans
@@ -48,8 +49,8 @@
               %}
             <p><a href="{{ apps_wiki }}" rel="external">The Open Web apps project</a> and <a href="{{ apps_market }}" rel="external">Marketplace</a> put you back in control of the app experience.</p>
           {% endtrans %}
+          <p class="more"><a href="https://wiki.mozilla.org/Apps" class="go" rel="external">{{ _('Learn more') }}</a></p>
         {% endif %}
-        <p class="more"><a href="https://wiki.mozilla.org/Apps" class="go" rel="external">{{ _('Learn more') }}</a></p>
       </div>
       
       <div class="boxed" id="newsletter">
