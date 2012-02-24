@@ -81,18 +81,22 @@ def set_browserid_explained(response):
 
 
 def browserid_header_signin_html(request):
+    next_url = _clean_next_url(request) or reverse('home')
     browserid_locales = constance.config.BROWSERID_LOCALES
     if request.locale.lower() not in browserid_locales.lower():
         raise Http404
-    return jingo.render(request, 'users/browserid_header_signin.html')
+    return jingo.render(request, 'users/browserid_header_signin.html',
+                        {'next_url': next_url})
 
 
 def browserid_signin_html(request):
+    next_url = _clean_next_url(request) or reverse('home')
     browserid_locales = constance.config.BROWSERID_LOCALES
     if request.locale.lower() not in browserid_locales.lower():
         raise Http404
     form = handle_login(request)
-    return jingo.render(request, 'users/browserid_signin.html', {'form': form})
+    return jingo.render(request, 'users/browserid_signin.html',
+                        {'form': form, 'next_url': next_url})
 
 
 @ssl_required
@@ -216,7 +220,11 @@ def browserid_register(request):
 
                     # Bounce to the newly created profile page, since the user
                     # might want to review & edit.
-                    return HttpResponseRedirect(profile.get_absolute_url())
+                    redirect_to = request.session.get(SESSION_REDIRECT_TO,
+                                                    profile.get_absolute_url())
+                    return set_browserid_explained(
+                        _redirect_with_mindtouch_login(redirect_to,
+                                                       user.username))
                 except MindTouchAPIError:
                     if user:
                         user.delete()
@@ -601,7 +609,7 @@ def _clean_next_url(request):
 
     if url:
         parsed_url = urlparse.urlparse(url)
-        # Don't redirect outside of SUMO.
+        # Don't redirect outside of site_domain.
         # Don't include protocol+domain, so if we are https we stay that way.
         if parsed_url.scheme:
             site_domain = Site.objects.get_current().domain
@@ -619,4 +627,8 @@ def _clean_next_url(request):
             if looping_url in parsed_url.path:
                 url = None
 
+    # TODO?HACK: can't use urllib.quote_plus because mod_rewrite quotes the
+    # next url value already.
+    if url:
+        url = url.replace(' ', '+')
     return url

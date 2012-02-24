@@ -9,7 +9,7 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-      <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}">
+      <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}?next={{ next_url }}">
             <h1>{{ _('Log In') }}</h1>
             {% include "users/login_form.html" %}
         </article>

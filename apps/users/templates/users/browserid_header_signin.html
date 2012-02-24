@@ -1,5 +1,6 @@
     <li class="user-signin menu">
       <form class="browserid" action="{{url('users.browserid_verify')}}" method="POST">
+        <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
         {{ browserid_form }}
         {% set toggle = 'toggle' %}
         {% if request.COOKIES.get('browserid_explained', 0) == '1' %}

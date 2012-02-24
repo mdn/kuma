@@ -89,6 +89,31 @@ class LoginTests(TestCaseBase):
         eq_(302, response.status_code)
         eq_('http://testserver' + next, response['location'])
 
+    def test_login_next_parameter_all_forms(self):
+        '''Test with a valid ?next=url parameter.'''
+        next = '/demos/submit'
+
+        # Verify that next parameter is set in form hidden field.
+        response = self.client.get(urlparams(reverse('users.login'),
+                                             next=next))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('input[name="next"]')[0].attrib['value'])
+
+        # Verify that next parameter is set in form hidden field.
+        response = self.client.get(urlparams(
+            reverse('users.browserid_header_signin_html'), next=next))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('input[name="next"]')[0].attrib['value'])
+
+        # Verify that next parameter is set in form hidden field.
+        response = self.client.get(urlparams(
+            reverse('users.browserid_signin_html'), next=next))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('input[name="next"]')[0].attrib['value'])
+
     @mock.patch_object(Site.objects, 'get_current')
     def test_clean_url(self, get_current):
         '''Verify that protocol and domain get removed.'''

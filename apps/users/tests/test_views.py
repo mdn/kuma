@@ -656,16 +656,18 @@ class BrowserIDTestCase(TestCase):
         resp = self.client.post(redir_url, {'username': 'neverbefore',
                                             'action': 'register'})
 
-        # The submission should result in a redirect to the new user's profile
+        # The submission should result in a redirect to the session's redirect
+        # value
         eq_(302, resp.status_code)
         redir_url = resp['Location']
-        profile_url = reverse('devmo_profile_view', args=[new_username])
-        ok_(profile_url in redir_url)
+        ok_('SUCCESS' in redir_url)
 
         # The session should look logged in, now.
         ok_('_auth_user_id' in self.client.session.keys())
         eq_('django_browserid.auth.BrowserIDBackend',
             self.client.session.get('_auth_user_backend', ''))
+        ok_(self.client.cookies.get('authtoken'), 'Should have set authtoken '
+                                                  'cookie for MindTouch')
 
         # Ensure that the user was created, and with the submitted username and
         # verified email address
