@@ -107,10 +107,9 @@ jQuery.fn.placeholder = function(new_value) {
     $('.browserid-signin').click(function (e) {
       if ( !$(this).hasClass('toggle') ) {
         navigator.id.getVerifiedEmail(function(assertion) {
-            if (!assertion) { return; }
-            $('#id_assertion')
-                .val(assertion.toString())
-                .parent().submit();
+          if (!assertion) { return; }
+          $('input[name="assertion"]').val(assertion.toString());
+          $('form.browserid').first().submit();
         });
         return false;
       }

@@ -1,7 +1,7 @@
             {% from "layout/errorlist.html" import errorlist %}
             <h1>{{ _('Sign In with BrowserID') }}</h1> 
             <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
-              <input type="hidden" name="next" value="{{ next_url }}" />
+              <input type="hidden" name="next" id="next" value="{{ next_url }}" />
               {{ errorlist(form) }}
               <p>{% trans browserid_href='https://browserid.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
               MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
