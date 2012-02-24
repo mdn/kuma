@@ -6,7 +6,7 @@ from django.forms import ValidationError
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from users.forms import AuthenticationForm, ProfileForm
+from users.forms import AuthenticationForm, ProfileForm, EmailReminderForm
 from users.tests import TestCaseBase
 
 
@@ -112,3 +112,13 @@ class ProfileFormTestCase(TestCaseBase):
                 clean()  # Should not raise.
             else:
                 self.assertRaises(ValidationError, clean)
+
+
+class EmailReminderFormTest(TestCaseBase):
+    def test_can_haz_3_char_username(self):
+        form = EmailReminderForm({'username': 'abcd'})
+        # it works with 4
+        self.assertTrue(form.is_valid())
+        form = EmailReminderForm({'username': 'abc'})
+        # it works with 3
+        self.assertTrue(form.is_valid())
