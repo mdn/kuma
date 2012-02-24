@@ -105,10 +105,10 @@ class LocaleRedirectTests(TestCaseBase):
                           locale=en)
         target.save()
         source = document(title='Locale Redirect Test Document',
-                          html='REDIRECT <a class="redirect" href="/docs/en/locale-redirect-test-target/">Locale Redirect Test Target</a>',
+                          html='REDIRECT <a class="redirect" href="/docs/%s/locale-redirect-test-target/">Locale Redirect Test Target</a>' % en,
                           locale=en)
         source.save()
-        url = reverse('wiki.document', args=[source.slug], locale=en)
+        url = reverse('wiki.document', args=['%s/%s' % (source.locale, source.slug)], locale=en)
         response = self.client.get(url, follow=False)
         self.assertEqual(response.status_code, 302)
         assert ('/%s/docs/' % en) in response['Location']
