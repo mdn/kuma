@@ -36,7 +36,7 @@ PASSWD_UTF8 = _lazy(u'To use this password, you need to initiate a password '
 class UsernameField(forms.RegexField):
     def __init__(self, *args, **kwargs):
         super(UsernameField, self).__init__(
-            label=_lazy(u'Username'), max_length=30, min_length=4,
+            label=_lazy(u'Username'), max_length=30, min_length=3,
             regex=r'^[\w.@+-]+$',
             help_text=_lazy(u'Required. 30 characters or fewer. '
                             'Letters, digits and @/./+/-/_ only.'),
