@@ -1,18 +1,14 @@
 import jingo
 import logging
-import urllib2
-import csv
 
 from django.conf import settings
-from django.core.paginator import Paginator, InvalidPage
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
-from django.http import (HttpResponseRedirect, HttpResponse,
-                         HttpResponseForbidden, HttpResponseNotFound)
-from django.contrib.auth.models import User
+from django.http import (HttpResponseRedirect, HttpResponseForbidden)
 
 from devmo.urlresolvers import reverse
 
-from taggit.utils import parse_tags, edit_string_for_tags
+from taggit.utils import parse_tags
 
 from access.decorators import login_required
 from demos.models import Submission
@@ -33,7 +29,8 @@ def events(request):
     upcoming_events = events.filter(done=False)
     past_events = events.filter(done=True)
     google_maps_api_key = getattr(settings, 'GOOGLE_MAPS_API_KEY',
-        "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ")
+        "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP"
+        "_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ")
 
     return jingo.render(request, 'devmo/calendar.html', {
         'upcoming_events': upcoming_events,
@@ -54,7 +51,8 @@ def profile_view(request, username):
         page_number = 1
     show_hidden = (user == request.user) or user.is_superuser
 
-    demos = Submission.objects.all_sorted(sort_order).filter(creator=profile.user)
+    demos = Submission.objects.all_sorted(sort_order).filter(
+                                                        creator=profile.user)
     if not show_hidden:
         demos = demos.exclude(hidden=True)
 
@@ -101,7 +99,7 @@ def profile_edit(request, username):
 
         # Form fields to receive tags filtered by namespace.
         for field, ns in field_to_tag_ns:
-            initial[field] = ', '.join(t.name.replace(ns,'') 
+            initial[field] = ', '.join(t.name.replace(ns, '')
                                        for t in profile.tags.all_ns(ns))
 
         # Finally, set up the form.
@@ -130,7 +128,8 @@ def profile_edit(request, username):
 
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
-                tags = [t.lower() for t in parse_tags(form.cleaned_data.get(field, ''))]
+                tags = [t.lower() for t in parse_tags(
+                                            form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
             return HttpResponseRedirect(reverse(
