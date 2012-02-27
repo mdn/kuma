@@ -255,12 +255,6 @@ class Command(BaseCommand):
                  "%s skipped, %s errors" %
                  ((time.time() - start_ts), ct, skip_ct, error_ct))
 
-        if ct == 0:
-            # If every document gathered for migration was skipped, then we
-            # basically did nothing. Exit with status 1, so that any script
-            # wrapping us in a loop knows that it can probably stop for awhile.
-            sys.exit("No migrations performed")
-
     def handle_template_metrics(self, rows):
         """Parse out DekiScript template calls from pages"""
         # This regex seems to catch all the DekiScript calls
