@@ -3,6 +3,8 @@ import logging
 import time
 from os.path import dirname
 
+import requests
+
 import mock
 from mock import patch
 from nose.tools import eq_, ok_
@@ -20,8 +22,7 @@ from soapbox.models import Message
 
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user,
-                              mock_put_mindtouch_user,
-                              mock_post_mindtouch_user)
+                              mock_put_mindtouch_user)
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from devmo.models import UserProfile, UserDocsActivityFeed
 
@@ -63,11 +64,11 @@ class ProfileViewsTest(TestCase):
             url = reverse('devmo.views.profile_view',
                           args=(user.username,))
             r = self.client.get(url, follow=True)
-            doc = pq(r.content)
+            pq(r.content)
         except Exception, e:
             raise e
             ok_(False, "There should be no exception %s" % e)
-    
+
     @attr('docs_activity')
     @mock_fetch_user_feed
     def test_profile_view(self):
@@ -114,6 +115,14 @@ class ProfileViewsTest(TestCase):
             if item.history_url:
                 eq_(item.history_url,
                     item_el.find('.actions a.history').attr('href'))
+
+    def test_my_profile_view(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/')
+        eq_(302, resp.status_code)
+        ok_(reverse('devmo.views.profile_view', args=(u.username,)) in
+            resp['Location'])
 
     @mock_put_mindtouch_user
     @mock_fetch_user_feed
@@ -187,6 +196,14 @@ class ProfileViewsTest(TestCase):
         eq_(new_attrs['fullname'], profile.fullname)
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
+
+    def test_my_profile_edit(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/edit')
+        eq_(302, resp.status_code)
+        ok_(reverse('devmo.views.profile_edit', args=(u.username,)) in
+            resp['Location'])
 
     @mock_put_mindtouch_user
     @mock_fetch_user_feed

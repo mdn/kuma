@@ -620,10 +620,13 @@ def _clean_next_url(request):
                 url = u'?'.join([getattr(parsed_url, x) for x in
                                 ('path', 'query') if getattr(parsed_url, x)])
 
-        # Don't redirect right back to login, logout, or register page
+        # Don't redirect right back to login, logout, register, or change email
+        # pages
         locale, register_url = split_path(reverse('users.browserid_register'))
+        locale, change_email_url = split_path(
+                                        reverse('users.change_email'))
         for looping_url in [settings.LOGIN_URL, settings.LOGOUT_URL,
-                            register_url]:
+                            register_url, change_email_url]:
             if looping_url in parsed_url.path:
                 url = None
 
