@@ -2,23 +2,24 @@
 {% extends "users/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _('Change Email Address') %}
-{% set classes = 'password' %}
+{% set classes = 'change_email' %}
 {% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block content %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-      <article id="pw-reset" class="main">
+      <article id="change-email" class="main">
         {% if use_browserid %}
           <h1>{{ _('Change email with BrowserID') }}</h1>
             <form class="browserid boxed" action="{{url('users.browserid_change_email')}}" method="POST">
               <input type="hidden" name="next" value="{{ next_url }}" />
               {{ errorlist(form) }}
-              <p>{% trans browserid_href='https://browserid.org/' %}
-              MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
-              a safe and simple way to sign in without a password.
-              {% endtrans %}</p>
+              {% trans browserid_href='https://browserid.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
+              <h3>What's this?</h3>
+              <p>MDN has switched to <a href="{{ browserid_href }}" target="_blank" rel="external">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. 
+              <a href="{{ why_browserid }}" rel="external">Learn more about why Mozilla is using BrowserID</a>.</p>
+              {% endtrans %}
               <p>{% trans %}
               To change your MDN email, simply sign in below with the new email 
               address.

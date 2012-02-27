@@ -115,6 +115,14 @@ class ProfileViewsTest(TestCase):
                 eq_(item.history_url,
                     item_el.find('.actions a.history').attr('href'))
 
+    def test_my_profile_view(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/')
+        eq_(302, resp.status_code)
+        ok_(reverse('devmo.views.profile_view', args=(u.username,)) in
+            resp['Location'])
+
     @mock_put_mindtouch_user
     @mock_fetch_user_feed
     def test_bug_698971(self):
@@ -187,6 +195,14 @@ class ProfileViewsTest(TestCase):
         eq_(new_attrs['fullname'], profile.fullname)
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
+
+    def test_my_profile_edit(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/edit')
+        eq_(302, resp.status_code)
+        ok_(reverse('devmo.views.profile_edit', args=(u.username,)) in
+            resp['Location'])
 
     @mock_put_mindtouch_user
     @mock_fetch_user_feed

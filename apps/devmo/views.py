@@ -14,6 +14,7 @@ from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags, edit_string_for_tags
 
+from access.decorators import login_required
 from demos.models import Submission
 
 from . import INTEREST_SUGGESTIONS
@@ -68,6 +69,13 @@ def profile_view(request, username):
         profile=profile, demos=demos, demos_paginator=demos_paginator,
         demos_page=demos_page, docs_feed_items=docs_feed_items
     ))
+
+
+@login_required
+def my_profile(request):
+    user = request.user
+    return HttpResponseRedirect(reverse(
+            'devmo.views.profile_view', args=(user.username,)))
 
 
 def profile_edit(request, username):
@@ -131,3 +139,10 @@ def profile_edit(request, username):
     return jingo.render(request, 'devmo/profile_edit.html', dict(
         profile=profile, form=form, INTEREST_SUGGESTIONS=INTEREST_SUGGESTIONS
     ))
+
+
+@login_required
+def my_profile_edit(request):
+    user = request.user
+    return HttpResponseRedirect(reverse(
+            'devmo.views.profile_edit', args=(user.username,)))
