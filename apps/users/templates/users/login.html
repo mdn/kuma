@@ -10,18 +10,14 @@
   <div class="wrap">
     <div id="content-main" class="full">
       <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}?next={{ next_url }}">
+        {% if use_browserid %}
+          {% include "users/browserid_signin.html" %}
+        {% else %}
             <h1>{{ _('Log In') }}</h1>
             {% include "users/login_form.html" %}
+        {% endif %}
         </article>
     </div>
    </div>
 </section>
-{% endblock %}
-
-{% block js %}
-{% if use_browserid %}
-<script type="text/javascript">
-  $('article.main').load($('article.main').attr('data-browserid-signin-html'), bindBrowserIDSignin);
-</script>
-{% endif %}
 {% endblock %}

@@ -116,13 +116,22 @@ jQuery.fn.placeholder = function(new_value) {
     });
   }
 
-  // And and wire up the BrowserID sign in button
+  // Hide the signed-out block, add and wire up a BrowserID sign in button,
+  // then show the signed-out block again
+  $('ul.signed-out').hide();
   $('ul.signed-out').load($('ul.signed-out').attr('data-browserid-header-signin-html'), function() {
     $('.toggle', $(this)).click(function() {
         $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
         return false;
     });
     bindBrowserIDSignin();
+  });
+  $('ul.signed-out').show();
+
+  // Wire up the statically-drawn browserid-signin element on the change
+  // email page
+  $('#change-email').ready(function(){
+      bindBrowserIDSignin();
   });
 
 // });
