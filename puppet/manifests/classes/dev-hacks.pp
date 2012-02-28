@@ -3,7 +3,7 @@ class dev_tools {
     package { 
         [ "gcc-c++", "git", "subversion-devel", "mercurial", "vim-enhanced",
             "man", "man-pages", "nfs-utils", "nfs-utils-lib", "telnet", "nc",
-            "rsync", "samba", "java-1.6.0-openjdk"]:
+            "rsync", "samba", "java-1.6.0-openjdk", "tmux"]:
             ensure => installed;
     }
 }
@@ -26,6 +26,11 @@ class dev_hacks {
     file { "$PROJ_DIR/settings_local.py":
         ensure => file,
         source => "$PROJ_DIR/puppet/files/vagrant/settings_local.py";
+    }
+        
+    file { "$PROJ_DIR/kumascript_settings_local.json":
+        ensure => file,
+        source => "$PROJ_DIR/puppet/files/vagrant/kumascript_settings_local.json";
     }
         
     case $operatingsystem {
@@ -106,6 +111,15 @@ class dev_hacks {
 
 # Last few things that need doing...
 class dev_hacks_post {
+
+    # This bash_profile auto-activates the virtualenv on login, adds some
+    # useful things to the $PATH, etc.
+    file {
+        "/home/vagrant/.bash_profile":
+            source => "$PROJ_DIR/puppet/files/home/vagrant/bash_profile",
+            owner => "vagrant", group => "vagrant", mode => 0664;
+    }
+    
     case $operatingsystem {
         centos: {
             # Sync a yum cache up to host machine from VM

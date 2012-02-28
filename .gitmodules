@@ -10,3 +10,6 @@
 [submodule "vendor"]
 	path = vendor
 	url = git://github.com/mozilla/kuma-lib.git
+[submodule "kumascript"]
+	path = kumascript
+	url = git://github.com/lmorchard/kumascript.git

@@ -1,5 +1,7 @@
-jQuery("#id_content").ckeditor(function() {
+(function () {
+
   // Callback functions after CKE is ready
+  var setup_ckeditor = function () {
 
     var $head      = $("#article-head");
     var $tools     = $(".cke_toolbox");
@@ -38,6 +40,24 @@ jQuery("#id_content").ckeditor(function() {
     // remove the id_content required attribute
     $('#id_content').removeAttr("required");
 
-  }, {
-  customConfig : '/docs/ckeditor_config.js'
-});
+  };
+
+  jQuery("#id_content").each(function () {
+
+      var el = jQuery(this),
+          doc_slug = $('#id_slug').val();
+
+      if (doc_slug.toLowerCase().indexOf('template:') === 0) {
+          // HACK: If we're on a Template:* page, abort setting up CKEditor
+          // because it doesn't work well at all for these pages.
+          // See bug 731651 for further work down this path.
+          return;
+      }
+
+      el.ckeditor(setup_ckeditor, {
+          customConfig : '/docs/ckeditor_config.js'
+      });
+
+  });
+
+})();
