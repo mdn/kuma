@@ -477,8 +477,6 @@ DOMAIN_METHODS = {
         ('apps/tags/**', 'ignore'),
         ('apps/twitter/**', 'ignore'),
         ('apps/upload/**', 'ignore'),
-        ('apps/users/**', 'ignore'),
-        ('apps/wiki/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
