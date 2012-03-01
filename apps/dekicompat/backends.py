@@ -146,7 +146,10 @@ class DekiUserBackend(object):
             return None
 
     @staticmethod
-    def get_or_create_user(deki_user, sync_attrs=None):
+    def get_or_create_user(deki_user, sync_attrs=('is_superuser',
+                                                  'is_staff',
+                                                  'is_active',
+                                                  'email')):
         """
         Grab the User via their UserProfile and deki_user_id.
         If non exists, create both.
@@ -154,9 +157,6 @@ class DekiUserBackend(object):
         NOTE: Changes to this method may require changes to
               parse_user_info
         """
-        if not sync_attrs:
-            sync_attrs = ('is_superuser', 'is_staff', 'is_active', 'email')
-
         try:
             # Try fetching an existing profile mapped to deki user
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
