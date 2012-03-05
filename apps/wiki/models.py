@@ -2,6 +2,8 @@ from collections import namedtuple
 from datetime import datetime
 from itertools import chain
 from urlparse import urlparse
+import hashlib
+import time
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -13,6 +15,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
 from django.http import Http404
+from django.utils.http import http_date
 
 from south.modelsinspector import add_introspection_rules
 
@@ -493,6 +496,17 @@ class Document(NotificationsMixin, ModelBase):
     # dynamically inherited by translations:
     firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
     operating_systems = _inherited('operating_systems', 'operating_system_set')
+
+    @property
+    def etag(self):
+        """Generate an ETag based on document content hash, suitable for an
+        HTTP header"""
+        return hashlib.md5(self.html.encode('utf8')).hexdigest()
+
+    @property
+    def last_modified(self):
+        """Generate a Last-Modified string suitable for an HTTP header"""
+        return http_date(time.mktime(self.modified.timetuple()))
 
     @property
     def full_path(self):

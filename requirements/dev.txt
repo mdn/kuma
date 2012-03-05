@@ -10,6 +10,7 @@ mock==0.6.0
 pyquery==0.5
 translate-toolkit==1.6.0
 pylint==0.20.0
+pygments==1.4
 
 django-devserver
 

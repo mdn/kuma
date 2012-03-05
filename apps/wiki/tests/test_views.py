@@ -10,6 +10,8 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
+import constance.config
+
 import waffle
 from waffle.models import Flag, Sample, Switch
 
@@ -113,6 +115,7 @@ class LocaleRedirectTests(TestCaseBase):
         self.assertEqual(response.status_code, 302)
         assert ('/%s/docs/' % en) in response['Location']
 
+
 class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
@@ -129,6 +132,83 @@ class ViewTests(TestCaseBase):
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
+
+
+class KumascriptIntegrationTests(TestCaseBase):
+    """Tests for usage of the kumascript service.
+    
+    Note that these tests really just check whether or not the service was
+    used, and are not integration tests meant to exercise the real service.
+    """
+
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        super(KumascriptIntegrationTests, self).setUp()
+
+        self.d, self.r = doc_rev()
+        self.url = reverse('wiki.document', 
+                           args=['%s/%s' % (self.d.locale, self.d.slug)],
+                           locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        # NOTE: We could do this instead of using the @patch decorator over and
+        # over, but it requires an upgrade of mock to 0.8.0
+        
+        # self.mock_perform_kumascript_request = (
+        #         mock.patch('wiki.views._perform_kumascript_request'))
+        # self.mock_perform_kumascript_request.return_value = self.d.html
+        
+    def tearDown(self):
+        super(KumascriptIntegrationTests, self).tearDown()
+
+        constance.config.KUMASCRIPT_TIMEOUT = 0.0
+        
+        # NOTE: We could do this instead of using the @patch decorator over and
+        # over, but it requires an upgrade of mock to 0.8.0
+
+        # self.mock_perform_kumascript_request.stop()
+
+    @mock.patch('wiki.views._perform_kumascript_request')
+    def test_basic_view(self, mock_perform_kumascript_request):
+        """When kumascript timeout is non-zero, the service should be used"""
+        mock_perform_kumascript_request.return_value = self.d.html
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        response = self.client.get(self.url, follow=False)
+        ok_(mock_perform_kumascript_request.called,
+            "kumascript should have been used")
+
+    @mock.patch('wiki.views._perform_kumascript_request')
+    def test_disabled(self, mock_perform_kumascript_request):
+        """When disabled, the kumascript service should not be used"""
+        mock_perform_kumascript_request.return_value = self.d.html
+        constance.config.KUMASCRIPT_TIMEOUT = 0.0
+        response = self.client.get(self.url, follow=False)
+        ok_(not mock_perform_kumascript_request.called,
+            "kumascript not should have been used")
+
+    @mock.patch('wiki.views._perform_kumascript_request')
+    def test_nomacros(self, mock_perform_kumascript_request):
+        mock_perform_kumascript_request.return_value = self.d.html
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        response = self.client.get('%s?nomacros' % self.url, follow=False)
+        ok_(not mock_perform_kumascript_request.called,
+            "kumascript should not have been used")
+
+    @mock.patch('wiki.views._perform_kumascript_request')
+    def test_raw(self, mock_perform_kumascript_request):
+        mock_perform_kumascript_request.return_value = self.d.html
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        response = self.client.get('%s?raw' % self.url, follow=False)
+        ok_(not mock_perform_kumascript_request.called,
+            "kumascript should not have been used")
+
+    @mock.patch('wiki.views._perform_kumascript_request')
+    def test_raw_macros(self, mock_perform_kumascript_request):
+        mock_perform_kumascript_request.return_value = self.d.html
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        response = self.client.get('%s?raw&macros' % self.url, follow=False)
+        ok_(mock_perform_kumascript_request.called,
+            "kumascript should have been used")
 
 
 class DocumentEditingTests(TestCaseBase):

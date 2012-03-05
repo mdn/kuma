@@ -940,6 +940,14 @@ CONSTANCE_CONFIG = dict(
         'We typically multiply this value by the retry number so, e.g., '
         'the 4th retry waits 4*.5 = 2 seconds.'
     ),
+
+    KUMASCRIPT_TIMEOUT = (
+        0.0,
+        'Maximum seconds to wait for a response from the kumascript service. '
+        'On timeout, the document gets served up as-is and without macro '
+        'evaluation as an attempt at graceful failure. NOTE: a value of 0 '
+        'disables kumascript altogether.'
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
@@ -953,3 +961,5 @@ DOMAIN = 'developer.mozilla.org'
 
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
+
+KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
