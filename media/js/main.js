@@ -96,7 +96,7 @@ k = {};
      * This lazy loads our jQueryUI script.
      */
     function lazyLoadScripts() {
-        var scripts = ['js/libs/jqueryui-min.js'],
+        var scripts = ['js/libs/jqueryui.min.js'],
             styles = [],  // was: ['css/jqueryui/jqueryui-min.css']
                           // turns out this messes with search
             i;

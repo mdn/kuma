@@ -4,6 +4,8 @@ import logging
 from urllib import urlencode
 from string import ascii_letters
 
+import requests
+
 try:
     from functools import wraps
 except ImportError:
@@ -18,6 +20,8 @@ from django.http import (HttpResponse, HttpResponseRedirect,
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods)
+
+import constance.config
 
 from waffle.decorators import waffle_flag
 
@@ -185,6 +189,14 @@ def document(request, document_slug, document_locale):
         except Document.DoesNotExist:
             pass
 
+    # Utility to set common headers used by all response exit points
+    def set_common_headers(r):
+        r['ETag'] = doc.etag
+        r['Last-Modified'] = doc.last_modified
+        if doc.current_revision:
+            r['x-kuma-revision'] = doc.current_revision.id
+        return r
+
     related = doc.related_documents.order_by('-related_to__in_common')[0:5]
 
     # Get the contributors. (To avoid this query, we could render the
@@ -201,11 +213,30 @@ def document(request, document_slug, document_locale):
 
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
-    show_raw = request.GET.get('raw', False)
-    need_edit_links = request.GET.get('edit_links', False)
+    show_raw = request.GET.get('raw', False) is not False
+    no_macros = request.GET.get('nomacros', False) is not False
+    force_macros = request.GET.get('macros', False) is not False
+    need_edit_links = request.GET.get('edit_links', False) is not False
+
+    # Grab the document HTML as a fallback, then attempt to use kumascript:
+    doc_html = doc.html
+    if (constance.config.KUMASCRIPT_TIMEOUT > 0 and 
+            (force_macros or (not no_macros and not show_raw))):
+        # We'll make a request to kumascript for macro evaluation only if:
+        #   * The service isn't disabled with a timeout of 0
+        #   * The request has *not* asked for raw source
+        #     (eg. ?raw)
+        #   * The request has *not* asked for no macro evaluation
+        #     (eg. ?nomacros)
+        #   * The request *has* asked for macro evaluation 
+        #     (eg. ?raw&macros)
+        resp_body = _perform_kumascript_request(document_locale,
+                                                document_slug)
+        if resp_body:
+            doc_html = resp_body
 
     # Start applying some filters to the document HTML
-    tool = wiki.content.parse(doc.html)
+    tool = wiki.content.parse(doc_html)
 
     # If a section ID is specified, extract that section.
     if section_id:
@@ -221,16 +252,48 @@ def document(request, document_slug, document_locale):
     # iframe inclusion
     if show_raw:
         response = HttpResponse(tool.serialize())
-        response['x-kuma-revision'] = doc.current_revision.id
         response['x-frame-options'] = 'Allow'
-        return response
+        return set_common_headers(response)
 
     data = {'document': doc, 'document_html': tool.serialize(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason}
     data.update(SHOWFOR_DATA)
-    return jingo.render(request, 'wiki/document.html', data)
+
+    response = jingo.render(request, 'wiki/document.html', data)
+    # FIXME: For some reason, the ETag isn't coming through here.
+    return set_common_headers(response)
+
+
+def _perform_kumascript_request(document_locale, document_slug):
+    """Perform a kumascript GET request for a document locale and slug.
+
+    This is broken out into its own utility function, both to make the view
+    method simpler and to make it easy to mock out in testing.
+    """
+    resp_body = None
+    
+    try:
+        url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
+        resp = requests.get(
+            url_tmpl.format(path='%s/%s' % (document_locale,
+                                            document_slug)),
+            timeout=constance.config.KUMASCRIPT_TIMEOUT)
+        if resp.status_code == 200:
+            # HACK: Assume we're getting UTF-8, which we should be.
+            # TODO: Better solution would be to upgrade the requests module
+            # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
+            # which does auto-detection. But, that will break things.
+            resp_body = resp.read().decode('utf8')
+
+    except Exception, e:
+        # Do nothing, if the kumascript service fails in some way.
+        # TODO: Log the failure more usefully here.
+        logging.debug("KS FAILED %s" % e)
+        pass
+
+    return resp_body
 
 
 @waffle_flag('kumawiki')
