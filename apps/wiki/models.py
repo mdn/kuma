@@ -19,9 +19,6 @@ from django.utils.http import http_date
 
 from south.modelsinspector import add_introspection_rules
 
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
-
 from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
@@ -30,9 +27,7 @@ from sumo.urlresolvers import reverse, split_path
 from wiki import TEMPLATE_TITLE_PREFIX
 import wiki.content
 
-import caching.base
-
-from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
+from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
 from taggit.utils import parse_tags
 
@@ -517,7 +512,8 @@ class Document(NotificationsMixin, ModelBase):
         """Build the absolute URL to this document from its full path"""
         if not ui_locale:
             ui_locale = self.locale
-        return reverse('wiki.document', locale=ui_locale, args=[self.full_path])
+        return reverse('wiki.document', locale=ui_locale,
+                       args=[self.full_path])
 
     @staticmethod
     def locale_and_slug_from_path(path, request=None):
@@ -881,6 +877,16 @@ class Revision(ModelBase):
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
             strip_comments=False
         )
+
+    def get_previous(self):
+        previous_revisions = self.document.revisions.filter(
+                                is_approved=True,
+                                created__lt=self.created,
+                                ).order_by('-created')
+        if len(previous_revisions):
+            return previous_revisions[0]
+        else:
+            return None
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

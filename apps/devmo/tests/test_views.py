@@ -32,6 +32,7 @@ from devmo.tests import mock_fetch_user_feed
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 
+from waffle.models import Flag
 
 TESTUSER_PASSWORD = 'testpass'
 APP_DIR = dirname(dirname(__file__))
@@ -137,6 +138,19 @@ class ProfileViewsTest(TestCase):
             self.client.get(url, follow=True)
         except PageNotAnInteger:
             ok_(False, "Non-numeric page number should not cause an error")
+
+    def test_kumawiki_docs_activity(self):
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        ok_(doc.find('#docs-activity').hasClass('mindtouch'))
+        Flag.objects.create(name='kumawiki', everyone=True)
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        ok_(doc.find('#docs-activity').hasClass('kumawiki'))
 
     @mock_put_mindtouch_user
     @mock_fetch_user_feed

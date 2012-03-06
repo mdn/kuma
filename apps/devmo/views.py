@@ -10,6 +10,8 @@ from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags
 
+import waffle
+
 from access.decorators import login_required
 from demos.models import Submission
 
@@ -59,13 +61,17 @@ def profile_view(request, username):
     demos_paginator = Paginator(demos, DEMOS_PAGE_SIZE, True)
     demos_page = demos_paginator.page(page_number)
 
+    wiki_activity = None
+    if waffle.flag_is_active(request, 'kumawiki'):
+        wiki_activity = profile.wiki_activity()
     docs_feed_items = UserDocsActivityFeed(user.username).items
     if docs_feed_items is not False:
         docs_feed_items = docs_feed_items[:DOCS_ACTIVITY_MAX_ITEMS]
 
     return jingo.render(request, 'devmo/profile.html', dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
-        demos_page=demos_page, docs_feed_items=docs_feed_items
+        demos_page=demos_page, docs_feed_items=docs_feed_items,
+        wiki_activity=wiki_activity
     ))
 
 
