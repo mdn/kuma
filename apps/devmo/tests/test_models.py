@@ -19,6 +19,8 @@ from devmo.models import Calendar, Event, UserProfile
 from dekicompat.tests import (mock_post_mindtouch_user, mock_put_mindtouch_user)
 from dekicompat.backends import DekiUser, DekiUserBackend
 
+from wiki.tests import revision
+
 
 APP_DIR = dirname(dirname(__file__))
 MOZILLA_PEOPLE_EVENTS_CSV = '%s/fixtures/Mozillapeopleevents.csv' % APP_DIR
@@ -227,3 +229,10 @@ class TestUserProfile(test_utils.TestCase):
         user = User.objects.get(username='testuser')
         profile = UserProfile.objects.get(user=user)
         eq_("en", profile.mindtouch_language)
+
+    def test_wiki_activity(self):
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+        rev = revision(save=True, is_approved=True)
+        eq_(1, len(profile.wiki_activity()))
+        item = profile.wiki_activity()[0]

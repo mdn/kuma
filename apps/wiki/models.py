@@ -882,6 +882,16 @@ class Revision(ModelBase):
             strip_comments=False
         )
 
+    def get_previous(self):
+        previous_revisions = self.document.revisions.filter(
+                                is_approved=True,
+                                created__lt=self.created,
+                                ).order_by('-created')
+        if len(previous_revisions):
+            return previous_revisions[0]
+        else:
+            return None
+
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
 # enumeration table of int-to-string is not represented in the DB because of

@@ -25,6 +25,7 @@ from tower import ugettext_lazy as _
 from jsonfield import JSONField
 
 from sumo.models import LocaleField
+from wiki.models import Revision
 
 from taggit_extras.managers import NamespacedTaggableManager
 
@@ -95,7 +96,8 @@ class UserProfile(ModelBase):
     # a different db
     deki_user_id = models.PositiveIntegerField(default=0,
                                                editable=False)
-    timezone = TimeZoneField(null=True, blank=True, verbose_name=_(u'Timezone'))
+    timezone = TimeZoneField(null=True, blank=True,
+                             verbose_name=_(u'Timezone'))
     locale = LocaleField(null=True, blank=True, db_index=True,
                          verbose_name=_(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
@@ -113,8 +115,8 @@ class UserProfile(ModelBase):
                                 blank=True)
     bio = models.TextField(_(u'About Me'), blank=True)
 
-    irc_nickname = models.CharField(_(u'IRC nickname'), max_length=255, default='',
-                                    blank=True)
+    irc_nickname = models.CharField(_(u'IRC nickname'), max_length=255,
+                                    default='', blank=True)
 
     tags = NamespacedTaggableManager(_(u'Tags'), blank=True)
 
@@ -207,6 +209,10 @@ class UserProfile(ModelBase):
         from dekicompat.backends import DekiUserBackend
         DekiUserBackend.put_mindtouch_user(self.user)
 
+    def wiki_activity(self):
+        return Revision.objects.filter(
+                                    creator=self.user).order_by('-created')[:5]
+
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
@@ -218,16 +224,17 @@ def create_user_profile(sender, instance, created, **kwargs):
 try:
     from south.modelsinspector import add_introspection_rules
     add_introspection_rules(rules=[(
-                                    (TimeZoneField, ), # Class(es) these apply to
-                                    [], # Positional arguments (not used)
-                                    { # Keyword argument
-                                        "max_length": ["max_length", { "default": MAX_TIMEZONE_LENGTH }],
-                                    }
-                                )],
-                                patterns=['timezones\.fields\.'])
+            (TimeZoneField,),   # Class(es) these apply to
+            [],                 # Positional arguments (not used)
+            {                   # Keyword argument
+            "max_length": ["max_length", {"default": MAX_TIMEZONE_LENGTH}],
+            }
+            )],
+        patterns=['timezones\.fields\.'])
     add_introspection_rules([], ['sumo.models.LocaleField'])
 except ImportError:
     pass
+
 
 class UserDocsActivityFeed(object):
     """Fetches, parses, and caches a user activity feed from Mindtouch"""
@@ -240,7 +247,8 @@ class UserDocsActivityFeed(object):
     def feed_url_for_user(self):
         """Build the API URL for a user docs activity feed"""
         return u'%s/@api/deki/users/=%s/feed?format=raw' % (
-            DEKIWIKI_ENDPOINT, urllib.quote_plus(self.username.encode('utf-8')))
+            DEKIWIKI_ENDPOINT, urllib.quote_plus(
+                                                self.username.encode('utf-8')))
 
     def fetch_user_feed(self):
         """Fetch a user feed from DekiWiki"""
@@ -270,7 +278,7 @@ class UserDocsActivityFeed(object):
                     cache.set(cache_key, items,
                               USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT)
 
-            except Exception, e:
+            except Exception:
                 # On error, items isn't just empty, it's False
                 items = False
 
@@ -324,8 +332,8 @@ class UserDocsActivityFeedParser(ContentHandler):
             # </table> is synonmous with endDocument, so ignore.
             return
         elif 'change' == name:
-            # The end of a <change> item signals the completion of collecting a set
-            # of properties.
+            # The end of a <change> item signals the completion of collecting
+            # a set of properties.
             self.items.append(UserDocsActivityFeedItem(self.curr,
                                                        self.base_url))
             self.in_current = False
@@ -345,7 +353,7 @@ class UserDocsActivityFeedItem(object):
     RC_TIMESTAMP_FORMAT = '%Y%m%d%H%M%S'
 
     # This list grabbed from DekiWiki C# source
-    # https://svn.mindtouch.com/source/public/dekiwiki/trunk/src/services/mindtouch.deki.data/types.cs
+    # http://mzl.la/mindtouch_data_types
     RC_TYPES = {
         "0": "EDIT",
         "1": "NEW",
@@ -367,7 +375,7 @@ class UserDocsActivityFeedItem(object):
         "60": "USER_CREATED",
     }
 
-    # See: https://svn.mindtouch.com/source/public/dekiwiki/trunk/web/includes/Defines.php
+    # See: http://mzl.la/mindtouch_constants
     # TODO: Merge these dicts to id->prefix?
     RC_NAMESPACE_NAMES = {
         "0": "NS_MAIN",
@@ -462,7 +470,8 @@ class UserDocsActivityFeedItem(object):
 
     @property
     def view_url(self):
-        return u'%s/%s' % (self.base_url, urllib.quote(self.current_title.encode('utf8')))
+        return u'%s/%s' % (self.base_url, urllib.quote(
+                                            self.current_title.encode('utf8')))
 
     @property
     def edit_url(self):
@@ -506,15 +515,15 @@ def parse_date(date_str):
 
 
 FIELD_MAP = {
-    "date": ["Start Date",None, parse_date],
-    "end_date": ["End Date",None, parse_date],
-    "conference": ["Conference",None],
-    "conference_link": ["Link",None],
-    "location": ["Location",None],
-    "people": ["Who",None],
-    "description": ["Description",None],
-    "done": ["Done",None],
-    "materials": ["Materials URL",None],
+    "date": ["Start Date", None, parse_date],
+    "end_date": ["End Date", None, parse_date],
+    "conference": ["Conference", None],
+    "conference_link": ["Link", None],
+    "location": ["Location", None],
+    "people": ["Who", None],
+    "description": ["Description", None],
+    "done": ["Done", None],
+    "materials": ["Materials URL", None],
 }
 
 
@@ -594,7 +603,8 @@ class Calendar(ModelBase):
                 row['done'] = True
             row['end_date'] = row['end_date'].strftime("%Y-%m-%d")
             row['date'] = row['date'].strftime("%Y-%m-%d")
-            for field_name in ('conference', 'location', 'people', 'description'):
+            for field_name in ('conference', 'location', 'people',
+                               'description'):
                 # Sometimes we still get here with non-ASCII data;
                 # that will blow up on attempting to save, so we check
                 # the text-based fields to make sure they decode
