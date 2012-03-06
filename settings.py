@@ -546,6 +546,8 @@ MINIFY_BUNDLES = {
         'wiki': (
             'css/wiki.css',
             'css/wiki-screen.css',
+            'syntaxhighlighter/styles/shCore.css',
+            'syntaxhighlighter/styles/shThemeDefault.css',
         ),
         'home': (
             'css/home.css',
@@ -643,6 +645,9 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'js/libs/django/prepopulate.js',
+            'syntaxhighlighter/scripts/shCore.js',
+            'syntaxhighlighter/scripts/shBrushCss.js',
+            'syntaxhighlighter/scripts/shBrushJScript.js',
             'js/wiki.js',
             'js/main.js',
         ),

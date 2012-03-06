@@ -16,8 +16,7 @@ import itertools
 import hashlib
 from optparse import make_option
 
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
+from BeautifulSoup import BeautifulSoup
 from pyquery import PyQuery as pq
 
 from django.conf import settings
@@ -632,6 +631,7 @@ class Command(BaseCommand):
         if pt.startswith('#REDIRECT'):
             pt = self.convert_redirect(pt)
 
+        pt = self.convert_code_blocks(pt)
         # TODO: bug 710728 - Convert and normalize template calls
         # TODO: bug 710726 - Convert intra-wiki links?
 
@@ -647,6 +647,16 @@ class Command(BaseCommand):
             href = reverse('wiki.document', args=[title])
             pt = REDIRECT_CONTENT % dict(href=href, title=title)
         return pt
+
+    def convert_code_blocks(self, pt):
+        soup = BeautifulSoup(pt)
+        for code_block in soup.findAll('pre',
+                                       {"class": "deki-transform",
+                                        "function": "syntax.JavaScript",
+                                       }):
+            code_block['class'] = "brush: js"
+            del code_block['function']
+        return str(soup)
 
     def get_tags_for_page(self, r):
         """For a given page row, get the list of tags from MindTouch and build
