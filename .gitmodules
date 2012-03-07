@@ -12,4 +12,4 @@
 	url = git://github.com/mozilla/kuma-lib.git
 [submodule "kumascript"]
 	path = kumascript
-	url = git://github.com/lmorchard/kumascript.git
+	url = git://github.com/mozilla/kumascript.git
