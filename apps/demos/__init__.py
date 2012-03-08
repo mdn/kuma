@@ -20,6 +20,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     {
         "tag_name": "challenge:none",
         "title": _("None"),
+        "description": _("Removed from Derby"),
     },
     {
         "tag_name": "challenge:2011:june",
