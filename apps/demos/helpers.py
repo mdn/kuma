@@ -233,7 +233,7 @@ def tag_description(tag):
     if not tag:
         return ''
     name = (isinstance(tag, basestring)) and tag or tag.name
-    if name in TAG_DESCRIPTIONS:
+    if name in TAG_DESCRIPTIONS and 'description' in TAG_DESCRIPTIONS[name]:
         return TAG_DESCRIPTIONS[name]['description']
     else:
         return name
