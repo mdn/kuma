@@ -16,8 +16,7 @@ import itertools
 import hashlib
 from optparse import make_option
 
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
+from BeautifulSoup import BeautifulSoup
 from pyquery import PyQuery as pq
 
 from django.conf import settings
@@ -34,9 +33,8 @@ from sumo.urlresolvers import reverse
 
 from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES)
 
-import wiki.content
 from wiki.models import REDIRECT_CONTENT
-from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
+from wiki.content import ContentSectionTool, CodeSyntaxFilter
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
@@ -46,6 +44,7 @@ log = commonware.log.getLogger('kuma.migration')
 # Regular expression to match and extract page title from MindTouch redirects
 # eg. #REDIRECT [[en/DOM/Foo]], #REDIRECT[[foo_bar_baz]]
 MT_REDIR_PAT = re.compile(r"""^#REDIRECT ?\[\[([^\]]+)\]\]""")
+
 
 # See also: https://github.com/mozilla/kuma/blob/mdn/apps/devmo/models.py#L327
 # I'd just import from there, but wanted to do this a little differently
@@ -138,6 +137,11 @@ class Command(BaseCommand):
                     help="Migrate # of documents containing redirects"),
         make_option('--nonen', dest="nonen", type="int", default=0,
                     help="Migrate # of documents in locales other than en-US"),
+        make_option('--withsyntax', dest="withsyntax", type="int", default=0,
+                    help="Migrate # of documents with syntax blocks"),
+        make_option('--syntax-metrics', action="store_true",
+                    dest="syntax_metrics", default=False,
+                    help="Measure syntax highlighter usage, skip migration"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -179,6 +183,8 @@ class Command(BaseCommand):
 
         if options['template_metrics']:
             self.handle_template_metrics(rows)
+        elif options['syntax_metrics']:
+            self.handle_syntax_metrics(rows)
         else:
             self.handle_migration(rows)
 
@@ -294,6 +300,18 @@ class Command(BaseCommand):
                         if '.' not in out and 'Template:' not in out:
                             out = u'Template:%s' % out
                         print out.encode('utf-8')
+
+    def handle_syntax_metrics(self, rows):
+        """Discover the languages used in syntax highlighting"""
+        for r in rows:
+            pt = r['page_text']
+            soup = BeautifulSoup(pt)
+            blocks = soup.findAll()
+            for block in blocks:
+                for attr in block.attrs:
+                    if attr[0] == 'function':
+                        print (u"%s\t%s\t%s" % (r['page_title'], block.name,
+                                                    attr[1])).encode('utf-8')
 
     @transaction.commit_on_success
     def wipe_documents(self):
@@ -427,6 +445,18 @@ class Command(BaseCommand):
                     ORDER BY page_timestamp DESC
                     LIMIT %s
                 """ % (ns_list, '%s'), self.options['nonen']))
+
+            if self.options['withsyntax'] > 0:
+                log.info("Gathering %s pages with syntax highlighting" %
+                         self.options['withsyntax'])
+                iters.append(self._query("""
+                    SELECT *
+                    FROM pages
+                    WHERE page_namespace IN %s AND
+                          page_text like '%%%%function="syntax.%%%%'
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """ % (ns_list, '%s'), self.options['withsyntax']))
 
         return itertools.chain(*iters)
 
@@ -632,6 +662,7 @@ class Command(BaseCommand):
         if pt.startswith('#REDIRECT'):
             pt = self.convert_redirect(pt)
 
+        pt = self.convert_code_blocks(pt)
         # TODO: bug 710728 - Convert and normalize template calls
         # TODO: bug 710726 - Convert intra-wiki links?
 
@@ -646,6 +677,10 @@ class Command(BaseCommand):
             title = m.group(1)
             href = reverse('wiki.document', args=[title])
             pt = REDIRECT_CONTENT % dict(href=href, title=title)
+        return pt
+
+    def convert_code_blocks(self, pt):
+        pt = ContentSectionTool(pt).filter(CodeSyntaxFilter).serialize()
         return pt
 
     def get_tags_for_page(self, r):

@@ -46,6 +46,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['div'] = ['class', 'id']
+ALLOWED_ATTRIBUTES['pre'] = ['class', 'id']
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
@@ -53,7 +54,7 @@ ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
-    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code', 'dl', 'dt', 'dd',
+    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',

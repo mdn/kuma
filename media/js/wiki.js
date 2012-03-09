@@ -27,6 +27,9 @@
             //updateShowforSelectors();
             initApproveReject();
         }
+        if ($('body').is('.document')){
+            initSyntaxHighlighter();
+        }
 
         if ($('body').is('.home')) {
             initClearOddSections();
@@ -566,6 +569,10 @@
                    .prepopulate($(field.dependency_ids.join(',')),
                                 field.maxLength);
         });
+    }
+
+    function initSyntaxHighlighter() {
+        SyntaxHighlighter.all();
     }
 
     // Return a table of contents (an <ol>) listing the visible headers within
