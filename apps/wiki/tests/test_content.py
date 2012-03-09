@@ -12,7 +12,7 @@ from django.core.exceptions import ValidationError
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
-from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
+from wiki.content import SECTION_EDIT_TAGS, CodeSyntaxFilter
 from wiki.tests import normalize_html
 
 import html5lib
@@ -309,6 +309,35 @@ class ContentSectionToolTests(TestCase):
                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_code_syntax_conversion(self):
+        doc_src = """
+            <h2>Some JavaScript</h2>:
+            <pre class="deki-transform" function="syntax.JavaScript">
+            function foo(){
+                alert("bar");
+            }
+            </pre>
+            <pre>Some CSS:</pre>
+            <pre class="dek-trans" function="syntax.CSS">
+            .dek-trans { color: red; }
+            </pre>
+        """
+        expected = """
+            <h2>Some JavaScript</h2>:
+            <pre class="brush: js">
+            function foo(){
+                alert("bar");
+            }
+            </pre>
+            <pre>Some CSS:</pre>
+            <pre class="brush: css">
+            .dek-trans { color: red; }
+            </pre>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(CodeSyntaxFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
 
 class AllowedHTMLTests(TestCase):
     simple_tags = (
