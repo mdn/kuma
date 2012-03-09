@@ -33,9 +33,8 @@ from sumo.urlresolvers import reverse
 
 from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES)
 
-import wiki.content
 from wiki.models import REDIRECT_CONTENT
-from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
+from wiki.content import ContentSectionTool, CodeSyntaxFilter
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
@@ -46,12 +45,6 @@ log = commonware.log.getLogger('kuma.migration')
 # eg. #REDIRECT [[en/DOM/Foo]], #REDIRECT[[foo_bar_baz]]
 MT_REDIR_PAT = re.compile(r"""^#REDIRECT ?\[\[([^\]]+)\]\]""")
 
-# Regex to extract language from MindTouch code elements' function attribute
-MT_SYNTAX_PAT = re.compile(r"""syntax\.(\w+)""")
-# map for mt syntax values that should turn into new brush values
-MT_SYNTAX_BRUSH_MAP = {
-    'javascript': 'js',
-}
 
 # See also: https://github.com/mozilla/kuma/blob/mdn/apps/devmo/models.py#L327
 # I'd just import from there, but wanted to do this a little differently
@@ -687,19 +680,8 @@ class Command(BaseCommand):
         return pt
 
     def convert_code_blocks(self, pt):
-        soup = BeautifulSoup(pt)
-        for el in soup.findAll(function=re.compile('^syntax')):
-            if el.has_key('function') and 'syntax' in el['function']:
-                m = MT_SYNTAX_PAT.match(el['function'])
-                if m:
-                    language = m.group(1).lower()
-                    if language in MT_SYNTAX_BRUSH_MAP:
-                        el['class'] = "brush: %s" % (
-                                MT_SYNTAX_BRUSH_MAP[language])
-                    else:
-                        el['class'] = "brush: %s" % language
-                    del el['function']
-        return str(soup)
+        pt = ContentSectionTool(pt).filter(CodeSyntaxFilter).serialize()
+        return pt
 
     def get_tags_for_page(self, r):
         """For a given page row, get the list of tags from MindTouch and build
