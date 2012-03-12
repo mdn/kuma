@@ -833,3 +833,11 @@ class BrowserIDTestCase(TestCase):
         eq_(200, resp.status_code)
         doc = pq(resp.content)
         ok_('testuser@test.com' in doc.find('li#field_email').text())
+
+
+class OldProfileTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def test_old_profile_url_gone(self):
+        resp = self.client.get('/users/edit', follow=True)
+        eq_(404, resp.status_code)
