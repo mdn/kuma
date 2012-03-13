@@ -27,7 +27,6 @@ users_patterns = patterns('',
     url(r'^/register$', views.register, name='users.register'),
     url(r'^/activate/(?P<activation_key>\w+)$', views.activate,
         name='users.activate'),
-    url(r'^/edit$', views.edit_profile, name='users.edit_profile'),
     url(r'^/avatar$', views.edit_avatar, name='users.edit_avatar'),
     url(r'^/avatar/delete$', views.delete_avatar, name='users.delete_avatar'),
 
