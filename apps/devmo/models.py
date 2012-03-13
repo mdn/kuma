@@ -520,7 +520,7 @@ FIELD_MAP = {
     "conference": ["Conference", None],
     "conference_link": ["Link", None],
     "location": ["Location", None],
-    "people": ["Who", None],
+    "people": ["Attendees", None],
     "description": ["Description", None],
     "done": ["Done", None],
     "materials": ["Materials URL", None],
