@@ -12,7 +12,10 @@
 
 {% block content %}
   {% set language = settings.LANGUAGES[locale.lower()] %}
-  <article id="localize-document" class="main form-page">
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="localize-document">
     <h1>{{ _('Translating {title}')|f(title=parent.title) }}</h1>
     <div class="change-locale">
       <p>
@@ -28,7 +31,7 @@
         <ul>
           {% for lcl in settings.LANGUAGE_CHOICES %}
             {% if lcl[0] not in [settings.WIKI_DEFAULT_LANGUAGE, locale] %}
-              <li><a href="{{ url('wiki.translate', locale=lcl[0], document_slug=parent.slug) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
+              <li><a href="{{ url('wiki.translate', locale=lcl[0], document_path=document.parent.full_path) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
             {% endif %}
           {% endfor %}
         </ul>
@@ -91,6 +94,7 @@
             {{ csrf() }}
             <input type="hidden" name="form" value="rev" />
         {% endif %}
+        {# TODO: restore keywords and summary when we restore search app
         <ul class="description">
           <li>
             <div class="approved">
@@ -113,6 +117,7 @@
             </div>
           </li>
         </ul>
+        #}
         {% if document.current_revision and document.current_revision.based_on %}
           {# Diff between the English version the current translation is based on and the current English version. #}
           {% set revision_from = document.current_revision.based_on %}
@@ -145,6 +150,9 @@
     {% endif %}
     <div id="preview"></div>
   </article>
+    </div>
+   </div>
+</section>
 {% endblock %}
 
 {% block side_top %}
