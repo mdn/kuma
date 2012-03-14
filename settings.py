@@ -958,6 +958,12 @@ CONSTANCE_CONFIG = dict(
         'evaluation as an attempt at graceful failure. NOTE: a value of 0 '
         'disables kumascript altogether.'
     ),
+    KUMASCRIPT_MAX_AGE = (
+        600,
+        'Maximum acceptable age (in seconds) of a cached response from '
+        'kumascript. Passed along in a Cache-Control: max-age={value} header, '
+        'which tells kumascript whether or not to serve up a cached response.'
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
