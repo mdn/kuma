@@ -37,6 +37,20 @@
               <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path) }}">{{_('Edit')}}</a></li>
             {% endif %}
         </ul>
+        {% if kumascript_errors %}
+          <div class="warning" id="kumascript-errors">
+            <p>{{ _("There are scripting errors on this page:") }}</p>
+            <ul>
+              {% for error in kumascript_errors %}
+                <li class="error error-{{ error.level }}">
+                  <span class="level">{{ error.level }}</span>
+                  {% if error.args %}<span class="type">{{ error.args[0] }}</span>{% endif %}
+                  <span class="message">{{ error.message }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
        </header>
         {% if redirected_from %}
           <div class="warning" id="redirected-from">
