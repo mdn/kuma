@@ -3,6 +3,7 @@ import json
 
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.cache import cache
 
 import mock
 from nose import SkipTest
@@ -134,6 +135,14 @@ class ViewTests(TestCaseBase):
         eq_('an article title', data['title'])
 
 
+class FakeResponse:
+    """Quick and dirty mocking stand-in for a response object"""
+    def __init__(self, **entries): 
+        self.__dict__.update(entries)
+    def read(self):
+        return self.body
+
+
 class KumascriptIntegrationTests(TestCaseBase):
     """Tests for usage of the kumascript service.
     
@@ -162,6 +171,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         super(KumascriptIntegrationTests, self).tearDown()
 
         constance.config.KUMASCRIPT_TIMEOUT = 0.0
+        constance.config.KUMASCRIPT_MAX_AGE = 600
         
         # NOTE: We could do this instead of using the @patch decorator over and
         # over, but it requires an upgrade of mock to 0.8.0
@@ -209,6 +219,98 @@ class KumascriptIntegrationTests(TestCaseBase):
         response = self.client.get('%s?raw&macros' % self.url, follow=False)
         ok_(mock_perform_kumascript_request.called,
             "kumascript should have been used")
+
+    @mock.patch('requests.get')
+    def test_ua_max_age_zero(self, mock_requests_get):
+        """Authenticated users can request a zero max-age for kumascript"""
+        trap = {}
+        def my_requests_get(url, headers=None, timeout=None):
+            trap['headers'] = headers
+            return FakeResponse(status_code=200,
+                headers={}, body='HELLO WORLD')
+        
+        mock_requests_get.side_effect = my_requests_get
+
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 1234
+
+        response = self.client.get(self.url, follow=False,
+                HTTP_CACHE_CONTROL='max-age=0')
+        eq_('max-age=1234', trap['headers']['Cache-Control'])
+
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(self.url, follow=False,
+                HTTP_CACHE_CONTROL='max-age=0')
+        eq_('max-age=0', trap['headers']['Cache-Control'])
+
+    @mock.patch('requests.get')
+    def test_ua_no_cache(self, mock_requests_get):
+        """Authenticated users can request no-cache for kumascript"""
+        trap = {}
+        def my_requests_get(url, headers=None, timeout=None):
+            trap['headers'] = headers
+            return FakeResponse(status_code=200,
+                headers={}, body='HELLO WORLD')
+        
+        mock_requests_get.side_effect = my_requests_get
+
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 1234
+
+        response = self.client.get(self.url, follow=False,
+                HTTP_CACHE_CONTROL='no-cache')
+        eq_('max-age=1234', trap['headers']['Cache-Control'])
+
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(self.url, follow=False,
+                HTTP_CACHE_CONTROL='no-cache')
+        eq_('no-cache', trap['headers']['Cache-Control'])
+
+    @mock.patch('requests.get')
+    def test_conditional_get(self, mock_requests_get):
+        """Ensure conditional GET in requests to kumascript work as expected"""
+        expected_etag = "8675309JENNY"
+        expected_modified = "Wed, 14 Mar 2012 22:29:17 GMT"
+        expected_content = "HELLO THERE, WORLD"
+
+        trap = dict( req_cnt=0 )
+        def my_requests_get(url, headers=None, timeout=None):
+            trap['req_cnt'] += 1
+            trap['headers'] = headers
+
+            if trap['req_cnt'] in [1, 2]:
+                return FakeResponse(status_code=200, body=expected_content,
+                    headers = { 
+                        "etag": expected_etag,
+                        "last-modified": expected_modified,
+                        "age": 456
+                    })
+            else:
+                return FakeResponse(status_code=304, body='',
+                    headers = { 
+                        "etag": expected_etag,
+                        "last-modified": expected_modified,
+                        "age": 123
+                    })
+        
+        mock_requests_get.side_effect = my_requests_get
+
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 1234
+
+        # First request to let the view cache etag / last-modified
+        response = self.client.get(self.url)
+
+        # Second request to verify the view sends them back
+        response = self.client.get(self.url)
+        eq_(expected_etag, trap['headers']['If-None-Match'])
+        eq_(expected_modified, trap['headers']['If-Modified-Since'])
+        eq_('200 OK, Age: 456', response['X-Kumascript-Caching'])
+
+        # Third request to verify content was cached and served on a 304
+        response = self.client.get(self.url)
+        ok_(expected_content in response.content)
+        eq_('304 Not Modified, Age: 123', response['X-Kumascript-Caching'])
 
 
 class DocumentEditingTests(TestCaseBase):
