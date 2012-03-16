@@ -14,6 +14,7 @@ except ImportError:
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.core.cache import cache
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
@@ -190,11 +191,15 @@ def document(request, document_slug, document_locale):
             pass
 
     # Utility to set common headers used by all response exit points
+    response_headers = dict()
     def set_common_headers(r):
         r['ETag'] = doc.etag
         r['Last-Modified'] = doc.last_modified
         if doc.current_revision:
             r['x-kuma-revision'] = doc.current_revision.id
+        # Finally, set any extra headers. update() doesn't work here.
+        for k,v in response_headers.items():
+            r[k] = v
         return r
 
     related = doc.related_documents.order_by('-related_to__in_common')[0:5]
@@ -230,7 +235,8 @@ def document(request, document_slug, document_locale):
         #     (eg. ?nomacros)
         #   * The request *has* asked for macro evaluation 
         #     (eg. ?raw&macros)
-        resp_body = _perform_kumascript_request(document_locale,
+        resp_body = _perform_kumascript_request(request, response_headers,
+                                                document_locale,
                                                 document_slug)
         if resp_body:
             doc_html = resp_body
@@ -266,7 +272,27 @@ def document(request, document_slug, document_locale):
     return set_common_headers(response)
 
 
-def _perform_kumascript_request(document_locale, document_slug):
+def _build_kumascript_cache_keys(document_locale, document_slug):
+    """Build the cache keys used for Kumascript"""
+    cache_key = ('kumascript:%s/%s:%s' %
+                 (document_locale, document_slug, '%s'))
+    ck_etag = cache_key % 'etag'
+    ck_modified = cache_key % 'modified'
+    ck_body = cache_key % 'body'
+    return (ck_etag, ck_modified, ck_body)
+
+
+def _invalidate_kumascript_cache(document):
+    """Invalidate the cached kumascript response for a given document"""
+    if constance.config.KUMASCRIPT_TIMEOUT == 0:
+        # Do nothing if kumascript is disabled
+        return
+    cache.delete_many(_build_kumascript_cache_keys(document.slug,
+                                                   document.locale))
+
+
+def _perform_kumascript_request(request, response_headers, document_locale,
+                                document_slug):
     """Perform a kumascript GET request for a document locale and slug.
 
     This is broken out into its own utility function, both to make the view
@@ -276,16 +302,72 @@ def _perform_kumascript_request(document_locale, document_slug):
     
     try:
         url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
-        resp = requests.get(
-            url_tmpl.format(path='%s/%s' % (document_locale,
-                                            document_slug)),
+        url = url_tmpl.format(path='%s/%s' %
+                                   (document_locale, document_slug))
+
+        ck_etag, ck_modified, ck_body = _build_kumascript_cache_keys(
+                                            document_slug, document_locale)
+
+        # Default to the configured max-age for cache control.
+        max_age = constance.config.KUMASCRIPT_MAX_AGE
+        cache_control = 'max-age=%s' % max_age
+
+        # TODO: Wrap this in a waffle flag for primitive access control?
+        if request.user.is_authenticated():
+            # Restricting to auth'd users places a speed bump on end-user
+            # triggered cache invalidation.
+            ua_cc = request.META.get('HTTP_CACHE_CONTROL')
+
+            if ua_cc == 'no-cache':
+                # Firefox issues no-cache on shift-reload, so this lets end-users
+                # trigger cache invalidation. kumascript will react to no-cache
+                # by reloading both document and template sources from Kuma.
+                cache_control = 'no-cache'
+
+            elif ua_cc == 'max-age=0':
+                # Firefox sends Cache-Control: max-age=0 on reload. kumascript
+                # will react to max-age=0 by reloading just the document source
+                # from Kuma and use cached templates. (pending bug 730715)
+                cache_control = 'max-age=0'
+
+        headers = { 'Cache-Control': cache_control }
+        
+        # Set up for conditional GET, if we have the details cached.
+        c_meta = cache.get_many([ck_etag, ck_modified])
+        if ck_etag in c_meta:
+            headers['If-None-Match'] = c_meta[ck_etag]
+        if ck_modified in c_meta:
+            headers['If-Modified-Since'] = c_meta[ck_modified]
+
+        # Finally, fire off the request.
+        resp = requests.get(url, headers=headers,
             timeout=constance.config.KUMASCRIPT_TIMEOUT)
+
         if resp.status_code == 200:
             # HACK: Assume we're getting UTF-8, which we should be.
             # TODO: Better solution would be to upgrade the requests module
             # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
             # which does auto-detection. But, that will break things.
             resp_body = resp.read().decode('utf8')
+
+            # Set a header so we can see what happened in caching.
+            response_headers['X-Kumascript-Caching'] = (
+                    '200 OK, Age: %s' % resp.headers.get('age', 0))
+
+            # Cache the request for conditional GET, but use the max_age for
+            # the cache timeout here too.
+            cache.set_many({
+                ck_etag: resp.headers.get('etag'),
+                ck_modified: resp.headers.get('last-modified'),
+                ck_body: resp_body
+            }, timeout=max_age)
+
+        elif resp.status_code == 304:
+            # Conditional GET was a pass, so use the cached body.
+            resp_body = cache.get(ck_body)
+            # Set a header so we can see what happened in caching.
+            response_headers['X-Kumascript-Caching'] = (
+                    '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
 
     except Exception, e:
         # Do nothing, if the kumascript service fails in some way.
@@ -435,6 +517,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
+                    _invalidate_kumascript_cache(doc)
 
                     # Do we need to rebuild the KB?
                     _maybe_schedule_rebuild(doc_form)
@@ -1032,6 +1115,8 @@ def _document_form_initial(document):
 def _save_rev_and_notify(rev_form, creator, document):
     """Save the given RevisionForm and send notifications."""
     new_rev = rev_form.save(creator, document)
+
+    _invalidate_kumascript_cache(document)
 
     # Enqueue notifications
     ReviewableRevisionInLocaleEvent(new_rev).fire(exclude=new_rev.creator)
