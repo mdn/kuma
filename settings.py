@@ -653,6 +653,7 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/scripts/shBrushJScript.js',
             'syntaxhighlighter/scripts/shBrushPhp.js',
             'syntaxhighlighter/scripts/shBrushXml.js',
+            'syntaxhighlighter/scripts/shBrushPlain.js',
             'js/wiki.js',
             'js/main.js',
         ),

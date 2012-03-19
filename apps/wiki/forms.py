@@ -162,7 +162,7 @@ class DocumentForm(forms.ModelForm):
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
 
-    title = StrippedCharField(min_length=5, max_length=255,
+    title = StrippedCharField(min_length=2, max_length=255,
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),

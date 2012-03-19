@@ -47,7 +47,8 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          REVIEW_FLAG_TAGS_DEFAULT, ALLOWED_ATTRIBUTES,
-                         ALLOWED_TAGS, get_current_or_latest_revision)
+                         ALLOWED_TAGS, ALLOWED_STYLES,
+                         get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
 
@@ -416,7 +417,7 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             # want sanitation, so it finally gets picked up here.
             resp_body = bleach.clean(
                 resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-                strip_comments=False
+                styles=ALLOWED_STYLES, strip_comments=False
             )
 
             # Cache the request for conditional GET, but use the max_age for
