@@ -386,7 +386,7 @@ def _perform_kumascript_request(request, response_headers, document_locale,
                 resp_errors = [
                     { "level": "error",
                       "message": "Problem parsing errors: %s" % e,
-                      "args": [ "ErrorParsingError" ] }
+                      "args": [ "ParsingError" ] }
                 ]
 
             # Set a header so we can see what happened in caching.
@@ -412,7 +412,23 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             response_headers['X-Kumascript-Caching'] = (
                     '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
 
+        elif resp.status_code == None:
+            resp_errors = [
+                { "level": "error",
+                  "message": "Request to Kumascript service timed out",
+                  "args": [ "TimeoutError" ] }
+            ]
+
+        else:
+            resp_errors = [
+                { "level": "error",
+                  "message": "Unexpected response from Kumascript service: %s" % resp.status_code,
+                  "args": [ "UnknownError" ] }
+            ]
+
+
     except Exception, e:
+        raise
         # Do nothing, if the kumascript service fails in some way.
         # TODO: Log the failure more usefully here.
         logging.debug("KS FAILED %s" % e)
