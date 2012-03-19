@@ -1,5 +1,7 @@
 from datetime import datetime
 import json
+from collections import defaultdict
+import base64
 import logging
 from urllib import urlencode
 from string import ascii_letters
@@ -224,7 +226,7 @@ def document(request, document_slug, document_locale):
     need_edit_links = request.GET.get('edit_links', False) is not False
 
     # Grab the document HTML as a fallback, then attempt to use kumascript:
-    doc_html = doc.html
+    doc_html, ks_errors = doc.html, None
     if (constance.config.KUMASCRIPT_TIMEOUT > 0 and 
             (force_macros or (not no_macros and not show_raw))):
         # We'll make a request to kumascript for macro evaluation only if:
@@ -235,11 +237,12 @@ def document(request, document_slug, document_locale):
         #     (eg. ?nomacros)
         #   * The request *has* asked for macro evaluation 
         #     (eg. ?raw&macros)
-        resp_body = _perform_kumascript_request(request, response_headers,
-                                                document_locale,
-                                                document_slug)
+        resp_body, resp_errors = _perform_kumascript_request(
+                request, response_headers, document_locale, document_slug)
         if resp_body:
             doc_html = resp_body
+        if resp_errors:
+            ks_errors = resp_errors
 
     # Start applying some filters to the document HTML
     tool = wiki.content.parse(doc_html)
@@ -264,7 +267,8 @@ def document(request, document_slug, document_locale):
     data = {'document': doc, 'document_html': tool.serialize(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
-            'fallback_reason': fallback_reason}
+            'fallback_reason': fallback_reason,
+            'kumascript_errors': ks_errors}
     data.update(SHOWFOR_DATA)
 
     response = jingo.render(request, 'wiki/document.html', data)
@@ -279,7 +283,8 @@ def _build_kumascript_cache_keys(document_locale, document_slug):
     ck_etag = cache_key % 'etag'
     ck_modified = cache_key % 'modified'
     ck_body = cache_key % 'body'
-    return (ck_etag, ck_modified, ck_body)
+    ck_errors = cache_key % 'errors'
+    return (ck_etag, ck_modified, ck_body, ck_errors)
 
 
 def _invalidate_kumascript_cache(document):
@@ -298,15 +303,15 @@ def _perform_kumascript_request(request, response_headers, document_locale,
     This is broken out into its own utility function, both to make the view
     method simpler and to make it easy to mock out in testing.
     """
-    resp_body = None
+    resp_body, resp_errors = None, None
     
     try:
         url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
         url = url_tmpl.format(path='%s/%s' %
                                    (document_locale, document_slug))
 
-        ck_etag, ck_modified, ck_body = _build_kumascript_cache_keys(
-                                            document_slug, document_locale)
+        ck_etag, ck_modified, ck_body, ck_errors = (
+                _build_kumascript_cache_keys(document_slug, document_locale))
 
         # Default to the configured max-age for cache control.
         max_age = constance.config.KUMASCRIPT_MAX_AGE
@@ -330,7 +335,10 @@ def _perform_kumascript_request(request, response_headers, document_locale,
                 # from Kuma and use cached templates. (pending bug 730715)
                 cache_control = 'max-age=0'
 
-        headers = { 'Cache-Control': cache_control }
+        headers = {
+            'X-FireLogger': '1.2',
+            'Cache-Control': cache_control
+        }
         
         # Set up for conditional GET, if we have the details cached.
         c_meta = cache.get_many([ck_etag, ck_modified])
@@ -350,6 +358,37 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             # which does auto-detection. But, that will break things.
             resp_body = resp.read().decode('utf8')
 
+            # Attempt to decode any FireLogger-style error messages in the
+            # response from kumascript.
+            try:
+                # Extract all the log packets from headers.
+                fl_packets = defaultdict(dict)
+                for k, v in resp.headers.items():
+                    if not k.lower().startswith('firelogger-'):
+                        continue
+                    _, packet_id, seq = k.split('-', 3)
+                    fl_packets[packet_id][seq] = v
+
+                # The FireLogger spec allows for multiple "packets". But,
+                # kumascript only ever sends the one, so flatten all messages.
+                fl_msgs = []
+                for id, contents in fl_packets.items():
+                    seqs = sorted(contents.keys(), key=int)
+                    d_b64 = "\n".join(contents[x] for x in seqs)
+                    d_json = base64.decodestring(d_b64)
+                    packet = json.loads(d_json)
+                    fl_msgs.extend(packet['logs'])
+
+                if len(fl_msgs):
+                    resp_errors = fl_msgs
+
+            except Exception, e:
+                resp_errors = [
+                    { "level": "error",
+                      "message": "Problem parsing errors: %s" % e,
+                      "args": [ "ParsingError" ] }
+                ]
+
             # Set a header so we can see what happened in caching.
             response_headers['X-Kumascript-Caching'] = (
                     '200 OK, Age: %s' % resp.headers.get('age', 0))
@@ -359,23 +398,43 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             cache.set_many({
                 ck_etag: resp.headers.get('etag'),
                 ck_modified: resp.headers.get('last-modified'),
-                ck_body: resp_body
+                ck_body: resp_body,
+                ck_errors: resp_errors
             }, timeout=max_age)
 
         elif resp.status_code == 304:
-            # Conditional GET was a pass, so use the cached body.
-            resp_body = cache.get(ck_body)
+            # Conditional GET was a pass, so use the cached content.
+            c_result = cache.get_many([ck_body, ck_errors])
+            resp_body = c_result.get(ck_body, None)
+            resp_errors = c_result.get(ck_errors, None)
+
             # Set a header so we can see what happened in caching.
             response_headers['X-Kumascript-Caching'] = (
                     '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
 
+        elif resp.status_code == None:
+            resp_errors = [
+                { "level": "error",
+                  "message": "Request to Kumascript service timed out",
+                  "args": [ "TimeoutError" ] }
+            ]
+
+        else:
+            resp_errors = [
+                { "level": "error",
+                  "message": "Unexpected response from Kumascript service: %s" % resp.status_code,
+                  "args": [ "UnknownError" ] }
+            ]
+
+
     except Exception, e:
+        raise
         # Do nothing, if the kumascript service fails in some way.
         # TODO: Log the failure more usefully here.
         logging.debug("KS FAILED %s" % e)
         pass
 
-    return resp_body
+    return (resp_body, resp_errors)
 
 
 @waffle_flag('kumawiki')
