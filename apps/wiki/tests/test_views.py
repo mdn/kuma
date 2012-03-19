@@ -1,5 +1,6 @@
 import logging
 import json
+import base64
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -181,7 +182,7 @@ class KumascriptIntegrationTests(TestCaseBase):
     @mock.patch('wiki.views._perform_kumascript_request')
     def test_basic_view(self, mock_perform_kumascript_request):
         """When kumascript timeout is non-zero, the service should be used"""
-        mock_perform_kumascript_request.return_value = self.d.html
+        mock_perform_kumascript_request.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get(self.url, follow=False)
         ok_(mock_perform_kumascript_request.called,
@@ -190,7 +191,7 @@ class KumascriptIntegrationTests(TestCaseBase):
     @mock.patch('wiki.views._perform_kumascript_request')
     def test_disabled(self, mock_perform_kumascript_request):
         """When disabled, the kumascript service should not be used"""
-        mock_perform_kumascript_request.return_value = self.d.html
+        mock_perform_kumascript_request.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 0.0
         response = self.client.get(self.url, follow=False)
         ok_(not mock_perform_kumascript_request.called,
@@ -198,7 +199,7 @@ class KumascriptIntegrationTests(TestCaseBase):
 
     @mock.patch('wiki.views._perform_kumascript_request')
     def test_nomacros(self, mock_perform_kumascript_request):
-        mock_perform_kumascript_request.return_value = self.d.html
+        mock_perform_kumascript_request.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get('%s?nomacros' % self.url, follow=False)
         ok_(not mock_perform_kumascript_request.called,
@@ -206,7 +207,7 @@ class KumascriptIntegrationTests(TestCaseBase):
 
     @mock.patch('wiki.views._perform_kumascript_request')
     def test_raw(self, mock_perform_kumascript_request):
-        mock_perform_kumascript_request.return_value = self.d.html
+        mock_perform_kumascript_request.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get('%s?raw' % self.url, follow=False)
         ok_(not mock_perform_kumascript_request.called,
@@ -214,7 +215,7 @@ class KumascriptIntegrationTests(TestCaseBase):
 
     @mock.patch('wiki.views._perform_kumascript_request')
     def test_raw_macros(self, mock_perform_kumascript_request):
-        mock_perform_kumascript_request.return_value = self.d.html
+        mock_perform_kumascript_request.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get('%s?raw&macros' % self.url, follow=False)
         ok_(mock_perform_kumascript_request.called,
@@ -311,6 +312,80 @@ class KumascriptIntegrationTests(TestCaseBase):
         response = self.client.get(self.url)
         ok_(expected_content in response.content)
         eq_('304 Not Modified, Age: 123', response['X-Kumascript-Caching'])
+
+    @mock.patch('requests.get')
+    def test_error_reporting(self, mock_requests_get):
+        """Kumascript reports errors in HTTP headers, Kuma should display them"""
+
+        # Make sure we have enough log messages to ensure there are more than
+        # 10 lines of Base64 in headers. This ensures that there'll be a
+        # failure if the view sorts FireLogger sequence number alphabetically
+        # instead of numerically.
+        expected_errors = {
+            "logs": [
+                { "level": "debug",
+                  "message": "Message #1",
+                  "args": ['TestError'],
+                  "time": "12:32:03 GMT-0400 (EDT)",
+                  "timestamp": "1331829123101000" },
+                { "level": "warning",
+                  "message": "Message #2",
+                  "args": ['TestError'],
+                  "time": "12:33:58 GMT-0400 (EDT)",
+                  "timestamp": "1331829238052000" },
+                { "level": "info",
+                  "message": "Message #3",
+                  "args": ['TestError'],
+                  "time": "12:34:22 GMT-0400 (EDT)",
+                  "timestamp": "1331829262403000" },
+                { "level": "debug",
+                  "message": "Message #4",
+                  "time": "12:32:03 GMT-0400 (EDT)",
+                  "timestamp": "1331829123101000" },
+                { "level": "warning",
+                  "message": "Message #5",
+                  "time": "12:33:58 GMT-0400 (EDT)",
+                  "timestamp": "1331829238052000" },
+                { "level": "info",
+                  "message": "Message #6",
+                  "time": "12:34:22 GMT-0400 (EDT)",
+                  "timestamp": "1331829262403000" },
+            ]
+        }
+
+        # Pack it up, get ready to ship it out.
+        d_json = json.dumps(expected_errors)
+        d_b64 = base64.encodestring(d_json)
+        d_lines = [x for x in d_b64.split("\n") if x]
+
+        # Headers are case-insensitive, so let's just drive that point home
+        p = ['firelogger', 'FIRELOGGER', 'FireLogger']
+        fl_uid = 8675309
+        headers_out = {}
+        for i in range(0, len(d_lines)):
+            headers_out['%s-%s-%s' % (p[i % len(p)], fl_uid, i)] = d_lines[i]
+        
+        # Now, trap the request from the view.
+        trap = {}
+        def my_requests_get(url, headers=None, timeout=None):
+            trap['headers'] = headers
+            return FakeResponse(
+                status_code=200,
+                body='HELLO WORLD',
+                headers=headers_out
+            )
+        mock_requests_get.side_effect = my_requests_get
+
+        # Ensure kumascript is enabled
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 600
+
+        # Finally, fire off the request to the view and ensure that the log
+        # messages were received and displayed on the page.
+        response = self.client.get(self.url)
+        eq_(trap['headers']['X-FireLogger'], '1.2') 
+        for error in expected_errors['logs']:
+            ok_(error['message'] in response.content)
 
 
 class DocumentEditingTests(TestCaseBase):
