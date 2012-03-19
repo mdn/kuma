@@ -741,15 +741,15 @@ class Command(BaseCommand):
         This is an incomplete process, but it tries to take care off as much as
         it can so that human intervention is minimized."""
 
-        # Many templates start with this prefix, which corresponds to {% in EJS
+        # Many templates start with this prefix, which corresponds to <% in EJS
         pre = '<pre class="script">'
         if pt.startswith(pre):
-            pt = "{%%\n%s" % pt[len(pre):]
+            pt = "<%%\n%s" % pt[len(pre):]
 
-        # Many templates end with this postfix, which corresponds to %} in EJS
+        # Many templates end with this postfix, which corresponds to %> in EJS
         post = '</pre>'
         if pt.endswith(post):
-            pt = "%s\n%%}" % pt[:0-len(post)]
+            pt = "%s\n%%>" % pt[:0-len(post)]
 
         # Template source is usually HTML encoded inside the <pre>
         pt = (pt.replace('&amp;', '&')
