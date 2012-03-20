@@ -13,7 +13,9 @@ except ImportError:
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.management.commands.dumpdata import sort_dependencies
 from django.core.exceptions import PermissionDenied
+from django.core import serializers
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
@@ -29,6 +31,9 @@ import jingo
 from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
+
+from smuggler.settings import SMUGGLER_FORMAT
+from smuggler.utils import serialize_to_response, superuser_required
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
@@ -937,6 +942,25 @@ def json_view(request, document_slug=None, document_locale=None):
         'url': document.get_absolute_url(),
     })
     return HttpResponse(data, mimetype='application/json')
+
+
+@waffle_flag('kumawiki')
+@superuser_required
+def template_documents(request):
+    objects = []
+    for model in sort_dependencies([(wiki.models, [Document, Revision])]):
+        if model.__name__ == 'Document':
+            objects.extend(model._default_manager.filter(
+                                                slug__startswith='Template:'))
+        elif model.__name__ == 'Revision':
+            objects.extend(model._default_manager.filter(
+                                    document__slug__startswith='Template:'))
+    serializers.get_serializer('json')
+    filename = "templates_%s.%s" % (
+        datetime.now().isoformat(), SMUGGLER_FORMAT)
+    response = HttpResponse(mimetype="text/plain")
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return serialize_to_response(objects, response)
 
 
 @waffle_flag('kumawiki')
