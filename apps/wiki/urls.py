@@ -92,6 +92,8 @@ urlpatterns += patterns('wiki.views',
         name='wiki.list_review_tag'),
     url(r'^/needs-review/?', 'list_documents_for_review',
         name='wiki.list_review'),
+    url(r'^/templates/?', 'template_documents',
+        name='wiki.templates'),
 
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
         DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
