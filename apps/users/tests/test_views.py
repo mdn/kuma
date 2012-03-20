@@ -81,6 +81,36 @@ class LoginTestCase(TestCase):
         doc = pq(response.content)
         eq_('testuser', doc.find('ul.user-state a:first').text())
 
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_logged_in_message(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        response = self.client.get(login_uri, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_("You are already logged in.", doc.find('div#content-main').text())
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login_redirects_to_next(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        response = self.client.get(login_uri, {'next': '/en-US/demos/submit'},
+                                   follow=True)
+        eq_('http://testserver/en-US/demos/submit',
+                                                response.redirect_chain[0][0])
+
     @mock_mindtouch_login
     @mock_get_deki_user
     @mock_put_mindtouch_user

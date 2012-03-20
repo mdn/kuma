@@ -258,10 +258,16 @@ def browserid_register(request):
 @ssl_required
 def login(request):
     """Try to log the user in."""
-    next_url = _clean_next_url(request) or reverse('home')
+    next_url = _clean_next_url(request)
+    if request.method == 'GET' and request.user.is_authenticated():
+        if next_url:
+            return HttpResponseRedirect(next_url)
+    else:
+        next_url = _clean_next_url(request) or reverse('home')
     form = handle_login(request)
 
-    if request.user.is_authenticated():
+    if form.is_valid() and request.user.is_authenticated():
+        next_url = next_url or reverse('home')
         return _redirect_with_mindtouch_login(next_url,
             form.cleaned_data.get('username'),
             form.cleaned_data.get('password'))

@@ -11,8 +11,6 @@ from users.models import RegistrationProfile
 
 
 def handle_login(request, only_active=True):
-    auth.logout(request)
-
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST, only_active=only_active)
         if form.is_valid():
