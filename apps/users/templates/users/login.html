@@ -9,14 +9,20 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-      <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}?next={{ next_url }}">
-        {% if use_browserid %}
-          {% include "users/browserid_signin.html" %}
-        {% else %}
-            <h1>{{ _('Log In') }}</h1>
-            {% include "users/login_form.html" %}
-        {% endif %}
+      {% if request.user.is_authenticated() %}
+        <article class="main">
+          <h3>{{ _('You are already logged in.') }}</h3>
         </article>
+      {% else %}
+        <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}?next={{ next_url }}">
+          {% if use_browserid %}
+            {% include "users/browserid_signin.html" %}
+          {% else %}
+              <h1>{{ _('Log In') }}</h1>
+              {% include "users/login_form.html" %}
+          {% endif %}
+          </article>
+        {% endif %}
     </div>
    </div>
 </section>
