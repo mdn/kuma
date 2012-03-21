@@ -114,8 +114,6 @@ def profile_edit(request, username):
     else:
         form = UserProfileEditForm(request.POST, request.FILES,
                                    instance=profile)
-        logging.debug('form.is_valid(): %s' % form.is_valid())
-        logging.debug('form.errors: %s' % form.errors)
         if form.is_valid():
             profile_new = form.save(commit=False)
 
