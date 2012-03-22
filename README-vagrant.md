@@ -16,10 +16,8 @@ reasons.
     # Open a terminal window.
     
     # Install vagrant, see vagrantup.com
-    # NOTE: Currently, vagrant v0.8.8 appears to fail with this setup, so we
-    # need to revert to 0.8.7
     sudo gem update
-    sudo gem install vagrant --version=0.8.7
+    sudo gem install vagrant
         
     # Clone a Kuma repo, switch to "mdn" branch (for now)
     git clone git://github.com/mozilla/kuma.git
