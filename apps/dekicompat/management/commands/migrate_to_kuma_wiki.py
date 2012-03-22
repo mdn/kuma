@@ -34,7 +34,9 @@ from sumo.urlresolvers import reverse
 from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES)
 
 from wiki.models import REDIRECT_CONTENT
-from wiki.content import ContentSectionTool, CodeSyntaxFilter
+import wiki.content
+from wiki.content import (ContentSectionTool, CodeSyntaxFilter,
+                          DekiscriptMacroFilter)
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
@@ -139,6 +141,8 @@ class Command(BaseCommand):
                     help="Migrate # of documents in locales other than en-US"),
         make_option('--withsyntax', dest="withsyntax", type="int", default=0,
                     help="Migrate # of documents with syntax blocks"),
+        make_option('--withscripts', dest="withscripts", type="int", default=0,
+                    help="Migrate # of documents that use scripts"),
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
                     help="Measure syntax highlighter usage, skip migration"),
@@ -458,6 +462,18 @@ class Command(BaseCommand):
                     LIMIT %s
                 """ % (ns_list, '%s'), self.options['withsyntax']))
 
+            if self.options['withscripts'] > 0:
+                log.info("Gathering %s pages that use scripts" %
+                         self.options['withscripts'])
+                iters.append(self._query("""
+                    SELECT *
+                    FROM pages
+                    WHERE page_namespace IN %s AND
+                          page_text like '%%%%span class="script"%%%%'
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """ % (ns_list, '%s'), self.options['withscripts']))
+
         return itertools.chain(*iters)
 
     @transaction.commit_on_success
@@ -471,7 +487,7 @@ class Command(BaseCommand):
         # Special: namespace (not migrated), or a couple of untitled and empty
         # pages under the Template: or User: namespaces.
         if not r['page_timestamp']:
-            log.debug("\t%s / %s (%s) skipped, no timestamp" %
+            log.debug("\t%s/%s (%s) skipped, no timestamp" %
                       (locale, slug, r['page_display_name']))
             return False
 
@@ -481,7 +497,7 @@ class Command(BaseCommand):
         last_mod = self.docs_migrated.get(r['page_id'], (None, None))[1]
         if (not self.options['update_documents'] and last_mod is not None
                 and last_mod >= page_ts):
-            log.debug("\t%s / %s (%s) up to date" %
+            log.debug("\t%s/%s (%s) up to date" %
                       (locale, slug, r['page_display_name']))
             return False
 
@@ -491,18 +507,18 @@ class Command(BaseCommand):
             content_hash = (hashlib.md5(r['page_text'].encode('utf-8'))
                                    .hexdigest())
             if content_hash in USER_NS_EXCLUDED_CONTENT_HASHES:
-                log.debug("\t%s / %s (%s) matched User: content exclusion list" %
+                log.debug("\t%s/%s (%s) matched User: content exclusion list" %
                           (locale, slug, r['page_display_name']))
                 return False
 
         # Check to see if this page's content is too long, skip if so.
         if len(r['page_text']) > self.options['maxlength']:
-            log.debug("\t%s / %s (%s) skipped, page too long (%s > %s max)" %
+            log.debug("\t%s/%s (%s) skipped, page too long (%s > %s max)" %
                       (locale, slug, r['page_display_name'],
                        len(r['page_text']), self.options['maxlength']))
             return False
 
-        log.info("\t%s / %s (%s)" % (locale, slug, r['page_display_name']))
+        log.info("\t%s/%s (%s)" % (locale, slug, r['page_display_name']))
 
         # Ensure that the document exists, and has the MindTouch page ID
         doc, created = Document.objects.get_or_create(
@@ -663,7 +679,7 @@ class Command(BaseCommand):
             pt = self.convert_redirect(pt)
 
         pt = self.convert_code_blocks(pt)
-        # TODO: bug 710728 - Convert and normalize template calls
+        pt = self.convert_dekiscript_template_calls(pt)
         # TODO: bug 710726 - Convert intra-wiki links?
 
         return pt
@@ -682,6 +698,10 @@ class Command(BaseCommand):
     def convert_code_blocks(self, pt):
         pt = ContentSectionTool(pt).filter(CodeSyntaxFilter).serialize()
         return pt
+
+    def convert_dekiscript_template_calls(self, pt):
+        return (wiki.content.parse(pt).filter(DekiscriptMacroFilter)
+                    .serialize())
 
     def get_tags_for_page(self, r):
         """For a given page row, get the list of tags from MindTouch and build

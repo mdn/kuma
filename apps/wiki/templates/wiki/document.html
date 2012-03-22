@@ -43,8 +43,9 @@
             <ul>
               {% for error in kumascript_errors %}
                 <li class="error error-{{ error.level }}">
-                  <span class="level">{{ error.level }}</span>
+                  {# <span class="level">{{ error.level }}</span> #}
                   {% if error.args %}<span class="type">{{ error.args[0] }}</span>{% endif %}
+                  &#8212;
                   <span class="message">{{ error.message }}</span>
                 </li>
               {% endfor %}

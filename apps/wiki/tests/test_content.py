@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+# see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 
 from datetime import datetime, timedelta
@@ -12,7 +14,8 @@ from django.core.exceptions import ValidationError
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
-from wiki.content import SECTION_EDIT_TAGS, CodeSyntaxFilter
+from wiki.content import (SECTION_EDIT_TAGS, CodeSyntaxFilter,
+                          DekiscriptMacroFilter)
 from wiki.tests import normalize_html
 
 import html5lib
@@ -338,6 +341,49 @@ class ContentSectionToolTests(TestCase):
                   .parse(doc_src)
                   .filter(CodeSyntaxFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
+
+    @attr('current')
+    def test_dekiscript_macro_conversion(self):
+        doc_src = u"""
+            <span>Just a span</span>
+            <span class="notascript">Hi there</span>
+            <li><span class="script">MixedCaseName('parameter1', 'parameter2')</span></li>
+            <li><span class="script">bug(689641)</span></li>
+            <li><span class="script">template.lowercasename('border')</span></li>
+            <li><span class="script">Template.UpperCaseTemplate("foo")</span></li>
+            <li><span class="script">wiki.template('英語版章題', [ "Reusing tabs" ])</span></li>
+            <li><span class="script">template("non-standard_inline", ["Reusing tabs", "YAY"])</span></li>
+            <li><span class="script">wiki.template('英語版章題')</span></li>
+            <li><span class="script">template("non-standard_inline")</span></li>
+        """
+        expected = u"""
+            <span>Just a span</span>
+            <span class="notascript">Hi there</span>
+            <li>{{ MixedCaseName('parameter1', 'parameter2') }}</li>
+            <li>{{ bug("689641") }}</li>
+            <li>{{ lowercasename('border') }}</li>
+            <li>{{ UpperCaseTemplate("foo") }}</li>
+            <li>{{ 英語版章題("Reusing tabs") }}</li>
+            <li>{{ non-standard_inline("Reusing tabs", "YAY") }}</li>
+            <li>{{ 英語版章題() }}</li>
+            <li>{{ non-standard_inline() }}</li>
+        """
+
+        # Check line-by-line, to help work out any issues failure-by-failure
+        doc_src_lines = doc_src.split("\n")
+        expected_lines = expected.split("\n")
+        for i in range(0, len(doc_src_lines)):
+            result = (wiki.content
+                      .parse(doc_src_lines[i])
+                      .filter(DekiscriptMacroFilter).serialize())
+            eq_(normalize_html(expected_lines[i]), normalize_html(result))
+
+        # But, the whole thing should work in the filter, as well.
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(DekiscriptMacroFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
 
 class AllowedHTMLTests(TestCase):
     simple_tags = (
