@@ -119,7 +119,7 @@ class LocaleRedirectTests(TestCaseBase):
 
 
 class ViewTests(TestCaseBase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json', 'wiki/templates.json']
 
     def test_json_view(self):
         url = reverse('wiki.json', force_locale=True)
@@ -134,6 +134,22 @@ class ViewTests(TestCaseBase):
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
+
+    def test_templates_dump(self):
+        url = reverse('wiki.templates')
+        resp = self.client.get(url)
+        eq_(403, resp.status_code)
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(url)
+        eq_(403, resp.status_code)
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.get(url)
+        eq_(200, resp.status_code)
+
+        templates = json.loads(resp.content)
+        for template in templates:
+            ok_(template['fields']['slug'].startswith('Template:'))
 
 
 class FakeResponse:

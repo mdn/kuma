@@ -33,6 +33,9 @@ from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
+from smuggler.settings import SMUGGLER_FORMAT
+from smuggler.utils import serialize_to_response, superuser_required
+
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, reverse
@@ -1079,6 +1082,17 @@ def json_view(request, document_slug=None, document_locale=None):
         'url': document.get_absolute_url(),
     })
     return HttpResponse(data, mimetype='application/json')
+
+
+@waffle_flag('kumawiki')
+@superuser_required
+def template_documents(request):
+    templates = Document.objects.filter(slug__startswith="Template:")
+    filename = "templates_%s.%s" % (
+        datetime.now().isoformat(), SMUGGLER_FORMAT)
+    response = HttpResponse(mimetype="text/plain")
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return serialize_to_response(templates, response)
 
 
 @waffle_flag('kumawiki')
