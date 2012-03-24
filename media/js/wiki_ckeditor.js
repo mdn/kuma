@@ -47,16 +47,11 @@
       var el = jQuery(this),
           doc_slug = $('#id_slug').val();
 
-      if (doc_slug.toLowerCase().indexOf('template:') === 0) {
-          // HACK: If we're on a Template:* page, abort setting up CKEditor
-          // because it doesn't work well at all for these pages.
-          // See bug 731651 for further work down this path.
-          return;
+      if (!$('body').is('.edit.is-template')) {
+          el.ckeditor(setup_ckeditor, {
+              customConfig : '/docs/ckeditor_config.js'
+          });
       }
-
-      el.ckeditor(setup_ckeditor, {
-          customConfig : '/docs/ckeditor_config.js'
-      });
 
   });
 
