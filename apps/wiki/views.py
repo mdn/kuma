@@ -228,6 +228,7 @@ def document(request, document_slug, document_locale):
     # Grab the document HTML as a fallback, then attempt to use kumascript:
     doc_html, ks_errors = doc.html, None
     if (constance.config.KUMASCRIPT_TIMEOUT > 0 and 
+            not doc.is_template and
             (force_macros or (not no_macros and not show_raw))):
         # We'll make a request to kumascript for macro evaluation only if:
         #   * The service isn't disabled with a timeout of 0
