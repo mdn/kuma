@@ -9,7 +9,7 @@
                  (document.get_absolute_url(), document.title),
                  (None, _('Edit Article'))] %}
 {% set classes = 'edit' %}
-{% block bodyclass %}edit{% endblock %}
+{% block bodyclass %}edit{% if document.is_template %} is-template{% endif %}{% endblock %}
 
 {% block content %}
 <section id="content">
@@ -120,6 +120,9 @@
     
         {% if revision_form %}
             {{ revision_form.content | safe }}
+            {% if document.is_template %}
+              <div id="ace_content"></div>
+            {% endif %}
             <input type="hidden" name="form" value="rev" />
           <section>
           <h4>{{_('Review needed?')}}</h4>
@@ -142,4 +145,14 @@
 {% block site_js %}
     {{ super() }}
     {{ js('framebuster') }}
+
+    {% if document.is_template %}
+      <script src="{{ MEDIA_URL }}ace/ace.js" 
+        type="text/javascript" charset="utf-8"></script>
+      <script src="{{ MEDIA_URL }}ace/theme-dreamweaver.js"
+        type="text/javascript" charset="utf-8"></script>
+      <script src="{{ MEDIA_URL }}ace/mode-javascript.js"
+        type="text/javascript" charset="utf-8"></script>
+    {% endif %}
+
 {% endblock %}

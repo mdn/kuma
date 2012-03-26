@@ -42,6 +42,21 @@
             initTitleAndSlugCheck();
             // initDrafting();
         }
+        if ($('body').is('.edit.is-template')) {
+            var textarea = $('textarea#id_content').hide();
+            
+            var editor = window.ace_editor = ace.edit("ace_content");
+            editor.setTheme("ace/theme/dreamweaver");
+            
+            var JavaScriptMode = require("ace/mode/javascript").Mode;
+
+            var session = editor.getSession();
+            session.setMode(new JavaScriptMode());
+            session.setValue(textarea.val());
+            session.on('change', function(){
+              textarea.val(editor.getSession().getValue());
+            });
+        }
     }
     
     var HEADERS = [ 'HGROUP', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ];

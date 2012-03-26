@@ -109,7 +109,11 @@
       </div>
       #}
       {% if not fallback_reason %}
-        {{ document_html|safe }}
+        {% if document.is_template %}
+          <pre class="brush: js">{{ document_html }}</pre>
+        {% else %}
+          {{ document_html|safe }}
+        {% endif %}
       {% elif fallback_reason == 'no_translation' %}
         <div id="doc-pending-fallback" class="warning-box">
           {% trans help_link=url('wiki.document', 'localize-firefox-help'),
