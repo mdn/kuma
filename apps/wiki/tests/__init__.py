@@ -97,8 +97,10 @@ def doc_rev(content=''):
 def new_document_data(tags=None):
     return {
         'title': 'A Test Article',
+        'locale': 'en-US',
         'slug': 'a-test-article',
-        'tags': tags or [],
+        'full_path': 'en-US/a-test-article',
+        'tags': ', '.join(tags or []),
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],
         'category': CATEGORIES[0][0],

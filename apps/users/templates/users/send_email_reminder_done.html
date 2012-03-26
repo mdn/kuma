@@ -1,0 +1,21 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% from "layout/errorlist.html" import errorlist %}
+{% set title = _('Reminder email sent.') %}
+{% set classes = 'register' %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+      <article id="register" class="main">
+        <h1>{{ title }}</h1>
+        <p>{% trans %}We've sent a reminder email to the address registered for
+        <strong>{{ username }}</strong>.
+        {% endtrans %}
+        </p>
+      </article>
+    </div>
+   </div>
+</section>
+{% endblock %}

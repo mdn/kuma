@@ -14,9 +14,14 @@ except ImportError:
 
 DEMOS_CACHE_NS_KEY = getattr(settings, 'DEMOS_CACHE_NS_KEY', 'demos_listing')
 
-# HACK: For easier L10N, define tag descriptions in code instead of as a DB model
-TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESCRIPTIONS', (
-
+# For easier L10N, define tag descriptions in code instead of as a DB model
+TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
+    settings, 'TAG_DESCRIPTIONS', (
+    {
+        "tag_name": "challenge:none",
+        "title": _("None"),
+        "description": _("Removed from Derby"),
+    },
     {
         "tag_name": "challenge:2011:june",
         "title": _("June 2011 Dev Derby Challenge - CSS3 Animations"),
@@ -136,13 +141,84 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
         "summary": _("CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."),
         "description": _("CSS 3D Transforms extends CSS Transforms to allow elements rendered by CSS to be transformed in three-dimensional space."),
         "learn_more": [],
-        "tab_copy": _(""),
+        "tab_copy": _("Three-D interfaces have always been a fascination for as long as we have used computers. CSS 3D transforms allows you to add depth to effects and makes it easier to add more content into the same screen space by stacking it. By moving and rotating content in the X, Y and Z axis you can create beautiful transitions and interfaces without having to learn a new language."),
+    },
+    {
+        "tag_name": "challenge:2012:april",
+        "title": _("April 2012 Dev Derby Challenge - Audio"),
+        "short_title": _("Audio"),
+        "dateline": _("April 2012"),
+        "short_dateline": _("April"),
+        "tagline": _("Can you hear me now?"),
+        "summary": _("The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."),
+        "description": _("The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."),
+        "learn_more": [],
+        "tab_copy": _("<p>The HTML5 &lt;audio&gt; element lets you embed sound in Web pages. More importantly, it lets you do so without requiring your users to rely on plug-ins. This means sound for everyone, everywhere, in the most open way possible. In particular, you can play sounds in games with very low latency, making for a responsive, immersive game experience.</p><p>What else can you do with the audio element? Show us by submitting to the Dev Derby today.</p>"),
+    },
+    {
+        "tag_name": "challenge:2012:may",
+        "title": _("May 2012 Dev Derby Challenge - WebSockets API"),
+        "short_title": _("WebSockets API"),
+        "dateline": _("May 2012"),
+        "short_dateline": _("May"),
+        "tagline": _("send() us your best"),
+        "summary": _("With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"),
+        "description": _("With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2012:june",
+        "title": _("June 2012 Dev Derby Challenge - WebGL"),
+        "short_title": _("WebGL"),
+        "dateline": _("June 2012"),
+        "short_dateline": _("June"),
+        "tagline": _("The Web: Now in amazing 3D!"),
+        "summary": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
+        "description": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2012:july",
+        "title": _("July 2012 Dev Derby Challenge - ??"),
+        "short_title": _("??"),
+        "dateline": _("July 2012"),
+        "short_dateline": _("July"),
+        "tagline": _("??"),
+        "summary": _("??"),
+        "description": _("??"),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2012:august",
+        "title": _("August 2012 Dev Derby Challenge - ??"),
+        "short_title": _("??"),
+        "dateline": _("August 2012"),
+        "short_dateline": _("August"),
+        "tagline": _("??"),
+        "summary": _("??"),
+        "description": _("??"),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2012:september",
+        "title": _("September 2012 Dev Derby Challenge - ??"),
+        "short_title": _("??"),
+        "dateline": _("September 2012"),
+        "short_dateline": _("September"),
+        "tagline": _("??"),
+        "summary": _("??"),
+        "description": _("??"),
+        "learn_more": [],
+        "tab_copy": _("??"),
     },
 
-
-    { 
-        "tag_name": "tech:audio", 
-        "title": _("Audio"), 
+    {
+        "tag_name": "tech:audio",
+        "title": _("Audio"),
         "description": _("Mozilla's Audio Data API extends the current HTML5 API and allows web developers to read and write raw audio data."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension')),
@@ -150,8 +226,8 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/video.html#audio')),
         ),
     },
-    { 
-        "tag_name": "tech:canvas", 
+    {
+        "tag_name": "tech:canvas",
         "title": _("Canvas"),
         "description": _("The HTML5 canvas element allows you to display scriptable renderings of 2D shapes and bitmap images."),
         "learn_more": (
@@ -160,9 +236,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/the-canvas-element.html')),
         ),
     },
-    { 
-        "tag_name": "tech:css3", 
-        "title": _("CSS3"), 
+    {
+        "tag_name": "tech:css3",
+        "title": _("CSS3"),
         "description": _("Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/CSS')),
@@ -170,27 +246,27 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/css3-roadmap/')),
         ),
     },
-    { 
-        "tag_name": "tech:device", 
-        "title": _("Device"), 
+    {
+        "tag_name": "tech:device",
+        "title": _("Device"),
         "description": _("Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/Detecting_device_orientation')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/css3-mediaqueries/')),
         ),
     },
-    { 
-        "tag_name": "tech:files", 
-        "title": _("Files"), 
+    {
+        "tag_name": "tech:files",
+        "title": _("Files"),
         "description": _("The File API allows web developers to use file objects in web applications, as well as selecting and accessing their data."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/using_files_from_web_applications')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/FileAPI/')),
         ),
     },
-    { 
-        "tag_name": "tech:fonts", 
-        "title": _("Fonts & Type"), 
+    {
+        "tag_name": "tech:fonts",
+        "title": _("Fonts & Type"),
         "description": _("The CSS3-Font specification contains enhanced features for fonts and typography like  embedding own fonts via @font-face or controlling OpenType font features directly via CSS."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/css/@font-face')),
@@ -198,9 +274,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/css3-fonts/')),
         ),
     },
-    { 
-        "tag_name": "tech:forms", 
-        "title": _("Forms"), 
+    {
+        "tag_name": "tech:forms",
+        "title": _("Forms"),
         "description": _("Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/HTML/HTML5/Forms_in_HTML5')),
@@ -208,9 +284,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/forms.html')),
         ),
     },
-    { 
-        "tag_name": "tech:geolocation", 
-        "title": _("Geolocation"), 
+    {
+        "tag_name": "tech:geolocation",
+        "title": _("Geolocation"),
         "description": _("The Geolocation API allows web applications to access the user's geographical location."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/En/Using_geolocation')),
@@ -218,9 +294,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://dev.w3.org/geo/api/spec-source.html')),
         ),
     },
-    { 
+    {
         "tag_name": "tech:javascript",
-        "title": _("JavaScript"), 
+        "title": _("JavaScript"),
         "description": _("JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/javascript')),
@@ -228,9 +304,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('ECMA Spec'),         _('http://www.ecma-international.org/publications/standards/Ecma-262.htm')),
         ),
     },
-    { 
+    {
         "tag_name": "tech:html5",
-        "title": _("HTML5"), 
+        "title": _("HTML5"),
         "description": _("HTML5 is the newest version of the HTML standard, currently under development."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/HTML/HTML5')),
@@ -238,9 +314,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://dev.w3.org/html5/spec/Overview.html')),
         ),
     },
-    { 
-        "tag_name": "tech:indexeddb", 
-        "title": _("IndexedDB"), 
+    {
+        "tag_name": "tech:indexeddb",
+        "title": _("IndexedDB"),
         "description": _("IndexedDB is an API for client-side storage of significant amounts of structured data and for high performance searches on this data using indexes. "),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/IndexedDB')),
@@ -248,9 +324,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/IndexedDB/')),
         ),
     },
-    { 
-        "tag_name": "tech:dragndrop", 
-        "title": _("Drag and Drop"), 
+    {
+        "tag_name": "tech:dragndrop",
+        "title": _("Drag and Drop"),
         "description": _("Drag and Drop features allow the user to move elements on the screen using the mouse pointer."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/DragDrop/Drag_and_Drop')),
@@ -258,9 +334,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/dnd.html')),
         ),
     },
-    { 
+    {
         "tag_name": "tech:mobile",
-        "title": _("Mobile"), 
+        "title": _("Mobile"),
         "description": _("Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/En/Mobile')),
@@ -268,9 +344,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/Mobile/')),
         ),
     },
-    { 
-        "tag_name": "tech:offlinesupport", 
-        "title": _("Offline Support"), 
+    {
+        "tag_name": "tech:offlinesupport",
+        "title": _("Offline Support"),
         "description": _("Offline caching of web applications' resources using the application cache and local storage."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/dom/storage#localStorage')),
@@ -278,9 +354,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://dev.w3.org/html5/webstorage/')),
         ),
     },
-    { 
-        "tag_name": "tech:svg", 
-        "title": _("SVG"), 
+    {
+        "tag_name": "tech:svg",
+        "title": _("SVG"),
         "description": _("Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/SVG')),
@@ -288,9 +364,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/SVG11/')),
         ),
     },
-    { 
-        "tag_name": "tech:video", 
-        "title": _("Video"), 
+    {
+        "tag_name": "tech:video",
+        "title": _("Video"),
         "description": _("The HTML5 video element provides integrated support for playing video media without requiring plug-ins."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox')),
@@ -298,9 +374,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/video.html')),
         ),
     },
-    { 
-        "tag_name": "tech:webgl", 
-        "title": _("WebGL"), 
+    {
+        "tag_name": "tech:webgl",
+        "title": _("WebGL"),
         "description": _("In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/WebGL')),
@@ -308,9 +384,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('Khronos Spec'),      _('http://www.khronos.org/webgl/')),
         ),
     },
-    { 
-        "tag_name": "tech:websockets", 
-        "title": _("WebSockets"), 
+    {
+        "tag_name": "tech:websockets",
+        "title": _("WebSockets"),
         "description": _("WebSockets is a technology that makes it possible to open an interactive  communication session between the user's browser and a server."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/WebSockets')),
@@ -318,9 +394,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://dev.w3.org/html5/websockets/')),
         ),
     },
-    { 
-        "tag_name": "tech:webworkers", 
-        "title": _("Web Workers"), 
+    {
+        "tag_name": "tech:webworkers",
+        "title": _("Web Workers"),
         "description": _("Web Workers provide a simple means for web content to run scripts in background threads."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/En/Using_web_workers')),
@@ -328,9 +404,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/workers/')),
         ),
     },
-    { 
-        "tag_name": "tech:xhr", 
-        "title": _("XMLHttpRequest"), 
+    {
+        "tag_name": "tech:xhr",
+        "title": _("XMLHttpRequest"),
         "description": _("XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/En/XMLHttpRequest/Using_XMLHttpRequest')),
@@ -338,9 +414,9 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
             (_('W3C Spec'),          _('http://www.w3.org/TR/XMLHttpRequest/')),
         ),
     },
-    { 
-        "tag_name": "tech:multitouch", 
-        "title": _("Multi-touch"), 
+    {
+        "tag_name": "tech:multitouch",
+        "title": _("Multi-touch"),
         "description": _("Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."),
         "learn_more": (
             (_('MDN Documentation'), _('https://developer.mozilla.org/en/DOM/Touch_events')),
@@ -351,33 +427,33 @@ TAG_DESCRIPTIONS = dict( (x['tag_name'], x) for x in getattr(settings, 'TAG_DESC
 )))
 
 # HACK: For easier L10N, define license in code instead of as a DB model
-DEMO_LICENSES = dict( (x['name'], x) for x in getattr(settings, 'DEMO_LICENSES', (
-    { 
-        'name': "mpl", 
+DEMO_LICENSES = dict((x['name'], x) for x in getattr(settings, 'DEMO_LICENSES', (
+    {
+        'name': "mpl",
         'title': _("MPL/GPL/LGPL"),
         'link': _('http://www.mozilla.org/MPL/'),
         'icon': '',
     },
-    { 
-        'name': "gpl", 
+    {
+        'name': "gpl",
         'title': _("GPL"),
         'link': _('http://www.opensource.org/licenses/gpl-license.php'),
         'icon': '',
     },
-    { 
-        'name': "bsd", 
+    {
+        'name': "bsd",
         'title': _("BSD"),
         'link': _('http://www.opensource.org/licenses/bsd-license.php'),
         'icon': '',
     },
-    { 
-        'name': "apache", 
+    {
+        'name': "apache",
         'title': _("Apache"),
         'link': _('http://www.apache.org/licenses/'),
         'icon': '',
     },
-    { 
-        'name': "publicdomain", 
+    {
+        'name': "publicdomain",
         'title': _("Public Domain (where applicable by law)"),
         'link': _('http://creativecommons.org/publicdomain/zero/1.0/'),
         'icon': '',
@@ -408,8 +484,8 @@ def scale_image(img_upload, img_max_size):
         x_offset = 0
         y_offset = int(float(src_height - crop_height) / 3)
 
-    img = img.crop((x_offset, y_offset, 
-        x_offset+int(crop_width), y_offset+int(crop_height)))
+    img = img.crop((x_offset, y_offset,
+        x_offset + int(crop_width), y_offset + int(crop_height)))
     img = img.resize((dst_width, dst_height), Image.ANTIALIAS)
 
     if img.mode != "RGB":
@@ -419,4 +495,3 @@ def scale_image(img_upload, img_max_size):
     img_data = new_img.getvalue()
 
     return ContentFile(img_data)
-

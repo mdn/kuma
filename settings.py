@@ -37,7 +37,17 @@ DATABASES = {
         'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-    }
+    },
+}
+
+MIGRATION_DATABASES = {
+    'wikidb': {
+        'NAME': 'wikidb',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'USER': 'wikiuser',
+        'PASSWORD': 'wikipass',
+    },
 }
 
 DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
@@ -90,8 +100,10 @@ SUMO_LANGUAGES = (
 #LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
 
 # Accepted locales
-MDN_LANGUAGES = ('en-US', 'de', 'el', 'es', 'fr', 'fy-NL', 'ga-IE', 'hr', 'hu', 'id',
-                 'ja', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'sq', 'th', 'zh-CN', 'zh-TW')
+MDN_LANGUAGES = ('en-US', 'ar', 'de', 'it', 'el', 'es', 'fa', 'fi', 'fr', 'cs',
+                 'ca', 'fy-NL', 'ga-IE', 'he', 'hr', 'hu', 'id', 'it', 'ja',
+                 'ka', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sq',
+                 'th', 'tr', 'vi', 'zh-CN', 'zh-TW')
 RTL_LANGUAGES = None # ('ar', 'fa', 'fa-IR', 'he')
 
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
@@ -152,6 +164,68 @@ def lazy_language_deki_map():
     return lang_deki_map
 
 LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
+
+# List of MindTouch locales mapped to Kuma locales.
+# 
+# Language in MindTouch pages are first determined from the locale in the page
+# title, with a fallback to the language in the page record.
+#
+# So, first MindTouch locales were inventoried like so:
+#
+#     mysql --skip-column-names -uroot wikidb -B \
+#           -e 'select page_title from pages  where page_namespace=0' \
+#           > page-titles.txt
+#
+#     grep '/' page-titles.txt | cut -d'/' -f1 | sort -f | uniq -ci | sort -rn
+#
+# Then, the database languages were inventoried like so:
+#
+#     select page_language, count(page_id) as ct 
+#     from pages group by page_language order by ct desc;
+#
+# Also worth noting, these are locales configured in the prod Control Panel:
+#
+# en,ar,ca,cs,de,el,es,fa,fi,fr,he,hr,hu,it,ja,
+# ka,ko,nl,pl,pt,ro,ru,th,tr,uk,vi,zh-cn,zh-tw
+# 
+# The Kuma side was picked from elements of the MDN_LANGUAGES list in
+# settings.py, and a few were added to match MindTouch locales.
+#
+# Most of these end up being direct mappings, but it's instructive to go
+# through the mapping exercise.
+
+MT_TO_KUMA_LOCALE_MAP = {
+    "en"    : "en-US",
+    "ja"    : "ja",
+    "pl"    : "pl",
+    "fr"    : "fr",
+    "es"    : "es",
+    ""      : "en-US",
+    "cn"    : "zh-CN",
+    "zh_cn" : "zh-CN",
+    "zh-cn" : "zh-CN",
+    "zh_tw" : "zh-TW",
+    "zh-tw" : "zh-TW",
+    "ko"    : "ko",
+    "pt"    : "pt-PT",
+    "de"    : "de",
+    "it"    : "it",
+    "ca"    : "ca",
+    "cs"    : "cs",
+    "ru"    : "ru",
+    "nl"    : "nl",
+    "hu"    : "hu",
+    "he"    : "he",
+    "el"    : "el",
+    "fi"    : "fi",
+    "tr"    : "tr",
+    "vi"    : "vi",
+    "ro"    : "ro",
+    "ar"    : "ar",
+    "th"    : "th",
+    "fa"    : "fa",
+    "ka"    : "ka",
+}
 
 TEXT_DOMAIN = 'messages'
 
@@ -403,8 +477,6 @@ DOMAIN_METHODS = {
         ('apps/tags/**', 'ignore'),
         ('apps/twitter/**', 'ignore'),
         ('apps/upload/**', 'ignore'),
-        ('apps/users/**', 'ignore'),
-        ('apps/wiki/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
@@ -474,6 +546,8 @@ MINIFY_BUNDLES = {
         'wiki': (
             'css/wiki.css',
             'css/wiki-screen.css',
+            'syntaxhighlighter/styles/shCore.css',
+            'syntaxhighlighter/styles/shThemeDefault.css',
         ),
         'home': (
             'css/home.css',
@@ -571,6 +645,14 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'js/libs/django/prepopulate.js',
+            'syntaxhighlighter/scripts/shCore.js',
+            'syntaxhighlighter/scripts/shBrushBash.js',
+            'syntaxhighlighter/scripts/shBrushCpp.js',
+            'syntaxhighlighter/scripts/shBrushCss.js',
+            'syntaxhighlighter/scripts/shBrushJava.js',
+            'syntaxhighlighter/scripts/shBrushJScript.js',
+            'syntaxhighlighter/scripts/shBrushPhp.js',
+            'syntaxhighlighter/scripts/shBrushXml.js',
             'js/wiki.js',
             'js/main.js',
         ),
@@ -858,6 +940,30 @@ CONSTANCE_CONFIG = dict(
         'Space-separated locales for which BrowserID sign-in should be enabled'
     ),
 
+    DEKIWIKI_POST_RETRIES = (
+        6,
+        'Number of time to retry dekiwiki/MindTouch post before giving up.'
+    ),
+    DEKIWIKI_API_RETRY_WAIT = (
+        .5,
+        'How long to wait between dekiwiki/Mindtouch api request retries. '
+        'We typically multiply this value by the retry number so, e.g., '
+        'the 4th retry waits 4*.5 = 2 seconds.'
+    ),
+
+    KUMASCRIPT_TIMEOUT = (
+        0.0,
+        'Maximum seconds to wait for a response from the kumascript service. '
+        'On timeout, the document gets served up as-is and without macro '
+        'evaluation as an attempt at graceful failure. NOTE: a value of 0 '
+        'disables kumascript altogether.'
+    ),
+    KUMASCRIPT_MAX_AGE = (
+        600,
+        'Maximum acceptable age (in seconds) of a cached response from '
+        'kumascript. Passed along in a Cache-Control: max-age={value} header, '
+        'which tells kumascript whether or not to serve up a cached response.'
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
@@ -868,3 +974,8 @@ LOGIN_REDIRECT_URL_FAILURE = '/'
 SITE_URL = 'https://developer.mozilla.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer.mozilla.org'
+
+BASKET_URL = 'https://basket.mozilla.com'
+BASKET_APPS_NEWSLETTER = 'app-dev'
+
+KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'

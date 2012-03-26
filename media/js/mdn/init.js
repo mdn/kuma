@@ -68,53 +68,70 @@ jQuery.fn.placeholder = function(new_value) {
 
   // Set up nav dropdowns  
   $("#masthead .toggle").click(function() {
-    $("#masthead .sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
-    $("#masthead .open").removeClass("open");
+    $(this).parents("li.menu").siblings(".menu").children(".sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
+    $(this).parents("li.menu").siblings(".menu").children(".open").removeClass("open");
     $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
     $(this).toggleClass("open");
     return false;
   });
   
   // Keep the dropdown visible when it's in use
-  $("#masthead .sub-menu").hover(
+  $("#masthead .sub-menu, #site-info .sub-menu").hover(
     function() {
       $(this).show().removeAttr("aria-hidden");
     },
     function() {
       $(this).delay(100).slideUp(150).attr("aria-hidden", "true");
-      $("#masthead .toggle").delay(100).removeClass("open").blur();
+      $("#masthead .toggle, #site-info .toggle").delay(100).removeClass("open").blur();
     }
   );
 
   // Hide dropdowns when anything else is clicked
   $(document).bind('click', function(e) {
     var $clicked = $(e.target);
-    if (! $clicked.parents().hasClass("menu")){
-      $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
-      $("#masthead .toggle").removeClass("open");
-    }
+    if (! $clicked.parents().hasClass("menu"))
+      $("#masthead .sub-menu, #site-info .sub-menu").hide().attr("aria-hidden", "true");
+      $("#masthead .toggle, #site-info .toggle").removeClass("open");
   });
   
   // or gets focus
   $("a, input, textarea, button, :focus").bind('focus', function(e) {
     var $focused = $(e.target);
     if (! $focused.parents().hasClass("menu")) {
-      $("#masthead .sub-menu").hide().attr("aria-hidden", "true");
-      $("#masthead .toggle").removeClass("open");
+      $("#masthead .sub-menu, #site-info .sub-menu").hide().attr("aria-hidden", "true");
+      $("#masthead .toggle, #site-info .sub-menu").removeClass("open");
     }
   });
 
-  // If found, wire up the BrowserID sign in button
-  $('.browserid-signin').click(function (e) {
-    if ( !$(this).hasClass('toggle') ) {
-      navigator.id.getVerifiedEmail(function(assertion) {
+  function bindBrowserIDSignin() {
+    $('.browserid-signin').click(function (e) {
+      if ( !$(this).hasClass('toggle') ) {
+        navigator.id.getVerifiedEmail(function(assertion) {
           if (!assertion) { return; }
-          $('#id_assertion')
-              .val(assertion.toString())
-              .parent().submit();
-      });
-      return false;
-    }
+          $('input[name="assertion"]').val(assertion.toString());
+          $('form.browserid').first().submit();
+        });
+        return false;
+      }
+    });
+  }
+
+  // Hide the signed-out block, add and wire up a BrowserID sign in button,
+  // then show the signed-out block again
+  $('ul.signed-out').hide();
+  $('ul.signed-out').load($('ul.signed-out').attr('data-browserid-header-signin-html'), function() {
+    $('.toggle', $(this)).click(function() {
+        $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
+        return false;
+    });
+    bindBrowserIDSignin();
+  });
+  $('ul.signed-out').show();
+
+  // Wire up the statically-drawn browserid-signin element on the change
+  // email page
+  $('#change-email').ready(function(){
+      bindBrowserIDSignin();
   });
 
 // });

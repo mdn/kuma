@@ -15,7 +15,7 @@ from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
 from countries import COUNTRIES
-from dekicompat.backends import DekiUserBackend
+from dekicompat.backends import DekiUserBackend, MindTouchAPIError
 from sumo.models import ModelBase
 from sumo.urlresolvers import reverse
 from devmo.models import UserProfile
@@ -152,7 +152,11 @@ class RegistrationManager(ConfirmationManager):
         new_user.is_active = False
         new_user.save()
         profile = UserProfile.objects.create(user=new_user)
-        deki_user = DekiUserBackend.post_mindtouch_user(new_user)
+        try:
+            deki_user = DekiUserBackend.post_mindtouch_user(new_user)
+        except MindTouchAPIError, e:
+            new_user.delete()
+            raise e
         profile.deki_user_id = deki_user.id
         profile.save()
 

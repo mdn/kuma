@@ -3,21 +3,15 @@ from os.path import dirname
 from datetime import datetime
 
 from mock import patch
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import assert_equal, eq_, ok_
 from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
 import test_utils
-from devmo.tests import create_profile
 
 from django.contrib.auth.models import User
 
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
-from devmo.helpers import devmo_url
-from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile
-
-from dekicompat.tests import (mock_post_mindtouch_user, mock_put_mindtouch_user)
-from dekicompat.backends import DekiUser, DekiUserBackend
+from dekicompat.tests import mock_put_mindtouch_user
+from wiki.tests import revision
 
 
 APP_DIR = dirname(dirname(__file__))
@@ -144,8 +138,8 @@ class TestUserProfile(test_utils.TestCase):
     def test_activity_url_bug689203(self):
         try:
             username = u"She\xeappy"
-            url = UserDocsActivityFeed(username=username).feed_url_for_user()
-        except KeyError, e:
+            UserDocsActivityFeed(username=username).feed_url_for_user()
+        except KeyError:
             ok_(False, "No KeyError should be thrown")
 
     @attr('docs_activity')
@@ -177,8 +171,23 @@ class TestUserProfile(test_utils.TestCase):
                 eq_(item.rc_moved_to_title, item.current_title)
 
     @attr('docs_activity')
+    @attr('bug715923')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_bug715923_feed_parsing_errors(self, fetch_user_feed):
+        fetch_user_feed.return_value = """
+            THIS IS NOT EVEN XML, SO BROKEN
+        """
+        try:
+            feed = UserDocsActivityFeed(username="Sheppy")
+            items = feed.items
+            eq_(False, items,
+                "On error, items should be False")
+        except Exception, e:
+            ok_(False, "There should be no exception %s" % e)
+
     def test_irc_nickname(self):
-        """We've added IRC nickname as a profile field. Make sure it shows up."""
+        """We've added IRC nickname as a profile field.
+        Make sure it shows up."""
         user = User.objects.get(username='testuser')
         profile_from_db = UserProfile.objects.get(user=user)
         ok_(hasattr(profile_from_db, 'irc_nickname'))
@@ -191,7 +200,7 @@ class TestUserProfile(test_utils.TestCase):
         user.email = u"Someguy Dude\xc3\xaas Lastname"
         try:
             profile = UserProfile.objects.get(user=user)
-            g = profile.gravatar
+            profile.gravatar
         except UnicodeEncodeError:
             ok_(False, "There should be no UnicodeEncodeError")
 
@@ -213,3 +222,9 @@ class TestUserProfile(test_utils.TestCase):
         user = User.objects.get(username='testuser')
         profile = UserProfile.objects.get(user=user)
         eq_("en", profile.mindtouch_language)
+
+    def test_wiki_activity(self):
+        user = User.objects.get(username='testuser')
+        profile = UserProfile.objects.get(user=user)
+        revision(save=True, is_approved=True)
+        eq_(1, len(profile.wiki_activity()))

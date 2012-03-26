@@ -1,12 +1,8 @@
-import logging
-
 from datetime import datetime, timedelta
+import time
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_
 from nose.plugins.attrib import attr
-from taggit.models import TaggedItem
-
-from pyquery import PyQuery as pq
 
 from django.core.exceptions import ValidationError
 
@@ -15,13 +11,10 @@ from sumo.tests import TestCase
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
-                         REDIRECT_HTML, MAJOR_SIGNIFICANCE, CATEGORIES,
-                         get_current_or_latest_revision)
-from wiki.parser import wiki_to_html
+                        MAJOR_SIGNIFICANCE, CATEGORIES,
+                         get_current_or_latest_revision,
+                         TaggedDocument)
 from wiki.tests import document, revision, doc_rev, translated_revision
-
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
 
 
 def _objects_eq(manager, list_):
@@ -65,10 +58,10 @@ class DocumentTests(TestCase):
         d = document()
         d.save()
         d.tags.add('grape')
-        eq_(1, TaggedItem.objects.count())
+        eq_(1, TaggedDocument.objects.count())
 
         d.delete()
-        eq_(0, TaggedItem.objects.count())
+        eq_(0, TaggedDocument.objects.count())
 
     def _test_m2m_inheritance(self, enum_class, attr, direct_attr):
         """Test a descriptor's handling of parent delegation."""
@@ -412,6 +405,33 @@ class RedirectCreationTests(TestCase):
         eq_(False, redirect.is_localizable)
 
 
+class TaggedDocumentTests(TestCase):
+    """Tests for tags in Documents and Revisions"""
+    fixtures = ['test_users.json']
+
+    @attr('tags')
+    def test_revision_tags(self):
+        """Change tags on Document by creating Revisions"""
+        d, _ = doc_rev('Sample document')
+
+        eq_(0, Document.objects.filter(tags__name='foo').count())
+        eq_(0, Document.objects.filter(tags__name='alpha').count())
+
+        r = revision(document=d, content='Update to document',
+                     is_approved=True, tags="foo, bar, baz")
+        r.save()
+
+        eq_(1, Document.objects.filter(tags__name='foo').count())
+        eq_(0, Document.objects.filter(tags__name='alpha').count())
+
+        r = revision(document=d, content='Another update',
+                     is_approved=True, tags="alpha, beta, gamma")
+        r.save()
+
+        eq_(0, Document.objects.filter(tags__name='foo').count())
+        eq_(1, Document.objects.filter(tags__name='alpha').count())
+
+
 class RevisionTests(TestCase):
     """Tests for the Revision model"""
     fixtures = ['test_users.json']
@@ -438,7 +458,8 @@ class RevisionTests(TestCase):
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
 
         # Creating another approved revision keeps initial content
-        r = revision(document=d, content='Fail to replace html', is_approved=False)
+        r = revision(document=d, content='Fail to replace html',
+                     is_approved=False)
         r.save()
 
         assert 'Here to stay' in d.html, '"Here to stay" not in %s' % d.html
@@ -482,6 +503,23 @@ class RevisionTests(TestCase):
         self.assertRaises(ValidationError, de_rev.clean)
 
         eq_(en_rev.document.current_revision, de_rev.based_on)
+
+    def test_get_previous(self):
+        """Revision.get_previous() should return this revision's document's
+        most recent approved revision."""
+        rev = revision(is_approved=True, save=True)
+        eq_(None, rev.get_previous())
+        # wait a second so next revision is a different datetime
+        time.sleep(1)
+        next_rev = revision(document=rev.document, content="Updated",
+                        is_approved=True)
+        next_rev.save()
+        eq_(rev, next_rev.get_previous())
+        time.sleep(1)
+        last_rev = revision(document=rev.document, content="Finally",
+                        is_approved=True)
+        last_rev.save()
+        eq_(next_rev, last_rev.get_previous())
 
 
 class RelatedDocumentTests(TestCase):

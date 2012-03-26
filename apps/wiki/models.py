@@ -2,6 +2,8 @@ from collections import namedtuple
 from datetime import datetime
 from itertools import chain
 from urlparse import urlparse
+import hashlib
+import time
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -13,31 +15,28 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
 from django.http import Http404
+from django.utils.http import http_date
 
 from south.modelsinspector import add_introspection_rules
-
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
 
 from notifications.models import NotificationsMixin
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ManagerBase, ModelBase, LocaleField
 from sumo.urlresolvers import reverse, split_path
-from tags.models import BigVocabTaggableMixin
 from wiki import TEMPLATE_TITLE_PREFIX
 import wiki.content
 
-import caching.base
-
-from taggit.models import ItemBase, TaggedItemBase, TaggedItem, TagBase
+from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
+from taggit.utils import parse_tags
 
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
-    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
-    'dl', 'dt', 'dd',
-    'img', 
+    'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'pre', 'code',
+    'dl', 'dt', 'dd', 'small', 'sup',
+    'img',
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -46,11 +45,16 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
+ALLOWED_ATTRIBUTES['div'] = ['class', 'id']
+ALLOWED_ATTRIBUTES['pre'] = ['class', 'id']
 ALLOWED_ATTRIBUTES['span'] = ['style', ]
-ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is', 'title', 'style']
+ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
+                             'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in
+                          ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
-    'div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
@@ -199,9 +203,12 @@ class DocumentManager(ManagerBase):
         if category:
             docs = docs.filter(category=category)
         if tag:
-            docs = docs.filter(tags__in=[tag.name])
+            docs = docs.filter(tags__in=[tag])
         if tag_name:
             docs = docs.filter(tags__name=tag_name)
+        # Leave out the html, since that leads to huge cache objects and we
+        # never use the content in lists.
+        docs = docs.defer('html')
         return docs
 
     def filter_for_review(self, tag=None, tag_name=None):
@@ -216,12 +223,43 @@ class DocumentManager(ManagerBase):
         return self.filter(**q).distinct()
 
 
-class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
+class DocumentTag(TagBase):
+    """A tag indexing a document"""
+    class Meta:
+        verbose_name = _("Document Tag")
+        verbose_name_plural = _("Document Tags")
+
+
+class TaggedDocument(ItemBase):
+    """Through model, for tags on Documents"""
+    content_object = models.ForeignKey('Document')
+    tag = models.ForeignKey(DocumentTag)
+
+    # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
+    # don't like. But, it seems to be the only way to get *both* a custom tag
+    # *and* a custom through model.
+    # See: https://github.com/boar/boar/blob/master/boar/articles/models.py#L63
+    @classmethod
+    def tags_for(cls, model, instance=None):
+        if instance is not None:
+            return DocumentTag.objects.filter(
+                taggeddocument__content_object=instance)
+        return DocumentTag.objects.filter(
+            taggeddocument__content_object__isnull=False).distinct()
+
+
+class Document(NotificationsMixin, ModelBase):
     """A localized knowledgebase document, not revision-specific."""
     objects = DocumentManager()
 
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
+
+    # NOTE: Documents are indexed by tags, but tags are edited in Revisions.
+    # Also, using a custom through table to isolate Document tags from those
+    # used in other models and apps. (Works better than namespaces, for
+    # completion and such.)
+    tags = TaggableManager(through=TaggedDocument)
 
     # Is this document a template or not?
     is_template = models.BooleanField(default=False, editable=False,
@@ -257,6 +295,16 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
+
+    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
+    # so that migrations can be idempotent.
+    mindtouch_page_id = models.IntegerField(
+            help_text="ID for migrated MindTouch page",
+            null=True, db_index=True)
+
+    # Last modified time for the document. Should be equal-to or greater than
+    # the current revision's created field
+    modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
     # firefox_versions,
     # operating_systems:
@@ -445,8 +493,64 @@ class Document(NotificationsMixin, ModelBase, BigVocabTaggableMixin):
     firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
     operating_systems = _inherited('operating_systems', 'operating_system_set')
 
-    def get_absolute_url(self):
-        return reverse('wiki.document', locale=self.locale, args=[self.slug])
+    @property
+    def etag(self):
+        """Generate an ETag based on document content hash, suitable for an
+        HTTP header"""
+        return hashlib.md5(self.html.encode('utf8')).hexdigest()
+
+    @property
+    def last_modified(self):
+        """Generate a Last-Modified string suitable for an HTTP header"""
+        return http_date(time.mktime(self.modified.timetuple()))
+
+    @property
+    def full_path(self):
+        """The full path of a document consists of {locale}/{slug}"""
+        return '%s/%s' % (self.locale, self.slug)
+
+    def get_absolute_url(self, ui_locale=None):
+        """Build the absolute URL to this document from its full path"""
+        if not ui_locale:
+            ui_locale = self.locale
+        return reverse('wiki.document', locale=ui_locale,
+                       args=[self.full_path])
+
+    @staticmethod
+    def locale_and_slug_from_path(path, request=None):
+        """Given a docs URL path, derive locale and slug for model lookup, and
+        a suggestion of whether this path deserves a redirect"""
+        locale, slug, needs_redirect = '', path, False
+
+        # If there's a slash in the path, then the first segment is likely to
+        # be the locale.
+        if '/' in path:
+            locale, slug = path.split('/', 1)
+
+            if locale in settings.MT_TO_KUMA_LOCALE_MAP:
+                # If this looks like a MindTouch locale, remap it.
+                old_locale = locale
+                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale]
+                # But, we only need a redirect if the locale actually changed.
+                needs_redirect = (locale != old_locale)
+
+            if locale not in settings.MDN_LANGUAGES:
+                # Oops, that doesn't look like a supported locale, so back out.
+                needs_redirect = True
+                locale, slug = '', path
+
+        # No locale by this point? Go with the locale detected from user agent
+        # if we have a request.
+        if locale == '' and request:
+            needs_redirect = True
+            locale = request.locale
+
+        # Still no locale? Go with the site default locale.
+        if locale == '':
+            needs_redirect = True
+            locale = getattr(settings, 'WIKI_DEFAULT_LANGUAGE', 'en-US')
+
+        return (locale, slug, needs_redirect)
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):
@@ -636,6 +740,10 @@ class Revision(ModelBase):
     # Revision so the translators can handle them:
     keywords = models.CharField(max_length=255, blank=True)
 
+    # Tags are stored in a Revision as a plain CharField, because Revisions are
+    # not indexed by tags. This data is retained for history tracking.
+    tags = models.CharField(max_length=255, blank=True)
+
     # Tags are (ab)used as status flags and for searches, but the through model
     # should constrain things from getting expensive.
     review_tags = TaggableManager(through=ReviewTaggedRevision)
@@ -655,6 +763,14 @@ class Revision(ModelBase):
     based_on = models.ForeignKey('self', null=True, blank=True)
     # TODO: limit_choices_to={'document__locale':
     # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
+
+    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
+    # so that migrations can be idempotent.
+    mindtouch_old_id = models.IntegerField(
+            help_text="ID for migrated MindTouch revision (null for current)",
+            null=True, db_index=True, unique=True)
+    is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
+            help_text="Did this revision come from MindTouch?")
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old
@@ -729,11 +845,20 @@ class Revision(ModelBase):
         if self.is_approved and (
                 not self.document.current_revision or
                 self.document.current_revision.id < self.id):
-            self.document.title = self.title
-            self.document.slug = self.slug
-            self.document.html = self.content_cleaned
-            self.document.current_revision = self
-            self.document.save()
+            self.make_current()
+
+    def make_current(self):
+        """Make this revision the current one for the document"""
+        self.document.title = self.title
+        self.document.slug = self.slug
+        self.document.html = self.content_cleaned
+        self.document.current_revision = self
+
+        # Since Revision stores tags as a string, we need to parse them first
+        # before setting on the Document.
+        self.document.tags.set(*parse_tags(self.tags))
+
+        self.document.save()
 
     def __unicode__(self):
         return u'[%s] %s #%s: %s' % (self.document.locale,
@@ -746,12 +871,23 @@ class Revision(ModelBase):
             .parse(self.content)
             .extractSection(section_id)
             .serialize())
-        
+
     @property
     def content_cleaned(self):
         return bleach.clean(
-            self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS
+            self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
+            strip_comments=False
         )
+
+    def get_previous(self):
+        previous_revisions = self.document.revisions.filter(
+                                is_approved=True,
+                                created__lt=self.created,
+                                ).order_by('-created')
+        if len(previous_revisions):
+            return previous_revisions[0]
+        else:
+            return None
 
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The

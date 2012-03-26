@@ -72,8 +72,18 @@ DATABASES = {
     },
 }
 
+MIGRATION_DATABASES = {
+    'wikidb': {
+        'NAME': 'wikidb',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'USER': 'wikiuser',
+        'PASSWORD': '2yeOr7ByBUMBiB4z',
+    },
+}
+
 # Use IP:PORT pairs separated by semicolons.
-CACHE_BACKEND = 'django_pylibmc.memcached://localhost:11211?timeout=3600'
+CACHE_BACKEND = 'memcached://localhost:11211?timeout=60'
 CONSTANCE_DATABASE_CACHE_BACKEND = CACHE_BACKEND
 
 # This is used to hash some things in Django.
@@ -102,3 +112,5 @@ BROWSERID_CACERT_FILE = None
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL_FAILURE = '/'
+
+KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'

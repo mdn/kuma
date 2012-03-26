@@ -1,6 +1,5 @@
-import logging
-
 from datetime import datetime
+import time
 from urllib import urlencode
 from urllib2 import HTTPError
 import urlparse
@@ -9,11 +8,12 @@ from xml.dom import minidom
 from xml.sax.saxutils import escape as xml_escape
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
-
 from pyquery import PyQuery as pq
 
 import commonware
+import constance.config
 
 from devmo.models import UserProfile
 
@@ -39,6 +39,8 @@ MINDTOUCH_USER_XML = """<user>
 </permissions.user>
 </user>"""
 
+class MindTouchAPIError(Exception):
+    pass
 
 class DekiUserBackend(object):
     """
@@ -144,7 +146,10 @@ class DekiUserBackend(object):
             return None
 
     @staticmethod
-    def get_or_create_user(deki_user):
+    def get_or_create_user(deki_user, sync_attrs=('is_superuser',
+                                                  'is_staff',
+                                                  'is_active',
+                                                  'email')):
         """
         Grab the User via their UserProfile and deki_user_id.
         If non exists, create both.
@@ -157,21 +162,28 @@ class DekiUserBackend(object):
             profile = UserProfile.objects.get(deki_user_id=deki_user.id)
             user = profile.user
 
-        except UserProfile.DoesNotExist:
+        except ObjectDoesNotExist:
             # No existing profile, so try creating a new profile and user
+
+            # HACK: Usernames in Kuma are limited to 30 characters. There are
+            # around 0.1% of MindTouch users in production (circa 2011) whose
+            # names exceed this length. They're mostly the product of spammers
+            # and security tests but it will still throw MySQL-level errors
+            # during migration.
+            username = deki_user.username[:30]
+
             user, created = (User.objects
-                             .get_or_create(username=deki_user.username))
-            user.username = deki_user.username
+                             .get_or_create(username=username))
+            user.username = username
             user.email = deki_user.email
             user.set_unusable_password()
             user.save()
             profile = UserProfile(deki_user_id=deki_user.id, user=user)
-            profile.save()
+            profile.save(skip_mindtouch_put=True)
 
         user.deki_user = deki_user
 
         # Sync these attributes from Deki -> Django (for now)
-        sync_attrs = ('is_superuser', 'is_staff', 'is_active', 'email')
         needs_save = False
         for sa in sync_attrs:
             deki_val = getattr(deki_user, sa, None)
@@ -211,14 +223,18 @@ class DekiUserBackend(object):
         role = 'Contributor'
         if user.is_staff and user.is_superuser:
             role = 'Admin'
-        user_xml = MINDTOUCH_USER_XML % {'username': user.username,
-                    'email': user.email,
-                    'fullname': user.get_profile().fullname,
+        user_xml = MINDTOUCH_USER_XML % {'username': user.username.encode('utf-8'),
+                    'email': user.email.encode('utf-8'),
+                    'fullname': user.get_profile().fullname.encode('utf-8'),
                     'status': 'active',
                     'language': user.get_profile().mindtouch_language,
                     'timezone': user.get_profile().mindtouch_timezone,
                     'role': role}
         return user_xml
+
+    @staticmethod
+    def _perform_post_mindtouch_user(url, data, headers):
+        return requests.post(url, data=data, headers=headers)
 
     @staticmethod
     def post_mindtouch_user(user):
@@ -228,10 +244,19 @@ class DekiUserBackend(object):
             settings.DEKIWIKI_APIKEY)
         user_xml = DekiUserBackend.generate_mindtouch_user_xml(user)
         headers = {'Content-Type': 'application/xml'}
-        resp = requests.post(user_url, data=user_xml, headers=headers)
+        resp = DekiUserBackend._perform_post_mindtouch_user(user_url,
+                                                            user_xml,
+                                                            headers)
         if resp.status_code is not 200:
-            # TODO: decide WTF to do here
-            pass
+            # HACK: MindTouch fails intermittently, so retry a few times
+            for i in range(constance.config.DEKIWIKI_POST_RETRIES):
+                resp = DekiUserBackend._perform_post_mindtouch_user(
+                    user_url, data=user_xml, headers=headers)
+                if resp.status_code is 200:
+                    break
+                time.sleep(constance.config.DEKIWIKI_API_RETRY_WAIT * i)
+            if resp.status_code is not 200:
+                raise MindTouchAPIError("post_mindtouch_user failed")
         return DekiUser.parse_user_info(resp.content)
 
     @staticmethod
@@ -264,7 +289,7 @@ class DekiUser(object):
         self.email = email
         self.gravatar = gravatar
         self.profile_url = profile_url
-        self.is_active = False
+        self.is_active = True
         self.is_staff = False
         self.is_superuser = False
 

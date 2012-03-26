@@ -1,17 +1,30 @@
 from datetime import datetime
 import json
+from collections import defaultdict
+import base64
 import logging
 from urllib import urlencode
 from string import ascii_letters
 
+import requests
+
+try:
+    from functools import wraps
+except ImportError:
+    from django.utils.functional import wraps
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.core.cache import cache
 from django.http import (HttpResponse, HttpResponseRedirect,
+                         HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods)
+
+import constance.config
 
 from waffle.decorators import waffle_flag
 
@@ -22,14 +35,14 @@ from tower import ugettext as _
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
 from wiki import DOCUMENTS_PER_PAGE
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
-                         ReviewTag,
+                         DocumentTag, ReviewTag,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
@@ -81,14 +94,47 @@ SHOWFOR_DATA = {
 }
 
 
+def process_document_path(func, reverse_name='wiki.document'):
+    """Decorator to process document_path into locale and slug, with
+    auto-redirect if necessary."""
+
+    # This function takes generic args and kwargs so it can presume as little
+    # as possible on the view method signature.
+    @wraps(func)
+    def process(request, document_path=None, *args, **kwargs):
+
+        document_slug, document_locale = None, None
+        if document_path:
+            # Parse the document path into locale and slug.
+            document_locale, document_slug, needs_redirect = (Document
+                    .locale_and_slug_from_path(document_path, request))
+
+            if needs_redirect:
+                # This catches old MindTouch locales, missing locale, and a few other
+                # cases to fire off a 301 Moved permanent redirect.
+                redir_path = '%s/%s' % (document_locale, document_slug)
+                url = reverse('wiki.document', locale=request.locale,
+                              args=[redir_path])
+                url = urlparams(url, query_dict=request.GET)
+                return HttpResponsePermanentRedirect(url)
+
+        # Set the kwargs that decorated methods will expect.
+        kwargs['document_slug'] = document_slug
+        kwargs['document_locale'] = document_locale
+        return func(request, *args, **kwargs)
+
+    return process
+
+
 @waffle_flag('kumawiki')
 @require_GET
-def document(request, document_slug):
+@process_document_path
+def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
-        doc = Document.objects.get(locale=request.locale, slug=document_slug)
+        doc = Document.objects.get(locale=document_locale, slug=document_slug)
         if (not doc.current_revision and doc.parent and
             doc.parent.current_revision):
             # This is a translation but its current_revision is None
@@ -104,7 +150,7 @@ def document(request, document_slug):
                                 locale=settings.WIKI_DEFAULT_LANGUAGE,
                                 slug=document_slug)
         # If there's a translation to the requested locale, take it:
-        translation = doc.translated_to(request.locale)
+        translation = doc.translated_to(document_locale)
         if translation and translation.current_revision:
             url = translation.get_absolute_url()
             url = urlparams(url, query_dict=request.GET)
@@ -127,6 +173,12 @@ def document(request, document_slug):
     if redirect_url:
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
+        # We want to make sure the UI locale is preserved in this
+        # redirect, so that the locale middleware doesn't have to
+        # redirect again afterward. Simplest way is just to do what
+        # the locale middleware would be doing.
+        prefixer = Prefixer(request=request)
+        url = prefixer.fix(url)
         return HttpResponseRedirect(url)
 
     # Get "redirected from" doc if we were redirected:
@@ -140,6 +192,18 @@ def document(request, document_slug):
         except Document.DoesNotExist:
             pass
 
+    # Utility to set common headers used by all response exit points
+    response_headers = dict()
+    def set_common_headers(r):
+        r['ETag'] = doc.etag
+        r['Last-Modified'] = doc.last_modified
+        if doc.current_revision:
+            r['x-kuma-revision'] = doc.current_revision.id
+        # Finally, set any extra headers. update() doesn't work here.
+        for k,v in response_headers.items():
+            r[k] = v
+        return r
+
     related = doc.related_documents.order_by('-related_to__in_common')[0:5]
 
     # Get the contributors. (To avoid this query, we could render the
@@ -151,43 +215,231 @@ def document(request, document_slug):
                                             .only('creator')
                                             .select_related('creator')])
     # TODO: Port this kitsune feature over, eventually:
-    #     https://github.com/jsocol/kitsune/commit/f1ebb241e4b1d746f97686e65f49e478e28d89f2
+    #     https://github.com/jsocol/kitsune/commit/
+    #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
-    show_raw = request.GET.get('raw', False)
-    need_edit_links = request.GET.get('edit_links', False)
+    show_raw = request.GET.get('raw', False) is not False
+    no_macros = request.GET.get('nomacros', False) is not False
+    force_macros = request.GET.get('macros', False) is not False
+    need_edit_links = request.GET.get('edit_links', False) is not False
+
+    # Grab the document HTML as a fallback, then attempt to use kumascript:
+    doc_html, ks_errors = doc.html, None
+    if (constance.config.KUMASCRIPT_TIMEOUT > 0 and 
+            (force_macros or (not no_macros and not show_raw))):
+        # We'll make a request to kumascript for macro evaluation only if:
+        #   * The service isn't disabled with a timeout of 0
+        #   * The request has *not* asked for raw source
+        #     (eg. ?raw)
+        #   * The request has *not* asked for no macro evaluation
+        #     (eg. ?nomacros)
+        #   * The request *has* asked for macro evaluation 
+        #     (eg. ?raw&macros)
+        resp_body, resp_errors = _perform_kumascript_request(
+                request, response_headers, document_locale, document_slug)
+        if resp_body:
+            doc_html = resp_body
+        if resp_errors:
+            ks_errors = resp_errors
 
     # Start applying some filters to the document HTML
-    tool = wiki.content.parse(doc.html)
+    tool = wiki.content.parse(doc_html)
 
     # If a section ID is specified, extract that section.
     if section_id:
         tool.extractSection(section_id)
 
     # If this user can edit the document, inject some section editing links.
-    if (need_edit_links or not show_raw) and doc.allows_editing_by(request.user):
-        tool.injectSectionEditingLinks(doc.slug, doc.locale)
+    if ((need_edit_links or not show_raw) and
+            doc.allows_editing_by(request.user)):
+        tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
     # iframe inclusion
     if show_raw:
         response = HttpResponse(tool.serialize())
-        response['x-kuma-revision'] = doc.current_revision.id
         response['x-frame-options'] = 'Allow'
-        return response
-    
+        return set_common_headers(response)
+
     data = {'document': doc, 'document_html': tool.serialize(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
-            'fallback_reason': fallback_reason}
+            'fallback_reason': fallback_reason,
+            'kumascript_errors': ks_errors}
     data.update(SHOWFOR_DATA)
-    return jingo.render(request, 'wiki/document.html', data)
+
+    response = jingo.render(request, 'wiki/document.html', data)
+    # FIXME: For some reason, the ETag isn't coming through here.
+    return set_common_headers(response)
+
+
+def _build_kumascript_cache_keys(document_locale, document_slug):
+    """Build the cache keys used for Kumascript"""
+    cache_key = ('kumascript:%s/%s:%s' %
+                 (document_locale, document_slug, '%s'))
+    ck_etag = cache_key % 'etag'
+    ck_modified = cache_key % 'modified'
+    ck_body = cache_key % 'body'
+    ck_errors = cache_key % 'errors'
+    return (ck_etag, ck_modified, ck_body, ck_errors)
+
+
+def _invalidate_kumascript_cache(document):
+    """Invalidate the cached kumascript response for a given document"""
+    if constance.config.KUMASCRIPT_TIMEOUT == 0:
+        # Do nothing if kumascript is disabled
+        return
+    cache.delete_many(_build_kumascript_cache_keys(document.slug,
+                                                   document.locale))
+
+
+def _perform_kumascript_request(request, response_headers, document_locale,
+                                document_slug):
+    """Perform a kumascript GET request for a document locale and slug.
+
+    This is broken out into its own utility function, both to make the view
+    method simpler and to make it easy to mock out in testing.
+    """
+    resp_body, resp_errors = None, None
+    
+    try:
+        url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
+        url = url_tmpl.format(path='%s/%s' %
+                                   (document_locale, document_slug))
+
+        ck_etag, ck_modified, ck_body, ck_errors = (
+                _build_kumascript_cache_keys(document_slug, document_locale))
+
+        # Default to the configured max-age for cache control.
+        max_age = constance.config.KUMASCRIPT_MAX_AGE
+        cache_control = 'max-age=%s' % max_age
+
+        # TODO: Wrap this in a waffle flag for primitive access control?
+        if request.user.is_authenticated():
+            # Restricting to auth'd users places a speed bump on end-user
+            # triggered cache invalidation.
+            ua_cc = request.META.get('HTTP_CACHE_CONTROL')
+
+            if ua_cc == 'no-cache':
+                # Firefox issues no-cache on shift-reload, so this lets end-users
+                # trigger cache invalidation. kumascript will react to no-cache
+                # by reloading both document and template sources from Kuma.
+                cache_control = 'no-cache'
+
+            elif ua_cc == 'max-age=0':
+                # Firefox sends Cache-Control: max-age=0 on reload. kumascript
+                # will react to max-age=0 by reloading just the document source
+                # from Kuma and use cached templates. (pending bug 730715)
+                cache_control = 'max-age=0'
+
+        headers = {
+            'X-FireLogger': '1.2',
+            'Cache-Control': cache_control
+        }
+        
+        # Set up for conditional GET, if we have the details cached.
+        c_meta = cache.get_many([ck_etag, ck_modified])
+        if ck_etag in c_meta:
+            headers['If-None-Match'] = c_meta[ck_etag]
+        if ck_modified in c_meta:
+            headers['If-Modified-Since'] = c_meta[ck_modified]
+
+        # Finally, fire off the request.
+        resp = requests.get(url, headers=headers,
+            timeout=constance.config.KUMASCRIPT_TIMEOUT)
+
+        if resp.status_code == 200:
+            # HACK: Assume we're getting UTF-8, which we should be.
+            # TODO: Better solution would be to upgrade the requests module
+            # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
+            # which does auto-detection. But, that will break things.
+            resp_body = resp.read().decode('utf8')
+
+            # Attempt to decode any FireLogger-style error messages in the
+            # response from kumascript.
+            try:
+                # Extract all the log packets from headers.
+                fl_packets = defaultdict(dict)
+                for k, v in resp.headers.items():
+                    if not k.lower().startswith('firelogger-'):
+                        continue
+                    _, packet_id, seq = k.split('-', 3)
+                    fl_packets[packet_id][seq] = v
+
+                # The FireLogger spec allows for multiple "packets". But,
+                # kumascript only ever sends the one, so flatten all messages.
+                fl_msgs = []
+                for id, contents in fl_packets.items():
+                    seqs = sorted(contents.keys(), key=int)
+                    d_b64 = "\n".join(contents[x] for x in seqs)
+                    d_json = base64.decodestring(d_b64)
+                    packet = json.loads(d_json)
+                    fl_msgs.extend(packet['logs'])
+
+                if len(fl_msgs):
+                    resp_errors = fl_msgs
+
+            except Exception, e:
+                resp_errors = [
+                    { "level": "error",
+                      "message": "Problem parsing errors: %s" % e,
+                      "args": [ "ParsingError" ] }
+                ]
+
+            # Set a header so we can see what happened in caching.
+            response_headers['X-Kumascript-Caching'] = (
+                    '200 OK, Age: %s' % resp.headers.get('age', 0))
+
+            # Cache the request for conditional GET, but use the max_age for
+            # the cache timeout here too.
+            cache.set_many({
+                ck_etag: resp.headers.get('etag'),
+                ck_modified: resp.headers.get('last-modified'),
+                ck_body: resp_body,
+                ck_errors: resp_errors
+            }, timeout=max_age)
+
+        elif resp.status_code == 304:
+            # Conditional GET was a pass, so use the cached content.
+            c_result = cache.get_many([ck_body, ck_errors])
+            resp_body = c_result.get(ck_body, None)
+            resp_errors = c_result.get(ck_errors, None)
+
+            # Set a header so we can see what happened in caching.
+            response_headers['X-Kumascript-Caching'] = (
+                    '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
+
+        elif resp.status_code == None:
+            resp_errors = [
+                { "level": "error",
+                  "message": "Request to Kumascript service timed out",
+                  "args": [ "TimeoutError" ] }
+            ]
+
+        else:
+            resp_errors = [
+                { "level": "error",
+                  "message": "Unexpected response from Kumascript service: %s" % resp.status_code,
+                  "args": [ "UnknownError" ] }
+            ]
+
+
+    except Exception, e:
+        raise
+        # Do nothing, if the kumascript service fails in some way.
+        # TODO: Log the failure more usefully here.
+        logging.debug("KS FAILED %s" % e)
+        pass
+
+    return (resp_body, resp_errors)
 
 
 @waffle_flag('kumawiki')
-def revision(request, document_slug, revision_id):
+@process_document_path
+def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
@@ -210,7 +462,9 @@ def list_documents(request, category=None, tag=None):
         except KeyError:
             raise Http404
 
-    tag_obj = tag and get_object_or_404(Tag, slug=tag) or None
+    # Taggit offers a slug - but use name here, because the slugification
+    # stinks and is hard to customize.
+    tag_obj = tag and get_object_or_404(DocumentTag, name=tag) or None
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category,
                                              tag=tag_obj)
@@ -239,17 +493,16 @@ def list_documents_for_review(request, tag=None):
 def new_document(request):
     """Create a new wiki document."""
     if request.method == 'GET':
-        doc_form = DocumentForm(
-            can_create_tags=request.user.has_perm('taggit.add_tag'))
-        rev_form = RevisionForm(initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
+        doc_form = DocumentForm()
+        rev_form = RevisionForm(
+                initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
                              'revision_form': rev_form})
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
-    doc_form = DocumentForm(post_data,
-        can_create_tags=request.user.has_perm('taggit.add_tag'))
+    doc_form = DocumentForm(post_data)
     rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
@@ -260,7 +513,7 @@ def new_document(request):
         else:
             view = 'wiki.document_revisions'
         return HttpResponseRedirect(reverse(view,
-                                    args=[doc.slug]))
+                                    args=[doc.full_path]))
 
     return jingo.render(request, 'wiki/new_document.html',
                         {'document_form': doc_form,
@@ -271,10 +524,11 @@ def new_document(request):
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in
                  # Document.allows_editing_by.
-def edit_document(request, document_slug, revision_id=None):
+@process_document_path
+def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     user = request.user
 
     # If this document has a parent, then the edit is handled by the
@@ -292,14 +546,13 @@ def edit_document(request, document_slug, revision_id=None):
 
     doc_form = rev_form = None
     if doc.allows_revision_by(user):
-        rev_form = RevisionForm(instance=rev, 
+        rev_form = RevisionForm(instance=rev,
                                 initial={'based_on': rev.id,
                                          'current_rev': rev.id,
                                          'comment': ''},
                                 section_id=section_id)
     if doc.allows_editing_by(user):
-        doc_form = DocumentForm(initial=_document_form_initial(doc),
-            can_create_tags=user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm(initial=_document_form_initial(doc))
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
@@ -318,12 +571,12 @@ def edit_document(request, document_slug, revision_id=None):
         if which_form == 'doc':
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
-                post_data.update({'locale': request.locale})
-                doc_form = DocumentForm(post_data, instance=doc,
-                    can_create_tags=user.has_perm('taggit.add_tag'))
+                post_data.update({'locale': document_locale})
+                doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
+                    _invalidate_kumascript_cache(doc)
 
                     # Do we need to rebuild the KB?
                     _maybe_schedule_rebuild(doc_form)
@@ -341,7 +594,7 @@ def edit_document(request, document_slug, revision_id=None):
 
                     return HttpResponseRedirect(
                         urlparams(reverse('wiki.edit_document',
-                                          args=[doc.slug]),
+                                          args=[doc.full_path]),
                                   opendescription=1))
                 disclose_description = True
             else:
@@ -351,7 +604,7 @@ def edit_document(request, document_slug, revision_id=None):
             if not doc.allows_revision_by(user):
                 raise PermissionDenied
             else:
-                rev_form = RevisionForm(request.POST, 
+                rev_form = RevisionForm(request.POST,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
@@ -372,13 +625,10 @@ def edit_document(request, document_slug, revision_id=None):
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
                         # Jump out to a function to escape indentation hell
-                        return _edit_document_collision(request,
-                                                        orig_rev, curr_rev,
-                                                        is_iframe_target,
-                                                        is_raw,
-                                                        rev_form, doc_form,
-                                                        section_id, 
-                                                        rev, doc)
+                        return _edit_document_collision(
+                                request, orig_rev, curr_rev, is_iframe_target,
+                                is_raw, rev_form, doc_form, section_id,
+                                rev, doc)
 
                 else:
                     _save_rev_and_notify(rev_form, user, doc)
@@ -394,7 +644,7 @@ def edit_document(request, document_slug, revision_id=None):
                         response['x-frame-options'] = 'SAMEORIGIN'
                         return response
 
-                    if (is_raw and orig_rev is not None and 
+                    if (is_raw and orig_rev is not None and
                             curr_rev.id != orig_rev.id):
                         # If this is the raw view, and there was an original
                         # revision, but the original revision differed from the
@@ -409,9 +659,9 @@ def edit_document(request, document_slug, revision_id=None):
                         view = 'wiki.document'
                     else:
                         view = 'wiki.document_revisions'
-                    
+
                     # Construct the redirect URL, adding any needed parameters
-                    url = reverse(view, args=[doc.slug], locale=doc.locale)
+                    url = reverse(view, args=[doc.full_path], locale=doc.locale)
                     params = {}
                     if is_raw:
                         params['raw'] = 'true'
@@ -463,7 +713,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     if is_raw:
         # When dealing with the raw content API, we need to signal the conflict
         # differently so the client-side can escape out to a conflict
-        # resolution UI. 
+        # resolution UI.
         response = HttpResponse('CONFLICT')
         response.status_code = 409
         response['x-frame-options'] = 'SAMEORIGIN'
@@ -514,24 +764,32 @@ def preview_revision(request):
 
 @waffle_flag('kumawiki')
 @require_GET
-def document_revisions(request, document_slug):
+@process_document_path
+def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
                 .defer('summary', 'content')
                 .order_by('-created', '-id'))
 
+    # Ensure the current revision appears at the top, no matter where it
+    # appears in the order.
+    curr_id = doc.current_revision.id
+    revs_out = [r for r in revs if r.id == curr_id]
+    revs_out.extend([r for r in revs if r.id != curr_id])
+
     return jingo.render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs, 'document': doc})
+                        {'revisions': revs_out, 'document': doc})
 
 
 @waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.review_revision')
-def review_revision(request, document_slug, revision_id):
+@process_document_path
+def review_revision(request, document_slug, document_locale, revision_id):
     """Review a revision of a wiki document."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
@@ -561,7 +819,7 @@ def review_revision(request, document_slug, revision_id):
             schedule_rebuild_kb()
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                                args=[document_slug]))
+                                                args=[document.full_path]))
 
     if doc.parent:  # A translation
         parent_revision = get_current_or_latest_revision(doc.parent)
@@ -578,14 +836,15 @@ def review_revision(request, document_slug, revision_id):
 
 @waffle_flag('kumawiki')
 @require_GET
-def compare_revisions(request, document_slug):
+@process_document_path
+def compare_revisions(request, document_slug, document_locale):
     """Compare two wiki document revisions.
 
     The ids are passed as query string parameters (to and from).
 
     """
     doc = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     if 'from' not in request.GET or 'to' not in request.GET:
         raise Http404
 
@@ -601,17 +860,19 @@ def compare_revisions(request, document_slug):
 
 @waffle_flag('kumawiki')
 @login_required
-def select_locale(request, document_slug):
+@process_document_path
+def select_locale(request, document_slug, document_locale):
     """Select a locale to translate the document to."""
     doc = get_object_or_404(
-        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     return jingo.render(request, 'wiki/select_locale.html', {'document': doc})
 
 
 @waffle_flag('kumawiki')
 @require_http_methods(['GET', 'POST'])
 @login_required
-def translate(request, document_slug, revision_id=None):
+@process_document_path
+def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
 
     * document_slug is for the default locale
@@ -624,11 +885,11 @@ def translate(request, document_slug, revision_id=None):
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
     user = request.user
 
-    if settings.WIKI_DEFAULT_LANGUAGE == request.locale:
+    if settings.WIKI_DEFAULT_LANGUAGE == document_locale:
         # Don't translate to the default language.
         return HttpResponseRedirect(reverse(
             'wiki.edit_document', locale=settings.WIKI_DEFAULT_LANGUAGE,
-            args=[parent_doc.slug]))
+            args=[parent_doc.full_path]))
 
     if not parent_doc.is_localizable:
         message = _lazy(u'You cannot translate this document.')
@@ -644,7 +905,7 @@ def translate(request, document_slug, revision_id=None):
     disclose_description = bool(request.GET.get('opendescription'))
 
     try:
-        doc = parent_doc.translations.get(locale=request.locale)
+        doc = parent_doc.translations.get(locale=document_locale)
     except Document.DoesNotExist:
         doc = None
         disclose_description = True
@@ -659,8 +920,7 @@ def translate(request, document_slug, revision_id=None):
 
     if user_has_doc_perm:
         doc_initial = _document_form_initial(doc) if doc else None
-        doc_form = DocumentForm(initial=doc_initial,
-            can_create_tags=user.has_perm('taggit.add_tag'))
+        doc_form = DocumentForm(initial=doc_initial)
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
         if revision_id:
@@ -678,10 +938,9 @@ def translate(request, document_slug, revision_id=None):
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
             post_data = request.POST.copy()
-            post_data.update({'locale': request.locale})
-            doc_form = DocumentForm(post_data, instance=doc,
-                can_create_tags=user.has_perm('taggit.add_tag'))
-            doc_form.instance.locale = request.locale
+            post_data.update({'locale': document_locale})
+            doc_form = DocumentForm(post_data, instance=doc)
+            doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
                 rev_form = RevisionForm(request.POST)
@@ -697,7 +956,7 @@ def translate(request, document_slug, revision_id=None):
 
                 if which_form == 'doc':
                     url = urlparams(reverse('wiki.edit_document',
-                                            args=[doc.slug]),
+                                            args=[doc.full_path]),
                                     opendescription=1)
                     return HttpResponseRedirect(url)
 
@@ -713,23 +972,24 @@ def translate(request, document_slug, revision_id=None):
             if rev_form.is_valid() and not doc_form_invalid:
                 _save_rev_and_notify(rev_form, request.user, doc)
                 url = reverse('wiki.document_revisions',
-                              args=[doc_slug])
+                              args=[doc.full_path])
                 return HttpResponseRedirect(url)
 
     return jingo.render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
-                         'locale': request.locale, 'based_on': based_on_rev,
+                         'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description})
 
 
 @waffle_flag('kumawiki')
 @require_POST
 @login_required
-def watch_document(request, document_slug):
+@process_document_path
+def watch_document(request, document_slug, document_locale):
     """Start watching a document for edits."""
     document = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     EditDocumentEvent.notify(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
 
@@ -737,10 +997,11 @@ def watch_document(request, document_slug):
 @waffle_flag('kumawiki')
 @require_POST
 @login_required
-def unwatch_document(request, document_slug):
+@process_document_path
+def unwatch_document(request, document_slug, document_locale):
     """Stop watching a document for edits."""
     document = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
     EditDocumentEvent.stop_notifying(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
 
@@ -794,12 +1055,13 @@ def unwatch_approved(request):
 
 @waffle_flag('kumawiki')
 @require_GET
-def json_view(request, document_slug=None):
+@process_document_path
+def json_view(request, document_slug=None, document_locale=None):
     """Return some basic document info in a JSON blob."""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
     if document_slug is not None:
         kwargs['slug'] = document_slug
-        kwargs['locale'] = request.locale
+        kwargs['locale'] = document_locale
     elif 'title' in request.GET:
         kwargs['title'] = request.GET['title']
     elif 'slug' in request.GET:
@@ -821,10 +1083,14 @@ def json_view(request, document_slug=None):
 
 @waffle_flag('kumawiki')
 @require_POST
-def helpful_vote(request, document_slug):
+@process_document_path
+def helpful_vote(request, document_slug, document_locale):
     """Vote for Helpful/Not Helpful document"""
+    document_locale, document_slug, needs_redirect = (Document
+            .locale_and_slug_from_path(document_path, request))
+
     document = get_object_or_404(
-        Document, locale=request.locale, slug=document_slug)
+        Document, locale=document_locale, slug=document_slug)
 
     if not document.has_voted(request):
         ua = request.META.get('HTTP_USER_AGENT', '')[:1000]  # 1000 max_length
@@ -855,8 +1121,11 @@ def helpful_vote(request, document_slug):
 @waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.delete_revision')
-def delete_revision(request, document_slug, revision_id):
+def delete_revision(request, document_path, revision_id):
     """Delete a revision."""
+    document_locale, document_slug, needs_redirect = (Document
+            .locale_and_slug_from_path(document_path, request))
+
     revision = get_object_or_404(Revision, pk=revision_id,
                                  document__slug=document_slug)
     document = revision.document
@@ -886,7 +1155,7 @@ def delete_revision(request, document_slug, revision_id):
     revision.delete()
 
     return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                        args=[document.slug]))
+                                        args=[document.full_path]))
 
 
 def _document_form_initial(document):
@@ -905,6 +1174,8 @@ def _document_form_initial(document):
 def _save_rev_and_notify(rev_form, creator, document):
     """Save the given RevisionForm and send notifications."""
     new_rev = rev_form.save(creator, document)
+
+    _invalidate_kumascript_cache(document)
 
     # Enqueue notifications
     ReviewableRevisionInLocaleEvent(new_rev).fire(exclude=new_rev.creator)

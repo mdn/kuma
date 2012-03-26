@@ -7,4 +7,7 @@ urlpatterns = patterns('devmo.views',
         name="devmo_profile_view"),
     url(r'^profiles/(?P<username>[^/]+)/edit$', 'profile_edit',
         name="devmo_profile_edit"),
+    url(r'^profile/?$', 'my_profile', name="devmo_my_profile"),
+    url(r'^profile/edit/?$', 'my_profile_edit',
+        name="devmo_my_profile_edit"),
 )

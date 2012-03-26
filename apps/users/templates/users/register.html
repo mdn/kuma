@@ -3,12 +3,13 @@
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _('Register') %}
 {% set classes = 'register' %}
+{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block content %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-      <article id="register" class="main">
+      <article id="register" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}">
         <h1>{{ _('Register') }}</h1>
         <p>{% trans %}
           You can access everything on the MDN website even without an account, but 
@@ -30,4 +31,12 @@
     </div>
    </div>
 </section>
+{% endblock %}
+
+{% block js %}
+{% if use_browserid %}
+<script type="text/javascript">
+  $('article.main').load($('article.main').attr('data-browserid-signin-html'), bindBrowserIDSignin);
+</script>
+{% endif %}
 {% endblock %}
