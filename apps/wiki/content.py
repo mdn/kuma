@@ -1,3 +1,4 @@
+import logging
 import re
 from urllib import urlencode
 import bleach
@@ -308,3 +309,62 @@ class CodeSyntaxFilter(html5lib_Filter):
                             del attrs['function']
                             token['data'] = attrs.items()
             yield token
+
+
+class DekiscriptMacroFilter(html5lib_Filter):
+    """Filter to convert Dekiscript template calls into kumascript macros."""
+    def __iter__(self):
+
+        buffer = []
+        for token in html5lib_Filter.__iter__(self):
+            buffer.append(token)
+
+        while len(buffer):
+            token = buffer.pop(0)
+
+            if not ('StartTag' == token['type'] and
+                    'span' == token['name']):
+                yield token
+                continue
+
+            attrs = dict(token['data'])
+            if attrs.get('class','') != 'script':
+                yield token
+                continue
+
+            ds_call = []
+            while len(buffer) and 'EndTag' != token['type']:
+                token = buffer.pop(0)
+                if 'Characters' == token['type']:
+                    ds_call.append(token['data'])
+
+            ds_call = ''.join(ds_call).strip()
+
+            # Snip off any "template." prefixes
+            strip_prefixes = ('template.', 'wiki.')
+            for prefix in strip_prefixes:
+                if ds_call.lower().startswith(prefix):
+                    ds_call = ds_call[len(prefix):]
+
+            # Convert numeric args to quoted. eg. bug(123) -> bug("123")
+            num_re = re.compile(r'^([^(]+)\((\d+)')
+            m = num_re.match(ds_call)
+            if m:
+                ds_call = '%s("%s")' % (m.group(1), m.group(2))
+
+            # template("template name", [ "params" ])
+            wt_re = re.compile(r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
+            m = wt_re.match(ds_call)
+            if m:
+                ds_call = '%s(%s)' % (m.group(1), m.group(2).strip())
+
+            # template("template name")
+            wt_re = re.compile(r'''^template\(['"]([^'"]+)['"]''', re.I)
+            m = wt_re.match(ds_call)
+            if m:
+                ds_call = '%s()' % (m.group(1))
+
+            yield dict(
+                type="Characters",
+                data='{{ %s }}' % ds_call
+            )

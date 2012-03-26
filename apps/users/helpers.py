@@ -10,7 +10,10 @@ from sumo.urlresolvers import reverse
 @register.function
 def profile_url(user):
     """Return a URL to the user's profile."""
-    return reverse('devmo_profile_view', args=[user.username])
+    try:
+        return reverse('devmo_profile_view', args=[user.username])
+    except Exception, e:
+        return user.username
 
 
 @register.function
