@@ -22,16 +22,16 @@ from optparse import  OptionParser
 
 # Constants
 PROJECT = 0
-VENDOR = 1
 
 ENV_BRANCH = {
-    # 'environment': [PROJECT_BRANCH, VENDOR_BRANCH],
-    'dev':   ['base',   'master'],
-    'stage': ['master', 'master'],
-    'prod':  ['prod',   'master'],
-    'mdn_dev':     ['mdn', 'master'],
-    'mdn_stage':   ['mdn', 'master'],
-    'mdn_prod':    ['mdn_prod', 'master']
+    # 'env': 'git branch'
+    # kuma-stage is set to 'stage'
+    'dev':          'master',
+    'stage':        'master',
+    'mdn_dev':      'master',
+    # developer-stage9 is set to 'mdn_stage'
+    'mdn_stage':    'next',
+    'mdn_prod':     'next',
 }
 
 PIP_INSTALL_COMPILED = "pip install -q -r requirements/compiled.txt"
@@ -52,8 +52,7 @@ def update_site(env, debug):
     """Run through commands to update this site."""
     error_updating = False
     here = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    project_branch = {'branch': ENV_BRANCH[env][PROJECT]}
-    vendor_branch = {'branch': ENV_BRANCH[env][VENDOR]}
+    project_branch = {'branch': ENV_BRANCH[env]}
 
     commands = [
         (CHDIR, here),
@@ -84,7 +83,6 @@ def update_site(env, debug):
         (CHDIR, os.path.join(here, 'vendor')),
         # This seems like a bad idea - it pulls from master, while the web app
         # itself has a submodule pointing at a specific vendor-lib commit ID
-        # (EXEC,  GIT_PULL % vendor_branch),
         (EXEC,  GIT_RESET_HARD),
         (EXEC,  GIT_SUBMODULE_SYNC),
         (EXEC,  GIT_SUBMODULE_UPDATE),
