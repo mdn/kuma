@@ -1,4 +1,3 @@
-import logging
 from collections import namedtuple
 from datetime import datetime
 from itertools import chain
@@ -138,9 +137,7 @@ REDIRECT_SLUG = _lazy(u'%(old)s-redirect-%(number)i')
 REVIEW_FLAG_TAGS = (
     ('technical', _('Technical - code samples, APIs, or technologies')),
     ('editorial', _('Editorial - prose, grammar, or content')),
-    ('template',  _('Template - KumaScript code')),
 )
-REVIEW_FLAG_TAGS_DEFAULT = ['technical', 'editorial']
 
 # TODO: This is info derived from urls.py, but unsure how to DRY it
 RESERVED_SLUGS = (
@@ -413,7 +410,7 @@ class Document(NotificationsMixin, ModelBase):
             return unique_attr()
 
     def save(self, *args, **kwargs):
-        self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
+        self.is_template = self.title.startswith(TEMPLATE_TITLE_PREFIX)
 
         try:
             # Check if the slug would collide with an existing doc
@@ -700,39 +697,6 @@ class Document(NotificationsMixin, ModelBase):
         from wiki.events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
-    def related_revisions_link(self):
-        """HTML link to related revisions for admin change list"""
-        link = '%s?%s' % (
-            reverse('admin:wiki_revision_changelist', args=[]),
-            'document__exact=%s' % (self.id)
-        )
-        count = self.revisions.count()
-        what = (count == 1) and 'revision' or 'revisons'
-        return '<a href="%s">%s %s</a>' % (link, count, what)
-
-    related_revisions_link.allow_tags = True
-    related_revisions_link.short_description = "All Revisions"
-        
-    def current_revision_link(self):
-        """HTML link to the current revision for the admin change list"""
-        if not self.current_revision:
-            return "None"
-        rev = self.current_revision
-        rev_url = reverse('admin:wiki_revision_change', args=[rev.id])
-        return '<a href="%s">Revision #%s</a>' % (rev_url, rev.id)
-
-    current_revision_link.allow_tags = True
-    current_revision_link.short_description = "Current Revision"
-        
-    def parent_document_link(self):
-        """HTML link to the parent document for admin change list"""
-        if not self.parent:
-            return "None"
-        url = reverse('admin:wiki_document_change', args=[self.parent.id])
-        return '<a href="%s">Document #%s</a>' % (url, self.parent.id)
-
-    parent_document_link.allow_tags = True
-    parent_document_link.short_description = "Parent Document"
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
@@ -864,7 +828,7 @@ class Revision(ModelBase):
                                    'to a revision of the default-'
                                    'language document.')
 
-        if self.content and not self.document.is_template:
+        if self.content:
             self.content = (wiki.content
                             .parse(self.content)
                             .injectSectionIDs()
@@ -910,8 +874,6 @@ class Revision(ModelBase):
 
     @property
     def content_cleaned(self):
-        if self.document.is_template:
-            return self.content
         return bleach.clean(
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
             strip_comments=False

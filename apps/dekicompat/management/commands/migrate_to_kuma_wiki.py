@@ -67,8 +67,7 @@ MT_NAMESPACES = (
 MT_NS_NAME_TO_ID = dict(MT_NAMESPACES)
 MT_NS_ID_TO_NAME = dict((x[1], x[0]) for x in MT_NAMESPACES)
 MT_MIGRATED_NS_IDS = (MT_NS_NAME_TO_ID[x] for x in (
-    '', 'Talk:', 'User:', 'User_talk:', 'Project:', 'Project_talk:',
-    'Template:', 'Template_talk:',
+    '', 'Talk:', 'User:', 'User_talk:', 'Project:', 'Project_talk:'
 ))
 
 # NOTE: These are MD5 hashes of garbage User page content. The criteria is that
@@ -144,8 +143,6 @@ class Command(BaseCommand):
                     help="Migrate # of documents with syntax blocks"),
         make_option('--withscripts', dest="withscripts", type="int", default=0,
                     help="Migrate # of documents that use scripts"),
-        make_option('--withtemplates', dest="withtemplates", type="int", default=0,
-                    help="Migrate # of template documents"),
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
                     help="Measure syntax highlighter usage, skip migration"),
@@ -477,18 +474,6 @@ class Command(BaseCommand):
                     LIMIT %s
                 """ % (ns_list, '%s'), self.options['withscripts']))
 
-            if self.options['withtemplates'] > 0:
-                log.info("Gathering %s templates" %
-                         self.options['withtemplates'])
-                iters.append(self._query("""
-                    SELECT *
-                    FROM pages
-                    WHERE page_namespace=%s
-                    ORDER BY page_timestamp DESC
-                    LIMIT %s
-                """, MT_NS_NAME_TO_ID['Template:'],
-                     self.options['withtemplates']))
-
         return itertools.chain(*iters)
 
     @transaction.commit_on_success
@@ -525,12 +510,6 @@ class Command(BaseCommand):
                 log.debug("\t%s/%s (%s) matched User: content exclusion list" %
                           (locale, slug, r['page_display_name']))
                 return False
-
-        # Skip migrating Template:MindTouch/* templates
-        if slug.startswith('Template:MindTouch'):
-            log.debug("\t%s/%s (%s) skipped, was a MindTouch default template" %
-                      (locale, slug, r['page_display_name']))
-            return False
 
         # Check to see if this page's content is too long, skip if so.
         if len(r['page_text']) > self.options['maxlength']:
@@ -617,7 +596,7 @@ class Command(BaseCommand):
                 significance=SIGNIFICANCES[0][0],
                 summary='',
                 keywords='',
-                content=self.convert_page_text(r_page, r['old_text']),
+                content=self.convert_page_text(r['old_text']),
                 comment=r['old_comment'],
                 created=ts,
                 creator_id=self.get_django_user_id_for_deki_id(r['old_user']),
@@ -678,7 +657,7 @@ class Command(BaseCommand):
         rev.slug = doc.slug
         rev.title = doc.title
         rev.tags = tags
-        rev.content = self.convert_page_text(r, r['page_text'])
+        rev.content = self.convert_page_text(r['page_text'])
 
         # HACK: Some comments end up being too long, but just truncate.
         rev.comment = r['page_comment'][:255]
@@ -687,31 +666,20 @@ class Command(BaseCommand):
         rev.save()
         rev.make_current()
 
-        # If this is a template, set it as in need of template review
-        if doc.slug.startswith('Template:'):
-            rev.review_tags.set('template') 
-
         if created:
             log.info("\t\tCurrent revision created. (ID=%s)" % rev.pk)
         else:
             log.info("\t\tCurrent revision updated. (ID=%s)" % rev.pk)
 
-    def convert_page_text(self, r, pt):
+    def convert_page_text(self, pt):
         """Given a page row from MindTouch, do whatever needs doing to convert
         the page content for Kuma."""
 
-        # If this is a redirect, just convert the redirect.
         if pt.startswith('#REDIRECT'):
-            return self.convert_redirect(pt)
+            pt = self.convert_redirect(pt)
 
-        # If this is a template, just do template conversion
-        ns_name = MT_NS_ID_TO_NAME.get(r['page_namespace'], '')
-        if ns_name == 'Template:':
-            return self.convert_dekiscript_template(pt)
-
-        # Otherwise, run through the rest of the conversions.
         pt = self.convert_code_blocks(pt)
-        pt = self.convert_dekiscript_calls(pt)
+        pt = self.convert_dekiscript_template_calls(pt)
         # TODO: bug 710726 - Convert intra-wiki links?
 
         return pt
@@ -731,47 +699,9 @@ class Command(BaseCommand):
         pt = ContentSectionTool(pt).filter(CodeSyntaxFilter).serialize()
         return pt
 
-    def convert_dekiscript_calls(self, pt):
+    def convert_dekiscript_template_calls(self, pt):
         return (wiki.content.parse(pt).filter(DekiscriptMacroFilter)
                     .serialize())
-
-    def convert_dekiscript_template(self, pt):
-        """Do what we can to convert DekiScript templates into EJS templates.
-
-        This is an incomplete process, but it tries to take care off as much as
-        it can so that human intervention is minimized."""
-
-        # Many templates start with this prefix, which corresponds to {% in EJS
-        pre = '<pre class="script">'
-        if pt.startswith(pre):
-            pt = "{%%\n%s" % pt[len(pre):]
-
-        # Many templates end with this postfix, which corresponds to %} in EJS
-        post = '</pre>'
-        if pt.endswith(post):
-            pt = "%s\n%%}" % pt[:0-len(post)]
-
-        # Template source is usually HTML encoded inside the <pre>
-        pt = (pt.replace('&amp;', '&')
-                .replace('&lt;', '<')
-                .replace('&gt;', '>')
-                .replace('&quot;', '"'))
-
-        # String concatenation is '..' in DS, '+' in EJS
-        pt = pt.replace('..', '+')
-
-        # ?? in DS is pretty much || in EJS
-        pt = pt.replace('??', '||')
-
-        # No need for DS 'let' in EJS
-        pt = pt.replace('let ', '')
-
-        # This is a common sequence at the start of many templates. It clobbers
-        # the url API, and needs correcting.
-        pt = (pt.replace('var uri =', 'var u =')
-                .replace('uri.path[', 'u.path['))
-
-        return pt
 
     def get_tags_for_page(self, r):
         """For a given page row, get the list of tags from MindTouch and build

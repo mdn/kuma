@@ -7,7 +7,6 @@ from urllib import urlencode
 from string import ascii_letters
 
 import requests
-import bleach
 
 try:
     from functools import wraps
@@ -47,9 +46,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
-                         REVIEW_FLAG_TAGS, REVIEW_FLAG_TAGS_DEFAULT,
-                         ALLOWED_ATTRIBUTES, ALLOWED_TAGS,
-                         get_current_or_latest_revision)
+                         REVIEW_FLAG_TAGS, get_current_or_latest_revision)
 from wiki.parser import wiki_to_html
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
@@ -248,34 +245,27 @@ def document(request, document_slug, document_locale):
         if resp_errors:
             ks_errors = resp_errors
 
-    if not doc.is_template:
+    # Start applying some filters to the document HTML
+    tool = wiki.content.parse(doc_html)
 
-        # Start applying some filters to the document HTML
-        tool = wiki.content.parse(doc_html)
+    # If a section ID is specified, extract that section.
+    if section_id:
+        tool.extractSection(section_id)
 
-        # If a section ID is specified, extract that section.
-        if section_id:
-            tool.extractSection(section_id)
-
-        # If this user can edit the document, inject some section editing links.
-        if ((need_edit_links or not show_raw) and
-                doc.allows_editing_by(request.user)):
-            tool.injectSectionEditingLinks(doc.full_path, doc.locale)
-
-        doc_html = tool.serialize()
+    # If this user can edit the document, inject some section editing links.
+    if ((need_edit_links or not show_raw) and
+            doc.allows_editing_by(request.user)):
+        tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
     # iframe inclusion
     if show_raw:
-        response = HttpResponse(doc_html)
+        response = HttpResponse(tool.serialize())
         response['x-frame-options'] = 'Allow'
-        if doc.is_template:
-            # Treat raw, un-bleached template source as plain text, not HTML.
-            response['Content-Type'] = 'text/plain; charset=utf-8'
         return set_common_headers(response)
 
-    data = {'document': doc, 'document_html': doc_html,
+    data = {'document': doc, 'document_html': tool.serialize(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
@@ -404,14 +394,6 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             response_headers['X-Kumascript-Caching'] = (
                     '200 OK, Age: %s' % resp.headers.get('age', 0))
 
-            # We defer bleach sanitation of kumascript content all the way
-            # through editing, source display, and raw output. But, we still
-            # want sanitation, so it finally gets picked up here.
-            resp_body = bleach.clean(
-                resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-                strip_comments=False
-            )
-
             # Cache the request for conditional GET, but use the max_age for
             # the cache timeout here too.
             cache.set_many({
@@ -514,7 +496,7 @@ def new_document(request):
     if request.method == 'GET':
         doc_form = DocumentForm()
         rev_form = RevisionForm(
-                initial={'review_tags': REVIEW_FLAG_TAGS_DEFAULT})
+                initial={'review_tags': [t[0] for t in REVIEW_FLAG_TAGS]})
         return jingo.render(request, 'wiki/new_document.html',
                             {'document_form': doc_form,
                              'revision_form': rev_form})
@@ -723,14 +705,11 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 
     # Process the original content for a diff, extracting a section if we're
     # editing one.
-    if (doc.is_template):
-        curr_content = curr_rev.content
-    else:
-        tool = wiki.content.parse(curr_rev.content)
-        tool.injectSectionIDs()
-        if section_id:
-            tool.extractSection(section_id)
-        curr_content = tool.serialize()
+    tool = wiki.content.parse(curr_rev.content)
+    tool.injectSectionIDs()
+    if section_id:
+        tool.extractSection(section_id)
+    curr_content = tool.serialize()
 
     if is_raw:
         # When dealing with the raw content API, we need to signal the conflict
