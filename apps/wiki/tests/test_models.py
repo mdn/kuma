@@ -40,12 +40,12 @@ class DocumentTests(TestCase):
 
         assert not d.is_template
 
-        d.title = 'Template:test'
+        d.slug = 'Template:test'
         d.save()
 
         assert d.is_template
 
-        d.title = 'Back to document'
+        d.slug = 'Back-to-document'
         d.save()
 
         assert not d.is_template
