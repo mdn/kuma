@@ -95,6 +95,8 @@ urlpatterns += patterns('wiki.views',
 
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
         DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
+    url(r'^/feeds/(?P<format>[^/]+)/tag/(?P<tag>[^/]+)',
+        DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
     url(r'^/feeds/(?P<format>[^/]+)/needs-review/(?P<tag>[^/]+)',
         DocumentsReviewFeed(), name="wiki.feeds.list_review_tag"),
     url(r'^/feeds/(?P<format>[^/]+)/needs-review/?',
@@ -102,5 +104,5 @@ urlpatterns += patterns('wiki.views',
 
     url(r'^/tag/(?P<tag>[^/]+)$', 'list_documents', name='wiki.tag'),
 
-    (r'^/(?P<document_slug>[^\$]+)', include(document_patterns)),
+    (r'^/(?P<document_path>[^\$]+)', include(document_patterns)),
 )

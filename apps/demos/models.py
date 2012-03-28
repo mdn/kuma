@@ -530,7 +530,7 @@ class Submission(models.Model):
 
     def challenge_closed(self):
         challenge_tags = self.taggit_tags.all_ns('challenge:')
-        if not challenge_tags:
+        if not challenge_tags or 'challenge:none' in map(str, challenge_tags):
             return False
         return challenge_utils.challenge_closed(challenge_tags)
 

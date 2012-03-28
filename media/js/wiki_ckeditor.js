@@ -1,5 +1,7 @@
-jQuery("#id_content").ckeditor(function() {
+(function () {
+
   // Callback functions after CKE is ready
+  var setup_ckeditor = function () {
 
     var $head      = $("#article-head");
     var $tools     = $(".cke_toolbox");
@@ -13,9 +15,9 @@ jQuery("#id_content").ckeditor(function() {
         if( $(this).scrollTop() >= contentTop.top ) {
             if( !fixed ) {
                 fixed = true;
-                $head.css({position:'fixed', top:20, width:"96%"});
-                $tools.css({position:'fixed', top:headHeight+29, width:$("#cke_id_content").width()-10});
-                $("td.cke_top").css({ height: toolHeight+29 });
+                $head.css({position:'fixed', top:19, width:"95%"});
+                $tools.css({position:'fixed', top:headHeight+28, width:$("#cke_id_content").width()-10});
+                $("td.cke_top").css({ height: toolHeight+28 });
                 $("#cke_id_content").css({ marginTop: headHeight });
             }
         } else {
@@ -38,6 +40,19 @@ jQuery("#id_content").ckeditor(function() {
     // remove the id_content required attribute
     $('#id_content').removeAttr("required");
 
-  }, {
-  customConfig : '/docs/ckeditor_config.js'
-});
+  };
+
+  jQuery("#id_content").each(function () {
+
+      var el = jQuery(this),
+          doc_slug = $('#id_slug').val();
+
+      if (!$('body').is('.edit.is-template')) {
+          el.ckeditor(setup_ckeditor, {
+              customConfig : '/docs/ckeditor_config.js'
+          });
+      }
+
+  });
+
+})();

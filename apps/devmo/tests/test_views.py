@@ -3,7 +3,10 @@ import logging
 import time
 from os.path import dirname
 
+import requests
+
 import mock
+from mock import patch
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -20,6 +23,7 @@ from soapbox.models import Message
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user,
                               mock_put_mindtouch_user)
+from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from devmo.models import UserProfile, UserDocsActivityFeed
 
 from devmo.cron import devmo_calendar_reload
@@ -28,6 +32,7 @@ from devmo.tests import mock_fetch_user_feed
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 
+from waffle.models import Flag
 
 TESTUSER_PASSWORD = 'testpass'
 APP_DIR = dirname(dirname(__file__))
@@ -46,6 +51,24 @@ class ProfileViewsTest(TestCase):
 
     def tearDown(self):
         settings.DEBUG = self.old_debug
+
+    @attr('docs_activity')
+    @attr('bug715923')
+    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
+    def test_bug715923_feed_parsing_errors(self, fetch_user_feed):
+        fetch_user_feed.return_value = """
+            THIS IS NOT EVEN XML, SO BROKEN
+        """
+        try:
+            profile = UserProfile.objects.get(user__username='testuser')
+            user = profile.user
+            url = reverse('devmo.views.profile_view',
+                          args=(user.username,))
+            r = self.client.get(url, follow=True)
+            pq(r.content)
+        except Exception, e:
+            raise e
+            ok_(False, "There should be no exception %s" % e)
 
     @attr('docs_activity')
     @mock_fetch_user_feed
@@ -94,6 +117,14 @@ class ProfileViewsTest(TestCase):
                 eq_(item.history_url,
                     item_el.find('.actions a.history').attr('href'))
 
+    def test_my_profile_view(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/')
+        eq_(302, resp.status_code)
+        ok_(reverse('devmo.views.profile_view', args=(u.username,)) in
+            resp['Location'])
+
     @mock_put_mindtouch_user
     @mock_fetch_user_feed
     def test_bug_698971(self):
@@ -107,6 +138,19 @@ class ProfileViewsTest(TestCase):
             self.client.get(url, follow=True)
         except PageNotAnInteger:
             ok_(False, "Non-numeric page number should not cause an error")
+
+    def test_kumawiki_docs_activity(self):
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        ok_(doc.find('#docs-activity').hasClass('mindtouch'))
+        Flag.objects.create(name='kumawiki', everyone=True)
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        ok_(doc.find('#docs-activity').hasClass('kumawiki'))
 
     @mock_put_mindtouch_user
     @mock_fetch_user_feed
@@ -166,6 +210,14 @@ class ProfileViewsTest(TestCase):
         eq_(new_attrs['fullname'], profile.fullname)
         eq_(new_attrs['title'], profile.title)
         eq_(new_attrs['organization'], profile.organization)
+
+    def test_my_profile_edit(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/edit')
+        eq_(302, resp.status_code)
+        ok_(reverse('devmo.views.profile_edit', args=(u.username,)) in
+            resp['Location'])
 
     @mock_put_mindtouch_user
     @mock_fetch_user_feed
@@ -337,6 +389,20 @@ class ProfileViewsTest(TestCase):
         except User.DoesNotExist:
             pass
 
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: Ensure that expected user details are in MindTouch when not
+            # mocking the API
+            mt_email = 'testaccount@testaccount.com'
+            user_xml = MINDTOUCH_USER_XML % dict(username="testaccount",
+                    email=mt_email, fullname="None", status="active",
+                    language="", timezone="-08:00", role="Contributor")
+            DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
+                                               user_xml=user_xml)
+            passwd_url = '%s/@api/deki/users/%s/password?apikey=%s' % (
+                settings.DEKIWIKI_ENDPOINT, '=testaccount',
+                settings.DEKIWIKI_APIKEY)
+            requests.put(passwd_url, data='theplanet')
+
         # log in as a MindTouch user to create django user & profile
         response = self.client.post(reverse('users.login', locale='en-US'),
                                     {'username': 'testaccount',
@@ -387,6 +453,21 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         eq_('nl', doc.find('language').text())
         """
+
+    def test_bug_698126_l10n(self):
+        """Test that the form field names are localized"""
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+            password=TESTUSER_PASSWORD)
+
+        url = reverse('devmo.views.profile_edit',
+            args=(user.username,))
+        r = self.client.get(url, follow=True)
+        for field in r.context['form'].fields:
+            # if label is localized it's a lazy proxy object
+            ok_(not isinstance(
+                r.context['form'].fields[field].label, basestring),
+                'Field %s is a string!' % field)
 
     def _break(self, url, r):
         logging.debug("URL  %s" % url)

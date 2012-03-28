@@ -12,6 +12,8 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect, Http404
 from django.views.decorators.http import (require_http_methods, require_GET,
                                           require_POST)
+from django.views.decorators.csrf import csrf_exempt
+
 from django.shortcuts import get_object_or_404
 from django.utils.http import base36_to_int
 
@@ -22,18 +24,20 @@ from django_browserid import auth as browserid_auth
 import jingo
 
 from access.decorators import logout_required, login_required
+import constance.config
 from notifications.tasks import claim_watches
 from sumo.decorators import ssl_required
-from sumo.urlresolvers import reverse
+from sumo.urlresolvers import reverse, split_path
 from upload.tasks import _create_image_thumbnail
 from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
-                         PasswordResetForm, BrowserIDRegisterForm)
+                         PasswordResetForm, BrowserIDRegisterForm,
+                         EmailReminderForm)
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
-from dekicompat.backends import DekiUserBackend
-from users.utils import handle_login, handle_register
+from dekicompat.backends import DekiUserBackend, MindTouchAPIError
+from users.utils import handle_login, handle_register, send_reminder_email
 
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
@@ -76,6 +80,50 @@ def set_browserid_explained(response):
     return response
 
 
+def browserid_header_signin_html(request):
+    next_url = _clean_next_url(request) or reverse('home')
+    browserid_locales = constance.config.BROWSERID_LOCALES
+    if request.locale.lower() not in browserid_locales.lower():
+        raise Http404
+    return jingo.render(request, 'users/browserid_header_signin.html',
+                        {'next_url': next_url})
+
+
+def browserid_signin_html(request):
+    next_url = _clean_next_url(request) or reverse('home')
+    browserid_locales = constance.config.BROWSERID_LOCALES
+    if request.locale.lower() not in browserid_locales.lower():
+        raise Http404
+    form = handle_login(request)
+    return jingo.render(request, 'users/browserid_signin.html',
+                        {'form': form, 'next_url': next_url})
+
+
+@ssl_required
+@login_required
+@require_POST
+def browserid_change_email(request):
+    """Process a submitted BrowserID assertion to change email."""
+    form = BrowserIDForm(data=request.POST)
+    if not form.is_valid():
+        messages.error(request, form.errors)
+        return HttpResponseRedirect(reverse('users.change_email'))
+    result = _verify_browserid(form, request)
+    email = result['email']
+    user = _get_latest_user_with_email(email)
+    if user and user != request.user:
+        messages.error(request, 'That email already belongs to another '
+                       'user.')
+        return HttpResponseRedirect(reverse('users.change_email'))
+    else:
+        user = request.user
+        user.email = email
+        user.save()
+        return HttpResponseRedirect(reverse('devmo_profile_edit',
+                                            args=[user.username, ]))
+
+
+@csrf_exempt
 @ssl_required
 @require_POST
 def browserid_verify(request):
@@ -106,30 +154,14 @@ def browserid_verify(request):
     email = result['email']
     user = None
 
-    # TODO: This user lookup and create stuff probably belongs in the model:
-    # If user is authenticated, change their email
-    if request.user.is_authenticated():
-        user = _get_latest_user_with_email(email)
-        # If a user with the email already exists, don't change
-        if user and user != request.user:
-            messages.error(request, 'That email already belongs to another '
-                           'user.')
-            return set_browserid_explained(
-                HttpResponseRedirect(reverse('users.change_email')))
-        else:
-            user = request.user
-            user.email = email
-            user.save()
-            redirect_to = reverse('devmo_profile_edit', args=[user.username, ])
-    else:
-        # Look for first most recently used Django account, use if found.
-        user = _get_latest_user_with_email(email)
-        # If no Django account, look for a MindTouch account by email.
-        # If found, auto-create the user.
-        if not user:
-            deki_user = DekiUserBackend.get_deki_user_by_email(email)
-            if deki_user:
-                user = DekiUserBackend.get_or_create_user(deki_user)
+    # Look for first most recently used Django account, use if found.
+    user = _get_latest_user_with_email(email)
+    # If no Django account, look for a MindTouch account by email.
+    # If found, auto-create the user.
+    if not user:
+        deki_user = DekiUserBackend.get_deki_user_by_email(email)
+        if deki_user:
+            user = DekiUserBackend.get_or_create_user(deki_user)
 
     # If we got a user from either the Django or MT paths, complete login for
     # Django and MT and redirect.
@@ -167,26 +199,39 @@ def browserid_register(request):
         if 'register' == request.POST.get('action', None):
             register_form = BrowserIDRegisterForm(request.POST)
             if register_form.is_valid():
-                # If the registration form is valid, then create a new Django
-                # user, a new MindTouch user, and link the two together.
-                # TODO: This all belongs in model classes
-                username = register_form.cleaned_data['username']
+                try:
+                    # If the registration form is valid, then create a new
+                    # Django user, a new MindTouch user, and link the two
+                    # together.
+                    # TODO: This all belongs in model classes
+                    username = register_form.cleaned_data['username']
 
-                user = User.objects.create(username=username, email=email)
-                user.set_unusable_password()
-                user.save()
+                    user = User.objects.create(username=username, email=email)
+                    user.set_unusable_password()
+                    user.save()
 
-                profile = UserProfile.objects.create(user=user)
-                deki_user = DekiUserBackend.post_mindtouch_user(user)
-                profile.deki_user_id = deki_user.id
-                profile.save()
+                    profile = UserProfile.objects.create(user=user)
+                    deki_user = DekiUserBackend.post_mindtouch_user(user)
+                    profile.deki_user_id = deki_user.id
+                    profile.save()
 
-                user.backend = 'django_browserid.auth.BrowserIDBackend'
-                auth.login(request, user)
+                    user.backend = 'django_browserid.auth.BrowserIDBackend'
+                    auth.login(request, user)
 
-                # Bounce to the newly created profile page, since the user
-                # might want to review & edit.
-                return HttpResponseRedirect(profile.get_absolute_url())
+                    # Bounce to the newly created profile page, since the user
+                    # might want to review & edit.
+                    redirect_to = request.session.get(SESSION_REDIRECT_TO,
+                                                    profile.get_absolute_url())
+                    return set_browserid_explained(
+                        _redirect_with_mindtouch_login(redirect_to,
+                                                       user.username))
+                except MindTouchAPIError:
+                    if user:
+                        user.delete()
+                    return jingo.render(request, '500.html',
+                                        {'error_message': "We couldn't "
+                                        "register a new account at this time. "
+                                        "Please try again later."})
 
         else:
             # If login was valid, then set to the verified email
@@ -213,10 +258,16 @@ def browserid_register(request):
 @ssl_required
 def login(request):
     """Try to log the user in."""
-    next_url = _clean_next_url(request) or reverse('home')
+    next_url = _clean_next_url(request)
+    if request.method == 'GET' and request.user.is_authenticated():
+        if next_url:
+            return HttpResponseRedirect(next_url)
+    else:
+        next_url = _clean_next_url(request) or reverse('home')
     form = handle_login(request)
 
-    if request.user.is_authenticated():
+    if form.is_valid() and request.user.is_authenticated():
+        next_url = next_url or reverse('home')
         return _redirect_with_mindtouch_login(next_url,
             form.cleaned_data.get('username'),
             form.cleaned_data.get('password'))
@@ -231,9 +282,9 @@ def login(request):
 def logout(request):
     """Log the user out."""
     auth.logout(request)
-    next_url = _clean_next_url(request) if 'next' in request.GET else ''
+    next_url = _clean_next_url(request) or reverse('home')
 
-    resp = HttpResponseRedirect(next_url or reverse('home'))
+    resp = HttpResponseRedirect(next_url)
     resp.delete_cookie('authtoken')
     return resp
 
@@ -243,11 +294,19 @@ def logout(request):
 @require_http_methods(['GET', 'POST'])
 def register(request):
     """Register a new user."""
-    form = handle_register(request)
-    if form.is_valid():
-        return jingo.render(request, 'users/register_done.html')
-    return jingo.render(request, 'users/register.html',
-                        {'form': form})
+    try:
+        form = handle_register(request)
+        if form.is_valid():
+            return jingo.render(request, 'users/register_done.html')
+        return jingo.render(request, 'users/register.html',
+                            {'form': form})
+    except MindTouchAPIError, e:
+        return jingo.render(request, '500.html',
+                            {'error_message': "We couldn't "
+                            "register a new account at this time. "
+                            "Please try again later."})
+    else:
+        raise e
 
 
 def activate(request, activation_key):
@@ -284,6 +343,28 @@ def resend_confirmation(request):
             return jingo.render(request,
                                 'users/resend_confirmation_done.html',
                                 {'email': email})
+    else:
+        form = EmailConfirmationForm()
+    return jingo.render(request, 'users/resend_confirmation.html',
+                        {'form': form})
+
+
+def send_email_reminder(request):
+    """Send reminder email."""
+    if request.method == 'POST':
+        form = EmailReminderForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            try:
+                user = User.objects.get(username=username, is_active=True)
+                # TODO: should this be on a model or manager instead?
+                send_reminder_email(user)
+            except User.DoesNotExist:
+                # Don't leak existence of email addresses.
+                pass
+            return jingo.render(request,
+                                'users/send_email_reminder_done.html',
+                                {'username': username})
     else:
         form = EmailConfirmationForm()
     return jingo.render(request, 'users/resend_confirmation.html',
@@ -366,9 +447,6 @@ def edit_profile(request):
                                                 args=[request.user.id]))
     else:  # request.method == 'GET'
         form = ProfileForm(instance=user_profile)
-
-    # TODO: detect timezone automatically from client side, see
-    # http://rocketscience.itteco.org/2010/03/13/automatic-users-timezone-determination-with-javascript-and-django-timezones/
 
     return jingo.render(request, 'users/edit_profile.html',
                         {'form': form, 'profile': user_profile})
@@ -537,7 +615,7 @@ def _clean_next_url(request):
 
     if url:
         parsed_url = urlparse.urlparse(url)
-        # Don't redirect outside of SUMO.
+        # Don't redirect outside of site_domain.
         # Don't include protocol+domain, so if we are https we stay that way.
         if parsed_url.scheme:
             site_domain = Site.objects.get_current().domain
@@ -548,8 +626,18 @@ def _clean_next_url(request):
                 url = u'?'.join([getattr(parsed_url, x) for x in
                                 ('path', 'query') if getattr(parsed_url, x)])
 
-        # Don't redirect right back to login or logout page
-        if parsed_url.path in [settings.LOGIN_URL, settings.LOGOUT_URL]:
-            url = None
+        # Don't redirect right back to login, logout, register, or change email
+        # pages
+        locale, register_url = split_path(reverse('users.browserid_register'))
+        locale, change_email_url = split_path(
+                                        reverse('users.change_email'))
+        for looping_url in [settings.LOGIN_URL, settings.LOGOUT_URL,
+                            register_url, change_email_url]:
+            if looping_url in parsed_url.path:
+                url = None
 
+    # TODO?HACK: can't use urllib.quote_plus because mod_rewrite quotes the
+    # next url value already.
+    if url:
+        url = url.replace(' ', '+')
     return url

@@ -9,7 +9,7 @@
                  (document.get_absolute_url(), document.title),
                  (None, _('Edit Article'))] %}
 {% set classes = 'edit' %}
-{% block bodyclass %}edit{% endblock %}
+{% block bodyclass %}edit{% if document.is_template %} is-template{% endif %}{% endblock %}
 
 {% block content %}
 <section id="content">
@@ -39,7 +39,7 @@
               </div>
               <div>
                 <h3>
-                    <a href="{{ url('wiki.revision', current_revision.document.slug, current_revision.id) }}">
+                    <a href="{{ url('wiki.revision', current_revision.document.full_path, current_revision.id) }}">
                       {{ _('Current Revision:')|f(num=current_revision.id) }}
                     </a>
                 </h3>
@@ -62,6 +62,12 @@
                 <h4>{{ _('Slug:') }}</h4>
                 <div><p>{{ slug }}</p></div>
                 <div><p>{{ current_revision.slug }}</p></div>
+            {% endif %}
+
+            {% if tags and current_revision.tags and tags != current_revision.tags %}
+                <h4>{{ _('Tags:') }}</h4>
+                <div><p>{{ tags }}</p></div>
+                <div><p>{{ current_revision.tags }}</p></div>
             {% endif %}
 
             {% if keywords and current_revision.keywords and keywords != current_revision.keywords %}
@@ -99,6 +105,7 @@
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
+                <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
                 <li><label>{{_('Keywords:')}}</label> {{ revision_form.keywords | safe }}</li>
             </ul>
           {% endif %}
@@ -113,6 +120,9 @@
     
         {% if revision_form %}
             {{ revision_form.content | safe }}
+            {% if document.is_template %}
+              <div id="ace_content"></div>
+            {% endif %}
             <input type="hidden" name="form" value="rev" />
           <section>
           <h4>{{_('Review needed?')}}</h4>
@@ -135,4 +145,14 @@
 {% block site_js %}
     {{ super() }}
     {{ js('framebuster') }}
+
+    {% if document.is_template %}
+      <script src="{{ MEDIA_URL }}ace/ace.js" 
+        type="text/javascript" charset="utf-8"></script>
+      <script src="{{ MEDIA_URL }}ace/theme-dreamweaver.js"
+        type="text/javascript" charset="utf-8"></script>
+      <script src="{{ MEDIA_URL }}ace/mode-javascript.js"
+        type="text/javascript" charset="utf-8"></script>
+    {% endif %}
+
 {% endblock %}

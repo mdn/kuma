@@ -50,6 +50,26 @@ def mock_post_mindtouch_user(test):
         return test
 
 
+def mock_perform_post_mindtouch_user(test):
+    bad_resp = Response()
+    bad_resp.status_code = 500
+    bad_resp.content = "<FAIL><failure/></FAIL>"
+
+    if settings.DEKIWIKI_MOCK:
+        @mock.patch('dekicompat.backends.DekiUserBackend.'
+                    '_perform_post_mindtouch_user')
+        def test_new(self, _perform_post_mindtouch_user):
+            _perform_post_mindtouch_user.return_value = bad_resp
+            try:
+                test(self)
+            except AttributeError:
+                pass
+            eq_(7, _perform_post_mindtouch_user.call_count)
+        return test_new
+    else:
+        return test
+
+
 def mock_put_mindtouch_user(test):
     if settings.DEKIWIKI_MOCK:
         @mock.patch('dekicompat.backends.DekiUserBackend.put_mindtouch_user')
@@ -92,7 +112,8 @@ def mock_get_deki_user_by_email(test, fixture_file=TESTACCOUNT_FIXTURE_XML):
 
 def mock_missing_get_deki_user_by_email(test):
     if settings.DEKIWIKI_MOCK:
-        @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
+        @mock.patch('dekicompat.backends.DekiUserBackend'
+                    '.get_deki_user_by_email')
         def test_new(self, get_deki_user):
             get_deki_user.return_value = None
             test(self)

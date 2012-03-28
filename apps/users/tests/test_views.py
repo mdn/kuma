@@ -16,7 +16,8 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user_by_email,
                               mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
-                              mock_post_mindtouch_user)
+                              mock_post_mindtouch_user,
+                              mock_perform_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from notifications.tests import watch
@@ -62,6 +63,53 @@ class LoginTestCase(TestCase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('testuser', doc.find('ul.user-state a:first').text())
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login_wont_redirect_to_login(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass',
+                                     'next': login_uri},
+                                    follow=True)
+        eq_(200, response.status_code)
+        for redirect_url, code in response.redirect_chain:
+            ok_(login_uri not in redirect_url, "Found %s in redirect_chain"
+                % login_uri)
+        doc = pq(response.content)
+        eq_('testuser', doc.find('ul.user-state a:first').text())
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_logged_in_message(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        response = self.client.get(login_uri, follow=True)
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_("You are already logged in.", doc.find('div#content-main').text())
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_django_login_redirects_to_next(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        login_uri = reverse('users.login')
+
+        response = self.client.post(login_uri,
+                                    {'username': 'testuser',
+                                     'password': 'testpass'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        response = self.client.get(login_uri, {'next': '/en-US/demos/submit'},
+                                   follow=True)
+        eq_('http://testserver/en-US/demos/submit',
+                                                response.redirect_chain[0][0])
 
     @mock_mindtouch_login
     @mock_get_deki_user
@@ -189,6 +237,24 @@ class RegisterTestCase(TestCase):
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
 
     @mock_missing_get_deki_user
+    @mock_put_mindtouch_user
+    @mock_perform_post_mindtouch_user
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_new_user_retries_mindtouch_post(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+        now = time()
+        username = 'n00b%s' % now
+        response = self.client.post(reverse('users.register'),
+                                    {'username': username,
+                                     'email': 'newbie@example.com',
+                                     'password': 'foo',
+                                     'password2': 'foo'}, follow=True)
+        eq_(200, response.status_code)
+        ok_("Please try again later." in response.content)
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=username)
+
+    @mock_missing_get_deki_user
     @mock_post_mindtouch_user
     @mock_put_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
@@ -287,6 +353,38 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo',
                                      'password2': 'bar'}, follow=True)
         self.assertContains(response, 'must match')
+
+
+class ReminderEmailTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_reminder_email(self, get_current):
+        """Should send simple email reminder to user."""
+        get_current.return_value.domain = 'dev.mo.org'
+
+        response = self.client.post(reverse('users.send_email_reminder'),
+                                    {'username': 'testuser'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        eq_(1, len(mail.outbox))
+        email = mail.outbox[0]
+        assert email.subject.find('Email Address Reminder') == 0
+        assert 'testuser' in email.body
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_unknown_user_no_email_sent(self, get_current):
+        """Should send simple email reminder to user."""
+        get_current.return_value.domain = 'dev.mo.org'
+
+        response = self.client.post(reverse('users.send_email_reminder'),
+                                    {'username': 'testuser404'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        eq_(0, len(mail.outbox))
 
 
 class ChangeEmailTestCase(TestCase):
@@ -465,8 +563,6 @@ class BrowserIDTestCase(TestCase):
     def test_explain_popup(self, _verify_browserid):
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
         resp = self.client.get(reverse('home', locale='en-US'))
-        doc = pq(resp.content)
-        eq_(True, 'toggle' in doc.find('li#user-signin').html())
 
         # Posting the fake assertion to browserid_verify should work, with the
         # actual verification method mocked out.
@@ -480,8 +576,6 @@ class BrowserIDTestCase(TestCase):
         # even after logout, cookie should prevent the toggle
         resp = self.client.get(reverse('home', locale='en-US'))
         eq_('1', self.client.cookies.get('browserid_explained').value)
-        doc = pq(resp.content)
-        eq_(False, 'toggle' in doc.find('li#user-signin').html())
 
     @mock_get_deki_user_by_email
     @mock_put_mindtouch_user
@@ -592,16 +686,18 @@ class BrowserIDTestCase(TestCase):
         resp = self.client.post(redir_url, {'username': 'neverbefore',
                                             'action': 'register'})
 
-        # The submission should result in a redirect to the new user's profile
+        # The submission should result in a redirect to the session's redirect
+        # value
         eq_(302, resp.status_code)
         redir_url = resp['Location']
-        profile_url = reverse('devmo_profile_view', args=[new_username])
-        ok_(profile_url in redir_url)
+        ok_('SUCCESS' in redir_url)
 
         # The session should look logged in, now.
         ok_('_auth_user_id' in self.client.session.keys())
         eq_('django_browserid.auth.BrowserIDBackend',
             self.client.session.get('_auth_user_backend', ''))
+        ok_(self.client.cookies.get('authtoken'), 'Should have set authtoken '
+                                                  'cookie for MindTouch')
 
         # Ensure that the user was created, and with the submitted username and
         # verified email address
@@ -611,6 +707,56 @@ class BrowserIDTestCase(TestCase):
             eq_(new_email, user.email)
         except User.DoesNotExist:
             ok_(False, "New user should have been created")
+
+    @mock_missing_get_deki_user_by_email
+    @mock_missing_get_deki_user
+    @mock_perform_post_mindtouch_user
+    @mock_put_mindtouch_user
+    @mock_mindtouch_login
+    @mock.patch('users.views._verify_browserid')
+    def test_browserid_register_retries_mindtouch(self,
+                                                  _verify_browserid):
+        new_username = 'neverbefore'
+        new_email = 'never.before.seen@example.com'
+        _verify_browserid.return_value = {'email': new_email}
+
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=new_username)
+
+        # Sign in with a verified email, but with no existing account
+        resp = self.client.post(reverse('users.browserid_verify',
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+
+        # This should be a redirect to the BrowserID registration page.
+        redir_url = resp['Location']
+        reg_url = reverse('users.browserid_register', locale='en-US')
+        ok_(reg_url in redir_url)
+
+        # And, as part of the redirect, the verified email address should be in
+        # our session now.
+        ok_(SESSION_VERIFIED_EMAIL in self.client.session.keys())
+        verified_email = self.client.session[SESSION_VERIFIED_EMAIL]
+        eq_(new_email, verified_email)
+
+        # Grab the redirect, assert that there's a create_user form present
+        resp = self.client.get(redir_url)
+        page = pq(resp.content)
+        form = page.find('form#create_user')
+        eq_(1, form.length)
+
+        # There should be no error lists on first load
+        eq_(0, page.find('.errorlist').length)
+
+        # Submit the create_user form, with a chosen username
+        response = self.client.post(redir_url, {'username': 'neverbefore',
+                                            'action': 'register'})
+
+        eq_(200, response.status_code)
+        ok_("Please try again later." in response.content)
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username=new_username)
 
     @mock_missing_get_deki_user_by_email
     @mock_post_mindtouch_user
@@ -683,9 +829,7 @@ class BrowserIDTestCase(TestCase):
 
         _verify_browserid.return_value = {'email': 'testuser+changed@test.com'}
 
-        # posting a valid assertion to browserid_verify changes email
-        # if the client is already logged-in
-        resp = self.client.post(reverse('users.browserid_verify',
+        resp = self.client.post(reverse('users.browserid_change_email',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -707,9 +851,8 @@ class BrowserIDTestCase(TestCase):
 
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
 
-        # posting a valid assertion to browserid_verify doesn't change email
-        # if the new email already belongs to another user
-        resp = self.client.post(reverse('users.browserid_verify',
+        # doesn't change email if the new email already belongs to another user
+        resp = self.client.post(reverse('users.browserid_change_email',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
@@ -720,3 +863,11 @@ class BrowserIDTestCase(TestCase):
         eq_(200, resp.status_code)
         doc = pq(resp.content)
         ok_('testuser@test.com' in doc.find('li#field_email').text())
+
+
+class OldProfileTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def test_old_profile_url_gone(self):
+        resp = self.client.get('/users/edit', follow=True)
+        eq_(404, resp.status_code)

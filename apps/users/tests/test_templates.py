@@ -1,4 +1,5 @@
 import hashlib
+import requests
 from time import time
 
 from django.conf import settings
@@ -10,16 +11,15 @@ from django.utils.http import int_to_base36
 
 import mock
 from nose.tools import eq_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from dekicompat.tests import (MULTI_ACCOUNT_FIXTURE_XML,
-                              SINGLE_ACCOUNT_FIXTURE_XML,
+from dekicompat.tests import (SINGLE_ACCOUNT_FIXTURE_XML,
                               mock_post_mindtouch_user,
                               mock_put_mindtouch_user,
                               mock_get_deki_user_by_email,
                               mock_get_deki_user)
+from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -88,6 +88,31 @@ class LoginTests(TestCaseBase):
                                      'next': next})
         eq_(302, response.status_code)
         eq_('http://testserver' + next, response['location'])
+
+    def test_login_next_parameter_all_forms(self):
+        '''Test with a valid ?next=url parameter.'''
+        next = '/demos/submit'
+
+        # Verify that next parameter is set in form hidden field.
+        response = self.client.get(urlparams(reverse('users.login'),
+                                             next=next))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('input[name="next"]')[0].attrib['value'])
+
+        # Verify that next parameter is set in form hidden field.
+        response = self.client.get(urlparams(
+            reverse('users.browserid_header_signin_html'), next=next))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('input[name="next"]')[0].attrib['value'])
+
+        # Verify that next parameter is set in form hidden field.
+        response = self.client.get(urlparams(
+            reverse('users.browserid_signin_html'), next=next))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('input[name="next"]')[0].attrib['value'])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_clean_url(self, get_current):
@@ -186,7 +211,22 @@ class PasswordReset(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_only_user(self, get_current):
         get_current.return_value.domain = 'testserver.com'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='testaccount')
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username='testaccount')
+
+        if not getattr(settings, 'DEKIWIKI_MOCK', False):
+            # HACK: Ensure that expected user details are in MindTouch when not
+            # mocking the API
+            mt_email = 'testaccount@testaccount.com'
+            user_xml = MINDTOUCH_USER_XML % dict(username="testaccount",
+                    email=mt_email, fullname="None", status="active",
+                    language="", timezone="-08:00", role="Contributor")
+            DekiUserBackend.put_mindtouch_user(deki_user_id='=testaccount',
+                                               user_xml=user_xml)
+            passwd_url = '%s/@api/deki/users/%s/password?apikey=%s' % (
+                settings.DEKIWIKI_ENDPOINT, '=testaccount',
+                settings.DEKIWIKI_APIKEY)
+            requests.put(passwd_url, data='theplanet')
 
         r = self.client.post(reverse('users.pw_reset'),
                              {'email': 'testaccount@testaccount.com'})
@@ -201,10 +241,11 @@ class PasswordReset(TestCaseBase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_email_multi_user(self, get_current):
         get_current.return_value.domain = 'testserver.com'
-        self.assertRaises(User.DoesNotExist, User.objects.get, username='Ibn el haithem')
+        self.assertRaises(User.DoesNotExist, User.objects.get,
+                          username='Ibn el haithem')
 
         r = self.client.post(reverse('users.pw_reset'),
-                             {'email': 'f487e0b2f7b637e4e7d5dd0ff76b0447@mozilla.com'})
+            {'email': 'f487e0b2f7b637e4e7d5dd0ff76b0447@mozilla.com'})
         eq_(302, r.status_code)
         eq_('http://testserver/en-US/users/pwresetsent', r['location'])
         eq_(1, len(mail.outbox))

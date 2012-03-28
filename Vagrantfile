@@ -29,16 +29,14 @@ Vagrant::Config.run do |config|
     end
 
     # This thing can be a little hungry for memory
-    config.vm.customize do |vm|
-        vm.memory_size = CONF['memory_size']
-    end
+    config.vm.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
 
     # uncomment to enable VM GUI console, mainly for troubleshooting
     if CONF['gui'] == true
         config.vm.boot_mode = :gui
     end
 
-    config.vm.network(CONF['ip_address'])
+    config.vm.network :hostonly, CONF['ip_address']
 
     # Increase vagrant's patience during hang-y CentOS bootup
     # see: https://github.com/jedi4ever/veewee/issues/14
