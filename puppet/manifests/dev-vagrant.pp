@@ -38,6 +38,7 @@ class dev {
 
         python: stage => langs;
         php:    stage => langs;
+        nodejs: stage => langs;
 
         dekiwiki: stage => vendors;
 

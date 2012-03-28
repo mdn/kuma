@@ -109,6 +109,7 @@ class SubmissionEditForm(MyModelForm):
         choices = (
             (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
             for x in parse_tags(
+                'challenge:none %s' %
                 constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
                 sorted=False)
             if x in TAG_DESCRIPTIONS

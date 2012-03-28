@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+# see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 
 from datetime import datetime, timedelta
@@ -12,11 +14,15 @@ from django.core.exceptions import ValidationError
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
-from wiki.content import (SectionIDFilter, SECTION_EDIT_TAGS)
+from wiki.content import (SECTION_EDIT_TAGS, CodeSyntaxFilter,
+                          DekiscriptMacroFilter)
 from wiki.tests import normalize_html
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
+
+import bleach
+from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
 
 
 class ContentSectionToolTests(TestCase):
@@ -305,3 +311,133 @@ class ContentSectionToolTests(TestCase):
                   .injectSectionEditingLinks('some-slug', 'en-US')
                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
+
+    def test_code_syntax_conversion(self):
+        doc_src = """
+            <h2>Some JavaScript</h2>:
+            <pre class="deki-transform" function="syntax.JavaScript">
+            function foo(){
+                alert("bar");
+            }
+            </pre>
+            <pre>Some CSS:</pre>
+            <pre class="dek-trans" function="syntax.CSS">
+            .dek-trans { color: red; }
+            </pre>
+        """
+        expected = """
+            <h2>Some JavaScript</h2>:
+            <pre class="brush: js">
+            function foo(){
+                alert("bar");
+            }
+            </pre>
+            <pre>Some CSS:</pre>
+            <pre class="brush: css">
+            .dek-trans { color: red; }
+            </pre>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(CodeSyntaxFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+    @attr('current')
+    def test_dekiscript_macro_conversion(self):
+        doc_src = u"""
+            <span>Just a span</span>
+            <span class="notascript">Hi there</span>
+            <li><span class="script">MixedCaseName('parameter1', 'parameter2')</span></li>
+            <li><span class="script">bug(689641)</span></li>
+            <li><span class="script">template.lowercasename('border')</span></li>
+            <li><span class="script">Template.UpperCaseTemplate("foo")</span></li>
+            <li><span class="script">wiki.template('英語版章題', [ "Reusing tabs" ])</span></li>
+            <li><span class="script">template("non-standard_inline", ["Reusing tabs", "YAY"])</span></li>
+            <li><span class="script">wiki.template('英語版章題')</span></li>
+            <li><span class="script">template("non-standard_inline")</span></li>
+        """
+        expected = u"""
+            <span>Just a span</span>
+            <span class="notascript">Hi there</span>
+            <li>{{ MixedCaseName('parameter1', 'parameter2') }}</li>
+            <li>{{ bug("689641") }}</li>
+            <li>{{ lowercasename('border') }}</li>
+            <li>{{ UpperCaseTemplate("foo") }}</li>
+            <li>{{ 英語版章題("Reusing tabs") }}</li>
+            <li>{{ non-standard_inline("Reusing tabs", "YAY") }}</li>
+            <li>{{ 英語版章題() }}</li>
+            <li>{{ non-standard_inline() }}</li>
+        """
+
+        # Check line-by-line, to help work out any issues failure-by-failure
+        doc_src_lines = doc_src.split("\n")
+        expected_lines = expected.split("\n")
+        for i in range(0, len(doc_src_lines)):
+            result = (wiki.content
+                      .parse(doc_src_lines[i])
+                      .filter(DekiscriptMacroFilter).serialize())
+            eq_(normalize_html(expected_lines[i]), normalize_html(result))
+
+        # But, the whole thing should work in the filter, as well.
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(DekiscriptMacroFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+
+class AllowedHTMLTests(TestCase):
+    simple_tags = (
+        'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
+        'code', 'dl', 'dt', 'dd', 'table',
+        'section', 'header', 'footer',
+        'nav', 'article', 'aside', 'figure', 'dialog', 'hgroup',
+        'mark', 'time', 'meter', 'output', 'progress',
+        'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+        'address'
+        )
+    
+    unclose_tags = ('img', 'input', 'br', 'command')
+
+    special_tags = (
+        "<table><thead><tr><th>foo</th></tr></thead><tbody><tr><td>foo</td></tr></tbody></table>",
+    )
+
+    special_attributes = (
+        '<command id="foo">',
+        '<img align="left" alt="picture of foo" class="foo" id="foo" src="foo" title="foo">',
+        '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
+        '<div class="foo">foo</div>',
+        # TODO: Styles have to be cleaned on a case-by-case basis. We
+        # need to enumerate the styles we're going to allow, then feed
+        # them to bleach.
+        # '<span style="font-size: 24px"></span>',
+    )
+    
+    def test_allowed_tags(self):
+        for tag in self.simple_tags:
+            html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+
+        for tag in self.unclose_tags:
+            html_str = '<%s>' % tag
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+            
+        for html_str in self.special_tags:
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+
+    def test_allowed_attributes(self):
+        for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
+                    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+                    'dialog', 'hgroup', 'mark', 'time', 'meter', 'output',
+                    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist',
+                    'address'):
+            html_str = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))
+
+        for html_str in self.special_attributes:
+            eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
+                                       tags=ALLOWED_TAGS))

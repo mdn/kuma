@@ -33,13 +33,6 @@ class python_virtualenv {
             command => "/usr/bin/virtualenv --no-site-packages /home/vagrant/kuma-venv",
             creates => "/home/vagrant/kuma-venv"
     }
-    # This bash_profile auto-activates the virtualenv on login.
-    file {
-        "/home/vagrant/.bash_profile":
-            source => "$PROJ_DIR/puppet/files/home/vagrant/bash_profile",
-            owner => "vagrant", group => "vagrant", mode => 0664,
-            require => Exec['virtualenv-create'];
-    }
 }
 
 class python_modules {

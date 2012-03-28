@@ -2,6 +2,8 @@
 *.pyo
 *.sw?
 .vagrant
+vagrantconfig_local.yaml
+kuma.box
 settings_local.py
 pip-log.txt
 .coverage
@@ -21,3 +23,7 @@ puppet/cache/*
 humans.txt
 apps/humans/tmp
 tmp
+webroot/.htaccess
+kumascript.log
+kumascript_settings_local.json
+lib/product_details_json

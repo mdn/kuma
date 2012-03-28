@@ -5,13 +5,15 @@ from jinja2 import escape, Markup
 from jingo import register
 
 from sumo.urlresolvers import reverse
-from devmo.models import UserProfile
 
 
 @register.function
 def profile_url(user):
     """Return a URL to the user's profile."""
-    return reverse('devmo_profile_view', args=[user.username])
+    try:
+        return reverse('devmo_profile_view', args=[user.username])
+    except Exception, e:
+        return user.username
 
 
 @register.function

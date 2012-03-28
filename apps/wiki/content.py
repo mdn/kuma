@@ -1,3 +1,5 @@
+import logging
+import re
 from urllib import urlencode
 import bleach
 
@@ -8,6 +10,13 @@ from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
 
+
+# Regex to extract language from MindTouch code elements' function attribute
+MT_SYNTAX_PAT = re.compile(r"""syntax\.(\w+)""")
+# map for mt syntax values that should turn into new brush values
+MT_SYNTAX_BRUSH_MAP = {
+    'javascript': 'js',
+}
 
 # List of tags supported for section editing. A subset of everything that could
 # be considered an HTML5 section
@@ -62,8 +71,8 @@ class ContentSectionTool(object):
         self.stream = SectionIDFilter(self.stream)
         return self
 
-    def injectSectionEditingLinks(self, slug, locale):
-        self.stream = SectionEditLinkFilter(self.stream, slug, locale)
+    def injectSectionEditingLinks(self, full_path, locale):
+        self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
         return self
 
     def extractSection(self, id):
@@ -120,9 +129,9 @@ class SectionIDFilter(html5lib_Filter):
 class SectionEditLinkFilter(html5lib_Filter):
     """Filter which injects editing links for sections with IDs"""
 
-    def __init__(self, source, slug, locale):
+    def __init__(self, source, full_path, locale):
         html5lib_Filter.__init__(self, source)
-        self.slug = slug
+        self.full_path = full_path
         self.locale = locale
 
     def __iter__(self):
@@ -145,13 +154,13 @@ class SectionEditLinkFilter(html5lib_Filter):
                              'data-section-id': id,
                              'data-section-src-url': '%s?%s' % (
                                  reverse('wiki.document',
-                                         args=[self.slug],
+                                         args=[self.full_path],
                                          locale=self.locale),
                                  urlencode({'section': id, 'raw': 'true'})
                               ),
                               'href': '%s?%s' % (
                                  reverse('wiki.edit_document',
-                                         args=[self.slug],
+                                         args=[self.full_path],
                                          locale=self.locale),
                                  urlencode({'section': id,
                                             'edit_links': 'true'})
@@ -281,3 +290,81 @@ class SectionFilter(html5lib_Filter):
             # encountered in the stream. Not doing that right now.
             # For now, just assume an hgroup is equivalent to h1
             return 1
+
+
+class CodeSyntaxFilter(html5lib_Filter):
+    """Filter which ensures section-related elements have unique IDs"""
+    def __iter__(self):
+        for token in html5lib_Filter.__iter__(self):
+            if ('StartTag' == token['type']):
+                if 'pre' == token['name']:
+                    attrs = dict(token['data'])
+                    function = attrs.get('function', None)
+                    if function:
+                        m = MT_SYNTAX_PAT.match(function)
+                        if m:
+                            lang = m.group(1).lower()
+                            brush = MT_SYNTAX_BRUSH_MAP.get(lang, lang)
+                            attrs['class'] = "brush: %s" % brush
+                            del attrs['function']
+                            token['data'] = attrs.items()
+            yield token
+
+
+class DekiscriptMacroFilter(html5lib_Filter):
+    """Filter to convert Dekiscript template calls into kumascript macros."""
+    def __iter__(self):
+
+        buffer = []
+        for token in html5lib_Filter.__iter__(self):
+            buffer.append(token)
+
+        while len(buffer):
+            token = buffer.pop(0)
+
+            if not ('StartTag' == token['type'] and
+                    'span' == token['name']):
+                yield token
+                continue
+
+            attrs = dict(token['data'])
+            if attrs.get('class','') != 'script':
+                yield token
+                continue
+
+            ds_call = []
+            while len(buffer) and 'EndTag' != token['type']:
+                token = buffer.pop(0)
+                if 'Characters' == token['type']:
+                    ds_call.append(token['data'])
+
+            ds_call = ''.join(ds_call).strip()
+
+            # Snip off any "template." prefixes
+            strip_prefixes = ('template.', 'wiki.')
+            for prefix in strip_prefixes:
+                if ds_call.lower().startswith(prefix):
+                    ds_call = ds_call[len(prefix):]
+
+            # Convert numeric args to quoted. eg. bug(123) -> bug("123")
+            num_re = re.compile(r'^([^(]+)\((\d+)')
+            m = num_re.match(ds_call)
+            if m:
+                ds_call = '%s("%s")' % (m.group(1), m.group(2))
+
+            # template("template name", [ "params" ])
+            wt_re = re.compile(r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
+            m = wt_re.match(ds_call)
+            if m:
+                ds_call = '%s(%s)' % (m.group(1), m.group(2).strip())
+
+            # template("template name")
+            wt_re = re.compile(r'''^template\(['"]([^'"]+)['"]''', re.I)
+            m = wt_re.match(ds_call)
+            if m:
+                ds_call = '%s()' % (m.group(1))
+
+            yield dict(
+                type="Characters",
+                data='{{ %s }}' % ds_call
+            )

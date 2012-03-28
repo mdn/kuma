@@ -1,0 +1,9 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+            {% from "layout/errorlist.html" import errorlist %}
+            <h1>{{ _('Sign In with BrowserID') }}</h1> 
+            <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
+              <input type="hidden" name="next" id="next" value="{{ next_url }}" />
+              {{ errorlist(form) }}
+              {% include "users/browserid_explanation.html" %}
+          <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a></p>
+            </form>

@@ -5,56 +5,70 @@
 ReWriteEngine On
 RewriteBase /
 
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/?)?)$           /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?docs.*)$     /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?users.*/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mobile/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mozilla/?)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?search/?)$   /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?web/?)$      /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?apps.*)$      /mwsgi/$1 [NC,PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?learn.*)$    /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?promote.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?events.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?profiles.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?discussions.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?forum-archive.*)$  /mwsgi/$1 [PT,L]
-RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?jsi18n.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mwc/?)$      /apps [NC,PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/?)?)$           /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?addons/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?demos.*)$    /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?docs.*)$     /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?users.*/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mobile/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?mozilla/?)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?search/?)$   /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?web/?)$      /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?apps.*)$      /mwsgi/$1 [NC,PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?learn.*)$    /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?promote.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?events.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?profiles?.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?discussions.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?forum-archive.*)$  /mwsgi/$1 [PT,L]
+RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|ga-IE|hr|hu|id|it|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?jsi18n.*)$  /mwsgi/$1 [PT,L]
 RewriteRule ^(admin(/.*)?)$                                                                 /mwsgi/$1 [PT,L]
+
 
 # For debug_toolbar, mainly on dev VMs
 RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|sl|sq|th|x-testing|zh-TW|zh-CN)/)?__debug__(/.*)?)$ /mwsgi/$1 [PT,L]
 
+   RewriteCond %{REQUEST_URI} ^/Special:UserPreferences$ [NC]
+   RewriteRule (.*) /profile/edit/ [L,R]
+
    RewriteCond %{REQUEST_URI} ^/Special:Userlogin$ [NC]
-   RewriteRule (.*) https://developer.mozilla.org/users/login? [L,R]
+   RewriteRule (.*) /users/login? [L,R]
+
+   RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
+   RewriteCond %{QUERY_STRING} title=Special:Userlogin [NC]
+   RewriteCond %{QUERY_STRING} returntotitle=(.*)&? [NC]
+   RewriteRule (.*) /users/login?next=/%1 [L,R]
+
+   RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
+   RewriteCond %{QUERY_STRING} title=Special:Userlogin [NC]
+   RewriteRule (.*) /users/login? [L,R]
 
    # PeteE: redirect feeds to a feeds disabled page
    RewriteCond %{REQUEST_URI} ^/Special:Article$ [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
    RewriteCond %{QUERY_STRING} title=Special:Article [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/Special:Watchlist$ [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/index.php$ [NC]
    RewriteCond %{QUERY_STRING} title=Special:Watchlist [NC]
    RewriteCond %{QUERY_STRING} type=feed [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
 
    RewriteCond %{REQUEST_URI} ^/@api/deki/pages/[0-9]+/feed(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/pages/[0-9]+/feed/new(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/feed(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/feed/new(/)?$ [NC,OR]
    RewriteCond %{REQUEST_URI} ^/@api/deki/users/[0-9]+/favorites/feed(/)?$ [NC]
-   RewriteRule (.*) https://developer.mozilla.org/deki/feeds_disabled.php? [L,R]
+   RewriteRule (.*) /deki/feeds_disabled.php? [L,R]
    # END FEEDS DISABLED
 
 	RewriteRule ^patches(.*) data/www/patches$1 [L]
@@ -103,4 +117,8 @@ RewriteRule ^(((en-US|de|el|es|fr|fy-NL|ga|hr|hu|id|ja|ko|nl|pl|pt-BR|pt-PT|ro|s
 	RewriteCond %{REQUEST_URI} !/block_862be.html
 	RewriteCond %{REQUEST_URI} !/block_f90c2.html
 	RewriteCond %{QUERY_STRING} ^$ [OR] %{REQUEST_URI} ^/Special:Search
-	RewriteRule ^(.*)$ index.php?mt=1&title=$1 [L,QSA,NE]
+	RewriteRule ^(.*)$ index.php?mt=1&title=$1 [L,QSA,NE,E=CORS:True]
+
+    Header set Access-Control-Allow-Origin "*" env=CORS
+    Header set Access-Control-Allow-Methods "GET" env=CORS
+    Header set Access-Control-Allow-Credentials "false" env=CORS

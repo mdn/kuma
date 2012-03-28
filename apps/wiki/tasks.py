@@ -26,11 +26,11 @@ log = logging.getLogger('k.task')
 def send_reviewed_notification(revision, document, message):
     """Send notification of review to the revision creator."""
     if revision.reviewer == revision.creator:
-        log.debug('Revision (id=%s) reviewed by creator, skipping email' % \
-                  revision.id)
+        # log.debug('Revision (id=%s) reviewed by creator, skipping email' % \
+        #           revision.id)
         return
 
-    log.debug('Sending reviewed email for revision (id=%s)' % revision.id)
+    # log.debug('Sending reviewed email for revision (id=%s)' % revision.id)
     if revision.is_approved:
         subject = _('Your revision has been approved: {title}')
     else:

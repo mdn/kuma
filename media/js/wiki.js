@@ -27,6 +27,9 @@
             //updateShowforSelectors();
             initApproveReject();
         }
+        if ($('body').is('.document')){
+            initSyntaxHighlighter();
+        }
 
         if ($('body').is('.home')) {
             initClearOddSections();
@@ -38,6 +41,21 @@
             initArticlePreview();
             initTitleAndSlugCheck();
             // initDrafting();
+        }
+        if ($('body').is('.edit.is-template')) {
+            var textarea = $('textarea#id_content').hide();
+            
+            var editor = window.ace_editor = ace.edit("ace_content");
+            editor.setTheme("ace/theme/dreamweaver");
+            
+            var JavaScriptMode = require("ace/mode/javascript").Mode;
+
+            var session = editor.getSession();
+            session.setMode(new JavaScriptMode());
+            session.setValue(textarea.val());
+            session.on('change', function(){
+              textarea.val(editor.getSession().getValue());
+            });
         }
     }
     
@@ -58,12 +76,12 @@
                 // Caught a section edit link click.
                 return handleSectionEditClick(ev, target);
             }
-            if (target.is('.edited-section-ui.current .save')) {
+            if (target.is('.edited-section-ui.current .btn-save')) {
                 // Caught a section edit save click.
                 saveSectionEdit();
                 return false;
             }
-            if (target.is('.edited-section-ui.current .cancel')) {
+            if (target.is('.edited-section-ui.current .btn-cancel')) {
                 // Caught a section edit cancel click.
                 cancelSectionEdit();
                 return false;
@@ -146,7 +164,7 @@
                 CKEDITOR.replace(ui.find('.src')[0], {
                     customConfig : '/docs/ckeditor_config.js'
                 }))
-            .find('.save').data('save_cb', saveSectionEdit).end();
+            .find('.btn-save').data('save_cb', saveSectionEdit).end();
     }
 
     /**
@@ -566,6 +584,10 @@
                    .prepopulate($(field.dependency_ids.join(',')),
                                 field.maxLength);
         });
+    }
+
+    function initSyntaxHighlighter() {
+        SyntaxHighlighter.all();
     }
 
     // Return a table of contents (an <ol>) listing the visible headers within
