@@ -251,11 +251,13 @@ class RevisionForm(forms.ModelForm):
                 self.initial['slug'] = self.instance.document.slug
 
             content = self.instance.content
-            tool = wiki.content.parse(content)
-            tool.injectSectionIDs()
-            if self.section_id:
-                tool.extractSection(self.section_id)
-            self.initial['content'] = tool.serialize()
+            if not self.instance.document.is_template:
+                tool = wiki.content.parse(content)
+                tool.injectSectionIDs()
+                if self.section_id:
+                    tool.extractSection(self.section_id)
+                content = tool.serialize()
+            self.initial['content'] = content
 
             self.initial['review_tags'] = [x.name
                 for x in self.instance.review_tags.all()]
