@@ -19,10 +19,9 @@ reasons.
     sudo gem update
     sudo gem install vagrant
         
-    # Clone a Kuma repo, switch to "mdn" branch (for now)
+    # Clone a Kuma repo
     git clone git://github.com/mozilla/kuma.git
     cd kuma
-    git checkout mdn
     git submodule update --init --recursive
 
     # Fire up the VM and install everything, take a bike ride (approx. 30 min)
