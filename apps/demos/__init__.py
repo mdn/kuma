@@ -153,7 +153,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."),
         "description": _("The HTML5 audio element lets you embed sound in webpages without requiring your users to rely on plug-ins."),
         "learn_more": [],
-        "tab_copy": _("<p>The HTML5 &lt;audio&gt; element lets you embed sound in Web pages. More importantly, it lets you do so without requiring your users to rely on plug-ins. This means sound for everyone, everywhere, in the most open way possible. In particular, you can play sounds in games with very low latency, making for a responsive, immersive game experience.</p><p>What else can you do with the audio element? Show us by submitting to the Dev Derby today.</p>"),
+        "tab_copy": _("<p>The <a href=\"https://developer.mozilla.org/en/HTML/Element/audio\">HTML5 &lt;audio&gt;</a> element lets you embed sound in Web pages. More importantly, it lets you do so without requiring your users to rely on plug-ins. This means sound for everyone, everywhere, in the most open way possible. In particular, you can play sounds in games with <a href=\"http://robert.ocallahan.org/2011/11/latency-of-html5-sounds.html\">very low latency</a>, making for a responsive, immersive game experience.</p><p>What else can you do with the audio element? Show us by submitting to the Dev Derby today.</p>"),
     },
     {
         "tag_name": "challenge:2012:may",
