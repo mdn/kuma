@@ -20,7 +20,9 @@ MT_SYNTAX_BRUSH_MAP = {
 
 # List of tags supported for section editing. A subset of everything that could
 # be considered an HTML5 section
-SECTION_EDIT_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'section')
+SECTION_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'section')
+
+HEAD_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 
 
 def parse(src):
@@ -117,7 +119,7 @@ class SectionIDFilter(html5lib_Filter):
         # Pass 2: Sprinkle in IDs where they're missing
         for token in buffer:
             if ('StartTag' == token['type'] and
-                    token['name'] in SECTION_EDIT_TAGS):
+                    token['name'] in SECTION_TAGS):
                 attrs = dict(token['data'])
                 id = attrs.get('id', None)
                 if not id:
@@ -142,7 +144,7 @@ class SectionEditLinkFilter(html5lib_Filter):
             yield token
 
             if ('StartTag' == token['type'] and
-                    token['name'] in SECTION_EDIT_TAGS):
+                    token['name'] in SECTION_TAGS):
                 attrs = dict(token['data'])
                 id = attrs.get('id', None)
                 if id:
@@ -171,6 +173,57 @@ class SectionEditLinkFilter(html5lib_Filter):
                     )
                     for t in out:
                         yield t
+
+
+class SectionTOCFilter(html5lib_Filter):
+    """Filter which builds a TOC tree of sections with headers"""
+    def __init__(self, source):
+        html5lib_Filter.__init__(self, source)
+        self.level = 1
+        self.in_header = False
+
+    def __iter__(self):
+        input = html5lib_Filter.__iter__(self)
+
+        for token in input:
+            if ('StartTag' == token['type'] and token['name'] in HEAD_TAGS):
+                self.in_header = True
+                out = ()
+                level_match = re.compile(r'^h(\d)$').match(token['name'])
+                level = int(level_match.group(1))
+                if level > self.level:
+                    diff = level - self.level
+                    for i in range(diff):
+                        out += ({'type': 'StartTag', 'name': 'ol', 'data': {}},)
+                    self.level = level
+                elif level < self.level:
+                    diff = self.level - level
+                    for i in range(diff):
+                        out += ({'type': 'EndTag', 'name': 'li'},
+                                {'type': 'EndTag', 'name': 'ol'})
+                    self.level = level
+                attrs = dict(token['data'])
+                id = attrs.get('id', None)
+                if id:
+                    out += (
+                        {'type': 'StartTag', 'name': 'li', 'data': {}},
+                        {'type': 'StartTag', 'name': 'a',
+                         'data': {
+                            'rel': 'internal',
+                            'href': '#%s' % id,
+                         }},
+                    )
+                    for t in out:
+                        yield t
+            elif ('Characters' == token['type'] and self.in_header):
+                yield token
+            elif ('EndTag' == token['type'] and token['name'] in HEAD_TAGS):
+                self.in_header = False
+                level_match = re.compile(r'^h(\d)$').match(token['name'])
+                level = int(level_match.group(1))
+                out = ({'type': 'EndTag', 'name': 'a'},)
+                for t in out:
+                    yield t
 
 
 class SectionFilter(html5lib_Filter):

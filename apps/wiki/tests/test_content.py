@@ -4,18 +4,15 @@ import logging
 
 from datetime import datetime, timedelta
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from pyquery import PyQuery as pq
 
-from django.core.exceptions import ValidationError
-
-from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
-from wiki.content import (SECTION_EDIT_TAGS, CodeSyntaxFilter,
-                          DekiscriptMacroFilter)
+from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
+                          SectionTOCFilter, SECTION_TAGS)
 from wiki.tests import normalize_html
 
 import html5lib
@@ -55,8 +52,8 @@ class ContentSectionToolTests(TestCase):
         eq_('i-already-have-an-id', result_doc.find('.hasid').attr('id'))
 
         # Then, ensure all elements in need of an ID now all have unique IDs.
-        ok_(len(SECTION_EDIT_TAGS) > 0)
-        els = result_doc.find(', '.join(SECTION_EDIT_TAGS))
+        ok_(len(SECTION_TAGS) > 0)
+        els = result_doc.find(', '.join(SECTION_TAGS))
         seen_ids = set()
         for i in range(0, len(els)):
             id = els.eq(i).attr('id')
@@ -340,6 +337,41 @@ class ContentSectionToolTests(TestCase):
         result = (wiki.content
                   .parse(doc_src)
                   .filter(CodeSyntaxFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+    @attr('toc')
+    def test_generate_toc(self):
+        doc_src = """
+            <h1 id="HTML">HTML</h1>
+              <h2 id="HTML5">HTML5</h2>
+            <h1 id="JavaScript">JavaScript</h1>
+              JavaScript is awesome.
+              <h2 id="WebGL">WebGL</h2>
+              <h2 id="Audio">Audio</h2>
+                <h3 id="Audio-API">Audio API</h3>
+            <h1 id="CSS">CSS</h1>
+        """
+        expected = """
+            <li><a rel="internal" href="#HTML">HTML</a>
+                <ol>
+                  <li><a rel="internal" href="#HTML5">HTML5</a></li>
+                </ol>
+            </li>
+            <li><a rel="internal" href="#JavaScript">JavaScript</a>
+                <ol>
+                  <li><a rel="internal" href="#WebGL">WebGL</a>
+                  <li><a rel="internal" href="#Audio">Audio</a>
+                    <ol>
+                      <li><a rel="internal" href="#Audio-API">Audio API</a></li>
+                    </ol>
+                  </li>
+                </ol>
+            </li>
+            <li><a rel="internal" href="#CSS">CSS</a></li>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     @attr('current')

@@ -252,6 +252,12 @@ def document(request, document_slug, document_locale):
 
         # Start applying some filters to the document HTML
         tool = wiki.content.parse(doc_html)
+        doc_html = tool.serialize()
+        # Generate a TOC for the document using the sections provided by
+        # SectionEditingLinks
+        if not show_raw:
+            toc_html = wiki.content.parse(doc_html).filter(
+                wiki.content.SectionTOCFilter).serialize()
 
         # If a section ID is specified, extract that section.
         if section_id:
@@ -264,6 +270,7 @@ def document(request, document_slug, document_locale):
 
         doc_html = tool.serialize()
 
+
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
     # iframe inclusion
@@ -275,7 +282,7 @@ def document(request, document_slug, document_locale):
             response['Content-Type'] = 'text/plain; charset=utf-8'
         return set_common_headers(response)
 
-    data = {'document': doc, 'document_html': doc_html,
+    data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
