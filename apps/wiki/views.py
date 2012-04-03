@@ -531,6 +531,9 @@ def new_document(request):
     rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
+        slug = doc_form.cleaned_data['slug']
+        if not Document.objects.allows_add_by(request.user, slug):
+            raise PermissionDenied
         doc = doc_form.save(None)
         _save_rev_and_notify(rev_form, request.user, doc)
         if doc.current_revision.is_approved:
