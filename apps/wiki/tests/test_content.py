@@ -1,29 +1,21 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
-import logging
-
-from datetime import datetime, timedelta
-
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from pyquery import PyQuery as pq
+import bleach
 
 from sumo.tests import TestCase
 import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           SectionTOCFilter, SECTION_TAGS)
-from wiki.tests import normalize_html
-
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
-
-import bleach
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+from wiki.tests import normalize_html
 
 
 class ContentSectionToolTests(TestCase):
-    
+
     def test_section_ids(self):
 
         doc_src = """
@@ -86,7 +78,7 @@ class ContentSectionToolTests(TestCase):
         doc_src = """
             <h1 id="s4-next">Head</h1>
             <p>test</p>
-            
+
             <section id="parent-s5">
                 <h1 id="s5">Head 5</h1>
                 <p>test</p>
@@ -127,7 +119,7 @@ class ContentSectionToolTests(TestCase):
         doc_src = """
             <h1 id="s4-next">Head</h1>
             <p>test</p>
-            
+
             <section id="parent-s5">
                 <h1 id="s5">Head 5</h1>
                 <p>test</p>
@@ -170,7 +162,7 @@ class ContentSectionToolTests(TestCase):
     def test_multilevel_implicit_section_extract(self):
         doc_src = """
             <p>test</p>
-            
+
             <h1 id="s4">Head 4</h1>
             <p>test</p>
             <p>test</p>
@@ -427,7 +419,7 @@ class AllowedHTMLTests(TestCase):
         'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
         'address'
         )
-    
+
     unclose_tags = ('img', 'input', 'br', 'command')
 
     special_tags = (
@@ -444,7 +436,7 @@ class AllowedHTMLTests(TestCase):
         # them to bleach.
         # '<span style="font-size: 24px"></span>',
     )
-    
+
     def test_allowed_tags(self):
         for tag in self.simple_tags:
             html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
@@ -455,7 +447,7 @@ class AllowedHTMLTests(TestCase):
             html_str = '<%s>' % tag
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
-            
+
         for html_str in self.special_tags:
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))

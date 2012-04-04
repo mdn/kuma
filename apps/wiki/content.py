@@ -1,7 +1,5 @@
-import logging
 import re
 from urllib import urlencode
-import bleach
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -194,7 +192,8 @@ class SectionTOCFilter(html5lib_Filter):
                 if level > self.level:
                     diff = level - self.level
                     for i in range(diff):
-                        out += ({'type': 'StartTag', 'name': 'ol', 'data': {}},)
+                        out += ({'type': 'StartTag', 'name': 'ol',
+                                 'data': {}},)
                     self.level = level
                 elif level < self.level:
                     diff = self.level - level
@@ -381,7 +380,7 @@ class DekiscriptMacroFilter(html5lib_Filter):
                 continue
 
             attrs = dict(token['data'])
-            if attrs.get('class','') != 'script':
+            if attrs.get('class', '') != 'script':
                 yield token
                 continue
 
@@ -406,7 +405,8 @@ class DekiscriptMacroFilter(html5lib_Filter):
                 ds_call = '%s("%s")' % (m.group(1), m.group(2))
 
             # template("template name", [ "params" ])
-            wt_re = re.compile(r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
+            wt_re = re.compile(
+                r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
             m = wt_re.match(ds_call)
             if m:
                 ds_call = '%s(%s)' % (m.group(1), m.group(2).strip())
