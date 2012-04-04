@@ -344,6 +344,14 @@ a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { ba
 .footer .user-state .browserid-info { top: auto; bottom: 30px; margin: 0 0 25px; }
 .footer .browserid-info h3:after { top: auto; bottom: -25px; background: transparent none; }
 
+/*** @Tabzilla *********/
+/* Hide Tabzilla on screens < 1250px wide so that it does not interfere with login / logout links. This is a temporary workaround for Tabzilla's fixedness issue. */
+@media screen and (max-width: 1250px) {
+  #developer-mozilla-org #tabzilla {
+    display: none;
+  }
+}
+
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 
