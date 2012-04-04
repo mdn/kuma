@@ -34,7 +34,7 @@
   <section id="content-main" class="full" role="main">
     <header id="derby-head">
       <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
-      <h1>{{_("Dev Derby")}}</h1>
+      <h1><a href="{{url('demos_devderby_landing')}}">{{_("Dev Derby")}}</a></h1>
       <h2>{% trans title=tag_meta(current_challenge_tag_name, "short_title") %}Show us what you can do with {{ title }}{% endtrans %}</h2>
       <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
       <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
