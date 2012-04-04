@@ -90,25 +90,20 @@
       {% endif %}
 
       <div id="wikiArticle" class="page-content boxed">
-          {# 
-        <div id="article-nav"> 
+        {% if toc_html %}
+        <div id="article-nav">
           <div class="page-toc">
             <h2>Table of Contents</h2>
             <ol>
-              <li><a href="#Lorum_Ipsum">Lorum Ipsum</a>
-                <ol>
-                  <li><a href="#Dolor_Sit_Amet">Dolor Sit Amet</a></li>
-                </ol>
-              </li>
-              <li><a href="#Another_Heading">Another Heading</a></li>
+              {{ toc_html|safe }}
             </ol>
           </div>
           <ul class="page-anchors">
             <li class="anchor-tags"><a href="#page-tags">Tags</a></li>
             <li class="anchor-files"><a href="#page-files">Files</a></li>
           </ul>
-      </div>
-      #}
+        </div>
+        {% endif %}
       {% if not fallback_reason %}
         {% if document.is_template %}
           <pre class="brush: js">{{ document_html }}</pre>

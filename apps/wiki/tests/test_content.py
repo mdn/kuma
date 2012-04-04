@@ -1,32 +1,21 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
-import logging
-
-from datetime import datetime, timedelta
-
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from pyquery import PyQuery as pq
+import bleach
 
-from django.core.exceptions import ValidationError
-
-from sumo import ProgrammingError
 from sumo.tests import TestCase
 import wiki.content
-from wiki.content import (SECTION_EDIT_TAGS, CodeSyntaxFilter,
-                          DekiscriptMacroFilter)
-from wiki.tests import normalize_html
-
-import html5lib
-from html5lib.filters._base import Filter as html5lib_Filter
-
-import bleach
+from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
+                          SectionTOCFilter, SECTION_TAGS)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+from wiki.tests import normalize_html
 
 
 class ContentSectionToolTests(TestCase):
-    
+
     def test_section_ids(self):
 
         doc_src = """
@@ -55,8 +44,8 @@ class ContentSectionToolTests(TestCase):
         eq_('i-already-have-an-id', result_doc.find('.hasid').attr('id'))
 
         # Then, ensure all elements in need of an ID now all have unique IDs.
-        ok_(len(SECTION_EDIT_TAGS) > 0)
-        els = result_doc.find(', '.join(SECTION_EDIT_TAGS))
+        ok_(len(SECTION_TAGS) > 0)
+        els = result_doc.find(', '.join(SECTION_TAGS))
         seen_ids = set()
         for i in range(0, len(els)):
             id = els.eq(i).attr('id')
@@ -89,7 +78,7 @@ class ContentSectionToolTests(TestCase):
         doc_src = """
             <h1 id="s4-next">Head</h1>
             <p>test</p>
-            
+
             <section id="parent-s5">
                 <h1 id="s5">Head 5</h1>
                 <p>test</p>
@@ -130,7 +119,7 @@ class ContentSectionToolTests(TestCase):
         doc_src = """
             <h1 id="s4-next">Head</h1>
             <p>test</p>
-            
+
             <section id="parent-s5">
                 <h1 id="s5">Head 5</h1>
                 <p>test</p>
@@ -173,7 +162,7 @@ class ContentSectionToolTests(TestCase):
     def test_multilevel_implicit_section_extract(self):
         doc_src = """
             <p>test</p>
-            
+
             <h1 id="s4">Head 4</h1>
             <p>test</p>
             <p>test</p>
@@ -342,6 +331,41 @@ class ContentSectionToolTests(TestCase):
                   .filter(CodeSyntaxFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    @attr('toc')
+    def test_generate_toc(self):
+        doc_src = """
+            <h1 id="HTML">HTML</h1>
+              <h2 id="HTML5">HTML5</h2>
+            <h1 id="JavaScript">JavaScript</h1>
+              JavaScript is awesome.
+              <h2 id="WebGL">WebGL</h2>
+              <h2 id="Audio">Audio</h2>
+                <h3 id="Audio-API">Audio API</h3>
+            <h1 id="CSS">CSS</h1>
+        """
+        expected = """
+            <li><a rel="internal" href="#HTML">HTML</a>
+                <ol>
+                  <li><a rel="internal" href="#HTML5">HTML5</a></li>
+                </ol>
+            </li>
+            <li><a rel="internal" href="#JavaScript">JavaScript</a>
+                <ol>
+                  <li><a rel="internal" href="#WebGL">WebGL</a>
+                  <li><a rel="internal" href="#Audio">Audio</a>
+                    <ol>
+                      <li><a rel="internal" href="#Audio-API">Audio API</a></li>
+                    </ol>
+                  </li>
+                </ol>
+            </li>
+            <li><a rel="internal" href="#CSS">CSS</a></li>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(SectionTOCFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
     @attr('current')
     def test_dekiscript_macro_conversion(self):
         doc_src = u"""
@@ -395,7 +419,7 @@ class AllowedHTMLTests(TestCase):
         'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
         'address'
         )
-    
+
     unclose_tags = ('img', 'input', 'br', 'command')
 
     special_tags = (
@@ -412,7 +436,7 @@ class AllowedHTMLTests(TestCase):
         # them to bleach.
         # '<span style="font-size: 24px"></span>',
     )
-    
+
     def test_allowed_tags(self):
         for tag in self.simple_tags:
             html_str = '<%(tag)s></%(tag)s>' % {'tag': tag}
@@ -423,7 +447,7 @@ class AllowedHTMLTests(TestCase):
             html_str = '<%s>' % tag
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
-            
+
         for html_str in self.special_tags:
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
