@@ -296,7 +296,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #site-search-gg .gsc-branding-text { width: 60px; display: block; color: #666; position: absolute; top: 0; }
 
 /*** @User status *********/
-.user-state { width: 235px; float: right; text-align: right; color: #666; margin: 0; }
+.user-state { width: 235px; float: right; text-align: right; color: #666; margin: 0; z-index: 1000; }
 .user-state li { display: inline; }
 .user-state li + li { padding-left: 10px; margin-left: 8px; border-left: 1px solid #666; }
 .user-state a { color: #ccc; }
