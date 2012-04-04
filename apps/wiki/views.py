@@ -15,7 +15,6 @@ except ImportError:
     from django.utils.functional import wraps
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.cache import cache
 from django.http import (HttpResponse, HttpResponseRedirect,
@@ -30,7 +29,6 @@ import constance.config
 from waffle.decorators import waffle_flag
 
 import jingo
-from taggit.models import Tag
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
@@ -47,10 +45,8 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
-                         REVIEW_FLAG_TAGS, REVIEW_FLAG_TAGS_DEFAULT,
-                         ALLOWED_ATTRIBUTES, ALLOWED_TAGS,
-                         get_current_or_latest_revision)
-from wiki.parser import wiki_to_html
+                         REVIEW_FLAG_TAGS_DEFAULT, ALLOWED_ATTRIBUTES,
+                         ALLOWED_TAGS, get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
 
@@ -113,8 +109,8 @@ def process_document_path(func, reverse_name='wiki.document'):
                     .locale_and_slug_from_path(document_path, request))
 
             if needs_redirect:
-                # This catches old MindTouch locales, missing locale, and a few other
-                # cases to fire off a 301 Moved permanent redirect.
+                # This catches old MindTouch locales, missing locale, and a few
+                # other cases to fire off a 301 Moved permanent redirect.
                 redir_path = '%s/%s' % (document_locale, document_slug)
                 url = reverse('wiki.document', locale=request.locale,
                               args=[redir_path])
@@ -197,13 +193,14 @@ def document(request, document_slug, document_locale):
 
     # Utility to set common headers used by all response exit points
     response_headers = dict()
+
     def set_common_headers(r):
         r['ETag'] = doc.etag
         r['Last-Modified'] = doc.last_modified
         if doc.current_revision:
             r['x-kuma-revision'] = doc.current_revision.id
         # Finally, set any extra headers. update() doesn't work here.
-        for k,v in response_headers.items():
+        for k, v in response_headers.items():
             r[k] = v
         return r
 
@@ -230,7 +227,7 @@ def document(request, document_slug, document_locale):
 
     # Grab the document HTML as a fallback, then attempt to use kumascript:
     doc_html, ks_errors = doc.html, None
-    if (constance.config.KUMASCRIPT_TIMEOUT > 0 and 
+    if (constance.config.KUMASCRIPT_TIMEOUT > 0 and
             not doc.is_template and
             (force_macros or (not no_macros and not show_raw))):
         # We'll make a request to kumascript for macro evaluation only if:
@@ -239,7 +236,7 @@ def document(request, document_slug, document_locale):
         #     (eg. ?raw)
         #   * The request has *not* asked for no macro evaluation
         #     (eg. ?nomacros)
-        #   * The request *has* asked for macro evaluation 
+        #   * The request *has* asked for macro evaluation
         #     (eg. ?raw&macros)
         resp_body, resp_errors = _perform_kumascript_request(
                 request, response_headers, document_locale, document_slug)
@@ -252,12 +249,19 @@ def document(request, document_slug, document_locale):
 
         # Start applying some filters to the document HTML
         tool = wiki.content.parse(doc_html)
+        doc_html = tool.serialize()
+        # Generate a TOC for the document using the sections provided by
+        # SectionEditingLinks
+        if not show_raw:
+            toc_html = wiki.content.parse(doc_html).filter(
+                wiki.content.SectionTOCFilter).serialize()
 
         # If a section ID is specified, extract that section.
         if section_id:
             tool.extractSection(section_id)
 
-        # If this user can edit the document, inject some section editing links.
+        # If this user can edit the document, inject some section editing
+        # links.
         if ((need_edit_links or not show_raw) and
                 doc.allows_editing_by(request.user)):
             tool.injectSectionEditingLinks(doc.full_path, doc.locale)
@@ -275,7 +279,7 @@ def document(request, document_slug, document_locale):
             response['Content-Type'] = 'text/plain; charset=utf-8'
         return set_common_headers(response)
 
-    data = {'document': doc, 'document_html': doc_html,
+    data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
@@ -315,7 +319,7 @@ def _perform_kumascript_request(request, response_headers, document_locale,
     method simpler and to make it easy to mock out in testing.
     """
     resp_body, resp_errors = None, None
-    
+
     try:
         url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
         url = url_tmpl.format(path='%s/%s' %
@@ -335,9 +339,10 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             ua_cc = request.META.get('HTTP_CACHE_CONTROL')
 
             if ua_cc == 'no-cache':
-                # Firefox issues no-cache on shift-reload, so this lets end-users
-                # trigger cache invalidation. kumascript will react to no-cache
-                # by reloading both document and template sources from Kuma.
+                # Firefox issues no-cache on shift-reload, so this lets
+                # end-users trigger cache invalidation. kumascript will react
+                # to no-cache by reloading both document and template sources
+                # from Kuma.
                 cache_control = 'no-cache'
 
             elif ua_cc == 'max-age=0':
@@ -350,7 +355,7 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             'X-FireLogger': '1.2',
             'Cache-Control': cache_control
         }
-        
+
         # Set up for conditional GET, if we have the details cached.
         c_meta = cache.get_many([ck_etag, ck_modified])
         if ck_etag in c_meta:
@@ -395,9 +400,9 @@ def _perform_kumascript_request(request, response_headers, document_locale,
 
             except Exception, e:
                 resp_errors = [
-                    { "level": "error",
+                    {"level": "error",
                       "message": "Problem parsing errors: %s" % e,
-                      "args": [ "ParsingError" ] }
+                      "args": ["ParsingError"]}
                 ]
 
             # Set a header so we can see what happened in caching.
@@ -433,18 +438,18 @@ def _perform_kumascript_request(request, response_headers, document_locale,
 
         elif resp.status_code == None:
             resp_errors = [
-                { "level": "error",
+                {"level": "error",
                   "message": "Request to Kumascript service timed out",
-                  "args": [ "TimeoutError" ] }
+                  "args": ["TimeoutError"]}
             ]
 
         else:
             resp_errors = [
-                { "level": "error",
-                  "message": "Unexpected response from Kumascript service: %s" % resp.status_code,
-                  "args": [ "UnknownError" ] }
+                {"level": "error",
+                  "message": "Unexpected response from Kumascript service: %s"
+                                % resp.status_code,
+                  "args": ["UnknownError"]}
             ]
-
 
     except Exception, e:
         raise
@@ -680,7 +685,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         view = 'wiki.document_revisions'
 
                     # Construct the redirect URL, adding any needed parameters
-                    url = reverse(view, args=[doc.full_path], locale=doc.locale)
+                    url = reverse(view, args=[doc.full_path],
+                                  locale=doc.locale)
                     params = {}
                     if is_raw:
                         params['raw'] = 'true'
