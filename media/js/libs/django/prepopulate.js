@@ -37,13 +37,12 @@
                 // "$" is used for verb delimiter in URLs
                 s = s.replace(/\$/g, ''); 
                 // trim to first num_chars chars
-                s = s.substring(0, num_chars);
+                s = s.substring(0, maxLength);
 
                 field.val(s);
             };
 
-            //rlr: Changed behavior to only run populate on the change event
-            dependencies/*.keyup(populate)*/.change(populate)/*.focus(populate)*/;
+            dependencies.keyup(populate).change(populate).focus(populate);
         });
     };
 })(jQuery);

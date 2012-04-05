@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 from collections import defaultdict
 import base64
+import hashlib
 import logging
 from urllib import urlencode
 from string import ascii_letters
@@ -36,7 +37,7 @@ from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
-from wiki import DOCUMENTS_PER_PAGE
+from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
@@ -294,8 +295,8 @@ def document(request, document_slug, document_locale):
 
 def _build_kumascript_cache_keys(document_locale, document_slug):
     """Build the cache keys used for Kumascript"""
-    cache_key = ('kumascript:%s/%s:%s' %
-                 (document_locale, document_slug, '%s'))
+    path_hash = hashlib.md5('%s/%s' % (document_locale, document_slug))
+    cache_key = 'kumascript:%s:%s' % (path_hash.hexdigest(), '%s')
     ck_etag = cache_key % 'etag'
     ck_modified = cache_key % 'modified'
     ck_body = cache_key % 'body'
@@ -517,12 +518,34 @@ def list_documents_for_review(request, tag=None):
 @login_required
 def new_document(request):
     """Create a new wiki document."""
+    initial_slug = request.GET.get('slug', '')
+    if not Document.objects.allows_add_by(request.user, initial_slug):
+        # Try to head off disallowed Template:* creation, right off the bat
+        raise PermissionDenied
+
+    is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)
+
     if request.method == 'GET':
-        doc_form = DocumentForm()
-        rev_form = RevisionForm(
-                initial={'review_tags': REVIEW_FLAG_TAGS_DEFAULT})
+        
+        doc_form = DocumentForm(initial={
+            'slug': initial_slug,
+            'title': initial_slug
+        })
+        
+        if is_template:
+            review_tags = ('template',)
+        else:
+            review_tags = REVIEW_FLAG_TAGS_DEFAULT
+
+        rev_form = RevisionForm(initial={
+            'slug': initial_slug,
+            'title': initial_slug,
+            'review_tags': review_tags
+        })
+        
         return jingo.render(request, 'wiki/new_document.html',
-                            {'document_form': doc_form,
+                            {'is_template': is_template,
+                             'document_form': doc_form,
                              'revision_form': rev_form})
 
     post_data = request.POST.copy()
@@ -531,6 +554,9 @@ def new_document(request):
     rev_form = RevisionForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
+        slug = doc_form.cleaned_data['slug']
+        if not Document.objects.allows_add_by(request.user, slug):
+            raise PermissionDenied
         doc = doc_form.save(None)
         _save_rev_and_notify(rev_form, request.user, doc)
         if doc.current_revision.is_approved:
@@ -541,7 +567,8 @@ def new_document(request):
                                     args=[doc.full_path]))
 
     return jingo.render(request, 'wiki/new_document.html',
-                        {'document_form': doc_form,
+                        {'is_template': is_template,
+                         'document_form': doc_form,
                          'revision_form': rev_form})
 
 

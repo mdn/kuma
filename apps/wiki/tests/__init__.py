@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.models import User, Group, Permission
 from django.template.defaultfilters import slugify
 
 import html5lib
@@ -125,3 +126,41 @@ def normalize_html(input):
             .parse(unicode(input))
             .filter(WhitespaceRemovalFilter)
             .serialize())
+
+
+def create_template_test_users():
+    perms = dict(
+        (x, [Permission.objects.get(codename='%s_template_document' % x)])
+        for x in ('add', 'change',)
+    )
+    perms['all'] = perms['add'] + perms['change']
+
+    groups = {}
+    for x in ('add', 'change', 'all'):
+        group, created = Group.objects.get_or_create(
+                             name='templaters_%s' % x)
+        if created:
+            group.permissions = perms[x]
+            group.save()
+        groups[x] = [group]
+
+    users = {}
+    for x in  ('none', 'add', 'change', 'all'):
+        user, created = User.objects.get_or_create(username='user_%s' % x,
+            defaults=dict(email='user_%s@example.com',
+                          is_active=True, is_staff=False, is_superuser=False))
+        if created:
+            user.set_password('testpass')
+            user.groups = groups.get(x, [])
+            user.save()
+        users[x] = user
+
+    superuser, created = User.objects.get_or_create(
+        username='superuser_1', defaults=dict(
+            email='superuser_1@example.com',
+            is_active=True, is_staff=True, is_superuser=True))
+    if created:
+        superuser.set_password('testpass')
+        superuser.save()
+
+    return (perms, groups, users, superuser)

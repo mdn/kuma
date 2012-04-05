@@ -1,20 +1,23 @@
 from datetime import datetime, timedelta
 import time
+import logging
 
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User, Group, Permission
 
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
-                        MAJOR_SIGNIFICANCE, CATEGORIES,
+                         MAJOR_SIGNIFICANCE, CATEGORIES,
                          get_current_or_latest_revision,
                          TaggedDocument)
-from wiki.tests import document, revision, doc_rev, translated_revision
+from wiki.tests import (document, revision, doc_rev, translated_revision,
+                        create_template_test_users)
 
 
 def _objects_eq(manager, list_):
@@ -239,6 +242,56 @@ class DocumentTests(TestCase):
         d2._clean_category()
         d1prime = Document.objects.get(pk=d1.pk)
         eq_(10, d1prime.category)
+
+
+class PermissionTests(TestCase):
+
+    def setUp(self):
+        """Set up the permissions, groups, and users needed for the tests"""
+        super(PermissionTests, self).setUp()
+        (self.perms, self.groups, self.users, self.superuser) = (
+            create_template_test_users())
+
+    def test_template_permissions(self):
+        msg = ('should not', 'should')
+
+        for is_add in (True, False):
+
+            slug_trials = (
+                ('test_for_%s', (
+                    (True, self.superuser),
+                    (True, self.users['none']),
+                    (True, self.users['all']),
+                    (True, self.users['add']),
+                    (True, self.users['change']),
+                )),
+                ('Template:test_for_%s', (
+                    (True,       self.superuser),
+                    (False,      self.users['none']),
+                    (True,       self.users['all']),
+                    (is_add,     self.users['add']),
+                    (not is_add, self.users['change']),
+                ))
+            )
+
+            for slug_tmpl, trials in slug_trials:
+                for expected, user in trials:
+                    slug = slug_tmpl % user.username
+                    if is_add:
+                        eq_(expected,
+                            Document.objects.allows_add_by(user, slug),
+                            'User %s %s able to create %s' % (
+                                user, msg[expected], slug))
+                    else:
+                        doc = document(slug=slug, title=slug)
+                        eq_(expected,
+                            doc.allows_revision_by(user),
+                            'User %s %s able to revise %s' % (
+                                user, msg[expected], slug))
+                        eq_(expected,
+                            doc.allows_editing_by(user),
+                            'User %s %s able to edit %s' % (
+                                user, msg[expected], slug))
 
 
 class DocumentTestsWithFixture(TestCase):

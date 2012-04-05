@@ -172,6 +172,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .edited-section-ui-saving .btn-save, .edited-section-ui-saving .btn-cancel{ display: none; }
 
 .editing .metadata { float: left; width: 55%; display: none; }
+.new .editing .metadata { display: block; }
 .editing ul.metadata li { margin: 0pt; padding: 0pt; }
 .editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
@@ -257,7 +258,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; }
 
-#edit-document #ace_content { position: relative; width: 100%; height: 500px; }
+#content #ace_content { position: relative; width: 100%; height: 500px; }
 
 @media screen and (max-width: 890px) { 
   #page-buttons a, #page-buttons button { font-size: 14px; }
