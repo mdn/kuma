@@ -1,22 +1,34 @@
 # encoding: utf-8
 import datetime
 from south.db import db
-from south.v2 import SchemaMigration
+from south.v2 import DataMigration
 from django.db import models
 
-class Migration(SchemaMigration):
+class Migration(DataMigration):
+
+    # We could import this from the wiki model, but migrations need to live
+    # independently from models and their changes. So, this is necessary
+    # redundancy.
+    permissions = (
+        ("add_template_document", "Can add Template:* document"),
+        ("change_template_document", "Can change Template:* document"),
+    )
 
     def forwards(self, orm):
-        
-        # Removing unique constraint on 'Document', fields ['locale', 'title']
-        db.delete_unique('wiki_document', ['locale', 'title'])
-
+        "Write your forwards methods here."
+        ct = orm['contenttypes.ContentType'].objects.get(app_label='wiki',
+                                                         model='document')
+        for p in self.permissions:
+            perm, created = orm['auth.permission'].objects.get_or_create(
+                content_type=ct, codename=p[0], defaults=dict(name=p[1]))
 
     def backwards(self, orm):
-        
-        # Adding unique constraint on 'Document', fields ['locale', 'title']
-        db.create_unique('wiki_document', ['locale', 'title'])
-
+        "Write your backwards methods here."
+        ct = orm['contenttypes.ContentType'].objects.get(app_label='wiki',
+                                                         model='document')
+        for p in self.permissions:
+            orm['auth.permission'].objects.filter(content_type=ct,
+                                                  codename=p[0]).delete()
 
     models = {
         'auth.group': {
@@ -24,6 +36,12 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
+        },
+        'auth.message': {
+            'Meta': {'object_name': 'Message'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'message': ('django.db.models.fields.TextField', [], {}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'_message_set'", 'to': "orm['auth.User']"})
         },
         'auth.permission': {
             'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
@@ -66,19 +84,6 @@ class Migration(SchemaMigration):
             'secret': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         },
-        'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
-        },
-        'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
-        },
         'wiki.document': {
             'Meta': {'unique_together': "(('parent', 'locale'), ('slug', 'locale'))", 'object_name': 'Document'},
             'category': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
@@ -88,10 +93,18 @@ class Migration(SchemaMigration):
             'is_localizable': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
             'is_template': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'locale': ('sumo.models.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'db_index': 'True'}),
+            'mindtouch_page_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'translations'", 'null': 'True', 'to': "orm['wiki.Document']"}),
             'related_documents': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['wiki.Document']", 'through': "orm['wiki.RelatedDocument']", 'symmetrical': 'False'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
+        },
+        'wiki.documenttag': {
+            'Meta': {'object_name': 'DocumentTag'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
         },
         'wiki.editortoolbar': {
             'Meta': {'object_name': 'EditorToolbar'},
@@ -152,14 +165,23 @@ class Migration(SchemaMigration):
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Document']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_approved': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
+            'is_mindtouch_migration': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'keywords': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
+            'mindtouch_old_id': ('django.db.models.fields.IntegerField', [], {'unique': 'True', 'null': 'True', 'db_index': 'True'}),
             'reviewed': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
             'reviewer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'reviewed_revisions'", 'null': 'True', 'to': "orm['auth.User']"}),
             'significance': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'db_index': 'True'}),
             'summary': ('django.db.models.fields.TextField', [], {}),
+            'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'db_index': 'True'})
+        },
+        'wiki.taggeddocument': {
+            'Meta': {'object_name': 'TaggedDocument'},
+            'content_object': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Document']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.DocumentTag']"})
         }
     }
 
-    complete_apps = ['wiki']
+    complete_apps = ['auth', 'contenttypes', 'wiki']

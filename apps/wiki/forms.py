@@ -70,7 +70,7 @@ class DocumentForm(forms.ModelForm):
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=2, max_length=255,
                              required=False,
-                             widget=forms.HiddenInput(),
+                             widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
                              error_messages={'required': SLUG_REQUIRED,

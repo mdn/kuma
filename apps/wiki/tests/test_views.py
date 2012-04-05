@@ -24,7 +24,7 @@ from . import TestCaseBase
 import wiki.content
 from wiki.models import VersionMetadata, Document, Revision
 from wiki.tests import (doc_rev, document, new_document_data, revision,
-                        normalize_html)
+                        normalize_html, create_template_test_users)
 from wiki.views import _version_groups
 from wiki.forms import MIDAIR_COLLISION
 
@@ -134,6 +134,78 @@ class ViewTests(TestCaseBase):
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
+
+
+class PermissionTests(TestCaseBase):
+
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        """Set up the permissions, groups, and users needed for the tests"""
+        super(PermissionTests, self).setUp()
+        (self.perms, self.groups, self.users, self.superuser) = (
+            create_template_test_users())
+
+    def test_template_permissions(self):
+        msg = ('edit', 'create')
+
+        for is_add in (True, False):
+
+            slug_trials = (
+                ('test_for_%s', (
+                    (True, self.superuser),
+                    (True, self.users['none']),
+                    (True, self.users['all']),
+                    (True, self.users['add']),
+                    (True, self.users['change']),
+                )),
+                ('Template:test_for_%s', (
+                    (True,       self.superuser),
+                    (False,      self.users['none']),
+                    (True,       self.users['all']),
+                    (is_add,     self.users['add']),
+                    (not is_add, self.users['change']),
+                ))
+            )
+
+            for slug_tmpl, trials in slug_trials:
+                for expected, user in trials:
+
+                    username = user.username
+                    slug = slug_tmpl % username
+                    locale = settings.WIKI_DEFAULT_LANGUAGE
+
+                    Document.objects.all().filter(slug=slug).delete()
+                    if not is_add:
+                        doc = document(save=True, slug=slug, title=slug,
+                                       locale=locale)
+                        rev = revision(save=True, document=doc)
+
+                    self.client.login(username=username, password='testpass')
+                    
+                    data = new_document_data()
+                    slug = slug_tmpl % username
+                    data.update({ "title": slug, "slug": slug })
+
+                    if is_add:
+                        url = reverse('wiki.new_document', locale=locale)
+                        resp = self.client.post(url, data, follow=False)
+                    else:
+                        path = '%s/%s' % (locale, slug)
+                        data['form'] = 'rev'
+                        url = reverse('wiki.edit_document', args=(path,),
+                                      locale=locale)
+                        resp = self.client.post(url, data, follow=False)
+
+                    if expected:
+                        eq_(302, resp.status_code,
+                            "%s should be able to %s %s" %
+                            (user, msg[is_add], slug))
+                        Document.objects.filter(slug=slug).delete()
+                    else:
+                        eq_(403, resp.status_code,
+                            "%s should not be able to %s %s" %
+                            (user, msg[is_add], slug))
 
 
 class FakeResponse:

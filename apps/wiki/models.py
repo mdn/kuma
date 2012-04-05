@@ -198,6 +198,16 @@ def _inherited(parent_attr, direct_attr):
 class DocumentManager(ManagerBase):
     """Manager for Documents, assists for queries"""
 
+    def allows_add_by(self, user, slug):
+        """Determine whether the user can create a document with the given
+        slug. Mainly for enforcing Template: editing permissions"""
+        if (slug.startswith(TEMPLATE_TITLE_PREFIX) and
+                not user.has_perm('wiki.add_template_document')):
+            return False
+        # NOTE: We could enforce wiki.add_document here, but it's implicitly
+        # assumed everyone is allowed.
+        return True
+
     def filter_for_list(self, locale=None, category=None, tag=None,
                         tag_name=None):
         docs = self.order_by('title')
@@ -319,6 +329,10 @@ class Document(NotificationsMixin, ModelBase):
     # title and locale as well as a combined (title, locale) one.
     class Meta(object):
         unique_together = (('parent', 'locale'), ('slug', 'locale'))
+        permissions = (
+            ("add_template_document", "Can add Template:* document"),
+            ("change_template_document", "Can change Template:* document"),
+        )
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
@@ -629,9 +643,9 @@ class Document(NotificationsMixin, ModelBase):
         docs may have different permissions.
 
         """
-        # TODO: Add tests for templateness or whatever is required.
-        # Leaving this method signature untouched for now in case we do need
-        # to use it in the future. ~james
+        if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
+                not user.has_perm('wiki.change_template_document')):
+            return False
         return True
 
     def allows_editing_by(self, user):
@@ -642,6 +656,9 @@ class Document(NotificationsMixin, ModelBase):
         Revision, the Document fields can only be edited by privileged users.
 
         """
+        if (self.slug.startswith(TEMPLATE_TITLE_PREFIX) and
+                not user.has_perm('wiki.change_template_document')):
+            return False
         return (not self.current_revision or
                 user.has_perm('wiki.change_document'))
 
