@@ -19,12 +19,13 @@
     <form id="wiki-page-edit" class="editing" method="post" action="">
       <fieldset>
       <header id="article-head">
-        <div class="title">
-            {{ document_form.title|safe }}
-            {{ document_form.slug|safe }}
-            {{ document_form.category|safe }}
-            <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
-        </div>
+        {{ document_form.category|safe }}
+
+        <ul class="metadata">
+          <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
+          <li><label>{{_('Slug:')}}</label> {{ document_form.slug | safe }}</li>
+          <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
+        </ul>
 
         {% include 'wiki/includes/page_buttons.html' %}
 

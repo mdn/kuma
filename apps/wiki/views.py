@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 from collections import defaultdict
 import base64
+import hashlib
 import logging
 from urllib import urlencode
 from string import ascii_letters
@@ -294,8 +295,8 @@ def document(request, document_slug, document_locale):
 
 def _build_kumascript_cache_keys(document_locale, document_slug):
     """Build the cache keys used for Kumascript"""
-    cache_key = ('kumascript:%s/%s:%s' %
-                 (document_locale, document_slug, '%s'))
+    path_hash = hashlib.md5('%s/%s' % (document_locale, document_slug))
+    cache_key = 'kumascript:%s:%s' % (path_hash.hexdigest(), '%s')
     ck_etag = cache_key % 'etag'
     ck_modified = cache_key % 'modified'
     ck_body = cache_key % 'body'
@@ -525,15 +526,23 @@ def new_document(request):
     is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)
 
     if request.method == 'GET':
+        
         doc_form = DocumentForm(initial={
             'slug': initial_slug,
             'title': initial_slug
         })
+        
+        if is_template:
+            review_tags = ('template',)
+        else:
+            review_tags = REVIEW_FLAG_TAGS_DEFAULT
+
         rev_form = RevisionForm(initial={
             'slug': initial_slug,
             'title': initial_slug,
-            'review_tags': REVIEW_FLAG_TAGS_DEFAULT
+            'review_tags': review_tags
         })
+        
         return jingo.render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
                              'document_form': doc_form,

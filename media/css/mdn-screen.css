@@ -941,7 +941,7 @@ transition-property: bottom, opacity, visibility;
 .submission .fm-submit button { font-size: 1.575em; }
 
 .submission .error input { border-color: #900; }
-.errorlist { color: #900; margin: .25em 0; font-weight: bold; }
+.errorlist { color: #900; font-weight: bold; }
 .errorlist li { margin: 0 0 .25em; }
 
 /* @Profile *********/
