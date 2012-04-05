@@ -245,6 +245,7 @@ def document(request, document_slug, document_locale):
         if resp_errors:
             ks_errors = resp_errors
 
+    toc_html = None
     if not doc.is_template:
 
         # Start applying some filters to the document HTML
