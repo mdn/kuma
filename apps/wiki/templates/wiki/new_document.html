@@ -7,7 +7,7 @@
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(None, _('New Article'))] %}
 {% set classes = 'new' %}
-{% block bodyclass %}new{% endblock %}
+{% block bodyclass %}new{% if is_template %} is-template{% endif %}{% endblock %}
 
 {% block content %}
 <section id="content">
@@ -19,18 +19,22 @@
     <form id="wiki-page-edit" class="editing" method="post" action="">
       <fieldset>
       <header id="article-head">
-        <div class="title">
-            {{ document_form.title|safe }}
-            {{ document_form.slug|safe }}
-            {{ document_form.category|safe }}
-            <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
-        </div>
+        {{ document_form.category|safe }}
+
+        <ul class="metadata">
+          <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
+          <li><label>{{_('Slug:')}}</label> {{ document_form.slug | safe }}</li>
+          <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
+        </ul>
 
         {% include 'wiki/includes/page_buttons.html' %}
 
       </header>
 
       {{ revision_form.content|safe }}
+      {% if is_template %}
+        <div id="ace_content"></div>
+      {% endif %}
 
       <section>
         <h4>Review needed?</h4>
@@ -45,4 +49,18 @@
     </div>
    </div>
 </section>
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+
+    {% if is_template %}
+      <script src="{{ MEDIA_URL }}ace/ace.js" 
+        type="text/javascript" charset="utf-8"></script>
+      <script src="{{ MEDIA_URL }}ace/theme-dreamweaver.js"
+        type="text/javascript" charset="utf-8"></script>
+      <script src="{{ MEDIA_URL }}ace/mode-javascript.js"
+        type="text/javascript" charset="utf-8"></script>
+    {% endif %}
+
 {% endblock %}

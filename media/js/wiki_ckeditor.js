@@ -47,7 +47,7 @@
       var el = jQuery(this),
           doc_slug = $('#id_slug').val();
 
-      if (!$('body').is('.edit.is-template')) {
+      if (!$('body').is('.is-template')) {
           el.ckeditor(setup_ckeditor, {
               customConfig : '/docs/ckeditor_config.js'
           });

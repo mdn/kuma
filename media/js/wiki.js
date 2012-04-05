@@ -42,7 +42,8 @@
             initTitleAndSlugCheck();
             // initDrafting();
         }
-        if ($('body').is('.edit.is-template')) {
+        if ($('body').is('.edit.is-template') ||
+                $('body').is('.new.is-template')) {
             var textarea = $('textarea#id_content').hide();
             
             var editor = window.ace_editor = ace.edit("ace_content");
