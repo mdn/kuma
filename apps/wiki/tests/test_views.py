@@ -1230,3 +1230,67 @@ class SectionEditingResourceTests(TestCaseBase):
         resp = client.get(reverse('docs'))
         page = pq(resp.content)
         eq_(1, page.find('#kumawiki_preview').length)
+
+
+class MindTouchRedirectTests(TestCaseBase):
+    """
+    Test that we appropriately redirect old-style MindTouch URLs to
+    new-style kuma URLs.
+    
+    """
+    # A note on these tests: we could try to use assertRedirects on
+    # these, but for the most part we're just constructing a URL
+    # similar enough to the wiki app's own built-in redirects that
+    # it'll pick up the request and do what we want with it. But it
+    # may end up issuing its own redirects, which are tricky to sort
+    # out from the ones the legacy MindTouch handling will emit, so
+    # instead we just test that A) we did issue a redirect and B) the
+    # URL we constructed is enough for the document views to go on.
+    
+    fixtures = ['test_users.json']
+
+    namespace_urls = (
+        # One for each namespace.
+        {'mindtouch': '/Help:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help:Foo/'},
+        {'mindtouch': '/Help_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help_talk:Foo/'},
+        {'mindtouch': '/Project:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project:Foo/'},
+        {'mindtouch': '/Project_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project_talk:Foo/'},
+        {'mindtouch': '/Special:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Special:Foo/'},
+        {'mindtouch': '/Talk:en/Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Talk:Foo/'},
+        {'mindtouch': '/Template:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Template:Foo/'},
+        {'mindtouch': '/User:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/User:Foo/'},
+    )
+
+    documents = (
+        {'title': 'HTML', 'kuma_locale': 'zh-CN', 'mt_locale': 'cn'},
+        {'title': 'JavaScript', 'kuma_locale': 'zh-CN', 'mt_locale': 'zh_cn'},
+        {'title': 'XHTML6', 'kuma_locale': 'zh-TW', 'mt_locale': 'zh_tw'},
+    )
+
+    def test_namespace_urls(self):
+        raise SkipTest()
+        new_doc = document()
+        new_doc.title = 'User:Foo'
+        new_doc.slug = 'User:Foo'
+        new_doc.save()
+        for namespace_test in self.namespace_urls:
+            resp = self.client.get(namespace_test['mindtouch'], follow=False)
+            eq_(301, resp.status_code)
+            eq_(namespace_test['kuma'], resp['Location'])
+
+    def test_document_urls(self):
+        raise SkipTest()
+        resp = self.client.get('/zh-CN/docs/HTML/')
+        for doc in self.documents:
+            d = document()
+            d.title = doc['title']
+            d.slug = doc['title']
+            d.locale = doc['kuma_locale']
+            d.save()
+            mt_url = '/%s' % '/'.join([doc['mt_locale'], doc['title']])
+            kuma_url = reverse('wiki.document', locale='en-US',
+                               args=['%s/%s' % (d.locale, d.slug)])
+            kuma_url = "http://testserver%s/" % kuma_url
+            resp = self.client.get(mt_url)
+            eq_(301, resp.status_code)
+            eq_(kuma_url, resp['Location'])

@@ -1242,3 +1242,104 @@ def _maybe_schedule_rebuild(form):
     """Try to schedule a KB rebuild if a title or slug has changed."""
     if 'title' in form.changed_data or 'slug' in form.changed_data:
         schedule_rebuild_kb()
+
+
+# Legacy MindTouch redirects.
+
+MINDTOUCH_NAMESPACES = (
+    'Help',
+    'Help_talk',
+    'Project',
+    'Project_talk',
+    'Special',
+    'Talk',
+    'Template',
+    'Template_talk',
+    'User',
+)
+
+MINDTOUCH_PROBLEM_LOCALES = {
+    'cn': 'zh-CN',
+    'en': 'en-US',
+    'zh_cn': 'zh-CN',
+    'zh_tw': 'zh-TW',
+}
+
+def mindtouch_namespace_redirect(request, namespace, slug):
+    """
+    For URLs in special namespaces (like Talk:, User:, etc.), redirect
+    if possible to the appropriate new URL in the appropriate
+    locale. If the locale cannot be correctly determined, fall back to
+    en-US.
+    
+    """
+    new_locale = new_slug = None
+    if namespace == 'Talk':
+        # Talk pages carry the old locale in their URL, which
+        # simplifies figuring out where to send them.
+        locale, _, doc_slug = slug.partition('/')
+        new_locale = settings.MT_TO_KUMA_LOCALE_MAP.get(locale, 'en-US')
+        new_slug = '%s:%s' % (namespace, doc_slug)
+    elif namespace == 'User':
+        # For users, we look up the latest revision and get the locale
+        # from there.
+        new_slug = '%s:%s' % (namespace, slug)
+        try:
+            rev = Revision.objects.filter(document__slug=new_slug).latest('created')
+            new_locale = rev.document.locale
+        except Revision.DoesNotExist:
+            # If that doesn't work, bail out to en-US.
+            new_locale = 'en-US'
+    else:
+        # Templates, etc. don't actually have a locale, so we give
+        # them the default.
+        new_locale = 'en-US'
+        new_slug = '%s:%s' % (namespace, slug)
+    if new_locale:
+        new_url = '/%s/docs/%s/%s/' % (request.locale, new_locale, new_slug)
+    return HttpResponsePermanentRedirect(new_url)
+
+
+def mindtouch_to_kuma_redirect(request, path):
+    """
+    Given a request to a Mindtouch-generated URL, generate a redirect
+    to the correct corresponding kuma URL.
+    
+    """
+    new_locale = new_slug = None
+    if path.startswith('Template:MindTouch'):
+        # MindTouch's default templates. There shouldn't be links to
+        # them anywhere in the wild, but just in case we 404 them.
+        raise Http404
+    if ':' in path:
+        namespace, _, slug = path.partition(':')
+        # The namespaces (Talk:, User:, etc.) get their own
+        # special-case handling.
+        if namespace in MINDTOUCH_NAMESPACES:
+            return mindtouch_namespace_redirect(request, namespace, slug)
+    if '/' in path:
+        maybe_locale, _, slug = path.partition('/')
+        # There are three problematic locales that MindTouch had which
+        # can still be in the path we see after the locale
+        # middleware's done its bit. Since those are easy, we check
+        # them first.
+        if maybe_locale in MINDTOUCH_PROBLEM_LOCALES:
+            new_url = '/%s/docs/%s/%s/' % (request.locale,
+                                           MINDTOUCH_PROBLEM_LOCALES[maybe_locale],
+                                           slug)
+            return HttpResponsePermanentRedirect(new_url)
+        # Next we try looking up a Document with the possible locale
+        # we've pulled out.
+        try:
+            doc = Document.objects.get(slug=slug, locale=maybe_locale)
+            return HttpResponsePermanentRedirect(doc.get_absolute_url())
+        except Document.DoesNotExist:
+            pass
+    # Last attempt: we ask the Document model if it can figure
+    # something out from the path we've been given. If so, we'll
+    # redirect to that. If not, we'll just give up and 404.
+    locale, slug, _ = Document.locale_and_slug_from_path(path)
+    if locale and slug:
+        url = '/%s/docs/%s/%s/' % (request.locale, locale, slug)
+        return HttpResponsePermanentRedirect(url)
+    raise Http404
