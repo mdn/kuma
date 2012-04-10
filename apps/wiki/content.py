@@ -1,5 +1,8 @@
+import logging
 import re
 from urllib import urlencode
+
+from xml.sax.saxutils import quoteattr
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -385,10 +388,24 @@ class DekiscriptMacroFilter(html5lib_Filter):
                 continue
 
             ds_call = []
-            while len(buffer) and 'EndTag' != token['type']:
+            while len(buffer):
                 token = buffer.pop(0)
-                if 'Characters' == token['type']:
+                if token['type'] in ('Characters', 'SpaceCharacters'):
                     ds_call.append(token['data'])
+                elif 'StartTag' == token['type']:
+                    attrs = token['data']
+                    if attrs:
+                        a_out = (u' %s' % u' '.join(
+                            (u'%s=%s' % 
+                             (name, quoteattr(val))
+                             for name, val in attrs)))
+                    else:
+                        a_out = u''
+                    ds_call.append(u'<%s%s>' % (token['name'], a_out))
+                elif 'EndTag' == token['type']:
+                    if 'span' == token['name']:
+                        break
+                    ds_call.append('</%s>' % token['name'])
 
             ds_call = ''.join(ds_call).strip()
 
@@ -417,7 +434,11 @@ class DekiscriptMacroFilter(html5lib_Filter):
             if m:
                 ds_call = '%s()' % (m.group(1))
 
-            yield dict(
-                type="Characters",
-                data='{{ %s }}' % ds_call
-            )
+            # HACK: This is dirty, but seems like the easiest way to
+            # reconstitute the token stream, including what gets parsed as
+            # markup in the middle of macro parameters.
+            #
+            # eg. {{ Note("This is <strong>strongly</strong> discouraged") }}
+            parsed = parse('{{ %s }}' % ds_call)
+            for token in parsed.stream:
+                yield token
