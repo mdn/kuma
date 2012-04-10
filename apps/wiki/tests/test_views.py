@@ -926,28 +926,28 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -962,26 +962,26 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>s1</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>s2</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>s3</h1>
             <p>test</p>
             <p>test</p>
         """ % {'full_path': d.full_path}
@@ -995,20 +995,20 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -1023,24 +1023,24 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         replace = """
-            <h1 id="s2">Replace</h1>
+            <h1 id="s2">s2</h1>
             <p>replace</p>
         """
         expected = """
-            <h1 id="s2">Replace</h1>
+            <h1 id="s2">s2</h1>
             <p>replace</p>
         """
         response = client.post('%s?section=s2&raw=true' %
@@ -1052,14 +1052,14 @@ class SectionEditingResourceTests(TestCaseBase):
             normalize_html(response.content))
 
         expected = """
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Replace</h1>
+            <h1 id="s2">s2</h1>
             <p>replace</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -1077,34 +1077,34 @@ class SectionEditingResourceTests(TestCaseBase):
         client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         replace_1 = """
-            <h1 id="s1">replace</h1>
+            <h1 id="s1">replace1</h1>
             <p>replace</p>
         """
         replace_2 = """
-            <h1 id="s2">replace</h1>
+            <h1 id="s2">replace2</h1>
             <p>replace</p>
         """
         expected = """
-            <h1 id="s1">replace</h1>
+            <h1 id="replace1">replace1</h1>
             <p>replace</p>
 
-            <h1 id="s2">replace</h1>
+            <h1 id="replace2">replace2</h1>
             <p>replace</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -1169,15 +1169,15 @@ class SectionEditingResourceTests(TestCaseBase):
         client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)

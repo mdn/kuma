@@ -105,6 +105,10 @@ class SectionIDFilter(html5lib_Filter):
                 self.known_ids.add(id)
                 return id
 
+    def slugify(self, text):
+        """Turn the text content of a header into a slug for use in an ID"""
+        return (text.replace(' ', '_'))
+
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
 
@@ -116,17 +120,63 @@ class SectionIDFilter(html5lib_Filter):
                 attrs = dict(token['data'])
                 if 'id' in attrs:
                     self.known_ids.add(attrs['id'])
+                if 'name' in attrs:
+                    self.known_ids.add(attrs['name'])
 
-        # Pass 2: Sprinkle in IDs where they're missing
-        for token in buffer:
-            if ('StartTag' == token['type'] and
+        # Pass 2: Sprinkle in IDs where they're needed
+        while len(buffer):
+            token = buffer.pop(0)
+            
+            if not ('StartTag' == token['type'] and
                     token['name'] in SECTION_TAGS):
+                yield token
+            else:
                 attrs = dict(token['data'])
-                id = attrs.get('id', None)
-                if not id:
+                
+                # Treat a name attribute as a human-specified ID override
+                name = attrs.get('name', None)
+                if name:
+                    attrs['id'] = name
+                    token['data'] = attrs.items()
+                    yield token
+                    continue
+
+                # If this is not a header, then generate a section ID.
+                if token['name'] not in HEAD_TAGS:
                     attrs['id'] = self.gen_id()
                     token['data'] = attrs.items()
-            yield token
+                    yield token
+                    continue
+                
+                # If this is a header, then scoop up the rest of the header and
+                # gather the text it contains.
+                start, text, tmp = token, [], []
+                while len(buffer):
+                    token = buffer.pop(0)
+                    tmp.append(token)
+                    if token['type'] in ('Characters', 'SpaceCharacters'):
+                        text.append(token['data'])
+                    elif ('EndTag' == token['type'] and
+                          start['name'] == token['name']):
+                        # Note: This is naive, and doesn't track other
+                        # start/end tags nested in the header. Odd things might
+                        # happen in a case like <h1><h1></h1></h1>. But, that's
+                        # invalid markup and the worst case should be a
+                        # truncated ID because all the text wasn't accumulated.
+                        break
+
+                # Slugify the text we found inside the header, generate an ID
+                # as a last resort.
+                slug = self.slugify(''.join(text))
+                if not slug:
+                    slug = self.gen_id()
+                attrs['id'] = slug
+                start['data'] = attrs.items()
+                
+                # Finally, emit the tokens we scooped up for the header.
+                yield start
+                for t in tmp:
+                    yield t
 
 
 class SectionEditLinkFilter(html5lib_Filter):
