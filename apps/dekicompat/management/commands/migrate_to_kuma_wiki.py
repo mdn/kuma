@@ -807,18 +807,19 @@ class Command(BaseCommand):
 
         # Come up with a complete slug, along with MT namespace mapped to name.
         ns_name = MT_NS_ID_TO_NAME.get(r['page_namespace'], '')
-        slug = '%s%s' % (ns_name, r['page_title'] or r['page_display_name'])
+        title = r['page_title'] or r['page_display_name']
+        slug = '%s%s' % (ns_name, title)
 
         # Start from the default language
         mt_language = ''
 
-        # If the page is not in a namespace, and it has paths in the slug...
-        if ns_name == '' and '/' in slug:
+        # If the page has path segments in its title...
+        if '/' in title:
             # Treat the first part of the slug path as locale and snip it off.
-            mt_language, new_slug = slug.split('/', 1)
+            mt_language, new_title = title.split('/', 1)
             if mt_language in MT_TO_KUMA_LOCALE_MAP:
-                # If it's a known language, then use the new slug
-                slug = new_slug
+                # If it's a known language, then rebuild the slug
+                slug = '%s%s' % (ns_name, new_title)
             else:
                 # Otherwise, we'll preserve the slug and tack the default
                 # locale onto it. (eg. ServerJS/FAQ, CommonJS/FAQ)
