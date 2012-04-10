@@ -53,6 +53,9 @@ urlpatterns = patterns('',
     #(r'', include('sumo.urls')),
     (r'^humans.txt$', 'django.views.static.serve',
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
+
+    # Legacy MindTouch redirects.
+    #(r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
 )
 
 # Handle 404 and 500 errors
