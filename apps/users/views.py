@@ -610,8 +610,10 @@ def _clean_next_url(request):
         url = request.POST.get('next')
     elif 'next' in request.GET:
         url = request.GET.get('next')
+    elif 'HTTP_REFERER' in request.META:
+        url = request.META.get('HTTP_REFERER').decode('latin1', 'ignore')
     else:
-        url = request.META.get('HTTP_REFERER')
+        url = None
 
     if url:
         parsed_url = urlparse.urlparse(url)
