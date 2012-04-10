@@ -183,7 +183,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .aside { width: 235px; float: right; }
 
 /* @Header *********/
-#masthead { background: #000 url("../img/bg-pinstripe.png") center top repeat-x; border-top: 2px solid #707070; border-bottom: 4px solid #f8d575; color: #ccc; min-height: 70px; -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+#masthead { background: #000 url("../img/bg-pinstripe.png") center top repeat-x; border-top: 2px solid #fff; border-bottom: 4px solid #f8d575; color: #ccc; min-height: 70px; -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
 #masthead .wrap { padding-top: 55px; background: #000 url("../img/bg-pinstripe.png") center top repeat-x; }
 
 .section-docs #masthead { border-bottom-color: #fb9500; }
@@ -202,8 +202,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #logo a { color: #fff; text-decoration: none; }
 #logo img { position: absolute; left: -3px; top: -4px; }
 
-#moz-tab { position: absolute; right: 10px; top: 0; display: block; width: 118px; height: 49px; text-indent: -999em; overflow: hidden; background: transparent url("../img/moz-tab.png") 0 0 no-repeat; }
-
 .global-notice { position: relative; border: solid #3c0000; border-width: 3px 0; color: #fff; background: #450000; padding: 15px 20px 0; margin: 0 0 -1px; font-size: .857em; }
 
 .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; box-shadow: 1px 1px 0 rgba(0,0,0,.1); }
@@ -212,7 +210,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .notice.error { border-color: #e1a696; }
 
 /*** @Accessbility @Navigation *********/
-#nav-access { position: absolute; top: -10em; width: 100%; z-index: 999; }
+#nav-access { position: absolute; top: -20em; width: 100%; z-index: 999; }
 #nav-access a:focus, #nav-access a:active { outline: 0; display: inline-block; padding: 4px 10px; background: #fff; position: absolute; top: 17em; text-decoration: none; box-shadow: 2px 2px 3px rgba(0,0,0,.5); }
 
 /*** @Main @Nav *********/
@@ -287,7 +285,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main #nav-sub-docs a:hover, #nav-sub-docs a:focus, #nav-sub-docs a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
 
 /*** @Search *********/
-#site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 135px 0 0; position: relative; }
+#site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 0 0; position: relative; }
 #site-search p { margin: 0; }
 #site-search #q { width: 160px; padding: 3px 4px 3px 28px; margin: 0 0 0 4px; float: right; background: #555; background: rgba(80,80,80,.9) url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #aaa; font-size: .857em; -webkit-appearance: textfield; appearance: textfield; }
 #site-search #q:hover, #site-search #q:focus { border-color: #9c0d10; background-color: #fff; color: #333; }
@@ -298,22 +296,22 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #site-search-gg .gsc-branding-text { width: 60px; display: block; color: #666; position: absolute; top: 0; }
 
 /*** @User status *********/
-.user-state { width: 235px; float: right; text-align: right; color: #666; margin: 0; }
+.user-state { width: 235px; float: right; text-align: right; color: #666; margin: 0; z-index: 1000; }
 .user-state li { display: inline; }
 .user-state li + li { padding-left: 10px; margin-left: 8px; border-left: 1px solid #666; }
 .user-state a { color: #ccc; }
 .user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
 .user-state form { display: inline; }
-#masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 145px; top: 12px; }
+#masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 10px; top: 12px; }
 #site-info .user-state { margin-bottom: .5em; }
 
 /*** @BrowserID *********/
 a.browserid-signin:link, a.browserid-signin:visited { padding: 1px 10px 1px 28px; color: #fff !important; background: #555 url("../img/btn-browserid.png") -1px 50% no-repeat; border-radius: 3px; border: 1px outset rgba(50,50,50,.5); }
 a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { background-color: #666; }
 
-.user-signin a.browserid-signin { position: relative; z-index: 100; }
+.user-signin a.browserid-signin { position: relative; z-index: 1001; }
 
-.user-state .browserid-info { position: absolute; z-index: 99; left: -999em; top: 0; margin-top: 25px; 
+.user-state .browserid-info { position: absolute; z-index: 1000; left: -999em; top: 0; margin-top: 25px; 
   width: 300px; 
   color: #ccc; 
   border: 4px solid #333; 
@@ -345,6 +343,14 @@ a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { ba
 
 .footer .user-state .browserid-info { top: auto; bottom: 30px; margin: 0 0 25px; }
 .footer .browserid-info h3:after { top: auto; bottom: -25px; background: transparent none; }
+
+/*** @Tabzilla *********/
+/* Hide Tabzilla on screens < 1250px wide so that it does not interfere with login / logout links. This is a temporary workaround for Tabzilla's fixedness issue. */
+@media screen and (max-width: 1250px) {
+  #developer-mozilla-org #tabzilla {
+    display: none;
+  }
+}
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
