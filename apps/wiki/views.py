@@ -1296,7 +1296,7 @@ def mindtouch_namespace_redirect(request, namespace, slug):
         new_locale = 'en-US'
         new_slug = '%s:%s' % (namespace, slug)
     if new_locale:
-        new_url = '/%s/docs/%s/%s/' % (request.locale, new_locale, new_slug)
+        new_url = '/%s/docs/%s/%s' % (request.locale, new_locale, new_slug)
     return HttpResponsePermanentRedirect(new_url)
 
 
@@ -1324,9 +1324,13 @@ def mindtouch_to_kuma_redirect(request, path):
         # middleware's done its bit. Since those are easy, we check
         # them first.
         if maybe_locale in MINDTOUCH_PROBLEM_LOCALES:
-            new_url = '/%s/docs/%s/%s/' % (request.locale,
-                                           MINDTOUCH_PROBLEM_LOCALES[maybe_locale],
-                                           slug)
+            new_locale = MINDTOUCH_PROBLEM_LOCALES[maybe_locale]
+            # We do not preserve UI locale here -- these locales won't
+            # be picked up correctly by the locale middleware, and
+            # anyone trying to view the document in its locale with
+            # their own UI locale will have the correct starting URL
+            # anyway.
+            new_url = '/%s/docs/%s/%s' % (new_locale, new_locale, slug)
             return HttpResponsePermanentRedirect(new_url)
         # Next we try looking up a Document with the possible locale
         # we've pulled out.
@@ -1335,11 +1339,10 @@ def mindtouch_to_kuma_redirect(request, path):
             return HttpResponsePermanentRedirect(doc.get_absolute_url())
         except Document.DoesNotExist:
             pass
-    # Last attempt: we ask the Document model if it can figure
-    # something out from the path we've been given. If so, we'll
-    # redirect to that. If not, we'll just give up and 404.
-    locale, slug, _ = Document.locale_and_slug_from_path(path)
-    if locale and slug:
-        url = '/%s/docs/%s/%s/' % (request.locale, locale, slug)
-        return HttpResponsePermanentRedirect(url)
-    raise Http404
+    # Last attempt: we try the request locale as the document locale,
+    # and see if that matches something.
+    try:
+        doc = Document.objects.get(slug=path, locale=request.locale)
+        return HttpResponsePermanentRedirect(doc.get_absolute_url())
+    except Document.DoesNotExist:
+        raise Http404

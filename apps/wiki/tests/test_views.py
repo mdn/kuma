@@ -1251,20 +1251,21 @@ class MindTouchRedirectTests(TestCaseBase):
 
     namespace_urls = (
         # One for each namespace.
-        {'mindtouch': '/Help:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help:Foo/'},
-        {'mindtouch': '/Help_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help_talk:Foo/'},
-        {'mindtouch': '/Project:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project:Foo/'},
-        {'mindtouch': '/Project_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project_talk:Foo/'},
-        {'mindtouch': '/Special:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Special:Foo/'},
-        {'mindtouch': '/Talk:en/Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Talk:Foo/'},
-        {'mindtouch': '/Template:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Template:Foo/'},
-        {'mindtouch': '/User:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/User:Foo/'},
+        {'mindtouch': '/Help:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help:Foo'},
+        {'mindtouch': '/Help_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help_talk:Foo'},
+        {'mindtouch': '/Project:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project:Foo'},
+        {'mindtouch': '/Project_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project_talk:Foo'},
+        {'mindtouch': '/Special:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Special:Foo'},
+        {'mindtouch': '/Talk:en/Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Talk:Foo'},
+        {'mindtouch': '/Template:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Template:Foo'},
+        {'mindtouch': '/User:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/User:Foo'},
     )
 
     documents = (
-        {'title': 'HTML', 'kuma_locale': 'zh-CN', 'mt_locale': 'cn'},
-        {'title': 'JavaScript', 'kuma_locale': 'zh-CN', 'mt_locale': 'zh_cn'},
-        {'title': 'XHTML6', 'kuma_locale': 'zh-TW', 'mt_locale': 'zh_tw'},
+        {'title': 'XHTML', 'mt_locale': 'cn', 'kuma_locale': 'zh-CN', 'expected': '/en-US/docs/zh-CN/XHTML'},
+        {'title': 'JavaScript', 'mt_locale': 'zh_cn', 'kuma_locale': 'zh-CN', 'expected': '/en-US/docs/zh-CN/JavaScript'},
+        {'title': 'XHTML6', 'mt_locale': 'zh_tw', 'kuma_locale': 'zh-CN', 'expected': '/en-US/docs/zh-TW/XHTML6'},
+        {'title': 'HTML7', 'mt_locale': 'fr', 'kuma_locale': 'fr', 'expected': '/fr/docs/fr/HTML7'},
     )
 
     def test_namespace_urls(self):
@@ -1280,7 +1281,6 @@ class MindTouchRedirectTests(TestCaseBase):
 
     def test_document_urls(self):
         raise SkipTest()
-        resp = self.client.get('/zh-CN/docs/HTML/')
         for doc in self.documents:
             d = document()
             d.title = doc['title']
@@ -1288,9 +1288,6 @@ class MindTouchRedirectTests(TestCaseBase):
             d.locale = doc['kuma_locale']
             d.save()
             mt_url = '/%s' % '/'.join([doc['mt_locale'], doc['title']])
-            kuma_url = reverse('wiki.document', locale='en-US',
-                               args=['%s/%s' % (d.locale, d.slug)])
-            kuma_url = "http://testserver%s/" % kuma_url
             resp = self.client.get(mt_url)
             eq_(301, resp.status_code)
-            eq_(kuma_url, resp['Location'])
+            eq_('http://testserver%s' % doc['expected'], resp['Location'])
