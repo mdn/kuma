@@ -11,9 +11,11 @@ from django.utils.http import int_to_base36
 
 import mock
 from nose.tools import eq_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
+import constance.config
 from dekicompat.tests import (SINGLE_ACCOUNT_FIXTURE_XML,
                               mock_post_mindtouch_user,
                               mock_put_mindtouch_user,
@@ -113,6 +115,22 @@ class LoginTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(next, doc('input[name="next"]')[0].attrib['value'])
+
+    @attr('latin1char_next')
+    def test_latin1_characters_in_next_parameter(self):
+        '''Some pages have bad chars in the url, which can kill clean_next_url.
+        Test with a bad character in HTTP_REFERER.'''
+        constance.config.BROWSERID_LOCALES = 'en-us, fr'
+        next = '/fr/Firefox_pour_les_d\xc3\xa9veloppeurs'
+        response = self.client.get(urlparams(
+            reverse('users.browserid_header_signin_html', locale='fr')),
+            **{'HTTP_REFERER': next,
+               'ACCEPT_LANGUAGE': 'fr',
+              })
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(unicode(next.decode('latin1', 'ignore')),
+            doc('input[name="next"]')[0].attrib['value'])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_clean_url(self, get_current):
