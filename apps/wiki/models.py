@@ -502,6 +502,10 @@ class Document(NotificationsMixin, ModelBase):
         return self.current_revision.content_parsed
 
     @property
+    def show_toc(self):
+        return self.current_revision and self.current_revision.show_toc
+
+    @property
     def language(self):
         return settings.LANGUAGES[self.locale.lower()]
 
@@ -800,6 +804,8 @@ class Revision(ModelBase):
     # Tags are (ab)used as status flags and for searches, but the through model
     # should constrain things from getting expensive.
     review_tags = TaggableManager(through=ReviewTaggedRevision)
+
+    show_toc = models.BooleanField(default=True)
 
     created = models.DateTimeField(default=datetime.now)
     reviewed = models.DateTimeField(null=True)

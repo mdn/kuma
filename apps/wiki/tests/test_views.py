@@ -889,6 +889,32 @@ class DocumentEditingTests(TestCaseBase):
         ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
             "Midair collision message should appear")
 
+    @attr('toc')
+    def test_toc_toggle_off(self):
+        """Toggling of table of contents in revisions"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, _ = doc_rev()
+        data = new_document_data()
+        data['form'] = 'rev'
+        del data['show_toc']
+        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
+        ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+
+    @attr('toc')
+    def test_toc_toggle_on(self):
+        """Toggling of table of contents in revisions"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev()
+        new_r = revision(document=d, content=r.content, show_toc=False,
+                         is_approved=True)
+        new_r.save()
+        data = new_document_data()
+        data['form'] = 'rev'
+        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
+        ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+
 
 class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']
