@@ -559,10 +559,10 @@ class Document(NotificationsMixin, ModelBase):
         if '/' in path:
             locale, slug = path.split('/', 1)
 
-            if locale in settings.MT_TO_KUMA_LOCALE_MAP:
+            if locale.lower() in settings.MT_TO_KUMA_LOCALE_MAP:
                 # If this looks like a MindTouch locale, remap it.
                 old_locale = locale
-                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale]
+                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale.lower()]
                 # But, we only need a redirect if the locale actually changed.
                 needs_redirect = (locale != old_locale)
 
