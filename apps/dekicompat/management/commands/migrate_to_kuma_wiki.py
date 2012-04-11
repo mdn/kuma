@@ -817,7 +817,7 @@ class Command(BaseCommand):
         if '/' in title:
             # Treat the first part of the slug path as locale and snip it off.
             mt_language, new_title = title.split('/', 1)
-            if mt_language in MT_TO_KUMA_LOCALE_MAP:
+            if mt_language.lower() in MT_TO_KUMA_LOCALE_MAP:
                 # If it's a known language, then rebuild the slug
                 slug = '%s%s' % (ns_name, new_title)
             else:
