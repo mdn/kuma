@@ -12,7 +12,7 @@
 
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
-  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico">
 
   {% block site_css %}
   <!--[if !IE 6]><!-->
@@ -25,7 +25,7 @@
   <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie7.css"><![endif]-->
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie6.css"><![endif]-->
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/mdn-print.css">
-  <link rel="stylesheet" href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" />
+  <link rel="stylesheet" href="//www.mozilla.org/tabzilla/media/css/tabzilla.css">
   {% endblock %}
 
   <!--[if IE]>
@@ -43,7 +43,6 @@
 <p><strong>Warning:</strong> The Mozilla Developer Network website employs emerging web standards that may not be fully supported in some versions of MicroSoft Internet Explorer. You can improve your experience of this website by enabling JavaScript.</p>
 </div></noscript>
 <![endif]-->
-  <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
   <header id="masthead" class="{% block headerclass %}minor{% endblock %}">
     <div class="wrap">
       <ul id="nav-access">
@@ -145,6 +144,7 @@
         <div id="site-search-gg"></div>
       </form>
 
+      <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
     </div>
   </header>
 {# end head #}
