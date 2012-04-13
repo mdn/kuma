@@ -896,10 +896,11 @@ class DocumentEditingTests(TestCaseBase):
         client.login(username='admin', password='testpass')
         d, _ = doc_rev()
         data = new_document_data()
+        ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
         data['form'] = 'rev'
         del data['show_toc']
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
-        ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+        ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).current_revision.show_toc)
 
     @attr('toc')
     def test_toc_toggle_on(self):
@@ -910,6 +911,7 @@ class DocumentEditingTests(TestCaseBase):
         new_r = revision(document=d, content=r.content, show_toc=False,
                          is_approved=True)
         new_r.save()
+        ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
         data = new_document_data()
         data['form'] = 'rev'
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)

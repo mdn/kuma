@@ -468,6 +468,7 @@ class Document(NotificationsMixin, ModelBase):
                                         href=self.get_absolute_url(),
                                         title=self.title),
                                     is_approved=True,
+                                    show_toc=self.current_revision.show_toc,
                                     reviewer=self.current_revision.creator,
                                     creator=self.current_revision.creator)
 
