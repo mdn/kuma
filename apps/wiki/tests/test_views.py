@@ -484,50 +484,48 @@ class DocumentEditingTests(TestCaseBase):
                                              locale=d.locale).title)
         assert "REDIRECT" in Document.uncached.get(title=old_title).html
 
-    def test_retitling_ignored_for_iframe(self):
+    def test_slug_change_ignored_for_iframe(self):
         """When the title of an article is edited in an iframe, the change is
         ignored."""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
-        new_title = 'Some New Title'
+        new_slug = 'some_new_slug'
         d, r = doc_rev()
-        old_title = d.title
+        old_slug = d.slug
         data = new_document_data()
-        data.update({'title': new_title,
-                     'slug': d.slug,
+        data.update({'title': d.title,
+                     'slug': new_slug,
                      'form': 'rev'})
         client.post('%s?iframe=1' % reverse('wiki.edit_document',
                                             args=[d.full_path]), data)
-        eq_(old_title, Document.uncached.get(slug=d.slug,
-                                             locale=d.locale).title)
-        assert "REDIRECT" not in Document.uncached.get(title=old_title).html
+        eq_(old_slug, Document.uncached.get(slug=d.slug,
+                                             locale=d.locale).slug)
+        assert "REDIRECT" not in Document.uncached.get(slug=old_slug).html
 
     @attr('clobber')
-    def test_title_slug_collision_errors(self):
+    def test_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
 
-        exist_title = "Existing doc"
         exist_slug = "existing-doc"
 
         # Create a new doc.
         data = new_document_data()
-        data.update({ "title": exist_title, "slug": exist_slug })
+        data.update({"slug": exist_slug})
         resp = client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
         # Create another new doc.
         data = new_document_data()
-        data.update({ "title": 'Some new title', "slug": 'some-new-title' })
+        data.update({"slug": 'some-new-title'})
         resp = client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
-        # Now, post an update with duplicate slug and title
+        # Now, post an update with duplicate slug
         data.update({
             'form': 'rev',
-            'title': exist_title,
             'slug': exist_slug
         })
         resp = client.post(reverse('wiki.edit_document', 
@@ -537,7 +535,6 @@ class DocumentEditingTests(TestCaseBase):
         p = pq(resp.content)
 
         ok_(p.find('.errorlist').length > 0)
-        ok_(p.find('.errorlist a[href="#id_title"]').length > 0)
         ok_(p.find('.errorlist a[href="#id_slug"]').length > 0)
 
     @attr('clobber')
