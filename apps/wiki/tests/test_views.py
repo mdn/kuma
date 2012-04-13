@@ -1,6 +1,7 @@
 import logging
 import json
 import base64
+import time
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -229,6 +230,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         super(KumascriptIntegrationTests, self).setUp()
 
         self.d, self.r = doc_rev()
+        self.d.tags.set('foo', 'bar', 'baz')
         self.url = reverse('wiki.document', 
                            args=['%s/%s' % (self.d.locale, self.d.slug)],
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -458,6 +460,41 @@ class KumascriptIntegrationTests(TestCaseBase):
         eq_(trap['headers']['X-FireLogger'], '1.2') 
         for error in expected_errors['logs']:
             ok_(error['message'] in response.content)
+
+    @mock.patch('requests.get')
+    def test_env_vars(self, mock_requests_get):
+        """Kumascript reports errors in HTTP headers, Kuma should display them"""
+
+        # Now, trap the request from the view.
+        trap = {}
+        def my_requests_get(url, headers=None, timeout=None):
+            trap['headers'] = headers
+            return FakeResponse(
+                status_code=200,
+                body='HELLO WORLD',
+                headers={}
+            )
+        mock_requests_get.side_effect = my_requests_get
+
+        # Ensure kumascript is enabled
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 600
+
+        # Fire off the request, and capture the env vars that would have been
+        # sent to kumascript
+        response = self.client.get(self.url)
+        pfx = 'x-kumascript-env-'
+        vars = dict(
+            (k[len(pfx):], json.loads(base64.b64decode(v)))
+            for k,v in trap['headers'].items()
+            if k.startswith(pfx))
+
+        # Ensure the env vars intended for kumascript match expected values.
+        for n in ('title', 'slug', 'locale'):
+            eq_(getattr(self.d, n), vars[n])
+        eq_(self.d.get_absolute_url(), vars['path'])
+        eq_(time.mktime(self.d.modified.timetuple()), vars['modified'])
+        eq_(sorted([u'foo', u'bar', u'baz']), sorted(vars['tags']))
 
 
 class DocumentEditingTests(TestCaseBase):

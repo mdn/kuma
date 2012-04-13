@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 import json
 from collections import defaultdict
 import base64
@@ -241,7 +242,7 @@ def document(request, document_slug, document_locale):
         #   * The request *has* asked for macro evaluation
         #     (eg. ?raw&macros)
         resp_body, resp_errors = _perform_kumascript_request(
-                request, response_headers, document_locale, document_slug)
+                request, response_headers, doc, document_locale, document_slug)
         if resp_body:
             doc_html = resp_body
         if resp_errors:
@@ -314,8 +315,8 @@ def _invalidate_kumascript_cache(document):
                                                    document.locale))
 
 
-def _perform_kumascript_request(request, response_headers, document_locale,
-                                document_slug):
+def _perform_kumascript_request(request, response_headers, document,
+                                document_locale, document_slug):
     """Perform a kumascript GET request for a document locale and slug.
 
     This is broken out into its own utility function, both to make the view
@@ -358,6 +359,26 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             'X-FireLogger': '1.2',
             'Cache-Control': cache_control
         }
+
+        # Assemble some KumaScript env vars
+        # TODO: See dekiscript vars for future inspiration
+        # http://developer.mindtouch.com/en/docs/DekiScript/Reference/Wiki_Functions_and_Variables
+        path = document.get_absolute_url()
+        env_vars = dict(
+            path=path,
+            url=request.build_absolute_uri(path),
+            id=document.pk,
+            locale=document.locale,
+            title=document.title,
+            slug=document.slug,
+            tags=[x.name for x in document.tags.all()],
+            modified=time.mktime(document.modified.timetuple()),
+        )
+        # Encode the vars as kumascript headers, as base64 JSON-encoded values.
+        headers.update(dict(
+            ('x-kumascript-env-%s' % k,
+             base64.b64encode(json.dumps(v)))
+            for k, v in env_vars.items()))
 
         # Set up for conditional GET, if we have the details cached.
         c_meta = cache.get_many([ck_etag, ck_modified])
