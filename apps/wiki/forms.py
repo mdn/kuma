@@ -49,7 +49,6 @@ CONTENT_LONG = _lazy(u'Please keep the length of the content to '
 COMMENT_LONG = _lazy(u'Please keep the length of the comment to '
                      u'%(limit_value)s characters or less. It is currently '
                      u'%(show_value)s characters.')
-TITLE_COLLIDES = _lazy(u'Another document with this title already exists.')
 SLUG_COLLIDES = _lazy(u'Another document with this slug already exists.')
 OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
@@ -274,8 +273,7 @@ class RevisionForm(forms.ModelForm):
             # to them are ignored for an iframe submission
             return getattr(self.instance.document, name)
 
-        error_message = {'title': TITLE_COLLIDES,
-                         'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
+        error_message = {'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
         try:
             existing_doc = Document.uncached.get(
                     locale=self.instance.document.locale,
@@ -296,9 +294,6 @@ class RevisionForm(forms.ModelForm):
             pass
 
         return value
-
-    def clean_title(self):
-        return self._clean_collidable('title')
 
     def clean_slug(self):
         return self._clean_collidable('slug')
