@@ -45,5 +45,13 @@ CKEDITOR.editorConfig = function(config) {
     config.startupFocus = true;
     config.toolbar = 'MDN';
 
+    config.autoGrow_minHeight = 600;
+    config.contentsCss = '/media/css/wiki-edcontent.css'; 
+    config.toolbarCanCollapse = false;
+    config.resize_enabled = false;
+    config.dialog_backgroundCoverColor = 'black';
+    config.dialog_backgroundCoverOpacity = 0.3;
+    config.docType = '<!DOCTYPE html>';
+
     {{ editor_config|safe }}
 };
