@@ -36,7 +36,7 @@ from taggit.utils import parse_tags
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code',
-    'dl', 'dt', 'dd', 'small', 'sup',
+    'dl', 'dt', 'dd', 'small', 'sup', 'u',
     'img',
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
@@ -46,12 +46,13 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
-ALLOWED_ATTRIBUTES['div'] = ['class', 'id']
-ALLOWED_ATTRIBUTES['pre'] = ['class', 'id']
-ALLOWED_ATTRIBUTES['span'] = ['style', ]
+ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'title', ]
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
-ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', ]
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
@@ -61,6 +62,15 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address'
 )))
+ALLOWED_STYLES = [
+    'border', 'float', 'overflow', 'min-height', 'vertical-align',
+    'white-space',
+    'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
+    'padding', 'padding-left', 'padding-top', 'padding-bottom', 'padding-right',
+    'background', # TODO: Maybe not this one, it can load URLs
+    'background-color',
+    'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
+]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
 # the relative severity.
@@ -931,7 +941,7 @@ class Revision(ModelBase):
             return self.content
         return bleach.clean(
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-            strip_comments=False
+            styles=ALLOWED_STYLES, strip_comments=False
         )
 
     def get_previous(self):
