@@ -285,7 +285,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main #nav-sub-docs a:hover, #nav-sub-docs a:focus, #nav-sub-docs a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
 
 /*** @Search *********/
-#site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 0 0; position: relative; }
+#site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
 #site-search p { margin: 0; }
 #site-search #q { width: 160px; padding: 3px 4px 3px 28px; margin: 0 0 0 4px; float: right; background: #555; background: rgba(80,80,80,.9) url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #aaa; font-size: .857em; -webkit-appearance: textfield; appearance: textfield; }
 #site-search #q:hover, #site-search #q:focus { border-color: #9c0d10; background-color: #fff; color: #333; }
@@ -302,7 +302,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .user-state a { color: #ccc; }
 .user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
 .user-state form { display: inline; }
-#masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 10px; top: 12px; }
+#masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 150px; top: 12px; }
 #site-info .user-state { margin-bottom: .5em; }
 
 /*** @BrowserID *********/
@@ -345,12 +345,7 @@ a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { ba
 .footer .browserid-info h3:after { top: auto; bottom: -25px; background: transparent none; }
 
 /*** @Tabzilla *********/
-/* Hide Tabzilla on screens < 1250px wide so that it does not interfere with login / logout links. This is a temporary workaround for Tabzilla's fixedness issue. */
-@media screen and (max-width: 1250px) {
-  #developer-mozilla-org #tabzilla {
-    display: none;
-  }
-}
+#masthead #tabzilla { position: absolute; right: 0; top: 0; }
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
