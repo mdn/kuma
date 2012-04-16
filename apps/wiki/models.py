@@ -70,6 +70,7 @@ ALLOWED_STYLES = [
     'background', # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
+    '-moz-column-width', '-webkit-columns', 'columns',
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
