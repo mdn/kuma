@@ -544,7 +544,6 @@ MINIFY_BUNDLES = {
             'css/search.css',
         ),
         'wiki': (
-            'css/wiki.css',
             'css/wiki-screen.css',
             'syntaxhighlighter/styles/shCore.css',
             'syntaxhighlighter/styles/shThemeDefault.css',
