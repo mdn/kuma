@@ -129,7 +129,7 @@ def process_document_path(func, reverse_name='wiki.document'):
 
 
 @waffle_flag('kumawiki')
-@require_GET
+@require_http_methods(['GET', 'HEAD'])
 @process_document_path
 def document(request, document_slug, document_locale):
     """View a wiki document."""
