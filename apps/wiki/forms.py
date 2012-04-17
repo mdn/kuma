@@ -219,6 +219,10 @@ class RevisionForm(forms.ModelForm):
         widget=CheckboxSelectMultiple, required=False,
         choices=REVIEW_FLAG_TAGS)
 
+    show_toc = forms.BooleanField(
+        required=False,
+        label=_("Generate and display a table of contents in this article:"))
+
     current_rev = forms.CharField(required=False,
                                   widget=forms.HiddenInput())
 
@@ -366,6 +370,7 @@ class RevisionForm(forms.ModelForm):
 
         new_rev.document = document
         new_rev.creator = creator
+        new_rev.show_toc = self.cleaned_data['show_toc']
         new_rev.save()
         new_rev.review_tags.set(*self.cleaned_data['review_tags'])
         return new_rev

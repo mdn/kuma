@@ -108,6 +108,7 @@ def new_document_data(tags=None):
         'keywords': 'key1, key2',
         'summary': 'lipsum',
         'content': 'lorem ipsum dolor sit amet',
+        'show_toc': 'true',
     }
 
 
