@@ -221,7 +221,6 @@ class RevisionForm(forms.ModelForm):
 
     show_toc = forms.BooleanField(
         required=False,
-        initial=True,
         label=_("Generate and display a table of contents in this article:"))
 
     current_rev = forms.CharField(required=False,
