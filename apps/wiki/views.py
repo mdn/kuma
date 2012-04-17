@@ -254,7 +254,7 @@ def document(request, document_slug, document_locale):
         doc_html = tool.serialize()
         # Generate a TOC for the document using the sections provided by
         # SectionEditingLinks
-        if not show_raw:
+        if doc.show_toc and not show_raw:
             toc_html = wiki.content.parse(doc_html).filter(
                 wiki.content.SectionTOCFilter).serialize()
 

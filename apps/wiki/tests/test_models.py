@@ -574,6 +574,24 @@ class RevisionTests(TestCase):
         last_rev.save()
         eq_(next_rev, last_rev.get_previous())
 
+    @attr('toc')
+    def test_show_toc(self):
+        """Setting show_toc appropriately affects the Document's
+        show_toc property."""
+        d, r = doc_rev('Toggle table of contents.')
+        assert r.show_toc
+        assert d.show_toc
+
+        r = revision(document=d, content=r.content, show_toc=False,
+                     is_approved=True)
+        r.save()
+        assert not d.show_toc
+
+        r = revision(document=d, content=r.content, show_toc=True,
+                     is_approved=True)
+        r.save()
+        assert d.show_toc
+
 
 class RelatedDocumentTests(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
