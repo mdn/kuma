@@ -26,20 +26,20 @@ class FormSectionEditingTests(TestCase):
         """RevisionForm given section_id should load initial content for only
         one section"""
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -49,15 +49,15 @@ class FormSectionEditingTests(TestCase):
 
     def test_form_save_section(self):
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
@@ -66,14 +66,14 @@ class FormSectionEditingTests(TestCase):
             <p>new stuff</p>
         """
         expected = """
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">New stuff</h1>
+            <h1 id="New_stuff">New stuff</h1>
             <p>new stuff</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """

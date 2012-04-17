@@ -34,6 +34,7 @@
                 });
 
                 s = values.join(' ');
+                s = s.replace(' ', '_');
                 // "$" is used for verb delimiter in URLs
                 s = s.replace(/\$/g, ''); 
                 // trim to first num_chars chars

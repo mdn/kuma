@@ -14,7 +14,9 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
-        initPrepopulatedSlugs();
+        if ($('body').is('.new')) {
+            initPrepopulatedSlugs();
+        }
         initDetailsTags();
 
         if ($('body').is('.document') || $('body').is('.home')) {  // Document page
@@ -39,7 +41,7 @@
             initMetadataEditButton();
             initSaveAndEditButtons();
             initArticlePreview();
-            initTitleAndSlugCheck();
+            // initTitleAndSlugCheck();
             // initDrafting();
         }
         if ($('body').is('.edit.is-template') ||
