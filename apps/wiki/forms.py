@@ -203,7 +203,7 @@ class RevisionForm(forms.ModelForm):
                      c in GROUPED_FIREFOX_VERSIONS]}
 
     content = StrippedCharField(
-                min_length=5, max_length=100000,
+                min_length=5, max_length=300000,
                 label=_lazy(u'Content:'),
                 widget=forms.Textarea(attrs={'data-showfor':
                                              json.dumps(showfor_data)}),
