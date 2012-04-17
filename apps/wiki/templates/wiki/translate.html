@@ -8,13 +8,16 @@
 {% set crumbs = [(url('wiki.category', parent.category), parent.get_category_display()),
                  (parent.get_absolute_url(), parent.title),
                  (None, _('Translate Article'))] %}
-{% set classes = 'translate' %}
+{% block bodyclass%}translate{% endblock %}
 
 {% block content %}
   {% set language = settings.LANGUAGES[locale.lower()] %}
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
+      <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
+        {{ csrf() }}
+        <input type="hidden" name="form" value="both" />
 
   <div id="localize-document" class="editing">
     <header id="article-head">
@@ -41,23 +44,10 @@
     {% endif %}
     </header>
 
-    {% if not document %}
-      {# If this is the first translation to this locale, we use 1 big form. #}
-      <form action="" method="post" data-json-url="{{ url('wiki.json') }}">
-        {{ csrf() }}
-        <input type="hidden" name="form" value="both" />
-    {% endif %}
-    
     {% if document_form %}
       <details id="trans-description"{% if disclose_description %} open="open"{% endif %}>
         <summary>{{ _('Translate Description') }}</summary>
         {{ errorlist(document_form) }}
-        {% if document %}
-          {# If there are existing translations in this locale, we use 2 separate forms. #}
-          <form action="" method="post" data-json-url="{{ url('wiki.json') }}" data-document-id="{{ document.id }}">
-            {{ csrf() }}
-            <input type="hidden" name="form" value="doc" />
-        {% endif %}
             <ul class="description">
               <li>
                 <dl class="approved">
@@ -80,9 +70,6 @@
                 </dl>
               </li>
             </ul>
-        {% if document %}
-          </form>
-        {% endif %}
       </details>
     {% endif %}
 
@@ -90,13 +77,6 @@
       <details id="trans-content" open="open">
         <summary>{{ _('Translate Content') }}</summary>
         {{ errorlist(revision_form) }}
-        {% if document %}
-          {# If there are existing translations in this locale, we use 2 separate forms. #}
-          <form action="" method="post">
-            {{ csrf() }}
-            <input type="hidden" name="form" value="rev" />
-        {% endif %}
-        
         {# TODO: restore keywords and summary when we restore search app
         <ul class="description">
           <li>
@@ -150,16 +130,11 @@
         </div>
         {{ revision_form.hidden_fields()|join|safe }}
         
-        {% if document %}
-          </form>
-        {% endif %}
       </details>
-    {% endif %}
-    {% if not document %}
-      </form>
     {% endif %}
     <div id="preview"></div>
   </div>
+</form>
     </div>
    </div>
 </section>
