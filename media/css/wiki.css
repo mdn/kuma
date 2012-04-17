@@ -551,102 +551,6 @@ article.main div.tags input.adder {
     width: 165px;
 }
 
-/* Translate specific */
-ul.description li {
-    list-style: none;
-    padding: 15px 0;
-}
-
-ul.description li.tag {
-    padding: 0;
-}
-
-ul.description li:first-child {
-    border: none;
-}
-
-div.approved,
-div.localized {
-    display: inline-block;
-    vertical-align: top;
-    width: 49%;
-}
-
-div.approved p,
-div.localized p {
-    min-height: 35px;
-}
-
-ul.description h3,
-#content-fields h3 {
-    color: #333;
-    font-family: Verdana;
-    font-size: 13px;
-    margin: 0 0 5px;
-}
-
-ul.description div.val {
-    color: #666;
-}
-
-ul.description input[type="text"] {
-    width: 330px;
-}
-
-ul.description textarea {
-    height: 100px;
-    padding: 2px;
-    width: 330px;
-}
-
-#content-fields {
-    padding: 15px 0;
-}
-
-#content-fields div.val {
-    border: solid 1px #999;
-    height: 500px;
-    overflow: auto;
-    padding: 2px;
-    width: 400px;
-}
-
-#content-fields textarea {
-    height: 500px;
-    padding: 2px;
-    width: 340px;
-}
-
-#content-fields div.approved textarea {
-    margin: 96px 0 0;
-}
-
-#content-fields .editor {
-    margin: 10px 0 0;
-    padding: 0;
-    width: 345px;
-}
-
-body.translate div.significance {
-    padding: 15px 0;
-}
-
-#change-locale li {
-    display: inline-block;
-    list-style: none;
-    width: 60px;
-}
-
-details.h2[open] {
-    margin-bottom: 21px;
-}
-
-/* Headings aren't valid in <summary>s, and it makes me sad. */
-details.h2 > summary {
-    color: #333;
-    font-size: 24px;
-    margin: 21px 0 8px;
-}
 
 /* Document list pages */
 #document-list ul.documents {
@@ -697,13 +601,13 @@ details.h2 > summary {
 }
 
 #revision-list li:nth-child(odd) {
-    background: #f2f2f2;
+    background: rgba(170,160,130,.1);
 }
 
 #revision-list li.current {
-    background: #daedf6;
-    border-bottom: solid 2px #a3b1b8;
-    border-top: solid 2px #a3b1b8;
+    background: rgba(198,198,175,.25);
+    border-bottom: solid 2px #b8b5a3;
+    border-top: solid 2px #b8b5a3;
 }
 
 #revision-list li.current div.status {
@@ -828,65 +732,6 @@ body.review #content-fields textarea {
     width: 350px;
 }
 
-/* Revision diffs */
-div.revision-diff div {
-    display: inline-block;
-    /* width: 364px; */
-    width: 49.7%;
-}
-
-div.revision-diff h3 {
-    font-weight: bold;
-    margin: 5px 0 0;
-}
-
-div.revision-diff h4 {
-    font-weight: bold;
-    margin: 10px 0 0;
-}
-
-table.diff {
-    border: solid 1px #999;
-    clear: both;
-    font-family:Courier;
-    margin: 5px 0 15px;
-    width: 100%;
-}
-
-.diff_header {
-    background-color:#e0e0e0;
-}
-
-td.diff_header {
-    text-align:right;
-}
-
-.diff_next {
-    background-color:#c0c0c0;
-}
-
-.diff_add {
-    background-color:#aaffaa;
-}
-
-.diff_chg {
-    background-color:#ffff77;
-}
-
-.diff_sub {
-    background-color:#ffaaaa;
-}
-
-/* Delete Revision */
-#delete-revision label {
-    display: block;
-    font-size: 16px;
-    margin: 15px 0 0;
-}
-
-#delete-revision form {
-    margin: 20px 0 0;
-}
 
 /* Submit commit message modal */
 #submit-modal div.comment,
@@ -902,61 +747,6 @@ td.diff_header {
     width: 400px;
 }
 
-/* Select locale for l10n page */
-#select-locale ul.locales {
-    font-size: 14px;
-    margin: 15px;
-}
-
-
-/* Graceful fallback for <details> tags */
-/* from http://mathiasbynens.be/notes/html5-details-jquery */
-
-details, summary {
-    display: block;
-}
-
-details {
-    margin: 25px 0 0;
-}
-
-/* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
-
-/* Add focus styles (for keyboard accessibility) */
-.no-details summary:focus {
-    outline: dotted 1px;
-}
-
-.no-details summary:hover {
-    background-color: #e6f1fb;
-}
-
-/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
-/* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
-/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
-
-/* Hide all direct descendants of every <details> element */
-/* Note that IE6 doesn't support the child selector; we'll work around that using jQuery later */
-.no-details details > * {
-    display: none;
-}
-
-/* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it's a clickable element */
-.no-details details summary {
-    border-bottom: solid 1px #cadaeb;
-    cursor: pointer;
-    display: block;
-    margin: 10px 0 30px;
-}
-
-.no-details details summary {
-    background: transparent url(../img/wiki/bkg.collapsibles.png) no-repeat 5px 5px;
-    padding: 0 0 0 30px;
-}
-
-.no-details details.open summary {
-    background-position: 5px -45px;
-}
 
 /* Style video modal */
 div.video .kbox-container {

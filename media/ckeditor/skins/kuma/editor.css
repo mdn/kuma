@@ -1,14 +1,14 @@
 /* Skin for CKEditor, customized for MDN, based on kama */
 
-.cke_editor_wikiArticle { background: #fff; padding: 18px; margin: 0 4px 26px 0; border: 1px solid #ecece7;
+.editor { background: #fff; padding: 0; margin: 0 4px 26px 0; border: 1px solid #ecece7;
   -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.5), 4px 4px 0 rgba(200,190,165,.5);
   -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.5), 4px 4px 0 rgba(200,190,165,.5);
   box-shadow: 2px 2px 0 rgba(170,160,130,.5), 4px 4px 0 rgba(200,190,165,.5);
 }
-.cke_editor_wikiArticle a:hover,
-.cke_editor_wikiArticle a:link,
-.cke_editor_wikiArticle a:visited,
-.cke_editor_wikiArticle a:active{text-decoration:none;}
+.editor a:hover,
+.editor a:link,
+.editor a:visited,
+.editor a:active{text-decoration:none;}
 
 .cke_skin_kuma .cke_rtl *,.cke_skin_kuma .cke_rtl a:hover,.cke_skin_kuma .cke_rtl a:link,.cke_skin_kuma .cke_rtl a:visited,.cke_skin_kuma .cke_rtl a:active,.cke_rtl .cke_skin_kuma *,.cke_rtl .cke_skin_kuma a:hover,.cke_rtl .cke_skin_kuma a:link,.cke_rtl .cke_skin_kuma a:visited,.cke_rtl .cke_skin_kuma a:active{text-align:right;}
 .cke_skin_kuma iframe{vertical-align:inherit;}

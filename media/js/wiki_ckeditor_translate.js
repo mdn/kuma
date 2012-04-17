@@ -48,7 +48,7 @@
         $("td.cke_top").css({ height: "auto" });
       }
 
-      $("#cke_contents_wikiArticle").css({ height: $(".approved .boxed").height() + headHeight + 12 });
+      $("#cke_contents_id_content").css({ height: $(".approved .boxed").height() });
 
     });
     
