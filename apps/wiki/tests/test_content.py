@@ -418,6 +418,28 @@ class ContentSectionToolTests(TestCase):
                   .filter(DekiscriptMacroFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_noinclude(self):
+        doc_src = u"""
+            <div class="noinclude">{{ XULRefAttr() }}</div>
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+            <div class="noinclude">
+              <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
+            </div>
+        """
+        expected = u"""
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+        """
+        result = (wiki.content.filter_out_noinclude(doc_src))
+        eq_(normalize_html(expected), normalize_html(result))
+
 
 class AllowedHTMLTests(TestCase):
     simple_tags = (

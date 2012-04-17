@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+# see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 import json
 import base64
@@ -1262,6 +1264,30 @@ class SectionEditingResourceTests(TestCaseBase):
                            data)
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)
+
+    def test_raw_include_option(self):
+        doc_src = u"""
+            <div class="noinclude">{{ XULRefAttr() }}</div>
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+            <div class="noinclude">
+              <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
+            </div>
+        """
+        doc, rev = doc_rev(doc_src)
+        expected = u"""
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+        """
+        client = LocalizingClient()
+        resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]))
+        eq_(normalize_html(expected), normalize_html(resp.content.decode('utf-8')))
 
     @attr('kumawiki')
     def test_kumawiki_waffle_flag(self):

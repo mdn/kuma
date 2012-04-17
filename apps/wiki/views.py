@@ -224,6 +224,7 @@ def document(request, document_slug, document_locale):
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
     show_raw = request.GET.get('raw', False) is not False
+    is_include = request.GET.get('include', False) is not False
     no_macros = request.GET.get('nomacros', False) is not False
     force_macros = request.GET.get('macros', False) is not False
     need_edit_links = request.GET.get('edit_links', False) is not False
@@ -271,6 +272,10 @@ def document(request, document_slug, document_locale):
             tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
         doc_html = tool.serialize()
+
+        # If this is an include, filter out the class="noinclude" blocks.
+        if is_include:
+            doc_html = (wiki.content.filter_out_noinclude(doc_html))
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for

@@ -6,6 +6,7 @@ from xml.sax.saxutils import quoteattr
 
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
+from pyquery import PyQuery as pq
 
 from tower import ugettext as _
 
@@ -28,6 +29,16 @@ HEAD_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 
 def parse(src):
     return ContentSectionTool(src)
+
+
+def filter_out_noinclude(src):
+    """Quick and dirty filter to remove <div class="noinclude"> blocks"""
+    # NOTE: This started as an html5lib filter, but it started getting really
+    # complex. Seems like pyquery works well enough without corrupting
+    # character encoding.
+    doc = pq(src)
+    doc.remove('*[class=noinclude]')
+    return doc.html()
 
 
 class ContentSectionTool(object):
