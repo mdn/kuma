@@ -61,7 +61,7 @@ class ContentSectionTool(object):
     def serialize(self, stream=None):
         if stream is None:
             stream = self.stream
-        return "".join(self.serializer.serialize(stream))
+        return u"".join(self.serializer.serialize(stream))
 
     def __unicode__(self):
         return self.serialize()
@@ -167,7 +167,7 @@ class SectionIDFilter(html5lib_Filter):
 
                 # Slugify the text we found inside the header, generate an ID
                 # as a last resort.
-                slug = self.slugify(''.join(text))
+                slug = self.slugify(u''.join(text))
                 if not slug:
                     slug = self.gen_id()
                 attrs['id'] = slug
@@ -205,17 +205,18 @@ class SectionEditLinkFilter(html5lib_Filter):
                              'title': _('Edit section'),
                              'class': 'edit-section',
                              'data-section-id': id,
-                             'data-section-src-url': '%s?%s' % (
+                             'data-section-src-url': u'%s?%s' % (
                                  reverse('wiki.document',
                                          args=[self.full_path],
                                          locale=self.locale),
-                                 urlencode({'section': id, 'raw': 'true'})
+                                 urlencode({'section': id.encode('utf-8'),
+                                            'raw': 'true'})
                               ),
-                              'href': '%s?%s' % (
+                              'href': u'%s?%s' % (
                                  reverse('wiki.edit_document',
                                          args=[self.full_path],
                                          locale=self.locale),
-                                 urlencode({'section': id,
+                                 urlencode({'section': id.encode('utf-8'),
                                             'edit_links': 'true'})
                               )
                          }},
@@ -457,7 +458,7 @@ class DekiscriptMacroFilter(html5lib_Filter):
                         break
                     ds_call.append('</%s>' % token['name'])
 
-            ds_call = ''.join(ds_call).strip()
+            ds_call = u''.join(ds_call).strip()
 
             # Snip off any "template." prefixes
             strip_prefixes = ('template.', 'wiki.')
