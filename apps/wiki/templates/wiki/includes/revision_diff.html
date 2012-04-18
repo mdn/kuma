@@ -1,9 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {# TODO: Turn this into a macro. Import it "with context" so datetimeformat can access request.locale. #}
 {% if revision_from and revision_to %}
-  <div class="revision-diff">
+  <section class="revision-diff">
     <header>
-      <div>
+      <div class="rev-from">
         <h3>
           {% if revision_from_header %}
             {{ revision_from_header}}
@@ -15,7 +15,7 @@
         </h3>
         <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime')) }}</p>
       </div>
-      <div>
+      <div class="rev-to">
         <h3>
           {% if revision_to_header %}
             {{ revision_to_header}}
@@ -28,34 +28,30 @@
         <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime')) }}</p>
       </div>
     </header>
-    <h4>{{ _('Title:') }}</h4>
-    <div><p>{{ revision_from.title }}</p></div>
-    <div><p>{{ revision_to.title }}</p></div>
-    <h4>{{ _('Slug:') }}</h4>
-    <div><p>{{ revision_from.slug }}</p></div>
-    <div><p>{{ revision_to.slug }}</p></div>
-    <h4>{{ _('Tags:') }}</h4>
-    <div>
-      <p>{{ revision_from.tags }}</p>
-    </div>
-    <div>
-      <p>{{ revision_to.tags }}</p>
-    </div>
-    <h4>{{ _('Keywords:') }}</h4>
-    <div>
-      <p>{{ revision_from.keywords }}</p>
-    </div>
-    <div>
-      <p>{{ revision_to.keywords }}</p>
-    </div>
-    <h4>{{ _('Search results summary:') }}</h4>
-    <div>
-      <p>{{ revision_from.summary }}</p>
-    </div>
-    <div>
-      <p>{{ revision_to.summary }}</p>
-    </div>
-    <h4>{{ _('Content:') }}</h4>
-    {{ diff_table(revision_from.content, revision_to.content) }}
-  </div>
+
+    <dl>
+      <dt>{{ _('Title:') }}</dt>
+      <dd class="rev-from">{{ revision_from.title }}</dd>
+      <dd class="rev-to">{{ revision_to.title }}</dd>
+      
+      <dt>{{ _('Slug:') }}</dt>
+      <dd class="rev-from">{{ revision_from.slug }}</dd>
+      <dd class="rev-to">{{ revision_to.slug }}</dd>
+      
+      <dt>{{ _('Tags:') }}</dt>
+      <dd class="rev-from">{{ revision_from.tags }}</dd>
+      <dd class="rev-to">{{ revision_to.tags }}</dd>
+      
+      <dt>{{ _('Keywords:') }}</dt>
+      <dd class="rev-from">{{ revision_from.keywords }}</dd>
+      <dd class="rev-to">{{ revision_to.keywords }}</dd>
+      
+      <dt>{{ _('Search results summary:') }}</dt>
+      <dd class="rev-from">{{ revision_from.summary }}</dd>
+      <dd class="rev-to">{{ revision_to.summary }}</dd>
+      
+      <dt>{{ _('Content:') }}</dt>
+      <dd>{{ diff_table(revision_from.content, revision_to.content) }}</dd>
+    </dl>
+  </section>
 {% endif %}
