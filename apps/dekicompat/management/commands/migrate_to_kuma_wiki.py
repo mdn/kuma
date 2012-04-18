@@ -8,12 +8,13 @@ TODO
 * https://bugzilla.mozilla.org/show_bug.cgi?id=710713
 * https://bugzilla.mozilla.org/showdependencytree.cgi?id=710713&hide_resolved=1
 """
-import sys
-import re
-import time
 import datetime
-import itertools
 import hashlib
+import itertools
+import json
+import re
+import sys
+import time
 from optparse import make_option
 
 from BeautifulSoup import BeautifulSoup
@@ -24,7 +25,7 @@ from django.contrib.auth.models import User
 from django.core.management.base import (BaseCommand, NoArgsCommand,
                                          CommandError)
 import django.db
-from django.db import connections, connection, transaction, IntegrityError
+from django.db import connections, transaction
 from django.utils import encoding, hashcompat
 
 import commonware.log
@@ -144,11 +145,18 @@ class Command(BaseCommand):
                     help="Migrate # of documents with syntax blocks"),
         make_option('--withscripts', dest="withscripts", type="int", default=0,
                     help="Migrate # of documents that use scripts"),
-        make_option('--withtemplates', dest="withtemplates", type="int", default=0,
-                    help="Migrate # of template documents"),
+        make_option('--withtemplates', dest="withtemplates", type="int",
+                    default=0, help="Migrate # of template documents"),
+        make_option('--withlanguages', dest="withlanguages", type="int",
+                    default=0,
+                    help="Migrate # of English documents with other "
+                    "languages"),
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
                     help="Measure syntax highlighter usage, skip migration"),
+        make_option('--language-rels', action="store_true",
+                    dest="language_rels", default=False,
+                    help="Build page languages tree, skip migration"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -192,6 +200,8 @@ class Command(BaseCommand):
             self.handle_template_metrics(rows)
         elif options['syntax_metrics']:
             self.handle_syntax_metrics(rows)
+        elif options['language_rels']:
+            self.make_languages_relationships(rows)
         else:
             self.handle_migration(rows)
 
@@ -319,6 +329,72 @@ class Command(BaseCommand):
                     if attr[0] == 'function':
                         print (u"%s\t%s\t%s" % (r['page_title'], block.name,
                                                     attr[1])).encode('utf-8')
+
+    @transaction.commit_manually(using='default')
+    def make_languages_relationships(self, rows):
+        """Set the parent_id of Kuma pages using wiki.languages params"""
+        wl_pat = re.compile(r"""^wiki.languages\((.+)\)""")
+        # language_tree is {page_id: [child_id, child_id, ...], ...}
+        language_tree = {}
+        for r in rows:
+            if not r['page_text'].strip():
+                # Page empty, so skip it.
+                continue
+            if not r['page_title'].lower().startswith('en/'):
+                # Page is not an english page, skip it
+                continue
+            parent_id = r['page_id']
+            doc = pq(r['page_text'])
+            spans = doc.find('span.script')
+            for span in spans:
+                src = unicode(span.text).strip()
+                if src.startswith('wiki.languages'):
+                    m = wl_pat.match(src)
+                    if not m:
+                        continue
+                    language_tree[parent_id] = []
+                    page_languages_json = m.group(1).strip()
+                    page_languages = {}
+                    try:
+                        page_languages = json.loads(page_languages_json)
+                    except ValueError:
+                        log.info("Error parsing wiki.languages JSON")
+                    wc = self.wikidb.cursor()
+                    sql = """
+                        SELECT page_id
+                        FROM pages
+                        WHERE page_title IN ('%s')
+                        AND page_namespace = 0
+                    """ % "','".join(page_languages.values())
+                    wc.execute(sql)
+                    for row in wc:
+                        language_tree[parent_id].append(row[0])
+        kc = self.kumadb.cursor()
+        for parent_id, children in language_tree.items():
+            # Now that we have our tree of docs and children, migrate them
+            # as necessary
+            try:
+                parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
+            except Document.DoesNotExist:
+                rows = self._query("SELECT * FROM pages WHERE page_id = %s" %
+                                   parent_id)
+                self.handle_migration(rows)
+                parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
+            sql = "SELECT * FROM pages WHERE page_id in (%s)" % (
+                ",".join([str(x) for x in children]))
+            rows = self._query(sql)
+            self.handle_migration(rows)
+            # All parents and children migrated, now set parent_id
+            # TODO: refactor this to source_id when we change to
+            # source/translation relationship model
+            sql = """
+                UPDATE wiki_document
+                SET parent_id = %s
+                WHERE mindtouch_page_id IN (%s)
+            """ % (parent_doc.id, ",".join([str(x) for x in children]))
+            kc.execute(sql)
+            transaction.commit()
+            log.info("Updated %s documents with parent ID." % kc.rowcount)
 
     @transaction.commit_on_success
     def wipe_documents(self):
@@ -488,6 +564,18 @@ class Command(BaseCommand):
                     LIMIT %s
                 """, MT_NS_NAME_TO_ID['Template:'],
                      self.options['withtemplates']))
+
+            if self.options['withlanguages'] > 0:
+                log.info("Gathering %s English pages that have languages" %
+                         self.options['withlanguages'])
+                iters.append(self._query("""
+                    SELECT *
+                    FROM pages
+                    WHERE page_text like '%%%%wiki.languages%%%%' AND
+                          LOWER(page_title) like 'en/%%%%'
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """, self.options['withlanguages']))
 
         return itertools.chain(*iters)
 
