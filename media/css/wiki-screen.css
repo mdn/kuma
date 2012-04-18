@@ -142,7 +142,8 @@ div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0
 div.note p, div.tip p { margin-bottom: .75em; }
 
 /* @Page @Title and @Buttons *********/
-#article-head { position: relative; clear: both; overflow: hidden; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#article-head { position: relative; clear: both; max-width: 1200px; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#article-head:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 
 .title { position: relative; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
@@ -298,6 +299,140 @@ input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 
 /* @Doc @Listings *********/
 #document-list .documents { list-style: disc; margin-left: 20px; }
 #document-list .documents li { margin: 0 0 .5em; }
+
+/* @Translation *********/
+.change-locale { font-size: .857em; float: left; clear: left; position: relative; top: -1.75em; }
+#change-locale-link { display: inline-block; padding: .6em 20px .7em 8px; background: transparent url("../img/wiki/menu-arrow.png") 92% 0 no-repeat; }
+#change-locale { position: absolute; left: -999em; z-index: 9999; width: 180px; background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
+.hasJS #change-locale { display: none; left: auto; right: 0; }
+#change-locale { padding: 6px 0; max-height: 300px; overflow: auto; }
+#change-locale li { list-style: none; }
+#change-locale a { display: block; padding: .25em 8px; }
+#change-locale a:before { content: attr(title) " ("; }
+#change-locale a:after { content: ")"; }
+#change-locale a:hover, #change-locale a:focus, #change-locale a:active { background-color: #369; background-position: 92% -100px; color: #fff; text-decoration: none; text-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+
+.editing summary { font-size: 1.428em; margin: 0 0 .5em; padding-left: 40px; cursor: pointer; }
+
+.description li { clear: both; margin: 0 0 .5em; }
+.description li:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.description dl { margin: 0; }
+.description dt { display: inline-block; margin-right: 10px; font-style: normal; font-weight: bold; }
+.description dd { display: inline-block; margin-left: 0; }
+.description .approved { width: 49%; float: left; }
+.description .localized { width: 49%; float: right; }
+
+.description input#id_title { font-size: 1.124em; width: 90%; margin: 0; }
+
+#content-fields:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+#content-fields header { position: relative; z-index: 10; display: block; height: 1.142em; padding: .5em 0 1em; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#content-fields .approved { width: 49%; float: left; }
+#content-fields .localized { width: 49%; float: right; }
+
+#content-fields .approved .boxed { padding: 25px; }
+#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px; 
+  background:  -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);  
+  background:  -webkit-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
+  background:  linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);  
+}
+
+#trans-description { margin: 0 0 1em; }
+#trans-content { margin: 0 0 1em; }
+
+#content-fields.fixed header { width: 48%; }
+
+#trans-content #cke_contents_wikiArticle { min-height: 800px; }
+
+/* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
+/* Add focus styles (for keyboard accessibility) */
+.no-details summary:hover, .no-details summary:focus { background: rgba(170,160,130,.1); outline: 0; }
+.no-details summary:before { content: "+"; float: left; margin: -.225em 0 0 -35px; font-size: 1.25em; }
+.no-details .open summary:before { content: "–"; float: left; margin: -.25em 0 0 -32px; font-size: 1.25em; }
+
+/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
+/* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
+/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
+
+/* Hide all direct descendants of every <details> element */
+/* Note that IE6 doesn't support the child selector; we'll work around that using jQuery later */
+.no-details details > * {
+    display: none;
+}
+
+/* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it's a clickable element */
+.no-details details summary {
+    cursor: pointer;
+    display: block;
+    margin: 10px 0 30px;
+}
+
+/* Revision diffs */
+.revision-diff dt {
+  clear: both;
+  font-style: normal;
+  font-weight: bold;
+  padding-top: .5em;
+  border-top: 1px dotted #ccc;
+}
+
+.revision-diff dd {
+  margin: 0 0 .5em;
+}
+
+.revision-diff .rev-from {
+  width: 49%;
+  float: left;
+}
+
+.revision-diff .rev-to {
+  width: 49%;
+  float: right;
+}
+
+.revision-diff h3 {
+    font-weight: bold;
+    margin: 5px 0 0;
+}
+
+table.diff {
+    border: 1px solid #ccc;
+    clear: both;
+    margin: 5px 0 15px;
+    width: 100%;
+}
+
+
+td.diff_header {
+    text-align:right;
+}
+
+.diff_next {
+    background-color:#c0c0c0;
+}
+
+.diff_add {
+    background-color:#aaffaa;
+}
+
+.diff_chg {
+    background-color:#ffff77;
+}
+
+.diff_sub {
+    background-color:#ffaaaa;
+}
+
+/* Delete Revision */
+#delete-revision label {
+    display: block;
+    font-size: 16px;
+    margin: 15px 0 0;
+}
+
+#delete-revision form {
+    margin: 20px 0 0;
+}
+
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { display: block; text-align: right; font-size: 90%; }
