@@ -89,7 +89,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "dateline": _("November 2011"),
         "short_dateline": _("November"),
         "tagline": _("The joy of painting"),
-        "summary": _("Canvas lets you to paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
+        "summary": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "description": _("Canvas lets you paint the Web using JavaScript to render 2D shapes, bitmapped images, and advanced graphical effects.  Each <canvas> element provides a graphics context with its own state and methods that make it easy to control and draw in."),
         "learn_more": [],
         "tab_copy": _("""
