@@ -154,9 +154,6 @@ class Command(BaseCommand):
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
                     help="Measure syntax highlighter usage, skip migration"),
-        make_option('--language-rels', action="store_true",
-                    dest="language_rels", default=False,
-                    help="Build page languages tree, skip migration"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -200,10 +197,10 @@ class Command(BaseCommand):
             self.handle_template_metrics(rows)
         elif options['syntax_metrics']:
             self.handle_syntax_metrics(rows)
-        elif options['language_rels']:
-            self.make_languages_relationships(rows)
         else:
             self.handle_migration(rows)
+            rows = self.gather_pages()
+            self.make_languages_relationships(rows)
 
     def init(self, options):
         """Set up connections and options"""
