@@ -1,9 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
-{# L10n: {t} is the title of the document. {c} is the category. #}
-{% set title = _('{t} | {c}')|f(t=document.title, c=document.get_category_display()) %}
-{% block title %}{{ page_title(title) }}{% endblock %}
+{% block title %}{{ page_title(document.title) }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
 {% if document.parent %}
@@ -38,19 +36,7 @@
             {% endif %}
         </ul>
         {% if kumascript_errors %}
-          <div class="warning" id="kumascript-errors">
-            <p>{{ _("There are scripting errors on this page:") }}</p>
-            <ul>
-              {% for error in kumascript_errors %}
-                <li class="error error-{{ error.level }}">
-                  {# <span class="level">{{ error.level }}</span> #}
-                  {% if error.args %}<span class="type">{{ error.args[0] }}</span>{% endif %}
-                  &#8212;
-                  <span class="message">{{ error.message }}</span>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
+          {% include 'wiki/includes/kumascript_errors.html' %}
         {% endif %}
        </header>
         {% if redirected_from %}

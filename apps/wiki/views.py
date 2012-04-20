@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 import json
 from collections import defaultdict
 import base64
@@ -47,7 +48,8 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          REVIEW_FLAG_TAGS_DEFAULT, ALLOWED_ATTRIBUTES,
-                         ALLOWED_TAGS, get_current_or_latest_revision)
+                         ALLOWED_TAGS, ALLOWED_STYLES,
+                         get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
 
@@ -127,7 +129,7 @@ def process_document_path(func, reverse_name='wiki.document'):
 
 
 @waffle_flag('kumawiki')
-@require_GET
+@require_http_methods(['GET', 'HEAD'])
 @process_document_path
 def document(request, document_slug, document_locale):
     """View a wiki document."""
@@ -222,6 +224,7 @@ def document(request, document_slug, document_locale):
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
     show_raw = request.GET.get('raw', False) is not False
+    is_include = request.GET.get('include', False) is not False
     no_macros = request.GET.get('nomacros', False) is not False
     force_macros = request.GET.get('macros', False) is not False
     need_edit_links = request.GET.get('edit_links', False) is not False
@@ -240,7 +243,7 @@ def document(request, document_slug, document_locale):
         #   * The request *has* asked for macro evaluation
         #     (eg. ?raw&macros)
         resp_body, resp_errors = _perform_kumascript_request(
-                request, response_headers, document_locale, document_slug)
+                request, response_headers, doc, document_locale, document_slug)
         if resp_body:
             doc_html = resp_body
         if resp_errors:
@@ -269,6 +272,10 @@ def document(request, document_slug, document_locale):
             tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
         doc_html = tool.serialize()
+
+        # If this is an include, filter out the class="noinclude" blocks.
+        if is_include:
+            doc_html = (wiki.content.filter_out_noinclude(doc_html))
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
@@ -313,8 +320,8 @@ def _invalidate_kumascript_cache(document):
                                                    document.locale))
 
 
-def _perform_kumascript_request(request, response_headers, document_locale,
-                                document_slug):
+def _perform_kumascript_request(request, response_headers, document,
+                                document_locale, document_slug):
     """Perform a kumascript GET request for a document locale and slug.
 
     This is broken out into its own utility function, both to make the view
@@ -357,6 +364,26 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             'X-FireLogger': '1.2',
             'Cache-Control': cache_control
         }
+
+        # Assemble some KumaScript env vars
+        # TODO: See dekiscript vars for future inspiration
+        # http://developer.mindtouch.com/en/docs/DekiScript/Reference/Wiki_Functions_and_Variables
+        path = document.get_absolute_url()
+        env_vars = dict(
+            path=path,
+            url=request.build_absolute_uri(path),
+            id=document.pk,
+            locale=document.locale,
+            title=document.title,
+            slug=document.slug,
+            tags=[x.name for x in document.tags.all()],
+            modified=time.mktime(document.modified.timetuple()),
+        )
+        # Encode the vars as kumascript headers, as base64 JSON-encoded values.
+        headers.update(dict(
+            ('x-kumascript-env-%s' % k,
+             base64.b64encode(json.dumps(v)))
+            for k, v in env_vars.items()))
 
         # Set up for conditional GET, if we have the details cached.
         c_meta = cache.get_many([ck_etag, ck_modified])
@@ -416,7 +443,7 @@ def _perform_kumascript_request(request, response_headers, document_locale,
             # want sanitation, so it finally gets picked up here.
             resp_body = bleach.clean(
                 resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-                strip_comments=False
+                styles=ALLOWED_STYLES, strip_comments=False
             )
 
             # Cache the request for conditional GET, but use the max_age for

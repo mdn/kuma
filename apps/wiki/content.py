@@ -1,8 +1,12 @@
+import logging
 import re
 from urllib import urlencode
 
+from xml.sax.saxutils import quoteattr
+
 import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
+from pyquery import PyQuery as pq
 
 from tower import ugettext as _
 
@@ -25,6 +29,16 @@ HEAD_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 
 def parse(src):
     return ContentSectionTool(src)
+
+
+def filter_out_noinclude(src):
+    """Quick and dirty filter to remove <div class="noinclude"> blocks"""
+    # NOTE: This started as an html5lib filter, but it started getting really
+    # complex. Seems like pyquery works well enough without corrupting
+    # character encoding.
+    doc = pq(src)
+    doc.remove('*[class=noinclude]')
+    return doc.html()
 
 
 class ContentSectionTool(object):
@@ -58,7 +72,7 @@ class ContentSectionTool(object):
     def serialize(self, stream=None):
         if stream is None:
             stream = self.stream
-        return "".join(self.serializer.serialize(stream))
+        return u"".join(self.serializer.serialize(stream))
 
     def __unicode__(self):
         return self.serialize()
@@ -102,6 +116,10 @@ class SectionIDFilter(html5lib_Filter):
                 self.known_ids.add(id)
                 return id
 
+    def slugify(self, text):
+        """Turn the text content of a header into a slug for use in an ID"""
+        return (text.replace(' ', '_'))
+
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
 
@@ -113,17 +131,63 @@ class SectionIDFilter(html5lib_Filter):
                 attrs = dict(token['data'])
                 if 'id' in attrs:
                     self.known_ids.add(attrs['id'])
+                if 'name' in attrs:
+                    self.known_ids.add(attrs['name'])
 
-        # Pass 2: Sprinkle in IDs where they're missing
-        for token in buffer:
-            if ('StartTag' == token['type'] and
+        # Pass 2: Sprinkle in IDs where they're needed
+        while len(buffer):
+            token = buffer.pop(0)
+            
+            if not ('StartTag' == token['type'] and
                     token['name'] in SECTION_TAGS):
+                yield token
+            else:
                 attrs = dict(token['data'])
-                id = attrs.get('id', None)
-                if not id:
+                
+                # Treat a name attribute as a human-specified ID override
+                name = attrs.get('name', None)
+                if name:
+                    attrs['id'] = name
+                    token['data'] = attrs.items()
+                    yield token
+                    continue
+
+                # If this is not a header, then generate a section ID.
+                if token['name'] not in HEAD_TAGS:
                     attrs['id'] = self.gen_id()
                     token['data'] = attrs.items()
-            yield token
+                    yield token
+                    continue
+                
+                # If this is a header, then scoop up the rest of the header and
+                # gather the text it contains.
+                start, text, tmp = token, [], []
+                while len(buffer):
+                    token = buffer.pop(0)
+                    tmp.append(token)
+                    if token['type'] in ('Characters', 'SpaceCharacters'):
+                        text.append(token['data'])
+                    elif ('EndTag' == token['type'] and
+                          start['name'] == token['name']):
+                        # Note: This is naive, and doesn't track other
+                        # start/end tags nested in the header. Odd things might
+                        # happen in a case like <h1><h1></h1></h1>. But, that's
+                        # invalid markup and the worst case should be a
+                        # truncated ID because all the text wasn't accumulated.
+                        break
+
+                # Slugify the text we found inside the header, generate an ID
+                # as a last resort.
+                slug = self.slugify(u''.join(text))
+                if not slug:
+                    slug = self.gen_id()
+                attrs['id'] = slug
+                start['data'] = attrs.items()
+                
+                # Finally, emit the tokens we scooped up for the header.
+                yield start
+                for t in tmp:
+                    yield t
 
 
 class SectionEditLinkFilter(html5lib_Filter):
@@ -152,17 +216,18 @@ class SectionEditLinkFilter(html5lib_Filter):
                              'title': _('Edit section'),
                              'class': 'edit-section',
                              'data-section-id': id,
-                             'data-section-src-url': '%s?%s' % (
+                             'data-section-src-url': u'%s?%s' % (
                                  reverse('wiki.document',
                                          args=[self.full_path],
                                          locale=self.locale),
-                                 urlencode({'section': id, 'raw': 'true'})
+                                 urlencode({'section': id.encode('utf-8'),
+                                            'raw': 'true'})
                               ),
-                              'href': '%s?%s' % (
+                              'href': u'%s?%s' % (
                                  reverse('wiki.edit_document',
                                          args=[self.full_path],
                                          locale=self.locale),
-                                 urlencode({'section': id,
+                                 urlencode({'section': id.encode('utf-8'),
                                             'edit_links': 'true'})
                               )
                          }},
@@ -385,12 +450,26 @@ class DekiscriptMacroFilter(html5lib_Filter):
                 continue
 
             ds_call = []
-            while len(buffer) and 'EndTag' != token['type']:
+            while len(buffer):
                 token = buffer.pop(0)
-                if 'Characters' == token['type']:
+                if token['type'] in ('Characters', 'SpaceCharacters'):
                     ds_call.append(token['data'])
+                elif 'StartTag' == token['type']:
+                    attrs = token['data']
+                    if attrs:
+                        a_out = (u' %s' % u' '.join(
+                            (u'%s=%s' % 
+                             (name, quoteattr(val))
+                             for name, val in attrs)))
+                    else:
+                        a_out = u''
+                    ds_call.append(u'<%s%s>' % (token['name'], a_out))
+                elif 'EndTag' == token['type']:
+                    if 'span' == token['name']:
+                        break
+                    ds_call.append('</%s>' % token['name'])
 
-            ds_call = ''.join(ds_call).strip()
+            ds_call = u''.join(ds_call).strip()
 
             # Snip off any "template." prefixes
             strip_prefixes = ('template.', 'wiki.')
@@ -417,7 +496,11 @@ class DekiscriptMacroFilter(html5lib_Filter):
             if m:
                 ds_call = '%s()' % (m.group(1))
 
-            yield dict(
-                type="Characters",
-                data='{{ %s }}' % ds_call
-            )
+            # HACK: This is dirty, but seems like the easiest way to
+            # reconstitute the token stream, including what gets parsed as
+            # markup in the middle of macro parameters.
+            #
+            # eg. {{ Note("This is <strong>strongly</strong> discouraged") }}
+            parsed = parse('{{ %s }}' % ds_call)
+            for token in parsed.stream:
+                yield token

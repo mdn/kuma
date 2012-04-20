@@ -2,7 +2,7 @@
     "log": {
         "console": true,
         "file": {
-            "filename": "./kumascript.log",
+            "filename": "/home/vagrant/logs/kumascript.log",
             "maxsize": 500000
         }
     },
@@ -10,8 +10,24 @@
         "port": 9080,
         "numWorkers": 4,
         "workerTimeout": 10000,
-        "document_url_template": "https://developer.mozilla.org/en-US/docs/{path}",
-        "template_url_template": "https://developer.mozilla.org/en-US/docs/en-US/Template:{path}",
-        "template_class": "KumaEJSTemplate"
+        "document_url_template": "http://localhost/en-US/docs/{path}?raw=1",
+        "template_url_template": "http://localhost/en-US/docs/en-US/Template:{name}?raw=1",
+        "template_class": "EJSTemplate",
+        "autorequire": {
+            "mdn": "MDN:Common",
+            "Culture": "DekiScript:Culture",
+            "Date": "DekiScript:Date",
+            "Json": "DekiScript:Json",
+            "List": "DekiScript:List",
+            "Map": "DekiScript:Map",
+            "Meta": "DekiScript:Meta",
+            "Num": "DekiScript:Num",
+            "Page": "DekiScript:Page",
+            "String": "DekiScript:String",
+            "Uri": "DekiScript:Uri",
+            "Web": "DekiScript:Web",
+            "Wiki": "DekiScript:Wiki",
+            "Xml": "DekiScript:Xml"
+        }
     }
 }
