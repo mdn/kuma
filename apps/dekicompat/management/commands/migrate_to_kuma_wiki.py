@@ -151,9 +151,13 @@ class Command(BaseCommand):
                     default=0,
                     help="Migrate # of English documents with other "
                     "languages"),
+
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
                     help="Measure syntax highlighter usage, skip migration"),
+        make_option('--skip-translations', action="store_true",
+                    dest="skip_translations", default=False,
+                    help="Skip migrating translated children of documents"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -199,8 +203,9 @@ class Command(BaseCommand):
             self.handle_syntax_metrics(rows)
         else:
             self.handle_migration(rows)
-            rows = self.gather_pages()
-            self.make_languages_relationships(rows)
+            if not options['skip_translations']:
+                rows = self.gather_pages()
+                self.make_languages_relationships(rows)
 
     def init(self, options):
         """Set up connections and options"""
