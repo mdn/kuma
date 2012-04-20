@@ -36,7 +36,7 @@ from taggit.utils import parse_tags
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code',
-    'dl', 'dt', 'dd', 'small', 'sup',
+    'dl', 'dt', 'dd', 'small', 'sup', 'u',
     'img',
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
@@ -46,13 +46,14 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
-ALLOWED_ATTRIBUTES['div'] = ['class', 'id']
-ALLOWED_ATTRIBUTES['pre'] = ['class', 'id']
-ALLOWED_ATTRIBUTES['span'] = ['style', ]
+ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'title', ]
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
-ALLOWED_ATTRIBUTES['a'] = ['id', 'class', 'href', 'title', ]
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', ]) for x in
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', ]
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
@@ -61,6 +62,16 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address'
 )))
+ALLOWED_STYLES = [
+    'border', 'float', 'overflow', 'min-height', 'vertical-align',
+    'white-space',
+    'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
+    'padding', 'padding-left', 'padding-top', 'padding-bottom', 'padding-right',
+    'background', # TODO: Maybe not this one, it can load URLs
+    'background-color',
+    'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
+    '-moz-column-width', '-webkit-columns', 'columns',
+]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
 # the relative severity.
@@ -549,10 +560,10 @@ class Document(NotificationsMixin, ModelBase):
         if '/' in path:
             locale, slug = path.split('/', 1)
 
-            if locale in settings.MT_TO_KUMA_LOCALE_MAP:
+            if locale.lower() in settings.MT_TO_KUMA_LOCALE_MAP:
                 # If this looks like a MindTouch locale, remap it.
                 old_locale = locale
-                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale]
+                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale.lower()]
                 # But, we only need a redirect if the locale actually changed.
                 needs_redirect = (locale != old_locale)
 
@@ -938,7 +949,7 @@ class Revision(ModelBase):
             return self.content
         return bleach.clean(
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-            strip_comments=False
+            styles=ALLOWED_STYLES, strip_comments=False
         )
 
     def get_previous(self):

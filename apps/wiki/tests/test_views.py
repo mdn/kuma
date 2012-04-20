@@ -1,6 +1,9 @@
+# This Python file uses the following encoding: utf-8
+# see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 import json
 import base64
+import time
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -229,6 +232,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         super(KumascriptIntegrationTests, self).setUp()
 
         self.d, self.r = doc_rev()
+        self.d.tags.set('foo', 'bar', 'baz')
         self.url = reverse('wiki.document', 
                            args=['%s/%s' % (self.d.locale, self.d.slug)],
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -459,6 +463,41 @@ class KumascriptIntegrationTests(TestCaseBase):
         for error in expected_errors['logs']:
             ok_(error['message'] in response.content)
 
+    @mock.patch('requests.get')
+    def test_env_vars(self, mock_requests_get):
+        """Kumascript reports errors in HTTP headers, Kuma should display them"""
+
+        # Now, trap the request from the view.
+        trap = {}
+        def my_requests_get(url, headers=None, timeout=None):
+            trap['headers'] = headers
+            return FakeResponse(
+                status_code=200,
+                body='HELLO WORLD',
+                headers={}
+            )
+        mock_requests_get.side_effect = my_requests_get
+
+        # Ensure kumascript is enabled
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 600
+
+        # Fire off the request, and capture the env vars that would have been
+        # sent to kumascript
+        response = self.client.get(self.url)
+        pfx = 'x-kumascript-env-'
+        vars = dict(
+            (k[len(pfx):], json.loads(base64.b64decode(v)))
+            for k,v in trap['headers'].items()
+            if k.startswith(pfx))
+
+        # Ensure the env vars intended for kumascript match expected values.
+        for n in ('title', 'slug', 'locale'):
+            eq_(getattr(self.d, n), vars[n])
+        eq_(self.d.get_absolute_url(), vars['path'])
+        eq_(time.mktime(self.d.modified.timetuple()), vars['modified'])
+        eq_(sorted([u'foo', u'bar', u'baz']), sorted(vars['tags']))
+
 
 class DocumentEditingTests(TestCaseBase):
     """Tests for the document-editing view"""
@@ -484,50 +523,48 @@ class DocumentEditingTests(TestCaseBase):
                                              locale=d.locale).title)
         assert "REDIRECT" in Document.uncached.get(title=old_title).html
 
-    def test_retitling_ignored_for_iframe(self):
+    def test_slug_change_ignored_for_iframe(self):
         """When the title of an article is edited in an iframe, the change is
         ignored."""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
-        new_title = 'Some New Title'
+        new_slug = 'some_new_slug'
         d, r = doc_rev()
-        old_title = d.title
+        old_slug = d.slug
         data = new_document_data()
-        data.update({'title': new_title,
-                     'slug': d.slug,
+        data.update({'title': d.title,
+                     'slug': new_slug,
                      'form': 'rev'})
         client.post('%s?iframe=1' % reverse('wiki.edit_document',
                                             args=[d.full_path]), data)
-        eq_(old_title, Document.uncached.get(slug=d.slug,
-                                             locale=d.locale).title)
-        assert "REDIRECT" not in Document.uncached.get(title=old_title).html
+        eq_(old_slug, Document.uncached.get(slug=d.slug,
+                                             locale=d.locale).slug)
+        assert "REDIRECT" not in Document.uncached.get(slug=old_slug).html
 
     @attr('clobber')
-    def test_title_slug_collision_errors(self):
+    def test_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
 
-        exist_title = "Existing doc"
         exist_slug = "existing-doc"
 
         # Create a new doc.
         data = new_document_data()
-        data.update({ "title": exist_title, "slug": exist_slug })
+        data.update({"slug": exist_slug})
         resp = client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
         # Create another new doc.
         data = new_document_data()
-        data.update({ "title": 'Some new title', "slug": 'some-new-title' })
+        data.update({"slug": 'some-new-title'})
         resp = client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
-        # Now, post an update with duplicate slug and title
+        # Now, post an update with duplicate slug
         data.update({
             'form': 'rev',
-            'title': exist_title,
             'slug': exist_slug
         })
         resp = client.post(reverse('wiki.edit_document', 
@@ -537,7 +574,6 @@ class DocumentEditingTests(TestCaseBase):
         p = pq(resp.content)
 
         ok_(p.find('.errorlist').length > 0)
-        ok_(p.find('.errorlist a[href="#id_title"]').length > 0)
         ok_(p.find('.errorlist a[href="#id_slug"]').length > 0)
 
     @attr('clobber')
@@ -926,28 +962,28 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -962,26 +998,26 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
+            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>s1</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h1>
+            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>s2</h1>
             <p>test</p>
             <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h1>
+            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>s3</h1>
             <p>test</p>
             <p>test</p>
         """ % {'full_path': d.full_path}
@@ -995,20 +1031,20 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         expected = """
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -1023,24 +1059,24 @@ class SectionEditingResourceTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         replace = """
-            <h1 id="s2">Replace</h1>
+            <h1 id="s2">s2</h1>
             <p>replace</p>
         """
         expected = """
-            <h1 id="s2">Replace</h1>
+            <h1 id="s2">s2</h1>
             <p>replace</p>
         """
         response = client.post('%s?section=s2&raw=true' %
@@ -1052,14 +1088,14 @@ class SectionEditingResourceTests(TestCaseBase):
             normalize_html(response.content))
 
         expected = """
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Replace</h1>
+            <h1 id="s2">s2</h1>
             <p>replace</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -1077,34 +1113,34 @@ class SectionEditingResourceTests(TestCaseBase):
         client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
         replace_1 = """
-            <h1 id="s1">replace</h1>
+            <h1 id="s1">replace1</h1>
             <p>replace</p>
         """
         replace_2 = """
-            <h1 id="s2">replace</h1>
+            <h1 id="s2">replace2</h1>
             <p>replace</p>
         """
         expected = """
-            <h1 id="s1">replace</h1>
+            <h1 id="replace1">replace1</h1>
             <p>replace</p>
 
-            <h1 id="s2">replace</h1>
+            <h1 id="replace2">replace2</h1>
             <p>replace</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """
@@ -1169,15 +1205,15 @@ class SectionEditingResourceTests(TestCaseBase):
         client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
-            <h1 id="s1">Head 1</h1>
+            <h1 id="s1">s1</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s2">Head 2</h1>
+            <h1 id="s2">s2</h1>
             <p>test</p>
             <p>test</p>
 
-            <h1 id="s3">Head 3</h1>
+            <h1 id="s3">s3</h1>
             <p>test</p>
             <p>test</p>
         """)
@@ -1228,6 +1264,30 @@ class SectionEditingResourceTests(TestCaseBase):
                            data)
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)
+
+    def test_raw_include_option(self):
+        doc_src = u"""
+            <div class="noinclude">{{ XULRefAttr() }}</div>
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+            <div class="noinclude">
+              <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
+            </div>
+        """
+        doc, rev = doc_rev(doc_src)
+        expected = u"""
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+        """
+        client = LocalizingClient()
+        resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]))
+        eq_(normalize_html(expected), normalize_html(resp.content.decode('utf-8')))
 
     @attr('kumawiki')
     def test_kumawiki_waffle_flag(self):
