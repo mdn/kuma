@@ -271,7 +271,7 @@
       
       {% if more_by | length > 1 %}
       <div class="module" id="moreby">
-        <h3 class="mod-title">More by {{ submission_creator(submission) }}</h3>
+        <h3 class="mod-title">{{ _('More by {creator}') | f(creator=submission_creator(submission)) | safe }}</h3>
         <ul class="gallery">
           {% for more_submission in more_by %}
             {% if more_submission.id != submission.id %}
@@ -283,7 +283,7 @@
       {% endif %}
       
       <div id="demo-report">
-        <h3>Report a Problem</h3>
+        <h3>{{ _("Report a Problem") }}</h3>
         <ul>
             <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking">{{_('Demo is not working')}}</a></li>
             <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=inappropriate">{{_('Demo is inappropriate')}}</a></li>
