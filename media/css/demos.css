@@ -140,6 +140,7 @@
   -o-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
+#demo-main .demo-details .descLink { color: #69b9f3; }
 
 #featured-demos .side { position: absolute; z-index: 15; top: 150px; width: 261px; height: 195px; padding: 9px 28px 54px; background: url("../img/demos/bg-smallscreen.png") center top no-repeat; }
 #featured-demos .side .preview { background: #000; width: 261px; height: 195px; overflow: hidden; }
@@ -448,6 +449,8 @@
 .demo .stats .comments a:hover, .demo .stats .comments a:focus, .demo .stats .comments a:active { color: #333; }  
 
 .demo .desc { font-size: .786em; margin: 0 0 .75em; }
+.demo .descLink { color: #79120e; font-weight:bold; }
+
 .demo .launch { position: absolute; top: 120px; right: 12px; font-size: 1.2em; }
 .demo .launch .button { color: #fff; }
 
