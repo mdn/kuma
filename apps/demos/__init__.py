@@ -165,7 +165,10 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"),
         "description": _("With the Websocket API and protocol, you can open a two-way channel between the browser and a server, for scalable and real-time data flow. No more server polling!"),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>With the <a href=\"https://developer.mozilla.org/en/WebSockets\">Websocket API and protocol</a>, you can open a two-way communication channel between the browser and a server. This lets you send messages to the server and receive event-driven responses in real time, all without server polling. Websockets are simple, scalable, and future-proof. <a href=\"http://www.websocket.org/\">Websocket.org</a> even argues that Websockets are the \"next evolutionary step in web communication.\"</p>
+<p>Not excited yet? This is about more than just sending messages&mdash;it's about highly interactive experiences. Last month, Little Workshop and Mozilla collaborated to create <a href=\"https://hacks.mozilla.org/2012/03/browserquest/\">BrowserQuest</a>, a multiplayer online game that uses Websockets at its core. As if that weren't enough, Mozilla's very own Rob Hawkes created <a href=\"http://rawkets.com/\">Rawkets</a>, a multiplayer space shooter that also uses Websockets.</p>
+<p>Of course, you can't do much with Websockets unless you have a server to communicate with. Thankfully, there are many free Websockets servers available on the web, including <a href=\"http://pusher.com/\">Pusher</a>, <a href=\"http://nodejitsu.com/#/\">Nodejitsu</a>, and <a href=\"http://beaconpush.com/\">Beaconpush</a>. If you prefer, you could even set up your own Websockets server.</p>
+<p>What can you create with the Websocket API and protocol? The next BrowserQuest? A better Rawkets? Show the world this month the May Dev Derby!</p>"""),
     },
     {
         "tag_name": "challenge:2012:june",
@@ -181,13 +184,13 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     },
     {
         "tag_name": "challenge:2012:july",
-        "title": _("July 2012 Dev Derby Challenge - ??"),
-        "short_title": _("??"),
+        "title": _("July 2012 Dev Derby Challenge - No JavaScript"),
+        "short_title": _("No JavaScript"),
         "dateline": _("July 2012"),
         "short_dateline": _("July"),
-        "tagline": _("??"),
-        "summary": _("??"),
-        "description": _("??"),
+        "tagline": _("Code with no.js!"),
+        "summary": _("Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user input with HTML, and more. What else can you do without JavaScript?"),
+        "description": _("Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user input with HTML, and more. What else can you do without JavaScript?"),
         "learn_more": [],
         "tab_copy": _("??"),
     },
