@@ -87,49 +87,54 @@
       <p id="close"><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}">{{_('Remove toolbar')}}</a></p>
     
     <script type="text/javascript">
-    $("#share-opts").ready(function(){
 
-    	$("#share-opts").addClass("js").hide();
-    	
-    	$("#sharetoggle").click(function() {
-        $("#share-opts").fadeIn(100);
+    $(document).ready(function() {
+
+      var $shareOpts = $("#share-opts"),
+          $shareToggle = $("#sharetoggle");
+
+      // Hide the "share" dropdown options
+      $shareOpts.addClass("js").hide();
+
+      // Toggle the dropdown when the button is clicked
+      $shareToggle.click(function() {
+        $shareOpts.fadeIn(100);
         return false;
-    	});
-    	
-      $("#share-opts").hover(
+      });
+
+      $shareOpts.hover(
         function() {
           $(this).show();
         },
         function() {
           $(this).fadeOut(100);
-          $("#sharetoggle").blur();
+          $shareToggle.blur();
         }
       );
-    	
-      $(document).bind('click', function(e) {
-        var $clicked = $(e.target);
-        if (! $clicked.parents().hasClass("share"))
-          $("#share-opts").hide();
-      });
-      
-      $("a, input, textarea, button").bind('focus', function(e) {
-        var $focused = $(e.target);
-        if (! $focused.parents().hasClass("share"))
-          $("#share-opts").hide();
-      });
-      
-      $("#shorturl").focus(function() {
-        $(this).select().addClass("focus");
-      });
-      $("#shorturl").click(function() {
-        $(this).select().addClass("focus");
-      });
-      $("#shorturl").blur(function() {
-        $(this).removeClass("focus");
-      });
-    
-    });
 
+      $(document).bind("click", function(e) {
+        if (! $(e.target).parents().hasClass("share"))
+          $shareOpts.hide();
+      });
+      
+      $("a, input, textarea, button").bind("focus", function(e) {
+        if (! $(e.target).parents().hasClass("share"))
+          $shareOpts.hide();
+      });
+      
+      $("#shorturl")
+        .focus(function() {
+          $(this).select().addClass("focus");
+        })
+        .click(function() {
+          $(this).select().addClass("focus");
+        })
+        .blur(function() {
+          $(this).removeClass("focus");
+        });
+
+
+    });
     </script>
     
   </header>
