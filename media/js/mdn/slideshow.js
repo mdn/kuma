@@ -72,8 +72,10 @@ $slideshow = {
 $(function() {
     // add a 'js' class to the slideshow container.
     // We'll use this as a style hook so the content can degrade gracefully when JS is absent.
-    $("#slideshow").addClass("js");
-
-    // initialise the slideshow when the DOM is ready
-    $slideshow.init();
+    var show = $("#slideshow");
+    if(show.length) {
+        show.addClass("js");
+        // initialise the slideshow when the DOM is ready
+        $slideshow.init();
+    }
 });
