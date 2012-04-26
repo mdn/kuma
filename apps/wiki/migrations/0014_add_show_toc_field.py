@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Revision.show_toc'
-        db.add_column('wiki_revision', 'show_toc', self.gf('django.db.models.fields.BooleanField')(default=True), keep_default=False)
+        db.add_column('wiki_revision', 'show_toc', self.gf('django.db.models.fields.BooleanField')(default=True), keep_default=True)
 
 
     def backwards(self, orm):
