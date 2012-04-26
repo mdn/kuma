@@ -15,5 +15,8 @@ DELETE FROM actioncounters_actioncounterunique
     WHERE unique_hash IN
         (SELECT unique_hash FROM dup_actioncounter_hashes);
 
+DROP INDEX actioncounters_actioncounterunique_unique
+    ON actioncounters_actioncounterunique;
+
 ALTER TABLE actioncounters_actioncounterunique 
     ADD UNIQUE actioncounters_actioncounterunique_unique (unique_hash);

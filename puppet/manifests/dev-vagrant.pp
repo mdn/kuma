@@ -34,7 +34,7 @@ class dev {
         apache:    stage => basics;
         mysql:     stage => basics;
         memcache:  stage => basics;
-        sphinx:    stage => basics;
+#        sphinx:    stage => basics;
 
         python: stage => langs;
         php:    stage => langs;

@@ -5,6 +5,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS
     wiki_document,
+    wiki_documenttag,
     wiki_editortoolbar,
     wiki_firefoxversion,
     wiki_helpfulvote,
@@ -12,7 +13,8 @@ DROP TABLE IF EXISTS
     wiki_relateddocument,
     wiki_reviewtag,
     wiki_reviewtaggedrevision,
-    wiki_revision;
+    wiki_revision,
+    wiki_taggeddocument;
 
 DELETE FROM south_migrationhistory 
     WHERE app_name="wiki";
