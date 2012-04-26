@@ -288,7 +288,7 @@
 #source .download a:hover, #source .download a:focus, #source .download a:active { background-position: 0 -100px; }
 #source .browse a { background-position: 0 -200px; }
 #source .browse a:hover, #source .browse a:focus, #source .browse a:active { background-position: 0 -300px; }
-#source .note { color: #666; font-weight: normal; font-size: .857em; }
+#source .note { color: #666; font-weight: normal; font-size: .857em; display: block; }
 #source a:hover .note, #source a:focus .note, #source a:active .note { color: #333; }
 #source .license { font-size: .857em; text-transform: uppercase; color: #666; padding-left: 50px; min-height: 40px; margin: 0; background: url("../img/demos/download-icons.png") 0 100px no-repeat; }
 #source .apache { background-position: 0 -400px; }
