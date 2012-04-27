@@ -549,6 +549,8 @@ MINIFY_BUNDLES = {
             'css/wiki-screen.css',
             'syntaxhighlighter/styles/shCore.css',
             'syntaxhighlighter/styles/shThemeDefault.css',
+            'css/jqueryui/jqueryui.css',
+            'css/jqueryui/jquery-ui-1.8.14.custom.css'
         ),
         'home': (
             'css/home.css',
@@ -658,6 +660,10 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/scripts/shBrushPlain.js',
             'js/wiki.js',
             'js/main.js',
+            'js/jquery-1.4.2.min.js',
+            'js/libs/jqueryui.min.js',
+            'js/libs/tag-it.js',
+            'js/wiki-tags-edit.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',
