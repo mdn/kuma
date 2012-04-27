@@ -16,6 +16,7 @@
   <meta property="og:description" content="{{ submission.summary }}"/>
   
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/modals.css">
   <script src="{{ MEDIA_URL }}js/mdn/jquery-1.4.2.min.js"></script>
   
   <!--[if IE]>
@@ -58,7 +59,17 @@
           <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
         </ul>
       </li>
+      <li class="report"><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking">{{ _("Report a Problem") }}</a>
+      </li>
     </ul>
+
+    <!-- hide share link if no javascript present -->
+    <noscript>
+      <style type="text/css">
+        .tools .share { display: none; }
+      </style>
+    </noscript>
+
 
     <nav class="paging">
       <ul role="navigation">
@@ -77,6 +88,7 @@
     
     <script type="text/javascript">
     $("#share-opts").ready(function(){
+
     	$("#share-opts").addClass("js").hide();
     	
     	$("#sharetoggle").click(function() {
@@ -158,6 +170,11 @@
           }
       };
   </script>
+
+  <!-- provide "report" functionality -->
+  <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
+  <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.simplemodal.1.4.1.min.js"></script>
+  <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/modal-control.js"></script>
 
 </body>
 </html>

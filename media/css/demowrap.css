@@ -34,13 +34,14 @@ h1, h2, h3, h4, h5, h6 { font-size: 1em; }
 .tools li { float: left; margin: 0; border-left: 1px solid #333; }
 .tools button { font-family: inherit; font-size: 1em; cursor: pointer; background: transparent none; margin: 0; padding: 0; border: 0; color: #fff; }
 .tools .like span { display: block; white-space: nowrap; height: 1.5em; margin: -1px -3px; padding: .5em 10px .5em 35px; background: url("../img/demobox-icons.png") 12px -994px no-repeat; }
-.tools .unlike span { display: block; white-space: nowrap; height: 1.5em; padding: .5em 10px .5em 35px; background: url("../img/demobox-icons.png") 12px -1044px no-repeat; }
+.tools .unlike span { display: block; white-space: nowrap; height: 1.5em; /* margin: -1px -3px; */ padding: .5em 10px .5em 35px; background: url("../img/demobox-icons.png") 12px -1044px no-repeat; }
 .tools .like:hover span, .tools .like:focus span, .tools .unlike:hover span, .tools .unlike:focus span { background-color: #333; color: #eee; text-decoration: underline; }
-.tools .share a { border-right: 1px solid #333; float: left; height: 1.5em; padding: .5em 12px .5em 35px; background: url("../img/demobox-icons.png") 12px -1092px no-repeat; }
-.tools .share a:hover, .tools .share a:focus, .tools .share a:active { background-color: #333; }
+.tools .share a, .tools .report a { border-right: 1px solid #333; float: left; height: 1.5em; padding: .5em 12px .5em 35px; background: url("../img/demobox-icons.png") 12px -1092px no-repeat; }
+.tools .share a:hover, .tools .share a:focus, .tools .share a:active, .tools .report a:hover, .tools .report a:focus, .tools .report a:active { background-color: #333; }
 .tools .share { position: relative; z-index: 99; }
+.tools .report a { background: url("../img/icn-delete.png") 12px -42px no-repeat; }
 
-#share-opts { margin: .25em 0; width: 220px; background: #000; }
+#share-opts { margin: .25em 0; width: 220px; background: #000; clear:both; display:none; }
 #share-opts.js { position: absolute; top: 2.5em; left: -1px; z-index: 99; float: left; margin: 0; padding: 0 10px; background: #000; border: 1px solid #808080; -moz-box-shadow: 5px 5px 0 rgba(0,0,0,.5); -webkit-box-shadow: 5px 5px 0 rgba(0,0,0,.5); box-shadow: 5px 5px 0 rgba(0,0,0,.5); }
 #share-opts li { font-size: 1.166em; float: none; border-left: 0; border-top: 1px dotted #3f3f3f; padding: .5em 0; margin: 0; background: none; }
 #share-opts li:first-child { border: 0; }

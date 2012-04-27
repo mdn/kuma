@@ -511,6 +511,7 @@ MINIFY_BUNDLES = {
     'css': {
         'mdn': (
             'css/mdn-screen.css',
+            'css/modals.css',
             'css/mdn-video-player.css',
             'css/mdn-forums-sidebar-module.css',
             'css/mdn-calendar.css',
@@ -607,6 +608,7 @@ MINIFY_BUNDLES = {
             'js/mdn/jquery.hoverIntent.minified.js',
             'js/mdn/jquery.scrollTo-1.4.2-min.js',
             'js/mdn/demos.js',
+            'js/mdn/modal-control.js'
         ),
         'demostudio_devderby_landing': (
             'js/mdn/demos-devderby-landing.js',
