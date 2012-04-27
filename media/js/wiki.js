@@ -4,7 +4,6 @@
  */
 
 
-
 (function ($, gettext) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
@@ -14,40 +13,40 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
-        var $bodyIs = $('body').is;
+        var $body = $('body');
 
-        if ($bodyIs('.new')) {
+        if ($body.is('.new')) {
             initPrepopulatedSlugs();
         }
         initDetailsTags();
 
-        if ($bodyIs('.document') || $bodyIs('.home')) {  // Document page
+        if ($body.is('.document') || $body.is('.home')) {  // Document page
             //initForTags();
             //updateShowforSelectors();
             initHelpfulVote();
             initSectionEditing();
-        } else if ($bodyIs('.review')) { // Review pages
+        } else if ($body.is('.review')) { // Review pages
             //initForTags();
             //updateShowforSelectors();
             initApproveReject();
         }
-        if ($bodyIs('.document')){
+        if ($body.is('.document')){
             initSyntaxHighlighter();
         }
 
-        if ($bodyIs('.home')) {
+        if ($body.is('.home')) {
             initClearOddSections();
         }
 
-        if ($bodyIs('.edit, .new, .translate')) {
+        if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
             initArticlePreview();
             // initTitleAndSlugCheck();
             // initDrafting();
         }
-        if ($bodyIs('.edit.is-template') ||
-                $bodyIs('.new.is-template')) {
+        if ($body.is('.edit.is-template') ||
+                $body.is('.new.is-template')) {
             var textarea = $('textarea#id_content').hide();
             
             var editor = window.ace_editor = ace.edit("ace_content");
