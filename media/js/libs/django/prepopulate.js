@@ -4,6 +4,7 @@
  * license details.
  * Modified slightly to handle fallback to full title if slug is empty.
  * Also modified to only trigger onchange.
+ * Also modified to catch illegal slug characters
  */
 (function($) {
     $.fn.prepopulate = function(dependencies, maxLength) {
@@ -34,9 +35,17 @@
                 });
 
                 s = values.join(' ');
-                s = s.replace(' ', '_');
+                
+                // Remove illegal characters
+                // Allowing "$" based on the code statement below
+                s = s.replace(/[^a-zA-Z0-9\$]+/g, '_');
+
                 // "$" is used for verb delimiter in URLs
                 s = s.replace(/\$/g, ''); 
+
+                // Don't allow "_____" mess
+                s = s.replace(/\_+/g, '_');
+
                 // trim to first num_chars chars
                 s = s.substring(0, maxLength);
 
