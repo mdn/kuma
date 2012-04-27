@@ -145,19 +145,21 @@
       src="{{ submission.demo_package.url.replace('.zip', '/index.html') }}"></iframe>
 
   <script type="text/javascript">
-    // Adaptor for demo protocol to make WoW demos run
-    var ifrm = document.getElementById('demoframe');
-    ifrm.addEventListener('load', function (ev) {
-        if (ifrm.contentWindow && ifrm.contentWindow.postMessage) {
-            ifrm.contentWindow.postMessage('start_demo', '*');
-        }
-    }, true);
+    (function() {
+      // Adaptor for demo protocol to make WoW demos run
+      var ifrm = document.getElementById('demoframe');
+      ifrm.addEventListener('load', function (ev) {
+          var contentWindow = ifrm.contentWindow;
+          if (contentWindow && contentWindow.postMessage) {
+              contentWindow.postMessage('start_demo', '*');
+          }
+      }, true);
+    })();
   </script>
 
   <script type="text/javascript">
     $('#share-opts li a').click(function () {
-        var link = $(this);
-        window.open(link.attr('href'), 'sharer', 
+        window.open($(this).attr('href'), 'sharer', 
             'toolbar=0, status=0, resizable=1, width=626, height=436');
         return false;
     });
