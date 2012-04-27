@@ -13,6 +13,8 @@
     <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_url(1)) }}"/>    
     <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
     <meta property="og:description" content="{{ submission.summary }}"/>
+
+    <meta name="description" content="{{ submission.summary }}" />
 {% endblock %}
 
 {% block content %}
