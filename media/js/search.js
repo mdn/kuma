@@ -7,26 +7,33 @@ $(document).ready(function() {
     $('#search-tabs input[name="author"]').autoPlaceholderText();
     $('#search-tabs input[name="tags"]').autoPlaceholderText();
 
-    $("#tab-wrapper form").submit(function() {
+    $('#tab-wrapper form').submit(function() {
         $('input.auto-fill').each(function() {
-            if ($(this).val() == $(this).attr('placeholder')) {
-                $(this).val('');
+            var $this = $(this);
+            if ($this.val() == $this.attr('placeholder')) {
+                $this.val('');
             }
         });
     });
 
-    $('.datepicker').datepicker();
-    $('.datepicker').attr('readonly', 'readonly').css('background', '#ddd');
+    // Create the datepicker
+    $datePicker = $('.datepicker');
+    $datePicker.datepicker();
+    $datePicker.attr('readonly', 'readonly').css('background', '#ddd');
 
     // Force numeric input for num_votes
     $('input.numeric').numericInput();
 
     $('select', cache_search_date).change(function () {
-        if ($(this).val() == 0) {
-            $('input', $(this).parent()).hide();
+        var $this = $(this),
+            $input = $('input', $this.parent());
+
+        if ($this.val() == 0) {
+            $input.hide();
         } else {
-            $('input', $(this).parent()).show();
+            $input.show();
         }
+        
     }).change();
 
     switch(parseInt($('#where').text(), 10)) {
