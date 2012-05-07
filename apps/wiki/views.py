@@ -378,6 +378,7 @@ def _perform_kumascript_request(request, response_headers, document,
             slug=document.slug,
             tags=[x.name for x in document.tags.all()],
             modified=time.mktime(document.modified.timetuple()),
+            cache_control=cache_control,
         )
         # Encode the vars as kumascript headers, as base64 JSON-encoded values.
         headers.update(dict(
@@ -396,7 +397,17 @@ def _perform_kumascript_request(request, response_headers, document,
         resp = requests.get(url, headers=headers,
             timeout=constance.config.KUMASCRIPT_TIMEOUT)
 
-        if resp.status_code == 200:
+        if resp.status_code == 304:
+            # Conditional GET was a pass, so use the cached content.
+            c_result = cache.get_many([ck_body, ck_errors])
+            resp_body = c_result.get(ck_body, '').decode('utf-8')
+            resp_errors = c_result.get(ck_errors, None)
+
+            # Set a header so we can see what happened in caching.
+            response_headers['X-Kumascript-Caching'] = (
+                    '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
+
+        elif resp.status_code == 200:
             # HACK: Assume we're getting UTF-8, which we should be.
             # TODO: Better solution would be to upgrade the requests module
             # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
@@ -448,22 +459,14 @@ def _perform_kumascript_request(request, response_headers, document,
 
             # Cache the request for conditional GET, but use the max_age for
             # the cache timeout here too.
-            cache.set_many({
-                ck_etag: resp.headers.get('etag'),
-                ck_modified: resp.headers.get('last-modified'),
-                ck_body: resp_body,
-                ck_errors: resp_errors
-            }, timeout=max_age)
-
-        elif resp.status_code == 304:
-            # Conditional GET was a pass, so use the cached content.
-            c_result = cache.get_many([ck_body, ck_errors])
-            resp_body = c_result.get(ck_body, None)
-            resp_errors = c_result.get(ck_errors, None)
-
-            # Set a header so we can see what happened in caching.
-            response_headers['X-Kumascript-Caching'] = (
-                    '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
+            cache.set(ck_etag, resp.headers.get('etag'),
+                      timeout=max_age)
+            cache.set(ck_modified, resp.headers.get('last-modified'),
+                      timeout=max_age)
+            cache.set(ck_body, resp_body.encode('utf-8'),
+                      timeout=max_age)
+            if resp_errors:
+                cache.set(ck_errors, resp_errors, timeout=max_age)
 
         elif resp.status_code == None:
             resp_errors = [
