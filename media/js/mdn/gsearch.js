@@ -1,18 +1,17 @@
 google.load("search", "1", {
     "nocss" : true,
     "nooldnames" : true,
-    "language": $('html').attr('lang')
+    "language": $("html").attr("lang")
 });
 
 $(document).ready(function() {
+    // Place branding
     google.search.Search.getBranding(document.getElementById("site-search-gg"));
-});
 
-/* Run a Google Search through the API */
-$(document).ready(function() {
+    /* Run a Google Search through the API */
     var sr = $('#search-results'),
-        query = sr.attr('data-q');
-    if (!$('#search-results').length || !query)
+        query = sr.attr("data-q");
+    if (!rs.length || !query)
         return;
 
     // branding
@@ -20,8 +19,8 @@ $(document).ready(function() {
 
     // restrict to MDN only
     var siteSearch = new google.search.WebSearch();
-    siteSearch.setUserDefinedLabel('');
-    siteSearch.setSiteRestriction('developer.mozilla.org');
+    siteSearch.setUserDefinedLabel("");
+    siteSearch.setSiteRestriction("developer.mozilla.org");
     siteSearch.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
     siteSearch.clearResults();
 
@@ -32,7 +31,7 @@ $(document).ready(function() {
 
         var cursor = siteSearch.cursor;
         if (!cursor && siteSearch.results.length == 0) {
-            sr.html('<p>No results found.</p>');
+            sr.html("<p>No results found.</p>");
         } else if (cursor.currentPageIndex < cursor.pages.length - 1) {
             // this is recursive. google.search will re-call its callback, i.e.
             // this function when it gets the next page of result.
