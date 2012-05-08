@@ -682,10 +682,10 @@ MINIFY_BUNDLES = {
             # Home Page
             # cycle and slideshow only needed on the home page (or any page
             # featuring the slide show widget).
-            'js/mdn/jquery.cycle.js',
-            'js/mdn/slideshow.js',
-            'js/mdn/TabInterface.js',
-            'js/mdn/home.js',
+            #'js/mdn/jquery.cycle.js',
+            #'js/mdn/slideshow.js',
+            #'js/mdn/TabInterface.js',
+            #'js/mdn/home.js',
         ),
         'framebuster': (
             'js/framebuster.js',
