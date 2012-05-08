@@ -1,6 +1,8 @@
-$(function() {
+$(document).ready(function() {
 
-    var markers = [], $mapCanvas = $("#map_canvas"), address;
+    var markers = [], 
+        $mapCanvas = $("#map_canvas"), 
+        address;
 
     $("#upcoming tbody tr").each(function(){
         var $self = $(this),
@@ -21,9 +23,9 @@ $(function() {
     });
 
     // Start rendering the map with a default position.
-    $mapCanvas.gMap({longitude: 1, latitude: 10, markers: markers, zoom: 2});
-    $("#upcoming").tablesorter({sortList:[[0,0]]});
-    $("#past").tablesorter({sortList:[[0,1]]});
+    $mapCanvas.gMap({ longitude: 1, latitude: 10, markers: markers, zoom: 2 });
+    $("#upcoming").tablesorter({ sortList:[[0,0]] });
+    $("#past").tablesorter({ sortList:[[0,1]] });
 
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
