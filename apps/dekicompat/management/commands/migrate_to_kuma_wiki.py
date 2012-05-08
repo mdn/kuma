@@ -12,6 +12,7 @@ import datetime
 import hashlib
 import itertools
 import json
+import os
 import re
 import sys
 import time
@@ -27,13 +28,17 @@ from django.core.management.base import (BaseCommand, NoArgsCommand,
 import django.db
 from django.db import connections, transaction
 from django.db.utils import DatabaseError
+from django.template.defaultfilters import slugify
 from django.utils import encoding, hashcompat
 
 import commonware.log
 
 from sumo.urlresolvers import reverse
 
-from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES)
+from wiki.models import (Document, Revision,
+                         Attachment, AttachmentRevision,
+                         CATEGORIES, SIGNIFICANCES,
+                         rev_upload_to)
 
 from wiki.models import REDIRECT_CONTENT
 import wiki.content
@@ -152,6 +157,8 @@ class Command(BaseCommand):
                     default=0,
                     help="Migrate # of English documents with other "
                     "languages"),
+        make_option('--files', action="store_true", dest="files", default=False,
+                    help="Migrate all files."),
 
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
@@ -207,6 +214,10 @@ class Command(BaseCommand):
             if not options['skip_translations']:
                 rows = self.gather_pages()
                 self.make_languages_relationships(rows)
+
+        if options['files']:
+            self.handle_file_migration()
+            
 
     def init(self, options):
         """Set up connections and options"""
@@ -1026,3 +1037,125 @@ class Command(BaseCommand):
         convert each row's list of columns to a dict."""
         names = [x[0] for x in cursor.description]
         return (dict(zip(names, row)) for row in cursor)
+
+    def get_filesystem_storage_root(self):
+        cursor = self.wikidb.cursor()
+        cursor.execute("""
+            SELECT config_value
+            FROM   config
+            WHERE  config_key = 'storage/fs/path';
+        """)
+        return cursor.fetchall()[0][0]
+
+    def handle_file_migration(self):
+        cursor = self.wikidb.cursor()
+        # Get as much information about each file as possible
+        # up-front; some of it's redundant with stuff we'll look up
+        # later, but getting it early helps a bit with processing.
+        #
+        # TODO: This currently does *not* migrate files which are
+        # marked as deleted in MindTouch. I'm not sure the file
+        # contents for those are even retrievable, but is it worth
+        # looking into?
+        cursor.execute("""
+            SELECT res_id, res_headrev, res_create_timestamp,
+                   res_update_timestamp, res_create_user_id,
+                   res_update_user_id, resrev_name, resrev_mimetype
+            FROM   resources
+            WHERE  res_type = 2
+                   AND resrev_deleted = 0;
+        """)
+        file_rows = list(self._query_dicts(cursor))
+        for row in file_rows:
+            self.handle_file(row)
+        return
+
+    def handle_file(self, row):
+        # First, figure out if we've already done some migration work
+        # on this file. get_or_create is a bit tricky here, so we
+        # manually look up and then create as needed.
+        attachment = Attachment.objects.get_or_create(mindtouch_attachment_id=row['res_id'],
+                                                      defaults={
+                                                       'title': row['resrev_name'],
+                                                       'slug': slufigy(row['resrev_name']),
+                                                       'modified': row['res_update_timestamp']})
+        # Now get the revisions.
+        cursor = self.wikidb.cursor()
+        cursor.execute("""
+            SELECT resrev_id, resrev_user_id, resrev_name,
+                   resrev_change_description, resrev_timestamp,
+                   resrev_content_id, resrev_mimetype
+            FROM   resourcerevs
+            WHERE  resrev_res_id = %s
+                   AND resrev_deleted = 0;
+        """ % row['res_id'])
+        rev_rows = list(self._query_dicts(cursor))
+        for rev_row in rev_rows:
+            # Make sure we haven't migrated this revision already.
+            if not AttachmentRevision.objects.exists(mindtouch_old_id=rev_row['resrev_id']):
+                self.handle_file_revision(attachment, rev_row)
+        attachment.revisions.order_by('-created')[0].make_current()
+        
+
+    def handle_file_revision(self, attachment, rev_row):
+        # Now we get the contents of the file, and build a Revision.
+        cursor = self.wikidb.cursor()
+        cursor.execute("""
+            SELECT rescontent_value, rescontent_mimetype,
+                   rescontent_location, rescontent_res_rev
+            FROM   resourcecontents
+            WHERE  rescontent_id = %s
+        """ % rev_row['resrev_content_id'])
+        content_row = list(self._query_dicts(cursor))[0]
+
+        # Now the fun part -- figuring out where to get the file
+        # contents!
+        #
+        # We start by looking at rescontent_location; if it's not
+        # NULL, it's the filesystem path of the file.
+        file_contents = None
+        file_path = None
+        if rev_row['rescontent_location'] is not None:
+            file_path = rev_row['rescontent_location']
+        # If it wasn't there, it may be in a blob in the database.
+        elif rev_row['rescontent_value']:
+            file_contents = rev_row['rescontent_value']
+        # And if it wasn't there, we get to construct a filesystem
+        # path that hopefully corresponds to where the file exists!
+        else:
+            fs_root = self.get_filesystem_storage_root()
+            padded_id = "%04i" % attachment.mindtouch_attachment_id
+            dir_id = padded_id[:3]
+            file_id = padded_id[3]
+            file_path = os.path.join(fs_root, dir_id,
+                                     "%s.res" % file_id,
+                                     "%s.bin" % row['rescontent_res_rev'])
+            if not os.path.exists(file_path):
+                print "File error (Attachment %s): cannot locate %s in database or on filesystem" % (attachment.mindtouch_old_id, file_path)
+                return
+        if file_path is not None:
+            file_contents = open(file_path, 'rb').read()
+        # Now we create a file in the location kuma wants, and dump the contents in.
+        now = datetime.datetime.now()
+        file_dir = os.path.join(settings.MEDIA_ROOT, "attachments/%(date)s/%(id)s/%(md5)s" % {
+            'date': now.strftime('%Y/%m/%d'),
+            'id': attachment.id,
+            'md5': hashlib.md5(str(now)).hexdigest()
+            })
+        if not os.path.exists(file_dir):
+            os.system('mkdir -p %s' % file_dir)
+        newfile = open(os.path.join(file_dir, rev_row['resrev_name']), 'wb')
+        newfile.write(file_contents)
+        newfile.close()
+        # Finally, create the revision.
+        rev = AttachmentRevision(attachment=attachment,
+                                 mime_type=content_row['rescontent_mimetype'],
+                                 title=rev_row['resrev_name'],
+                                 slug=slugify(rev_row['resrev_name']),
+                                 description='', # TODO: work out how to pull the mindtouch namespaces description resource
+                                 created=rev_row['resrev_timestamp'],
+                                 is_approved=True,
+                                 is_mindtouch_migration=True)
+        rev.file = os.path.join(file_dir, rev_row['resrev_name'])
+        rev.creator_id = self.get_django_user_id_for_deki_id(revrow['res_create_user_id'])
+        rev.save()           
