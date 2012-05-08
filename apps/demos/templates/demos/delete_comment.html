@@ -47,9 +47,15 @@
 
         <form id="demo-remove" method="post" target="_top" action=".">
             {{ csrf() }}
+
             <input type="hidden" name="next" value="{{ request.GET.get('next') }}" />
-            <button type="submit" class="remove"><span>{{_("Delete comment")}}</span></button>
-            or <a class="closeModal" href="{{ next }}">{{_('Cancel')}}</a>
+
+            {% trans %}
+              <button type="submit" class="remove"><span>Delete comment</span></button>
+              or  <a class="closeModal" href="{{ next }}">Cancel</a>
+            {% endtrans %}
+
+
         </form>
         <ul>
 

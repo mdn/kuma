@@ -2,7 +2,7 @@
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% from "wiki/includes/sidebar_modules.html" import document_tabs %}
-{% set title = _('Edit Article | {document}')|f(document=document.title) %}
+{% set title = _('{document} | Edit Article')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {# TODO: Change KB url to landing page when we have one #}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
@@ -105,7 +105,7 @@
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
-                <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
+                <li><label>{{_('Generate table of contents:')}}</label> {{ revision_form.show_toc | safe }}</li>
             </ul>
           {% endif %}
 
@@ -123,6 +123,15 @@
               <div id="ace_content"></div>
             {% endif %}
             <input type="hidden" name="form" value="rev" />
+
+            <section class="page-meta">
+              {% set tags = document.tags.all() %}
+              <section id="page-tags">
+                <h2>{{ _('Tags') }}</h2>
+                <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
+              </section>
+            </section>
+
           <section>
           <h4>{{_('Review needed?')}}</h4>
             {{ revision_form.review_tags|safe }}
@@ -155,3 +164,4 @@
     {% endif %}
 
 {% endblock %}
+

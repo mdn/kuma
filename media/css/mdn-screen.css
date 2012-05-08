@@ -38,8 +38,7 @@ Font sizes -
   src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
   src: url('../fonts/League_Gothic-webfont.eot?') format('eot'), /* IE6-8 */
        url('../fonts/League_Gothic-webfont.woff') format('woff'), /* Modern browsers */
-  	   url('../fonts/League_Gothic-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/League_Gothic-webfont.svg#webfont') format('svg'); /* Opera */
+  	   url('../fonts/League_Gothic-webfont.ttf') format('truetype'); /* Older Webkits */
 	font-weight: normal;
 	font-style: normal;
 }
@@ -49,8 +48,7 @@ Font sizes -
 	src: url('../fonts/BebasNeue-webfont.eot'); /* IE9 */
  	src: url('../fonts/BebasNeue-webfont.eot?') format('eot'), /* IE6-8 */
  	     url('../fonts/BebasNeue-webfont.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/BebasNeue-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/BebasNeue-webfont.svg#webfont') format('svg'); /* Opera */
+	     url('../fonts/BebasNeue-webfont.ttf') format('truetype'); /* Older Webkits */
 	font-weight: normal;
 	font-style: normal;
 }
@@ -60,8 +58,7 @@ Font sizes -
 	src: url('../fonts/CartoGothicStd-Bold-webfont.eot'); /* IE9 */
  	src: url('../fonts/CartoGothicStd-Bold-webfont.eot?') format('eot'), /* IE6-8 */
  		   url('../fonts/CartoGothicStd-Bold-webfont.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/CartoGothicStd-Bold-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/CartoGothicStd-Bold-webfont.svg#webfont') format('svg'); /* Opera */
+	     url('../fonts/CartoGothicStd-Bold-webfont.ttf') format('truetype'); /* Older Webkits */
 	font-weight: bold;
 	font-style: normal;
 }
@@ -71,8 +68,7 @@ Font sizes -
 	src: url('../fonts/ABTSmilk.eot'); /* IE9 */
  	src: url('../fonts/ABTSmilk.eot?') format('eot'), /* IE6-8 */
  	     url('../fonts/ABTSmilk.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/ABTSmilk.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/ABTSmilk.svg#webfont') format('svg'); /* Opera */
+	     url('../fonts/ABTSmilk.ttf') format('truetype'); /* Older Webkits */
 	font-weight: normal;
 	font-style: normal;
 }
@@ -82,14 +78,13 @@ Font sizes -
 	src: url('../fonts/MuseoSans_500-webfont.eot'); /* IE9 */
  	src: url('../fonts/MuseoSans_500-webfont.eot?') format('eot'), /* IE6-8 */
  	     url('../fonts/MuseoSans_500-webfont.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'), /* Older Webkits */
-	     url('../fonts/MuseoSans_500-webfont.svg#webfont') format('svg'); /* Opera */
+	     url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'); /* Older Webkits */
 	font-weight: normal;
 	font-style: normal;
 }
 
 /* @Reset *********/
-header, hgroup, nav, section, article, aside, footer, figure { display: block; }
+header, hgroup, nav, section, article, aside, footer, figure, details, summary { display: block; }
 html, body, form, fieldset, legend, figure,
 h1, h2, h3, h4, h5, h6, dt, dd { margin: 0; padding: 0; }
 blockquote:before, blockquote:after, q:before, q:after { content: ""; }
@@ -285,7 +280,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 #nav-main #nav-sub-docs a:hover, #nav-sub-docs a:focus, #nav-sub-docs a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
 
 /*** @Search *********/
-#site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 0 0; position: relative; }
+#site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
 #site-search p { margin: 0; }
 #site-search #q { width: 160px; padding: 3px 4px 3px 28px; margin: 0 0 0 4px; float: right; background: #555; background: rgba(80,80,80,.9) url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #aaa; font-size: .857em; -webkit-appearance: textfield; appearance: textfield; }
 #site-search #q:hover, #site-search #q:focus { border-color: #9c0d10; background-color: #fff; color: #333; }
@@ -302,7 +297,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .user-state a { color: #ccc; }
 .user-state a:hover, .user-state a:focus, .user-state a:active { color: #fff; }
 .user-state form { display: inline; }
-#masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 10px; top: 12px; }
+#masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 150px; top: 12px; }
 #site-info .user-state { margin-bottom: .5em; }
 
 /*** @BrowserID *********/
@@ -345,12 +340,7 @@ a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { ba
 .footer .browserid-info h3:after { top: auto; bottom: -25px; background: transparent none; }
 
 /*** @Tabzilla *********/
-/* Hide Tabzilla on screens < 1250px wide so that it does not interfere with login / logout links. This is a temporary workaround for Tabzilla's fixedness issue. */
-@media screen and (max-width: 1250px) {
-  #developer-mozilla-org #tabzilla {
-    display: none;
-  }
-}
+#masthead #tabzilla { position: absolute; right: 0; top: 0; }
 
 /*** @Language Picker *********/
 footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
@@ -837,13 +827,6 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 
 #newsletter-sub.modal { width: 260px; margin: 0; border: 0; }
 #wait-modal, #error-modal { display: none; }
-
-/* @Modal dialogs *********/
-#simplemodal-overlay { background: #fff; opacity: 0.15; }
-#simplemodal-container { padding: 18px; background: #aaa082; background: rgba(170,160,130,.75); overflow: visible; }
-#simplemodal-wrap { overflow: hidden; }
-.simplemodal-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: -7px; top: -7px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; }
-.simplemodal-close:hover, .simplemodal-close:focus { background-position: 0 -600px; }
 
 /* @Learning pages *********/
 .section-learning #content { border: 0; }

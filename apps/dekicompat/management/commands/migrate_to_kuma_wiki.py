@@ -8,12 +8,13 @@ TODO
 * https://bugzilla.mozilla.org/show_bug.cgi?id=710713
 * https://bugzilla.mozilla.org/showdependencytree.cgi?id=710713&hide_resolved=1
 """
-import sys
-import re
-import time
 import datetime
-import itertools
 import hashlib
+import itertools
+import json
+import re
+import sys
+import time
 from optparse import make_option
 
 from BeautifulSoup import BeautifulSoup
@@ -24,7 +25,8 @@ from django.contrib.auth.models import User
 from django.core.management.base import (BaseCommand, NoArgsCommand,
                                          CommandError)
 import django.db
-from django.db import connections, connection, transaction, IntegrityError
+from django.db import connections, transaction
+from django.db.utils import DatabaseError
 from django.utils import encoding, hashcompat
 
 import commonware.log
@@ -66,10 +68,10 @@ MT_NAMESPACES = (
 )
 MT_NS_NAME_TO_ID = dict(MT_NAMESPACES)
 MT_NS_ID_TO_NAME = dict((x[1], x[0]) for x in MT_NAMESPACES)
-MT_MIGRATED_NS_IDS = (MT_NS_NAME_TO_ID[x] for x in (
+MT_MIGRATED_NS_IDS = [MT_NS_NAME_TO_ID[x] for x in (
     '', 'Talk:', 'User:', 'User_talk:', 'Project:', 'Project_talk:',
     'Template:', 'Template_talk:',
-))
+)]
 
 # NOTE: These are MD5 hashes of garbage User page content. The criteria is that
 # the content was found to repeat more than 3 times, and was hand-reviewed by
@@ -144,11 +146,19 @@ class Command(BaseCommand):
                     help="Migrate # of documents with syntax blocks"),
         make_option('--withscripts', dest="withscripts", type="int", default=0,
                     help="Migrate # of documents that use scripts"),
-        make_option('--withtemplates', dest="withtemplates", type="int", default=0,
-                    help="Migrate # of template documents"),
+        make_option('--withtemplates', dest="withtemplates", type="int",
+                    default=0, help="Migrate # of template documents"),
+        make_option('--withlanguages', dest="withlanguages", type="int",
+                    default=0,
+                    help="Migrate # of English documents with other "
+                    "languages"),
+
         make_option('--syntax-metrics', action="store_true",
                     dest="syntax_metrics", default=False,
                     help="Measure syntax highlighter usage, skip migration"),
+        make_option('--skip-translations', action="store_true",
+                    dest="skip_translations", default=False,
+                    help="Skip migrating translated children of documents"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -194,6 +204,9 @@ class Command(BaseCommand):
             self.handle_syntax_metrics(rows)
         else:
             self.handle_migration(rows)
+            if not options['skip_translations']:
+                rows = self.gather_pages()
+                self.make_languages_relationships(rows)
 
     def init(self, options):
         """Set up connections and options"""
@@ -215,7 +228,7 @@ class Command(BaseCommand):
         log.info("Found %s docs already migrated" %
                  len(self.docs_migrated.values()))
 
-        start_ts = ts_now = time.time()
+        start_ts = ts_now = ts_last_status = time.time()
 
         self.rev_ct = 0
         ct, skip_ct, error_ct = 0, 0, 0
@@ -254,7 +267,9 @@ class Command(BaseCommand):
             ts_now = time.time()
             duration = ts_now - start_ts
             total_ct = ct + skip_ct + error_ct
-            if (total_ct % 10) == 0:
+            # Emit status every 5 seconds
+            if ((ts_now - ts_last_status) > 5.0):
+                ts_last_status = time.time()
                 log.info("Rate: %s docs/sec, %s secs/doc, "
                          "%s total in %s seconds" %
                          ((total_ct + 1) / (duration + 1),
@@ -319,6 +334,103 @@ class Command(BaseCommand):
                     if attr[0] == 'function':
                         print (u"%s\t%s\t%s" % (r['page_title'], block.name,
                                                     attr[1])).encode('utf-8')
+
+    @transaction.commit_manually(using='default')
+    def make_languages_relationships(self, rows):
+        """Set the parent_id of Kuma pages using wiki.languages params"""
+        log.info("Building parent/child locale tree...")
+        wl_pat = re.compile(r"""^wiki.languages\((.+)\)""")
+        # language_tree is {page_id: [child_id, child_id, ...], ...}
+        language_tree = {}
+        for r in rows:
+            if not r['page_text'].strip():
+                # Page empty, so skip it.
+                continue
+            if not r['page_title'].lower().startswith('en/'):
+                # Page is not an english page, skip it
+                continue
+            # Build the page slug from namespace + title or display name
+            locale, slug = self.get_kuma_locale_and_slug_for_page(r)
+            parent_id = r['page_id']
+            doc = pq(r['page_text'])
+            spans = doc.find('span.script')
+            for span in spans:
+                src = unicode(span.text).strip()
+                if src.startswith('wiki.languages'):
+                    m = wl_pat.match(src)
+                    if not m:
+                        continue
+                    language_tree[parent_id] = []
+                    page_languages_json = m.group(1).strip()
+                    page_languages = {}
+                    try:
+                        page_languages = json.loads(page_languages_json)
+                    except ValueError:
+                        log.error("\t%s/%s (%s) error parsing wiki.languages JSON" %
+                                  (locale, slug, r['page_display_name']))
+                        continue
+                    vals = page_languages.values()
+                    if not vals:
+                        continue
+                    wc = self.wikidb.cursor()
+                    sql = """
+                        SELECT page_id
+                        FROM pages
+                        WHERE page_title IN ('%s')
+                        AND page_namespace = 0
+                    """ % "','".join(vals)
+                    try:
+                        wc.execute(sql)
+                    except Exception, e:
+                        log.error("\t%s/%s (%s) error %s" %
+                                  (locale, slug, r['page_display_name'], e))
+                        continue
+                    for row in wc:
+                        language_tree[parent_id].append(row[0])
+
+        log.info("Building translation relationships...")
+        kc = self.kumadb.cursor()
+        for parent_id, children in language_tree.items():
+            # Now that we have our tree of docs and children, migrate them
+            # as necessary
+            try:
+                parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
+            except Document.DoesNotExist:
+                rows = self._query("SELECT * FROM pages WHERE page_id = %s" %
+                                   parent_id)
+                self.handle_migration(rows)
+                try:
+                    parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
+                except Document.DoesNotExist:
+                    # Ugh, even after migration we didn't end up with the
+                    # parent doc
+                    continue
+
+            # Migrate any child documents that haven't already been
+            existing = [str(x['mindtouch_page_id']) for x in 
+                        Document.objects.filter(mindtouch_page_id__in=children)
+                                        .values('mindtouch_page_id')]
+            need_migrate_ids = [str(x) for x in children if str(x) not in existing]
+            if need_migrate_ids:
+                sql = "SELECT * FROM pages WHERE page_id in (%s)" % (
+                    ",".join(need_migrate_ids))
+                rows = self._query(sql)
+                self.handle_migration(rows)
+
+            # All parents and children migrated, now set parent_id
+            # TODO: refactor this to source_id when we change to
+            # source/translation relationship model
+            child_ids = [str(x) for x in children]
+            if child_ids:
+                log.info(u"\t%s (%s)" % (parent_doc.full_path, parent_doc.title))
+                sql = """
+                    UPDATE wiki_document
+                    SET parent_id = %s
+                    WHERE mindtouch_page_id IN (%s)
+                """ % (parent_doc.id, ",".join(child_ids))
+                kc.execute(sql)
+                log.info(u"\t\tUpdated %s documents with parent ID." % kc.rowcount)
+                transaction.commit()
 
     @transaction.commit_on_success
     def wipe_documents(self):
@@ -489,6 +601,18 @@ class Command(BaseCommand):
                 """, MT_NS_NAME_TO_ID['Template:'],
                      self.options['withtemplates']))
 
+            if self.options['withlanguages'] > 0:
+                log.info("Gathering %s English pages that have languages" %
+                         self.options['withlanguages'])
+                iters.append(self._query("""
+                    SELECT *
+                    FROM pages
+                    WHERE page_text like '%%%%wiki.languages%%%%' AND
+                          LOWER(page_title) like 'en/%%%%'
+                    ORDER BY page_timestamp DESC
+                    LIMIT %s
+                """, self.options['withlanguages']))
+
         return itertools.chain(*iters)
 
     @transaction.commit_on_success
@@ -512,8 +636,8 @@ class Command(BaseCommand):
         last_mod = self.docs_migrated.get(r['page_id'], (None, None))[1]
         if (not self.options['update_documents'] and last_mod is not None
                 and last_mod >= page_ts):
-            log.debug("\t%s/%s (%s) up to date" %
-                      (locale, slug, r['page_display_name']))
+            # log.debug("\t%s/%s (%s) up to date" %
+            #           (locale, slug, r['page_display_name']))
             return False
 
         # Check to see if this doc's content hash falls in the list of User:
@@ -522,8 +646,8 @@ class Command(BaseCommand):
             content_hash = (hashlib.md5(r['page_text'].encode('utf-8'))
                                    .hexdigest())
             if content_hash in USER_NS_EXCLUDED_CONTENT_HASHES:
-                log.debug("\t%s/%s (%s) matched User: content exclusion list" %
-                          (locale, slug, r['page_display_name']))
+                # log.debug("\t%s/%s (%s) matched User: content exclusion list" %
+                #           (locale, slug, r['page_display_name']))
                 return False
 
         # Skip migrating Template:MindTouch/* templates
@@ -741,15 +865,15 @@ class Command(BaseCommand):
         This is an incomplete process, but it tries to take care off as much as
         it can so that human intervention is minimized."""
 
-        # Many templates start with this prefix, which corresponds to {% in EJS
+        # Many templates start with this prefix, which corresponds to <% in EJS
         pre = '<pre class="script">'
         if pt.startswith(pre):
-            pt = "{%%\n%s" % pt[len(pre):]
+            pt = "<%%\n%s" % pt[len(pre):]
 
-        # Many templates end with this postfix, which corresponds to %} in EJS
+        # Many templates end with this postfix, which corresponds to %> in EJS
         post = '</pre>'
         if pt.endswith(post):
-            pt = "%s\n%%}" % pt[:0-len(post)]
+            pt = "%s\n%%>" % pt[:0-len(post)]
 
         # Template source is usually HTML encoded inside the <pre>
         pt = (pt.replace('&amp;', '&')
@@ -817,7 +941,7 @@ class Command(BaseCommand):
         if '/' in title:
             # Treat the first part of the slug path as locale and snip it off.
             mt_language, new_title = title.split('/', 1)
-            if mt_language in MT_TO_KUMA_LOCALE_MAP:
+            if mt_language.lower() in MT_TO_KUMA_LOCALE_MAP:
                 # If it's a known language, then rebuild the slug
                 slug = '%s%s' % (ns_name, new_title)
             else:

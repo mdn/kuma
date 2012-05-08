@@ -14,8 +14,11 @@
   <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_1.url) }}"/>    
   <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
   <meta property="og:description" content="{{ submission.summary }}"/>
+
+  <meta name="description" content="{{ submission.summary }}" />
   
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/modals.css">
   <script src="{{ MEDIA_URL }}js/mdn/jquery-1.4.2.min.js"></script>
   
   <!--[if IE]>
@@ -58,7 +61,17 @@
           <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
         </ul>
       </li>
+      <li class="report"><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking">{{ _("Report a Problem") }}</a>
+      </li>
     </ul>
+
+    <!-- hide share link if no javascript present -->
+    <noscript>
+      <style type="text/css">
+        .tools .share { display: none; }
+      </style>
+    </noscript>
+
 
     <nav class="paging">
       <ul role="navigation">
@@ -76,48 +89,54 @@
       <p id="close"><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}">{{_('Remove toolbar')}}</a></p>
     
     <script type="text/javascript">
-    $("#share-opts").ready(function(){
-    	$("#share-opts").addClass("js").hide();
-    	
-    	$("#sharetoggle").click(function() {
-        $("#share-opts").fadeIn(100);
+
+    $(document).ready(function() {
+
+      var $shareOpts = $("#share-opts"),
+          $shareToggle = $("#sharetoggle");
+
+      // Hide the "share" dropdown options
+      $shareOpts.addClass("js").hide();
+
+      // Toggle the dropdown when the button is clicked
+      $shareToggle.click(function() {
+        $shareOpts.fadeIn(100);
         return false;
-    	});
-    	
-      $("#share-opts").hover(
+      });
+
+      $shareOpts.hover(
         function() {
           $(this).show();
         },
         function() {
           $(this).fadeOut(100);
-          $("#sharetoggle").blur();
+          $shareToggle.blur();
         }
       );
-    	
-      $(document).bind('click', function(e) {
-        var $clicked = $(e.target);
-        if (! $clicked.parents().hasClass("share"))
-          $("#share-opts").hide();
-      });
-      
-      $("a, input, textarea, button").bind('focus', function(e) {
-        var $focused = $(e.target);
-        if (! $focused.parents().hasClass("share"))
-          $("#share-opts").hide();
-      });
-      
-      $("#shorturl").focus(function() {
-        $(this).select().addClass("focus");
-      });
-      $("#shorturl").click(function() {
-        $(this).select().addClass("focus");
-      });
-      $("#shorturl").blur(function() {
-        $(this).removeClass("focus");
-      });
-    
-    });
 
+      $(document).bind("click", function(e) {
+        if (! $(e.target).parents().hasClass("share"))
+          $shareOpts.hide();
+      });
+      
+      $("a, input, textarea, button").bind("focus", function(e) {
+        if (! $(e.target).parents().hasClass("share"))
+          $shareOpts.hide();
+      });
+      
+      $("#shorturl")
+        .focus(function() {
+          $(this).select().addClass("focus");
+        })
+        .click(function() {
+          $(this).select().addClass("focus");
+        })
+        .blur(function() {
+          $(this).removeClass("focus");
+        });
+
+
+    });
     </script>
     
   </header>
@@ -126,19 +145,21 @@
       src="{{ submission.demo_package.url.replace('.zip', '/index.html') }}"></iframe>
 
   <script type="text/javascript">
-    // Adaptor for demo protocol to make WoW demos run
-    var ifrm = document.getElementById('demoframe');
-    ifrm.addEventListener('load', function (ev) {
-        if (ifrm.contentWindow && ifrm.contentWindow.postMessage) {
-            ifrm.contentWindow.postMessage('start_demo', '*');
-        }
-    }, true);
+    (function() {
+      // Adaptor for demo protocol to make WoW demos run
+      var ifrm = document.getElementById('demoframe');
+      ifrm.addEventListener('load', function (ev) {
+          var contentWindow = ifrm.contentWindow;
+          if (contentWindow && contentWindow.postMessage) {
+              contentWindow.postMessage('start_demo', '*');
+          }
+      }, true);
+    })();
   </script>
 
   <script type="text/javascript">
     $('#share-opts li a').click(function () {
-        var link = $(this);
-        window.open(link.attr('href'), 'sharer', 
+        window.open($(this).attr('href'), 'sharer', 
             'toolbar=0, status=0, resizable=1, width=626, height=436');
         return false;
     });
@@ -158,6 +179,11 @@
           }
       };
   </script>
+
+  <!-- provide "report" functionality -->
+  <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
+  <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.simplemodal.1.4.1.min.js"></script>
+  <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/modal-control.js"></script>
 
 </body>
 </html>

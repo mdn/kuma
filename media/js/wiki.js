@@ -4,7 +4,6 @@
  */
 
 
-
 (function ($, gettext) {
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
@@ -14,36 +13,40 @@
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
 
-        initPrepopulatedSlugs();
+        var $body = $('body');
+
+        if ($body.is('.new')) {
+            initPrepopulatedSlugs();
+        }
         initDetailsTags();
 
-        if ($('body').is('.document') || $('body').is('.home')) {  // Document page
+        if ($body.is('.document') || $body.is('.home')) {  // Document page
             //initForTags();
             //updateShowforSelectors();
             initHelpfulVote();
             initSectionEditing();
-        } else if ($('body').is('.review')) { // Review pages
+        } else if ($body.is('.review')) { // Review pages
             //initForTags();
             //updateShowforSelectors();
             initApproveReject();
         }
-        if ($('body').is('.document')){
+        if ($body.is('.document')){
             initSyntaxHighlighter();
         }
 
-        if ($('body').is('.home')) {
+        if ($body.is('.home')) {
             initClearOddSections();
         }
 
-        if ($('body').is('.edit, .new, .translate')) {
+        if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
             initArticlePreview();
-            initTitleAndSlugCheck();
+            // initTitleAndSlugCheck();
             // initDrafting();
         }
-        if ($('body').is('.edit.is-template') ||
-                $('body').is('.new.is-template')) {
+        if ($body.is('.edit.is-template') ||
+                $body.is('.new.is-template')) {
             var textarea = $('textarea#id_content').hide();
             
             var editor = window.ace_editor = ace.edit("ace_content");
@@ -1033,16 +1036,20 @@
     }
 
     function initApproveReject() {
+
+        var approveModal = $('#approve-modal'),
+            rejectModal = $('#reject-modal');
+
         $('#btn-approve').click(function() {
-            $('#approve-modal').show();
-            $('#reject-modal').hide();
+            approveModal.show();
+            rejectModal.hide();
         });
-        $('#approve-modal').hide();
+        approveModal.hide();
         $('#btn-reject').click(function() {
-            $('#reject-modal').show();
-            $('#approve-modal').hide();
+            rejectModal.show();
+            approveModal.hide();
         });
-        $('#reject-modal').hide();
+        rejectModal.hide();
     }
 
     $(document).ready(init);

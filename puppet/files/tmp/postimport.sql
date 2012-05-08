@@ -5,6 +5,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `devmo_event` CASCADE;
 DROP TABLE IF EXISTS `devmo_calendar` CASCADE;
 DROP TABLE IF EXISTS `wiki_document` CASCADE;
+DROP TABLE IF EXISTS `wiki_documenttag` CASCADE;
 DROP TABLE IF EXISTS `wiki_revision` CASCADE;
 DROP TABLE IF EXISTS `wiki_firefoxversion` CASCADE; 
 DROP TABLE IF EXISTS `wiki_operatingsystem` CASCADE;
@@ -13,6 +14,7 @@ DROP TABLE IF EXISTS `wiki_relateddocument` CASCADE;
 DROP TABLE IF EXISTS `wiki_editortoolbar` CASCADE;
 DROP TABLE IF EXISTS `wiki_reviewtaggedrevision` CASCADE;
 DROP TABLE IF EXISTS `wiki_reviewtag` CASCADE;
+DROP TABLE IF EXISTS `wiki_taggeddocument` CASCADE;
 
 -- Change site to developer-dev
 UPDATE django_site set domain = 'developer-dev.mozilla.org', name = 'developer-dev.mozilla.org';

@@ -140,6 +140,7 @@
   -o-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
+#demo-main .demo-details .descLink { color: #69b9f3; }
 
 #featured-demos .side { position: absolute; z-index: 15; top: 150px; width: 261px; height: 195px; padding: 9px 28px 54px; background: url("../img/demos/bg-smallscreen.png") center top no-repeat; }
 #featured-demos .side .preview { background: #000; width: 261px; height: 195px; overflow: hidden; }
@@ -287,7 +288,7 @@
 #source .download a:hover, #source .download a:focus, #source .download a:active { background-position: 0 -100px; }
 #source .browse a { background-position: 0 -200px; }
 #source .browse a:hover, #source .browse a:focus, #source .browse a:active { background-position: 0 -300px; }
-#source .note { color: #666; font-weight: normal; font-size: .857em; }
+#source .note { color: #666; font-weight: normal; font-size: .857em; display: block; }
 #source a:hover .note, #source a:focus .note, #source a:active .note { color: #333; }
 #source .license { font-size: .857em; text-transform: uppercase; color: #666; padding-left: 50px; min-height: 40px; margin: 0; background: url("../img/demos/download-icons.png") 0 100px no-repeat; }
 #source .apache { background-position: 0 -400px; }
@@ -448,6 +449,8 @@
 .demo .stats .comments a:hover, .demo .stats .comments a:focus, .demo .stats .comments a:active { color: #333; }  
 
 .demo .desc { font-size: .786em; margin: 0 0 .75em; }
+.demo .descLink { color: #79120e; font-weight:bold; }
+
 .demo .launch { position: absolute; top: 120px; right: 12px; font-size: 1.2em; }
 .demo .launch .button { color: #fff; }
 

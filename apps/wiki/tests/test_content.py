@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
+import logging
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
@@ -19,18 +20,18 @@ class ContentSectionToolTests(TestCase):
     def test_section_ids(self):
 
         doc_src = """
-            <h1>head</h1>
+            <h1 class="header1">Header One</h1>
             <p>test</p>
             <section>
-                <h1>head</h1>
+                <h1 class="header2">Header Two</h1>
                 <p>test</p>
             </section>
-            <h2>head</h2>
+            <h2 name="Constants" class="hasname">This title does not match the name</h2>
             <p>test</p>
 
-            <h1 id="i-already-have-an-id" class="hasid">head</h1>
+            <h1 id="i-already-have-an-id" class="hasid">This text clobbers the ID</h1>
 
-            <h1>head</h1>
+            <h1 class="header3">Header Three</h1>
             <p>test</p>
         """
 
@@ -40,8 +41,14 @@ class ContentSectionToolTests(TestCase):
                       .serialize())
         result_doc = pq(result_src)
 
-        # First, ensure an existing ID hasn't been disturbed
-        eq_('i-already-have-an-id', result_doc.find('.hasid').attr('id'))
+        expected = (
+            ('header1', 'Header_One'),
+            ('header2', 'Header_Two'),
+            ('hasname', 'Constants'),
+            ('hasid',   'This_text_clobbers_the_ID'),
+        )
+        for cls, id in expected:
+            eq_(id, result_doc.find('.%s' % cls).attr('id'))
 
         # Then, ensure all elements in need of an ID now all have unique IDs.
         ok_(len(SECTION_TAGS) > 0)
@@ -366,11 +373,12 @@ class ContentSectionToolTests(TestCase):
                   .filter(SectionTOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    @attr('current')
     def test_dekiscript_macro_conversion(self):
         doc_src = u"""
             <span>Just a span</span>
             <span class="notascript">Hi there</span>
+            <li><span class="script">Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!")</span></li>
+            <li><span class="script">Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!")</span></li>
             <li><span class="script">MixedCaseName('parameter1', 'parameter2')</span></li>
             <li><span class="script">bug(689641)</span></li>
             <li><span class="script">template.lowercasename('border')</span></li>
@@ -383,6 +391,8 @@ class ContentSectionToolTests(TestCase):
         expected = u"""
             <span>Just a span</span>
             <span class="notascript">Hi there</span>
+            <li>{{ Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!") }}</li>
+            <li>{{ Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!") }}</li>
             <li>{{ MixedCaseName('parameter1', 'parameter2') }}</li>
             <li>{{ bug("689641") }}</li>
             <li>{{ lowercasename('border') }}</li>
@@ -406,6 +416,28 @@ class ContentSectionToolTests(TestCase):
         result = (wiki.content
                   .parse(doc_src)
                   .filter(DekiscriptMacroFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_noinclude(self):
+        doc_src = u"""
+            <div class="noinclude">{{ XULRefAttr() }}</div>
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+            <div class="noinclude">
+              <p>{{ languages( { &quot;ja&quot;: &quot;ja/XUL/Attribute/maxlength&quot; } ) }}</p>
+            </div>
+        """
+        expected = u"""
+            <dl>
+              <dt>{{ XULAttr(&quot;maxlength&quot;) }}</dt>
+              <dd>Type: <em>integer</em></dd>
+              <dd>Przykłady 例 예제 示例</dd>
+            </dl>
+        """
+        result = (wiki.content.filter_out_noinclude(doc_src))
         eq_(normalize_html(expected), normalize_html(result))
 
 

@@ -511,6 +511,7 @@ MINIFY_BUNDLES = {
     'css': {
         'mdn': (
             'css/mdn-screen.css',
+            'css/modals.css',
             'css/mdn-video-player.css',
             'css/mdn-forums-sidebar-module.css',
             'css/mdn-calendar.css',
@@ -548,6 +549,8 @@ MINIFY_BUNDLES = {
             'css/wiki-screen.css',
             'syntaxhighlighter/styles/shCore.css',
             'syntaxhighlighter/styles/shThemeDefault.css',
+            'css/jqueryui/jqueryui.css',
+            'css/jqueryui/jquery-ui-1.8.14.custom.css'
         ),
         'home': (
             'css/home.css',
@@ -607,6 +610,7 @@ MINIFY_BUNDLES = {
             'js/mdn/jquery.hoverIntent.minified.js',
             'js/mdn/jquery.scrollTo-1.4.2-min.js',
             'js/mdn/demos.js',
+            'js/mdn/modal-control.js'
         ),
         'demostudio_devderby_landing': (
             'js/mdn/demos-devderby-landing.js',
@@ -653,8 +657,13 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/scripts/shBrushJScript.js',
             'syntaxhighlighter/scripts/shBrushPhp.js',
             'syntaxhighlighter/scripts/shBrushXml.js',
+            'syntaxhighlighter/scripts/shBrushPlain.js',
             'js/wiki.js',
             'js/main.js',
+            'js/jquery-1.4.2.min.js',
+            'js/libs/jqueryui.min.js',
+            'js/libs/tag-it.js',
+            'js/wiki-tags-edit.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',

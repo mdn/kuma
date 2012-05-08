@@ -49,7 +49,6 @@ CONTENT_LONG = _lazy(u'Please keep the length of the content to '
 COMMENT_LONG = _lazy(u'Please keep the length of the comment to '
                      u'%(limit_value)s characters or less. It is currently '
                      u'%(show_value)s characters.')
-TITLE_COLLIDES = _lazy(u'Another document with this title already exists.')
 SLUG_COLLIDES = _lazy(u'Another document with this slug already exists.')
 OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
@@ -162,7 +161,7 @@ class DocumentForm(forms.ModelForm):
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
 
-    title = StrippedCharField(min_length=5, max_length=255,
+    title = StrippedCharField(min_length=2, max_length=255,
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
@@ -204,7 +203,7 @@ class RevisionForm(forms.ModelForm):
                      c in GROUPED_FIREFOX_VERSIONS]}
 
     content = StrippedCharField(
-                min_length=5, max_length=100000,
+                min_length=5, max_length=300000,
                 label=_lazy(u'Content:'),
                 widget=forms.Textarea(attrs={'data-showfor':
                                              json.dumps(showfor_data)}),
@@ -218,6 +217,10 @@ class RevisionForm(forms.ModelForm):
         label=_("Tag this revision for review?"),
         widget=CheckboxSelectMultiple, required=False,
         choices=REVIEW_FLAG_TAGS)
+
+    show_toc = forms.BooleanField(
+        required=False,
+        label=_("Generate and display a table of contents in this article:"))
 
     current_rev = forms.CharField(required=False,
                                   widget=forms.HiddenInput())
@@ -270,8 +273,7 @@ class RevisionForm(forms.ModelForm):
             # to them are ignored for an iframe submission
             return getattr(self.instance.document, name)
 
-        error_message = {'title': TITLE_COLLIDES,
-                         'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
+        error_message = {'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
         try:
             existing_doc = Document.uncached.get(
                     locale=self.instance.document.locale,
@@ -292,9 +294,6 @@ class RevisionForm(forms.ModelForm):
             pass
 
         return value
-
-    def clean_title(self):
-        return self._clean_collidable('title')
 
     def clean_slug(self):
         return self._clean_collidable('slug')
@@ -366,6 +365,7 @@ class RevisionForm(forms.ModelForm):
 
         new_rev.document = document
         new_rev.creator = creator
+        new_rev.show_toc = self.cleaned_data['show_toc']
         new_rev.save()
         new_rev.review_tags.set(*self.cleaned_data['review_tags'])
         return new_rev

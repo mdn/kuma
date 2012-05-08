@@ -13,6 +13,8 @@
     <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_url(1)) }}"/>    
     <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
     <meta property="og:description" content="{{ submission.summary }}"/>
+
+    <meta name="description" content="{{ submission.summary }}" />
 {% endblock %}
 
 {% block content %}
@@ -271,7 +273,7 @@
       
       {% if more_by | length > 1 %}
       <div class="module" id="moreby">
-        <h3 class="mod-title">More by {{ submission_creator(submission) }}</h3>
+        <h3 class="mod-title">{{ _('More by {creator}')|fe(creator=submission_creator(submission)) }}</h3>
         <ul class="gallery">
           {% for more_submission in more_by %}
             {% if more_submission.id != submission.id %}
@@ -283,7 +285,7 @@
       {% endif %}
       
       <div id="demo-report">
-        <h3>Report a Problem</h3>
+        <h3>{{ _("Report a Problem") }}</h3>
         <ul>
             <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking">{{_('Demo is not working')}}</a></li>
             <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=inappropriate">{{_('Demo is inappropriate')}}</a></li>
@@ -323,44 +325,50 @@
 
     </script>
 
+
     <script type="text/javascript">      
-      $("#share-opts").ready(function(){
-      	$("#share-opts").addClass("js").hide();
-      	
-      	$("#sharetoggle").click(function() {
-          $("#share-opts").fadeIn(100);
+
+      $(document).ready(function() {
+        var $shareOpts = $("#share-opts"),
+          $shareToggle = $("#sharetoggle");
+
+        $shareOpts.addClass("js").hide();
+
+        $shareToggle.click(function() {
+          $shareOpts.fadeIn(100);
           return false;
-      	});
-      	
-        $("#share-opts").hover(
+        });
+        
+        $shareOpts.hover(
           function() {
             $(this).show();
           },
           function() {
             $(this).fadeOut(100);
-            $("#sharetoggle").blur();
+            $shareToggle.blur();
           }
         );
         
-        $("#shorturl").focus(function() {
-          $(this).select().addClass("focus");
-        });
-        $("#shorturl").click(function() {
-          $(this).select().addClass("focus");
-        });
-        $("#shorturl").blur(function() {
-          $(this).removeClass("focus");
-        });
+        $("#shorturl")
+          .focus(function() {
+            $(this).select().addClass("focus");
+          })
+          .click(function() {
+            $(this).select().addClass("focus");
+          })
+          .blur(function() {
+            $(this).removeClass("focus");
+          });
 
-        $('#share-opts li a').click(function () {
+        $shareOpts.find('li a').click(function () {
             var link = $(this);
             window.open(link.attr('href'), 'sharer', 
                 'toolbar=0, status=0, resizable=1, width=626, height=436');
             return false;
         });
-      
+
       });
-      </script>
+    </script>
        <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/carousel.js"></script>
 
         <script type="text/javascript">

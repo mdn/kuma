@@ -201,6 +201,28 @@ class DocumentTests(TestCaseBase):
         doc = pq(resp.content)
         assert 'Localize' not in doc('#doc-tabs li').text()
 
+    @attr('toc')
+    def test_show_toc(self):
+        """Toggling show_toc field on/off should cause table of
+        contents to appear/disappear."""
+        doc_content = """
+        <h2>This is a section</h2>
+        <p>This is section content.</p>
+        <h2>This is another section</h2>
+        <p>This is more section content.</p>
+        """
+        r = revision(save=True, content=doc_content, is_approved=True)
+        response = self.client.get(r.document.get_absolute_url())
+        eq_(200, response.status_code)
+        ok_('<div class="page-toc">' in response.content)
+        new_r = revision(document=r.document, content=r.content, show_toc=False,
+                         is_approved=True)
+        new_r.save()
+        response = self.client.get(r.document.get_absolute_url())
+        eq_(200, response.status_code)
+        ok_('<div class="page-toc">' not in response.content)
+        
+
 
 class RevisionTests(SkippedTestCase):
     """Tests for the Revision template"""
