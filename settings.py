@@ -590,8 +590,6 @@ MINIFY_BUNDLES = {
             # featuring the slide show widget).
             'js/mdn/jquery.cycle.js',
             'js/mdn/slideshow.js',
-            'js/mdn/TabInterface.js',
-            'js/mdn/home.js',
 
             # Used only on pages with video popups
             'js/mdn/video-player.js',
@@ -679,13 +677,10 @@ MINIFY_BUNDLES = {
             'js/users.js',
         ),
         'mdn_home': (
-            # Home Page
-            # cycle and slideshow only needed on the home page (or any page
-            # featuring the slide show widget).
-            'js/mdn/jquery.cycle.js',
-            'js/mdn/slideshow.js',
-            'js/mdn/TabInterface.js',
-            'js/mdn/home.js',
+            # Removing as they aren't being used at the moment
+
+            #'js/mdn/TabInterface.js',
+            #'js/mdn/home.js',
         ),
         'framebuster': (
             'js/framebuster.js',
