@@ -11,7 +11,7 @@ $(document).ready(function() {
     /* Run a Google Search through the API */
     var sr = $('#search-results'),
         query = sr.attr("data-q");
-    if (!rs.length || !query)
+    if (!sr.length || !query)
         return;
 
     // branding
