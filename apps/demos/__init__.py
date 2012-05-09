@@ -169,7 +169,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
 <p>Not excited yet? This is about more than just sending messages&mdash;it's about highly interactive experiences. Last month, Little Workshop and Mozilla collaborated to create <a href="https://hacks.mozilla.org/2012/03/browserquest/">BrowserQuest</a>, a multiplayer online game that uses Websockets at its core. As if that weren't enough, Mozilla's very own Rob Hawkes created <a href="http://rawkets.com/">Rawkets</a>, a multiplayer space shooter that also uses Websockets.</p>
 <p>Of course, you can't do much with Websockets unless you have a server to communicate with. Thankfully, there are many free Websockets servers available on the web, such as <a href="http://www.heroku.com/">Heroku</a> and <a href="http://nodejitsu.com/#/">Nodejitsu</a>. If you prefer, you could even use your own Websockets server.</p>
 <p>Setting up a Websockets demo is more involved than setting up a static demo, but we know you can do it. As long as you keep these <a href="https://hacks.mozilla.org/2012/05/may-dev-derby-show-us-what-you-can-do-with-websockets/#may-derby-setup">three simple rules</a> in mind, everything should work flawlessly.</p>
-<p>What can you create with the Websocket API and protocol? The next BrowserQuest? A better Rawkets? Show the world this month the May Dev Derby!</p>"""),
+<p>What can you create with the Websocket API and protocol? The next BrowserQuest? A better Rawkets? Show the world this month in the May Dev Derby!</p>"""),
     },
     {
         "tag_name": "challenge:2012:june",
