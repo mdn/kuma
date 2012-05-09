@@ -3,32 +3,23 @@ from datetime import datetime
 from django.contrib import admin
 from django.core import serializers
 from django.http import HttpResponse
-
-from smuggler.settings import SMUGGLER_FORMAT
-from smuggler.utils import serialize_to_response
+from django.core import serializers
 
 from wiki.models import Document, Revision, EditorToolbar
 
 
-def dump_selected(modeladmin, request, queryset):
-    objects = []
-    for doc in queryset.all():
-        rev = Revision.objects.get(id=doc.current_revision.id)
-        doc.current_revision = None
-        objects.append(doc)
-        objects.append(rev)
-    serializers.get_serializer('json')
-    filename = "documents_%s.%s" % (
-        datetime.now().isoformat(), SMUGGLER_FORMAT)
+def dump_selected_documents(modeladmin, request, queryset):
+    filename = "documents_%s.json" % (datetime.now().isoformat(),)
     response = HttpResponse(mimetype="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
-    return serialize_to_response(objects, response)
+    Document.objects.dump_json(queryset, response) 
+    return response
 
-dump_selected.short_description = "Dump selected objects as JSON data"
+dump_selected_documents.short_description = "Dump selected documents as JSON"
 
 
 class DocumentAdmin(admin.ModelAdmin):
-    actions = [dump_selected, ]
+    actions = [dump_selected_documents, ]
     change_list_template = 'admin/wiki/document/change_list.html'
     fields = ('title', 'slug', 'locale', 'parent', 'category')
     list_display = ('id', 'locale', 'slug', 'title', 'is_localizable',
@@ -38,7 +29,7 @@ class DocumentAdmin(admin.ModelAdmin):
     list_filter = ('is_template', 'is_localizable', 'category', 'locale')
     raw_id_fields = ('parent',)
     readonly_fields = ('id', 'current_revision')
-    search_fields = ('title', 'slug', 'html')
+    search_fields = ('title', 'slug', 'html', 'current_revision__tags')
 
 
 class RevisionAdmin(admin.ModelAdmin):

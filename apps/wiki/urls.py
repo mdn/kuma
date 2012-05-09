@@ -104,5 +104,7 @@ urlpatterns += patterns('wiki.views',
 
     url(r'^/tag/(?P<tag>[^/]+)$', 'list_documents', name='wiki.tag'),
 
+    url(r'^/load/$', 'load_documents', name='wiki.load_documents'),
+
     (r'^/(?P<document_path>[^\$]+)', include(document_patterns)),
 )
