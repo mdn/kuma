@@ -399,3 +399,19 @@ class DemoViewsTest(test_utils.TestCase):
             r = self.client.get(reverse('demos_feed_featured', args=['json']))
         except:
             ok_(False, "No exceptions should have been thrown")
+
+    @attr('bug745902')
+    def test_long_slug(self):
+        """
+        A title longer than 50 characters should truncate to a
+        50-character slug during (python-level) save, not on DB
+        insertion, so that anything that wants the slug to build a URL
+        has the value that actually ends up in the DB.
+        
+        """
+        s = save_valid_submission("AudioVisualizer for Alternative Music Notation Systems")
+        s.taggit_tags.set_ns('tech:', 'javascript')
+        s.save()
+        ok_(len(s.slug) == 50)
+        r = self.client.get(reverse('demos.views.detail', args=(s.slug,)))
+        ok_(r.status_code == 200)

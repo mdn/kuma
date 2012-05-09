@@ -362,7 +362,7 @@ class Submission(models.Model):
             _("what is your demo's name?"), 
             max_length=255, blank=False, unique=True)
     slug = models.SlugField(_("slug"), 
-            blank=False, unique=True)
+            blank=False, unique=True, max_length=50)
     summary = models.CharField(
             _("describe your demo in one line"),
             max_length=255, blank=False)
@@ -460,7 +460,7 @@ class Submission(models.Model):
 
     def save(self):
         """Save the submission, updating slug and screenshot thumbnails"""
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.title)[:50]
         super(Submission,self).save()
 
     def delete(self,using=None):
