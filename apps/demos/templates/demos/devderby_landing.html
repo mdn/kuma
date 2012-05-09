@@ -125,26 +125,33 @@
         <p>Entries will be reviewed by a panel of qualified judges, including
             members of the Mozilla team and outside experts. We will rate the demos
             across 4 dimensions:</p>
+      {% endtrans %}
+      {% trans %}
         <ul class="prose">
             <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li>
             <li><strong>Originality</strong> &ndash; How innovative and unique is the demo?</li>
             <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li>
             <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the Web today?</li>
         </ul>
+      {% endtrans %}
+      {% trans %}
         <p>The judges will use all four dimensions in scoring each entry, and
             any additional criteria specified for a particular contest.</p>
+      {% endtrans %}
+      {% trans %}
         <p>The judges may also take into account how many &ldquo;likes&rdquo;
             the entries have received from the community. So make sure to share
             your demo with others and encourage them to visit Dev Derby to
             &ldquo;vote.&rdquo;</p>
-            
-        <h2>Current Judges</h2>
+      {% endtrans %}
+        <h2>{{ _("Current Judges") }}</h2>
         <ul class="judges">
           <li class="vcard">
             <h3><a href="http://devthought.com" class="fn url">Guillermo Rauch<img src="{{MEDIA_URL}}img/devderby/judges/guillermorauch.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">CTO, LearnBoost</h4>
+            <h4 class="title">{{ _("CTO, LearnBoost") }}</h4>
             <p class="twitter"><a href="http://twitter.com/rauchg" class="url nickname">@rauchg</a></p>
             <p>
+              {% trans %}
               <a href="http://devthought.com/">Guillermo Rauch</a> is the creator of several
               popular open-source JavaScript libraries like <a href="http://socket.io/">Socket.IO</a>
               and <a href="http://mongoosejs.com/">MongooseJS</a>. He's the author of Wiley's
@@ -153,13 +160,15 @@
               <a href="http://mootools.net/">MooTools</a>, the client-side JavaScript library.
               He's the co-founder and CTO of <a href="http://learnboost.com/">LearnBoost</a>,
               an education software company based in San Francisco.
+              {% endtrans %}
             </p>
           </li>
           <li class="vcard">
             <h3><a href="http://kaazing.com/training" class="fn url">Peter Lubbers</a><img src="{{MEDIA_URL}}img/devderby/judges/peterlubbers.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">Senior Director Technical Communication, Kaazing</h4>
+        <h4 class="title">{{ _("Senior Director Technical Communication, Kaazing") }}</h4>
             <p class="twitter"><a href="http://twitter.com/peterlubbers" class="url nickname">@peterlubbers</a></p>
             <p>
+              {% trans %}
               Peter lives and breathes HTML5. Even his car has the California "HTML5" license
               plate. Peter is the co-author of Pro HTML5 Programming (Apress, 2011) and the
               co-founder of the San Francisco HTML5 User Group, the largest HTML5 User Group
@@ -168,136 +177,23 @@
               documentation and training at Kaazing, a start-up company specialized in
               building a high-performance HTML5 WebSocket platform that revolutionizes web
               communication and the first company to offer HTML5 training worldwide.
+              {% endtrans %}
             </p>
           </li>
           <li class="vcard">
             <h3><a href="http://rawkes.com/" class="fn url">Rob Hawkes</a><img src="{{MEDIA_URL}}img/devderby/judges/robhawkes.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">Technical Evangelist at Mozilla</h4>
+            <h4 class="title">{{ _("Technical Evangelist at Mozilla") }}</h4>
             <p class="twitter"><a href="http://twitter.com/robhawkes" class="url nickname">@robhawkes</a></p>
             <p>
+              {% trans %}
               Rob thrives on solving problems through code. He has an addiction to visual
               programming and can’t get enough of HTML5 and JavaScript. He’s a Technical
               Evangelist at Mozilla and leads the gaming side of their work within the
               developer community.
+              {% endtrans %}
             </p>
           </li>
         </ul>
-        <h2>Past Judges</h2>
-        <ul class="judges">
-          <li class="vcard">
-            <h3><a href="http://remysharp.com/" class="fn url">Remy Sharp<img src="{{MEDIA_URL}}img/devderby/judges/remysharp.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">MasterChef of code and cookies</h4>
-            <p class="twitter"><a href="http://twitter.com/rem" class="url nickname">@rem</a></p>
-            <p>Short, ginger, British.  Built a few things: 
-            <a href="http://jsbin.com">jsbin.com</a>, <a href="http://html5demos.com">html5demos.com</a>, 
-            <a href="http://remote-tilt.com">remote-tilt.com</a>, <a href="http://responsivepx.com">responsivepx.com</a>, 
-            nodemon, <a href="http://inliner.leftlogic.com">inliner.leftlogic.com</a>, 
-            <a href="http://jqueryfordesigners.com">jqueryfordesigners.com</a>, <a href="http://mit-license.org">mit-license.org</a>, 
-            <a href="http://snapbird.org">snapbird.org</a>, <a href="http://jsconsole.com">jsconsole.com</a>. 
-            Runs a conference, wrote half a book.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://chriscoyier.net/" class="fn url">Chris Coyier<img src="{{MEDIA_URL}}img/devderby/judges/chriscoyier.jpg" alt="" class="photo" width="100"></a></h3>
-            <h4 class="title">Lead Hucklebucker</h4>
-            <p class="twitter"><a href="http://twitter.com/chriscoyier" class="url nickname">@chriscoyier</a></p>
-            <p>Chris is a web worker currently working for Wufoo &amp; SurveyMonkey. He
-            blogs about all things web at the community site CSS-Tricks. He
-            co-authored the book Digging Into WordPress and talks shop about the
-            web at the aptly named ShopTalk podcast.
-            
-            You can easily get him excited by talking about HTML, CSS,
-            JavaScript, banjos, camping, or serialized sci-fi television shows.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://christianheilmann.com/" class="fn url">Chris Heilmann<img src="{{MEDIA_URL}}img/devderby/judges/chrisheilmann.png" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">Principal Evangelist at Mozilla</h4>
-            <p class="twitter"><a href="http://twitter.com/codepo8" class="url nickname">@codepo8</a></p>
-            <p>Chris Heilmann is the principal evangelist for Mozilla and has been blogging on web technologies for the last 6 years. Before Mozilla he was part of the Yahoo Developer Network and before that he spent several years developing large web sites and apps. Originally Chris was a radio journalist and newscaster. Chris lives in England but travels most of the time. His blog mostly contains his presentations, code examples about upcoming technologies and tips and tricks on web development of all kinds.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://isofarro.com" class="fn url">Mike Davies <img src="{{MEDIA_URL}}img/devderby/judges/mikedavies.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">Web Developer, Retro-gamer</h4>
-            <p class="twitter"><a href="http://twitter.com/isofarro" class="url nickname">@isofarro</a></p>
-            <p>Mike Davies is a Senior Web Developer at <a href="http://www.lovefilm.com/">LOVEFiLM</a> 
-            based in West London. He has over 10 years of commercial web development experience, including 
-            a stint at Yahoo! Europe. One of his notable career achievements was his lead-developer role 
-            for Legal &amp; General's 2005 <a href="http://www.w3.org/WAI/bcase/legal-and-general-case-study">commercially successful accessibility redesign</a>. 
-            Mike is passionate about high-quality web development, and Lords of Midnight on the ZX Spectrum. 
-            He also worries about online privacy.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://wonko.com" class="fn url">Ryan Grove <img src="{{MEDIA_URL}}img/devderby/judges/ryangrove.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">YUI Engineer at Yahoo!</h4>
-            <p class="twitter"><a href="http://twitter.com/yaypie" class="url nickname">@yaypie</a></p>
-            <p>Ryan Grove works on YUI at Yahoo!. His love of JavaScript is surpassed only by his 
-            love of pie. He lives the dream of the 90s in Portland, Oregon, where the weather usually 
-            provides a perfect excuse to stay inside eating pie and writing code.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://encoding.com" class="fn url">Jeff Malkin <img src="{{MEDIA_URL}}img/devderby/judges/jeffmalkin.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">President, Encoding.com</h4>
-            <p class="twitter"><a href="http://twitter.com/jeffmalkin" class="url nickname">@jeffmalkin</a></p>
-            <p>Jeff Malkin is a fearless entrepreneur with a proven track record in growing technology 
-            startups in the Internet and mobile sectors. Jeff has guided Encoding.com, a Gartner “Cool 
-            Vendor 2011,” to its position as the world's largest video encoding service for web and 
-            mobile video, with over 2,000 clients and more than 10 million encodes. Jeff was recently 
-            named a Streaming Media All Star for 2011.</p>
-          </li>
-          <li class="vcard">
-             <h3><a href="http://nimbupani.com" class="fn url">Divya Manian <img src="{{MEDIA_URL}}img/devderby/judges/divyamanian.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-             <h4 class="title">Web Opener at Opera, Open Web Vigilante</h4>
-             <p class="twitter"><a href="http://twitter.com/divya" class="url nickname">@divya</a></p>
-             <p>Divya Manian is a Web Opener for Opera Software in Seattle. She made the jump from 
-             developing device drivers for Motorola phones to designing websites and has not looked 
-             back since. She takes her duties as an Open Web vigilante seriously which has resulted 
-             in collaborative projects such as <a href="http://html5readiness.com">HTML5 Readiness</a> 
-             and <a href="http://html5boilerplate.com">HTML5 Boilerplate</a>.</p>
-          </li>
-          <li class="vcard">
-             <h3><a href="http://ethanmarcotte.com" class="fn url">Ethan Marcotte <img src="{{MEDIA_URL}}img/devderby/judges/ethanmarcotte.jpg" alt="" class="photo" width="100" height="100" title="Photo by Anton Peck"></a></h3>
-             <h4 class="title">Web designer, author</h4>
-             <p class="twitter"><a href="http://twitter.com/beep" class="url nickname">@beep</a></p>
-             <p><a href="http://ethanmarcotte.com/">Ethan Marcotte</a> is a web designer &amp; developer 
-             who cares deeply about beautiful design, elegant code, and the intersection of the two. Over 
-             the years, Ethan has enjoyed working with such clients as the Sundance Film Festival, Stanford 
-             University, <cite>New&nbsp;York Magazine</cite> and The Today Show. He swears profusely 
-             <a href="http://twitter.com/beep">on Twitter</a>, and would like to be an 
-             <a href="http://unstoppablerobotninja.com/" class="url">unstoppable robot ninja</a> when he grows up. His 
-             most recent book is <cite><a href="http://www.abookapart.com/products/responsive-web-design">Responsive Web Design</a></cite>.</p>
-          </li>
-          <li class="vcard">
-             <h3><a href="http://leaverou.me" class="fn url">Lea Verou <img src="{{MEDIA_URL}}img/devderby/judges/leaverou.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-             <h4 class="title">Web developer, Co-founder of Fresset Ltd.</h4>
-             <p class="twitter"><a href="http://twitter.com/leaverou" class="url nickname">@leaverou</a></p>
-             <p>Lea Verou is the lead web developer and designer of Fresset Ltd, which she co-founded in 
-             2008. Fresset owns and manages some of the largest greek community websites. Lea has a 
-             long-standing passion for open web standards, especially CSS and JavaScript. She loves 
-             researching  new ways to use them and shares her findings through her blog, 
-             <a href="http://leaverou.me">leaverou.me</a>. She speaks at a number of the largest web 
-             development conferences and writes for leading industry publications. Lea also co-organized 
-             and occasionally lectures the web development course at the Athens University of Economics 
-             and Business.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="https://github.com/defunkt" class="fn url">Chris Wanstrath <img src="{{MEDIA_URL}}img/devderby/judges/chriswanstrath.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">Developer, GitHub co-founder</h4>
-						<p class="twitter"><a href="http://twitter.com/defunkt" class="url nickname">@defunkt</a></p>
-            <p>Chris Wanstrath lives in San Francisco and co-founded <a href="http://github.com">GitHub</a>. 
-            He likes HTML, guitars, and coffee.</p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://benward.me/" class="fn url">Ben Ward <img src="{{MEDIA_URL}}img/devderby/judges/benward.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">Front-end developer at Twitter</h4>
-            <p class="twitter"><a href="http://twitter.com/benward" class="url nickname">@benward</a></p>
-            <p>Ben Ward is a front-end developer on Twitter's Platform team. He works on products 
-            that put Twitter into other contexts all around the web and in applications. Ben cares 
-            a great deal about building on robust content with progressive enhancement and designing 
-            for failure. He's written at length about and in awe of the linkable, resource-based 
-            architecture of the web. He's also a semantics nerd, administrating and editing 
-            specifications at <a href="http://microformats.org">microformats.org</a>.</p>
-          </li>
-        </ul>
-        {% endtrans %}
       </section>
 
       <section id="tab-previous" class="block">
