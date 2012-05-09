@@ -1,5 +1,5 @@
 /*
- * Taken from Django's contrib/admin/media/js folder, thanks Django!
+ * Taken from Django"s contrib/admin/media/js folder, thanks Django!
  * Copyright Django and licensed under BSD, please see django/LICENSE for
  * license details.
  * Modified slightly to handle fallback to full title if slug is empty.
@@ -13,19 +13,19 @@
             Populates a selected field with the values of the dependent fields,
             URLifies and shortens the string.
             dependencies - selected jQuery object of dependent fields
-            maxLength - maximum length of the URLify'd string
+            maxLength - maximum length of the URLify"d string
         */
         return this.each(function() {
             var field = $(this);
 
-            field.data('_changed', false);
+            field.data("_changed", false);
             field.change(function() {
-                field.data('_changed', true);
+                field.data("_changed", true);
             });
 
             var populate = function () {
                 // Bail if the fields value has changed
-                if (field.data('_changed') == true) return;
+                if (field.data("_changed") == true) return;
 
                 var values = [], field_val, field_val_raw;
                 dependencies.each(function() {
@@ -34,17 +34,17 @@
                     }
                 });
 
-                s = values.join(' ');
+                s = values.join(" ");
                 
                 // Remove illegal characters
                 // Allowing "$" based on the code statement below
-                s = s.replace(/[^a-zA-Z0-9\$]+/g, '_');
+                s = s.replace(/[^a-zA-Z0-9:\$]+/g, "_");
 
                 // "$" is used for verb delimiter in URLs
-                s = s.replace(/\$/g, ''); 
+                s = s.replace(/\$/g, ""); 
 
-                // Don't allow "_____" mess
-                s = s.replace(/\_+/g, '_');
+                // Don"t allow "_____" mess
+                s = s.replace(/\_+/g, "_");
 
                 // trim to first num_chars chars
                 s = s.substring(0, maxLength);
