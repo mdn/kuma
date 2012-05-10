@@ -28,6 +28,8 @@ from django.contrib.auth.models import User
 
 from django.core.files.base import ContentFile
 
+from django.template.defaultfilters import slugify
+
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 
@@ -40,7 +42,7 @@ from demos.forms import SubmissionEditForm, SubmissionNewForm
 
 def save_valid_submission(title='hello world'):
     testuser = User.objects.get(username='testuser')
-    s = Submission(title=title, slug='hello-world',
+    s = Submission(title=title, slug=slugify(title),
         description='This is a hello world demo',
         creator=testuser)
     fout = StringIO()

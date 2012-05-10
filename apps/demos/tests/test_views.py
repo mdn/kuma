@@ -8,6 +8,7 @@ import logging
 
 from django import http, test
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 from sumo.urlresolvers import reverse
 from sumo.tests import LocalizingClient
@@ -219,6 +220,7 @@ class DemoViewsTest(test_utils.TestCase):
         assert pq(r.content)('form#demo-submit')
         eq_('Save changes',
             pq(r.content)('p.fm-submit button[type="submit"]').text())
+        
 
     @logged_in
     def test_hidden_field(self):
@@ -341,7 +343,7 @@ class DemoViewsTest(test_utils.TestCase):
 
         eq_(302, r.status_code)
         assert 'Location' in r
-        assert 'hello-world' in r['Location']
+        assert s.slug in r['Location']
 
         r = self.client.get(edit_url)
         eq_(r.status_code, 200)
@@ -357,7 +359,7 @@ class DemoViewsTest(test_utils.TestCase):
 
         eq_(302, r.status_code)
         assert 'Location' in r
-        assert 'hello-world' in r['Location']
+        assert s.slug in r['Location']
 
         r = self.client.get(edit_url)
         eq_(r.status_code, 200)
@@ -415,3 +417,14 @@ class DemoViewsTest(test_utils.TestCase):
         ok_(len(s.slug) == 50)
         r = self.client.get(reverse('demos.views.detail', args=(s.slug,)))
         ok_(r.status_code == 200)
+
+    def test_make_unique_slug(self):
+        """
+        Ensure that unique slugs are generated even from titles whose
+        first 50 characters are identical.
+        
+        """
+        s = save_valid_submission("This is a really long title whose only purpose in life is to be longer than fifty characters")
+        s2 = save_valid_submission("This is a really long title whose only purpose in life is to be longer than fifty characters and not the same as the first title")
+        s3 = save_valid_submission("This is a really long title whose only purpose in life is to be longer than fifty characters and not the same as the first or second title")
+        ok_(s.slug != s2.slug and s.slug != s3.slug and s2.slug != s3.slug)

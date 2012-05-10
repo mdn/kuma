@@ -458,9 +458,37 @@ class Submission(models.Model):
     def get_absolute_url(self):
         return reverse('demos.views.detail', kwargs={'slug':self.slug})
 
+    def _make_unique_slug(self):
+        """
+        Try to generate a unique 50-character slug.
+        
+        """
+        if self.slug:
+            slug = self.slug[:50]
+        else:
+            slug = slugify(self.title)[:50]
+        existing = Submission.objects.filter(slug=slug)
+        if (not existing) or (self.id and self.id in [s.id for s in existing]):
+            return slug
+        # If the first 50 characters aren't unique, we chop off the
+        # last two and try sticking a two-digit number there.
+        #
+        # If for some reason we get to 100 demos which all have the
+        # same first fifty characters in their title, this will
+        # break. Hopefully that's unlikely enough that it won't be a
+        # problem, but we can always add a check at the end of the
+        # while loop or come up with some other method if we actually
+        # run into it.
+        base_slug = slug[:-2]
+        i = 0
+        while Submission.objects.filter(slug=slug).exists() and i < 100:
+            slug = "%s%02d" % (base_slug, i)
+            i += 1
+        return slug
+
     def save(self):
         """Save the submission, updating slug and screenshot thumbnails"""
-        self.slug = slugify(self.title)[:50]
+        self.slug = self._make_unique_slug()
         super(Submission,self).save()
 
     def delete(self,using=None):
