@@ -1,4 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
+{% if kumascript_errors %}
+  {% include 'wiki/includes/kumascript_errors.html' %}
+{% endif %}
 <div id="doc-content">
   {{ content|safe }}
 </div>
