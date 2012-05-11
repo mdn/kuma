@@ -41,6 +41,22 @@ jQuery.fn.placeholder = function(new_value) {
     }).blur();
 };
 
+/* Parse a querystring into an object */
+jQuery.extend({
+	parseQuerystring: function(){
+		var nvpair = {},
+			qs = window.location.search.replace("?", ""),
+			pairs = qs.split("&");
+			
+		$.each(pairs, function(i, v){
+			var pair = v.split("=");
+			nvpair[pair[0]] = pair[1];
+		});
+		
+		return nvpair;
+	}
+});
+
 // HACK: This ready() call is commented out, because all of our JS is at the
 // end of the page where the DOM is pretty much ready anyway. This shaves a few
 // dozen ms off page setup time.
@@ -127,7 +143,7 @@ jQuery.fn.placeholder = function(new_value) {
     $signedOutList.hide();  
     
     $.get($signedOutList.attr('data-browserid-header-signin-html'), {
-      next: window.location.pathname
+      next: $.parseQuerystring().next || window.location.pathname
     }, function(content) {
       $signedOutList.html(content);
       $('.toggle', $signedOutList).click(function() {
