@@ -15,7 +15,7 @@ following things (in addition to Git, of course).
 
 * MySQL Server and client headers.
 
-* Memcached Server.
+* Memcached Server and ``libmemcached``.
 
 * `Sphinx <http://sphinxsearch.com/>`_ 0.9.9, compiled with the
   ``--enable-id64`` flag.
@@ -57,9 +57,12 @@ Getting the Source
 
 Grab the source from Github using::
 
+    mkdir mdn # you probably want to do this, since you'll have to create 
+    cd mdn    # product_details_json/ as a sibling of kuma/ later.
     git clone git://github.com/mozilla/kuma.git
     cd kuma
     git submodule update --init --recursive
+
 
 Installing the Packages
 =======================
@@ -121,19 +124,24 @@ database (see below) and lots of tests will fail. Hundreds.
 Once you've set up the database, you can generate the schema with Django's
 ``syncdb`` command::
 
+    mkdir ../product_details_json
     ./manage.py syncdb
     ./manage.py migrate
 
 This will generate an empty database, which will get you started!
 
-If you run into a "No such file or directory" error for
-../product_details_json just create this folder::
 
-    mkdir ../product_details_json
+Initializing Mozilla Product Details
+------------------------------------
 
-and run::
+One of the packages Kuma uses, Django Mozilla Product Details, needs to
+fetch JSON files containing historical Firefox version data and write them
+within its package directory. To set this up, just run::
 
     ./manage.py update_product_details
+
+...to do the initial fetch.
+
 
 Media
 -----
@@ -145,12 +153,42 @@ set your ``settings_local.py`` with the following::
     TEMPLATE_DEBUG = DEBUG
     SERVE_MEDIA = True
 
+Configure BrowserID
+-----
+
+Add the following to ``settings_local.py`` so that BrowserID works with the
+development instance::
+
+    SITE_URL = 'http://localhost:8000'
+    PROTOCOL = 'http://'
+    DOMAIN = 'localhost'
+    PORT = 8000
+    SESSION_COOKIE_SECURE = False # needed if the server is running on http://
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+The `SESSION_EXPIRE_AT_BROWSER_CLOSE` setting is not strictly necessary, but
+it's convenient for development.
+
+Enable kumawiki in waffle
+-----
+
+We're using `django-waffle <https://github.com/jsocol/django-waffle>`_ to disable
+features not yet ready for production. To test out the wiki, you'll have to enable
+it first. To do so, open the `django admin interface <http://localhost:8000/admin/>`_
+and add a ``kumawiki`` flag.
+
+Note that features disabled by a flag will show up as a 404 error.
+
 Testing it Out
 ==============
 
 To start the dev server, run ``./manage.py runserver``, then open up
 ``http://localhost:8000``. If everything's working, you should see
 the MDN home page!
+
+You might need to set ``LC_CTYPE`` if you're on Mac OS X until `bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::
+
+    export LC_CTYPE=en_US
 
 
 Running the Tests
@@ -171,20 +209,15 @@ Running the test suite is easy::
 
     ./manage.py test -s --noinput --logging-clear-handlers
 
+Note that this will try (and fail) to run tests that depend on apps disabled
+via ``INSTALLED_APPS``. You should run a subset of tests specified in
+`scripts/build.sh <../scripts/build.sh>`_, at the bottom of the script.
+
 For more information, see the `test documentation <tests.rst>`_.
 
 
 Last Steps
 ==========
-
-Initializing Mozilla Product Details
-------------------------------------
-
-One of the packages Kuma uses, Django Mozilla Product Details, needs to
-fetch JSON files containing historical Firefox version data and write them
-within its package directory. To set this up, just run
-``./manage.py update_product_details`` to do the initial fetch.
-
 
 Setting Up Search
 -----------------
