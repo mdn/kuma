@@ -169,6 +169,16 @@ development instance::
 The `SESSION_EXPIRE_AT_BROWSER_CLOSE` setting is not strictly necessary, but
 it's convenient for development.
 
+Enable kumawiki in waffle
+-----
+
+We're using `django-waffle <https://github.com/jsocol/django-waffle>`_ to disable
+features not yet ready for production. To test out the wiki, you'll have to enable
+it first. To do so, open the `django admin interface <http://localhost:8000/admin/>`_
+and add a ``kumawiki`` flag.
+
+Note that features disabled by a flag will show up as a 404 error.
+
 Testing it Out
 ==============
 
