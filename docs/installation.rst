@@ -160,6 +160,10 @@ To start the dev server, run ``./manage.py runserver``, then open up
 ``http://localhost:8000``. If everything's working, you should see
 the MDN home page!
 
+You might need to set ``LC_CTYPE`` if you're on Mac OS X until `bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::
+
+    export LC_CTYPE=en_US
+
 
 Running the Tests
 -----------------
