@@ -57,9 +57,12 @@ Getting the Source
 
 Grab the source from Github using::
 
+    mkdir mdn # you probably want to do this, since you'll have to create 
+    cd mdn    # product_details_json/ as a sibling of kuma/ later.
     git clone git://github.com/mozilla/kuma.git
     cd kuma
     git submodule update --init --recursive
+
 
 Installing the Packages
 =======================
@@ -121,19 +124,24 @@ database (see below) and lots of tests will fail. Hundreds.
 Once you've set up the database, you can generate the schema with Django's
 ``syncdb`` command::
 
+    mkdir ../product_details_json
     ./manage.py syncdb
     ./manage.py migrate
 
 This will generate an empty database, which will get you started!
 
-If you run into a "No such file or directory" error for
-../product_details_json just create this folder::
 
-    mkdir ../product_details_json
+Initializing Mozilla Product Details
+------------------------------------
 
-and run::
+One of the packages Kuma uses, Django Mozilla Product Details, needs to
+fetch JSON files containing historical Firefox version data and write them
+within its package directory. To set this up, just run::
 
     ./manage.py update_product_details
+
+...to do the initial fetch.
+
 
 Media
 -----
@@ -176,15 +184,6 @@ For more information, see the `test documentation <tests.rst>`_.
 
 Last Steps
 ==========
-
-Initializing Mozilla Product Details
-------------------------------------
-
-One of the packages Kuma uses, Django Mozilla Product Details, needs to
-fetch JSON files containing historical Firefox version data and write them
-within its package directory. To set this up, just run
-``./manage.py update_product_details`` to do the initial fetch.
-
 
 Setting Up Search
 -----------------
