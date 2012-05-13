@@ -153,6 +153,22 @@ set your ``settings_local.py`` with the following::
     TEMPLATE_DEBUG = DEBUG
     SERVE_MEDIA = True
 
+Configure BrowserID
+-----
+
+Add the following to ``settings_local.py`` so that BrowserID works with the
+development instance::
+
+    SITE_URL = 'http://localhost:8000'
+    PROTOCOL = 'http://'
+    DOMAIN = 'localhost'
+    PORT = 8000
+    SESSION_COOKIE_SECURE = False # needed if the server is running on http://
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+The `SESSION_EXPIRE_AT_BROWSER_CLOSE` setting is not strictly necessary, but
+it's convenient for development.
+
 Testing it Out
 ==============
 
