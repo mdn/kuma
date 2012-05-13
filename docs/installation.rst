@@ -15,7 +15,7 @@ following things (in addition to Git, of course).
 
 * MySQL Server and client headers.
 
-* Memcached Server.
+* Memcached Server and ``libmemcached``.
 
 * `Sphinx <http://sphinxsearch.com/>`_ 0.9.9, compiled with the
   ``--enable-id64`` flag.
