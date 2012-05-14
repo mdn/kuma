@@ -225,23 +225,11 @@ def document(request, document_slug, document_locale):
     section_id = request.GET.get('section', None)
     show_raw = request.GET.get('raw', False) is not False
     is_include = request.GET.get('include', False) is not False
-    no_macros = request.GET.get('nomacros', False) is not False
-    force_macros = request.GET.get('macros', False) is not False
     need_edit_links = request.GET.get('edit_links', False) is not False
 
     # Grab the document HTML as a fallback, then attempt to use kumascript:
     doc_html, ks_errors = doc.html, None
-    if (constance.config.KUMASCRIPT_TIMEOUT > 0 and
-            not doc.is_template and
-            (force_macros or (not no_macros and not show_raw))):
-        # We'll make a request to kumascript for macro evaluation only if:
-        #   * The service isn't disabled with a timeout of 0
-        #   * The request has *not* asked for raw source
-        #     (eg. ?raw)
-        #   * The request has *not* asked for no macro evaluation
-        #     (eg. ?nomacros)
-        #   * The request *has* asked for macro evaluation
-        #     (eg. ?raw&macros)
+    if _run_kumascript(doc, request):
         resp_body, resp_errors = _perform_kumascript_request(
                 request, response_headers, doc, document_locale, document_slug)
         if resp_body:
@@ -318,6 +306,92 @@ def _invalidate_kumascript_cache(document):
         return
     cache.delete_many(_build_kumascript_cache_keys(document.slug,
                                                    document.locale))
+
+def _run_kumascript(doc, request):
+    """
+    We'll make a request to kumascript for macro evaluation only if:
+      * The service isn't disabled with a timeout of 0
+      * The request has *not* asked for raw source
+        (eg. ?raw)
+      * The request has *not* asked for no macro evaluation
+        (eg. ?nomacros)
+      * The request *has* asked for macro evaluation
+        (eg. ?raw&macros)
+    """
+    show_raw = request.GET.get('raw', False) is not False
+    no_macros = request.GET.get('nomacros', False) is not False
+    force_macros = request.GET.get('macros', False) is not False
+    is_template = False
+    if doc:
+        is_template = doc.is_template
+    return (constance.config.KUMASCRIPT_TIMEOUT > 0 and
+            not is_template and
+            (force_macros or (not no_macros and not show_raw)))
+
+
+def _process_kumascript_body(response):
+    # HACK: Assume we're getting UTF-8, which we should be.
+    # TODO: Better solution would be to upgrade the requests module
+    # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
+    # which does auto-detection. But, that will break things.
+    resp_body = response.read().decode('utf8')
+
+    # We defer bleach sanitation of kumascript content all the way
+    # through editing, source display, and raw output. But, we still
+    # want sanitation, so it finally gets picked up here.
+    resp_body = bleach.clean(
+        resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
+        styles=ALLOWED_STYLES, strip_comments=False
+    )
+    return resp_body
+
+
+def _process_kumascript_errors(response):
+    """Attempt to decode any FireLogger-style error messages in the response
+    from kumascript."""
+    resp_errors = []
+    try:
+        # Extract all the log packets from headers.
+        fl_packets = defaultdict(dict)
+        for k, v in response.headers.items():
+            if not k.lower().startswith('firelogger-'):
+                continue
+            _, packet_id, seq = k.split('-', 3)
+            fl_packets[packet_id][seq] = v
+
+        # The FireLogger spec allows for multiple "packets". But,
+        # kumascript only ever sends the one, so flatten all messages.
+        fl_msgs = []
+        for id, contents in fl_packets.items():
+            seqs = sorted(contents.keys(), key=int)
+            d_b64 = "\n".join(contents[x] for x in seqs)
+            d_json = base64.decodestring(d_b64)
+            packet = json.loads(d_json)
+            fl_msgs.extend(packet['logs'])
+
+        if len(fl_msgs):
+            resp_errors = fl_msgs
+
+
+    except Exception, e:
+        resp_errors = [
+            {"level": "error",
+              "message": "Problem parsing errors: %s" % e,
+              "args": ["ParsingError"]}
+        ]
+    return resp_errors
+
+
+def _perform_kumascript_post(content):
+    ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
+    headers = {
+        'X-FireLogger': '1.2',
+    }
+    resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
+                        data=content, headers=headers)
+    resp_body = _process_kumascript_body(resp)
+    resp_errors = _process_kumascript_errors(resp)
+    return resp_body, resp_errors
 
 
 def _perform_kumascript_request(request, response_headers, document,
@@ -408,54 +482,12 @@ def _perform_kumascript_request(request, response_headers, document,
                     '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
 
         elif resp.status_code == 200:
-            # HACK: Assume we're getting UTF-8, which we should be.
-            # TODO: Better solution would be to upgrade the requests module
-            # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
-            # which does auto-detection. But, that will break things.
-            resp_body = resp.read().decode('utf8')
-
-            # Attempt to decode any FireLogger-style error messages in the
-            # response from kumascript.
-            try:
-                # Extract all the log packets from headers.
-                fl_packets = defaultdict(dict)
-                for k, v in resp.headers.items():
-                    if not k.lower().startswith('firelogger-'):
-                        continue
-                    _, packet_id, seq = k.split('-', 3)
-                    fl_packets[packet_id][seq] = v
-
-                # The FireLogger spec allows for multiple "packets". But,
-                # kumascript only ever sends the one, so flatten all messages.
-                fl_msgs = []
-                for id, contents in fl_packets.items():
-                    seqs = sorted(contents.keys(), key=int)
-                    d_b64 = "\n".join(contents[x] for x in seqs)
-                    d_json = base64.decodestring(d_b64)
-                    packet = json.loads(d_json)
-                    fl_msgs.extend(packet['logs'])
-
-                if len(fl_msgs):
-                    resp_errors = fl_msgs
-
-            except Exception, e:
-                resp_errors = [
-                    {"level": "error",
-                      "message": "Problem parsing errors: %s" % e,
-                      "args": ["ParsingError"]}
-                ]
+            resp_body = _process_kumascript_body(resp)
+            resp_errors = _process_kumascript_errors(resp)
 
             # Set a header so we can see what happened in caching.
             response_headers['X-Kumascript-Caching'] = (
                     '200 OK, Age: %s' % resp.headers.get('age', 0))
-
-            # We defer bleach sanitation of kumascript content all the way
-            # through editing, source display, and raw output. But, we still
-            # want sanitation, so it finally gets picked up here.
-            resp_body = bleach.clean(
-                resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-                styles=ALLOWED_STYLES, strip_comments=False
-            )
 
             # Cache the request for conditional GET, but use the max_age for
             # the cache timeout here too.
@@ -842,8 +874,15 @@ def ckeditor_config(request):
 def preview_revision(request):
     """Create an HTML fragment preview of the posted wiki syntax."""
     wiki_content = request.POST.get('content', '')
+    kumascript_errors = []
+    doc = None
+    if request.POST.get('doc_id', False):
+        doc = Document.objects.get(id=request.POST.get('doc_id'))
+    if _run_kumascript(doc, request):
+        wiki_content, kumascript_errors = _perform_kumascript_post(
+                                                                wiki_content)
     # TODO: Get doc ID from JSON.
-    data = {'content': wiki_content}
+    data = {'content': wiki_content, 'kumascript_errors': kumascript_errors}
     #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
