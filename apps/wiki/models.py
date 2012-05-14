@@ -67,8 +67,9 @@ ALLOWED_STYLES = [
     'border', 'float', 'overflow', 'min-height', 'vertical-align',
     'white-space',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
-    'padding', 'padding-left', 'padding-top', 'padding-bottom', 'padding-right',
-    'background', # TODO: Maybe not this one, it can load URLs
+    'padding', 'padding-left', 'padding-top', 'padding-bottom',
+    'padding-right',
+    'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns',
@@ -262,7 +263,7 @@ class DocumentManager(ManagerBase):
             if not rev:
                 # Skip this doc if, for some reason, there's no revision.
                 continue
-            
+
             # Drop the pk and circular reference to rev.
             doc.pk = None
             doc.current_revision = None
@@ -282,7 +283,7 @@ class DocumentManager(ManagerBase):
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
             'parent', 'category', 'document', 'summary', 'content', 'comment',
             'keywords', 'tags', 'show_toc', 'significance', 'is_approved',
-            'creator', # HACK: Replaced on import, but deserialize needs it
+            'creator',  # HACK: Replaced on import, but deserialize needs it
             'mindtouch_page_id', 'mindtouch_old_id', 'is_mindtouch_migration',
         )
         serializers.serialize('json', objects, indent=2, stream=stream,
@@ -290,7 +291,7 @@ class DocumentManager(ManagerBase):
 
     def load_json(self, creator, stream):
         """Import a stream of JSON-serialized Documents and Revisions
-    
+
         This is inspired by smuggler.views.load_data with customizations for
         Document specifics, per bug 747137
         """
@@ -325,6 +326,7 @@ class DocumentManager(ManagerBase):
             counter += 1
 
         return counter
+
 
 class DocumentTag(TagBase):
     """A tag indexing a document"""
@@ -824,7 +826,7 @@ class Document(NotificationsMixin, ModelBase):
 
     related_revisions_link.allow_tags = True
     related_revisions_link.short_description = "All Revisions"
-        
+
     def current_revision_link(self):
         """HTML link to the current revision for the admin change list"""
         if not self.current_revision:
@@ -835,7 +837,7 @@ class Document(NotificationsMixin, ModelBase):
 
     current_revision_link.allow_tags = True
     current_revision_link.short_description = "Current Revision"
-        
+
     def parent_document_link(self):
         """HTML link to the parent document for admin change list"""
         if not self.parent:
@@ -845,6 +847,7 @@ class Document(NotificationsMixin, ModelBase):
 
     parent_document_link.allow_tags = True
     parent_document_link.short_description = "Parent Document"
+
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""

@@ -680,8 +680,9 @@ class GetCurrentOrLatestRevisionTests(TestCase):
         eq_(r2, get_current_or_latest_revision(r1.document,
                                                reviewed_only=False))
 
+
 class DumpAndLoadJsonTests(TestCase):
-    fixtures = ['test_users.json',]
+    fixtures = ['test_users.json', ]
 
     def test_roundtrip(self):
         # Create some documents and revisions here, rather than use a fixture
@@ -731,7 +732,7 @@ class DumpAndLoadJsonTests(TestCase):
         # For good measure, ensure no documents missing revisions in the dump.
         doc_no_rev = (Document.objects
                       .filter(current_revision__isnull=True))[0]
-        no_rev_cnt = len([x for x in data 
+        no_rev_cnt = len([x for x in data
                           if x['model'] == 'wiki.document' and
                              x['fields']['slug'] == doc_no_rev.slug and
                              x['fields']['locale'] == doc_no_rev.locale])
@@ -748,7 +749,8 @@ class DumpAndLoadJsonTests(TestCase):
             d_curr = Document.uncached.get(pk=d_orig.pk)
             eq_(2, d_curr.revisions.count())
             ok_(d_orig.current_revision.id != d_curr.current_revision.id)
-            ok_(d_orig.current_revision.creator_id != d_curr.current_revision.creator_id)
+            ok_(d_orig.current_revision.creator_id !=
+                d_curr.current_revision.creator_id)
             eq_(uploader.id, d_curr.current_revision.creator_id)
 
         # Everyone out of the pool!
@@ -761,8 +763,8 @@ class DumpAndLoadJsonTests(TestCase):
 
         # Count docs (with revisions) and revisions in DB. The imported objects
         # should have beeen doc/rev pairs.
-        eq_(loaded_cnt/2, Document.objects.count())
-        eq_(loaded_cnt/2, Revision.objects.count())
+        eq_(loaded_cnt / 2, Document.objects.count())
+        eq_(loaded_cnt / 2, Revision.objects.count())
 
         # The originals should be gone, now.
         for d_orig in (d1, d2, d3, d4):
