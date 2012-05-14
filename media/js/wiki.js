@@ -718,10 +718,6 @@
                     $preview.html(html)
                         .find('select.enable-if-js').removeAttr('disabled');
                     document.location.hash = 'preview';
-                    //initForTags();
-                    //updateShowforSelectors();
-                    $preview.find('.kbox').kbox();
-                    k.initVideo();
                     $btn.removeAttr('disabled');
                 },
                 error: function() {
