@@ -711,7 +711,7 @@
             $.ajax({
                 url: $(this).attr('data-preview-url'),
                 type: 'POST',
-                data: $('#id_content').serialize(),
+                data: $('#id_content').val(CKEDITOR.instances['id_content'].getData()).serialize(),
                 dataType: 'html',
                 success: function(html) {
                     var $preview = $('#preview');
