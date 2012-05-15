@@ -3,6 +3,7 @@
 import logging
 import json
 import base64
+import hashlib
 import time
 
 from django.conf import settings
@@ -28,7 +29,7 @@ import wiki.content
 from wiki.models import VersionMetadata, Document, Revision
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
-from wiki.views import _version_groups
+from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from wiki.forms import MIDAIR_COLLISION
 
 
@@ -209,6 +210,53 @@ class PermissionTests(TestCaseBase):
                         eq_(403, resp.status_code,
                             "%s should not be able to %s %s" %
                             (user, msg[is_add], slug))
+
+
+class ConditionalGetTests(TestCaseBase):
+    """Tests for conditional GET on document view"""
+    fixtures = ['test_users.json']
+
+    def test_last_modified(self):
+        """Ensure the last-modified stamp of a document is cached"""
+        
+        self.d, self.r = doc_rev()
+        self.url = reverse('wiki.document', 
+                           args=['%s/%s' % (self.d.locale, self.d.slug)],
+                           locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        # There should be no last-modified date cached for this document yet.
+        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
+                     hashlib.md5(self.d.full_path).hexdigest())
+        ok_(not cache.get(cache_key))
+
+        # Now, try a request, and ensure that the last-modified header is present.
+        response = self.client.get(self.url, follow=False)
+        ok_(response.has_header('last-modified'))
+        last_mod = response['last-modified']
+
+        # Try another request, using If-Modified-Since. THis should be a 304
+        response = self.client.get(self.url, follow=False,
+                                   HTTP_IF_MODIFIED_SINCE=last_mod)
+        eq_(304, response.status_code)
+
+        # Finally, ensure that the last-modified was cached.
+        cached_last_mod = cache.get(cache_key)
+        eq_(self.d.modified.strftime('%s'), cached_last_mod)
+
+        # Let the clock tick, so the last-modified will change on edit.
+        time.sleep(1.0)
+
+        # Edit the document, ensure the last-modified has been invalidated.
+        new_rev = revision(document=self.d, content="New edits", save=True)
+        ok_(not cache.get(cache_key))
+
+        # This should be another 304, but the last-modified in response and
+        # cache should have changed.
+        response = self.client.get(self.url, follow=False,
+                                   HTTP_IF_MODIFIED_SINCE=last_mod)
+        eq_(200, response.status_code)
+        ok_(last_mod != response['last-modified'])
+        ok_(cached_last_mod != cache.get(cache_key))
 
 
 class FakeResponse:
