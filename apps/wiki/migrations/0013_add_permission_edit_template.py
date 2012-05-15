@@ -16,6 +16,10 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
+        # Force create content types, since by default south wouldn't create
+        # them until it finished running migrations.
+        db.send_pending_create_signals()
+
         ct = orm['contenttypes.ContentType'].objects.get(app_label='wiki',
                                                          model='document')
         for p in self.permissions:
