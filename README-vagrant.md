@@ -4,60 +4,94 @@ This is an attempt to describe the bootstrap process to get Kuma running in a
 Vagrant-managed virtual machine. 
 
 This is known to work on Mac OS X. It could possibly be made to work under
-Linux and Windows, but I haven't tried. Bug reports and suggestions are
-welcome. The main barrier to Windows is probably that this Vagrantfile 
+Linux and Windows, but few have tried. Bug reports and suggestions are
+welcome. The main barrier to Windows is that this Vagrantfile 
 [uses NFS to share the current working directory][nfs] for performance 
-reasons. 
+reasons, and also Vagrant support for Windows is not-so-great yet.
 
 [nfs]: http://vagrantup.com/docs/nfs.html
 
-    # Install VirtualBox 4 from http://www.virtualbox.org/
+## Getting up and running
 
-    # Open a terminal window.
+* Install VirtualBox 4 from http://www.virtualbox.org/
+
+* Install vagrant from a Terminal window, see vagrantup.com:
+
+        gem update
+        gem install vagrant
+
+* Clone Kuma, update submodules:
+
+        git clone git://github.com/mozilla/kuma.git
+        cd kuma
+        git submodule update --init --recursive
+
+* Create a `vagrantconfig_local.yaml` file to configure your VM:
+
+        cp vagrantconfig_local.yaml-dist vagrantconfig_local.yaml
+
+  This may have some interesting settings for you to tweak, but the 
+  defaults should work fine.
+
+* Fire up the VM and install everything, go take a bike ride (approx.
+  30 min on a fast net connection):
+ 
+        vagrant up
+
+* If the process fails with an error, try running the Puppet setup again:
+
+        vagrant provision
+
+  This often recovers from transient network issues or installation 
+  ordering problems.
+
+* Add developer-dev.mozilla.org to /etc/hosts:
+ 
+        echo '192.168.10.55 developer-dev.mozilla.org' >> /etc/hosts
+
+* Everything should be working now, frmo the host side.
+
+        curl 'http://developer-dev.mozilla.org'
+
+* You should be able to log into a shell in the VM as the user `vagrant`:
+
+        vagrant ssh
+
+## What's next?
+
+* Django and node.js web services must be started within the VM by hand,
+  which makes them easier to restart during development. Details on this
+  should be displayed via `/etc/motd` when you log in with `vagrant ssh`
+
+* Edit files as usual on your host machine; the current directory is
+  mounted via NFS at /vagrant within the VM. Update should be reflected
+  without any action on your part.
+
+* Useful vagrant sub-commands:
+
+        vagrant ssh     # Connect to the VM via ssh
+        vagrant suspend # Sleep the VM, saving state
+        vagrant halt    # Shutdown the VM
+        vagrant up      # Boot up the VM
+        vagrant destroy # Destroy the VM
+
+* You should occasionally re-run the Puppet setup, especially after 
+  updating code with major changes. This will ensure that the VM
+  environment stays up to date with configuration changes and 
+  installation of additional services.
+
+    * On the Host:
+
+            vagrant provision
+
+    * Inside the VM:
     
-    # Install vagrant, see vagrantup.com
-    sudo gem update
-    sudo gem install vagrant
-        
-    # Clone a Kuma repo, switch to "mdn" branch (for now)
-    git clone git://github.com/mozilla/kuma.git
-    cd kuma
-    git checkout mdn
-    git submodule update --init --recursive
+            sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn.pp
 
-    # Fire up the VM and install everything, take a bike ride (approx. 30 min)
-    vagrant up
+* **Experimental and Optional**: Download and import data extracted and
+  sanitized from the production site. This can take a long while, since 
+  there's over 500MB of data to download.
 
-    # If the process fails with an error, try running the Puppet setup again.
-    # (This sometimes fixes transient or ordering problems)
-    vagrant provision
-
-    # Add developer-dev.mozilla.org to /etc/hosts
-    echo '192.168.10.55 developer-dev.mozilla.org' >> /etc/hosts
-
-    # Everything should be working now.
-    curl 'http://developer-dev.mozilla.org'
-    
-    # Experimental / Optional: Download and import data extracted from the
-    # production site. This can take a long while, since there's over 500MB
-    vagrant ssh
-    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
-    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
-
-    # Edit files as usual on your host machine; the current directory is
-    # mounted via NFS at /vagrant within the VM.
-
-    # Useful vagrant sub-commands:
-
-    vagrant ssh     # Connect to the VM via ssh
-    vagrant suspend # Sleep the VM, saving state
-    vagrant halt    # Shutdown the VM
-    vagrant up      # Boot up the VM
-    vagrant destroy # Destroy the VM
-
-    # Occasionally run this within the VM to sync the environment up 
-    # with an updated Puppet manifest, or to recover from failures
-    # during the initial VM spin-up. It should be safe to run repeatedly,
-    # since Puppet works to establish state, not run scripts per se.
-
-    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn.pp
+        vagrant ssh
+        sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
+        sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
