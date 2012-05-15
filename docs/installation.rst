@@ -209,6 +209,10 @@ Running the test suite is easy::
 
     ./manage.py test -s --noinput --logging-clear-handlers
 
+Note that this will try (and fail) to run tests that depend on apps disabled
+via ``INSTALLED_APPS``. You should run a subset of tests specified in
+`scripts/build.sh <../scripts/build.sh>`_, at the bottom of the script.
+
 For more information, see the `test documentation <tests.rst>`_.
 
 
