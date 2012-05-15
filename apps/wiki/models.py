@@ -12,6 +12,7 @@ import bleach
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core import serializers
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -66,8 +67,9 @@ ALLOWED_STYLES = [
     'border', 'float', 'overflow', 'min-height', 'vertical-align',
     'white-space',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
-    'padding', 'padding-left', 'padding-top', 'padding-bottom', 'padding-right',
-    'background', # TODO: Maybe not this one, it can load URLs
+    'padding', 'padding-left', 'padding-top', 'padding-bottom',
+    'padding-right',
+    'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns',
@@ -209,6 +211,9 @@ def _inherited(parent_attr, direct_attr):
 class DocumentManager(ManagerBase):
     """Manager for Documents, assists for queries"""
 
+    def get_by_natural_key(self, locale, slug):
+        return self.get(locale=locale, slug=slug)
+
     def allows_add_by(self, user, slug):
         """Determine whether the user can create a document with the given
         slug. Mainly for enforcing Template: editing permissions"""
@@ -245,6 +250,82 @@ class DocumentManager(ManagerBase):
         else:
             q = {bq % 'name__isnull': False}
         return self.filter(**q).distinct()
+
+    def dump_json(self, queryset, stream):
+        """Export a stream of JSON-serialized Documents and Revisions
+
+        This is inspired by smuggler.views.dump_data with customizations for
+        Document specifics, per bug 747137
+        """
+        objects = []
+        for doc in queryset.all():
+            rev = get_current_or_latest_revision(doc)
+            if not rev:
+                # Skip this doc if, for some reason, there's no revision.
+                continue
+
+            # Drop the pk and circular reference to rev.
+            doc.pk = None
+            doc.current_revision = None
+            objects.append(doc)
+
+            # Drop the rev pk
+            rev.pk = None
+            objects.append(rev)
+
+        # HACK: This is kind of awkward, but the serializer only accepts a flat
+        # list of field names across all model classes that get handled. So,
+        # this is a mashup whitelist of Document and Revision fields.
+        fields = (
+            # TODO: Maybe make this an *exclusion* list by getting the list of
+            # fields from Document and Revision models and knocking out what we
+            # don't want? Serializer doesn't support exclusion list directly.
+            'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
+            'parent', 'category', 'document', 'summary', 'content', 'comment',
+            'keywords', 'tags', 'show_toc', 'significance', 'is_approved',
+            'creator',  # HACK: Replaced on import, but deserialize needs it
+            'mindtouch_page_id', 'mindtouch_old_id', 'is_mindtouch_migration',
+        )
+        serializers.serialize('json', objects, indent=2, stream=stream,
+                              fields=fields, use_natural_keys=True)
+
+    def load_json(self, creator, stream):
+        """Import a stream of JSON-serialized Documents and Revisions
+
+        This is inspired by smuggler.views.load_data with customizations for
+        Document specifics, per bug 747137
+        """
+        counter = 0
+        objects = serializers.deserialize('json', stream)
+        for obj in objects:
+
+            # HACK: Dig up the deserializer wrapped model object & manager,
+            # because the deserializer wrapper bypasses some things we need to
+            # un-bypass here
+            actual = obj.object
+            mgr = actual._default_manager
+
+            actual.pk = None
+            if hasattr(mgr, 'get_by_natural_key'):
+                # If the model uses natural keys, attempt to find the pk of an
+                # existing record to overwrite.
+                try:
+                    nk = actual.natural_key()
+                    existing = mgr.get_by_natural_key(*nk)
+                    actual.pk = existing.pk
+                except actual.DoesNotExist:
+                    pass
+
+            # Tweak a few fields on the way through, mainly for Revisions.
+            if hasattr(actual, 'creator'):
+                actual.creator = creator
+            if hasattr(actual, 'created'):
+                actual.created = datetime.now()
+
+            actual.save()
+            counter += 1
+
+        return counter
 
 
 class DocumentTag(TagBase):
@@ -335,9 +416,9 @@ class Document(NotificationsMixin, ModelBase):
     #    defined in the respective classes below. Use them as in
     #    test_firefox_versions.
 
-    # TODO: Rethink indexes once controller code is near complete. Depending on
-    # how MySQL uses indexes, we probably don't need individual indexes on
-    # title and locale as well as a combined (title, locale) one.
+    def natural_key(self):
+        return (self.locale, self.slug,)
+
     class Meta(object):
         unique_together = (('parent', 'locale'), ('slug', 'locale'))
         permissions = (
@@ -745,7 +826,7 @@ class Document(NotificationsMixin, ModelBase):
 
     related_revisions_link.allow_tags = True
     related_revisions_link.short_description = "All Revisions"
-        
+
     def current_revision_link(self):
         """HTML link to the current revision for the admin change list"""
         if not self.current_revision:
@@ -756,7 +837,7 @@ class Document(NotificationsMixin, ModelBase):
 
     current_revision_link.allow_tags = True
     current_revision_link.short_description = "Current Revision"
-        
+
     def parent_document_link(self):
         """HTML link to the parent document for admin change list"""
         if not self.parent:
@@ -766,6 +847,7 @@ class Document(NotificationsMixin, ModelBase):
 
     parent_document_link.allow_tags = True
     parent_document_link.short_description = "Parent Document"
+
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""

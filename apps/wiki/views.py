@@ -18,11 +18,13 @@ except ImportError:
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+from django.template import RequestContext
 from django.core.cache import cache
+from django.contrib import messages
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render_to_response
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods)
 
@@ -33,6 +35,9 @@ from waffle.decorators import waffle_flag
 import jingo
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
+
+from smuggler.utils import superuser_required
+from smuggler.forms import ImportFileForm
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
@@ -441,7 +446,8 @@ def _perform_kumascript_request(request, response_headers, document,
 
         # Assemble some KumaScript env vars
         # TODO: See dekiscript vars for future inspiration
-        # http://developer.mindtouch.com/en/docs/DekiScript/Reference/Wiki_Functions_and_Variables
+        # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
+        #   Wiki_Functions_and_Variables
         path = document.get_absolute_url()
         env_vars = dict(
             path=path,
@@ -588,12 +594,12 @@ def new_document(request):
     is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)
 
     if request.method == 'GET':
-        
+
         doc_form = DocumentForm(initial={
             'slug': initial_slug,
             'title': initial_slug
         })
-        
+
         if is_template:
             review_tags = ('template',)
         else:
@@ -604,7 +610,7 @@ def new_document(request):
             'title': initial_slug,
             'review_tags': review_tags
         })
-        
+
         return jingo.render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
                              'document_form': doc_form,
@@ -1334,13 +1340,13 @@ MINDTOUCH_PROBLEM_LOCALES = {
     'zh_tw': 'zh-TW',
 }
 
+
 def mindtouch_namespace_redirect(request, namespace, slug):
     """
     For URLs in special namespaces (like Talk:, User:, etc.), redirect
     if possible to the appropriate new URL in the appropriate
     locale. If the locale cannot be correctly determined, fall back to
     en-US.
-    
     """
     new_locale = new_slug = None
     if namespace == 'Talk':
@@ -1354,7 +1360,8 @@ def mindtouch_namespace_redirect(request, namespace, slug):
         # from there.
         new_slug = '%s:%s' % (namespace, slug)
         try:
-            rev = Revision.objects.filter(document__slug=new_slug).latest('created')
+            rev = (Revision.objects.filter(document__slug=new_slug)
+                                   .latest('created'))
             new_locale = rev.document.locale
         except Revision.DoesNotExist:
             # If that doesn't work, bail out to en-US.
@@ -1373,7 +1380,6 @@ def mindtouch_to_kuma_redirect(request, path):
     """
     Given a request to a Mindtouch-generated URL, generate a redirect
     to the correct corresponding kuma URL.
-    
     """
     new_locale = new_slug = None
     if path.startswith('Template:MindTouch'):
@@ -1415,3 +1421,37 @@ def mindtouch_to_kuma_redirect(request, path):
         return HttpResponsePermanentRedirect(doc.get_absolute_url())
     except Document.DoesNotExist:
         raise Http404
+
+
+@superuser_required
+def load_documents(request):
+    """Load documents from uploaded file."""
+    form = ImportFileForm()
+    if request.method == 'POST':
+
+        # Accept the uploaded document data.
+        file_data = None
+        form = ImportFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = request.FILES['file']
+            if uploaded_file.multiple_chunks():
+                file_data = open(uploaded_file.temporary_file_path(), 'r')
+            else:
+                file_data = uploaded_file.read()
+
+        if file_data:
+            # Try to import the data, but report any error that occurs.
+            try:
+                counter = Document.objects.load_json(request.user, file_data)
+                user_msg = (_('%(obj_count)d object(s) loaded.') %
+                            {'obj_count': counter, })
+                messages.add_message(request, messages.INFO, user_msg)
+            except Exception, e:
+                err_msg = (_('Failed to import data: %(error)s') %
+                           {'error': '%s' % e, })
+                messages.add_message(request, messages.ERROR, err_msg)
+
+    context = {'import_file_form': form, }
+    return render_to_response('admin/wiki/document/load_data_form.html',
+                              context,
+                              context_instance=RequestContext(request))
