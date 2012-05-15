@@ -15,6 +15,64 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- top toobar -->
+<section id="nav-toolbar"><div class="wrap">
+  <!-- right floated navigation -->
+  <nav id="tool-menus">
+    <ul id="tools">
+      <li class="menu">
+        <a href="#site-tools" class="toggle">{{ _('Site tools') }}</a>
+        <ul id="site-tools" class="sub-menu" role="navigation">
+          <li class="site-recent"><a href="/Special:Recentchanges" title="{{ _('Recent changes') }}">{{ _('Recent changes') }}</a></li>
+          <li class="site-rss"> <a href="/Special:ListRss" title="{{ _('RSS feeds') }}">{{ _('RSS feeds') }}</a></li>
+          <li class="siteListusers"><a href="/User:" title="{{ _('Users') }}">{{ _('Users') }}</a></li>
+          <li class="site-templates"> <a href="/Template:" title="{{ _('Templates') }}">{{ _('Templates') }}</a></li>
+          <li class="site-map"> <a href="/Special:Sitemap" title="{{ _('Sitemap') }}">{{ _('Sitemap') }}</a></li>
+          <li class="site-popular"> <a href="/Special:Popularpages" title="{{ _('Popular pages') }}">{{ _('Popular pages') }}</a></li>
+          <li class="siteAbout"><a href="/Special:About" title="{{ _('About MDN') }}">{{ _('About MDN') }}</a></li>
+        </ul>
+      </li>
+      <li class="menu">
+        <a href="#page-tools" class="toggle">{{ _('This page') }}</a>
+        <ul id="page-tools" class="sub-menu" role="navigation">
+          <li class="page-new"><a href="#" title="{{ _('New sub-page') }}" class="disabled ">{{ _('New sub-page') }}</a></li>
+          <li class="page-history"><a href="/index.php?title={{ document.full_path }}&action=history" title="{{ _('Page history') }}">{{ _('History') }}</a></li>
+          <li class="page-talk"><a href="/Talk:{{ document.full_path }}" title="{{ _('Talk page') }}">{{ _('Talk page') }}</a></li>
+          <li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print page') }}</a></li>
+          <li class="page-backlinks"><a href="/index.php?title=Special:Article&type=backlinks&pageid={{ document.id }}">{{ _('Pages that link here') }}</a></li>
+        </ul>
+      </li>
+      <li class="menu">
+        <a href="#" class="toggle">{{ _('Languages') }}</a>
+        <ul>
+          <!-- Item pattern 
+            <li><a rel="internal" href="https://developer.mozilla.org/es/Recursos_offline_en_firefox" title="es/Recursos_offline_en_firefox">Espa&ntilde;ol</a></li>
+          -->
+        </ul>
+      </li>
+    </ul>
+
+  </nav>
+  
+  <!-- left crumb navigation -->
+  <nav class="crumbs" role="navigation">
+    <ol>
+      <!-- Sample... 
+      <li class="crumb-one"><a href="/">MDN</a></li>
+      <li class="crumb-two"><a href="/docs">Docs</a></li>
+      <li class="first"><a href="https://developer.mozilla.org/" class="deki-ns">MDN</a></li>
+      <li class="second"><a href="https://developer.mozilla.org/en" class="deki-ns">MDN</a></li>
+      <li><a href="https://developer.mozilla.org/en/HTML" class="deki-ns">HTML</a></li>
+      <li class="last"><a href="https://developer.mozilla.org/en/HTML/Using_the_application_cache" class="deki-ns current">Using the application cache</a></li> 
+      -->
+    </ol>
+  </nav>
+  
+</div></section>
+
+
+
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
