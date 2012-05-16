@@ -677,10 +677,7 @@ MINIFY_BUNDLES = {
             'js/users.js',
         ),
         'mdn_home': (
-            # Removing as they aren't being used at the moment
-
-            #'js/mdn/TabInterface.js',
-            #'js/mdn/home.js',
+            'js/mdn/empty.js',
         ),
         'framebuster': (
             'js/framebuster.js',
