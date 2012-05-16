@@ -5,8 +5,10 @@
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
 {% if document.parent %}
-  {# If there is a parent doc, use it's URL for switching locales. #}
-  {% set localizable_url = document.parent.get_absolute_url(settings.WIKI_DEFAULT_LANGUAGE) %}
+  {# If there is a parent doc, use it for translating. #}
+  {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
+{% else %}
+  {% set translate_url = url('wiki.select_locale', document_path=document.full_path) %}
 {% endif %}
 
 {% block extrahead %}
@@ -16,7 +18,7 @@
 
 {% block content %}
 
-<!-- top toobar -->
+<!-- top toolbar -->
 <section id="nav-toolbar"><div class="wrap">
   <!-- right floated navigation -->
   <nav id="tool-menus" role="navigation">
@@ -25,20 +27,22 @@
         <a href="#page-tools" class="toggle">{{ _('This page') }}</a>
         <ul id="page-tools" class="sub-menu">
           <li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print page') }}</a></li>
-          <li><a href="">{{ _('Access privileges') }}</a></li>
-          <li><a href="">{{ _('New sub-page') }}</a></li>
+          <!-- <li><a href="">{{ _('Access privileges') }}</a></li> -->
+          <li><a href="{{ url('wiki.new_document')+'?slug='+document.slug+'/' }}">{{ _('New sub-page') }}</a></li>
+          <!--
           <li><a href="">{{ _('Delete page') }}</a></li>
           <li><a href="">{{ _('Pages that link') }}</a></li>
+          -->
         </ul>
       </li>
       <li class="menu">
         <a href="#" class="toggle">{{ _('Languages') }}</a>
         <ul>
-          <!-- Item pattern 
-            <li><a rel="internal" href="https://developer.mozilla.org/es/Recursos_offline_en_firefox" title="es/Recursos_offline_en_firefox">Espa&ntilde;ol</a></li>
-          -->
+          {% for translation in document.other_translations %}
+            <li><a rel="internal" href="{{ url('wiki.document', translation.locale + '/' + translation.slug) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
+          {% endfor %}
           
-          <li><a href="">{{ _('Add translation') }}</a></li>
+          <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
         </ul>
       </li>
     </ul>

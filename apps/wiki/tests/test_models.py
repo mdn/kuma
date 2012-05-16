@@ -246,6 +246,27 @@ class DocumentTests(TestCase):
         d1prime = Document.objects.get(pk=d1.pk)
         eq_(10, d1prime.category)
 
+    @attr('doc_translations')
+    def test_other_translations(self):
+        """
+        parent doc should list all docs for which it is parent
+
+        A child doc should list all its parent's docs, excluding itself, and
+        including its parent
+        """
+        parent = document(locale='en-US', title='test', save=True)
+        enfant = document(locale='fr', title='le test', parent=parent,
+                         save=True)
+        bambino = document(locale='es', title='el test', parent=parent,
+                           save=True)
+
+        children = Document.objects.filter(parent=parent)
+        eq_(list(children), parent.other_translations)
+
+        ok_(parent in enfant.other_translations)
+        ok_(bambino in enfant.other_translations)
+        eq_(False, enfant in enfant.other_translations)
+
 
 class PermissionTests(TestCase):
 

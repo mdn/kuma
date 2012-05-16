@@ -70,10 +70,6 @@ class LocaleRedirectTests(TestCaseBase):
         """If a slug isn't found in the requested locale but is in the default
         locale and if there is a translation of that default-locale document to
         the requested locale, the translation should be served."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
-
         en_doc, de_doc = self._create_en_and_de_docs()
         response = self.client.get(reverse('wiki.document',
                                            args=['de/%s' % en_doc.slug],
@@ -83,9 +79,6 @@ class LocaleRedirectTests(TestCaseBase):
 
     def test_fallback_with_query_params(self):
         """The query parameters should be passed along to the redirect."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
 
         en_doc, de_doc = self._create_en_and_de_docs()
         url = reverse('wiki.document', args=['de/%s' % en_doc.slug], locale='de')

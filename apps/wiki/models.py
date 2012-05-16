@@ -779,6 +779,18 @@ class Document(NotificationsMixin, ModelBase):
         """Return the document I was translated from or, if none, myself."""
         return self.parent or self
 
+    @property
+    def other_translations(self):
+        """Return a list of Documents - other translations of this Document"""
+        translations = []
+        if self.parent == None:
+            translations = list(self.translations.all())
+        else:
+            translations = list(self.parent.translations.all().exclude(
+                                                                id=self.id))
+            translations.insert(0, self.parent)
+        return translations
+
     def has_voted(self, request):
         """Did the user already vote for this document?"""
         if request.user.is_authenticated():
