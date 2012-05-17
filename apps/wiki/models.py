@@ -13,6 +13,7 @@ import bleach
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import serializers
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -174,6 +175,8 @@ RESERVED_SLUGS = (
     'feeds/[^/]+/needs-review/?',
     'tag/[^/]+'
 )
+
+DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = 'kuma:document-last-modified:%s'
 
 
 class UniqueCollision(Exception):
@@ -542,6 +545,11 @@ class Document(NotificationsMixin, ModelBase):
 
         super(Document, self).save(*args, **kwargs)
 
+        # Delete any cached last-modified timestamp.
+        path_hash = hashlib.md5(self.full_path).hexdigest()
+        cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % path_hash
+        cache.delete(cache_key)
+
         # Make redirects if there's an approved revision and title or slug
         # changed. Allowing redirects for unapproved docs would (1) be of
         # limited use and (2) require making Revision.creator nullable.
@@ -606,17 +614,6 @@ class Document(NotificationsMixin, ModelBase):
     # dynamically inherited by translations:
     firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
     operating_systems = _inherited('operating_systems', 'operating_system_set')
-
-    @property
-    def etag(self):
-        """Generate an ETag based on document content hash, suitable for an
-        HTTP header"""
-        return hashlib.md5(self.html.encode('utf8')).hexdigest()
-
-    @property
-    def last_modified(self):
-        """Generate a Last-Modified string suitable for an HTTP header"""
-        return http_date(time.mktime(self.modified.timetuple()))
 
     @property
     def full_path(self):
