@@ -36,9 +36,9 @@
 
                 s = values.join(" ");
                 
-                // Remove illegal characters
-                // Allowing "$" based on the code statement below
-                s = s.replace(/[^a-zA-Z0-9:\$]+/g, "_");
+                // Remove anything from the slug that could cause big problems
+                s = s.replace(/[\?\&\#\*\$ +?]/g, "_");
+                
 
                 // "$" is used for verb delimiter in URLs
                 s = s.replace(/\$/g, ""); 
