@@ -26,7 +26,7 @@ from django.http import (HttpResponse, HttpResponseRedirect,
                          Http404, HttpResponseBadRequest)
 from django.shortcuts import get_object_or_404, render_to_response
 from django.views.decorators.http import (require_GET, require_POST,
-                                          require_http_methods)
+                                          require_http_methods, condition)
 
 import constance.config
 
@@ -54,6 +54,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          REVIEW_FLAG_TAGS_DEFAULT, ALLOWED_ATTRIBUTES,
                          ALLOWED_TAGS, ALLOWED_STYLES,
+                         DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
@@ -133,9 +134,35 @@ def process_document_path(func, reverse_name='wiki.document'):
     return process
 
 
+def _document_last_modified(request, document_slug, document_locale):
+    """Utility function to derive the last modified timestamp of a document.
+    Mainly for the @condition decorator."""
+    path_hash = (hashlib.md5('%s/%s' % (document_locale, document_slug))
+                        .hexdigest())
+    cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % path_hash
+    try:
+        last_mod = cache.get(cache_key)
+        if not last_mod:
+            doc = Document.objects.get(locale=document_locale,
+                                      slug=document_slug)
+
+            # Convert python datetime to Unix epoch seconds. This is more
+            # easily digested by the cache, and is more compatible with other
+            # services that might spy on Kuma's cache entries (eg. KumaScript)
+            last_mod = doc.modified.strftime('%s')
+            cache.set(cache_key, last_mod)
+
+        # Convert the cached Unix epoch seconds back to Python datetime
+        return datetime.fromtimestamp(float(last_mod))
+
+    except Document.DoesNotExist:
+        return None
+
+
 @waffle_flag('kumawiki')
 @require_http_methods(['GET', 'HEAD'])
 @process_document_path
+@condition(last_modified_func=_document_last_modified)
 def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
@@ -203,8 +230,6 @@ def document(request, document_slug, document_locale):
     response_headers = dict()
 
     def set_common_headers(r):
-        r['ETag'] = doc.etag
-        r['Last-Modified'] = doc.last_modified
         if doc.current_revision:
             r['x-kuma-revision'] = doc.current_revision.id
         # Finally, set any extra headers. update() doesn't work here.
@@ -312,6 +337,7 @@ def _invalidate_kumascript_cache(document):
     cache.delete_many(_build_kumascript_cache_keys(document.slug,
                                                    document.locale))
 
+
 def _run_kumascript(doc, request):
     """
     We'll make a request to kumascript for macro evaluation only if:
@@ -376,7 +402,6 @@ def _process_kumascript_errors(response):
 
         if len(fl_msgs):
             resp_errors = fl_msgs
-
 
     except Exception, e:
         resp_errors = [
