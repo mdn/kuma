@@ -1,5 +1,5 @@
 /*
- * Taken from Django"s contrib/admin/media/js folder, thanks Django!
+ * Taken from Django's contrib/admin/media/js folder, thanks Django!
  * Copyright Django and licensed under BSD, please see django/LICENSE for
  * license details.
  * Modified slightly to handle fallback to full title if slug is empty.
@@ -13,7 +13,7 @@
             Populates a selected field with the values of the dependent fields,
             URLifies and shortens the string.
             dependencies - selected jQuery object of dependent fields
-            maxLength - maximum length of the URLify"d string
+            maxLength - maximum length of the URLify'd string
         */
         return this.each(function() {
             var field = $(this);
@@ -43,7 +43,7 @@
                 // "$" is used for verb delimiter in URLs
                 s = s.replace(/\$/g, ""); 
 
-                // Don"t allow "_____" mess
+                // Don't allow "_____" mess
                 s = s.replace(/\_+/g, "_");
 
                 // trim to first num_chars chars
