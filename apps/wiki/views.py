@@ -915,7 +915,8 @@ def preview_revision(request):
         wiki_content, kumascript_errors = _perform_kumascript_post(
                                                                 wiki_content)
     # TODO: Get doc ID from JSON.
-    data = {'content': wiki_content, 'kumascript_errors': kumascript_errors}
+    data = {'content': wiki_content, 'title': request.POST.get('title', ''),
+            'kumascript_errors': kumascript_errors}
     #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 

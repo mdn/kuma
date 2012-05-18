@@ -705,34 +705,42 @@
      * Initialize the article preview functionality.
      */
     function initArticlePreview() {
-        $('#btn-preview').click(function(e) {
-            var $btn = $(this),
-                data = $.trim(CKEDITOR.instances['id_content'].getData());
-                
-            // Only submit if the form has data....
-            if(data) {
-                $btn.attr('disabled', 'disabled');
-                $.ajax({
-                    url: $(this).attr('data-preview-url'),
-                    type: 'POST',
-                    data: $('#id_content').val(data).serialize(),
-                    dataType: 'html',
-                    success: function(html) {
-                        var $preview = $('#preview');
-                        $preview.html(html)
-                            .find('select.enable-if-js').removeAttr('disabled');
-                        document.location.hash = 'preview';
-                        $btn.removeAttr('disabled');
-                    },
-                    error: function() {
-                        var msg = gettext('There was an error generating the preview.');
-                        $('#preview').html(msg);
-                        $btn.removeAttr('disabled');
-                    }
-                });
-            }
-
+        $("#btn-preview").click(function(e) {
             e.preventDefault();
+            
+            // Ensure that content is available and exists
+            var title = " ", 
+                $titleNode = $("#id_title"),
+                data;
+                
+            if(CKEDITOR.instances['id_content']) {
+                data = $.trim(CKEDITOR.instances['id_content'].getData());
+            }
+            else if(ace_editor && ace_editor) {
+                data = $.trim(ace_editor.getSession().getValue());
+            }
+            else {
+                return;
+            }
+            if($titleNode.length) {
+                title = $titleNode.val();
+            }
+            
+            // Since we have content, we can launch!
+            if(data) {
+                // Create and inject form for preview submission
+                var $form = $("<form action='" + $(this).attr("data-preview-url") + "' target='_blank' method='POST' />").appendTo(document.body);
+                $("<input type='hidden' name='content' />").val(data).appendTo($form);
+                $("<input type='hidden' name='title' />").val(title).appendTo($form);
+                
+                // Add the CSRF ?
+                $("#csrfmiddlewaretoken").clone().appendTo($form);
+                
+                // Submit the form, and then get rid of it
+                $form.get(0).submit();
+                $form.remove();
+            }
+            
             return false;
         });
     }
