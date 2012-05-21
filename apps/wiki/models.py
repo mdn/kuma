@@ -390,6 +390,9 @@ class Document(NotificationsMixin, ModelBase):
     parent = models.ForeignKey('self', related_name='translations',
                                null=True, blank=True)
 
+    parent_topic = models.ForeignKey('self', related_name='children',
+                                     null=True, blank=True)
+
     # Related documents, based on tags in common.
     # The RelatedDocument table is populated by
     # wiki.cron.calculate_related_documents.
@@ -775,6 +778,19 @@ class Document(NotificationsMixin, ModelBase):
     def original(self):
         """Return the document I was translated from or, if none, myself."""
         return self.parent or self
+
+    @property
+    def parents(self):
+        """Return the list of topical parent documents above this one,
+        or an empty list if none exist."""
+        if self.parent_topic is None:
+            return []
+        current_parent = self.parent_topic
+        parents = [current_parent]
+        while current_parent.parent_topic is not None:
+            parents.insert(0, current_parent.parent_topic)
+            current_parent = current_parent.parent_topic
+        return parents
 
     def has_voted(self, request):
         """Did the user already vote for this document?"""
