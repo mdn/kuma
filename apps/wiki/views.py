@@ -633,7 +633,8 @@ def new_document(request):
         rev_form = RevisionForm(initial={
             'slug': initial_slug,
             'title': initial_slug,
-            'review_tags': review_tags
+            'review_tags': review_tags,
+            'show_toc': True
         })
 
         return jingo.render(request, 'wiki/new_document.html',
