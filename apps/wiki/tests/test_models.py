@@ -267,6 +267,20 @@ class DocumentTests(TestCase):
         ok_(bambino in enfant.other_translations)
         eq_(False, enfant in enfant.other_translations)
 
+    def test_topical_parents(self):
+        d1 = document(title='HTML7')
+        d1.save()
+
+        d2 = document(title='Smellovision')
+        d2.parent_topic = d1
+        d2.save()
+        ok_(d2.parents == [d1])
+
+        d3 = document(title='Smell accessibility')
+        d3.parent_topic = d2
+        d3.save()
+        ok_(d3.parents == [d1, d2])
+
 
 class PermissionTests(TestCase):
 
