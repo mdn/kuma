@@ -108,6 +108,10 @@ class DocumentForm(forms.ModelForm):
                                  help_text=_lazy(u'Type of article'),
                                  widget=forms.HiddenInput())
 
+    parent_topic = forms.ModelChoiceField(queryset=Document.objects.all(),
+                                          required=False,
+                                          label=_lazy(u'Parent:'))
+
     locale = forms.CharField(widget=forms.HiddenInput())
 
     def clean_slug(self):
@@ -143,6 +147,8 @@ class DocumentForm(forms.ModelForm):
         """Persist the Document form, and return the saved Document."""
         doc = super(DocumentForm, self).save(commit=False, **kwargs)
         doc.parent = parent_doc
+        if 'parent_topic' in self.cleaned_data:
+            doc.parent_topic = self.cleaned_data['parent_topic']
         doc.save()
         self.save_m2m()  # not strictly necessary since we didn't change
                          # any m2m data since we instantiated the doc

@@ -1001,6 +1001,23 @@ class DocumentEditingTests(TestCaseBase):
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
         ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
 
+    def test_parent_topic(self):
+        """Selection of a parent topic when creating a document."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d = document(title='HTML8')
+        d.save()
+        r = revision(document=d)
+        r.save()
+
+        data = new_document_data()
+        data['title'] = 'Replicated local storage'
+        data['parent_topic'] = d.id
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+        ok_(d.children.count() == 1)
+        ok_(d.children.all()[0].title == 'Replicated local storage')
+
 
 class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']
