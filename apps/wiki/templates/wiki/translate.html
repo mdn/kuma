@@ -31,7 +31,7 @@
         <ul id="change-locale" class="sub-menu" data-target="#change-locale-link" data-modal="true" data-close-on-out-click="true">
         {% for lcl in settings.LANGUAGE_CHOICES %}
           {% if lcl[0] not in [settings.WIKI_DEFAULT_LANGUAGE, locale] %}
-            <li><a href="{{ url('wiki.translate', locale=lcl[0], document_path=document.parent.full_path) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
+            <li><a href="{{ url('wiki.translate', document_path=lcl[0]+'/'+parent.slug) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
           {% endif %}
         {% endfor %}
         </ul>

@@ -68,7 +68,6 @@ class DocumentForm(forms.ModelForm):
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=2, max_length=255,
-                             required=False,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
@@ -93,11 +92,6 @@ class DocumentForm(forms.ModelForm):
                                          GROUPED_OPERATING_SYSTEMS[0][1]],
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())
-
-    is_localizable = forms.BooleanField(
-                                initial=True,
-                                label=_lazy(u'Allow translations:'),
-                                required=False)
 
     category = forms.ChoiceField(choices=CATEGORIES,
                                  initial=10,
@@ -137,7 +131,7 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'category', 'is_localizable', 'locale')
+        fields = ('title', 'slug', 'category', 'locale')
 
     def save(self, parent_doc, **kwargs):
         """Persist the Document form, and return the saved Document."""

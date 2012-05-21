@@ -142,7 +142,8 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 /* @Custom styles *********/
 p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
-div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; }
+div.callout-box, p.trans-note { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; }
+p.trans-note { float:none; clear: both; width: auto; margin-bottom: 1em; }
 div.note { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; }
 div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; color: #6d675f; }
 div.note p, div.tip p { margin-bottom: .75em; }
