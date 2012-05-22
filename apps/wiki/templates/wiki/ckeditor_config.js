@@ -23,9 +23,11 @@ CKEDITOR.on('instanceReady', function (ev) {
 
 });
 
+
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link';
+    config.removePlugins = 'link';
 
     config.toolbar_MDN = [
         ['Source','-','mdnSave','mdnNewPage','mdnPreview'],
@@ -53,5 +55,5 @@ CKEDITOR.editorConfig = function(config) {
     config.dialog_backgroundCoverOpacity = 0.3;
     config.docType = '<!DOCTYPE html>';
 
-    {{ editor_config|safe }}
+    {{ editor_config|safe }}    
 };
