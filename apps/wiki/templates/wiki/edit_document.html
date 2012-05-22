@@ -123,6 +123,7 @@
               <div id="ace_content"></div>
             {% endif %}
             <input type="hidden" name="form" value="rev" />
+            {{ revision_form.hidden_fields()|join|safe }}
 
             <section class="page-meta">
               {% set tags = document.tags.all() %}

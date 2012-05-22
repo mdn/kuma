@@ -68,7 +68,6 @@ class DocumentForm(forms.ModelForm):
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=2, max_length=255,
-                             required=False,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
@@ -94,11 +93,6 @@ class DocumentForm(forms.ModelForm):
                                 required=False,
                                 widget=forms.CheckboxSelectMultiple())
 
-    is_localizable = forms.BooleanField(
-                                initial=True,
-                                label=_lazy(u'Allow translations:'),
-                                required=False)
-
     category = forms.ChoiceField(choices=CATEGORIES,
                                  initial=10,
                                  # Required for non-translations, which is
@@ -107,6 +101,10 @@ class DocumentForm(forms.ModelForm):
                                  label=_lazy(u'Category:'),
                                  help_text=_lazy(u'Type of article'),
                                  widget=forms.HiddenInput())
+
+    parent_topic = forms.ModelChoiceField(queryset=Document.objects.all(),
+                                          required=False,
+                                          label=_lazy(u'Parent:'))
 
     locale = forms.CharField(widget=forms.HiddenInput())
 
@@ -137,12 +135,14 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = Document
-        fields = ('title', 'slug', 'category', 'is_localizable', 'locale')
+        fields = ('title', 'slug', 'category', 'locale')
 
     def save(self, parent_doc, **kwargs):
         """Persist the Document form, and return the saved Document."""
         doc = super(DocumentForm, self).save(commit=False, **kwargs)
         doc.parent = parent_doc
+        if 'parent_topic' in self.cleaned_data:
+            doc.parent_topic = self.cleaned_data['parent_topic']
         doc.save()
         self.save_m2m()  # not strictly necessary since we didn't change
                          # any m2m data since we instantiated the doc

@@ -71,10 +71,6 @@ class LocaleRedirectTests(TestCaseBase):
         """If a slug isn't found in the requested locale but is in the default
         locale and if there is a translation of that default-locale document to
         the requested locale, the translation should be served."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
-
         en_doc, de_doc = self._create_en_and_de_docs()
         response = self.client.get(reverse('wiki.document',
                                            args=['de/%s' % en_doc.slug],
@@ -84,9 +80,6 @@ class LocaleRedirectTests(TestCaseBase):
 
     def test_fallback_with_query_params(self):
         """The query parameters should be passed along to the redirect."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
 
         en_doc, de_doc = self._create_en_and_de_docs()
         url = reverse('wiki.document', args=['de/%s' % en_doc.slug], locale='de')
@@ -1000,6 +993,23 @@ class DocumentEditingTests(TestCaseBase):
         data['form'] = 'rev'
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
         ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+
+    def test_parent_topic(self):
+        """Selection of a parent topic when creating a document."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d = document(title='HTML8')
+        d.save()
+        r = revision(document=d)
+        r.save()
+
+        data = new_document_data()
+        data['title'] = 'Replicated local storage'
+        data['parent_topic'] = d.id
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(302, resp.status_code)
+        ok_(d.children.count() == 1)
+        ok_(d.children.all()[0].title == 'Replicated local storage')
 
 
 class SectionEditingResourceTests(TestCaseBase):

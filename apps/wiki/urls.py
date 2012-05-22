@@ -31,7 +31,7 @@ discuss_patterns = patterns('kbforums.views',
         name='wiki.discuss.delete_post'),
 )
 
-# These patterns inherit (?P<document_slug>[^\/]).
+# These patterns inherit (?P<document_path>[^\$]+).
 document_patterns = patterns('wiki.views',
     url(r'^$', 'document', name='wiki.document'),
     url(r'^\$revision/(?P<revision_id>\d+)$', 'revision',

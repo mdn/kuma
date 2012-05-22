@@ -246,6 +246,41 @@ class DocumentTests(TestCase):
         d1prime = Document.objects.get(pk=d1.pk)
         eq_(10, d1prime.category)
 
+    @attr('doc_translations')
+    def test_other_translations(self):
+        """
+        parent doc should list all docs for which it is parent
+
+        A child doc should list all its parent's docs, excluding itself, and
+        including its parent
+        """
+        parent = document(locale='en-US', title='test', save=True)
+        enfant = document(locale='fr', title='le test', parent=parent,
+                         save=True)
+        bambino = document(locale='es', title='el test', parent=parent,
+                           save=True)
+
+        children = Document.objects.filter(parent=parent)
+        eq_(list(children), parent.other_translations)
+
+        ok_(parent in enfant.other_translations)
+        ok_(bambino in enfant.other_translations)
+        eq_(False, enfant in enfant.other_translations)
+
+    def test_topical_parents(self):
+        d1 = document(title='HTML7')
+        d1.save()
+
+        d2 = document(title='Smellovision')
+        d2.parent_topic = d1
+        d2.save()
+        ok_(d2.parents == [d1])
+
+        d3 = document(title='Smell accessibility')
+        d3.parent_topic = d2
+        d3.save()
+        ok_(d3.parents == [d1, d2])
+
 
 class PermissionTests(TestCase):
 

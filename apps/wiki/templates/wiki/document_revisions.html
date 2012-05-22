@@ -18,7 +18,7 @@
       <ul>
         {% if document.parent %}
           <li>
-            <a href="{{ url('wiki.document_revisions', document.parent.slug, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
+            <a href="{{ url('wiki.document_revisions', document.parent.full_path, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
           </li>
         {% endif %}
         <li>
@@ -28,7 +28,7 @@
     </div>
     <div id="revision-list">
       {% if revisions %}
-        <form action="{{ url('wiki.compare_revisions', document.slug) }}" method="get">
+        <form action="{{ url('wiki.compare_revisions', document.full_path) }}" method="get">
           {% if revisions | length %}
             <div class="compare top">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
@@ -48,14 +48,14 @@
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
               </div>
               <div class="date">
-                <a href="{{ url('wiki.revision', document.slug, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='date') }}</a>
+                <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='date') }}</a>
               </div>
               <div class="status">
                 {% if document.current_revision.id == rev.id %}
                     <span class="current">{{ _('Current') }}</span>
                 {% elif not rev.is_approved and not rev.reviewed %}
                     {% if not reached_current and user.has_perm('wiki.review_revision') %}
-                      <a href="{{ url('wiki.review_revision', document.slug, rev.id) }}">{{ _('Review') }}</a>
+                      <a href="{{ url('wiki.review_revision', document.full_path, rev.id) }}">{{ _('Review') }}</a>
                     {% else %}
                       <span class="unreviewed">{{ _('Unreviewed', 'revision') }}</span>
                     {% endif %}
@@ -82,7 +82,7 @@
               </div>
               {% if document.current_revision != rev and user.has_perm('wiki.delete_revision') %}
                 <div class="delete">
-                  <a href="{{ url('wiki.delete_revision', document.slug, rev.id) }}">{{ _('Delete') }}</a>
+                  <a href="{{ url('wiki.delete_revision', document.full_path, rev.id) }}">{{ _('Delete') }}</a>
                 </div>
               {% endif %}
             </li>

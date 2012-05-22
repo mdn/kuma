@@ -134,8 +134,8 @@ jQuery.extend({
 
   
   
-  
   (function() {
+    
     var $signedOutList = $('ul.signed-out');
       
     // Hide the signed-out block, add and wire up a BrowserID sign in button,
@@ -145,16 +145,17 @@ jQuery.extend({
     $.get($signedOutList.attr('data-browserid-header-signin-html'), {
       next: $.parseQuerystring().next || window.location.pathname
     }, function(content) {
-      $signedOutList.html(content);
-      $('.toggle', $signedOutList).click(function() {
-          $signedOutList.siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
-          return false;
+      $signedOutList.html(content).each(function() {
+        $('.toggle', $(this)).click(function() {
+            $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
+            return false;
+        });
       });
+      // Binding the signout link!
       bindBrowserIDSignin();
-    })
+    });
     
-    $('ul.signed-out').show();
-    
+    $signedOutList.show();
     
   })();
   
