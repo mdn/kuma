@@ -181,7 +181,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 .editing .metadata { float: left; width: 55%; display: none; }
 .new .editing .metadata { display: block; }
-.editing ul.metadata li { margin: 0pt; padding: 0pt; clear: both; }
+.editing ul.metadata li { margin: 0; padding: 0; clear: both; }
 .editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
 
