@@ -619,17 +619,19 @@ def new_document(request):
     is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)
 
     if request.method == 'GET':
-
-        doc_form = DocumentForm(initial={
-            'slug': initial_slug,
-        })
+        
+        initial_data = {
+            'slug': initial_slug
+        }
 
         if is_template:
-            doc_form.title = initial_slug
+            initial_data['title'] = initial_slug
             review_tags = ('template',)
         else:
             review_tags = REVIEW_FLAG_TAGS_DEFAULT
-
+            
+        doc_form = DocumentForm(initial=initial_data)
+            
         rev_form = RevisionForm(initial={
             'slug': initial_slug,
             'title': initial_slug,
