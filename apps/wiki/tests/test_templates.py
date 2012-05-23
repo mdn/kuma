@@ -83,7 +83,8 @@ class DocumentTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(r.document.title, doc('article header h1.page-title').text())
-        eq_("This article doesn't have approved content yet.", doc('div#wikiArticle').text())
+        eq_("This article doesn't have approved content yet.",
+            doc('div#wikiArticle').text())
 
     def test_translation_document_no_approved_content(self):
         """Load a non-English document with no approved content, with a parent
@@ -101,7 +102,8 @@ class DocumentTests(TestCaseBase):
         eq_(d2.title, doc('article header h1.page-title').text())
         # Avoid depending on localization, assert just that there is only text
         # d.html would definitely have a <p> in it, at least.
-        eq_("This article doesn't have approved content yet.", doc('div#wikiArticle').text())
+        eq_("This article doesn't have approved content yet.",
+            doc('div#wikiArticle').text())
 
     def test_document_fallback_with_translation(self):
         """The document template falls back to English if translation exists
@@ -109,7 +111,7 @@ class DocumentTests(TestCaseBase):
 
         # FIXME: This test seems broken, not sure why
         raise SkipTest()
-        
+
         r = revision(save=True, content='Test', is_approved=True)
         d2 = document(parent=r.document, locale='fr', slug='french', save=True)
         revision(document=d2, is_approved=False, save=True)
@@ -132,7 +134,7 @@ class DocumentTests(TestCaseBase):
 
         # FIXME: This test seems broken, not sure why
         raise SkipTest()
-        
+
         r = revision(save=True, content='Some text.', is_approved=True)
         url = reverse('wiki.document', args=[r.document.slug], locale='fr')
         response = self.client.get(url)
@@ -217,13 +219,12 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' in response.content)
-        new_r = revision(document=r.document, content=r.content, show_toc=False,
-                         is_approved=True)
+        new_r = revision(document=r.document, content=r.content,
+                         show_toc=False, is_approved=True)
         new_r.save()
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
-        
 
 
 class RevisionTests(SkippedTestCase):
@@ -438,7 +439,8 @@ class NewRevisionTests(TestCaseBase):
                                            args=[self.d.full_path]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('article#edit-document form#wiki-page-edit textarea[name="content"]')))
+        eq_(1, len(doc('article#edit-document '
+                       'form#wiki-page-edit textarea[name="content"]')))
 
     def test_new_revision_GET_based_on(self):
         """HTTP GET to new revision URL based on another revision.
@@ -542,8 +544,9 @@ class NewRevisionTests(TestCaseBase):
         tags = [u'tag1', u'tag4']
         data = new_document_data(tags)
         data['form'] = 'rev'
-        self.client.post(reverse('wiki.edit_document', args=[self.d.full_path]),
-                         data)
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[self.d.full_path]),
+                        data)
         result_tags = list(self.d.tags.values_list('name', flat=True))
         result_tags.sort()
         eq_(tags, result_tags)
@@ -872,8 +875,8 @@ class ReviewRevisionTests(SkippedTestCase):
         eq_('Approved English version:',
             doc('#content-fields h3').eq(0).text())
         rev_message = doc('#content-fields p').eq(0).text()
-        assert 'by testuser' in rev_message, ('%s does not contain "by testuser"'
-                                            % rev_message)
+        assert 'by testuser' in rev_message, ('%s does not contain '
+                                              '"by testuser"' % rev_message)
 
     def test_review_translation_of_rejected_parent(self):
         """Translate rejected English document a 2nd time.
@@ -1139,7 +1142,8 @@ class TranslateTests(TestCaseBase):
         data['form'] = 'doc'
         response = self.client.post(translate_uri, data)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/docs/es/un-test-articulo$edit?opendescription=1',
+        eq_('http://testserver/en-US/docs/es/un-test-articulo$edit'
+            '?opendescription=1',
             response['location'])
         revisions = rev_es.document.revisions.all()
         eq_(1, revisions.count())  # No new revisions
@@ -1233,7 +1237,8 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
         uri = reverse(view, locale=locale, args=[doc.full_path])
     response = client.get(uri)
     orig_rev = doc.current_revision
-    eq_(orig_rev.id, int(pq(response.content)('input[name=based_on]').attr('value')))
+    eq_(orig_rev.id,
+        int(pq(response.content)('input[name=based_on]').attr('value')))
 
     # While Fred is editing the above, Martha approves a new rev:
     martha_rev = revision(document=doc)
@@ -1428,7 +1433,8 @@ class SelectLocaleTests(SkippedTestCase):
 
     def test_page_renders_locales(self):
         """Load the page and verify it contains all the locales for l10n."""
-        response = get(self.client, 'wiki.select_locale', args=[self.d.full_path])
+        response = get(self.client, 'wiki.select_locale',
+                       args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(len(settings.LANGUAGE_CHOICES) - 1,  # All except for 1 (en-US)
