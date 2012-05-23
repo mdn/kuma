@@ -1342,7 +1342,7 @@ class ArticlePreviewTests(TestCaseBase):
                         {'content': '<h1>Test Content</h1>'})
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Test Content', doc('#doc-content h1').text())
+        eq_('Test Content', doc('div#wikiArticle h1').text())
 
     def test_preview_locale(self):
         raise SkipTest

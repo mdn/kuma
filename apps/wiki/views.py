@@ -43,7 +43,8 @@ from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
-from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
+                  KUMASCRIPT_TIMEOUT_ERROR)
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
@@ -419,9 +420,13 @@ def _perform_kumascript_post(content):
     }
     resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
                         data=content, headers=headers)
-    resp_body = _process_kumascript_body(resp)
-    resp_errors = _process_kumascript_errors(resp)
-    return resp_body, resp_errors
+    if resp:
+        resp_body = _process_kumascript_body(resp)
+        resp_errors = _process_kumascript_errors(resp)
+        return resp_body, resp_errors
+    else:
+        resp_errors = KUMASCRIPT_TIMEOUT_ERROR
+        return content, resp_errors
 
 
 def _perform_kumascript_request(request, response_headers, document,
@@ -532,11 +537,7 @@ def _perform_kumascript_request(request, response_headers, document,
                 cache.set(ck_errors, resp_errors, timeout=max_age)
 
         elif resp.status_code == None:
-            resp_errors = [
-                {"level": "error",
-                  "message": "Request to Kumascript service timed out",
-                  "args": ["TimeoutError"]}
-            ]
+            resp_errors = KUMASCRIPT_TIMEOUT_ERROR
 
         else:
             resp_errors = [
