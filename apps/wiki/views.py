@@ -413,11 +413,24 @@ def _process_kumascript_errors(response):
     return resp_errors
 
 
-def _perform_kumascript_post(content):
+def _add_kumascript_env_headers(headers, env_vars):
+    # Encode the vars as kumascript headers, as base64 JSON-encoded values.
+    headers.update(dict(
+        ('x-kumascript-env-%s' % k, base64.b64encode(json.dumps(v)))
+        for k, v in env_vars.items()
+    ))
+    return headers
+
+
+def _perform_kumascript_post(request, content):
     ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
     }
+    env_vars = dict(
+        url=request.build_absolute_uri('/'),
+    )
+    _add_kumascript_env_headers(headers, env_vars)
     resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
                         data=content, headers=headers)
     if resp:
@@ -490,11 +503,7 @@ def _perform_kumascript_request(request, response_headers, document,
             modified=time.mktime(document.modified.timetuple()),
             cache_control=cache_control,
         )
-        # Encode the vars as kumascript headers, as base64 JSON-encoded values.
-        headers.update(dict(
-            ('x-kumascript-env-%s' % k,
-             base64.b64encode(json.dumps(v)))
-            for k, v in env_vars.items()))
+        _add_kumascript_env_headers(headers, env_vars)
 
         # Set up for conditional GET, if we have the details cached.
         c_meta = cache.get_many([ck_etag, ck_modified])
@@ -912,8 +921,10 @@ def preview_revision(request):
     doc = None
     if request.POST.get('doc_id', False):
         doc = Document.objects.get(id=request.POST.get('doc_id'))
+
     if _run_kumascript(doc, request):
         wiki_content, kumascript_errors = _perform_kumascript_post(
+                                                                request,
                                                                 wiki_content)
     # TODO: Get doc ID from JSON.
     data = {'content': wiki_content, 'title': request.POST.get('title', ''),

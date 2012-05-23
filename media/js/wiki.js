@@ -714,7 +714,7 @@
                 data;
                 
             if(CKEDITOR.instances['id_content']) {
-                data = $.trim(CKEDITOR.instances['id_content'].getData());
+                data = $.trim(CKEDITOR.instances['id_content'].getSnapshot());
             }
             else if(ace_editor && ace_editor) {
                 data = $.trim(ace_editor.getSession().getValue());
