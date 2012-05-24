@@ -26,6 +26,9 @@
           <li><label>{{_('Slug:')}}</label> {{ document_form.slug | safe }}</li>
           <li><label>{{_('Parent:')}}</label> {{ document_form.parent_topic | safe }}</li>
           <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
+          <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
+            {{ revision_form.show_toc | safe }}
+          </li>
         </ul>
 
         {% include 'wiki/includes/page_buttons.html' %}
