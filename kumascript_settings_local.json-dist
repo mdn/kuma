@@ -8,8 +8,7 @@
     },
     "server": {
         "port": 9080,
-        "numWorkers": 4,
-        "workerTimeout": 10000,
+        "numWorkers": 8,
         "memcache": {
             "server": {"127.0.0.1:11211": 1},
             "options": { }
