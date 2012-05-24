@@ -184,3 +184,26 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
                 .filter_for_review(tag_name=tag)
                 .order_by('-current_revision__created')
                 .all()[:MAX_FEED_ITEMS])
+
+
+class RevisionsFeed(DocumentsFeed):
+    """Feed of recent revisions"""
+
+    title = _("MDN recent revisions")
+    subtitle = _("Recent revisions to MDN documents")
+
+    def items(self):
+        return Revision.objects.order_by('-created')[:MAX_FEED_ITEMS]
+
+    def item_title(self, item):
+        return "%s edited %s" % (item.creator.username, item.title)
+
+    def item_description(self, item):
+        return item.comment
+
+    def item_link(self, item):
+        compare_url = reverse('wiki.compare_revisions')
+        qs = {'from': item.get_previous().id,
+              'to': item.id}
+        return "%s?%s" % (self.request.build_absolute_uri(compare_url),
+                          urllib.urlencode(qs))

@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url, include
 
 from kbforums.feeds import ThreadsFeed, PostsFeed
 from sumo.views import redirect_to
-from wiki.feeds import DocumentsRecentFeed, DocumentsReviewFeed
+from wiki.feeds import DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed
 
 
 # These patterns inherit from /discuss
@@ -101,6 +101,8 @@ urlpatterns += patterns('wiki.views',
         DocumentsReviewFeed(), name="wiki.feeds.list_review_tag"),
     url(r'^/feeds/(?P<format>[^/]+)/needs-review/?',
         DocumentsReviewFeed(), name="wiki.feeds.list_review"),
+    url(r'^/feeds/(?P<format>[^/]+)/revisions/?',
+        RevisionsFeed(), name="wiki.feeds.recent_revisions"),
 
     url(r'^/tag/(?P<tag>[^/]+)$', 'list_documents', name='wiki.tag'),
 
