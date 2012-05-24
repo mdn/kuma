@@ -137,7 +137,8 @@ def process_document_path(func, reverse_name='wiki.document'):
 def _document_last_modified(request, document_slug, document_locale):
     """Utility function to derive the last modified timestamp of a document.
     Mainly for the @condition decorator."""
-    path_hash = (hashlib.md5('%s/%s' % (document_locale, document_slug))
+    path_hash = (hashlib.md5((u'%s/%s' % (document_locale, document_slug))
+                              .encode('utf8'))
                         .hexdigest())
     cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % path_hash
     try:
@@ -320,7 +321,8 @@ def document(request, document_slug, document_locale):
 
 def _build_kumascript_cache_keys(document_locale, document_slug):
     """Build the cache keys used for Kumascript"""
-    path_hash = hashlib.md5('%s/%s' % (document_locale, document_slug))
+    path_hash = hashlib.md5((u'%s/%s' % (document_locale, document_slug))
+                            .encode('utf8'))
     cache_key = 'kumascript:%s:%s' % (path_hash.hexdigest(), '%s')
     ck_etag = cache_key % 'etag'
     ck_modified = cache_key % 'modified'
