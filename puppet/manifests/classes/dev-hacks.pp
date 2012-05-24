@@ -18,7 +18,8 @@ class dev_hacks {
     file { 
         [ "/home/vagrant/logs",
             "/home/vagrant/uploads",
-            "/home/vagrant/product_details_json" ]:
+            "/home/vagrant/product_details_json",
+            "/home/vagrant/mdc_pages" ]:
         ensure => directory,
         owner => "vagrant", group => "vagrant", mode => 0777;
     }
