@@ -137,25 +137,27 @@ jQuery.extend({
   (function() {
     
     var $signedOutList = $('ul.signed-out');
+    
+    if($signedOutList.length) {
+      // Hide the signed-out block, add and wire up a BrowserID sign in button,
+      // then show the signed-out block again
+      $signedOutList.hide();  
       
-    // Hide the signed-out block, add and wire up a BrowserID sign in button,
-    // then show the signed-out block again
-    $signedOutList.hide();  
-    
-    $.get($signedOutList.attr('data-browserid-header-signin-html'), {
-      next: $.parseQuerystring().next || window.location.pathname
-    }, function(content) {
-      $signedOutList.html(content).each(function() {
-        $('.toggle', $(this)).click(function() {
-            $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
-            return false;
+      $.get($signedOutList.attr('data-browserid-header-signin-html'), {
+        next: $.parseQuerystring().next || window.location.pathname
+      }, function(content) {
+        $signedOutList.html(content).each(function() {
+          $('.toggle', $(this)).click(function() {
+              $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
+              return false;
+          });
         });
+        // Binding the signout link!
+        bindBrowserIDSignin();
       });
-      // Binding the signout link!
-      bindBrowserIDSignin();
-    });
-    
-    $signedOutList.show();
+      
+      $signedOutList.show();
+    }
     
   })();
   
