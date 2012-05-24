@@ -228,7 +228,7 @@ class RevisionForm(forms.ModelForm):
     class Meta(object):
         model = Revision
         fields = ('title', 'slug', 'tags', 'keywords', 'summary', 'content',
-                  'comment', 'based_on')
+                  'comment', 'based_on', 'show_toc')
 
     def __init__(self, *args, **kwargs):
 
