@@ -181,7 +181,10 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
         "description": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>WebGL brings the power of OpenGL to the Web. Using WebGL, you can create interactive 3D graphics that work directly in modern browsers without plug-ins.
+<p>Using WebGL is easier if you already have experience with graphics programming, but don't let that hold you back. <a href="http://learningwebgl.com/blog/?page_id=1217">Learning WebGL</a> provides a great set of tutorials for newcomers and the MDN offers <a href="https://developer.mozilla.org/en/WebGL">WebGL articles</a> that make a great next step. While you're working, you might also appreciate <a href="http://webglplayground.net/">WebGL Playground</a>, a handy tool that lets you edit your creations and see the results in real time.</p>
+<p>Best of all, you have the power of the open-source community on your side. Be sure to consider the <a href="http://dev.opera.com/articles/view/an-introduction-to-webgl/#webgllib">many JavaScript libraries</a> that make writing WebGL animations even easier.</p>
+<p>What can you do with WebGL? Show us this month in the June Dev Derby!</p>"""),
     },
     {
         "tag_name": "challenge:2012:july",
@@ -197,13 +200,13 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     },
     {
         "tag_name": "challenge:2012:august",
-        "title": _("August 2012 Dev Derby Challenge - ??"),
-        "short_title": _("??"),
+        "title": _("August 2012 Dev Derby Challenge - Camera API"),
+        "short_title": _("Camera API"),
         "dateline": _("August 2012"),
         "short_dateline": _("August"),
-        "tagline": _("??"),
-        "summary": _("??"),
-        "description": _("??"),
+        "tagline": _("Say cheese!"),
+        "summary": _("The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."),
+        "description": _("The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
