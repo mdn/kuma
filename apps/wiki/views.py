@@ -43,7 +43,8 @@ from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
-from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
+                  KUMASCRIPT_TIMEOUT_ERROR)
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
@@ -414,16 +415,33 @@ def _process_kumascript_errors(response):
     return resp_errors
 
 
-def _perform_kumascript_post(content):
+def _add_kumascript_env_headers(headers, env_vars):
+    # Encode the vars as kumascript headers, as base64 JSON-encoded values.
+    headers.update(dict(
+        ('x-kumascript-env-%s' % k, base64.b64encode(json.dumps(v)))
+        for k, v in env_vars.items()
+    ))
+    return headers
+
+
+def _perform_kumascript_post(request, content):
     ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
     }
+    env_vars = dict(
+        url=request.build_absolute_uri('/'),
+    )
+    _add_kumascript_env_headers(headers, env_vars)
     resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
                         data=content, headers=headers)
-    resp_body = _process_kumascript_body(resp)
-    resp_errors = _process_kumascript_errors(resp)
-    return resp_body, resp_errors
+    if resp:
+        resp_body = _process_kumascript_body(resp)
+        resp_errors = _process_kumascript_errors(resp)
+        return resp_body, resp_errors
+    else:
+        resp_errors = KUMASCRIPT_TIMEOUT_ERROR
+        return content, resp_errors
 
 
 def _perform_kumascript_request(request, response_headers, document,
@@ -487,11 +505,7 @@ def _perform_kumascript_request(request, response_headers, document,
             modified=time.mktime(document.modified.timetuple()),
             cache_control=cache_control,
         )
-        # Encode the vars as kumascript headers, as base64 JSON-encoded values.
-        headers.update(dict(
-            ('x-kumascript-env-%s' % k,
-             base64.b64encode(json.dumps(v)))
-            for k, v in env_vars.items()))
+        _add_kumascript_env_headers(headers, env_vars)
 
         # Set up for conditional GET, if we have the details cached.
         c_meta = cache.get_many([ck_etag, ck_modified])
@@ -534,11 +548,7 @@ def _perform_kumascript_request(request, response_headers, document,
                 cache.set(ck_errors, resp_errors, timeout=max_age)
 
         elif resp.status_code == None:
-            resp_errors = [
-                {"level": "error",
-                  "message": "Request to Kumascript service timed out",
-                  "args": ["TimeoutError"]}
-            ]
+            resp_errors = KUMASCRIPT_TIMEOUT_ERROR
 
         else:
             resp_errors = [
@@ -914,11 +924,14 @@ def preview_revision(request):
     doc = None
     if request.POST.get('doc_id', False):
         doc = Document.objects.get(id=request.POST.get('doc_id'))
+
     if _run_kumascript(doc, request):
         wiki_content, kumascript_errors = _perform_kumascript_post(
+                                                                request,
                                                                 wiki_content)
     # TODO: Get doc ID from JSON.
-    data = {'content': wiki_content, 'kumascript_errors': kumascript_errors}
+    data = {'content': wiki_content, 'title': request.POST.get('title', ''),
+            'kumascript_errors': kumascript_errors}
     #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
