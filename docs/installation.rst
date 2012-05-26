@@ -154,7 +154,7 @@ set your ``settings_local.py`` with the following::
     SERVE_MEDIA = True
 
 Configure BrowserID
------
+-------------------
 
 Add the following to ``settings_local.py`` so that BrowserID works with the
 development instance::
@@ -166,11 +166,11 @@ development instance::
     SESSION_COOKIE_SECURE = False # needed if the server is running on http://
     SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-The `SESSION_EXPIRE_AT_BROWSER_CLOSE` setting is not strictly necessary, but
+The ``SESSION_EXPIRE_AT_BROWSER_CLOSE`` setting is not strictly necessary, but
 it's convenient for development.
 
 Enable kumawiki in waffle
------
+-------------------------
 
 We're using `django-waffle <https://github.com/jsocol/django-waffle>`_ to disable
 features not yet ready for production. To test out the wiki, you'll have to enable
@@ -186,7 +186,8 @@ To start the dev server, run ``./manage.py runserver``, then open up
 ``http://localhost:8000``. If everything's working, you should see
 the MDN home page!
 
-You might need to set ``LC_CTYPE`` if you're on Mac OS X until `bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::
+You might need to first set ``LC_CTYPE`` if you're on Mac OS X until
+`bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::
 
     export LC_CTYPE=en_US
 
