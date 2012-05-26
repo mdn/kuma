@@ -8,3 +8,7 @@ To start the Django app:
 
 To start the kumascript service:
     node kumascript/run.js
+
+To run tests:
+    (cd / && /vagrant/manage.py test actioncounters contentflagging dekicompat demos devmo landing users wiki)
+    (cd /vagrant/kumascript && ./node_modules/.bin/nodeunit tests)
