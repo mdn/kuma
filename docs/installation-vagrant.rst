@@ -1,15 +1,18 @@
 Kuma in VirtualBox via Vagrant
 ==============================
 
-This is an attempt to describe the bootstrap process to get Kuma running
-in a Vagrant-managed virtual machine.
+The core developers run Kuma in a `Vagrant`_-managed virtual machine to
+simplify `installation <installation.rst>`_.
+If you're on Mac OS X and looking for a quick way to get started, you
+should try these instructions.
 
-This is known to work on Mac OS X. It could possibly be made to work
-under Linux and Windows, but few have tried. Bug reports and suggestions
-are welcome. The main barrier to Windows is that this Vagrantfile `uses
-NFS to share the current working directory`_ for performance reasons,
-and also Vagrant support for Windows is not-so-great yet.
+This could possibly be made to work under Linux and Windows, but few have
+tried. Bug reports and suggestions are welcome.
+The main barrier to Windows is that this Vagrantfile `uses NFS to share
+the current working directory`_ for performance reasons, and also Vagrant
+support for Windows is not-so-great yet.
 
+.. _vagrant: http://vagrantup.com/
 .. _uses NFS to share the current working directory: http://vagrantup.com/docs/nfs.html
 
 
@@ -17,12 +20,16 @@ Getting up and running
 ----------------------
 
 -  Install VirtualBox 4 from http://www.virtualbox.org/
--  Install vagrant from a Terminal window, see vagrantup.com::
+-  Install vagrant using ``gem`` from a Terminal window, or by downloading
+   a package from `vagrantup.com`_. ::
 
        gem update
        gem install vagrant
 
--  Clone Kuma, update submodules::
+.. _vagrantup.com: http://vagrantup.com/
+
+-  Clone Kuma, update submodules (**don't** try to use the same working
+   directory as for the local installation)::
 
        git clone git://github.com/mozilla/kuma.git
        cd kuma
@@ -64,6 +71,8 @@ Getting up and running
 What’s next?
 ------------
 
+-  See `development <development.rst>`_ for tips not specific to vagrant.
+
 -  Django and node.js web services must be started within the VM by
    hand, which makes them easier to restart during development. Details
    on this should be displayed via ``/etc/motd`` when you log in with
@@ -92,7 +101,11 @@ What’s next?
 
    -  Inside the VM::
 
-          sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn.pp
+          sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
+
+-  The VM comes with MindTouch wiki (the one that powers the production
+   developer.mozilla.org site) installed. Visit http://developer-dev.mozilla.org/en/Test
+   after you log in to create a page in it.
 
 -  **Experimental and Optional**: Download and import data extracted and
    sanitized from the production site. This can take a long while, since
