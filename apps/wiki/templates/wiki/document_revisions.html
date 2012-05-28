@@ -1,6 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Revision History | {document}')|fe(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
@@ -104,6 +103,3 @@
 </section>
 {% endblock %}
 
-{% block side_top %}
-  {{ document_tabs(document, document.parent, user, 'history', settings) }}
-{% endblock %}
