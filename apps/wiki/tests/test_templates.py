@@ -23,7 +23,8 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.models import Document, Revision, HelpfulVote, SIGNIFICANCES
 from wiki.tasks import send_reviewed_notification
-from wiki.tests import TestCaseBase, document, revision, new_document_data
+from wiki.tests import (TestCaseBase, document, revision, new_document_data,
+                        create_topical_parents_docs)
 from devmo.tests import SkippedTestCase
 
 
@@ -75,6 +76,22 @@ class DocumentTests(TestCaseBase):
         doc = pq(response.content)
         eq_(r.document.title, doc('article header h1.page-title').text())
         eq_(r.document.html, doc('div#wikiArticle').text())
+
+    @attr("breadcrumbs")
+    def test_document_breadcrumbs(self):
+        """Create docs with topical parent/child rel, verify breadcrumbs."""
+        d1, d2 = create_topical_parents_docs()
+        response = self.client.get(d1.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(d1.title, doc('article header h1.page-title').text())
+        eq_(d1.title, doc('nav.crumbs').text())
+        response = self.client.get(d2.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(d2.title, doc('article header h1.page-title').text())
+        crumbs = "%s %s" % (d1.title, d2.title)
+        eq_(crumbs, doc('nav.crumbs').text())
 
     def test_english_document_no_approved_content(self):
         """Load an English document with no approved content."""
