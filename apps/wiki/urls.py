@@ -86,6 +86,9 @@ urlpatterns += patterns('wiki.views',
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
     url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
+    
+    url(r'^/get-documents$', 'autosuggest_documents', name='wiki.autosuggest_documents'),
+    
     url(r'^/category/(?P<category>\d+)$', 'list_documents',
         name='wiki.category'),
     url(r'^/needs-review/(?P<tag>[^/]+)$', 'list_documents_for_review',

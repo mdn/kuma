@@ -440,6 +440,9 @@ td.diff_header {
     margin: 20px 0 0;
 }
 
+/* WYSIWYG-specific styles */
+.ui-autocomplete { z-index: 100001 !important; } /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
+
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { display: block; text-align: right; font-size: 90%; }

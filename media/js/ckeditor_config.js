@@ -18,5 +18,6 @@ CKEDITOR.editorConfig = function(config) {
     config.skin = 'kuma';
     config.startupFocus = true;
     config.toolbar = 'MDN';
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link';
+    config.removePlugins = 'link';
 };

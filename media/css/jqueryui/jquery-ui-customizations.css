@@ -1,0 +1,22 @@
+/* classes for locking in values */
+.ui-autocomplete-input-valid {
+	border-color: #98fa98 !important;
+}
+
+.ui-autocomplete-input-valid, .ui-autocomplete-input-valid input {
+	background-color: #e1fae1 !important;
+}
+
+.ui-autocomplete-input-invalid {
+	border-color: #fc0 !important;
+}
+
+.ui-autocomplete-input-invalid, .ui-autocomplete-input-invalid input {
+	background-color: #fffea1 !important;
+}
+
+.ui-autocomplete-loading {
+	background-image: url(images/mozAutocompleteSpinner.gif) !important;
+	background-position: 97% 5px !important;
+	background-repeat: no-repeat !important;
+}

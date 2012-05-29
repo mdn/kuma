@@ -126,6 +126,8 @@
             {% endif %}
             <input type="hidden" name="form" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
+            
+            {% include 'wiki/includes/title_autosuggest_url.html' %}
 
             <section class="page-meta">
               {% set tags = document.tags.all() %}

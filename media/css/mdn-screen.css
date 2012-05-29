@@ -1118,3 +1118,5 @@ li.tag-expert label:hover { border-color: #bbb; }
 #learn-html5 .more { margin-top: .5em; text-align: right; }
 #learn-html5 #mdn-docs .mod-title { background-position: 96% -100px; }
 
+/* @Utility Classes *********/
+.hidden { display: none; }

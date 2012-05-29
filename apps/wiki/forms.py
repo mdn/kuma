@@ -11,6 +11,8 @@ from tower import ugettext as _
 from sumo.form_fields import StrippedCharField
 from tags import forms as tag_forms
 
+#from sumo.urlresolvers import reverse
+
 from taggit.utils import parse_tags, edit_string_for_tags
 
 import wiki.content
@@ -206,7 +208,7 @@ class RevisionForm(forms.ModelForm):
                 min_length=5, max_length=300000,
                 label=_lazy(u'Content:'),
                 widget=forms.Textarea(attrs={'data-showfor':
-                                             json.dumps(showfor_data)}),
+                                             json.dumps(showfor_data) }),
                 error_messages={'required': CONTENT_REQUIRED,
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})
