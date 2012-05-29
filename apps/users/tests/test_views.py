@@ -1,3 +1,4 @@
+import logging
 from time import time
 import requests
 
@@ -8,6 +9,7 @@ from django.core import mail
 
 import mock
 from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from dekicompat.tests import (mock_mindtouch_login,
@@ -110,6 +112,29 @@ class LoginTestCase(TestCase):
                                    follow=True)
         eq_('http://testserver/en-US/demos/submit',
                                                 response.redirect_chain[0][0])
+
+    @mock.patch('dekicompat.backends.DekiUserBackend.mindtouch_login')
+    def test_mindtouch_disabled_login(self, mock_mindtouch_login):
+        """When DEKIWIKI_ENDPOINT unavailable, skip MindTouch auth."""
+        _old = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = False
+
+        # HACK: mock has an assert_called_with, but I want something like
+        # never_called or call_count. Instead, I have this:
+        trap = {'was_called': False}
+        def my_mindtouch_login(username, password, force=False):
+            trap['was_called'] = True
+            return False
+
+        mock_mindtouch_login.side_effect = my_mindtouch_login
+
+        # Try to log in as a MindTouch user, assert that MindTouch auth was
+        # never attempted.
+        response = self.client.post(reverse('users.login'),
+                                    {'username': 'testaccount',
+                                     'password': 'theplanet'}, follow=True)
+        ok_(not trap['was_called'])
+        settings.DEKIWIKI_ENDPOINT = _old
 
     @mock_mindtouch_login
     @mock_get_deki_user
@@ -818,6 +843,38 @@ class BrowserIDTestCase(TestCase):
             User.objects.get(email=new_email)
         except User.DoesNotExist:
             ok_(False, "The MindTouch user should exist in Django now.")
+
+    @mock.patch('dekicompat.backends.DekiUserBackend.mindtouch_login')
+    @mock.patch('users.views._verify_browserid')
+    def test_mindtouch_disabled_redirect_login(self, _verify_browserid,
+                                               mock_mindtouch_login):
+        """When DEKIWIKI_ENDPOINT unavailable, skip MindTouch auth."""
+        _verify_browserid.return_value = {'email': 'testuser2@test.com'}
+
+        # HACK: mock has an assert_called_with, but I want something like
+        # never_called or call_count. Instead, I have this:
+        trap = {'was_called': False}
+        def my_mindtouch_login(username, password, force=False):
+            trap['was_called'] = True
+            return False
+        mock_mindtouch_login.side_effect = my_mindtouch_login
+
+        _old = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = False
+
+        resp = self.client.post(reverse('users.browserid_verify',
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+        eq_(302, resp.status_code)
+        ok_('SUCCESS' in resp['Location'])
+
+        # The session should look logged in, now.
+        ok_('_auth_user_id' in self.client.session.keys())
+        eq_('django_browserid.auth.BrowserIDBackend',
+            self.client.session.get('_auth_user_backend', ''))
+
+        ok_(not trap['was_called'])
+        settings.DEKIWIKI_ENDPOINT = _old
 
     @mock_get_deki_user_by_email
     @mock_put_mindtouch_user

@@ -1,3 +1,4 @@
+import logging
 import os
 import urlparse
 
@@ -60,6 +61,8 @@ def _verify_browserid(form, request):
 
 def _redirect_with_mindtouch_login(next_url, username, password=None):
     resp = HttpResponseRedirect(next_url)
+    if not settings.DEKIWIKI_ENDPOINT:
+        return resp
     authtoken = DekiUserBackend.mindtouch_login(username, password,
                                                 force=True)
     if authtoken:

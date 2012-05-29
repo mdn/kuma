@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 import time
 from urllib import urlencode
@@ -54,6 +55,12 @@ class DekiUserBackend(object):
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
     def authenticate(self, username=None, password=None):
+        
+        if not settings.DEKIWIKI_ENDPOINT:
+            # If there's no DEKIWIKI_ENDPOINT, consider MindTouch auth to be
+            # disabled and refuse all authentication
+            return None
+
         authtoken = DekiUserBackend.mindtouch_login(
             username=username,
             password=password)

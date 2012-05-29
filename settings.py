@@ -56,7 +56,8 @@ DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
 SLAVE_DATABASES = []
 
 # Dekiwiki has a backend API. protocol://hostname:port
-DEKIWIKI_ENDPOINT = 'https://developer-stage9.mozilla.org'
+# If set to False, integration with MindTouch / Dekiwiki will be disabled
+DEKIWIKI_ENDPOINT = False # 'https://developer-stage9.mozilla.org'
 DEKIWIKI_APIKEY = 'SET IN LOCAL SETTINGS'
 DEKIWIKI_MOCK = True
 
