@@ -9,11 +9,11 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	
 	// These vars are specific to the autocompleter
 	var autoCompleteCreated = false,
-		autoCompleteUrl = "get-documents", //editor.element.getAttribute("data-autosuggest-title-url"),
+		autoCompleteUrl = jQuery("#autosuggestTitleUrl").attr("data-url"),
 		autoCompletePaneId = "autosuggestpane",
 		autoCompleteTextbox,
 		autoCompleteSelection;
-	
+		
 	// Handles the event when the "Target" selection box is changed.
 	var targetChanged = function()
 	{
@@ -1500,6 +1500,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		}
 		
 	};
+	
 });
 
 /**
