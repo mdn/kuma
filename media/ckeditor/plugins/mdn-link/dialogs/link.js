@@ -13,7 +13,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		autoCompletePaneId = "autosuggestpane",
 		autoCompleteTextbox,
 		autoCompleteSelection;
-		
+	
 	// Handles the event when the "Target" selection box is changed.
 	var targetChanged = function()
 	{
@@ -1473,10 +1473,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				})(x);
 			}
 		},
-		// Inital focus on 'url' field if link is of type URL.
+		// Inital focus on 'url' field if link is of type URL.;  this fires whenever the dialog is opened
 		onFocus : function()
 		{
-			var tabToShow = jQuery.cookie("wikiLinkTab") || "info";
+			var tabToShow = jQuery.cookie("wikiLinkTab") || "info",
+				selectedText = editor.getSelection().getSelectedText(),
+				selectedElement = editor.getSelection().getSelectedElement();
+			
+			// If there's selected text but not an element, select the "Search" tab and start
+			if(selectedText && !selectedElement) {
+				this.selectPage(autoCompletePaneId);
+				autoCompleteTextbox.select();
+				jQuery(autoCompleteTextbox).val(selectedText);
+				jQuery(autoCompleteTextbox).mozillaAutocomplete("deselect");
+				jQuery(autoCompleteTextbox).mozillaAutocomplete("search", selectedText);
+				return;
+			}
+			
 			
 			// Always defaulting to the "info" screen *if* they are using a source element
 			if(tabToShow == "info" || this.hasSourceElement) {
@@ -1491,14 +1504,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			else {
 				// Show the other tab
 				this.selectPage(tabToShow);
+			}
 				
-				// If the "Search" pane is selected, focus on the element
-				if(tabToShow == autoCompletePaneId && autoCompleteTextbox) {
-					autoCompleteTextbox.select();
-				}
+			// If the "Search" pane is selected, focus on the element
+			if(tabToShow == autoCompletePaneId && autoCompleteTextbox) {
+				autoCompleteTextbox.select();
 			}
 		}
-		
 	};
 	
 });
