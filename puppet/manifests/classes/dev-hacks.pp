@@ -119,6 +119,12 @@ class dev_hacks_post {
         "/home/vagrant/.bash_profile":
             source => "$PROJ_DIR/puppet/files/home/vagrant/bash_profile",
             owner => "vagrant", group => "vagrant", mode => 0664;
+        "/home/vagrant/bin":
+            ensure => directory,
+            owner => "vagrant", group => "vagrant", mode => 0777;
+        "/home/vagrant/bin/go-tmux.sh":
+            source => "$PROJ_DIR/puppet/files/home/vagrant/bin/go-tmux.sh",
+            owner => "vagrant", group => "vagrant", mode => 0777;
     }
     
     case $operatingsystem {
