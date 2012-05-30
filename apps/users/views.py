@@ -214,8 +214,9 @@ def browserid_register(request):
                     user.save()
 
                     profile = UserProfile.objects.create(user=user)
-                    deki_user = DekiUserBackend.post_mindtouch_user(user)
-                    profile.deki_user_id = deki_user.id
+                    if settings.DEKIWIKI_ENDPOINT:
+                        deki_user = DekiUserBackend.post_mindtouch_user(user)
+                        profile.deki_user_id = deki_user.id
                     profile.save()
 
                     user.backend = 'django_browserid.auth.BrowserIDBackend'
