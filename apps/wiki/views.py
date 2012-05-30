@@ -121,9 +121,8 @@ def process_document_path(func, reverse_name='wiki.document'):
             if needs_redirect:
                 # This catches old MindTouch locales, missing locale, and a few
                 # other cases to fire off a 301 Moved permanent redirect.
-                redir_path = '%s/%s' % (document_locale, document_slug)
-                url = reverse('wiki.document', locale=request.locale,
-                              args=[redir_path])
+                url = reverse('wiki.document', locale=document_locale,
+                              args=[document_slug])
                 url = urlparams(url, query_dict=request.GET)
                 return HttpResponsePermanentRedirect(url)
 
@@ -138,15 +137,14 @@ def process_document_path(func, reverse_name='wiki.document'):
 def _document_last_modified(request, document_slug, document_locale):
     """Utility function to derive the last modified timestamp of a document.
     Mainly for the @condition decorator."""
-    path_hash = (hashlib.md5((u'%s/%s' % (document_locale, document_slug))
-                              .encode('utf8'))
-                        .hexdigest())
-    cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % path_hash
+    nk = u'/'.join((document_locale, document_slug))
+    nk_hash = hashlib.md5(nk.encode('utf8')).hexdigest()
+    cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % nk_hash
     try:
         last_mod = cache.get(cache_key)
         if not last_mod:
             doc = Document.objects.get(locale=document_locale,
-                                      slug=document_slug)
+                                       slug=document_slug)
 
             # Convert python datetime to Unix epoch seconds. This is more
             # easily digested by the cache, and is more compatible with other
@@ -456,8 +454,8 @@ def _perform_kumascript_request(request, response_headers, document,
 
     try:
         url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
-        url = url_tmpl.format(path='%s/%s' %
-                                   (document_locale, document_slug))
+        url = unicode(url_tmpl).format(path=u'%s/%s' %
+                                       (document_locale, document_slug))
 
         ck_etag, ck_modified, ck_body, ck_errors = (
                 _build_kumascript_cache_keys(document_slug, document_locale))
@@ -1505,7 +1503,7 @@ def mindtouch_namespace_redirect(request, namespace, slug):
         new_locale = 'en-US'
         new_slug = '%s:%s' % (namespace, slug)
     if new_locale:
-        new_url = '/%s/docs/%s/%s' % (request.locale, new_locale, new_slug)
+        new_url = '/%s/docs/%s' % (request.locale, new_slug)
     return HttpResponsePermanentRedirect(new_url)
 
 
@@ -1538,7 +1536,7 @@ def mindtouch_to_kuma_redirect(request, path):
             # anyone trying to view the document in its locale with
             # their own UI locale will have the correct starting URL
             # anyway.
-            new_url = '/%s/docs/%s/%s' % (new_locale, new_locale, slug)
+            new_url = '/%s/docs/%s' % (new_locale, slug)
             return HttpResponsePermanentRedirect(new_url)
         # Next we try looking up a Document with the possible locale
         # we've pulled out.

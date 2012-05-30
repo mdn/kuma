@@ -1,0 +1,49 @@
+# Note this file should be symlinked from the web root
+# Example: ln -s /home/foo/mdn/configs/htaccess /var/www/dekiwiki/.htaccess
+#
+# Make sure AllowOverride has FileInfo
+ReWriteEngine On
+RewriteBase /
+
+# Links to FTP'ed code samples and examples
+RewriteRule ^patches(.*) data/www/patches$1 [L]
+RewriteRule ^presentations(.*) data/www/presentations$1 [L]
+RewriteRule ^samples(.*) data/www/samples$1 [L]
+RewriteRule ^diagrams(.*) data/www/diagrams$1 [L]
+RewriteRule ^devnews(.*) data/www/devnews$1 [L]
+RewriteRule ^web-tech(.*) data/www/web-tech$1 [L]
+RewriteRule ^css(.*) data/www/css$1 [L]
+
+# Some blanket section moves / renames
+RewriteRule ^En/JavaScript/Reference/Objects/Array$ en-US/docs/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]
+RewriteRule ^En/JavaScript/Reference/Objects$ en-US/docs/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]
+RewriteRule ^En/Core_JavaScript_1\.5_Reference/Objects/(.*) en-US/docs/JavaScript/Reference/Global_Objects/$1 [R=301,L,NC]
+RewriteRule ^En/Core_JavaScript_1\.5_Reference/(.*) en-US/docs/JavaScript/Reference/$1 [R=301,L,NC]
+
+# Off-site redirects
+RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
+RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
+RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
+
+# HACK: Django will eventually redirect the user to the right spot, but skip a
+# couple of redirects for these known legacy locales
+RewriteRule ^en/(.*)$     /mwsgi/en-US/$1 [L,QSA,NE,NC,E=CORS:True]
+RewriteRule ^cn/(.*)$     /mwsgi/zh-CN/$1 [L,QSA,NE,NC,E=CORS:True]
+RewriteRule ^zh_cn/(.*)$  /mwsgi/zh-CN/$1 [L,QSA,NE,NC,E=CORS:True]
+RewriteRule ^zh_tw/(.*)$  /mwsgi/zh-TW/$1 [L,QSA,NE,NC,E=CORS:True]
+
+# These are some known static files
+RewriteCond %{REQUEST_URI} !/forums
+RewriteCond %{REQUEST_URI} !/favicon.ico
+# TODO: Should Django handle robots.txt?
+RewriteCond %{REQUEST_URI} !/robots.txt
+RewriteCond %{REQUEST_URI} !/block_862be.html
+RewriteCond %{REQUEST_URI} !/block_f90c2.html
+
+# Everything else passes through the Django handler
+RewriteRule ^(.*)$ /mwsgi/$1 [L,QSA,NE,E=CORS:True]
+
+# Allow wide-open CORS on the site.
+Header set Access-Control-Allow-Origin "*" env=CORS
+Header set Access-Control-Allow-Methods "GET" env=CORS
+Header set Access-Control-Allow-Credentials "false" env=CORS
