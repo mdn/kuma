@@ -937,6 +937,29 @@ def preview_revision(request):
 
 
 @waffle_flag('kumawiki')
+@login_required
+@require_GET
+def autosuggest_documents(request):
+    """Returns the closest title matches for front-end autosuggests"""
+    partial_title = request.GET.get('term', '')
+
+    # TODO: isolate to just approved docs?
+    docs = Document.objects.filter(title__icontains=partial_title).filter(is_template=0)
+
+    docs_list = []
+    for d in docs:
+        doc_info = {}
+        doc_info['title'] = d.title
+        doc_info['label'] = d.title
+        doc_info['href'] = d.get_absolute_url()
+        doc_info['id'] = d.id
+        docs_list.append(doc_info)
+
+    data = json.dumps(docs_list)
+    return HttpResponse(data, mimetype='application/json')
+
+
+@waffle_flag('kumawiki')
 @require_GET
 @process_document_path
 def document_revisions(request, document_slug, document_locale):
