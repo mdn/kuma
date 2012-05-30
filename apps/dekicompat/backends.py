@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 import time
 from urllib import urlencode
@@ -54,6 +55,12 @@ class DekiUserBackend(object):
         (settings.DEKIWIKI_ENDPOINT, '%s'))
 
     def authenticate(self, username=None, password=None):
+        
+        if not settings.DEKIWIKI_ENDPOINT:
+            # If there's no DEKIWIKI_ENDPOINT, consider MindTouch auth to be
+            # disabled and refuse all authentication
+            return None
+
         authtoken = DekiUserBackend.mindtouch_login(
             username=username,
             password=password)
@@ -238,6 +245,9 @@ class DekiUserBackend(object):
 
     @staticmethod
     def post_mindtouch_user(user):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # No-op, if there's no MindTouch API available
+            return None
         # post a new mindtouch user
         user_url = '%s/@api/deki/users?apikey=%s' % (
             settings.DEKIWIKI_ENDPOINT,
@@ -261,6 +271,9 @@ class DekiUserBackend(object):
 
     @staticmethod
     def put_mindtouch_user(user=None, deki_user_id=None, user_xml=None):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # No-op, if there's no MindTouch API available
+            return None
         if user:
             # update an existing mindtouch user
             deki_user_id = user.get_profile().deki_user_id or ''

@@ -4,6 +4,7 @@ import shlex
 import urllib2
 from os.path import basename, dirname, isfile, isdir
 
+import mock
 from mock import patch
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
@@ -11,6 +12,7 @@ from nose import SkipTest
 from pyquery import PyQuery as pq
 import test_utils
 
+from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser
 
 from devmo.helpers import devmo_url
@@ -109,6 +111,35 @@ class TestDevMoHelpers(test_utils.TestCase):
         eq_(devmo_url(context, localized_page), '/de/HTML')
         req.locale = 'zh-TW'
         eq_(devmo_url(context, localized_page), '/zh_tw/HTML')
+
+
+    @attr('current')
+    @mock.patch('devmo.helpers.check_devmo_local_page')
+    def test_devmo_url_midtouch_disabled(self, mock_check_devmo_local_page):
+        _old = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = False
+
+        # HACK: mock has an assert_called_with, but I want something like
+        # never_called or call_count. Instead, I have this:
+        trap = {'was_called': False}
+        def my_check_devmo_local_page(username, password, force=False):
+            trap['was_called'] = True
+            return None
+        mock_check_devmo_local_page.side_effect = my_check_devmo_local_page
+
+        en_only_page = '/en/HTML/HTML5'
+        localized_page = '/en/HTML'
+        req = test_utils.RequestFactory().get('/')
+        context = {'request': req}
+
+        # NOTE: This is undesirable behavior, but expected. Since devmo_url can
+        # no longer consult MindTouch, it will punt and claim that /en/HTML is
+        # the proper path to the de locale page. See also, bug 759356
+        req.locale = 'de'
+        eq_(devmo_url(context, localized_page), '/en/HTML')
+
+        ok_(not trap['was_called'])
+        settings.DEKIWIKI_ENDPOINT = _old
 
 
 class TestDevMoUrlResolvers(test_utils.TestCase):
