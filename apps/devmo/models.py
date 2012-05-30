@@ -155,6 +155,9 @@ class UserProfile(ModelBase):
 
     @property
     def deki_user(self):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # There is no deki_user, if the MindTouch API is disabled.
+            return None
         if not self._deki_user:
             # Need to find the DekiUser corresponding to the ID
             from dekicompat.backends import DekiUserBackend
@@ -211,6 +214,9 @@ class UserProfile(ModelBase):
         super(UserProfile, self).save(*args, **kwargs)
         if skip_mindtouch_put:
             return
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Skip if the MindTouch API is unavailable
+            return
         from dekicompat.backends import DekiUserBackend
         DekiUserBackend.put_mindtouch_user(self.user)
 
@@ -263,6 +269,13 @@ class UserDocsActivityFeed(object):
     def items(self):
         """On-demand items property, fetches and parses feed data with
         caching"""
+        if not settings.DEKIWIKI_ENDPOINT:
+            # If there's no MindTouch API, then there's no user feed to fetch.
+            # There should be a switch in the view which skips using this feed
+            # altogether, but including this skip here just to ensure no
+            # attempt is made to call the MT API.
+            return []
+
         # If there's no feed data in the object, try getting it.
         if not self._items:
 

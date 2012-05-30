@@ -19,6 +19,11 @@ log = commonware.log.getLogger('kuma.cron')
 @cronjobs.register
 def mdc_pages():
     """Grab popular pages off MDC/DekiWiki."""
+    if not settings.DEKIWIKI_ENDPOINT:
+        # Even though DEKIWIKI_ENDPOINT isn't used here to build MindTouch API
+        # URLs, use its false-ness as a signal to skip this cron task.
+        # See also, bug 759361
+        return
 
     try:
         pagelist = ElementTree.parse(urllib.urlopen(

@@ -125,6 +125,7 @@
 
   <aside id="content-sub" role="complementary">
 
+    {% if active_docs %}
     <div class="module hot" id="most-active">
       <h3 class="mod-title">{{ _('Most Active Docs') }}</h3>
       <ul class="hfeed">
@@ -136,6 +137,7 @@
         {% endfor %}
       </ul>
     </div>
+    {% endif %}
 
     {% if waffle.flag('kumawiki') %}
     {% set review_flags = (
@@ -159,6 +161,7 @@
     {% endfor %}
     {% endif %}
 
+    {% if dotd %}
     <div class="module hfeed" id="doc-of-the-day">
       <h3 class="mod-title">{{ _('Doc Of The Day') }}</h3>
       <div class="hentry">
@@ -173,6 +176,7 @@
         </p>
       </div>
     </div>
+    {% endif %}
 
   </aside>{# /#content-sub #}
 

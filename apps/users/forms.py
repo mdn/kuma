@@ -94,11 +94,13 @@ class RegisterForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        # check deki for existing user (it needs = in front of name)
-        deki_user = DekiUserBackend.get_deki_user('=' + username)
-        if deki_user is not None:
-            raise forms.ValidationError(
-                _('The username you entered already exists.'))
+        if settings.DEKIWIKI_ENDPOINT:
+            # Check deki for existing user (it needs = in front of name), but
+            # only if the API is available.
+            deki_user = DekiUserBackend.get_deki_user('=' + username)
+            if deki_user is not None:
+                raise forms.ValidationError(
+                    _('The username you entered already exists.'))
         return username
 
     def __init__(self,  request=None, *args, **kwargs):
@@ -118,11 +120,13 @@ class BrowserIDRegisterForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        # check deki for existing user (it needs = in front of name)
-        deki_user = DekiUserBackend.get_deki_user('=' + username)
-        if deki_user is not None:
-            raise forms.ValidationError(_('The username you entered'
-                                          ' already exists.'))
+        if settings.DEKIWIKI_ENDPOINT:
+            # Check deki for existing user (it needs = in front of name), but
+            # only if the API is available.
+            deki_user = DekiUserBackend.get_deki_user('=' + username)
+            if deki_user is not None:
+                raise forms.ValidationError(_('The username you entered'
+                                              ' already exists.'))
         return username
 
     def __init__(self,  request=None, *args, **kwargs):

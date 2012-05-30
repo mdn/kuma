@@ -83,6 +83,10 @@ def devmo_url(context, path):
     if getattr(settings, 'DEKIWIKI_MOCK', False):
         return path
 
+    if not settings.DEKIWIKI_ENDPOINT:
+        # If MindTouch is unavailable, skip the rest of this
+        return path
+
     current_locale = context['request'].locale
     m = get_locale_path_match(path)
     if not m:
