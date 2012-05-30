@@ -8,6 +8,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
+from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -141,6 +142,10 @@ class LoginTestCase(TestCase):
     @mock_put_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_mindtouch_creds_create_user_and_profile(self, get_current):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Don't even bother with this test, if there's no MindTouch API
+            raise SkipTest()
+
         get_current.return_value.domain = 'dev.mo.org'
 
         if not getattr(settings, 'DEKIWIKI_MOCK', False):
@@ -266,6 +271,10 @@ class RegisterTestCase(TestCase):
     @mock_perform_post_mindtouch_user
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_retries_mindtouch_post(self, get_current):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Don't even bother with this test, if there's no MindTouch API
+            raise SkipTest()
+
         get_current.return_value.domain = 'dev.mo.org'
         now = time()
         username = 'n00b%s' % now
@@ -353,6 +362,10 @@ class RegisterTestCase(TestCase):
 
     @mock_get_deki_user
     def test_duplicate_mindtouch_username(self):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Don't even bother with this test, if there's no MindTouch API
+            raise SkipTest()
+
         response = self.client.post(reverse('users.register'),
                                     {'username': 'testaccount',
                                      'email': 'testaccount@example.com',
@@ -607,6 +620,10 @@ class BrowserIDTestCase(TestCase):
     @mock_mindtouch_login
     @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_mindtouch_user(self, _verify_browserid):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Don't even bother with this test, if there's no MindTouch API
+            raise SkipTest()
+
         mt_email = 'testaccount@testaccount.com'
         _verify_browserid.return_value = {'email': mt_email}
 
@@ -753,8 +770,11 @@ class BrowserIDTestCase(TestCase):
         ok_('_auth_user_id' in self.client.session.keys())
         eq_('django_browserid.auth.BrowserIDBackend',
             self.client.session.get('_auth_user_backend', ''))
-        ok_(self.client.cookies.get('authtoken'), 'Should have set authtoken '
-                                                  'cookie for MindTouch')
+
+        if settings.DEKIWIKI_ENDPOINT:
+            ok_(self.client.cookies.get('authtoken'), 'Should have set '
+                                                      'authtoken cookie for '
+                                                      'MindTouch')
 
         # Ensure that the user was created, and with the submitted username and
         # verified email address
@@ -773,6 +793,10 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('users.views._verify_browserid')
     def test_browserid_register_retries_mindtouch(self,
                                                   _verify_browserid):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Don't even bother with this test, if there's no MindTouch API
+            raise SkipTest()
+
         new_username = 'neverbefore'
         new_email = 'never.before.seen@example.com'
         _verify_browserid.return_value = {'email': new_email}

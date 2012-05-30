@@ -415,7 +415,8 @@ def confirm_change_email(request, activation_key):
         # Update user's email.
         u.email = new_email
         u.save()
-        DekiUserBackend.put_mindtouch_user(u)
+        if settings.DEKIWIKI_ENDPOINT:
+            DekiUserBackend.put_mindtouch_user(u)
 
     # Delete the activation profile now, we don't need it anymore.
     email_change.delete()

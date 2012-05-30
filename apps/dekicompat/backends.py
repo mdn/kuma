@@ -245,6 +245,9 @@ class DekiUserBackend(object):
 
     @staticmethod
     def post_mindtouch_user(user):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # No-op, if there's no MindTouch API available
+            return None
         # post a new mindtouch user
         user_url = '%s/@api/deki/users?apikey=%s' % (
             settings.DEKIWIKI_ENDPOINT,
@@ -268,6 +271,9 @@ class DekiUserBackend(object):
 
     @staticmethod
     def put_mindtouch_user(user=None, deki_user_id=None, user_xml=None):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # No-op, if there's no MindTouch API available
+            return None
         if user:
             # update an existing mindtouch user
             deki_user_id = user.get_profile().deki_user_id or ''
