@@ -43,9 +43,9 @@ jQuery.fn.placeholder = function(new_value) {
 
 /* Parse a querystring into an object */
 jQuery.extend({
-	parseQuerystring: function(){
+	parseQuerystring: function(str){
 		var nvpair = {},
-			qs = window.location.search.replace("?", ""),
+			qs = (str || window.location.search).replace("?", ""),
 			pairs = qs.split("&");
 			
 		$.each(pairs, function(i, v){
@@ -143,8 +143,16 @@ jQuery.extend({
       // then show the signed-out block again
       $signedOutList.hide();  
       
-      $.get($signedOutList.attr('data-browserid-header-signin-html'), {
-        next: $.parseQuerystring().next || window.location.pathname
+      // Retrieve the login url
+      var url = $signedOutList.attr('data-browserid-header-signin-html');
+        
+      // Split the URL, find the next value
+      var urlSplit = url.split("?"),
+          rootUrl = urlSplit.shift(),
+          qstring = urlSplit.join("?");
+      
+      $.get(rootUrl, {
+        next: $.parseQuerystring(qstring).next || $.parseQuerystring().next || window.location.pathname
       }, function(content) {
         $signedOutList.html(content).each(function() {
           $('.toggle', $(this)).click(function() {
