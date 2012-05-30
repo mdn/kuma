@@ -7,6 +7,7 @@ import requests
 
 import mock
 from mock import patch
+from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -95,6 +96,11 @@ class ProfileViewsTest(TestCase):
             doc.find('#profile-head.vcard .irc').text())
         eq_(profile.bio,
             doc.find('#profile-head.vcard .bio').text())
+
+        if not settings.DEKIWIKI_ENDPOINT:
+            # The rest of this test relies on MindTouch API data.
+            # TODO: Properly rewrite to use Kuma data
+            return
 
         # There should be 15 doc activity items in the page.
         feed_trs = doc.find('#docs-activity table.activity tbody tr')
@@ -381,6 +387,10 @@ class ProfileViewsTest(TestCase):
     @mock_fetch_user_feed
     @mock.patch_object(Site.objects, 'get_current')
     def test_profile_edit_language_saves_to_mindtouch(self, get_current):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Don't even bother with this test, if there's no MindTouch API
+            raise SkipTest()
+
         get_current.return_value.domain = 'dev.mo.org'
 
         try:

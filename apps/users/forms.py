@@ -184,6 +184,9 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
         try:
             return super(PasswordResetForm, self).clean_email()
         except forms.ValidationError as e:
+            if not settings.DEKIWIKI_ENDPOINT:
+                # Skip MindTouch API, if unavailable.
+                raise e
             email = self.cleaned_data["email"]
             deki_user = DekiUserBackend.get_deki_user_by_email(email)
             if deki_user is None:

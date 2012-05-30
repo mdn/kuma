@@ -10,6 +10,7 @@ from django.core import mail
 from django.utils.http import int_to_base36
 
 import mock
+from nose import SkipTest
 from nose.tools import eq_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -228,6 +229,10 @@ class PasswordReset(TestCaseBase):
     @mock_get_deki_user_by_email
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_only_user(self, get_current):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Skip, if MindTouch API unavailable
+            raise SkipTest()
+
         get_current.return_value.domain = 'testserver.com'
         self.assertRaises(User.DoesNotExist, User.objects.get,
                           username='testaccount')
@@ -258,6 +263,10 @@ class PasswordReset(TestCaseBase):
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_deki_email_multi_user(self, get_current):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Skip, if MindTouch API unavailable
+            raise SkipTest()
+
         get_current.return_value.domain = 'testserver.com'
         self.assertRaises(User.DoesNotExist, User.objects.get,
                           username='Ibn el haithem')
