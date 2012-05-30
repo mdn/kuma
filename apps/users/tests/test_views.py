@@ -116,9 +116,6 @@ class LoginTestCase(TestCase):
     @mock.patch('dekicompat.backends.DekiUserBackend.mindtouch_login')
     def test_mindtouch_disabled_login(self, mock_mindtouch_login):
         """When DEKIWIKI_ENDPOINT unavailable, skip MindTouch auth."""
-        _old = settings.DEKIWIKI_ENDPOINT
-        settings.DEKIWIKI_ENDPOINT = False
-
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
@@ -130,11 +127,14 @@ class LoginTestCase(TestCase):
 
         # Try to log in as a MindTouch user, assert that MindTouch auth was
         # never attempted.
+        _old = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = False
         response = self.client.post(reverse('users.login'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
-        ok_(not trap['was_called'])
         settings.DEKIWIKI_ENDPOINT = _old
+
+        ok_(not trap['was_called'])
 
     @mock_mindtouch_login
     @mock_get_deki_user
@@ -669,17 +669,16 @@ class BrowserIDTestCase(TestCase):
 
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
-
         resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
+        settings.DEKIWIKI_ENDPOINT = _old
 
         # This should end up being a redirect to register
         eq_(302, resp.status_code)
         ok_('browserid_register' in resp['Location'])
 
         ok_(not trap['was_called'])
-        settings.DEKIWIKI_ENDPOINT = _old
 
     @mock_missing_get_deki_user_by_email
     @mock_missing_get_deki_user
@@ -894,10 +893,11 @@ class BrowserIDTestCase(TestCase):
 
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
-
         resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'),
                                 {'assertion': 'PRETENDTHISISVALID'})
+        settings.DEKIWIKI_ENDPOINT = _old
+
         eq_(302, resp.status_code)
         ok_('SUCCESS' in resp['Location'])
 
@@ -907,7 +907,6 @@ class BrowserIDTestCase(TestCase):
             self.client.session.get('_auth_user_backend', ''))
 
         ok_(not trap['was_called'])
-        settings.DEKIWIKI_ENDPOINT = _old
 
     @mock_get_deki_user_by_email
     @mock_put_mindtouch_user
