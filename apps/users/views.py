@@ -159,9 +159,9 @@ def browserid_verify(request):
 
     # Look for first most recently used Django account, use if found.
     user = _get_latest_user_with_email(email)
-    # If no Django account, look for a MindTouch account by email.
-    # If found, auto-create the user.
-    if not user:
+    # If no Django account, look for a MindTouch account by email. But, only if
+    # there's a MindTouch API available. If found, auto-create the user.
+    if not user and settings.DEKIWIKI_ENDPOINT:
         deki_user = DekiUserBackend.get_deki_user_by_email(email)
         if deki_user:
             user = DekiUserBackend.get_or_create_user(deki_user)

@@ -648,6 +648,39 @@ class BrowserIDTestCase(TestCase):
         except User.DoesNotExist:
             ok_(False, "The MindTouch user should exist in Django now.")
 
+    @attr('current')
+    @mock.patch('dekicompat.backends.DekiUserBackend.get_deki_user_by_email')
+    @mock.patch('users.views._verify_browserid')
+    def test_valid_assertion_with_mt_disabled(self, _verify_browserid,
+                                              mock_get_deki_user_by_email):
+        """On valid browserid assertion, when Django user is not found, yet
+        MindTouch API disabled, there should be no attempt to look the user up
+        in MindTouch"""
+        mt_email = 'testaccount@testaccount.com'
+        _verify_browserid.return_value = {'email': mt_email}
+
+        # HACK: mock has an assert_called_with, but I want something like
+        # never_called or call_count. Instead, I have this:
+        trap = {'was_called': False}
+        def my_get_deki_user_by_email(email):
+            trap['was_called'] = True
+            return False
+        mock_get_deki_user_by_email.side_effect = my_get_deki_user_by_email
+
+        _old = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = False
+
+        resp = self.client.post(reverse('users.browserid_verify',
+                                        locale='en-US'),
+                                {'assertion': 'PRETENDTHISISVALID'})
+
+        # This should end up being a redirect to register
+        eq_(302, resp.status_code)
+        ok_('browserid_register' in resp['Location'])
+
+        ok_(not trap['was_called'])
+        settings.DEKIWIKI_ENDPOINT = _old
+
     @mock_missing_get_deki_user_by_email
     @mock_missing_get_deki_user
     @mock_post_mindtouch_user
