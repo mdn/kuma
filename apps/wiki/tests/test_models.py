@@ -20,7 +20,8 @@ from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
                          get_current_or_latest_revision,
                          TaggedDocument)
 from wiki.tests import (document, revision, doc_rev, translated_revision,
-                        create_template_test_users)
+                        create_template_test_users,
+                        create_topical_parents_docs)
 
 
 def _objects_eq(manager, list_):
@@ -268,12 +269,7 @@ class DocumentTests(TestCase):
         eq_(False, enfant in enfant.other_translations)
 
     def test_topical_parents(self):
-        d1 = document(title='HTML7')
-        d1.save()
-
-        d2 = document(title='Smellovision')
-        d2.parent_topic = d1
-        d2.save()
+        d1, d2 = create_topical_parents_docs()
         ok_(d2.parents == [d1])
 
         d3 = document(title='Smell accessibility')

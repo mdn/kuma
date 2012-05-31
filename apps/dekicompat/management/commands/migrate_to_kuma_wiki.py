@@ -159,6 +159,9 @@ class Command(BaseCommand):
         make_option('--skip-translations', action="store_true",
                     dest="skip_translations", default=False,
                     help="Skip migrating translated children of documents"),
+        make_option('--skip-breadcrumbs', action="store_true",
+                    dest="skip_breadcrumbs", default=False,
+                    help="Skip migrating breadcrumb parents of documents"),
 
         make_option('--limit', dest="limit", type="int", default=99999,
                     help="Stop after a migrating a number of documents"),
@@ -207,6 +210,9 @@ class Command(BaseCommand):
             if not options['skip_translations']:
                 rows = self.gather_pages()
                 self.make_languages_relationships(rows)
+            if not options['skip_breadcrumbs']:
+                rows = self.gather_pages()
+                self.make_breadcrumb_relationships(rows)
 
     def init(self, options):
         """Set up connections and options"""
@@ -335,6 +341,63 @@ class Command(BaseCommand):
                         print (u"%s\t%s\t%s" % (r['page_title'], block.name,
                                                     attr[1])).encode('utf-8')
 
+    def _get_mindtouch_pages_row(self, page_id):
+        sql = """
+            SELECT *
+            FROM pages
+            WHERE page_id = %d
+        """ % page_id
+        try:
+            rows = self._query(sql)
+        except Exception, e:
+            log.error("\tpage_id %s error %s" %
+                      (page_id, e))
+        single_row = None
+        for row in rows:
+            single_row = row
+        return single_row
+
+    def _migrate_necessary_mindtouch_pages(self, migrate_ids):
+        """ Given a list of mindtouch ids, migrate only the necessary pages."""
+        existing = [str(x['mindtouch_page_id']) for x in
+                    Document.objects.filter(mindtouch_page_id__in=migrate_ids)
+                                    .values('mindtouch_page_id')]
+        need_migrate_ids = [str(x) for x in migrate_ids
+                            if str(x) not in existing]
+        if need_migrate_ids:
+            sql = "SELECT * FROM pages WHERE page_id in (%s)" % (
+                ",".join(need_migrate_ids))
+            rows = self._query(sql)
+            self.handle_migration(rows)
+
+    def _add_parent_ids(self, r, bc_ids):
+        """ Recursively add parent ids to breadcrumb ids list. """
+        parent_row = self._get_mindtouch_pages_row(r['page_parent'])
+        if parent_row:
+            bc_ids.insert(0, r['page_parent'])
+            self._add_parent_ids(parent_row, bc_ids)
+        return bc_ids
+
+    @transaction.commit_on_success(using='default')
+    def make_breadcrumb_relationships(self, rows):
+        """Set the topic_parent for Kuma pages using parent_id"""
+        log.info("Building parent/child breadcrumb tree...")
+        for r in rows:
+            if not r['page_text'].strip():
+                continue
+            bc_ids = []
+            bc_ids.insert(0, r['page_id'])
+            if r['page_parent']:
+                bc_ids = self._add_parent_ids(r, bc_ids)
+            log.info("Migrating breadcrumb ids: %s" % bc_ids)
+            self._migrate_necessary_mindtouch_pages(bc_ids)
+            parent_doc = Document.objects.get(mindtouch_page_id=bc_ids.pop(0))
+            for id in bc_ids:
+                doc = Document.objects.get(mindtouch_page_id=id)
+                doc.parent_topic = parent_doc
+                doc.save()
+                parent_doc = doc
+
     @transaction.commit_manually(using='default')
     def make_languages_relationships(self, rows):
         """Set the parent_id of Kuma pages using wiki.languages params"""
@@ -407,15 +470,7 @@ class Command(BaseCommand):
                     continue
 
             # Migrate any child documents that haven't already been
-            existing = [str(x['mindtouch_page_id']) for x in 
-                        Document.objects.filter(mindtouch_page_id__in=children)
-                                        .values('mindtouch_page_id')]
-            need_migrate_ids = [str(x) for x in children if str(x) not in existing]
-            if need_migrate_ids:
-                sql = "SELECT * FROM pages WHERE page_id in (%s)" % (
-                    ",".join(need_migrate_ids))
-                rows = self._query(sql)
-                self.handle_migration(rows)
+            self._migrate_necessary_mindtouch_pages(children)
 
             # All parents and children migrated, now set parent_id
             # TODO: refactor this to source_id when we change to
@@ -667,8 +722,10 @@ class Command(BaseCommand):
 
         # Ensure that the document exists, and has the MindTouch page ID
         doc, created = Document.objects.get_or_create(
-            locale=locale, slug=slug,
-            title=r['page_display_name'], defaults=dict(
+            locale=locale,
+            slug=slug,
+            title=r['page_display_name'],
+            defaults=dict(
                 category=CATEGORIES[0][0],
             ))
         doc.mindtouch_page_id = r['page_id']
