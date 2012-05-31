@@ -202,7 +202,7 @@ class RevisionsFeed(DocumentsFeed):
         return item.comment
 
     def item_link(self, item):
-        compare_url = reverse('wiki.compare_revisions')
+        compare_url = reverse('wiki.compare_revisions', args=[item.document.slug])
         qs = {'from': item.get_previous().id,
               'to': item.id}
         return "%s?%s" % (self.request.build_absolute_uri(compare_url),
