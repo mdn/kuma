@@ -288,7 +288,8 @@ def document(request, document_slug, document_locale):
         # If this user can edit the document, inject some section editing
         # links.
         if ((need_edit_links or not show_raw) and
-                doc.allows_editing_by(request.user)):
+                request.user.is_authenticated() and
+                doc.allows_revision_by(request.user)):
             tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
         doc_html = tool.serialize()

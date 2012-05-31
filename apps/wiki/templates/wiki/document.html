@@ -82,7 +82,7 @@
             {% if request.user.is_authenticated() %}
               <li class="page-watch"><a href="{{ url('wiki.document_watch', document.full_path) }}">{{_('Watch')}}</a></li>
             {% endif %}
-            {% if document.allows_editing_by(request.user) or document.allows_revision_by(request.user) %}
+            {% if document.allows_revision_by(request.user) %}
               <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path) }}">{{_('Edit')}}</a></li>
             {% endif %}
         </ul>
@@ -202,7 +202,7 @@
   #}
     </div>
    </div>
-    {% if document.allows_editing_by(request.user) %}
+    {% if document.allows_revision_by(request.user) and request.user.is_authenticated() %}
       <div class="edited-section-ui template">
         <a class="btn-save" href="#">{{ _('Save') }}</a>
         <a class="btn-cancel" href="#">{{ _('Cancel') }}</a>
