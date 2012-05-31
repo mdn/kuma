@@ -1,6 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
 {% block title %}{{ page_title(document.title) }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
@@ -218,26 +217,6 @@
       </form>
     {% endif %}
 </section>
-{% endblock %}
-
-{% block side_top %}
-  {{ document_tabs(document, document.parent, user, 'article', settings) }}
-
-  {% if user.is_authenticated() and document %}
-    <div id="doc-watch">
-      {% if document.is_watched_by(user) %}
-        <form action="{{ url('wiki.document_unwatch', document.full_path) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="link-btn" value="{{ _('Turn off emails.') }}" />
-        </form>
-      {% else %}
-        <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="link-btn" value="{{ _('Get emailed when this article changes.') }}" />
-        </form>
-      {% endif %}
-    </div>
-  {% endif %}
 {% endblock %}
 
 {% block side %}
