@@ -50,14 +50,10 @@
   <!-- left crumb navigation -->
   <nav class="crumbs" role="navigation">
     <ol>
-      <!-- Sample... 
-      <li class="crumb-one"><a href="/">MDN</a></li>
-      <li class="crumb-two"><a href="/docs">Docs</a></li>
-      <li class="first"><a href="https://developer.mozilla.org/" class="deki-ns">MDN</a></li>
-      <li class="second"><a href="https://developer.mozilla.org/en" class="deki-ns">MDN</a></li>
-      <li><a href="https://developer.mozilla.org/en/HTML" class="deki-ns">HTML</a></li>
-      <li class="last"><a href="https://developer.mozilla.org/en/HTML/Using_the_application_cache" class="deki-ns current">Using the application cache</a></li> 
-      -->
+      {% for doc in document.parents %}
+      <li class="crumb"><a href="{{ url('wiki.document', doc.locale+'/'+doc.slug) }}">{{ doc.title }}</a></li>
+      {% endfor %}
+      <li class="crumb">{{ document.title }}</li>
     </ol>
   </nav>
   
@@ -221,7 +217,4 @@
 
 {% block side %}
   {% include 'wiki/includes/support_for_selectors.html' %}
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

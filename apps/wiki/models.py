@@ -864,15 +864,25 @@ class Document(NotificationsMixin, ModelBase):
     current_revision_link.short_description = "Current Revision"
 
     def parent_document_link(self):
-        """HTML link to the parent document for admin change list"""
+        """HTML link to the topical parent document for admin change list"""
         if not self.parent:
             return "None"
         url = reverse('admin:wiki_document_change', args=[self.parent.id])
         return '<a href="%s">Document #%s</a>' % (url, self.parent.id)
 
     parent_document_link.allow_tags = True
-    parent_document_link.short_description = "Parent Document"
+    parent_document_link.short_description = "Translation Parent"
 
+    def topic_parent_document_link(self):
+        """HTML link to the parent document for admin change list"""
+        if not self.parent_topic:
+            return "None"
+        url = reverse('admin:wiki_document_change',
+                      args=[self.parent_topic.id])
+        return '<a href="%s">Document #%s</a>' % (url, self.parent_topic.id)
+
+    topic_parent_document_link.allow_tags = True
+    topic_parent_document_link.short_description = "Parent Document"
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
