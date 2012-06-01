@@ -24,11 +24,15 @@
         <ul class="metadata">
           <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
           <li><label>{{_('Slug:')}}</label> {{ document_form.slug | safe }}</li>
-          <li><label>{{_('Parent:')}}</label> {{ document_form.parent_topic | safe }}</li>
+          {% if not is_template %}
+            <li><label>{{_('Parent:')}}</label> {{ document_form.parent_topic | safe }}</li>
+          {% endif %}
           <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
-          <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
-            {{ revision_form.show_toc | safe }}
-          </li>
+          {% if not is_template %}
+            <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
+              {{ revision_form.show_toc | safe }}
+            </li>
+          {% endif %}
         </ul>
 
         {% include 'wiki/includes/page_buttons.html' %}
