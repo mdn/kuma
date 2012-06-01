@@ -57,12 +57,12 @@ ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', ]
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-    'address'
+    'tr', 'td', 'th', 'address'
 )))
 ALLOWED_STYLES = [
     'border', 'float', 'overflow', 'min-height', 'vertical-align',
@@ -73,7 +73,7 @@ ALLOWED_STYLES = [
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
-    '-moz-column-width', '-webkit-columns', 'columns',
+    '-moz-column-width', '-webkit-columns', 'columns', 'width',
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
