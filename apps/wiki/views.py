@@ -1117,7 +1117,13 @@ def translate(request, document_slug, document_locale, revision_id=None):
     doc_form = rev_form = None
 
     if user_has_doc_perm:
-        doc_initial = _document_form_initial(doc) if doc else None
+        if doc:
+            # If there's an existing doc, populate form from it.
+            doc_initial = _document_form_initial(doc)
+        else:
+            # If no existing doc, bring over the original title and slug.
+            doc_initial = {'title': based_on_rev.title,
+                           'slug': based_on_rev.slug,}
         doc_form = DocumentForm(initial=doc_initial)
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
