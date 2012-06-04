@@ -104,6 +104,9 @@
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
+                {% if parent_slug %}
+                  <li><label>{{_('Parent:')}}</label> <span class="metadataDisplay">{{ parent_slug }}</span></li>
+                {% endif %}
                 {% if not document.is_template %}
                   <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
                     {{ revision_form.show_toc | safe }}

@@ -24,8 +24,8 @@
         <ul class="metadata">
           <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
           <li><label>{{_('Slug:')}}</label> {{ document_form.slug | safe }}</li>
-          {% if not is_template %}
-            <li><label>{{_('Parent:')}}</label> {{ document_form.parent_topic | safe }}</li>
+          {% if parent_slug and not is_template %}
+            <li><label>{{_('Parent:')}}</label> <span class="metadataDisplay">{{ parent_slug }}</span></li>
           {% endif %}
           <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
           {% if not is_template %}
@@ -34,6 +34,8 @@
             </li>
           {% endif %}
         </ul>
+        <input type="hidden" name="parent_topic" value="{{ parent_id | safe }}" />
+        <div class="hidden" id="parentSlugPrefix">{{ parent_slug | safe }}</div>
 
         {% include 'wiki/includes/page_buttons.html' %}
 
