@@ -3,6 +3,9 @@ Welcome to Kuma (developer-dev.mozilla.org)
 To update this dev environment:
     sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
+To launch or reattach to a Tmux session running everything:
+    ~/bin/go-tmux.sh
+
 To start the Django app:
     ./manage.py runserver --forked 0.0.0.0:8000
 
