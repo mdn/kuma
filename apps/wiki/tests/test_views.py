@@ -1140,6 +1140,7 @@ class SectionEditingResourceTests(TestCaseBase):
         response = client.post('%s?section=s2&raw=true' %
                                reverse('wiki.edit_document', args=[d.full_path]),
                                {"form": "rev",
+                               'slug': '',
                                 "content": replace},
                                follow=True)
         eq_(normalize_html(expected), 
@@ -1204,7 +1205,8 @@ class SectionEditingResourceTests(TestCaseBase):
         """
         data = {
             'form': 'rev',
-            'content': rev.content
+            'content': rev.content,
+            'slug': ''
         }
 
         # Edit #1 starts...
@@ -1304,6 +1306,7 @@ class SectionEditingResourceTests(TestCaseBase):
         data.update({
             'form': 'rev',
             'content': replace_2,
+            'slug': '',
             'current_rev': rev_id2
         })
         resp = client.post('%s?section=s2&raw=true' %
