@@ -624,6 +624,8 @@ def list_documents_for_review(request, tag=None):
 @login_required
 def new_document(request):
     """Create a new wiki document."""
+    initial_parent_id = request.GET.get('parent', '')
+
     initial_slug = request.GET.get('slug', '')
     if not Document.objects.allows_add_by(request.user, initial_slug):
         # Try to head off disallowed Template:* creation, right off the bat
@@ -631,14 +633,25 @@ def new_document(request):
 
     is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)
 
+    # If a parent ID is provided via GET, confirm it exists
+    parent_slug = ''
+    if initial_parent_id:
+        try:
+            parent_doc = Document.objects.get(pk=initial_parent_id)
+            parent_slug = parent_doc.slug
+        except Document.DoesNotExist:
+            parent_slug = ''
+
     if request.method == 'GET':
 
-        initial_data = {
-            'slug': initial_slug
-        }
+        initial_data = {}
+
+        if parent_slug:
+            initial_data['parent_topic'] = initial_parent_id
 
         if is_template:
             initial_data['title'] = initial_slug
+            initial_data['slug'] = initial_slug
             review_tags = ('template',)
         else:
             review_tags = REVIEW_FLAG_TAGS_DEFAULT
@@ -654,11 +667,18 @@ def new_document(request):
 
         return jingo.render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
+                             'parent_slug': parent_slug,
+                             'parent_id': initial_parent_id,
                              'document_form': doc_form,
                              'revision_form': rev_form})
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
+
+    # Prefix this new doc's slug with the parent document's slug.
+    if parent_slug:
+        post_data.update({'slug': parent_slug + '/' + post_data['slug']})
+
     doc_form = DocumentForm(post_data)
     rev_form = RevisionForm(post_data)
 
@@ -666,6 +686,7 @@ def new_document(request):
         slug = doc_form.cleaned_data['slug']
         if not Document.objects.allows_add_by(request.user, slug):
             raise PermissionDenied
+
         doc = doc_form.save(None)
         _save_rev_and_notify(rev_form, request.user, doc)
         if doc.current_revision.is_approved:
@@ -702,6 +723,17 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         rev = doc.current_revision or doc.revisions.order_by('-created',
                                                              '-id')[0]
 
+    # Keep hold of the full post slug
+    full_slug = rev.slug
+    slug_split = full_slug.split('/')
+    # Update the slug, removing the parent path, and
+    # *only* using the last piece.
+    # This is only for the edit form.
+    rev.slug = slug_split[-1]
+    # Keep a parent slug
+    # Create the slug prefix from the parent string
+    slug_split.pop()
+
     section_id = request.GET.get('section', None)
     disclose_description = bool(request.GET.get('opendescription'))
 
@@ -719,6 +751,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         if not (rev_form or doc_form):
             # You can't do anything on this page, so get lost.
             raise PermissionDenied
+
     else:  # POST
 
         is_iframe_target = request.GET.get('iframe', False)
@@ -732,6 +765,10 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         if which_form == 'doc':
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
+
+                slug_split.append(post_data['slug'])
+                post_data['slug'] = '/'.join(slug_split)
+
                 post_data.update({'locale': document_locale})
                 doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
@@ -765,7 +802,13 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             if not doc.allows_revision_by(user):
                 raise PermissionDenied
             else:
-                rev_form = RevisionForm(request.POST,
+
+                post_data = request.POST.copy()
+
+                slug_split.append(post_data['slug'])
+                post_data['slug'] = '/'.join(slug_split)
+
+                rev_form = RevisionForm(post_data,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
@@ -849,6 +892,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                          'document_form': doc_form,
                          'section_id': section_id,
                          'disclose_description': disclose_description,
+                         'parent_slug': '/'.join(slug_split),
                          'revision': rev,
                          'document': doc})
 
@@ -1083,6 +1127,13 @@ def translate(request, document_slug, document_locale, revision_id=None):
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
     user = request.user
 
+    # Handle parent slug
+    full_parent_slug = document_slug
+    parent_slug_split = full_parent_slug.split('/')
+    specific_slug = parent_slug_split[-1]
+    parent_slug_split.pop()
+    parent_slug = '/'.join(parent_slug_split)
+
     if settings.WIKI_DEFAULT_LANGUAGE == document_locale:
         # Don't translate to the default language.
         return HttpResponseRedirect(reverse(
@@ -1123,7 +1174,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         else:
             # If no existing doc, bring over the original title and slug.
             doc_initial = {'title': based_on_rev.title,
-                           'slug': based_on_rev.slug,}
+                           'slug': specific_slug}
         doc_form = DocumentForm(initial=doc_initial)
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
@@ -1142,12 +1193,13 @@ def translate(request, document_slug, document_locale, revision_id=None):
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
             post_data = request.POST.copy()
+
             post_data.update({'locale': document_locale})
             doc_form = DocumentForm(post_data, instance=doc)
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
-                rev_form = RevisionForm(request.POST)
+                rev_form = RevisionForm(post_data)
 
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
@@ -1171,7 +1223,14 @@ def translate(request, document_slug, document_locale, revision_id=None):
             doc_slug = doc.slug
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:
-            rev_form = RevisionForm(request.POST)
+
+            post_data = request.POST.copy()
+
+            # append final slug
+            parent_slug_split.append(post_data['slug'])
+            post_data['slug'] = '/'.join(parent_slug_split)
+
+            rev_form = RevisionForm(post_data)
             rev_form.instance.document = doc  # for rev_form.clean()
             if rev_form.is_valid() and not doc_form_invalid:
                 _save_rev_and_notify(rev_form, request.user, doc)
@@ -1183,7 +1242,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
                          'locale': document_locale, 'based_on': based_on_rev,
-                         'disclose_description': disclose_description})
+                         'disclose_description': disclose_description,
+                         'specific_slug': specific_slug, 'parent_slug': parent_slug})
 
 
 @waffle_flag('kumawiki')

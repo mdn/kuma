@@ -498,7 +498,7 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2',
+             'keywords': 'keyword1 keyword2', 'slug': '',
              'based_on': self.d.current_revision.id, 'form': 'rev'})
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
@@ -574,7 +574,7 @@ class NewRevisionTests(TestCaseBase):
         editing."""
         _test_form_maintains_based_on_rev(
             self.client, self.d, 'wiki.edit_document',
-            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev'},
+            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev', 'slug': ''},
             locale='en-US')
 
 

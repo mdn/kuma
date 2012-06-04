@@ -61,13 +61,24 @@
               <li>
                 <dl class="approved">
                   <dt>{{ _('Slug:') }}</dt>
-                  <dd>{{ parent.slug }}</dd>
+                  <dd>{{ specific_slug }}</dd>
                 </dl>
                 <dl class="localized">
                   <dt><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></dt>
                   <dd>{{ document_form.slug|safe }}</dd>
                 </dl>
               </li>
+              {% if parent_slug %}
+              <li>
+                <dl class="approved">
+                  <dt>{{ _('Parent:') }}</dt>
+                  <dd>{{ parent_slug }}</dd>
+                </dl>
+                <dl class="localized">
+                  &nbsp;
+                </dl>
+              </li>
+              {% endif %}
             </ul>
       </details>
     {% endif %}

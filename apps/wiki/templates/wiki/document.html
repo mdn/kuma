@@ -27,7 +27,7 @@
         <ul id="page-tools" class="sub-menu">
           <li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print page') }}</a></li>
           {% if not document.is_template %}
-            <li><a href="{{ url('wiki.new_document')+'?slug='+document.slug+'/' }}">{{ _('New sub-page') }}</a></li>
+            <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
           {% endif %}
         </ul>
       </li>
