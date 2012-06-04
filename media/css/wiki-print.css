@@ -30,6 +30,11 @@ Created by Craig Cook - focalcurve.com
 ul.index, 
 #nav-toolbar, 
 #footbar, 
+#nav-toolbar,
+#page-buttons,
+.edited-section-ui,
+.warning,
+footer .languages,
 #masthead { 
   display: none; 
 }

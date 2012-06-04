@@ -554,6 +554,9 @@ MINIFY_BUNDLES = {
             'css/jqueryui/jquery-ui-1.8.14.custom.css',
             'css/jqueryui/jquery-ui-customizations.css'
         ),
+        'wiki-print': (
+            'css/wiki-print.css',
+        ),
         'home': (
             'css/home.css',
         ),
