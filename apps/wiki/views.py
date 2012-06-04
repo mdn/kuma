@@ -1175,7 +1175,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             rev_form.instance.document = doc  # for rev_form.clean()
             if rev_form.is_valid() and not doc_form_invalid:
                 _save_rev_and_notify(rev_form, request.user, doc)
-                url = reverse('wiki.document_revisions',
+                url = reverse('wiki.document',
                               args=[doc.full_path])
                 return HttpResponseRedirect(url)
 
