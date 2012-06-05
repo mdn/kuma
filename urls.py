@@ -56,7 +56,7 @@ urlpatterns = patterns('',
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
 
     # Legacy MindTouch redirects.
-    #(r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
+    (r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
 )
 
 # Handle 404 and 500 errors
