@@ -717,7 +717,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     # If this document has a parent, then the edit is handled by the
     # translate view. Pass it on.
     if doc.parent:
-        return translate(request, doc.parent.slug, doc.locale, revision_id)
+        kw = {"document_path": doc.full_path}
+        if revision_id:
+            kw['revision_id'] = revision_id
+        url = reverse('wiki.translate', kwargs=kw)
+        return HttpResponseRedirect(url)
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
     else:
