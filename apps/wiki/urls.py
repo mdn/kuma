@@ -44,6 +44,8 @@ document_patterns = patterns('wiki.views',
         name='wiki.review_revision'),
     url(r'^\$compare$', 'compare_revisions', name='wiki.compare_revisions'),
     url(r'^\$translate$', 'translate', name='wiki.translate'),
+    url(r'^\$translate/(?P<revision_id>\d+)$', 'translate',
+        name='wiki.translate'),
     url(r'^\$locales$', 'select_locale', name='wiki.select_locale'),
     url(r'^\$json$', 'json_view', name='wiki.json_slug'),
 

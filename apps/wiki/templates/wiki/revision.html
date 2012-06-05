@@ -62,7 +62,7 @@
             </li>
           {% endif %}
           {% if user.is_authenticated() %}
-            <li><a href="{{ url('wiki.new_revision_based_on', document.slug, revision.id) }}">{{ _('Edit article based on this revision') }}</a></li>
+            <li><a href="{{ url('wiki.new_revision_based_on', document.full_path, revision.id) }}">{{ _('Edit article based on this revision') }}</a></li>
           {% endif %}
         </ul>
       </div>
