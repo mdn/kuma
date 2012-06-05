@@ -115,7 +115,7 @@ class TestDevMoHelpers(test_utils.TestCase):
 
     @attr('current')
     @mock.patch('devmo.helpers.check_devmo_local_page')
-    def test_devmo_url_midtouch_disabled(self, mock_check_devmo_local_page):
+    def test_devmo_url_mindtouch_disabled(self, mock_check_devmo_local_page):
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
 
@@ -132,11 +132,8 @@ class TestDevMoHelpers(test_utils.TestCase):
         req = test_utils.RequestFactory().get('/')
         context = {'request': req}
 
-        # NOTE: This is undesirable behavior, but expected. Since devmo_url can
-        # no longer consult MindTouch, it will punt and claim that /en/HTML is
-        # the proper path to the de locale page. See also, bug 759356
         req.locale = 'de'
-        eq_(devmo_url(context, localized_page), '/en/HTML')
+        eq_(devmo_url(context, localized_page), '/de/docs/HTML')
 
         ok_(not trap['was_called'])
         settings.DEKIWIKI_ENDPOINT = _old

@@ -998,21 +998,21 @@ class TranslateTests(TestCaseBase):
     def test_translate_GET_logged_out(self):
         """Try to create a translation while logged out."""
         self.client.logout()
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         response = self.client.get(translate_uri)
         eq_(302, response.status_code)
-        expected_url = '%s?next=%s' % (reverse('users.login', locale='en-US'),
+        expected_url = '%s?next=%s' % (reverse('users.login', locale='es'),
                                        translate_uri)
         ok_(expected_url in response['Location'])
 
     def test_translate_GET_with_perm(self):
         """HTTP GET to translate URL renders the form."""
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         response = self.client.get(translate_uri)
         eq_(200, response.status_code)
@@ -1025,18 +1025,18 @@ class TranslateTests(TestCaseBase):
         """HTTP GET to translate URL returns 400 when not localizable."""
         self.d.is_localizable = False
         self.d.save()
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         response = self.client.get(translate_uri)
         eq_(400, response.status_code)
 
     def test_invalid_document_form(self):
         """Make sure we handle invalid document form without a 500."""
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         data = _translation_data()
         data['slug'] = ''  # Invalid slug
@@ -1046,9 +1046,9 @@ class TranslateTests(TestCaseBase):
     def test_invalid_revision_form(self):
         """When creating a new translation, an invalid revision form shouldn't
         result in a new Document being created."""
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         data = _translation_data()
         data['content'] = ''  # Content is required
@@ -1064,9 +1064,9 @@ class TranslateTests(TestCaseBase):
         """Create the first translation of a doc to new locale."""
         get_current.return_value.domain = 'testserver'
 
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         data = _translation_data()
         response = self.client.post(translate_uri, data)
@@ -1110,9 +1110,9 @@ class TranslateTests(TestCaseBase):
         rev_enUS.save()
 
         # Verify the form renders with correct content
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         response = self.client.get(translate_uri)
         doc = pq(response.content)
@@ -1124,7 +1124,7 @@ class TranslateTests(TestCaseBase):
         data['content'] = 'loremo ipsumo doloro sito ameto nuevo'
         response = self.client.post(translate_uri, data)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/docs/es/un-test-articulo',
+        eq_('http://testserver/es/docs/un-test-articulo',
             response['location'])
         doc = Document.objects.get(slug=data['slug'])
         rev = doc.revisions.filter(content=data['content'])[0]
@@ -1149,9 +1149,9 @@ class TranslateTests(TestCaseBase):
         """Submitting the document form should update document. No new
         revisions should be created."""
         rev_es = self._create_and_approve_first_translation()
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         data = _translation_data()
         new_title = 'Un nuevo titulo'
@@ -1159,7 +1159,7 @@ class TranslateTests(TestCaseBase):
         data['form'] = 'doc'
         response = self.client.post(translate_uri, data)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/docs/es/un-test-articulo$edit'
+        eq_('http://testserver/es/docs/un-test-articulo$edit'
             '?opendescription=1',
             response['location'])
         revisions = rev_es.document.revisions.all()
@@ -1171,9 +1171,9 @@ class TranslateTests(TestCaseBase):
         """Submitting the revision form should create a new revision.
         And since Kuma docs default to approved, should update doc too."""
         rev_es = self._create_and_approve_first_translation()
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         data = _translation_data()
         new_title = 'Un nuevo titulo'
@@ -1181,7 +1181,7 @@ class TranslateTests(TestCaseBase):
         data['form'] = 'rev'
         response = self.client.post(translate_uri, data)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/docs/es/un-test-articulo',
+        eq_('http://testserver/es/docs/un-test-articulo',
             response['location'])
         revisions = rev_es.document.revisions.all()
         eq_(2, revisions.count())  # New revision is created
@@ -1192,9 +1192,9 @@ class TranslateTests(TestCaseBase):
         """If there are existing but unapproved translations, prefill
         content with latest."""
         self.test_first_translation_to_locale()
-        translate_path = 'es/' + self.d.slug
+        translate_path = self.d.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         response = self.client.get(translate_uri)
         doc = pq(response.content)
@@ -1213,9 +1213,9 @@ class TranslateTests(TestCaseBase):
         d = Document.objects.get(pk=base_rev.document.id)
         eq_(r, base_rev.document.current_revision)
 
-        translate_path = 'es/' + d.slug
+        translate_path = d.slug
         uri = urllib.quote(reverse('wiki.new_revision_based_on',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path,
                                                    base_rev.id]))
         response = self.client.get(uri)
@@ -1229,9 +1229,9 @@ class TranslateTests(TestCaseBase):
         en_revision = revision(is_approved=False, save=True, reviewer=user,
                                reviewed=datetime.now())
 
-        translate_path = 'es/' + en_revision.document.slug
+        translate_path = en_revision.document.slug
         translate_uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale='es',
                                              args=[translate_path]))
         response = self.client.get(translate_uri)
         doc = pq(response.content)
@@ -1246,9 +1246,9 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     form was first loaded, even if other revisions have been approved in the
     meantime."""
     if trans_lang:
-        translate_path = trans_lang + '/' + doc.slug
+        translate_path = doc.slug
         uri = urllib.quote(reverse('wiki.translate',
-                                             locale='en-US',
+                                             locale=trans_lang,
                                              args=[translate_path]))
     else:
         uri = reverse(view, locale=locale, args=[doc.full_path])

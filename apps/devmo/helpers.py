@@ -77,14 +77,18 @@ def devmo_url(context, path):
         Look for a wiki page in the current locale first,
         then default to given path
     """
+    if not settings.DEKIWIKI_ENDPOINT:
+        # HACK: If MindTouch is unavailable, skip the rest of this and lean on
+        # locale processing redirects to resolve things. Might be interesting
+        # to resolve some of the redirects first, and come up with the ultimate
+        # real URL. See bug 759356 for followup.
+        path = path.replace('/en', '')
+        return '/%s/docs%s' % (context['request'].locale, path)
+
     # HACK: If DEKIWIKI_MOCK is True, just skip hitting the API. This can speed
     # up a lot of tests without adding decorators, and should never be true in
     # production.
     if getattr(settings, 'DEKIWIKI_MOCK', False):
-        return path
-
-    if not settings.DEKIWIKI_ENDPOINT:
-        # If MindTouch is unavailable, skip the rest of this
         return path
 
     current_locale = context['request'].locale
