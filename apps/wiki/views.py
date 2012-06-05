@@ -633,10 +633,12 @@ def new_document(request):
 
     # If a parent ID is provided via GET, confirm it exists
     parent_slug = ''
+    parent_path = ''
     if initial_parent_id:
         try:
             parent_doc = Document.objects.get(pk=initial_parent_id)
             parent_slug = parent_doc.slug
+            parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
         except Document.DoesNotExist:
             parent_slug = ''
 
@@ -668,7 +670,8 @@ def new_document(request):
                              'parent_slug': parent_slug,
                              'parent_id': initial_parent_id,
                              'document_form': doc_form,
-                             'revision_form': rev_form})
+                             'revision_form': rev_form,
+                             'parent_path': parent_path})
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
@@ -885,12 +888,19 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
                     return HttpResponseRedirect(url)
 
+    parent_slug = '/'.join(slug_split)
+    parent_path = ''
+    if doc.parent_topic_id:
+        parent_doc = Document.objects.get(pk=doc.parent_topic_id)
+        parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
+
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'section_id': section_id,
                          'disclose_description': disclose_description,
                          'parent_slug': '/'.join(slug_split),
+                         'parent_path': parent_path,
                          'revision': rev,
                          'document': doc})
 
