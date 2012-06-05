@@ -13,7 +13,7 @@
 {% block extrahead %}
   {% if category %}
       <link rel="alternate" type="application/atom+xml" title="{{title}}" 
-          href="{{ url('wiki.feeds.recent_documents', format='atom', category=category) }}" />
+          href="{{ url('wiki.feeds.recent_documents_category', format='atom', category=category) }}" />
   {% elif tag %}
       <link rel="alternate" type="application/atom+xml" title="{{title}}" 
           href="{{ url('wiki.feeds.recent_documents', format='atom', tag=tag) }}" />

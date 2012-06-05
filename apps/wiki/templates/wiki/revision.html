@@ -27,11 +27,11 @@
             <mark>{{ _('Revision title:') }}</mark>
             <span>{{ revision.title }}</span>
           </li>
-          <li>
+          <li class="revision-id">
             <mark>{{ _('Revision id:') }}</mark>
             <span>{{ revision.id }}</span>
           </li>
-          <li>
+          <li class="revision-created">
             <mark>{{ _('Created:') }}</mark>
             <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
           </li>
@@ -39,12 +39,12 @@
             <mark>{{ _('Creator:') }}</mark>
             <span>{{ revision.creator }}</span>
           </li>
-          <li>
+          <li class="revision-is-reviewed">
             <mark>{{ _('Is reviewed?') }}</mark>
             <span>{{ revision.reviewed|yesno }}</span>
           </li>
           {% if revision.reviewed %}
-            <li>
+            <li class="revision-reviewed">
               <mark>{{ _('Reviewed:') }}</mark>
               <span>{{ datetimeformat(revision.reviewed, format='datetime') }}</span>
             </li>
@@ -52,7 +52,7 @@
               <mark>{{ _('Reviewed by:') }}</mark>
               <span>{{ revision.reviewer }}</span>
             </li>
-            <li>
+            <li class="revision-is-current">
               <mark>{{ _('Is approved?') }}</mark>
               <span>{{ revision.is_approved|yesno }}</span>
             </li>
