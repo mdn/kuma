@@ -779,7 +779,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						}
 					}
 				]
-			},
+			},/*
 			{
 				id : 'target',
 				label : linkLang.target,
@@ -999,7 +999,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						]
 					}
 				]
-			},
+			},*/
 			{
 				id: autoCompletePaneId,
 				label: gettext("Search"),
