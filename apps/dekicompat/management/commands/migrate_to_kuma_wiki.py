@@ -22,6 +22,7 @@ from pyquery import PyQuery as pq
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import MultipleObjectsReturned
 from django.core.management.base import (BaseCommand, NoArgsCommand,
                                          CommandError)
 import django.db
@@ -398,6 +399,9 @@ class Command(BaseCommand):
                 parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
                 for id in bc_ids:
                     doc = Document.objects.get(mindtouch_page_id=id)
+                    if doc.parent_topic:
+                        # Skip altering docs that already have parents.
+                        continue
                     doc.parent_topic = parent_doc
                     doc.save()
                     parent_doc = doc
@@ -729,15 +733,24 @@ class Command(BaseCommand):
 
         log.info("\t%s/%s (%s)" % (locale, slug, r['page_display_name']))
 
-        # Ensure that the document exists, and has the MindTouch page ID
-        doc, created = Document.objects.get_or_create(
-            locale=locale,
-            slug=slug,
-            title=r['page_display_name'],
-            defaults=dict(
-                category=CATEGORIES[0][0],
-            ))
-        doc.mindtouch_page_id = r['page_id']
+        try:
+            # Try to get just a single document for the page ID.
+            doc = Document.objects.get(mindtouch_page_id=r['page_id'])
+            created = False
+        except MultipleObjectsReturned:
+            # If there are multiples, then just get the first.
+            doc = Document.objects.filter(mindtouch_page_id=r['page_id'])[0]
+            created = False
+        except Document.DoesNotExist:
+            # Otherwise, try to create a new one.
+            doc, created = Document.objects.get_or_create(
+                locale=locale,
+                slug=slug,
+                title=r['page_display_name'],
+                defaults=dict(
+                    category=CATEGORIES[0][0],
+                ))
+            doc.mindtouch_page_id = r['page_id']
 
         if created:
             log.info("\t\tNew document created. (ID=%s)" % doc.pk)
