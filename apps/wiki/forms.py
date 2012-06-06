@@ -61,7 +61,7 @@ MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
 class DocumentForm(forms.ModelForm):
     """Form to create/edit a document."""
 
-    title = StrippedCharField(min_length=5, max_length=255,
+    title = StrippedCharField(min_length=1, max_length=255,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
                               label=_lazy(u'Title:'),
@@ -69,7 +69,7 @@ class DocumentForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=2, max_length=255,
+    slug = StrippedCharField(min_length=1, max_length=255,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
                              help_text=_lazy(u'Article URL'),
@@ -163,7 +163,7 @@ class DocumentForm(forms.ModelForm):
 class RevisionForm(forms.ModelForm):
     """Form to create new revisions."""
 
-    title = StrippedCharField(min_length=2, max_length=255,
+    title = StrippedCharField(min_length=1, max_length=255,
                               required=False,
                               widget=forms.TextInput(
                                   attrs={'placeholder': TITLE_PLACEHOLDER}),
@@ -172,7 +172,7 @@ class RevisionForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
-    slug = StrippedCharField(min_length=2, max_length=255,
+    slug = StrippedCharField(min_length=1, max_length=255,
                              required=False,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
