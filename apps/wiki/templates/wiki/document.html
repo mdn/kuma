@@ -35,10 +35,12 @@
         <a href="#" class="toggle">{{ _('Languages') }}</a>
         <ul>
           {% for translation in document.other_translations %}
-            <li><a rel="internal" href="{{ url('wiki.document', translation.locale + '/' + translation.slug) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
+            <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
           {% endfor %}
           
-          <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
+          {% if document.is_localizable %}
+            <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
+          {% endif %}
         </ul>
       </li>
     </ul>
@@ -48,7 +50,7 @@
   <nav class="crumbs" role="navigation">
     <ol>
       {% for doc in document.parents %}
-      <li class="crumb"><a href="{{ url('wiki.document', doc.locale+'/'+doc.slug) }}">{{ doc.title }}</a></li>
+        <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
       {% endfor %}
       <li class="crumb">{{ document.title }}</li>
     </ol>

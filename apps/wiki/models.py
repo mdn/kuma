@@ -203,10 +203,12 @@ def _inherited(parent_attr, direct_attr):
 
     """
     getter = lambda self: (getattr(self.parent, parent_attr)
-                               if self.parent
+                               if self.parent and 
+                                  self.parent.id != self.id
                            else getattr(self, direct_attr))
     setter = lambda self, val: (setattr(self.parent, parent_attr,
-                                        val) if self.parent else
+                                        val) if self.parent and 
+                                                self.parent.id != self.id else
                                 setattr(self, direct_attr, val))
     return property(getter, setter)
 
@@ -233,7 +235,10 @@ class DocumentManager(ManagerBase):
         if locale:
             docs = docs.filter(locale=locale)
         if category:
-            docs = docs.filter(category=category)
+            try:
+                docs = docs.filter(category=int(category))
+            except ValueError:
+                pass
         if tag:
             docs = docs.filter(tags__in=[tag])
         if tag_name:
@@ -472,7 +477,8 @@ class Document(NotificationsMixin, ModelBase):
             self.is_localizable = False
 
         # Can't save this translation if parent not localizable
-        if self.parent and not self.parent.is_localizable:
+        if (self.parent and self.parent.id != self.id and 
+                not self.parent.is_localizable):
             raise ValidationError('"%s": parent "%s" is not localizable.' % (
                                   unicode(self), unicode(self.parent)))
 
