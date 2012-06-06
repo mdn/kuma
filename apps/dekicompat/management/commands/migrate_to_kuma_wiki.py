@@ -29,6 +29,7 @@ import django.db
 from django.db import connections, transaction
 from django.db.utils import DatabaseError
 from django.utils import encoding, hashcompat
+from django.db.models import F
 
 import commonware.log
 
@@ -211,6 +212,7 @@ class Command(BaseCommand):
             if not options['skip_translations']:
                 rows = self.gather_pages()
                 self.make_languages_relationships(rows)
+                self.cleanup_circular_translations()
             if not options['skip_breadcrumbs']:
                 rows = self.gather_pages()
                 self.make_breadcrumb_relationships(rows)
@@ -509,6 +511,15 @@ class Command(BaseCommand):
                 log.info(u"\t\tUpdated %s documents with parent ID." % kc.rowcount)
                 transaction.commit()
 
+    def cleanup_circular_translations(self):
+        """In past migrations, some objects ended up pointing at themselves as
+        translation parents. Fix that."""
+        log.info("Cleaning up circular translations...")
+        for doc in Document.objects.filter(parent=F('id')):
+            log.info("\t%s" % doc)
+            doc.parent = None
+            doc.save()
+    
     @transaction.commit_on_success
     def wipe_documents(self):
         """Delete all documents"""
