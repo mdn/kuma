@@ -390,13 +390,22 @@ class Command(BaseCommand):
             if r['page_parent']:
                 bc_ids = self._add_parent_ids(r, bc_ids)
             log.info("Migrating breadcrumb ids: %s" % bc_ids)
-            self._migrate_necessary_mindtouch_pages(bc_ids)
-            parent_doc = Document.objects.get(mindtouch_page_id=bc_ids.pop(0))
-            for id in bc_ids:
-                doc = Document.objects.get(mindtouch_page_id=id)
-                doc.parent_topic = parent_doc
-                doc.save()
-                parent_doc = doc
+            if not self.options['all']:
+                # Don't bother migrating as needed, if --all was already done.
+                self._migrate_necessary_mindtouch_pages(bc_ids)
+            parent_id = bc_ids.pop(0)
+            try:
+                parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
+                for id in bc_ids:
+                    doc = Document.objects.get(mindtouch_page_id=id)
+                    doc.parent_topic = parent_doc
+                    doc.save()
+                    parent_doc = doc
+            except Document.DoesNotExist:
+                # Some pages are skipped by migration, regardless of whether
+                # another page calls it parent. Most of these cases look like
+                # boilerplate User:* pages
+                log.error("\tNo such document, %s" % parent_id)
 
     @transaction.commit_manually(using='default')
     def make_languages_relationships(self, rows):
