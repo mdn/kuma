@@ -383,33 +383,42 @@ class Command(BaseCommand):
     def make_breadcrumb_relationships(self, rows):
         """Set the topic_parent for Kuma pages using parent_id"""
         log.info("Building parent/child breadcrumb tree...")
+        seen_docs = set()
         for r in rows:
             if not r['page_text'].strip():
+                # Skip blank pages.
                 continue
-            bc_ids = []
-            bc_ids.insert(0, r['page_id'])
-            if r['page_parent']:
-                bc_ids = self._add_parent_ids(r, bc_ids)
-            log.info("Migrating breadcrumb ids: %s" % bc_ids)
+            if not r['page_parent']:
+                # If there's no parent here, skip along.
+                continue
+            bc_ids = self._add_parent_ids(r, [r['page_id']])
             if not self.options['all']:
                 # Don't bother migrating as needed, if --all was already done.
+                log.info("Migrating breadcrumb ids: %s" % bc_ids)
                 self._migrate_necessary_mindtouch_pages(bc_ids)
             parent_id = bc_ids.pop(0)
             try:
                 parent_doc = Document.objects.get(mindtouch_page_id=parent_id)
                 for id in bc_ids:
-                    doc = Document.objects.get(mindtouch_page_id=id)
-                    if doc.parent_topic:
-                        # Skip altering docs that already have parents.
-                        continue
-                    doc.parent_topic = parent_doc
-                    doc.save()
-                    parent_doc = doc
+                    try:
+                        doc = Document.objects.get(mindtouch_page_id=id)
+                        if not id in seen_docs:
+                            # Only bother updating this document if we haven't done
+                            # so already in this run.
+                            log.info("\t%s -> %s" % (parent_doc, doc))
+                            doc.parent_topic = parent_doc
+                            doc.save()
+                        seen_docs.add(id)
+                        parent_doc = doc
+                    except Document.DoesNotExist:
+                        # If a parent doc in the chain does not exist, just
+                        # ignore its absence and snip it out of the path.
+                        log.error("\t\t%s not found in chain" % id)
             except Document.DoesNotExist:
                 # Some pages are skipped by migration, regardless of whether
                 # another page calls it parent. Most of these cases look like
                 # boilerplate User:* pages
-                log.error("\tNo such document, %s" % parent_id)
+                log.error("\t\t%s not found in chain" % parent_id)
 
     @transaction.commit_manually(using='default')
     def make_languages_relationships(self, rows):
