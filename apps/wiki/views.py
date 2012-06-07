@@ -60,6 +60,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
 
+import logging
 
 log = logging.getLogger('k.wiki')
 
@@ -120,9 +121,16 @@ def process_document_path(func, reverse_name='wiki.document'):
 
         document_slug, document_locale = None, None
         if document_path:
+
             # Parse the document path into locale and slug.
             document_locale, document_slug, needs_redirect = (Document
                     .locale_and_slug_from_path(document_path, request))
+
+            # Add check for "local" URL, remove trailing slash
+            slug_length = len(document_slug)
+            if slug_length and document_slug[slug_length-1] == '/':
+                needs_redirect = True
+                document_slug = document_slug.rstrip('/')
 
             if needs_redirect:
                 # This catches old MindTouch locales, missing locale, and a few
@@ -185,24 +193,44 @@ def document(request, document_slug, document_locale):
             # nothing to show.
             fallback_reason = 'no_content'
     except Document.DoesNotExist:
-        # Look in default language:
-        doc = get_object_or_404(Document,
+
+        # The user may be trying to create a child page
+        # If a parent exists for this document,
+        # redirect them to the "Create" page
+        try:
+            parent_slug = document_slug.split('/')
+            new_child_slug = parent_slug.pop()
+            parent_slug = '/'.join(parent_slug)
+
+            parent_doc = Document.objects.get(locale=document_locale,
+                                              slug=parent_slug)
+
+            # Redirect to create page with parent ID
+            url = reverse('wiki.new_document', locale=document_locale)
+            url = urlparams(url, parent=parent_doc.id, slug=new_child_slug)
+            return HttpResponseRedirect(url)
+
+        except Document.DoesNotExist:
+
+            # Look in default language:
+            doc = get_object_or_404(Document,
                                 locale=settings.WIKI_DEFAULT_LANGUAGE,
                                 slug=document_slug)
-        # If there's a translation to the requested locale, take it:
-        translation = doc.translated_to(document_locale)
-        if translation and translation.current_revision:
-            url = translation.get_absolute_url()
-            url = urlparams(url, query_dict=request.GET)
-            return HttpResponseRedirect(url)
-        elif translation and doc.current_revision:
-            # Found a translation but its current_revision is None
-            # and OK to fall back to parent (parent is approved).
-            fallback_reason = 'translation_not_approved'
-        elif doc.current_revision:
-            # There is no translation
-            # and OK to fall back to parent (parent is approved).
-            fallback_reason = 'no_translation'
+
+            # If there's a translation to the requested locale, take it:
+            translation = doc.translated_to(document_locale)
+            if translation and translation.current_revision:
+                url = translation.get_absolute_url()
+                url = urlparams(url, query_dict=request.GET)
+                return HttpResponseRedirect(url)
+            elif translation and doc.current_revision:
+                # Found a translation but its current_revision is None
+                # and OK to fall back to parent (parent is approved).
+                fallback_reason = 'translation_not_approved'
+            elif doc.current_revision:
+                # There is no translation
+                # and OK to fall back to parent (parent is approved).
+                fallback_reason = 'no_translation'
 
     # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a
@@ -649,10 +677,12 @@ def new_document(request):
 
         if parent_slug:
             initial_data['parent_topic'] = initial_parent_id
-
-        if is_template:
+            
+        if initial_slug:
             initial_data['title'] = initial_slug
             initial_data['slug'] = initial_slug
+            
+        if is_template:
             review_tags = ('template',)
         else:
             review_tags = REVIEW_FLAG_TAGS_DEFAULT
