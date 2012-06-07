@@ -245,10 +245,6 @@ article #toc ul li {
     line-height: 1.5em;
 }
 
-#doc-pending-fallback {
-    margin: -1em 0 2em;
-}
-
 /* Blocks in the content that need margins. */
 #doc-content p,
 #doc-content pre,
@@ -345,7 +341,7 @@ article #toc ul li {
    padding: .5em 1em;
 }
 
-#doc-content .warning {
+#doc-content .warning, #page-content .warning {
    background: #FFF9DB url(../img/wiki/bkg.warning.png) repeat-y left top;
    color: #666458;
    padding: .5em 1em;
