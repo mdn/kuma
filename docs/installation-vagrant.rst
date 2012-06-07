@@ -3,10 +3,10 @@ Kuma in VirtualBox via Vagrant
 
 The core developers run Kuma in a `Vagrant`_-managed virtual machine to
 simplify `installation <installation.rst>`_.
-If you're on Mac OS X and looking for a quick way to get started, you
+If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
-This could possibly be made to work under Linux and Windows, but few have
+This could possibly be made to work under Windows, but few have
 tried. Bug reports and suggestions are welcome.
 The main barrier to Windows is that this Vagrantfile `uses NFS to share
 the current working directory`_ for performance reasons, and also Vagrant
