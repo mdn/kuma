@@ -59,11 +59,12 @@ instructions.
 Getting the Source
 ==================
 
-Grab the source from Github using::
+First, to follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
+fork the project into your own account. Then get the source using::
 
     mkdir mdn # you probably want to do this, since you'll have to create 
     cd mdn    # product_details_json/ as a sibling of kuma/ later.
-    git clone git://github.com/mozilla/kuma.git
+    git clone git://github.com/<your_account>/kuma.git
     cd kuma
     git submodule update --init --recursive
 

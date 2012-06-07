@@ -27,11 +27,12 @@ Getting up and running
        gem install vagrant
 
 .. _vagrantup.com: http://vagrantup.com/
-
--  Clone Kuma, update submodules (**don't** try to use the same working
+-  To follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
+   fork the project into your own account.
+-  Clone your fork of Kuma and update submodules (**don't** try to use the same working
    directory as for the local installation)::
 
-       git clone git://github.com/mozilla/kuma.git
+       git clone git://github.com/<your_account>/kuma.git
        cd kuma
        git submodule update --init --recursive
 
