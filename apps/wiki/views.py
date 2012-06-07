@@ -112,6 +112,12 @@ def process_document_path(func, reverse_name='wiki.document'):
     @wraps(func)
     def process(request, document_path=None, *args, **kwargs):
 
+        if kwargs.get('bypass_process_document_path', False):
+            # Support an option to bypass this decorator altogether, so one
+            # view can directly call another view.
+            del kwargs['bypass_process_document_path']
+            return func(request, document_path, *args, **kwargs)
+
         document_slug, document_locale = None, None
         if document_path:
             # Parse the document path into locale and slug.
@@ -207,12 +213,6 @@ def document(request, document_slug, document_locale):
     if redirect_url:
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
-        # We want to make sure the UI locale is preserved in this
-        # redirect, so that the locale middleware doesn't have to
-        # redirect again afterward. Simplest way is just to do what
-        # the locale middleware would be doing.
-        prefixer = Prefixer(request=request)
-        url = prefixer.fix(url)
         return HttpResponseRedirect(url)
 
     # Get "redirected from" doc if we were redirected:
@@ -582,6 +582,7 @@ def revision(request, document_slug, document_locale, revision_id):
 @require_GET
 def list_documents(request, category=None, tag=None):
     """List wiki documents."""
+    category_id = None
     if category:
         try:
             category_id = int(category)
@@ -596,7 +597,7 @@ def list_documents(request, category=None, tag=None):
     # stinks and is hard to customize.
     tag_obj = tag and get_object_or_404(DocumentTag, name=tag) or None
     docs = Document.objects.filter_for_list(locale=request.locale,
-                                             category=category,
+                                             category=category_id,
                                              tag=tag_obj)
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
@@ -716,8 +717,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
     # If this document has a parent, then the edit is handled by the
     # translate view. Pass it on.
-    if doc.parent:
-        return translate(request, doc.parent.slug, doc.locale, revision_id)
+    if doc.parent and doc.parent.id != doc.id:
+        return translate(request, doc.parent.slug, doc.locale, revision_id,
+                         bypass_process_document_path=True)
     if revision_id:
         rev = get_object_or_404(Revision, pk=revision_id, document=doc)
     else:
@@ -1135,6 +1137,13 @@ def translate(request, document_slug, document_locale, revision_id=None):
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
     user = request.user
 
+    if not revision_id:
+        # HACK: Seems weird, but sticking the translate-to locale in a query
+        # param is the best way to avoid the MindTouch-legacy locale
+        # redirection logic.
+        document_locale = request.REQUEST.get('tolocale',
+                                              settings.WIKI_DEFAULT_LANGUAGE)
+
     # Handle parent slug
     full_parent_slug = document_slug
     parent_slug_split = full_parent_slug.split('/')
@@ -1184,6 +1193,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             doc_initial = {'title': based_on_rev.title,
                            'slug': specific_slug}
         doc_form = DocumentForm(initial=doc_initial)
+
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': ''}
         if revision_id:
@@ -1220,7 +1230,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
                 if which_form == 'doc':
                     url = urlparams(reverse('wiki.edit_document',
-                                            args=[doc.full_path]),
+                                            args=[doc.full_path],
+                                            locale=doc.locale),
                                     opendescription=1)
                     return HttpResponseRedirect(url)
 
@@ -1242,8 +1253,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
             rev_form.instance.document = doc  # for rev_form.clean()
             if rev_form.is_valid() and not doc_form_invalid:
                 _save_rev_and_notify(rev_form, request.user, doc)
-                url = reverse('wiki.document',
-                              args=[doc.full_path])
+                url = reverse('wiki.document', args=[doc.full_path],
+                              locale=doc.locale)
                 return HttpResponseRedirect(url)
 
     return jingo.render(request, 'wiki/translate.html',
