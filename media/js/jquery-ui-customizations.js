@@ -2,19 +2,33 @@
 	Customizations to jQuery UI's autocomplete widget for better use in
 	"locking in" a value
 */
-(function() {
+(function($) {
 	
     // Create our own widget
     $.widget("ui.mozillaAutocomplete", $.ui.autocomplete, {
 		
 		/* Additional options */
-		// If we want to require a value be chosen, we should 
 		options: {
+			// Shows an "invalid" style if something good isn't picked
 			requireValidOption: false,
+			// Callback for selection;  true selection or "silent" selection
 			onSelect: function(selectionObj, isSilent){},
+			// Callback for when a selection is deselected via this plugin
 			onDeselect: function(oldSelection){},
+			// URL to hit to retrieve results
 			autocompleteURL: "",
-			styleElement: null
+			// Element to style and add "valid" and "invalid" classes to
+			styleElement: null,
+			// Minimum length of search before XHR is fired
+			minLength: 3,
+			// Method that can modify the request / data object 
+			buildRequest: function(req) {
+				return req;
+			},
+			// The data object property which will also be the label
+			labelField: "title",
+			// Allow overriding of "_renderItem" method
+			_renderItem: null
 		},
 		
 		// Create a cache - make this a 
@@ -26,6 +40,7 @@
 		// Store the last XHR
 		lastXHR: null,
 		
+		// Updates the styleElement (usually the INPUT)'s CSS styles
 		updateStyles: function(valid) {
 			var validClass = "ui-autocomplete-input-valid",
 				invalidClass = "ui-autocomplete-input-invalid";
@@ -48,8 +63,8 @@
 			}
 		},
 		
-		// Deselecter
-		deselect: function(fireCallback) {
+		// Deselection a current selection if exists
+		deselect: function() {
 			var oldSelection = this.selection;
 			
 			this.clear();
@@ -62,6 +77,7 @@
 			this.options.onDeselect(oldSelection);
 		},
 		
+		// Clears the stored selection and updates styling
 		clear: function() {
 			this.selection = null;
 			
@@ -102,43 +118,60 @@
 			// Decide which element gets styles!
 			this.styleElement = $(this.options.styleElement || this.element);
 			
-			
+			// Set the "source" method -- the one that executes searches or returns the filtered static array
 			var oldSource = this.source;
-			this.source = function(request, response) {
-				// Put the term in lowercase for caching purposes
-				var term = request.term.toLowerCase();
-				
-				// Modify the response;  if there are matches and they've blurred, pick the first
-				var originalResponse = response;
-				response = function(data) {
-					originalResponse.call(self, data);
+			this.source = $.isArray(this.options.source) ?
+				function(request, response) {
+					assignLabel(self.options.source);
+					response($.ui.autocomplete.filter(self.options.source, request.term));
+				} :
+				function(request, response) {
+					// Format the request
+					request = this.options.buildRequest(request);
 					
-					if(data.length && cache.keys[term]) {
-						// Set the selection
-						self.options.select.call(self, null, { item: cache.keys[term] }, true);
+					// Put the term in lowercase for caching purposes
+					var term = request.term.toLowerCase();
+					
+					// Modify the response;  if there are matches and they've blurred, pick the first
+					var originalResponse = response;
+					response = function(data) {
+						originalResponse.call(self, data);
+						
+						if(data.length && cache.keys[term]) {
+							// Set the selection
+							self.options.select.call(self, null, { item: cache.keys[term] }, true);
+						}
+						else {
+							// If no data, we know it's not good
+							self.deselect();
+						}
+					};
+					
+					// Search the cache for the results first;  if found, return it
+					if(cache.terms[term]) {
+						response(cache.terms[term]);
+						return;
 					}
-				};
-				
-				// Search the cache for the results first;  if found, return it
-				if(cache.terms[term]) {
-					response(cache.terms[term]);
-					return;
-				}
-				
-				// Trigger a new AJAX request to find the results
-				self.lastXHR = $.getJSON(self.options.autocompleteUrl, request, function(data, status, xhr) {
-					// Cache results
-					$.each(data, function() {
-						cache.keys[this.label.toLowerCase()] = this;
+					
+					// Trigger a new AJAX request to find the results
+					self.lastXHR = $.getJSON(self.options.autocompleteUrl, request, function(data, status, xhr) {
+						var labelField = self.options.labelField;
+						
+						// Message the data
+						assignLabel(data);
+						
+						// Cache results
+						$.each(data, function() {
+							cache.keys[this.label.toLowerCase()] = this;
+						});
+						cache.terms[term] = data;
+						
+						// Respond with data *if* this is the last request
+						if(xhr == self.lastXHR) {
+							response(data);
+						}
 					});
-					cache.terms[term] = data;
-					
-					// Respond with data *if* this is the last request
-					if(xhr == self.lastXHR) {
-						response(data);
-					}
-				});
-			};
+				};
 			
 			// Modify selection
 			var select = this.options.select;
@@ -187,12 +220,30 @@
 				if(lookup) {
 					// Add the valid class
 					self.updateStyles(true);
-					
 					// Set the selection
 					self.options.onSelect(self.selection, true);
 				}
 			});
+			
+			// If there's an initial value and we must match, we need search initially
+			if(self.options.requireValidOption && self.element.val()) {
+				self.search(self.element.val());
+			}
+			
+			// Utility function to message data before any of it is displayed to the user
+			function assignLabel(data) {
+				$.each(data, function() {
+					this.label = this[self.options.labelField];
+				});
+				return data;
+			}
+			
+			// If the user wants to override the "_renderItem" method, let them
+			if(self.options._renderItem) {
+				self._renderItem = self.options._renderItem;
+			}
+			
 		}
     });
 	
-})();
+})(jQuery);

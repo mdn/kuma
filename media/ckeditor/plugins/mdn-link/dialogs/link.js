@@ -9,8 +9,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	
 	// These vars are specific to the autocompleter
 	var autoCompleteCreated = false,
-		autoCompleteUrl = jQuery("#autosuggestTitleUrl").attr("data-url"),
-		autoCompletePaneId = "autosuggestpane",
+		autoCompleteUrl = jQuery('#autosuggestTitleUrl').attr('data-url'),
+		autoCompletePaneId = 'autosuggestpane',
 		autoCompleteTextbox,
 		autoCompleteSelection;
 	
@@ -405,7 +405,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	function autoCompleteSelect(dialog, submit) {
 		// Set the link in the "link" pane, put value into place
 		//dialog.selectPage("info");
-		dialog.setValueOf("info", "url", autoCompleteSelection.href);
+		dialog.setValueOf('info', 'url', autoCompleteSelection.href);
 		
 		// Trigger "OK"
 		if(submit) {
@@ -782,13 +782,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			},
 			{
 				id: autoCompletePaneId,
-				label: gettext("Search"),
-				title: gettext("Search"),
+				label: gettext('Search'),
+				title: gettext('Search'),
 				elements: [
 					{
 						id: 'articleName',
 						type: 'text',
-						label: gettext("Article Title"),
+						label: gettext('Article Title'),
 						setup: function() {
 							// This happens upon every open, so need to make sure we don't keep creating new autocompleters!
 							var dialog = this.getDialog(),
@@ -796,23 +796,29 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							
 							// Create widget if not done already
 							if(!autoCompleteTextbox) {
-								autoCompleteTextbox = this.getElement().getElementsByTag("input").$[0];
+								autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
 								
 								jQuery(autoCompleteTextbox).mozillaAutocomplete({
 									minLength: 1,
 									requireValidOption: true,
 									styleElement: autoCompleteTextbox.parentNode,
-									autocompleteUrl: jQuery("#autosuggestTitleUrl").attr("data-url"),
+									autocompleteUrl: autoCompleteUrl,
 									onSelect: function(item, isSilent) {
 										autoCompleteSelection = item;
 										// Select item
 										autoCompleteSelect(dialog, !isSilent);
+									},
+									_renderItem: function(ul, item) {
+										return $('<li>')
+											.attr('title', item.href)
+											.append($('<a>').text(item.label))
+											.appendTo(ul);
 									}
 								});
 							}
 							
 							// Clear out the the values so there aren't any problems
-							jQuery(autoCompleteTextbox).mozillaAutocomplete("clear");
+							jQuery(autoCompleteTextbox).mozillaAutocomplete('clear');
 						}
 					}
 				]
@@ -1238,15 +1244,15 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			for(var x = 0; x < count; x++) {
 				var tab = children.getItem(x);
 				(function(x) {
-					tab.on("click", function() {
+					tab.on('click', function() {
 						var tabId = dialog.definition.contents[x].id;
-						jQuery.cookie("wikiLinkTab", tabId); // Session cookie for now?
+						jQuery.cookie('wikiLinkTab', tabId); // Session cookie for now?
 						
 						// If the search tab, place the cursor
 						if(tabId == autoCompletePaneId) {
 							setTimeout(function() { autoCompleteTextbox.select(); }, 400);
 						}
-						else if(tabId == "info") {
+						else if(tabId == 'info') {
 							dialog.getContentElement( 'info', 'url' ).select();
 						}
 					});
@@ -1256,7 +1262,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		// Inital focus on 'url' field if link is of type URL.;  this fires whenever the dialog is opened
 		onFocus : function()
 		{
-			var tabToShow = jQuery.cookie("wikiLinkTab") || "info",
+			var tabToShow = jQuery.cookie('wikiLinkTab') || 'info',
 				selectedText = editor.getSelection().getSelectedText(),
 				selectedElement = editor.getSelection().getSelectedElement();
 			
@@ -1265,14 +1271,14 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				this.selectPage(autoCompletePaneId);
 				autoCompleteTextbox.select();
 				jQuery(autoCompleteTextbox).val(selectedText);
-				jQuery(autoCompleteTextbox).mozillaAutocomplete("deselect");
-				jQuery(autoCompleteTextbox).mozillaAutocomplete("search", selectedText);
+				jQuery(autoCompleteTextbox).mozillaAutocomplete('deselect');
+				jQuery(autoCompleteTextbox).mozillaAutocomplete('search', selectedText);
 				return;
 			}
 			
 			
 			// Always defaulting to the "info" screen *if* they are using a source element
-			if(tabToShow == "info" || this.hasSourceElement) {
+			if(tabToShow == 'info' || this.hasSourceElement) {
 				var linkType = this.getContentElement( 'info', 'linkType' ),
 						urlField;
 				if ( linkType && linkType.getValue() == 'url' )
