@@ -999,7 +999,9 @@ def autosuggest_documents(request):
     partial_title = request.GET.get('term', '')
 
     # TODO: isolate to just approved docs?
-    docs = Document.objects.filter(title__icontains=partial_title).filter(is_template=0)
+    docs = (Document.objects.filter(title__icontains=partial_title,
+                                    is_template=0,
+                                    locale=request.locale))
 
     docs_list = []
     for d in docs:
