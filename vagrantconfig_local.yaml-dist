@@ -3,7 +3,7 @@
 # On OS X and Linux you can use an NFS mount; virtualbox shared folders are slow.
 # see also: http://vagrantup.com/docs/nfs.html
 nfs: true
-gui: true
+gui: false
 
 # Add to /etc/hosts: 192.168.10.55 developer-dev.mozilla.org
 ip_address: 192.168.10.55

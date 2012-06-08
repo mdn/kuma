@@ -16,6 +16,8 @@ the kumascript service to enable wiki templates processing::
 
 ...and `celery <celery.rst>`_ to enable background task processing (such as sending
 the e-mail notifications).
+Note that, before running the kumascript, you need to install the node.js ``fibers`` module
+by running ``npm install fibers``.
 
 Log in
 ------

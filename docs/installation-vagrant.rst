@@ -3,10 +3,10 @@ Kuma in VirtualBox via Vagrant
 
 The core developers run Kuma in a `Vagrant`_-managed virtual machine to
 simplify `installation <installation.rst>`_.
-If you're on Mac OS X and looking for a quick way to get started, you
+If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
-This could possibly be made to work under Linux and Windows, but few have
+This could possibly be made to work under Windows, but few have
 tried. Bug reports and suggestions are welcome.
 The main barrier to Windows is that this Vagrantfile `uses NFS to share
 the current working directory`_ for performance reasons, and also Vagrant
@@ -27,11 +27,12 @@ Getting up and running
        gem install vagrant
 
 .. _vagrantup.com: http://vagrantup.com/
-
--  Clone Kuma, update submodules (**don't** try to use the same working
+-  To follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
+   fork the project into your own account.
+-  Clone your fork of Kuma and update submodules (**don't** try to use the same working
    directory as for the local installation)::
 
-       git clone git://github.com/mozilla/kuma.git
+       git clone git://github.com/<your_account>/kuma.git
        cd kuma
        git submodule update --init --recursive
 
