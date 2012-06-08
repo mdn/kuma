@@ -798,9 +798,10 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         if which_form == 'doc':
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
-
-                slug_split.append(post_data['slug'])
-                post_data['slug'] = '/'.join(slug_split)
+                
+                if 'slug' in post_data: # if a section edit
+                    slug_split.append(post_data['slug'])
+                    post_data['slug'] = '/'.join(slug_split)
 
                 post_data.update({'locale': document_locale})
                 doc_form = DocumentForm(post_data, instance=doc)
@@ -837,9 +838,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             else:
 
                 post_data = request.POST.copy()
-
-                slug_split.append(post_data['slug'])
-                post_data['slug'] = '/'.join(slug_split)
+                if 'slug' in post_data:
+                    slug_split.append(post_data['slug'])
+                    post_data['slug'] = '/'.join(slug_split)
 
                 rev_form = RevisionForm(post_data,
                                         is_iframe_target=is_iframe_target,
@@ -919,9 +920,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         url = '%s#%s' % (url, section_id)
 
                     return HttpResponseRedirect(url)
-
-    parent_slug = '/'.join(slug_split)
+                    
     parent_path = ''
+    if slug_split:
+        parent_slug = '/'.join(slug_split)
+        
     if doc.parent_topic_id:
         parent_doc = Document.objects.get(pk=doc.parent_topic_id)
         parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
