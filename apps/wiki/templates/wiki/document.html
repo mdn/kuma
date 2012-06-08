@@ -7,7 +7,12 @@
   {# If there is a parent doc, use it for translating. #}
   {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
 {% else %}
-  {% set translate_url = url('wiki.select_locale', document_path=document.full_path) %}
+  {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
+{% endif %}
+{% if fallback_reason == 'no_translation' %}
+  {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
+{% elif fallback_reason == 'translation_not_approved' %}
+  {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
 {% endif %}
 
 {% block extrahead %}
@@ -77,7 +82,13 @@
               <li class="page-watch"><a href="{{ url('wiki.document_watch', document.full_path) }}">{{_('Watch')}}</a></li>
             {% endif %}
             {% if document.allows_revision_by(request.user) %}
-              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path) }}">{{_('Edit')}}</a></li>
+              {% if fallback_reason %}
+                {% set edit_label = _('Edit English')  %}
+                <li class="page-edit"><a href="{{ help_link }}">{{ _('Translate') }}</a></li>
+              {% else %}
+                {% set edit_label = _('Edit')  %}
+              {% endif %}
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}">{{ edit_label }}</a></li>
             {% endif %}
         </ul>
         {% if kumascript_errors %}
@@ -119,6 +130,14 @@
           {% endif %}
         {% endfor %}
       {% endif %}
+      {% if fallback_reason %}
+        <div id="doc-pending-fallback" class="warning">
+          {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
+            Our volunteers haven't translated this article into {{ locale }} yet.
+            <a href="{{ help_link }}">Join us and help get the job done!</a>
+          {% endtrans %}
+        </div>
+      {% endif %}
 
       <div id="wikiArticle" class="page-content boxed">
         {% if toc_html %}
@@ -142,22 +161,8 @@
           {{ document_html|safe }}
         {% endif %}
       {% elif fallback_reason == 'no_translation' %}
-        <div id="doc-pending-fallback" class="warning-box">
-          {% trans help_link=url('wiki.document', 'localize-firefox-help'),
-                   locale=settings.LOCALES[request.locale].native %}
-            Our volunteers haven't translated this article into {{ locale }} yet.
-            <a href="{{ help_link }}">Join us and help get the job done!</a>
-          {% endtrans %}
-        </div>
         {{ document_html|safe }}
       {% elif fallback_reason == 'translation_not_approved' %}
-        <div id="doc-pending-fallback" class="warning-box">
-          {# L10n: This is shown for existing, never-approved translations #}
-          {% trans %}
-            Our volunteers are working on translating this article.
-            Until it's ready, maybe the English version can be of some help.
-          {% endtrans %}
-        </div>
         {{ document.parent.html|safe }}
       {% else %}
         {{ _("This article doesn't have approved content yet.") }}
