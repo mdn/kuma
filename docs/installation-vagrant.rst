@@ -47,13 +47,14 @@ Getting up and running
 
        vagrant up
 
--  If the process fails with an error, try running the Puppet setup
-   again::
+-  If the above process fails with an error, try running the Puppet setup
+   again with the following command::
 
        vagrant provision
 
    This often recovers from transient network issues or installation
-   ordering problems.
+   ordering problems. However, In some rare occasions you might need
+   to run this multiple times
 
 -  Add developer-dev.mozilla.org to /etc/hosts::
 
