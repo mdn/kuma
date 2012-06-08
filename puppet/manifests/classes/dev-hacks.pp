@@ -66,6 +66,11 @@ class dev_hacks {
                 owner => "root", group => "root", mode => 0644;
             }
 
+            file { "/etc/resolv.conf":
+                source => "/vagrant/puppet/files/etc/resolv.conf",
+                owner => "root", group => "root", mode => 0644;
+            }
+
             #file { "/etc/samba":
             #    ensure => directory,
             #    recurse => true,
