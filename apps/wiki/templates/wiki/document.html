@@ -1,6 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs, document_notifications %}
 {% block title %}{{ page_title(document.title) }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
@@ -8,7 +7,12 @@
   {# If there is a parent doc, use it for translating. #}
   {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
 {% else %}
-  {% set translate_url = url('wiki.select_locale', document_path=document.full_path) %}
+  {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
+{% endif %}
+{% if fallback_reason == 'no_translation' %}
+  {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
+{% elif fallback_reason == 'translation_not_approved' %}
+  {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
 {% endif %}
 
 {% block extrahead %}
@@ -27,22 +31,21 @@
         <a href="#page-tools" class="toggle">{{ _('This page') }}</a>
         <ul id="page-tools" class="sub-menu">
           <li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print page') }}</a></li>
-          <!-- <li><a href="">{{ _('Access privileges') }}</a></li> -->
-          <li><a href="{{ url('wiki.new_document')+'?slug='+document.slug+'/' }}">{{ _('New sub-page') }}</a></li>
-          <!--
-          <li><a href="">{{ _('Delete page') }}</a></li>
-          <li><a href="">{{ _('Pages that link') }}</a></li>
-          -->
+          {% if not document.is_template %}
+            <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
+          {% endif %}
         </ul>
       </li>
       <li class="menu">
         <a href="#" class="toggle">{{ _('Languages') }}</a>
         <ul>
           {% for translation in document.other_translations %}
-            <li><a rel="internal" href="{{ url('wiki.document', translation.locale + '/' + translation.slug) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
+            <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
           {% endfor %}
           
-          <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
+          {% if document.is_localizable %}
+            <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
+          {% endif %}
         </ul>
       </li>
     </ul>
@@ -51,14 +54,10 @@
   <!-- left crumb navigation -->
   <nav class="crumbs" role="navigation">
     <ol>
-      <!-- Sample... 
-      <li class="crumb-one"><a href="/">MDN</a></li>
-      <li class="crumb-two"><a href="/docs">Docs</a></li>
-      <li class="first"><a href="https://developer.mozilla.org/" class="deki-ns">MDN</a></li>
-      <li class="second"><a href="https://developer.mozilla.org/en" class="deki-ns">MDN</a></li>
-      <li><a href="https://developer.mozilla.org/en/HTML" class="deki-ns">HTML</a></li>
-      <li class="last"><a href="https://developer.mozilla.org/en/HTML/Using_the_application_cache" class="deki-ns current">Using the application cache</a></li> 
-      -->
+      {% for doc in document.parents %}
+        <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
+      {% endfor %}
+      <li class="crumb">{{ document.title }}</li>
     </ol>
   </nav>
   
@@ -82,8 +81,14 @@
             {% if request.user.is_authenticated() %}
               <li class="page-watch"><a href="{{ url('wiki.document_watch', document.full_path) }}">{{_('Watch')}}</a></li>
             {% endif %}
-            {% if document.allows_editing_by(request.user) or document.allows_revision_by(request.user) %}
-              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path) }}">{{_('Edit')}}</a></li>
+            {% if document.allows_revision_by(request.user) %}
+              {% if fallback_reason %}
+                {% set edit_label = _('Edit English')  %}
+                <li class="page-edit"><a href="{{ help_link }}">{{ _('Translate') }}</a></li>
+              {% else %}
+                {% set edit_label = _('Edit')  %}
+              {% endif %}
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}">{{ edit_label }}</a></li>
             {% endif %}
         </ul>
         {% if kumascript_errors %}
@@ -125,6 +130,14 @@
           {% endif %}
         {% endfor %}
       {% endif %}
+      {% if fallback_reason %}
+        <div id="doc-pending-fallback" class="warning">
+          {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
+            Our volunteers haven't translated this article into {{ locale }} yet.
+            <a href="{{ help_link }}">Join us and help get the job done!</a>
+          {% endtrans %}
+        </div>
+      {% endif %}
 
       <div id="wikiArticle" class="page-content boxed">
         {% if toc_html %}
@@ -148,22 +161,8 @@
           {{ document_html|safe }}
         {% endif %}
       {% elif fallback_reason == 'no_translation' %}
-        <div id="doc-pending-fallback" class="warning-box">
-          {% trans help_link=url('wiki.document', 'localize-firefox-help'),
-                   locale=settings.LOCALES[request.locale].native %}
-            Our volunteers haven't translated this article into {{ locale }} yet.
-            <a href="{{ help_link }}">Join us and help get the job done!</a>
-          {% endtrans %}
-        </div>
         {{ document_html|safe }}
       {% elif fallback_reason == 'translation_not_approved' %}
-        <div id="doc-pending-fallback" class="warning-box">
-          {# L10n: This is shown for existing, never-approved translations #}
-          {% trans %}
-            Our volunteers are working on translating this article.
-            Until it's ready, maybe the English version can be of some help.
-          {% endtrans %}
-        </div>
         {{ document.parent.html|safe }}
       {% else %}
         {{ _("This article doesn't have approved content yet.") }}
@@ -202,7 +201,7 @@
   #}
     </div>
    </div>
-    {% if document.allows_editing_by(request.user) %}
+    {% if document.allows_revision_by(request.user) and request.user.is_authenticated() %}
       <div class="edited-section-ui template">
         <a class="btn-save" href="#">{{ _('Save') }}</a>
         <a class="btn-cancel" href="#">{{ _('Cancel') }}</a>
@@ -220,29 +219,6 @@
 </section>
 {% endblock %}
 
-{% block side_top %}
-  {{ document_tabs(document, document.parent, user, 'article', settings) }}
-
-  {% if user.is_authenticated() and document %}
-    <div id="doc-watch">
-      {% if document.is_watched_by(user) %}
-        <form action="{{ url('wiki.document_unwatch', document.full_path) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="link-btn" value="{{ _('Turn off emails.') }}" />
-        </form>
-      {% else %}
-        <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
-          {{ csrf() }}
-          <input type="submit" class="link-btn" value="{{ _('Get emailed when this article changes.') }}" />
-        </form>
-      {% endif %}
-    </div>
-  {% endif %}
-{% endblock %}
-
 {% block side %}
   {% include 'wiki/includes/support_for_selectors.html' %}
-{% endblock %}
-
-{% block breadcrumbs %}
 {% endblock %}

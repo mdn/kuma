@@ -21,9 +21,10 @@ dump_selected_documents.short_description = "Dump selected documents as JSON"
 class DocumentAdmin(admin.ModelAdmin):
     actions = [dump_selected_documents, ]
     change_list_template = 'admin/wiki/document/change_list.html'
-    fields = ('title', 'slug', 'locale', 'parent', 'category')
+    fields = ('title', 'slug', 'locale', 'parent', 'parent_topic', 'category')
     list_display = ('id', 'locale', 'slug', 'title', 'is_localizable',
                     'modified', 'parent_document_link',
+                    'topic_parent_document_link',
                     'current_revision_link', 'related_revisions_link',)
     list_display_links = ('id', 'slug',)
     list_filter = ('is_template', 'is_localizable', 'category', 'locale')

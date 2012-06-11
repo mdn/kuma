@@ -56,7 +56,8 @@ DATABASE_ROUTERS = ('multidb.PinningMasterSlaveRouter',)
 SLAVE_DATABASES = []
 
 # Dekiwiki has a backend API. protocol://hostname:port
-DEKIWIKI_ENDPOINT = 'https://developer-stage9.mozilla.org'
+# If set to False, integration with MindTouch / Dekiwiki will be disabled
+DEKIWIKI_ENDPOINT = False # 'https://developer-stage9.mozilla.org'
 DEKIWIKI_APIKEY = 'SET IN LOCAL SETTINGS'
 DEKIWIKI_MOCK = True
 
@@ -391,7 +392,7 @@ INSTALLED_APPS = (
 
     # SUMO
     'users',
-    #ROOT_PACKAGE,
+    ROOT_PACKAGE,
     #'authority',
     #'timezones',
     #'access',
@@ -488,10 +489,10 @@ DOMAIN_METHODS = {
 #        ('**/templates/**.lhtml',
 #            'tower.management.commands.extract.extract_tower_template'),
 #    ],
-#    'javascript': [
-#        # We can't say **.js because that would dive into any libraries.
-#        ('media/js/*.js', 'javascript'),
-#    ],
+    'javascript': [
+        # We can't say **.js because that would dive into any libraries.
+        ('media/ckeditor/plugins/mdn-link/**.js', 'javascript'),
+    ],
 }
 
 # These domains will not be merged into messages.pot and will use separate PO
@@ -550,7 +551,11 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/styles/shCore.css',
             'syntaxhighlighter/styles/shThemeDefault.css',
             'css/jqueryui/jqueryui.css',
-            'css/jqueryui/jquery-ui-1.8.14.custom.css'
+            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'css/jqueryui/jquery-ui-customizations.css'
+        ),
+        'wiki-print': (
+            'css/wiki-print.css',
         ),
         'home': (
             'css/home.css',
@@ -660,6 +665,7 @@ MINIFY_BUNDLES = {
             'js/main.js',
             'js/jquery-1.4.2.min.js',
             'js/libs/jqueryui.min.js',
+            'js/jquery-ui-customizations.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
         ),

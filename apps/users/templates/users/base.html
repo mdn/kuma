@@ -3,31 +3,5 @@
 {% set styles = ('users',) %}
 {% set scripts = ('users',) %}
 
-{% block side_top %}
-  {% if not profile and user.is_authenticated() %}
-    {% set profile = user.get_profile() %}
-  {% endif %}
-  {% if profile %}
-    <nav id="doc-tabs">
-      <ul>{# If form is set, we're editing #}
-        <li{% if not form %} class="active"{% endif %}>
-          <a href="{{ profile_url(profile.user) }}">
-            {% if user == profile.user %}
-              {{ _('My profile') }}
-            {% else %}
-              {{ display_name(profile.user) }}
-            {% endif %}
-          </a>
-        </li>
-        {% if request.user == profile.user %}
-          <li{% if form %} class="active"{% endif %}>
-            <a href="{{ url('users.edit_profile') }}">{{ _('Edit my profile') }}</a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
-  {% endif %}
-{% endblock %}
-
 {% block breadcrumbs %}
 {% endblock %}

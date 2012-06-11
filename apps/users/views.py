@@ -1,3 +1,4 @@
+import logging
 import os
 import urlparse
 
@@ -60,6 +61,8 @@ def _verify_browserid(form, request):
 
 def _redirect_with_mindtouch_login(next_url, username, password=None):
     resp = HttpResponseRedirect(next_url)
+    if not settings.DEKIWIKI_ENDPOINT:
+        return resp
     authtoken = DekiUserBackend.mindtouch_login(username, password,
                                                 force=True)
     if authtoken:
@@ -156,9 +159,9 @@ def browserid_verify(request):
 
     # Look for first most recently used Django account, use if found.
     user = _get_latest_user_with_email(email)
-    # If no Django account, look for a MindTouch account by email.
-    # If found, auto-create the user.
-    if not user:
+    # If no Django account, look for a MindTouch account by email. But, only if
+    # there's a MindTouch API available. If found, auto-create the user.
+    if not user and settings.DEKIWIKI_ENDPOINT:
         deki_user = DekiUserBackend.get_deki_user_by_email(email)
         if deki_user:
             user = DekiUserBackend.get_or_create_user(deki_user)
@@ -211,8 +214,9 @@ def browserid_register(request):
                     user.save()
 
                     profile = UserProfile.objects.create(user=user)
-                    deki_user = DekiUserBackend.post_mindtouch_user(user)
-                    profile.deki_user_id = deki_user.id
+                    if settings.DEKIWIKI_ENDPOINT:
+                        deki_user = DekiUserBackend.post_mindtouch_user(user)
+                        profile.deki_user_id = deki_user.id
                     profile.save()
 
                     user.backend = 'django_browserid.auth.BrowserIDBackend'
@@ -412,7 +416,8 @@ def confirm_change_email(request, activation_key):
         # Update user's email.
         u.email = new_email
         u.save()
-        DekiUserBackend.put_mindtouch_user(u)
+        if settings.DEKIWIKI_ENDPOINT:
+            DekiUserBackend.put_mindtouch_user(u)
 
     # Delete the activation profile now, we don't need it anymore.
     email_change.delete()

@@ -1,6 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
 {% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -28,11 +27,11 @@
             <mark>{{ _('Revision title:') }}</mark>
             <span>{{ revision.title }}</span>
           </li>
-          <li>
+          <li class="revision-id">
             <mark>{{ _('Revision id:') }}</mark>
             <span>{{ revision.id }}</span>
           </li>
-          <li>
+          <li class="revision-created">
             <mark>{{ _('Created:') }}</mark>
             <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
           </li>
@@ -40,12 +39,12 @@
             <mark>{{ _('Creator:') }}</mark>
             <span>{{ revision.creator }}</span>
           </li>
-          <li>
+          <li class="revision-is-reviewed">
             <mark>{{ _('Is reviewed?') }}</mark>
             <span>{{ revision.reviewed|yesno }}</span>
           </li>
           {% if revision.reviewed %}
-            <li>
+            <li class="revision-reviewed">
               <mark>{{ _('Reviewed:') }}</mark>
               <span>{{ datetimeformat(revision.reviewed, format='datetime') }}</span>
             </li>
@@ -53,7 +52,7 @@
               <mark>{{ _('Reviewed by:') }}</mark>
               <span>{{ revision.reviewer }}</span>
             </li>
-            <li>
+            <li class="revision-is-current">
               <mark>{{ _('Is approved?') }}</mark>
               <span>{{ revision.is_approved|yesno }}</span>
             </li>
@@ -86,10 +85,6 @@
 </section>
 {% endblock %}
 
-
-{% block side_top %}
-  {{ document_tabs(document, document.parent, user, '', settings) }}
-{% endblock %}
 
 {% block side %}
   {% include 'wiki/includes/support_for_selectors.html' %}

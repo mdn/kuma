@@ -39,6 +39,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code',
     'dl', 'dt', 'dd', 'small', 'sup', 'u',
+    'nobr', 'dfn', 'caption',
     'img',
     'input',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
@@ -57,12 +58,12 @@ ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', ]
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['id', ]) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-    'address'
+    'tr', 'td', 'th', 'address'
 )))
 ALLOWED_STYLES = [
     'border', 'float', 'overflow', 'min-height', 'vertical-align',
@@ -73,7 +74,7 @@ ALLOWED_STYLES = [
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
-    '-moz-column-width', '-webkit-columns', 'columns',
+    '-moz-column-width', '-webkit-columns', 'columns', 'width',
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
@@ -176,7 +177,7 @@ RESERVED_SLUGS = (
     'tag/[^/]+'
 )
 
-DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = 'kuma:document-last-modified:%s'
+DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
 
 
 class UniqueCollision(Exception):
@@ -203,10 +204,12 @@ def _inherited(parent_attr, direct_attr):
 
     """
     getter = lambda self: (getattr(self.parent, parent_attr)
-                               if self.parent
+                               if self.parent and 
+                                  self.parent.id != self.id
                            else getattr(self, direct_attr))
     setter = lambda self, val: (setattr(self.parent, parent_attr,
-                                        val) if self.parent else
+                                        val) if self.parent and 
+                                                self.parent.id != self.id else
                                 setattr(self, direct_attr, val))
     return property(getter, setter)
 
@@ -233,7 +236,10 @@ class DocumentManager(ManagerBase):
         if locale:
             docs = docs.filter(locale=locale)
         if category:
-            docs = docs.filter(category=category)
+            try:
+                docs = docs.filter(category=int(category))
+            except ValueError:
+                pass
         if tag:
             docs = docs.filter(tags__in=[tag])
         if tag_name:
@@ -425,6 +431,11 @@ class Document(NotificationsMixin, ModelBase):
     def natural_key(self):
         return (self.locale, self.slug,)
 
+    @property
+    def natural_cache_key(self):
+        nk = u'/'.join(self.natural_key())
+        return hashlib.md5(nk.encode('utf8')).hexdigest()
+
     class Meta(object):
         unique_together = (('parent', 'locale'), ('slug', 'locale'))
         permissions = (
@@ -467,7 +478,8 @@ class Document(NotificationsMixin, ModelBase):
             self.is_localizable = False
 
         # Can't save this translation if parent not localizable
-        if self.parent and not self.parent.is_localizable:
+        if (self.parent and self.parent.id != self.id and 
+                not self.parent.is_localizable):
             raise ValidationError('"%s": parent "%s" is not localizable.' % (
                                   unicode(self), unicode(self.parent)))
 
@@ -549,8 +561,8 @@ class Document(NotificationsMixin, ModelBase):
         super(Document, self).save(*args, **kwargs)
 
         # Delete any cached last-modified timestamp.
-        path_hash = hashlib.md5(self.full_path).hexdigest()
-        cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % path_hash
+        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
+                     self.natural_cache_key)
         cache.delete(cache_key)
 
         # Make redirects if there's an approved revision and title or slug
@@ -620,8 +632,11 @@ class Document(NotificationsMixin, ModelBase):
 
     @property
     def full_path(self):
-        """The full path of a document consists of {locale}/{slug}"""
-        return '%s/%s' % (self.locale, self.slug)
+        """The full path of a document consists of {slug}"""
+        # TODO: See about removing this and all references to full_path? Once
+        # upon a time, this was composed of {locale}/{slug}, but bug 754534
+        # reverted that.
+        return self.slug
 
     def get_absolute_url(self, ui_locale=None):
         """Build the absolute URL to this document from its full path"""
@@ -632,36 +647,38 @@ class Document(NotificationsMixin, ModelBase):
 
     @staticmethod
     def locale_and_slug_from_path(path, request=None):
-        """Given a docs URL path, derive locale and slug for model lookup, and
-        a suggestion of whether this path deserves a redirect"""
+        """Given a proposed doc path, try to see if there's a legacy MindTouch
+        locale or even a modern Kuma domain in the path. If so, signal for a
+        redirect to a more canonical path. In any case, produce a locale and
+        slug derived from the given path."""
         locale, slug, needs_redirect = '', path, False
+        mdn_languages_lower = dict((x.lower(), x)
+                                   for x in settings.MDN_LANGUAGES)
 
-        # If there's a slash in the path, then the first segment is likely to
-        # be the locale.
+        # If there's a slash in the path, then the first segment could be a
+        # locale. And, that locale could even be a legacy MindTouch locale.
         if '/' in path:
-            locale, slug = path.split('/', 1)
+            maybe_locale, maybe_slug = path.split('/', 1)
+            l_locale = maybe_locale.lower()
 
-            if locale.lower() in settings.MT_TO_KUMA_LOCALE_MAP:
-                # If this looks like a MindTouch locale, remap it.
-                old_locale = locale
-                locale = settings.MT_TO_KUMA_LOCALE_MAP[locale.lower()]
-                # But, we only need a redirect if the locale actually changed.
-                needs_redirect = (locale != old_locale)
-
-            if locale not in settings.MDN_LANGUAGES:
-                # Oops, that doesn't look like a supported locale, so back out.
+            if l_locale in settings.MT_TO_KUMA_LOCALE_MAP:
+                # The first segment looks like a MindTouch locale, remap it.
                 needs_redirect = True
-                locale, slug = '', path
+                locale = settings.MT_TO_KUMA_LOCALE_MAP[l_locale]
+                slug = maybe_slug
 
-        # No locale by this point? Go with the locale detected from user agent
-        # if we have a request.
+            elif l_locale in mdn_languages_lower:
+                # The first segment looks like an MDN locale, redirect.
+                needs_redirect = True
+                locale = mdn_languages_lower[l_locale]
+                slug = maybe_slug
+
+        # No locale yet? Try the locale detected by the request.
         if locale == '' and request:
-            needs_redirect = True
             locale = request.locale
 
-        # Still no locale? Go with the site default locale.
+        # Still no locale? Probably no request. Go with the site default.
         if locale == '':
-            needs_redirect = True
             locale = getattr(settings, 'WIKI_DEFAULT_LANGUAGE', 'en-US')
 
         return (locale, slug, needs_redirect)
@@ -864,15 +881,25 @@ class Document(NotificationsMixin, ModelBase):
     current_revision_link.short_description = "Current Revision"
 
     def parent_document_link(self):
-        """HTML link to the parent document for admin change list"""
+        """HTML link to the topical parent document for admin change list"""
         if not self.parent:
             return "None"
         url = reverse('admin:wiki_document_change', args=[self.parent.id])
         return '<a href="%s">Document #%s</a>' % (url, self.parent.id)
 
     parent_document_link.allow_tags = True
-    parent_document_link.short_description = "Parent Document"
+    parent_document_link.short_description = "Translation Parent"
 
+    def topic_parent_document_link(self):
+        """HTML link to the parent document for admin change list"""
+        if not self.parent_topic:
+            return "None"
+        url = reverse('admin:wiki_document_change',
+                      args=[self.parent_topic.id])
+        return '<a href="%s">Document #%s</a>' % (url, self.parent_topic.id)
+
+    topic_parent_document_link.allow_tags = True
+    topic_parent_document_link.short_description = "Parent Document"
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""

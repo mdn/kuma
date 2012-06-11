@@ -73,7 +73,7 @@ class LocaleRedirectTests(TestCaseBase):
         the requested locale, the translation should be served."""
         en_doc, de_doc = self._create_en_and_de_docs()
         response = self.client.get(reverse('wiki.document',
-                                           args=['de/%s' % en_doc.slug],
+                                           args=(en_doc.slug,),
                                            locale='de'),
                                    follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url())
@@ -82,7 +82,7 @@ class LocaleRedirectTests(TestCaseBase):
         """The query parameters should be passed along to the redirect."""
 
         en_doc, de_doc = self._create_en_and_de_docs()
-        url = reverse('wiki.document', args=['de/%s' % en_doc.slug], locale='de')
+        url = reverse('wiki.document', args=[en_doc.slug], locale='de')
         response = self.client.get(url + '?x=y&x=z', follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url() + '?x=y&x=z')
 
@@ -96,37 +96,19 @@ class LocaleRedirectTests(TestCaseBase):
         de_rev.save()
         return en_doc, de_doc
 
-    def test_ui_locale(self):
-        """Bug 723242: make sure wiki redirects insert the correct UI
-        locale in the URL, so that the locale middleware doesn't have
-        to redirect again."""
-        en = settings.WIKI_DEFAULT_LANGUAGE
-        target = document(title='Locale Redirect Test Target',
-                          html='<p>Locale Redirect Test Target</p>',
-                          locale=en)
-        target.save()
-        source = document(title='Locale Redirect Test Document',
-                          html='REDIRECT <a class="redirect" href="/docs/%s/locale-redirect-test-target/">Locale Redirect Test Target</a>' % en,
-                          locale=en)
-        source.save()
-        url = reverse('wiki.document', args=['%s/%s' % (source.locale, source.slug)], locale=en)
-        response = self.client.get(url, follow=False)
-        self.assertEqual(response.status_code, 302)
-        assert ('/%s/docs/' % en) in response['Location']
-
 
 class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_json_view(self):
-        url = reverse('wiki.json', force_locale=True)
+        url = reverse('wiki.json', locale='en-US')
 
         resp = self.client.get(url, {'title': 'an article title'})
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('article-title', data['slug'])
 
-        url = reverse('wiki.json_slug', args=('en-US/article-title',), force_locale=True)
+        url = reverse('wiki.json_slug', args=('article-title',), locale='en-US')
         resp = self.client.get(url)
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
@@ -188,9 +170,8 @@ class PermissionTests(TestCaseBase):
                         url = reverse('wiki.new_document', locale=locale)
                         resp = self.client.post(url, data, follow=False)
                     else:
-                        path = '%s/%s' % (locale, slug)
                         data['form'] = 'rev'
-                        url = reverse('wiki.edit_document', args=(path,),
+                        url = reverse('wiki.edit_document', args=(slug,),
                                       locale=locale)
                         resp = self.client.post(url, data, follow=False)
 
@@ -214,12 +195,12 @@ class ConditionalGetTests(TestCaseBase):
         
         self.d, self.r = doc_rev()
         self.url = reverse('wiki.document', 
-                           args=['%s/%s' % (self.d.locale, self.d.slug)],
+                           args=[self.d.slug],
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         # There should be no last-modified date cached for this document yet.
         cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     hashlib.md5(self.d.full_path).hexdigest())
+                     self.d.natural_cache_key)
         ok_(not cache.get(cache_key))
 
         # Now, try a request, and ensure that the last-modified header is present.
@@ -275,8 +256,8 @@ class KumascriptIntegrationTests(TestCaseBase):
         self.d, self.r = doc_rev()
         self.d.tags.set('foo', 'bar', 'baz')
         self.url = reverse('wiki.document', 
-                           args=['%s/%s' % (self.d.locale, self.d.slug)],
-                           locale=settings.WIKI_DEFAULT_LANGUAGE)
+                           args=(self.d.slug,),
+                           locale=self.d.locale)
 
         # NOTE: We could do this instead of using the @patch decorator over and
         # over, but it requires an upgrade of mock to 0.8.0
@@ -609,7 +590,7 @@ class DocumentEditingTests(TestCaseBase):
             'slug': exist_slug
         })
         resp = client.post(reverse('wiki.edit_document', 
-                                   args=['en-US/some-new-title']),
+                                   args=['some-new-title']),
                            data)
         eq_(200, resp.status_code)
         p = pq(resp.content)
@@ -642,8 +623,7 @@ class DocumentEditingTests(TestCaseBase):
                      'title': changed_title, 
                      'slug': changed_slug})
         resp = client.post(reverse('wiki.edit_document',
-                                    args=['%s/%s' % (data['locale'],
-                                                     exist_slug)]), 
+                                    args=[exist_slug]), 
                            data)
         eq_(302, resp.status_code)
 
@@ -652,8 +632,7 @@ class DocumentEditingTests(TestCaseBase):
                      'title': exist_title, 
                      'slug': exist_slug})
         resp = client.post(reverse('wiki.edit_document',
-                                    args=["%s/%s" % (data['locale'],
-                                                     changed_slug)]), 
+                                    args=[changed_slug]), 
                            data)
         eq_(302, resp.status_code)
 
@@ -666,13 +645,13 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'firefox_versions': [1, 2, 3],
                      'operating_systems': [1, 3],
                      'form': 'doc'})
-        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
+        client.post(reverse('wiki.edit_document', args=[d.slug]), data)
         eq_(3, d.firefox_versions.count())
         eq_(2, d.operating_systems.count())
         data.update({'firefox_versions': [1, 2],
                      'operating_systems': [2],
                      'form': 'doc'})
-        client.post(reverse('wiki.edit_document', args=[data['full_path']]), data)
+        client.post(reverse('wiki.edit_document', args=[data['slug']]), data)
         eq_(2, d.firefox_versions.count())
         eq_(1, d.operating_systems.count())
 
@@ -686,8 +665,7 @@ class DocumentEditingTests(TestCaseBase):
         data['slug'] = 'valid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response,
-                reverse('wiki.document', args=['%s/%s' %
-                                               (data['locale'], data['slug'])],
+                reverse('wiki.document', args=[data['slug']],
                                          locale='en-US'))
 
         # Slashes should be fine
@@ -695,8 +673,7 @@ class DocumentEditingTests(TestCaseBase):
         data['slug'] = 'va/lid'
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response,
-                reverse('wiki.document', args=['%s/%s' % 
-                                               (data['locale'], data['slug'])],
+                reverse('wiki.document', args=[data['slug']],
                                          locale='en-US'))
 
         # Dollar sign is reserved for verbs
@@ -746,10 +723,6 @@ class DocumentEditingTests(TestCaseBase):
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
         localization is OK."""
-
-        # FIXME: This test seems broken
-        raise SkipTest()
-
         self.client.login(username='admin', password='testpass')
         en_r = revision(save=True)
         fr_d = document(parent=en_r.document, locale='fr', save=True)
@@ -767,7 +740,7 @@ class DocumentEditingTests(TestCaseBase):
         data = new_document_data()
         locale = data['locale']
         slug = data['slug']
-        path = '%s/%s' % (locale, slug)
+        path = slug
         ts1 = ('JavaScript', 'AJAX', 'DOM')
         ts2 = ('XML', 'JSON')
 
@@ -1140,6 +1113,7 @@ class SectionEditingResourceTests(TestCaseBase):
         response = client.post('%s?section=s2&raw=true' %
                                reverse('wiki.edit_document', args=[d.full_path]),
                                {"form": "rev",
+                               'slug': '',
                                 "content": replace},
                                follow=True)
         eq_(normalize_html(expected), 
@@ -1204,7 +1178,8 @@ class SectionEditingResourceTests(TestCaseBase):
         """
         data = {
             'form': 'rev',
-            'content': rev.content
+            'content': rev.content,
+            'slug': ''
         }
 
         # Edit #1 starts...
@@ -1304,6 +1279,7 @@ class SectionEditingResourceTests(TestCaseBase):
         data.update({
             'form': 'rev',
             'content': replace_2,
+            'slug': '',
             'current_rev': rev_id2
         })
         resp = client.post('%s?section=s2&raw=true' %
@@ -1397,25 +1373,36 @@ class MindTouchRedirectTests(TestCaseBase):
 
     namespace_urls = (
         # One for each namespace.
-        {'mindtouch': '/Help:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help:Foo'},
-        {'mindtouch': '/Help_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Help_talk:Foo'},
-        {'mindtouch': '/Project:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project:Foo'},
-        {'mindtouch': '/Project_talk:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Project_talk:Foo'},
-        {'mindtouch': '/Special:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Special:Foo'},
-        {'mindtouch': '/Talk:en/Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Talk:Foo'},
-        {'mindtouch': '/Template:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/Template:Foo'},
-        {'mindtouch': '/User:Foo', 'kuma': 'http://testserver/en-US/docs/en-US/User:Foo'},
+        {'mindtouch': '/Help:Foo',
+         'kuma': 'http://testserver/en-US/docs/Help:Foo'},
+        {'mindtouch': '/Help_talk:Foo',
+         'kuma': 'http://testserver/en-US/docs/Help_talk:Foo'},
+        {'mindtouch': '/Project:Foo',
+         'kuma': 'http://testserver/en-US/docs/Project:Foo'},
+        {'mindtouch': '/Project_talk:Foo',
+         'kuma': 'http://testserver/en-US/docs/Project_talk:Foo'},
+        {'mindtouch': '/Special:Foo',
+         'kuma': 'http://testserver/en-US/docs/Special:Foo'},
+        {'mindtouch': '/Talk:en/Foo',
+         'kuma': 'http://testserver/en-US/docs/Talk:Foo'},
+        {'mindtouch': '/Template:Foo',
+         'kuma': 'http://testserver/en-US/docs/Template:Foo'},
+        {'mindtouch': '/User:Foo',
+         'kuma': 'http://testserver/en-US/docs/User:Foo'},
     )
 
     documents = (
-        {'title': 'XHTML', 'mt_locale': 'cn', 'kuma_locale': 'zh-CN', 'expected': '/en-US/docs/zh-CN/XHTML'},
-        {'title': 'JavaScript', 'mt_locale': 'zh_cn', 'kuma_locale': 'zh-CN', 'expected': '/en-US/docs/zh-CN/JavaScript'},
-        {'title': 'XHTML6', 'mt_locale': 'zh_tw', 'kuma_locale': 'zh-CN', 'expected': '/en-US/docs/zh-TW/XHTML6'},
-        {'title': 'HTML7', 'mt_locale': 'fr', 'kuma_locale': 'fr', 'expected': '/fr/docs/fr/HTML7'},
+        {'title': 'XHTML', 'mt_locale': 'cn', 'kuma_locale': 'zh-CN',
+         'expected': '/zh-CN/docs/XHTML'},
+        {'title': 'JavaScript', 'mt_locale': 'zh_cn', 'kuma_locale': 'zh-CN',
+         'expected': '/zh-CN/docs/JavaScript'},
+        {'title': 'XHTML6', 'mt_locale': 'zh_tw', 'kuma_locale': 'zh-CN',
+         'expected': '/zh-TW/docs/XHTML6'},
+        {'title': 'HTML7', 'mt_locale': 'fr', 'kuma_locale': 'fr',
+         'expected': '/fr/docs/HTML7'},
     )
 
     def test_namespace_urls(self):
-        raise SkipTest()
         new_doc = document()
         new_doc.title = 'User:Foo'
         new_doc.slug = 'User:Foo'
@@ -1426,7 +1413,6 @@ class MindTouchRedirectTests(TestCaseBase):
             eq_(namespace_test['kuma'], resp['Location'])
 
     def test_document_urls(self):
-        raise SkipTest()
         for doc in self.documents:
             d = document()
             d.title = doc['title']

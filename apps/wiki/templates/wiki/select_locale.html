@@ -1,6 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('Select language | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
@@ -16,7 +15,7 @@
     <ul class="locales">
       {% for locale in settings.LANGUAGE_CHOICES %}
         {% if locale[0] != settings.WIKI_DEFAULT_LANGUAGE %}
-          <li><a href="{{ url('wiki.translate', document_path=locale[0]+'/'+document.slug) }}">{{ locale[1] }} ({{ locale[0] }})</a></li>
+          <li><a href="{{ url('wiki.translate', document_path=document.full_path)|urlparams(tolocale=locale[0]) }}">{{ locale[1] }} ({{ locale[0] }})</a></li>
         {% endif %}
       {% endfor %}
     </ul>
@@ -24,8 +23,4 @@
     </div>
    </div>
 </section>
-{% endblock %}
-
-{% block side_top %}
-  {{ document_tabs(document, document.parent, user, 'localize', settings) }}
 {% endblock %}

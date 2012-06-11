@@ -3,10 +3,12 @@ from os.path import dirname
 from datetime import datetime
 
 from mock import patch
+from nose import SkipTest
 from nose.tools import assert_equal, eq_, ok_
 from nose.plugins.attrib import attr
 import test_utils
 
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
@@ -145,6 +147,10 @@ class TestUserProfile(test_utils.TestCase):
     @attr('docs_activity')
     @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
     def test_user_docs_activity(self, fetch_user_feed):
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Skip this, if MindTouch API not available.
+            raise SkipTest()
+
         fetch_user_feed.return_value = (open(USER_DOCS_ACTIVITY_FEED_XML, 'r')
                                         .read())
         feed = UserDocsActivityFeed(username="Sheppy")
@@ -177,6 +183,10 @@ class TestUserProfile(test_utils.TestCase):
         fetch_user_feed.return_value = """
             THIS IS NOT EVEN XML, SO BROKEN
         """
+        if not settings.DEKIWIKI_ENDPOINT:
+            # Skip this, if MindTouch API not available.
+            raise SkipTest()
+
         try:
             feed = UserDocsActivityFeed(username="Sheppy")
             items = feed.items

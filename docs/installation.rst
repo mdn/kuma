@@ -2,6 +2,10 @@
 Installation
 ============
 
+This page describes the manual installation procedure. If you can, you
+should set up the `vagrant-managed virtual machine <installation-vagrant.rst>`_
+instead.
+
 Requirements
 ============
 
@@ -55,11 +59,12 @@ instructions.
 Getting the Source
 ==================
 
-Grab the source from Github using::
+First, to follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
+fork the project into your own account. Then get the source using::
 
     mkdir mdn # you probably want to do this, since you'll have to create 
     cd mdn    # product_details_json/ as a sibling of kuma/ later.
-    git clone git://github.com/mozilla/kuma.git
+    git clone git://github.com/<your_account>/kuma.git
     cd kuma
     git submodule update --init --recursive
 
@@ -154,7 +159,7 @@ set your ``settings_local.py`` with the following::
     SERVE_MEDIA = True
 
 Configure BrowserID
------
+-------------------
 
 Add the following to ``settings_local.py`` so that BrowserID works with the
 development instance::
@@ -166,18 +171,8 @@ development instance::
     SESSION_COOKIE_SECURE = False # needed if the server is running on http://
     SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-The `SESSION_EXPIRE_AT_BROWSER_CLOSE` setting is not strictly necessary, but
+The ``SESSION_EXPIRE_AT_BROWSER_CLOSE`` setting is not strictly necessary, but
 it's convenient for development.
-
-Enable kumawiki in waffle
------
-
-We're using `django-waffle <https://github.com/jsocol/django-waffle>`_ to disable
-features not yet ready for production. To test out the wiki, you'll have to enable
-it first. To do so, open the `django admin interface <http://localhost:8000/admin/>`_
-and add a ``kumawiki`` flag.
-
-Note that features disabled by a flag will show up as a 404 error.
 
 Testing it Out
 ==============
@@ -186,35 +181,15 @@ To start the dev server, run ``./manage.py runserver``, then open up
 ``http://localhost:8000``. If everything's working, you should see
 the MDN home page!
 
-You might need to set ``LC_CTYPE`` if you're on Mac OS X until `bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::
+You might need to first set ``LC_CTYPE`` if you're on Mac OS X until
+`bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::
 
     export LC_CTYPE=en_US
 
+What’s next?
+============
 
-Running the Tests
------------------
-
-A great way to check that everything really is working is to run the test
-suite. You'll need to add an extra grant in MySQL for your database user::
-
-    GRANT ALL ON test_NAME.* TO USER@localhost;
-
-Where ``NAME`` and ``USER`` are the same as the values in your database
-configuration.
-
-The test suite will create and use this database, to keep any data in your
-development database safe from tests.
-
-Running the test suite is easy::
-
-    ./manage.py test -s --noinput --logging-clear-handlers
-
-Note that this will try (and fail) to run tests that depend on apps disabled
-via ``INSTALLED_APPS``. You should run a subset of tests specified in
-`scripts/build.sh <../scripts/build.sh>`_, at the bottom of the script.
-
-For more information, see the `test documentation <tests.rst>`_.
-
+See `development <development.rst>`_ for further instructions.
 
 Last Steps
 ==========

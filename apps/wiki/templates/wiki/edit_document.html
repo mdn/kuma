@@ -1,7 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% set title = _('{document} | Edit Article')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {# TODO: Change KB url to landing page when we have one #}
@@ -105,9 +104,15 @@
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 <li><label>{{_('Slug:')}}</label> {{ revision_form.slug | safe }}</li>
-                <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
-                  {{ revision_form.show_toc | safe }}
-                </li>
+                {% if parent_slug %}
+                  <li><label>{{_('Parent:')}}</label> 
+                    <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
+                {% endif %}
+                {% if not document.is_template %}
+                  <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
+                    {{ revision_form.show_toc | safe }}
+                  </li>
+                {% endif %}
             </ul>
           {% endif %}
 
@@ -126,6 +131,8 @@
             {% endif %}
             <input type="hidden" name="form" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
+            
+            {% include 'wiki/includes/title_autosuggest_url.html' %}
 
             <section class="page-meta">
               {% set tags = document.tags.all() %}
@@ -147,10 +154,6 @@
     </div>
    </div>
 </section>
-{% endblock %}
-
-{% block side_top %}
-  {{ document_tabs(document, document.parent, user, 'edit', settings) }}
 {% endblock %}
 
 {% block site_js %}

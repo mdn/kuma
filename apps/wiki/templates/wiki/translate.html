@@ -1,7 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
-{% from "wiki/includes/sidebar_modules.html" import document_tabs %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -31,7 +30,7 @@
         <ul id="change-locale" class="sub-menu" data-target="#change-locale-link" data-modal="true" data-close-on-out-click="true">
         {% for lcl in settings.LANGUAGE_CHOICES %}
           {% if lcl[0] not in [settings.WIKI_DEFAULT_LANGUAGE, locale] %}
-            <li><a href="{{ url('wiki.translate', document_path=lcl[0]+'/'+parent.slug) }}" title="{{ lcl[1] }}">{{ lcl[0] }}</a></li>
+            <li><a href="{{ url('wiki.translate', document_path=parent.full_path)|urlparams(tolocale=lcl[0]) }}">{{ lcl[1] }} ({{ lcl[0] }})</a></li>
           {% endif %}
         {% endfor %}
         </ul>
@@ -62,13 +61,24 @@
               <li>
                 <dl class="approved">
                   <dt>{{ _('Slug:') }}</dt>
-                  <dd>{{ parent.slug }}</dd>
+                  <dd>{{ specific_slug }}</dd>
                 </dl>
                 <dl class="localized">
                   <dt><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></dt>
                   <dd>{{ document_form.slug|safe }}</dd>
                 </dl>
               </li>
+              {% if parent_slug %}
+              <li>
+                <dl class="approved">
+                  <dt>{{ _('Parent:') }}</dt>
+                  <dd>{{ parent_slug }}</dd>
+                </dl>
+                <dl class="localized">
+                  &nbsp;
+                </dl>
+              </li>
+              {% endif %}
             </ul>
       </details>
     {% endif %}
@@ -138,10 +148,6 @@
     </div>
    </div>
 </section>
-{% endblock %}
-
-{% block side_top %}
-  {{ document_tabs(document, parent, user, 'localize', settings) }}
 {% endblock %}
 
 {% block js %}

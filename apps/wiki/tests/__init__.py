@@ -165,3 +165,14 @@ def create_template_test_users():
         superuser.save()
 
     return (perms, groups, users, superuser)
+
+
+def create_topical_parents_docs():
+    d1 = document(title='HTML7')
+    d1.save()
+
+    d2 = document(title='Smellovision')
+    d2.parent_topic = d1
+    d2.save()
+    return d1, d2
+

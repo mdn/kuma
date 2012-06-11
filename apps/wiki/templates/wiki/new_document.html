@@ -24,12 +24,19 @@
         <ul class="metadata">
           <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
           <li><label>{{_('Slug:')}}</label> {{ document_form.slug | safe }}</li>
-          <li><label>{{_('Parent:')}}</label> {{ document_form.parent_topic | safe }}</li>
+          {% if parent_slug and not is_template %}
+            <li><label>{{_('Parent:')}}</label> 
+                <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
+          {% endif %}
           <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
-          <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
-            {{ revision_form.show_toc | safe }}
-          </li>
+          {% if not is_template %}
+            <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
+              {{ revision_form.show_toc | safe }}
+            </li>
+          {% endif %}
         </ul>
+        <input type="hidden" name="parent_topic" value="{{ parent_id | safe }}" />
+        <div class="hidden" id="parentSlugPrefix">{{ parent_slug | safe }}</div>
 
         {% include 'wiki/includes/page_buttons.html' %}
 
@@ -39,6 +46,8 @@
       {% if is_template %}
         <div id="ace_content"></div>
       {% endif %}
+      
+      {% include 'wiki/includes/title_autosuggest_url.html' %}
 
       <section>
         <h4>Review needed?</h4>

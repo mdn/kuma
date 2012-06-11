@@ -184,6 +184,8 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing ul.metadata li { margin: 0; padding: 0; clear: both; }
 .editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
+.editing ul.metadata li input[type="checkbox"] { width: auto; margin-left: 6px; }
+.editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
 
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }
@@ -440,6 +442,9 @@ td.diff_header {
     margin: 20px 0 0;
 }
 
+/* WYSIWYG-specific styles */
+.ui-autocomplete { z-index: 100001 !important; } /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
+
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { display: block; text-align: right; font-size: 90%; }
@@ -465,7 +470,8 @@ table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
 .wrong-inline { border: 1px solid #ac6262; padding: 0 3px 0 3px; background: #fbeded; color: #6d675f; }
 .article .wrong-source-code { color: #8a4e4e; }
 .article .right-source-code { color: #537d46; }
-div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 0 10px; background: #fbeded; color: #6d675f; }
+div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
+  div.bug *:last-child, div.warning *:last-child { padding: 0; margin: 0; }
 .originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
 .originaldocinfo h2 { font-size: 120%; }
 .licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
