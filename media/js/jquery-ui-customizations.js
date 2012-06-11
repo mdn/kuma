@@ -43,16 +43,17 @@
 		// Updates the styleElement (usually the INPUT)'s CSS styles
 		updateStyles: function(valid) {
 			var validClass = "ui-autocomplete-input-valid",
-				invalidClass = "ui-autocomplete-input-invalid";
-			
+				invalidClass = "ui-autocomplete-input-invalid",
+				styleElement = this.styleElement;
+				
 			if(valid == "all") {
-				this.styleElement.removeClass(validClass).removeClass(invalidClass);
+				styleElement.removeClass(validClass).removeClass(invalidClass);
 			}
 			else if(valid) {
-				this.styleElement.addClass(validClass).removeClass(invalidClass);
+				styleElement.addClass(validClass).removeClass(invalidClass);
 			}
 			else {
-				this.styleElement.removeClass(validClass).addClass(invalidClass);
+				styleElement.removeClass(validClass).addClass(invalidClass);
 			}
 		},
 		
