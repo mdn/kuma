@@ -1230,7 +1230,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
         doc_form = DocumentForm(initial=doc_initial)
 
     if user_has_rev_perm:
-        initial = {'based_on': based_on_rev.id, 'comment': ''}
+        initial = {'based_on': based_on_rev.id, 'comment': '', 
+                   'show_toc': based_on_rev.show_toc }
         if revision_id:
             initial.update(
                 content=Revision.objects.get(pk=revision_id).content)

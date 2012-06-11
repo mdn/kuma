@@ -79,6 +79,18 @@
                 </dl>
               </li>
               {% endif %}
+              {% if not document.is_template %}
+                <li>
+                  <dl class="approved">
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;</dd>
+                  </dl>
+                  <dl class="localized">
+                    <dt><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label></dt>
+                    <dd>{{ revision_form.show_toc | safe }}</dd>
+                  </dl>
+                </li>
+                {% endif %}
             </ul>
       </details>
     {% endif %}
