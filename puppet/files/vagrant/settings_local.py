@@ -8,7 +8,7 @@ DEV = True
 TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
@@ -16,7 +16,7 @@ DEMO_UPLOADS_URL = '/media/uploads/demos/'
 PROD_DETAILS_DIR = '/home/vagrant/product_details_json'
 MDC_PAGES_DIR    = '/home/vagrant/mdc_pages'
 
-DEKIWIKI_ENDPOINT = "http://localhost"
+DEKIWIKI_ENDPOINT = False # "http://localhost"
 DEKIWIKI_APIKEY = "GFxaNVK37fLPsFEYM7NwdIuNpGIiFTOX"
 DEKIWIKI_MOCK = True
 
@@ -119,9 +119,9 @@ SPHINX_INDEXER = '/usr/local/bin/indexer'
 SPHINX_SEARCHD = '/usr/local/bin/searchd'
 SEARCH_CACHE_PERIOD = 0 
 
-SITE_URL = 'http://developer-dev.mozilla.org'
-PROTOCOL = 'http://'
-DOMAIN = 'developer-dev.mozilla.org'
+SITE_URL = 'https://developer-local.allizom.org'
+PROTOCOL = 'https://'
+DOMAIN = 'developer-local.allizom.org'
 
 # See: https://github.com/mozilla/django-browserid/issues/8 (TODO)
 BROWSERID_DISABLE_CERT_CHECK = True
