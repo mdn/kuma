@@ -326,10 +326,9 @@ class DocumentManager(ManagerBase):
                 except actual.DoesNotExist:
                     pass
 
-            # Tweak a few fields on the way through, mainly for Revisions.
-            if hasattr(actual, 'creator'):
+            # Tweak a few fields on the way through for Revisions.
+            if type(actual) is Revision:
                 actual.creator = creator
-            if hasattr(actual, 'created'):
                 actual.created = datetime.now()
 
             actual.save()
