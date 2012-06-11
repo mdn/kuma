@@ -5,6 +5,8 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.core import serializers
 
+from sumo.urlresolvers import reverse, split_path
+
 from wiki.models import Document, Revision, EditorToolbar
 
 
@@ -18,14 +20,94 @@ def dump_selected_documents(modeladmin, request, queryset):
 dump_selected_documents.short_description = "Dump selected documents as JSON"
 
 
+def related_revisions_link(self):
+    """HTML link to related revisions for admin change list"""
+    link = '%s?%s' % (
+        reverse('admin:wiki_revision_changelist', args=[]),
+        'document__exact=%s' % (self.id)
+    )
+    count = self.revisions.count()
+    what = (count == 1) and 'revision' or 'revisions'
+    return '<a href="%s">%s %s</a>' % (link, count, what)
+
+related_revisions_link.allow_tags = True
+related_revisions_link.short_description = "All Revisions"
+
+
+def current_revision_link(self):
+    """HTML link to the current revision for the admin change list"""
+    if not self.current_revision:
+        return "None"
+    rev = self.current_revision
+    rev_url = reverse('admin:wiki_revision_change', args=[rev.id])
+    return '<a href="%s">Revision #%s</a>' % (rev_url, rev.id)
+
+current_revision_link.allow_tags = True
+current_revision_link.short_description = "Current Revision"
+
+
+def parent_document_link(self):
+    """HTML link to the topical parent document for admin change list"""
+    if not self.parent:
+        return "None"
+    url = reverse('admin:wiki_document_change', args=[self.parent.id])
+    return '<a href="%s">Document #%s</a>' % (url, self.parent.id)
+
+parent_document_link.allow_tags = True
+parent_document_link.short_description = "Translation Parent"
+
+
+def topic_parent_document_link(self):
+    """HTML link to the parent document for admin change list"""
+    if not self.parent_topic:
+        return "None"
+    url = reverse('admin:wiki_document_change',
+                  args=[self.parent_topic.id])
+    return '<a href="%s">Document #%s</a>' % (url, self.parent_topic.id)
+
+topic_parent_document_link.allow_tags = True
+topic_parent_document_link.short_description = "Parent Document"
+
+
+def topic_children_documents_link(self):
+    """HTML link to a list of child documents"""
+    link = '%s?%s' % (
+        reverse('admin:wiki_document_changelist', args=[]),
+        'parent_topic__exact=%s' % (self.id)
+    )
+    count = self.children.count()
+    what = (count == 1) and 'document' or 'documents'
+    return '<a href="%s">%s %s</a>' % (link, count, what)
+
+topic_children_documents_link.allow_tags = True
+topic_children_documents_link.short_description = "Child Documents"
+
+
+def topic_sibling_documents_link(self):
+    """HTML link to a list of sibling documents"""
+    link = '%s?%s' % (
+        reverse('admin:wiki_document_changelist', args=[]),
+        'parent_topic__exact=%s' % (self.parent_topic.id)
+    )
+    count = self.parent_topic.children.count()
+    what = (count == 1) and 'document' or 'documents'
+    return '<a href="%s">%s %s</a>' % (link, count, what)
+
+topic_sibling_documents_link.allow_tags = True
+topic_sibling_documents_link.short_description = "Sibling Documents"
+
+
 class DocumentAdmin(admin.ModelAdmin):
     actions = [dump_selected_documents, ]
     change_list_template = 'admin/wiki/document/change_list.html'
     fields = ('title', 'slug', 'locale', 'parent', 'parent_topic', 'category')
     list_display = ('id', 'locale', 'slug', 'title', 'is_localizable',
-                    'modified', 'parent_document_link',
-                    'topic_parent_document_link',
-                    'current_revision_link', 'related_revisions_link',)
+                    'modified', parent_document_link,
+                    topic_parent_document_link,
+                    topic_sibling_documents_link,
+                    topic_children_documents_link,
+                    current_revision_link,
+                    related_revisions_link,)
     list_display_links = ('id', 'slug',)
     list_filter = ('is_template', 'is_localizable', 'category', 'locale')
     raw_id_fields = ('parent',)
