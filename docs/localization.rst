@@ -2,7 +2,7 @@
 Localization
 ============
 
-Kitsune is localized with `gettext <http://www.gnu.org/software/gettext/>`_.
+Kuma is localized with `gettext <http://www.gnu.org/software/gettext/>`_.
 User-facing strings in the code or templates need to be marked for gettext
 localization.
 
@@ -278,3 +278,21 @@ Updating strings is pretty easy. Check out the localizations as above, then::
     $ python manage.py verbatimize --rename
 
 Congratulations! You've now updated the POT file.
+
+Now commit the POT file to svn::
+
+    $ cd locale
+    $ svn up
+    $ svn ci -m "MDN string update YYYY-MM-DD"
+
+After committing, update the `templates in Verbatim
+<https://localize.mozilla.org/templates/mdn/>`_ from SVN.
+
+![Updating verbatim templates from
+SVN](https://dl.dropbox.com/u/21969365/images/templates_mdn.png)
+
+After updating the templates in Verbatim, `update each language
+<https://localize.mozilla.org/projects/mdn/admin.html>`_ from the templates.
+
+![Updating messages from
+templates](https://dl.dropbox.com/u/21969365/images/mdn_admin_update.png)
