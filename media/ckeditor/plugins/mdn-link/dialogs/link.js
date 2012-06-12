@@ -10,7 +10,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	// These vars are specific to the autocompleter
 	var autoCompleteCreated = false,
 		autoCompleteUrl = jQuery('#autosuggestTitleUrl').attr('data-url'),
-		autoCompletePaneId = 'autosuggestpane',
 		autoCompleteTextbox,
 		autoCompleteSelection;
 	
@@ -454,6 +453,43 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						children :
 						[
 							{
+								id: 'articleName',
+								type: 'text',
+								label: gettext('Article Title'),
+								setup: function() {
+									// This happens upon every open, so need to make sure we don't keep creating new autocompleters!
+									var dialog = this.getDialog(),
+										term;
+									
+									// Create widget if not done already
+									if(!autoCompleteTextbox) {
+										autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
+										
+										jQuery(autoCompleteTextbox).mozillaAutocomplete({
+											minLength: 1,
+											requireValidOption: true,
+											styleElement: autoCompleteTextbox.parentNode,
+											autocompleteUrl: autoCompleteUrl,
+											onSelect: function(item, isSilent) {
+												autoCompleteSelection = item;
+												// Select item
+												autoCompleteSelect(dialog, !isSilent);
+											},
+											_renderItem: function(ul, item) {
+												return jQuery('<li></li>')
+													.data("item.autocomplete", item)
+													.attr('title', item.href)
+													.append(jQuery('<a></a>').text(item.label))
+													.appendTo(ul);
+											}
+										});
+									}
+									
+									// Clear out the the values so there aren't any problems
+									jQuery(autoCompleteTextbox).mozillaAutocomplete('clear');
+								}
+							},
+							{
 								type : 'hbox',
 								widths : [ '0', '100%' ],
 								children :
@@ -744,50 +780,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				]
 			},
 			{
-				id: autoCompletePaneId,
-				label: gettext('Search'),
-				title: gettext('Search'),
-				elements: [
-					{
-						id: 'articleName',
-						type: 'text',
-						label: gettext('Article Title'),
-						setup: function() {
-							// This happens upon every open, so need to make sure we don't keep creating new autocompleters!
-							var dialog = this.getDialog(),
-								term;
-							
-							// Create widget if not done already
-							if(!autoCompleteTextbox) {
-								autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
-								
-								jQuery(autoCompleteTextbox).mozillaAutocomplete({
-									minLength: 1,
-									requireValidOption: true,
-									styleElement: autoCompleteTextbox.parentNode,
-									autocompleteUrl: autoCompleteUrl,
-									onSelect: function(item, isSilent) {
-										autoCompleteSelection = item;
-										// Select item
-										autoCompleteSelect(dialog, !isSilent);
-									},
-									_renderItem: function(ul, item) {
-										return jQuery('<li></li>')
-											.data("item.autocomplete", item)
-											.attr('title', item.href)
-											.append(jQuery('<a></a>').text(item.label))
-											.appendTo(ul);
-									}
-								});
-							}
-							
-							// Clear out the the values so there aren't any problems
-							jQuery(autoCompleteTextbox).mozillaAutocomplete('clear');
-						}
-					}
-				]
-			},
-			{
 				id : 'upload',
 				label : linkLang.upload,
 				title : linkLang.upload,
@@ -1013,8 +1005,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			switch ( data.type || 'url' )
 			{
 				case 'url':
-					var url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '';
-					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : (url.indexOf('//') > -1 ? url : "http://" + url);
+					var url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '',
+						useOriginal = url.indexOf( '/' ) === 0 || 	// ex: "/some/page"
+									  url.indexOf('#') === 0 || 	// ex: "someAnchor"
+									  url.indexOf('//') > -1 ; 		// ex: "http://mozilla.com" or "https://mozilla.com"
+					
+					attributes[ 'data-cke-saved-href' ] = useOriginal ? url : 'http://' + url;
 					
 					break;
 				case 'anchor':
@@ -1197,29 +1193,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			if ( !editor.config.linkShowTargetTab )
 				this.hidePage( 'target' );		//Hide Target tab.
-			
-			
-			// "Save the last focused tab"
-			var dialog = this;
-				children = this.parts.tabs.getChildren(), 
-				count = children.count(), 
-				tab;
-			
-			for(var x = 0; x < count; x++) {
-				var tab = children.getItem(x);
-				(function(x) {
-					tab.on('click', function() {
-						var tabId = dialog.definition.contents[x].id;
-						// If the search tab, place the cursor
-						if(tabId == autoCompletePaneId) {
-							setTimeout(function() { autoCompleteTextbox.select(); }, 400);
-						}
-						else if(tabId == 'info') {
-							dialog.getContentElement( 'info', 'url' ).select();
-						}
-					});
-				})(x);
-			}
 		},
 		// Inital focus on 'url' field if link is of type URL.;  this fires whenever the dialog is opened
 		onFocus : function()
@@ -1230,9 +1203,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			// Clear out the previous auto-creation text
 			autoCompleteSelection = null;
 			
-			// If there's selected text but not an element, select the "Search" tab and start
+			// If there's selected text but not an element, search for an article
 			if(selectedText && !selectedElement) {
-				this.selectPage(autoCompletePaneId);
 				jQuery(autoCompleteTextbox).val(selectedText);
 				jQuery(autoCompleteTextbox).mozillaAutocomplete('deselect');
 				jQuery(autoCompleteTextbox).mozillaAutocomplete('search', selectedText);
