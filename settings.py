@@ -663,7 +663,6 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/scripts/shBrushPlain.js',
             'js/wiki.js',
             'js/main.js',
-            'js/jquery-1.4.2.min.js',
             'js/libs/jqueryui.min.js',
             'js/jquery-ui-customizations.js',
             'js/libs/tag-it.js',

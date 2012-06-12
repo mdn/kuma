@@ -290,7 +290,8 @@ class DocumentManager(ManagerBase):
             # fields from Document and Revision models and knocking out what we
             # don't want? Serializer doesn't support exclusion list directly.
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
-            'parent', 'category', 'document', 'summary', 'content', 'comment',
+            'parent', 'parent_topic', 'category', 'document', 
+            'summary', 'content', 'comment',
             'keywords', 'tags', 'show_toc', 'significance', 'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
             'mindtouch_page_id', 'mindtouch_old_id', 'is_mindtouch_migration',
@@ -325,10 +326,9 @@ class DocumentManager(ManagerBase):
                 except actual.DoesNotExist:
                     pass
 
-            # Tweak a few fields on the way through, mainly for Revisions.
-            if hasattr(actual, 'creator'):
+            # Tweak a few fields on the way through for Revisions.
+            if type(actual) is Revision:
                 actual.creator = creator
-            if hasattr(actual, 'created'):
                 actual.created = datetime.now()
 
             actual.save()
@@ -856,50 +856,6 @@ class Document(NotificationsMixin, ModelBase):
         from wiki.events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
-    def related_revisions_link(self):
-        """HTML link to related revisions for admin change list"""
-        link = '%s?%s' % (
-            reverse('admin:wiki_revision_changelist', args=[]),
-            'document__exact=%s' % (self.id)
-        )
-        count = self.revisions.count()
-        what = (count == 1) and 'revision' or 'revisons'
-        return '<a href="%s">%s %s</a>' % (link, count, what)
-
-    related_revisions_link.allow_tags = True
-    related_revisions_link.short_description = "All Revisions"
-
-    def current_revision_link(self):
-        """HTML link to the current revision for the admin change list"""
-        if not self.current_revision:
-            return "None"
-        rev = self.current_revision
-        rev_url = reverse('admin:wiki_revision_change', args=[rev.id])
-        return '<a href="%s">Revision #%s</a>' % (rev_url, rev.id)
-
-    current_revision_link.allow_tags = True
-    current_revision_link.short_description = "Current Revision"
-
-    def parent_document_link(self):
-        """HTML link to the topical parent document for admin change list"""
-        if not self.parent:
-            return "None"
-        url = reverse('admin:wiki_document_change', args=[self.parent.id])
-        return '<a href="%s">Document #%s</a>' % (url, self.parent.id)
-
-    parent_document_link.allow_tags = True
-    parent_document_link.short_description = "Translation Parent"
-
-    def topic_parent_document_link(self):
-        """HTML link to the parent document for admin change list"""
-        if not self.parent_topic:
-            return "None"
-        url = reverse('admin:wiki_document_change',
-                      args=[self.parent_topic.id])
-        return '<a href="%s">Document #%s</a>' % (url, self.parent_topic.id)
-
-    topic_parent_document_link.allow_tags = True
-    topic_parent_document_link.short_description = "Parent Document"
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""

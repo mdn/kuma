@@ -177,9 +177,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			else if (  href && ( urlMatch = href.match( urlRegex ) ) )
 			{
 				retval.type = 'url';
-				retval.url = {};
-				retval.url.protocol = urlMatch[1];
-				retval.url.url = urlMatch[2];
+				retval.url = {
+					url: href
+				};
 			}
 			else
 				retval.type = 'url';
@@ -455,36 +455,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						[
 							{
 								type : 'hbox',
-								widths : [ '25%', '75%' ],
+								widths : [ '0', '100%' ],
 								children :
 								[
-									{
-										id : 'protocol',
-										type : 'select',
-										label : commonLang.protocol,
-										'default' : 'http://',
-										items :
-										[
-											// Force 'ltr' for protocol names in BIDI. (#5433)
-											[ 'http://\u200E', 'http://' ],
-											[ 'https://\u200E', 'https://' ],
-											[ 'ftp://\u200E', 'ftp://' ],
-											[ 'news://\u200E', 'news://' ],
-											[ linkLang.other , '' ]
-										],
-										setup : function( data )
-										{
-											if ( data.url )
-												this.setValue( data.url.protocol || '' );
-										},
-										commit : function( data )
-										{
-											if ( !data.url )
-												data.url = {};
-
-											data.url.protocol = this.getValue();
-										}
-									},
 									{
 										type : 'text',
 										id : 'url',
@@ -497,19 +470,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 										onKeyUp : function()
 										{
 											this.allowOnChange = false;
-											var	protocolCmb = this.getDialog().getContentElement( 'info', 'protocol' ),
-												url = this.getValue(),
+											var	url = this.getValue(),
 												urlOnChangeProtocol = /^(http|https|ftp|news):\/\/(?=.)/i,
 												urlOnChangeTestOther = /^((javascript:)|[#\/\.\?])/i;
-
-											var protocol = urlOnChangeProtocol.exec( url );
-											if ( protocol )
-											{
-												this.setValue( url.substr( protocol[ 0 ].length ) );
-												protocolCmb.setValue( protocol[ 0 ].toLowerCase() );
-											}
-											else if ( urlOnChangeTestOther.test( url ) )
-												protocolCmb.setValue( '' );
 
 											this.allowOnChange = true;
 										},
@@ -809,9 +772,10 @@ CKEDITOR.dialog.add( 'link', function( editor )
 										autoCompleteSelect(dialog, !isSilent);
 									},
 									_renderItem: function(ul, item) {
-										return $('<li>')
+										return jQuery('<li></li>')
+											.data("item.autocomplete", item)
 											.attr('title', item.href)
-											.append($('<a>').text(item.label))
+											.append(jQuery('<a></a>').text(item.label))
 											.appendTo(ul);
 									}
 								});
@@ -1049,9 +1013,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			switch ( data.type || 'url' )
 			{
 				case 'url':
-					var protocol = ( data.url && data.url.protocol != undefined ) ? data.url.protocol : 'http://',
-						url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '';
-					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : protocol + url;
+					var url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '';
+					attributes[ 'data-cke-saved-href' ] = ( url.indexOf( '/' ) === 0 ) ? url : (url.indexOf('//') > -1 ? url : "http://" + url);
+					
 					break;
 				case 'anchor':
 					var name = ( data.anchor && data.anchor.name ),
@@ -1246,8 +1210,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				(function(x) {
 					tab.on('click', function() {
 						var tabId = dialog.definition.contents[x].id;
-						jQuery.cookie('wikiLinkTab', tabId); // Session cookie for now?
-						
 						// If the search tab, place the cursor
 						if(tabId == autoCompletePaneId) {
 							setTimeout(function() { autoCompleteTextbox.select(); }, 400);
@@ -1262,40 +1224,24 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		// Inital focus on 'url' field if link is of type URL.;  this fires whenever the dialog is opened
 		onFocus : function()
 		{
-			var tabToShow = jQuery.cookie('wikiLinkTab') || 'info',
-				selectedText = editor.getSelection().getSelectedText(),
+			var selectedText = editor.getSelection().getSelectedText(),
 				selectedElement = editor.getSelection().getSelectedElement();
+				
+			// Clear out the previous auto-creation text
+			autoCompleteSelection = null;
 			
 			// If there's selected text but not an element, select the "Search" tab and start
 			if(selectedText && !selectedElement) {
 				this.selectPage(autoCompletePaneId);
-				autoCompleteTextbox.select();
 				jQuery(autoCompleteTextbox).val(selectedText);
 				jQuery(autoCompleteTextbox).mozillaAutocomplete('deselect');
 				jQuery(autoCompleteTextbox).mozillaAutocomplete('search', selectedText);
+				autoCompleteTextbox.select();
 				return;
 			}
 			
-			
-			// Always defaulting to the "info" screen *if* they are using a source element
-			if(tabToShow == 'info' || this.hasSourceElement) {
-				var linkType = this.getContentElement( 'info', 'linkType' ),
-						urlField;
-				if ( linkType && linkType.getValue() == 'url' )
-				{
-					urlField = this.getContentElement( 'info', 'url' );
-					urlField.select();
-				}
-			}
-			else {
-				// Show the other tab
-				this.selectPage(tabToShow);
-			}
-				
-			// If the "Search" pane is selected, focus on the element
-			if(tabToShow == autoCompletePaneId && autoCompleteTextbox) {
-				autoCompleteTextbox.select();
-			}
+			// Select the URL field
+			this.getContentElement( 'info', 'url' ).select();
 		}
 	};
 	
