@@ -95,10 +95,12 @@ class TestDevMoRobots(test_utils.TestCase):
 
 
 class TestDevMoHelpers(test_utils.TestCase):
+    fixtures = ['wiki/documents.json']
+
     def test_devmo_url(self):
 
         # Skipping this test for now, because it hits unreliable prod resources
-        raise SkipTest()        
+        raise SkipTest()
 
         en_only_page = '/en/HTML/HTML5'
         localized_page = '/en/HTML'
@@ -113,31 +115,29 @@ class TestDevMoHelpers(test_utils.TestCase):
         eq_(devmo_url(context, localized_page), '/zh_tw/HTML')
 
 
-    @attr('current')
-    @mock.patch('devmo.helpers.check_devmo_local_page')
-    def test_devmo_url_mindtouch_disabled(self, mock_check_devmo_local_page):
+    def test_devmo_url_mindtouch_disabled(self):
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
 
-        # HACK: mock has an assert_called_with, but I want something like
-        # never_called or call_count. Instead, I have this:
-        trap = {'was_called': False}
-        def my_check_devmo_local_page(username, password, force=False):
-            trap['was_called'] = True
-            return None
-        mock_check_devmo_local_page.side_effect = my_check_devmo_local_page
-
-        en_only_page = '/en/HTML/HTML5'
-        localized_page = '/en/HTML'
+        localized_page = 'article-title'
         req = test_utils.RequestFactory().get('/')
         context = {'request': req}
 
-        req.locale = 'de'
-        eq_(devmo_url(context, localized_page), '/de/docs/HTML')
+        req.locale = 'fr'
+        eq_(devmo_url(context, localized_page), '/fr/docs/le-title')
 
-        ok_(not trap['was_called'])
         settings.DEKIWIKI_ENDPOINT = _old
 
+
+    def test_devmo_url_mindtouch_disabled_redirect(self):
+        # Skipping this test for now, redirect model logic is coupled to view
+        raise SkipTest()
+        _old = settings.DEKIWIKI_ENDPOINT
+        settings.DEKIWIKI_ENDPOINT = False
+
+        # TODO: add redirect localized pages to fixture and test
+
+        settings.DEKIWIKI_ENDPOINT = _old
 
 class TestDevMoUrlResolvers(test_utils.TestCase):
     def test_prefixer_get_language(self):
