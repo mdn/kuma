@@ -3,6 +3,7 @@ import time
 import json
 from collections import defaultdict
 import base64
+import httplib
 import hashlib
 import logging
 from urllib import urlencode
@@ -131,6 +132,12 @@ def process_document_path(func, reverse_name='wiki.document'):
             if slug_length and document_slug[slug_length - 1] == '/':
                 needs_redirect = True
                 document_slug = document_slug.rstrip('/')
+
+            if request.GET.get('raw', False) is not False:
+                # HACK: There are and will be a lot of kumascript templates
+                # based on legacy DekiScript which will attempt to request
+                # old-style URLs. Skip 301 redirects for raw content.
+                needs_redirect = False
 
             if needs_redirect:
                 # This catches old MindTouch locales, missing locale, and a few
@@ -590,16 +597,18 @@ def _perform_kumascript_request(request, response_headers, document,
             resp_errors = [
                 {"level": "error",
                   "message": "Unexpected response from Kumascript service: %s"
-                                % resp.status_code,
+                             % resp.status_code,
                   "args": ["UnknownError"]}
             ]
 
     except Exception, e:
-        raise
-        # Do nothing, if the kumascript service fails in some way.
-        # TODO: Log the failure more usefully here.
-        logging.debug("KS FAILED %s" % e)
-        pass
+        # Last resort: Something went really haywire. Kumascript server died
+        # mid-request, or something. Try to report at least some hint.
+        resp_errors = [
+            {"level": "error",
+             "message": "Kumascript service failed unexpectedly: %s" % type(e),
+             "args": ["UnknownError"]}
+        ]
 
     return (resp_body, resp_errors)
 
