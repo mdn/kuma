@@ -7,8 +7,10 @@ import hashlib
 import time
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.cache import cache
+from django.db.models import Q
 
 import mock
 from nose import SkipTest
@@ -231,6 +233,85 @@ class ConditionalGetTests(TestCaseBase):
         eq_(200, response.status_code)
         ok_(last_mod != response['last-modified'])
         ok_(cached_last_mod != cache.get(cache_key))
+
+
+class ReadOnlyTests(TestCaseBase):
+    """Tests readonly scenarios"""
+    fixtures = ['test_users.json', 'wiki/documents.json']
+
+    def setUp(self):
+        super(ReadOnlyTests, self).setUp()
+        self.d, self.r = doc_rev()
+        self.edit_url = reverse('wiki.edit_document', args=[self.d.full_path])
+
+    def test_everyone(self):
+        """ kumaediting: everyone, kumabanned: none  """
+        self.kumaediting_flag.everyone = True
+        self.kumaediting_flag.save()
+
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(200, resp.status_code)
+
+    def test_superusers_only(self):
+        """ kumaediting: superusers, kumabanned: none """
+        self.kumaediting_flag.everyone = None
+        self.kumaediting_flag.superusers = True
+        self.kumaediting_flag.save()
+
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(403, resp.status_code)
+        ok_('The wiki is in read-only mode.' in resp.content)
+        self.client.logout()
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(200, resp.status_code)
+
+    def test_banned_users(self):
+        """ kumaediting: everyone, kumabanned: testuser2 """
+        self.kumaediting_flag.everyone = True
+        self.kumaediting_flag.save()
+        # ban testuser2
+        kumabanned = Flag.objects.create(name='kumabanned')
+        kumabanned.users = User.objects.filter(username='testuser2')
+        kumabanned.save()
+
+        # testuser can still access
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(200, resp.status_code)
+        self.client.logout()
+
+        # testuser2 cannot
+        self.client.login(username='testuser2', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(403, resp.status_code)
+        ok_('Your account has been banned from making edits.' in resp.content)
+
+        # ban testuser01 and testuser2
+        kumabanned.users = User.objects.filter(Q(username='testuser2') |
+                                               Q(username='testuser01'))
+        kumabanned.save()
+
+        # testuser can still access
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(200, resp.status_code)
+        self.client.logout()
+
+        # testuser2 cannot access
+        self.client.login(username='testuser2', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(403, resp.status_code)
+        ok_('Your account has been banned from making edits.' in resp.content)
+
+        # testuser01 cannot access
+        self.client.login(username='testuser01', password='testpass')
+        resp = self.client.get(self.edit_url)
+        eq_(403, resp.status_code)
+        ok_('Your account has been banned from making edits.' in resp.content)
 
 
 class FakeResponse:
