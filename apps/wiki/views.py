@@ -50,7 +50,7 @@ from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
-from wiki.forms import DocumentForm, RevisionForm, ReviewForm
+from wiki.forms import DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag,
                          CATEGORIES,
@@ -690,7 +690,7 @@ def new_document(request):
             parent_slug = parent_doc.slug
             parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
         except Document.DoesNotExist:
-            parent_slug = ''
+            logging.debug('Cannot find parent')
 
     if request.method == 'GET':
 
@@ -727,15 +727,20 @@ def new_document(request):
 
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
-
-    # Prefix this new doc's slug with the parent document's slug.
     if parent_slug:
-        post_data.update({'slug': parent_slug + '/' + post_data['slug']})
+        post_data.update({'parent_topic': initial_parent_id})
 
     doc_form = DocumentForm(post_data)
-    rev_form = RevisionForm(post_data)
+    rev_form = RevisionValidationForm(post_data)
 
     if doc_form.is_valid() and rev_form.is_valid():
+        
+        rev_form = RevisionForm(post_data)
+        
+        # Prefix this new doc's slug with the parent document's slug.
+        if parent_slug:
+            post_data.update({'slug': parent_slug + '/' + post_data['slug']})
+
         slug = doc_form.cleaned_data['slug']
         if not Document.objects.allows_add_by(request.user, slug):
             raise PermissionDenied
@@ -752,7 +757,9 @@ def new_document(request):
     return jingo.render(request, 'wiki/new_document.html',
                         {'is_template': is_template,
                          'document_form': doc_form,
-                         'revision_form': rev_form})
+                         'revision_form': rev_form,
+                         'parent_slug': parent_slug,
+                         'parent_path': parent_path})
 
 
 @waffle_flag('kumawiki')
@@ -779,12 +786,12 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                                              '-id')[0]
 
     # Keep hold of the full post slug
-    full_slug = rev.slug
+    full_slug = document_slug
     slug_split = full_slug.split('/')
     # Update the slug, removing the parent path, and
     # *only* using the last piece.
     # This is only for the edit form.
-    rev.slug = slug_split[-1]
+    doc.slug = rev.slug = slug_split[-1]
     # Keep a parent slug
     # Create the slug prefix from the parent string
     slug_split.pop()
@@ -821,13 +828,14 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
 
-                if 'slug' in post_data:  # if a section edit
-                    slug_split.append(post_data['slug'])
-                    post_data['slug'] = '/'.join(slug_split)
-
                 post_data.update({'locale': document_locale})
                 doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
+
+                    if 'slug' in post_data:  # if must be here for section edits
+                        slug_split.append(post_data['slug'])
+                        post_data['slug'] = '/'.join(slug_split)
+
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
                     _invalidate_kumascript_cache(doc)
@@ -860,11 +868,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             else:
 
                 post_data = request.POST.copy()
-                if 'slug' in post_data:
-                    slug_split.append(post_data['slug'])
-                    post_data['slug'] = '/'.join(slug_split)
 
-                rev_form = RevisionForm(post_data,
+                rev_form = RevisionValidationForm(post_data,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
                 rev_form.instance.document = doc  # for rev_form.clean()
@@ -881,7 +886,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 curr_rev = doc.current_revision
 
                 if not rev_form.is_valid():
-
+                    
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
                         # Jump out to a function to escape indentation hell
@@ -891,6 +896,18 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                 rev, doc)
 
                 else:
+                    
+                    if 'slug' in post_data:
+                        slug_split.append(post_data['slug'])
+                        post_data['slug'] = '/'.join(slug_split)
+
+                    # We know now that the form is valid (i.e. slug doesn't have a "/")
+                    # Now we can make it a true revision form
+                    rev_form = RevisionForm(post_data,
+                                            is_iframe_target=is_iframe_target,
+                                            section_id=section_id)
+                    rev_form.instance.document = doc  # for rev_form.clean()
+                    
                     _save_rev_and_notify(rev_form, user, doc)
 
                     if is_iframe_target:
@@ -1279,12 +1296,13 @@ def translate(request, document_slug, document_locale, revision_id=None):
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
-                rev_form = RevisionForm(post_data)
+                rev_form = RevisionValidationForm(post_data)
 
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
             if doc_form.is_valid() and (which_form == 'doc' or
                                         rev_form.is_valid()):
+                rev_form = RevisionForm(post_data)
                 doc = doc_form.save(parent_doc)
 
                 # Possibly schedule a rebuild.
@@ -1304,16 +1322,17 @@ def translate(request, document_slug, document_locale, revision_id=None):
             doc_slug = doc.slug
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:
-
             post_data = request.POST.copy()
 
-            # append final slug
-            parent_slug_split.append(post_data['slug'])
-            post_data['slug'] = '/'.join(parent_slug_split)
-
-            rev_form = RevisionForm(post_data)
+            rev_form = RevisionValidationForm(post_data)
             rev_form.instance.document = doc  # for rev_form.clean()
+
             if rev_form.is_valid() and not doc_form_invalid:
+                # append final slug
+                parent_slug_split.append(post_data['slug'])
+                post_data['slug'] = '/'.join(parent_slug_split)
+                rev_form = RevisionForm(post_data)
+
                 _save_rev_and_notify(rev_form, request.user, doc)
                 url = reverse('wiki.document', args=[doc.full_path],
                               locale=doc.locale)
