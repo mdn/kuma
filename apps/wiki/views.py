@@ -128,7 +128,7 @@ def process_document_path(func, reverse_name='wiki.document'):
 
             # Add check for "local" URL, remove trailing slash
             slug_length = len(document_slug)
-            if slug_length and document_slug[slug_length-1] == '/':
+            if slug_length and document_slug[slug_length - 1] == '/':
                 needs_redirect = True
                 document_slug = document_slug.rstrip('/')
 
@@ -192,30 +192,12 @@ def document(request, document_slug, document_locale):
             # No current_revision, no parent with current revision, so
             # nothing to show.
             fallback_reason = 'no_content'
+
     except Document.DoesNotExist:
-
-        # The user may be trying to create a child page
-        # If a parent exists for this document,
-        # redirect them to the "Create" page
         try:
-            parent_slug = document_slug.split('/')
-            new_child_slug = parent_slug.pop()
-            parent_slug = '/'.join(parent_slug)
-
-            parent_doc = Document.objects.get(locale=document_locale,
-                                              slug=parent_slug)
-
-            # Redirect to create page with parent ID
-            url = reverse('wiki.new_document', locale=document_locale)
-            url = urlparams(url, parent=parent_doc.id, slug=new_child_slug)
-            return HttpResponseRedirect(url)
-
-        except Document.DoesNotExist:
-
             # Look in default language:
-            doc = get_object_or_404(Document,
-                                locale=settings.WIKI_DEFAULT_LANGUAGE,
-                                slug=document_slug)
+            doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                       slug=document_slug)
 
             # If there's a translation to the requested locale, take it:
             translation = doc.translated_to(document_locale)
@@ -231,6 +213,33 @@ def document(request, document_slug, document_locale):
                 # There is no translation
                 # and OK to fall back to parent (parent is approved).
                 fallback_reason = 'no_translation'
+
+        except Document.DoesNotExist:
+
+            # If any of these parameters are present, throw a real 404.
+            if (request.GET.get('raw', False) is not False or
+                request.GET.get('include', False) is not False or
+                request.GET.get('nocreate', False) is not False):
+                raise Http404
+
+            # The user may be trying to create a child page If a parent exists
+            # for this document, redirect them to the "Create" page
+            try:
+                parent_slug = document_slug.split('/')
+                new_child_slug = parent_slug.pop()
+                parent_slug = '/'.join(parent_slug)
+
+                parent_doc = Document.objects.get(locale=document_locale,
+                                                  slug=parent_slug,
+                                                  is_template=0)
+
+                # Redirect to create page with parent ID
+                url = reverse('wiki.new_document', locale=document_locale)
+                url = urlparams(url, parent=parent_doc.id, slug=new_child_slug)
+                return HttpResponseRedirect(url)
+
+            except Document.DoesNotExist:
+                raise Http404
 
     # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a
@@ -677,11 +686,11 @@ def new_document(request):
 
         if parent_slug:
             initial_data['parent_topic'] = initial_parent_id
-            
+
         if initial_slug:
             initial_data['title'] = initial_slug
             initial_data['slug'] = initial_slug
-            
+
         if is_template:
             review_tags = ('template',)
         else:
@@ -798,8 +807,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         if which_form == 'doc':
             if doc.allows_editing_by(user):
                 post_data = request.POST.copy()
-                
-                if 'slug' in post_data: # if a section edit
+
+                if 'slug' in post_data:  # if a section edit
                     slug_split.append(post_data['slug'])
                     post_data['slug'] = '/'.join(slug_split)
 
@@ -920,11 +929,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         url = '%s#%s' % (url, section_id)
 
                     return HttpResponseRedirect(url)
-                    
+
     parent_path = ''
     if slug_split:
         parent_slug = '/'.join(slug_split)
-        
+
     if doc.parent_topic_id:
         parent_doc = Document.objects.get(pk=doc.parent_topic_id)
         parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
@@ -1230,8 +1239,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
         doc_form = DocumentForm(initial=doc_initial)
 
     if user_has_rev_perm:
-        initial = {'based_on': based_on_rev.id, 'comment': '', 
-                   'show_toc': based_on_rev.show_toc }
+        initial = {'based_on': based_on_rev.id, 'comment': '',
+                   'show_toc': based_on_rev.show_toc}
         if revision_id:
             initial.update(
                 content=Revision.objects.get(pk=revision_id).content)
