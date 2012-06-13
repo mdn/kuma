@@ -526,6 +526,37 @@ class DocumentEditingTests(TestCaseBase):
 
     fixtures = ['test_users.json']
 
+    def test_create_on_404(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # TODO: create-on-404 does not work for root pages
+        # eg. /en-US/docs/Foo, /en-US/docs/Bar
+
+        # Create the parent page.
+        d, r = doc_rev()
+
+        # Establish attribs of child page.
+        locale = settings.WIKI_DEFAULT_LANGUAGE
+        title = 'Some New Title'
+        local_slug = 'Some_New_Title'
+        slug = '%s/%s' % (d.slug, local_slug)
+        url = reverse('wiki.document', args=[slug], locale=locale)
+
+        # Ensure redirect to create new page on attempt to visit non-existent
+        # child page.
+        resp = client.get(url)
+        eq_(302, resp.status_code)
+        ok_('docs/new' in resp['Location'])
+        ok_('?slug=%s' % local_slug  in resp['Location'])
+
+        # Ensure real 404 for visit to non-existent page with params common to
+        # kumascript and raw content API.
+        for p_name in ('raw', 'include', 'nocreate'):
+            sub_url = '%s?%s=1' % (url, p_name)
+            resp = client.get(sub_url)
+            eq_(404, resp.status_code)
+
     def test_retitling(self):
         """When the title of an article is edited, a redirect is made."""
         # Not testing slug changes separately; the model tests cover those plus
