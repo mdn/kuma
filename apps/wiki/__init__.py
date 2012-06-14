@@ -6,3 +6,10 @@ KUMASCRIPT_TIMEOUT_ERROR = [
      "message": "Request to Kumascript service timed out",
      "args": ["TimeoutError"]}
 ]
+
+
+class ReadOnlyException(Exception):
+    """
+    A special exception to signal the wiki is read-only
+    """
+    pass

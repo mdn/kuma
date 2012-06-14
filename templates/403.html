@@ -13,6 +13,12 @@
 
     <h1 class="page-title">Permission Denied</h1>
 
+    {% if reason == 'kumaediting' %}
+      <p class="notice">{{ _('The wiki is in read-only mode.') }}</p>
+    {% elif reason == 'kumabanned' %}
+      <p class="notice">{{ _('Your account has been banned from making edits.') }}</p>
+    {% endif %}
+  
     <img src="{{ MEDIA_URL }}img/beast-403.png" alt="" class="beast 403">
 
     {% if user.username %}

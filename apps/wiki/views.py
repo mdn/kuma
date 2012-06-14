@@ -32,6 +32,7 @@ from django.views.decorators.http import (require_GET, require_POST,
 import constance.config
 
 from waffle.decorators import waffle_flag
+from waffle import flag_is_active
 
 import jingo
 from tower import ugettext_lazy as _lazy
@@ -45,7 +46,8 @@ from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
 from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
-                  KUMASCRIPT_TIMEOUT_ERROR)
+                  KUMASCRIPT_TIMEOUT_ERROR, ReadOnlyException)
+from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
@@ -667,6 +669,7 @@ def list_documents_for_review(request, tag=None):
 
 @waffle_flag('kumawiki')
 @login_required
+@check_readonly
 def new_document(request):
     """Create a new wiki document."""
     initial_parent_id = request.GET.get('parent', '')
@@ -757,6 +760,7 @@ def new_document(request):
 @login_required  # TODO: Stop repeating this knowledge here and in
                  # Document.allows_editing_by.
 @process_document_path
+@check_readonly
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404(
@@ -1179,6 +1183,7 @@ def select_locale(request, document_slug, document_locale):
 @require_http_methods(['GET', 'POST'])
 @login_required
 @process_document_path
+@check_readonly
 def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
 
@@ -1460,6 +1465,7 @@ def helpful_vote(request, document_slug, document_locale):
 @waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.delete_revision')
+@check_readonly
 def delete_revision(request, document_path, revision_id):
     """Delete a revision."""
     document_locale, document_slug, needs_redirect = (Document
