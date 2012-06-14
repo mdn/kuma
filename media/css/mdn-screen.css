@@ -1120,3 +1120,17 @@ li.tag-expert label:hover { border-color: #bbb; }
 
 /* @Utility Classes *********/
 .hidden { display: none; }
+
+
+/* RTL Classes *********/
+
+/* need to shift around the header */
+.html-rtl #nav { float: right; margin: 0 70px 6px 0; font: 200 18px/1 "Bebas Neue", "League Gothic", "Arial Narrow", Arial, Helvetica, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.html-rtl #branding { position: absolute; right: 10px; top: 10px; width: 50%; padding: 2px 70px 0 0; margin: 0 0 10px; }
+.html-rtl #logo img { position: absolute; right: -3px; top: -4px; }
+.html-rtl #masthead .user-state { left: 150px; right: auto; }
+.html-rtl .user-state li + li { padding-right: 10px; margin-right: 8px; margin-left:0; padding-left:0; border-right: 1px solid #666; border-left: 0; }
+.html-rtl #masthead #tabzilla { position: absolute; left: 0; top: 0; right: auto; }
+
+.html-rtl #welcome-close { right: auto; left: 15px; }
+.html-rtl #welcome-open { right: auto; left: 10px; }
