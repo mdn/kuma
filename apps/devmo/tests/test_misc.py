@@ -1,32 +1,15 @@
 import logging
-import csv
 import shlex
 import urllib2
-from os.path import basename, dirname, isfile, isdir
 
-import mock
-from mock import patch
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
-from nose.plugins.attrib import attr
+from nose.tools import eq_
 from nose import SkipTest
-from pyquery import PyQuery as pq
 import test_utils
 
 from django.conf import settings
-from django.contrib.auth.models import User, AnonymousUser
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
-from devmo.models import Calendar, Event, UserProfile
-
-from dekicompat.backends import DekiUser
-
-from sumo.tests import LocalizingClient
-from sumo.urlresolvers import reverse
-
-from nose.plugins.skip import SkipTest
-
-from . import SkippedTestCase
 
 
 def parse_robots(base_url):
@@ -60,7 +43,7 @@ class TestDevMoRobots(test_utils.TestCase):
         acceptance tests """
     def test_production(self):
         # Skip this test, because it runs against external sites and breaks.
-        raise SkipTest()        
+        raise SkipTest()
         rules = [
             ("User-Agent", "*"),
             ("Crawl-delay", "5"),
@@ -77,7 +60,7 @@ class TestDevMoRobots(test_utils.TestCase):
 
     def test_stage_bug607996(self):
         # Skip this test, because it runs against external sites and breaks.
-        raise SkipTest()        
+        raise SkipTest()
         rules = [
             ("User-agent", "*"),
             ("Disallow", "/"),
@@ -114,7 +97,6 @@ class TestDevMoHelpers(test_utils.TestCase):
         req.locale = 'zh-TW'
         eq_(devmo_url(context, localized_page), '/zh_tw/HTML')
 
-
     def test_devmo_url_mindtouch_disabled(self):
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
@@ -128,7 +110,6 @@ class TestDevMoHelpers(test_utils.TestCase):
 
         settings.DEKIWIKI_ENDPOINT = _old
 
-
     def test_devmo_url_mindtouch_disabled_redirect(self):
         # Skipping this test for now, redirect model logic is coupled to view
         raise SkipTest()
@@ -139,11 +120,12 @@ class TestDevMoHelpers(test_utils.TestCase):
 
         settings.DEKIWIKI_ENDPOINT = _old
 
+
 class TestDevMoUrlResolvers(test_utils.TestCase):
     def test_prefixer_get_language(self):
 
         # Skipping this test for now, because it hits unreliable prod resources
-        raise SkipTest()        
+        raise SkipTest()
 
         # language precedence is GET param > cookie > Accept-Language
         req = test_utils.RequestFactory().get('/', {'lang': 'es'})
