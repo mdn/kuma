@@ -1043,7 +1043,9 @@ def autosuggest_documents(request):
     # TODO: isolate to just approved docs?
     docs = (Document.objects.filter(title__icontains=partial_title,
                                     is_template=0,
-                                    locale=request.locale))
+                                    locale=request.locale).
+                             exclude(title__iregex=r'Redirect [0-9]+$').
+                             order_by('title'))
 
     docs_list = []
     for d in docs:
