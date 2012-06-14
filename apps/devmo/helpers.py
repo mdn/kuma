@@ -17,7 +17,8 @@ import pytz
 from soapbox.models import Message
 
 import utils
-from sumo.urlresolvers import split_path
+from sumo.urlresolvers import split_path, reverse
+from wiki.models import Document
 
 
 # Yanking filters from Django.
@@ -70,20 +71,39 @@ def jsonencode(data):
     return jinja2.Markup(simplejson.dumps(data))
 
 
+# TODO: move this to wiki/helpers.py
 @register.function
 @jinja2.contextfunction
 def devmo_url(context, path):
     """ Create a URL pointing to devmo.
-        Look for a wiki page in the current locale first,
-        then default to given path
+        Look for a wiki page in the current locale, or default to given path
     """
     if not settings.DEKIWIKI_ENDPOINT:
-        # HACK: If MindTouch is unavailable, skip the rest of this and lean on
-        # locale processing redirects to resolve things. Might be interesting
-        # to resolve some of the redirects first, and come up with the ultimate
-        # real URL. See bug 759356 for followup.
-        path = path.replace('/en', '')
-        return '/%s/docs%s' % (context['request'].locale, path)
+        locale = context['request'].locale
+        url = cache.get('devmo_url:%s_%s' % (locale, path))
+        if not url:
+            url = reverse('wiki.document',
+                          locale=settings.WIKI_DEFAULT_LANGUAGE,
+                          args=[path])
+            if locale != settings.WIKI_DEFAULT_LANGUAGE:
+                try:
+                    parent = Document.objects.get(
+                        locale=settings.WIKI_DEFAULT_LANGUAGE, slug=path)
+                    """ # TODO: redirect_document is coupled to doc view
+                    follow redirects vs. update devmo_url calls
+
+                    target = parent.redirect_document()
+                    if target:
+                        parent = target
+                    """
+                    child = Document.objects.get(locale=locale,
+                                                 parent=parent)
+                    url = reverse('wiki.document', locale=locale,
+                                  args=[child.slug])
+                except Document.DoesNotExist:
+                    pass
+            cache.set('devmo_url:%s_%s' % (locale, path), url)
+        return url
 
     # HACK: If DEKIWIKI_MOCK is True, just skip hitting the API. This can speed
     # up a lot of tests without adding decorators, and should never be true in
