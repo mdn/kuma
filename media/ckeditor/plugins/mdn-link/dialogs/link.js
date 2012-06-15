@@ -459,7 +459,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								setup: function() {
 									// This happens upon every open, so need to make sure we don't keep creating new autocompleters!
 									var dialog = this.getDialog(),
+										listener,
 										term;
+										
+									// Scroll listener
+									var openCancelScroll = function(e) {
+										jQuery(autoCompleteTextbox).mozillaAutocomplete('reposition');
+									};
 									
 									// Create widget if not done already
 									if(!autoCompleteTextbox) {
@@ -481,6 +487,12 @@ CKEDITOR.dialog.add( 'link', function( editor )
 													.attr('title', item.href)
 													.append(jQuery('<a></a>').text(item.label))
 													.appendTo(ul);
+											},
+											open: function() {
+												jQuery(window).bind("scroll", openCancelScroll);
+											},
+											close: function() {
+												jQuery(window).unbind("scroll", openCancelScroll);	
 											}
 										});
 									}
