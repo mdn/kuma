@@ -26,7 +26,7 @@ CKEDITOR.on('instanceReady', function (ev) {
 
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter';
     config.removePlugins = 'link';
 
     config.toolbar_MDN = [
@@ -39,7 +39,7 @@ CKEDITOR.editorConfig = function(config) {
         ['BidiLtr', 'BidiRtl' ],
         ['Link','Unlink','Anchor'],
         ['Image','Table','HorizontalRule','SpecialChar','Iframe'],
-        ['h1Button', 'h2Button', 'h3Button', 'preButton', 'codeButton', '-', 'Styles'],
+        ['h1Button', 'h2Button', 'h3Button', 'preButton', 'mdn-syntaxhighlighter', 'codeButton', '-', 'Styles'],
         ['TextColor','BGColor'],
         ['Maximize', 'ShowBlocks','-','About']
     ];
