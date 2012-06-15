@@ -184,3 +184,46 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
                 .filter_for_review(tag_name=tag)
                 .order_by('-current_revision__created')
                 .all()[:MAX_FEED_ITEMS])
+
+
+class RevisionsFeed(DocumentsFeed):
+    """Feed of recent revisions"""
+
+    title = _("MDN recent revisions")
+    subtitle = _("Recent revisions to MDN documents")
+
+    def items(self):
+        return Revision.objects.order_by('-created')[:50]
+
+    def item_title(self, item):
+        return "%s edited %s" % (item.creator.username, item.title)
+
+    def item_description(self, item):
+        previous = item.get_previous()
+        if previous is None:
+            return 'Document created'
+        return item.comment
+
+    def item_link(self, item):
+        previous = item.get_previous()
+        if previous is None:
+            return item.document.get_absolute_url()
+        compare_url = reverse('wiki.compare_revisions', args=[item.document.slug])
+        qs = {'from': previous.id,
+              'to': item.id}
+        return "%s?%s" % (self.request.build_absolute_uri(compare_url),
+                          urllib.urlencode(qs))
+
+    def item_pubdate(self, item):
+        return item.created
+
+    def item_author_name(self, item):
+        return '%s' % item.creator
+
+    def item_author_link(self, item):
+        return self.request.build_absolute_uri(
+            reverse('devmo.views.profile_view',
+                    args=(item.creator.username,)))
+
+    def item_categories(self, item):
+        return []
