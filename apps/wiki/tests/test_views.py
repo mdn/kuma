@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
+import datetime
 import logging
 import json
 import base64
@@ -1096,6 +1097,24 @@ class DocumentEditingTests(TestCaseBase):
         ok_(d.children.count() == 1)
         ok_(d.children.all()[0].title == 'Replicated local storage')
 
+    def test_revisions_feed(self):
+        d = document(title='HTML9')
+        d.save()
+        for i in xrange(1, 6):
+            r = revision(save=True, document=d,
+                         title='HTML9', comment='Revision %s' % i,
+                         is_approved=True,
+                         created=datetime.datetime.now()\
+                         + datetime.timedelta(seconds=5*i))
+
+        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
+                                       args=(), kwargs={'format': 'rss'}))
+        eq_(200, resp.status_code)
+
+        ok_('Document created' in resp.content)
+        ok_('Revision 3' in resp.content)
+        ok_('$compare?to' in resp.content)
+        
 
 class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']
