@@ -577,6 +577,16 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 #doc-of-the-day .entry-summary a:link, #doc-of-the-day .entry-summary a:visited, 
 #doc-of-the-day .entry-meta a:link, #doc-of-the-day .entry-meta a:visited { color: #f8d575; }
 
+/*** @Doc Pagination *********/
+ol.pagination { border-top: solid 1px #9ACCF7; font-family: Verdana; margin: 20px 0; padding: 20px 0; }
+ol.pagination li { float: left; list-style: none; padding: 0 2px; }
+ol.pagination li.prev { padding-left: 0; }
+ol.pagination li a { float: left; padding: 3px 8px 5px; }
+ol.pagination li a:hover { text-decoration: underline; }
+ol.pagination li.prev a { padding-left: 0; }
+ol.pagination li.selected a { background: #447bc4; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; color: #fff; cursor: default; }
+ol.pagination li.selected a:hover { text-decoration:none; }
+
 /*** @Tools *********/
 #content-sub #tools { background: #e1dcba; background: rgba(200,190,90,.25); border-bottom: 3px solid #c9ba5e; }
 #tools .mod-title { color: #cabd6a; background: #2f2f2f url("../img/bg-headings.png") 100% -200px no-repeat; }
