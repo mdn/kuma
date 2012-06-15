@@ -1104,7 +1104,8 @@ class DocumentEditingTests(TestCaseBase):
             r = revision(save=True, document=d,
                          title='HTML9', comment='Revision %s' % i,
                          is_approved=True,
-                         created=datetime.datetime.now() + datetime.timedelta(seconds=5*i))
+                         created=datetime.datetime.now()\
+                         + datetime.timedelta(seconds=5*i))
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}))

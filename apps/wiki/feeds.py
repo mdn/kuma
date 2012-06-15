@@ -208,7 +208,8 @@ class RevisionsFeed(DocumentsFeed):
         previous = item.get_previous()
         if previous is None:
             return item.document.get_absolute_url()
-        compare_url = reverse('wiki.compare_revisions', args=[item.document.slug])
+        compare_url = reverse('wiki.compare_revisions',
+                              args=[item.document.slug])
         qs = {'from': previous.id,
               'to': item.id}
         return "%s?%s" % (self.request.build_absolute_uri(compare_url),
