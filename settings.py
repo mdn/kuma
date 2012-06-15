@@ -105,7 +105,7 @@ MDN_LANGUAGES = ('en-US', 'ar', 'de', 'it', 'el', 'es', 'fa', 'fi', 'fr', 'cs',
                  'ca', 'fy-NL', 'ga-IE', 'he', 'hr', 'hu', 'id', 'it', 'ja',
                  'ka', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sq',
                  'th', 'tr', 'vi', 'zh-CN', 'zh-TW')
-RTL_LANGUAGES = None # ('ar', 'fa', 'fa-IR', 'he')
+RTL_LANGUAGES = ('ar', 'fa', 'fa-IR', 'he')
 
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
     'pt': 'pt-PT',
@@ -309,6 +309,7 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
     'sumo.middleware.LocaleURLMiddleware',
+    'wiki.middleware.ReadOnlyMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
