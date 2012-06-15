@@ -55,7 +55,8 @@ ul.cke_panel_list{list-style-type:none;margin:3px;padding:0;white-space:nowrap;}
 li.cke_panel_listItem{margin:0;}
 .cke_panel_listItem a{padding:2px;display:block;border:1px solid #fff;color:inherit!important;text-decoration:none;overflow:hidden;text-overflow:ellipsis;}* html .cke_panel_listItem a{width:100%;color:#000;}
 *:first-child+html .cke_panel_listItem a{color:#000;}.cke_panel_listItem.cke_selected a{border:1px solid #ccc;background-color:#e9f5ff;}
-.cke_panel_listItem a:hover,.cke_panel_listItem a:focus,.cke_panel_listItem a:active{border-color:#316ac5;background-color:#dff1ff;}
+.cke_panel_listItem a:hover{background-color:#fefefe;cursor:pointer;}
+.cke_panel_listItem a:focus,.cke_panel_listItem a:active{border-color:#316ac5;background-color:#dff1ff;}
 .cke_hc .cke_panel_listItem.cke_selected a,.cke_hc .cke_panel_listItem a:hover,.cke_hc .cke_panel_listItem a:focus,.cke_hc .cke_panel_listItem a:active{border-width:3px;padding:0;}.cke_panel_grouptitle{font-size:11px;font-family:'Microsoft Sans Serif',Tahoma,Arial,Verdana,Sans-Serif;font-weight:bold;white-space:nowrap;background-color:#dcdcdc;color:#000;margin:0;padding:3px;}
 .cke_panel_listItem p,.cke_panel_listItem h1,.cke_panel_listItem h2,.cke_panel_listItem h3,.cke_panel_listItem h4,.cke_panel_listItem h5,.cke_panel_listItem h6,.cke_panel_listItem pre{margin-top:3px;margin-bottom:3px;}.cke_skin_kuma .cke_button_textcolor_panel,.cke_skin_kuma .cke_button_bgcolor_panel{width:150px;height:135px;}.cke_colorblock{padding:3px;font-size:11px;font-family:'Microsoft Sans Serif',Tahoma,Arial,Verdana,Sans-Serif;}
 .cke_colorblock,.cke_colorblock a{text-decoration:none;color:#000;}
