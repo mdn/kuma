@@ -109,7 +109,7 @@ urlpatterns += patterns('wiki.views',
     url(r'^/feeds/(?P<format>[^/]+)/revisions/?',
         RevisionsFeed(), name="wiki.feeds.recent_revisions"),
 
-    url(r'^/tag/(?P<tag>[^/]+)$', 'list_documents', name='wiki.tag'),
+    url(r'^/tag/(?P<tag>.+)$', 'list_documents', name='wiki.tag'),
 
     url(r'^/load/$', 'load_documents', name='wiki.load_documents'),
 
