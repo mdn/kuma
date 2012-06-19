@@ -22,6 +22,14 @@ h2 { font-size: 1.428em; }
 h3 { font-size: 1.142em; }
 h4, h5, h6 { font-size: 1em; }
 
+h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { color: #999; font-style:italic; font-size: 12px; }
+h1:before { content: "<h1> "; }
+h2:before { content: "<h2> "; }
+h3:before { content: "<h3> "; }
+h4:before { content: "<h4> "; }
+h5:before { content: "<h5> "; }
+h6:before { content: "<h6> "; }
+
 .urlexpansion { display: none; }
 a.imagelink, a[rel~="internal"] { background: none; padding-right: 0; }
 
