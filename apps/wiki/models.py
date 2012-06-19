@@ -38,10 +38,10 @@ from taggit.utils import parse_tags
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code',
-    'dl', 'dt', 'dd', 'small', 'sup', 'u',
-    'nobr', 'dfn', 'caption',
+    'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp',
+    'nobr', 'dfn', 'caption', 'var',
     'img',
-    'input',
+    'input', 'label', 'select', 'option', 'textarea',
     'table', 'tbody', 'thead', 'tr', 'th', 'td',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
