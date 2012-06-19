@@ -203,6 +203,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .notice p, .notice ul { margin-bottom: 10px; }
 .notice.success { background: #effdfb; border-color: #beede5; }
 .notice.error { border-color: #e1a696; }
+p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 
 /*** @Accessbility @Navigation *********/
 #nav-access { position: absolute; top: -20em; width: 100%; z-index: 999; }
