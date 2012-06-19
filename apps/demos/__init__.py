@@ -196,7 +196,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user input with HTML, and more. What else can you do without JavaScript?"),
         "description": _("Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user input with HTML, and more. What else can you do without JavaScript?"),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>Who needs JavaScript? The expanding capabilities of HTML and CSS make it easier than ever to create rich user experiences for the Web. Mark Pilgrim captures this in <cite><a href="http://diveintohtml5.info/index.html">Dive into HTML5</a></cite> when he advises, "Scripting is here to stay, but should be avoided where more convenient declarative markup can be used." Today, declarative markup can be used to accomplish more than ever.</p>
+<p>Dynamically adapt to different screen sizes using CSS <a href="https://developer.mozilla.org/en/CSS/Media_queries">media queries</a>. Make a page come alive with CSS <a href="https://developer.mozilla.org/en/CSS/CSS_transitions">transitions</a> and <a href="https://developer.mozilla.org/en/CSS/CSS_animations">animations</a>. Create eye-popping graphics and animations with <a href="https://developer.mozilla.org/en/CSS/Using_CSS_transforms#3D_specific_CSS_properties">3D transforms</a>. Warn users about invalid input with HTML <a href="https://developer.mozilla.org/en/HTML/Forms_in_HTML#section_8">form validation</a>. Provide rich media with graceful fallbacks using HTML5 <a href="https://developer.mozilla.org/en/Using_audio_and_video_in_Firefox">video and audio</a>. The open Web lets you do all of this and more, all without a single line of JavaScript.</p>
+<p>So hold the JavaScript and show us what you can do this month in the July Dev Derby!</p>"""),
     },
     {
         "tag_name": "challenge:2012:august",
@@ -212,13 +214,13 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     },
     {
         "tag_name": "challenge:2012:september",
-        "title": _("September 2012 Dev Derby Challenge - ??"),
-        "short_title": _("??"),
+        "title": _("September 2012 Dev Derby Challenge - Geolocation & Camera API"),
+        "short_title": _("Geolocation & Camera API"),
         "dateline": _("September 2012"),
         "short_dateline": _("September"),
-        "tagline": _("??"),
-        "summary": _("??"),
-        "description": _("??"),
+        "tagline": _("Wish you were here!"),
+        "summary": _("With Geolocation, you can get the user's physical location. With the Camera API, you can access their mobile camera. What can you do by combining the two? People, places, photos. Go!"),
+        "description": _("With Geolocation, you can get the user's physical location. With the Camera API, you can access their mobile camera. What can you do by combining the two? People, places, photos. Go!"),
         "learn_more": [],
         "tab_copy": _("??"),
     },
