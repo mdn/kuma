@@ -493,6 +493,7 @@ DOMAIN_METHODS = {
     'javascript': [
         # We can't say **.js because that would dive into any libraries.
         ('media/ckeditor/plugins/mdn-link/**.js', 'javascript'),
+        ('media/ckeditor/plugins/mdn-syntaxhighlighter/**.js', 'javascript'),
     ],
 }
 
