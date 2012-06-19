@@ -443,7 +443,11 @@ td.diff_header {
 }
 
 /* WYSIWYG-specific styles */
-.ui-autocomplete { z-index: 100001 !important; } /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
+.ui-autocomplete { 
+  z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
+  max-height: 200px;
+  overflow: auto;
+}
 
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/

@@ -244,6 +244,12 @@
 				self._renderItem = self.options._renderItem;
 			}
 			
+		},
+		
+		reposition: function() {
+			this.menu.element.position( $.extend({
+				of: this.element
+			}, this.options.position ))
 		}
     });
 	
