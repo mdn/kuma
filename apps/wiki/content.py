@@ -118,7 +118,28 @@ class SectionIDFilter(html5lib_Filter):
 
     def slugify(self, text):
         """Turn the text content of a header into a slug for use in an ID"""
-        return (text.replace(' ', '_'))
+        non_ascii = [c for c in text if ord(c) > 128]
+        if non_ascii:
+            for c in non_ascii:
+                text = text.replace(c, self.encode_non_ascii(c))
+        text = text.replace(' ', '_')
+        return text
+
+    def encode_non_ascii(self, c):
+        # This is slightly gnarly.
+        #
+        # What MindTouch does is basically turn any non-ASCII characters
+        # into UTF-8 codepoints, preceded by a dot.
+        #
+        # This is somewhat tricky in Python because Python's internals are
+        # UCS-2, meaning that Python will give us, essentially, UTF-16
+        # codepoints out of Unicode strings. So, an ugly but functional
+        # hack: encode the offending character UTF-8 and repr that, which
+        # gives us the codepoints preceded by '\x' escape sequences. Then
+        # we can just replace the escape sequence with the dot, uppercase
+        # it, and we have the thing MindTouch would generate.
+        return repr(c.encode('utf-8')).strip("'").replace(r'\x', '.').upper()
+
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
