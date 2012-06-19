@@ -1058,15 +1058,16 @@ def autosuggest_documents(request):
                                     is_template=0,
                                     locale=request.locale).
                              exclude(title__iregex=r'Redirect [0-9]+$').
+                             exclude(html__iregex=r'^(<p>)?REDIRECT').  #Legacy redirect
                              order_by('title'))
 
     docs_list = []
     for d in docs:
-        doc_info = {}
-        doc_info['title'] = d.title
-        doc_info['label'] = d.title
-        doc_info['href'] = d.get_absolute_url()
-        doc_info['id'] = d.id
+        doc_info = {
+            'title': d.title,
+            'label': d.title,
+            'href':  d.get_absolute_url()
+        }
         docs_list.append(doc_info)
 
     data = json.dumps(docs_list)
