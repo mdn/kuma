@@ -1057,8 +1057,9 @@ def autosuggest_documents(request):
     docs = (Document.objects.filter(title__icontains=partial_title,
                                     is_template=0,
                                     locale=request.locale).
-                             exclude(title__iregex=r'Redirect [0-9]+$').
+                             exclude(title__iregex=r'Redirect [0-9]+$').  # New redirect pattern
                              exclude(html__iregex=r'^(<p>)?REDIRECT').  #Legacy redirect
+                             exclude(slug__icontains='Talk:').  # Remove old talk pages
                              order_by('title'))
 
     docs_list = []
