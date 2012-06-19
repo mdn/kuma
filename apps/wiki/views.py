@@ -1197,7 +1197,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
     user = request.user
 
-    if not revision_id:
+    if not revision_id and not document_locale:
         # HACK: Seems weird, but sticking the translate-to locale in a query
         # param is the best way to avoid the MindTouch-legacy locale
         # redirection logic.
