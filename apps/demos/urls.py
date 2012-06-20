@@ -1,9 +1,5 @@
 from django.conf.urls.defaults import *
 
-from django.views.generic.list_detail import object_list
-
-from demos.models import Submission
-
 from .feeds import RecentSubmissionsFeed, FeaturedSubmissionsFeed
 from .feeds import TagSubmissionsFeed, ProfileSubmissionsFeed
 from .feeds import SearchSubmissionsFeed
@@ -15,10 +11,12 @@ template_loader = JingoTemplateLoader()
 urlpatterns = patterns('demos.views',
 
     url(r'^$', 'home', name='demos'),
-    
+
     url(r'^devderby/?$', 'devderby_landing', name='demos_devderby_landing'),
-    url(r'^devderby/(?P<year>\d\d\d\d)/(?P<month>[\w]+)/?$', 'devderby_by_date', name='demos_devderby_by_date'),
-    url(r'^devderby/tag/(?P<tag>[^/]+)/?$', 'devderby_tag', name='demos_devderby_tag'),
+    url(r'^devderby/(?P<year>\d\d\d\d)/(?P<month>[\w]+)/?$',
+        'devderby_by_date', name='demos_devderby_by_date'),
+    url(r'^devderby/tag/(?P<tag>[^/]+)/?$', 'devderby_tag',
+        name='demos_devderby_tag'),
     url(r'^devderby/rules/?$', 'devderby_rules', name='demos_devderby_rules'),
 
     url(r'^terms', 'terms', name='demos_terms'),
@@ -29,35 +27,39 @@ urlpatterns = patterns('demos.views',
     url(r'^detail/(?P<slug>[^/]+)/like$', 'like', name='demos_like'),
     url(r'^detail/(?P<slug>[^/]+)/unlike$', 'unlike', name='demos_unlike'),
     url(r'^detail/(?P<slug>[^/]+)/flag$', 'flag', name='demos_flag'),
-    url(r'^detail/(?P<slug>[^/]+)/download$', 'download', name='demos_download'),
+    url(r'^detail/(?P<slug>[^/]+)/download$', 'download',
+        name='demos_download'),
     url(r'^detail/(?P<slug>[^/]+)/launch$', 'launch', name='demos_launch'),
     url(r'^detail/(?P<slug>[^/]+)/edit$', 'edit', name='demos_edit'),
     url(r'^detail/(?P<slug>[^/]+)/delete$', 'delete', name='demos_delete'),
-    url(r'^detail/(?P<slug>[^/]+)/comment/$', 
+    url(r'^detail/(?P<slug>[^/]+)/comment/$',
         'new_comment', name='demos_new_comment'),
-    url(r'^detail/(?P<slug>[^/]+)/comment/(?P<parent_id>\d+)/$', 
+    url(r'^detail/(?P<slug>[^/]+)/comment/(?P<parent_id>\d+)/$',
         'new_comment', name='demos_new_reply'),
-    url(r'^detail/(?P<slug>[^/]+)/comment/(?P<object_id>\d+)/delete/$', 
+    url(r'^detail/(?P<slug>[^/]+)/comment/(?P<object_id>\d+)/delete/$',
         'delete_comment', name='demos_delete_comment'),
-    url(r'^detail/(?P<slug>[^/]+)/hide$', 'hideshow', dict( hide=True ), name='demos_hide'),
-    url(r'^detail/(?P<slug>[^/]+)/show$', 'hideshow', dict( hide=False ), name='demos_show'),
+    url(r'^detail/(?P<slug>[^/]+)/hide$', 'hideshow', dict(hide=True),
+        name='demos_hide'),
+    url(r'^detail/(?P<slug>[^/]+)/show$', 'hideshow', dict(hide=False),
+        name='demos_show'),
 
     url(r'^search/?$', 'search', name="demos_search"),
     url(r'^all/?$', 'all', name='demos_all'),
     url(r'^tag/(?P<tag>[^/]+)/?$', 'tag', name='demos_tag'),
-    url(r'^profile/(?P<username>[^/]+)/?$', 'profile_detail', name="demos_profile_detail"),
+    url(r'^profile/(?P<username>[^/]+)/?$', 'profile_detail',
+        name="demos_profile_detail"),
 
-    url(r'feeds/(?P<format>[^/]+)/all/', RecentSubmissionsFeed(), 
+    url(r'feeds/(?P<format>[^/]+)/all/', RecentSubmissionsFeed(),
         name="demos_feed_recent"),
-    url(r'feeds/(?P<format>[^/]+)/featured/', FeaturedSubmissionsFeed(), 
+    url(r'feeds/(?P<format>[^/]+)/featured/', FeaturedSubmissionsFeed(),
         name="demos_feed_featured"),
-    url(r'feeds/(?P<format>[^/]+)/search/?$', SearchSubmissionsFeed(), 
+    url(r'feeds/(?P<format>[^/]+)/search/?$', SearchSubmissionsFeed(),
         name="demos_feed_search"),
-    url(r'feeds/(?P<format>[^/]+)/tag/(?P<tag>[^/]+)/?$', TagSubmissionsFeed(), 
+    url(r'feeds/(?P<format>[^/]+)/tag/(?P<tag>[^/]+)/?$', TagSubmissionsFeed(),
         name="demos_feed_tag"),
-    url(r'feeds/(?P<format>[^/]+)/profile/(?P<username>[^/]+)/?$', ProfileSubmissionsFeed(), 
-        name="demos_feed_profile"),
-    
+    url(r'feeds/(?P<format>[^/]+)/profile/(?P<username>[^/]+)/?$',
+        ProfileSubmissionsFeed(), name="demos_feed_profile"),
+
 )
 urlpatterns += patterns('',
     (r'^comments/', include('threadedcomments.urls')),

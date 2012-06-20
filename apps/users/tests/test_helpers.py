@@ -1,5 +1,4 @@
 import urllib
-import logging
 from hashlib import md5
 
 from django.conf import settings
@@ -7,7 +6,6 @@ from django.contrib.auth.models import User
 
 from jinja2 import Markup
 from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
@@ -28,7 +26,9 @@ class HelperTestCase(TestCase):
         eq_(u'/profiles/testuser', profile_url(self.u))
 
     def test_profile_default_gravatar(self):
-        ok_(urllib.urlencode({'d': settings.DEFAULT_AVATAR}) in profile_avatar(self.u), "Bad default avatar: %s" % profile_avatar(self.u))
+        d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})
+        ok_(d_param in profile_avatar(self.u),
+            "Bad default avatar: %s" % profile_avatar(self.u))
 
     def test_profile_avatar(self):
         self.u.email = 'test@test.com'
