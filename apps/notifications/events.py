@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import mail
 from django.db.models import Q
 
-from celery.decorators import task
+from celery.task import task
 
 from notifications.models import Watch, WatchFilter, EmailUser, multi_raw
 from notifications.utils import merge, hash_to_unsigned

@@ -93,10 +93,10 @@ class dev_hacks {
             #    owner => "root", group => "root", mode => 0440;
             #}
             
-            #file { "/etc/hosts":
-            #    source => "/vagrant/puppet/files/etc/hosts",
-            #    owner => "root", group => "root", mode => 0644;
-            #}
+            file { "/etc/hosts":
+                source => "/vagrant/puppet/files/etc/hosts",
+                owner => "root", group => "root", mode => 0644;
+            }
             
             # Disable SELinux... causing problems, and I don't understand it.
             # TODO: see http://blog.endpoint.com/2010/02/selinux-httpd-modwsgi-26-rhel-centos-5.html
@@ -126,7 +126,7 @@ class dev_hacks_post {
             owner => "vagrant", group => "vagrant", mode => 0664;
         "/home/vagrant/bin":
             ensure => directory,
-            owner => "vagrant", group => "vagrant", mode => 0777;
+            owner => "vagrant", group => "vagrant", mode => 0755;
         "/home/vagrant/bin/go-tmux.sh":
             source => "$PROJ_DIR/puppet/files/home/vagrant/bin/go-tmux.sh",
             owner => "vagrant", group => "vagrant", mode => 0777;
