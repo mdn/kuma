@@ -22,7 +22,8 @@ from sumo.tests import post, get, attrs_eq
 from wiki.cron import calculate_related_documents
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
-from wiki.models import Document, Revision, HelpfulVote, SIGNIFICANCES
+from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
+                         DocumentTag)
 from wiki.tasks import send_reviewed_notification
 from wiki.tests import (TestCaseBase, document, revision, new_document_data,
                         create_topical_parents_docs)
@@ -651,7 +652,7 @@ class DocumentListTests(TestCaseBase):
 
     def test_tag_list(self):
         """Verify the tagged documents list view."""
-        tag = Tag(name='Test Tag', slug='test-tag')
+        tag = DocumentTag(name='Test Tag', slug='test-tag')
         tag.save()
         self.doc.tags.add(tag)
         response = self.client.get(reverse('wiki.tag',
