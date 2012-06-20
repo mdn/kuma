@@ -1554,3 +1554,51 @@ class MindTouchRedirectTests(TestCaseBase):
             resp = self.client.get(mt_url)
             eq_(301, resp.status_code)
             eq_('http://testserver%s' % doc['expected'], resp['Location'])
+
+class AutosuggestDocumentsTests(TestCaseBase):
+    """ Test the we're properly filtering out the Redirects from the document list """
+
+    def test_document_redirects(self):
+
+        # All contain "e", so that will be the search term
+        invalidDocuments = (
+            {'title': 'Redirect 1'},  # Should *not* be returned (first rule)
+            {'title': 'e 1', 'html': 'Redirect http//'},  # Should *not* be returned (second rule)
+            {'title': 'e 2', 'html': '#Redirect http//'},  # Should *not* be returned (second rule)
+            {'title': 'e 3', 'html': '<p>#Redirect http//'},  # Should *not* be returned (second rule)
+            {'title': 'e 4', 'html': '<p>Redirect http//'},  # Should *not* be returned (second rule)
+            {'title': 'e 5', 'slug': 'Talk:Something'},  # Should *not* be returned (third rule)
+        )
+
+        validDocuments = (
+            {'title': 'e 6', 'html': '<p>Blah text Redirect'},
+            {'title': 'e 7', 'html': 'AppleTalk'},
+            {'title': 'Response.Redirect' },
+        )
+
+        allDocuments = invalidDocuments + validDocuments
+
+        for doc in allDocuments:
+            d = document()
+            d.title = doc['title']
+            if 'html' in doc:
+                d.html = doc['html']
+            if 'slug' in doc:
+                d.slug = doc['slug']
+            d.save()
+
+        url = reverse('wiki.autosuggest_documents', locale='en-US') + '?term=e'
+        resp = self.client.get(url)
+
+        eq_(200, resp.status_code)
+        data = json.loads(resp.content)
+        eq_(len(data), len(validDocuments))
+
+        # Ensure that the valid docs found are all in the valid list
+        for d in data:
+            found = False
+            for v in validDocuments:
+                if v['title'] == d['title']:
+                    found = True
+                    break
+            eq_(True, found)
