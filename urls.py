@@ -16,11 +16,11 @@ urlpatterns = patterns('',
     ('', include('landing.urls')),
     ('', include('devmo.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
-    (r'^demos/', include('demos.urls')),
+    (r'^demos/?', include('demos.urls')),
 
     # Django admin:
-    (r'^admin/', include('smuggler.urls')),
-    (r'^admin/', include(admin.site.urls)),
+    (r'^admin/?', include('smuggler.urls')),
+    (r'^admin/?', include(admin.site.urls)),
 
     (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
@@ -31,7 +31,7 @@ urlpatterns = patterns('',
     # Docs landing page and next-gen kuma wiki
     ('', include('docs.urls')),
     (r'^docs', include('wiki.urls')),
-    
+
     #(r'^gallery', include('gallery.urls')),
     #(r'^army-of-awesome', include('customercare.urls')),
     #(r'^chat', include('chat.urls')),
@@ -58,6 +58,7 @@ urlpatterns = patterns('',
     # Legacy MindTouch redirects.
     (r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
 )
+
 
 # Handle 404 and 500 errors
 def _error_page(request, status):
