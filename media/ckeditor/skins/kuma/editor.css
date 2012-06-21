@@ -240,8 +240,11 @@ html.cke_skin_kuma_container{visibility:visible;}
 .cke_skin_kuma .cke_toolbox:after{content:".";display:block;clear:both;height:0;visibility:hidden;}
 
 .cke_skin_kuma .mdn-buttons-button { background: url(/media/img/markup.png) no-repeat; }
-.mdn-buttons-button.h1 {background-position:-6px -6px;}
-.mdn-buttons-button.h2 {background-position:-50px -6px;}
-.mdn-buttons-button.h3 {background-position:-94px -6px;}
+.mdn-buttons-button.h1 {background-position:-5px -6px;}
+.mdn-buttons-button.h2 {background-position:-49px -6px;}
+.mdn-buttons-button.h3 {background-position:-93px -6px;}
+.mdn-buttons-button.h4 {background-position:-136px -6px;}
+.mdn-buttons-button.h5 {background-position:-180px -6px;}
+.mdn-buttons-button.h6 {background-position:-225px -6px;}
 .mdn-buttons-button.pre {background: url(/media/ckeditor/plugins/mdn-buttons/button-pre.png) no-repeat center center;} 
 .mdn-buttons-button.code {background: url(/media/ckeditor/plugins/mdn-buttons/button-code.png) no-repeat center center;} 
