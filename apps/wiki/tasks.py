@@ -109,3 +109,9 @@ def _rebuild_kb_chunk(data, **kwargs):
     transaction.commit_unless_managed()
 
     unpin_this_thread()  # Not all tasks need to do use the master.
+
+
+@task
+def render_document(doc, cache_control, base_url):
+    """Simple task wrapper for the render() method of the Document model"""
+    doc.render(cache_control, base_url)

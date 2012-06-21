@@ -4,12 +4,15 @@ import logging
 
 from cStringIO import StringIO
 
+import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User, Group, Permission
 import django.utils.simplejson as json
+
+import constance.config
 
 from sumo import ProgrammingError
 from sumo.tests import TestCase
@@ -18,10 +21,13 @@ from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
                          MAJOR_SIGNIFICANCE, CATEGORIES,
                          get_current_or_latest_revision,
-                         TaggedDocument)
+                         DocumentRenderedContentNotAvailable,
+                         DocumentRenderingInProgress,
+                         TaggedDocument,)
 from wiki.tests import (document, revision, doc_rev, translated_revision,
                         create_template_test_users,
                         create_topical_parents_docs)
+from wiki import tasks
 
 
 def _objects_eq(manager, list_):
@@ -812,3 +818,174 @@ class DumpAndLoadJsonTests(TestCase):
             d_curr = Document.objects.get_by_natural_key(*key)
             eq_(1, d_curr.revisions.count())
             eq_(uploader.id, d_curr.current_revision.creator_id)
+
+
+class DeferredRenderingTests(TestCase):
+    fixtures = ['test_users.json', ]
+
+    def setUp(self):
+        super(DeferredRenderingTests, self).setUp()
+        self.rendered_content = 'THIS IS RENDERED'
+        self.raw_content = 'THIS IS NOT RENDERED CONTENT'
+        self.d1, self.r1 = doc_rev('Doc 1')
+        constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT = 600.0
+        constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 7.0
+
+    def tearDown(self):
+        super(DeferredRenderingTests, self).tearDown()
+        self.d1.delete()
+
+    def test_rendering_fields(self):
+        """Defaults for model fields related to rendering should work as
+        expected"""
+        ok_(not self.d1.rendered_html)
+        ok_(not self.d1.defer_rendering)
+        ok_(not self.d1.is_rendering_scheduled)
+        ok_(not self.d1.is_rendering_in_progress)
+
+    @mock.patch('wiki.kumascript.get')
+    def test_get_rendered(self, mock_kumascript_get):
+        """get_rendered() should return rendered content when available,
+        attempt a render() when it's not"""
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+
+        # First, try getting the rendered version of a document. It should
+        # trigger a call to kumascript.
+        ok_(not self.d1.rendered_html)
+        ok_(not self.d1.render_started_at)
+        ok_(not self.d1.last_rendered_at)
+        result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
+        ok_(mock_kumascript_get.called)
+        eq_(self.rendered_content, result_rendered)
+        eq_(self.rendered_content, self.d1.rendered_html)
+
+        # Next, get a fresh copy of the document and try getting a rendering.
+        # It should *not* call out to kumascript, because the rendered content
+        # should be in the DB.
+        d1_fresh = Document.uncached.get(pk=self.d1.pk)
+        eq_(self.rendered_content, d1_fresh.rendered_html)
+        ok_(d1_fresh.render_started_at)
+        ok_(d1_fresh.last_rendered_at)
+        mock_kumascript_get.called = False
+        result_rendered, _ = d1_fresh.get_rendered(None, 'http://testserver/')
+        ok_(not mock_kumascript_get.called)
+        eq_(self.rendered_content, result_rendered)
+
+    @mock.patch('wiki.kumascript.get')
+    def test_one_render_at_a_time(self, mock_kumascript_get):
+        """Only one in-progress rendering should be allowed for a Document"""
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+        self.d1.render_started_at = datetime.now()
+        self.d1.save()
+        try:
+            self.d1.render('', 'http://testserver/')
+            ok_(False, "An attempt to render while another appears to be in "
+                       "progress should be disallowed")
+        except DocumentRenderingInProgress:
+            pass
+
+    @mock.patch('wiki.kumascript.get')
+    def test_render_timeout(self, mock_kumascript_get):
+        """A rendering that has taken too long is no longer considered in progress"""
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+        timeout = 5.0
+        constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT = timeout
+        self.d1.render_started_at = (datetime.now() -
+                                     timedelta(seconds=timeout+1))
+        self.d1.save()
+        try:
+            self.d1.render('', 'http://testserver/')
+        except DocumentRenderingInProgress:
+            ok_(False, "A timed-out rendering should not be considered as still "
+                       "in progress")
+
+    @mock.patch('wiki.kumascript.get')
+    def test_long_render_sets_deferred(self, mock_kumascript_get):
+        """A rendering that takes more than a desired response time marks the
+        document as in need of deferred rendering in the future."""
+        rendered_content = self.rendered_content
+        def my_kumascript_get(self, cache_control, base_url, timeout):
+            time.sleep(1.0)
+            return (rendered_content, None)
+        mock_kumascript_get.side_effect = my_kumascript_get
+
+        constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 2.0
+        self.d1.render('', 'http://testserver/')
+        ok_(not self.d1.defer_rendering)
+
+        constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 0.5
+        self.d1.render('', 'http://testserver/')
+        ok_(self.d1.defer_rendering)
+
+    @mock.patch('wiki.kumascript.get')
+    @mock.patch_object(tasks.render_document, 'delay')
+    def test_schedule_rendering(self, mock_render_document_delay,
+                                mock_kumascript_get):
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+        
+        # Scheduling for a non-deferred render should happen on the spot.
+        self.d1.defer_rendering = False
+        self.d1.save()
+        ok_(not self.d1.render_scheduled_at)
+        ok_(not self.d1.last_rendered_at)
+        self.d1.schedule_rendering(None, 'http://testserver/')
+        ok_(self.d1.render_scheduled_at)
+        ok_(self.d1.last_rendered_at)
+        ok_(not mock_render_document_delay.called)
+        ok_(not self.d1.is_rendering_scheduled)
+
+        # Reset the significant fields and try a deferred render.
+        self.d1.last_rendered_at = None
+        self.d1.render_started_at = None
+        self.d1.render_scheduled_at = None
+        self.d1.defer_rendering = True
+        self.d1.save()
+
+        # Scheduling for a deferred render should result in a queued task.
+        self.d1.schedule_rendering(None, 'http://testserver/')
+        ok_(self.d1.render_scheduled_at)
+        ok_(not self.d1.last_rendered_at)
+        ok_(mock_render_document_delay.called)
+
+        # And, since our mock delay() doesn't actually queue a task, this
+        # document should appear to be scheduled for a pending render not yet
+        # in progress.
+        ok_(self.d1.is_rendering_scheduled)
+        ok_(not self.d1.is_rendering_in_progress)
+
+    @mock.patch('wiki.kumascript.get')
+    @mock.patch_object(tasks.render_document, 'delay')
+    def test_deferred_vs_immediate_rendering(self, mock_render_document_delay,
+                                             mock_kumascript_get):
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+
+        # When defer_rendering == False, the rendering should be immediate.
+        self.d1.rendered_html = ''
+        self.d1.defer_rendering = False
+        self.d1.save()
+        result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
+        ok_(not mock_render_document_delay.called)
+
+        # When defer_rendering == True, the rendering should be deferred and an
+        # exception raised if the content is blank.
+        self.d1.rendered_html = ''
+        self.d1.defer_rendering = True
+        self.d1.save()
+        try:
+            result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
+            ok_(False, "We should have gotten a "
+                       "DocumentRenderedContentNotAvailable exception")
+        except DocumentRenderedContentNotAvailable:
+            pass
+        ok_(mock_render_document_delay.called)
+
+    @mock.patch('wiki.kumascript.get')
+    def test_errors_stored_correctly(self, mock_kumascript_get):
+        errors = [
+            {'level': 'error', 'message': 'This is a fake error',
+             'args': ['FakeError']},
+        ]
+        mock_kumascript_get.return_value = (self.rendered_content, errors)
+
+        r_rendered, r_errors = self.d1.get_rendered(None, 'http://testserver/')
+        ok_(errors, r_errors)

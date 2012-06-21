@@ -962,6 +962,18 @@ CONSTANCE_CONFIG = dict(
         'the 4th retry waits 4*.5 = 2 seconds.'
     ),
 
+    KUMA_DOCUMENT_RENDER_TIMEOUT = (
+        180.0,
+        'Maximum seconds to wait before considering a rendering in progress or '
+        'scheduled as failed and allowing another attempt.'
+    ),
+    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = (
+        10.0,
+        'Maximum seconds to allow a document to spend rendering during the '
+        'response cycle before flagging it to be sent to the deferred rendering '
+        'queue for future renders.'
+    ),
+
     KUMASCRIPT_TIMEOUT = (
         0.0,
         'Maximum seconds to wait for a response from the kumascript service. '
