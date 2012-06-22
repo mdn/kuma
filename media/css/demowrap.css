@@ -11,7 +11,7 @@ a img { border: 0; }
 
 html, body { height: 100%; background: #000; overflow: hidden; }
 
-body { font: 12px/1.286 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; background: #000; color: #999; }
+body { font: 12px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; background: #000; color: #999; }
 h1, h2, h3, h4, h5, h6 { font-size: 1em; }
 
 :link, :visited { color: #fff; text-decoration: none; }
