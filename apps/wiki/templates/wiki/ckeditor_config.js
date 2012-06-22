@@ -28,21 +28,15 @@ CKEDITOR.editorConfig = function(config) {
 
     config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter';
     config.removePlugins = 'link';
-
+    
     config.toolbar_MDN = [
-        ['Source','-','mdnSave','mdnNewPage','mdnPreview'],
-        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
-        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-        ['NumberedList','BulletedList','DefinitionList','DefinitionTerm','DefinitionDescription','-','Outdent','Indent','Blockquote','CreateDiv'],
-        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-        ['BidiLtr', 'BidiRtl' ],
-        ['Link','Unlink','Anchor'],
-        ['Image','Table','HorizontalRule','SpecialChar','Iframe'],
-        ['h1Button', 'h2Button', 'h3Button', 'preButton', 'mdn-syntaxhighlighter', 'codeButton', '-', 'Styles'],
-        ['TextColor','BGColor'],
-        ['Maximize', 'ShowBlocks','-','About']
+        ['Source', 'mdnPreview', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
+        ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'Table', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
+        '/',
+        ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', '-', 'preButton', 'mdn-syntaxhighlighter', 'Styles'],
+        ['Link', 'Unlink', 'Anchor', '-', 'Bold', 'Italic', 'Underline', 'codeButton', 'Strike', 'Superscript', 'RemoveFormat', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyLeft']
     ];
+    
     config.skin = 'kuma';
     config.startupFocus = true;
     config.toolbar = 'MDN';
