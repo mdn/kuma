@@ -10,7 +10,6 @@
     // Requires node reading because the tag-it widget incorrectly overrides the "singleNodeField"
     function consolidateTags(isRemove) {
       return function(event, li) {
-
         var listItems = $("#page-tags .tagit-choice"),
             itemTexts = [];
 
@@ -21,7 +20,7 @@
 
         // Cycling through each list item, 
         listItems.each(function(i, e, a) {
-          if(isRemove && $(this)[0] == li[0]) {
+          if(isRemove && this == li[0]) {
             // do nothing -- this is the item being removed
           }
           else {
