@@ -72,7 +72,7 @@ abbr, acronym { border: 0; }
 #logo a { color: #000; text-decoration: none; }
 .major #logo img { width: 62px; height: auto; }
 #logo img { position: absolute; left: 0; top: -4px; border: 0; }
-#tagline { font-size: .714em; letter-spacing: -.01em; margin: 0; font-family: "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; }
+#tagline { font-size: .714em; letter-spacing: -.01em; margin: 0; font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; }
 
 /* @Footer *********/
 #footbar { clear: both; border-top: 3px solid #ccc; margin: 1em 0; padding: 20px 0 0; }

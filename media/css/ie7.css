@@ -35,4 +35,4 @@ ul.sortable .remove { font-family: sans-serif; margin-top: -1.25em; }
 /* IE doesn't inherit */
 ul.sortable .remove, 
 button.like, button.unlike,
-#comments-list .comment-opts button { font-family: "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; }
+#comments-list .comment-opts button { font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; }

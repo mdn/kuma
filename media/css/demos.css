@@ -107,7 +107,7 @@
 }
 #derby-cta span:before, #derby-cta span:after { content: "\272D"; display: inline-block; font-size: 11px; margin: 0 6px; position: relative; top: -5px; }
 #derby-cta em { font-style: normal; display: block; font-size: 32px; padding: 4px 0 1px; margin: 4px 0 6px; border: solid #fff; border-width: 1px 0; }
-#derby-cta strong { font-weight: normal; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; color: #f1ed0f; }
+#derby-cta strong { font-weight: normal; font: 11px "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; color: #f1ed0f; }
 #derby-cta strong:before { content: "\203A"; font-size: 1.4em; line-height: 1; margin-right: 2px; }
 
 /* Next and Prev demos *********/
