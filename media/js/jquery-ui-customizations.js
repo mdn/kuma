@@ -28,7 +28,9 @@
 			// The data object property which will also be the label
 			labelField: "title",
 			// Allow overriding of "_renderItem" method
-			_renderItem: null
+			_renderItem: null,
+			// Show items as anchors with title attributes
+			_renderItemAsLink: false
 		},
 		
 		// Create a cache - make this a 
@@ -242,6 +244,15 @@
 			// If the user wants to override the "_renderItem" method, let them
 			if(self.options._renderItem) {
 				self._renderItem = self.options._renderItem;
+			}
+			else if(self.options._renderItemAsLink) {
+				self._renderItem = function(list, item) {
+					return $("<li></li>")
+					        .data("item.autocomplete", item)
+					        .attr("title", item.href)
+					        .append($("<a></a>").text(item.label))
+					        .appendTo(list);
+				}
 			}
 			
 		},

@@ -113,6 +113,14 @@
                     {{ revision_form.show_toc | safe }}
                   </li>
                 {% endif %}
+                {% if show_translation_parent_block %}
+                <li class="metadata-choose-parent">
+                    {% include 'wiki/includes/title_autosuggest_url.html' %}
+                    {{_('This document may have been a translation of an existing document.  Search and set the parent document by title:')}}
+                    <input type="text" id="parent_text" />
+                    <input type="hidden" name="parent_id" id="parent_id" />
+                </li>
+                {% endif %}
             </ul>
           {% endif %}
 
