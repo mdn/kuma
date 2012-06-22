@@ -38,7 +38,7 @@ abbr.updated, abbr.published { border: 0; cursor: default; }
 
 /* @General elements and content *********/
 html { background: #f6f6f1 url("../img/bg-content.png"); }
-body { height: 400px; font: .875em/1.286 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; }
+body { height: 400px; font: .875em/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; }
 
 /*** @Links *********/
 :link { color: #369; text-decoration: none; }

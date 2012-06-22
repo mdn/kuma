@@ -1,6 +1,6 @@
 /* Styles for the WYSIWYG editor */
 html { margin: 0; padding: 0; }
-body { margin: 0; padding: 5px 18px; background-color: #fff; color: #333; font: .875em/1.286 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; }
+body { margin: 0; padding: 5px 18px; background-color: #fff; color: #333; font: .875em/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; }
 p, pre, blockquote, dl, ul, ol { margin: 0 0 1.286em; padding: 0; }
 table {	font-size: 100%; }
 th, td { font-family: inherit; font-size: inherit; color: inherit; }

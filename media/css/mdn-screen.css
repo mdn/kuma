@@ -107,7 +107,7 @@ abbr.updated, abbr.published { border: 0; cursor: default; }
 
 /* @General elements and content *********/
 html { background: #f6f6f1 url("../img/bg-content.png") fixed; }
-body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; }
+body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; }
 
 /*** @Links *********/
 :link { color: #369; text-decoration: none; }
@@ -273,10 +273,10 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 /*** @Shortcuts to @Docs *********/
 #nav-main #nav-sub-docs { width: 420px; padding: 10px 15px; font-size: .857em; border-color: #fb9500; }
 .hasJS #nav-main #nav-sub-docs, #nav-main .menu:hover #nav-sub-docs { margin-left: -150px; }
-#nav-main #nav-sub-docs ul { list-style: none; margin: 0; overflow: hidden; font: 11px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
+#nav-main #nav-sub-docs ul { list-style: none; margin: 0; overflow: hidden; font: 11px "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
 #nav-main #nav-sub-docs li { width: 24.9%; float: left; padding: .5em 0; margin: 0; text-align: center; }
 #nav-main #nav-sub-docs li li { width: 100%; float: none; padding: 0; margin: 0; }
-#nav-main #nav-sub-docs p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: .785em "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
+#nav-main #nav-sub-docs p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: .785em "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
 #nav-main #nav-sub-docs a { color: #ccc; height: auto; display: block; padding: .4em 0; border: 0; }
 #nav-main #nav-sub-docs a:hover, #nav-sub-docs a:focus, #nav-sub-docs a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
 
@@ -409,7 +409,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 #welcome-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: 15px; top: 15px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
 #welcome-close:hover, #welcome-close:focus { background-position: 0 -600px; }
 
-#welcome-open { position: absolute; right: 10px; top: -2px; z-index: 20; cursor: pointer; padding: 3px 8px; font: .785em/1 "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; color: #444; background: #f8d575 none; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; }
+#welcome-open { position: absolute; right: 10px; top: -2px; z-index: 20; cursor: pointer; padding: 3px 8px; font: .785em/1 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; color: #444; background: #f8d575 none; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; }
 #welcome-open:hover, #welcome-open:focus { color: #000; cursor: pointer; }
 
 /*** @Top @Docs *********/
