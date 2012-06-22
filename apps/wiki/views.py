@@ -699,6 +699,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                 section_id=section_id)
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc))
+        
+    # Need to make check *here* to see if this could have a translation parent
+    show_translation_parent_block = (document_locale != settings.WIKI_DEFAULT_LANGUAGE) and (not doc.parent_id)
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
@@ -709,6 +712,16 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         is_iframe_target = request.GET.get('iframe', False)
         is_raw = request.GET.get('raw', False)
         need_edit_links = request.GET.get('edit_links', False)
+        parent_id = request.POST.get('parent_id', '')
+
+        # Attempt to set a parent
+        if show_translation_parent_block and parent_id:
+            try:
+                parent_doc = get_object_or_404(Document, id=parent_id)
+                doc.parent = parent_doc
+            except Document.DoesNotExist:
+                logging.debug('Could not find posted parent')
+
 
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
@@ -862,6 +875,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'section_id': section_id,
+                         'show_translation_parent_block': show_translation_parent_block,
                          'disclose_description': disclose_description,
                          'parent_slug': parent_slug,
                          'parent_path': parent_path,
@@ -960,6 +974,8 @@ def preview_revision(request):
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
     partial_title = request.GET.get('term', '')
+    current_locale = request.GET.get('current_locale', False)
+    exclude_current_locale = request.GET.get('exclude_current_locale', False)
 
     # TODO: isolate to just approved docs?
     docs = (Document.objects.extra(select={'length':'Length(slug)'}).filter(title__icontains=partial_title,
@@ -970,12 +986,19 @@ def autosuggest_documents(request):
                              exclude(slug__icontains='Talk:').  # Remove old talk pages
                              order_by('title', 'length'))
 
+    if current_locale:
+        docs = docs.filter(locale=request.locale)
+
+    if exclude_current_locale:
+        docs = docs.exclude(locale=request.locale)
+
     docs_list = []
     for d in docs:
         doc_info = {
-            'title': d.title,
+            'title': d.title + ' [' + d.locale + ']',
             'label': d.title,
-            'href':  d.get_absolute_url()
+            'href':  d.get_absolute_url(),
+            'id': d.id 
         }
         docs_list.append(doc_info)
 
