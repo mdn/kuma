@@ -1020,15 +1020,16 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					var url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '',
 						useOriginal = url.indexOf( '/' ) === 0 || 	// ex: "/some/page"
 									  url.indexOf('#') === 0 || 	// ex: "someAnchor"
-									  url.indexOf('//') > -1 ; 		// ex: "http://mozilla.com" or "https://mozilla.com"
+									  url.indexOf('//') > -1; 		// ex: "http://mozilla.com" or "https://mozilla.com"
 					
-					attributes[ 'data-cke-saved-href' ] = useOriginal ? url : 'http://' + url;
+					attributes[ 'data-cke-saved-href' ] = attributes.title = useOriginal ? url : 'http://' + url;
 					
 					break;
 				case 'anchor':
 					var name = ( data.anchor && data.anchor.name ),
-						id = ( data.anchor && data.anchor.id );
-					attributes[ 'data-cke-saved-href' ] = '#' + ( name || id || '' );
+						id = ( data.anchor && data.anchor.id ),
+						finalURL = '#' + ( name || id || '' );
+					attributes[ 'data-cke-saved-href' ] = attributes.title = finalURL;
 					break;
 				case 'email':
 
@@ -1075,7 +1076,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						}
 					}
 
-					attributes[ 'data-cke-saved-href' ] = linkHref.join( '' );
+					attributes[ 'data-cke-saved-href' ] = attributes.title = linkHref.join( '' );
 					break;
 			}
 
