@@ -1047,7 +1047,6 @@ def preview_revision(request):
 
 
 @waffle_flag('kumawiki')
-@login_required
 @require_GET
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
@@ -1058,7 +1057,7 @@ def autosuggest_documents(request):
                                     is_template=0,
                                     locale=request.locale).
                              exclude(title__iregex=r'Redirect [0-9]+$').  # New redirect pattern
-                             exclude(html__iregex=r'^(<p>)?REDIRECT').  #Legacy redirect
+                             exclude(html__iregex=r'^(<p>)?(#)?REDIRECT').  #Legacy redirect
                              exclude(slug__icontains='Talk:').  # Remove old talk pages
                              order_by('title'))
 
