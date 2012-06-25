@@ -113,5 +113,9 @@ urlpatterns += patterns('wiki.views',
 
     url(r'^/load/$', 'load_documents', name='wiki.load_documents'),
 
+    # File detail. Note this does not have a trailing slash.
+    url(r'^/files/(?P<attachment_id>\d+)/(?P<filename>.+)$',
+        'attachment_detail', name='wiki.attachment_detail'),
+
     (r'^/(?P<document_path>[^\$]+)', include(document_patterns)),
 )
