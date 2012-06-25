@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import transaction
 
-from celery.decorators import task
+from celery.task import task
 
 from questions import ANSWERS_PER_PAGE
 
