@@ -70,7 +70,7 @@ ALLOWED_STYLES = [
     'white-space',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
     'padding', 'padding-left', 'padding-top', 'padding-bottom',
-    'padding-right',
+    'padding-right', "position", "top", "height", "left", "right", 
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
