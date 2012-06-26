@@ -18,7 +18,7 @@ CKEDITOR.plugins.add( 'mdn-link',
 	{
 		
 		// Add the link and unlink buttons.
-		editor.addCommand( 'link', new CKEDITOR.dialogCommand( 'link' ) );
+		editor.addCommand( 'link', new CKEDITOR.dialogCommand('link') );
 		editor.addCommand( 'anchor', new CKEDITOR.dialogCommand( 'anchor' ) );
 		editor.addCommand( 'unlink', new CKEDITOR.unlinkCommand() );
 		editor.addCommand( 'removeAnchor', new CKEDITOR.removeAnchorCommand() );
@@ -41,7 +41,6 @@ CKEDITOR.plugins.add( 'mdn-link',
 		CKEDITOR.dialog.add( 'anchor', this.path + 'dialogs/anchor.js' );
 
 		// Add the CSS styles for anchor placeholders.
-
 		var side = ( editor.lang.dir == 'rtl' ? 'right' : 'left' );
 		var basicCss =
 			'background:url(' + CKEDITOR.getUrl( this.path + 'images/anchor.gif' ) + ') no-repeat ' + side + ' center;' +
