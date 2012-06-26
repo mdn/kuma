@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import include, patterns, url
 from django.conf import settings
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
@@ -16,11 +17,12 @@ urlpatterns = patterns('',
     ('', include('landing.urls')),
     ('', include('devmo.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
-    (r'^demos/?', include('demos.urls')),
+    (r'^demos/', include('demos.urls')),
+    (r'^demos', lambda x: redirect('demos.views.home')),
 
     # Django admin:
-    (r'^admin/?', include('smuggler.urls')),
-    (r'^admin/?', include(admin.site.urls)),
+    (r'^admin/', include('smuggler.urls')),
+    (r'^admin/', include(admin.site.urls)),
 
     (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
