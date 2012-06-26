@@ -25,7 +25,7 @@ from django.contrib import messages
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
 
@@ -1490,13 +1490,19 @@ def delete_revision(request, document_path, revision_id):
         # If the current_revision is being deleted, lets try to update it to
         # the previous approved revision.
         revs = document.revisions.filter(
-            is_approved=True).order_by('-reviewed')
-        if revs.count() > 1:
-            document.current_revision = revs[1]
+            is_approved=True).order_by('-created')
+
+        # Using len() here instead of count(), because count is affected by
+        # a cache delay of 60 seconds, so if the revisions are deleted in
+        # a short time span, the value returned by count() doesn't
+        # correspond to the number of existing reviews
+        if len(revs) > 1:
+            rev = revs[1]
+            rev.make_current()
         else:
-            document.current_revision = None
-        document.html = document.content_cleaned or ''
-        document.save()
+            # The document is deleted along with its last revision
+            document.delete()
+            return redirect('wiki.all_documents')
 
     revision.delete()
 
