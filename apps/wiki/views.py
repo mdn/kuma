@@ -803,7 +803,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         doc_form = DocumentForm(initial=_document_form_initial(doc))
         
     # Need to make check *here* to see if this could have a translation parent
-    show_translation_parent_block = True
+    show_translation_parent_block = (document_locale != settings.WIKI_DEFAULT_LANGUAGE) and (not doc.parent_id)
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
