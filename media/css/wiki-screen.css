@@ -154,7 +154,7 @@ div.note p, div.tip p { margin-bottom: .75em; }
 
 .title { position: relative; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
-.title h1 { float: left; width: 60%; }
+.title h1 { float: left; width: 60%; padding-left: 18px; }
 .title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
@@ -193,7 +193,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; }
 .editing #btn-properties:hover, .editing #btn-properties:focus { background-color: #25a; }
 
-.editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; }
+.editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; padding-left: 18px; }
 .editing #btn-savedraft { font-family: inherit; font-size: 1em; line-height: 1; text-transform: none; color: #333; padding: 0; background: transparent none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 .editing #btn-savedraft:hover, .editing #btn-savedraft:focus { text-decoration: underline; color: #25a; }
 
