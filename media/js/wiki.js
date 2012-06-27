@@ -591,6 +591,7 @@
     }
 
     function initSyntaxHighlighter() {
+        SyntaxHighlighter.defaults.toolbar = false;
         SyntaxHighlighter.all();
     }
 
