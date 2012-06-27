@@ -67,10 +67,11 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
 )))
 ALLOWED_STYLES = [
     'border', 'float', 'overflow', 'min-height', 'vertical-align',
-    'white-space',
+    'white-space', 'border-radius', '-webkit-border-radius',
+    '-moz-border-radius, -o-border-radius',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
     'padding', 'padding-left', 'padding-top', 'padding-bottom',
-    'padding-right',
+    'padding-right', 'position', 'top', 'height', 'left', 'right', 
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
