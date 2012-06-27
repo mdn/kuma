@@ -52,7 +52,7 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
-                         DocumentTag, ReviewTag,
+                         DocumentTag, ReviewTag, Attachment,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
@@ -1676,3 +1676,24 @@ def load_documents(request):
     return render_to_response('admin/wiki/document/load_data_form.html',
                               context,
                               context_instance=RequestContext(request))
+
+
+def attachment_detail(request, attachment_id, filename):
+    """Detail of a file attachment."""
+    # TODO: For now this just grabs and serves the file in the most
+    # naive way, since that ensures compatibility for the most common
+    # case where we just want to show the file contents embedded in a
+    # document.
+    #
+    # In the future, this should grow to be multiple views -- one
+    # legacy view to support document-embedded file URLs, and then
+    # more full-featured views for showing metadata, revision history,
+    # uploading new versions, etc.
+    attachment = get_object_or_404(Attachment, pk=attachment_id)
+    if attachment.current_revision is None:
+        raise Http404
+    rev = attachment.current_revision
+    resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
+    resp["Last-Modified"] = rev.created
+    resp["Content-Length"] = rev.size
+    return resp

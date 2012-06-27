@@ -4,6 +4,7 @@ from datetime import datetime
 from itertools import chain
 from urlparse import urlparse
 import hashlib
+import re
 import time
 
 from pyquery import PyQuery
@@ -178,6 +179,8 @@ RESERVED_SLUGS = (
 )
 
 DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
+
+DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 
 
 class UniqueCollision(Exception):
@@ -616,6 +619,28 @@ class Document(NotificationsMixin, ModelBase):
             return None
 
         return self.current_revision.content_parsed
+
+    @property
+    def attachments(self):
+        # Is there a more elegant way to do this?
+        #
+        # File attachments aren't really stored at the DB level;
+        # instead, the page just gets appropriate HTML to embed
+        # whatever type of file it is. So we find them by
+        # regex-searching over the HTML for URLs that match the
+        # MindTouch file URL pattern.
+        #
+        # TODO: Once we settle kuma's file URL pattern and people
+        # start using kuma's file-handling, we'll need to also scan
+        # for the kuma file URL pattern. That'll probably just involve
+        # setting up a couple Q() objects (one for MindTouch file IDs,
+        # one for kuma file IDs) and OR'ing them together to get the
+        # file query.
+        mt_files = DEKI_FILE_URL.findall(self.html)
+        if mt_files:
+            return Attachment.objects.filter(mindtouch_attachment_id__in=mt_files)
+        # If no files found, return an empty Attachment queryset.
+        return Attachment.objects.none()
 
     @property
     def show_toc(self):
@@ -1129,3 +1154,120 @@ def get_current_or_latest_revision(document, reviewed_only=True):
     return rev
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
+
+
+def rev_upload_to(instance, filename):
+    """
+    Generate a path to store a file attachment.
+    
+    """
+    # TODO: We could probably just get away with strftime formatting
+    # in the 'upload_to' argument here, but this does a bit more to be
+    # extra-safe with potential duplicate filenames.
+    #
+    # For now, the filesystem storage path will look like this:
+    #
+    # attachments/year/month/day/attachment_id/md5/filename
+    #
+    # The md5 hash here is of the full timestamp, down to the
+    # microsecond, of when the path is generated.
+    now = datetime.now()
+    return "attachments/%(date)s/%(id)s/%(md5)s/%(filename)s" % {
+        'date': now.strftime('%Y/%m/%d'),
+        'id': instance.attachment.id,
+        'md5': hashlib.md5(str(now)).hexdigest(),
+        'filename': filename
+    }
+    
+
+class Attachment(models.Model):
+    """
+    An attachment which can be inserted into one or more wiki documents.
+
+    There is no direct database-level relationship between attachments
+    and documents; insertion of an attachment is handled through
+    markup in the document.
+    
+    """
+    current_revision = models.ForeignKey('AttachmentRevision', null=True,
+                                         related_name='current_rev')
+
+    # These get filled from the current revision.
+    title = models.CharField(max_length=255, db_index=True)
+    slug = models.CharField(max_length=255, db_index=True)
+
+    # This is somewhat like the bookkeeping we do for Documents, but
+    # is also slightly more permanent because storing this ID lets us
+    # map from old MindTouch file URLs (which are based on the ID) to
+    # new kuma file URLs.
+    mindtouch_attachment_id = models.IntegerField(
+        help_text="ID for migrated MindTouch resource",
+        null=True, db_index=True)
+    modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('wiki.attachment_detail', (), {'attachment_id': self.id,
+                                               'filename': self.current_revision.filename()})
+        
+
+class AttachmentRevision(models.Model):
+    """
+    A revision of an attachment.
+    
+    """
+    attachment = models.ForeignKey(Attachment, related_name='revisions')
+
+    file = models.FileField(upload_to=rev_upload_to, max_length=500)
+
+    # If not supplied, these get auto-filled from the name of the file
+    # as uploaded.
+    title = models.CharField(max_length=255, null=True, db_index=True)
+    slug = models.CharField(max_length=255, null=True, db_index=True)
+    
+    # This either comes from the MindTouch import or, for new files,
+    # from the (as-yet-unwritten) upload view using the Python
+    # mimetypes library to figure it out.
+    #
+    # TODO: do we want to make this an explicit set of choices? That'd
+    # rule out certain types of attachments, but might be a lot safer.
+    mime_type = models.CharField(max_length=255, db_index=True, editable=False)
+
+    description = models.TextField() # Does not allow wiki markup currently.
+
+    created = models.DateTimeField(default=datetime.now)
+    comment = models.CharField(max_length=255)
+    creator = models.ForeignKey(User, related_name='created_attachment_revisions')
+    is_approved = models.BooleanField(default=True, db_index=True)
+
+    # As with document revisions, bookkeeping for the MindTouch
+    # migration.
+    #
+    # TODO: Do we actually need full file revision history from
+    # MindTouch?
+    mindtouch_old_id = models.IntegerField(
+        help_text="ID for migrated MindTouch resource revision",
+        null=True, db_index=True, unique=True)
+    is_mindtouch_migration = models.BooleanField(
+        default=False, db_index=True,
+        help_text="Did this revision come from MindTouch?")
+
+    def filename(self):
+        return self.file.path.split('/')[-1]
+
+    def save(self, *args, **kwargs):
+        super(AttachmentRevision, self).save(*args, **kwargs)
+        if self.is_approved and (
+                not self.attachment.current_revision or
+                self.attachment.current_revision.id < self.id):
+            self.make_current()
+    
+    def make_current(self):
+        """
+        Make this revision the current one for the attachment.
+        
+        """
+        self.attachment.title = self.title
+        self.attachment.slug = self.slug
+        self.attachment.current_revision = self
+        self.attachment.save()
