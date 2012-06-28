@@ -476,6 +476,8 @@ def _perform_kumascript_post(request, content):
     }
     env_vars = dict(
         url=request.build_absolute_uri('/'),
+        locale=request.locale,
+        title=request.POST.get('title'),
     )
     _add_kumascript_env_headers(headers, env_vars)
     resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
