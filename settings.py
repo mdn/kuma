@@ -401,7 +401,7 @@ INSTALLED_APPS = (
     # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
     'search',
     #'forums',
-    #'djcelery',
+    'djcelery',
     'notifications',
     #'questions',
     #'kadmin',
@@ -801,15 +801,17 @@ djcelery.setup_loader()
 
 BROKER_HOST = 'localhost'
 BROKER_PORT = 5672
-BROKER_USER = 'kitsune'
-BROKER_PASSWORD = 'kitsune'
-BROKER_VHOST = 'kitsune'
+BROKER_USER = 'kuma'
+BROKER_PASSWORD = 'kuma'
+BROKER_VHOST = 'kuma'
 CELERY_RESULT_BACKEND = 'amqp'
 CELERY_IGNORE_RESULT = True
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = 4
+
+CELERY_IMPORTS = ( 'wiki.tasks', )
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
@@ -905,6 +907,7 @@ SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
     # HACK: South treats "database" as the name of constance.backends.database
     'database': 'migrations.south.constance',
+    'djcelery': 'migrations.south.djcelery',
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'

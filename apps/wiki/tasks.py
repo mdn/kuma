@@ -9,7 +9,7 @@ from django.db import transaction
 from django.template import Context, loader
 
 import celery.conf
-from celery.decorators import task
+from celery.task import task
 from celery.messaging import establish_connection
 from multidb.pinning import pin_this_thread, unpin_this_thread
 from tower import ugettext as _

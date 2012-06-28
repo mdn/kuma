@@ -19,11 +19,14 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
         return command;
     };
     
-    CKEDITOR.plugins.add("mdn-buttons", {
+    CKEDITOR.plugins.add('mdn-buttons', {
         init: function(editor) {
 
             var tags = CKEDITOR.config.mdnButtons_tags;
-            var pluginName = "mdn-buttons";
+            var pluginName = 'mdn-buttons';
+            var $saveButton = $('#btn-save');
+            var $saveContinueButton = $('#btn-save-and-edit')
+            
             // addCommand and addButton for each tag in the list
             for (var i = 0, j = tags.length; i < j; i++) {
                 var tag = tags[i];
@@ -36,36 +39,42 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
                     className: 'mdn-buttons-button ' + tag,
                 });
             }
-
-            // Use the save-and-edit if available, fall back to save, then fall
-            // back to an inline section editor save button
-            var save_btn = $('#btn-save-and-edit');
-            if (save_btn.length < 1 || save_btn.attr('disabled')) {
-                save_btn = $('#btn-save');
-            }
-            if (save_btn.length < 1) {
-                save_btn = $('.edited-section-ui.current .save');
-            }
-
-            // If the jquery data for the save button offers a callback, use
-            // it. Otherwise, just try clicking the button.
-            var save_cb = save_btn.data('save_cb');
-            if (!save_cb) {
-                save_cb = function () { save_btn.click(); }
-            }
-
-            // Define the command and button for "Save"
-            editor.addCommand(pluginName + '-save', {
+            
+            // Configure "Save and Exit"
+            editor.addCommand(pluginName + '-save-exit', {
                 exec: function (editor, data) {
+                    if(!$saveButton.length) {
+                        $saveButton = $('.edited-section-ui.current .btn-save');
+                    }
+                    
                     editor.updateElement();
-                    save_cb();
+                    $saveButton.click();
                 }
             });
-            editor.ui.addButton('mdnSave', {
-                label: save_btn.text(),
-                className: 'cke_button_save',
-                command: pluginName + '-save'
+            editor.ui.addButton('mdnSaveExit', {
+                label: gettext('Save and Exit'),
+                className: 'cke_button_save_exit',
+                command: pluginName + '-save-exit'
             });
+            
+            // Add "Save and Continue", if that button is present
+            if($saveContinueButton.length) {
+                editor.addCommand(pluginName + '-save', {
+                    exec: function (editor, data) {
+                        var saveCallback = $saveContinueButton.data('save_cb') || function () { 
+                            $saveContinueButton.click(); 
+                        };
+                        
+                        editor.updateElement();
+                        saveCallback();
+                    }
+                });
+                editor.ui.addButton('mdnSave', {
+                    label: $saveContinueButton.text(),
+                    className: 'cke_button_save',
+                    command: pluginName + '-save'
+                });
+            }
 
             // Some localized strings are stashed on #page-buttons...
             var pb = $('#page-buttons');

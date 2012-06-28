@@ -28,15 +28,56 @@ CKEDITOR.on('instanceReady', function (ev) {
     toolbox.appendChild(pathP);
 });
 
+(function() {
+
+    var keys = CKEDITOR.mdnKeys = {
+            control1: CKEDITOR.CTRL + 49,
+            control2: CKEDITOR.CTRL + 50,
+            control3: CKEDITOR.CTRL + 51,
+            control4: CKEDITOR.CTRL + 52,
+            control5: CKEDITOR.CTRL + 53,
+            control6: CKEDITOR.CTRL + 54,
+
+            controlK: CKEDITOR.CTRL + 75,
+            controlL: CKEDITOR.CTRL + 76,
+            controlShiftL: CKEDITOR.CTRL + CKEDITOR.SHIFT + 76,
+            controlS: CKEDITOR.CTRL + 83,
+            controlO: CKEDITOR.CTRL + 79,
+            controlShiftO: CKEDITOR.CTRL + CKEDITOR.SHIFT + 79,
+            controlShiftS: CKEDITOR.CTRL + CKEDITOR.SHIFT + 83,
+            shiftSpace: CKEDITOR.SHIFT + 32,
+            tab: 9,
+            shiftTab: CKEDITOR.SHIFT + 9
+        },
+        block = function(k) {
+            return CKEDITOR.config.blockedKeystrokes.push(keys[k]);
+        };
+
+    // Prevent key handling
+    block('tab');
+    block('shiftTab');
+    block('control1');
+    block('control2');
+    block('control3');
+    block('control4');
+    block('control5');
+    block('control6');
+    block('controlO');
+    block('controlS');
+    block('controlShiftL');
+    block('controlShiftO');
+
+})();
 
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter';
-    config.removePlugins = 'link';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes';
+    config.removePlugins = 'link,tab';
     
     config.toolbar_MDN = [
-        ['Source', 'mdnPreview', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
+        ['Source', 'mdnSaveExit', 'mdnSave', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
         ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'Table', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
+        ['Maximize'],
         '/',
         ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', '-', 'preButton', 'mdn-syntaxhighlighter', 'Styles'],
         ['Link', 'Unlink', 'Anchor', '-', 'Bold', 'Italic', 'Underline', 'codeButton', 'Strike', 'Superscript', 'RemoveFormat', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyLeft']
@@ -53,6 +94,16 @@ CKEDITOR.editorConfig = function(config) {
     config.dialog_backgroundCoverColor = 'black';
     config.dialog_backgroundCoverOpacity = 0.3;
     config.docType = '<!DOCTYPE html>';
+    
+    CKEDITOR.stylesSet.add('default',[
+        { name: "None", element: 'p' },
+        { name: "Note box", element: 'div', attributes: { 'class': 'note' }},
+        { name: "Warning box", element: 'div', attributes: { 'class': 'warning' }},
+        { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }},
+        { name: "Plaintext (nowiki)", element: 'span', attributes: { 'class': 'plain' }},
+        { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }},
+        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }}
+    ]);
 
     {{ editor_config|safe }}    
 };
