@@ -1,8 +1,13 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "base.html" %}
 
-{% block extrahead %}
+{% block site_css %}
+    {{ super() }}
     {{ css('wiki-print', media='print') }}
+    {% if config.KUMA_CUSTOM_CSS_PATH %}
+      <link rel="stylesheet" type="text/css"
+            href="{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1" />
+    {% endif %}
 {% endblock %}
 
 {% if not styles %}
