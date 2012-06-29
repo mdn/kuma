@@ -79,7 +79,7 @@ ALLOWED_STYLES = [
     'color',
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
-    'radial-gradient', '-moz-radial-gradient', '-webkit-linear-gradient'
+    'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient'
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
