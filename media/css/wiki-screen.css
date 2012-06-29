@@ -191,7 +191,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }
 .editing .title h1 em { color: #333; font-style: normal; }
-.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; }
+.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; z-index:3; }
 .editing #btn-properties:hover, .editing #btn-properties:focus { background-color: #25a; }
 
 .editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; padding-left: 18px; }
