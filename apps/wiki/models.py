@@ -79,7 +79,11 @@ ALLOWED_STYLES = [
     'font', 'font-size', 'font-weight', 'font-family', 
     'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
-    'list-style-type'
+    'list-style-type',
+    'color',
+    'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
+    'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
+    'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
