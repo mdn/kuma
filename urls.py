@@ -49,6 +49,10 @@ urlpatterns = patterns('',
 
     #url(r'^', include('dashboards.urls')),
 
+    # File detail.
+    url(r'^/files/(?P<attachment_id>\d+)/(?P<filename>.+)$',
+        'attachment_detail', name='wiki.attachment_detail'),
+
     # Users
     ('', include('users.urls')),
 
