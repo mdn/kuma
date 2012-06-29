@@ -75,6 +75,11 @@
       <header id="article-head">
         <div class="title">
             <h1 class="page-title">{{ document.title }}</h1>
+            {% if redirected_from %}
+            <div class="redirected-from" id="redirected-from">
+              <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+            </div>
+          {% endif %}
         </div>
         <ul id="page-buttons">
             <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
@@ -95,11 +100,6 @@
           {% include 'wiki/includes/kumascript_errors.html' %}
         {% endif %}
        </header>
-        {% if redirected_from %}
-          <div class="warning" id="redirected-from">
-            <p>{{ _('(Redirected from <a href="{href}">{title}</a>)')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
-          </div>
-        {% endif %}
 
        {#
     {% if document.is_majorly_outdated() %}

@@ -152,12 +152,13 @@ div.note p, div.tip p { margin-bottom: .75em; }
 #article-head { position: relative; clear: both; max-width: 1200px; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
 #article-head:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 
-.title { position: relative; }
+.title { position: relative; margin-bottom: 0.8em; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
-.title h1 { float: left; width: 60%; padding-left: 18px; }
+.title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
 .title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
+.title .redirected-from { padding: 5px 0 0 18px; font-size: 0.785em; }
 
 .template { display: none; }
 
@@ -190,7 +191,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; float:left; }
 .editing .title h1 em { color: #333; font-style: normal; }
-.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; margin-top: 9px; }
+.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; z-index:3; margin-top: 9px; }
 .editing #btn-properties:hover, .editing #btn-properties:focus { background-color: #25a; }
 
 .editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; padding-left: 18px; clear:both; }

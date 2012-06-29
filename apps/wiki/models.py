@@ -75,8 +75,10 @@ ALLOWED_STYLES = [
     'padding-right', 'position', 'top', 'height', 'left', 'right', 
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
-    'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
+    'font', 'font-size', 'font-weight', 'font-family', 
+    'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
+    'list-style-type'
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
