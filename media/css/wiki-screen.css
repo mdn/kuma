@@ -189,12 +189,12 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
 
 .editing .title { float: left; width: 55%; }
-.editing .title h1 { display: inline-block; width: auto; float: none; color: #888; }
+.editing .title h1 { display: inline-block; width: auto; float: none; color: #888; float:left; }
 .editing .title h1 em { color: #333; font-style: normal; }
-.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; z-index:3; }
+.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; z-index:3; margin-top: 9px; }
 .editing #btn-properties:hover, .editing #btn-properties:focus { background-color: #25a; }
 
-.editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; padding-left: 18px; }
+.editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; padding-left: 18px; clear:both; }
 .editing #btn-savedraft { font-family: inherit; font-size: 1em; line-height: 1; text-transform: none; color: #333; padding: 0; background: transparent none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 .editing #btn-savedraft:hover, .editing #btn-savedraft:focus { text-decoration: underline; color: #25a; }
 
