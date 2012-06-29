@@ -73,6 +73,7 @@ CKEDITOR.editorConfig = function(config) {
 
     config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes';
     config.removePlugins = 'link,tab';
+    config.entities = false;
     
     config.toolbar_MDN = [
         ['Source', 'mdnSaveExit', 'mdnSave', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
