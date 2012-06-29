@@ -42,6 +42,7 @@
             initMetadataEditButton();
             initSaveAndEditButtons();
             initArticlePreview();
+            initMetadataParentTranslation();
             // initTitleAndSlugCheck();
             // initDrafting();
         }
@@ -901,6 +902,30 @@
             $('#btn-properties').hide();
         }
     }
+    
+    // 
+    // Initialize logic for metadata parent translation
+    // 
+    function initMetadataParentTranslation() {
+        var $parentLi = $('#article-head .metadata .metadata-choose-parent'),
+            $parentInput = $("#parent_id");
+        if($parentLi.length) {
+            $parentLi.css('display', 'block');
+            $('#parent_text').mozillaAutocomplete({
+                minLength: 1,
+                requireValidOption: true,
+                autocompleteUrl: $('#autosuggestTitleUrl').attr('data-url'),
+                _renderItemAsLink: true,
+                onSelect: function(item, isSilent) {
+                    $parentInput.val(item.id);
+                },
+                onDeselect: function(item) {
+                    $parentInput.val("");
+                }
+            });
+        }
+    }
+    
 
     //
     // Initialize logic for save and save-and-edit buttons.

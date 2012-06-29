@@ -801,6 +801,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                 section_id=section_id)
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc))
+        
+    # Need to make check *here* to see if this could have a translation parent
+    show_translation_parent_block = (document_locale != settings.WIKI_DEFAULT_LANGUAGE) and (not doc.parent_id)
 
     if request.method == 'GET':
         if not (rev_form or doc_form):
@@ -828,6 +831,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 post_data.update({'locale': document_locale})
                 doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
+                    
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
                     _invalidate_kumascript_cache(doc)
@@ -955,6 +959,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'section_id': section_id,
+                         'show_translation_parent_block': show_translation_parent_block,
                          'disclose_description': disclose_description,
                          'parent_slug': '/'.join(slug_split),
                          'parent_path': parent_path,
@@ -1066,7 +1071,8 @@ def autosuggest_documents(request):
         doc_info = {
             'title': d.title,
             'label': d.title,
-            'href':  d.get_absolute_url()
+            'href':  d.get_absolute_url(),
+            'id': d.id 
         }
         docs_list.append(doc_info)
 
