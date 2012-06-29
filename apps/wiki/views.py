@@ -348,7 +348,9 @@ def document(request, document_slug, document_locale):
     if show_raw:
         response = HttpResponse(doc_html)
         response['x-frame-options'] = 'Allow'
-        if doc.is_template:
+        if constance.config.KUMA_CUSTOM_CSS_PATH == doc.get_absolute_url():
+            response['Content-Type'] = 'text/css; charset=utf-8'
+        elif doc.is_template:
             # Treat raw, un-bleached template source as plain text, not HTML.
             response['Content-Type'] = 'text/plain; charset=utf-8'
         return set_common_headers(response)
