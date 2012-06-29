@@ -152,12 +152,13 @@ div.note p, div.tip p { margin-bottom: .75em; }
 #article-head { position: relative; clear: both; max-width: 1200px; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
 #article-head:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 
-.title { position: relative; }
+.title { position: relative; margin-bottom: 0.8em; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
-.title h1 { float: left; width: 60%; padding-left: 18px; }
+.title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
 .title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
+.title .redirected-from { padding: 5px 0 0 18px; font-size: 0.785em; }
 
 .template { display: none; }
 
