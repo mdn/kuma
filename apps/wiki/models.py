@@ -76,6 +76,7 @@ ALLOWED_STYLES = [
     'background-color',
     'font', 'font-size', 'font-weight', 'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
+    'list-style-type'
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
