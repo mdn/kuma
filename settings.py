@@ -975,6 +975,14 @@ CONSTANCE_CONFIG = dict(
         'kumascript. Passed along in a Cache-Control: max-age={value} header, '
         'which tells kumascript whether or not to serve up a cached response.'
     ),
+
+    KUMA_CUSTOM_CSS_PATH = (
+        '/en-US/docs/Template:CustomCSS',
+        'Path to a wiki document whose raw content will be loaded as a CSS '
+        'stylesheet for the wiki base template. Will also cause the ?raw '
+        'parameter for this path to send a Content-Type: text/css header. Empty '
+        'value disables the feature altogether.',
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
