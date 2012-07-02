@@ -40,6 +40,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code',
     'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp',
+    'ul', 'ol', 'li',
     'nobr', 'dfn', 'caption', 'var',
     'img',
     'input', 'label', 'select', 'option', 'textarea',
@@ -53,6 +54,9 @@ ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align']
 ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['ul'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id']
+ALLOWED_ATTRIBUTES['li'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'title']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
