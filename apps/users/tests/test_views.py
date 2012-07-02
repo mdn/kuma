@@ -337,6 +337,8 @@ class RegisterTestCase(TestCase):
     @mock.patch_object(Site.objects, 'get_current')
     def test_new_user_claim_watches(self, get_current):
         """Claim user watches upon activation."""
+        old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
+        
         get_current.return_value.domain = 'su.mo.com'
 
         watch(email='sumouser@test.com', save=True)
@@ -350,6 +352,8 @@ class RegisterTestCase(TestCase):
 
         # Watches are claimed.
         assert user.watch_set.exists()
+
+        settings.CELERY_ALWAYS_EAGER = old
 
     @mock_get_deki_user
     def test_duplicate_username(self):

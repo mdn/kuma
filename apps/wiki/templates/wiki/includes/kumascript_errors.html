@@ -1,4 +1,10 @@
 <div class="warning" id="kumascript-errors">
+{% if not request.user.is_authenticated() %}
+    <p>{% trans %}
+    There were scripting errors on this page. While those are being addressed by
+    site editors, you can view partial content below.
+    {% endtrans %}</p>
+{% else %}
 <p>{{ _("There are scripting messages on this page:") }}</p>
 <ul>
   {% for error in kumascript_errors %}
@@ -42,4 +48,5 @@
     </li>
   {% endfor %}
 </ul>
+{% endif %}
 </div>

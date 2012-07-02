@@ -471,6 +471,8 @@ class NewRevisionTests(TestCaseBase):
         Also assert that the edited and reviewable notifications go out.
 
         """
+        old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
+        
         get_current.return_value.domain = 'testserver'
 
         # Sign up for notifications:
@@ -502,6 +504,8 @@ class NewRevisionTests(TestCaseBase):
                  body=DOCUMENT_EDITED_EMAIL_CONTENT %
                     (self.d.title, self.d.slug),
                  to=['sam@example.com'])
+
+        settings.CELERY_ALWAYS_EAGER = old
 
     @mock.patch_object(ReviewableRevisionInLocaleEvent, 'fire')
     @mock.patch_object(EditDocumentEvent, 'fire')
