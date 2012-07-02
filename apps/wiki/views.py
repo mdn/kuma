@@ -18,6 +18,7 @@ except ImportError:
     from django.utils.functional import wraps
 
 from django.conf import settings
+from django.db import transaction
 from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
 from django.core.cache import cache
@@ -45,14 +46,15 @@ from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, reverse
 from sumo.utils import paginate, smart_int
-from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
-                  KUMASCRIPT_TIMEOUT_ERROR, ReadOnlyException)
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, ReadOnlyException)
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import DocumentForm, RevisionForm, ReviewForm
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
+                         DocumentRenderingInProgress,
+                         DocumentRenderedContentNotAvailable,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
@@ -62,6 +64,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
+from wiki import kumascript
 
 import logging
 
@@ -186,6 +189,7 @@ def _document_last_modified(request, document_slug, document_locale):
 @require_http_methods(['GET', 'HEAD'])
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
+@transaction.autocommit # For rendering bookkeeping, needs immediate updates
 def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
@@ -283,35 +287,37 @@ def document(request, document_slug, document_locale):
             r[k] = v
         return r
 
-    related = doc.related_documents.order_by('-related_to__in_common')[0:5]
-
-    # Get the contributors. (To avoid this query, we could render the
-    # the contributors right into the Document's html field.)
-    # NOTE: .only() avoids a memcache object-too-large error for large wiki
-    # pages when an attempt is made to cache all revisions
-    contributors = set([r.creator for r in doc.revisions
-                                            .filter(is_approved=True)
-                                            .only('creator')
-                                            .select_related('creator')])
-    # TODO: Port this kitsune feature over, eventually:
-    #     https://github.com/jsocol/kitsune/commit/
-    #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
-
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
     show_raw = request.GET.get('raw', False) is not False
     is_include = request.GET.get('include', False) is not False
     need_edit_links = request.GET.get('edit_links', False) is not False
 
+    render_raw_fallback = False
+
     # Grab the document HTML as a fallback, then attempt to use kumascript:
     doc_html, ks_errors = doc.html, None
-    if _run_kumascript(doc, request):
-        resp_body, resp_errors = _perform_kumascript_request(
-                request, response_headers, doc, document_locale, document_slug)
-        if resp_body:
-            doc_html = resp_body
-        if resp_errors:
-            ks_errors = resp_errors
+    if kumascript.should_use_rendered(doc, request.GET):
+
+        # A logged-in user can schedule a full re-render with Shift-Reload
+        cache_control = None
+        if request.user.is_authenticated():
+            # Shift-Reload sends Cache-Control: no-cache
+            ua_cc = request.META.get('HTTP_CACHE_CONTROL')
+            if ua_cc == 'no-cache':
+                cache_control = 'no-cache'
+
+        try:
+            base_url = request.build_absolute_uri('/')
+            r_body, r_errors = doc.get_rendered(cache_control, base_url)
+            if r_body:
+                doc_html = r_body
+            if r_errors:
+                ks_errors = r_errors
+        except DocumentRenderedContentNotAvailable:
+            # There was no rendered content available, and we were unable to
+            # render it on the spot. So, fall back to presenting raw content
+            render_raw_fallback = True
 
     toc_html = None
     if not doc.is_template:
@@ -355,266 +361,31 @@ def document(request, document_slug, document_locale):
             response['Content-Type'] = 'text/plain; charset=utf-8'
         return set_common_headers(response)
 
+    related = doc.related_documents.order_by('-related_to__in_common')[0:5]
+
+    # Get the contributors. (To avoid this query, we could render the
+    # the contributors right into the Document's html field.)
+    # NOTE: .only() avoids a memcache object-too-large error for large wiki
+    # pages when an attempt is made to cache all revisions
+    contributors = set([r.creator for r in doc.revisions
+                                            .filter(is_approved=True)
+                                            .only('creator')
+                                            .select_related('creator')])
+    # TODO: Port this kitsune feature over, eventually:
+    #     https://github.com/jsocol/kitsune/commit/
+    #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
+
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
-            'kumascript_errors': ks_errors}
+            'kumascript_errors': ks_errors,
+            'render_raw_fallback': render_raw_fallback}
     data.update(SHOWFOR_DATA)
 
     response = jingo.render(request, 'wiki/document.html', data)
     # FIXME: For some reason, the ETag isn't coming through here.
     return set_common_headers(response)
-
-
-def _build_kumascript_cache_keys(document_locale, document_slug):
-    """Build the cache keys used for Kumascript"""
-    path_hash = hashlib.md5((u'%s/%s' % (document_locale, document_slug))
-                            .encode('utf8'))
-    cache_key = 'kumascript:%s:%s' % (path_hash.hexdigest(), '%s')
-    ck_etag = cache_key % 'etag'
-    ck_modified = cache_key % 'modified'
-    ck_body = cache_key % 'body'
-    ck_errors = cache_key % 'errors'
-    return (ck_etag, ck_modified, ck_body, ck_errors)
-
-
-def _invalidate_kumascript_cache(document):
-    """Invalidate the cached kumascript response for a given document"""
-    if constance.config.KUMASCRIPT_TIMEOUT == 0:
-        # Do nothing if kumascript is disabled
-        return
-    cache.delete_many(_build_kumascript_cache_keys(document.slug,
-                                                   document.locale))
-
-
-def _run_kumascript(doc, request):
-    """
-    We'll make a request to kumascript for macro evaluation only if:
-      * The service isn't disabled with a timeout of 0
-      * The request has *not* asked for raw source
-        (eg. ?raw)
-      * The request has *not* asked for no macro evaluation
-        (eg. ?nomacros)
-      * The request *has* asked for macro evaluation
-        (eg. ?raw&macros)
-    """
-    show_raw = request.GET.get('raw', False) is not False
-    no_macros = request.GET.get('nomacros', False) is not False
-    force_macros = request.GET.get('macros', False) is not False
-    is_template = False
-    if doc:
-        is_template = doc.is_template
-    return (constance.config.KUMASCRIPT_TIMEOUT > 0 and
-            not is_template and
-            (force_macros or (not no_macros and not show_raw)))
-
-
-def _process_kumascript_body(response):
-    # HACK: Assume we're getting UTF-8, which we should be.
-    # TODO: Better solution would be to upgrade the requests module
-    # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
-    # which does auto-detection. But, that will break things.
-    resp_body = response.read().decode('utf8')
-
-    # We defer bleach sanitation of kumascript content all the way
-    # through editing, source display, and raw output. But, we still
-    # want sanitation, so it finally gets picked up here.
-    resp_body = bleach.clean(
-        resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-        styles=ALLOWED_STYLES, strip_comments=False
-    )
-    return resp_body
-
-
-def _process_kumascript_errors(response):
-    """Attempt to decode any FireLogger-style error messages in the response
-    from kumascript."""
-    resp_errors = []
-    try:
-        # Extract all the log packets from headers.
-        fl_packets = defaultdict(dict)
-        for k, v in response.headers.items():
-            if not k.lower().startswith('firelogger-'):
-                continue
-            _, packet_id, seq = k.split('-', 3)
-            fl_packets[packet_id][seq] = v
-
-        # The FireLogger spec allows for multiple "packets". But,
-        # kumascript only ever sends the one, so flatten all messages.
-        fl_msgs = []
-        for id, contents in fl_packets.items():
-            seqs = sorted(contents.keys(), key=int)
-            d_b64 = "\n".join(contents[x] for x in seqs)
-            d_json = base64.decodestring(d_b64)
-            packet = json.loads(d_json)
-            fl_msgs.extend(packet['logs'])
-
-        if len(fl_msgs):
-            resp_errors = fl_msgs
-
-    except Exception, e:
-        resp_errors = [
-            {"level": "error",
-              "message": "Problem parsing errors: %s" % e,
-              "args": ["ParsingError"]}
-        ]
-    return resp_errors
-
-
-def _add_kumascript_env_headers(headers, env_vars):
-    # Encode the vars as kumascript headers, as base64 JSON-encoded values.
-    headers.update(dict(
-        ('x-kumascript-env-%s' % k, base64.b64encode(json.dumps(v)))
-        for k, v in env_vars.items()
-    ))
-    return headers
-
-
-def _perform_kumascript_post(request, content):
-    ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
-    headers = {
-        'X-FireLogger': '1.2',
-    }
-    env_vars = dict(
-        url=request.build_absolute_uri('/'),
-    )
-    _add_kumascript_env_headers(headers, env_vars)
-    resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
-                        data=content, headers=headers)
-    if resp:
-        resp_body = _process_kumascript_body(resp)
-        resp_errors = _process_kumascript_errors(resp)
-        return resp_body, resp_errors
-    else:
-        resp_errors = KUMASCRIPT_TIMEOUT_ERROR
-        return content, resp_errors
-
-
-def _perform_kumascript_request(request, response_headers, document,
-                                document_locale, document_slug):
-    """Perform a kumascript GET request for a document locale and slug.
-
-    This is broken out into its own utility function, both to make the view
-    method simpler and to make it easy to mock out in testing.
-    """
-    resp_body, resp_errors = None, None
-
-    try:
-        url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
-        url = unicode(url_tmpl).format(path=u'%s/%s' %
-                                       (document_locale, document_slug))
-
-        ck_etag, ck_modified, ck_body, ck_errors = (
-                _build_kumascript_cache_keys(document_slug, document_locale))
-
-        # Default to the configured max-age for cache control.
-        max_age = constance.config.KUMASCRIPT_MAX_AGE
-        cache_control = 'max-age=%s' % max_age
-
-        # TODO: Wrap this in a waffle flag for primitive access control?
-        if request.user.is_authenticated():
-            # Restricting to auth'd users places a speed bump on end-user
-            # triggered cache invalidation.
-            ua_cc = request.META.get('HTTP_CACHE_CONTROL')
-
-            if ua_cc == 'no-cache':
-                # Firefox issues no-cache on shift-reload, so this lets
-                # end-users trigger cache invalidation. kumascript will react
-                # to no-cache by reloading both document and template sources
-                # from Kuma.
-                cache_control = 'no-cache'
-
-            elif ua_cc == 'max-age=0':
-                # Firefox sends Cache-Control: max-age=0 on reload. kumascript
-                # will react to max-age=0 by reloading just the document source
-                # from Kuma and use cached templates. (pending bug 730715)
-                cache_control = 'max-age=0'
-
-        headers = {
-            'X-FireLogger': '1.2',
-            'Cache-Control': cache_control
-        }
-
-        # Assemble some KumaScript env vars
-        # TODO: See dekiscript vars for future inspiration
-        # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
-        #   Wiki_Functions_and_Variables
-        path = document.get_absolute_url()
-        env_vars = dict(
-            path=path,
-            url=request.build_absolute_uri(path),
-            id=document.pk,
-            locale=document.locale,
-            title=document.title,
-            slug=document.slug,
-            tags=[x.name for x in document.tags.all()],
-            modified=time.mktime(document.modified.timetuple()),
-            cache_control=cache_control,
-        )
-        _add_kumascript_env_headers(headers, env_vars)
-
-        # Set up for conditional GET, if we have the details cached.
-        c_meta = cache.get_many([ck_etag, ck_modified])
-        if ck_etag in c_meta:
-            headers['If-None-Match'] = c_meta[ck_etag]
-        if ck_modified in c_meta:
-            headers['If-Modified-Since'] = c_meta[ck_modified]
-
-        # Finally, fire off the request.
-        resp = requests.get(url, headers=headers,
-            timeout=constance.config.KUMASCRIPT_TIMEOUT)
-
-        if resp.status_code == 304:
-            # Conditional GET was a pass, so use the cached content.
-            c_result = cache.get_many([ck_body, ck_errors])
-            resp_body = c_result.get(ck_body, '').decode('utf-8')
-            resp_errors = c_result.get(ck_errors, None)
-
-            # Set a header so we can see what happened in caching.
-            response_headers['X-Kumascript-Caching'] = (
-                    '304 Not Modified, Age: %s' % resp.headers.get('age', 0))
-
-        elif resp.status_code == 200:
-            resp_body = _process_kumascript_body(resp)
-            resp_errors = _process_kumascript_errors(resp)
-
-            # Set a header so we can see what happened in caching.
-            response_headers['X-Kumascript-Caching'] = (
-                    '200 OK, Age: %s' % resp.headers.get('age', 0))
-
-            # Cache the request for conditional GET, but use the max_age for
-            # the cache timeout here too.
-            cache.set(ck_etag, resp.headers.get('etag'),
-                      timeout=max_age)
-            cache.set(ck_modified, resp.headers.get('last-modified'),
-                      timeout=max_age)
-            cache.set(ck_body, resp_body.encode('utf-8'),
-                      timeout=max_age)
-            if resp_errors:
-                cache.set(ck_errors, resp_errors, timeout=max_age)
-
-        elif resp.status_code == None:
-            resp_errors = KUMASCRIPT_TIMEOUT_ERROR
-
-        else:
-            resp_errors = [
-                {"level": "error",
-                  "message": "Unexpected response from Kumascript service: %s"
-                             % resp.status_code,
-                  "args": ["UnknownError"]}
-            ]
-
-    except Exception, e:
-        # Last resort: Something went really haywire. Kumascript server died
-        # mid-request, or something. Try to report at least some hint.
-        resp_errors = [
-            {"level": "error",
-             "message": "Kumascript service failed unexpectedly: %s" % type(e),
-             "args": ["UnknownError"]}
-        ]
-
-    return (resp_body, resp_errors)
 
 
 @waffle_flag('kumawiki')
@@ -672,6 +443,7 @@ def list_documents_for_review(request, tag=None):
 @waffle_flag('kumawiki')
 @login_required
 @check_readonly
+@transaction.autocommit # For rendering bookkeeping, needs immediate updates
 def new_document(request):
     """Create a new wiki document."""
     initial_parent_id = request.GET.get('parent', '')
@@ -763,6 +535,7 @@ def new_document(request):
                  # Document.allows_editing_by.
 @process_document_path
 @check_readonly
+@transaction.autocommit # For rendering bookkeeping, needs immediate updates
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404(
@@ -832,10 +605,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 if doc_form.is_valid():
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
-                    _invalidate_kumascript_cache(doc)
-
-                    # Do we need to rebuild the KB?
-                    _maybe_schedule_rebuild(doc_form)
+                    doc.schedule_rendering('max-age=0')
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
@@ -1037,10 +807,9 @@ def preview_revision(request):
     if request.POST.get('doc_id', False):
         doc = Document.objects.get(id=request.POST.get('doc_id'))
 
-    if _run_kumascript(doc, request):
-        wiki_content, kumascript_errors = _perform_kumascript_post(
-                                                                request,
-                                                                wiki_content)
+    if kumascript.should_use_rendered(doc, request.GET):
+        wiki_content, kumascript_errors = kumascript.post(request,
+                                                          wiki_content)
     # TODO: Get doc ID from JSON.
     data = {'content': wiki_content, 'title': request.POST.get('title', ''),
             'kumascript_errors': kumascript_errors}
@@ -1130,7 +899,7 @@ def review_revision(request, document_slug, document_locale, revision_id):
             ApproveRevisionInLocaleEvent(rev).fire(exclude=rev.creator)
 
             # Schedule KB rebuild?
-            schedule_rebuild_kb()
+            # schedule_rebuild_kb()
 
             return HttpResponseRedirect(reverse('wiki.document_revisions',
                                                 args=[document.full_path]))
@@ -1187,6 +956,7 @@ def select_locale(request, document_slug, document_locale):
 @login_required
 @process_document_path
 @check_readonly
+@transaction.autocommit # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
 
@@ -1288,9 +1058,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             if doc_form.is_valid() and (which_form == 'doc' or
                                         rev_form.is_valid()):
                 doc = doc_form.save(parent_doc)
-
-                # Possibly schedule a rebuild.
-                _maybe_schedule_rebuild(doc_form)
+                doc.schedule_rendering('max-age=0')
 
                 if which_form == 'doc':
                     url = urlparams(reverse('wiki.edit_document',
@@ -1529,17 +1297,11 @@ def _save_rev_and_notify(rev_form, creator, document):
     """Save the given RevisionForm and send notifications."""
     new_rev = rev_form.save(creator, document)
 
-    _invalidate_kumascript_cache(document)
+    document.schedule_rendering('max-age=0')
 
     # Enqueue notifications
     ReviewableRevisionInLocaleEvent(new_rev).fire(exclude=new_rev.creator)
     EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
-
-
-def _maybe_schedule_rebuild(form):
-    """Try to schedule a KB rebuild if a title or slug has changed."""
-    if 'title' in form.changed_data or 'slug' in form.changed_data:
-        schedule_rebuild_kb()
 
 
 # Legacy MindTouch redirects.

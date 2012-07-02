@@ -96,6 +96,37 @@
               <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}">{{ edit_label }}</a></li>
             {% endif %}
         </ul>
+
+        {% if request.user.is_authenticated() %}
+          {% if render_raw_fallback %}
+            <div id="doc-render-raw-fallback" class="warning">
+            {% trans url=document.get_absolute_url() %}
+              This document is being rendered for the first time by the system.
+              Please <a href="{{ url }}">reload this page</a> in a few minutes
+              to see full content.
+            {% endtrans %}
+            </div>
+          {% elif document.is_rendering_in_progress %}
+            <div id="doc-rendering-in-progress" class="warning">
+            {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
+              An update to this document
+              <abbr title="{{ started_at }}">is currently in progress</abbr>.
+              If the content below seems stale or if something is missing,
+              please <a href="{{ url }}">reload this page</a> in a few minutes.
+            {% endtrans %}
+            </div>
+          {% elif document.is_rendering_scheduled %}
+            <div id="doc-rendering-scheduled" class="warning">
+            {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
+              An update to this document 
+              <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
+              If the content below seems stale or if something is missing,
+              please <a href="{{ url }}">reload this page</a> in a few minutes.
+            {% endtrans %}
+            </div>
+          {% endif %}
+        {% endif %}
+
         {% if kumascript_errors %}
           {% include 'wiki/includes/kumascript_errors.html' %}
         {% endif %}

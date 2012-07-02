@@ -10,7 +10,7 @@ from sumo.urlresolvers import reverse, split_path
 from wiki.models import Document, Revision, EditorToolbar
 
 
-def dump_selected_documents(modeladmin, request, queryset):
+def dump_selected_documents(self, request, queryset):
     filename = "documents_%s.json" % (datetime.now().isoformat(),)
     response = HttpResponse(mimetype="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
@@ -18,6 +18,22 @@ def dump_selected_documents(modeladmin, request, queryset):
     return response
 
 dump_selected_documents.short_description = "Dump selected documents as JSON"
+
+
+def enable_deferred_rendering_for_documents(self, request, queryset):
+    queryset.update(defer_rendering=True)
+    self.message_user(request, 'Enabled deferred rendering for %s Documents' %
+                               queryset.count()) 
+enable_deferred_rendering_for_documents.short_description = (
+    "Enable deferred rendering for selected documents")
+
+
+def disable_deferred_rendering_for_documents(self, request, queryset):
+    queryset.update(defer_rendering=False)
+    self.message_user(request, 'Disabled deferred rendering for %s Documents' %
+                               queryset.count()) 
+disable_deferred_rendering_for_documents.short_description = (
+    "Disable deferred rendering for selected documents")
 
 
 def related_revisions_link(self):
@@ -97,20 +113,39 @@ topic_sibling_documents_link.allow_tags = True
 topic_sibling_documents_link.short_description = "Sibling Documents"
 
 
+def document_link(self):
+    link = self.get_absolute_url()
+    return '<a target="_blank" href="%s">Link</a>' % (link,)
+
+document_link.allow_tags = True
+document_link.short_description = "Public Link"
+
+
 class DocumentAdmin(admin.ModelAdmin):
-    actions = [dump_selected_documents, ]
+    list_per_page = 50
+    actions = (dump_selected_documents,
+               enable_deferred_rendering_for_documents,
+               disable_deferred_rendering_for_documents)
     change_list_template = 'admin/wiki/document/change_list.html'
-    fields = ('title', 'slug', 'locale', 'parent', 'parent_topic', 'category')
-    list_display = ('id', 'locale', 'slug', 'title', 'is_localizable',
-                    'modified', parent_document_link,
+    fields = ('locale', 'slug', 'title', 'defer_rendering', 'parent',
+              'parent_topic', 'category')
+    list_display = ('id', 'slug', 'locale', 'title',
+                    document_link,
+                    'defer_rendering',
+                    'is_localizable', 'modified', 
+                    'last_rendered_at', 
+                    'render_started_at', 
+                    'render_scheduled_at',
+                    parent_document_link,
                     topic_parent_document_link,
                     topic_sibling_documents_link,
                     topic_children_documents_link,
                     current_revision_link,
                     related_revisions_link,)
     list_display_links = ('id', 'slug',)
-    list_filter = ('is_template', 'is_localizable', 'category', 'locale')
-    raw_id_fields = ('parent',)
+    list_filter = ('defer_rendering', 'is_template', 'is_localizable',
+                   'category', 'locale')
+    raw_id_fields = ('parent', 'parent_topic',)
     readonly_fields = ('id', 'current_revision')
     search_fields = ('title', 'slug', 'html', 'current_revision__tags')
 

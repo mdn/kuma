@@ -344,9 +344,9 @@ class KumascriptIntegrationTests(TestCaseBase):
         # NOTE: We could do this instead of using the @patch decorator over and
         # over, but it requires an upgrade of mock to 0.8.0
         
-        # self.mock_perform_kumascript_request = (
-        #         mock.patch('wiki.views._perform_kumascript_request'))
-        # self.mock_perform_kumascript_request.return_value = self.d.html
+        # self.mock_kumascript_get = (
+        #         mock.patch('wiki.kumascript.get'))
+        # self.mock_kumascript_get.return_value = self.d.html
         
     def tearDown(self):
         super(KumascriptIntegrationTests, self).tearDown()
@@ -357,48 +357,48 @@ class KumascriptIntegrationTests(TestCaseBase):
         # NOTE: We could do this instead of using the @patch decorator over and
         # over, but it requires an upgrade of mock to 0.8.0
 
-        # self.mock_perform_kumascript_request.stop()
+        # self.mock_kumascript_get.stop()
 
-    @mock.patch('wiki.views._perform_kumascript_request')
-    def test_basic_view(self, mock_perform_kumascript_request):
+    @mock.patch('wiki.kumascript.get')
+    def test_basic_view(self, mock_kumascript_get):
         """When kumascript timeout is non-zero, the service should be used"""
-        mock_perform_kumascript_request.return_value = (self.d.html, None)
+        mock_kumascript_get.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get(self.url, follow=False)
-        ok_(mock_perform_kumascript_request.called,
+        ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
-    @mock.patch('wiki.views._perform_kumascript_request')
-    def test_disabled(self, mock_perform_kumascript_request):
+    @mock.patch('wiki.kumascript.get')
+    def test_disabled(self, mock_kumascript_get):
         """When disabled, the kumascript service should not be used"""
-        mock_perform_kumascript_request.return_value = (self.d.html, None)
+        mock_kumascript_get.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 0.0
         response = self.client.get(self.url, follow=False)
-        ok_(not mock_perform_kumascript_request.called,
+        ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
 
-    @mock.patch('wiki.views._perform_kumascript_request')
-    def test_nomacros(self, mock_perform_kumascript_request):
-        mock_perform_kumascript_request.return_value = (self.d.html, None)
+    @mock.patch('wiki.kumascript.get')
+    def test_nomacros(self, mock_kumascript_get):
+        mock_kumascript_get.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get('%s?nomacros' % self.url, follow=False)
-        ok_(not mock_perform_kumascript_request.called,
+        ok_(not mock_kumascript_get.called,
             "kumascript should not have been used")
 
-    @mock.patch('wiki.views._perform_kumascript_request')
-    def test_raw(self, mock_perform_kumascript_request):
-        mock_perform_kumascript_request.return_value = (self.d.html, None)
+    @mock.patch('wiki.kumascript.get')
+    def test_raw(self, mock_kumascript_get):
+        mock_kumascript_get.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get('%s?raw' % self.url, follow=False)
-        ok_(not mock_perform_kumascript_request.called,
+        ok_(not mock_kumascript_get.called,
             "kumascript should not have been used")
 
-    @mock.patch('wiki.views._perform_kumascript_request')
-    def test_raw_macros(self, mock_perform_kumascript_request):
-        mock_perform_kumascript_request.return_value = (self.d.html, None)
+    @mock.patch('wiki.kumascript.get')
+    def test_raw_macros(self, mock_kumascript_get):
+        mock_kumascript_get.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         response = self.client.get('%s?raw&macros' % self.url, follow=False)
-        ok_(mock_perform_kumascript_request.called,
+        ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
     @mock.patch('requests.get')
@@ -416,13 +416,13 @@ class KumascriptIntegrationTests(TestCaseBase):
         constance.config.KUMASCRIPT_MAX_AGE = 1234
 
         response = self.client.get(self.url, follow=False,
-                HTTP_CACHE_CONTROL='max-age=0')
+                HTTP_CACHE_CONTROL='no-cache')
         eq_('max-age=1234', trap['headers']['Cache-Control'])
 
         self.client.login(username='admin', password='testpass')
         response = self.client.get(self.url, follow=False,
-                HTTP_CACHE_CONTROL='max-age=0')
-        eq_('max-age=0', trap['headers']['Cache-Control'])
+                HTTP_CACHE_CONTROL='no-cache')
+        eq_('no-cache', trap['headers']['Cache-Control'])
 
     @mock.patch('requests.get')
     def test_ua_no_cache(self, mock_requests_get):
@@ -458,7 +458,6 @@ class KumascriptIntegrationTests(TestCaseBase):
         def my_requests_get(url, headers=None, timeout=None):
             trap['req_cnt'] += 1
             trap['headers'] = headers
-
             if trap['req_cnt'] in [1, 2]:
                 return FakeResponse(status_code=200, body=expected_content,
                     headers = { 
@@ -482,16 +481,18 @@ class KumascriptIntegrationTests(TestCaseBase):
         # First request to let the view cache etag / last-modified
         response = self.client.get(self.url)
 
+        # Clear rendered_html to force another request.
+        self.d.rendered_html = ''
+        self.d.save()
+
         # Second request to verify the view sends them back
         response = self.client.get(self.url)
         eq_(expected_etag, trap['headers']['If-None-Match'])
         eq_(expected_modified, trap['headers']['If-Modified-Since'])
-        eq_('200 OK, Age: 456', response['X-Kumascript-Caching'])
 
         # Third request to verify content was cached and served on a 304
         response = self.client.get(self.url)
         ok_(expected_content in response.content)
-        eq_('304 Not Modified, Age: 123', response['X-Kumascript-Caching'])
 
     @mock.patch('requests.get')
     def test_error_reporting(self, mock_requests_get):
@@ -561,46 +562,13 @@ class KumascriptIntegrationTests(TestCaseBase):
         constance.config.KUMASCRIPT_MAX_AGE = 600
 
         # Finally, fire off the request to the view and ensure that the log
-        # messages were received and displayed on the page.
+        # messages were received and displayed on the page. But, only for a
+        # logged in user.
+        self.client.login(username='admin', password='testpass')
         response = self.client.get(self.url)
         eq_(trap['headers']['X-FireLogger'], '1.2') 
         for error in expected_errors['logs']:
             ok_(error['message'] in response.content)
-
-    @mock.patch('requests.get')
-    def test_env_vars(self, mock_requests_get):
-        """Kumascript reports errors in HTTP headers, Kuma should display them"""
-
-        # Now, trap the request from the view.
-        trap = {}
-        def my_requests_get(url, headers=None, timeout=None):
-            trap['headers'] = headers
-            return FakeResponse(
-                status_code=200,
-                body='HELLO WORLD',
-                headers={}
-            )
-        mock_requests_get.side_effect = my_requests_get
-
-        # Ensure kumascript is enabled
-        constance.config.KUMASCRIPT_TIMEOUT = 1.0
-        constance.config.KUMASCRIPT_MAX_AGE = 600
-
-        # Fire off the request, and capture the env vars that would have been
-        # sent to kumascript
-        response = self.client.get(self.url)
-        pfx = 'x-kumascript-env-'
-        vars = dict(
-            (k[len(pfx):], json.loads(base64.b64decode(v)))
-            for k,v in trap['headers'].items()
-            if k.startswith(pfx))
-
-        # Ensure the env vars intended for kumascript match expected values.
-        for n in ('title', 'slug', 'locale'):
-            eq_(getattr(self.d, n), vars[n])
-        eq_(self.d.get_absolute_url(), vars['path'])
-        eq_(time.mktime(self.d.modified.timetuple()), vars['modified'])
-        eq_(sorted([u'foo', u'bar', u'baz']), sorted(vars['tags']))
 
 
 class DocumentEditingTests(TestCaseBase):
@@ -1555,6 +1523,7 @@ class MindTouchRedirectTests(TestCaseBase):
             eq_(301, resp.status_code)
             eq_('http://testserver%s' % doc['expected'], resp['Location'])
 
+
 class AutosuggestDocumentsTests(TestCaseBase):
     """ Test the we're properly filtering out the Redirects from the document list """
 
@@ -1602,3 +1571,118 @@ class AutosuggestDocumentsTests(TestCaseBase):
                     found = True
                     break
             eq_(True, found)
+
+
+class DeferredRenderingViewTests(TestCaseBase):
+    """Tests for the deferred rendering system and interaction with views"""
+
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        super(DeferredRenderingViewTests, self).setUp()
+        self.rendered_content = 'HELLO RENDERED CONTENT'
+        self.raw_content = 'THIS IS RAW CONTENT'
+
+        self.d, self.r = doc_rev(self.raw_content)
+        
+        # Disable TOC, makes content inspection easier.
+        self.r.show_toc = False
+        self.r.save()
+
+        self.d.html = self.raw_content
+        self.d.rendered_html = self.rendered_content
+        self.d.save()
+
+        self.url = reverse('wiki.document', 
+                           args=(self.d.slug,),
+                           locale=self.d.locale)
+
+        constance.config.KUMASCRIPT_TIMEOUT = 5.0
+        constance.config.KUMASCRIPT_MAX_AGE = 600
+
+    def tearDown(self):
+        super(DeferredRenderingViewTests, self).tearDown()
+
+        constance.config.KUMASCRIPT_TIMEOUT = 0
+        constance.config.KUMASCRIPT_MAX_AGE = 0
+
+    @mock.patch('wiki.kumascript.get')
+    def test_rendered_content(self, mock_kumascript_get):
+        """Document view should serve up rendered content when available"""
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+        resp = self.client.get(self.url, follow=False)
+        p = pq(resp.content)
+        txt = p.find('#wikiArticle').text()
+        ok_(self.rendered_content in txt)
+        ok_(self.raw_content not in txt)
+
+        eq_(0, p.find('#doc-rendering-in-progress').length)
+        eq_(0, p.find('#doc-render-raw-fallback').length)
+
+    def test_rendering_in_progress_warning(self):
+        """Document view should serve up rendered content when available"""
+        # Make the document look like there's a rendering in progress.
+        self.d.render_started_at = datetime.datetime.now()
+        self.d.save()
+
+        resp = self.client.get(self.url, follow=False)
+        p = pq(resp.content)
+        txt = p.find('#wikiArticle').text()
+
+        # Even though a rendering looks like it's in progress, ensure the
+        # last-known render is displayed.
+        ok_(self.rendered_content in txt)
+        ok_(self.raw_content not in txt)
+        eq_(0, p.find('#doc-rendering-in-progress').length)
+
+        # Only for logged-in users, ensure the render-in-progress warning is
+        # displayed.
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(self.url, follow=False)
+        p = pq(resp.content)
+        eq_(1, p.find('#doc-rendering-in-progress').length)
+
+    @mock.patch('wiki.kumascript.get')
+    def test_raw_content_during_initial_render(self, mock_kumascript_get):
+        """Raw content should be displayed during a document's initial
+        deferred rendering"""
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+
+        # Make the document look like there's no rendered content, but that a
+        # rendering is in progress.
+        self.d.html = self.raw_content
+        self.d.rendered_html = ''
+        self.d.render_started_at = datetime.datetime.now()
+        self.d.save()
+        
+        # Now, ensure that raw content is shown in the view.
+        resp = self.client.get(self.url, follow=False)
+        p = pq(resp.content)
+        txt = p.find('#wikiArticle').text()
+        ok_(self.rendered_content not in txt)
+        ok_(self.raw_content in txt)
+        eq_(0, p.find('#doc-render-raw-fallback').length)
+
+        # Only for logged-in users, ensure that a warning is displayed about
+        # the fallback
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(self.url, follow=False)
+        p = pq(resp.content)
+        eq_(1, p.find('#doc-render-raw-fallback').length)
+
+    @mock.patch_object(Document, 'schedule_rendering')
+    @mock.patch('wiki.kumascript.get')
+    def test_schedule_render_on_edit(self, mock_kumascript_get, mock_document_schedule_rendering):
+        mock_kumascript_get.return_value = (self.rendered_content, None)
+
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        data.update({
+            'form': 'rev',
+            'content': 'This is an update',
+        })
+        resp = self.client.post(reverse('wiki.edit_document',
+                                args=[self.d.full_path]), data)
+        eq_(302, resp.status_code)
+
+        ok_(mock_document_schedule_rendering.called)
