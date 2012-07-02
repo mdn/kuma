@@ -32,7 +32,7 @@
     
     <div id="topic-content">
       <section id="topic-html5" class="block">
-        {% trans html5=devmo_url('HTML/HTML5') %}<p><b><a href="{{ html5 }}">HTML5</a> is the set of
+        {% trans html5=devmo_url(_('/en/HTML/HTML5')) %}<p><b><a href="{{ html5 }}">HTML5</a> is the set of
         technology standards that support the next phase in the development of the Web.</b>
         From its beginning, Mozilla has championed Web standards to ensure freedom of choice
         for those who use the Web and independence for those who build it. Leaders from Mozilla
@@ -49,15 +49,15 @@
         <h2>{{ _('CSS3 Styling') }}</h2>
 
         {% trans
-            CSS=devmo_url('CSS'),
-            CSS_gradients=devmo_url('CSS/Using_CSS_gradients'),
-            CSS_transforms=devmo_url('CSS/Using_CSS_transforms'),
-            CSS_layouts=devmo_url('CSS/Using_CSS_multi-column_layouts'),
-            flexbox=devmo_url('Using_flexbox'),
-            calc=devmo_url('CSS/calc'),
-            transitions=devmo_url('CSS/CSS_transitions'),
-            animations=devmo_url('CSS/CSS_animations'),
-            Media_queries=devmo_url('CSS/Media_queries')
+            CSS=devmo_url(_('/en/CSS')),
+            CSS_gradients=devmo_url(_('/en/CSS/Using_CSS_gradients')),
+            CSS_transforms=devmo_url(_('/en/CSS/Using_CSS_transforms')),
+            CSS_layouts=devmo_url(_('/en/CSS/Using_CSS_multi-column_layouts')),
+            flexbox=devmo_url(_('/en/Using_flexbox')),
+            calc=devmo_url(_('/en/CSS/calc')),
+            transitions=devmo_url(_('/en/CSS/CSS_transitions')),
+            animations=devmo_url(_('/en/CSS/CSS_animations')),
+            Media_queries=devmo_url(_('/en/CSS/Media_queries'))
         %}<p><a href="{{ CSS }}">Cascading Style Sheets</a> deliver a wide
         range of stylization and effects, enhancing web pages without sacrificing their semantic
         structure or performance. CSS3 is the latest
@@ -79,8 +79,8 @@
       <section id="topic-semantics" class="block">
         <h2>{{ _('Semantics') }}</h2>
         {% trans
-            new_elements=devmo_url('Sections_and_Outlines_of_an_HTML5_document'),
-            new_forms=devmo_url('HTML/Forms_in_HTML')
+            new_elements=devmo_url(_('/en/Sections_and_Outlines_of_an_HTML5_document')),
+            new_forms=devmo_url(_('/en/HTML/Forms_in_HTML'))
         %}<p>HTML5 introduces a number of
         <a href="{{ new_elements }}">new elements and attributes</a>
         to support content in more meaningful ways.
@@ -92,8 +92,8 @@
       <section id="topic-connectivity" class="block">
         <h2>{{ _('Connectivity') }}</h2>
         {% trans
-            websockets=devmo_url('WebSockets'),
-            server_events=devmo_url('Server-sent_events')
+            websockets=devmo_url(_('/en/WebSockets')),
+            server_events=devmo_url(_('/en/Server-sent_events'))
         %}<p>More efficient connectivity means more real-time chats, faster games, and better
         communication. <a href="{{ websockets }}">WebSockets</a> and
         <a href="{{ server_events }}">Server-Sent Events</a>
@@ -103,10 +103,10 @@
       <section id="topic-performance" class="block">
         <h2>{{ _('Performance & Integration') }}</h2>
         {% trans
-            web_workers=devmo_url('Using_web_workers'),
-            xhr=devmo_url('DOM/XMLHttpRequest'),
-            ajax=devmo_url('AJAX'),
-            history=devmo_url('DOM/Manipulating_the_browser_history')
+            web_workers=devmo_url(_('/en/Using_web_workers')),
+            xhr=devmo_url(_('/en/DOM/XMLHttpRequest')),
+            ajax=devmo_url(_('/en/AJAX')),
+            history=devmo_url(_('/en/DOM/Manipulating_the_browser_history'))
         %}<p>Make apps more seamless and make dynamic content load faster with a variety of techniques
         and technologies such as <a href="{{ web_workers }}">Web Workers</a>,
         <a href="{{ xhr }}">XMLHttpRequest Level 2</a> (the technology behind
@@ -117,10 +117,10 @@
       <section id="topic-offline" class="block">
         <h2>{{ _('Offline & Storage') }}</h2>
         {% trans
-            app_cache=devmo_url('Using_the_Application_Cache'),
-            local_storage=devmo_url('DOM/Storage'),
-            indexed_db=devmo_url('IndexedDB'),
-            file_api=devmo_url('Using_files_from_web_applications')
+            app_cache=devmo_url(_('/en/Using_the_Application_Cache')),
+            local_storage=devmo_url(_('/en/DOM/Storage')),
+            indexed_db=devmo_url(_('/en/IndexedDB')),
+            file_api=devmo_url(_('/en/Using_files_from_web_applications'))
         %}<p>Web apps can still function even if there is no internet connection, thanks
         to the <a href="{{ app_cache }}">HTML5 App Cache</a>,
         as well as the <a href="{{ local_storage }}">Local Storage</a>,
@@ -132,7 +132,7 @@
       
       <section id="topic-multimedia" class="block">
         <h2>{{ _('Multimedia') }}</h2>
-        {% trans html5_av=devmo_url('Using_HTML5_audio_and_video') %}<p>Incorporating audio or video into a web page has long required an additional plug-in
+        {% trans html5_av=devmo_url(_('/en/Using_HTML5_audio_and_video')) %}<p>Incorporating audio or video into a web page has long required an additional plug-in
         to add more capabilities to the browser that weren&#8217;t native to the browser itself, but
         that&#8217;s changing with HTML5. The new <a href="{{ html5_av }}">audio and video elements</a>
         allow web developers to embed sound and moving pictures into web pages without any
@@ -143,10 +143,10 @@
       <section id="topic-graphics" class="block">
         <h2>{{ _('3D, Graphics, & Effects') }}</h2>
         {% trans
-            svg=devmo_url('SVG'),
-            canvas=devmo_url('HTML/Canvas'),
-            webgl=devmo_url('WebGL'),
-            css3d=devmo_url('CSS/Using_CSS_transforms#3D_specific_CSS_properties')
+            svg=devmo_url(_('/en/SVG')),
+            canvas=devmo_url(_('/en/HTML/Canvas')),
+            webgl=devmo_url(_('/en/WebGL')),
+            css3d=devmo_url(_('/en/CSS/Using_CSS_transforms#3D_specific_CSS_properties'))
         %}<p>Images on the Web have always been flat and static, created once and then living forever
         in a permanent, unchanging, 2-dimensional state. Now <a href="{{ svg }}">SVG</a>
         and <a href="{{ canvas }}">canvas</a> can generate dynamic,
@@ -159,9 +159,9 @@
       <section id="topic-devices" class="block">
         <h2>{{ _('Device Access') }}</h2>
         {% trans
-            geolocation=devmo_url('Using_geolocation'),
-            touch=devmo_url('DOM/Touch_events'),
-            orientation=devmo_url('detecting_device_orientation')
+            geolocation=devmo_url(_('/en/Using_geolocation')),
+            touch=devmo_url(_('/en/DOM/Touch_events')),
+            orientation=devmo_url(_('/en/detecting_device_orientation'))
         %}<p>The Web is becoming more mobile every day, with an ever-growing number and variety of devices accessing it.
         With new technologies like the <a href="{{ geolocation }}">Geolocation API</a> and
         <a href="{{ touch }}">touch events</a>, web applications can
@@ -198,17 +198,17 @@
       <h3 class="mod-title">{{ _('MDN Docs') }}</h3>
       <p class="mod-intro">{{ _('Community docs of HTML5 features and related technologies') }}</p>
       <ul class="prose">
-        <li><a href="{{ devmo_url('HTML') }}">{{ _('HTML') }}</a></li>
-        <li><a href="{{ devmo_url('HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
-        <li><a href="{{ devmo_url('CSS') }}">{{ _('CSS') }}</a></li>
-        <li><a href="{{ devmo_url('Using_HTML5_audio_and_video') }}">{{ _('HTML5 Audio and Video') }}</a></li>
-        <li><a href="{{ devmo_url('HTML/Canvas') }}">{{ _('Canvas') }}</a></li>
-        <li><a href="{{ devmo_url('WebSockets') }}">{{ _('WebSockets') }}</a></li>
-        <li><a href="{{ devmo_url('Using_the_Application_Cache') }}">{{ _('HTML5 App Cache') }}</a></li>
-        <li><a href="{{ devmo_url('DOM/Storage') }}">{{ _('Local Storage') }}</a></li>
-        <li><a href="{{ devmo_url('IndexedDB') }}">{{ _('Indexed Database') }}</a></li>
-        <li><a href="{{ devmo_url('Using_files_from_web_applications') }}">{{ _('File API') }}</a></li>
-        <li><a href="{{ devmo_url('Using_geolocation') }}">{{ _('Geolocation API') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">{{ _('HTML5') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_HTML5_audio_and_video')) }}">{{ _('HTML5 Audio and Video') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/HTML/Canvas')) }}">{{ _('Canvas') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/WebSockets')) }}">{{ _('WebSockets') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_the_Application_Cache')) }}">{{ _('HTML5 App Cache') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/DOM/Storage')) }}">{{ _('Local Storage') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/IndexedDB')) }}">{{ _('Indexed Database') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_files_from_web_applications')) }}">{{ _('File API') }}</a></li>
+        <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">{{ _('Geolocation API') }}</a></li>
       </ul>
     </div>
   

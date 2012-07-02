@@ -23,7 +23,7 @@
       <div class="boxed">
         <h2>{{ _('Getting Started') }}</h2>
         {% if waffle.switch('apps-market-launch') %}
-          {% trans apps_url=devmo_url('Apps') %}
+          {% trans apps_url=devmo_url(_('/en/Apps')) %}
             <p>The Mozilla Web Apps platform lets you <a href="{{ apps_url }}">build apps</a> powered by Web standards like HTML5, CSS3, JavaScript and related APIs.</p>
           {% endtrans %}
         {% else %}
@@ -31,7 +31,7 @@
             <p>The Mozilla Marketplace lets you build app experiences powered by Web standards like HTML5, CSS3, JavaScript and related APIs.</p>
           {% endtrans %}
         {% endif %}
-        <p class="more"><a href="{{ devmo_url('Apps/Getting_Started') }}" class="go">{{ _('Learn more') }}</a></p>
+        <p class="more"><a href="{{ devmo_url(_('/en/Apps/Getting_Started')) }}" class="go">{{ _('Learn more') }}</a></p>
       </div>
       
       <div class="boxed">
@@ -85,7 +85,7 @@
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url('Apps/For_mobile_developers') }}" rel="bookmark">{{ _('For mobile apps developers') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_mobile_developers')) }}" rel="bookmark">{{ _('For mobile apps developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
             If you already develop apps for mobile devices, here's how to develop Open Web apps.
@@ -93,7 +93,7 @@
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url('Apps/For_Web_developers') }}" rel="bookmark">{{ _('For web developers') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/For_Web_developers')) }}" rel="bookmark">{{ _('For web developers') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
             If you already develop websites, here's how to make them into installable apps.
@@ -101,7 +101,7 @@
             </p>
           </li>
           <li class="hentry">
-            <h4 class="entry-title"><a href="{{ devmo_url('Apps/Using_apps_offline') }}" rel="bookmark">{{ _('Using apps offline') }}</a></h4>
+            <h4 class="entry-title"><a href="{{ devmo_url(_('/en/Apps/Using_apps_offline')) }}" rel="bookmark">{{ _('Using apps offline') }}</a></h4>
             <p class="entry-summary">
             {% trans %}
             How to design apps so they can be cached and used without an Internet connection.
