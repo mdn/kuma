@@ -235,24 +235,31 @@ def document(request, document_slug, document_locale):
                 request.GET.get('nocreate', False) is not False):
                 raise Http404
 
-            # The user may be trying to create a child page If a parent exists
+            # The user may be trying to create a child page; if a parent exists
             # for this document, redirect them to the "Create" page
-            try:
-                parent_slug = document_slug.split('/')
-                new_child_slug = parent_slug.pop()
-                parent_slug = '/'.join(parent_slug)
+            # Otherwise, they could be trying to create a main level doc
 
-                parent_doc = Document.objects.get(locale=document_locale,
-                                                  slug=parent_slug,
-                                                  is_template=0)
+            parent_split = document_slug.split('/')
+            url = reverse('wiki.new_document', locale=document_locale)
 
-                # Redirect to create page with parent ID
-                url = reverse('wiki.new_document', locale=document_locale)
-                url = urlparams(url, parent=parent_doc.id, slug=new_child_slug)
-                return HttpResponseRedirect(url)
+            if len(parent_split) > 1:
+                try:
+                    new_child_slug = parent_split.pop()
+                    parent_slug = '/'.join(parent_split)
 
-            except Document.DoesNotExist:
-                raise Http404
+                    parent_doc = Document.objects.get(locale=document_locale,
+                                                      slug=parent_slug,
+                                                      is_template=0)
+                    # Redirect to create page with parent ID
+                    url = urlparams(url, parent=parent_doc.id,
+                                    slug=new_child_slug)
+                    return HttpResponseRedirect(url)
+                except Document.DoesNotExist:
+                    raise Http404
+
+            # This is a "base level" redirect, i.e. no parent
+            url = urlparams(url, slug=document_slug)
+            return HttpResponseRedirect(url)
 
     # Obey explicit redirect pages:
     # Don't redirect on redirect=no (like Wikipedia), so we can link from a

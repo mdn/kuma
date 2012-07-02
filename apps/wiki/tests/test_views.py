@@ -580,9 +580,6 @@ class DocumentEditingTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
 
-        # TODO: create-on-404 does not work for root pages
-        # eg. /en-US/docs/Foo, /en-US/docs/Bar
-
         # Create the parent page.
         d, r = doc_rev()
 
@@ -606,6 +603,16 @@ class DocumentEditingTests(TestCaseBase):
             sub_url = '%s?%s=1' % (url, p_name)
             resp = client.get(sub_url)
             eq_(404, resp.status_code)
+
+        # Ensure root level documents work, not just children
+        slug = 'noExist'
+        response = client.get(reverse('wiki.document', args=[slug], locale=locale))
+        eq_(302, response.status_code)
+
+        slug = 'Template:NoExist'
+        response = client.get(reverse('wiki.document', args=[slug], locale=locale))
+        eq_(302, response.status_code)
+
 
     def test_retitling(self):
         """When the title of an article is edited, a redirect is made."""
@@ -1529,7 +1536,6 @@ class SectionEditingResourceTests(TestCaseBase):
         resp = client.get(reverse('docs'))
         page = pq(resp.content)
         eq_(1, page.find('#kumawiki_preview').length)
-
 
 class MindTouchRedirectTests(TestCaseBase):
     """
