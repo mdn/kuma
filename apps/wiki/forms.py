@@ -382,3 +382,16 @@ class ReviewForm(forms.Form):
                     label=_lazy(u'Significance:'),
                     choices=SIGNIFICANCES, initial=SIGNIFICANCES[0][0],
                     required=False, widget=forms.RadioSelect())
+
+
+class RevisionValidationForm(RevisionForm):
+    """Created primarily to disallow slashes in slugs during validation"""
+
+    #def __init__(self, *args, **kwargs):
+    #    return super(RevisionValidationForm, self).__init__(self, *args, **kwargs)
+
+    def clean_slug(self):
+        # "/" disallowed in form input
+        if '/' in self.cleaned_data['slug']:
+            raise forms.ValidationError(SLUG_INVALID)
+        return super(RevisionValidationForm, self).clean_slug()

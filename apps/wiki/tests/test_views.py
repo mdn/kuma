@@ -749,13 +749,11 @@ class DocumentEditingTests(TestCaseBase):
                 reverse('wiki.document', args=[data['slug']],
                                          locale='en-US'))
 
-        # Slashes should be fine
+        # Slashes should not be acceptable via form input
         data['title'] = 'valid with slash'
         data['slug'] = 'va/lid'
         response = client.post(reverse('wiki.new_document'), data)
-        self.assertRedirects(response,
-                reverse('wiki.document', args=[data['slug']],
-                                         locale='en-US'))
+        self.assertContains(response, 'The slug provided is not valid.')
 
         # Dollar sign is reserved for verbs
         data['title'] = 'invalid with dollars'
@@ -800,6 +798,86 @@ class DocumentEditingTests(TestCaseBase):
             data['slug'] = term
             response = client.post(reverse('wiki.new_document'), data)
             self.assertContains(response, 'The slug provided is not valid.')
+
+    def test_parent_child_slug_built_properly(self):
+        """Slugs and their parents are properly rebuilt during each edit"""
+
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Create the parent document
+        parent_slug = 'parentDoc'
+        parent_doc = document(title='Parent Doc', slug=parent_slug, is_localizable=True)
+        parent_doc.save()
+        r = revision(document=parent_doc)
+        r.save()
+
+        # Create the new document test data
+        data = new_document_data()
+        data['title'] = 'Child Doc'
+        data['slug'] = 'childDoc'
+        data['content'] = 'I am a bunch of content'
+        data['is_localizable'] = True
+
+        # Validate that a child slug is built properly
+        response = client.post(reverse('wiki.new_document') + '?parent=' + str(parent_doc.id), data)
+        eq_(302, response.status_code)
+        child_doc = parent_doc.children.all()[0]
+        ok_(parent_doc.children.count() == 1)
+        eq_(child_doc.slug, 'parentDoc/childDoc')
+
+        # Now validate that the slug stays correct when an edit is done and the slug isn't touched
+        data['form'] = 'rev'
+        edit_url = reverse('wiki.edit_document',
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   args=[child_doc.full_path])
+        response = client.post(edit_url, data)
+        self.assertRedirects(response, '/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + parent_slug + '/' + data['slug'])
+        child_doc = parent_doc.children.all()[0]
+        eq_(child_doc.slug, parent_slug + '/' + data['slug'])
+
+
+        # Validate that the slug stays correct when an edit is done and the slug *is* touched
+        data['slug'] = 'childDocUpdated'
+        response = client.post(edit_url, data)
+        self.assertRedirects(response, '/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + parent_slug + '/' + data['slug'])
+        child_doc = parent_doc.children.all()[0]
+        eq_(child_doc.slug, parent_slug + '/' + data['slug'])
+            
+        # Validate that the slug is correctly built when translated
+        child_doc = parent_doc.children.all()[0]
+        child_doc.is_localizable = True
+        child_doc.save()
+        data['slug'] = 'ChildSluggo'
+        data['form'] = 'both'
+        translate_url = reverse('wiki.document', locale=settings.WIKI_DEFAULT_LANGUAGE, args=[child_doc.slug]) + '$translate?tolocale=es'
+        response = client.post(translate_url, data)
+        self.assertRedirects(response, '/es/docs/' + parent_slug + '/' + data['slug'])
+
+        # Validate that the grandchild slug is properly created
+        grandchild_data = new_document_data()
+        grandchild_data['title'] = 'Grandchild Doc'
+        grandchild_data['slug'] = 'grandchildDoc'
+        grandchild_data['contnet'] = 'This is the document'
+        grandchild_data['is_localizable'] = True
+        response = client.post(reverse('wiki.new_document') + '?parent=' + str(child_doc.id), grandchild_data)
+        eq_(302, response.status_code)
+        grandchild_doc = child_doc.children.all()[0]
+        eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
+
+        # Validate that the grandchild slug is correct after edit
+        child_doc = parent_doc.children.all()[0]
+        grandchild_data['form'] = 'rev'
+        edit_url = reverse('wiki.edit_document',
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   args=[grandchild_doc.full_path])
+        grandchild_data['slug'] = 'grandchildDocUpdated'
+        response = client.post(edit_url, grandchild_data)
+        self.assertRedirects(response, '/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + child_doc.slug + '/' + grandchild_data['slug'])
+        grandchild_doc = child_doc.children.all()[0]
+        eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
+
+
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
