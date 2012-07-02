@@ -35,6 +35,7 @@
     var j = idTagsField.tagit({
       availableTags: window.INTEREST_SUGGESTIONS || [],
       singleField: true,
+      allowSpaces: true,
       singleFieldNode: idTagsField,
       onTagAdded  : consolidateTags(),
       onTagRemoved: consolidateTags(true)
