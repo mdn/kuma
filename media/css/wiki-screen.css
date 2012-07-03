@@ -387,6 +387,7 @@ input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 
 
 .revision-diff dd {
   margin: 0 0 .5em;
+  max-width: 100%;
 }
 
 .revision-diff .rev-from {
@@ -409,6 +410,7 @@ table.diff {
     clear: both;
     margin: 5px 0 15px;
     width: 100%;
+    font-family: "Courier New", "Andale Mono", monospace;
 }
 
 
