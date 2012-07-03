@@ -826,13 +826,24 @@ class DocumentEditingTests(TestCaseBase):
         ok_(parent_doc.children.count() == 1)
         eq_(child_doc.slug, 'parentDoc/childDoc')
 
+        # Validate that the child slug is reached without problem
+        response = client.get(reverse('wiki.document', args=[child_doc.slug],
+                                         locale=settings.WIKI_DEFAULT_LANGUAGE))
+        eq_(200, response.status_code)
+
+        # Validate that the child didn't create a redirection on the main level; bug #770338
+        response = client.get(reverse('wiki.document', args=[data['slug']],
+                                         locale=settings.WIKI_DEFAULT_LANGUAGE) + '?raw=1')
+        eq_(404, response.status_code)
+
         # Now validate that the slug stays correct when an edit is done and the slug isn't touched
         data['form'] = 'rev'
         edit_url = reverse('wiki.edit_document',
                                    locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    args=[child_doc.full_path])
         response = client.post(edit_url, data)
-        self.assertRedirects(response, '/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + parent_slug + '/' + data['slug'])
+        self.assertRedirects(response, reverse('wiki.document', locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                                args=[parent_slug + '/' + data['slug']]))
         child_doc = parent_doc.children.all()[0]
         eq_(child_doc.slug, parent_slug + '/' + data['slug'])
 
@@ -840,11 +851,13 @@ class DocumentEditingTests(TestCaseBase):
         # Validate that the slug stays correct when an edit is done and the slug *is* touched
         data['slug'] = 'childDocUpdated'
         response = client.post(edit_url, data)
-        self.assertRedirects(response, '/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + parent_slug + '/' + data['slug'])
+        self.assertRedirects(response, reverse('wiki.document', locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                                args=[parent_slug + '/' + data['slug']]))
         child_doc = parent_doc.children.all()[0]
         eq_(child_doc.slug, parent_slug + '/' + data['slug'])
             
         # Validate that the slug is correctly built when translated
+        foreign_prefix = '/es/docs/'
         child_doc = parent_doc.children.all()[0]
         child_doc.is_localizable = True
         child_doc.save()
@@ -852,7 +865,15 @@ class DocumentEditingTests(TestCaseBase):
         data['form'] = 'both'
         translate_url = reverse('wiki.document', locale=settings.WIKI_DEFAULT_LANGUAGE, args=[child_doc.slug]) + '$translate?tolocale=es'
         response = client.post(translate_url, data)
-        self.assertRedirects(response, '/es/docs/' + parent_slug + '/' + data['slug'])
+        self.assertRedirects(response, foreign_prefix + parent_slug + '/' + data['slug'])
+
+        # Validate that hitting the translation page works
+        response = client.get(foreign_prefix + parent_slug + '/' + data['slug'])
+        eq_(200, response.status_code)
+
+        # Validate that the translation didn't create a redirection on the main level; bug #770338
+        response = client.get(foreign_prefix + data['slug'] + '?raw=1')
+        eq_(404, response.status_code)
 
         # Validate that the grandchild slug is properly created
         grandchild_data = new_document_data()
@@ -865,6 +886,10 @@ class DocumentEditingTests(TestCaseBase):
         grandchild_doc = child_doc.children.all()[0]
         eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
 
+        # Validate that the grandchild slug is reached without problems
+        response = client.get('/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + grandchild_doc.slug)
+        eq_(200, response.status_code)
+
         # Validate that the grandchild slug is correct after edit
         child_doc = parent_doc.children.all()[0]
         grandchild_data['form'] = 'rev'
@@ -873,7 +898,9 @@ class DocumentEditingTests(TestCaseBase):
                                    args=[grandchild_doc.full_path])
         grandchild_data['slug'] = 'grandchildDocUpdated'
         response = client.post(edit_url, grandchild_data)
-        self.assertRedirects(response, '/' + settings.WIKI_DEFAULT_LANGUAGE + '/docs/' + child_doc.slug + '/' + grandchild_data['slug'])
+    
+        self.assertRedirects(response, reverse('wiki.document', locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                                args=[child_doc.slug + '/' + grandchild_data['slug']]))
         grandchild_doc = child_doc.children.all()[0]
         eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
 

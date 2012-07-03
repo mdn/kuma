@@ -387,9 +387,6 @@ class ReviewForm(forms.Form):
 class RevisionValidationForm(RevisionForm):
     """Created primarily to disallow slashes in slugs during validation"""
 
-    #def __init__(self, *args, **kwargs):
-    #    return super(RevisionValidationForm, self).__init__(self, *args, **kwargs)
-
     def clean_slug(self):
         # "/" disallowed in form input
         if '/' in self.cleaned_data['slug']:
