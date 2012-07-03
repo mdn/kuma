@@ -504,7 +504,6 @@ def new_document(request):
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
     if parent_slug:
-        post_data.update({'slug': parent_slug + '/' + post_data['slug']})
         post_data.update({'parent_topic': initial_parent_id})
 
     doc_form = DocumentForm(post_data)
@@ -512,6 +511,13 @@ def new_document(request):
 
     if doc_form.is_valid() and rev_form.is_valid():
         
+        # Now that the form has been validated
+        # Add the parent slug path
+        if parent_slug:
+            post_data.update({'slug': parent_slug + '/' + post_data['slug']})
+        doc_form = DocumentForm(post_data)
+        doc_form.is_valid()
+
         rev_form = RevisionForm(post_data)
         
         slug = doc_form.cleaned_data['slug']
@@ -1069,7 +1075,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             post_data.update({'slug': destination_slug})
 
             doc_form = DocumentForm(post_data, instance=doc)
-            doc_form.slug = destination_slug
+            #doc_form.slug = destination_slug
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
