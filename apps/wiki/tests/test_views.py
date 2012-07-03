@@ -5,12 +5,14 @@ import logging
 import json
 import base64
 import hashlib
+import os
 import time
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.cache import cache
+from django.core.files.base import ContentFile
 from django.db.models import Q
 
 import mock
@@ -29,7 +31,8 @@ from sumo.urlresolvers import reverse
 from . import TestCaseBase
 
 import wiki.content
-from wiki.models import VersionMetadata, Document, Revision
+from wiki.models import VersionMetadata, Document, Revision, \
+                        Attachment, AttachmentRevision
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
@@ -1683,7 +1686,6 @@ class AutosuggestDocumentsTests(TestCaseBase):
                     break
             eq_(True, found)
 
-
 class DeferredRenderingViewTests(TestCaseBase):
     """Tests for the deferred rendering system and interaction with views"""
 
@@ -1797,3 +1799,43 @@ class DeferredRenderingViewTests(TestCaseBase):
         eq_(302, resp.status_code)
 
         ok_(mock_document_schedule_rendering.called)
+
+class AttachmentTests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def test_legacy_redirect(self):
+        test_user = User.objects.get(username='testuser2')
+        test_file_content = 'Meh meh I am a test file.'
+        test_files = (
+            {'file_id': 97, 'filename': 'Canvas_rect.png',
+             'title': 'Canvas rect', 'slug': 'canvas-rect'},
+            {'file_id': 107, 'filename': 'Canvas_smiley.png',
+             'title': 'Canvas smiley', 'slug': 'canvas-smiley'},
+            {'file_id': 86, 'filename': 'Canvas_lineTo.png',
+             'title': 'Canvas lineTo', 'slug': 'canvas-lineto'},
+            {'file_id': 55, 'filename': 'Canvas_arc.png',
+             'title': 'Canvas arc', 'slug': 'canvas-arc'},
+        )
+        for f in test_files:
+            a = Attachment(title=f['title'], slug=f['slug'],
+                           mindtouch_attachment_id=f['file_id'])
+            a.save()
+            now = datetime.datetime.now()
+            r = AttachmentRevision(
+                attachment=a,
+                mime_type='text/plain',
+                title=f['title'],
+                slug=f['slug'],
+                description = '',
+                created=now,
+                is_approved=True)
+            r.creator = test_user
+            r.file.save(f['filename'], ContentFile(test_file_content))
+            r.make_current()
+            mindtouch_url = reverse('wiki.mindtouch_file_redirect',
+                                    args=(),
+                                    kwargs={'file_id': f['file_id'],
+                                            'filename': f['filename']})
+            resp = self.client.get(mindtouch_url)
+            eq_(301, resp.status_code)
+            ok_(a.get_absolute_url() in resp['Location'])
