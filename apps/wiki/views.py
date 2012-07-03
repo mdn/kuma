@@ -193,6 +193,7 @@ def _document_last_modified(request, document_slug, document_locale):
 def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
+
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
         doc = Document.objects.get(locale=document_locale, slug=document_slug)
@@ -260,6 +261,7 @@ def document(request, document_slug, document_locale):
     # the redirect.
     redirect_url = (None if request.GET.get('redirect') == 'no'
                     else doc.redirect_url())
+
     if redirect_url:
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
@@ -502,19 +504,16 @@ def new_document(request):
     post_data = request.POST.copy()
     post_data.update({'locale': request.locale})
     if parent_slug:
+        post_data.update({'slug': parent_slug + '/' + post_data['slug']})
         post_data.update({'parent_topic': initial_parent_id})
 
     doc_form = DocumentForm(post_data)
-    rev_form = RevisionValidationForm(post_data)
+    rev_form = RevisionValidationForm(request.POST.copy())
 
     if doc_form.is_valid() and rev_form.is_valid():
         
         rev_form = RevisionForm(post_data)
         
-        # Prefix this new doc's slug with the parent document's slug.
-        if parent_slug:
-            post_data.update({'slug': parent_slug + '/' + post_data['slug']})
-
         slug = doc_form.cleaned_data['slug']
         if not Document.objects.allows_add_by(request.user, slug):
             raise PermissionDenied
@@ -1059,16 +1058,24 @@ def translate(request, document_slug, document_locale, revision_id=None):
         which_form = request.POST.get('form', 'both')
         doc_form_invalid = False
 
+        parent_slug_split.append(request.POST.get('slug', ''))
+        destination_slug = '/'.join(parent_slug_split)
+
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
             post_data = request.POST.copy()
 
             post_data.update({'locale': document_locale})
+            post_data.update({'slug': destination_slug})
+
             doc_form = DocumentForm(post_data, instance=doc)
+            doc_form.slug = destination_slug
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
-                rev_form = RevisionValidationForm(post_data)
+                # Sending a new copy of post so the slug change above
+                # doesn't cause problems during validation
+                rev_form = RevisionValidationForm(request.POST.copy())
 
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
@@ -1084,12 +1091,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                             locale=doc.locale),
                                     opendescription=1)
                     return HttpResponseRedirect(url)
-
-                doc_slug = doc_form.cleaned_data['slug']
             else:
                 doc_form_invalid = True
-        else:
-            doc_slug = doc.slug
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:
             post_data = request.POST.copy()
@@ -1099,8 +1102,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
             if rev_form.is_valid() and not doc_form_invalid:
                 # append final slug
-                parent_slug_split.append(post_data['slug'])
-                post_data['slug'] = '/'.join(parent_slug_split)
+                post_data['slug'] = destination_slug
                 rev_form = RevisionForm(post_data)
 
                 _save_rev_and_notify(rev_form, request.user, doc)
