@@ -62,6 +62,9 @@ urlpatterns = patterns('',
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
 
     # Legacy MindTouch redirects.
+    url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
+        'wiki.views.mindtouch_file_redirect',
+        name='wiki.mindtouch_file_redirect'),
     (r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
 )
 
