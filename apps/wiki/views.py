@@ -1489,3 +1489,9 @@ def attachment_detail(request, attachment_id, filename):
     resp["Last-Modified"] = rev.created
     resp["Content-Length"] = rev.size
     return resp
+
+
+def mindtouch_file_redirect(request, file_id, filename):
+    """Redirect an old MindTouch file URL to a new kuma file URL."""
+    attachment = get_object_or_404(Attachment, mindtouch_attachment_id=file_id)
+    return HttpResponsePermanentRedirect(attachment.get_absolute_url())
