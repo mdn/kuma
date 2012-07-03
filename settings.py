@@ -995,6 +995,11 @@ CONSTANCE_CONFIG = dict(
         'parameter for this path to send a Content-Type: text/css header. Empty '
         'value disables the feature altogether.',
     ),
+
+    DIFF_CONTEXT_LINES = (
+        0,
+        'Number of lines of context to show in diff displays.',
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
