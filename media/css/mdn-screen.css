@@ -301,6 +301,12 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #masthead .user-state { font-size: .786em; margin-bottom: 0; position: absolute; right: 150px; top: 12px; }
 #site-info .user-state { margin-bottom: .5em; }
 
+.reportBug { position: absolute; font-size: .8em; top: 48px; right: 20px; }
+.reportBug span { font-weight: bold; color: #F8D475; display: inline-block; }
+.reportBug a { color: #fff; background: rgba(80, 80, 80, 0.9); border-radius: 6px; padding: 4px 7px; display: inline-block; border: 1px solid #666; }
+.reportBug a:hover, .reportBug a:active { background: #fff; }
+.reportBug a:hover span, .reportBug a:active span { color: #cc3435; }
+
 /*** @BrowserID *********/
 a.browserid-signin:link, a.browserid-signin:visited { padding: 1px 10px 1px 28px; color: #fff !important; background: #555 url("../img/btn-browserid.png") -1px 50% no-repeat; border-radius: 3px; border: 1px outset rgba(50,50,50,.5); }
 a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { background-color: #666; }
@@ -1142,6 +1148,8 @@ li.tag-expert label:hover { border-color: #bbb; }
 .html-rtl #masthead .user-state { left: 150px; right: auto; }
 .html-rtl .user-state li + li { padding-right: 10px; margin-right: 8px; margin-left:0; padding-left:0; border-right: 1px solid #666; border-left: 0; }
 .html-rtl #masthead #tabzilla { position: absolute; left: 0; top: 0; right: auto; }
+
+.html-rl .reportBug { left: 20px; right: auto; }
 
 .html-rtl #welcome-close { right: auto; left: 15px; }
 .html-rtl #welcome-open { right: auto; left: 10px; }
