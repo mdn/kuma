@@ -565,7 +565,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     # Update the slug, removing the parent path, and
     # *only* using the last piece.
     # This is only for the edit form.
-    doc.slug = rev.slug = slug_split[-1]
+    rev.slug = slug_split[-1]
     # Keep a parent slug
     # Create the slug prefix from the parent string
     slug_split.pop()
