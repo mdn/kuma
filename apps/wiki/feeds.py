@@ -6,22 +6,21 @@ import validate_jsonp
 
 import jingo
 
-from django.contrib.syndication.views import Feed, FeedDoesNotExist
-from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
-                                        Atom1Feed, get_tag_uri)
-import django.utils.simplejson as json
-from django.shortcuts import get_object_or_404
-
-from django.utils.translation import ugettext as _
-
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.syndication.views import Feed, FeedDoesNotExist
+from django.shortcuts import get_object_or_404
+from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
+                                        Atom1Feed)
+from django.utils.html import escape
+import django.utils.simplejson as json
+from django.utils.translation import ugettext as _
 
 from sumo.urlresolvers import reverse
 from devmo.models import UserProfile
 
-from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
-                         ReviewTag,)
+from wiki.helpers import diff_table, diff_inline
+from wiki.models import Document, Revision
 
 
 MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 15)
@@ -196,24 +195,41 @@ class RevisionsFeed(DocumentsFeed):
         return Revision.objects.order_by('-created')[:50]
 
     def item_title(self, item):
-        return "%s edited %s" % (item.creator.username, item.title)
+        return "%s/%s" % (item.document.locale, item.document.full_path)
 
     def item_description(self, item):
         previous = item.get_previous()
         if previous is None:
-            return 'Document created'
-        return item.comment
+            return '<p>Created by: %s</p>' % item.creator.username
+        # TODO: put this in a jinja template if django syndication will let us
+        by = '<p>Edited by: %s</p>' % item.creator.username
+        comment = '<p>Comment: %s</p>' % item.comment
+        diff = ("Diff:<blockquote>%s</blockquote>" % (
+            diff_inline(previous.content, item.content)))
+        link_cell = '<td><a href="%s">%s</a></td>'
+        view_cell = link_cell % (reverse('wiki.document',
+                                         args=[item.document.full_path]),
+                                 _('View Page'))
+        edit_cell = link_cell % (reverse('wiki.edit_document',
+                                         args=[item.document.full_path]),
+                                 _('Edit Page'))
+        compare_cell = link_cell % (reverse('wiki.compare_revisions',
+                                         args=[item.document.full_path])
+                                    + '?' +
+                                    urllib.urlencode({'from': previous.id,
+                                                      'to': item.id}),
+                                 _('Show comparison'))
+        history_cell = link_cell % (reverse('wiki.document_revisions',
+                                         args=[item.document.full_path]),
+                                 _('History'))
+        links_table = '<table border="0" width="80%">'
+        links_table = links_table + '<tr>%s%s%s%s</tr>' % (view_cell, edit_cell, compare_cell, history_cell)
+        links_table = links_table + '</table>'
+        description = "%s%s%s%s" % (by, comment, diff, links_table)
+        return description
 
     def item_link(self, item):
-        previous = item.get_previous()
-        if previous is None:
-            return item.document.get_absolute_url()
-        compare_url = reverse('wiki.compare_revisions',
-                              args=[item.document.slug])
-        qs = {'from': previous.id,
-              'to': item.id}
-        return "%s?%s" % (self.request.build_absolute_uri(compare_url),
-                          urllib.urlencode(qs))
+        return reverse('wiki.document', args=[item.document.full_path])
 
     def item_pubdate(self, item):
         return item.created
