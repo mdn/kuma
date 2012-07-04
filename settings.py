@@ -998,7 +998,12 @@ CONSTANCE_CONFIG = dict(
 
     DIFF_CONTEXT_LINES = (
         0,
-        'Number of lines of context to show in diff displays.',
+        'Number of lines of context to show in diff display.',
+    ),
+
+    FEED_DIFF_CONTEXT_LINES = (
+        3,
+        'Number of lines of context to show in feed diff display.',
     ),
 )
 
