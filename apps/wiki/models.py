@@ -198,6 +198,7 @@ RESERVED_SLUGS = (
 DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
 
 DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
+KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
 
 
 class UniqueCollision(Exception):
@@ -805,17 +806,22 @@ class Document(NotificationsMixin, ModelBase):
         # instead, the page just gets appropriate HTML to embed
         # whatever type of file it is. So we find them by
         # regex-searching over the HTML for URLs that match the
-        # MindTouch file URL pattern.
-        #
-        # TODO: Once we settle kuma's file URL pattern and people
-        # start using kuma's file-handling, we'll need to also scan
-        # for the kuma file URL pattern. That'll probably just involve
-        # setting up a couple Q() objects (one for MindTouch file IDs,
-        # one for kuma file IDs) and OR'ing them together to get the
-        # file query.
+        # file URL patterns.
         mt_files = DEKI_FILE_URL.findall(self.html)
+        kuma_files = KUMA_FILE_URL.findall(self.html)
+        mt_q = kuma_q = params = None
+
         if mt_files:
-            return Attachment.objects.filter(mindtouch_attachment_id__in=mt_files)
+            # We have at least some MindTouch files.
+            params = mt_files
+            if kuma_files:
+                # We also have some kuma files. Use an OR query.
+                params = params | kuma_files
+        if kuma_files and not params:
+            # We have only kuma files.
+            params = kuma_files
+        if params:
+            return Attachment.objects.filter(params)
         # If no files found, return an empty Attachment queryset.
         return Attachment.objects.none()
 
