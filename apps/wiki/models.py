@@ -813,13 +813,13 @@ class Document(NotificationsMixin, ModelBase):
 
         if mt_files:
             # We have at least some MindTouch files.
-            params = mt_files
+            params = models.Q(mindtouch_attachment_id__in=mt_files)
             if kuma_files:
                 # We also have some kuma files. Use an OR query.
-                params = params | kuma_files
+                params = params | models.Q(id__in=kuma_files)
         if kuma_files and not params:
             # We have only kuma files.
-            params = kuma_files
+            params = models.Q(id__in=kuma_files)
         if params:
             return Attachment.objects.filter(params)
         # If no files found, return an empty Attachment queryset.
