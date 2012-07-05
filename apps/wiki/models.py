@@ -7,6 +7,7 @@ import hashlib
 import re
 import time
 import json
+import os
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -1431,6 +1432,10 @@ class AttachmentRevision(models.Model):
 
     def filename(self):
         return self.file.path.split('/')[-1]
+
+    # models.py, after the filename method inside AttachmentRevision
+    def filesize(self):
+        return os.path.getsize(self.attachment.current_revision.file.path)
 
     def save(self, *args, **kwargs):
         super(AttachmentRevision, self).save(*args, **kwargs)
