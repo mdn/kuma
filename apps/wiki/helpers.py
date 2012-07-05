@@ -54,8 +54,9 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
                 # and preceding lines for next change
                 context = context_lines[:lines] + ['<p>...</p>'] + context_lines[-lines:]
             output = output + context
-    # remove extra context from the very end
-    output = output[:-lines]
+    # remove extra context from the very end, unless its the only context
+    if len(output) > lines+1:  # context lines and the change line
+        output = output[:-lines]
     return ''.join(output)
 
 @register.function
