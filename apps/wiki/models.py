@@ -1384,8 +1384,12 @@ class Attachment(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('wiki.attachment_detail', (), {'attachment_id': self.id,
-                                               'filename': self.current_revision.filename()})
+        return ('wiki.attachment_detail', (), {'attachment_id': self.id})
+
+    @models.permalink
+    def get_file_url(self):
+        return ('wiki.raw_file', (), {'attachment_id': self.id,
+                                      'filename': self.current_revision.filename()})
         
 
 class AttachmentRevision(models.Model):
@@ -1397,8 +1401,6 @@ class AttachmentRevision(models.Model):
 
     file = models.FileField(upload_to=rev_upload_to, max_length=500)
 
-    # If not supplied, these get auto-filled from the name of the file
-    # as uploaded.
     title = models.CharField(max_length=255, null=True, db_index=True)
     slug = models.CharField(max_length=255, null=True, db_index=True)
     
