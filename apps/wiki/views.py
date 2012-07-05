@@ -1004,7 +1004,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         # param is the best way to avoid the MindTouch-legacy locale
         # redirection logic.
         document_locale = request.REQUEST.get('tolocale',
-                                              settings.WIKI_DEFAULT_LANGUAGE)
+                                              document_locale)
 
     # Handle parent slug
     full_parent_slug = document_slug

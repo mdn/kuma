@@ -616,7 +616,6 @@ class DocumentEditingTests(TestCaseBase):
         response = client.get(reverse('wiki.document', args=[slug], locale=locale))
         eq_(302, response.status_code)
 
-
     def test_retitling(self):
         """When the title of an article is edited, a redirect is made."""
         # Not testing slug changes separately; the model tests cover those plus
@@ -914,8 +913,6 @@ class DocumentEditingTests(TestCaseBase):
         grandchild_doc = child_doc.children.all()[0]
         eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
 
-
-
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
         localization is OK."""
@@ -1179,6 +1176,20 @@ class DocumentEditingTests(TestCaseBase):
         eq_(302, resp.status_code)
         ok_(d.children.count() == 1)
         ok_(d.children.all()[0].title == 'Replicated local storage')
+
+    def test_translate_on_edit(self):
+        d1 = document(title="Doc1", locale='en-US', save=True)
+        r1 = revision(document=d1, save=True)
+
+        d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
+        r2 = revision(document=d2, save=True)
+
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        url = reverse('wiki.edit_document', args=(d2.slug,), locale=d2.locale)
+
+        resp = client.get(url)
+        eq_(200, resp.status_code)
 
     def test_revisions_feed(self):
         d = document(title='HTML9')
