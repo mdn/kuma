@@ -1405,6 +1405,9 @@ def mindtouch_to_kuma_redirect(request, path):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.
         raise Http404
+    if path.endswith('/'):
+        # If there's a trailing slash, snip it off.
+        path = path[:-1]
     if ':' in path:
         namespace, _, slug = path.partition(':')
         # The namespaces (Talk:, User:, etc.) get their own
