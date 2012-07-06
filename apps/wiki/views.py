@@ -1049,6 +1049,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if user_has_doc_perm:
         if doc:
             # If there's an existing doc, populate form from it.
+            doc.slug = specific_slug
             doc_initial = _document_form_initial(doc)
         else:
             # If no existing doc, bring over the original title and slug.
@@ -1071,7 +1072,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
         which_form = request.POST.get('form', 'both')
         doc_form_invalid = False
 
-        parent_slug_split.append(request.POST.get('slug', ''))
+        # Grab the posted slug value in case it's invalid
+        posted_slug = request.POST.get('slug', specific_slug)
+        parent_slug_split.append(posted_slug)
         destination_slug = '/'.join(parent_slug_split)
 
         if user_has_doc_perm and which_form in ['doc', 'both']:
@@ -1082,7 +1085,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
             post_data.update({'slug': destination_slug})
 
             doc_form = DocumentForm(post_data, instance=doc)
-            #doc_form.slug = destination_slug
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
@@ -1105,6 +1107,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                     opendescription=1)
                     return HttpResponseRedirect(url)
             else:
+                doc_form.data['slug'] = posted_slug
                 doc_form_invalid = True
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:

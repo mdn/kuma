@@ -808,6 +808,7 @@ class DocumentEditingTests(TestCaseBase):
             response = client.post(reverse('wiki.new_document'), data)
             self.assertContains(response, 'The slug provided is not valid.')
 
+    @attr('tags')
     def test_parent_child_slug_built_properly(self):
         """Slugs and their parents are properly rebuilt during each edit"""
 
@@ -888,7 +889,7 @@ class DocumentEditingTests(TestCaseBase):
         grandchild_data = new_document_data()
         grandchild_data['title'] = 'Grandchild Doc'
         grandchild_data['slug'] = 'grandchildDoc'
-        grandchild_data['contnet'] = 'This is the document'
+        grandchild_data['content'] = 'This is the document'
         grandchild_data['is_localizable'] = True
         response = client.post(reverse('wiki.new_document') + '?parent=' + str(child_doc.id), grandchild_data)
         eq_(302, response.status_code)
@@ -912,6 +913,25 @@ class DocumentEditingTests(TestCaseBase):
                                                 args=[child_doc.slug + '/' + grandchild_data['slug']]))
         grandchild_doc = child_doc.children.all()[0]
         eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
+
+        # Create a foreign doc
+        foreign_slug = 'ChildSluggo/nino'
+        parent_doc = document(title='El Padre Doc', slug=foreign_slug, is_localizable=True, locale="es")
+        parent_doc.save()
+        r = revision(document=parent_doc)
+        r.save()
+
+        # Go to the foreign doc, submit as invalid, ensure doc is only 'nono'
+        foreign_data = new_document_data()
+        foreign_data['title'] = 'El Padre'
+        foreign_data['slug'] = 'nino'
+        foreign_data['content'] = ''
+        foreign_data['is_localizable'] = True
+
+        foreign_url = reverse('wiki.edit_document', locale='es', args=[foreign_slug])
+        response = client.post(foreign_url, foreign_data)
+        page = pq(response.content)
+        eq_(page.find('input[name=slug]')[0].value, 'nino')
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
