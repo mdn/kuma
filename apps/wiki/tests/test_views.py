@@ -931,7 +931,7 @@ class DocumentEditingTests(TestCaseBase):
             def _run_translate_tests(translate_slug, translate_data, translate_doc):
 
                 foreign_url = reverse('wiki.translate', args=[translate_doc.slug], locale=locale) + '?tolocale=' + foreign_locale
-                forign_doc_url = reverse('wiki.document', args=[translate_doc.slug], locale=foreign_locale)
+                foreign_doc_url = reverse('wiki.document', args=[translate_doc.slug], locale=foreign_locale)
 
                 # Load the translate page, ensure that the form is populated correctly
                 response = client.get(foreign_url)
@@ -954,7 +954,7 @@ class DocumentEditingTests(TestCaseBase):
                 response = client.post(foreign_url, translate_data)
                 eq_(302, response.status_code)
                 eq_(0, len(Document.objects.filter(title=translate_data['title'] + ' Redirect 1', locale=foreign_locale))) # Ensure no redirect
-                self.assertRedirects(response, forign_doc_url)
+                self.assertRedirects(response, foreign_doc_url)
 
                 return Document.objects.get(locale=foreign_locale, slug=translate_doc.slug)
 
