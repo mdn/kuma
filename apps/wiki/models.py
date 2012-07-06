@@ -1416,7 +1416,7 @@ class AttachmentRevision(models.Model):
     #
     # TODO: do we want to make this an explicit set of choices? That'd
     # rule out certain types of attachments, but might be a lot safer.
-    mime_type = models.CharField(max_length=255, db_index=True, editable=False)
+    mime_type = models.CharField(max_length=255, db_index=True)
 
     description = models.TextField() # Does not allow wiki markup currently.
 
