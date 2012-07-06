@@ -1664,6 +1664,17 @@ class MindTouchRedirectTests(TestCaseBase):
             eq_(301, resp.status_code)
             eq_(namespace_test['kuma'], resp['Location'])
 
+    def test_trailing_slash(self):
+        d = document()
+        d.locale = 'zh-CN'
+        d.slug = 'foofoo'
+        d.title = 'FooFoo'
+        d.save()
+        mt_url = '/cn/%s/' % (d.slug,)
+        resp = self.client.get(mt_url)
+        eq_(301, resp.status_code)
+        eq_('http://testserver%s' % d.get_absolute_url(), resp['Location'])
+
     def test_document_urls(self):
         for doc in self.documents:
             d = document()
