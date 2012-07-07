@@ -198,6 +198,7 @@ RESERVED_SLUGS = (
 DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
 
 DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
+KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
 
 
 class UniqueCollision(Exception):
@@ -805,17 +806,22 @@ class Document(NotificationsMixin, ModelBase):
         # instead, the page just gets appropriate HTML to embed
         # whatever type of file it is. So we find them by
         # regex-searching over the HTML for URLs that match the
-        # MindTouch file URL pattern.
-        #
-        # TODO: Once we settle kuma's file URL pattern and people
-        # start using kuma's file-handling, we'll need to also scan
-        # for the kuma file URL pattern. That'll probably just involve
-        # setting up a couple Q() objects (one for MindTouch file IDs,
-        # one for kuma file IDs) and OR'ing them together to get the
-        # file query.
+        # file URL patterns.
         mt_files = DEKI_FILE_URL.findall(self.html)
+        kuma_files = KUMA_FILE_URL.findall(self.html)
+        mt_q = kuma_q = params = None
+
         if mt_files:
-            return Attachment.objects.filter(mindtouch_attachment_id__in=mt_files)
+            # We have at least some MindTouch files.
+            params = models.Q(mindtouch_attachment_id__in=mt_files)
+            if kuma_files:
+                # We also have some kuma files. Use an OR query.
+                params = params | models.Q(id__in=kuma_files)
+        if kuma_files and not params:
+            # We have only kuma files.
+            params = models.Q(id__in=kuma_files)
+        if params:
+            return Attachment.objects.filter(params)
         # If no files found, return an empty Attachment queryset.
         return Attachment.objects.none()
 
@@ -1384,8 +1390,12 @@ class Attachment(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('wiki.attachment_detail', (), {'attachment_id': self.id,
-                                               'filename': self.current_revision.filename()})
+        return ('wiki.attachment_detail', (), {'attachment_id': self.id})
+
+    @models.permalink
+    def get_file_url(self):
+        return ('wiki.raw_file', (), {'attachment_id': self.id,
+                                      'filename': self.current_revision.filename()})
         
 
 class AttachmentRevision(models.Model):
@@ -1397,8 +1407,6 @@ class AttachmentRevision(models.Model):
 
     file = models.FileField(upload_to=rev_upload_to, max_length=500)
 
-    # If not supplied, these get auto-filled from the name of the file
-    # as uploaded.
     title = models.CharField(max_length=255, null=True, db_index=True)
     slug = models.CharField(max_length=255, null=True, db_index=True)
     
@@ -1408,7 +1416,7 @@ class AttachmentRevision(models.Model):
     #
     # TODO: do we want to make this an explicit set of choices? That'd
     # rule out certain types of attachments, but might be a lot safer.
-    mime_type = models.CharField(max_length=255, db_index=True, editable=False)
+    mime_type = models.CharField(max_length=255, db_index=True)
 
     description = models.TextField() # Does not allow wiki markup currently.
 

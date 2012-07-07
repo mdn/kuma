@@ -1,4 +1,5 @@
 import json
+import mimetypes
 import re
 
 from django import forms
@@ -17,6 +18,7 @@ from taggit.utils import parse_tags, edit_string_for_tags
 
 import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
+                         AttachmentRevision,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                      GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
                      CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS)
@@ -392,3 +394,36 @@ class RevisionValidationForm(RevisionForm):
         if '/' in self.cleaned_data['slug']:
             raise forms.ValidationError(SLUG_INVALID)
         return super(RevisionValidationForm, self).clean_slug()
+
+
+class AttachmentRevisionForm(forms.ModelForm):
+    # Unlike the DocumentForm/RevisionForm split, we have only one
+    # form for file attachments. The handling view will determine if
+    # this is a new revision of an existing file, or the first version
+    # of a new file.
+    #
+    # As a result of this, calling save(commit=True) is off-limits.
+    class Meta:
+        model = AttachmentRevision
+        fields = ('file', 'title', 'description', 'comment')
+
+    def save(self, commit=True):
+        if commit:
+            raise NotImplementedError
+        rev = super(AttachmentRevisionForm, self).save(commit=False)
+
+        uploaded_file = self.cleaned_data['file']
+        rev.slug = uploaded_file.name
+
+        # guess_type() is usually pretty good at coming up with the
+        # right thing, but if it can't give us an answer, we fall back
+        # to a default of application/octet-stream.
+        #
+        # TODO: we probably want a "manually fix the mime-type"
+        # ability in the admin.
+        mime_type = mimetypes.guess_type(uploaded_file.name)[0]
+        if mime_type is None:
+            mime_type = 'application/octet-stream'
+        rev.mime_type = mime_type
+
+        return rev
