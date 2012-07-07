@@ -1013,6 +1013,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
     parent_slug_split.pop()
     parent_slug = '/'.join(parent_slug_split)
 
+    # Set a "Discard Changes" page
+    discard_href = ''
+
     if settings.WIKI_DEFAULT_LANGUAGE == document_locale:
         # Don't translate to the default language.
         return HttpResponseRedirect(reverse(
@@ -1049,10 +1052,12 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if user_has_doc_perm:
         if doc:
             # If there's an existing doc, populate form from it.
+            discard_href = doc.get_absolute_url()
             doc.slug = specific_slug
             doc_initial = _document_form_initial(doc)
         else:
             # If no existing doc, bring over the original title and slug.
+            discard_href = parent_doc.get_absolute_url()
             doc_initial = {'title': based_on_rev.title,
                            'slug': specific_slug}
         doc_form = DocumentForm(initial=doc_initial)
@@ -1131,7 +1136,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                          'document_form': doc_form, 'revision_form': rev_form,
                          'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description,
-                         'specific_slug': specific_slug, 'parent_slug': parent_slug})
+                         'specific_slug': specific_slug, 'parent_slug': parent_slug,
+                         'discard_href': discard_href})
 
 
 @waffle_flag('kumawiki')
