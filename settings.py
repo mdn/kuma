@@ -263,7 +263,7 @@ SERVE_MEDIA = False
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', '1')
+SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', '1', 'files')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'

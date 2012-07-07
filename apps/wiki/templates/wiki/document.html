@@ -170,6 +170,9 @@
         </div>
       {% endif %}
 
+      {% set tags = document.tags.all() %}
+      {% set attachments = document.attachments.all() %}
+
       <div id="wikiArticle" class="page-content boxed">
         {% if toc_html %}
         <div id="article-nav">
@@ -180,8 +183,20 @@
             </ol>
           </div>
           <ul class="page-anchors">
-            <li class="anchor-tags"><a href="#page-tags">Tags</a></li>
-            <li class="anchor-files"><a href="#page-files">Files</a></li>
+            <li class="anchor-tags">
+              {% if tags|length %}
+                <a href="#page-tags">Tags</a>
+              {% else %}
+                <span title="{{ _('This document has no tags') }}">Tags</span>
+              {% endif %}
+            </li>
+            <li class="anchor-files">
+              {% if attachments|length %}
+                <a href="#page-file">Files</a>
+              {% else %}
+                <span title="{{ _('This document has no files') }}">Files</span>
+              {% endif %}
+            </li>
           </ul>
         </div>
         {% endif %}
@@ -200,10 +215,10 @@
       {% endif %}
     </div>
     <section class="page-meta">
-      {% set tags = document.tags.all() %}
+      
       {% if tags | length %}
       <section id="page-tags">
-        <h2>{{ _('Tags') }}</h2>
+        <h2>{{ _('Tags') }} ({{ tags | length}})</h2>
         <div id="deki-page-tags">
           <ul class="tags">
             <li>
@@ -215,6 +230,39 @@
         </div>
       </section>
       {% endif %}
+
+      {% if attachments | length %}
+        <section id="page-attachments">
+          <h2>{{ _('Attachments') }} ({{ attachments | length}})</h2>
+          <table cellpadding="0" cellspacing="0">
+            <thead>
+              <th>{{ _('File') }}</th>
+              <th>{{ _('Size') }}</th>
+              <th>{{ _('Date') }}</th>
+              <th>{{ _('Attached by') }}</th>
+              <!-- <th>&nbsp;</th>  actions will go here -->
+            </thead>
+            <tbody>
+              {% for attachment in attachments %}
+                <tr>
+                  <td class="attachment-name-cell">
+                    <a href="{{ attachment.get_file_url() }}" title="{{ attachment.get_file_url() }}" target="_blank">{{ attachment.title | safe }}</a>
+                    {% if attachment.current_revision.description %}
+                      <div class="attachment-description">{{ attachment.current_revision.description }}</div>
+                    {% endif %}
+                  </td>
+                  <td>{{ attachment.current_revision.file.size }} bytes</td>
+                  <td>{{ datetimeformat(attachment.current_revision.created, format='datetime') }}</td>
+                  <td><a href="{{ url('devmo.views.profile_view', username=attachment.current_revision.creator) }}">{{ attachment.current_revision.creator }}</a></td>
+                  <!--<td>&nbsp;</td> actions will go here -->
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </section>
+      {% endif %}
+
+
       <section id="doc-contributors">
         {% trans contributors=user_list(contributors) %}
           Contributors to this page: {{ contributors }}

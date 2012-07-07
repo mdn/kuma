@@ -13,7 +13,9 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.files.base import ContentFile
+from django.core.files import temp as tempfile
 from django.db.models import Q
+from django.test.client import Client
 
 import mock
 from nose import SkipTest
@@ -1015,7 +1017,6 @@ class DocumentEditingTests(TestCaseBase):
         # Run all of the tests
         _createAndRunTests("parent")
 
-
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
         localization is OK."""
@@ -1320,6 +1321,41 @@ class DocumentEditingTests(TestCaseBase):
                 ok_('$edit' in desc_text)
                 ok_('$history' in desc_text)
 
+    def test_discard_location(self):
+        """Testing that the 'discard' HREF goes to the correct place when it's
+           explicitely and implicitely set"""
+
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        def _create_doc(slug, locale):
+            doc = document(slug=slug, is_localizable=True, locale=locale)
+            doc.save()
+            r = revision(document=doc)
+            r.save()
+            return doc
+
+        # Test that the 'discard' button on an edit goes to the original page
+        doc = _create_doc('testdiscarddoc', settings.WIKI_DEFAULT_LANGUAGE)
+        response = client.get(reverse('wiki.edit_document', args=[doc.slug], locale=doc.locale));
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.document', args=[doc.slug], locale=doc.locale))
+
+        # Test that the 'discard button on a new translation goes to the en-US page'
+        response = client.get(reverse('wiki.translate', args=[doc.slug], locale=doc.locale) + '?tolocale=es')
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.document', args=[doc.slug], locale=doc.locale))
+
+        # Test that the 'discard' button on an existing translation goes to the 'es' page
+        foreign_doc = _create_doc('testdiscarddoc', 'es')
+        response = client.get(reverse('wiki.edit_document', args=[foreign_doc.slug], locale=foreign_doc.locale));
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.document', args=[foreign_doc.slug], locale=foreign_doc.locale))
+
+        # Test new
+        response = client.get(reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE));
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE))
 
 class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']
@@ -1712,10 +1748,10 @@ class MindTouchRedirectTests(TestCaseBase):
          'kuma': 'http://testserver/en-US/docs/Help:Foo'},
         {'mindtouch': '/Help_talk:Foo',
          'kuma': 'http://testserver/en-US/docs/Help_talk:Foo'},
-        {'mindtouch': '/Project:Foo',
-         'kuma': 'http://testserver/en-US/docs/Project:Foo'},
-        {'mindtouch': '/Project_talk:Foo',
-         'kuma': 'http://testserver/en-US/docs/Project_talk:Foo'},
+        {'mindtouch': '/Project:En/MDC_editor_guide',
+         'kuma': 'http://testserver/en-US/docs/Project:MDC_editor_guide'},
+        {'mindtouch': '/Project_talk:En/MDC_style_guide',
+         'kuma': 'http://testserver/en-US/docs/Project_talk:MDC_style_guide'},
         {'mindtouch': '/Special:Foo',
          'kuma': 'http://testserver/en-US/docs/Special:Foo'},
         {'mindtouch': '/Talk:en/Foo',
@@ -1737,6 +1773,7 @@ class MindTouchRedirectTests(TestCaseBase):
          'expected': '/fr/docs/HTML7'},
     )
 
+    @attr('current')
     def test_namespace_urls(self):
         new_doc = document()
         new_doc.title = 'User:Foo'
@@ -1746,6 +1783,17 @@ class MindTouchRedirectTests(TestCaseBase):
             resp = self.client.get(namespace_test['mindtouch'], follow=False)
             eq_(301, resp.status_code)
             eq_(namespace_test['kuma'], resp['Location'])
+
+    def test_trailing_slash(self):
+        d = document()
+        d.locale = 'zh-CN'
+        d.slug = 'foofoo'
+        d.title = 'FooFoo'
+        d.save()
+        mt_url = '/cn/%s/' % (d.slug,)
+        resp = self.client.get(mt_url)
+        eq_(301, resp.status_code)
+        eq_('http://testserver%s' % d.get_absolute_url(), resp['Location'])
 
     def test_document_urls(self):
         for doc in self.documents:
@@ -1960,4 +2008,110 @@ class AttachmentTests(TestCaseBase):
                                             'filename': f['filename']})
             resp = self.client.get(mindtouch_url)
             eq_(301, resp.status_code)
-            ok_(a.get_absolute_url() in resp['Location'])
+            ok_(a.get_file_url() in resp['Location'])
+
+    def test_new_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='testuser', password='testpass')
+
+        # Shamelessly stolen from Django's own file-upload tests.
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        file_for_upload.write('I am a test file for upload.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test uploaded file',
+            'description': 'A test file uploaded into kuma.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        eq_(302, resp.status_code)
+
+        attachment = Attachment.objects.get(title='Test uploaded file')
+        eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
+
+        rev = attachment.current_revision
+        eq_('testuser', rev.creator.username)
+        eq_('A test file uploaded into kuma.', rev.description)
+        eq_('Initial upload', rev.comment)
+        ok_(rev.is_approved)
+
+    def test_edit_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='testuser', password='testpass')
+
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        file_for_upload.write('I am a test file for editing.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test editing file',
+            'description': 'A test file for editing.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        
+        tdir = tempfile.gettempdir()
+        edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        edited_file_for_upload.write('I am a new version of the test file for editing.')
+        edited_file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test editing file',
+            'description': 'A test file for editing.',
+            'comment': 'Second revision.',
+            'file': edited_file_for_upload,
+        }
+
+        attachment = Attachment.objects.get(title='Test editing file')
+
+        resp = self.client.post(reverse('wiki.edit_attachment',
+                                        kwargs={'attachment_id': attachment.id}),
+                                data=post_data)
+
+        eq_(302, resp.status_code)
+
+        # Re-fetch because it's been updated.
+        attachment = Attachment.objects.get(title='Test editing file')
+        eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
+
+        eq_(2, attachment.revisions.count())
+        
+        rev = attachment.current_revision
+        eq_('testuser', rev.creator.username)
+        eq_('Second revision.', rev.comment)
+        ok_(rev.is_approved)
+
+        resp = self.client.get(attachment.get_file_url())
+        eq_('text/plain', rev.mime_type)
+        ok_('I am a new version of the test file for editing.' in resp.content)
+
+    def test_attachment_detail(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='testuser', password='testpass')
+
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        file_for_upload.write('I am a test file for attachment detail view.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test file for viewing',
+            'description': 'A test file for viewing.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+
+        attachment = Attachment.objects.get(title='Test file for viewing')
+
+        resp = self.client.get(reverse('wiki.attachment_detail',
+                                       kwargs={'attachment_id': attachment.id}))
+        eq_(200, resp.status_code)
