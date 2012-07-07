@@ -50,7 +50,8 @@ from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, ReadOnlyException)
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
-from wiki.forms import DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm
+from wiki.forms import (DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm,
+                        AttachmentRevisionForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
                          DocumentRenderingInProgress,
@@ -1488,28 +1489,74 @@ def load_documents(request):
                               context_instance=RequestContext(request))
 
 
-def attachment_detail(request, attachment_id, filename):
-    """Detail of a file attachment."""
+def raw_file(request, attachment_id, filename):
+    """Serve up an attachment's file."""
     # TODO: For now this just grabs and serves the file in the most
-    # naive way, since that ensures compatibility for the most common
-    # case where we just want to show the file contents embedded in a
-    # document.
-    #
-    # In the future, this should grow to be multiple views -- one
-    # legacy view to support document-embedded file URLs, and then
-    # more full-featured views for showing metadata, revision history,
-    # uploading new versions, etc.
+    # naive way. This likely has performance and security implications.
     attachment = get_object_or_404(Attachment, pk=attachment_id)
     if attachment.current_revision is None:
         raise Http404
     rev = attachment.current_revision
     resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
     resp["Last-Modified"] = rev.created
-    resp["Content-Length"] = rev.size
+    resp["Content-Length"] = rev.file.size
     return resp
 
 
 def mindtouch_file_redirect(request, file_id, filename):
     """Redirect an old MindTouch file URL to a new kuma file URL."""
     attachment = get_object_or_404(Attachment, mindtouch_attachment_id=file_id)
-    return HttpResponsePermanentRedirect(attachment.get_absolute_url())
+    return HttpResponsePermanentRedirect(attachment.get_file_url())
+
+
+def attachment_detail(request, attachment_id):
+    """Detail view of an attachment."""
+    attachment = get_object_or_404(Attachment, pk=attachment_id)
+    return jingo.render(request, 'wiki/attachment_detail.html',
+                        {'attachment': attachment})
+
+
+def attachment_history(request, attachment_id):
+    """Detail view of an attachment."""
+    # For now this is just attachment_detail with a different
+    # template. At some point in the near future, it'd be nice to add
+    # a few extra bits, like the ability to set an arbitrary revision
+    # to be current.
+    attachment = get_object_or_404(Attachment, pk=attachment_id)
+    return jingo.render(request, 'wiki/attachment_history.html',
+                        {'attachment': attachment})
+
+@login_required
+def new_attachment(request):
+    """Create a new Attachment object and populate its initial
+    revision."""
+    if request.method == 'POST':
+        form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            rev = form.save(commit=False)
+            rev.creator = request.user
+            attachment = Attachment.objects.create(title=rev.title,
+                                                   slug=rev.slug)
+            rev.attachment = attachment
+            rev.save()
+            return HttpResponseRedirect(attachment.get_absolute_url())
+    form = AttachmentRevisionForm()
+    return jingo.render(request, 'wiki/new_attachment.html',
+                        {'form': form})
+
+
+@login_required
+def edit_attachment(request, attachment_id):
+    attachment = get_object_or_404(Attachment,
+                                   pk=attachment_id)
+    if request.method == 'POST':
+        form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            rev = form.save(commit=False)
+            rev.creator = request.user
+            rev.attachment = attachment
+            rev.save()
+            return HttpResponseRedirect(attachment.get_absolute_url())
+    form = AttachmentRevisionForm()
+    return jingo.render(request, 'wiki/edit_attachment.html',
+                        {'form': form})

@@ -13,7 +13,9 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.files.base import ContentFile
+from django.core.files import temp as tempfile
 from django.db.models import Q
+from django.test.client import Client
 
 import mock
 from nose import SkipTest
@@ -1924,4 +1926,110 @@ class AttachmentTests(TestCaseBase):
                                             'filename': f['filename']})
             resp = self.client.get(mindtouch_url)
             eq_(301, resp.status_code)
-            ok_(a.get_absolute_url() in resp['Location'])
+            ok_(a.get_file_url() in resp['Location'])
+
+    def test_new_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='testuser', password='testpass')
+
+        # Shamelessly stolen from Django's own file-upload tests.
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        file_for_upload.write('I am a test file for upload.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test uploaded file',
+            'description': 'A test file uploaded into kuma.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        eq_(302, resp.status_code)
+
+        attachment = Attachment.objects.get(title='Test uploaded file')
+        eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
+
+        rev = attachment.current_revision
+        eq_('testuser', rev.creator.username)
+        eq_('A test file uploaded into kuma.', rev.description)
+        eq_('Initial upload', rev.comment)
+        ok_(rev.is_approved)
+
+    def test_edit_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='testuser', password='testpass')
+
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        file_for_upload.write('I am a test file for editing.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test editing file',
+            'description': 'A test file for editing.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        
+        tdir = tempfile.gettempdir()
+        edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        edited_file_for_upload.write('I am a new version of the test file for editing.')
+        edited_file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test editing file',
+            'description': 'A test file for editing.',
+            'comment': 'Second revision.',
+            'file': edited_file_for_upload,
+        }
+
+        attachment = Attachment.objects.get(title='Test editing file')
+
+        resp = self.client.post(reverse('wiki.edit_attachment',
+                                        kwargs={'attachment_id': attachment.id}),
+                                data=post_data)
+
+        eq_(302, resp.status_code)
+
+        # Re-fetch because it's been updated.
+        attachment = Attachment.objects.get(title='Test editing file')
+        eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
+
+        eq_(2, attachment.revisions.count())
+        
+        rev = attachment.current_revision
+        eq_('testuser', rev.creator.username)
+        eq_('Second revision.', rev.comment)
+        ok_(rev.is_approved)
+
+        resp = self.client.get(attachment.get_file_url())
+        eq_('text/plain', rev.mime_type)
+        ok_('I am a new version of the test file for editing.' in resp.content)
+
+    def test_attachment_detail(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='testuser', password='testpass')
+
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
+        file_for_upload.write('I am a test file for attachment detail view.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test file for viewing',
+            'description': 'A test file for viewing.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+
+        attachment = Attachment.objects.get(title='Test file for viewing')
+
+        resp = self.client.get(reverse('wiki.attachment_detail',
+                                       kwargs={'attachment_id': attachment.id}))
+        eq_(200, resp.status_code)
