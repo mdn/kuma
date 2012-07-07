@@ -15,6 +15,7 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
 from django.db.models import Q
+from django.test.client import Client
 
 import mock
 from nose import SkipTest
@@ -1928,6 +1929,7 @@ class AttachmentTests(TestCaseBase):
             ok_(a.get_file_url() in resp['Location'])
 
     def test_new_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='testuser', password='testpass')
 
         # Shamelessly stolen from Django's own file-upload tests.
@@ -1956,6 +1958,7 @@ class AttachmentTests(TestCaseBase):
         ok_(rev.is_approved)
 
     def test_edit_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='testuser', password='testpass')
 
         tdir = tempfile.gettempdir()
@@ -2008,6 +2011,7 @@ class AttachmentTests(TestCaseBase):
         ok_('I am a new version of the test file for editing.' in resp.content)
 
     def test_attachment_detail(self):
+        self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='testuser', password='testpass')
 
         tdir = tempfile.gettempdir()
