@@ -1053,6 +1053,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         if doc:
             # If there's an existing doc, populate form from it.
             discard_href = doc.get_absolute_url()
+            doc.slug = specific_slug
             doc_initial = _document_form_initial(doc)
         else:
             # If no existing doc, bring over the original title and slug.
@@ -1076,7 +1077,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
         which_form = request.POST.get('form', 'both')
         doc_form_invalid = False
 
-        parent_slug_split.append(request.POST.get('slug', ''))
+        # Grab the posted slug value in case it's invalid
+        posted_slug = request.POST.get('slug', specific_slug)
+        parent_slug_split.append(posted_slug)
         destination_slug = '/'.join(parent_slug_split)
 
         if user_has_doc_perm and which_form in ['doc', 'both']:
@@ -1087,7 +1090,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
             post_data.update({'slug': destination_slug})
 
             doc_form = DocumentForm(post_data, instance=doc)
-            #doc_form.slug = destination_slug
             doc_form.instance.locale = document_locale
             doc_form.instance.parent = parent_doc
             if which_form == 'both':
@@ -1110,6 +1112,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                     opendescription=1)
                     return HttpResponseRedirect(url)
             else:
+                doc_form.data['slug'] = posted_slug
                 doc_form_invalid = True
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:
@@ -1374,8 +1377,8 @@ def mindtouch_namespace_redirect(request, namespace, slug):
     en-US.
     """
     new_locale = new_slug = None
-    if namespace == 'Talk':
-        # Talk pages carry the old locale in their URL, which
+    if namespace in ('Talk', 'Project', 'Project_talk'):
+        # These namespaces carry the old locale in their URL, which
         # simplifies figuring out where to send them.
         locale, _, doc_slug = slug.partition('/')
         new_locale = settings.MT_TO_KUMA_LOCALE_MAP.get(locale, 'en-US')
@@ -1411,6 +1414,9 @@ def mindtouch_to_kuma_redirect(request, path):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.
         raise Http404
+    if path.endswith('/'):
+        # If there's a trailing slash, snip it off.
+        path = path[:-1]
     if ':' in path:
         namespace, _, slug = path.partition(':')
         # The namespaces (Talk:, User:, etc.) get their own

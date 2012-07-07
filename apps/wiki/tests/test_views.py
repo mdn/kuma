@@ -808,6 +808,7 @@ class DocumentEditingTests(TestCaseBase):
             response = client.post(reverse('wiki.new_document'), data)
             self.assertContains(response, 'The slug provided is not valid.')
 
+    @attr('tags')
     def test_parent_child_slug_built_properly(self):
         """Slugs and their parents are properly rebuilt during each edit"""
 
@@ -888,7 +889,7 @@ class DocumentEditingTests(TestCaseBase):
         grandchild_data = new_document_data()
         grandchild_data['title'] = 'Grandchild Doc'
         grandchild_data['slug'] = 'grandchildDoc'
-        grandchild_data['contnet'] = 'This is the document'
+        grandchild_data['content'] = 'This is the document'
         grandchild_data['is_localizable'] = True
         response = client.post(reverse('wiki.new_document') + '?parent=' + str(child_doc.id), grandchild_data)
         eq_(302, response.status_code)
@@ -912,6 +913,25 @@ class DocumentEditingTests(TestCaseBase):
                                                 args=[child_doc.slug + '/' + grandchild_data['slug']]))
         grandchild_doc = child_doc.children.all()[0]
         eq_(grandchild_doc.slug, child_doc.slug + '/' + grandchild_data['slug'])
+
+        # Create a foreign doc
+        foreign_slug = 'ChildSluggo/nino'
+        parent_doc = document(title='El Padre Doc', slug=foreign_slug, is_localizable=True, locale="es")
+        parent_doc.save()
+        r = revision(document=parent_doc)
+        r.save()
+
+        # Go to the foreign doc, submit as invalid, ensure doc is only 'nono'
+        foreign_data = new_document_data()
+        foreign_data['title'] = 'El Padre'
+        foreign_data['slug'] = 'nino'
+        foreign_data['content'] = ''
+        foreign_data['is_localizable'] = True
+
+        foreign_url = reverse('wiki.edit_document', locale='es', args=[foreign_slug])
+        response = client.post(foreign_url, foreign_data)
+        page = pq(response.content)
+        eq_(page.find('input[name=slug]')[0].value, 'nino')
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
@@ -1644,10 +1664,10 @@ class MindTouchRedirectTests(TestCaseBase):
          'kuma': 'http://testserver/en-US/docs/Help:Foo'},
         {'mindtouch': '/Help_talk:Foo',
          'kuma': 'http://testserver/en-US/docs/Help_talk:Foo'},
-        {'mindtouch': '/Project:Foo',
-         'kuma': 'http://testserver/en-US/docs/Project:Foo'},
-        {'mindtouch': '/Project_talk:Foo',
-         'kuma': 'http://testserver/en-US/docs/Project_talk:Foo'},
+        {'mindtouch': '/Project:En/MDC_editor_guide',
+         'kuma': 'http://testserver/en-US/docs/Project:MDC_editor_guide'},
+        {'mindtouch': '/Project_talk:En/MDC_style_guide',
+         'kuma': 'http://testserver/en-US/docs/Project_talk:MDC_style_guide'},
         {'mindtouch': '/Special:Foo',
          'kuma': 'http://testserver/en-US/docs/Special:Foo'},
         {'mindtouch': '/Talk:en/Foo',
@@ -1669,6 +1689,7 @@ class MindTouchRedirectTests(TestCaseBase):
          'expected': '/fr/docs/HTML7'},
     )
 
+    @attr('current')
     def test_namespace_urls(self):
         new_doc = document()
         new_doc.title = 'User:Foo'
@@ -1678,6 +1699,17 @@ class MindTouchRedirectTests(TestCaseBase):
             resp = self.client.get(namespace_test['mindtouch'], follow=False)
             eq_(301, resp.status_code)
             eq_(namespace_test['kuma'], resp['Location'])
+
+    def test_trailing_slash(self):
+        d = document()
+        d.locale = 'zh-CN'
+        d.slug = 'foofoo'
+        d.title = 'FooFoo'
+        d.save()
+        mt_url = '/cn/%s/' % (d.slug,)
+        resp = self.client.get(mt_url)
+        eq_(301, resp.status_code)
+        eq_('http://testserver%s' % d.get_absolute_url(), resp['Location'])
 
     def test_document_urls(self):
         for doc in self.documents:
