@@ -1371,8 +1371,8 @@ def mindtouch_namespace_redirect(request, namespace, slug):
     en-US.
     """
     new_locale = new_slug = None
-    if namespace == 'Talk':
-        # Talk pages carry the old locale in their URL, which
+    if namespace in ('Talk', 'Project', 'Project_talk'):
+        # These namespaces carry the old locale in their URL, which
         # simplifies figuring out where to send them.
         locale, _, doc_slug = slug.partition('/')
         new_locale = settings.MT_TO_KUMA_LOCALE_MAP.get(locale, 'en-US')

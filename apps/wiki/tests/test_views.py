@@ -1629,10 +1629,10 @@ class MindTouchRedirectTests(TestCaseBase):
          'kuma': 'http://testserver/en-US/docs/Help:Foo'},
         {'mindtouch': '/Help_talk:Foo',
          'kuma': 'http://testserver/en-US/docs/Help_talk:Foo'},
-        {'mindtouch': '/Project:Foo',
-         'kuma': 'http://testserver/en-US/docs/Project:Foo'},
-        {'mindtouch': '/Project_talk:Foo',
-         'kuma': 'http://testserver/en-US/docs/Project_talk:Foo'},
+        {'mindtouch': '/Project:En/MDC_editor_guide',
+         'kuma': 'http://testserver/en-US/docs/Project:MDC_editor_guide'},
+        {'mindtouch': '/Project_talk:En/MDC_style_guide',
+         'kuma': 'http://testserver/en-US/docs/Project_talk:MDC_style_guide'},
         {'mindtouch': '/Special:Foo',
          'kuma': 'http://testserver/en-US/docs/Special:Foo'},
         {'mindtouch': '/Talk:en/Foo',
@@ -1654,6 +1654,7 @@ class MindTouchRedirectTests(TestCaseBase):
          'expected': '/fr/docs/HTML7'},
     )
 
+    @attr('current')
     def test_namespace_urls(self):
         new_doc = document()
         new_doc.title = 'User:Foo'
