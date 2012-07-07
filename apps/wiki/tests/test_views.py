@@ -1237,6 +1237,41 @@ class DocumentEditingTests(TestCaseBase):
                 ok_('$edit' in desc_text)
                 ok_('$history' in desc_text)
 
+    def test_discard_location(self):
+        """Testing that the 'discard' HREF goes to the correct place when it's
+           explicitely and implicitely set"""
+
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        def _create_doc(slug, locale):
+            doc = document(slug=slug, is_localizable=True, locale=locale)
+            doc.save()
+            r = revision(document=doc)
+            r.save()
+            return doc
+
+        # Test that the 'discard' button on an edit goes to the original page
+        doc = _create_doc('testdiscarddoc', settings.WIKI_DEFAULT_LANGUAGE)
+        response = client.get(reverse('wiki.edit_document', args=[doc.slug], locale=doc.locale));
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.document', args=[doc.slug], locale=doc.locale))
+
+        # Test that the 'discard button on a new translation goes to the en-US page'
+        response = client.get(reverse('wiki.translate', args=[doc.slug], locale=doc.locale) + '?tolocale=es')
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.document', args=[doc.slug], locale=doc.locale))
+
+        # Test that the 'discard' button on an existing translation goes to the 'es' page
+        foreign_doc = _create_doc('testdiscarddoc', 'es')
+        response = client.get(reverse('wiki.edit_document', args=[foreign_doc.slug], locale=foreign_doc.locale));
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.document', args=[foreign_doc.slug], locale=foreign_doc.locale))
+
+        # Test new
+        response = client.get(reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE));
+        eq_(pq(response.content).find('#btn-discard').attr('href'),
+            reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE))
 
 class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']

@@ -1,8 +1,10 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
-{% if document %}
+{% if not discard_href %}
+  {% if document %}
     {% set discard_href = url('wiki.document', document.full_path) %}
-{% else %}
+  {% else %}
     {% set discard_href = url('wiki.new_document') %}
+  {% endif %}
 {% endif %}
 <ul id="page-buttons" 
     data-new-page-href="{{ url('wiki.new_document') }}"
