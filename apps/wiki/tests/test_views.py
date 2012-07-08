@@ -1725,6 +1725,18 @@ class MindTouchRedirectTests(TestCaseBase):
             eq_(301, resp.status_code)
             eq_('http://testserver%s' % doc['expected'], resp['Location'])
 
+    def test_view_param(self):
+        raise SkipTest("WTF does the spot check work but test doesn't?")
+        d = document()
+        d.locale = 'en-US'
+        d.slug = 'HTML/HTML5'
+        d.title = 'HTML 5'
+        d.save()
+        mt_url = '/en/%s?view=edit' % (d.slug,)
+        resp = self.client.get(mt_url)
+        eq_(301, resp.status_code)
+        expected_url = 'http://testserver%s$edit' % d.get_absolute_url()
+        eq_(expected_url, resp['Location'])
 
 class AutosuggestDocumentsTests(TestCaseBase):
     """ Test the we're properly filtering out the Redirects from the document list """

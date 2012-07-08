@@ -1410,7 +1410,7 @@ def mindtouch_to_kuma_redirect(request, path):
     Given a request to a Mindtouch-generated URL, generate a redirect
     to the correct corresponding kuma URL.
     """
-    new_locale = new_slug = None
+    new_locale = None
     if path.startswith('Template:MindTouch'):
         # MindTouch's default templates. There shouldn't be links to
         # them anywhere in the wild, but just in case we 404 them.
@@ -1438,21 +1438,25 @@ def mindtouch_to_kuma_redirect(request, path):
             # their own UI locale will have the correct starting URL
             # anyway.
             new_url = '/%s/docs/%s' % (new_locale, slug)
+            if 'view' in request.GET:
+                new_url = '%s$%s' % (new_url, request.GET['view'])
             return HttpResponsePermanentRedirect(new_url)
         # Next we try looking up a Document with the possible locale
         # we've pulled out.
         try:
             doc = Document.objects.get(slug=slug, locale=maybe_locale)
-            return HttpResponsePermanentRedirect(doc.get_absolute_url())
         except Document.DoesNotExist:
             pass
     # Last attempt: we try the request locale as the document locale,
     # and see if that matches something.
     try:
         doc = Document.objects.get(slug=path, locale=request.locale)
-        return HttpResponsePermanentRedirect(doc.get_absolute_url())
     except Document.DoesNotExist:
         raise Http404
+    location = doc.get_absolute_url()
+    if 'view' in request.GET:
+        location = '%s$%s' % (location, request.GET['view'])
+    return HttpResponsePermanentRedirect(location)
 
 
 @superuser_required
