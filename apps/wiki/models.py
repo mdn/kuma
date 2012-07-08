@@ -52,7 +52,7 @@ ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['span'] = ['style', 'title', ]
+ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'title' ]
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', ]
