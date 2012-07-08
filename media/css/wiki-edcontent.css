@@ -69,6 +69,11 @@ div.note { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; p
 div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; background: transparent url("img/tip-bg.png") repeat-x; color: #6d675f; }
 div.note p, div.tip p { margin-bottom: .75em; }
 
+/*** @WYSIWYG style blocks *********/
+.twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
+.threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
+.geckoVersionNote { background: #E0E0FF; background: -moz-radial-gradient(0px 0 45deg, circle farthest-corner, #E0E0FF 0%, #F8F8FF 80%) repeat scroll 0 0 transparent; border-left: 5px solid #008 }
+
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { float: right; font-size: 90%; }
 

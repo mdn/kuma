@@ -491,6 +491,11 @@ div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10
 .originaldocinfo h2 { font-size: 120%; }
 .licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
 
+/*** @WYSIWYG style blocks *********/
+.twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
+.threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
+.geckoVersionNote { background: #E0E0FF; background: -moz-radial-gradient(0px 0 45deg, circle farthest-corner, #E0E0FF 0%, #F8F8FF 80%) repeat scroll 0 0 transparent; border-left: 5px solid #008 }
+
 div.floatright, table.floatright { float: right; clear: right; margin: 0 0 .5em .5em; }
 div.floatleft, table.floatleft { float: left; margin: 0 .5em .5em 0; }
 div.thumb { margin-bottom: 0.5em; border: 1px solid #fff; }
