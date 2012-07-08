@@ -4,6 +4,7 @@ import re
 import constance.config
 from jingo import register
 import jinja2
+from tidylib import tidy_document
 
 from wiki import DIFF_WRAP_COLUMN
 from wiki import parser
@@ -62,9 +63,12 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
 @register.function
 def diff_table(content_from, content_to):
     """Creates an HTML diff of the passed in content_from and content_to."""
+    tidy_options = {'output-xhtml': 0, 'force-output': 1}
+    tidy_from, errors = tidy_document(content_from, options=tidy_options)
+    tidy_to, errors = tidy_document(content_to, options=tidy_options)
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
-    from_lines = content_from.splitlines()
-    to_lines = content_to.splitlines()
+    from_lines = tidy_from.splitlines()
+    to_lines = tidy_to.splitlines()
     diff = html_diff.make_table(from_lines, to_lines, context=True,
                                 numlines=constance.config.DIFF_CONTEXT_LINES)
     return jinja2.Markup(diff)
