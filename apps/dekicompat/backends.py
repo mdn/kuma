@@ -166,10 +166,10 @@ class DekiUserBackend(object):
         """
         try:
             # Try fetching an existing profile mapped to deki user
-            profile = UserProfile.objects.get(deki_user_id=deki_user.id)
+            profile = UserProfile.objects.filter(deki_user_id=deki_user.id)[0]
             user = profile.user
 
-        except ObjectDoesNotExist:
+        except IndexError:
             # No existing profile, so try creating a new profile and user
 
             # HACK: Usernames in Kuma are limited to 30 characters. There are
