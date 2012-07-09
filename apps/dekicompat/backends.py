@@ -169,7 +169,7 @@ class DekiUserBackend(object):
             profile = UserProfile.objects.filter(deki_user_id=deki_user.id)[0]
             user = profile.user
 
-        except IndexError:
+        except (IndexError, ObjectDoesNotExist):
             # No existing profile, so try creating a new profile and user
 
             # HACK: Usernames in Kuma are limited to 30 characters. There are
