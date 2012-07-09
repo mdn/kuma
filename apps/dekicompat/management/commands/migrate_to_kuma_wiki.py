@@ -30,6 +30,7 @@ from django.core.files.base import ContentFile
 import django.db
 from django.db import connections, transaction
 from django.db.utils import DatabaseError
+from django.template.defaultfilters import slugify
 from django.utils import encoding, hashcompat
 from django.db.models import F
 
@@ -37,7 +38,8 @@ import commonware.log
 
 from sumo.urlresolvers import reverse
 
-from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES)
+from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES,
+                         Attachment, AttachmentRevision)
 
 from wiki.models import REDIRECT_CONTENT
 import wiki.content
@@ -1178,11 +1180,12 @@ class Command(BaseCommand):
 
         print "Start of migration for file with MindTouch ID %s" % res_row['file_id']
 
-        attachment = Attachment.objects.get_or_create(mindtouch_attachment_id=res_row['file_id'],
-                                                      defaults={
-                                                       'title': row['resrev_name'],
-                                                       'slug': slufigy(row['resrev_name']),
-                                                       'modified': row['res_update_timestamp']})
+        attachment, created = Attachment.objects.get_or_create(
+            mindtouch_attachment_id=res_row['file_id'],
+            defaults={
+                'title': row['resrev_name'],
+                'slug': slugify(row['resrev_name']),
+                'modified': row['res_update_timestamp']})
 
         # Now get the revisions.
         cursor = self.wikidb.cursor()
@@ -1197,13 +1200,15 @@ class Command(BaseCommand):
         rev_rows = list(self._query_dicts(cursor))
         for rev_row in rev_rows:
             # Make sure we haven't migrated this revision already.
-            # if not AttachmentRevision.objects.exists(mindtouch_old_id=rev_row['resrev_id']):
-            self.handle_file_revision(row, res_row, rev_row)
+            if not AttachmentRevision.objects.filter(mindtouch_old_id=rev_row['resrev_id']).exists():
+                self.handle_file_revision(attachment, row, res_row, rev_row)
+        revs = attachment.revisions.order_by('-created')
+        if revs:
+            revs[0].make_current()
         print "End of migration for file with MindTouch ID %s" % res_row['file_id']
-        attachment.revisions.order_by('-created')[0].make_current()
         
 
-    def handle_file_revision(self, row, res_row, rev_row):
+    def handle_file_revision(self, attachment, row, res_row, rev_row):
         # Now we get the contents of the file, and build a Revision.
         print "Start of migration for file revision with MindTouch ID %s" % rev_row['resrev_id']
         cursor = self.wikidb.cursor()
@@ -1262,8 +1267,10 @@ class Command(BaseCommand):
                                  description='',
                                  created=rev_row['resrev_timestamp'],
                                  is_approved=True,
-                                 is_mindtouch_migration=True)
-        rev.creator_id = self.get_django_user_id_for_deki_id(revrow['res_create_user_id'])
+                                 is_mindtouch_migration=True,
+                                 mindtouch_old_id=rev_row['resrev_id'])
+        rev.creator_id = self.get_django_user_id_for_deki_id(rev_row['resrev_user_id'])
         rev.file.save(rev_row['resrev_name'], ContentFile(file_contents))
         rev.save()
+        print "Created kuma AttachmentRevision %s for MindTouch file revision %s" % (rev.id, rev_row['resrev_id'])
         return
