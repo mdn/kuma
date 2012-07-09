@@ -1892,6 +1892,7 @@ class AttachmentTests(TestCaseBase):
     fixtures = ['test_users.json']
 
     def test_legacy_redirect(self):
+        self.client = Client()  # file views don't need LocalizingClient
         test_user = User.objects.get(username='testuser2')
         test_file_content = 'Meh meh I am a test file.'
         test_files = (
