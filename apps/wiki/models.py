@@ -62,7 +62,7 @@ ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['ul'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['li'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['span'] = ['style', 'title']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'title']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title']
