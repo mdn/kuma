@@ -11,6 +11,7 @@ import json
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
 import bleach
+import jingo
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -1396,6 +1397,31 @@ class Attachment(models.Model):
     def get_file_url(self):
         return ('wiki.raw_file', (), {'attachment_id': self.id,
                                       'filename': self.current_revision.filename()})
+
+    def get_embed_html(self):
+        """
+        Return suitable initial HTML for embedding this file in an
+        article, generated from a template.
+
+        The template searching is from most specific to least
+        specific, based on mime-type. For example, an attachment with
+        mime-type 'image/png' will try to load the following
+        templates, in order, and use the first one found:
+
+        * wiki/attachments/image_png.html
+
+        * wiki/attachments/image.html
+
+        * wiki/attachments/generic.html
+        
+        """
+        rev = self.current_revision
+        env = jingo.get_env()
+        t = env.select_template([
+            'wiki/attachments/%s.html' % rev.mime_type.replace('/', '_'),
+            'wiki/attachments/%s.html' % rev.mime_type.split('/')[0],
+            'wiki/attachments/generic.html'])
+        return t.render({'attachment': rev})
         
 
 class AttachmentRevision(models.Model):
