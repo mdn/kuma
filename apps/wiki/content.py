@@ -26,6 +26,9 @@ SECTION_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'section')
 
 HEAD_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 
+# Head tags to included in the table of contents
+HEAD_TAGS_TOC = ('h1', 'h2', 'h3', 'h4')
+
 
 def parse(src):
     return ContentSectionTool(src)
@@ -270,7 +273,7 @@ class SectionTOCFilter(html5lib_Filter):
         input = html5lib_Filter.__iter__(self)
 
         for token in input:
-            if ('StartTag' == token['type'] and token['name'] in HEAD_TAGS):
+            if ('StartTag' == token['type'] and token['name'] in HEAD_TAGS_TOC):
                 self.in_header = True
                 out = ()
                 level_match = re.compile(r'^h(\d)$').match(token['name'])
@@ -302,7 +305,7 @@ class SectionTOCFilter(html5lib_Filter):
                         yield t
             elif ('Characters' == token['type'] and self.in_header):
                 yield token
-            elif ('EndTag' == token['type'] and token['name'] in HEAD_TAGS):
+            elif ('EndTag' == token['type'] and token['name'] in HEAD_TAGS_TOC):
                 self.in_header = False
                 level_match = re.compile(r'^h(\d)$').match(token['name'])
                 level = int(level_match.group(1))
