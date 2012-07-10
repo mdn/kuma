@@ -67,6 +67,7 @@ ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan']
+ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope']
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
@@ -74,7 +75,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-    'tr', 'th', 'address'
+    'tr', 'address'
 )))
 ALLOWED_STYLES = [
     'border', 'float', 'overflow', 'min-height', 'vertical-align',
