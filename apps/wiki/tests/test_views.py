@@ -1234,7 +1234,7 @@ class DocumentEditingTests(TestCaseBase):
             ok_('by: testuser' in desc_text)
             if "Edited" in desc_text:
                 ok_('Comment: Revision' in desc_text)
-                ok_('<ins>' in desc_text)
+                ok_('<ins' in desc_text)
                 ok_('$compare?to' in desc_text)
                 ok_('$edit' in desc_text)
                 ok_('$history' in desc_text)
