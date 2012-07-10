@@ -95,14 +95,13 @@ def profile_edit(request, username):
         ('expertise', 'profile:expertise:')
     )
 
-    if request.method != "POST":
+    if request.method != 'POST':
 
         initial = dict(email=profile.user.email)
 
         # Load up initial websites with either user data or required base URL
         for name, meta in UserProfile.website_choices:
-            val = profile.websites.get(name, '') or meta['prefix']
-            initial['websites_%s' % name] = val
+            initial['websites_%s' % name] = profile.websites.get(name, '')
 
         # Form fields to receive tags filtered by namespace.
         for field, ns in field_to_tag_ns:
@@ -123,7 +122,7 @@ def profile_edit(request, username):
             for name, meta in UserProfile.website_choices:
                 field_name = 'websites_%s' % name
                 field_value = form.cleaned_data.get(field_name, '')
-                if field_value:
+                if field_value and field_value != meta['prefix']:
                     sites[name] = field_value
             profile_new.websites = sites
 
