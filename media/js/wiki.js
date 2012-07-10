@@ -620,6 +620,11 @@
             var h_level = headerLevel(0, this),
                 $h = $(this);
 
+            if (h_level > 4) {
+                // Don't go any deeper than h4
+                return;
+            }
+
             if (excludesSelector && $h.is(excludesSelector)) {
                 // Skip excluded headers.
                 return;
