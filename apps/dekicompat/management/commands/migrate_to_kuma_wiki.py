@@ -18,6 +18,11 @@ import sys
 import time
 from optparse import make_option
 
+# HACK: This is the fattest hack I've written in awhile. I blame ianbicking
+# http://blog.ianbicking.org/illusive-setdefaultencoding.html
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 from BeautifulSoup import BeautifulSoup
 from pyquery import PyQuery as pq
 
@@ -947,8 +952,8 @@ class Command(BaseCommand):
         # Check to see if the current revision is up to date, in which case we
         # can skip the update and save a little time.
         page_ts = self.parse_timestamp(r['page_timestamp'])
-        if (not self.options['update_documents'] and page_ts <= rev.created):
-            log.info(u"\t\tCurrent revision up to date." % rev.pk)
+        if (not self.options['update_documents'] and page_ts <= doc.modified):
+            log.info(u"\t\tCurrent revision up to date.")
             return
 
         # Always create a new current revision; never overwrite or modify the
