@@ -125,5 +125,8 @@
 			field.keypress(updateWordCount);
 		});
 
+		// Update "Other Profiles", preventing "blank" submissions
+		$("#elsewhere input").mozPlaceholder();
+
 	});
 })();

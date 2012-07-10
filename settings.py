@@ -554,7 +554,7 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/styles/shThemeDefault.css',
             'css/jqueryui/jqueryui.css',
             'css/jqueryui/jquery-ui-1.8.14.custom.css',
-            'css/jqueryui/jquery-ui-customizations.css'
+            'css/jqueryui/moz-jquery-plugins.css'
         ),
         'wiki-print': (
             'css/wiki-print.css',
@@ -605,6 +605,7 @@ MINIFY_BUNDLES = {
         ),
         'profile': (
             'js/mdn/profile.js',
+            'js/moz-jquery-plugins.js',
         ),
         'events': (
             'js/libs/jquery.gmap-1.1.0.js',
@@ -666,7 +667,7 @@ MINIFY_BUNDLES = {
             'js/wiki.js',
             'js/main.js',
             'js/libs/jqueryui.min.js',
-            'js/jquery-ui-customizations.js',
+            'js/moz-jquery-plugins.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
         ),
