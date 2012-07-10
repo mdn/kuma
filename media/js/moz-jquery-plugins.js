@@ -4,7 +4,13 @@
 */
 (function($) {
 	
-    // Create our own widget
+    /*
+		Customized autocomplete that provides:
+			*  Cache management
+			*  Additional callbacks
+			*  Color based success/failure selections
+			*  more....
+    */
     $.widget("ui.mozillaAutocomplete", $.ui.autocomplete, {
 		
 		/* Additional options */
@@ -252,5 +258,33 @@
 			}, this.options.position ))
 		}
     });
+
+	/*
+		Plugin that adds placeholder text to the INPUTs on focus/blur
+	*/
+	$.fn.mozPlaceholder = function() {
+		return this.each(function() {
+			var $input = $(this),
+				placeholder = $input.attr("placeholder");
+
+			var valCheck = function() {
+				var box = $input[0]
+				if(box.value == placeholder) {
+					 box.value = "";
+				}
+			};
+
+			// Events
+			valCheck();
+			$input.bind({
+				blur: valCheck,
+				focus: function() {
+					if($input.val() == "") {
+						$input.val(placeholder);
+					}
+				}
+			});
+		});
+	};
 	
 })(jQuery);

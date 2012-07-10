@@ -31,6 +31,7 @@ class UserProfileEditForm(forms.ModelForm):
         for name, meta in sites:
             self.fields['websites_%s' % name] = forms.RegexField(
                     regex=meta['regex'], required=False)
+            self.fields['websites_%s' % name].widget.attrs['placeholder'] = meta['prefix']
 
     def clean_expertise(self):
         """Enforce expertise as a subset of interests"""
