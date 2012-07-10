@@ -60,12 +60,16 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
         output = output[:-lines]
     return ''.join(output)
 
+def _massage_diff_content(content):
+    tidy_options = {'output-xhtml': 0, 'force-output': 1}
+    content = tidy_document(content, options=tidy_options)
+    return content
+
 @register.function
 def diff_table(content_from, content_to):
     """Creates an HTML diff of the passed in content_from and content_to."""
-    tidy_options = {'output-xhtml': 0, 'force-output': 1}
-    tidy_from, errors = tidy_document(content_from, options=tidy_options)
-    tidy_to, errors = tidy_document(content_to, options=tidy_options)
+    tidy_from, errors = _massage_diff_content(content_from)
+    tidy_to, errors = _massage_diff_content(content_to)
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
     from_lines = tidy_from.splitlines()
     to_lines = tidy_to.splitlines()
@@ -75,7 +79,9 @@ def diff_table(content_from, content_to):
 
 @register.function
 def diff_inline(content_from, content_to):
-    sm = difflib.SequenceMatcher(None, content_from, content_to)
+    tidy_from, errors = _massage_diff_content(content_from)
+    tidy_to, errors = _massage_diff_content(content_to)
+    sm = difflib.SequenceMatcher(None, tidy_from, tidy_to)
     diff = show_diff(sm)
     return jinja2.Markup(diff)
 
