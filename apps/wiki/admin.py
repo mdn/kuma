@@ -174,6 +174,11 @@ rendering_info.short_description = 'Rendering'
 rendering_info.admin_order_field = 'last_rendered_at'
 
 
+def current_revision_reviewed(self):
+    return self.current_revision.reviewed
+current_revision_reviewed.admin_order_field = 'current_revision__reviewed'
+
+
 class DocumentAdmin(admin.ModelAdmin):
 
     class Media:
@@ -189,6 +194,12 @@ class DocumentAdmin(admin.ModelAdmin):
     list_display = ('id', 'locale', 'slug', 'title',
                     document_link,
                     'modified',
+                    # HACK: This is temporary, just to help us see & sort
+                    # documents by an empty reviewed field on current revision.
+                    # This is symptomatic of a migration issue, and this field
+                    # should be removed from the admin list after bug 769129 is
+                    # resolved.
+                    current_revision_reviewed,
                     rendering_info,
                     document_nav_links,
                     revision_links,)

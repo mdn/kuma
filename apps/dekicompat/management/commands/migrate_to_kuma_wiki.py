@@ -158,6 +158,15 @@ class Command(BaseCommand):
                     default=0,
                     help="Migrate # of English documents with other "
                     "languages"),
+        make_option('--withemptycontent', action="store_true",
+                    dest="withemptycontent", default=False,
+                    help="Migrate all documents with empty current revision "
+                         "content."),
+        make_option('--withunreviewed', action="store_true",
+                    dest="withunreviewed", default=False,
+                    help="Migrate all documents with unreviewed current "
+                         "revision."),
+
         make_option('--files', action="store_true", dest="files", default=False,
                     help="Migrate all files."),
 
@@ -243,7 +252,7 @@ class Command(BaseCommand):
 
     def handle_migration(self, rows):
         self.docs_migrated = self.index_migrated_docs()
-        log.info("Found %s docs already migrated" %
+        log.info(u"Found %s docs already migrated" %
                  len(self.docs_migrated.values()))
 
         start_ts = ts_now = ts_last_status = time.time()
@@ -267,7 +276,7 @@ class Command(BaseCommand):
                 django.db.reset_queries()
 
                 if ct >= self.options['limit']:
-                    log.info("Reached limit of %s documents migrated" %
+                    log.info(u"Reached limit of %s documents migrated" %
                              self.options['limit'])
                     break
 
@@ -279,7 +288,7 @@ class Command(BaseCommand):
                     # Note: This traps *all* errors, so that the migration can get
                     # through what it can. This should really produce a problem
                     # documents report, though.
-                    log.error('\t\tPROBLEM %s' % type(e))
+                    log.error(u'\t\tPROBLEM %s' % type(e))
                     error_ct += 1
 
             ts_now = time.time()
@@ -288,17 +297,17 @@ class Command(BaseCommand):
             # Emit status every 5 seconds
             if ((ts_now - ts_last_status) > 5.0):
                 ts_last_status = time.time()
-                log.info("Rate: %s docs/sec, %s secs/doc, "
+                log.info(u"Rate: %s docs/sec, %s secs/doc, "
                          "%s total in %s seconds" %
                          ((total_ct + 1) / (duration + 1),
                           (duration + 1) / (total_ct + 1),
                           total_ct, duration))
-                log.info("Rate: %s revs/sec, %s total in %s seconds" %
+                log.info(u"Rate: %s revs/sec, %s total in %s seconds" %
                          ((self.rev_ct + 1) / (duration + 1),
                           self.rev_ct, duration))
 
-        log.info("Migration finished: %s seconds, %s migrated, "
-                 "%s skipped, %s errors" %
+        log.info(u"Migration finished: %s seconds, %s migrated, "
+                 u"%s skipped, %s errors" %
                  ((time.time() - start_ts), ct, skip_ct, error_ct))
 
     def handle_template_metrics(self, rows):
@@ -362,7 +371,7 @@ class Command(BaseCommand):
         try:
             rows = self._query(sql)
         except Exception, e:
-            log.error("\tpage_id %s error %s" %
+            log.error(u"\tpage_id %s error %s" %
                       (page_id, e))
         single_row = None
         for row in rows:
@@ -393,7 +402,7 @@ class Command(BaseCommand):
     @transaction.commit_on_success(using='default')
     def make_breadcrumb_relationships(self, rows):
         """Set the topic_parent for Kuma pages using parent_id"""
-        log.info("Building parent/child breadcrumb tree...")
+        log.info(u"Building parent/child breadcrumb tree...")
         seen_docs = set()
         for r in rows:
             if not r['page_text'].strip():
@@ -405,7 +414,7 @@ class Command(BaseCommand):
             bc_ids = self._add_parent_ids(r, [r['page_id']])
             if not self.options['all']:
                 # Don't bother migrating as needed, if --all was already done.
-                log.info("Migrating breadcrumb ids: %s" % bc_ids)
+                log.info(u"Migrating breadcrumb ids: %s" % bc_ids)
                 self._migrate_necessary_mindtouch_pages(bc_ids)
             parent_id = bc_ids.pop(0)
             try:
@@ -416,7 +425,7 @@ class Command(BaseCommand):
                         if not id in seen_docs:
                             # Only bother updating this document if we haven't done
                             # so already in this run.
-                            log.info("\t%s -> %s" % (parent_doc, doc))
+                            log.info(u"\t%s -> %s" % (parent_doc, doc))
                             doc.parent_topic = parent_doc
                             doc.save()
                         seen_docs.add(id)
@@ -424,17 +433,17 @@ class Command(BaseCommand):
                     except Document.DoesNotExist:
                         # If a parent doc in the chain does not exist, just
                         # ignore its absence and snip it out of the path.
-                        log.error("\t\t%s not found in chain" % id)
+                        log.error(u"\t\t%s not found in chain" % id)
             except Document.DoesNotExist:
                 # Some pages are skipped by migration, regardless of whether
                 # another page calls it parent. Most of these cases look like
                 # boilerplate User:* pages
-                log.error("\t\t%s not found in chain" % parent_id)
+                log.error(u"\t\t%s not found in chain" % parent_id)
 
     @transaction.commit_manually(using='default')
     def make_languages_relationships(self, rows):
         """Set the parent_id of Kuma pages using wiki.languages params"""
-        log.info("Building parent/child locale tree...")
+        log.info(u"Building parent/child locale tree...")
         wl_pat = re.compile(r"""^wiki.languages\((.+)\)""")
         # language_tree is {page_id: [child_id, child_id, ...], ...}
         language_tree = {}
@@ -462,7 +471,7 @@ class Command(BaseCommand):
                     try:
                         page_languages = json.loads(page_languages_json)
                     except ValueError:
-                        log.error("\t%s/%s (%s) error parsing wiki.languages JSON" %
+                        log.error(u"\t%s/%s (%s) error parsing wiki.languages JSON" %
                                   (locale, slug, r['page_display_name']))
                         continue
                     vals = page_languages.values()
@@ -478,13 +487,13 @@ class Command(BaseCommand):
                     try:
                         wc.execute(sql)
                     except Exception, e:
-                        log.error("\t%s/%s (%s) error %s" %
+                        log.error(u"\t%s/%s (%s) error %s" %
                                   (locale, slug, r['page_display_name'], e))
                         continue
                     for row in wc:
                         language_tree[parent_id].append(row[0])
 
-        log.info("Building translation relationships...")
+        log.info(u"Building translation relationships...")
         kc = self.kumadb.cursor()
         for parent_id, children in language_tree.items():
             # Now that we have our tree of docs and children, migrate them
@@ -523,16 +532,16 @@ class Command(BaseCommand):
     def cleanup_circular_translations(self):
         """In past migrations, some objects ended up pointing at themselves as
         translation parents. Fix that."""
-        log.info("Cleaning up circular translations...")
+        log.info(u"Cleaning up circular translations...")
         for doc in Document.objects.filter(parent=F('id')):
-            log.info("\t%s" % doc)
+            log.info(u"\t%s" % doc)
             doc.parent = None
             doc.save()
     
     @transaction.commit_on_success
     def wipe_documents(self):
         """Delete all documents"""
-        log.info("Wiping all Kuma documents and revisions")
+        log.info(u"Wiping all Kuma documents and revisions")
         kc = self.kumadb.cursor()
         kc.execute("""
             SET FOREIGN_KEY_CHECKS = 0;
@@ -567,7 +576,7 @@ class Command(BaseCommand):
                 ORDER BY page_timestamp DESC
             """ % (ns_list)
             self.cur.execute("SELECT count(*) FROM pages %s" % where)
-            log.info("Gathering ALL %s pages..." %
+            log.info(u"Gathering ALL %s pages..." %
                      self.cur.fetchone()[0])
             iters.append(self._query("SELECT * FROM pages %s" % where))
 
@@ -580,7 +589,7 @@ class Command(BaseCommand):
                 ns = MT_NS_NAME_TO_ID.get('%s:' % ns_name, 0)
 
             # Migrating a single page...
-            log.info("Searching for %s" % self.options['slug'])
+            log.info(u"Searching for %s" % self.options['slug'])
             iters.append(self._query("""
                 SELECT *
                 FROM pages
@@ -595,7 +604,7 @@ class Command(BaseCommand):
 
             if self.options['most_viewed'] > 0:
                 # Grab the most viewed pages
-                log.info("Gathering %s most viewed pages..." %
+                log.info(u"Gathering %s most viewed pages..." %
                          self.options['most_viewed'])
                 iters.append(self._query("""
                     SELECT p.*, pc.*
@@ -609,7 +618,7 @@ class Command(BaseCommand):
 
             if self.options['recent'] > 0:
                 # Grab the most recently modified
-                log.info("Gathering %s recently modified pages..." %
+                log.info(u"Gathering %s recently modified pages..." %
                          self.options['recent'])
                 iters.append(self._query("""
                     SELECT *
@@ -621,7 +630,7 @@ class Command(BaseCommand):
 
             if self.options['longest'] > 0:
                 # Grab the longest pages
-                log.info("Gathering %s longest pages..." %
+                log.info(u"Gathering %s longest pages..." %
                          self.options['longest'])
                 iters.append(self._query("""
                     SELECT *
@@ -633,7 +642,7 @@ class Command(BaseCommand):
 
             if self.options['redirects'] > 0:
                 # Grab the redirect pages
-                log.info("Gathering %s redirects from MindTouch..." %
+                log.info(u"Gathering %s redirects from MindTouch..." %
                          self.options['redirects'])
                 # HACK: Need to use "%%%%" here, just to get one "%". It's
                 # stinky, but it's because this string goes twice through %
@@ -651,7 +660,7 @@ class Command(BaseCommand):
             if self.options['nonen'] > 0:
                 # Grab non-en pages. Might catch a few pages with "en/" in the
                 # title, but not in the page_language.
-                log.info("Gathering %s pages in locales other than en-US..." %
+                log.info(u"Gathering %s pages in locales other than en-US..." %
                          self.options['nonen'])
                 iters.append(self._query("""
                     SELECT *
@@ -663,7 +672,7 @@ class Command(BaseCommand):
                 """ % (ns_list, '%s'), self.options['nonen']))
 
             if self.options['withsyntax'] > 0:
-                log.info("Gathering %s pages with syntax highlighting" %
+                log.info(u"Gathering %s pages with syntax highlighting" %
                          self.options['withsyntax'])
                 iters.append(self._query("""
                     SELECT *
@@ -675,7 +684,7 @@ class Command(BaseCommand):
                 """ % (ns_list, '%s'), self.options['withsyntax']))
 
             if self.options['withscripts'] > 0:
-                log.info("Gathering %s pages that use scripts" %
+                log.info(u"Gathering %s pages that use scripts" %
                          self.options['withscripts'])
                 iters.append(self._query("""
                     SELECT *
@@ -687,7 +696,7 @@ class Command(BaseCommand):
                 """ % (ns_list, '%s'), self.options['withscripts']))
 
             if self.options['withtemplates'] > 0:
-                log.info("Gathering %s templates" %
+                log.info(u"Gathering %s templates" %
                          self.options['withtemplates'])
                 iters.append(self._query("""
                     SELECT *
@@ -699,7 +708,7 @@ class Command(BaseCommand):
                      self.options['withtemplates']))
 
             if self.options['withlanguages'] > 0:
-                log.info("Gathering %s English pages that have languages" %
+                log.info(u"Gathering %s English pages that have languages" %
                          self.options['withlanguages'])
                 iters.append(self._query("""
                     SELECT *
@@ -709,6 +718,48 @@ class Command(BaseCommand):
                     ORDER BY page_timestamp DESC
                     LIMIT %s
                 """, self.options['withlanguages']))
+
+            if self.options['withemptycontent']:
+                log.info(u"Gathering ALL pages corresponding to documents whose "
+                         "current revision has empty content")
+                sql = """
+                    SELECT d.mindtouch_page_id
+                    FROM wiki_document AS d, wiki_revision AS r
+                    WHERE
+                        r.id = d.current_revision_id AND
+                        r.is_mindtouch_migration=1 AND
+                        r.content = ''
+                        GROUP BY d.id
+                """
+                # Can't easily join between DBs, so this is painful:
+                kc = self.kumadb.cursor()
+                kc.execute(sql)
+                for row in kc:
+                    iters.append(self._query("""
+                        SELECT * FROM pages
+                        WHERE page_id = %s
+                    """, row[0]))
+
+            if self.options['withunreviewed']:
+                log.info(u"Gathering ALL pages corresponding to documents whose "
+                         "current revision is unreviewed")
+                sql = """
+                    SELECT d.mindtouch_page_id
+                    FROM wiki_document AS d, wiki_revision AS r
+                    WHERE
+                        r.id = d.current_revision_id AND
+                        r.is_mindtouch_migration=1 AND
+                        r.reviewed IS NULL
+                        GROUP BY d.id
+                """
+                # Can't easily join between DBs, so this is painful:
+                kc = self.kumadb.cursor()
+                kc.execute(sql)
+                for row in kc:
+                    iters.append(self._query("""
+                        SELECT * FROM pages
+                        WHERE page_id = %s
+                    """, row[0]))
 
         return itertools.chain(*iters)
 
@@ -723,7 +774,7 @@ class Command(BaseCommand):
         # Special: namespace (not migrated), or a couple of untitled and empty
         # pages under the Template: or User: namespaces.
         if not r['page_timestamp']:
-            log.debug("\t%s/%s (%s) skipped, no timestamp" %
+            log.debug(u"\t%s/%s (%s) skipped, no timestamp" %
                       (locale, slug, r['page_display_name']))
             return False
 
@@ -733,7 +784,7 @@ class Command(BaseCommand):
         last_mod = self.docs_migrated.get(r['page_id'], (None, None))[1]
         if (not self.options['update_documents'] and last_mod is not None
                 and last_mod >= page_ts):
-            # log.debug("\t%s/%s (%s) up to date" %
+            # log.debug(u"\t%s/%s (%s) up to date" %
             #           (locale, slug, r['page_display_name']))
             return False
 
@@ -743,24 +794,24 @@ class Command(BaseCommand):
             content_hash = (hashlib.md5(r['page_text'].encode('utf-8'))
                                    .hexdigest())
             if content_hash in USER_NS_EXCLUDED_CONTENT_HASHES:
-                # log.debug("\t%s/%s (%s) matched User: content exclusion list" %
+                # log.debug(u"\t%s/%s (%s) matched User: content exclusion list" %
                 #           (locale, slug, r['page_display_name']))
                 return False
 
         # Skip migrating Template:MindTouch/* templates
         if slug.startswith('Template:MindTouch'):
-            log.debug("\t%s/%s (%s) skipped, was a MindTouch default template" %
+            log.debug(u"\t%s/%s (%s) skipped, was a MindTouch default template" %
                       (locale, slug, r['page_display_name']))
             return False
 
         # Check to see if this page's content is too long, skip if so.
         if len(r['page_text']) > self.options['maxlength']:
-            log.debug("\t%s/%s (%s) skipped, page too long (%s > %s max)" %
+            log.debug(u"\t%s/%s (%s) skipped, page too long (%s > %s max)" %
                       (locale, slug, r['page_display_name'],
                        len(r['page_text']), self.options['maxlength']))
             return False
 
-        log.info("\t%s/%s (%s)" % (locale, slug, r['page_display_name']))
+        log.info(u"\t%s/%s (%s)" % (locale, slug, r['page_display_name']))
 
         try:
             # Try to get just a single document for the page ID.
@@ -782,9 +833,9 @@ class Command(BaseCommand):
             doc.mindtouch_page_id = r['page_id']
 
         if created:
-            log.info("\t\tNew document created. (ID=%s)" % doc.pk)
+            log.info(u"\t\tNew document created. (ID=%s)" % doc.pk)
         else:
-            log.info("\t\tDocument already exists. (ID=%s)" % doc.pk)
+            log.info(u"\t\tDocument already exists. (ID=%s)" % doc.pk)
 
         tags = self.get_tags_for_page(r)
 
@@ -883,7 +934,7 @@ class Command(BaseCommand):
             kc.execute(sql, revs_flat)
 
         self.rev_ct += ct_saved + ct_skipped + ct_error
-        log.info("\t\tPast revisions: %s saved, %s skipped, %s errors" %
+        log.info(u"\t\tPast revisions: %s saved, %s skipped, %s errors" %
                  (ct_saved, ct_skipped, ct_error))
 
     def update_current_revision(self, r, doc, tags):
@@ -892,28 +943,30 @@ class Command(BaseCommand):
         # All revisions of a Kuma document have revision records, whereas
         # MindTouch only tracks "old" revisions.
         p_id = r['page_user_id']
-        rev, created = Revision.objects.get_or_create(document=doc,
-            is_mindtouch_migration=True, mindtouch_old_id=None, defaults=dict(
-                creator_id=self.get_django_user_id_for_deki_id(p_id),
-                is_approved=True,
-                significance=SIGNIFICANCES[0][0],))
 
         # Check to see if the current revision is up to date, in which case we
         # can skip the update and save a little time.
         page_ts = self.parse_timestamp(r['page_timestamp'])
-        if (not self.options['update_documents'] and not created and
-                page_ts <= rev.created):
-            log.info("\t\tCurrent revision up to date. (ID=%s)" % rev.pk)
+        if (not self.options['update_documents'] and page_ts <= rev.created):
+            log.info(u"\t\tCurrent revision up to date." % rev.pk)
             return
 
-        rev.created = rev.reviewed = page_ts
-        rev.slug = doc.slug
-        rev.title = doc.title
-        rev.tags = tags
-        rev.content = self.convert_page_text(r, r['page_text'])
-
-        # HACK: Some comments end up being too long, but just truncate.
-        rev.comment = r['page_comment'][:255]
+        # Always create a new current revision; never overwrite or modify the
+        # existing one, even if we're just technically updating.
+        rev = Revision(document=doc, 
+                       slug=doc.slug, title=doc.slug, tags=tags,
+                       created=page_ts, reviewed=page_ts,
+                       # Process the revision content along the way...
+                       content=self.convert_page_text(r, r['page_text']),
+                       # HACK: Some rare comments end up being too long, but
+                       # just truncate.
+                       comment = r['page_comment'][:255],
+                       # This is a mindtouch migration, but the current rev in
+                       # MT has no old_id.
+                       is_mindtouch_migration=True, mindtouch_old_id=None,
+                       creator_id=self.get_django_user_id_for_deki_id(p_id),
+                       is_approved=True,
+                       significance=SIGNIFICANCES[0][0],)
 
         # Save, and force to current revision.
         rev.save()
@@ -923,10 +976,7 @@ class Command(BaseCommand):
         if doc.slug.startswith('Template:'):
             rev.review_tags.set('template') 
 
-        if created:
-            log.info("\t\tCurrent revision created. (ID=%s)" % rev.pk)
-        else:
-            log.info("\t\tCurrent revision updated. (ID=%s)" % rev.pk)
+        log.info(u"\t\tNew current revision created. (ID=%s)" % rev.pk)
 
     def convert_page_text(self, r, pt):
         """Given a page row from MindTouch, do whatever needs doing to convert
