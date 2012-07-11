@@ -1187,6 +1187,7 @@ class TranslateTests(TestCaseBase):
 
     def test_translate_rejected_parent(self):
         """Translate view of rejected English document shows warning."""
+        raise SkipTest("Review and approval don't work this way in Kuma, TODO: Fixme")
         user = User.objects.get(pk=8)
         en_revision = revision(is_approved=False, save=True, reviewer=user,
                                reviewed=datetime.now())

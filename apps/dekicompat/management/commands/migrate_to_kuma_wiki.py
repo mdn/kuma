@@ -952,7 +952,9 @@ class Command(BaseCommand):
         # Check to see if the current revision is up to date, in which case we
         # can skip the update and save a little time.
         page_ts = self.parse_timestamp(r['page_timestamp'])
-        if (not self.options['update_documents'] and page_ts <= doc.modified):
+        if (doc.current_revision and
+                (not self.options['update_documents'] and
+                 page_ts <= doc.current_revision.modified)):
             log.info(u"\t\tCurrent revision up to date.")
             return
 

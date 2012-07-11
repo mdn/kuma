@@ -1204,13 +1204,18 @@ class Revision(ModelBase):
         if not self.slug:
             self.slug = self.document.slug
 
+        if self.is_approved and not self.reviewed:
+            # HACK: For Kuma, we do an end-run around the review system here by
+            # auto-self-reviewing all revisions.
+            # TODO: Remove the kitsune review/approval system from kuma.
+            self.reviewer = self.creator
+            self.reviewed = datetime.now()
+
         super(Revision, self).save(*args, **kwargs)
 
         # When a revision is approved, update document metadata and re-cache
         # the document's html content
-        if self.is_approved and (
-                not self.document.current_revision or
-                self.document.current_revision.id < self.id):
+        if self.is_approved:
             self.make_current()
 
     def make_current(self):
