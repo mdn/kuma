@@ -57,22 +57,17 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
-ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align']
-ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['ul'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['li'] = ['style', 'class', 'id']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope']
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', ]) for x in
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
-    'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id']) for x in (
+    'div', 'pre', 'ul', 'ol', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
