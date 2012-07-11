@@ -37,6 +37,37 @@ disable_deferred_rendering_for_documents.short_description = (
     "Disable deferred rendering for selected documents")
 
 
+def force_render_documents(self, request,queryset):
+    count, bad_count = 0, 0
+    for doc in queryset:
+        try:
+            doc.render(cache_control='no-cache')
+            count += 1
+        except:
+            bad_count += 1
+            pass
+    self.message_user(request, "Rendered %s documents, failed on %s "
+                               "documents." % (count, bad_count))
+force_render_documents.short_description = (
+    "Perform rendering for selected documents")
+
+        
+def resave_current_revision(self, request, queryset):
+    count, bad_count = 0, 0
+    for doc in queryset:
+        if not doc.current_revision:
+            bad_count += 1
+        else:
+            doc.current_revision.save()
+            count += 1
+    self.message_user(request, "Resaved current revision for %s documents. %s "
+                               "documents had no current revision." %
+                               (count, bad_count))
+
+resave_current_revision.short_description = (
+    "Re-save current revision for selected documents")
+
+
 def related_revisions_link(self):
     """HTML link to related revisions for admin change list"""
     link = '%s?%s' % (
@@ -186,6 +217,8 @@ class DocumentAdmin(admin.ModelAdmin):
 
     list_per_page = 25
     actions = (dump_selected_documents,
+               resave_current_revision,
+               force_render_documents,
                enable_deferred_rendering_for_documents,
                disable_deferred_rendering_for_documents)
     change_list_template = 'admin/wiki/document/change_list.html'
