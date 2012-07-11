@@ -80,7 +80,10 @@ def devmo_url(context, path):
     """
     if not settings.DEKIWIKI_ENDPOINT:
         locale = context['request'].locale
-        url = cache.get('devmo_url:%s_%s' % (locale, path))
+        try:
+            url = cache.get('devmo_url:%s_%s' % (locale, path))
+        except:
+            return path
         if not url:
             url = reverse('wiki.document',
                           locale=settings.WIKI_DEFAULT_LANGUAGE,
