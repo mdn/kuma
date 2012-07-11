@@ -961,7 +961,7 @@ class Command(BaseCommand):
         # Always create a new current revision; never overwrite or modify the
         # existing one, even if we're just technically updating.
         rev = Revision(document=doc, 
-                       slug=doc.slug, title=doc.slug, tags=tags,
+                       slug=doc.slug, title=doc.title, tags=tags,
                        created=page_ts, reviewed=page_ts,
                        # Process the revision content along the way...
                        content=self.convert_page_text(r, r['page_text']),
