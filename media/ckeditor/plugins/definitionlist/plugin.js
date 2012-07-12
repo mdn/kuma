@@ -120,6 +120,12 @@
 			else if ( item.indent == Math.max( indentLevel, 0 ) + 1 )
 			{
 				var listData = arrayToDefList( listArray, null, currentIndex, paragraphMode );
+
+				// If the next block is an <li> with another list tree as the first
+				// child, we'll need to append a filler (<br>/NBSP) or the list item
+				// wouldn't be editable. (#6724)
+				if ( !currentListItem.getChildCount() && CKEDITOR.env.ie && !( doc.$.documentMode > 7 ))
+					currentListItem.append( doc.createText( '\xa0' ) );
 				currentListItem.append( listData.listNode );
 				currentIndex = listData.nextIndex;
 			}
@@ -131,12 +137,14 @@
 				else
 				{
 					// Create completely new blocks here.
-					if ( dir || item.element.hasAttributes() ||
-						( paragraphMode != CKEDITOR.ENTER_BR && item.grandparent.getName() != 'td' ) )
+					if ( dir || item.element.hasAttributes() || paragraphMode != CKEDITOR.ENTER_BR )
 					{
 						currentListItem = doc.createElement( paragraphName );
 						item.element.copyAttributes( currentListItem, { type:1, value:1 } );
-						dir && currentListItem.setAttribute( 'dir', dir );
+						var itemDir = item.element.getDirection() || dir;
+						itemDir &&
+							currentListItem.setAttribute( 'dir', itemDir );
+
 
 						// There might be a case where there are no attributes in the element after all
 						// (i.e. when "type" or "value" are the only attributes set). In this case, if enterMode = BR,
@@ -212,30 +220,23 @@
 		return { listNode : retval, nextIndex : currentIndex };
 	}
 
-	function setState( editor, state )
-	{
-		editor.getCommand( this.name ).setState( state );
-	}
-
 	function onSelectionChange( evt )
 	{
 		var path = evt.data.path,
 			blockLimit = path.blockLimit,
 			elements = path.elements,
-			element;
+			element,
+			i;
 
 		// Grouping should only happen under blockLimit.(#3940).
-		for ( var i = 0 ; i < elements.length && ( element = elements[ i ] )
+		for ( i = 0 ; i < elements.length && ( element = elements[ i ] )
 			  && !element.equals( blockLimit ); i++ )
 		{
-			if ( elements[i].getName() == this.type )
-			{
-				return setState.call( this, evt.editor,
-						this.type == elements[i].getName() ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
-			}
+			if ( listNodeNames[ elements[i].getName() ] )
+				return this.setState( this.type == elements[i].getName() ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
 		}
 
-		return setState.call( this, evt.editor, CKEDITOR.TRISTATE_OFF );
+		return this.setState( CKEDITOR.TRISTATE_OFF );
 	}
 
 	function changeListType( editor, groupObj, database, listsCreated )
@@ -481,7 +482,7 @@
 						enclosedNode = range && range.getEnclosedNode();
 					if ( enclosedNode && enclosedNode.is
 						&& this.type == enclosedNode.getName() )
-							setState.call( this, editor, CKEDITOR.TRISTATE_ON );
+							this.setState( CKEDITOR.TRISTATE_ON );
 				}
 			}
 
@@ -619,38 +620,37 @@
 	{
 		requires : [ 'domiterator', 'list' ],
 
-		lang : [ 'en', 'cs', 'de', 'en-au', 'es', 'et', 'fr-ca', 'fr', 'he', 'hu', 'it', 'ja', 'ko', 'nl', 'pt-br', 'ru', 'sv' ],
+		lang : [ 'en' ], // @Packager.RemoveLine
 
 		init : function( editor )
 		{
 			// Register commands.
-			var definitionListCommand = new defListCommand( 'definitionlist', 'dl' ),
-				definitionTermCommand = new defListCommand( 'definitionterm', 'dt' ),
-				definitionDescCommand = new defListCommand( 'definitiondesc', 'dd' );
+			var definitionListCommand = editor.addCommand( 'definitionlist', new defListCommand( 'definitionlist', 'dl' ) ),
+				definitionTermCommand = editor.addCommand( 'definitionterm', new defListCommand( 'definitionterm', 'dt' ) ),
+				definitionDescCommand = editor.addCommand( 'definitiondesc', new defListCommand( 'definitiondesc', 'dd' ) );
 
-			editor.addCommand( 'definitionlist', definitionListCommand );
-			editor.addCommand( 'definitionterm', definitionTermCommand );
-			editor.addCommand( 'definitiondesc', definitionDescCommand );
+			var plugin = this;
+			var getButton = function( command, label, image, offset )
+			{
+				var button =
+					{
+						icon : plugin.path + 'images/' + image, // @Packager.RemoveLine
+						label : editor.lang[ label ],
+						command : command
+					};
 
-			// Register the toolbar button.
-			editor.ui.addButton( 'DefinitionList',
+				if ( !button.icon )
 				{
-					label : editor.lang.definitionList,
-					command : 'definitionlist',
-					icon : this.path + 'images/dl.gif'
-				} );
-			editor.ui.addButton( 'DefinitionTerm',
-				{
-					label : editor.lang.definitionTerm,
-					command : 'definitionterm',
-					icon : this.path + 'images/dt.gif'
-				} );
-			editor.ui.addButton( 'DefinitionDescription',
-				{
-					label : editor.lang.definitionDesc,
-					command : 'definitiondesc',
-					icon : this.path + 'images/dd.gif'
-				} );
+					button.icon = editor.config.mindtouch.editorPath + '/images/icons.png';
+					button.iconOffset = offset;
+				}
+
+				return button;
+			};
+
+			editor.ui.addButton( 'DefinitionList', getButton( 'definitionlist', 'definitionList', 'dl.gif', 7 ) );
+			editor.ui.addButton( 'DefinitionTerm', getButton( 'definitionterm', 'definitionTerm', 'dt.gif', 8 ) );
+			editor.ui.addButton( 'DefinitionDescription', getButton( 'definitiondesc', 'definitionDesc', 'dd.gif', 6 ) );
 
 			// Register the state changing handlers.
 			editor.on( 'selectionChange', CKEDITOR.tools.bind( onSelectionChange, definitionListCommand ) );
