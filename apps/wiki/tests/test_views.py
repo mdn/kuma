@@ -341,6 +341,8 @@ class KumascriptIntegrationTests(TestCaseBase):
         super(KumascriptIntegrationTests, self).setUp()
 
         self.d, self.r = doc_rev()
+        self.r.content = "TEST CONTENT"
+        self.r.save()
         self.d.tags.set('foo', 'bar', 'baz')
         self.url = reverse('wiki.document', 
                            args=(self.d.slug,),
