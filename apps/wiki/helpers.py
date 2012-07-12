@@ -5,6 +5,7 @@ import constance.config
 from jingo import register
 import jinja2
 from tidylib import tidy_document
+from tower import ugettext as _
 
 from wiki import DIFF_WRAP_COLUMN
 from wiki import parser
@@ -73,8 +74,13 @@ def diff_table(content_from, content_to):
     html_diff = difflib.HtmlDiff(wrapcolumn=DIFF_WRAP_COLUMN)
     from_lines = tidy_from.splitlines()
     to_lines = tidy_to.splitlines()
-    diff = html_diff.make_table(from_lines, to_lines, context=True,
-                                numlines=constance.config.DIFF_CONTEXT_LINES)
+    try:
+        diff = html_diff.make_table(from_lines, to_lines, context=True,
+                                    numlines=constance.config.DIFF_CONTEXT_LINES)
+    except RuntimeError:
+        # some diffs hit a max recursion error
+        message = _(u'There was an error generating the content.')
+        diff = '<div class="warning"><p>%s</p></div>' % message
     return jinja2.Markup(diff)
 
 @register.function
