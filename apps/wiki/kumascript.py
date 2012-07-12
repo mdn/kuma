@@ -22,6 +22,7 @@ from wiki import (KUMASCRIPT_TIMEOUT_ERROR, ReadOnlyException)
 def should_use_rendered(doc, params):
     """
       * The service isn't disabled with a timeout of 0
+      * The document isn't empty
       * The request has *not* asked for raw source
         (eg. ?raw)
       * The request has *not* asked for no macro evaluation
@@ -36,6 +37,7 @@ def should_use_rendered(doc, params):
     if doc:
         is_template = doc.is_template
     return (constance.config.KUMASCRIPT_TIMEOUT > 0 and
+            doc.html and
             not is_template and
             (force_macros or (not no_macros and not show_raw)))
 
