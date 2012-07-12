@@ -406,7 +406,6 @@ class ContentSectionToolTests(TestCase):
             <li><span class="script">Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!")</span></li>
             <li><span class="script">Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!")</span></li>
             <li><span class="script">MixedCaseName('parameter1', 'parameter2')</span></li>
-            <li><span class="script">bug(689641)</span></li>
             <li><span class="script">template.lowercasename('border')</span></li>
             <li><span class="script">Template.UpperCaseTemplate("foo")</span></li>
             <li><span class="script">wiki.template('英語版章題', [ "Reusing tabs" ])</span></li>
@@ -420,7 +419,6 @@ class ContentSectionToolTests(TestCase):
             <li>{{ Warning("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong>strongly</strong> discouraged!") }}</li>
             <li>{{ Note("Performing synchronous IO on the main thread can cause serious performance problems. As a result, this method of modifying the database is <strong class="important">strongly</strong> discouraged!") }}</li>
             <li>{{ MixedCaseName('parameter1', 'parameter2') }}</li>
-            <li>{{ bug("689641") }}</li>
             <li>{{ lowercasename('border') }}</li>
             <li>{{ UpperCaseTemplate("foo") }}</li>
             <li>{{ 英語版章題("Reusing tabs") }}</li>

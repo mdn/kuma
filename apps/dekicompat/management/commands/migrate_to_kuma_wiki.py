@@ -172,6 +172,9 @@ class Command(BaseCommand):
                     help="Migrate all documents with unreviewed current "
                          "revision."),
 
+        make_option('--fromlist', type="string", default='',
+                    help="Migrate pages from a list in the named file."),
+
         make_option('--files', action="store_true", dest="files", default=False,
                     help="Migrate all files."),
 
@@ -766,6 +769,30 @@ class Command(BaseCommand):
                         WHERE page_id = %s
                     """, row[0]))
 
+            if self.options['fromlist']:
+                # Read in the page title list, carefully snipping off the \n's
+                names = [x[:-1] for x in open(self.options['fromlist'])]
+                log.info(u"Gathering %s pages from %s" %
+                         (len(names), self.options['fromlist']))
+
+                # Paginate the page title list so we can do chunked queries. I
+                # think queries can be pretty large, but not arbitrarily so.
+                page_len = 500
+                pages = [names[x:x+page_len]
+                         for x in range(0, len(names), page_len)]
+                
+                # Perform the chunked queries, collect the iterators.
+                page_num = 0
+                for page in pages:
+                    page_num += 1
+                    log.debug("\tpage %s of %s (%s titles)" %
+                              (page_num, len(pages), len(page)))
+                    sql = """
+                        SELECT * FROM pages
+                        WHERE page_title IN (%s)
+                    """ % ','.join(['%s' for x in range(0, len(page))])
+                    iters.append(self._query(sql, *page))
+
         return itertools.chain(*iters)
 
     @transaction.commit_on_success
@@ -829,13 +856,15 @@ class Command(BaseCommand):
         except Document.DoesNotExist:
             # Otherwise, try to create a new one.
             doc, created = Document.objects.get_or_create(
-                locale=locale,
-                slug=slug,
-                title=r['page_display_name'],
+                locale=locale, slug=slug,
                 defaults=dict(
-                    category=CATEGORIES[0][0],
+                    category=CATEGORIES[0][0]
                 ))
             doc.mindtouch_page_id = r['page_id']
+
+        # Ensure the title is up to date.
+        doc.title = r['page_display_name']
+        doc.save()
 
         if created:
             log.info(u"\t\tNew document created. (ID=%s)" % doc.pk)
@@ -954,7 +983,7 @@ class Command(BaseCommand):
         page_ts = self.parse_timestamp(r['page_timestamp'])
         if (doc.current_revision and
                 (not self.options['update_documents'] and
-                 page_ts <= doc.current_revision.modified)):
+                 page_ts <= doc.current_revision.created)):
             log.info(u"\t\tCurrent revision up to date.")
             return
 
