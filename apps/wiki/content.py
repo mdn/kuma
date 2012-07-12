@@ -501,12 +501,6 @@ class DekiscriptMacroFilter(html5lib_Filter):
                 if ds_call.lower().startswith(prefix):
                     ds_call = ds_call[len(prefix):]
 
-            # Convert numeric args to quoted. eg. bug(123) -> bug("123")
-            num_re = re.compile(r'^([^(]+)\((\d+)')
-            m = num_re.match(ds_call)
-            if m:
-                ds_call = '%s("%s")' % (m.group(1), m.group(2))
-
             # template("template name", [ "params" ])
             wt_re = re.compile(
                 r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
