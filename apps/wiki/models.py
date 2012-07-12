@@ -1483,3 +1483,13 @@ class AttachmentRevision(models.Model):
         self.attachment.slug = self.slug
         self.attachment.current_revision = self
         self.attachment.save()
+
+    def get_previous(self):
+        previous_revisions = self.attachment.revisions.filter(
+            is_approved=True,
+            created__lt=self.created,
+            ).order_by('-created')
+        if len(previous_revisions):
+            return previous_revisions[0]
+        else:
+            return None
