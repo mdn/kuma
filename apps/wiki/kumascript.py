@@ -1,6 +1,5 @@
 import logging
 import time
-import httplib
 from urlparse import urljoin
 import json
 import base64
@@ -16,7 +15,7 @@ from django.contrib.sites.models import Site
 
 import constance.config
 
-from wiki import (KUMASCRIPT_TIMEOUT_ERROR, ReadOnlyException)
+from wiki import KUMASCRIPT_TIMEOUT_ERROR
 
 
 def should_use_rendered(doc, params):
@@ -49,8 +48,9 @@ def post(request, content):
         url=request.build_absolute_uri('/'),
     )
     add_env_headers(headers, env_vars)
+    data = content.encode('utf8')
     resp = requests.post(ks_url, timeout=constance.config.KUMASCRIPT_TIMEOUT,
-                        data=content, headers=headers)
+                        data=data, headers=headers)
     if resp:
         resp_body = process_body(resp)
         resp_errors = process_errors(resp)

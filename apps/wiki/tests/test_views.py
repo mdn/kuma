@@ -30,7 +30,7 @@ from waffle.models import Flag, Sample, Switch
 
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
-from . import TestCaseBase
+from . import TestCaseBase, FakeResponse
 
 import wiki.content
 from wiki.models import VersionMetadata, Document, Revision, \
@@ -320,14 +320,6 @@ class ReadOnlyTests(TestCaseBase):
         ok_('Your account has been banned from making edits.' in resp.content)
 
 
-class FakeResponse:
-    """Quick and dirty mocking stand-in for a response object"""
-    def __init__(self, **entries): 
-        self.__dict__.update(entries)
-    def read(self):
-        return self.body
-
-
 class KumascriptIntegrationTests(TestCaseBase):
     """Tests for usage of the kumascript service.
     
@@ -574,6 +566,27 @@ class KumascriptIntegrationTests(TestCaseBase):
         eq_(trap['headers']['X-FireLogger'], '1.2') 
         for error in expected_errors['logs']:
             ok_(error['message'] in response.content)
+
+    @mock.patch('requests.post')
+    def test_preview_nonascii(self, mock_post):
+        """POSTing non-ascii to kumascript should encode to utf8"""
+        content = u'Français'
+        trap = {}
+        def my_post(url, timeout=None, headers=None, data=None):
+            trap['data'] = data
+            return FakeResponse(status_code=200, headers={},
+                                body=content.encode('utf8'))
+        mock_post.side_effect = my_post
+
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        constance.config.KUMASCRIPT_MAX_AGE = 600
+
+        self.client.login(username='admin', password='testpass')
+        self.client.post(reverse('wiki.preview'), {'content': content})
+        try:
+            trap['data'].decode('utf8')
+        except UnicodeDecodeError:
+            ok_(False, "Data wasn't posted as utf8")
 
 
 class DocumentEditingTests(TestCaseBase):
