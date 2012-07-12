@@ -74,7 +74,8 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id']) for x in (
     'tr', 'address'
 )))
 ALLOWED_STYLES = [
-    'border', 'float', 'overflow', 'min-height', 'vertical-align',
+    'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
+    'float', 'overflow', 'min-height', 'vertical-align',
     'white-space', 'border-radius', '-webkit-border-radius',
     '-moz-border-radius, -o-border-radius',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
