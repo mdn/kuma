@@ -97,7 +97,7 @@
             {% endif %}
         </ul>
 
-        {% if request.user.is_authenticated() %}
+        {% if request.user.is_authenticated() and document_html %}
           {% if render_raw_fallback %}
             <div id="doc-render-raw-fallback" class="warning">
             {% trans url=document.get_absolute_url() %}
@@ -201,7 +201,9 @@
         </div>
         {% endif %}
       {% if not fallback_reason %}
-        {% if document.is_template %}
+        {% if not document_html %}
+          {{ _("This article doesn't have any content yet.") }}
+        {% elif document.is_template %}
           <pre class="brush: js">{{ document_html }}</pre>
         {% else %}
           {{ document_html|safe }}
