@@ -47,7 +47,8 @@ CKEDITOR.on('instanceReady', function (ev) {
             controlShiftS: CKEDITOR.CTRL + CKEDITOR.SHIFT + 83,
             shiftSpace: CKEDITOR.SHIFT + 32,
             tab: 9,
-            shiftTab: CKEDITOR.SHIFT + 9
+            shiftTab: CKEDITOR.SHIFT + 9,
+            enter: 13
         },
         block = function(k) {
             return CKEDITOR.config.blockedKeystrokes.push(keys[k]);
@@ -71,13 +72,13 @@ CKEDITOR.on('instanceReady', function (ev) {
 
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes';
-    config.removePlugins = 'link,tab';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-enterkey';
+    config.removePlugins = 'link,tab,enterkey';
     config.entities = false;
     
     config.toolbar_MDN = [
         ['Source', 'mdnSaveExit', 'mdnSave', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
-        ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'Table', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
+        ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', 'DefinitionDescription', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'Table', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
         ['Maximize'],
         '/',
         ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', '-', 'preButton', 'mdn-syntaxhighlighter', 'Styles'],
