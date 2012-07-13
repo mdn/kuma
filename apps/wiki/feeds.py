@@ -207,8 +207,8 @@ class RevisionsFeed(DocumentsFeed):
         diff = ("Diff:<blockquote>%s</blockquote>" % (
             diff_inline(previous.content, item.content)))
 
-        diff = (diff.replace('<ins', '<ins style="background-color: #AAFFAA;"')
-                .replace('<del', '<del style="background-color: #FFAAAA;"'))
+        diff = (diff.replace('<ins', '<ins style="background-color: #AAFFAA;text-decoration:none;"')
+                .replace('<del', '<del style="background-color: #FFAAAA;text-decoration:none;"'))
 
         link_cell = '<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (reverse('wiki.document',
