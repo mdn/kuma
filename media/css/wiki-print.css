@@ -67,6 +67,8 @@ abbr, acronym { border: 0; }
 #latest-comments { width: 48%; float: right; }
 #content-elsewhere .mdn-section { width: 18%; margin-right: 1.9%; float: left; }
 
+a.edit-section, #article-nav, .global-notice { display: none; }
+
 .global-notice { position: relative; border: 3px solid #e6e1cf; color: #630; padding: 1em 10px 0; margin-bottom: 2em; font-size: .857em; }
 
 .last-mod { font-size: .857em; font-style: italic; text-align: right; }
