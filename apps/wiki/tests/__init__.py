@@ -3,7 +3,6 @@ from datetime import datetime
 from django.contrib.auth.models import User, Group, Permission
 from django.template.defaultfilters import slugify
 
-import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
 
 from waffle.models import Flag
@@ -11,6 +10,7 @@ from waffle.models import Flag
 from sumo.tests import LocalizingClient, TestCase, get_user
 import wiki.content
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
+
 
 class TestCaseBase(TestCase):
     """Base TestCase for the wiki app test cases."""
@@ -178,3 +178,11 @@ def create_topical_parents_docs():
     d2.save()
     return d1, d2
 
+
+class FakeResponse:
+    """Quick and dirty mocking stand-in for a response object"""
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
+
+    def read(self):
+        return self.body
