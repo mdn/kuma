@@ -66,12 +66,15 @@ a.labs:hover, a.labs:focus, a.labs:active { color: #bcbcbc; }
 p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
 div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; }
 div.note { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; }
+	.cke_panel_listItem div.note { margin-bottom: 0; }
 div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; background: transparent url("img/tip-bg.png") repeat-x; color: #6d675f; }
 div.note p, div.tip p { margin-bottom: .75em; }
 
 /*** @WYSIWYG style blocks *********/
 .twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
 .threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
+	.cke_panel_listItem .twocolumns { -moz-column-count: auto; -webkit-column-count: auto; column-count: auto; }
+	.cke_panel_listItem .threecolumns { -moz-column-count: auto; -webkit-column-count: auto; column-count: auto; }
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { float: right; font-size: 90%; }
@@ -98,6 +101,7 @@ table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
 .right-source-code { color: #537d46; }
 div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
   div.bug *:last-child, div.warning *:last-child { padding: 0; margin: 0; }
+  .cke_panel_listItem div.bug, .cke_panel_listItem div.warning { margin:0; }
 .originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
 .originaldocinfo h2 { font-size: 120%; }
 .licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
