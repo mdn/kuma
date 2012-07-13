@@ -27,3 +27,4 @@ webroot/.htaccess
 kumascript.log
 kumascript_settings_local.json
 lib/product_details_json
+node_modules

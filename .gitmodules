@@ -1,15 +1,20 @@
 [submodule "locale"]
 	path = locale
 	url = git://github.com/jsocol/sumo-locales.git
+	ignore = dirty
 [submodule "templates/global"]
 	path = templates/global
 	url = git://github.com/mozilla/django-moz-header.git
+	ignore = dirty
 [submodule "media/global"]
 	path = media/global
 	url = git://github.com/mozilla/django-moz-header.git
+	ignore = dirty
 [submodule "vendor"]
 	path = vendor
 	url = git://github.com/mozilla/kuma-lib.git
+	ignore = dirty
 [submodule "kumascript"]
 	path = kumascript
 	url = git://github.com/mozilla/kumascript.git
+	ignore = dirty
