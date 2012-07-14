@@ -288,6 +288,9 @@ south.modelsinspector.add_introspection_rules([
 class SubmissionManager(models.Manager):
     """Manager for Submission objects"""
 
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
     # never show censored submissions
     def get_query_set(self):
         return super(SubmissionManager, self).get_query_set().exclude(censored=True)
@@ -451,6 +454,34 @@ class Submission(models.Model):
     modified = models.DateTimeField( _('date last modified'), 
             auto_now=True, blank=False)
 
+    def natural_key(self):
+        return (self.slug,)
+
+    def update(self, **kw):
+        """
+        Shortcut for doing an UPDATE on this object.
+
+        If _signal=False is in ``kw`` the post_save signal won't be sent.
+        """
+        signal = kw.pop('_signal', True)
+        cls = self.__class__
+        using = kw.pop('using', 'default')
+        for k, v in kw.items():
+            setattr(self, k, v)
+        if signal:
+            # Detect any attribute changes during pre_save and add those to the
+            # update kwargs.
+            attrs = dict(self.__dict__)
+            models.signals.pre_save.send(sender=cls, instance=self)
+            for k, v in self.__dict__.items():
+                if attrs[k] != v:
+                    kw[k] = v
+                    setattr(self, k, v)
+        cls.objects.using(using).filter(pk=self.pk).update(**kw)
+        if signal:
+            models.signals.post_save.send(sender=cls, instance=self,
+                                          created=False)
+
     def __unicode__(self):
         return 'Submission "%(title)s"' % dict(
             title=self.title )
@@ -458,7 +489,7 @@ class Submission(models.Model):
     def get_absolute_url(self):
         return reverse('demos.views.detail', kwargs={'slug':self.slug})
 
-    def _make_unique_slug(self):
+    def _make_unique_slug(self, **kwargs):
         """
         Try to generate a unique 50-character slug.
         
@@ -467,7 +498,8 @@ class Submission(models.Model):
             slug = self.slug[:50]
         else:
             slug = slugify(self.title)[:50]
-        existing = Submission.objects.filter(slug=slug)
+        using = kwargs['using'] if 'using' in kwargs else 'default'
+        existing = Submission.objects.using(using).filter(slug=slug)
         if (not existing) or (self.id and self.id in [s.id for s in existing]):
             return slug
         # If the first 50 characters aren't unique, we chop off the
@@ -486,10 +518,10 @@ class Submission(models.Model):
             i += 1
         return slug
 
-    def save(self):
+    def save(self, **kwargs):
         """Save the submission, updating slug and screenshot thumbnails"""
-        self.slug = self._make_unique_slug()
-        super(Submission,self).save()
+        self.slug = self._make_unique_slug(**kwargs)
+        super(Submission,self).save(**kwargs)
 
     def delete(self,using=None):
         root = '%s/%s' % (settings.MEDIA_ROOT, get_root_for_submission(self))
