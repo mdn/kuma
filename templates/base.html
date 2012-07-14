@@ -177,10 +177,10 @@
       <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
       <p id="copyright">&copy; {{ thisyear() }} Mozilla Developer Network</p>
       <p>
-      {% trans copyright_url=devmo_url(_('Project:Copyrights')) %}
+      {% trans copyright_url=devmo_url(_('/en-US/docs/Project:Copyrights')) %}
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
       {% endtrans %}
-      &bull; <a href="{{ devmo_url(_('Project:About')) }}">{{ _('About MDN') }}</a> &bull;
+      &bull; <a href="{{ devmo_url(_('/en-US/docs/Project:About')) }}">{{ _('About MDN') }}</a> &bull;
       <a href="http://www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a> &bull;
       <a href="/forums/viewtopic.php?f=3&amp;t=5">{{ _('Help') }}</a></p>
     </div>
