@@ -436,6 +436,16 @@ def list_documents(request, category=None, tag=None):
                          'category': category,
                          'tag': tag})
 
+@waffle_flag('kumawiki')
+@require_GET
+def list_templates(request):
+    """Returns listing of all templates"""
+    docs = Document.objects.filter(is_template=True)
+    docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    return jingo.render(request, 'wiki/list_documents.html',
+                        {'documents': docs,
+                         'is_templates': True})
+
 
 @waffle_flag('kumawiki')
 @require_GET
