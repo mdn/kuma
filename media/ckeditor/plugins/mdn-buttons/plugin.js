@@ -15,10 +15,6 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
                 enclosedNode = range && range.getEnclosedNode(),
                 upperTag = tag.toUpperCase();
 
-                console.warn("selection is: ", selection);
-                console.warn("range is: ", range);
-                console.warn("enclosed node is: ", enclosedNode);
-
                 if(enclosedNode) {
                     // Firefox
                     if(enclosedNode.$.nodeName == upperTag) {
