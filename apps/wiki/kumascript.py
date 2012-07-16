@@ -18,7 +18,7 @@ import constance.config
 from wiki import KUMASCRIPT_TIMEOUT_ERROR
 
 
-def should_use_rendered(doc, params):
+def should_use_rendered(doc, params, html=None):
     """
       * The service isn't disabled with a timeout of 0
       * The document isn't empty
@@ -35,8 +35,9 @@ def should_use_rendered(doc, params):
     is_template = False
     if doc:
         is_template = doc.is_template
+        html = doc.html
     return (constance.config.KUMASCRIPT_TIMEOUT > 0 and
-            doc.html and
+            html and
             not is_template and
             (force_macros or (not no_macros and not show_raw)))
 
