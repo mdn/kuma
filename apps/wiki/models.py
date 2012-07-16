@@ -82,7 +82,16 @@ ALLOWED_STYLES = [
     'font', 'font-size', 'font-weight', 'font-family', 
     'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
-    'list-style-type'
+    'list-style-type', 'line-height',
+    # CSS properties needed for live examples (until we have a proper solution):
+    'backface-visibility', '-moz-backface-visibility', '-webkit-backface-visibility', '-o-backface-visibility',
+    'perspective', '-moz-perspective', '-webkit-perspective', '-o-perspective',
+    'perspective-origin', '-moz-perspective-origin', '-webkit-perspective-origin', '-o-perspective-origin',
+    'transform', '-moz-transform', '-webkit-transform', '-o-transform',
+    'transform-style', '-moz-transform-style', '-webkit-transform-style', '-o-transform-style',
+    'position', 'border-style', 'background-clip', 
+    'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
+    'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style'
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
