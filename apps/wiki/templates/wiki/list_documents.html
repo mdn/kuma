@@ -4,6 +4,8 @@
   {% set title = category %}
 {% elif tag %}
   {% set title = _('Articles tagged: {tag}')|f(tag=tag) %}
+{% elif is_templates %}
+  {% set title = _('All Templates') %}
 {% else %}
   {% set title = _('All Articles') %}
 {% endif %}

@@ -183,6 +183,7 @@ RESERVED_SLUGS = (
     '.json$',
     'new$',
     'all$',
+    'templates$',
     'preview-wiki-content$',
     'category/\d+$',
     'needs-review/?[^/]+$',
