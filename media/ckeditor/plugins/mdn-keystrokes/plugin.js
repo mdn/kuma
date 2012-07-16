@@ -66,7 +66,7 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 
 				/* <code> Toggle */
 				case keys.controlO:
-					codeToggle(event);
+					editor.execCommand('mdn-buttons-code');
 					break;
 
 				/* Save buttons */
@@ -132,23 +132,6 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 
 			return false;
 		}		
-
-		/* Toggles code tag */
-		function codeToggle(event) {
-
-			var selection = event.editor.getSelection(),
-				ranges = selection.getRanges(0),
-				range = ranges && ranges[0],
-				enclosedNode = range && range.getEnclosedNode();
-
-			if(!enclosedNode || enclosedNode.$.nodeName != 'CODE') {
-				editor.execCommand('mdn-buttons-code');
-			}
-			else {
-				editor.execCommand('removeFormat');
-			}
-
-		}
 
 		/* Handles tab key presses */
 		function tab(event, hasShift) {

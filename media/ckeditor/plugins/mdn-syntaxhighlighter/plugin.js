@@ -52,6 +52,7 @@
 						editor.execCommand("mdn-buttons-pre");
 						selection = editor.getSelection();
 					}
+					
 					if(selection) {
 						selection.getStartElement().$.className = klass;
 					}
@@ -77,7 +78,6 @@
 							state = CKEDITOR.TRISTATE_OFF;
 							self.setValue(getBrushFromClassName(element));
 							if(CKEDITOR.env.ie) self.lastPre = element; // IE-Specific
-							alert("Setting new pre");
 						}
 						
 						//self.setState(state);
