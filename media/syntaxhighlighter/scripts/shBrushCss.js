@@ -75,7 +75,7 @@
 			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },	// double quoted strings
 			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },	// single quoted strings
 			{ regex: /\#[a-fA-F0-9]{3,6}/g,					css: 'value' },		// html colors
-			{ regex: new RegExp(getUnitsCSS(units), 'g'),			css: 'value' },		// sizes
+			{ regex: new RegExp(getUnitsCSS(units), 'g'),			css: 'value' },		// dimensions
 			{ regex: /!important/g,						css: 'color3' },	// !important
 			{ regex: new RegExp(getKeywordsCSS(keywords), 'gm'),		css: 'keyword' },	// keywords
 			{ regex: new RegExp(getValuesCSS(values), 'g'),			css: 'value' },		// values
