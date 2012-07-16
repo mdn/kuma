@@ -57,16 +57,19 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
-ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align']
-ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title']
+ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
-                             'title', 'style']
-ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title']
-ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan']
-ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope']
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', ]) for x in
+                             'title', 'style', 'lang']
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
+ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
+                            'lang']
+ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
+                            'scope', 'lang']
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
+                          for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id']) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'div', 'pre', 'ul', 'ol', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
@@ -96,6 +99,11 @@ ALLOWED_STYLES = [
     'position', 'border-style', 'background-clip', 
     'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
     'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style',
+    'vertical-align', 'border-collapse', 'border-width', 'border-color',
+    'border-left', 'border-right', 'border-bottom', 'border-top',
+    'clip', 'cursor', 'filter', 'float', 'max-width', 'font-style',
+    'letter-spacing', 'opacity', 'zoom', 'text-overflow', 'text-indent',
+    'text-rendering', 'text-shadow',
     'color',
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
