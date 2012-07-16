@@ -96,7 +96,13 @@ ALLOWED_STYLES = [
     'border-left', 'border-right', 'border-bottom', 'border-top',
     'clip', 'cursor', 'filter', 'float', 'max-width', 'font-style',
     'letter-spacing', 'opacity', 'zoom', 'text-overflow', 'text-indent',
-    'text-rendering', 'text-shadow'
+    'text-rendering', 'text-shadow',
+    'transition', 'transition', 'transition', 'transition', 
+    'transition-delay', '-moz-transition-delay', '-webkit-transition-delay', '-o-transition-delay',
+    'transition-duration', '-moz-transition-duration', '-webkit-transition-duration', '-o-transition-duration',
+    'transition-property', '-moz-transition-property', '-webkit-transition-property', '-o-transition-property',
+    'transition-timing-function',  '-moz-transition-timing-function',  '-webkit-transition-timing-function',  '-o-transition-timing-function',
+
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
