@@ -33,7 +33,7 @@
 		
 		function geUnitsCSS(str)
 		{
-			return '(-?|\\d+)(\\.\\d+)?(' + str.replace(/ /g, '|')+ '|\\%|)/g';
+			return '(-?|\\d+)(\\.\\d+)?(' + str.replace(/ /g, '|')+ '|\\%|)';
 		}
 
 		var keywords =	'ascent azimuth background-attachment background-color background-image background-position ' +
