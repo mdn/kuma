@@ -9,6 +9,9 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
     var tagCommand = function(tag) {
         var command = {
             exec: function(editor, data){
+
+                alert("Exec'ing: " + tag);
+
                 var format = {
                     element: tag
                 };
