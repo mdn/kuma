@@ -90,7 +90,7 @@ CKEDITOR.editorConfig = function(config) {
     config.toolbar = 'MDN';
 
     config.autoGrow_minHeight = 600;
-    config.contentsCss = ['/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS'];
+    config.contentsCss = ['/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS?raw=1'];
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
     config.dialog_backgroundCoverColor = 'black';
