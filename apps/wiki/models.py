@@ -50,21 +50,21 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
-ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['ul'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['li'] = ['style', 'class', 'id']
-ALLOWED_ATTRIBUTES['span'] = ['style', 'title']
+ALLOWED_ATTRIBUTES['div'] = ['style', 'class', 'id', 'lang']
+ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'lang']
+ALLOWED_ATTRIBUTES['pre'] = ['style', 'class', 'id', 'lang']
+ALLOWED_ATTRIBUTES['ul'] = ['style', 'class', 'id', 'lang']
+ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang']
+ALLOWED_ATTRIBUTES['li'] = ['style', 'class', 'id', 'lang']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style']
-ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title']
-ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan']
-ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope']
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', ]) for x in
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
+ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'lang']
+ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope', 'lang']
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', 'lang' ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class']) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class', 'lang']) for x in (
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
@@ -91,7 +91,12 @@ ALLOWED_STYLES = [
     'transform-style', '-moz-transform-style', '-webkit-transform-style', '-o-transform-style',
     'position', 'border-style', 'background-clip', 
     'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
-    'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style'
+    'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style',
+    'vertical-align', 'border-collapse', 'border-width', 'border-color',
+    'border-left', 'border-right', 'border-bottom', 'border-top',
+    'clip', 'cursor', 'filter', 'float', 'max-width', 'font-style',
+    'letter-spacing', 'opacity', 'zoom', 'text-overflow', 'text-indent',
+    'text-rendering', 'text-shadow'
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
