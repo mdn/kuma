@@ -82,8 +82,9 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 /* tag editing; uses tagit */
 #page-tags #id_tags { width: 90%; }
-#page-tags ul.tagit { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CBC8B9; padding: 6px 8px; }
+#page-tags ul.tagit { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CBC8B9; padding: 6px 8px; min-height: 30px; }
 #page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
+#page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
 
 /* page attachments */
 #page-attachments table  { margin: 20px 0 0 0; width: 100%; border: 1px solid #E0E0DC; border-bottom:0; border-right:0; border-collapse: collapse; }
