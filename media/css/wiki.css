@@ -239,6 +239,13 @@ article #toc ul li {
     text-decoration: underline;
 }
 
+#template-pages p.approx-message {
+    color: #aaa;
+    font-style: italic;
+    font-size: .875em;
+    margin-bottom: 0;
+}
+
 /* Wiki Document content */
 #doc-content {
     font-size: 14px;

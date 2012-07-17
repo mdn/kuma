@@ -269,6 +269,28 @@
       {% endif %}
 
 
+      {% if user.has_perm('add_document') and document.is_template %}
+      <section id="template-pages">
+        <div id="document-list">
+          <h1>{{ _('Pages Using This Template') }}</h1>
+          {% if template_page_list %}
+            <ul class="documents cols-3">
+              {% for doc in template_page_list.object_list %}
+                <li>
+                  <a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a> ({{ doc.locale }})<br/>
+                  <small>{{ doc.get_absolute_url() }}</small>
+                </li>
+              {% endfor %}
+            </ul>
+            {{ template_page_list|paginator }}
+          {% else %}
+            <p>{{ _('There are no documents.') }}</p>
+          {% endif %}
+          <p class="approx-message">{{ _('This is only an approximation.  Some templates are embedded and are not included in this calculation.') }}</p>
+        </div>
+      </section>
+      {% endif %}
+
       <section id="doc-contributors">
         {% trans contributors=user_list(contributors) %}
           Contributors to this page: {{ contributors }}
@@ -288,6 +310,7 @@
           {% endif %}
         {% endif %}
       </section>
+
     </section>
   </article>
   <form id="wiki-page-edit" class="editing" method="post" action="{{ url('wiki.edit_document', document_path=document.full_path) }}">
@@ -316,6 +339,7 @@
       </form>
     {% endif %}
 </section>
+
 {% endblock %}
 
 {% block side %}
