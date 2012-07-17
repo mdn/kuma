@@ -72,7 +72,7 @@ CKEDITOR.on('instanceReady', function (ev) {
 
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-enterkey';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-enterkey,mdn-wrapstyle';
     config.removePlugins = 'link,tab,enterkey';
     config.entities = false;
     
@@ -99,12 +99,12 @@ CKEDITOR.editorConfig = function(config) {
     
     CKEDITOR.stylesSet.add('default',[
         { name: "None", element: 'p' },
-        { name: "Note box", element: 'div', attributes: { 'class': 'note' }},
-        { name: "Warning box", element: 'div', attributes: { 'class': 'warning' }},
-        { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }},
+        { name: "Note box", element: 'div', attributes: { 'class': 'note' }, wrap: true },
+        { name: "Warning box", element: 'div', attributes: { 'class': 'warning' }, wrap: true },
+        { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
         { name: "Plaintext (nowiki)", element: 'span', attributes: { 'class': 'plain' }},
-        { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }},
-        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }}
+        { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
+        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true}
     ]);
 
     {{ editor_config|safe }}    
