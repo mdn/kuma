@@ -537,11 +537,6 @@ class Document(NotificationsMixin, ModelBase):
             except DocumentRenderingInProgress:
                 pass
 
-        # If the above resulted in an immediate render, we might have content.
-        if not self.rendered_html:
-            # But, no such luck, so bail out.
-            raise DocumentRenderedContentNotAvailable()
-
         # Parse JSON errors, if available.
         errors = None
         try:
@@ -549,6 +544,14 @@ class Document(NotificationsMixin, ModelBase):
                       json.loads(self.rendered_errors) or None)
         except ValueError:
             pass
+
+        # If the above resulted in an immediate render, we might have content.
+        if not self.rendered_html:
+            if errors:
+                return ('', errors)
+            else:
+                # But, no such luck, so bail out.
+                raise DocumentRenderedContentNotAvailable()
 
         return (self.rendered_html, errors)
 
