@@ -117,7 +117,7 @@
               please <a href="{{ url }}">reload this page</a> in a few minutes.
             {% endtrans %}
             </div>
-          {% elif document.is_rendering_scheduled %}
+          {% elif document.is_rendering_scheduled and not kumascript_errors %}
             <div id="doc-rendering-scheduled" class="warning">
             {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
               An update to this document 
