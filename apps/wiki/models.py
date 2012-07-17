@@ -62,6 +62,8 @@ ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'lang']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope', 'lang']
+ALLOWED_ATTRIBUTES['input'] = ['type', 'name', 'id', 'checked']
+ALLOWED_ATTRIBUTES['label'] = ['for']
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'name', 'lang' ]) for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['id', 'style', 'class', 'lang']) for x in (
