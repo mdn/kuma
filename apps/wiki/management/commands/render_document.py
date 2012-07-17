@@ -8,9 +8,14 @@ import datetime
 import urlparse
 import hashlib
 import logging
-import requests
-
 from optparse import make_option
+
+# HACK: This is the fattest hack I've written in awhile. I blame ianbicking
+# http://blog.ianbicking.org/illusive-setdefaultencoding.html
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+import requests
 
 from django.conf import settings
 from django.core.cache import cache
@@ -25,9 +30,15 @@ from wiki.tasks import render_document
 
 
 class Command(BaseCommand):
-
+    args = "<document_path document_path ...>"
     help = "Render a wiki document"
     option_list = BaseCommand.option_list + (
+        make_option('--all', dest="all", default=False,
+                    action="store_true",
+                    help="Render ALL documents"),
+        make_option('--min-age', dest="min_age", default=600,
+                    help="Documents rendered less than this many seconds ago "
+                         "will be skipped"),
         make_option('--baseurl', dest="baseurl",
                     default=False,
                     help="Base URL to site"),
@@ -44,43 +55,68 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
-        
-        base_url = options['baseurl']
-        if not base_url:
+        self.options = options
+
+        self.base_url = options['baseurl']
+        if not self.base_url:
             from django.contrib.sites.models import Site
             site = Site.objects.get_current()
-            base_url = 'http://%s' % site.domain
+            self.base_url = 'http://%s' % site.domain
 
-        path = args[0]
-        if path.startswith('/'):
-            path = path[1:]
-        locale, sep, slug = path.partition('/')
-        head, sep, tail = slug.partition('/')
-        if head == 'docs':
-            slug = tail
+        if options['all']:
+            logging.info(u"Querying ALL %s documents..." %
+                         Document.objects.count())
+            docs = Document.objects.order_by('-modified').iterator()
+            for doc in docs:
+                self.do_render(doc)
 
-        doc = Document.objects.get(locale=locale, slug=slug)
+        else:
+            if not len(args) == 1:
+                raise CommandError("Need at least one document path to render")
+            for path in args:
+                # Accept a single page path from command line, but be liberal in
+                # what we accept, eg: /en-US/docs/CSS (full path); /en-US/CSS (no
+                # /docs); or even en-US/CSS (no leading slash)
+                if path.startswith('/'):
+                    path = path[1:]
+                locale, sep, slug = path.partition('/')
+                head, sep, tail = slug.partition('/')
+                if head == 'docs':
+                    slug = tail
+                self.do_render(Document.objects.get(locale=locale, slug=slug))
 
-        if options['force']:
+    def do_render(self, doc):
+        # Skip very recently rendered documents. This should help make it
+        # easier to start and stop an --all command without needing to start
+        # from the top of the list every time.
+        if doc.last_rendered_at:
+            now = datetime.datetime.now()
+            render_age = now - doc.last_rendered_at
+            min_age = datetime.timedelta(seconds=self.options['min_age'])
+            if (render_age < min_age):
+                logging.debug(u"Skipping %s (%s) - rendered %s sec ago" %
+                              (doc, doc.get_absolute_url(), render_age))
+                return
+
+        if self.options['force']:
             doc.render_started_at = None
 
-        if options['nocache']:
+        if self.options['nocache']:
             cc = 'no-cache'
         else:
             cc = 'max-age=0'
 
-        if options['defer']:
-            logging.info("Queuing deferred render for %s (%s)" %
+        if self.options['defer']:
+            logging.info(u"Queuing deferred render for %s (%s)" %
                           (doc, doc.get_absolute_url()))
-            render_document.delay(doc, cc, base_url)
-            logging.info("Queued.")
+            render_document.delay(doc, cc, self.base_url)
+            logging.debug(u"Queued.")
 
         else:
-            logging.info("Rendering %s (%s)" %
+            logging.info(u"Rendering %s (%s)" %
                          (doc, doc.get_absolute_url()))
             try:
-                render_document(doc, cc, base_url)
-                logging.info("DONE.")
+                render_document(doc, cc, self.base_url)
+                logging.debug(u"DONE.")
             except DocumentRenderingInProgress:
-                logging.error("Rendering is already in progress for this "
-                              "document") 
+                logging.error(u"Rendering is already in progress for this document") 
