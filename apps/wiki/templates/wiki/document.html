@@ -36,6 +36,7 @@
           {% endif %}
         </ul>
       </li>
+      {% if document.is_localizable or document.parent %}
       <li class="menu">
         <a href="#" class="toggle">{{ _('Languages') }}</a>
         <ul>
@@ -48,6 +49,7 @@
           {% endif %}
         </ul>
       </li>
+      {% endif %}
     </ul>
   </nav>
   
