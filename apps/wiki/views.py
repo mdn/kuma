@@ -373,6 +373,14 @@ def document(request, document_slug, document_locale):
 
     related = doc.related_documents.order_by('-related_to__in_common')[0:5]
 
+    # if a template, get a list of pages template is used on
+    template_page_list = None
+    if request.user.has_perm('add_document') and doc.is_template:
+        templateName = doc.title.replace(TEMPLATE_TITLE_PREFIX, '')
+        # This search assumes TEMPLATE_NAME() calls
+        template_page_list = Document.objects.filter(html__icontains=templateName + '(')
+        template_page_list = paginate(request, template_page_list, per_page=DOCUMENTS_PER_PAGE)
+
     # Get the contributors. (To avoid this query, we could render the
     # the contributors right into the Document's html field.)
     # NOTE: .only() avoids a memcache object-too-large error for large wiki
@@ -390,7 +398,8 @@ def document(request, document_slug, document_locale):
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
             'kumascript_errors': ks_errors,
-            'render_raw_fallback': render_raw_fallback}
+            'render_raw_fallback': render_raw_fallback,
+            'template_page_list': template_page_list}
     data.update(SHOWFOR_DATA)
 
     response = jingo.render(request, 'wiki/document.html', data)
