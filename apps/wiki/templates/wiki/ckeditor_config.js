@@ -48,7 +48,9 @@ CKEDITOR.on('instanceReady', function (ev) {
             shiftSpace: CKEDITOR.SHIFT + 32,
             tab: 9,
             shiftTab: CKEDITOR.SHIFT + 9,
-            enter: 13
+            enter: 13,
+            back: 1114149,
+            forward: 1114151
         },
         block = function(k) {
             return CKEDITOR.config.blockedKeystrokes.push(keys[k]);
@@ -67,7 +69,8 @@ CKEDITOR.on('instanceReady', function (ev) {
     block('controlS');
     block('controlShiftL');
     block('controlShiftO');
-
+    block('back');
+    block('forward');
 })();
 
 CKEDITOR.editorConfig = function(config) {
