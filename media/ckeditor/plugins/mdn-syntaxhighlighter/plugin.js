@@ -44,10 +44,13 @@
 				},
 				onClick: function(value) {
 					// Set the selected class, focus on the editor
-					var klass = "",
+					var klass = value && value != "none" ? "brush:" + value + ";" : "",
 						selection = editor.getSelection();
-					if(value && value != "none") {
-						klass = "brush:" + value + ";";
+
+					// If there's a selection, and it's not a PRE, attempt to force?
+					if(CKEDITOR.env.ie || (selection && selection.getStartElement().$.tagName != "PRE")) {;
+						editor.execCommand("mdn-buttons-pre");
+						selection = editor.getSelection();
 					}
 					
 					if(selection) {
@@ -77,7 +80,7 @@
 							if(CKEDITOR.env.ie) self.lastPre = element; // IE-Specific
 						}
 						
-						self.setState(state);
+						//self.setState(state);
 					});
 				},
 				onOpen: function() {
