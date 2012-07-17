@@ -9,10 +9,37 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
     var tagCommand = function(tag) {
         var command = {
             exec: function(editor, data){
-                var format = {
-                    element: tag
-                };
-                var style = new CKEDITOR.style(format);
+                var selection = editor.getSelection(),
+                ranges = selection.getRanges(0),
+                range = ranges && ranges[0],
+                enclosedNode = range && range.getEnclosedNode(),
+                upperTag = tag.toUpperCase();
+
+                if(enclosedNode) {
+                    // Firefox
+                    if(enclosedNode.$.nodeName == upperTag) {
+                        editor.execCommand('removeFormat');
+                        return;
+                    }
+                    else if(enclosedNode.$.childNodes.length && enclosedNode.$.childNodes[0].tagName == upperTag) {
+                        editor.execCommand('removeFormat');
+                        return;
+                    }
+                    // WebKit
+                    else if(CKEDITOR.env.webkit && enclosedNode.$.nodeType == 3 && enclosedNode.$.parentNode && 
+                            enclosedNode.$.parentNode.nodeName == upperTag) {
+                        editor.execCommand('removeFormat');
+                        return;
+                    }
+                }
+                // WebKit and sometimes Firefox, apparently
+                else if(range && (range.startContainer.$.nodeName == upperTag || range.startContainer.$.parentNode.nodeName == upperTag)) {
+                    editor.execCommand('removeFormat');
+                    return;
+                }
+
+                // Apply the button style
+                var style = new CKEDITOR.style({ element: tag });
                 style.apply(editor.document);
             }
         };
@@ -20,6 +47,9 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
     };
     
     CKEDITOR.plugins.add('mdn-buttons', {
+
+        requires: ['selection', 'removeformat'],
+
         init: function(editor) {
 
             var tags = CKEDITOR.config.mdnButtons_tags;
@@ -39,6 +69,10 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 
                     className: 'mdn-buttons-button ' + tag,
                 });
             }
+
+            // Add the removeformat filter to all of our custom elements
+            editor.config.removeFormatTags += ',' + CKEDITOR.config.mdnButtons_tags.join(',');
+            editor._.removeFormatRegex = new RegExp('^(?:' + editor.config.removeFormatTags.replace( /,/g,'|') + ')$', 'i');
             
             // Configure "Save and Exit"
             editor.addCommand(pluginName + '-save-exit', {
