@@ -462,6 +462,12 @@ td.diff_header {
   max-height: 200px;
   overflow: auto;
 }
+.cke_skin_kuma .cke_rcombo .cke_text {
+  width: 130px !important;
+}
+.cke_skin_kuma .cke_rcombopanel {
+  height: 200px !important;
+}
 
 /*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
 span.alllinks { display: block; text-align: right; font-size: 90%; }
