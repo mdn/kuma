@@ -1,1 +1,79 @@
- 
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
+{% set title = _('Attachment {n} | {t}')|f(n=revision.id, t=attachment.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+{% set meta = [('robots', 'noindex, nofollow')] %}
+{% set classes = 'document' %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article id="wiki-doc">
+    <h1 class="title">{{ attachment.title }}</h1>
+    <details class="h2" open="open">
+      <summary>{{ _('Attachment Information') }}</summary>
+      <div class="revision-info">
+        <ul>
+          <li>
+            <mark>{{ _('Revision slug:') }}</mark>
+            <span>{{ revision.slug }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Revision title:') }}</mark>
+            <span>{{ revision.title }}</span>
+          </li>
+          <li class="revision-id">
+            <mark>{{ _('Revision id:') }}</mark>
+            <span>{{ revision.id }}</span>
+          </li>
+          <li class="revision-created">
+            <mark>{{ _('Created:') }}</mark>
+            <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Creator:') }}</mark>
+            <span>{{ revision.creator }}</span>
+          </li>
+          <li>
+            <mark>{{ _('MIME Type:') }}</mark>
+            <span>{{ revision.mime_type }}</span>
+          </li>
+          <li>
+            <mark>{{ _('MIME Type:') }}</mark>
+            <span>{{ _('%s bytes') % attachment.size }}</span>
+          </li>
+          
+          {% if revision.reviewed %}
+            <li class="revision-reviewed">
+              <mark>{{ _('Reviewed:') }}</mark>
+              <span>{{ datetimeformat(revision.reviewed, format='datetime') }}</span>
+            </li>
+            <li>
+              <mark>{{ _('Reviewed by:') }}</mark>
+              <span>{{ revision.reviewer }}</span>
+            </li>
+            <li class="revision-is-current">
+              <mark>{{ _('Is approved?') }}</mark>
+              <span>{{ revision.is_approved|yesno }}</span>
+            </li>
+            <li>
+              <mark>{{ _('Is current revision?') }}</mark>
+              <span>{{ (revision == attachment.current_revision)|yesno }}</span>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </details>
+    <details class="h2">
+      <summary>{{ _('Attachment Preview') }}</summary>
+      <div id="doc-content">
+        Image thumbnail or document content here
+      </div>
+    </details>
+  </article>
+    </div>
+   </div>
+</section>
+{% endblock %}
