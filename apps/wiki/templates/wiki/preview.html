@@ -2,7 +2,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 
 {% extends "wiki/base.html" %}
-{% block title %}{{ title|safe }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
 
@@ -23,7 +23,7 @@
       <article class="article" role="main">
       <header id="article-head">
         <div class="title">
-            <h1 class="page-title">{{ title|safe }}</h1>
+            <h1 class="page-title">{{ title }}</h1>
         </div>
       </header>
       
