@@ -20,6 +20,25 @@
     href="{{ url('wiki.json_slug', document.full_path) }}">
 {% endblock %}
 
+{% block lang_switcher %}
+  {% if document.is_localizable or document.parent %}
+    <form class="languages go" method="get" action="{{ url('docs') }}">
+      <label for="language">{{ _('Other languages:') }}</label>
+      <select id="language" class="wiki-l10n" name="next" dir="ltr">
+        <option value="{{ url('wiki.document', document.full_path, locale=document.locale) }}" selected>
+          {{ document.language }}
+        </option>
+        {% for translation in document.other_translations %}
+          <option value="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}">
+            {{ translation.language }}
+          </option>
+        {%- endfor %}
+      </select>
+      <noscript><button type="submit">{{ _('Go') }}</button></noscript>
+    </form>
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 
 <!-- top toolbar -->
