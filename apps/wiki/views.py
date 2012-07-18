@@ -440,7 +440,7 @@ def list_documents(request, category=None, tag=None):
 @require_GET
 def list_templates(request):
     """Returns listing of all templates"""
-    docs = Document.objects.filter(is_template=True)
+    docs = Document.objects.filter(is_template=True).order_by('title')
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
                         {'documents': docs,
