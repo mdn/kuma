@@ -7,6 +7,7 @@ import base64
 import hashlib
 import os
 import time
+import unicodedata
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -596,6 +597,50 @@ class DocumentEditingTests(TestCaseBase):
 
     fixtures = ['test_users.json']
 
+    def test_seo_script(self):
+
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        def make_page_and_compare_seo(slug, content, aught_preview):
+            # Create the doc
+            data = new_document_data()
+            data.update({ 'title': 'blah', 'slug': slug, 'content': content })
+            response = client.post(reverse('wiki.new_document', locale='en-US'), data)
+            eq_(302, response.status_code)
+
+            # Connect to newly created page
+            response = self.client.get(reverse('wiki.document', args=[slug], locale='en-US'))
+            page = pq(response.content)
+            meta_content = page.find('meta[name=description]').attr('content')
+            eq_(str(meta_content).decode('utf-8'), 
+                str(aught_preview).decode('utf-8'))
+
+        # Weird chars for testing
+        complex_html_prefix = '<div><p>slx<a>jsf</a></p><p>yah</p></div> <blockquote><p>yah</p></blockquote>'
+        fa_chars = 'ست داشتید هنوز در اینجا هست.ما تنها می ‎ خواستیم نام بهتری برای انجمن توسعه ‎ دهندگان'
+        ko_chars = '웹 애플리케이션 특징 최종 단계로 접어들어 거의 완료되어가고 먼트 '
+        ru_chars = 'Русский'
+        ar_chars = 'عربي'
+
+        # Test pages - very basic
+        good = 'This is the content which should be chosen, man.'
+        make_page_and_compare_seo('one', '<p>' + good + '</p>', good)
+        # No content, no seo
+        make_page_and_compare_seo('two', 'blahblahblahblah<br />', None)
+        # No summary, no seo
+        make_page_and_compare_seo('three', '<div><p>You cant see me</p></div>', None)
+        # Warning paragraph ignored
+        make_page_and_compare_seo('four', '<div class="geckoVersion"><p>No no no</p></div><p>yes yes yes</p>', 'yes yes yes')
+        # Warning paragraph ignored, first one chosen if multiple matches
+        make_page_and_compare_seo('five', '<div class="geckoVersion"><p>No no no</p></div><p>yes yes yes</p><p>ignore ignore ignore</p>', 'yes yes yes')
+        # Weird chars
+        make_page_and_compare_seo('fa', complex_html_prefix + '<p>' + fa_chars + '</p>', fa_chars)
+        make_page_and_compare_seo('ko', complex_html_prefix + '<p>' + ko_chars + '</p>', ko_chars)
+        make_page_and_compare_seo('ru', complex_html_prefix + '<p>' + ru_chars + '</p>', ru_chars)
+        make_page_and_compare_seo('ar', complex_html_prefix + '<p>' + ar_chars + '</p>', ar_chars)
+
+
     def test_create_on_404(self):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
@@ -625,12 +670,10 @@ class DocumentEditingTests(TestCaseBase):
             eq_(404, resp.status_code)
 
         # Ensure root level documents work, not just children
-        slug = 'noExist'
-        response = client.get(reverse('wiki.document', args=[slug], locale=locale))
+        response = client.get(reverse('wiki.document', args=['noExist'], locale=locale))
         eq_(302, response.status_code)
 
-        slug = 'Template:NoExist'
-        response = client.get(reverse('wiki.document', args=[slug], locale=locale))
+        response = client.get(reverse('wiki.document', args=['Template:NoExist'], locale=locale))
         eq_(302, response.status_code)
 
     def test_retitling(self):

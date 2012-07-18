@@ -67,6 +67,8 @@ from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
 from wiki import kumascript
 
+from pyquery import PyQuery as pq
+
 import logging
 
 log = logging.getLogger('k.wiki')
@@ -385,12 +387,37 @@ def document(request, document_slug, document_locale):
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
+    # Create an SEO summary
+    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
+    #        way to find the end of sentence before 180?
+    seo_summary = ''
+    try:
+        if doc_html and not doc.is_template:
+            # Need to add a BR to the page content otherwise pyQuery wont find a 
+            # <p></p> element if it's the only element in the doc_html
+            seo_analyze_doc_html = doc_html + '<br />'
+            page = pq(seo_analyze_doc_html)
+            paragraphs = page.find('p')
+            if paragraphs.length:
+                for p in range(len(paragraphs)):
+                    item = paragraphs.eq(p)
+                    text = item.text()
+                    # Checking for a parent length of 2 because we don't want p's wrapped
+                    # in DIVs ("<div class='warning'>") and pyQuery adds 
+                    # "<html><div>" wrapping to entire document
+                    if len(text) and not 'Redirect' in text and item.parents().length == 2:
+                        seo_summary = text.strip()
+                        break
+    except XMLSyntaxError:
+        logging.debug('Could not generate SEO summary')
+
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
             'kumascript_errors': ks_errors,
-            'render_raw_fallback': render_raw_fallback}
+            'render_raw_fallback': render_raw_fallback,
+            'seo_summary': seo_summary}
     data.update(SHOWFOR_DATA)
 
     response = jingo.render(request, 'wiki/document.html', data)
