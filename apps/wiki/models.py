@@ -1221,11 +1221,6 @@ class Revision(ModelBase):
                                    'to a revision of the default-'
                                    'language document.')
 
-        if self.content and not self.document.is_template:
-            self.content = (wiki.content
-                            .parse(self.content)
-                            .injectSectionIDs()
-                            .serialize())
         if not self.title:
             self.title = self.document.title
         if not self.slug:
