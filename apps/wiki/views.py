@@ -68,6 +68,7 @@ import wiki.content
 from wiki import kumascript
 
 from django.utils.safestring import mark_safe
+from pyquery import PyQuery as pq
 
 import logging
 
@@ -356,14 +357,19 @@ def document(request, document_slug, document_locale):
     toc_html = None
     if not doc.is_template:
 
+        doc_html = (wiki.content.parse(doc_html)
+                                .injectSectionIDs()
+                                .serialize())
+
         # Start applying some filters to the document HTML
-        tool = wiki.content.parse(doc_html)
-        doc_html = tool.serialize()
+        tool = (wiki.content.parse(doc_html))
+
         # Generate a TOC for the document using the sections provided by
         # SectionEditingLinks
         if doc.show_toc and not show_raw:
-            toc_html = wiki.content.parse(doc_html).filter(
-                wiki.content.SectionTOCFilter).serialize()
+            toc_html = (wiki.content.parse(tool.serialize())
+                                    .filter(wiki.content.SectionTOCFilter)
+                                    .serialize())
 
         # If a section ID is specified, extract that section.
         if section_id:
@@ -410,6 +416,31 @@ def document(request, document_slug, document_locale):
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
     attachments = _format_attachment_obj(doc.attachments)
+
+    # Create an SEO summary
+    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
+    #        way to find the end of sentence before 180?
+    seo_summary = ''
+    try:
+        if doc_html and not doc.is_template:
+            # Need to add a BR to the page content otherwise pyQuery wont find a 
+            # <p></p> element if it's the only element in the doc_html
+            seo_analyze_doc_html = doc_html + '<br />'
+            page = pq(seo_analyze_doc_html)
+            paragraphs = page.find('p')
+            if paragraphs.length:
+                for p in range(len(paragraphs)):
+                    item = paragraphs.eq(p)
+                    text = item.text()
+                    # Checking for a parent length of 2 because we don't want p's wrapped
+                    # in DIVs ("<div class='warning'>") and pyQuery adds 
+                    # "<html><div>" wrapping to entire document
+                    if len(text) and not 'Redirect' in text and item.parents().length == 2:
+                        seo_summary = text.strip()
+                        break
+    except XMLSyntaxError:
+        logging.debug('Could not generate SEO summary')
+
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
@@ -417,7 +448,8 @@ def document(request, document_slug, document_locale):
             'kumascript_errors': ks_errors,
             'render_raw_fallback': render_raw_fallback,
             'attachment_data': attachments,
-            'attachment_data_json': json.dumps(attachments)}
+            'attachment_data_json': json.dumps(attachments),
+            'seo_summary': seo_summary}
     data.update(SHOWFOR_DATA)
 
     response = jingo.render(request, 'wiki/document.html', data)
@@ -467,7 +499,7 @@ def list_documents(request, category=None, tag=None):
 @require_GET
 def list_templates(request):
     """Returns listing of all templates"""
-    docs = Document.objects.filter(is_template=True)
+    docs = Document.objects.filter(is_template=True).order_by('title')
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_documents.html',
                         {'documents': docs,

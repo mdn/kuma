@@ -96,6 +96,19 @@ def get(document, cache_control, base_url, timeout=None):
             'Cache-Control': cache_control
         }
 
+        # Create the file interface
+        files = []
+        for attachment in document.attachments.all():
+            files.append({
+                'title': attachment.title,
+                'description': attachment.current_revision.description,
+                'filename': attachment.current_revision.filename(),
+                'size': attachment.current_revision.file.size,
+                'author': attachment.current_revision.creator.username,
+                'mime': attachment.current_revision.mime_type,
+                'url': attachment.get_file_url(),
+            })
+
         # Assemble some KumaScript env vars
         # TODO: See dekiscript vars for future inspiration
         # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
@@ -107,6 +120,8 @@ def get(document, cache_control, base_url, timeout=None):
             id=document.pk,
             locale=document.locale,
             title=document.title,
+            files=files,
+            attachments=files, # Just for sake of verbiage?
             slug=document.slug,
             tags=[x.name for x in document.tags.all()],
             modified=time.mktime(document.modified.timetuple()),

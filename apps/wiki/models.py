@@ -57,16 +57,19 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'address'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
-ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align']
-ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title']
+ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
-                             'title', 'style']
-ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title']
-ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan']
-ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan', 'scope']
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', ]) for x in
+                             'title', 'style', 'lang']
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
+ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
+                            'lang']
+ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
+                            'scope', 'lang']
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
+                          for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id']) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'div', 'pre', 'ul', 'ol', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
@@ -76,7 +79,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id']) for x in (
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
     'float', 'overflow', 'min-height', 'vertical-align',
-    'white-space', 'border-radius', '-webkit-border-radius',
+    'white-space', 'color', 'border-radius', '-webkit-border-radius',
     '-moz-border-radius, -o-border-radius',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
     'padding', 'padding-left', 'padding-top', 'padding-bottom',
@@ -86,7 +89,26 @@ ALLOWED_STYLES = [
     'font', 'font-size', 'font-weight', 'font-family', 
     'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
-    'list-style-type',
+    'list-style-type', 'line-height',
+    # CSS properties needed for live examples (until we have a proper solution):
+    'backface-visibility', '-moz-backface-visibility', '-webkit-backface-visibility', '-o-backface-visibility',
+    'perspective', '-moz-perspective', '-webkit-perspective', '-o-perspective',
+    'perspective-origin', '-moz-perspective-origin', '-webkit-perspective-origin', '-o-perspective-origin',
+    'transform', '-moz-transform', '-webkit-transform', '-o-transform',
+    'transform-style', '-moz-transform-style', '-webkit-transform-style', '-o-transform-style',
+    'position', 'border-style', 'background-clip', 
+    'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
+    'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style',
+    'vertical-align', 'border-collapse', 'border-width', 'border-color',
+    'border-left', 'border-right', 'border-bottom', 'border-top',
+    'clip', 'cursor', 'filter', 'float', 'max-width', 'font-style',
+    'letter-spacing', 'opacity', 'zoom', 'text-overflow', 'text-indent',
+    'text-rendering', 'text-shadow',
+    'transition', 'transition', 'transition', 'transition', 
+    'transition-delay', '-moz-transition-delay', '-webkit-transition-delay', '-o-transition-delay',
+    'transition-duration', '-moz-transition-duration', '-webkit-transition-duration', '-o-transition-duration',
+    'transition-property', '-moz-transition-property', '-webkit-transition-property', '-o-transition-property',
+    'transition-timing-function',  '-moz-transition-timing-function',  '-webkit-transition-timing-function',  '-o-transition-timing-function',
     'color',
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
@@ -1199,11 +1221,6 @@ class Revision(ModelBase):
                                    'to a revision of the default-'
                                    'language document.')
 
-        if self.content and not self.document.is_template:
-            self.content = (wiki.content
-                            .parse(self.content)
-                            .injectSectionIDs()
-                            .serialize())
         if not self.title:
             self.title = self.document.title
         if not self.slug:
