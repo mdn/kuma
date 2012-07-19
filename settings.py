@@ -26,6 +26,10 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
+SITE_URL = 'https://developer.mozilla.org'
+PROTOCOL = 'https://'
+DOMAIN = 'developer.mozilla.org'
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -337,7 +341,7 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
 
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = MEDIA_URL + 'img/avatar-default.png'
+DEFAULT_AVATAR = SITE_URL + MEDIA_URL + 'img/avatar-default.png'
 AVATAR_SIZE = 48  # in pixels
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
@@ -1011,10 +1015,6 @@ BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL_FAILURE = '/'
-
-SITE_URL = 'https://developer.mozilla.org'
-PROTOCOL = 'https://'
-DOMAIN = 'developer.mozilla.org'
 
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
