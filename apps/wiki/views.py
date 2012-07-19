@@ -334,14 +334,19 @@ def document(request, document_slug, document_locale):
     toc_html = None
     if not doc.is_template:
 
+        doc_html = (wiki.content.parse(doc_html)
+                                .injectSectionIDs()
+                                .serialize())
+
         # Start applying some filters to the document HTML
-        tool = wiki.content.parse(doc_html)
-        doc_html = tool.serialize()
+        tool = (wiki.content.parse(doc_html))
+
         # Generate a TOC for the document using the sections provided by
         # SectionEditingLinks
         if doc.show_toc and not show_raw:
-            toc_html = wiki.content.parse(doc_html).filter(
-                wiki.content.SectionTOCFilter).serialize()
+            toc_html = (wiki.content.parse(tool.serialize())
+                                    .filter(wiki.content.SectionTOCFilter)
+                                    .serialize())
 
         # If a section ID is specified, extract that section.
         if section_id:
