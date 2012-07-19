@@ -1,7 +1,7 @@
 // See: http://blog.lystor.org.ua/2010/11/ckeditor-plugin-and-toolbar-button-for.html
 
 // the plugin automatically creates button commands for these tags
-CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 (function(){
     
