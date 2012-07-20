@@ -70,7 +70,7 @@ class FormSectionEditingTests(TestCase):
             <p>test</p>
             <p>test</p>
 
-            <h1 id="New_stuff">New stuff</h1>
+            <h1 id="s2">New stuff</h1>
             <p>new stuff</p>
 
             <h1 id="s3">s3</h1>
