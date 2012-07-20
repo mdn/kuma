@@ -21,18 +21,13 @@
         initDetailsTags();
 
         if ($body.is('.document') || $body.is('.home')) {  // Document page
-            //initForTags();
-            //updateShowforSelectors();
             initHelpfulVote();
             initSectionEditing();
         } else if ($body.is('.review')) { // Review pages
-            //initForTags();
-            //updateShowforSelectors();
             initApproveReject();
         }
         if ($body.is('.document')){
-            initSyntaxHighlighter();
-        }
+            initSyntaxHighlighter();        }
 
         if ($body.is('.home')) {
             initClearOddSections();
@@ -42,8 +37,7 @@
             initMetadataEditButton();
             initSaveAndEditButtons();
             initArticlePreview();
-            // initTitleAndSlugCheck();
-            // initDrafting();
+            initAttachmentsActions();
         }
         if ($body.is('.edit.is-template') ||
                 $body.is('.new.is-template')) {
@@ -1065,6 +1059,171 @@
             approveModal.hide();
         });
         rejectModal.hide();
+    }
+
+    function initAttachmentsActions() {
+        var $attachmentsTable = $("#page-attachments-table"),
+            $attachmentsCount = $("#page-attachments-count"),
+            $attachmentsButton = $("#page-attachments-button"),
+            $attachmentsNoMessage = $("#page-attachments-no-message"),
+            $attachmentsNewTable = $("#page-attachments-new-table"),
+            $attachmentsForm = $("#page-attachments-form"),
+            $attachmentsFormCloneRow = $attachmentsNewTable.find("tbody tr").first(),
+            $attachmentsNewTableActions = $attachmentsNewTable.find("tbody tr").last(),
+            $pageAttachmentsSpinner = $("#page-attachments-spinner"),
+            $iframe = $("#page-attachments-upload-target"),
+            uploadFormTarget = $attachmentsForm.length && $attachmentsForm.attr("action"),
+            running = false;
+
+        // If no attachments table, get out -- no permissions
+        if(!$attachmentsTable.length) {
+            return;
+        }
+
+        // Upon click of the "Attach Files" button, toggle display of upload table
+        $attachmentsButton.bind("click", function(e) {
+            e.preventDefault();
+            $attachmentsNewTable.toggleClass("hidden");
+            if(!$attachmentsNewTable.hasClass("hidden")) {
+                $attachmentsNewTable.find("input[type=text]").first()[0].focus();
+            }
+        });
+
+        // Clicking the "AMF" button adds more rows
+        $("#page-attachments-more").bind("click", function() {
+            // Don't add boxes during submission
+            if(running) return;
+            function clone() {
+                // Create and insert clone
+                $clone = $attachmentsFormCloneRow.clone();
+                $clone.find("input, textarea").val("");
+                $clone.find(".attachment-error").remove();
+                $clone.insertBefore($attachmentsNewTableActions);
+                $clone.addClass('dynamic-row');
+
+                // Show the cell actions now!
+                $attachmentsNewTable.find(".page-attachment-actions-cell").removeClass("hidden");
+                $clone.find(".delete-attachment").removeClass("hidden");
+
+                return $clone;
+            }
+            var firstClone = clone();
+            firstClone.find('input[type="text"]')[0].focus();
+        });
+
+        // Add an "ajax" parameter to the form for the sake of the server
+        $("<input type='hidden' name='is_ajax' value='1' />").appendTo($attachmentsForm);
+
+        // Submitting the form posts to mystical iframe
+        $iframe.bind("load", function(e) {
+            running = false;
+            $attachmentsForm.data('disabled', false);
+
+            // Handle results
+            try {
+                var $textarea = $iframe.contents().find("textarea").first(),
+                    validIndexes = [],
+                    invalidIndexes = [],
+                    dynamicRows,
+                    result;
+                if($textarea.length) {
+                    // Get JSON
+                    result = JSON.parse($.trim($textarea.val()));
+                    // Add error messages where needed, or hide all new rows
+                    $dynamicRows = $attachmentsNewTable.find(".dynamic-row");
+                    // Add the row to the table
+                    $.each(result, function(i) {
+                        // If valid....
+                        if(this.id) {
+                            // Add to uploads table
+                            var $newTr = $(this.html);
+                            $newTr.appendTo($attachmentsTable);
+                            $newTr.addClass("new-row");
+                            // Update attachment count
+                            $attachmentsCount.text(parseInt($attachmentsCount.text(), 10) + 1);
+                            // Add item to list
+                            if(window.MDN_ATTACHMENTS) {
+                                window.MDN_ATTACHMENTS.push(this);
+                            }
+                            validIndexes.push(i);
+                            // Remove the form row
+                            if(!i) { // First row
+                                $attachmentsFormCloneRow.find("input, textarea").val("");
+                            }
+                            else {
+                                var node = $dynamicRows.eq(i)[0];
+                                $dynamicRows[i] = "";
+                                node.parentNode.removeChild(node);
+                            }
+                        }
+                        else { // Error!
+                            invalidIndexes.push(i);
+                        }
+
+                    });
+
+                    // Hide the "no rows" paragraph, show table
+                    $attachmentsNoMessage.addClass("hidden");
+                    $attachmentsTable.removeClass("hidden");
+
+                    // If all good, we can reset the form
+                    if(validIndexes.length == result.length) {
+                        // Reset the entire form
+                        $attachmentsForm[0].reset();
+                        $dynamicRows.remove();
+                    }
+                    else { // We have to cherry pick which were good and which were bad
+                        $.each(invalidIndexes, function() {
+                            if(this == 0) {
+                                // Add message to the clone row
+                                $('<div class="attachment-error"></div>')
+                                    .appendTo($attachmentsFormCloneRow.find(".page-attachment-actions-file-cell"))
+                                    .text(result[this]['error'])
+                            }
+                        });
+                    }
+                }
+                else {
+                    // Show error message?
+                    console.warn("No textarea")
+                }
+            }
+            catch(e) {
+                // Show error message? 
+                console.warn("Exception! ", e);
+            }
+            $pageAttachmentsSpinner.css("opacity", 0);
+        });
+
+        // Form submission, upload, and response handling
+        $attachmentsForm.attr("target", "page-attachments-upload-target").bind("submit", function(e) {
+            // Stop concurrent submissions
+            if(running) return;
+            // Hide all error messages
+            $attachmentsNewTable.find(".attachment-error").remove();
+            // IE....
+            var valid = true;
+            $attachmentsNewTable.find("input[required], textarea[required]").each(function() {
+                var $this = $(this);
+                if($this.val() == "") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $this.addClass("attachment-required");
+                    valid = false;
+                }
+                else {
+                    $this.removeClass("attachment-required");
+                }
+            });
+            if(!valid) {
+                running = false;
+                setTimeout(function() { $attachmentsForm.data('disabled', false); }, 200);
+                return;
+            }
+
+            // Show the spinner
+            $pageAttachmentsSpinner.css("opacity", 1);
+        });
     }
 
     $(document).ready(init);

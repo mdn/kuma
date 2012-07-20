@@ -67,6 +67,7 @@ from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
 import wiki.content
 from wiki import kumascript
 
+from django.utils.safestring import mark_safe
 from pyquery import PyQuery as pq
 
 import logging
@@ -186,6 +187,28 @@ def _document_last_modified(request, document_slug, document_locale):
 
     except Document.DoesNotExist:
         return None
+
+def _format_attachment_obj(attachments):
+    attachments_list = []
+    for attachment in attachments:
+        html = jingo.get_env().select_template(['wiki/includes/attachment_row.html'])
+        obj = {
+            'title': attachment.title,
+            'date': str(attachment.current_revision.created),
+            'description': attachment.current_revision.description,
+            'url': attachment.get_file_url(),
+            'size': attachment.current_revision.file.size,
+            'creator': attachment.current_revision.creator.username,
+            'creatorUrl': reverse('devmo.views.profile_view', 
+                            args=[attachment.current_revision.creator]),
+            'revision': attachment.current_revision.id,
+            'id': attachment.id,
+            'mime': attachment.current_revision.mime_type
+        }
+        obj['html'] = mark_safe(html.render({ 'attachment': obj }))
+        attachments_list.append(obj)
+    return attachments_list
+
 
 
 @waffle_flag('kumawiki')
@@ -392,6 +415,8 @@ def document(request, document_slug, document_locale):
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
+    attachments = _format_attachment_obj(doc.attachments)
+
     # Create an SEO summary
     # TODO:  Google only takes the first 180 characters, so maybe we find a logical
     #        way to find the end of sentence before 180?
@@ -422,6 +447,8 @@ def document(request, document_slug, document_locale):
             'fallback_reason': fallback_reason,
             'kumascript_errors': ks_errors,
             'render_raw_fallback': render_raw_fallback,
+            'attachment_data': attachments,
+            'attachment_data_json': json.dumps(attachments),
             'seo_summary': seo_summary}
     data.update(SHOWFOR_DATA)
 
@@ -549,6 +576,7 @@ def new_document(request):
                              'parent_id': initial_parent_id,
                              'document_form': doc_form,
                              'revision_form': rev_form,
+                             'attachment_form': AttachmentRevisionForm(),
                              'parent_path': parent_path})
 
     post_data = request.POST.copy()
@@ -587,6 +615,7 @@ def new_document(request):
                         {'is_template': is_template,
                          'document_form': doc_form,
                          'revision_form': rev_form,
+                         'attachment_form': AttachmentRevisionForm(),
                          'parent_slug': parent_slug,
                          'parent_path': parent_path})
 
@@ -795,6 +824,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         parent_doc = Document.objects.get(pk=doc.parent_topic_id)
         parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
 
+
+    attachments = _format_attachment_obj(doc.attachments)
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
@@ -803,7 +834,10 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                          'parent_slug': '/'.join(slug_split),
                          'parent_path': parent_path,
                          'revision': rev,
-                         'document': doc})
+                         'document': doc,
+                         'attachment_form': AttachmentRevisionForm(),
+                         'attachment_data': attachments,
+                         'attachment_data_json': json.dumps(attachments)})
 
 
 def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
@@ -1559,7 +1593,8 @@ def attachment_detail(request, attachment_id):
     """Detail view of an attachment."""
     attachment = get_object_or_404(Attachment, pk=attachment_id)
     return jingo.render(request, 'wiki/attachment_detail.html',
-                        {'attachment': attachment})
+                        {'attachment': attachment,
+                         'revision': attachment.current_revision})
 
 
 def attachment_history(request, attachment_id):
@@ -1570,12 +1605,18 @@ def attachment_history(request, attachment_id):
     # to be current.
     attachment = get_object_or_404(Attachment, pk=attachment_id)
     return jingo.render(request, 'wiki/attachment_history.html',
-                        {'attachment': attachment})
+                        {'attachment': attachment,
+                         'revision': attachment.current_revision})
 
 @login_required
 def new_attachment(request):
     """Create a new Attachment object and populate its initial
     revision."""
+
+    # No access if no permissions to upload
+    if not request.user.has_perm('add_attachment'):
+        raise PermissionDenied
+    
     if request.method == 'POST':
         form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -1585,14 +1626,32 @@ def new_attachment(request):
                                                    slug=rev.slug)
             rev.attachment = attachment
             rev.save()
-            return HttpResponseRedirect(attachment.get_absolute_url())
-    form = AttachmentRevisionForm()
-    return jingo.render(request, 'wiki/new_attachment.html',
-                        {'form': form})
+
+            if request.POST.get('is_ajax', ''):
+                response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
+                        { 'result': json.dumps(_format_attachment_obj([attachment])) })
+            else:
+                return HttpResponseRedirect(attachment.get_absolute_url())
+        else:
+            if request.POST.get('is_ajax', ''):
+                error_obj = {
+                    'title': request.POST.get('is_ajax', ''),
+                    'error': _(u'The file provided is not valid')
+                }
+                response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
+                        { 'result': json.dumps([error_obj]) })
+        
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 
 @login_required
 def edit_attachment(request, attachment_id):
+
+    # No access if no permissions to upload
+    if not request.user.has_perm('change_attachment'):
+        raise PermissionDenied
+
     attachment = get_object_or_404(Attachment,
                                    pk=attachment_id)
     if request.method == 'POST':
