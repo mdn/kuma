@@ -2145,3 +2145,42 @@ class AttachmentTests(TestCaseBase):
         resp = self.client.get(reverse('wiki.attachment_detail',
                                        kwargs={'attachment_id': attachment.id}))
         eq_(200, resp.status_code)
+
+    def test_get_previous(self):
+        """AttachmentRevision.get_previous() should return this revisions's files's
+        most recent approved revision."""
+        test_user = User.objects.get(username='testuser2')
+        a = Attachment(title='Test attachment for get_previous',
+                       slug='test-attachment-for-get-previous')
+        a.save()
+        r = AttachmentRevision(
+            attachment=a,
+            mime_type='text/plain',
+            title=a.title,
+            slug=a.slug,
+            description='',
+            comment='Initial revision.',
+            created=datetime.datetime.now() - datetime.timedelta(seconds=30),
+            creator=test_user,
+            is_approved=True)
+        r.file.save('get_previous_test_file.txt',
+                    ContentFile('I am a test file for get_previous'))
+        r.save()
+        r.make_current()
+
+        r2 = AttachmentRevision(
+            attachment=a,
+            mime_type='text/plain',
+            title=a.title,
+            slug=a.slug,
+            description='',
+            comment='First edit..',
+            created=datetime.datetime.now(),
+            creator=test_user,
+            is_approved=True)
+        r2.file.save('get_previous_test_file.txt',
+                     ContentFile('I am a test file for get_previous'))
+        r2.save()
+        r2.make_current()
+        
+        eq_(r, r2.get_previous())
