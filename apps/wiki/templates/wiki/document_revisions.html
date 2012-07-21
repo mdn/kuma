@@ -75,7 +75,7 @@
                 {% endif %}
               </div>
               <div class="creator">
-                {{ rev.creator }}
+                <a href="{{ url('devmo.views.profile_view', username=rev.creator) }}">{{ rev.creator }}</a>
               </div>
               <div class="comment">
                 {{ rev.comment }}
