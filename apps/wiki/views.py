@@ -557,22 +557,17 @@ def new_document(request):
                              'parent_path': parent_path})
 
     post_data = request.POST.copy()
+    posted_slug = post_data['slug']
     post_data.update({'locale': request.locale})
     if parent_slug:
         post_data.update({'parent_topic': initial_parent_id})
+        post_data.update({'slug': parent_slug + '/' + post_data['slug']})
 
     doc_form = DocumentForm(post_data)
     rev_form = RevisionValidationForm(request.POST.copy())
+    rev_form.parent_slug = parent_slug
 
     if doc_form.is_valid() and rev_form.is_valid():
-        
-        # Now that the form has been validated
-        # Add the parent slug path
-        if parent_slug:
-            post_data.update({'slug': parent_slug + '/' + post_data['slug']})
-        doc_form = DocumentForm(post_data)
-        doc_form.is_valid()
-
         rev_form = RevisionForm(post_data)
         
         slug = doc_form.cleaned_data['slug']
@@ -587,6 +582,8 @@ def new_document(request):
             view = 'wiki.document_revisions'
         return HttpResponseRedirect(reverse(view,
                                     args=[doc.full_path]))
+    else:
+        doc_form.data['slug'] = posted_slug
 
     return jingo.render(request, 'wiki/new_document.html',
                         {'is_template': is_template,
@@ -650,7 +647,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             raise PermissionDenied
 
     else:  # POST
-
         is_iframe_target = request.GET.get('iframe', False)
         is_raw = request.GET.get('raw', False)
         need_edit_links = request.GET.get('edit_links', False)
@@ -704,6 +700,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 rev_form = RevisionValidationForm(post_data,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
+                rev_form.parent_slug = '/'.join(slug_split)
                 rev_form.instance.document = doc  # for rev_form.clean()
 
                 # Come up with the original revision to which these changes
@@ -740,57 +737,58 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                             section_id=section_id)
                     rev_form.instance.document = doc  # for rev_form.clean()
                     
-                    _save_rev_and_notify(rev_form, user, doc)
+                    if rev_form.is_valid():
+                        _save_rev_and_notify(rev_form, user, doc)
 
-                    if is_iframe_target:
-                        # TODO: Does this really need to be a template? Just
-                        # shoehorning data into a single HTML element.
-                        response = HttpResponse("""
-                            <span id="iframe-response"
-                                  data-status="OK"
-                                  data-current-revision="%s">OK</span>
-                        """ % doc.current_revision.id)
-                        response['x-frame-options'] = 'SAMEORIGIN'
-                        return response
+                        if is_iframe_target:
+                            # TODO: Does this really need to be a template? Just
+                            # shoehorning data into a single HTML element.
+                            response = HttpResponse("""
+                                <span id="iframe-response"
+                                      data-status="OK"
+                                      data-current-revision="%s">OK</span>
+                            """ % doc.current_revision.id)
+                            response['x-frame-options'] = 'SAMEORIGIN'
+                            return response
 
-                    if (is_raw and orig_rev is not None and
-                            curr_rev.id != orig_rev.id):
-                        # If this is the raw view, and there was an original
-                        # revision, but the original revision differed from the
-                        # current revision at start of editing, we should tell
-                        # the client to refresh the page.
-                        response = HttpResponse('RESET')
-                        response.status_code = 205
-                        response['x-frame-options'] = 'SAMEORIGIN'
-                        return response
+                        if (is_raw and orig_rev is not None and
+                                curr_rev.id != orig_rev.id):
+                            # If this is the raw view, and there was an original
+                            # revision, but the original revision differed from the
+                            # current revision at start of editing, we should tell
+                            # the client to refresh the page.
+                            response = HttpResponse('RESET')
+                            response.status_code = 205
+                            response['x-frame-options'] = 'SAMEORIGIN'
+                            return response
 
-                    if rev_form.instance.is_approved:
-                        view = 'wiki.document'
-                    else:
-                        view = 'wiki.document_revisions'
+                        if rev_form.instance.is_approved:
+                            view = 'wiki.document'
+                        else:
+                            view = 'wiki.document_revisions'
 
-                    # Construct the redirect URL, adding any needed parameters
-                    url = reverse(view, args=[doc.full_path],
-                                  locale=doc.locale)
-                    params = {}
-                    if is_raw:
-                        params['raw'] = 'true'
-                        if need_edit_links:
-                            # Only need to carry over ?edit_links with ?raw,
-                            # because they're on by default in the normal UI
-                            params['edit_links'] = 'true'
-                        if section_id:
-                            # If a section was edited, and we're using the raw
-                            # content API, constrain to that section.
-                            params['section'] = section_id
-                    if params:
-                        url = '%s?%s' % (url, urlencode(params))
-                    if not is_raw and section_id:
-                        # If a section was edited, jump to the section anchor
-                        # if we're not getting raw content.
-                        url = '%s#%s' % (url, section_id)
+                        # Construct the redirect URL, adding any needed parameters
+                        url = reverse(view, args=[doc.full_path],
+                                      locale=doc.locale)
+                        params = {}
+                        if is_raw:
+                            params['raw'] = 'true'
+                            if need_edit_links:
+                                # Only need to carry over ?edit_links with ?raw,
+                                # because they're on by default in the normal UI
+                                params['edit_links'] = 'true'
+                            if section_id:
+                                # If a section was edited, and we're using the raw
+                                # content API, constrain to that section.
+                                params['section'] = section_id
+                        if params:
+                            url = '%s?%s' % (url, urlencode(params))
+                        if not is_raw and section_id:
+                            # If a section was edited, jump to the section anchor
+                            # if we're not getting raw content.
+                            url = '%s#%s' % (url, section_id)
 
-                    return HttpResponseRedirect(url)
+                        return HttpResponseRedirect(url)
 
     parent_path = ''
     if slug_split:
@@ -1127,6 +1125,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
         # Grab the posted slug value in case it's invalid
         posted_slug = request.POST.get('slug', specific_slug)
+        parent_slug = '/'.join(parent_slug_split)
         parent_slug_split.append(posted_slug)
         destination_slug = '/'.join(parent_slug_split)
 
@@ -1144,6 +1143,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 # Sending a new copy of post so the slug change above
                 # doesn't cause problems during validation
                 rev_form = RevisionValidationForm(request.POST.copy())
+                rev_form.parent_slug = parent_slug
 
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
@@ -1167,6 +1167,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             post_data = request.POST.copy()
 
             rev_form = RevisionValidationForm(post_data)
+            rev_form.parent_slug = parent_slug
             rev_form.instance.document = doc  # for rev_form.clean()
 
             if rev_form.is_valid() and not doc_form_invalid:
