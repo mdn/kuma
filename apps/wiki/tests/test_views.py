@@ -995,6 +995,45 @@ class DocumentEditingTests(TestCaseBase):
         page = pq(response.content)
         eq_(page.find('input[name=slug]')[0].value, 'nino')
 
+        # Test that slugs with the same "specific" slug but in different levels in the heiharachy
+        # are validate properly upon submission
+
+        # Create base doc
+        parent_doc = document(title='Length', slug='length', is_localizable=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        parent_doc.save()
+        r = revision(document=parent_doc)
+        r.save()
+
+        # Create child, try to use same slug, should work
+        child_data = new_document_data()
+        child_data['title'] = 'Child Length'
+        child_data['slug'] = 'length'
+        child_data['content'] = 'This is the content'
+        child_data['is_localizable'] = True
+        child_url = reverse('wiki.new_document') + '?parent=' + str(parent_doc.id)
+        response = client.post(child_url, child_data)
+        eq_(302, response.status_code)
+        self.assertRedirects(response, reverse('wiki.document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE))
+
+        # Editing "length/length" document doesn't cause errors
+        child_data['form'] = 'rev'
+        edit_url = reverse('wiki.edit_document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = client.post(edit_url, child_data)
+        eq_(302, response.status_code)
+        self.assertRedirects(response, reverse('wiki.document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE))
+
+        # Creating a new translation of "length" and "length/length" doesn't cause errors
+        child_data['form'] = 'both'
+        translate_url = reverse('wiki.document', args=[child_data['slug']], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=es'
+        response = client.post(translate_url, child_data)
+        eq_(302, response.status_code)
+        self.assertRedirects(response, reverse('wiki.document', args=[child_data['slug']], locale='es'))
+
+        translate_url = reverse('wiki.document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=es'
+        response = client.post(translate_url, child_data)
+        eq_(302, response.status_code)
+        self.assertRedirects(response, reverse('wiki.document', args=['length/' + child_data['slug']], locale='es'))
+
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
         localization is OK."""
