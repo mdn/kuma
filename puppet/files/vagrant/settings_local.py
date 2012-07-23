@@ -61,6 +61,7 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
+    'django_statsd.panel.StatsdPanel',
 )
 
 DEVSERVER_MODULES = (
@@ -130,3 +131,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL_FAILURE = '/'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
+
+STATSD_CLIENT = 'django_statsd.clients.toolbar'
