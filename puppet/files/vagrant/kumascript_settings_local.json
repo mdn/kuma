@@ -6,6 +6,11 @@
             "maxsize": 500000
         }
     },
+    "statsd": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 8125
+    },
     "server": {
         "port": 9080,
         "numWorkers": 4,
@@ -14,6 +19,7 @@
             "server": {"127.0.0.1:11211": 1},
             "options": { }
         },
+        "macro_timeout": 60000,
         "document_url_template": "http://localhost/en-US/docs/{path}?raw=1",
         "template_url_template": "http://localhost/en-US/docs/en-US/Template:{name}?raw=1",
         "template_class": "EJSTemplate",
