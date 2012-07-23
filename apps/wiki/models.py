@@ -61,6 +61,7 @@ ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style', 'lang']
+ALLOWED_ATTRIBUTES['video'] = ['src', 'controls']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'lang']
