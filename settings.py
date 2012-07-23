@@ -330,6 +330,8 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.HidePasswordOnException',
     #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_statsd.middleware.GraphiteRequestTimingMiddleware',
+    'django_statsd.middleware.GraphiteMiddleware',
 )
 
 # Auth
@@ -393,6 +395,7 @@ INSTALLED_APPS = (
     'constance',
     'waffle',
     'soapbox',
+    'django_statsd',
 
     # SUMO
     'users',
@@ -1020,3 +1023,13 @@ BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
+
+STATSD_CLIENT = 'django_statsd.clients.normal'
+STATSD_HOST = 'localhost'
+STATSD_PORT = 8125
+STATSD_PREFIX = 'developer'
+
+GRAPHITE_HOST = 'localhost'
+GRAPHITE_PORT = 2003
+GRAPHITE_PREFIX = 'devmo'
+GRAPHITE_TIMEOUT = 1
