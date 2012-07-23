@@ -211,6 +211,11 @@ def document(request, document_slug, document_locale):
             fallback_reason = 'no_content'
 
     except Document.DoesNotExist:
+
+        # We can throw a 404 immediately if the request type is HEAD
+        if request.method == 'HEAD':
+            raise Http404
+
         try:
             # Look in default language:
             doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
