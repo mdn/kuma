@@ -390,10 +390,23 @@ class RevisionValidationForm(RevisionForm):
     """Created primarily to disallow slashes in slugs during validation"""
 
     def clean_slug(self):
+        is_valid = True
+        original = self.cleaned_data['slug']
+
         # "/" disallowed in form input
-        if '/' in self.cleaned_data['slug']:
+        if '/' in original:
+            is_valid = False
             raise forms.ValidationError(SLUG_INVALID)
-        return super(RevisionValidationForm, self).clean_slug()
+
+        # Append parent slug data, call super, ensure still valid
+        self.cleaned_data['slug'] = self.data['slug'] = self.parent_slug + '/' + original
+        is_valid = is_valid and super(RevisionValidationForm, self).clean_slug()
+
+        # Set the slug back to original
+        #if not is_valid:
+        self.cleaned_data['slug'] = self.data['slug'] = original
+
+        return self.cleaned_data['slug']
 
 
 class AttachmentRevisionForm(forms.ModelForm):
