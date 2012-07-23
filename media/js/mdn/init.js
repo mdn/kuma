@@ -78,9 +78,13 @@ jQuery.extend({
     // Submit locale form on change
     $('form.languages')
         .find('select').change(function(){
-            this.form.submit();
+            var sel = $(this);
+            if (sel.hasClass('wiki-l10n')) {
+                location.href = sel.val();
+            } else {
+                this.form.submit();
+            }
         });
-
 
   // Set up nav dropdowns  
   $(".toggle").click(function() {

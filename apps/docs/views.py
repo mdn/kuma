@@ -3,6 +3,7 @@ import os.path
 import random
 
 from django.conf import settings
+from django.http import (HttpResponseRedirect)
 
 from caching.base import cached
 import commonware
@@ -21,6 +22,13 @@ MAX_REVIEW_DOCS = 5
 
 def docs(request):
     """Docs landing page."""
+
+    # Accept ?next parameter for redirects from language selector.
+    if 'next' in request.GET:
+        next = request.GET['next']
+        # Only accept site-relative paths, not absolute URLs to anywhere.
+        if next.startswith('/'):
+            return HttpResponseRedirect(next)
 
     # Doc of the day
     dotd = cached(_get_popular_item, 'kuma_docs_dotd', 24*60*60)
