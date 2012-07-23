@@ -472,7 +472,7 @@ class AllowedHTMLTests(TestCase):
         'section', 'header', 'footer',
         'nav', 'article', 'aside', 'figure', 'dialog', 'hgroup',
         'mark', 'time', 'meter', 'output', 'progress',
-        'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
+        'audio', 'details', 'datagrid', 'datalist', 'table',
         'address'
         )
 
@@ -487,6 +487,7 @@ class AllowedHTMLTests(TestCase):
         '<img align="left" alt="picture of foo" class="foo" id="foo" src="foo" title="foo">',
         '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
         '<div class="foo">foo</div>',
+        '<video class="movie" controls id="some-movie" lang="en-US" src="some-movie.mpg">Fallback</video>'
         # TODO: Styles have to be cleaned on a case-by-case basis. We
         # need to enumerate the styles we're going to allow, then feed
         # them to bleach.
@@ -512,7 +513,7 @@ class AllowedHTMLTests(TestCase):
         for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
                     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
                     'dialog', 'hgroup', 'mark', 'time', 'meter', 'output',
-                    'progress', 'audio', 'video', 'details', 'datagrid', 'datalist',
+                    'progress', 'audio', 'details', 'datagrid', 'datalist',
                     'address'):
             html_str = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
