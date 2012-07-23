@@ -185,7 +185,9 @@
       <a href="/discussions">{{ _('Help') }}</a></p>
     </div>
     {% include "includes/login.html" %}
-    {% include "includes/lang_switcher.html" %}
+    {% block lang_switcher %}
+        {% include "includes/lang_switcher.html" %}
+    {% endblock %}
 </div>
 </footer>
 
