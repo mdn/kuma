@@ -569,19 +569,21 @@ def new_document(request):
 
     if doc_form.is_valid() and rev_form.is_valid():
         rev_form = RevisionForm(post_data)
-        
-        slug = doc_form.cleaned_data['slug']
-        if not Document.objects.allows_add_by(request.user, slug):
-            raise PermissionDenied
+        if rev_form.is_valid():
+            slug = doc_form.cleaned_data['slug']
+            if not Document.objects.allows_add_by(request.user, slug):
+                raise PermissionDenied
 
-        doc = doc_form.save(None)
-        _save_rev_and_notify(rev_form, request.user, doc)
-        if doc.current_revision.is_approved:
-            view = 'wiki.document'
+            doc = doc_form.save(None)
+            _save_rev_and_notify(rev_form, request.user, doc)
+            if doc.current_revision.is_approved:
+                view = 'wiki.document'
+            else:
+                view = 'wiki.document_revisions'
+            return HttpResponseRedirect(reverse(view,
+                                        args=[doc.full_path]))
         else:
-            view = 'wiki.document_revisions'
-        return HttpResponseRedirect(reverse(view,
-                                    args=[doc.full_path]))
+            doc_form.data['slug'] = posted_slug
     else:
         doc_form.data['slug'] = posted_slug
 
@@ -1150,15 +1152,20 @@ def translate(request, document_slug, document_locale, revision_id=None):
             if doc_form.is_valid() and (which_form == 'doc' or
                                         rev_form.is_valid()):
                 rev_form = RevisionForm(post_data)
-                doc = doc_form.save(parent_doc)
-                doc.schedule_rendering('max-age=0')
 
-                if which_form == 'doc':
-                    url = urlparams(reverse('wiki.edit_document',
-                                            args=[doc.full_path],
-                                            locale=doc.locale),
-                                    opendescription=1)
-                    return HttpResponseRedirect(url)
+                if rev_form.is_valid():
+                    doc = doc_form.save(parent_doc)
+                    doc.schedule_rendering('max-age=0')
+
+                    if which_form == 'doc':
+                        url = urlparams(reverse('wiki.edit_document',
+                                                args=[doc.full_path],
+                                                locale=doc.locale),
+                                        opendescription=1)
+                        return HttpResponseRedirect(url)
+                else:
+                    doc_form.data['slug'] = posted_slug
+                    doc_form_invalid = True
             else:
                 doc_form.data['slug'] = posted_slug
                 doc_form_invalid = True
@@ -1175,10 +1182,11 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 post_data['slug'] = destination_slug
                 rev_form = RevisionForm(post_data)
 
-                _save_rev_and_notify(rev_form, request.user, doc)
-                url = reverse('wiki.document', args=[doc.full_path],
-                              locale=doc.locale)
-                return HttpResponseRedirect(url)
+                if rev_form.is_valid():
+                    _save_rev_and_notify(rev_form, request.user, doc)
+                    url = reverse('wiki.document', args=[doc.full_path],
+                                  locale=doc.locale)
+                    return HttpResponseRedirect(url)
 
     return jingo.render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
