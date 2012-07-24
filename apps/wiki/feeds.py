@@ -267,7 +267,7 @@ class AttachmentsFeed(DocumentsFeed):
         return "<p>Edited by %s: %s" % (item.creator.username, item.comment)
 
     def item_link(self, item):
-        return self.request.build_absolute_url(
+        return self.request.build_absolute_uri(
             item.attachment.get_absolute_url())
 
     def item_pubdate(self, item):
