@@ -29,7 +29,17 @@ CKEDITOR.on('instanceReady', function (ev) {
 });
 
 (function() {
+    // Brick dialog "changed" prompts
+    var originalOn = CKEDITOR.dialog.prototype.on;
+    CKEDITOR.dialog.prototype.on = function(event, callback) {
+        // If it's the cancel event that pops up the confirmation, just get out
+        if(event == 'cancel' && callback.toString().indexOf('confirmCancel') != -1) {
+            return true;
+        }
+        originalOn.apply(this, arguments);
+    };
 
+    // Manage key presses
     var keys = CKEDITOR.mdnKeys = {
             control1: CKEDITOR.CTRL + 49,
             control2: CKEDITOR.CTRL + 50,
