@@ -710,7 +710,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 rev_form = RevisionValidationForm(post_data,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
-                rev_form.parent_slug = '/'.join(slug_split)
+                rev_form.parent_slug = slug_dict['parent']
                 rev_form.instance.document = doc  # for rev_form.clean()
 
                 # Come up with the original revision to which these changes
@@ -1148,7 +1148,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 # Sending a new copy of post so the slug change above
                 # doesn't cause problems during validation
                 rev_form = RevisionValidationForm(request.POST.copy())
-                rev_form.parent_slug = parent_slug
+                rev_form.parent_slug = slug_dict['parent']
 
             # If we are submitting the whole form, we need to check that
             # the Revision is valid before saving the Document.
@@ -1177,7 +1177,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             post_data = request.POST.copy()
 
             rev_form = RevisionValidationForm(post_data)
-            rev_form.parent_slug = parent_slug
+            rev_form.parent_slug = slug_dict['parent']
             rev_form.instance.document = doc  # for rev_form.clean()
 
             if rev_form.is_valid() and not doc_form_invalid:
