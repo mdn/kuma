@@ -482,6 +482,10 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 #promo-apps:hover div { box-shadow: inset 0 0 30px rgba(150,30,0,.25); -moz-transition: box-shadow .2s ease-in; -webkit-transition: box-shadow .2s ease-in; -o-transition: box-shadow .2s ease-in; transition: box-shadow .2s ease-in; }
 
 .home-extra #webfwd-promo { margin: -15px 0 1.5em; }
+.home-extra #snippet-promo a { background: url("../img/features/labs_snippets_landing.png"); width:456px; height:150px; position:relative; display: block; font-family: "Open Sans", sans-serif; text-shadow: 1px 1px 0 #fff; }
+	.home-extra #snippet-promo a span.heading { display: block; color: #484848; font-size: 1.9em; position: absolute; top:20px; left: 20px; display: inline-block; line-height: 1.2em; }
+	.home-extra #snippet-promo a span.conversion { font-size: 1.5em; left: 20px; bottom: 30px; display: inline-block; position: absolute; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.25); }
+
 .home-extra .promo { margin: 0 0 1.5em; }
 .home-extra .col-1 { width: 420px; float: left; }
 .home-extra .col-2 { width: 420px; float: right; }
