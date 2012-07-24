@@ -340,14 +340,14 @@ class ContentSectionToolTests(TestCase):
 
     def test_non_ascii_section_headers(self):
         headers = [
-            (u'Documentation à propos de HTML',
-             'Documentation_.C3.A0_propos_de_HTML'),
+           (u'Documentation à propos de HTML',
+            'Documentation_.C3.A0_propos_de_HTML'),
             (u'Outils facilitant le développement HTML',
              'Outils_facilitant_le_d.C3.A9veloppement_HTML'),
             (u'例:\u00a0スキューと平行移動',
-             '.E4.BE.8B:.C2.A0.E3.82.B9.E3.82.AD.E3.83.A5.E3.83.BC.E3.81.A8.E5.B9.B3.E8.A1.8C.E7.A7.BB.E5.8B.95'),
+             '.E4.BE.8B.3A.C2.A0.E3.82.B9.E3.82.AD.E3.83.A5.E3.83.BC.E3.81.A8.E5.B9.B3.E8.A1.8C.E7.A7.BB.E5.8B.95'),
             (u'例:\u00a0回転',
-             '.E4.BE.8B:.C2.A0.E5.9B.9E.E8.BB.A2'),
+             '.E4.BE.8B.3A.C2.A0.E5.9B.9E.E8.BB.A2'),
             (u'Documentação',
              'Documenta.C3.A7.C3.A3o'),
             (u'Lektury uzupełniające',
@@ -356,6 +356,8 @@ class ContentSectionToolTests(TestCase):
              '.D0.90.D1.82.D1.80.D0.B8.D0.B1.D1.83.D1.82.D1.8B'),
             (u'HTML5 엘리먼트',
              'HTML5_.EC.97.98.EB.A6.AC.EB.A8.BC.ED.8A.B8'),
+            (u'Non safe title "#$%&+,/:;=?@[\\]^`{|}~',
+             u'Non_safe_title_.22.23.24.25.26.2B.2C.2F.3A.3B.3D.3F.40.5B.5C.5D.5E.60.7B.7C.7D.7E'),
         ]
 
         section_filter = SectionIDFilter('')

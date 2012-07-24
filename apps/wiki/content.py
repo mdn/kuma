@@ -119,14 +119,25 @@ class SectionIDFilter(html5lib_Filter):
                 self.known_ids.add(id)
                 return id
 
+    # MindTouch encodes these characters, so we have to encode them
+    # too.
+    non_url_safe = ['"', '#', '$', '%', '&', '+',
+                    ',', '/', ':', ';', '=', '?',
+                    '@', '[', '\\', ']', '^', '`',
+                    '{', '|', '}', '~']
+
     def slugify(self, text):
         """Turn the text content of a header into a slug for use in an ID"""
+        non_safe = [c for c in text if c in self.non_url_safe]
+        if non_safe:
+            for c in non_safe:
+                text = text.replace(c, hex(ord(c)).replace('0x', '.').upper())
         non_ascii = [c for c in text if ord(c) > 128]
         if non_ascii:
             for c in non_ascii:
                 text = text.replace(c, self.encode_non_ascii(c))
         text = text.replace(' ', '_')
-        return text
+        return text        
 
     def encode_non_ascii(self, c):
         # This is slightly gnarly.
