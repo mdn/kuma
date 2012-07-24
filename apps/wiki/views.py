@@ -188,11 +188,26 @@ def _document_last_modified(request, document_slug, document_locale):
         return None
 
 
+def _split_slug(slug):
+    """Utility function to do basic slug splitting"""
+    slug_split = slug.split('/')
+    length = len(slug_split)
+    specific = slug_split.pop()
+
+    return {'specific': specific, 'parent': '/'.join(slug_split),
+            'full': slug, 'parent_split': slug_split, 'length': length}
+
+
+def _join_slug(parent_split, slug):
+    parent_split.append(slug)
+    return '/'.join(parent_split)
+
+
 @waffle_flag('kumawiki')
 @require_http_methods(['GET', 'HEAD'])
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
-@transaction.autocommit # For rendering bookkeeping, needs immediate updates
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
@@ -247,21 +262,18 @@ def document(request, document_slug, document_locale):
             # The user may be trying to create a child page; if a parent exists
             # for this document, redirect them to the "Create" page
             # Otherwise, they could be trying to create a main level doc
-
-            parent_split = document_slug.split('/')
             url = reverse('wiki.new_document', locale=document_locale)
 
-            if len(parent_split) > 1:
+            slug_dict = _split_slug(document_slug)
+            if slug_dict['length'] > 1:
                 try:
-                    new_child_slug = parent_split.pop()
-                    parent_slug = '/'.join(parent_split)
-
                     parent_doc = Document.objects.get(locale=document_locale,
-                                                      slug=parent_slug,
+                                                      slug=slug_dict['parent'],
                                                       is_template=0)
+
                     # Redirect to create page with parent ID
                     url = urlparams(url, parent=parent_doc.id,
-                                    slug=new_child_slug)
+                                    slug=slug_dict['specific'])
                     return HttpResponseRedirect(url)
                 except Document.DoesNotExist:
                     raise Http404
@@ -500,12 +512,12 @@ def list_documents_for_review(request, tag=None):
 @waffle_flag('kumawiki')
 @login_required
 @check_readonly
-@transaction.autocommit # For rendering bookkeeping, needs immediate updates
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def new_document(request):
     """Create a new wiki document."""
     initial_parent_id = request.GET.get('parent', '')
-
     initial_slug = request.GET.get('slug', '')
+
     if not Document.objects.allows_add_by(request.user, initial_slug):
         # Try to head off disallowed Template:* creation, right off the bat
         raise PermissionDenied
@@ -513,13 +525,13 @@ def new_document(request):
     is_template = initial_slug.startswith(TEMPLATE_TITLE_PREFIX)
 
     # If a parent ID is provided via GET, confirm it exists
-    parent_slug = ''
-    parent_path = ''
+    parent_slug = parent_path = ''
+
     if initial_parent_id:
         try:
             parent_doc = Document.objects.get(pk=initial_parent_id)
             parent_slug = parent_doc.slug
-            parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
+            parent_path = parent_doc.get_absolute_url()
         except Document.DoesNotExist:
             logging.debug('Cannot find parent')
 
@@ -568,6 +580,7 @@ def new_document(request):
     rev_form.parent_slug = parent_slug
 
     if doc_form.is_valid() and rev_form.is_valid():
+
         rev_form = RevisionForm(post_data)
         if rev_form.is_valid():
             slug = doc_form.cleaned_data['slug']
@@ -601,7 +614,7 @@ def new_document(request):
                  # Document.allows_editing_by.
 @process_document_path
 @check_readonly
-@transaction.autocommit # For rendering bookkeeping, needs immediate updates
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404(
@@ -620,15 +633,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                                              '-id')[0]
 
     # Keep hold of the full post slug
-    full_slug = document_slug
-    slug_split = full_slug.split('/')
+    slug_dict = _split_slug(document_slug)
     # Update the slug, removing the parent path, and
     # *only* using the last piece.
     # This is only for the edit form.
-    rev.slug = slug_split[-1]
-    # Keep a parent slug
-    # Create the slug prefix from the parent string
-    slug_split.pop()
+    rev.slug = slug_dict['specific']
 
     section_id = request.GET.get('section', None)
     disclose_description = bool(request.GET.get('opendescription'))
@@ -666,8 +675,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 if doc_form.is_valid():
 
                     if 'slug' in post_data:  # if must be here for section edits
-                        slug_split.append(post_data['slug'])
-                        post_data['slug'] = '/'.join(slug_split)
+                        post_data['slug'] = _join_slug(slug_dict['parent_split'], post_data['slug'])
 
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
@@ -717,7 +725,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 curr_rev = doc.current_revision
 
                 if not rev_form.is_valid():
-                    
+
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
                         # Jump out to a function to escape indentation hell
@@ -727,10 +735,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                 rev, doc)
 
                 else:
-                    
+
                     if 'slug' in post_data:
-                        slug_split.append(post_data['slug'])
-                        post_data['slug'] = '/'.join(slug_split)
+                        post_data['slug'] = _join_slug(slug_dict['parent_split'], post_data['slug'])
 
                     # We know now that the form is valid (i.e. slug doesn't have a "/")
                     # Now we can make it a true revision form
@@ -792,20 +799,20 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
                         return HttpResponseRedirect(url)
 
-    parent_path = ''
-    if slug_split:
-        parent_slug = '/'.join(slug_split)
+    parent_path = parent_slug = ''
+    if slug_dict['parent']:
+        parent_slug = slug_dict['parent']
 
     if doc.parent_topic_id:
         parent_doc = Document.objects.get(pk=doc.parent_topic_id)
-        parent_path = request.build_absolute_uri(parent_doc.get_absolute_url())
+        parent_path = parent_doc.get_absolute_url()
 
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'section_id': section_id,
                          'disclose_description': disclose_description,
-                         'parent_slug': '/'.join(slug_split),
+                         'parent_slug': parent_slug,
                          'parent_path': parent_path,
                          'revision': rev,
                          'document': doc})
@@ -1033,7 +1040,7 @@ def select_locale(request, document_slug, document_locale):
 @login_required
 @process_document_path
 @check_readonly
-@transaction.autocommit # For rendering bookkeeping, needs immediate updates
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
 
@@ -1054,12 +1061,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
         document_locale = request.REQUEST.get('tolocale',
                                               document_locale)
 
-    # Handle parent slug
-    full_parent_slug = document_slug
-    parent_slug_split = full_parent_slug.split('/')
-    specific_slug = parent_slug_split[-1]
-    parent_slug_split.pop()
-    parent_slug = '/'.join(parent_slug_split)
+    # Parese the parent slug
+    slug_dict = _split_slug(document_slug)
 
     # Set a "Discard Changes" page
     discard_href = ''
@@ -1100,14 +1103,14 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if user_has_doc_perm:
         if doc:
             # If there's an existing doc, populate form from it.
+            doc.slug = slug_dict['specific']
             discard_href = doc.get_absolute_url()
-            doc.slug = specific_slug
             doc_initial = _document_form_initial(doc)
         else:
             # If no existing doc, bring over the original title and slug.
             discard_href = parent_doc.get_absolute_url()
             doc_initial = {'title': based_on_rev.title,
-                           'slug': specific_slug}
+                           'slug': slug_dict['specific']}
         doc_form = DocumentForm(initial=doc_initial)
 
     if user_has_rev_perm:
@@ -1126,15 +1129,15 @@ def translate(request, document_slug, document_locale, revision_id=None):
         doc_form_invalid = False
 
         # Grab the posted slug value in case it's invalid
-        posted_slug = request.POST.get('slug', specific_slug)
-        parent_slug = '/'.join(parent_slug_split)
-        parent_slug_split.append(posted_slug)
-        destination_slug = '/'.join(parent_slug_split)
+        posted_slug = request.POST.get('slug', slug_dict['specific'])
+        destination_slug = _join_slug(slug_dict['parent_split'], posted_slug)
 
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
-            post_data = request.POST.copy()
 
+            # Receive post data, update locale and slug properties
+            # to ensure data integrity and validation accuracy
+            post_data = request.POST.copy()
             post_data.update({'locale': document_locale})
             post_data.update({'slug': destination_slug})
 
@@ -1193,7 +1196,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                          'document_form': doc_form, 'revision_form': rev_form,
                          'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description,
-                         'specific_slug': specific_slug, 'parent_slug': parent_slug,
+                         'specific_slug': slug_dict['specific'], 'parent_slug': slug_dict['parent'],
                          'discard_href': discard_href})
 
 
