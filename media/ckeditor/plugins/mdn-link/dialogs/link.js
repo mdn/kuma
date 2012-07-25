@@ -1019,8 +1019,17 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				case 'url':
 					var url = ( data.url && CKEDITOR.tools.trim( data.url.url ) ) || '',
 						useOriginal = url.indexOf( '/' ) === 0 || 	// ex: "/some/page"
-									  url.indexOf('#') === 0 || 	// ex: "someAnchor"
+									  url.indexOf('#') === 0 || 	// ex: "#someAnchor"
 									  url.indexOf('//') > -1; 		// ex: "http://mozilla.com" or "https://mozilla.com"
+
+					// Look for links starting with "en-US/more/stuff"
+					// We can spot that by the link not having a "." in the first split, i.e. "www."
+					if(!useOriginal) {
+						if(url.split('/')[0].indexOf('.') == -1) {
+							url = '/' + url;
+							useOriginal = true;
+						}
+					}
 					
 					attributes[ 'data-cke-saved-href' ] = attributes.title = useOriginal ? url : 'http://' + url;
 					
