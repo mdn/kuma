@@ -149,7 +149,11 @@
         {% endif %}
       </fieldset>
     </form>
-    <div id="preview"></div>
+
+    <section class="page-meta">
+      {% include 'wiki/includes/attachment_list.html' %}
+    </section>
+    
   </article>
     </div>
    </div>
@@ -170,4 +174,3 @@
     {% endif %}
 
 {% endblock %}
-
