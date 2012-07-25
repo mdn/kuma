@@ -1022,7 +1022,11 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									  url.indexOf('#') === 0 || 	// ex: "someAnchor"
 									  url.indexOf('//') > -1; 		// ex: "http://mozilla.com" or "https://mozilla.com"
 					
-					attributes[ 'data-cke-saved-href' ] = attributes.title = useOriginal ? url : 'http://' + url;
+					// Replace spaces in links
+					url = url.replace(/ /g, '_');
+
+					// Set the link to be used
+					attributes[ 'data-cke-saved-href' ] = attributes.title = (useOriginal ? url : 'http://' + url);
 					
 					break;
 				case 'anchor':
