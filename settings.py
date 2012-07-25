@@ -555,6 +555,7 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'css/wiki.css',
+            'css/modals.css',
             'css/wiki-screen.css',
             'syntaxhighlighter/styles/shCore.css',
             'syntaxhighlighter/styles/shThemeDefault.css',
@@ -670,6 +671,7 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/scripts/shBrushPhp.js',
             'syntaxhighlighter/scripts/shBrushXml.js',
             'syntaxhighlighter/scripts/shBrushPlain.js',
+            'js/mdn/jquery.simplemodal.1.4.1.min.js',
             'js/wiki.js',
             'js/main.js',
             'js/libs/jqueryui.min.js',

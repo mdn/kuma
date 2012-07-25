@@ -28,6 +28,9 @@ CKEDITOR.on('instanceReady', function (ev) {
     toolbox.appendChild(pathP);
 });
 
+// Any utilities we need to be globably available will go here
+CKEDITOR.mdn = {};
+
 (function() {
     // Brick dialog "changed" prompts
     var originalOn = CKEDITOR.dialog.prototype.on;
@@ -66,6 +69,9 @@ CKEDITOR.on('instanceReady', function (ev) {
             return CKEDITOR.config.blockedKeystrokes.push(keys[k]);
         };
 
+    // Make keys globally available
+    CKEDITOR.mdn.keys = keys;
+
     // Prevent key handling
     block('tab');
     block('shiftTab');
@@ -85,8 +91,8 @@ CKEDITOR.on('instanceReady', function (ev) {
 
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-enterkey,mdn-wrapstyle';
-    config.removePlugins = 'link,tab,enterkey';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle';
+    config.removePlugins = 'link,image,tab,enterkey';
     config.entities = false;
     
     config.toolbar_MDN = [
