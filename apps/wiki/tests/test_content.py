@@ -464,6 +464,16 @@ class ContentSectionToolTests(TestCase):
         result = (wiki.content.filter_out_noinclude(doc_src))
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_noinclude_empty_content(self):
+        """Bug 777475: The noinclude filter and pyquery seems to really dislike
+        empty string as input"""
+        doc_src = ''
+        try:
+            result = wiki.content.filter_out_noinclude(doc_src)
+            eq_('', result)
+        except e:
+            ok_(False, "There should not have been an exception")
+
 
 class AllowedHTMLTests(TestCase):
     simple_tags = (

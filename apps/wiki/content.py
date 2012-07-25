@@ -39,6 +39,7 @@ def filter_out_noinclude(src):
     # NOTE: This started as an html5lib filter, but it started getting really
     # complex. Seems like pyquery works well enough without corrupting
     # character encoding.
+    if not src: return ''
     doc = pq(src)
     doc.remove('*[class=noinclude]')
     return doc.html()
