@@ -506,6 +506,8 @@ def new_document(request):
     initial_parent_id = request.GET.get('parent', '')
 
     initial_slug = request.GET.get('slug', '')
+    initial_title = initial_slug.replace('_', ' ')
+
     if not Document.objects.allows_add_by(request.user, initial_slug):
         # Try to head off disallowed Template:* creation, right off the bat
         raise PermissionDenied
@@ -531,7 +533,7 @@ def new_document(request):
             initial_data['parent_topic'] = initial_parent_id
 
         if initial_slug:
-            initial_data['title'] = initial_slug
+            initial_data['title'] = initial_title
             initial_data['slug'] = initial_slug
 
         if is_template:
@@ -543,7 +545,7 @@ def new_document(request):
 
         rev_form = RevisionForm(initial={
             'slug': initial_slug,
-            'title': initial_slug,
+            'title': initial_title,
             'review_tags': review_tags,
             'show_toc': True
         })
