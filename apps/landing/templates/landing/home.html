@@ -152,8 +152,10 @@
         {% elif waffle.switch('labs_snippets_landing') %}
         <figure id="snippet-promo" class="promo banner">
           <a href="https://hacks.mozilla.org/2012/07/taking-snippets-to-the-next-level">
+              {% trans %}
             <span class="heading">We're taking snippets<br />to the next level.</span>
             <span class="conversion">See what's new &raquo;</span>
+              {% endtrans %}
           </a>
         </figure>
         {% else %}
