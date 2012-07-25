@@ -110,7 +110,7 @@ ALLOWED_STYLES = [
     'transition-duration', '-moz-transition-duration', '-webkit-transition-duration', '-o-transition-duration',
     'transition-property', '-moz-transition-property', '-webkit-transition-property', '-o-transition-property',
     'transition-timing-function',  '-moz-transition-timing-function',  '-webkit-transition-timing-function',  '-o-transition-timing-function',
-    'color',
+    'color', 'display', 'position',
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
     'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
