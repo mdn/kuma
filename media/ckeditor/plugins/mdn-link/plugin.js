@@ -14,6 +14,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.plugins.add( 'mdn-link',
 {
+	// Requires CKEditor's keystrokes
+	requires: ['mdn-attachments'],
+
 	init : function( editor )
 	{
 		

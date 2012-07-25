@@ -2042,7 +2042,7 @@ class AttachmentTests(TestCaseBase):
 
     def test_new_attachment(self):
         self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='testuser', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Shamelessly stolen from Django's own file-upload tests.
         tdir = tempfile.gettempdir()
@@ -2064,14 +2064,14 @@ class AttachmentTests(TestCaseBase):
         eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
 
         rev = attachment.current_revision
-        eq_('testuser', rev.creator.username)
+        eq_('admin', rev.creator.username)
         eq_('A test file uploaded into kuma.', rev.description)
         eq_('Initial upload', rev.comment)
         ok_(rev.is_approved)
 
     def test_edit_attachment(self):
         self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='testuser', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         tdir = tempfile.gettempdir()
         file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
@@ -2114,7 +2114,7 @@ class AttachmentTests(TestCaseBase):
         eq_(2, attachment.revisions.count())
         
         rev = attachment.current_revision
-        eq_('testuser', rev.creator.username)
+        eq_('admin', rev.creator.username)
         eq_('Second revision.', rev.comment)
         ok_(rev.is_approved)
 
@@ -2124,7 +2124,7 @@ class AttachmentTests(TestCaseBase):
 
     def test_attachment_detail(self):
         self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='testuser', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         tdir = tempfile.gettempdir()
         file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
