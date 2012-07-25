@@ -100,6 +100,7 @@ ALLOWED_STYLES = [
     'position', 'border-style', 'background-clip', 
     'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
     'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style',
+    'border-bottom-width', 'border-left-width', 'border-right-width', 'border-top-width',
     'vertical-align', 'border-collapse', 'border-width', 'border-color',
     'border-left', 'border-right', 'border-bottom', 'border-top',
     'clip', 'cursor', 'filter', 'float', 'max-width', 'font-style',
