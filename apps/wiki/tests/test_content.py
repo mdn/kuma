@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
 import logging
+from urlparse import urljoin
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
@@ -11,11 +12,12 @@ from sumo.tests import TestCase
 import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           SectionTOCFilter, SectionIDFilter, SECTION_TAGS)
-from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
-from wiki.tests import normalize_html
+from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
+from wiki.tests import normalize_html, doc_rev, document, revision
 
 
 class ContentSectionToolTests(TestCase):
+    fixtures = ['test_users.json']
 
     def test_section_ids(self):
 
@@ -475,6 +477,55 @@ class ContentSectionToolTests(TestCase):
             eq_('', result)
         except e:
             ok_(False, "There should not have been an exception")
+
+    def test_link_annotation(self):
+        d, r = doc_rev("This document exists")
+        d.save()
+        r.save()
+        base_url = 'http://testserver/'
+        vars = dict(
+            base_url=base_url,
+            exist_url=d.get_absolute_url(),
+            exist_url_with_base=urljoin(base_url, d.get_absolute_url()),
+            uilocale_url='/en-US/docs/%s/%s' % (d.locale, d.slug),
+            noexist_url='/en-US/docs/no-such-doc',
+            noexist_url_with_base=urljoin(base_url, '/en-US/docs/no-such-doc'),
+            noexist_uilocale_url='/en-US/docs/en-US/blah-blah-blah',
+        )
+        doc_src = """
+            <ul>
+                <li><a href="%(exist_url)s">This doc should exist</a></li>
+                <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
+                <li><a href="%(uilocale_url)s">This doc should exist</a></li>
+                <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
+                <li><a href="%(noexist_url)s">This doc should NOT exist</a></li>
+                <li><a href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
+                <li><a href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
+                <li><a class="foobar" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
+                <li><a href="http://mozilla.org/">This is an external link</a></li>
+                <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
+                <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
+            </ul>
+        """ % vars
+        expected = """
+            <ul>
+                <li><a href="%(exist_url)s">This doc should exist</a></li>
+                <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
+                <li><a href="%(uilocale_url)s">This doc should exist</a></li>
+                <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
+                <li><a class="new" href="%(noexist_url)s">This doc should NOT exist</a></li>
+                <li><a class="new" href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
+                <li><a class="new" href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
+                <li><a class="foobar new" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
+                <li><a class="external" href="http://mozilla.org/">This is an external link</a></li>
+                <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
+                <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
+            </ul>
+        """ % vars
+        result = (wiki.content.parse(doc_src)
+                      .annotateLinks(base_url=vars['base_url'])
+                      .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
 
 
 class AllowedHTMLTests(TestCase):

@@ -93,6 +93,10 @@ class ContentSectionTool(object):
         self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
         return self
 
+    def annotateLinks(self, base_url):
+        self.stream = LinkAnnotationFilter(self.stream, base_url)
+        return self
+
     def extractSection(self, id):
         self.stream = SectionFilter(self.stream, id)
         return self
@@ -101,6 +105,108 @@ class ContentSectionTool(object):
         replace_stream = self.walker(self.parser.parseFragment(replace_src))
         self.stream = SectionFilter(self.stream, id, replace_stream)
         return self
+
+
+class LinkAnnotationFilter(html5lib_Filter):
+    """Filter which annotates links to indicate things like whether they're
+    external, if they point to non-existent wiki pages, etc."""
+
+    # TODO: Need more external link prefixes, here?
+    EXTERNAL_PREFIXES = ('http:', 'https:', 'ftp:',)
+
+    def __init__(self, source, base_url):
+        html5lib_Filter.__init__(self, source)
+        self.base_url = base_url
+
+    def __iter__(self):
+        from wiki.models import Document
+
+        input = html5lib_Filter.__iter__(self)
+
+        # Pass #1: Gather all the link URLs and prepare annotations
+        links = dict()
+        buffer = []
+        for token in input:
+            buffer.append(token)
+            if ('StartTag' == token['type'] and 'a' == token['name']):
+                attrs = dict(token['data'])
+                if not 'href' in attrs:
+                    continue
+                
+                href = attrs['href']
+                if href.startswith(self.base_url):
+                    # Squash site-absolute URLs to site-relative paths.
+                    href = '/%s' % href[len(self.base_url):]
+
+                # Prepare annotations record for this path.
+                links[href] = dict(
+                    classes=[]
+                )
+
+        # Run through all the links and check for annotatable conditions.
+        for href in links.keys():
+
+            # Is this an external URL?
+            is_external = False
+            for prefix in self.EXTERNAL_PREFIXES:
+                if href.startswith(prefix):
+                    is_external = True
+                    break
+            if is_external:
+                links[href]['classes'].append('external')
+                continue
+
+            # TODO: Should this also check for old-school mindtouch URLs? Or
+            # should we encourage editors to convert to new-style URLs to take
+            # advantage of link annotation? (I'd say the latter)
+
+            # Is this a kuma doc URL?
+            if '/docs/' in href:
+                href_locale, href_path = href.split(u'/docs/', 1)
+                if href_locale.startswith(u'/'):
+                    href_locale = href_locale[1:]
+
+                # Try to sort out the locale and slug through some of our
+                # redirection logic.
+                locale, slug, needs_redirect = (Document
+                        .locale_and_slug_from_path(href_path,
+                                                   path_locale=href_locale))
+                
+                # Does this locale and slug correspond to an existing document?
+                # If not, mark it as a "new" link.
+                #
+                # TODO: Should these DB queries be batched up into one big
+                # query? A page with hundreds of links will fire off hundreds
+                # of queries
+                ct = Document.objects.filter(locale=locale, slug=slug).count()
+                if ct == 0:
+                    links[href]['classes'].append('new')
+
+        # Pass #2: Filter the content, annotating links
+        for token in buffer:
+            if ('StartTag' == token['type'] and 'a' == token['name']):
+                attrs = dict(token['data'])
+
+                if 'href' in attrs:
+
+                    href = attrs['href']
+                    if href.startswith(self.base_url):
+                        # Squash site-absolute URLs to site-relative paths.
+                        href = '/%s' % href[len(self.base_url):]
+
+                    if href in links:
+                        # Update class names on this link element.
+                        if 'class' in attrs:
+                            classes = set(attrs['class'].split(u' '))
+                        else:
+                            classes = set()
+                        classes.update(links[href]['classes'])
+                        if classes:
+                            attrs['class'] = u' '.join(classes)
+
+                token['data'] = attrs.items()
+
+            yield token
 
 
 class SectionIDFilter(html5lib_Filter):

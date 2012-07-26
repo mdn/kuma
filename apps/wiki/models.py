@@ -886,7 +886,7 @@ class Document(NotificationsMixin, ModelBase):
                        args=[self.full_path])
 
     @staticmethod
-    def locale_and_slug_from_path(path, request=None):
+    def locale_and_slug_from_path(path, request=None, path_locale=None):
         """Given a proposed doc path, try to see if there's a legacy MindTouch
         locale or even a modern Kuma domain in the path. If so, signal for a
         redirect to a more canonical path. In any case, produce a locale and
@@ -913,9 +913,12 @@ class Document(NotificationsMixin, ModelBase):
                 locale = mdn_languages_lower[l_locale]
                 slug = maybe_slug
 
-        # No locale yet? Try the locale detected by the request.
-        if locale == '' and request:
-            locale = request.locale
+        # No locale yet? Try the locale detected by the request or in path
+        if locale == '':
+            if request:
+                locale = request.locale
+            elif path_locale:
+                locale = path_locale
 
         # Still no locale? Probably no request. Go with the site default.
         if locale == '':
