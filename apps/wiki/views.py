@@ -223,6 +223,7 @@ def _format_attachment_obj(attachments):
 def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
+    base_url = request.build_absolute_uri('/')
 
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
@@ -352,7 +353,6 @@ def document(request, document_slug, document_locale):
                 cache_control = 'no-cache'
 
         try:
-            base_url = request.build_absolute_uri('/')
             r_body, r_errors = doc.get_rendered(cache_control, base_url)
             if r_body:
                 doc_html = r_body
@@ -383,6 +383,10 @@ def document(request, document_slug, document_locale):
         # If a section ID is specified, extract that section.
         if section_id:
             tool.extractSection(section_id)
+
+        # Annotate links within the page, but only if not sending raw source.
+        if not show_raw:
+            tool.annotateLinks(base_url=base_url)
 
         # If this user can edit the document, inject some section editing
         # links.
