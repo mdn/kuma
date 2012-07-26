@@ -44,11 +44,11 @@ from . import kumascript
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-    'pre', 'code',
+    'pre', 'code', 'cite',
     'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp',
     'ul', 'ol', 'li',
     'nobr', 'dfn', 'caption', 'var',
-    'img',
+    'img', 'hr',
     'input', 'label', 'select', 'option', 'textarea',
     'table', 'tbody', 'thead', 'tr', 'th', 'td', 'colgroup', 'col',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
@@ -97,6 +97,10 @@ ALLOWED_STYLES = [
     'perspective-origin', '-moz-perspective-origin', '-webkit-perspective-origin', '-o-perspective-origin',
     'transform', '-moz-transform', '-webkit-transform', '-o-transform',
     'transform-style', '-moz-transform-style', '-webkit-transform-style', '-o-transform-style',
+    'columns', '-moz-columns', '-webkit-columns',
+    'column-rule', '-moz-column-rule', '-webkit-column-rule',
+    'column-width', '-moz-column-width', '-webkit-column-width',
+    'image-rendering', '-ms-interpolation-mode',
     'position', 'border-style', 'background-clip', 
     'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
     'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style',
@@ -111,10 +115,12 @@ ALLOWED_STYLES = [
     'transition-duration', '-moz-transition-duration', '-webkit-transition-duration', '-o-transition-duration',
     'transition-property', '-moz-transition-property', '-webkit-transition-property', '-o-transition-property',
     'transition-timing-function',  '-moz-transition-timing-function',  '-webkit-transition-timing-function',  '-o-transition-timing-function',
-    'color', 'display', 'position',
+    'color', 'display', 'position', 'outline-color', 'outline', 'outline-offset', 
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
     'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
+    'text-decoration-style', '-moz-text-decoration-style',
+    'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
 # Disruptiveness of edits to translated versions. Numerical magnitude indicate
