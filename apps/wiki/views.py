@@ -141,6 +141,10 @@ def process_document_path(func, reverse_name='wiki.document'):
                 needs_redirect = True
                 document_slug = document_slug.rstrip('/')
 
+            if not document_slug:
+                # If there's no slug, then this is just a 404.
+                raise Http404()
+
             if request.GET.get('raw', False) is not False:
                 # HACK: There are and will be a lot of kumascript templates
                 # based on legacy DekiScript which will attempt to request

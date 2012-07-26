@@ -17,6 +17,7 @@ from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
 from django.db.models import Q
 from django.test.client import Client
+from django.http import Http404
 
 import mock
 from nose import SkipTest
@@ -94,6 +95,17 @@ class LocaleRedirectTests(TestCaseBase):
         url = reverse('wiki.document', args=[en_doc.slug], locale='de')
         response = self.client.get(url + '?x=y&x=z', follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url() + '?x=y&x=z')
+
+    @attr('current')
+    def test_redirect_with_no_slug(self):
+        """Bug 775241: Fix exception in legacy redirect for URL with ui-locale"""
+        url = '/en-US/docs/en-US/'
+        try:
+            response = self.client.get(url, follow=True)
+        except Http404, e:
+            ok_(True)
+        except Exception, e:
+            ok_(False, "The only exception should be a 404, not this: %s" % e)
 
     def _create_en_and_de_docs(self):
         en = settings.WIKI_DEFAULT_LANGUAGE
