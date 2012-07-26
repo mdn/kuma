@@ -67,14 +67,12 @@ def web(request):
     return common_landing(request, section=SECTION_WEB)
 
 
-@waffle_switch('apps_landing')
 def apps(request):
     """Web landing page."""
     return common_landing(request, section=SECTION_APPS,
                           extra={'form': SubscriptionForm()})
 
 
-@waffle_switch('apps_landing')
 def apps_subscription(request):
     form = SubscriptionForm(data=request.POST)
     context = {'form': form}
