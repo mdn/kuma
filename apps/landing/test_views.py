@@ -127,17 +127,6 @@ class AppsViewsTest(test_utils.TestCase):
         url = reverse('landing.views.home')
         r = self.client.get(url)
         eq_(200, r.status_code)
-
-        doc = pq(r.content)
-        nav_sub_topics = doc.find('ul#nav-sub-topics')
-        ok_(nav_sub_topics)
-        apps_item = nav_sub_topics.find('li#nav-sub-apps')
-        eq_([], apps_item)
-
-        s = Switch.objects.create(name='apps_landing', active=True)
-        s.save()
-        r = self.client.get(url)
-        eq_(200, r.status_code)
         doc = pq(r.content)
         nav_sub_topics = doc.find('ul#nav-sub-topics')
         ok_(nav_sub_topics)
@@ -146,11 +135,6 @@ class AppsViewsTest(test_utils.TestCase):
 
     def test_apps(self):
         url = reverse('landing.views.apps')
-        r = self.client.get(url)
-        eq_(404, r.status_code)
-
-        s = Switch.objects.create(name='apps_landing', active=True)
-        s.save()
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
         doc = pq(r.content)
@@ -161,8 +145,6 @@ class AppsViewsTest(test_utils.TestCase):
     @patch('landing.views.basket.subscribe')
     def test_apps_subscription(self, subscribe):
         subscribe.return_value = True
-        s = Switch.objects.create(name='apps_landing', active=True)
-        s.save()
         url = reverse('landing.views.apps_subscription')
         r = self.client.post(url,
                 {'format': 'html',
@@ -177,8 +159,6 @@ class AppsViewsTest(test_utils.TestCase):
     @patch('landing.views.basket.subscribe')
     def test_apps_subscription_ajax(self, subscribe):
         subscribe.return_value = True
-        s = Switch.objects.create(name='apps_landing', active=True)
-        s.save()
         url = reverse('landing.views.apps_subscription')
         r = self.client.post(url,
                              {'format': 'html',
@@ -196,8 +176,6 @@ class AppsViewsTest(test_utils.TestCase):
     @patch('landing.views.basket.subscribe')
     def test_apps_subscription_bad_values(self, subscribe):
         subscribe.return_value = True
-        s = Switch.objects.create(name='apps_landing', active=True)
-        s.save()
         url = reverse('landing.views.apps_subscription')
         r = self.client.post(url, {'format': 1, 'email': 'nope'})
         eq_(200, r.status_code)
