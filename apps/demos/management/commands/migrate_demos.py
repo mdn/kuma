@@ -1,3 +1,4 @@
+from copy import deepcopy
 import logging
 from optparse import make_option
 
@@ -34,26 +35,39 @@ class Command(BaseCommand):
             source_demos = Submission.objects.filter(slug=options['slug'])
         else:
             source_demos = Submission.objects.all()
+        # Make a list of slugs for loop since the Submission QuerySet jumps
+        # between default and 'new' databases
+        source_slugs = [demo.slug for demo in source_demos]
         logger.info("Migrating %s demo(s)" % len(source_demos))
-        for source_demo in source_demos:
-            destination_demo = _get_or_create_destination_demo(source_demo)
-            destination_creator = _get_or_create_destination_creator(
-                source_demo)
-
-            destination_demo.creator = destination_creator
-            destination_demo = _update_fields(destination_demo, source_demo)
-            destination_demo.save(using='new')
-
-            _delete_and_recreate_tags(source_demo, destination_demo)
-
-            _delete_and_recreate_comments(source_demo, destination_demo)
-
+        for source_slug in source_slugs:
+            _update_or_create_destination_demo(source_slug)
+            _delete_and_recreate_tags(source_slug)
+            _delete_and_recreate_comments(source_slug)
             if not options['skip_actions']:
-                _delete_and_recreate_action_counters(source_demo,
-                                                     destination_demo)
+                _delete_and_recreate_action_counters(source_slug)
 
 
-def _delete_and_recreate_tags(source_demo, destination_demo):
+def _update_or_create_destination_demo(slug):
+    source_demo = Submission.objects.using('default').get(slug=slug)
+    try:
+        destination_demo = Submission.objects.using('new').get(
+            slug=source_demo.slug)
+        logger.info("%s: exists" % source_demo.slug)
+        destination_demo = _update_fields(destination_demo, source_demo)
+    except Submission.DoesNotExist:
+        destination_demo = deepcopy(source_demo)
+        destination_demo.pk = destination_demo.id = None
+        destination_creator = _get_or_create_destination_creator(source_demo)
+        destination_demo.creator = destination_creator
+        logger.info("%s: created" % source_demo.slug)
+    _disable_auto_date_fields(destination_demo)
+    destination_demo.save(using='new')
+    return destination_demo
+
+
+def _delete_and_recreate_tags(slug):
+    source_demo = Submission.objects.using('default').get(slug=slug)
+    destination_demo = Submission.objects.using('new').get(slug=slug)
     source_type, destination_type = _get_demo_content_types()
 
     source_tags = source_demo.taggit_tags.all()
@@ -62,16 +76,28 @@ def _delete_and_recreate_tags(source_demo, destination_demo):
     destination_tags_names = [tag.name for tag in destination_tags]
 
     if source_tags_names == destination_tags_names:
+        logger.info("%s: Found %s matching tag(s): %s" % (source_demo.slug,
+                                                 len(destination_tags),
+                                                 destination_tags_names))
         return destination_tags
     else:
-        destination_tags.delete()
+        dest_demo_tagged_items = TaggedItem.objects.using('new').filter(
+            tag__in=[tag for tag in destination_tags],
+            object_id=destination_demo.id,
+            content_type=destination_type
+        )
+        dest_demo_tagged_items.using('new').delete()
         logger.info("%s: Migrating %s tag(s): %s" % (source_demo.slug,
                                                     len(source_tags),
                                                   source_tags_names))
         for source_tag in source_tags:
-            destination_tag = (
-                Tag.objects.using('new').get(slug=source_tag.slug))
-            destination_demo_tag = TaggedItem.objects.create(
+            try:
+                destination_tag = (
+                    Tag.objects.using('new').get(name=source_tag.name))
+            except Tag.DoesNotExist:
+                destination_tag = Tag(name=source_tag.name)
+                destination_tag.save(using='new')
+            destination_demo_tag = TaggedItem(
                 content_type=destination_type,
                 object_id=destination_demo.id,
                 tag = destination_tag)
@@ -79,12 +105,15 @@ def _delete_and_recreate_tags(source_demo, destination_demo):
     return destination_tags
 
 
-def _delete_and_recreate_comments(source_demo, destination_demo):
+def _delete_and_recreate_comments(slug):
+    source_demo = Submission.objects.using('default').get(slug=slug)
+    destination_demo = Submission.objects.using('new').get(slug=slug)
     source_type, destination_type = _get_demo_content_types()
     # delete destination comments
-    ThreadedComment.objects.using('new').filter(
+    destination_comments = ThreadedComment.objects.using('new').filter(
                             content_type=destination_type,
-                            object_id=destination_demo.id).delete()
+                            object_id=destination_demo.id)
+    destination_comments.using('new').delete()
 
     # disconnect update comment count - we already migrate the comments_total
     # value during _update_fields
@@ -98,12 +127,16 @@ def _delete_and_recreate_comments(source_demo, destination_demo):
     disconnect_signal(post_delete, update_submission_comment_count,
                                                             ThreadedComment)
 
-    source_comments = ThreadedComment.objects.filter(content_type=source_type,
-                                                     object_id=source_demo.id)
+    source_comments = ThreadedComment.objects.using('default').filter(
+        content_type=source_type, object_id=source_demo.id)
     logger.info("%s: Migrating %s comment(s)" % (source_demo.slug,
                                                len(source_comments)))
     for comment in source_comments:
         comment.pk = None
+        if comment.parent:
+            # TODO: this flattens out the comments; do we care enough to write a
+            # recursive _get_or_create_destination_parent_comment function?
+            comment.parent = None
         comment.content_type = destination_type
         comment.object_id = destination_demo.id
         comment.user = _get_or_create_destination_commentor(source_demo,
@@ -111,20 +144,14 @@ def _delete_and_recreate_comments(source_demo, destination_demo):
         try:
             comment.save(using='new')
         except:
-            logger.warning("%s: Couldn't save %s's comment." %
+            import pdb; pdb.set_trace()
+            logger.info("%s: Couldn't save %s's comment." %
                            (destination_demo.slug, comment.user.username))
 
 
-def _get_demo_content_types():
-    source_type = ContentType.objects.get_by_natural_key('demos', 'submission')
-    # have to use .get because QuerySet returned by using() isn't a manager
-    # with get_natural_key (django bug?)
-    destination_type = ContentType.objects.using('new').get(
-        app_label='demos', model='submission')
-    return source_type, destination_type
-
-
-def _delete_and_recreate_action_counters(source_demo, destination_demo):
+def _delete_and_recreate_action_counters(slug):
+    source_demo = Submission.objects.using('default').get(slug=slug)
+    destination_demo = Submission.objects.using('new').get(slug=slug)
     source_type, destination_type = _get_demo_content_types()
     # delete destination action counters
     ActionCounterUnique.objects.using('new').filter(
@@ -148,16 +175,23 @@ def _delete_and_recreate_action_counters(source_demo, destination_demo):
                            (destination_demo.slug, action.name))
 
 
-def _get_or_create_destination_demo(source_demo):
-    try:
-        destination_demo = Submission.objects.using('new').get(
-            slug=source_demo.slug)
-        logger.info("%s: exists" % source_demo.slug)
-    except Submission.DoesNotExist:
-        destination_demo = source_demo
-        destination_demo.pk = None
-        logger.info("%s: created" % source_demo.slug)
-    return destination_demo
+def _get_demo_content_types():
+    source_type = ContentType.objects.get_by_natural_key('demos', 'submission')
+    # have to use .get because QuerySet returned by using() isn't a manager
+    # with get_natural_key (django bug?)
+    destination_type = ContentType.objects.using('new').get(
+        app_label='demos', model='submission')
+    return source_type, destination_type
+
+
+# we need to preserve created and modified datetimes
+# http://stackoverflow.com/q/7499767/571420
+def _disable_auto_date_fields(submission):
+    for field in submission._meta.local_fields:
+        if field.name == 'created':
+            field.auto_now_add = False
+        elif field.name == 'modified':
+            field.auto_now = False
 
 
 def _get_or_create_destination_creator(source_demo):
@@ -209,7 +243,8 @@ def _get_or_create_destination_profile(source_demo, destination_user):
                                             destination_user.username,
                                             destination_user.id))
     except UserProfile.DoesNotExist:
-        source_profile = UserProfile.objects.get(user=source_demo.creator)
+        source_profile = UserProfile.objects.using('default').get(
+            user=source_demo.creator)
         destination_profile = source_profile
         destination_profile.pk = None
         destination_profile.user = destination_user
