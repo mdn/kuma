@@ -455,7 +455,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								id: 'articleName',
 								type: 'text',
-								label: gettext('Article Title Lookup'),
+								label: gettext('Article Title Lookup / Link Text'),
 								setup: function() {
 									// This happens upon every open, so need to make sure we don't keep creating new autocompleters!
 									var dialog = this.getDialog(),
@@ -1198,8 +1198,18 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				if ( ranges.length == 1 && ranges[0].collapsed )
 				{
 					// Short mailto link text view (#5736).
-					var text = new CKEDITOR.dom.text( data.type == 'email' ?
-							data.email.address : (autoCompleteSelection ? autoCompleteSelection.label : attributes[ 'data-cke-saved-href' ]), editor.document );
+					var text = attributes[ 'data-cke-saved-href' ];
+					if(data.type == 'email') {
+						text = data.email.address
+					}
+					else if(autoCompleteSelection) {
+						text = autoCompleteSelection.label
+					}
+					else if(autoCompleteTextbox.value) {
+						text = autoCompleteTextbox.value
+					}
+
+					text = new CKEDITOR.dom.text(text, editor.document );
 					ranges[0].insertNode( text );
 					ranges[0].selectNodeContents( text );
 					selection.selectRanges( ranges );
