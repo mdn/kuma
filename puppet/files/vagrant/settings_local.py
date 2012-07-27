@@ -42,9 +42,9 @@ INSTALLED_APPS = INSTALLED_APPS + (
     "devserver",
 )
 
-MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + (
+MIDDLEWARE_CLASSES = (
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-)
+) + MIDDLEWARE_CLASSES
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
