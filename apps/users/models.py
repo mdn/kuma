@@ -157,7 +157,8 @@ class RegistrationManager(ConfirmationManager):
         except MindTouchAPIError, e:
             new_user.delete()
             raise e
-        profile.deki_user_id = deki_user.id
+        if deki_user:
+            profile.deki_user_id = deki_user.id
         profile.save()
 
         registration_profile = self.create_profile(new_user)
