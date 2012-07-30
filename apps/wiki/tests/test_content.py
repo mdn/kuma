@@ -482,17 +482,23 @@ class ContentSectionToolTests(TestCase):
         d, r = doc_rev("This document exists")
         d.save()
         r.save()
-        base_url = 'http://testserver/'
+
+        d2 = document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
+                      save=True)
+
+        base_url = u'http://testserver/'
         vars = dict(
             base_url=base_url,
             exist_url=d.get_absolute_url(),
             exist_url_with_base=urljoin(base_url, d.get_absolute_url()),
-            uilocale_url='/en-US/docs/%s/%s' % (d.locale, d.slug),
-            noexist_url='/en-US/docs/no-such-doc',
-            noexist_url_with_base=urljoin(base_url, '/en-US/docs/no-such-doc'),
-            noexist_uilocale_url='/en-US/docs/en-US/blah-blah-blah',
+            uilocale_url=u'/en-US/docs/%s/%s' % (d.locale, d.slug),
+            noexist_url=u'/en-US/docs/no-such-doc',
+            noexist_url_with_base=urljoin(base_url, u'/en-US/docs/no-such-doc'),
+            noexist_uilocale_url=u'/en-US/docs/en-US/blah-blah-blah',
+            nonen_slug='/fr/docs/CSS/H%c3%a9ritage',
         )
-        doc_src = """
+        doc_src = u"""
+                <li><a href="%(nonen_slug)s">Héritée</a></li>
                 <li><a href="%(exist_url)s">This doc should exist</a></li>
                 <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
                 <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
@@ -509,7 +515,8 @@ class ContentSectionToolTests(TestCase):
                 <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
                 <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
         """ % vars
-        expected = """
+        expected = u"""
+                <li><a href="%(nonen_slug)s">Héritée</a></li>
                 <li><a href="%(exist_url)s">This doc should exist</a></li>
                 <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
                 <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
@@ -531,8 +538,9 @@ class ContentSectionToolTests(TestCase):
         doc_lines = doc_src.strip().split("\n")
         expected_lines = expected.strip().split("\n")
         for idx in range(0, len(doc_lines)):
+            doc_line = doc_lines[idx]
             expected_line = expected_lines[idx]
-            result_line = (wiki.content.parse(doc_lines[idx])
+            result_line = (wiki.content.parse(doc_line)
                           .annotateLinks(base_url=vars['base_url'])
                           .serialize())
             eq_(normalize_html(expected_line), normalize_html(result_line))
