@@ -493,39 +493,49 @@ class ContentSectionToolTests(TestCase):
             noexist_uilocale_url='/en-US/docs/en-US/blah-blah-blah',
         )
         doc_src = """
-            <ul>
                 <li><a href="%(exist_url)s">This doc should exist</a></li>
+                <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
                 <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
+                <li><a href="%(exist_url_with_base)s#withanchor">This doc should exist</a></li>
                 <li><a href="%(uilocale_url)s">This doc should exist</a></li>
                 <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
+                <li><a href="%(noexist_url)s#withanchor">This doc should NOT exist</a></li>
                 <li><a href="%(noexist_url)s">This doc should NOT exist</a></li>
                 <li><a href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
+                <li><a href="%(noexist_url_with_base)s#withanchor">This doc should NOT exist</a></li>
                 <li><a href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
                 <li><a class="foobar" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
                 <li><a href="http://mozilla.org/">This is an external link</a></li>
                 <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
                 <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
-            </ul>
         """ % vars
         expected = """
-            <ul>
                 <li><a href="%(exist_url)s">This doc should exist</a></li>
+                <li><a href="%(exist_url)s#withanchor">This doc should exist</a></li>
                 <li><a href="%(exist_url_with_base)s">This doc should exist</a></li>
+                <li><a href="%(exist_url_with_base)s#withanchor">This doc should exist</a></li>
                 <li><a href="%(uilocale_url)s">This doc should exist</a></li>
                 <li><a class="foobar" href="%(exist_url)s">This doc should exist, and its class should be left alone.</a></li>
+                <li><a class="new" href="%(noexist_url)s#withanchor">This doc should NOT exist</a></li>
                 <li><a class="new" href="%(noexist_url)s">This doc should NOT exist</a></li>
                 <li><a class="new" href="%(noexist_url_with_base)s">This doc should NOT exist</a></li>
+                <li><a class="new" href="%(noexist_url_with_base)s#withanchor">This doc should NOT exist</a></li>
                 <li><a class="new" href="%(noexist_uilocale_url)s">This doc should NOT exist</a></li>
                 <li><a class="foobar new" href="%(noexist_url)s">This doc should NOT exist, and its class should be altered</a></li>
                 <li><a class="external" href="http://mozilla.org/">This is an external link</a></li>
                 <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
                 <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
-            </ul>
         """ % vars
-        result = (wiki.content.parse(doc_src)
-                      .annotateLinks(base_url=vars['base_url'])
-                      .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
+
+        # Split the markup into lines, to better see failures
+        doc_lines = doc_src.strip().split("\n")
+        expected_lines = expected.strip().split("\n")
+        for idx in range(0, len(doc_lines)):
+            expected_line = expected_lines[idx]
+            result_line = (wiki.content.parse(doc_lines[idx])
+                          .annotateLinks(base_url=vars['base_url'])
+                          .serialize())
+            eq_(normalize_html(expected_line), normalize_html(result_line))
 
 
 class AllowedHTMLTests(TestCase):

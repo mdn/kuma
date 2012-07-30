@@ -166,6 +166,10 @@ class LinkAnnotationFilter(html5lib_Filter):
                 if href_locale.startswith(u'/'):
                     href_locale = href_locale[1:]
 
+                if '#' in href_path:
+                    # If present, discard the hash anchor
+                    href_path, _, _ = href_path.partition('#')
+
                 # Try to sort out the locale and slug through some of our
                 # redirection logic.
                 locale, slug, needs_redirect = (Document
