@@ -40,7 +40,7 @@ class TestCalendar(test_utils.TestCase):
         success = self.cal.reload()
         ok_(success == False)
         ok_(Event.objects.all()[0].conference == 'Web2Day')
-        self.cal.url = 'http://test.com/testcalspreadsheet'
+        self.cal.url = 'http://test/testcalspreadsheet'
         success = self.cal.reload()
         ok_(success == False)
         ok_(Event.objects.all()[0].conference == 'Web2Day')
