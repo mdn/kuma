@@ -1,5 +1,6 @@
 import logging
 import re
+import urllib
 from urllib import urlencode
 
 from xml.sax.saxutils import quoteattr
@@ -165,6 +166,15 @@ class LinkAnnotationFilter(html5lib_Filter):
                 href_locale, href_path = href.split(u'/docs/', 1)
                 if href_locale.startswith(u'/'):
                     href_locale = href_locale[1:]
+
+                if '#' in href_path:
+                    # If present, discard the hash anchor
+                    href_path, _, _ = href_path.partition('#')
+
+                # Handle any URL-encoded UTF-8 characters in the path
+                href_path = href_path.encode('ascii', 'ignore')
+                href_path = urllib.unquote(href_path)
+                href_path = href_path.decode('utf-8', 'ignore')
 
                 # Try to sort out the locale and slug through some of our
                 # redirection logic.
