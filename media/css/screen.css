@@ -100,7 +100,7 @@ abbr, acronym, dfn { border-bottom: 1px dotted #666; font-variant: normal; curso
 input, button, textarea, select, optgroup, option { font-family: inherit; font-size: inherit; font-style: inherit; font-weight: inherit; }
 textarea { -webkit-appearance: textfield; -moz-appearance: textfield; }
 table { border-collapse: collapse; border-spacing: 0; margin: 0 0 1.286em; }
-caption, th { text-align: left; }
+caption, th { text-align: start; }
 p, pre, blockquote, dl, ul, ol { margin: 0 0 1.286em; padding: 0; }
 li ul, li ol { margin-bottom: 0; }
 ul { list-style: none; }
