@@ -56,6 +56,9 @@
 
       $("#cke_contents_id_content").css({ height: $appBoxes.height() });
 
+      // remove the id_content required attribute
+      $('#id_content').removeAttr("required");
+
     });
     
     $window.resize(function() { // Recalculate box width on resize
