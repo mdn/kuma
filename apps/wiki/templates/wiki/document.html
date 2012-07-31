@@ -265,7 +265,9 @@
       </section>
       {% endif %}
 
+      {% if attachments | length %}
       {% include 'wiki/includes/attachment_list.html' %}
+      {% endif %}
 
       <section id="doc-contributors">
         {% trans contributors=user_list(contributors) %}
