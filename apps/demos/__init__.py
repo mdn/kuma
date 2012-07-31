@@ -210,7 +210,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."),
         "description": _("The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The <a href="https://hacks.mozilla.org/2012/04/taking-pictures-with-the-camera-api-part-of-webapi/">Camera API</a> lets you access the cameras of mobile devices (with the user's permission, of course!). By using the Camera API, you can help users take photos (or retrieve existing ones) and upload them to a web page easily. No <em>Browse</em> button and no digging through obscure file names. This is totally seamless photo sharing.</p>
+<p>The Camera API was born out of Mozilla's <a href="https://wiki.mozilla.org/WebAPI">WebAPI</a> project, but has already gained support across browsers. Users of <a href="https://www.mozilla.org/firefox/mobile/features/">Firefox for Android</a>, Chrome for Android, and recent versions of the stock Android Browser can already reap the benefits.</p>
+<p>Mozilla's Robert Nyman has written a great article on <a href="https://hacks.mozilla.org/2012/04/taking-pictures-with-the-camera-api-part-of-webapi/">using the Camera API</a> and a <a href="http://robnyman.github.com/camera-api/">live demo</a> of it. Unfortunately, little other creative work has been done with this powerful technology. That's where you come in. What can you do with the Camera API? Show us this month in the August Dev Derby!</p>"""),
     },
     {
         "tag_name": "challenge:2012:september",
@@ -221,6 +223,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Wish you were here!"),
         "summary": _("With Geolocation, you can get the user's physical location. With the Camera API, you can access their mobile camera. What can you do by combining the two? People, places, photos. Go!"),
         "description": _("With Geolocation, you can get the user's physical location. With the Camera API, you can access their mobile camera. What can you do by combining the two? People, places, photos. Go!"),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2012:october",
+        "title": _("October 2012 Dev Derby Challenge - CSS Media Queries II"),
+        "short_title": _("CSS Media Queries II"),
+        "dateline": _("October 2012"),
+        "short_dateline": _("October"),
+        "tagline": _("Size still matters"),
+        "summary": _("CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can you do with Media Queries?"),
+        "description": _("CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can you do with Media Queries?"),
         "learn_more": [],
         "tab_copy": _("??"),
     },
