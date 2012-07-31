@@ -571,57 +571,60 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 
 /* @RTL - flip the layout for right-to-left languages *********/
 /* just a jump to the left... */
-.rtl #utility, 
-.rtl .user-state, 
-.rtl #site-search, 
-.rtl #tool-menus, 
-.rtl #tool-menus ul li.menu,  
-.rtl #page-buttons li, 
-.rtl #article-nav { 
+.html-rtl #utility, 
+.html-rtl .user-state,
+.html-rtl #tool-menus, 
+.html-rtl #tool-menus ul li.menu,  
+.html-rtl #page-buttons li, 
+.html-rtl #article-nav { 
   float: left; 
 }
 
 /* then a step to the right... */
-.rtl #branding, 
-.rtl #nav,
-.rtl #title, 
-.rtl #nav-toolbar .crumbs, 
-.rtl #page-tags h2, 
-.rtl #page-tags #deki-page-tags,
-.rtl #page-tags .tags-edit, 
-.rtl #site-info #legal, 
-.rtl .deki-pagination div, 
-.rtl .pagination span, 
-.rtl .deki-pagination div.info { 
+.html-rtl #branding, 
+.html-rtl #nav,
+.html-rtl #title, 
+.html-rtl #nav-toolbar .crumbs, 
+.html-rtl #page-tags h2, 
+.html-rtl #page-tags #deki-page-tags,
+.html-rtl #page-tags .tags-edit, 
+.html-rtl #site-info #legal, 
+.html-rtl .deki-pagination div, 
+.html-rtl .pagination span, 
+.html-rtl .deki-pagination div.info { 
   float: right; 
 }
 
-.rtl #utility .user-state li { border-left: 0; margin-left: 0; padding-left: 0; border-right: 1px solid; margin-right: 5px; padding-right: 8px; }
-.rtl #utility .user-state li:first-child { padding: 0; margin: 0; border: 0; }
-.rtl #site-search button { float: left; }
-.rtl #site-search-gg { float: left; margin: 2px 0 0 35px; }
-.rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
-.rtl #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
-.rtl #nav-toolbar .crumbs li:last-child { background: none; }
-.rtl #tools.superfish .menu ul { left: 0; right: auto; }
-.rtl #utility .sub-menu, .rtl .compact #nav .sub-menu, .rtl #tools .menu ul { left: auto; right: -999em; }
-.rtl .compact #nav .nav-menu:hover .sub-menu, .rtl .compact #nav .hover .sub-menu, .rtl .compact #nav a:focus + ul { right: auto; }
-.rtl #article-nav { padding: 0 20px 1em 0; }
-.rtl .page-meta h2 { margin: 0 0 0 20px; }
-.rtl #page-tags #deki-page-tags-toggleview, .rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
-.rtl #page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
-.rtl #page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
-.rtl #page-buttons { right: auto; left: 20px; }
-.rtl #site-info #legal { padding: 0 55px 0 0; }
-.rtl #site-info #legal img { left: auto; right: 0; }
-.rtl .user-state { text-align: left; }
-.rtl #utility .sub-menu li { text-align: right; border: 0; padding: 0; margin: 0; }
-.rtl #menuFiller .deki-file-menu { margin-left: 86px; }
-.rtl span.icon img { margin: 0 0 0 3px; }
-.rtl .last-mod, html[dir="rtl"] #footbar p { text-align: left; }
-.rtl .deki-pagination .next, .rtl .pagination .next { text-align: left; float: left !important; }
-.rtl .deki-pagination .prev, .rtl .pagination .prev { text-align: right; float: right !important; }
-.rtl .deki-pagination .prev a:before, .rtl .pagination .prev a:before,
-.rtl .deki-pagination .next a:after, .rtl .pagination .next a:after { content: ""; }
-.rtl .deki-pagination .prev a:after, .rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
-.rtl .deki-pagination .next a:before, .rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
+.html-rtl #utility .user-state li { border-left: 0; margin-left: 0; padding-left: 0; border-right: 1px solid; margin-right: 5px; padding-right: 8px; }
+.html-rtl #utility .user-state li:first-child { padding: 0; margin: 0; border: 0; }
+.html-rtl #site-search button { float: left; }
+.html-rtl #site-search-gg { float: left; margin: 2px 0 0 35px; }
+.html-rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
+.html-rtl #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
+.html-rtl #nav-toolbar .crumbs li:last-child { background: none; }
+
+.html-rtl #tools .menu ul { position: absolute; left: 0; right: -999em; }
+.html-rtl #tools .menu:hover ul, .html-rtl #tool-menus ul .sfhover ul { left: 0; right: auto; }
+.html-rtl #tools.superfish .menu ul { left: 0; right: auto; }
+
+.html-rtl #utility .sub-menu, .html-rtl .compact #nav .sub-menu, .html-rtl #tools .menu ul { left: auto; right: -999em; }
+.html-rtl .compact #nav .nav-menu:hover .sub-menu, .html-rtl .compact #nav .hover .sub-menu, .html-rtl .compact #nav a:focus + ul { right: auto; }
+.html-rtl #article-nav { padding: 0 20px 1em 0; }
+.html-rtl .page-meta h2 { margin: 0 0 0 20px; }
+.html-rtl #page-tags #deki-page-tags-toggleview, .html-rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
+.html-rtl #page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
+.html-rtl #page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
+.html-rtl #page-buttons { right: auto; left: 20px; }
+.html-rtl #site-info #legal { padding: 0 55px 0 0; }
+.html-rtl #site-info #legal img { left: auto; right: 0; }
+.html-rtl .user-state { text-align: left; }
+.html-rtl #utility .sub-menu li { text-align: right; border: 0; padding: 0; margin: 0; }
+.html-rtl #menuFiller .deki-file-menu { margin-left: 86px; }
+.html-rtl span.icon img { margin: 0 0 0 3px; }
+.html-rtl .last-mod, html[dir="rtl"] #footbar p { text-align: left; }
+.html-rtl .deki-pagination .next, .html-rtl .pagination .next { text-align: left; float: left !important; }
+.html-rtl .deki-pagination .prev, .html-rtl .pagination .prev { text-align: right; float: right !important; }
+.html-rtl .deki-pagination .prev a:before, .html-rtl .pagination .prev a:before,
+.html-rtl .deki-pagination .next a:after, .html-rtl .pagination .next a:after { content: ""; }
+.html-rtl .deki-pagination .prev a:after, .html-rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
+.html-rtl .deki-pagination .next a:before, .html-rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
