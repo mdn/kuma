@@ -61,7 +61,7 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 .page-content img { max-width: 100%; height: auto; }
 .page-content caption { font-weight: bold; }
 .page-content table { border-collapse: collapse; border: solid #e0e0dc; border-width: 1px 0 0 1px; }
-.page-content td, .page-content th { border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px; text-align: left; }
+.page-content td, .page-content th { border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px; text-align: start; }
 .page-content thead th { background: #f3f3ef; }
 
 /* Increase line-height in wide windows */
