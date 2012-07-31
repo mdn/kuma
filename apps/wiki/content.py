@@ -172,7 +172,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                     href_path, _, _ = href_path.partition('#')
 
                 # Handle any URL-encoded UTF-8 characters in the path
-                href_path = href_path.encode('ascii', 'ignore')
+                href_path = href_path.encode('utf-8', 'ignore')
                 href_path = urllib.unquote(href_path)
                 href_path = href_path.decode('utf-8', 'ignore')
 
