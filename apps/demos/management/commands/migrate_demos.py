@@ -57,7 +57,7 @@ def _update_or_create_destination_demo(slug):
     except Submission.DoesNotExist:
         destination_demo = deepcopy(source_demo)
         destination_demo.pk = destination_demo.id = None
-        destination_creator = _get_or_create_destination_creator(source_demo)
+        destination_creator = _get_or_create_destination_creator(slug)
         destination_demo.creator = destination_creator
         logger.info("%s: created" % source_demo.slug)
     _disable_auto_date_fields(destination_demo)
@@ -139,7 +139,7 @@ def _delete_and_recreate_comments(slug):
             comment.parent = None
         comment.content_type = destination_type
         comment.object_id = destination_demo.id
-        comment.user = _get_or_create_destination_commentor(source_demo,
+        comment.user = _get_or_create_destination_commentor(slug,
                                                             comment)
         try:
             comment.save(using='new')
@@ -194,7 +194,8 @@ def _disable_auto_date_fields(submission):
             field.auto_now = False
 
 
-def _get_or_create_destination_creator(source_demo):
+def _get_or_create_destination_creator(slug):
+    source_demo = Submission.objects.using('default').get(slug=slug)
     try:
         destination_creator = User.objects.using('new').get(
             username=source_demo.creator.username)
@@ -210,11 +211,12 @@ def _get_or_create_destination_creator(source_demo):
                                                 source_demo.slug,
                                                 destination_creator.username,
                                                 destination_creator.id))
-    _get_or_create_destination_profile(source_demo, destination_creator)
+    _get_or_create_destination_profile(slug, destination_creator)
     return destination_creator
 
 
-def _get_or_create_destination_commentor(source_demo, source_comment):
+def _get_or_create_destination_commentor(slug, source_comment):
+    source_demo = Submission.objects.using('default').get(slug=slug)
     try:
         destination_commentator = User.objects.using('new').get(
             username=source_comment.user.username)
@@ -230,11 +232,12 @@ def _get_or_create_destination_commentor(source_demo, source_comment):
                                             source_demo.slug,
                                             destination_commentator.username,
                                             destination_commentator.id))
-    _get_or_create_destination_profile(source_demo, destination_commentator)
+    _get_or_create_destination_profile(slug, destination_commentator)
     return destination_commentator
 
 
-def _get_or_create_destination_profile(source_demo, destination_user):
+def _get_or_create_destination_profile(slug, destination_user):
+    source_demo = Submission.objects.using('default').get(slug=slug)
     try:
         destination_profile = UserProfile.objects.using('new').get(
             user=destination_user)
