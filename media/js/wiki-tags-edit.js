@@ -24,7 +24,7 @@
             // do nothing -- this is the item being removed
           }
           else {
-            itemTexts.push($(this).find(".tagit-label").text());
+            itemTexts.push('"' + $(this).find(".tagit-label").text() + '"');
           }
         });
         hiddenTags.val(itemTexts.join(","));
