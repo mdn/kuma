@@ -671,6 +671,7 @@ MINIFY_BUNDLES = {
             'syntaxhighlighter/scripts/shBrushPhp.js',
             'syntaxhighlighter/scripts/shBrushXml.js',
             'syntaxhighlighter/scripts/shBrushPlain.js',
+            'syntaxhighlighter/scripts/shBrushPython.js',
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
             'js/wiki.js',
             'js/main.js',
