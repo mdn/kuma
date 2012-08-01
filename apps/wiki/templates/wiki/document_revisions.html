@@ -48,7 +48,7 @@
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
               </div>
               <div class="date">
-                <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='date') }}</a>
+                <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
               <div class="status">
                 {% if document.current_revision.id == rev.id %}
