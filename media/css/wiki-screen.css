@@ -86,6 +86,9 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
 #page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
 
+#deki-page-tags ul.tagit { background: transparent; border: 0; padding: 0; min-height: none; margin-top: 6px; }
+#deki-page-tags li.tagit-choice { padding-right: 10px; }
+
 /* page attachments */
 @-moz-keyframes newAttachment { 
   0% { background-color: #90ee90; } 

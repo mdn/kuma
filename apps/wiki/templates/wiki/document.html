@@ -254,12 +254,12 @@
       <section id="page-tags">
         <h2>{{ _('Tags') }} ({{ tags | length}})</h2>
         <div id="deki-page-tags">
-          <ul class="tags">
-            <li>
-              {% for tag in tags %}
-                <a class="text" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
-              {% endfor %}
+          <ul class="tags tagit ui-widget ui-widget-content">
+            {% for tag in tags %}
+            <li class="tagit-choice ui-widget-content ui-state-default">
+                <a class="text tagit-label" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
             </li>
+            {% endfor %}
           </ul>
         </div>
       </section>
