@@ -43,7 +43,7 @@ CKEDITOR.mdn = {};
     };
 
     // Manage key presses
-    var keys = CKEDITOR.mdnKeys = {
+    var keys = CKEDITOR.mdn.keys = {
             control1: CKEDITOR.CTRL + 49,
             control2: CKEDITOR.CTRL + 50,
             control3: CKEDITOR.CTRL + 51,
@@ -69,9 +69,6 @@ CKEDITOR.mdn = {};
             return CKEDITOR.config.blockedKeystrokes.push(keys[k]);
         };
 
-    // Make keys globally available
-    CKEDITOR.mdn.keys = keys;
-
     // Prevent key handling
     block('tab');
     block('shiftTab');
@@ -91,13 +88,13 @@ CKEDITOR.mdn = {};
 
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle';
-    config.removePlugins = 'link,image,tab,enterkey';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table';
+    config.removePlugins = 'link,image,tab,enterkey,table';
     config.entities = false;
     
     config.toolbar_MDN = [
         ['Source', 'mdnSaveExit', 'mdnSave', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
-        ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', 'DefinitionDescription', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'Table', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
+        ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', 'DefinitionDescription', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'MDNTable', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
         ['Maximize'],
         '/',
         ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', '-', 'preButton', 'mdn-syntaxhighlighter', 'Styles'],
@@ -123,7 +120,7 @@ CKEDITOR.editorConfig = function(config) {
         { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
         { name: "Plaintext (nowiki)", element: 'span', attributes: { 'class': 'plain' }},
         { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
-        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true}
+        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true }
     ]);
 
     {{ editor_config|safe }}    
