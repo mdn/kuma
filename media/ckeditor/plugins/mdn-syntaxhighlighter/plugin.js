@@ -8,6 +8,7 @@
 		{ name: "JavaScript", brush: "js" },
 		{ name: "HTML", brush: "html" },
 		{ name: "PHP", brush: "php" },
+		{ name: "Python", brush: "python" },
 		{ name: "SQL", brush: "sql" },
 		{ name: "XML", brush: "xml" }
 	];
