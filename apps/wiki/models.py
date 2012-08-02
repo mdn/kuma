@@ -54,7 +54,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-    'address'
+    'address', 'font'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
@@ -67,6 +67,7 @@ ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'scope', 'lang']
 ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src', 'controls']
+ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size']
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
