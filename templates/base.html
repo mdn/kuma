@@ -76,42 +76,42 @@
               <ul>
                 <li>
                   <ul>
-                    <li><a href="{{ devmo_url(_('/en/HTML')) }}">{{ _('HTML') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/DOM')) }}">{{ _('DOM') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">{{ _('Video') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Using_audio_and_video_in_Firefox')) }}">{{ _('Audio') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/SVG')) }}">{{ _('SVG') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/WebGL')) }}">{{ _('WebGL') }}</a></li>
+                    <li><a href="{{ devmo_url('HTML') }}">{{ _('HTML') }}</a></li>
+                    <li><a href="{{ devmo_url('DOM') }}">{{ _('DOM') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_audio_and_video_in_Firefox') }}">{{ _('Video') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_audio_and_video_in_Firefox') }}">{{ _('Audio') }}</a></li>
+                    <li><a href="{{ devmo_url('SVG') }}">{{ _('SVG') }}</a></li>
+                    <li><a href="{{ devmo_url('WebGL') }}">{{ _('WebGL') }}</a></li>
                   </ul>
                 </li>
                 <li>
                   <ul>
-                    <li><a href="{{ devmo_url(_('/en/HTML/HTML5')) }}">{{ _('HTML5') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/WebSockets')) }}">{{ _('WebSockets') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Offline_resources_in_Firefox')) }}">{{ _('Offline Cache') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/DOM/Storage')) }}">{{ _('Local Storage') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/IndexedDB')) }}">{{ _('IndexedDB') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Using_files_from_web_applications')) }}">{{ _('File API') }}</a></li>
+                    <li><a href="{{ devmo_url('HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
+                    <li><a href="{{ devmo_url('WebSockets') }}">{{ _('WebSockets') }}</a></li>
+                    <li><a href="{{ devmo_url('Offline_resources_in_Firefox') }}">{{ _('Offline Cache') }}</a></li>
+                    <li><a href="{{ devmo_url('DOM/Storage') }}">{{ _('Local Storage') }}</a></li>
+                    <li><a href="{{ devmo_url('IndexedDB') }}">{{ _('IndexedDB') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_files_from_web_applications') }}">{{ _('File API') }}</a></li>
                   </ul>
                 </li>
                 <li>
                   <ul>
-                    <li><a href="{{ devmo_url(_('/en/CSS')) }}">{{ _('CSS') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Using_gradients')) }}">{{ _('Gradients') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/CSS/Using_CSS_transforms')) }}">{{ _('Transforms') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/CSS/CSS_transitions')) }}">{{ _('Transitions') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/CSS/CSS_animations')) }}">{{ _('Animations') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/CSS/Media_queries')) }}">{{ _('Media Queries') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS') }}">{{ _('CSS') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_gradients') }}">{{ _('Gradients') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/Using_CSS_transforms') }}">{{ _('Transforms') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/CSS_transitions') }}">{{ _('Transitions') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/CSS_animations') }}">{{ _('Animations') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/Media_queries') }}">{{ _('Media Queries') }}</a></li>
                   </ul>
                 </li>
                 <li>
                   <ul>
-                    <li><a href="{{ devmo_url(_('/en/JavaScript')) }}">{{ _('JavaScript') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/AJAX')) }}">{{ _('AJAX') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/HTML/Canvas')) }}">{{ _('Canvas') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Using_geolocation')) }}">{{ _('Geolocation') }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/DragDrop/Drag_and_Drop')) }}">{{ _('Drag &amp; Drop')|safe }}</a></li>
-                    <li><a href="{{ devmo_url(_('/en/Using_web_workers')) }}">{{ _('Web Workers') }}</a></li>
+                    <li><a href="{{ devmo_url('JavaScript') }}">{{ _('JavaScript') }}</a></li>
+                    <li><a href="{{ devmo_url('AJAX') }}">{{ _('AJAX') }}</a></li>
+                    <li><a href="{{ devmo_url('HTML/Canvas') }}">{{ _('Canvas') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_geolocation') }}">{{ _('Geolocation') }}</a></li>
+                    <li><a href="{{ devmo_url('DragDrop/Drag_and_Drop') }}">{{ _('Drag &amp; Drop')|safe }}</a></li>
+                    <li><a href="{{ devmo_url('Using_web_workers') }}">{{ _('Web Workers') }}</a></li>
                   </ul>
                 </li>
               </ul>
@@ -175,10 +175,10 @@
       <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
       <p id="copyright">&copy; {{ thisyear() }} Mozilla Developer Network</p>
       <p>
-      {% trans copyright_url=devmo_url(_('/en-US/docs/Project:Copyrights')) %}
+      {% trans copyright_url=devmo_url('en-US/docs/Project:Copyrights') %}
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
       {% endtrans %}
-      &bull; <a href="{{ devmo_url(_('/en-US/docs/Project:About')) }}">{{ _('About MDN') }}</a> &bull;
+      &bull; <a href="{{ devmo_url('en-US/docs/Project:About') }}">{{ _('About MDN') }}</a> &bull;
       <a href="http://www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a> &bull;
       <a href="/discussions">{{ _('Help') }}</a></p>
     </div>
