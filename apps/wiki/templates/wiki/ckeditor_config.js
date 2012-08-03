@@ -44,7 +44,6 @@ CKEDITOR.mdn = {};
 
     // Manage key presses
     var keys = CKEDITOR.mdn.keys = {
-            control1: CKEDITOR.CTRL + 49,
             control2: CKEDITOR.CTRL + 50,
             control3: CKEDITOR.CTRL + 51,
             control4: CKEDITOR.CTRL + 52,
@@ -72,7 +71,6 @@ CKEDITOR.mdn = {};
     // Prevent key handling
     block('tab');
     block('shiftTab');
-    block('control1');
     block('control2');
     block('control3');
     block('control4');
