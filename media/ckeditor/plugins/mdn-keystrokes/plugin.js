@@ -15,11 +15,6 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 				
 				/* Heading Tags */
 				
-				// Control - 1
-				case keys.control1:
-					editor.execCommand('mdn-buttons-h1');
-					break;
-				
 				// Control - 2
 				case keys.control2:
 					editor.execCommand('mdn-buttons-h2');
