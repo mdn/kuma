@@ -212,7 +212,8 @@ def process_body(response):
     from wiki.models import (ALLOWED_ATTRIBUTES, ALLOWED_TAGS, ALLOWED_STYLES)
     resp_body = bleach.clean(
         resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-        styles=ALLOWED_STYLES, strip_comments=False
+        styles=ALLOWED_STYLES, strip_comments=False,
+        skip_gauntlet=True
     )
     return resp_body
 

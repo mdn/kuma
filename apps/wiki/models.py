@@ -1283,7 +1283,8 @@ class Revision(ModelBase):
             return self.content
         return bleach.clean(
             self.content, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-            styles=ALLOWED_STYLES, strip_comments=False
+            styles=ALLOWED_STYLES, strip_comments=False,
+            skip_gauntlet=True
         )
 
     def get_previous(self):
