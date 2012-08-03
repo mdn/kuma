@@ -116,7 +116,6 @@ CKEDITOR.editorConfig = function(config) {
         { name: "Note box", element: 'div', attributes: { 'class': 'note' }, wrap: true },
         { name: "Warning box", element: 'div', attributes: { 'class': 'warning' }, wrap: true },
         { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
-        { name: "Plaintext (nowiki)", element: 'span', attributes: { 'class': 'plain' }},
         { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
         { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true }
     ]);
