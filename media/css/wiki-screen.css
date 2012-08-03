@@ -188,6 +188,7 @@ p.trans-note { float:none; clear: both; width: auto; margin-bottom: 1em; }
 div.note { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; }
 div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; color: #6d675f; }
 div.note p, div.tip p { margin-bottom: .75em; }
+div.note p:last-child, div.tip p:last-child { margin-bottom: 0; }
 
 /* @Page @Title and @Buttons *********/
 #article-head { position: relative; clear: both; max-width: 1200px; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
