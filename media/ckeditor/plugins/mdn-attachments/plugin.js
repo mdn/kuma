@@ -33,6 +33,9 @@ CKEDITOR.plugins.add('mdn-attachments', {
 					// Cycle through, filter out cruft
 					jQuery.each(mdnArray, function() {
 						if(!filter || filter(this)) {
+							if(!attachmentsArray.length) {
+								select.add(gettext('Select an attachment'), '', 0);
+							}
 							attachmentsArray.push(this);
 							select.add(this.title, this.url);
 							validFiles[this.url] = this;
@@ -42,12 +45,11 @@ CKEDITOR.plugins.add('mdn-attachments', {
 
 				// Populate the dropdown
 				if(!attachmentsArray.length) {
-					select.add(gettext('No attachments available'), '');
+					select.add(gettext('No attachments available'), '', 0);
 				}
-				else {
-					select.add(gettext('Select an attachment'), '', 0);
+				else if(validFiles[url]) {
+					select.setValue(url);
 				}
-				select.setValue(url);
 			}
 
         }
