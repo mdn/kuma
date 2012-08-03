@@ -1623,6 +1623,7 @@ def attachment_history(request, attachment_id):
                         {'attachment': attachment,
                          'revision': attachment.current_revision})
 
+@require_POST
 @login_required
 def new_attachment(request):
     """Create a new Attachment object and populate its initial
@@ -1632,29 +1633,28 @@ def new_attachment(request):
     if not request.user.has_perm('add_attachment'):
         raise PermissionDenied
     
-    if request.method == 'POST':
-        form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            rev = form.save(commit=False)
-            rev.creator = request.user
-            attachment = Attachment.objects.create(title=rev.title,
-                                                   slug=rev.slug)
-            rev.attachment = attachment
-            rev.save()
+    form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
+    if form.is_valid():
+        rev = form.save(commit=False)
+        rev.creator = request.user
+        attachment = Attachment.objects.create(title=rev.title,
+                                               slug=rev.slug)
+        rev.attachment = attachment
+        rev.save()
 
-            if request.POST.get('is_ajax', ''):
-                response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
-                        { 'result': json.dumps(_format_attachment_obj([attachment])) })
-            else:
-                return HttpResponseRedirect(attachment.get_absolute_url())
+        if request.POST.get('is_ajax', ''):
+            response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
+                    { 'result': json.dumps(_format_attachment_obj([attachment])) })
         else:
-            if request.POST.get('is_ajax', ''):
-                error_obj = {
-                    'title': request.POST.get('is_ajax', ''),
-                    'error': _(u'The file provided is not valid')
-                }
-                response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
-                        { 'result': json.dumps([error_obj]) })
+            return HttpResponseRedirect(attachment.get_absolute_url())
+    else:
+        if request.POST.get('is_ajax', ''):
+            error_obj = {
+                'title': request.POST.get('is_ajax', ''),
+                'error': _(u'The file provided is not valid')
+            }
+            response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
+                    { 'result': json.dumps([error_obj]) })
         
     response['x-frame-options'] = 'SAMEORIGIN'
     return response
