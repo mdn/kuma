@@ -9,6 +9,10 @@
                  (None, _('Revision {num}')|f(num=revision.id))] %}
 {% set classes = 'document' %}
 
+{% block extrahead %}
+  <meta name="robots" content="noindex" />
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
