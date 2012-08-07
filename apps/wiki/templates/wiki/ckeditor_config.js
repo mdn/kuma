@@ -55,6 +55,7 @@ CKEDITOR.mdn = {};
             controlShiftL: CKEDITOR.CTRL + CKEDITOR.SHIFT + 76,
             controlS: CKEDITOR.CTRL + 83,
             controlO: CKEDITOR.CTRL + 79,
+            controlP: CKEDITOR.CTRL + 80,
             controlShiftO: CKEDITOR.CTRL + CKEDITOR.SHIFT + 79,
             controlShiftS: CKEDITOR.CTRL + CKEDITOR.SHIFT + 83,
             shiftSpace: CKEDITOR.SHIFT + 32,
