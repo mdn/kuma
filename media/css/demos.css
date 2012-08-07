@@ -1,12 +1,16 @@
 /* @Background *********/
-.section-demos { background: url("../img/demos/bg-demostudio.jpg") center 50px no-repeat; min-width: 960px; }
+.section-demos { background: #f6f6f1 url("../img/demos/bg-demostudio.jpg") center 50px no-repeat !important; min-width: 960px; }
 .section-demos #content-main { margin: 20px -20px 40px; padding: 20px 20px 10px; background: #c0c4c8; background: rgba(255,255,255,.6); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.25); box-shadow: 1px 1px 4px rgba(0,0,0,.25); }
 
-#demostudio.detail { background: url("../img/demos/bg-demodetail.jpg") center 55px no-repeat; }
+#demostudio.detail { background: #f6f6f1 url("../img/demos/bg-demodetail.jpg") center 55px no-repeat !important; }
 #demostudio.detail #content-main { background: transparent; padding: 0 20px; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
-#demostudio.landing { background: url("../img/demos/bg-demolanding.jpg") center 50px no-repeat; }
+#demostudio.landing { background: #f6f6f1 url("../img/demos/bg-demolanding.jpg") center 50px no-repeat !important; }
 #demostudio.landing #content-main { background: transparent; border-radius: 0; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
+
+.section-demos #content, #demostudio.detail #content, #demostudio.landing #content {
+  background: none;
+}
 
 /* @Buttons *********/
 .section-demos button, .section-demos .button { display: inline-block; padding: .35em 14px .25em; color: #fff; border: 1px solid #8f4d4f; border-color: rgba(255,255,255,.2);
