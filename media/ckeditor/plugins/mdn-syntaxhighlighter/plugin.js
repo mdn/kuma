@@ -20,10 +20,11 @@
 		init: function(editor) {
 
 			// Add the button to the syntax highlighter
+			var title = gettext("Syntax Highlighter");
 			editor.ui.addComboButton("mdn-syntaxhighlighter", {
 				className: "cke_syntaxhighlighter",
-				label: gettext("Syntax Highlighter"),
-				title: gettext("Syntax Highlighter"),
+				label: title,
+				title: title,
 				iconOffset: 1,
 				icon: editor.skinPath + "icons.png",
 				panel: {
