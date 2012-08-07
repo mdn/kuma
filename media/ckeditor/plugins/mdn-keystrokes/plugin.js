@@ -64,6 +64,12 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 					editor.execCommand('mdn-buttons-code');
 					break;
 
+				/* <pre> Toggle */
+				case keys.controlP:
+					event.cancel();
+					editor.execCommand('mdn-buttons-pre');
+					break;
+
 				/* Save buttons */
 				case keys.controlS:
 					editor.execCommand('mdn-buttons-save-exit');
