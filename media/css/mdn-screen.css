@@ -354,7 +354,8 @@ a.browserid-signin:hover, a.browserid-signin:focus, a.browserid-link:active { ba
 footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 
 /*** @Toolbar *********/
-#nav-toolbar { font-size: .786em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 3px 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
+#nav-toolbar { font-size: .786em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 3px 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#nav-toolbar>div { background: #e4e4d9; background: rgba(198,198,175,.35); }
 #nav-toolbar a:link, #nav-toolbar a:visited { color: #6d6d67; }
 #nav-toolbar a:hover, #nav-toolbar a:focus, #nav-toolbar a:active { color: #25a; }
 
