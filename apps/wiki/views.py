@@ -446,10 +446,12 @@ def document(request, document_slug, document_locale):
                     # Checking for a parent length of 2 because we don't want p's wrapped
                     # in DIVs ("<div class='warning'>") and pyQuery adds 
                     # "<html><div>" wrapping to entire document
-                    if len(text) and not 'Redirect' in text and item.parents().length == 2:
+                    if (len(text) and not 'Redirect' in text and item.parents().length == 2 and 
+                        # Additional check for CSS reference breadcrumbs
+                        not '&laquo' in text):
                         seo_summary = text.strip()
                         break
-    except XMLSyntaxError:
+    except:
         logging.debug('Could not generate SEO summary')
 
     attachments = _format_attachment_obj(doc.attachments)
