@@ -12,7 +12,7 @@
 {% block content %}
 
 {% if not is_popup %}
-  <section id="nav-toolbar">
+  <section id="nav-toolbar"><div>
     <div class="wrap">
 
       <nav class="crumbs">
@@ -25,7 +25,7 @@
       
       <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">{{_('Submit a Demo')}}</a></p>
     </div>
-  </section>
+  </div></section>
 {% endif %}
 
 <section id="content">

@@ -127,7 +127,8 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments-spinner { opacity: 0; display: inline-block; width: 16px; height:16px; margin-left: 10px; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  }
 
 /*** @Tools @Nav *********/
-#nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #e4e4d9; background: rgba(198,198,175,.35); }
+#nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#nav-toolbar>div { background: #e4e4d9; background: rgba(198,198,175,.35); }
 #nav-toolbar .crumbs { margin: 0; }
 
 #tool-menus { width: 300px; float: right; }
