@@ -194,7 +194,7 @@
 	CKEDITOR.plugins.add('mdn-wrapstyle', {
 		requires: ['styles'],
 
-		beforeInit: function(editor) {
+		beforeInit: function(editor) {/*
 			var sortStyleDefinitions = function(definitionA, definitionB) {
 				return definitionA.wrap === true ? -1 :
 					definitionB.wrap === true ? 1 : 0;
@@ -225,12 +225,14 @@
 				// move wrap styles up
 				stylesDefinitions.sort(sortStyleDefinitions);
 			});
+			*/
 
 			// extend style class
 			var styleProto = CKEDITOR.style.prototype,
 				applyStyle = styleProto.apply,
 				removeStyle = styleProto.remove,
 				checkRemovable = styleProto.checkElementRemovable;
+			
 
 			CKEDITOR.tools.extend(styleProto, {
 					apply: function(document) {
@@ -255,8 +257,9 @@
 						if(this._.definition.wrap && this._.definition.wrap === true) {
 							element = element && element.getAscendant(this.element, true);
 						}
-
-						return checkRemovable.apply(this, [element, fullMatch]);
+						if(element) {
+							return checkRemovable.apply(this, [element, fullMatch]);
+						}
 					}
 				}, true);
 		},
