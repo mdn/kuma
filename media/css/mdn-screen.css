@@ -107,7 +107,7 @@ form ol, form ul { list-style: none; margin: 0 0 1.286em; }
 abbr.updated, abbr.published { border: 0; cursor: default; }
 
 /* @General elements and content *********/
-html { background: #000; }
+html { background: #f6f6f1 url("../img/bg-content.png") fixed; }
 body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; }
 
 /*** @Links *********/
@@ -166,7 +166,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .wrap { position: relative; width: 940px; padding: 0 10px; margin: 0 auto; }
 .wrap:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
 
-#content { min-height: 400px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#content { min-height: 400px; }
 #content .wrap { padding-bottom: 1em; }
 #content .wrap.sidebar { min-height: 400px; padding-bottom: 3em; background: transparent url("../img/bg-sidebar.png") 695px 0 no-repeat; }
 .section-demos #content { border-top: 0; }
@@ -856,7 +856,7 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 
 /* @Learning pages *********/
 .section-learning #content { border: 0; }
-.section-learning #page-head { margin: 0; padding: 40px 0 10px; text-align: center; border-top: 1px solid #a33500; clear: both; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+.section-learning #page-head { margin: 0; padding: 40px 0 10px; text-align: center; border-top: 1px solid #a33500; clear: both; }
 .section-learning #page-head .crumb { font-size: .857em; text-align: left; margin-top: -1.75em; }
 .section-learning #page-head .crumb a:before { content: "\00AB\00A0"; }
 .section-learning #page-head p { text-align: justify; font-size: .857em; width: 700px; margin: 0 auto 1em; color: #666; }
