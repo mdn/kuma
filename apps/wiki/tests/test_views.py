@@ -1,3 +1,5 @@
+# coding=utf-8
+
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
 import datetime
@@ -641,18 +643,13 @@ class DocumentEditingTests(TestCaseBase):
         # Warning paragraph ignored, first one chosen if multiple matches
         make_page_and_compare_seo('five', '<div class="geckoVersion"><p>No no no</p></div><p>yes yes yes</p><p>ignore ignore ignore</p>', 'yes yes yes')
         # Weird chars for testing
-        # FIXME: utf8 chars cause test errors, but work thru the web UI
-        """
         complex_html_prefix = '<div><p>slx<a>jsf</a></p><p>yah</p></div> <blockquote><p>yah</p></blockquote>'
-        fa_chars = 'ست داشتید هنوز در اینجا هست.ما تنها می ‎ خواستیم نام بهتری برای انجمن توسعه ‎ دهندگان'
-        ko_chars = '웹 애플리케이션 특징 최종 단계로 접어들어 거의 완료되어가고 먼트 '
-        ru_chars = 'Русский'
-        ar_chars = 'عربي'
-        make_page_and_compare_seo('fa', complex_html_prefix + '<p>' + fa_chars + '</p>', fa_chars)
-        make_page_and_compare_seo('ko', complex_html_prefix + '<p>' + ko_chars + '</p>', ko_chars)
-        make_page_and_compare_seo('ru', complex_html_prefix + '<p>' + ru_chars + '</p>', ru_chars)
-        make_page_and_compare_seo('ar', complex_html_prefix + '<p>' + ar_chars + '</p>', ar_chars)
-        """
+        # Don't take legacy crumbs
+        make_page_and_compare_seo('six', u'<p>« CSS</p><p>I am me!</p>', 'I am me!')
+        # Take the seoSummary class'd element
+        make_page_and_compare_seo('seven', u'<p>I could be taken</p><p class="seoSummary">I should be though</p>', 'I should be though')
+        # Two summaries append
+        make_page_and_compare_seo('eight', u'<p>I could be taken</p><p class="seoSummary">a</p><p class="seoSummary">b</p>', 'a b')
 
 
     def test_create_on_404(self):

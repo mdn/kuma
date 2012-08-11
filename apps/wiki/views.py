@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from datetime import datetime
 import time
 import json
@@ -438,19 +440,29 @@ def document(request, document_slug, document_locale):
             # <p></p> element if it's the only element in the doc_html
             seo_analyze_doc_html = doc_html + '<br />'
             page = pq(seo_analyze_doc_html)
-            paragraphs = page.find('p')
-            if paragraphs.length:
-                for p in range(len(paragraphs)):
-                    item = paragraphs.eq(p)
-                    text = item.text()
-                    # Checking for a parent length of 2 because we don't want p's wrapped
-                    # in DIVs ("<div class='warning'>") and pyQuery adds 
-                    # "<html><div>" wrapping to entire document
-                    if len(text) and not 'Redirect' in text and item.parents().length == 2:
-                        seo_summary = text.strip()
-                        break
-    except XMLSyntaxError:
-        logging.debug('Could not generate SEO summary')
+
+            # Look for the SEO summary class first
+            summaryClasses = page.find('.seoSummary')
+            if len(summaryClasses):
+                seo_summary = summaryClasses.text()
+            else:
+                paragraphs = page.find('p')
+                if paragraphs.length:
+                    for p in range(len(paragraphs)):
+                        item = paragraphs.eq(p)
+                        text = item.text()
+                        # Checking for a parent length of 2 because we don't want p's wrapped
+                        # in DIVs ("<div class='warning'>") and pyQuery adds 
+                        # "<html><div>" wrapping to entire document
+                        if (len(text) and 
+                            not 'Redirect' in text and 
+                            text.find(u'«') == -1 and
+                            text.find('&laquo') == -1 and
+                            item.parents().length == 2):
+                            seo_summary = text.strip()
+                            break
+    except:
+        logging.debug("Could not create SEO summary");
 
     attachments = _format_attachment_obj(doc.attachments)
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
