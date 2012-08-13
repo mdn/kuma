@@ -1216,6 +1216,10 @@ def translate(request, document_slug, document_locale, revision_id=None):
             if rev_form.is_valid() and not doc_form_invalid:
                 # append final slug
                 post_data['slug'] = destination_slug
+
+                # update the post data with the show_toc of original
+                post_data['show_toc'] = based_on_rev.show_toc
+
                 rev_form = RevisionForm(post_data)
 
                 _save_rev_and_notify(rev_form, request.user, doc)
