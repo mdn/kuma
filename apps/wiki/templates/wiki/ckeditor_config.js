@@ -49,7 +49,6 @@ CKEDITOR.mdn = {};
             control4: CKEDITOR.CTRL + 52,
             control5: CKEDITOR.CTRL + 53,
             control6: CKEDITOR.CTRL + 54,
-
             controlK: CKEDITOR.CTRL + 75,
             controlL: CKEDITOR.CTRL + 76,
             controlShiftL: CKEDITOR.CTRL + CKEDITOR.SHIFT + 76,
