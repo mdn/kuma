@@ -8,7 +8,19 @@
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
 
-    var current_editor;
+    var current_editor, startingContent;
+
+    // This function creates the beforeunload event handler and subsequent message
+    // for both the WYSIWYG (new, edit, translate) and the ACE editor (new, edit)
+    function setLeaveListener(getValueFn) {
+        // When the page unloads, stop if not saved
+        $(window).bind("beforeunload", function() {
+            // Form submitted and the starting content isn't the same as the current
+            if(!$("#wiki-page-edit, #wiki-page-translate").data("disabled") && startingContent != $.trim(getValueFn())) {
+                return gettext("You have unsaved changes.  Choose 'OK' to discard changes.");
+            }
+        });
+    }
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
@@ -40,11 +52,21 @@
             initSaveAndEditButtons();
             initArticlePreview();
             initAttachmentsActions();
+
+            // When the page unloads, stop if not saved
+            var hasWYSIWYG = CKEDITOR.instances.id_content;
+            startingContent = $.trim($('textarea#id_content').val());
+            if(hasWYSIWYG) {
+                setLeaveListener(function() {
+                    return CKEDITOR.instances.id_content.getData();
+                });
+            }
         }
-        if ($body.is('.edit.is-template') ||
-                $body.is('.new.is-template')) {
+        if ($body.is('.edit.is-template') || $body.is('.new.is-template')) {
+
             var textarea = $('textarea#id_content').hide();
-            
+            startingContent = $.trim(textarea.val());
+
             var editor = window.ace_editor = ace.edit("ace_content");
             editor.setTheme("ace/theme/dreamweaver");
             
@@ -55,6 +77,11 @@
             session.setValue(textarea.val());
             session.on('change', function(){
               textarea.val(editor.getSession().getValue());
+            });
+
+            // When the page unloads, stop if not saved
+            setLeaveListener(function() {
+                return textarea.val();
             });
         }
     }
@@ -933,13 +960,14 @@
 
         // Save-and-edit submits to a hidden iframe, style the button with a
         // loading anim.
+        var savedTa;
         $('#btn-save-and-edit').click(function () {
+            savedTa = $('#wiki-page-edit textarea[name=content]').val();
             if (typeof(window.sessionStorage) != 'undefined') {
                 // Preserve editor content, because saving to the iframe can
                 // yield things like 403 / login-required errors that bust out
                 // of the frame
-                window.sessionStorage.setItem(STORAGE_NAME, 
-                    $('#wiki-page-edit textarea[name=content]').val());
+                window.sessionStorage.setItem(STORAGE_NAME, savedTa);
             }
             // Redirect the editor form to the iframe.
             $('#wiki-page-edit')
@@ -968,6 +996,8 @@
                         // the background.
                         $('#wiki-page-edit input[name=current_rev]').val(
                             ir.attr('data-current-revision'));
+
+                        startingContent = savedTa;
                         
                     } else if ($('#wiki-page-edit', if_doc).hasClass('conflict')) {
                         // HACK: If we detect a conflict in the iframe while
