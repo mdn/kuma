@@ -117,7 +117,8 @@ CKEDITOR.editorConfig = function(config) {
         { name: "Warning box", element: 'div', attributes: { 'class': 'warning' }, wrap: true },
         { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
         { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
-        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true }
+        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true },
+        { name: "SEO Summary", element: "span", attributes: { 'class': 'seoSummary' }, wrap: false }
     ]);
 
     {{ editor_config|safe }}    

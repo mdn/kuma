@@ -132,3 +132,22 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .OK { background-color: rgb(153,255,153); }
 .irrelevant { color: rgb(153,153,153); }
 .maybe { background-color: rgb(255,255,204); }
+
+.seoSummary {
+	padding: 3px;
+	border: 1px dotted #ccc;
+	position: relative;
+}
+.seoSummary:before {
+	font-size: 10px;
+	content: "SEO Summary";
+	position: absolute;
+	top: -16px;
+	left: 0;
+	z-index: 10;
+	border: 1px dotted #fc0;
+	background: #fffea1;
+	display: block;
+	opacity: 0.8;
+	cursor: default;
+};
