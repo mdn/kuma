@@ -22,6 +22,12 @@
   {% else %}
       <link rel="alternate" type="application/atom+xml" title="{{title}}" 
           href="{{ url('wiki.feeds.recent_documents', format='atom') }}" />
+      {% if (request.locale != 'en-US'): %}
+        {# TODO: Someday, en-US won't be special in l10n. #}
+        <link rel="alternate" type="application/atom+xml" 
+              title="{{_('Translation updates needed')}}" 
+              href="{{ url('wiki.feeds.l10n_updates', format='atom') }}" />
+      {% endif %}
   {% endif %}
 {% endblock %}
 

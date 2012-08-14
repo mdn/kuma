@@ -1,4 +1,5 @@
 """Feeds for documents"""
+import logging
 import datetime
 import hashlib
 import urllib
@@ -7,6 +8,7 @@ import validate_jsonp
 import jingo
 
 from django.conf import settings
+from django.db.models import Q, F
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed, FeedDoesNotExist
 from django.shortcuts import get_object_or_404
@@ -23,7 +25,7 @@ from wiki.helpers import diff_table, diff_inline
 from wiki.models import Document, Revision, AttachmentRevision
 
 
-MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 15)
+MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 100)
 
 
 class DocumentsFeed(Feed):
@@ -50,7 +52,7 @@ class DocumentsFeed(Feed):
             self.feed_type = Atom1Feed
 
     def item_pubdate(self, document):
-        return document.current_revision.created
+        return document.modified
 
     def item_title(self, document):
         return document.title
@@ -183,6 +185,54 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
                 .filter_for_review(tag_name=tag)
                 .order_by('-current_revision__created')
                 .all()[:MAX_FEED_ITEMS])
+
+
+class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
+    """Feed of translated documents whose parent has been modified since the
+    translation was last updated."""
+
+    def get_object(self, request, format, tag=None):
+        (super(DocumentsUpdatedTranslationParentFeed, self)
+            .get_object(request, format))
+        self.locale = request.locale
+        self.subtitle = None
+        self.title = _("MDN '%s' translations in need of update" %
+                       self.locale)
+        # TODO: Need an HTML / dashboard version of this feed
+        self.link = self.request.build_absolute_uri(
+            reverse('wiki.views.list_documents'))
+
+    def items(self):
+        return (Document.objects
+                .filter(locale=self.locale)
+                .filter(parent__isnull=False)
+                .filter(modified__lt=F('parent__modified'))
+                .order_by('-parent__modified')
+                .all()[:MAX_FEED_ITEMS])
+
+    def item_description(self, item):
+        # TODO: Needs to be a jinja template?
+        tmpl = _(u"""
+            <p><a href="%(parent_url)s" title="%(parent_title)s">View '%(parent_locale)s' parent</a>
+                (last modified at %(parent_modified)s)</p>
+            <p><a href="%(doc_edit_url)s" title="%(doc_title)s">Edit '%(doc_locale)s' translation</a>
+                (last modified at %(doc_modified)s)</p>
+        """)
+
+        doc, parent = item, item.parent
+
+        return tmpl % dict(
+            doc_url=self.request.build_absolute_uri(doc.get_absolute_url()),
+            doc_edit_url=self.request.build_absolute_uri(
+                reverse('wiki.edit_document', args=[doc.full_path])),
+            doc_title=doc.title,
+            doc_locale=doc.locale,
+            doc_modified=doc.modified,
+            parent_url=self.request.build_absolute_uri(parent.get_absolute_url()),
+            parent_title=parent.title,
+            parent_locale=parent.locale,
+            parent_modified=parent.modified,
+        )
 
 
 class RevisionsFeed(DocumentsFeed):
