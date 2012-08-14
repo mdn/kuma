@@ -3,7 +3,8 @@ from django.conf.urls.defaults import patterns, url, include
 from kbforums.feeds import ThreadsFeed, PostsFeed
 from sumo.views import redirect_to
 from wiki.feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
-                        AttachmentsFeed)
+                        AttachmentsFeed,
+                        DocumentsUpdatedTranslationParentFeed,)
 
 
 # These patterns inherit from /discuss
@@ -100,6 +101,8 @@ urlpatterns += patterns('wiki.views',
 
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
         DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
+    url(r'^/feeds/(?P<format>[^/]+)/l10n-updates/?',
+        DocumentsUpdatedTranslationParentFeed(), name="wiki.feeds.l10n_updates"),
     url(r'^/feeds/(?P<format>[^/]+)/tag/(?P<tag>[^/]+)',
         DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
     url(r'^/feeds/(?P<format>[^/]+)/category/(?P<category>[^/]+)',

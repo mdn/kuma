@@ -96,7 +96,6 @@ class LocaleRedirectTests(TestCaseBase):
         response = self.client.get(url + '?x=y&x=z', follow=True)
         self.assertRedirects(response, de_doc.get_absolute_url() + '?x=y&x=z')
 
-    @attr('current')
     def test_redirect_with_no_slug(self):
         """Bug 775241: Fix exception in legacy redirect for URL with ui-locale"""
         url = '/en-US/docs/en-US/'
@@ -1324,6 +1323,35 @@ class DocumentEditingTests(TestCaseBase):
         resp = client.get(url)
         eq_(200, resp.status_code)
 
+    def test_updated_translation_parent_feed(self):
+        # Create translation parent...
+        d1 = document(title="Doc1", locale='en-US', save=True)
+        r1 = revision(document=d1, save=True)
+
+        # Then, translate it to de
+        d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
+        r2 = revision(document=d2, save=True)
+
+        # Get the feed URL for reuse.
+        feed_url = reverse('wiki.feeds.l10n_updates', locale='de',
+                           args=(), kwargs={'format': 'json'})
+
+        # There should be no entries in this feed yet.
+        resp = self.client.get(feed_url)
+        data = json.loads(resp.content)
+        eq_(0, len(data))
+
+        # Let the clock tick, then update the translation parent.
+        time.sleep(1.0)
+        r1a = revision(document=d1, save=True)
+        d1a = Document.objects.get(pk=d1.pk)
+
+        # Now, there should be an item in the feed.
+        resp = self.client.get(feed_url)
+        data = json.loads(resp.content)
+        eq_(1, len(data))
+        ok_(d2.get_absolute_url() in data[0]['link'])
+
     def test_revisions_feed(self):
         d = document(title='HTML9')
         d.save()
@@ -1802,7 +1830,6 @@ class MindTouchRedirectTests(TestCaseBase):
          'expected': '/fr/docs/HTML7'},
     )
 
-    @attr('current')
     def test_namespace_urls(self):
         new_doc = document()
         new_doc.title = 'User:Foo'
