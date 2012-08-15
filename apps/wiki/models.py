@@ -54,7 +54,8 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
-    'address', 'font'
+    'address', 'font',
+    'bdo', 'del', 'ins', 'kbd', 'samp', 'var'
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
