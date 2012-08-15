@@ -399,6 +399,14 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 #trans-content #cke_contents_wikiArticle { min-height: 800px; }
 
+.translate-display {
+  overflow-x: hidden;
+}
+
+.translate-display pre {
+  white-space: normal;
+}
+
 /* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
 /* Add focus styles (for keyboard accessibility) */
 .no-details summary:hover, .no-details summary:focus { background: rgba(170,160,130,.1); outline: 0; }
