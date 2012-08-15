@@ -300,7 +300,7 @@ class DocumentManager(ManagerBase):
         docs = docs.defer('html')
         return docs
 
-    def filter_for_review(self, tag=None, tag_name=None):
+    def filter_for_review(self, locale=None, tag=None, tag_name=None):
         """Filter for documents with current revision flagged for review"""
         bq = 'current_revision__review_tags__%s'
         if tag_name:
@@ -309,6 +309,8 @@ class DocumentManager(ManagerBase):
             q = {bq % 'in': [tag]}
         else:
             q = {bq % 'name__isnull': False}
+        if locale:
+            q['locale'] = locale
         return self.filter(**q).distinct()
 
     def dump_json(self, queryset, stream):

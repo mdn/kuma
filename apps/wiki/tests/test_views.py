@@ -1375,6 +1375,50 @@ class DocumentEditingTests(TestCaseBase):
                 ok_('$edit' in desc_text)
                 ok_('$history' in desc_text)
 
+    def test_feed_locale_filter(self):
+        """Documents and Revisions in feeds should be filtered by locale"""
+        d1 = document(title="Doc1", locale='en-US', save=True)
+        r1 = revision(document=d1, save=True)
+        r1.review_tags.set('editorial')
+        d1.tags.set('foobar')
+
+        d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
+        r2 = revision(document=d2, save=True)
+        r2.review_tags.set('editorial')
+        d2.tags.set('foobar')
+
+        d3 = document(title="TransDoc1", locale='fr', parent=d1, save=True)
+        r3 = revision(document=d3, save=True)
+        r3.review_tags.set('editorial')
+        d3.tags.set('foobar')
+
+        show_alls = (False, True)
+        locales = ('en-US', 'de', 'fr')
+        for show_all in show_alls:
+            for locale in locales:
+                feed_urls = (
+                    reverse('wiki.feeds.recent_revisions', locale=locale,
+                            args=(), kwargs={'format': 'json'}),
+                    reverse('wiki.feeds.recent_documents', locale=locale,
+                            args=(), kwargs={'format': 'json'}),
+                    reverse('wiki.feeds.recent_documents', locale=locale,
+                            args=(), kwargs={'format': 'json',
+                                             'tag':'foobar'}),
+                    reverse('wiki.feeds.list_review', locale=locale,
+                            args=('json',)),
+                    reverse('wiki.feeds.list_review_tag', locale=locale,
+                            args=('json', 'editorial',)),
+                )
+                for feed_url in feed_urls:
+                    if show_all:
+                        feed_url = '%s?all_locales' % feed_url
+                    resp = self.client.get(feed_url)
+                    data = json.loads(resp.content)
+                    if show_all:
+                        eq_(3, len(data))
+                    else:
+                        eq_(1, len(data))
+
     def test_discard_location(self):
         """Testing that the 'discard' HREF goes to the correct place when it's
            explicitely and implicitely set"""
