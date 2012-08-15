@@ -70,7 +70,7 @@ class DocumentsFeed(Feed):
 
     def item_link(self, document):
         return self.request.build_absolute_uri(
-            reverse('wiki.views.document',
+            reverse('wiki.views.document', locale=document.locale,
                     args=(document.slug,)))
 
     def item_categories(self, document):
@@ -98,17 +98,28 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
         items_out = []
         for item in self.items:
             document = item['obj']
-            revision = document.current_revision
 
             # Include some of the simple elements from the preprocessed item
             item_out = dict((x, item[x]) for x in (
                 'link', 'title', 'pubdate', 'author_name', 'author_link',
             ))
 
-            # Include an avatar image URL, if available.
+            # HACK: DocumentFeed is the superclass of RevisionFeed. In this
+            # case, current_revision is the revision itself.
+            # TODO: Refactor this out into separate DocumentFeed and
+            # RevisionFeed subclasses of Feed.
+            if hasattr(document, 'current_revision'):
+                revision = document.current_revision
+            else:
+                revision = document
+            
             profile = UserProfile.objects.get(user=revision.creator)
             if hasattr(profile, 'gravatar'):
                 item_out['author_avatar'] = profile.gravatar
+
+            summary = revision.summary
+            if summary:
+                item_out['summary'] = summary
 
             # Linkify the tags used in the feed item
             categories = dict(
@@ -119,10 +130,6 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             )
             if categories:
                 item_out['categories'] = categories
-
-            summary = revision.summary
-            if summary:
-                item_out['summary'] = summary
 
             #TODO: What else might be useful in a JSON feed of documents?
 
@@ -156,11 +163,15 @@ class DocumentsRecentFeed(DocumentsFeed):
                 reverse('wiki.views.list_documents'))
 
     def items(self):
+        locale = ((self.request.GET.get('all_locales', False) is False)
+                  and self.request.locale or None)
         return (Document.objects
-                .filter_for_list(tag_name=self.tag, category=self.category)
-                .filter(current_revision__isnull=False)
-                .order_by('-current_revision__created')
-                .all()[:MAX_FEED_ITEMS])
+                        .filter_for_list(tag_name=self.tag,
+                                         category=self.category,
+                                         locale=locale)
+                        .filter(current_revision__isnull=False)
+                        .order_by('-modified')
+                        [:MAX_FEED_ITEMS])
 
 
 class DocumentsReviewFeed(DocumentsRecentFeed):
@@ -181,10 +192,12 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
         return tag
 
     def items(self, tag=None):
+        locale = ((self.request.GET.get('all_locales', False) is False)
+                  and self.request.locale or None)
         return (Document.objects
-                .filter_for_review(tag_name=tag)
-                .order_by('-current_revision__created')
-                .all()[:MAX_FEED_ITEMS])
+                        .filter_for_review(tag_name=tag, locale=locale)
+                        .order_by('-modified')
+                        [:MAX_FEED_ITEMS])
 
 
 class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
@@ -242,7 +255,10 @@ class RevisionsFeed(DocumentsFeed):
     subtitle = _("Recent revisions to MDN documents")
 
     def items(self):
-        return Revision.objects.order_by('-created')[:50]
+        items = Revision.objects
+        if self.request.GET.get('all_locales', False) is False:
+            items = items.filter(document__locale=self.request.locale)
+        return items.order_by('-created')[:MAX_FEED_ITEMS]
 
     def item_title(self, item):
         return "%s/%s" % (item.document.locale, item.document.full_path)
