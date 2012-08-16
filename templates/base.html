@@ -58,9 +58,9 @@
       
       {% block headernav %}
 
-      <nav id="nav" role="menubar">
-        <ul id="nav-main">
-          <li id="nav-main-topics" class="menu"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="{{ _('Explore other parts of MDN') }}">{{ _('Topics') }}</a>
+      <nav id="nav">
+        <ul id="nav-main" role="menubar">
+          <li id="nav-main-topics" class="menu" role="menuitem"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="{{ _('Explore other parts of MDN') }}">{{ _('Topics') }}</a>
             <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
               <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
               <li id="nav-sub-apps"><a href="{{ url('apps') }}">{{ _('Apps') }}</a></li>
@@ -69,7 +69,7 @@
               <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
             </ul>
           </li>
-          <li id="nav-main-docs" class="menu">
+          <li id="nav-main-docs" class="menu" role="menuitem">
             <a href="{{ url('docs') }}" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
             <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
               <ul>
