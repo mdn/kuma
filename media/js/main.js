@@ -79,6 +79,10 @@ k = {};
     function disableFormsOnSubmit() {
         $('form').submit(function(ev) {
             var $this = $(this);
+
+            // Allow for a special CSS class to prevent this functionality
+            if($this.hasClass('nodisable')) return;
+
             if ($this.data('disabled')) {
                 ev.preventDefault();
             } else {
