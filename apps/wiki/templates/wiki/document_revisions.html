@@ -28,7 +28,7 @@
     </div>
     <div id="revision-list">
       {% if revisions %}
-        <form action="{{ url('wiki.compare_revisions', document.full_path) }}" method="get">
+        <form action="{{ url('wiki.compare_revisions', document.full_path) }}" method="get" class="nodisable">
           {% if revisions | length > 1 %}
             <div class="compare top">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
