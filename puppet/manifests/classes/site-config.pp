@@ -94,7 +94,7 @@ class kuma_config {
             require => [ File["/home/vagrant/uploads"] ];
         "/vagrant/webroot/.htaccess":
             ensure => link,
-            target => "$PROJ_DIR/configs/htaccess";
+            target => "$PROJ_DIR/configs/htaccess-without-mindtouch";
     }
     exec { 
         "kuma_update_product_details":
