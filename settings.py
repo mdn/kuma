@@ -1017,7 +1017,7 @@ CONSTANCE_CONFIG = dict(
     ),
 )
 
-BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
+BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL_FAILURE = '/'
