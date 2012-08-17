@@ -15,7 +15,7 @@
             <form class="browserid boxed" action="{{url('users.browserid_change_email')}}" method="POST">
               <input type="hidden" name="next" value="{{ next_url }}" />
               {{ errorlist(form) }}
-              {% trans browserid_href='https://browserid.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
+              {% trans browserid_href='https://persona.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
               <h3>What's this?</h3>
               <p>MDN has switched to <a href="{{ browserid_href }}" target="_blank" rel="external">BrowserID</a>, a safe and simple way to sign in with just your e-mail address. 
               <a href="{{ why_browserid }}" rel="external">Learn more about why Mozilla is using BrowserID</a>.</p>
@@ -25,7 +25,7 @@
               address.
               {% endtrans %}</p>
               {{ browserid_form }}
-              <a href="https://browserid.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
+              <a href="https://persona.org/" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a>
               {% if messages %}
                 <ul class="messages errorlist">
                   {% for message in messages %}
