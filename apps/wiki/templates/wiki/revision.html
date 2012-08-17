@@ -64,6 +64,10 @@
               <mark>{{ _('Is current revision?') }}</mark>
               <span>{{ (revision == document.current_revision)|yesno }}</span>
             </li>
+            <li>
+              <mark>{{ _('Comment') }}</mark>
+              <span>{{ ("None" if not revision.comment else revision.comment) }}</span>
+            </li>
           {% endif %}
           {#
           {% if user.is_authenticated() %}

@@ -142,6 +142,12 @@
               </section>
             </section>
 
+            <section class="page-meta"><section id="page-comment">
+              <h2>{{_('Review Comment')}}</h2>
+              <p>{{_('Tell us about why you made this change.')}}</p>
+              {{ revision_form.comment | safe }}
+            </section></section>
+
           <section>
           <h4>{{_('Review needed?')}}</h4>
             {{ revision_form.review_tags|safe }}

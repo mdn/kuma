@@ -89,6 +89,14 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #deki-page-tags ul.tagit { background: transparent; border: 0; padding: 0; min-height: none; margin-top: 6px; }
 #deki-page-tags li.tagit-choice { padding-right: 10px; }
 
+/*  */
+#page-comment input {
+  width: 98%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
 /* page attachments */
 @-moz-keyframes newAttachment { 
   0% { background-color: #90ee90; } 
