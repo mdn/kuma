@@ -21,7 +21,7 @@ from django.utils.translation import ugettext as _
 from sumo.urlresolvers import reverse
 from devmo.models import UserProfile
 
-from wiki.helpers import diff_table, diff_inline
+from wiki.helpers import diff_inline, compare_url
 from wiki.models import Document, Revision, AttachmentRevision
 
 
@@ -227,12 +227,18 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
         # TODO: Needs to be a jinja template?
         tmpl = _(u"""
             <p><a href="%(parent_url)s" title="%(parent_title)s">View '%(parent_locale)s' parent</a>
-                (last modified at %(parent_modified)s)</p>
+                (<a href="%(mod_url)s">last modified at %(parent_modified)s</a>)</p>
             <p><a href="%(doc_edit_url)s" title="%(doc_title)s">Edit '%(doc_locale)s' translation</a>
                 (last modified at %(doc_modified)s)</p>
         """)
 
         doc, parent = item, item.parent
+
+        trans_based_on_rev = (Revision.objects.filter(document=parent)
+                                            .filter(created__lte=doc.modified)
+                                            .order_by('created')[0])
+        mod_url = compare_url(parent, trans_based_on_rev.id,
+                              parent.current_revision.id)
 
         return tmpl % dict(
             doc_url=self.request.build_absolute_uri(doc.get_absolute_url()),
@@ -245,6 +251,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
             parent_title=parent.title,
             parent_locale=parent.locale,
             parent_modified=parent.modified,
+            mod_url=mod_url,
         )
 
 

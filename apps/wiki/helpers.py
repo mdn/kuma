@@ -1,5 +1,6 @@
 import difflib
 import re
+import urllib
 
 import constance.config
 from jingo import register
@@ -7,8 +8,17 @@ import jinja2
 from tidylib import tidy_document
 from tower import ugettext as _
 
+from sumo.urlresolvers import reverse
 from wiki import DIFF_WRAP_COLUMN
 from wiki import parser
+
+
+def compare_url(doc, from_id, to_id):
+    return (reverse('wiki.compare_revisions', args=[doc.full_path],
+                    locale=doc.locale)
+            + '?' +
+            urllib.urlencode({'from': from_id, 'to': to_id})
+           )
 
 
 # http://stackoverflow.com/q/774316/571420
