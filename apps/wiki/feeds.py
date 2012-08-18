@@ -1,20 +1,14 @@
 """Feeds for documents"""
-import logging
 import datetime
-import hashlib
 import urllib
 import validate_jsonp
 
-import jingo
 
 from django.conf import settings
-from django.db.models import Q, F
-from django.contrib.auth.models import User
-from django.contrib.syndication.views import Feed, FeedDoesNotExist
-from django.shortcuts import get_object_or_404
+from django.db.models import F
+from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
                                         Atom1Feed)
-from django.utils.html import escape
 import django.utils.simplejson as json
 from django.utils.translation import ugettext as _
 
@@ -112,7 +106,7 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
                 revision = document.current_revision
             else:
                 revision = document
-            
+
             profile = UserProfile.objects.get(user=revision.creator)
             if hasattr(profile, 'gravatar'):
                 item_out['author_avatar'] = profile.gravatar
@@ -226,10 +220,18 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
     def item_description(self, item):
         # TODO: Needs to be a jinja template?
         tmpl = _(u"""
-            <p><a href="%(parent_url)s" title="%(parent_title)s">View '%(parent_locale)s' parent</a>
-                (<a href="%(mod_url)s">last modified at %(parent_modified)s</a>)</p>
-            <p><a href="%(doc_edit_url)s" title="%(doc_title)s">Edit '%(doc_locale)s' translation</a>
-                (last modified at %(doc_modified)s)</p>
+            <p>
+              <a href="%(parent_url)s" title="%(parent_title)s">
+                 View '%(parent_locale)s' parent
+              </a>
+              (<a href="%(mod_url)s">last modified at %(parent_modified)s</a>)
+            </p>
+            <p>
+              <a href="%(doc_edit_url)s" title="%(doc_title)s">
+                  Edit '%(doc_locale)s' translation
+              </a>
+              (last modified at %(doc_modified)s)
+            </p>
         """)
 
         doc, parent = item, item.parent
@@ -247,7 +249,8 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
             doc_title=doc.title,
             doc_locale=doc.locale,
             doc_modified=doc.modified,
-            parent_url=self.request.build_absolute_uri(parent.get_absolute_url()),
+            parent_url=self.request.build_absolute_uri(
+                parent.get_absolute_url()),
             parent_title=parent.title,
             parent_locale=parent.locale,
             parent_modified=parent.modified,
@@ -280,8 +283,10 @@ class RevisionsFeed(DocumentsFeed):
         diff = ("Diff:<blockquote>%s</blockquote>" % (
             diff_inline(previous.content, item.content)))
 
-        diff = (diff.replace('<ins', '<ins style="background-color: #AAFFAA;text-decoration:none;"')
-                .replace('<del', '<del style="background-color: #FFAAAA;text-decoration:none;"'))
+        diff = (diff.replace('<ins', '<ins style="background-color: #AAFFAA;'
+                             'text-decoration:none;"')
+                .replace('<del', '<del style="background-color: #FFAAAA;'
+                         'text-decoration:none;"'))
 
         link_cell = '<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (reverse('wiki.document',
@@ -300,7 +305,10 @@ class RevisionsFeed(DocumentsFeed):
                                          args=[item.document.full_path]),
                                  _('History'))
         links_table = '<table border="0" width="80%">'
-        links_table = links_table + '<tr>%s%s%s%s</tr>' % (view_cell, edit_cell, compare_cell, history_cell)
+        links_table = links_table + '<tr>%s%s%s%s</tr>' % (view_cell,
+                                                           edit_cell,
+                                                           compare_cell,
+                                                           history_cell)
         links_table = links_table + '</table>'
         description = "%s%s%s%s" % (by, comment, diff, links_table)
         return description

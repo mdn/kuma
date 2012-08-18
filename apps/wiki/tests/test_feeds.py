@@ -3,7 +3,6 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
 import datetime
-import logging
 import json
 
 from nose.tools import eq_, ok_
@@ -57,17 +56,16 @@ class FeedTests(TestCaseBase):
                                                  first_rev_id)
                 in desc_text)
 
-
     def test_revisions_feed(self):
         d = document(title='HTML9')
         d.save()
         for i in xrange(1, 6):
-            r = revision(save=True, document=d,
+            revision(save=True, document=d,
                          title='HTML9', comment='Revision %s' % i,
-                         content = "Some Content %s" % i,
+                         content="Some Content %s" % i,
                          is_approved=True,
                          created=datetime.datetime.now()\
-                         + datetime.timedelta(seconds=5*i))
+                         + datetime.timedelta(seconds=5 * i))
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}))
@@ -112,7 +110,7 @@ class FeedTests(TestCaseBase):
                             args=(), kwargs={'format': 'json'}),
                     reverse('wiki.feeds.recent_documents', locale=locale,
                             args=(), kwargs={'format': 'json',
-                                             'tag':'foobar'}),
+                                             'tag': 'foobar'}),
                     reverse('wiki.feeds.list_review', locale=locale,
                             args=('json',)),
                     reverse('wiki.feeds.list_review_tag', locale=locale,

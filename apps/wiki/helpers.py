@@ -26,7 +26,7 @@ def show_diff(seqm):
     """Unify operations between two compared strings
 seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
     lines = constance.config.FEED_DIFF_CONTEXT_LINES
-    full_output= []
+    full_output = []
     for opcode, a0, a1, b0, b1 in seqm.get_opcodes():
         if opcode == 'equal':
             full_output.append(seqm.a[a0:a1])
@@ -38,7 +38,7 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
             full_output.append("&nbsp;<del>" + seqm.a[a0:a1] + "</del>&nbsp;")
             full_output.append("&nbsp;<ins>" + seqm.b[b0:b1] + "</ins>&nbsp;")
         else:
-            raise RuntimeError, "unexpected opcode"
+            raise RuntimeError("unexpected opcode")
     output = []
     whitespace_change = False
     for piece in full_output:
@@ -64,17 +64,21 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
             else:
                 # context shows subsequent lines
                 # and preceding lines for next change
-                context = context_lines[:lines] + ['<p>...</p>'] + context_lines[-lines:]
+                context = (context_lines[:lines]
+                           + ['<p>...</p>']
+                           + context_lines[-lines:])
             output = output + context
     # remove extra context from the very end, unless its the only context
-    if len(output) > lines+1:  # context lines and the change line
+    if len(output) > lines + 1:  # context lines and the change line
         output = output[:-lines]
     return ''.join(output)
+
 
 def _massage_diff_content(content):
     tidy_options = {'output-xhtml': 0, 'force-output': 1}
     content = tidy_document(content, options=tidy_options)
     return content
+
 
 @register.function
 def diff_table(content_from, content_to):
@@ -86,12 +90,13 @@ def diff_table(content_from, content_to):
     to_lines = tidy_to.splitlines()
     try:
         diff = html_diff.make_table(from_lines, to_lines, context=True,
-                                    numlines=constance.config.DIFF_CONTEXT_LINES)
+                                numlines=constance.config.DIFF_CONTEXT_LINES)
     except RuntimeError:
         # some diffs hit a max recursion error
         message = _(u'There was an error generating the content.')
         diff = '<div class="warning"><p>%s</p></div>' % message
     return jinja2.Markup(diff)
+
 
 @register.function
 def diff_inline(content_from, content_to):

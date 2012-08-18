@@ -89,18 +89,19 @@ def translated_revision(locale='de', **kwargs):
 def make_translation():
     # Create translation parent...
     d1 = document(title="Doc1", locale='en-US', save=True)
-    r1 = revision(document=d1, save=True)
+    revision(document=d1, save=True)
 
     # Then, translate it to de
     d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
-    r2 = revision(document=d2, save=True)
+    revision(document=d2, save=True)
 
     return d1, d2
+
 
 def wait_add_rev(document):
     # Let the clock tick, then update the translation parent.
     time.sleep(1.0)
-    r1a = revision(document=document, save=True)
+    revision(document=document, save=True)
     return document
 
 
