@@ -72,6 +72,8 @@ ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'scope', 'lang']
 ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src', 'controls']
 ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size']
+ALLOWED_ATTRIBUTES['select'] = ['name']
+ALLOWED_ATTRIBUTES['option'] = ['value', 'selected']
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
