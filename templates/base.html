@@ -165,7 +165,7 @@
 <div class="wrap">
     <div id="legal">
       <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
-      <p id="copyright">&copy; {{ thisyear() }} Mozilla Developer Network</p>
+      <p id="copyright">&copy; 2005 - {{ thisyear() }} Mozilla Developer Network {{ _('and individual contributors') }}</p>
       <p>
       {% trans copyright_url=devmo_url('Project:Copyrights') %}
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
