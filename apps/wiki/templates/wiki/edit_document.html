@@ -83,7 +83,7 @@
 
             {% if content and current_revision.content and content != current_revision.content %}
                 <h4>{{ _('Content:') }}</h4>
-                {{ diff_table(content, current_content) }}
+                {{ diff_table(content, current_content, current_revision.id, "Proposed") }}
             {% endif %}
 
           </div>
