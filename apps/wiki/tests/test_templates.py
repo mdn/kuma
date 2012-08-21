@@ -115,10 +115,14 @@ class DocumentTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(d2.title, doc('article header h1.page-title').text())
-        # Avoid depending on localization, assert just that there is only text
-        # d.html would definitely have a <p> in it, at least.
-        ok_("This article doesn't have approved content yet." in
-            doc('div#wikiArticle').text())
+        # HACK: fr doc has different message if locale/ is updated
+        ok_(
+            ("This article doesn't have approved content yet." in
+                doc('div#wikiArticle').text())
+            or
+            ("Cet article n'a pas encore de contenu" in
+                doc('div#wikiArticle').text())
+           )
 
     def test_document_fallback_with_translation(self):
         """The document template falls back to English if translation exists

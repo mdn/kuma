@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 
 from django.contrib.auth.models import User, Group, Permission
 from django.template.defaultfilters import slugify
@@ -83,6 +84,25 @@ def translated_revision(locale='de', **kwargs):
     new_kwargs = {'document': translation, 'based_on': parent_rev}
     new_kwargs.update(kwargs)
     return revision(**new_kwargs)
+
+
+def make_translation():
+    # Create translation parent...
+    d1 = document(title="Doc1", locale='en-US', save=True)
+    revision(document=d1, save=True)
+
+    # Then, translate it to de
+    d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
+    revision(document=d2, save=True)
+
+    return d1, d2
+
+
+def wait_add_rev(document):
+    # Let the clock tick, then update the translation parent.
+    time.sleep(1.0)
+    revision(document=document, save=True)
+    return document
 
 
 # I don't like this thing. revision() is more flexible. All this adds is
