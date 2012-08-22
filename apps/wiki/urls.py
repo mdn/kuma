@@ -48,6 +48,8 @@ document_patterns = patterns('wiki.views',
     url(r'^\$translate$', 'translate', name='wiki.translate'),
     url(r'^\$locales$', 'select_locale', name='wiki.select_locale'),
     url(r'^\$json$', 'json_view', name='wiki.json_slug'),
+    url(r'^\$revert/(?P<revision_id>\d+)$', 'revert_document',
+        name='wiki.revert_document'),
 
     # Un/Subscribe to document edit notifications.
     url(r'^\$watch$', 'watch_document', name='wiki.document_watch'),
@@ -58,10 +60,6 @@ document_patterns = patterns('wiki.views',
 
     # KB discussion forums
     (r'^\$discuss', include(discuss_patterns)),
-
-    # Delete a revision
-    url(r'^\$revision/(?P<revision_id>\d+)/delete$', 'delete_revision',
-        name='wiki.delete_revision'),
 )
 
 urlpatterns = patterns('docs.views',

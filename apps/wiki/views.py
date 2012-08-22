@@ -1393,6 +1393,28 @@ def helpful_vote(request, document_slug, document_locale):
 
 @waffle_flag('kumawiki')
 @login_required
+@check_readonly
+def revert_document(request, document_path, revision_id):
+    """Revert document to a specific revision."""
+    document_locale, document_slug, needs_redirect = (Document
+            .locale_and_slug_from_path(document_path, request))
+
+    revision = get_object_or_404(Revision, pk=revision_id,
+                                 document__slug=document_slug)
+    document = revision.document
+    
+    if request.method == 'GET':
+        # Render the confirmation page
+        return jingo.render(request, 'wiki/confirm_revision_revert.html',
+                            {'revision': revision, 'document': document})
+
+    document.revert(revision, request.user)
+    return HttpResponseRedirect(reverse('wiki.document_revisions',
+                                args=[document.full_path]))
+    
+
+@waffle_flag('kumawiki')
+@login_required
 @permission_required('wiki.delete_revision')
 @check_readonly
 def delete_revision(request, document_path, revision_id):
