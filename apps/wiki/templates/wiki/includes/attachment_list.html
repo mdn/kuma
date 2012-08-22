@@ -1,4 +1,4 @@
-{% set show_attach_button = user.has_perm('add_attachment') %}
+{% set show_attach_button = user.has_perm('wiki.add_attachment') %}
 
 <section id="page-attachments">
   <h2>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
