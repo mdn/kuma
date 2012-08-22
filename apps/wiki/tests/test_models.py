@@ -632,7 +632,26 @@ class RevisionTests(TestCase):
         r.save()
         assert d.show_toc
 
+    def test_revert(self):
+        """Reverting to a specific revision."""
+        d, r = doc_rev('Test reverting')
+        old_id = r.id
 
+        time.sleep(1)
+
+        r2 = revision(document=d, title='Test reverting',
+                      content='An edit to revert',
+                      comment='This edit gets reverted',
+                      is_approved=True)
+        r.save()
+
+        time.sleep(1)
+
+        reverted = d.revert(r, r.creator)
+        ok_('Revert to' in reverted.comment)
+        ok_('Test reverting' == reverted.content)
+        ok_(old_id != reverted.id)
+        
 class RelatedDocumentTests(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 

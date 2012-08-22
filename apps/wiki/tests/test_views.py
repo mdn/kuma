@@ -1510,6 +1510,34 @@ class DocumentEditingTests(TestCaseBase):
         eq_(pq(response.content).find('#btn-discard').attr('href'),
             reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE))
 
+    def test_revert(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        data = new_document_data()
+        data['title'] = 'A Test Article For Reverting'
+        data['slug'] = 'test-article-for-reverting'
+        response = client.post(reverse('wiki.new_document'), data)
+
+        doc = Document.objects.get(locale='en-US',
+                                   slug='test-article-for-reverting')
+        rev = doc.revisions.order_by('-id').all()[0]
+
+        data['content'] = 'Not lorem ipsum anymore'
+        data['comment'] = 'Nobody likes Latin anyway'
+
+        response = client.post(reverse('wiki.edit_document',
+                                       args=[doc.full_path]), data)
+
+        response = client.post(reverse('wiki.revert_document',
+                                       args=[doc.full_path, rev.id]),
+                               {'revert': True})
+
+        ok_(302 == response.status_code)
+        rev = doc.revisions.order_by('-id').all()[0]
+        ok_('lorem ipsum dolor sit amet' == rev.content)
+        
+
 class SectionEditingResourceTests(TestCaseBase):
     fixtures = ['test_users.json']
 
