@@ -3,7 +3,6 @@ import datetime
 import urllib
 import validate_jsonp
 
-
 from django.conf import settings
 from django.db.models import F
 from django.contrib.syndication.views import Feed
@@ -15,7 +14,7 @@ from django.utils.translation import ugettext as _
 from sumo.urlresolvers import reverse
 from devmo.models import UserProfile
 
-from wiki.helpers import diff_inline, compare_url
+from wiki.helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from wiki.models import Document, Revision, AttachmentRevision
 
 
@@ -271,22 +270,42 @@ class RevisionsFeed(DocumentsFeed):
         return items.order_by('-created')[:MAX_FEED_ITEMS]
 
     def item_title(self, item):
-        return "%s/%s" % (item.document.locale, item.document.full_path)
+        return "%s (%s)" % (item.document.full_path, item.document.locale)
 
     def item_description(self, item):
         previous = item.get_previous()
         if previous is None:
-            return '<p>Created by: %s</p>' % item.creator.username
+            return '<h3>Created by:</h3><p>%s</p>' % item.creator.username
         # TODO: put this in a jinja template if django syndication will let us
-        by = '<p>Edited by: %s</p>' % item.creator.username
-        comment = '<p>Comment: %s</p>' % item.comment
-        diff = ("Diff:<blockquote>%s</blockquote>" % (
-            diff_inline(previous.content, item.content)))
+        by = '<h3>Edited by:</h3><p>%s</p>' % item.creator.username
+        comment = ''
+        if item.comment:
+            comment = '<h3>Comment:</h3><p>%s</p>' % item.comment
 
-        diff = (diff.replace('<ins', '<ins style="background-color: #AAFFAA;'
-                             'text-decoration:none;"')
-                .replace('<del', '<del style="background-color: #FFAAAA;'
-                         'text-decoration:none;"'))
+        review_diff = ''
+        prev_review_tags = ','.join(
+            [x.name for x in previous.review_tags.all()])
+        curr_review_tags = ','.join(
+            [x.name for x in item.review_tags.all()])
+        if prev_review_tags != curr_review_tags:
+            review_diff = ("<h3>Review changes:</h3>%s" % tag_diff_table(
+                prev_review_tags, curr_review_tags, previous.id, item.id))
+            review_diff = colorize_diff(review_diff)
+
+        tag_diff = ''
+        if previous.tags != item.tags:
+            tag_diff = ("<h3>Tag changes:</h3>%s" % tag_diff_table(
+                previous.tags, item.tags, previous.id, item.id))
+            tag_diff = colorize_diff(tag_diff)
+
+        content_diff = ''
+        if previous.content != item.content:
+            content_diff = ("<h3>Content changes:</h3>%s" % (
+                diff_table(previous.content, item.content,
+                           previous.id, item.id))
+            )
+
+            content_diff = colorize_diff(content_diff)
 
         link_cell = '<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (reverse('wiki.document',
@@ -310,7 +329,8 @@ class RevisionsFeed(DocumentsFeed):
                                                            compare_cell,
                                                            history_cell)
         links_table = links_table + '</table>'
-        description = "%s%s%s%s" % (by, comment, diff, links_table)
+        description = "%s%s%s%s%s%s" % (by, comment, tag_diff, review_diff,
+                                        content_diff, links_table)
         return description
 
     def item_link(self, item):
