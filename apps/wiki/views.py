@@ -854,6 +854,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     if doc.parent_topic_id:
         parent_doc = Document.objects.get(pk=doc.parent_topic_id)
         parent_path = parent_doc.get_absolute_url()
+        parent_slug = parent_doc.slug
 
 
     attachments = _format_attachment_obj(doc.attachments)
