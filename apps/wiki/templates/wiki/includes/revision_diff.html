@@ -51,7 +51,7 @@
       <dd class="rev-to">{{ revision_to.summary }}</dd>
       
       <dt>{{ _('Content:') }}</dt>
-      <dd>{{ diff_table(revision_from.content, revision_to.content) }}</dd>
+      <dd>{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}</dd>
     </dl>
   </section>
 {% endif %}
