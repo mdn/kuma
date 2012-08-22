@@ -758,6 +758,16 @@ class Document(NotificationsMixin, ModelBase):
             # Come up with a unique slug (or title):
             return unique_attr()
 
+    def revert(self, revision, user):
+        revision.id = None
+        revision.comment = "Revert to revision of %s by %s" % (revision.created,
+                                                               revision.creator)
+        revision.created = datetime.now()
+        revision.creator = user
+        revision.save()
+        revision.make_current()
+        return revision
+
     def save(self, *args, **kwargs):
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
 
