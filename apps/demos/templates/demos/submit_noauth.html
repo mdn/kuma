@@ -1,15 +1,9 @@
 {% extends "demos/base.html" %}
 
-{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
-
 {% set obj = submission %}
 {% set submit_url=url('demos_submit') %}
 {% set login_url='%s?next=%s' % (url('users.login'), submit_url) %}
-{% if use_browserid %}
-    {% set signup_url=login_url %}
-{% else %}
-    {% set signup_url=url('users.register') | e %}
-{% endif %}
+{% set signup_url=login_url %}
 
 {% block pageid %}demos-submit{% endblock %}
 {% block bodyclass %}section-demos plain{% endblock %}
@@ -69,9 +63,6 @@
     {% endtrans %}
     
     <p class="choices">
-        {% if not use_browserid %}
-        <a href="{{signup_url}}" class="button positive">{{_('Create an Account')}}</a> 
-        {% endif %}
         <a href="{{login_url}}" class="button">{{_('Log In to Account')}}</a>
     </p>
 
