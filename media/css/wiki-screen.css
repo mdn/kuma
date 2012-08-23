@@ -612,7 +612,12 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl #site-info #legal, 
 .html-rtl .deki-pagination div, 
 .html-rtl .pagination span, 
-.html-rtl .deki-pagination div.info { 
+.html-rtl .deki-pagination div.info,
+.html-rtl #content-fields .approved, 
+.html-rtl .description .approved, 
+.html-rtl .editing .title, 
+.html-rtl .change-locale, 
+.html-rtl .editing .title h1 { 
   float: right; 
 }
 
@@ -649,3 +654,5 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl .deki-pagination .next a:after, .html-rtl .pagination .next a:after { content: ""; }
 .html-rtl .deki-pagination .prev a:after, .html-rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
 .html-rtl .deki-pagination .next a:before, .html-rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
+
+.html-rtl .change-locale { clear: right; }
