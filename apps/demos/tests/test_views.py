@@ -76,8 +76,6 @@ class DemoViewsTest(test_utils.TestCase):
 
     def test_submit_loggedout(self):
         r = self.client.get(reverse('demos_submit'))
-        # Check for at least the login button. Registration button may or may
-        # not appear, depending on BrowserID availability.
         choices = pq(r.content)('p.choices a[href*="login"]')
         eq_(choices.length, 1)
 

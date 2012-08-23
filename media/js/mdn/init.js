@@ -136,47 +136,9 @@ jQuery.extend({
     });
   }
 
-  
-  
-  (function() {
-    
-    var $signedOutList = $('ul.signed-out');
-    
-    if($signedOutList.length) {
-      // Hide the signed-out block, add and wire up a BrowserID sign in button,
-      // then show the signed-out block again
-      $signedOutList.hide();  
-      
-      // Retrieve the login url
-      var url = $signedOutList.attr('data-browserid-header-signin-html');
-        
-      // Split the URL, find the next value
-      var urlSplit = url.split("?"),
-          rootUrl = urlSplit.shift(),
-          qstring = urlSplit.join("?");
-      
-      $.get(rootUrl, {
-        next: $.parseQuerystring(qstring).next || $.parseQuerystring().next || window.location.pathname
-      }, function(content) {
-        $signedOutList.html(content).each(function() {
-          $('.toggle', $(this)).click(function() {
-              $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
-              return false;
-          });
-        });
-        // Binding the signout link!
-        bindBrowserIDSignin();
-      });
-      
-      $signedOutList.show();
-    }
-    
-  })();
-  
-
   // Wire up the statically-drawn browserid-signin element on the change
   // email page
-  $('#change-email').ready(function(){
+  $('#change-email', '.signed-out').ready(function(){
       bindBrowserIDSignin();
   });
 

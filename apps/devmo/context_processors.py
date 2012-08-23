@@ -10,6 +10,12 @@ def i18n(request):
             }
 
 
+def next_url(request):
+    if 'login' not in request.path and 'register' not in request.path:
+        return {'next_url': request.path }
+    return {}
+
+
 def phpbb_logged_in(request):
     """Detect PHPBB login cookie."""
     return {

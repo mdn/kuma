@@ -3,7 +3,6 @@
 {% extends "users/base.html" %}
 {% set title = _('Log In') %}
 {% set classes = 'login' %}
-{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 
 {% block content %}
 <section id="content">
@@ -14,16 +13,11 @@
           <h3>{{ _('You are already logged in.') }}</h3>
         </article>
       {% else %}
-        <article id="login" class="main" data-browserid-signin-html="{{ url('users.browserid_signin_html') }}?next={{ next_url }}">
-          {% if use_browserid %}
+        <article id="login" class="main">
             {% include "users/browserid_signin.html" %}
-          {% else %}
-              <h1>{{ _('Log In') }}</h1>
-              {% include "users/login_form.html" %}
-          {% endif %}
-          </article>
-        {% endif %}
+        </article>
+      {% endif %}
     </div>
-   </div>
+  </div>
 </section>
 {% endblock %}
