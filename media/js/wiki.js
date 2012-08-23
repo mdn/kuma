@@ -43,6 +43,10 @@
             initTabBox();
         }
 
+        if ($body.is('.revert-document')) {
+            initSyntaxHighlighter();
+        }
+
         if ($body.is('.home')) {
             initClearOddSections();
         }
