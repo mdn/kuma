@@ -47,7 +47,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'pre', 'code', 'cite',
     'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp',
     'ul', 'ol', 'li',
-    'nobr', 'dfn', 'caption', 'var',
+    'nobr', 'dfn', 'caption', 'var', 's',
     'img', 'hr',
     'input', 'label', 'select', 'option', 'textarea',
     'table', 'tbody', 'thead', 'tr', 'th', 'td', 'colgroup', 'col',
@@ -82,7 +82,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
-    'tr', 'address', 'col'
+    'tr', 'address', 'col', 's'
 )))
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
