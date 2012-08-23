@@ -22,7 +22,7 @@ by running ``npm install fibers``.
 Log in
 ------
 
-You can log into the wiki using BrowserID or via the django admin interface.
+You can log into the wiki using Persona or via the django admin interface.
 If you use the admin interface, you can log in as the user you created during installation
 or on the vagrant VM use login ``admin`` with password ``admin``.
 
