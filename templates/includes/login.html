@@ -14,11 +14,11 @@
         {% if request.COOKIES.get('browserid_explained', 0) == '1' %}
           {% set toggle = '' %}
         {% endif %}
-        <a href="#" target="_blank" class="browserid-signin {{ toggle }}" aria-haspopup="true" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a> 
+        <a href="#" target="_blank" class="browserid-signin {{ toggle }}" aria-haspopup="true" title="{{_('Sign in with Persona')}}">{{ _('Sign in') }}</a>
         {% if toggle %}
         <div class="browserid-info sub-menu" aria-hidden="true">
         {% include "users/browserid_explanation.html" %}
-          <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a></p>
+          <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with Persona')}}">{{ _('Sign in') }}</a></p>
         </div>
         {% endif %}
       </form>

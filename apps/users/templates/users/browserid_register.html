@@ -10,9 +10,9 @@
     <section id="content-main" role="main">
       <article id="browser_register" class="main">
   
-        <h1>{{ _('BrowserID is here!') }}</h1>
+        <h1>{{ _('Persona is here!') }}</h1>
         <p>{% trans browserid_href='https://persona.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
-        MDN has switched to <a href="{{ browserid_href }}" rel="external">BrowserID</a>, 
+        MDN has switched to <a href="{{ browserid_href }}" rel="external">Persona</a>,
         a safe and simple way to sign in with just your e-mail address. <a href="{{ why_browserid }}" rel="external">Learn more about it.</a>
         {% endtrans %}</p> 
     
@@ -20,7 +20,7 @@
         <form id="create_user" class="boxed" method="post" action="">
           <h2>{{ _('New MDN Members') }}</h2>
           <p>{% trans %}
-            We couldn't find an MDN profile for your BrowserID. If you're new here, 
+            We couldn't find an MDN profile for your Persona. If you're new here,
             you can pick an MDN username now and complete your registration.
           {% endtrans %}</p>
           <p>{% trans %}
@@ -49,7 +49,7 @@
           <h2>{{ _('Returning MDN Members') }}</h2>
           <p>{% trans %}
             If you have an MDN account, log in here to use your
-            existing MDN profile. You'll be able to sign in with your BrowserID from 
+            existing MDN profile. You'll be able to sign in with your Persona from
             now on.
           {% endtrans %}</p>
           {{ errorlist(login_form) }}
