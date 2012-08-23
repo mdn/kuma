@@ -158,10 +158,10 @@ set your ``settings_local.py`` with the following::
     TEMPLATE_DEBUG = DEBUG
     SERVE_MEDIA = True
 
-Configure BrowserID
+Configure Persona
 -------------------
 
-Add the following to ``settings_local.py`` so that BrowserID works with the
+Add the following to ``settings_local.py`` so that Persona works with the
 development instance::
 
     SITE_URL = 'http://localhost:8000'
