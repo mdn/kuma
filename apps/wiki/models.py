@@ -50,7 +50,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'nobr', 'dfn', 'caption', 'var', 's',
     'img', 'hr',
     'input', 'label', 'select', 'option', 'textarea',
-    'table', 'tbody', 'thead', 'tr', 'th', 'td', 'colgroup', 'col',
+    'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'colgroup', 'col',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
