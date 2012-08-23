@@ -29,7 +29,7 @@ from sumo.helpers import urlparams
 from sumo.tests import post
 from users.models import RegistrationProfile
 from users.tests import TestCaseBase
-from users.views import _clean_next_url
+from users.views import _clean_next_url, SESSION_VERIFIED_EMAIL
 
 
 class LoginTests(TestCaseBase):
@@ -92,46 +92,23 @@ class LoginTests(TestCaseBase):
         eq_(302, response.status_code)
         eq_('http://testserver' + next, response['location'])
 
-    def test_login_next_parameter_all_forms(self):
+    def test_login_next_parameter_in_forms(self):
         '''Test with a valid ?next=url parameter.'''
-        next = '/demos/submit'
+        # header and footer forms
+        next = '/en-US/demos/submit'
+        response = self.client.get(urlparams(reverse('demos_submit')))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(next, doc('#masthead input[name="next"]')[0].attrib['value'])
+        eq_(next, doc('#site-info input[name="next"]')[0].attrib['value'])
 
-        # Verify that next parameter is set in form hidden field.
+        # user login page - someone logged-out clicks edit
+        next = '/en-US/docs/Testing$edit'
         response = self.client.get(urlparams(reverse('users.login'),
                                              next=next))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(next, doc('input[name="next"]')[0].attrib['value'])
-
-        # Verify that next parameter is set in form hidden field.
-        response = self.client.get(urlparams(
-            reverse('users.browserid_header_signin_html'), next=next))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(next, doc('input[name="next"]')[0].attrib['value'])
-
-        # Verify that next parameter is set in form hidden field.
-        response = self.client.get(urlparams(
-            reverse('users.browserid_signin_html'), next=next))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(next, doc('input[name="next"]')[0].attrib['value'])
-
-    @attr('latin1char_next')
-    def test_latin1_characters_in_next_parameter(self):
-        '''Some pages have bad chars in the url, which can kill clean_next_url.
-        Test with a bad character in HTTP_REFERER.'''
-        constance.config.BROWSERID_LOCALES = 'en-us, fr'
-        next = '/fr/Firefox_pour_les_d\xc3\xa9veloppeurs'
-        response = self.client.get(urlparams(
-            reverse('users.browserid_header_signin_html', locale='fr')),
-            **{'HTTP_REFERER': next,
-               'ACCEPT_LANGUAGE': 'fr',
-              })
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(unicode(next.decode('latin1', 'ignore')),
-            doc('input[name="next"]')[0].attrib['value'])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_clean_url(self, get_current):

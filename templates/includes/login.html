@@ -1,13 +1,27 @@
-{% set use_browserid = LANG|lower in config.BROWSERID_LOCALES.split(' ') %}
 {% if user.is_authenticated() %}
   <ul class="user-state">
     {% set username = request.user.username %}
       <li><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('{username}') | f(username=username) }}</a></li>
-      <li><a href="{{ url('users.logout') }}">{{ _('Sign out') }}</a></li>
+      <li><a href="{{ url('users.logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
   </ul>
 {% else %}
-<ul class="user-state signed-out" data-browserid-header-signin-html="{{ url('users.browserid_header_signin_html') }}?next={{ next_url }}">
-    <li><a href="{{ url('users.register') }}">{{ _('Join MDN') }}</a></li>
-    <li><a href="{{ url('users.login') }}">{{ _('Log in') }}</a></li>
+<ul class="user-state signed-out">
+    <li class="user-signin menu">
+    <form class="browserid" action="{{url('users.browserid_verify') }}" method="POST">
+        <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
+        {{ browserid_form }}
+        {% set toggle = 'toggle' %}
+        {% if request.COOKIES.get('browserid_explained', 0) == '1' %}
+          {% set toggle = '' %}
+        {% endif %}
+        <a href="#" target="_blank" class="browserid-signin {{ toggle }}" aria-haspopup="true" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a> 
+        {% if toggle %}
+        <div class="browserid-info sub-menu" aria-hidden="true">
+        {% include "users/browserid_explanation.html" %}
+          <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with BrowserID')}}">{{ _('Sign in') }}</a></p>
+        </div>
+        {% endif %}
+      </form>
+    </li>
   </ul>
 {% endif %}
