@@ -278,7 +278,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				'image/pjpeg': 1,
 				'image/gif': 1,
 				'image/bmp': 1,
-				'image/x-windows-bmp': 1
+				'image/x-windows-bmp': 1,
+				'image/svg+xml': 1
 			};
 			return attachment.mime.toLowerCase() in validMimes;
 		};
