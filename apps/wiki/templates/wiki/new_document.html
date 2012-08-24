@@ -77,6 +77,8 @@
         type="text/javascript" charset="utf-8"></script>
       <script src="{{ MEDIA_URL }}ace/mode-javascript.js"
         type="text/javascript" charset="utf-8"></script>
+    {% else %}
+      {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
 
 {% endblock %}
