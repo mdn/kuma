@@ -1021,6 +1021,8 @@
             }
             // Stop loading state on button
             $('#btn-save-and-edit').removeClass('loading');
+            // Clear the review comment
+            $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
             $('#wiki-page-edit')
                 .data('disabled', false)
