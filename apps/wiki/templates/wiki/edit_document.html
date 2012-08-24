@@ -134,6 +134,12 @@
             
             {% include 'wiki/includes/title_autosuggest_url.html' %}
 
+            <section class="page-meta"><section id="page-comment">
+              <h2>{{_('Revision Comment')}}</h2>
+              <p>{{_('Tell us about why you made this change.')}}</p>
+              {{ revision_form.comment | safe }}
+            </section></section>
+
             <section class="page-meta">
               {% set tags = document.tags.all() %}
               <section id="page-tags">
@@ -141,12 +147,6 @@
                 <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
               </section>
             </section>
-
-            <section class="page-meta"><section id="page-comment">
-              <h2>{{_('Review Comment')}}</h2>
-              <p>{{_('Tell us about why you made this change.')}}</p>
-              {{ revision_form.comment | safe }}
-            </section></section>
 
           <section>
           <h4>{{_('Review needed?')}}</h4>
