@@ -80,6 +80,11 @@
               <div class="comment">
                 {{ rev.comment }}
               </div>
+              {% if document.current_revision.id != rev.id and user.has_perm('wiki.delete_revision') %}
+              <div class="creator">
+                <a href="{{ url('wiki.revert_document', document.full_path, rev.id) }}">Revert</a>
+              </div>
+              {% endif %}
             </li>
             {% if loop.last %}</ul>{% endif %}
           {% endfor %}
