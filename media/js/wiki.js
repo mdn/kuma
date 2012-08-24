@@ -58,7 +58,7 @@
             initAttachmentsActions();
 
             // When the page unloads, stop if not saved
-            var hasWYSIWYG = CKEDITOR.instances.id_content;
+            var hasWYSIWYG = window.CKEDITOR && CKEDITOR.instances.id_content;
             startingContent = $.trim($('textarea#id_content').val());
             if(hasWYSIWYG) {
                 setLeaveListener(function() {
