@@ -1,6 +1,7 @@
 /*
  * wiki.js
  * Scripts for the wiki app.
+ * 
  */
 
 
@@ -8,22 +9,21 @@
     var OSES, BROWSERS, VERSIONS, MISSING_MSG;
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
 
-    var current_editor, startingContent;
-
-    // This function creates the beforeunload event handler and subsequent message
-    // for both the WYSIWYG (new, edit, translate) and the ACE editor (new, edit)
-    function setLeaveListener(getValueFn) {
-        // When the page unloads, stop if not saved
-        $(window).bind("beforeunload", function() {
-            // Form submitted and the starting content isn't the same as the current
-            if(!$("#wiki-page-edit, #wiki-page-translate").data("disabled") && startingContent != $.trim(getValueFn())) {
-                return gettext("You have unsaved changes.  Choose 'OK' to discard changes.");
-            }
-        });
-    }
+    var supportsLocalStorage = ('localStorage' in window),
+        formId = 'wiki-page-edit',
+        formSelector,
+        isTranslation;
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
+
+        // If the form is a translate form, update the formId
+        var translateFormId = 'wiki-page-translate';
+        if($('#' + translateFormId).length) {
+            formId = translateFormId;
+            isTranslation = true;
+        }
+        formSelector = '#' + formId;
 
         var $body = $('body');
 
@@ -56,36 +56,22 @@
             initSaveAndEditButtons();
             initArticlePreview();
             initAttachmentsActions();
-
-            // When the page unloads, stop if not saved
-            var hasWYSIWYG = window.CKEDITOR && CKEDITOR.instances.id_content;
-            startingContent = $.trim($('textarea#id_content').val());
-            if(hasWYSIWYG) {
-                setLeaveListener(function() {
-                    return CKEDITOR.instances.id_content.getData();
-                });
-            }
+            initDrafting();
         }
         if ($body.is('.edit.is-template') || $body.is('.new.is-template')) {
 
             var textarea = $('textarea#id_content').hide();
-            startingContent = $.trim(textarea.val());
 
-            var editor = window.ace_editor = ace.edit("ace_content");
-            editor.setTheme("ace/theme/dreamweaver");
+            var editor = window.ace_editor = ace.edit('ace_content');
+            editor.setTheme('ace/theme/dreamweaver');
             
-            var JavaScriptMode = require("ace/mode/javascript").Mode;
+            var JavaScriptMode = require('ace/mode/javascript').Mode;
 
             var session = editor.getSession();
             session.setMode(new JavaScriptMode());
             session.setValue(textarea.val());
             session.on('change', function(){
               textarea.val(editor.getSession().getValue());
-            });
-
-            // When the page unloads, stop if not saved
-            setLeaveListener(function() {
-                return textarea.val();
             });
         }
     }
@@ -205,7 +191,7 @@
         // Make sure the user wants this to happen.
         var msg = $('#content-main > article')
                     .attr('data-cancel-edit-message'),
-            rv = window.confirm(msg);
+            rv = confirm(msg);
         if (!rv) { return false; }
         // We're sure, so clean up without committing.
         cleanupSectionEdit();
@@ -251,7 +237,7 @@
                 }
 
                 // Anything else error-wise is probably recoverable.
-                window.alert("Error saving section, please try again.");
+                alert('Error saving section, please try again.');
                 ui.removeClass('.edited-section-ui-saving');
 
             },
@@ -263,7 +249,7 @@
                     // than just updating the edited section. That will help
                     // prevent conflicts in future section edits and alert the
                     // user that someone else is touching the page.
-                    window.alert(refresh_msg);
+                    alert(refresh_msg);
                     window.location.reload();
                     return;
                 }
@@ -935,28 +921,64 @@
     }
 
     //
+    // Generates a storage key to be used by new, edit, translate, and translate-edit purposes
+    // Ensures same key used by all functionalities in this file
+    // Uses slashes as delimiters because they can't be used in slugs to edge name clashes based on
+    // slug can be prevented
+    // 
+    function getStorageKey() {
+        var noEdit = location.pathname.replace('$edit', ''),
+            finalKey;
+        if(isTranslation) { // Translation interface
+            finalKey = 'draft/translate' + noEdit + '/' + location.search.replace('?tolocale=', '');
+            finalKey = finalKey.replace('$translate', '');
+        }
+        else if($("#id_current_rev").val()) { // Edit
+            finalKey = 'draft/edit' + noEdit;
+        }
+        else { // New
+            finalKey = 'draft/new';
+        }
+        return $.trim(finalKey);
+    }
+
+    // Injects a DIV with language to the effect of "you had a previous draft, want to restore it?"
+    // This takes the place of an ugly, ugly confirmation box :(
+
+    var $draftDiv;
+    function displayDraftBox(content) {
+        var text = gettext('You have a draft in progress.  <a href="">Click here</a> to restore the draft content.'),
+            $contentNode = $('#id_content');
+        $draftDiv = $('<div class="notice"><p>' + text + '</p></div>')
+                        .insertBefore($contentNode)
+                        .click(function(e) {
+                            e.preventDefault();
+                            $contentNode.val(content);
+                            var editor = $contentNode.ckeditorGet();
+                            editor.setData(content);
+                            editor.focus();
+                            updateDraftState('loaded');
+                            hideDraftBox();
+                        });
+    }
+    function hideDraftBox() {
+        $draftDiv && $draftDiv.css('display', 'none');
+    }
+
+
+    //
     // Initialize logic for save and save-and-edit buttons.
     // 
     function initSaveAndEditButtons () {
+        var STORAGE_NAME = getStorageKey();
 
-        var STORAGE_NAME = 'wiki-page-edit';
-
-        if (typeof(window.sessionStorage) != 'undefined') {
-            // If there's previous content preserved, load it into the textarea
-            var prev_ct = window.sessionStorage.getItem(STORAGE_NAME);
-            if (prev_ct) {
-                $('#wiki-page-edit textarea[name=content]').val(prev_ct);
-                window.sessionStorage.setItem(STORAGE_NAME, '');
-            }
-        }
-        
         // Save button submits to top-level
         $('#btn-save').click(function () {
-            if (typeof(window.sessionStorage) != 'undefined') {
+            if (supportsLocalStorage) {
                 // Clear any preserved content.
-                window.sessionStorage.setItem(STORAGE_NAME, '');
+                localStorage.removeItem(STORAGE_NAME);
             }
-            $('#wiki-page-edit')
+            $(formSelector)
                 .attr('action', '')
                 .removeAttr('target');
             return true;
@@ -966,15 +988,15 @@
         // loading anim.
         var savedTa;
         $('#btn-save-and-edit').click(function () {
-            savedTa = $('#wiki-page-edit textarea[name=content]').val();
-            if (typeof(window.sessionStorage) != 'undefined') {
+            savedTa = $(formSelector + ' textarea[name=content]').val();
+            if (supportsLocalStorage) {
                 // Preserve editor content, because saving to the iframe can
                 // yield things like 403 / login-required errors that bust out
                 // of the frame
-                window.sessionStorage.setItem(STORAGE_NAME, savedTa);
+                localStorage.setItem(STORAGE_NAME, savedTa);
             }
             // Redirect the editor form to the iframe.
-            $('#wiki-page-edit')
+            $(formSelector)
                 .attr('action', '?iframe=1')
                 .attr('target', 'save-and-edit-target');
             // Change the button to a loading state style
@@ -984,7 +1006,7 @@
         $('#btn-save-and-edit').show();
 
         $('#save-and-edit-target').load(function () {
-            if (typeof(window.sessionStorage) != 'undefined') {
+            if (supportsLocalStorage) {
                 var if_doc = $('#save-and-edit-target')[0].contentDocument;
                 if (typeof(if_doc) != 'undefined') {
 
@@ -993,22 +1015,20 @@
 
                         // Dig into the iframe on load and look for "OK". If found,
                         // then it should be safe to throw away the preserved content.
-                        window.sessionStorage.setItem(STORAGE_NAME, '');
+                        localStorage.removeItem(STORAGE_NAME);
 
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        $('#wiki-page-edit input[name=current_rev]').val(
+                        $(formSelector + ' input[name=current_rev]').val(
                             ir.attr('data-current-revision'));
-
-                        startingContent = savedTa;
                         
-                    } else if ($('#wiki-page-edit', if_doc).hasClass('conflict')) {
+                    } else if ($(formSelector, if_doc).hasClass('conflict')) {
                         // HACK: If we detect a conflict in the iframe while
                         // doing save-and-edit, force a full-on save in order
                         // to surface the issue. There's no easy way to bust
                         // the iframe otherwise, since this was a POST.
-                        $('#wiki-page-edit')
+                        $(formSelector)
                             .attr('action', '')
                             .attr('target', '');
                         $('#btn-save').click();
@@ -1024,7 +1044,7 @@
             // Clear the review comment
             $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
-            $('#wiki-page-edit')
+            $(formSelector)
                 .data('disabled', false)
                 .removeClass('disabled');
             return true;
@@ -1040,44 +1060,43 @@
     }
 
     function saveDraft() {
-        var now;
-        if (typeof(window.localStorage) != 'undefined') {
-            window.localStorage.setItem(DRAFT_NAME, $('#wiki-page-edit textarea[name=content]').val());
+        if (supportsLocalStorage) {
+            localStorage.setItem(DRAFT_NAME, $(formSelector + ' textarea[name=content]').val());
             updateDraftState(gettext('saved'));
         }
     }
 
     function clearDraft(key) {
-        if (typeof(window.localStorage) != 'undefined') {
-           window.localStorage.setItem(key, null);
+        if (supportsLocalStorage) {
+           localStorage.removeItem(key);
         }
     }
 
     function initDrafting() {
-        var article_slug, editor, now;
-        article_slug = $('#id_slug').val();
-        DRAFT_NAME = 'draft-' + (article_slug ? article_slug : 'new');
-        if (typeof(window.localStorage) != 'undefined') {
-            var prev_draft = window.localStorage.getItem(DRAFT_NAME);
+        var editor;
+        DRAFT_NAME = getStorageKey();
+
+        if (supportsLocalStorage) {
+            var prev_draft = localStorage.getItem(DRAFT_NAME);
             if (prev_draft){
                 // draft matches server so discard draft
-                if ($.trim(prev_draft) == $('#wiki-page-edit textarea[name=content]').val().trim()) {
-		    clearDraft(DRAFT_NAME);
-                } else if (confirm("Load previous draft?", "Draft detected")){
-                    $('#wiki-page-edit textarea[name=content]').val(prev_draft);
-                    updateDraftState('loaded');
+                if ($.trim(prev_draft) == $(formSelector + ' textarea[name=content]').val().trim()) {
+                    clearDraft(DRAFT_NAME);
                 } else {
-		    // Cancel should clear the draft
-		    clearDraft(DRAFT_NAME);
-		}
+                    displayDraftBox(prev_draft);
+                }
             }
         }
-        editor = $('#id_content').ckeditorGet();
-        editor.on('key', function() {
-                window.clearTimeout(DRAFT_TIMEOUT_ID);
-                DRAFT_TIMEOUT_ID = window.setTimeout(saveDraft, 3000);
+
+        // Add key listener for CKEditor and drafting
+        $('#id_content').ckeditorGet().on('key', function() {
+                clearTimeout(DRAFT_TIMEOUT_ID);
+                DRAFT_TIMEOUT_ID = setTimeout(saveDraft, 3000);
         });
+
+        // 
        $('#btn-discard').click(function() {
+            clearTimeout(DRAFT_TIMEOUT_ID);
            clearDraft(DRAFT_NAME);
        });
     }
