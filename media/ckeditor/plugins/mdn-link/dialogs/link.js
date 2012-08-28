@@ -413,6 +413,16 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			dialog.hide();
 		}
 	}
+
+	// Returns the default slug for the give page ("/{lang}/docs/")
+	function getDefaultSlug(dialog) {
+		var lang = jQuery('html').attr('lang'),
+			returnValue = '';
+		if (lang) {
+			returnValue = '/' + lang + '/docs/';
+		}
+		return returnValue;
+	}
 		
 	return {
 		title : linkLang.title,
@@ -1006,16 +1016,20 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		{
 			var editor = this.getParentEditor(),
 				selection = editor.getSelection(),
-				element = null;
+				element = null,
+				lang;
 
 			// Update the dropdown
 			CKEDITOR.mdn.updateAttachments(attachmentsSelect, this.getValueOf('info', 'url'));
 
 			// Fill in all the relevant fields if there's already one link selected.
-			if ( ( element = plugin.getSelectedLink( editor ) ) && element.hasAttribute( 'href' ) )
-				selection.selectElement( element );
-			else
-				element = null;
+			if ((element = plugin.getSelectedLink(editor)) && element.hasAttribute('href')) {
+				selection.selectElement(element);
+			}
+			else {
+				// Set the link URL box value to default if no element
+				this.setValueOf('info', 'url', getDefaultSlug());
+			}
 
 			this.setupContent( parseLink.apply( this, [ editor, element ] ) );
 
@@ -1251,27 +1265,40 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			if ( !editor.config.linkShowTargetTab )
 				this.hidePage( 'target' );		//Hide Target tab.
+
+			$urlInput = jQuery(this.getContentElement( 'info', 'url' ).getElement().$).find('input');
+			$urlInput.focus(function() {
+				// Focus
+				var val = $urlInput.val();
+				$urlInput.attr('value', '');
+				setTimeout(function() { $urlInput.attr('value', val); }, 10);
+			});
 		},
 		// Inital focus on 'url' field if link is of type URL.;  this fires whenever the dialog is opened
 		onFocus : function()
 		{
-			var selectedText = editor.getSelection().getSelectedText(),
-				selectedElement = editor.getSelection().getSelectedElement();
+			var selection = editor.getSelection(),
+				selectedText = selection.getSelectedText(),
+				selectedElement = selection.getSelectedElement(),
+				$autoComplete = jQuery(autoCompleteTextbox);
 				
 			// Clear out the previous auto-creation text
 			autoCompleteSelection = null;
 			
 			// If there's selected text but not an element, search for an article
 			if(selectedText && !selectedElement) {
-				jQuery(autoCompleteTextbox).val(selectedText);
-				jQuery(autoCompleteTextbox).mozillaAutocomplete('deselect');
-				jQuery(autoCompleteTextbox).mozillaAutocomplete('search', selectedText);
+				$autoComplete.val(selectedText);
+				$autoComplete.mozillaAutocomplete('deselect');
+				$autoComplete.mozillaAutocomplete('search', selectedText);
 				autoCompleteTextbox.select();
 				return;
 			}
 			
 			// Select the URL field
-			this.getContentElement( 'info', 'url' ).select();
+			//this.getContentElement( 'info', 'url' ).select();
+			var urlElement = this.getContentElement( 'info', 'url' );
+			urlElement.focus();
+			urlElement.value = urlElement.value;
 		}
 	};
 	
