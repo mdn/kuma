@@ -322,7 +322,7 @@ def document(request, document_slug, document_locale):
     if redirect_url:
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
-        return HttpResponseRedirect(url)
+        return HttpResponsePermanentRedirect(url)
 
     # Get "redirected from" doc if we were redirected:
     redirect_slug = request.GET.get('redirectslug')
