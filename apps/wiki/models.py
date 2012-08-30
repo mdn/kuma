@@ -1083,6 +1083,37 @@ class Document(NotificationsMixin, ModelBase):
             parents.insert(0, current_parent.parent_topic)
             current_parent = current_parent.parent_topic
         return parents
+    
+    # This is a method, not a property, because it can do a lot of DB
+    # queries and so should look scarier. It's not just named
+    # 'children' because that's taken already by the reverse relation
+    # on parent_topic.
+    def get_all_children(self):
+        """
+        Return a tree of documents which have this one as their
+        topical parent.
+
+        The returned data structure is a list of dictionaries, like
+        so:
+
+        [
+          { 'document': <Document object>,
+            'children': [] },
+        ]
+
+        Where 'children' is another data structure in the same
+        format. This allows not only walking through all child
+        documents, but specific sub-trees.
+
+        If there are no children, returns an empty list.
+        """
+        results = []
+        immediate_children = self.children.all()
+        if immediate_children.count():
+            for child in immediate_children:
+                results.append({'document': child,
+                                'children': child.get_all_children()})
+        return results
 
     def has_voted(self, request):
         """Did the user already vote for this document?"""
