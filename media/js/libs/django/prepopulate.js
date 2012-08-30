@@ -37,7 +37,7 @@
                 s = values.join(" ");
                 
                 // Remove anything from the slug that could cause big problems
-                s = s.replace(/[\?\&\#\*\$\/ +?]/g, "_");
+                s = s.replace(/[\?\&\"\'\#\*\$\/ +?]/g, "_");
 
                 // "$" is used for verb delimiter in URLs
                 s = s.replace(/\$/g, ""); 
