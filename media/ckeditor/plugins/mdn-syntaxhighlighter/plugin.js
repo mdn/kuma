@@ -3,6 +3,7 @@
 	// List of languages we'll allow syntax highlighting for
 	var supportedBrushes = [
 		{ name: "Bash", brush: "bash" },
+		{ name: "C/C++", brush: "cpp" },
 		{ name: "CSS", brush: "css" },
 		{ name: "Java", brush: "java" },
 		{ name: "JavaScript", brush: "js" },
