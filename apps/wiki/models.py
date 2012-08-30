@@ -56,9 +56,12 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address', 'font',
     'bdo', 'del', 'ins', 'kbd', 'samp', 'var',
-    # MathML tags
-    'math', 'mfenced', 'mtable', 'mtr', 'mtd', 'mo', 'mi', 'mn', 
-    'msub', 'msup', 'msubsup',
+    # MathML
+    'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
+    'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
+    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 
+    'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
+    'munderover', 'none', 'mprescripts',
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
@@ -84,6 +87,46 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
     'tr', 'address', 'col', 's'
 )))
+# MathML
+ALLOWED_ATTRIBUTES.update(dict((x, ['accent', ]) for x in (
+    'mo', 'mover', 'munderover')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['accentunder', ]) for x in (
+    'mover', 'munderover')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['dir', ]) for x in (
+    'math', 'mi', 'mo', 'mrow', 'ms', 'mtext')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['mathsize', 'mathvariant', ]) for x in (
+    'mi', 'mn', 'mo', 'ms', 'mtext')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['subscripshift', 
+                                    'supscriptshift', ]) for x in (
+    'mmultiscripts', 'msub', 'msup', 'msubsup')))
+ALLOWED_ATTRIBUTES.update(dict((x, ['selection', 'notation', 'close', 'open',
+                                    'separators', 'bevelled', 'denomalign',
+                                    'linethickness', 'numalign', 'largeop',
+                                    'maxsize', 'minsize', 'movablelimits',
+                                    'rspace', 'separator', 'stretchy',
+                                    'symmetric', 'depth', 'lquote', 'rquote',
+                                    'align', 'columnlines', 'frame', 'rowalign',
+                                    'rowspacing', 'rowspan', 'columnspan', 
+                                    'accent', 'accentunder', 'dir', 'mathsize',
+                                    'mathvariant', 'subscriptshift',
+                                    'supscriptshift'
+                                   ]) for x in ('math', 'mstyle')))
+ALLOWED_ATTRIBUTES['math'] += ['display']
+ALLOWED_ATTRIBUTES['maction'] = ['actiontype', 'selection']
+ALLOWED_ATTRIBUTES['menclose'] = ['notation']
+ALLOWED_ATTRIBUTES['mfenced'] = ['close', 'open', 'separators']
+ALLOWED_ATTRIBUTES['mfrac'] = ['bevelled', 'denomalign', 'linethickness',
+                               'numalign']
+ALLOWED_ATTRIBUTES['mo'] += ['largeop', 'lspace', 'maxsize', 'minsize',
+                            'movablelimits', 'rspace', 'separator', 'stretchy',
+                            'symmetric']
+ALLOWED_ATTRIBUTES['mpadded'] = ['lspace', 'voffset', 'depth']
+ALLOWED_ATTRIBUTES['ms'] += ['lquote', 'rquote']
+ALLOWED_ATTRIBUTES['mtable'] = ['align', 'columnalign', 'columnlines', 'frame',
+                                'rowalign', 'rowspacing', 'rowlines']
+ALLOWED_ATTRIBUTES['mtd'] = ['columnalign', 'columnspan', 'rowalign', 'rowspan']
+ALLOWED_ATTRIBUTES['mtr'] = ['columnalign', 'rowalign']
+# CSS
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
     'float', 'overflow', 'min-height', 'vertical-align',
