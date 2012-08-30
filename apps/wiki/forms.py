@@ -117,8 +117,8 @@ class DocumentForm(forms.ModelForm):
         if slug == '':
             # Default to the title, if missing.
             slug = self.cleaned_data['title']
-        # "?" and " " disallowed in slugs altogether
-        if '?' in slug or ' ' in slug:
+        # "?", " ", quote disallowed in slugs altogether
+        if '?' in slug or ' ' in slug or '"' in slug or "'" in slug:
             raise forms.ValidationError(SLUG_INVALID)
         # Pattern copied from urls.py
         if not re.compile(r'^[^\$]+$').match(slug):
