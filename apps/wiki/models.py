@@ -82,7 +82,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
-    'tr', 'address', 'col', 's'
+    'tr', 'address', 'col', 's', 'strong'
 )))
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
@@ -126,7 +126,7 @@ ALLOWED_STYLES = [
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
     'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
-    'text-decoration-style', '-moz-text-decoration-style',
+    'text-decoration-style', '-moz-text-decoration-style', 'text-decoration',
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
