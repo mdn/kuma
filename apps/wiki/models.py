@@ -79,7 +79,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
-    'div', 'pre', 'ul', 'ol', 'li', 'code', 'dl', 'dt', 'dd',
+    'div', 'pre', 'ul', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
