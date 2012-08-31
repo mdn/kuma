@@ -86,7 +86,7 @@
     <details class="h2">
       <summary>{{ _('Revision Content') }}</summary>
       <div id="doc-content">
-        {{ revision.content_parsed|safe }}
+        <div class="page-content boxed">{{ revision.content|safe }}</div>
       </div>
     </details>
   </article>
