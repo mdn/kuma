@@ -707,6 +707,7 @@ class Document(NotificationsMixin, ModelBase):
         permissions = (
             ("add_template_document", "Can add Template:* document"),
             ("change_template_document", "Can change Template:* document"),
+            ("move_tree", "Can move a tree of documents"),
         )
 
     def _existing(self, attr, value):
