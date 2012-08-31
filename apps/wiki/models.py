@@ -65,7 +65,7 @@ ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style', 'lang']
-ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang', 'name']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'lang']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
@@ -74,6 +74,7 @@ ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src', 'controls'
 ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size']
 ALLOWED_ATTRIBUTES['select'] = ['name']
 ALLOWED_ATTRIBUTES['option'] = ['value', 'selected']
+ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start']
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
@@ -82,7 +83,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
-    'tr', 'address', 'col', 's'
+    'tr', 'address', 'col', 's', 'strong'
 )))
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
@@ -126,7 +127,7 @@ ALLOWED_STYLES = [
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
     'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
-    'text-decoration-style', '-moz-text-decoration-style',
+    'text-decoration-style', '-moz-text-decoration-style', 'text-decoration',
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
