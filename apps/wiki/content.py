@@ -394,8 +394,9 @@ class SectionTOCFilter(html5lib_Filter):
     """Filter which builds a TOC tree of sections with headers"""
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
-        self.level = 1
+        self.level = 2
         self.in_header = False
+        self.open_level = 0
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
@@ -409,14 +410,16 @@ class SectionTOCFilter(html5lib_Filter):
                 if level > self.level:
                     diff = level - self.level
                     for i in range(diff):
-                        out += ({'type': 'StartTag', 'name': 'ol',
-                                 'data': {}},)
+                        out += ({'type': 'StartTag', 'name': 'li', 'data': {}},
+                                {'type': 'StartTag', 'name': 'ol', 'data': {}})
+                        self.open_level += 1
                     self.level = level
                 elif level < self.level:
                     diff = self.level - level
                     for i in range(diff):
-                        out += ({'type': 'EndTag', 'name': 'li'},
-                                {'type': 'EndTag', 'name': 'ol'})
+                        out += ({'type': 'EndTag', 'name': 'ol'},
+                                {'type': 'EndTag', 'name': 'li'})
+                        self.open_level -= 1
                     self.level = level
                 attrs = dict(token['data'])
                 id = attrs.get('id', None)
@@ -435,11 +438,18 @@ class SectionTOCFilter(html5lib_Filter):
                 yield token
             elif ('EndTag' == token['type'] and token['name'] in HEAD_TAGS_TOC):
                 self.in_header = False
-                level_match = re.compile(r'^h(\d)$').match(token['name'])
-                level = int(level_match.group(1))
-                out = ({'type': 'EndTag', 'name': 'a'},)
+                out = ({'type': 'EndTag', 'name': 'a'},
+                       {'type': 'EndTag', 'name': 'li'})
                 for t in out:
                     yield t
+
+        if self.open_level > 0:
+            out = ()
+            for i in range(self.open_level):
+                out += ({'type': 'EndTag', 'name': 'ol'},
+                        {'type': 'EndTag', 'name': 'li'}) 
+            for t in out:
+                yield t
 
 
 class SectionFilter(html5lib_Filter):
