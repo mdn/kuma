@@ -6,8 +6,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from os.path import dirname
-from os.path import exists
+from os import makedirs
+from os.path import dirname, exists, isdir
 from nose.tools import assert_equal, ok_
 import json
 import fileinput
@@ -43,6 +43,9 @@ class HumansTest(TestCase):
         assert_equal(human.name, "chengwang")
 
     def test_write_to_file(self):
+        if not isdir("%s/tmp/" % APP_DIR):
+            makedirs("%s/tmp/" % APP_DIR)
+            
         target = open("%s/tmp/humans.txt" % APP_DIR, 'w')
         human1 = Human()
         human1.name = "joe"
