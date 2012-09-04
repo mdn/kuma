@@ -381,10 +381,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .description li { clear: both; margin: 0 0 .5em; }
 .description li:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 .description dl { margin: 0; }
-.description dt { display: inline-block; margin-right: 10px; font-style: normal; font-weight: bold; }
+.description dt { display: inline-block; margin-right: 10px; font-style: normal; font-weight: bold; vertical-align: top; padding-top: 4px; }
 .description dd { display: inline-block; margin-left: 0; }
-.description .approved { width: 49%; float: left; }
-.description .localized { width: 49%; float: right; }
+.description .approved, #trans-content .approved { width: 49%; float: left; }
+.description .localized, #trans-content .localized { width: 49%; float: right; }
 
 .description input#id_title { font-size: 1.124em; width: 90%; margin: 0; }
 
