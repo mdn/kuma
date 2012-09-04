@@ -4,7 +4,7 @@
     var idTagsField = $("#tagit_tags");
 
     // Create a hidden input type for the purposes of saving
-    var hiddenTags = $('<input type="hidden" name="tags" id="hiddenTags" value="' + idTagsField.val() +  '" />').appendTo("#page-tags");
+    var hiddenTags = $('<input type="hidden" name="tags" id="hiddenTags" value="' + (idTagsField.val() || "") +  '" />').appendTo("#page-tags");
 
     // Grabs text from the list items, updates hidden input so tags are properly saved
     // Requires node reading because the tag-it widget incorrectly overrides the "singleNodeField"
