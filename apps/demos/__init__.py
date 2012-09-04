@@ -224,9 +224,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "description": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "learn_more": [],
-        "tab_copy": _(""""<p>The Geolocation API lets you determine the location and movement of a user. What can you do with this information? Maps, social networking, games &mdash; the possibilities are endless. Looking for inspiration? Just take a look at some of the amazing things created for our <a href="https://developer.mozilla.org/en-US/demos/devderby/2011/september">first Geolocation Derby</a>.</p>
+        "tab_copy": _("""<p>The Geolocation API lets you determine the location and movement of a user. What can you do with this information? Maps, social networking, games &mdash; the possibilities are endless. Looking for inspiration? Just take a look at some of the amazing things created for our <a href="https://developer.mozilla.org/en-US/demos/devderby/2011/september">first Geolocation Derby</a>.</p>
 <p>Anyone can learn to use the Geolocation API, especially considering how much documentation we already have on the topic. Beginners might like <a href="https://hacks.mozilla.org/2011/09/where-on-earth-this-months-developer-derby-is-all-about-geolocation/">this blog post</a> from our very own Christian Heilmann (complete with an interactive code sample), and experts might like the <a href="https://developer.mozilla.org/en-US/docs/Using_geolocation">even more detailed documentation</a> available on the MDN.</p>
-<p>The best part? You don't need to learn much start Geolocation on mobile devices right now. No Java, no Objective-C, no native SDKs. Just the web. And you already know how to use that, right?</p>"""),
+<p>The best part? You don't need to learn much to start using Geolocation on mobile devices right now. No Java, no Objective-C, no native SDKs. Just the web. And you already know how to use that, right?</p>"""),
     },
     {
         "tag_name": "challenge:2012:october",
