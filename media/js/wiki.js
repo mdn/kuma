@@ -12,7 +12,8 @@
     var supportsLocalStorage = ('localStorage' in window),
         formId = 'wiki-page-edit',
         formSelector,
-        isTranslation;
+        isTranslation,
+        isTemplate;
 
     function init() {
         $('select.enable-if-js').removeAttr('disabled');
@@ -26,6 +27,10 @@
         formSelector = '#' + formId;
 
         var $body = $('body');
+
+        if($body.hasClass("is-template")) {
+            isTemplate = 1;
+        }
 
         if ($body.is('.new')) {
             initPrepopulatedSlugs();
@@ -56,7 +61,9 @@
             initSaveAndEditButtons();
             initArticlePreview();
             initAttachmentsActions();
-            initDrafting();
+            if(!isTemplate) {
+                initDrafting();
+            }
         }
         if ($body.is('.edit.is-template') || $body.is('.new.is-template')) {
 
@@ -73,6 +80,7 @@
             session.on('change', function(){
               textarea.val(editor.getSession().getValue());
             });
+            initDrafting();
         }
     }
     
@@ -939,6 +947,12 @@
         else { // New
             finalKey = 'draft/new';
         }
+
+        // Add another identifier for templates
+        if(isTemplate) {
+            finalKey += '/template';
+        }
+
         return $.trim(finalKey);
     }
 
@@ -948,15 +962,25 @@
     var $draftDiv;
     function displayDraftBox(content) {
         var text = gettext('You have a draft in progress.  <a href="">Click here</a> to restore the draft content.'),
-            $contentNode = $('#id_content');
+            $contentNode = $('#id_content'),
+            editor;
+
         $draftDiv = $('<div class="notice"><p>' + text + '</p></div>')
                         .insertBefore($contentNode)
                         .click(function(e) {
                             e.preventDefault();
                             $contentNode.val(content);
-                            var editor = $contentNode.ckeditorGet();
-                            editor.setData(content);
+
+                            if(isTemplate) {
+                                editor = ace_editor;
+                                ace_editor.session.setValue(content);
+                            }
+                            else {
+                                editor = $contentNode.ckeditorGet();
+                                editor.setData(content);
+                            }
                             editor.focus();
+                            
                             updateDraftState('loaded');
                             hideDraftBox();
                         });
@@ -1089,10 +1113,16 @@
         }
 
         // Add key listener for CKEditor and drafting
-        $('#id_content').ckeditorGet().on('key', function() {
-                clearTimeout(DRAFT_TIMEOUT_ID);
-                DRAFT_TIMEOUT_ID = setTimeout(saveDraft, 3000);
-        });
+        var callback = function() {
+            clearTimeout(DRAFT_TIMEOUT_ID);
+            DRAFT_TIMEOUT_ID = setTimeout(saveDraft, 3000);
+        };
+        if(isTemplate) {
+            ace_editor.on && ace_editor.on('change', callback);
+        }
+        else {
+            $('#id_content').ckeditorGet().on('key', callback);
+        }
 
         // 
        $('#btn-discard').click(function() {
