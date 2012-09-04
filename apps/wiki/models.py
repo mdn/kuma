@@ -394,7 +394,7 @@ class DocumentManager(ManagerBase):
             counter += 1
 
         return counter
-
+        
 
 class DocumentTag(TagBase):
     """A tag indexing a document"""
@@ -804,26 +804,62 @@ class Document(NotificationsMixin, ModelBase):
         slug_changed = hasattr(self, 'old_slug')
         title_changed = hasattr(self, 'old_title')
         if self.current_revision and (slug_changed or title_changed):
-            doc = Document.objects.create(locale=self.locale,
-                                          title=self._attr_for_redirect(
-                                              'title', REDIRECT_TITLE),
-                                          slug=self._attr_for_redirect(
-                                              'slug', REDIRECT_SLUG),
-                                          category=self.category,
-                                          is_localizable=False)
-            Revision.objects.create(document=doc,
-                                    content=REDIRECT_CONTENT % dict(
-                                        href=self.get_absolute_url(),
-                                        title=self.title),
-                                    is_approved=True,
-                                    show_toc=self.current_revision.show_toc,
-                                    reviewer=self.current_revision.creator,
-                                    creator=self.current_revision.creator)
-
+            self.move()
             if slug_changed:
                 del self.old_slug
             if title_changed:
                 del self.old_title
+
+    def move(self, new_slug=None, user=None):
+        """
+        Complete the process of moving a page by leaving a redirect
+        behind.
+        
+        """
+        if new_slug is None:
+            new_slug = self.slug
+        if user is None:
+            user = self.current_revision.creator
+        self.slug = new_slug
+        doc = Document.objects.create(locale=self.locale,
+                                      title=self._attr_for_redirect(
+                                          'title', REDIRECT_TITLE),
+                                      slug=self._attr_for_redirect(
+                                          'slug', REDIRECT_SLUG),
+                                      category=self.category,
+                                      is_localizable=False)
+        Revision.objects.create(document=doc,
+                                content=REDIRECT_CONTENT % dict(
+                                    href=self.get_absolute_url(),
+                                    title=self.title),
+                                is_approved=True,
+                                show_toc=self.current_revision.show_toc,
+                                reviewer=self.current_revision.creator,
+                                creator=user)
+
+    def _move_tree(self, old_substr, new_substr, user):
+        """
+        Move this page and all its children, by replacing old_substr
+        in the slug with new_substr.
+        
+        """
+        immediate_children = self.children.all()
+        
+        rev = self.current_revision
+
+        # Shortcut trick for getting a object with all the same
+        # values, but making Django think it's new.
+        rev.id = None
+
+        rev.creator = user
+        rev.created = datetime.now()
+        rev.slug = rev.slug.replace(old_substr, new_substr)
+
+        rev.save()
+
+        for child in immediate_children:
+            child._move_tree(old_substr, new_substr, user)
+        
 
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""
