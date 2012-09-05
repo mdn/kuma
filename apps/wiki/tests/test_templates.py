@@ -1011,7 +1011,7 @@ class TranslateTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('form textarea[name="content"]')))
-        assert (u'Español' in doc('div.change-locale').text())
+        assert (u'Espa' in doc('div.change-locale').text())
 
     def test_translate_disallow(self):
         """HTTP GET to translate URL returns 400 when not localizable."""
