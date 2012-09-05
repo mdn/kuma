@@ -17,6 +17,7 @@
 
 {% block extrahead %}
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}" />
+  <link rel="canonical" href="{{ url('wiki.document', document.full_path) }}" />
 
   <meta property="og:title" content="{{ document.title }}"/>
   <meta property="og:type" content="website"/>
