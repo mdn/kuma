@@ -180,7 +180,8 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(redirect_url, follow=True)
         self.assertRedirects(response, urlparams(target_url,
                                                 redirectlocale=redirect.locale,
-                                                redirectslug=redirect.slug))
+                                                redirectslug=redirect.slug),
+                                                status_code=301)
         self.assertContains(response, redirect_url + '?redirect=no')
 
     def test_redirect_from_nonexistent(self):
