@@ -945,7 +945,7 @@
                 autocompleteUrl: $('#autosuggestTitleUrl').attr('data-url'),
                 _renderItemAsLink: true,
                 buildRequestData: function(req) {
-                    req.exclude_current_locale = 1;
+                    req.locale = 'en-US';
                     return req;
                 },
                 onSelect: function(item, isSilent) {

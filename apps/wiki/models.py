@@ -1257,8 +1257,7 @@ class Revision(ModelBase):
         base = get_current_or_latest_revision(original)
         has_approved = original.revisions.filter(is_approved=True).exists()
         if (original.current_revision or not has_approved):
-            if (self.based_on and
-                self.based_on.document != original):
+            if (self.based_on and self.based_on.document != original):
                 # based_on is set and points to the wrong doc.
                 return base, False
             # Else based_on is valid; leave it alone.
@@ -1279,14 +1278,18 @@ class Revision(ModelBase):
         else:
             based_on, is_clean = self._based_on_is_clean()
             if not is_clean:
-                old = self.based_on
-                self.based_on = based_on  # Be nice and guess a correct value.
-                # TODO(erik): This error message ignores non-translations.
-                raise ValidationError(_('A revision must be based on a '
-                    'revision of the %(locale)s document. Revision ID'
-                    ' %(id)s does not fit those criteria.') %
-                    dict(locale=LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
-                         id=old.id))
+                if self.document.parent:
+                    # Restoring translation source, so base on current_revision
+                    self.based_on = self.document.parent.current_revision
+                else:
+                    old = self.based_on
+                    self.based_on = based_on  # Be nice and guess a correct value.
+                    locale = LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
+                    # TODO(erik): This error message ignores non-translations.
+                    raise ValidationError(_('A revision must be based on a '
+                        'revision of the %(locale)s document. Revision ID'
+                        ' %(id)s does not fit those criteria.') %
+                        dict(locale=locale, id=old.id))
 
     def save(self, *args, **kwargs):
         _, is_clean = self._based_on_is_clean()

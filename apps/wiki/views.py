@@ -974,17 +974,20 @@ def preview_revision(request):
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
     partial_title = request.GET.get('term', '')
+    locale = request.GET.get('locale', False)
     current_locale = request.GET.get('current_locale', False)
     exclude_current_locale = request.GET.get('exclude_current_locale', False)
 
     # TODO: isolate to just approved docs?
     docs = (Document.objects.extra(select={'length':'Length(slug)'}).filter(title__icontains=partial_title,
-                                    is_template=0,
-                                    locale=request.locale).
+                                    is_template=0).
                              exclude(title__iregex=r'Redirect [0-9]+$').  # New redirect pattern
                              exclude(html__iregex=r'^(<p>)?(#)?REDIRECT').  #Legacy redirect
                              exclude(slug__icontains='Talk:').  # Remove old talk pages
                              order_by('title', 'length'))
+
+    if locale:
+        docs = docs.filter(locale=locale)
 
     if current_locale:
         docs = docs.filter(locale=request.locale)
