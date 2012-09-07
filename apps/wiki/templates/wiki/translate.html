@@ -125,11 +125,13 @@
         </ul>
         #}
         {% if document.current_revision and document.current_revision.based_on %}
-          {# Diff between the English version the current translation is based on and the current English version. #}
-          {% set revision_from = document.current_revision.based_on %}
-          {% set revision_to = parent.current_revision %}
-          {% include 'wiki/includes/revision_diff.html' %}
-          {# TODO: 'change revisions' link and modal selector #}
+          {% if parent.current_revision != document.current_revision.based_on %}
+            {# Diff between the English version the current translation is based on and the current English version. #}
+            {% set revision_from = document.current_revision.based_on %}
+            {% set revision_to = parent.current_revision %}
+            {% include 'wiki/includes/revision_diff.html' %}
+            {# TODO: 'change revisions' link and modal selector #}
+          {% endif %}
         {% else %}
           <p class="no-trans">{{ _('Note: There are no approved translations for this article.') }}</p>
         {% endif %}
