@@ -117,4 +117,10 @@ What’s next?
        sudo puppet apply /vagrant/puppet/manifests/dev-vagrant-mdn-import.pp
        sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
+-  After your first sign in, SSH into the vagrant box and add yourself as an admin:
 
+       vagrant ssh
+       mysql -uroot kuma
+       UPDATE auth_user set is_staff = 1, is_active=1, is_superuser = 1 WHERE username = 'YOUR_USERNAME'
+
+-  To allow creation and editing of documents, go to /admin/ and create waffle flags called ``wikiediting`` and ``kumawiki``
