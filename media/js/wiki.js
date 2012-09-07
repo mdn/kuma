@@ -64,6 +64,9 @@
             if(!isTemplate) {
                 initDrafting();
             }
+            initMetadataParentTranslation();
+            // initTitleAndSlugCheck();
+            // initDrafting();
         }
         if ($body.is('.edit.is-template') || $body.is('.new.is-template')) {
 
@@ -927,6 +930,34 @@
             $('#btn-properties').hide();
         }
     }
+    
+    // 
+    // Initialize logic for metadata parent translation
+    // 
+    function initMetadataParentTranslation() {
+        var $parentLi = $('#article-head .metadata .metadata-choose-parent'),
+            $parentInput = $("#parent_id");
+        if($parentLi.length) {
+            $parentLi.css('display', 'block');
+            $('#parent_text').mozillaAutocomplete({
+                minLength: 1,
+                requireValidOption: true,
+                autocompleteUrl: $('#autosuggestTitleUrl').attr('data-url'),
+                _renderItemAsLink: true,
+                buildRequestData: function(req) {
+                    req.locale = 'en-US';
+                    return req;
+                },
+                onSelect: function(item, isSilent) {
+                    $parentInput.val(item.id);
+                },
+                onDeselect: function(item) {
+                    $parentInput.val("");
+                }
+            });
+        }
+    }
+    
 
     //
     // Generates a storage key to be used by new, edit, translate, and translate-edit purposes

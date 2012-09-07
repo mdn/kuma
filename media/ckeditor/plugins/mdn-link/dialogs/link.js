@@ -484,6 +484,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 										jQuery(autoCompleteTextbox).mozillaAutocomplete({
 											minLength: 1,
 											requireValidOption: true,
+											_renderItemAsLink: true,
 											styleElement: autoCompleteTextbox.parentNode,
 											autocompleteUrl: autoCompleteUrl,
 											onSelect: function(item, isSilent) {
@@ -491,12 +492,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												// Select item
 												autoCompleteSelect(dialog, !isSilent);
 											},
-											_renderItem: function(ul, item) {
-												return jQuery('<li></li>')
-													.data("item.autocomplete", item)
-													.attr('title', item.href)
-													.append(jQuery('<a></a>').text(item.label))
-													.appendTo(ul);
+											buildRequestData: function(req) {
+												req.current_locale = 1;
+												return req;
 											},
 											open: function() {
 												jQuery(window).bind("scroll", openCancelScroll);

@@ -578,7 +578,7 @@ class RevisionTests(TestCase):
         eq_(None, r.based_on)
 
     def test_correct_based_on_to_current_revision(self):
-        """Assure Revision.clean() changes a bad based_on value to the English
+        """Assure Revision.clean() defaults based_on value to the English
         doc's current_revision when there is one."""
         # Make English rev:
         en_rev = revision(is_approved=True)
@@ -589,12 +589,9 @@ class RevisionTests(TestCase):
         de_doc.save()
         de_rev = revision(document=de_doc)
 
-        # Set based_on to some random, unrelated Document's rev:
-        de_rev.based_on = revision()
-
-        # Try to recover:
-        self.assertRaises(ValidationError, de_rev.clean)
-
+        # Set based_on to a de rev to simulate fixing broken translation source
+        de_rev.based_on = de_rev
+        de_rev.clean()
         eq_(en_rev.document.current_revision, de_rev.based_on)
 
     def test_get_previous(self):
