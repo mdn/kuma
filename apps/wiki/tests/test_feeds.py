@@ -107,7 +107,7 @@ class FeedTests(TestCaseBase):
             desc_text = pq(item).find('description').text()
             if "Edited" in desc_text:
                 ok_('<h3>Tag changes:</h3>' in desc_text)
-                ok_('<span class="diff_add" style="background-color: #afa; text-decoration: none;">"more",&nbsp;</span>' in desc_text)
+                ok_('<span class="diff_add" style="background-color: #afa; text-decoration: none;">"more"<br />&nbsp;</span>' in desc_text)
                 ok_('<h3>Review changes:</h3>' in desc_text)
                 ok_('<span class="diff_add" style="background-color: #afa; text-decoration: none;">editorial</span>' in desc_text)
 
