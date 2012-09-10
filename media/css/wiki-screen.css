@@ -323,6 +323,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 /* input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; } */
 
 #content #ace_content { position: relative; width: 100%; height: 500px; }
+#content #ace_content .ace_warning,
+#content #ace_content .ace_error {
+  background-image: none;
+}
 
 @media screen and (max-width: 890px) { 
   #page-buttons a, #page-buttons button { font-size: 14px; }
