@@ -1,0 +1,61 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "wiki/base.html" %}
+{% set title = _('Move "{t}"')|f(t=document.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+{% set meta = [('robots', 'noindex, nofollow')] %}
+{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
+                 (document.get_absolute_url(), document.title)] %}
+{% block bodyclass %}move-page{% endblock %}
+
+{% block extrahead %}
+  <meta name="robots" content="noindex" />
+{% endblock %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+        
+        <h1>{{ title }}</h1>
+        <p>Please provide a new slug for this page using the field below.</p>
+
+        <ul class="description">
+          <li>
+            <dl>
+              <dt>Current Slug: </dt>
+              <dd>/{{ document.slug }}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Current Title: </dt>
+              <dd><input type="text" name="title" value="{{ document.title }}" style="width:400px;" /></dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>New Slug: </dt>
+              <dd>
+                <input type="text" name="slug" id="moveSlug" value="" style="width:400px;" />
+                <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
+                <input type="hidden" value="{{ document.locale }}" id="moveLocale" />
+              </dd>
+              <dd class="parentSuggestContainer">
+                <a href="" class="moveLookupLink">{{ _('Lookup by Document Title') }}</a>
+
+                <div id="parentSuggestionInputContainer">
+                    <input type="text" placeholder="{{ _('Parent Title') }}" id="parentSuggestion" />
+                </div>
+                {% include 'wiki/includes/title_autosuggest_url.html' %}
+              </dd>
+            </dl>
+          </li>
+        </ul>
+
+        <p><strong>The following {{ descendants_count }} subpages will be effected by this move:</strong></p>
+        <div class="moveDescendants">{{ descendants | safe }}</div>
+
+    </div>
+   </div>
+</section>
+{% endblock %}
