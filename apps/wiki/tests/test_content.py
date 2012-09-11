@@ -478,6 +478,35 @@ class ContentSectionToolTests(TestCase):
         except e:
             ok_(False, "There should not have been an exception")
 
+    def test_unclosed_anchor_bugfix(self):
+        doc_src = """
+            <h3><a name="x-1">Foo</h3>
+            <p>Lorem ipsum</p>
+            <p>Dolor amet</p>
+            <h3><a name="x-2"/>Bar</h3>
+            <p>Bacon bacon bacon</p>
+            <h3><a name="x-3">Baz</h3>
+            <p>Tofu tofu tofu</p>
+            <h3><a name="x-4"></a>Quux</h3>
+            <p>Peas peas peas</p>
+        """
+        expected = """
+            <h3 id="Foo"><a name="x-1">Foo</a></h3>
+            <p>Lorem ipsum</p>
+            <p>Dolor amet</p>            
+            <h3 id="Bar"><a name="x-2">Bar</a></h3>            
+            <p>Bacon bacon bacon</p>            
+            <h3 id="Baz"><a name="x-3">Baz</a></h3>
+            <p>Tofu tofu tofu</p>
+            <h3 id="Quux"><a name="x-4"></a>Quux</h3>
+            <p>Peas peas peas</p>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .injectSectionIDs()
+                  .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
         d.save()

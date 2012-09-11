@@ -52,6 +52,10 @@ class ContentSectionTool(object):
 
         self.tree = html5lib.treebuilders.getTreeBuilder("simpletree")
 
+        # HACK: for bug 775952, we don't actually *want* to reconstruct active
+        # formatting elements, no matter what the HTML5 spec says.
+        self.tree.reconstructActiveFormattingElements = lambda self: None
+
         self.parser = html5lib.HTMLParser(tree=self.tree,
             namespaceHTMLElements=False)
 
