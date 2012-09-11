@@ -520,6 +520,10 @@ td.diff_header {
   width: 120px;
 }
 
+.move-page input[type=text] {
+  width: 400px;
+}
+
 .parentSuggestContainer {
   position: relative;
 }
@@ -548,8 +552,11 @@ td.diff_header {
 }
 #parentSuggestionInputContainer {
   padding: 10px;
-  background: #eee;
-  border: 1px solid #ccc;
+  background: #eaeff2;
+  background: linear-gradient(top, #eaeff2, #d4dde4);
+  background: -moz-linear-gradient(top, #eaeff2, #d4dde4);
+  background: -webkit-linear-gradient(top, #eaeff2, #d4dde4);
+  border: 1px solid #d4dde4;
   box-shadow: 0 5px 10px #ccc;
   position: absolute;
   margin-left: 20px;
@@ -561,7 +568,7 @@ td.diff_header {
   position: absolute;
   display: inline-block;
   border-top: 7px solid transparent;
-  border-right: 7px solid #eee;
+  border-right: 7px solid #dfe6eb;
   border-bottom: 7px solid transparent;
   left: -7px;
   top: 20px;
@@ -571,7 +578,7 @@ td.diff_header {
   position: absolute;
   display: inline-block;
   border-top: 6px solid transparent;
-  border-right: 6px solid #eee;
+  border-right: 6px solid #dfe6eb;
   border-bottom: 6px solid transparent;
   left: -6px;
   top: 21px;
@@ -582,10 +589,10 @@ td.diff_header {
 }
 .moveDescendants {
   height: 160px;
-  border: 1px solid #ccc;
+  border: 1px solid #dfe6eb;
   padding: 10px 10px 0 10px;
   overflow-y: auto;
-  background: #f8f8f8;
+  background: #eaeff2;
   resize: vertical;
 }
 .moveDescendants ul {

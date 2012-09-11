@@ -29,14 +29,14 @@
           <li>
             <dl>
               <dt>Current Title: </dt>
-              <dd><input type="text" name="title" value="{{ document.title }}" style="width:400px;" /></dd>
+              <dd><input type="text" name="title" value="{{ document.title }}" /></dd>
             </dl>
           </li>
           <li>
             <dl>
               <dt>New Slug: </dt>
               <dd>
-                <input type="text" name="slug" id="moveSlug" value="" style="width:400px;" />
+                <input type="text" name="slug" id="moveSlug" value="" />
                 <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
                 <input type="hidden" value="{{ document.locale }}" id="moveLocale" />
               </dd>
