@@ -989,32 +989,40 @@
 
     // Injects a DIV with language to the effect of "you had a previous draft, want to restore it?"
     // This takes the place of an ugly, ugly confirmation box :(
-
     var $draftDiv;
     function displayDraftBox(content) {
-        var text = gettext('You have a draft in progress.  <a href="">Click here</a> to restore the draft content.'),
+        var text = gettext('You have a draft in progress.  <a href="" class="restoreLink">Restore the draft content</a> or <a href="" class="discardLink">discard the draft</a>.'),
             $contentNode = $('#id_content'),
             editor;
 
-        $draftDiv = $('<div class="notice"><p>' + text + '</p></div>')
-                        .insertBefore($contentNode)
-                        .click(function(e) {
-                            e.preventDefault();
-                            $contentNode.val(content);
+        // Plan the draft into the page
+        $draftDiv = $('<div class="notice"><p>' + text + '</p></div>').insertBefore($contentNode);
 
-                            if(isTemplate) {
-                                editor = ace_editor;
-                                ace_editor.session.setValue(content);
-                            }
-                            else {
-                                editor = $contentNode.ckeditorGet();
-                                editor.setData(content);
-                            }
-                            editor.focus();
-                            
-                            updateDraftState('loaded');
-                            hideDraftBox();
-                        });
+        // Hook up the "restore" link
+        $draftDiv.find(".restoreLink").click(function(e) {
+            e.preventDefault();
+            $contentNode.val(content);
+
+            if(isTemplate) {
+                editor = ace_editor;
+                ace_editor.session.setValue(content);
+            }
+            else {
+                editor = $contentNode.ckeditorGet();
+                editor.setData(content);
+            }
+            editor.focus();
+            
+            updateDraftState('loaded');
+            hideDraftBox();
+        });
+
+        // Hook up the "dispose" link 
+        $draftDiv.find(".discardLink").click(function(e) {
+            e.preventDefault();
+            hideDraftBox();
+            clearDraft(getStorageKey());
+        });
     }
     function hideDraftBox() {
         $draftDiv && $draftDiv.css('display', 'none');
