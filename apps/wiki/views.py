@@ -964,7 +964,8 @@ def preview_revision(request):
 
     if kumascript.should_use_rendered(doc, request.GET, html=wiki_content):
         wiki_content, kumascript_errors = kumascript.post(request,
-                                                          wiki_content)
+                                                          wiki_content,
+                                                          request.locale)
     # TODO: Get doc ID from JSON.
     data = {'content': wiki_content, 'title': request.POST.get('title', ''),
             'kumascript_errors': kumascript_errors}
