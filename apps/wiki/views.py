@@ -232,6 +232,48 @@ def _join_slug(parent_split, slug):
     return '/'.join(parent_split)
 
 
+def get_seo_description(content):
+    # Create an SEO summary
+    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
+    #        way to find the end of sentence before 180?
+    seo_summary = ''
+    try:
+        if content:
+            # Need to add a BR to the page content otherwise pyQuery wont find a 
+            # <p></p> element if it's the only element in the doc_html
+            seo_analyze_doc_html = content + '<br />'
+            page = pq(seo_analyze_doc_html)
+
+            # Look for the SEO summary class first
+            summaryClasses = page.find('.seoSummary')
+            if len(summaryClasses):
+                seo_summary = summaryClasses.text()
+            else:
+                paragraphs = page.find('p')
+                if paragraphs.length:
+                    for p in range(len(paragraphs)):
+                        item = paragraphs.eq(p)
+                        text = item.text()
+                        # Checking for a parent length of 2 
+                        # because we don't want p's wrapped
+                        # in DIVs ("<div class='warning'>") and pyQuery adds 
+                        # "<html><div>" wrapping to entire document
+                        if (len(text) and 
+                            not 'Redirect' in text and 
+                            text.find(u'«') == -1 and
+                            text.find('&laquo') == -1 and
+                            item.parents().length == 2):
+                            seo_summary = text.strip()
+                            break
+    except:
+        logging.debug('Could not create SEO summary');
+
+    # Post-found cleanup
+    seo_summary = seo_summary.replace('<', '').replace('>', '')
+
+    return seo_summary
+
+
 @waffle_flag('kumawiki')
 @require_http_methods(['GET', 'HEAD'])
 @process_document_path
@@ -442,41 +484,14 @@ def document(request, document_slug, document_locale):
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
-    # Create an SEO summary
-    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
-    #        way to find the end of sentence before 180?
+    # Get the SEO summary
     seo_summary = ''
-    try:
-        if doc_html and not doc.is_template:
-            # Need to add a BR to the page content otherwise pyQuery wont find a 
-            # <p></p> element if it's the only element in the doc_html
-            seo_analyze_doc_html = doc_html + '<br />'
-            page = pq(seo_analyze_doc_html)
+    if not doc.is_template:
+        seo_summary = get_seo_description(doc_html)
 
-            # Look for the SEO summary class first
-            summaryClasses = page.find('.seoSummary')
-            if len(summaryClasses):
-                seo_summary = summaryClasses.text()
-            else:
-                paragraphs = page.find('p')
-                if paragraphs.length:
-                    for p in range(len(paragraphs)):
-                        item = paragraphs.eq(p)
-                        text = item.text()
-                        # Checking for a parent length of 2 because we don't want p's wrapped
-                        # in DIVs ("<div class='warning'>") and pyQuery adds 
-                        # "<html><div>" wrapping to entire document
-                        if (len(text) and 
-                            not 'Redirect' in text and 
-                            text.find(u'«') == -1 and
-                            text.find('&laquo') == -1 and
-                            item.parents().length == 2):
-                            seo_summary = text.strip()
-                            break
-    except:
-        logging.debug("Could not create SEO summary");
-
+    # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
+    
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
