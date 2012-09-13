@@ -43,13 +43,14 @@ def should_use_rendered(doc, params, html=None):
             (force_macros or (not no_macros and not show_raw)))
 
 
-def post(request, content):
+def post(request, content, locale=settings.LANGUAGE_CODE):
     ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
     }
     env_vars = dict(
         url=request.build_absolute_uri('/'),
+        locale=locale
     )
     add_env_headers(headers, env_vars)
     data = content.encode('utf8')
