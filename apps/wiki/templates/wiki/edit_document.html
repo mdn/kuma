@@ -94,10 +94,12 @@
 
           <div class="title">
             <h1>{{ _('Editing <em>{title}</em>')|fe(title=revision.title) }}</h1>
-            {% if not section_id %}
-                <button type="button" id="btn-properties" title="Edit Page Title and Properties">{{ _('Edit Page Title and Properties') }}</button>
-            {% endif %}
-            <p class="save-state" id="draft-status">{% trans %}Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>{% endtrans %}</p>
+            <p class="save-state" id="draft-status">
+              {% if not section_id %}
+                <a href="" id="btn-properties">{{ _('Edit Page Title and Properties') }}</a><br />
+              {% endif %}
+              {% trans %}Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>{% endtrans %}
+            </p>
           </div>
 
           {% if revision_form and not section_id %}
