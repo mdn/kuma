@@ -668,6 +668,11 @@ class DocumentEditingTests(TestCaseBase):
                                   '<p class="seoSummary">b</p>',
                                   'a b')
 
+        # No brackets
+        make_page_and_compare_seo('nine',
+                                  u'<p>I <em>am</em> awesome. <a href="blah">A link</a> is also &lt;cool&gt;</p>',
+                                  'I am awesome. A link is also cool')
+
     def test_create_on_404(self):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
