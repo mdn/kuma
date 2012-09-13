@@ -231,7 +231,6 @@ def _join_slug(parent_split, slug):
     parent_split.append(slug)
     return '/'.join(parent_split)
 
-
 @waffle_flag('kumawiki')
 @require_http_methods(['GET', 'HEAD'])
 @process_document_path
@@ -938,6 +937,61 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return response
 
 
+
+@waffle_flag('kumawiki')
+@require_http_methods(['GET', 'POST'])
+@login_required  # TODO: Stop repeating this knowledge here and in
+                 # Document.allows_editing_by.
+@process_document_path
+@check_readonly
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+def move_document(request, document_slug, document_locale, revision_id=None):
+    """Create a new revision of a wiki document, or edit document metadata."""
+
+    # Attempt to get the document; if it doesn't exist, 404 it
+    doc = get_object_or_404(Document, locale=document_locale, slug=document_slug)
+
+    # Simply render out if it's a post
+    if request.method == 'GET':
+
+        #  A method which recursively gets a list of documents and its children
+        def _get_child_list(specific_document_list):
+            if not len(specific_document_list):
+             return
+
+            html = '<ul>';
+            for d in specific_document_list:
+                docObj = d['document']
+                html += ('<li title="' + docObj.slug + '">' + docObj.title +
+                            '<br /><a href="' + docObj.get_absolute_url() + '">' + docObj.slug + '</a>')
+                children = docObj.get_all_children()
+                if len(children):
+                    html += _get_child_list(children)
+                html += '</li>'
+            html += '</ul>'
+            return html
+
+        descendant_html = _get_child_list(doc.get_all_children())
+
+        return jingo.render(request, 'wiki/move_document.html', {
+            'document': doc,
+            'specific_slug': _split_slug(doc.slug)['specific'],
+            'descendants':  descendant_html,
+            'descendants_count': descendant_html.count('<li')
+        })
+
+    # ubernostrum does the magic here
+        """
+            Probably need to validate that:
+
+                1.  All fields are completed
+                2.  A page with the given slug doesn't already exist
+
+
+        """
+
+
+
 @waffle_flag('kumawiki')
 def ckeditor_config(request):
     """Return ckeditor config from database"""
@@ -1005,7 +1059,8 @@ def autosuggest_documents(request):
             'title': d.title + ' [' + d.locale + ']',
             'label': d.title,
             'href':  d.get_absolute_url(),
-            'id': d.id 
+            'id': d.id,
+            'slug': d.slug,
         }
         docs_list.append(doc_info)
 
