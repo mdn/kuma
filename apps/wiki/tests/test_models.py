@@ -1073,3 +1073,72 @@ class DeferredRenderingTests(TestCase):
 
         r_rendered, r_errors = self.d1.get_rendered(None, 'http://testserver/')
         ok_(errors, r_errors)
+
+
+class PageMoveTests(TestCase):
+    """Tests for page-moving and associated functionality."""
+    def test_children_simple(self):
+        """A basic tree with two direct children and no sub-trees on
+        either."""
+        d1 = document(title='Parent')
+        d2 = document(title='Child')
+        d2.parent_topic = d1
+        d2.save()
+        d3 = document(title='Another child')
+        d3.parent_topic = d1
+        d3.save()
+
+        expected = [
+            {'document': d2, 'children': []},
+            {'document': d3, 'children': []}
+        ]
+        ok_(expected == d1.get_descendants())
+
+    def test_children_complex(self):
+        """A slightly more complex tree, with multiple children, some
+        of which do/don't have their own children."""
+        top = document(title='Parent')
+        
+        c1 = document(title='Child 1')
+        c1.parent_topic = top
+        c1.save()
+
+        gc1 = document(title='Child of child 1')
+        gc1.parent_topic = c1
+        gc1.save()
+
+        c2 = document(title='Child 2')
+        c2.parent_topic = top
+        c2.save()
+
+        gc2 = document(title='Child of child 2')
+        gc2.parent_topic = c2
+        gc2.save()
+
+        gc3 = document(title='Another child of child 2')
+        gc3.parent_topic = c2
+        gc3.save()
+
+        ggc1 = document(title='Child of the second child of child 2')
+        ggc1.parent_topic = gc3
+        ggc1.save()
+
+        expected = [
+            {'document': c1,
+             'children': [
+                 {'document': gc1,
+                  'children': []}
+             ]},
+            {'document': c2,
+             'children': [
+                 {'document': gc2,
+                  'children': []},
+                 {'document': gc3,
+                  'children': [
+                      {'document': ggc1,
+                       'children': []},
+                  ]},
+             ]},
+        ]
+
+        ok_(expected == top.get_descendants())
