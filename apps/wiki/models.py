@@ -438,7 +438,7 @@ class DocumentManager(ManagerBase):
             counter += 1
 
         return counter
-
+        
 
 class DocumentTag(TagBase):
     """A tag indexing a document"""
@@ -848,26 +848,62 @@ class Document(NotificationsMixin, ModelBase):
         slug_changed = hasattr(self, 'old_slug')
         title_changed = hasattr(self, 'old_title')
         if self.current_revision and (slug_changed or title_changed):
-            doc = Document.objects.create(locale=self.locale,
-                                          title=self._attr_for_redirect(
-                                              'title', REDIRECT_TITLE),
-                                          slug=self._attr_for_redirect(
-                                              'slug', REDIRECT_SLUG),
-                                          category=self.category,
-                                          is_localizable=False)
-            Revision.objects.create(document=doc,
-                                    content=REDIRECT_CONTENT % dict(
-                                        href=self.get_absolute_url(),
-                                        title=self.title),
-                                    is_approved=True,
-                                    show_toc=self.current_revision.show_toc,
-                                    reviewer=self.current_revision.creator,
-                                    creator=self.current_revision.creator)
-
+            self.move()
             if slug_changed:
                 del self.old_slug
             if title_changed:
                 del self.old_title
+
+    def move(self, new_slug=None, user=None):
+        """
+        Complete the process of moving a page by leaving a redirect
+        behind.
+        
+        """
+        if new_slug is None:
+            new_slug = self.slug
+        if user is None:
+            user = self.current_revision.creator
+        self.slug = new_slug
+        doc = Document.objects.create(locale=self.locale,
+                                      title=self._attr_for_redirect(
+                                          'title', REDIRECT_TITLE),
+                                      slug=self._attr_for_redirect(
+                                          'slug', REDIRECT_SLUG),
+                                      category=self.category,
+                                      is_localizable=False)
+        Revision.objects.create(document=doc,
+                                content=REDIRECT_CONTENT % dict(
+                                    href=self.get_absolute_url(),
+                                    title=self.title),
+                                is_approved=True,
+                                show_toc=self.current_revision.show_toc,
+                                reviewer=self.current_revision.creator,
+                                creator=user)
+
+    def _move_tree(self, old_substr, new_substr, user):
+        """
+        Move this page and all its children, by replacing old_substr
+        in the slug with new_substr.
+        
+        """
+        immediate_children = self.children.all()
+        
+        rev = self.current_revision
+
+        # Shortcut trick for getting a object with all the same
+        # values, but making Django think it's new.
+        rev.id = None
+
+        rev.creator = user
+        rev.created = datetime.now()
+        rev.slug = rev.slug.replace(old_substr, new_substr)
+
+        rev.save()
+
+        for child in immediate_children:
+            child._move_tree(old_substr, new_substr, user)
+        
 
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""
@@ -1127,6 +1163,47 @@ class Document(NotificationsMixin, ModelBase):
             parents.insert(0, current_parent.parent_topic)
             current_parent = current_parent.parent_topic
         return parents
+
+    def has_children(self):
+        """Does this document have at least one child?"""
+        return self.children.count()
+
+    def is_child_of(self, other):
+        """Circular dependency detection -- if someone tries to set
+        this as a parent of a document it's a child of, they're gonna
+        have a bad time."""
+        return other.id in (d.id for d in self.parents)
+    
+    # This is a method, not a property, because it can do a lot of DB
+    # queries and so should look scarier. It's not just named
+    # 'children' because that's taken already by the reverse relation
+    # on parent_topic.
+    def get_all_children(self):
+        """
+        Return a tree of documents which have this one as their
+        topical parent.
+
+        The returned data structure is a list of dictionaries, like
+        so:
+
+        [
+          { 'document': <Document object>,
+            'children': [] },
+        ]
+
+        Where 'children' is another data structure in the same
+        format. This allows not only walking through all child
+        documents, but specific sub-trees.
+
+        If there are no children, returns an empty list.
+        """
+        results = []
+        immediate_children = self.children.all()
+        if immediate_children.count():
+            for child in immediate_children:
+                results.append({'document': child,
+                                'children': child.get_all_children()})
+        return results
 
     def has_voted(self, request):
         """Did the user already vote for this document?"""
