@@ -1011,6 +1011,8 @@ class TranslateTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('form textarea[name="content"]')))
+        # initial translation should include slug input
+        eq_(1, len(doc('form input[name="slug"]')))
         assert (u'Espa' in doc('div.change-locale').text())
 
     def test_translate_disallow(self):
@@ -1109,6 +1111,13 @@ class TranslateTests(TestCaseBase):
         eq_(data['content'], rev.content)
         edited_fire.assert_called()
         ready_fire.assert_called()
+
+        # subsequent translations should NOT include slug input
+        self.client.logout()
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(translate_uri)
+        doc = pq(response.content)
+        eq_(0, len(doc('form input[name="slug"]')))
 
     def test_translate_form_maintains_based_on_rev(self):
         """Revision.based_on should be the rev that was current when the

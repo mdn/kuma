@@ -44,57 +44,7 @@
     {% endif %}
     </header>
 
-    {% if document_form %}
-      <details id="trans-description"{% if disclose_description %} open="open"{% endif %}>
-        <summary>{{ _('Translate Description') }}</summary>
-        {{ errorlist(document_form) }}
-            <ul class="description">
-              <li>
-                <dl class="approved">
-                  <dt>{{ _('Title:') }}</dt>
-                  <dd>{{ parent.title }}</dd>
-                </dl>
-                <dl class="localized">
-                  <dt><label for="{{ document_form.title.auto_id }}" title="{{ document_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></dt>
-                  <dd>{{ document_form.title|safe }}</dd>
-                </dl>
-              </li>
-              <li>
-                <dl class="approved">
-                  <dt>{{ _('Slug:') }}</dt>
-                  <dd>{{ specific_slug }}</dd>
-                </dl>
-                <dl class="localized">
-                  <dt><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></dt>
-                  <dd>{{ document_form.slug|safe }}</dd>
-                </dl>
-              </li>
-              {% if parent_slug %}
-              <li>
-                <dl class="approved">
-                  <dt>{{ _('Parent:') }}</dt>
-                  <dd>{{ parent_slug }}</dd>
-                </dl>
-                <dl class="localized">
-                  &nbsp;
-                </dl>
-              </li>
-              {% endif %}
-              {% if not document.is_template %}
-                <li>
-                  <dl class="approved">
-                    <dt>&nbsp;</dt>
-                    <dd>&nbsp;</dd>
-                  </dl>
-                  <dl class="localized">
-                    <dt><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label></dt>
-                    <dd>{{ revision_form.show_toc | safe }}</dd>
-                  </dl>
-                </li>
-                {% endif %}
-            </ul>
-      </details>
-    {% endif %}
+    {% include 'wiki/includes/translate_description.html' %}
 
     {% if revision_form %}
       <details id="trans-content" open="open">
