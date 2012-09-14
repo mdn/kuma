@@ -623,12 +623,14 @@ def new_document(request):
             'show_toc': True
         })
 
+        allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
         return jingo.render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
                              'parent_slug': parent_slug,
                              'parent_id': initial_parent_id,
                              'document_form': doc_form,
                              'revision_form': rev_form,
+                             'allow_add_attachment': allow_add_attachment,
                              'attachment_form': AttachmentRevisionForm(),
                              'parent_path': parent_path})
 
@@ -663,10 +665,12 @@ def new_document(request):
     else:
         doc_form.data['slug'] = posted_slug
 
+    allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
     return jingo.render(request, 'wiki/new_document.html',
                         {'is_template': is_template,
                          'document_form': doc_form,
                          'revision_form': rev_form,
+                         'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'parent_slug': parent_slug,
                          'parent_path': parent_path})
@@ -889,6 +893,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
 
     attachments = _format_attachment_obj(doc.attachments)
+    allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
@@ -900,6 +905,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                          'parent_path': parent_path,
                          'revision': rev,
                          'document': doc,
+                         'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'attachment_data': attachments,
                          'attachment_data_json': json.dumps(attachments)})
@@ -1723,7 +1729,7 @@ def new_attachment(request):
     revision."""
 
     # No access if no permissions to upload
-    if not request.user.has_perm('wiki.add_attachment'):
+    if not Attachment.objects.allow_add_attachment_by(request.user):
         raise PermissionDenied
     
     form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
