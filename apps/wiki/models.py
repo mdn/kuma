@@ -1142,6 +1142,16 @@ class Document(NotificationsMixin, ModelBase):
             current_parent = current_parent.parent_topic
         return parents
 
+    def has_children(self):
+        """Does this document have at least one child?"""
+        return self.children.count()
+
+    def is_child_of(self, other):
+        """Circular dependency detection -- if someone tries to set
+        this as a parent of a document it's a child of, they're gonna
+        have a bad time."""
+        return other.id in (d.id for d in self.parents)
+
     # This is a method, not a property, because it can do a lot of DB
     # queries and so should look scarier. It's not just named
     # 'children' because that's taken already by the reverse relation

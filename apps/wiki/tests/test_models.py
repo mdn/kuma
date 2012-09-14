@@ -1142,3 +1142,29 @@ class PageMoveTests(TestCase):
         ]
 
         ok_(expected == top.get_descendants())
+
+    def test_circular_dependency(self):
+        """Make sure we can detect potential circular dependencies in
+        parent/child relationships."""
+        # Test detection at one level removed.
+        parent = document(title='Parent of circular-dependency document')
+        child = document(title='Document with circular dependency')
+        child.parent_topic = parent
+        child.save()
+
+        ok_(child.is_child_of(parent))
+
+        # And at two levels removed.
+        grandparent = document(title='Grandparent of circular-dependency document')
+        parent.parent_topic = grandparent
+        child.save()
+
+        ok_(child.is_child_of(grandparent))
+
+    def test_has_children(self):
+        parent = document(title='Parent document for testing has_children()')
+        child = document(title='Child document for testing has_children()')
+        child.parent_topic = parent
+        child.save()
+
+        ok_(parent.has_children())
