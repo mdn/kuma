@@ -56,6 +56,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address', 'font',
     'bdo', 'del', 'ins', 'kbd', 'samp', 'var',
+    'ruby', 'rp', 'rt',
     # MathML
     'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
     'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
