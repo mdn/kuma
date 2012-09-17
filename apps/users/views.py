@@ -1,5 +1,6 @@
 import logging
 import os
+from smtplib import SMTPRecipientsRefused
 import urlparse
 
 from django.conf import settings
@@ -218,19 +219,6 @@ def browserid_register(request):
                                         "register a new account at this time. "
                                         "Please try again later."})
 
-        else:
-            # If login was valid, then set to the verified email
-            login_form = handle_login(request)
-            if login_form.is_valid():
-                if request.user.is_authenticated():
-                    # Change email to new verified email, for next time
-                    user = request.user
-                    user.email = email
-                    user.save()
-                    return _redirect_with_mindtouch_login(redirect_to,
-                        login_form.cleaned_data.get('username'),
-                        login_form.cleaned_data.get('password'))
-
     # HACK: Pretend the session was modified. Otherwise, the data disappears
     # for the next request.
     request.session.modified = True
@@ -339,17 +327,21 @@ def send_email_reminder(request):
     if request.method == 'POST':
         form = EmailReminderForm(request.POST)
         if form.is_valid():
+            error = None
             username = form.cleaned_data['username']
             try:
                 user = User.objects.get(username=username, is_active=True)
-                # TODO: should this be on a model or manager instead?
-                send_reminder_email(user)
+                if user.email:
+                    # TODO: should this be on a model or manager instead?
+                    send_reminder_email(user)
+                else:
+                    error = 'no_email'
             except User.DoesNotExist:
                 # Don't leak existence of email addresses.
                 pass
             return jingo.render(request,
                                 'users/send_email_reminder_done.html',
-                                {'username': username})
+                                {'username': username, 'error': error})
     else:
         form = EmailConfirmationForm()
     return jingo.render(request, 'users/resend_confirmation.html',

@@ -46,4 +46,5 @@ def send_reminder_email(user):
                     'domain': current_site.domain}
     message = render_to_string(email_template, email_kwargs)
     send_to = user.email
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [send_to])
+    if send_to:
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [send_to])
