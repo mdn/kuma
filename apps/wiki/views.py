@@ -194,6 +194,17 @@ def _document_last_modified(request, document_slug, document_locale):
     except Document.DoesNotExist:
         return None
 
+
+def prevent_indexing(func):
+    """Decorator to prevent a page from being indexable by robots"""
+    @wraps(func)
+    def _added_header(request, *args, **kwargs):
+        response = func(request, *args, **kwargs)
+        response['X-Robots-Tag'] = 'noindex'
+        return response
+    return _added_header
+
+
 def _format_attachment_obj(attachments):
     attachments_list = []
     for attachment in attachments:
@@ -574,6 +585,7 @@ def list_documents_for_review(request, tag=None):
 @waffle_flag('kumawiki')
 @login_required
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def new_document(request):
     """Create a new wiki document."""
@@ -678,6 +690,7 @@ def new_document(request):
                  # Document.allows_editing_by.
 @process_document_path
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
@@ -1141,6 +1154,7 @@ def select_locale(request, document_slug, document_locale):
 @login_required
 @process_document_path
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
