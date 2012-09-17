@@ -1,4 +1,3 @@
-import logging
 from time import time
 import requests
 
@@ -120,6 +119,7 @@ class LoginTestCase(TestCase):
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
+
         def my_mindtouch_login(username, password, force=False):
             trap['was_called'] = True
             return False
@@ -130,7 +130,7 @@ class LoginTestCase(TestCase):
         # never attempted.
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
-        response = self.client.post(reverse('users.login'),
+        self.client.post(reverse('users.login'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         settings.DEKIWIKI_ENDPOINT = _old
@@ -338,7 +338,7 @@ class RegisterTestCase(TestCase):
     def test_new_user_claim_watches(self, get_current):
         """Claim user watches upon activation."""
         old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
-        
+
         get_current.return_value.domain = 'su.mo.com'
 
         watch(email='sumouser@test.com', save=True)
@@ -444,6 +444,7 @@ class ReminderEmailTestCase(TestCase):
         eq_(0, len(mail.outbox))
         ok_('Could not find email' in response.content)
         ok_('file a bug' in response.content)
+
 
 class ChangeEmailTestCase(TestCase):
     fixtures = ['test_users.json']
@@ -699,6 +700,7 @@ class BrowserIDTestCase(TestCase):
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
+
         def my_get_deki_user_by_email(email):
             trap['was_called'] = True
             return False
@@ -911,6 +913,7 @@ class BrowserIDTestCase(TestCase):
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
+
         def my_mindtouch_login(username, password, force=False):
             trap['was_called'] = True
             return False

@@ -1,6 +1,4 @@
-import logging
 import os
-from smtplib import SMTPRecipientsRefused
 import urlparse
 
 from django.conf import settings
@@ -26,7 +24,6 @@ from django_browserid import auth as browserid_auth
 import jingo
 
 from access.decorators import logout_required, login_required
-import constance.config
 from notifications.tasks import claim_watches
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
