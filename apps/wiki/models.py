@@ -479,6 +479,15 @@ class DocumentRenderedContentNotAvailable(Exception):
 
 class Document(NotificationsMixin, ModelBase):
     """A localized knowledgebase document, not revision-specific."""
+
+    class Meta(object):
+        unique_together = (('parent', 'locale'), ('slug', 'locale'))
+        permissions = (
+            ("add_template_document", "Can add Template:* document"),
+            ("change_template_document", "Can change Template:* document"),
+            ("move_tree", "Can move a tree of documents"),
+        )
+
     objects = DocumentManager()
 
     title = models.CharField(max_length=255, db_index=True)
@@ -701,14 +710,6 @@ class Document(NotificationsMixin, ModelBase):
     def natural_cache_key(self):
         nk = u'/'.join(self.natural_key())
         return hashlib.md5(nk.encode('utf8')).hexdigest()
-
-    class Meta(object):
-        unique_together = (('parent', 'locale'), ('slug', 'locale'))
-        permissions = (
-            ("add_template_document", "Can add Template:* document"),
-            ("change_template_document", "Can change Template:* document"),
-            ("move_tree", "Can move a tree of documents"),
-        )
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
@@ -1464,7 +1465,29 @@ def rev_upload_to(instance, filename):
         'md5': hashlib.md5(str(now)).hexdigest(),
         'filename': filename
     }
-    
+
+
+class AttachmentManager(models.Manager):
+
+    def allow_add_attachment_by(self, user):
+        """Returns whether the `user` is allowed to upload attachments.
+
+        This is determined by a negative permission, `disallow_add_attachment`
+        When the user has this permission, upload is disallowed unless it's
+        a superuser or staff.
+        """
+        if user.is_superuser or user.is_staff:
+            # Superusers and staff always allowed
+            return True
+        if user.has_perm('wiki.add_attachment'):
+            # Explicit add permission overrides disallow
+            return True
+        if user.has_perm('wiki.disallow_add_attachment'):
+            # Disallow generally applied via group, so per-user allow can
+            # override
+            return False
+        return True
+
 
 class Attachment(models.Model):
     """
@@ -1475,6 +1498,13 @@ class Attachment(models.Model):
     markup in the document.
     
     """
+    class Meta(object):
+        permissions = (
+            ("disallow_add_attachment", "Cannot upload attachment"),
+        )
+
+    objects = AttachmentManager()
+
     current_revision = models.ForeignKey('AttachmentRevision', null=True,
                                          related_name='current_rev')
 
