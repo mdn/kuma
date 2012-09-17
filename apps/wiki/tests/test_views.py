@@ -612,6 +612,16 @@ class DocumentEditingTests(TestCaseBase):
 
     fixtures = ['test_users.json']
 
+    def test_noindex_post(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Go to new document page to ensure no-index header works
+        response = client.get(reverse('wiki.new_document', args=[],
+                                               locale='en-US'))
+        eq_(response['X-Robots-Tag'], 'noindex')
+
+
     def test_seo_script(self):
 
         client = LocalizingClient()
