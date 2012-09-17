@@ -521,6 +521,7 @@ def document(request, document_slug, document_locale):
 
 
 @waffle_flag('kumawiki')
+@prevent_indexing
 @process_document_path
 def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
@@ -1052,6 +1053,7 @@ def autosuggest_documents(request):
 @waffle_flag('kumawiki')
 @require_GET
 @process_document_path
+@prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
@@ -1124,6 +1126,7 @@ def review_revision(request, document_slug, document_locale, revision_id):
 @waffle_flag('kumawiki')
 @require_GET
 @process_document_path
+@prevent_indexing
 def compare_revisions(request, document_slug, document_locale):
     """Compare two wiki document revisions.
 
@@ -1397,6 +1400,7 @@ def unwatch_approved(request):
 @waffle_flag('kumawiki')
 @require_GET
 @process_document_path
+@prevent_indexing
 def json_view(request, document_slug=None, document_locale=None):
     """Return some basic document info in a JSON blob."""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
