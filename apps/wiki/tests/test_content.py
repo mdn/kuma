@@ -379,6 +379,9 @@ class ContentSectionToolTests(TestCase):
               <h3 id="Audio">Audio</h3>
                 <h4 id="Audio-API">Audio API</h4>
             <h2 id="CSS">CSS</h2>
+                <h4 id="CSS_transforms">CSS transforms</h4>
+              <h3 id="Gradients">Gradients</h3>
+                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
         """
         expected = """
             <li><a rel="internal" href="#HTML">HTML</a>
@@ -396,7 +399,19 @@ class ContentSectionToolTests(TestCase):
                   </li>
                 </ol>
             </li>
-            <li><a rel="internal" href="#CSS">CSS</a></li>
+            <li><a rel="internal" href="#CSS">CSS</a>
+                <ol>
+                  <li>
+                    <ol>
+                      <li><a rel="internal" href="#CSS_transforms">CSS transforms</a>
+                    </ol>
+                  </li>
+                  <li><a rel="internal" href="#Gradients">Gradients</a>
+                    <ol>
+                      <li><a rel="internal" href="#Scaling_backgrounds">Scaling backgrounds</a>
+                    </ol>
+                </ol>
+            </li>
         """
         result = (wiki.content
                   .parse(doc_src)
