@@ -1091,11 +1091,7 @@ class PageMoveTests(TestCase):
         d3.parent_topic = d1
         d3.save()
 
-        expected = [
-            {'document': d2, 'children': []},
-            {'document': d3, 'children': []}
-        ]
-        ok_(expected == d1.get_descendants())
+        eq_([d2, d3], d1.get_descendants())
 
     def test_children_complex(self):
         """A slightly more complex tree, with multiple children, some
@@ -1128,25 +1124,7 @@ class PageMoveTests(TestCase):
         ggc1.parent_topic = gc3
         ggc1.save()
 
-        expected = [
-            {'document': c1,
-             'children': [
-                 {'document': gc1,
-                  'children': []}
-             ]},
-            {'document': c2,
-             'children': [
-                 {'document': gc2,
-                  'children': []},
-                 {'document': gc3,
-                  'children': [
-                      {'document': ggc1,
-                       'children': []},
-                  ]},
-             ]},
-        ]
-
-        ok_(expected == top.get_descendants())
+        ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
 
     def test_circular_dependency(self):
         """Make sure we can detect potential circular dependencies in

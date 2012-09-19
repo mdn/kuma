@@ -1197,29 +1197,15 @@ class Document(NotificationsMixin, ModelBase):
     # on parent_topic.
     def get_descendants(self):
         """
-        Return a tree of documents which have this one as their
-        topical parent.
-
-        The returned data structure is a list of dictionaries, like
-        so:
-
-        [
-          { 'document': <Document object>,
-            'children': [] },
-        ]
-
-        Where 'children' is another data structure in the same
-        format. This allows not only walking through all child
-        documents, but specific sub-trees.
-
-        If there are no children, returns an empty list.
+        Return a list of all documents which are children
+        (grandchildren, great-grandchildren, etc.) of this one.
+        
         """
         results = []
-        immediate_children = self.children.all()
-        if immediate_children.count():
-            for child in immediate_children:
-                results.append({'document': child,
-                                'children': child.get_descendants()})
+        if self.has_children():
+            for child in self.children.all():
+                results.append(child)
+                [results.append(grandchild) for grandchild in child.get_descendants()]
         return results
 
     def has_voted(self, request):
