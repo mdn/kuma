@@ -1276,3 +1276,28 @@ class PageMoveTests(TestCase):
         ok_(old_grandchild_id != moved_grandchild.current_revision.id)
         ok_(moved_grandchild.current_revision.slug in \
             Document.objects.get(slug='first-level/second-level/third-level/grandchild').redirect_url())
+
+    def test_move_prepend(self):
+        """Test the special-case prepend logic."""
+        top = revision(title='Top-level parent for testing moves with prependings',
+                       slug='parent',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+        
+        child1 = revision(title='First child of tree-move-prepending parent',
+                          slug='first-level/child1',
+                          is_approved=True,
+                          save=True)
+        child1_doc = child1.document
+        child1_doc.parent_topic = top_doc
+        child1_doc.save()
+
+        top_doc._move_tree('', 'new-prefix', prepend=True)
+        moved_top = Document.objects.get(pk=top_doc.id)
+        eq_('new-prefix/parent',
+            moved_top.current_revision.slug)
+        
+        moved_child1 = Document.objects.get(pk=child1_doc.id)
+        eq_('new-prefix/first-level/child1',
+            moved_child1.current_revision.slug)
