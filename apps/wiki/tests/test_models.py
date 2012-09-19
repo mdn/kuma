@@ -1279,3 +1279,58 @@ class PageMoveTests(TestCase):
         moved_child1 = Document.objects.get(pk=child1_doc.id)
         eq_('new-prefix/first-level/child1',
             moved_child1.current_revision.slug)
+
+    def test_tree_change(self):
+        d1 = document(title='Test tree change without prepend',
+                      slug='move-tests/test-tree-change')
+        eq_(('foo/move-tests', False),
+            d1._tree_change('foo/move-tests/test-tree-change'))
+        d2 = document(title='Test tree change with prepend',
+                      slug='test-tree-change-prepend')
+        eq_(('foo', True),
+            d2._tree_change('foo/test-tree-change-prepend'))
+
+    def test_conflicts(self):
+        top = revision(title='Test page-move conflict detection',
+                       slug='test-move-conflict-detection',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+        child = revision(title='Child of conflict detection test',
+                         slug='move-tests/conflict-child',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = top_doc
+        child_doc.save()
+
+        # We should find the conflict if it's at the slug the document
+        # will move to.
+        top_conflict = revision(title='Conflicting document for move conflict detection',
+                                slug='moved/test-move-conflict-detection',
+                                is_approved=True,
+                                save=True)
+
+        eq_([top_conflict.document],
+            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
+        # Or if it will involve a child document.
+        child_conflict = revision(title='Conflicting child for move conflict detection',
+                                  slug='moved/move-tests/conflict-child',
+                                  is_approved=True,
+                                  save=True)
+
+        eq_([top_conflict.document, child_conflict.document],
+            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
+        # But a redirect should not trigger a conflict.
+        conflict_redirect = revision(title='Conflicting document for move conflict detection',
+                                     slug='moved/test-move-conflict-detection',
+                                     content='REDIRECT <a class="redirect" href="/foo">Foo</a>',
+                                     document=top_conflict.document,
+                                     is_approved=True,
+                                     save=True)
+
+        eq_([child_conflict.document],
+            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
