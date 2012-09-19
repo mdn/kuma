@@ -2396,3 +2396,100 @@ class AttachmentTests(TestCaseBase):
         r2.make_current()
 
         eq_(r, r2.get_previous())
+
+
+class PageMoveTests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def test_move_detection(self):
+        """Attempting to change the slug of a page with children will
+        redirect to page move interface."""
+        parent = revision(title='Test page move views',
+                          slug='test-page-move-views',
+                          is_approved=True,
+                          save=True)
+
+        child = revision(title='Child of page-move view test',
+                         slug='page-move/test-views',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = parent.document
+        child_doc.save()
+
+        data = {'slug': 'change-test-page-move-views'}
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(reverse('wiki.edit_document',
+                                        args=(parent.document.slug,),
+                                        locale=parent.document.locale),
+                                data=data)
+        eq_(302, resp.status_code)
+        ok_(reverse('wiki.move',
+                    args=(parent.document.slug,),
+                    locale=parent.document.locale) in resp['Location'])
+
+    def test_move_view(self):
+        parent = revision(title='Test page move views',
+                          slug='test-page-move-views',
+                          is_approved=True,
+                          save=True)
+        parent_doc = parent.document
+
+        child = revision(title='Child of page-move view test',
+                         slug='page-move/test-views',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = parent.document
+        child_doc.save()
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.get(reverse('wiki.move',
+                                       args=(parent_doc.slug,),
+                                       locale=parent_doc.locale))
+        eq_(200, resp.status_code)
+
+        data = {'slug': 'moved/test-page-move-views'}
+        resp = self.client.post(reverse('wiki.move',
+                                        args=(parent_doc.slug,),
+                                        locale=parent_doc.locale),
+                                data=data)
+        eq_(302, resp.status_code)
+        ok_(reverse('wiki.document',
+                    args=('moved/test-page-move-views',),
+                    locale=parent_doc.locale) in resp['Location'])
+        moved_parent = Document.objects.get(pk=parent_doc.id)
+        eq_('moved/test-page-move-views',
+            moved_parent.current_revision.slug)
+        moved_child = Document.objects.get(pk=child_doc.id)
+        eq_('moved/page-move/test-views',
+            moved_child.current_revision.slug)
+
+    def test_move_conflict(self):
+        parent = revision(title='Test page move views',
+                          slug='test-page-move-views',
+                          is_approved=True,
+                          save=True)
+        parent_doc = parent.document
+
+        child = revision(title='Child of page-move view test',
+                         slug='page-move/test-views',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = parent.document
+        child_doc.save()
+
+        conflict = revision(title='Conflict for page-move view',
+                            slug='moved/page-move/test-views',
+                            is_approved=True,
+                            save=True)
+
+        data = {'slug': 'moved/test-page-move-views'}
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(reverse('wiki.move',
+                                        args=(parent_doc.slug,),
+                                        locale=parent_doc.locale),
+                                data=data)
+
+        eq_(200, resp.status_code)
