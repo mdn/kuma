@@ -118,12 +118,10 @@
                 {% if show_translation_parent_block %}
                 <li class="metadata-choose-parent">
                     {% include 'wiki/includes/title_autosuggest_url.html' %}
-                    {{_('The translation source of this article is not set. To set the translation source ...')}}
+                    {{_('Find the translation source with the lookup below and then click "Save Changes."')}}
                     <br />
-                    {{_('Search by English title:')}}
-                    <input type="text" id="parent_text" />
+                    <strong>Lookup:</strong> <input type="text" id="parent_text" />
                     <input type="hidden" name="parent_id" id="parent_id" />
-                    {{_('Then click "Save Changes"')}}
                 </li>
                 {% endif %}
             </ul>
