@@ -74,6 +74,7 @@
 
             var editor = window.ace_editor = ace.edit('ace_content');
             editor.setTheme('ace/theme/dreamweaver');
+            editor.setBehavioursEnabled(false);
             
             var JavaScriptMode = require('ace/mode/javascript').Mode;
 
