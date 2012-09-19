@@ -51,34 +51,6 @@
           </fieldset>
         </form>
 
-        <form id="existing_user" class="boxed" method="post" action="">
-          <h2>{{ _('Returning MDN Members') }}</h2>
-          <p>{% trans %}
-            If you have an MDN account, log in here to use your
-            existing MDN profile. You'll be able to sign in with your Persona from
-            now on.
-          {% endtrans %}</p>
-          {{ errorlist(login_form) }}
-
-          {{ csrf() }}
-          <input type="hidden" name="action" value="login">
-          <fieldset>
-            <ul>
-              <li>
-                <label for="id_username">{{ _('Username') }}</label>
-                {{ login_form.username|safe }}
-              </li>
-              <li>
-                <label for="id_password">{{ _('Password') }}</label>
-                {{ login_form.password|safe }}
-              </li>
-              <li class="submit">
-                <button type="submit">{{ _('Log In') }}</button>
-              </li>
-            </ul>
-          </fieldset>
-        </form>
-
         <form id="forgot_email" class="boxed" method="post" action="{{ url('users.send_email_reminder') }}">
           <h2>{{ _('Forgot your email?') }}</h2>
           <p>{% trans %}
