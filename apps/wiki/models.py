@@ -882,7 +882,7 @@ class Document(NotificationsMixin, ModelBase):
                                 reviewer=self.current_revision.creator,
                                 creator=user)
 
-    def _move_tree(self, old_substr, new_substr, user=None):
+    def _move_tree(self, old_substr, new_substr, user=None, prepend=False):
         """
         Move this page and all its children, by replacing old_substr
         in the slug with new_substr.
@@ -899,12 +899,15 @@ class Document(NotificationsMixin, ModelBase):
 
         rev.creator = user
         rev.created = datetime.now()
-        rev.slug = rev.slug.replace(old_substr, new_substr)
+        if prepend:
+            rev.slug = '/'.join([new_substr, rev.slug])
+        else:
+            rev.slug = rev.slug.replace(old_substr, new_substr)
         
         rev.save(force_insert=True)
 
         for child in self.children.all():
-            child._move_tree(old_substr, new_substr, user)
+            child._move_tree(old_substr, new_substr, user, prepend)
 
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""
