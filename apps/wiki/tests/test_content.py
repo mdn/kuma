@@ -371,19 +371,22 @@ class ContentSectionToolTests(TestCase):
     @attr('toc')
     def test_generate_toc(self):
         doc_src = """
-            <h1 id="HTML">HTML</h1>
-              <h2 id="HTML5">HTML5</h2>
-            <h1 id="JavaScript">JavaScript</h1>
+            <h2 id="HTML">HTML</h2>
+              <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
+            <h2 id="JavaScript">JavaScript</h2>
               JavaScript is awesome.
-              <h2 id="WebGL">WebGL</h2>
-              <h2 id="Audio">Audio</h2>
-                <h3 id="Audio-API">Audio API</h3>
-            <h1 id="CSS">CSS</h1>
+              <h3 id="WebGL">WebGL</h3>
+              <h3 id="Audio">Audio</h3>
+                <h4 id="Audio-API">Audio API</h4>
+            <h2 id="CSS">CSS</h2>
+                <h4 id="CSS_transforms">CSS transforms</h4>
+              <h3 id="Gradients">Gradients</h3>
+                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
         """
         expected = """
             <li><a rel="internal" href="#HTML">HTML</a>
                 <ol>
-                  <li><a rel="internal" href="#HTML5">HTML5</a></li>
+                  <li><a rel="internal" href="#HTML5_canvas_element">HTML5 <code>canvas</code> element</a></li>
                 </ol>
             </li>
             <li><a rel="internal" href="#JavaScript">JavaScript</a>
@@ -396,7 +399,19 @@ class ContentSectionToolTests(TestCase):
                   </li>
                 </ol>
             </li>
-            <li><a rel="internal" href="#CSS">CSS</a></li>
+            <li><a rel="internal" href="#CSS">CSS</a>
+                <ol>
+                  <li>
+                    <ol>
+                      <li><a rel="internal" href="#CSS_transforms">CSS transforms</a>
+                    </ol>
+                  </li>
+                  <li><a rel="internal" href="#Gradients">Gradients</a>
+                    <ol>
+                      <li><a rel="internal" href="#Scaling_backgrounds">Scaling backgrounds</a>
+                    </ol>
+                </ol>
+            </li>
         """
         result = (wiki.content
                   .parse(doc_src)

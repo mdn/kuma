@@ -27,9 +27,11 @@ SECTION_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'section')
 
 HEAD_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 
-# Head tags to included in the table of contents
-HEAD_TAGS_TOC = ('h1', 'h2', 'h3', 'h4')
+# Head tags to be included in the table of contents
+HEAD_TAGS_TOC = ('h2', 'h3', 'h4')
 
+# Allowed tags in the table of contents list
+TAGS_IN_TOC = ('code')
 
 def parse(src):
     return ContentSectionTool(src)
@@ -394,8 +396,10 @@ class SectionTOCFilter(html5lib_Filter):
     """Filter which builds a TOC tree of sections with headers"""
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
-        self.level = 1
+        self.level = 2
         self.in_header = False
+        self.open_level = 0
+        self.in_hierarchy = False
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
@@ -409,14 +413,21 @@ class SectionTOCFilter(html5lib_Filter):
                 if level > self.level:
                     diff = level - self.level
                     for i in range(diff):
-                        out += ({'type': 'StartTag', 'name': 'ol',
-                                 'data': {}},)
+                        if (not self.in_hierarchy and i % 2 == 0):
+                            out += ({'type': 'StartTag', 'name': 'li',
+                                     'data': {}},)
+                        out += ({'type': 'StartTag', 'name': 'ol', 'data': {}},)
+                        if (diff > 1 and i % 2 == 0 and i != diff-1):
+                            out += ({'type': 'StartTag', 'name': 'li',
+                                     'data': {}},)
+                        self.open_level += 1
                     self.level = level
                 elif level < self.level:
                     diff = self.level - level
                     for i in range(diff):
-                        out += ({'type': 'EndTag', 'name': 'li'},
-                                {'type': 'EndTag', 'name': 'ol'})
+                        out += ({'type': 'EndTag', 'name': 'ol'},
+                                {'type': 'EndTag', 'name': 'li'})
+                        self.open_level -= 1
                     self.level = level
                 attrs = dict(token['data'])
                 id = attrs.get('id', None)
@@ -429,17 +440,29 @@ class SectionTOCFilter(html5lib_Filter):
                             'href': '#%s' % id,
                          }},
                     )
+                    self.in_hierarchy = True
                     for t in out:
                         yield t
-            elif ('Characters' == token['type'] and self.in_header):
+            elif ('StartTag' == token['type'] and token['name'] in TAGS_IN_TOC):
+                yield token
+            elif (token['type'] in ("Characters", "SpaceCharacters")
+                  and self.in_header):
+                yield token
+            elif ('EndTag' == token['type'] and token['name'] in TAGS_IN_TOC):
                 yield token
             elif ('EndTag' == token['type'] and token['name'] in HEAD_TAGS_TOC):
                 self.in_header = False
-                level_match = re.compile(r'^h(\d)$').match(token['name'])
-                level = int(level_match.group(1))
                 out = ({'type': 'EndTag', 'name': 'a'},)
                 for t in out:
                     yield t
+
+        if self.open_level > 0:
+            out = ()
+            for i in range(self.open_level):
+                out += ({'type': 'EndTag', 'name': 'ol'},
+                        {'type': 'EndTag', 'name': 'li'}) 
+            for t in out:
+                yield t
 
 
 class SectionFilter(html5lib_Filter):
