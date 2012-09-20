@@ -63,6 +63,7 @@
           {% if not document.is_template %}
             <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
           {% endif %}
+          <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move page') }}</a></li>
         </ul>
       </li>
       {% if document.is_localizable or document.parent %}

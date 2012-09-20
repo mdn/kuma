@@ -990,9 +990,18 @@ def move(request, document_slug, document_locale):
 
     if request.method == 'POST':
         form = TreeMoveForm(initial=request.GET, data=request.POST)
+
+        logging.debug('post caught')
+
         if form.is_valid():
+
+            logging.debug('form is valid')
+
             conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
             if conflicts:
+
+                logging.debug('conflicts found!')
+
                 return jingo.render(request, 'wiki/move_document.html', {
                     'form': form,
                     'document': doc,
@@ -1003,6 +1012,9 @@ def move(request, document_slug, document_locale):
             old_hierarchy = '/'.join(doc.slug.split('/')[:-1])
             new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
             doc._move_tree(old_hierarchy, new_hierarchy, request.user, prepend)
+
+            logging.debug('All is well')
+
             return redirect(reverse('wiki.document',
                                     args=(form.cleaned_data['slug'],),
                                     locale=doc.locale))
@@ -1085,7 +1097,8 @@ def autosuggest_documents(request):
             'title': d.title + ' [' + d.locale + ']',
             'label': d.title,
             'href':  d.get_absolute_url(),
-            'id': d.id 
+            'id': d.id,
+            'slug': d.slug
         }
         docs_list.append(doc_info)
 
