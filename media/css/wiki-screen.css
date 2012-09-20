@@ -511,6 +511,108 @@ td.diff_header {
     margin: 20px 0 0;
 }
 
+/* Move page styles */
+.move-page dl {
+  width: auto;
+}
+.move-page dt {
+  width: 120px;
+}
+
+.move-page input[type=text] {
+  width: 400px;
+}
+
+.parentSuggestContainer {
+  position: relative;
+}
+
+  .parentSuggestContainer.show .moveLookupLink {
+    display: none;
+  }
+
+  .parentSuggestContainer.show #parentSuggestionInputContainer {
+    display: block;
+    opacity: 1;
+    top: -22px;
+    left: 0;
+
+    -webkit-transition-property: opacity, top;
+    -webkit-transition-duration: .4s;
+
+    -moz-transition-property: opacity, top;
+    -moz-transition-duration: .4s;
+  }
+
+.moveLookupLink {
+  display: inline-block; 
+  margin-left: 40px; 
+  font-size: 0.8em;
+}
+#parentSuggestionInputContainer {
+  padding: 10px;
+  background: #eaeff2;
+  background: linear-gradient(top, #eaeff2, #d4dde4);
+  background: -moz-linear-gradient(top, #eaeff2, #d4dde4);
+  background: -webkit-linear-gradient(top, #eaeff2, #d4dde4);
+  border: 1px solid #d4dde4;
+  box-shadow: 0 5px 10px #ccc;
+  position: absolute;
+  margin-left: 20px;
+  opacity: 0;
+  top: -10px;
+  left: -90000px;
+}
+#parentSuggestionInputContainer:before {
+  position: absolute;
+  display: inline-block;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #dfe6eb;
+  border-bottom: 7px solid transparent;
+  left: -7px;
+  top: 20px;
+  content: '';
+}
+#parentSuggestionInputContainer:after {
+  position: absolute;
+  display: inline-block;
+  border-top: 6px solid transparent;
+  border-right: 6px solid #dfe6eb;
+  border-bottom: 6px solid transparent;
+  left: -6px;
+  top: 21px;
+  content: '';
+}
+#parentSuggestion  {
+  width: 300px;
+}
+.moveDescendants {
+  max-height: 160px;
+  border: 1px solid #dfe6eb;
+  padding: 10px 10px 0 10px;
+  overflow-y: auto;
+  background: #eaeff2;
+  resize: vertical;
+  width: 50%;
+}
+.moveDescendants ul {
+  margin-left: 40px;
+  list-style-type:circle;
+}
+.moveDescendants a {
+  display: inline-block;
+  margin: 0 0 10px 0;
+  font-size: 80%;
+}
+
+.move-page #page-buttons {
+  right: auto;
+  top: auto;
+  text-align: left;
+  margin: 20px 0;
+  position: relative;
+}
+
 /* WYSIWYG-specific styles */
 .ui-autocomplete { 
   z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
