@@ -53,7 +53,7 @@ from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import (DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm,
-                        AttachmentRevisionForm)
+                        AttachmentRevisionForm, TreeMoveForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
                          DocumentRenderingInProgress,
@@ -745,6 +745,10 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             raise PermissionDenied
 
     else:  # POST
+        if request.POST.get('slug', None) and doc.has_children():
+            return redirect(reverse('wiki.move',
+                                    args=(doc.full_path,),
+                                    locale=doc.locale))
         is_iframe_target = request.GET.get('iframe', False)
         is_raw = request.GET.get('raw', False)
         need_edit_links = request.GET.get('edit_links', False)
@@ -974,6 +978,57 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return response
 
 
+@require_http_methods(['GET', 'POST'])
+@permission_required('wiki.move_tree')
+@process_document_path
+@check_readonly
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+def move(request, document_slug, document_locale):
+    """Move a tree of pages"""
+    doc = get_object_or_404(
+        Document, locale=document_locale, slug=document_slug)
+
+    if request.method == 'POST':
+        form = TreeMoveForm(initial=request.GET, data=request.POST)
+
+        logging.debug('post caught')
+
+        if form.is_valid():
+
+            logging.debug('form is valid')
+
+            conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
+            if conflicts:
+
+                logging.debug('conflicts found!')
+
+                return jingo.render(request, 'wiki/move_document.html', {
+                    'form': form,
+                    'document': doc,
+                    'descendants':  [],
+                    'descendants_count': 0,
+                    'conflicts': conflicts,
+                })
+            old_hierarchy = '/'.join(doc.slug.split('/')[:-1])
+            new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
+            doc._move_tree(old_hierarchy, new_hierarchy, request.user, prepend)
+
+            logging.debug('All is well')
+
+            return redirect(reverse('wiki.document',
+                                    args=(form.cleaned_data['slug'],),
+                                    locale=doc.locale))
+    else:
+        form = TreeMoveForm()
+    descendants = doc.get_descendants()
+    return jingo.render(request, 'wiki/move_document.html', {
+        'form': form,
+        'document': doc,
+        'descendants':  descendants,
+        'descendants_count': len(descendants),
+    })
+
+
 @waffle_flag('kumawiki')
 def ckeditor_config(request):
     """Return ckeditor config from database"""
@@ -1042,7 +1097,8 @@ def autosuggest_documents(request):
             'title': d.title + ' [' + d.locale + ']',
             'label': d.title,
             'href':  d.get_absolute_url(),
-            'id': d.id 
+            'id': d.id,
+            'slug': d.slug
         }
         docs_list.append(doc_info)
 
