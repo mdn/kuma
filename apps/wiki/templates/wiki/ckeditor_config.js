@@ -104,12 +104,13 @@ CKEDITOR.editorConfig = function(config) {
     config.toolbar = 'MDN';
 
     config.autoGrow_minHeight = 600;
-    config.contentsCss = ['/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS?raw=1'];
+    config.contentsCss = ['/media/css/wiki-screen.css', '/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS?raw=1'];
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
     config.dialog_backgroundCoverColor = 'black';
     config.dialog_backgroundCoverOpacity = 0.3;
     config.docType = '<!DOCTYPE html>';
+    config.bodyClass = 'page-content';
     
     CKEDITOR.stylesSet.add('default',[
         { name: "None", element: 'p' },
