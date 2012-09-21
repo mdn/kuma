@@ -939,10 +939,10 @@ class Document(NotificationsMixin, ModelBase):
             return conflicts
             
 
-    def _move_tree(self, old_substr, new_substr, user=None, prepend=False):
+    def _move_tree(self, old_hierarchy, new_hierarchy, user=None, prepend=False):
         """
-        Move this page and all its children, by replacing old_substr
-        in the slug with new_substr.
+        Move this page and all its children, by replacing old_hierarchy
+        in the slug with new_hierarchy.
         
         """
         if user is None:
@@ -957,14 +957,14 @@ class Document(NotificationsMixin, ModelBase):
         rev.creator = user
         rev.created = datetime.now()
         if prepend:
-            rev.slug = '/'.join([new_substr, rev.slug])
+            rev.slug = '/'.join([new_hierarchy, rev.slug])
         else:
-            rev.slug = rev.slug.replace(old_substr, new_substr)
+            rev.slug = rev.slug.replace(old_hierarchy, new_hierarchy)
         
         rev.save(force_insert=True)
 
         for child in self.children.all():
-            child._move_tree(old_substr, new_substr, user, prepend)
+            child._move_tree(old_hierarchy, new_hierarchy, user, prepend)
 
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""
