@@ -44,7 +44,13 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 .article a.imagelink { background: none; padding-right: 0; }
 
 /*** @Basics *********/
-.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; border-bottom: 1px solid #e0e0dc; position: relative; }
+.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; position: relative; }
+.page-content h1, .page-content h2 { border-bottom: 1px solid #e0e0dc; }
+.page-content h2 { font-size: 1.628em; }
+.page-content h3 { font-size: 1.428em; }
+.page-content h4 { font-size: 1.142em; }
+
+
 .page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 .page-content ul { list-style: disc; padding-left: 22px; }
 .page-content ul ul { list-style: circle; }
