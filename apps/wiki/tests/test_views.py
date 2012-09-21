@@ -1036,46 +1036,6 @@ class DocumentEditingTests(TestCaseBase):
                                 title=grandchild_data['title'] + ' Redirect 1',
                                 locale=locale)))
 
-            """ EDIT DOCUMENT TESTING """
-            def _run_edit_tests(edit_slug, edit_data, edit_doc,
-                                edit_parent_path):
-                # Load the "Edit" page for the root doc, ensure no "/" in the slug
-                # Also ensure the 'parent' link is not present
-                response = client.get(reverse('wiki.edit_document', args=[edit_doc.slug], locale=locale))
-                eq_(200, response.status_code)
-                page = pq(response.content)
-                eq_(edit_data['slug'], page.find('input[name=slug]')[0].value)
-                eq_(edit_parent_path, page.find('.metadataDisplay').attr('href'))
-
-                # Attempt an invalid edit of the root, ensure the slug stays the same (i.e. no parent prepending)
-                def test_invalid_slug_edit(inv_slug, url, data):
-                    data['slug'] = inv_slug
-                    data['form'] = 'rev'
-                    response = client.post(url, data)
-                    eq_(200, response.status_code) # 200 = bad, invalid data
-                    page = pq(response.content)
-                    eq_(inv_slug, page.find('input[name=slug]')[0].value) # Slug doesn't add parent
-                    eq_(edit_parent_path, page.find('.metadataDisplay').attr('href'))
-                    self.assertContains(response, 'The slug provided is not valid.')
-                    eq_(0, len(Document.objects.filter(title=data['title'] + ' Redirect 1', locale=locale))) # Ensure no redirect
-
-                edit_bad_url = reverse('wiki.edit_document', args=[edit_doc.slug], locale=locale)
-                test_invalid_slug_edit(invalid_slug1, edit_bad_url, edit_data)
-                test_invalid_slug_edit(invalid_slug2, edit_bad_url, edit_data)
-                test_invalid_slug_edit(invalid_slug3, edit_bad_url, edit_data)
-
-                # Push a valid edit, without changing the slug
-                edit_data['slug'] = edit_slug
-                edit_data['form'] = 'rev'
-                response = client.post(reverse('wiki.edit_document', args=[edit_doc.slug], locale=locale), edit_data)
-                eq_(302, response.status_code)
-                eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=locale))) # Ensure no redirect
-                self.assertRedirects(response, reverse('wiki.document', locale=locale, args=[edit_doc.slug]))
-
-            _run_edit_tests(slug, doc_data, doc, None)
-            _run_edit_tests(child_slug, child_data, child_doc, doc.get_absolute_url())
-            _run_edit_tests(grandchild_slug, grandchild_data, grandchild_doc, child_doc.get_absolute_url())
-
 
             """ TRANSLATION DOCUMENT TESTING """
             def _run_translate_tests(translate_slug, translate_data, translate_doc):
@@ -1148,26 +1108,6 @@ class DocumentEditingTests(TestCaseBase):
             _run_translate_edit_tests(slug, doc_data, foreign_doc)
             _run_translate_edit_tests(child_slug, child_data, foreign_child_doc)
             _run_translate_edit_tests(grandchild_slug, grandchild_data, foreign_grandchild_doc)
-
-
-            """ TEST EDITING SLUGS AND TRANSLATIONS """
-            def _run_slug_edit_tests(edit_slug, edit_data, edit_doc, loc):
-
-                edit_data['slug'] = edit_data['slug'] + '_Updated'
-                edit_data['form'] = 'rev'
-                response = client.post(reverse('wiki.edit_document', args=[edit_doc.slug], locale=loc), edit_data)
-                eq_(302, response.status_code)
-                # HACK: the es doc gets a 'Redirigen 1' if locale/ is updated
-                eq_(1, len(Document.objects.filter(title__contains=edit_data['title'] + ' Redir', locale=loc))) # Ensure *1* redirect
-                self.assertRedirects(response, reverse('wiki.document', locale=loc, args=[edit_doc.slug.replace(edit_slug, edit_data['slug'])]))
-
-            _run_slug_edit_tests(slug, doc_data, doc, locale)
-            _run_slug_edit_tests(child_slug, child_data, child_doc, locale)
-            _run_slug_edit_tests(grandchild_slug, grandchild_data, grandchild_doc, locale)
-            _run_slug_edit_tests(slug, doc_data, foreign_doc, foreign_locale)
-            _run_slug_edit_tests(child_slug, child_data, foreign_child_doc, foreign_locale)
-            _run_slug_edit_tests(grandchild_slug, grandchild_data, foreign_grandchild_doc, foreign_locale)
-
 
         # Run all of the tests
         _createAndRunTests("parent")
