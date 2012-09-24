@@ -42,7 +42,7 @@ class dev {
 
         dekiwiki: stage => vendors;
 
-        site_config: ;
+        site_config: stage => main;
         dekiwiki_config: stage => vendors_post;
         dev_hacks_post: stage => hacks_post;
 
