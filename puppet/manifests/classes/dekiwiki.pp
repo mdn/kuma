@@ -88,10 +88,6 @@ class dekiwiki_config {
             source => "$PROJ_DIR/puppet/files/etc/dekiwiki/mindtouch.host.conf",
             owner => "apache", group => "apache", mode => 0644,
             require => [ Package['httpd-devel'], Package["mysql-server"] ];
-        "/var/www/dekiwiki/.htaccess":
-            ensure => link,
-            target => "$PROJ_DIR/configs/htaccess",
-            owner => "apache", group => "apache", mode => 0644;
         "/var/www/dekiwiki/favicon.ico":
             ensure => file,
             source => "$PROJ_DIR/puppet/files/var/www/dekiwiki/favicon.ico",
