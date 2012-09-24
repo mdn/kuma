@@ -170,6 +170,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #nav-toolbar .crumbs li.first, #nav-toolbar .crumbs li.second { display:none; }
 #nav-toolbar .crumbs li.first.last { display: inline; }
 #nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
+#nav-toolbar .crumbs li a { text-decoration: underline; }
 
 /* @Footer *********/
 .last-mod { clear: both; text-align: right; font-size: .785em; }
