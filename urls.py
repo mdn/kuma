@@ -4,7 +4,6 @@ from django.contrib import admin
 from django.shortcuts import redirect
 from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
-from wiki.sitemap import DocumentSitemap
 
 import authority
 import jingo
@@ -12,10 +11,6 @@ import jingo
 
 admin.autodiscover()
 authority.autodiscover()
-
-sitemaps = {
-    'documents': DocumentSitemap,
-}
 
 urlpatterns = patterns('',
    # Home / landing pages:
@@ -73,9 +68,6 @@ urlpatterns = patterns('',
 
     # Users
     ('', include('users.urls')),
-
-    #Sitemap
-    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', { 'sitemaps': sitemaps }),
 
     # Services and sundry.
     #(r'', include('sumo.urls')),

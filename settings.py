@@ -267,7 +267,7 @@ SERVE_MEDIA = False
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('sitemap.xml', 'media', 'admin', 'robots.txt', 'services', 
+SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services',
                         '1', 'files', '@api', )
 
 # Make this unique, and don't share it with anybody.
