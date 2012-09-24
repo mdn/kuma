@@ -89,44 +89,57 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
     'tr', 'address', 'col', 's', 'strong'
 )))
 # MathML
-ALLOWED_ATTRIBUTES.update(dict((x, ['accent', ]) for x in (
-    'mo', 'mover', 'munderover')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['accentunder', ]) for x in (
-    'mover', 'munderover')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['dir', ]) for x in (
-    'math', 'mi', 'mo', 'mrow', 'ms', 'mtext')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['mathsize', 'mathvariant', ]) for x in (
-    'mi', 'mn', 'mo', 'ms', 'mtext')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['subscripshift', 
-                                    'supscriptshift', ]) for x in (
-    'mmultiscripts', 'msub', 'msup', 'msubsup')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['selection', 'notation', 'close', 'open',
-                                    'separators', 'bevelled', 'denomalign',
-                                    'linethickness', 'numalign', 'largeop',
-                                    'maxsize', 'minsize', 'movablelimits',
-                                    'rspace', 'separator', 'stretchy',
-                                    'symmetric', 'depth', 'lquote', 'rquote',
-                                    'align', 'columnlines', 'frame', 'rowalign',
-                                    'rowspacing', 'rowspan', 'columnspan', 
-                                    'accent', 'accentunder', 'dir', 'mathsize',
-                                    'mathvariant', 'subscriptshift',
-                                    'supscriptshift'
-                                   ]) for x in ('math', 'mstyle')))
-ALLOWED_ATTRIBUTES['math'] += ['display']
-ALLOWED_ATTRIBUTES['maction'] = ['actiontype', 'selection']
-ALLOWED_ATTRIBUTES['menclose'] = ['notation']
-ALLOWED_ATTRIBUTES['mfenced'] = ['close', 'open', 'separators']
-ALLOWED_ATTRIBUTES['mfrac'] = ['bevelled', 'denomalign', 'linethickness',
-                               'numalign']
+ALLOWED_ATTRIBUTES.update(dict((x, ['href', 'mathbackground', 'mathcolor',
+    'id', 'class', 'style']) for x in (
+    'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
+    'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
+    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 
+    'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
+    'munderover', 'none', 'mprescripts')))
+ALLOWED_ATTRIBUTES['math'] += ['display', 'dir', 'selection', 'notation', 
+    'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
+    'numalign', 'largeop','maxsize', 'minsize', 'movablelimits', 'rspace',
+    'separator', 'stretchy','symmetric', 'depth', 'lquote', 'rquote', 'align',
+    'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
+    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant', 'subscriptshift',
+    'supscriptshift', 'scriptlevel', 'displaystyle', 'scriptsizemultiplier',
+    'scriptminsize']
+ALLOWED_ATTRIBUTES['maction'] += ['actiontype', 'selection']
+ALLOWED_ATTRIBUTES['menclose'] += ['notation']
+ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
+ALLOWED_ATTRIBUTES['mfrac'] += ['bevelled', 'denomalign', 'linethickness',
+    'numalign']
+ALLOWED_ATTRIBUTES['mi'] += ['dir', 'mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mi'] += ['mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mmultiscripts'] += ['subscriptshift', 'superscriptshift']
 ALLOWED_ATTRIBUTES['mo'] += ['largeop', 'lspace', 'maxsize', 'minsize',
-                            'movablelimits', 'rspace', 'separator', 'stretchy',
-                            'symmetric']
-ALLOWED_ATTRIBUTES['mpadded'] = ['lspace', 'voffset', 'depth']
-ALLOWED_ATTRIBUTES['ms'] += ['lquote', 'rquote']
-ALLOWED_ATTRIBUTES['mtable'] = ['align', 'columnalign', 'columnlines', 'frame',
-                                'rowalign', 'rowspacing', 'rowlines']
-ALLOWED_ATTRIBUTES['mtd'] = ['columnalign', 'columnspan', 'rowalign', 'rowspan']
-ALLOWED_ATTRIBUTES['mtr'] = ['columnalign', 'rowalign']
+    'movablelimits', 'rspace', 'separator', 'stretchy', 'symmetric', 'accent',
+    'dir', 'mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mover'] += ['accent']
+ALLOWED_ATTRIBUTES['mpadded'] += ['lspace', 'voffset', 'depth']
+ALLOWED_ATTRIBUTES['mrow'] += ['dir']
+ALLOWED_ATTRIBUTES['ms'] += ['lquote', 'rquote', 'dir', 'mathsize',
+    'mathvariant']
+ALLOWED_ATTRIBUTES['mspace'] += ['depth', 'height', 'width']
+ALLOWED_ATTRIBUTES['mstyle'] += ['display', 'dir', 'selection', 'notation', 
+    'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
+    'numalign', 'largeop','maxsize', 'minsize', 'movablelimits', 'rspace',
+    'separator', 'stretchy','symmetric', 'depth', 'lquote', 'rquote', 'align',
+    'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
+    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant', 'subscriptshift',
+    'supscriptshift', 'scriptlevel', 'displaystyle', 'scriptsizemultiplier',
+    'scriptminsize']
+ALLOWED_ATTRIBUTES['msub'] += ['subscriptshift']
+ALLOWED_ATTRIBUTES['msubsup'] += ['subscriptshift', 'superscriptshift']
+ALLOWED_ATTRIBUTES['msup'] += ['superscriptshift']
+ALLOWED_ATTRIBUTES['mtable'] += ['align', 'columnalign', 'columnlines', 'frame',
+    'rowalign', 'rowspacing', 'rowlines']
+ALLOWED_ATTRIBUTES['mtd'] += ['columnalign', 'columnspan', 'rowalign',
+    'rowspan']
+ALLOWED_ATTRIBUTES['mtext'] += ['dir', 'mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mtr'] += ['columnalign', 'rowalign']
+ALLOWED_ATTRIBUTES['munder'] += ['accentunder']
+ALLOWED_ATTRIBUTES['mundermover'] = ['accent', 'accentunder']
 # CSS
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
