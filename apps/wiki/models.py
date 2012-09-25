@@ -936,7 +936,7 @@ class Document(NotificationsMixin, ModelBase):
                     conflicts.append(existing)
             except Document.DoesNotExist:
                 pass
-            return conflicts
+        return conflicts
             
 
     def _move_tree(self, old_hierarchy, new_hierarchy, user=None, prepend=False):
