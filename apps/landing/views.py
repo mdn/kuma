@@ -127,11 +127,6 @@ def promote_buttons(request):
     return jingo.render(request, 'landing/promote_buttons.html')
 
 
-def discussion(request):
-    """Discussion landing page."""
-    return jingo.render(request, 'landing/discussion.html')
-
-
 def forum_archive(request):
     """Forum Archive from phpbb-static landing page."""
     return jingo.render(request, 'landing/forum_archive.html')
