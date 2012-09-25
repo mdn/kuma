@@ -621,6 +621,26 @@ class DocumentEditingTests(TestCaseBase):
                                                locale='en-US'))
         eq_(response['X-Robots-Tag'], 'noindex')
 
+    def test_seo_title(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Utility to make a quick doc
+        def _make_doc(title, aught_title, slug):
+            doc = document(save=True, slug=slug, title=title,
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE)
+            revision(save=True, document=doc)
+            response = client.get(reverse('wiki.document', args=[slug],
+                                    locale=settings.WIKI_DEFAULT_LANGUAGE))
+            page = pq(response.content)
+            eq_(aught_title, page.find('title').text())
+
+        # Test nested document titles
+        _make_doc('One', 'One | MDN', 'one')
+        _make_doc('Two', 'Two | One | MDN', 'one/two')
+        _make_doc('Three', 'Three | One | MDN', 'one/two/three')
+        _make_doc(u'Special Φ Char', u'Special Φ Char | One | MDN', 'one/two/special_char')
+
 
     def test_seo_script(self):
 
@@ -632,13 +652,13 @@ class DocumentEditingTests(TestCaseBase):
             data = new_document_data()
             data.update({'title': 'blah', 'slug': slug, 'content': content})
             response = client.post(reverse('wiki.new_document',
-                                           locale='en-US'),
+                                           locale=settings.WIKI_DEFAULT_LANGUAGE),
                                    data)
             eq_(302, response.status_code)
 
             # Connect to newly created page
             response = self.client.get(reverse('wiki.document', args=[slug],
-                                               locale='en-US'))
+                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
             meta_content = page.find('meta[name=description]').attr('content')
             eq_(str(meta_content).decode('utf-8'),

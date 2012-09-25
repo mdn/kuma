@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% block title %}{{ page_title(document.title) }}{% endblock %}
+{% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 {% set classes = 'document' %}
 {% block bodyclass %}document{% endblock %}
 {% if document.parent %}
