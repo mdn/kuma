@@ -646,12 +646,12 @@ article.main div.tags input.adder {
 #revision-list div.creator {
     color: #333;
     display: inline-block;
-    width: 105px;
+    width: 175px;
 }
 
 #revision-list div.comment {
     display: inline-block;
-    width: 280px;
+    width: 380px;
 }
 
 #revision-list div.delete {
