@@ -238,7 +238,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can you do with Media Queries?"),
         "description": _("CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can you do with Media Queries?"),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>CSS Media Queries have come a long way in the last year. Now a <a href="http://www.w3.org/TR/css3-mediaqueries/">W3C Recommendation</a>, media queries help you support the ever-expanding variety of screen sizes and resolutions in use today. Smart phones and feature phones, tablets and e-book readers, short screens, tall screens, and super-high-resolution screens -- the Web is growing, shrinking, and changing every day.</p>
+<p>Building a Web app that works well across this spectrum can seem daunting, but we have you covered. Take a look at this <a href="http://css-tricks.com/css-media-queries/">introduction</a> from former Derby judge Chris Coyier and be sure to head over to the MDN for <a href="https://developer.mozilla.org/en-US/docs/CSS/Media_queries">more depth and more up-to-date information</a> after that. Need help testing your creation? The new <a href="https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_View">Responsive Design View</a> of Firefox Developer Tools makes debugging responsive web designs fast, easy, and fun.</p>
+<p>Some <a href="https://developer.mozilla.org/en-US/demos/devderby/2011/october">great demos</a> were shared in our last Derby on this topic. What can you do with CSS Media Queries?</p>"""),
     },
     {
         "tag_name": "challenge:2012:november",
@@ -249,6 +251,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Know no bounds"),
         "summary": _("With the Full Screen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"),
         "description": _("With the Full Screen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2012:december",
+        "title": _("December 2012 Dev Derby Challenge - Offline"),
+        "short_title": _("Offline"),
+        "dateline": _("December 2012"),
+        "short_dateline": _("December"),
+        "tagline": _("Unplug"),
+        "summary": _("With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."),
+        "description": _("With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
