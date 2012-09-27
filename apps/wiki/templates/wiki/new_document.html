@@ -28,7 +28,6 @@
             <li><label>{{_('Parent:')}}</label> 
                 <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
           {% endif %}
-          <li><label>{{_('Tags:')}}</label> {{ revision_form.tags | safe }}</li>
           {% if not is_template %}
             <li><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label>
               {{ revision_form.show_toc | safe }}
@@ -52,6 +51,13 @@
       <section>
         <h4>Review needed?</h4>
         {{ revision_form.review_tags|safe }}
+      </section>
+
+      <section class="page-meta">
+        <section id="page-tags">
+          <h2>{{ _('Tags') }}</h2>
+          <input id="tagit_tags" type="text" name="tags" value="" maxlength="255" />
+        </section>
       </section>
       
     </fieldset>
