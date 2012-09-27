@@ -1334,3 +1334,21 @@ class PageMoveTests(TestCase):
         eq_([child_conflict.document],
             top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
+    def test_preserve_tags(self):
+        tags = "'moving', 'tests'"
+        rev = revision(title='Test page-move tag preservation',
+                       slug='page-move-tags',
+                       tags=tags,
+                       is_approved=True,
+                       save=True)
+        rev.review_tags.set('technical')
+        rev = Revision.objects.get(pk=rev.id)
+
+        doc = rev.document
+        doc._move_tree('', 'move', prepend=True)
+
+        moved_doc = Document.objects.get(pk=doc.id)
+        new_rev = moved_doc.current_revision
+        eq_(tags, new_rev.tags)
+        eq_(['technical'],
+            [str(tag) for tag in new_rev.review_tags.all()])

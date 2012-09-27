@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from django.conf import settings
 
 import datetime
@@ -414,6 +416,18 @@ class DemoViewsTest(test_utils.TestCase):
         s.save()
         ok_(len(s.slug) == 50)
         r = self.client.get(reverse('demos.views.detail', args=(s.slug,)))
+        ok_(r.status_code == 200)
+
+    @attr('bug781823')
+    def test_unicode(self):
+        """
+        Unicode characters in the summary or description doesn't brick the feed.
+        
+        """
+        s = save_valid_submission('ΦOTOS ftw', 'ΦOTOS ΦOTOS ΦOTOS')
+        s.featured = 1
+        s.save()
+        r = self.client.get(reverse('demos_feed_featured', args=['json']))
         ok_(r.status_code == 200)
 
     def test_make_unique_slug(self):

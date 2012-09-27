@@ -40,10 +40,11 @@ demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 from demos.forms import SubmissionEditForm, SubmissionNewForm
 
 
-def save_valid_submission(title='hello world'):
+def save_valid_submission(title='hello world', desc = 'This is a hello world demo'):
     testuser = User.objects.get(username='testuser')
     s = Submission(title=title, slug=slugify(title),
-        description='This is a hello world demo',
+        description=desc,
+        summary=desc,
         creator=testuser)
     fout = StringIO()
     zf = zipfile.ZipFile(fout, 'w')

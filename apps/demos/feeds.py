@@ -62,7 +62,7 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
             )
 
             # Include a few more, raw from the submission object itself.
-            item_out.update( (x, str(getattr(item['obj'], x))) for x in (
+            item_out.update( (x, unicode(getattr(item['obj'], x))) for x in (
                 'summary', 'description',
             ))
 

@@ -44,7 +44,13 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 .article a.imagelink { background: none; padding-right: 0; }
 
 /*** @Basics *********/
-.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; border-bottom: 1px solid #e0e0dc; position: relative; }
+.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; position: relative; }
+.page-content h1, .page-content h2 { border-bottom: 1px solid #e0e0dc; }
+.page-content h2 { font-size: 1.628em; }
+.page-content h3 { font-size: 1.428em; }
+.page-content h4 { font-size: 1.142em; }
+
+
 .page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 .page-content ul { list-style: disc; padding-left: 22px; }
 .page-content ul ul { list-style: circle; }
@@ -164,6 +170,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #nav-toolbar .crumbs li.first, #nav-toolbar .crumbs li.second { display:none; }
 #nav-toolbar .crumbs li.first.last { display: inline; }
 #nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
+#nav-toolbar .crumbs li a { text-decoration: underline; }
 
 /* @Footer *********/
 .last-mod { clear: both; text-align: right; font-size: .785em; }
@@ -238,8 +245,8 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
 .editing ul.metadata li input[type="checkbox"] { width: auto; margin-left: 6px; }
 .editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
-.editing ul.metadata li.metadata-choose-parent { padding: 10px; background: lightblue; border-radius: 10px; margin: 0 10px; display: none; }
-.editing ul.metadata li.metadata-choose-parent #parent_text { display:block; margin-top:10px; }
+.editing ul.metadata li.metadata-choose-parent { padding: 10px; border: 1px solid #d4dde4; font-size: 90%; background: #eaeff2; background: linear-gradient(top, #eaeff2, #d4dde4); background: -moz-linear-gradient(top, #eaeff2, #d4dde4); background: -webkit-linear-gradient(top, #eaeff2, #d4dde4); border-radius: 10px; margin: 0 10px; display: none; }
+.editing ul.metadata li.metadata-choose-parent #parent_text { display: inline-block; margin-top:10px; }
 
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; float:left; }
