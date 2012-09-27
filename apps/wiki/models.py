@@ -949,6 +949,7 @@ class Document(NotificationsMixin, ModelBase):
             user = self.current_revision.creator
         
         rev = self.current_revision
+        review_tags = [str(tag) for tag in rev.review_tags.all()]
 
         # Shortcut trick for getting an object with all the same
         # values, but making Django think it's new.
@@ -962,6 +963,8 @@ class Document(NotificationsMixin, ModelBase):
             rev.slug = rev.slug.replace(old_hierarchy, new_hierarchy)
         
         rev.save(force_insert=True)
+
+        rev.review_tags.set(*review_tags)
 
         for child in self.children.all():
             child._move_tree(old_hierarchy, new_hierarchy, user, prepend)
