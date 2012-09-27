@@ -19,6 +19,22 @@
         <h1>{{ title }}</h1>
         <p>Please provide a new slug for this page using the field below.</p>
 
+        {% if conflicts: %}
+        <div class="warning">
+          <p>{{ _('Your requested move cannot be completed due to slug conflicts:') }}</p>
+
+          <div class="moveDescendants">
+            <ul>
+            {% for doc in descendants %}
+              <li>{{ doc }}</li>
+            {% endfor %}
+            </ul>
+          </div>
+
+          <p>{{ _('Please choose a different slug value.') }}</p>
+        </div>
+        {% endif %}
+
         <form action="" method="post">
           <ul class="description">
             <li>

@@ -593,6 +593,7 @@ td.diff_header {
 #parentSuggestion  {
   width: 300px;
 }
+
 .moveDescendants {
   max-height: 160px;
   border: 1px solid #dfe6eb;
@@ -601,10 +602,11 @@ td.diff_header {
   background: #eaeff2;
   resize: vertical;
   width: 50%;
+  margin-bottom: 20px;
 }
 .moveDescendants ul {
   margin-left: 40px;
-  list-style-type:circle;
+  list-style-type: circle;
 }
 .moveDescendants a {
   display: inline-block;
@@ -668,7 +670,7 @@ table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
 .article .wrong-source-code { color: #8a4e4e; }
 .article .right-source-code { color: #537d46; }
 div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
-  div.bug *:last-child, div.warning *:last-child { padding: 0; margin: 0; }
+  div.bug > *:last-child, div.warning > *:last-child { padding: 0; margin: 0; }
 .originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
 .originaldocinfo h2 { font-size: 120%; }
 .licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
