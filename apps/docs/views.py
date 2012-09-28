@@ -1,3 +1,4 @@
+import logging
 import json
 import os.path
 import random
@@ -6,7 +7,6 @@ from django.conf import settings
 from django.http import (HttpResponseRedirect)
 
 from caching.base import cached
-import commonware
 from dateutil.parser import parse as date_parse
 import jingo
 from tower import ugettext as _
@@ -15,7 +15,7 @@ from feeder.models import Entry
 
 from wiki.models import Document, REVIEW_FLAG_TAGS
 
-log = commonware.log.getLogger('kuma.docs')
+log = logging.getLogger('mdn.views')
 
 MAX_REVIEW_DOCS = 5
 

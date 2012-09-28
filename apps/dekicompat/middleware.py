@@ -1,10 +1,10 @@
+import logging
+
 from django.core.exceptions import ImproperlyConfigured
 
 from django.contrib import auth
 
-import commonware
-
-log = commonware.log.getLogger('kuma.dekicompat')
+log = logging.getLogger('mdn')
 
 class DekiUserMiddleware(object):
     """

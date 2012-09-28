@@ -17,7 +17,7 @@ from PIL import Image
 from sumo.urlresolvers import reverse
 
 
-log = logging.getLogger('k.services')
+log = logging.getLogger('mdn.views')
 
 
 def handle403(request):

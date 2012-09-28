@@ -12,6 +12,7 @@ import datetime
 import hashlib
 import itertools
 import json
+import logging
 import os
 import re
 import sys
@@ -39,8 +40,6 @@ from django.template.defaultfilters import slugify
 from django.utils import encoding, hashcompat
 from django.db.models import F
 
-import commonware.log
-
 from sumo.urlresolvers import reverse
 
 from wiki.models import (Document, Revision, CATEGORIES, SIGNIFICANCES,
@@ -54,7 +53,7 @@ from wiki.content import (ContentSectionTool, CodeSyntaxFilter,
 from dekicompat.backends import DekiUser, DekiUserBackend
 
 
-log = commonware.log.getLogger('kuma.migration')
+log = logging.getLogger('mdn.commands')
 
 # Regular expression to match and extract page title from MindTouch redirects
 # eg. #REDIRECT [[en/DOM/Foo]], #REDIRECT[[foo_bar_baz]]

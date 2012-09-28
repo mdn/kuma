@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from demos.management.commands.migrate_demos import _disable_auto_date_fields
 from demos.models import Submission
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('mdn.commands')
 
 
 class Command(BaseCommand):

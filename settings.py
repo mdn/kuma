@@ -331,6 +331,7 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.HidePasswordOnException',
     #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_arecibo.middleware.AreciboMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
 )

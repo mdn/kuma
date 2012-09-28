@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from os.path import dirname
 
 from requests.models import Response
@@ -9,14 +10,12 @@ from nose.tools import eq_
 
 from test_utils import TestCase
 
-import commonware
-
 from django.conf import settings
 
 from dekicompat.backends import DekiUser, DekiUserBackend
 
 
-log = commonware.log.getLogger('mdn.dekicompat')
+log = logging.getLogger('mdn')
 
 APP_DIR = dirname(__file__)
 # Need to make test account fixture XML filename relative to this file, since

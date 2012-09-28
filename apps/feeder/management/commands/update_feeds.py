@@ -1,4 +1,5 @@
 import datetime
+import logging
 from optparse import make_option
 import socket
 import time
@@ -8,7 +9,6 @@ from django.core.management.base import NoArgsCommand, CommandError
 from django.db import IntegrityError
 from django.utils import encoding, hashcompat
 
-import commonware
 import feedparser
 import jsonpickle
 
@@ -16,7 +16,7 @@ from feeder.models import Feed, Entry
 from utils import locked
 
 
-log = commonware.log.getLogger('mdn.feeder')
+log = logging.getLogger('mdn.commands')
 
 
 class Command(NoArgsCommand):
