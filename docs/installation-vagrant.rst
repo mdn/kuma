@@ -59,11 +59,11 @@ Getting up and running
 
 -  Add developer-dev.mozilla.org to /etc/hosts::
 
-       echo '192.168.10.55 developer-dev.mozilla.org' >> /etc/hosts
+       echo '192.168.10.55 developer-local.allizom.org' >> /etc/hosts
 
 -  Everything should be working now, from the host side::
 
-       curl 'http://developer-dev.mozilla.org'
+       curl 'https://developer-local.allizom.org'
 
 -  You should be able to log into a shell in the VM as the user
    ``vagrant``::
