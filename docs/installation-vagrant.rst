@@ -43,8 +43,11 @@ Getting up and running
    This may have some interesting settings for you to tweak, but the
    defaults should work fine.
 
--  Fire up the VM and install everything, go take a bike ride (approx.
-   30 min on a fast net connection)::
+-  The next step is to fire up the VM and install everything.
+   By default, VirtualBox creates VMs in your system drive and kuma's VM weighs 3GB;
+   so you might need to change that directory to another drive following `that tutorial <http://emptysquare.net/blog/moving-virtualbox-and-vagrant-to-an-external-drive/>`_.
+   When you are ready, use the following command and go take a bike ride (approx.
+   30 min on a fast net connection).::
 
        vagrant up
 
@@ -56,6 +59,13 @@ Getting up and running
    This often recovers from transient network issues or installation
    ordering problems. However, In some rare occasions you might need
    to run this multiple times
+
+-  On Ubuntu, "vagrant up" will likely fail after being unable to mount NFS shared folders.
+   The solution is to disable nfs by setting the nfs flag in the vagrantconfig_local.yaml file you just created.
+
+       nfs: false
+
+   The system will be a lot slower.
 
 -  Add developer-dev.mozilla.org to /etc/hosts::
 
@@ -123,4 +133,8 @@ What’s next?
        mysql -uroot kuma
        UPDATE auth_user set is_staff = 1, is_active=1, is_superuser = 1 WHERE username = 'YOUR_USERNAME'
 
--  To allow creation and editing of documents, go to /admin/ and create waffle flags called ``wikiediting`` and ``kumawiki``
+- Alternatively, you can simply issue the command:
+
+       ./manage.py createsuperuser
+
+-  To allow creation and editing of documents, go to /admin/, go to the waffle section and add flags called ``kumaediting`` and ``kumawiki``
