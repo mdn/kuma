@@ -537,7 +537,7 @@ td.diff_header {
 .htab > ul > li.selected { opacity:1; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100); border: 1px solid #ddd; border-bottom: none; z-index: 10; background-color: #f1f6f8 !important; position: relative; cursor:pointer; }
 .htab > ul { width:150px; text-align:left; display:inline; padding:0; margin:0 auto; position:relative; top:1px; }
 #compat-desktop, #compat-mobile, .btab { background-color: #f1f6f8; margin-top: 0px; border: 1px solid #ddd; padding: 12px; position: relative; z-index: 9; word-wrap: break-word; }
-.hasJS #compat-desktop.selected, .hasJS #compat-mobile.selected, .hasJS .btab.selected { display: none; }
+.hasJS #compat-desktop, .hasJS #compat-mobile, .hasJS .btab { display: none; }
 #compat-desktop.selected, #compat-mobile.selected, .btab.selected { display: block; }
 table.compat-table { border: 1px solid #bbb; border-collapse: collapse;}
 table.compat-table td { padding: 5px; border: 1px solid #ccc; text-align: left; background: #fff; vertical-align: top; word-wrap: break-word; }
