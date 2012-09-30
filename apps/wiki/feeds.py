@@ -1,4 +1,5 @@
 """Feeds for documents"""
+import cgi
 import datetime
 import urllib
 import validate_jsonp
@@ -273,39 +274,47 @@ class RevisionsFeed(DocumentsFeed):
         return "%s (%s)" % (item.document.full_path, item.document.locale)
 
     def item_description(self, item):
-        previous = item.get_previous()
-        if previous is None:
-            return '<h3>Created by:</h3><p>%s</p>' % item.creator.username
         # TODO: put this in a jinja template if django syndication will let us
-        by = '<h3>Edited by:</h3><p>%s</p>' % item.creator.username
+        previous = item.get_previous()
+        action = "Edited"
+        if previous is None:
+            action = "Created"
+        by = '<h3>%s by:</h3><p>%s</p>' % (action, item.creator.username)
         comment = ''
         if item.comment:
             comment = '<h3>Comment:</h3><p>%s</p>' % item.comment
 
         review_diff = ''
-        prev_review_tags = ','.join(
-            [x.name for x in previous.review_tags.all()])
-        curr_review_tags = ','.join(
-            [x.name for x in item.review_tags.all()])
-        if prev_review_tags != curr_review_tags:
-            review_diff = ("<h3>Review changes:</h3>%s" % tag_diff_table(
-                prev_review_tags, curr_review_tags, previous.id, item.id))
-            review_diff = colorize_diff(review_diff)
-
         tag_diff = ''
-        if previous.tags != item.tags:
-            tag_diff = ("<h3>Tag changes:</h3>%s" % tag_diff_table(
-                previous.tags, item.tags, previous.id, item.id))
-            tag_diff = colorize_diff(tag_diff)
-
         content_diff = ''
-        if previous.content != item.content:
-            content_diff = ("<h3>Content changes:</h3>%s" % (
-                diff_table(previous.content, item.content,
-                           previous.id, item.id))
-            )
 
-            content_diff = colorize_diff(content_diff)
+        if previous:
+            prev_review_tags = ','.join(
+                [x.name for x in previous.review_tags.all()])
+            curr_review_tags = ','.join(
+                [x.name for x in item.review_tags.all()])
+            if prev_review_tags != curr_review_tags:
+                review_diff = ("<h3>Review changes:</h3>%s" % tag_diff_table(
+                    prev_review_tags, curr_review_tags, previous.id, item.id))
+                review_diff = colorize_diff(review_diff)
+
+            if previous.tags != item.tags:
+                tag_diff = ("<h3>Tag changes:</h3>%s" % tag_diff_table(
+                    previous.tags, item.tags, previous.id, item.id))
+                tag_diff = colorize_diff(tag_diff)
+
+        previous_content = ''
+        previous_id = 'N/A'
+        content_diff = "<h3>Content changes:</h3>"
+        if previous:
+            previous_content = previous.content
+            previous_id = previous.id
+            if previous_content != item.content:
+                content_diff = content_diff + diff_table(
+                    previous_content, item.content, previous_id, item.id)
+                content_diff = colorize_diff(content_diff)
+        else:
+            content_diff = content_diff + cgi.escape(item.content, quote=True)
 
         link_cell = '<td><a href="%s">%s</a></td>'
         view_cell = link_cell % (reverse('wiki.document',
@@ -314,12 +323,14 @@ class RevisionsFeed(DocumentsFeed):
         edit_cell = link_cell % (reverse('wiki.edit_document',
                                          args=[item.document.full_path]),
                                  _('Edit Page'))
-        compare_cell = link_cell % (reverse('wiki.compare_revisions',
-                                         args=[item.document.full_path])
-                                    + '?' +
-                                    urllib.urlencode({'from': previous.id,
-                                                      'to': item.id}),
-                                 _('Show comparison'))
+        compare_cell = ''
+        if previous:
+            compare_cell = link_cell % (reverse('wiki.compare_revisions',
+                                             args=[item.document.full_path])
+                                        + '?' +
+                                        urllib.urlencode({'from': previous.id,
+                                                          'to': item.id}),
+                                     _('Show comparison'))
         history_cell = link_cell % (reverse('wiki.document_revisions',
                                          args=[item.document.full_path]),
                                  _('History'))

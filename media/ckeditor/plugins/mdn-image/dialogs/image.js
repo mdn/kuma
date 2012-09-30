@@ -278,7 +278,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				'image/pjpeg': 1,
 				'image/gif': 1,
 				'image/bmp': 1,
-				'image/x-windows-bmp': 1
+				'image/x-windows-bmp': 1,
+				'image/svg+xml': 1
 			};
 			return attachment.mime.toLowerCase() in validMimes;
 		};
@@ -518,7 +519,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								label: gettext('Attachments'),
 								items: [],
 								onChange: function() {
-									this.getDialog().setValueOf('info', 'txtUrl', this.getValue());
+									var value = this.getValue(),
+										dialog = this.getDialog(),
+										alt = CKEDITOR.mdn.getObjectByUrl(value);
+									dialog.setValueOf('info', 'txtUrl', value);
+									if(alt) {
+										dialog.setValueOf('info', 'txtAlt', alt.description);
+									}
 								},
 								setup: function(data) {
 									attachmentsSelect = this;

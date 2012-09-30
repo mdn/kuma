@@ -95,6 +95,9 @@ class kuma_config {
         "/vagrant/webroot/.htaccess":
             ensure => link,
             target => "$PROJ_DIR/configs/htaccess-without-mindtouch";
+        "/var/www/dekiwiki/.htaccess":
+            ensure => link,
+            target => "$PROJ_DIR/configs/htaccess-without-mindtouch";
     }
     exec { 
         "kuma_update_product_details":

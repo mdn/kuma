@@ -56,16 +56,19 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address', 'font',
     'bdo', 'del', 'ins', 'kbd', 'samp', 'var',
-    # MathML tags
-    'math', 'mfenced', 'mtable', 'mtr', 'mtd', 'mo', 'mi', 'mn', 
-    'msub', 'msup', 'msubsup',
+    # MathML
+    'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
+    'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
+    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 
+    'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
+    'munderover', 'none', 'mprescripts',
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style', 'lang']
-ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang']
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang', 'name']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'lang']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
@@ -74,16 +77,70 @@ ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src', 'controls'
 ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size']
 ALLOWED_ATTRIBUTES['select'] = ['name']
 ALLOWED_ATTRIBUTES['option'] = ['value', 'selected']
+ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start']
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
-    'div', 'pre', 'ul', 'ol', 'li', 'code', 'dl', 'dt', 'dd',
+    'div', 'pre', 'ul', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
-    'tr', 'address', 'col', 's'
+    'tr', 'address', 'col', 's', 'strong'
 )))
+# MathML
+ALLOWED_ATTRIBUTES.update(dict((x, ['href', 'mathbackground', 'mathcolor',
+    'id', 'class', 'style']) for x in (
+    'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
+    'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
+    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 
+    'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
+    'munderover', 'none', 'mprescripts')))
+ALLOWED_ATTRIBUTES['math'] += ['display', 'dir', 'selection', 'notation', 
+    'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
+    'numalign', 'largeop','maxsize', 'minsize', 'movablelimits', 'rspace',
+    'separator', 'stretchy','symmetric', 'depth', 'lquote', 'rquote', 'align',
+    'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
+    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant', 'subscriptshift',
+    'supscriptshift', 'scriptlevel', 'displaystyle', 'scriptsizemultiplier',
+    'scriptminsize']
+ALLOWED_ATTRIBUTES['maction'] += ['actiontype', 'selection']
+ALLOWED_ATTRIBUTES['menclose'] += ['notation']
+ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
+ALLOWED_ATTRIBUTES['mfrac'] += ['bevelled', 'denomalign', 'linethickness',
+    'numalign']
+ALLOWED_ATTRIBUTES['mi'] += ['dir', 'mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mi'] += ['mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mmultiscripts'] += ['subscriptshift', 'superscriptshift']
+ALLOWED_ATTRIBUTES['mo'] += ['largeop', 'lspace', 'maxsize', 'minsize',
+    'movablelimits', 'rspace', 'separator', 'stretchy', 'symmetric', 'accent',
+    'dir', 'mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mover'] += ['accent']
+ALLOWED_ATTRIBUTES['mpadded'] += ['lspace', 'voffset', 'depth']
+ALLOWED_ATTRIBUTES['mrow'] += ['dir']
+ALLOWED_ATTRIBUTES['ms'] += ['lquote', 'rquote', 'dir', 'mathsize',
+    'mathvariant']
+ALLOWED_ATTRIBUTES['mspace'] += ['depth', 'height', 'width']
+ALLOWED_ATTRIBUTES['mstyle'] += ['display', 'dir', 'selection', 'notation', 
+    'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
+    'numalign', 'largeop','maxsize', 'minsize', 'movablelimits', 'rspace',
+    'separator', 'stretchy','symmetric', 'depth', 'lquote', 'rquote', 'align',
+    'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
+    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant', 'subscriptshift',
+    'supscriptshift', 'scriptlevel', 'displaystyle', 'scriptsizemultiplier',
+    'scriptminsize']
+ALLOWED_ATTRIBUTES['msub'] += ['subscriptshift']
+ALLOWED_ATTRIBUTES['msubsup'] += ['subscriptshift', 'superscriptshift']
+ALLOWED_ATTRIBUTES['msup'] += ['superscriptshift']
+ALLOWED_ATTRIBUTES['mtable'] += ['align', 'columnalign', 'columnlines', 'frame',
+    'rowalign', 'rowspacing', 'rowlines']
+ALLOWED_ATTRIBUTES['mtd'] += ['columnalign', 'columnspan', 'rowalign',
+    'rowspan']
+ALLOWED_ATTRIBUTES['mtext'] += ['dir', 'mathsize', 'mathvariant']
+ALLOWED_ATTRIBUTES['mtr'] += ['columnalign', 'rowalign']
+ALLOWED_ATTRIBUTES['munder'] += ['accentunder']
+ALLOWED_ATTRIBUTES['mundermover'] = ['accent', 'accentunder']
+# CSS
 ALLOWED_STYLES = [
     'border', 'border-top', 'border-right', 'border-bottom', 'border-left',
     'float', 'overflow', 'min-height', 'vertical-align',
@@ -126,7 +183,7 @@ ALLOWED_STYLES = [
     'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
     'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
-    'text-decoration-style', '-moz-text-decoration-style',
+    'text-decoration-style', '-moz-text-decoration-style', 'text-decoration',
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
@@ -435,6 +492,15 @@ class DocumentRenderedContentNotAvailable(Exception):
 
 class Document(NotificationsMixin, ModelBase):
     """A localized knowledgebase document, not revision-specific."""
+
+    class Meta(object):
+        unique_together = (('parent', 'locale'), ('slug', 'locale'))
+        permissions = (
+            ("add_template_document", "Can add Template:* document"),
+            ("change_template_document", "Can change Template:* document"),
+            ("move_tree", "Can move a tree of documents"),
+        )
+
     objects = DocumentManager()
 
     title = models.CharField(max_length=255, db_index=True)
@@ -657,13 +723,6 @@ class Document(NotificationsMixin, ModelBase):
     def natural_cache_key(self):
         nk = u'/'.join(self.natural_key())
         return hashlib.md5(nk.encode('utf8')).hexdigest()
-
-    class Meta(object):
-        unique_together = (('parent', 'locale'), ('slug', 'locale'))
-        permissions = (
-            ("add_template_document", "Can add Template:* document"),
-            ("change_template_document", "Can change Template:* document"),
-        )
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
@@ -1212,8 +1271,7 @@ class Revision(ModelBase):
         base = get_current_or_latest_revision(original)
         has_approved = original.revisions.filter(is_approved=True).exists()
         if (original.current_revision or not has_approved):
-            if (self.based_on and
-                self.based_on.document != original):
+            if (self.based_on and self.based_on.document != original):
                 # based_on is set and points to the wrong doc.
                 return base, False
             # Else based_on is valid; leave it alone.
@@ -1234,14 +1292,18 @@ class Revision(ModelBase):
         else:
             based_on, is_clean = self._based_on_is_clean()
             if not is_clean:
-                old = self.based_on
-                self.based_on = based_on  # Be nice and guess a correct value.
-                # TODO(erik): This error message ignores non-translations.
-                raise ValidationError(_('A revision must be based on a '
-                    'revision of the %(locale)s document. Revision ID'
-                    ' %(id)s does not fit those criteria.') %
-                    dict(locale=LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native,
-                         id=old.id))
+                if self.document.parent:
+                    # Restoring translation source, so base on current_revision
+                    self.based_on = self.document.parent.current_revision
+                else:
+                    old = self.based_on
+                    self.based_on = based_on  # Be nice and guess a correct value.
+                    locale = LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
+                    # TODO(erik): This error message ignores non-translations.
+                    raise ValidationError(_('A revision must be based on a '
+                        'revision of the %(locale)s document. Revision ID'
+                        ' %(id)s does not fit those criteria.') %
+                        dict(locale=locale, id=old.id))
 
     def save(self, *args, **kwargs):
         _, is_clean = self._based_on_is_clean()
@@ -1416,7 +1478,29 @@ def rev_upload_to(instance, filename):
         'md5': hashlib.md5(str(now)).hexdigest(),
         'filename': filename
     }
-    
+
+
+class AttachmentManager(models.Manager):
+
+    def allow_add_attachment_by(self, user):
+        """Returns whether the `user` is allowed to upload attachments.
+
+        This is determined by a negative permission, `disallow_add_attachment`
+        When the user has this permission, upload is disallowed unless it's
+        a superuser or staff.
+        """
+        if user.is_superuser or user.is_staff:
+            # Superusers and staff always allowed
+            return True
+        if user.has_perm('wiki.add_attachment'):
+            # Explicit add permission overrides disallow
+            return True
+        if user.has_perm('wiki.disallow_add_attachment'):
+            # Disallow generally applied via group, so per-user allow can
+            # override
+            return False
+        return True
+
 
 class Attachment(models.Model):
     """
@@ -1427,6 +1511,13 @@ class Attachment(models.Model):
     markup in the document.
     
     """
+    class Meta(object):
+        permissions = (
+            ("disallow_add_attachment", "Cannot upload attachment"),
+        )
+
+    objects = AttachmentManager()
+
     current_revision = models.ForeignKey('AttachmentRevision', null=True,
                                          related_name='current_rev')
 

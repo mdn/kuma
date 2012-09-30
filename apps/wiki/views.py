@@ -194,6 +194,17 @@ def _document_last_modified(request, document_slug, document_locale):
     except Document.DoesNotExist:
         return None
 
+
+def prevent_indexing(func):
+    """Decorator to prevent a page from being indexable by robots"""
+    @wraps(func)
+    def _added_header(request, *args, **kwargs):
+        response = func(request, *args, **kwargs)
+        response['X-Robots-Tag'] = 'noindex'
+        return response
+    return _added_header
+
+
 def _format_attachment_obj(attachments):
     attachments_list = []
     for attachment in attachments:
@@ -230,6 +241,48 @@ def _split_slug(slug):
 def _join_slug(parent_split, slug):
     parent_split.append(slug)
     return '/'.join(parent_split)
+
+
+def get_seo_description(content):
+    # Create an SEO summary
+    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
+    #        way to find the end of sentence before 180?
+    seo_summary = ''
+    try:
+        if content:
+            # Need to add a BR to the page content otherwise pyQuery wont find a 
+            # <p></p> element if it's the only element in the doc_html
+            seo_analyze_doc_html = content + '<br />'
+            page = pq(seo_analyze_doc_html)
+
+            # Look for the SEO summary class first
+            summaryClasses = page.find('.seoSummary')
+            if len(summaryClasses):
+                seo_summary = summaryClasses.text()
+            else:
+                paragraphs = page.find('p')
+                if paragraphs.length:
+                    for p in range(len(paragraphs)):
+                        item = paragraphs.eq(p)
+                        text = item.text()
+                        # Checking for a parent length of 2 
+                        # because we don't want p's wrapped
+                        # in DIVs ("<div class='warning'>") and pyQuery adds 
+                        # "<html><div>" wrapping to entire document
+                        if (len(text) and 
+                            not 'Redirect' in text and 
+                            text.find(u'«') == -1 and
+                            text.find('&laquo') == -1 and
+                            item.parents().length == 2):
+                            seo_summary = text.strip()
+                            break
+    except:
+        logging.debug('Could not create SEO summary');
+
+    # Post-found cleanup
+    seo_summary = seo_summary.replace('<', '').replace('>', '')
+
+    return seo_summary
 
 
 @waffle_flag('kumawiki')
@@ -322,7 +375,7 @@ def document(request, document_slug, document_locale):
     if redirect_url:
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
-        return HttpResponseRedirect(url)
+        return HttpResponsePermanentRedirect(url)
 
     # Get "redirected from" doc if we were redirected:
     redirect_slug = request.GET.get('redirectslug')
@@ -421,6 +474,7 @@ def document(request, document_slug, document_locale):
     if show_raw:
         response = HttpResponse(doc_html)
         response['x-frame-options'] = 'Allow'
+        response['X-Robots-Tag'] = 'noindex'
         if constance.config.KUMA_CUSTOM_CSS_PATH == doc.get_absolute_url():
             response['Content-Type'] = 'text/css; charset=utf-8'
         elif doc.is_template:
@@ -442,41 +496,14 @@ def document(request, document_slug, document_locale):
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
 
-    # Create an SEO summary
-    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
-    #        way to find the end of sentence before 180?
+    # Get the SEO summary
     seo_summary = ''
-    try:
-        if doc_html and not doc.is_template:
-            # Need to add a BR to the page content otherwise pyQuery wont find a 
-            # <p></p> element if it's the only element in the doc_html
-            seo_analyze_doc_html = doc_html + '<br />'
-            page = pq(seo_analyze_doc_html)
+    if not doc.is_template:
+        seo_summary = get_seo_description(doc_html)
 
-            # Look for the SEO summary class first
-            summaryClasses = page.find('.seoSummary')
-            if len(summaryClasses):
-                seo_summary = summaryClasses.text()
-            else:
-                paragraphs = page.find('p')
-                if paragraphs.length:
-                    for p in range(len(paragraphs)):
-                        item = paragraphs.eq(p)
-                        text = item.text()
-                        # Checking for a parent length of 2 because we don't want p's wrapped
-                        # in DIVs ("<div class='warning'>") and pyQuery adds 
-                        # "<html><div>" wrapping to entire document
-                        if (len(text) and 
-                            not 'Redirect' in text and 
-                            text.find(u'«') == -1 and
-                            text.find('&laquo') == -1 and
-                            item.parents().length == 2):
-                            seo_summary = text.strip()
-                            break
-    except:
-        logging.debug("Could not create SEO summary");
-
+    # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
+    
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
@@ -494,6 +521,7 @@ def document(request, document_slug, document_locale):
 
 
 @waffle_flag('kumawiki')
+@prevent_indexing
 @process_document_path
 def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
@@ -558,6 +586,7 @@ def list_documents_for_review(request, tag=None):
 @waffle_flag('kumawiki')
 @login_required
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def new_document(request):
     """Create a new wiki document."""
@@ -607,12 +636,14 @@ def new_document(request):
             'show_toc': True
         })
 
+        allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
         return jingo.render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
                              'parent_slug': parent_slug,
                              'parent_id': initial_parent_id,
                              'document_form': doc_form,
                              'revision_form': rev_form,
+                             'allow_add_attachment': allow_add_attachment,
                              'attachment_form': AttachmentRevisionForm(),
                              'parent_path': parent_path})
 
@@ -647,10 +678,12 @@ def new_document(request):
     else:
         doc_form.data['slug'] = posted_slug
 
+    allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
     return jingo.render(request, 'wiki/new_document.html',
                         {'is_template': is_template,
                          'document_form': doc_form,
                          'revision_form': rev_form,
+                         'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'parent_slug': parent_slug,
                          'parent_path': parent_path})
@@ -662,6 +695,7 @@ def new_document(request):
                  # Document.allows_editing_by.
 @process_document_path
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
@@ -700,6 +734,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     if doc.allows_editing_by(user):
         doc_form = DocumentForm(initial=_document_form_initial(doc))
 
+    # Need to make check *here* to see if this could have a translation parent
+    show_translation_parent_block = (
+        (document_locale != settings.WIKI_DEFAULT_LANGUAGE) and
+        (not doc.parent_id))
+
     if request.method == 'GET':
         if not (rev_form or doc_form):
             # You can't do anything on this page, so get lost.
@@ -709,6 +748,16 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         is_iframe_target = request.GET.get('iframe', False)
         is_raw = request.GET.get('raw', False)
         need_edit_links = request.GET.get('edit_links', False)
+        parent_id = request.POST.get('parent_id', '')
+
+        # Attempt to set a parent
+        if show_translation_parent_block and parent_id:
+            try:
+                parent_doc = get_object_or_404(Document, id=parent_id)
+                doc.parent = parent_doc
+            except Document.DoesNotExist:
+                logging.debug('Could not find posted parent')
+
 
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
@@ -858,15 +907,19 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
 
     attachments = _format_attachment_obj(doc.attachments)
+    allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'section_id': section_id,
+                         'show_translation_parent_block':
+                            show_translation_parent_block,
                          'disclose_description': disclose_description,
                          'parent_slug': parent_slug,
                          'parent_path': parent_path,
                          'revision': rev,
                          'document': doc,
+                         'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'attachment_data': attachments,
                          'attachment_data_json': json.dumps(attachments)})
@@ -947,7 +1000,8 @@ def preview_revision(request):
 
     if kumascript.should_use_rendered(doc, request.GET, html=wiki_content):
         wiki_content, kumascript_errors = kumascript.post(request,
-                                                          wiki_content)
+                                                          wiki_content,
+                                                          request.locale)
     # TODO: Get doc ID from JSON.
     data = {'content': wiki_content, 'title': request.POST.get('title', ''),
             'kumascript_errors': kumascript_errors}
@@ -960,22 +1014,35 @@ def preview_revision(request):
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
     partial_title = request.GET.get('term', '')
+    locale = request.GET.get('locale', False)
+    current_locale = request.GET.get('current_locale', False)
+    exclude_current_locale = request.GET.get('exclude_current_locale', False)
 
     # TODO: isolate to just approved docs?
-    docs = (Document.objects.filter(title__icontains=partial_title,
-                                    is_template=0,
-                                    locale=request.locale).
-                             exclude(title__iregex=r'Redirect [0-9]+$').  # New redirect pattern
-                             exclude(html__iregex=r'^(<p>)?(#)?REDIRECT').  #Legacy redirect
-                             exclude(slug__icontains='Talk:').  # Remove old talk pages
-                             order_by('title'))
+    docs = (Document.objects.
+        extra(select={'length':'Length(slug)'}).
+        filter(title__icontains=partial_title, is_template=0).
+        exclude(title__iregex=r'Redirect [0-9]+$').  # New redirect pattern
+        exclude(html__iregex=r'^(<p>)?(#)?REDIRECT').  #Legacy redirect
+        exclude(slug__icontains='Talk:').  # Remove old talk pages
+        order_by('title', 'length'))
+
+    if locale:
+        docs = docs.filter(locale=locale)
+
+    if current_locale:
+        docs = docs.filter(locale=request.locale)
+
+    if exclude_current_locale:
+        docs = docs.exclude(locale=request.locale)
 
     docs_list = []
     for d in docs:
         doc_info = {
-            'title': d.title,
+            'title': d.title + ' [' + d.locale + ']',
             'label': d.title,
-            'href':  d.get_absolute_url()
+            'href':  d.get_absolute_url(),
+            'id': d.id 
         }
         docs_list.append(doc_info)
 
@@ -986,6 +1053,7 @@ def autosuggest_documents(request):
 @waffle_flag('kumawiki')
 @require_GET
 @process_document_path
+@prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
@@ -1058,6 +1126,7 @@ def review_revision(request, document_slug, document_locale, revision_id):
 @waffle_flag('kumawiki')
 @require_GET
 @process_document_path
+@prevent_indexing
 def compare_revisions(request, document_slug, document_locale):
     """Compare two wiki document revisions.
 
@@ -1094,6 +1163,7 @@ def select_locale(request, document_slug, document_locale):
 @login_required
 @process_document_path
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
@@ -1330,6 +1400,7 @@ def unwatch_approved(request):
 @waffle_flag('kumawiki')
 @require_GET
 @process_document_path
+@prevent_indexing
 def json_view(request, document_slug=None, document_locale=None):
     """Return some basic document info in a JSON blob."""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
@@ -1676,7 +1747,7 @@ def new_attachment(request):
     revision."""
 
     # No access if no permissions to upload
-    if not request.user.has_perm('wiki.add_attachment'):
+    if not Attachment.objects.allow_add_attachment_by(request.user):
         raise PermissionDenied
     
     form = AttachmentRevisionForm(data=request.POST, files=request.FILES)

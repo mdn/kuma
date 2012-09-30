@@ -44,7 +44,13 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 .article a.imagelink { background: none; padding-right: 0; }
 
 /*** @Basics *********/
-.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; border-bottom: 1px solid #e0e0dc; position: relative; }
+.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; position: relative; }
+.page-content h1, .page-content h2 { border-bottom: 1px solid #e0e0dc; }
+.page-content h2 { font-size: 1.628em; }
+.page-content h3 { font-size: 1.428em; }
+.page-content h4 { font-size: 1.142em; }
+
+
 .page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 .page-content ul { list-style: disc; padding-left: 22px; }
 .page-content ul ul { list-style: circle; }
@@ -164,6 +170,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #nav-toolbar .crumbs li.first, #nav-toolbar .crumbs li.second { display:none; }
 #nav-toolbar .crumbs li.first.last { display: inline; }
 #nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
+#nav-toolbar .crumbs li a { text-decoration: underline; }
 
 /* @Footer *********/
 .last-mod { clear: both; text-align: right; font-size: .785em; }
@@ -238,14 +245,15 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
 .editing ul.metadata li input[type="checkbox"] { width: auto; margin-left: 6px; }
 .editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
+.editing ul.metadata li.metadata-choose-parent { padding: 10px; border: 1px solid #d4dde4; font-size: 90%; background: #eaeff2; background: linear-gradient(top, #eaeff2, #d4dde4); background: -moz-linear-gradient(top, #eaeff2, #d4dde4); background: -webkit-linear-gradient(top, #eaeff2, #d4dde4); border-radius: 10px; margin: 0 10px; display: none; }
+.editing ul.metadata li.metadata-choose-parent #parent_text { display: inline-block; margin-top:10px; }
 
 .editing .title { float: left; width: 55%; }
 .editing .title h1 { display: inline-block; width: auto; float: none; color: #888; float:left; }
 .editing .title h1 em { color: #333; font-style: normal; }
-.editing #btn-properties { position: relative; font-size: 18px; padding: 0; margin-left: 6px; width: 1em; height: 1em; line-height: 1.2; text-indent: -999em; overflow: hidden; background: #b4b4b4 url("../img/wiki/icons/icn-info.png") center center no-repeat; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; -moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em; z-index:3; margin-top: 9px; }
-.editing #btn-properties:hover, .editing #btn-properties:focus { background-color: #25a; }
+.editing #btn-properties { font-weight: bold; }
 
-.editing .save-state { font-size: .785em; margin: -1.75em 0 1.5em; color: #888; padding-left: 18px; clear:both; }
+.editing .save-state { font-size: .85em; margin: -1.75em 0 1.5em; color: #888; padding-left: 20px; clear:both; }
 .editing #btn-savedraft { font-family: inherit; font-size: 1em; line-height: 1; text-transform: none; color: #333; padding: 0; background: transparent none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 .editing #btn-savedraft:hover, .editing #btn-savedraft:focus { text-decoration: underline; color: #25a; }
 
@@ -321,6 +329,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 /* input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; } */
 
 #content #ace_content { position: relative; width: 100%; height: 500px; }
+#content #ace_content .ace_warning,
+#content #ace_content .ace_error {
+  background-image: none;
+}
 
 @media screen and (max-width: 890px) { 
   #page-buttons a, #page-buttons button { font-size: 14px; }
@@ -381,10 +393,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .description li { clear: both; margin: 0 0 .5em; }
 .description li:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 .description dl { margin: 0; }
-.description dt { display: inline-block; margin-right: 10px; font-style: normal; font-weight: bold; }
+.description dt { display: inline-block; margin-right: 10px; font-style: normal; font-weight: bold; vertical-align: top; padding-top: 4px; }
 .description dd { display: inline-block; margin-left: 0; }
-.description .approved { width: 49%; float: left; }
-.description .localized { width: 49%; float: right; }
+.description .approved, #trans-content .approved { width: 49%; float: left; }
+.description .localized, #trans-content .localized { width: 49%; float: right; }
 
 .description input#id_title { font-size: 1.124em; width: 90%; margin: 0; }
 

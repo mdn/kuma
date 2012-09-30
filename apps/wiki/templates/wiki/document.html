@@ -17,6 +17,7 @@
 
 {% block extrahead %}
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}" />
+  <link rel="canonical" href="{{ url('wiki.document', document.full_path) }}" />
 
   <meta property="og:title" content="{{ document.title }}"/>
   <meta property="og:type" content="website"/>
@@ -67,7 +68,7 @@
       {% if document.is_localizable or document.parent %}
       <li class="menu">
         <a href="#" class="toggle">{{ _('Languages') }}</a>
-        <ul>
+        <ul id="translations">
           {% for translation in document.other_translations %}
             <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
           {% endfor %}

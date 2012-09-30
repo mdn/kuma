@@ -52,5 +52,18 @@ CKEDITOR.plugins.add('mdn-attachments', {
 				}
 			}
 
+			// Utility method to get an MDN attachment object by url
+			CKEDITOR.mdn.getObjectByUrl = function(url) {
+				if(!window.MDN_ATTACHMENTS) return;
+				
+				var returnObj = false;
+				$.each(window.MDN_ATTACHMENTS, function() {
+					if(this.url == url) {
+						returnObj = this;
+					}
+				});
+				return returnObj;
+			};
+
         }
 });

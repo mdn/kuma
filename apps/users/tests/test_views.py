@@ -1,4 +1,3 @@
-import logging
 from time import time
 import requests
 
@@ -120,6 +119,7 @@ class LoginTestCase(TestCase):
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
+
         def my_mindtouch_login(username, password, force=False):
             trap['was_called'] = True
             return False
@@ -130,7 +130,7 @@ class LoginTestCase(TestCase):
         # never attempted.
         _old = settings.DEKIWIKI_ENDPOINT
         settings.DEKIWIKI_ENDPOINT = False
-        response = self.client.post(reverse('users.login'),
+        self.client.post(reverse('users.login'),
                                     {'username': 'testaccount',
                                      'password': 'theplanet'}, follow=True)
         settings.DEKIWIKI_ENDPOINT = _old
@@ -338,7 +338,7 @@ class RegisterTestCase(TestCase):
     def test_new_user_claim_watches(self, get_current):
         """Claim user watches upon activation."""
         old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
-        
+
         get_current.return_value.domain = 'su.mo.com'
 
         watch(email='sumouser@test.com', save=True)
@@ -427,6 +427,23 @@ class ReminderEmailTestCase(TestCase):
                                     follow=True)
         eq_(200, response.status_code)
         eq_(0, len(mail.outbox))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_user_without_email_message(self, get_current):
+        """Should send simple email reminder to user."""
+        get_current.return_value.domain = 'dev.mo.org'
+
+        u = User.objects.get(username='testuser')
+        u.email = ''
+        u.save()
+
+        response = self.client.post(reverse('users.send_email_reminder'),
+                                    {'username': 'testuser'},
+                                    follow=True)
+        eq_(200, response.status_code)
+        eq_(0, len(mail.outbox))
+        ok_('Could not find email' in response.content)
+        ok_('file a bug' in response.content)
 
 
 class ChangeEmailTestCase(TestCase):
@@ -683,6 +700,7 @@ class BrowserIDTestCase(TestCase):
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
+
         def my_get_deki_user_by_email(email):
             trap['was_called'] = True
             return False
@@ -851,6 +869,8 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_existing_account_login(self,
                                                          _verify_browserid):
+        """ Removed the existing user form: we don't auth the password with
+        MindTouch anymore """
         new_email = 'mynewemail@example.com'
         _verify_browserid.return_value = {'email': new_email}
 
@@ -881,28 +901,7 @@ class BrowserIDTestCase(TestCase):
         resp = self.client.get(redir_url)
         page = pq(resp.content)
         form = page.find('form#existing_user')
-        eq_(1, form.length)
-
-        # There should be no error lists on first load
-        eq_(0, page.find('.errorlist').length)
-
-        # Submit the existing_user form, with a chosen username
-        resp = self.client.post(redir_url, {'username': 'testuser',
-                                            'password': 'testpass',
-                                            'action': 'login'})
-
-        # A successful login should result in a redirect to success.
-        eq_(302, resp.status_code)
-        ok_('SUCCESS' in resp['Location'])
-
-        # The session should look logged in, now.
-        ok_('_auth_user_id' in self.client.session.keys())
-
-        # And, after all the above, there should be a Django user now.
-        try:
-            User.objects.get(email=new_email)
-        except User.DoesNotExist:
-            ok_(False, "The MindTouch user should exist in Django now.")
+        eq_(0, form.length)
 
     @mock.patch('dekicompat.backends.DekiUserBackend.mindtouch_login')
     @mock.patch('users.views._verify_browserid')
@@ -914,6 +913,7 @@ class BrowserIDTestCase(TestCase):
         # HACK: mock has an assert_called_with, but I want something like
         # never_called or call_count. Instead, I have this:
         trap = {'was_called': False}
+
         def my_mindtouch_login(username, password, force=False):
             trap['was_called'] = True
             return False

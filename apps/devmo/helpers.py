@@ -31,7 +31,7 @@ register.filter(utils.entity_decode)
 
 @register.function
 def page_title(title):
-    return u'%s | Mozilla Developer Network' % title
+    return u'%s | MDN' % title
 
 
 @register.filter

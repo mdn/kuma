@@ -48,7 +48,7 @@
     
       <div id="branding">
         {% block headerlogo %}
-        <h1 id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="" title="" width="62" height="71"> {{ _('Mozilla Developer Network') }}</a></h1>
+        <div id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="{{ _('Mozilla Developer Network') }}" title="{{ _('Mozilla Developer Network') }}" width="62" height="71"> {{ _('Mozilla Developer Network') }}</a></div>
         {% endblock %}
       </div>
       
@@ -73,8 +73,8 @@
                   <ul>
                     <li><a href="{{ devmo_url('HTML') }}">{{ _('HTML') }}</a></li>
                     <li><a href="{{ devmo_url('DOM') }}">{{ _('DOM') }}</a></li>
-                    <li><a href="{{ devmo_url('Using_audio_and_video_in_Firefox') }}">{{ _('Video') }}</a></li>
-                    <li><a href="{{ devmo_url('Using_audio_and_video_in_Firefox') }}">{{ _('Audio') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_HTML5_audio_and_video_in_Firefox') }}">{{ _('Video') }}</a></li>
+                    <li><a href="{{ devmo_url('Using_HTML5_audio_and_video_in_Firefox') }}">{{ _('Audio') }}</a></li>
                     <li><a href="{{ devmo_url('SVG') }}">{{ _('SVG') }}</a></li>
                     <li><a href="{{ devmo_url('WebGL') }}">{{ _('WebGL') }}</a></li>
                   </ul>
@@ -83,7 +83,7 @@
                   <ul>
                     <li><a href="{{ devmo_url('HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
                     <li><a href="{{ devmo_url('WebSockets') }}">{{ _('WebSockets') }}</a></li>
-                    <li><a href="{{ devmo_url('Offline_resources_in_Firefox') }}">{{ _('Offline Cache') }}</a></li>
+                    <li><a href="{{ devmo_url('HTML/Using_the_application_cache') }}">{{ _('Offline Cache') }}</a></li>
                     <li><a href="{{ devmo_url('DOM/Storage') }}">{{ _('Local Storage') }}</a></li>
                     <li><a href="{{ devmo_url('IndexedDB') }}">{{ _('IndexedDB') }}</a></li>
                     <li><a href="{{ devmo_url('Using_files_from_web_applications') }}">{{ _('File API') }}</a></li>
@@ -92,10 +92,10 @@
                 <li>
                   <ul>
                     <li><a href="{{ devmo_url('CSS') }}">{{ _('CSS') }}</a></li>
-                    <li><a href="{{ devmo_url('Using_gradients') }}">{{ _('Gradients') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/Using_CSS_gradients') }}">{{ _('Gradients') }}</a></li>
                     <li><a href="{{ devmo_url('CSS/Using_CSS_transforms') }}">{{ _('Transforms') }}</a></li>
-                    <li><a href="{{ devmo_url('CSS/CSS_transitions') }}">{{ _('Transitions') }}</a></li>
-                    <li><a href="{{ devmo_url('CSS/CSS_animations') }}">{{ _('Animations') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/Using_CSS_transitions') }}">{{ _('Transitions') }}</a></li>
+                    <li><a href="{{ devmo_url('CSS/Using_CSS_animations') }}">{{ _('Animations') }}</a></li>
                     <li><a href="{{ devmo_url('CSS/Media_queries') }}">{{ _('Media Queries') }}</a></li>
                   </ul>
                 </li>
@@ -106,7 +106,7 @@
                     <li><a href="{{ devmo_url('HTML/Canvas') }}">{{ _('Canvas') }}</a></li>
                     <li><a href="{{ devmo_url('Using_geolocation') }}">{{ _('Geolocation') }}</a></li>
                     <li><a href="{{ devmo_url('DragDrop/Drag_and_Drop') }}">{{ _('Drag &amp; Drop')|safe }}</a></li>
-                    <li><a href="{{ devmo_url('Using_web_workers') }}">{{ _('Web Workers') }}</a></li>
+                    <li><a href="{{ devmo_url('DOM/Using_web_workers') }}">{{ _('Web Workers') }}</a></li>
                   </ul>
                 </li>
               </ul>
@@ -118,7 +118,6 @@
           <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Community') }}</a>
             <ul id="nav-sub-community" class="sub-menu">
               <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
-              <li><a href="{{ url('discussion') }}">{{ _('Discussions') }}</a></li>
               <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
             </ul>
           </li>
@@ -166,9 +165,8 @@
       {% trans copyright_url=devmo_url('Project:Copyrights') %}
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
       {% endtrans %}
-      &bull; <a href="{{ devmo_url('Project:About') }}">{{ _('About MDN') }}</a> &bull;
-      <a href="http://www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a> &bull;
-      <a href="/discussions">{{ _('Help') }}</a></p>
+      &bull; <a href="{{ devmo_url('Project:About') }}">{{ _('About MDN') }}</a>
+      &bull; <a href="http://www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
     </div>
     {% include "includes/login.html" %}
     {% block lang_switcher %}

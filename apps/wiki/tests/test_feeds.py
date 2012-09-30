@@ -60,12 +60,12 @@ class FeedTests(TestCaseBase):
         d = document(title='HTML9')
         d.save()
         for i in xrange(1, 6):
-            r = revision(save=True, document=d,
+            revision(save=True, document=d,
                          title='HTML9', comment='Revision %s' % i,
-                         content = "Some Content %s" % i,
+                         content="Some Content %s" % i,
                          is_approved=True,
                          created=datetime.datetime.now()\
-                         + datetime.timedelta(seconds=5*i))
+                         + datetime.timedelta(seconds=5 * i))
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}))
@@ -75,27 +75,27 @@ class FeedTests(TestCaseBase):
         for i, item in enumerate(feed.find('item')):
             desc_text = pq(item).find('description').text()
             ok_('by:</h3><p>testuser</p>' in desc_text)
+            ok_('<h3>Comment:</h3><p>Revision' in desc_text)
             if "Edited" in desc_text:
-                ok_('<h3>Comment:</h3><p>Revision' in desc_text)
-                ok_('diff_chg' in desc_text)
                 ok_('$compare?to' in desc_text)
-                ok_('$edit' in desc_text)
-                ok_('$history' in desc_text)
+                ok_('diff_chg' in desc_text)
+            ok_('$edit' in desc_text)
+            ok_('$history' in desc_text)
 
     def test_revisions_feed_diffs(self):
         d = document(title='HTML9')
         d.save()
         revision(save=True, document=d,
                     title='HTML9', comment='Revision 1',
-                    content = "First Content",
+                    content="First Content",
                     is_approved=True,
                     created=datetime.datetime.now())
         r = revision(save=True, document=d,
                     title='HTML9', comment='Revision 2',
-                    content = "First Content",
+                    content="First Content",
                     is_approved=True,
-                    created=datetime.datetime.now()\
-                        +datetime.timedelta(seconds=1),
+                    created=datetime.datetime.now() \
+                        + datetime.timedelta(seconds=1),
                     tags='"some", "more", "tags"')
         r.review_tags.set(*[u'editorial'])
 
@@ -107,9 +107,12 @@ class FeedTests(TestCaseBase):
             desc_text = pq(item).find('description').text()
             if "Edited" in desc_text:
                 ok_('<h3>Tag changes:</h3>' in desc_text)
-                ok_('<span class="diff_add" style="background-color: #afa; text-decoration: none;">"more",&nbsp;</span>' in desc_text)
+                ok_('<span class="diff_add" style="background-color: #afa; '
+                    'text-decoration: none;">"more"<br />&nbsp;</span>'
+                    in desc_text)
                 ok_('<h3>Review changes:</h3>' in desc_text)
-                ok_('<span class="diff_add" style="background-color: #afa; text-decoration: none;">editorial</span>' in desc_text)
+                ok_('<span class="diff_add" style="background-color: #afa; '
+                    'text-decoration: none;">editorial</span>' in desc_text)
 
     def test_feed_locale_filter(self):
         """Documents and Revisions in feeds should be filtered by locale"""

@@ -131,9 +131,9 @@
                   <th scope="row">
                       <h3><a href="{{ rev.document.get_absolute_url() }}">{{ rev.document.title }}</a></h3>
                       <ul class="actions">
-                          <li><a href="{{ url('wiki.views.edit_document', rev.document.full_path) }}" class="edit">{{_("Edit page")}}</a></li>
-                          <li>{% if rev.get_previous() %}<a href="{{ url('wiki.views.compare_revisions', rev.document.full_path) }}?from={{ rev.get_previous().id }}&to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
-                          <li><a href="{{ url('wiki.views.document_revisions', rev.document.full_path) }}" class="history">{{_("View page history")}}</a></li>
+                          <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{_("Edit page")}}</a></li>
+                          <li>{% if rev.get_previous() %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ rev.get_previous().id }}&to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
+                          <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{_("View page history")}}</a></li>
                       </ul>
                   </th>
                   <td>{{ rev.created.strftime('%B %d, %Y') }}<br>

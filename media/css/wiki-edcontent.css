@@ -1,138 +1,14 @@
-/* Styles for the WYSIWYG editor */
-html { margin: 0; padding: 0; }
-body { margin: 0; padding: 5px 18px; background-color: #fff; color: #333; font: .875em/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; }
-p, pre, blockquote, dl, ul, ol { margin: 0 0 1.286em; padding: 0; }
-table {	font-size: 100%; }
-th, td { font-family: inherit; font-size: inherit; color: inherit; }
-a { text-decoration: none; color: #369 !important; cursor: default; }
+/* styles for the WYSIWYG editor which we cannot take directly from screen.css */
+html { background: #fff; }
+body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; padding: 0 20px; }
 
-.plain { background-color: #dbdbdb; border: 1px dotted #bbb; }
+/*** @Links *********/
+:link { color: #369; text-decoration: none; }
+:visited { color: #69c; text-decoration: none; }
+:link:hover, :link:focus, :link:active { color: #25a; text-decoration: underline; }
+:visited:hover, :visited:focus, :visited:active { color: #25a; text-decoration: underline; }
 
-h1, .header_1 { font-size: 1.857em; margin: 0 0 .8em; }
-h2, .header_2 {	font-size: 1.428em; margin: 0 0 .8em; }
-h3, .header_3 {	font-size: 1.142em; margin: 0 0 .8em; }
-h4, .header_4, 
-h5, .header_5,
-h6, .header_6 {	font-size: 1em; margin: 0 0 .8em; }
-
-/*** @Headings *********/
-h1, h2, h3, h4, h5, h6 { margin: 0 0 .8em; }
-h1, .page-title { font-size: 1.857em; }
-h2 { font-size: 1.428em; }
-h3 { font-size: 1.142em; }
-h4, h5, h6 { font-size: 1em; }
-
-.urlexpansion { display: none; }
-a.imagelink, a[rel~="internal"] { background: none; padding-right: 0; }
-
-img.lwrap { margin: 0 20px .5em 0; }
-img.rwrap { margin: 0 0 .5em 20px; }
-
-/*** @Basics *********/
-blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
-ul, ol { padding-left: 22px; }
-dt { font-style: normal; font-weight: bold; }
-dd { margin-bottom: .5em; padding-left: 15px; }
-table { margin-bottom: 1.286em; border-collapse: collapse; border-color: #ccc; }
-th, td { padding: 1px 3px; }
-caption { font-weight: bold; }
-pre { border: 1px solid #d5cdbb; padding: 10px 20px; overflow: auto; font: 100% "Courier New", "Andale Mono", monospace; }
-code { font: 100% "Courier New", "Andale Mono", monospace; color: inherit; font-weight: inherit; }
-pre code { font-size: 100%; }
-strong code { font-weight: inherit; }
-tt { font: "Courier New", "Andale Mono", monospace; color: inherit; font-weight: inherit; }
-strong tt { font-weight: inherit; }
-a code { color: inherit; }
-
-/*** @Section @Colors *********/
-.web, a.web:link, a.web:visited { color: #fb9500; }
-a.web:hover, a.web:focus, a.web:active { color: #ffae3b; }
-
-.mobile, a.mobile:link, a.mobile:visited { color: #8dc434; }
-a.mobile:hover, a.mobile:focus, a.mobile:active { color: #a7df38; }
-
-.addons, a.addons:link, a.addons:visited { color: #00b6f0; }
-a.addons:hover, a.addons:focus, a.addons:active { color: #0cf; }
-
-.apps, a.apps:link, a.apps:visited { color: #ed2024; }
-a.apps:hover, a.apps:focus, a.apps:active { color: #f33; }
-.moz, a.moz:link, a.moz:visited { color: #ed2024; }
-a.moz:hover, a.moz:focus, a.moz:active { color: #f33; }
-
-.labs, a.labs:link, a.labs:visited { color: #aaa8a5; }
-a.labs:hover, a.labs:focus, a.labs:active { color: #bcbcbc; }
-
-/* @Custom styles *********/
-p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
-div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; }
-div.note { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; }
-	.cke_panel_listItem div.note { margin-bottom: 0; }
-div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; background: transparent url("img/tip-bg.png") repeat-x; color: #6d675f; }
-div.note p, div.tip p { margin-bottom: .75em; }
-
-/*** @WYSIWYG style blocks *********/
-.twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
-.threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
-	.cke_panel_listItem .twocolumns { -moz-column-count: auto; -webkit-column-count: auto; column-count: auto; }
-	.cke_panel_listItem .threecolumns { -moz-column-count: auto; -webkit-column-count: auto; column-count: auto; }
-
-/*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
-span.alllinks { float: right; font-size: 90%; }
-
-table.topicpage-table { width: auto; clear: both; }
-table.topicpage-table td { padding: 10px; width: 50%; vertical-align: top; }
-table.standard-table { border: 1px solid #bbb; border-collapse: collapse; }
-table.standard-table td { padding: 5px; border: 1px solid #ccc; text-align: left; vertical-align: top; }
-table.standard-table td.header, table.standard-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; text-align: left; font-weight: bold; }
-table.fullwidth-table { margin-bottom: 1.5em; border: 1px solid #bbb; border-collapse: collapse; width: 100%; background: #fff; }
-table.fullwidth-table td { border: 1px solid #bbb; padding: 5px 15px; text-align: left; vertical-align: top; }
-table.fullwidth-table td.header, table.fullwidth-table th { border: 1px solid #bbb; padding: 0 5px; background: #ddd; font-weight: bold; font-size: 1.05em; text-align: left; }
-table.features-table { margin-bottom: 20px; border-collapse: collapse; width: auto; }
-table.features-table td { padding-top: 20px; vertical-align: top; }
-table.features-table td img { float: left; margin: -20px 15px 5px 0px; }
-table.features-table td p { margin: 0 3px; font-size: 95%; }
-table.mainpage-table { margin: 0 0 10px 0; border-collapse: collapse; width: auto; }
-table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
-
-.prewrong pre { border: 1px dashed #ac6262; background: #fbeded; color: #8a4e4e; }
-.wrong { margin: 0 0 1.5em; padding: 5px; background: #fbeded; border: solid 1px #ac6262; color: #6d675f; }
-.wrong-inline { border: 1px solid #ac6262; padding: 0 3px 0 3px; background: #fbeded; color: #6d675f; }
-.wrong-source-code { color: #8a4e4e; }
-.right-source-code { color: #537d46; }
-div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
-  div.bug *:last-child, div.warning *:last-child { padding: 0; margin: 0; }
-  .cke_panel_listItem div.bug, .cke_panel_listItem div.warning { margin:0; }
-.originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
-.originaldocinfo h2 { font-size: 120%; }
-.licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
-
-div.floatright, table.floatright { float: right; clear: right; margin: 0 0 .5em .5em; }
-div.floatleft, table.floatleft { float: left; margin: 0 .5em .5em 0; }
-div.thumb { margin-bottom: 0.5em; border: 1px solid #fff; }
-div.thumb div { border: 1px solid #ccc; padding: 3px; overflow: hidden; background-color: #f9f9f9; font-size: 94%; text-align: center; }
-div.thumb div a img { border: 1px solid #ccc; }
-div.thumb div div.thumbcaption { border: none; padding: .3em 0 .1em 0; text-align: left; line-height: 1.4; }
-div.magnify { float: right; }
-div.magnify a, div.magnify img { display: block; }
-div.tright { float: right; clear: right; border-width: .5em 0 .8em 1.4em; }
-div.tleft { float: left; margin-right: .5em; border-width: .5em 1.4em .8em 0; }
-
-table.release { border: 1px solid #ccc; width: 100%; font-size: 95%; }
-table.release td { border: 1px solid #ccc; padding: 0 0 15px 25px; }
-tr.releaseHeader td { font-size: 125%;}
-tr.releaseHeader td.OK { background-color: green;}
-tr.releaseHeader td.ERR { background-color: red;}
-tr.releaseHeader td.IP { background-color: yellow;}
-tr.releaseHeader td.TBD {background-color: grey;}
-tr.release td.OK { width: 22%; background: #cfc; }
-tr.release td.ERR { width: 22%; background: #fcc; }
-tr.release td.IP { width: 22%; background: #ffc; }
-tr.release td.TBD { width: 22%; background: #eee; }
-tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: right; }
-.OK { background-color: rgb(153,255,153); }
-.irrelevant { color: rgb(153,153,153); }
-.maybe { background-color: rgb(255,255,204); }
-
+/* seo plugin styles */
 .seoSummary {
 	padding: 3px;
 	border: 1px dotted #ccc;

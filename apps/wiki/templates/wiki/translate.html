@@ -44,57 +44,7 @@
     {% endif %}
     </header>
 
-    {% if document_form %}
-      <details id="trans-description"{% if disclose_description %} open="open"{% endif %}>
-        <summary>{{ _('Translate Description') }}</summary>
-        {{ errorlist(document_form) }}
-            <ul class="description">
-              <li>
-                <dl class="approved">
-                  <dt>{{ _('Title:') }}</dt>
-                  <dd>{{ parent.title }}</dd>
-                </dl>
-                <dl class="localized">
-                  <dt><label for="{{ document_form.title.auto_id }}" title="{{ document_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></dt>
-                  <dd>{{ document_form.title|safe }}</dd>
-                </dl>
-              </li>
-              <li>
-                <dl class="approved">
-                  <dt>{{ _('Slug:') }}</dt>
-                  <dd>{{ specific_slug }}</dd>
-                </dl>
-                <dl class="localized">
-                  <dt><label for="{{ document_form.slug.auto_id }}" title="{{ document_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></dt>
-                  <dd>{{ document_form.slug|safe }}</dd>
-                </dl>
-              </li>
-              {% if parent_slug %}
-              <li>
-                <dl class="approved">
-                  <dt>{{ _('Parent:') }}</dt>
-                  <dd>{{ parent_slug }}</dd>
-                </dl>
-                <dl class="localized">
-                  &nbsp;
-                </dl>
-              </li>
-              {% endif %}
-              {% if not document.is_template %}
-                <li>
-                  <dl class="approved">
-                    <dt>&nbsp;</dt>
-                    <dd>&nbsp;</dd>
-                  </dl>
-                  <dl class="localized">
-                    <dt><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label></dt>
-                    <dd>{{ revision_form.show_toc | safe }}</dd>
-                  </dl>
-                </li>
-                {% endif %}
-            </ul>
-      </details>
-    {% endif %}
+    {% include 'wiki/includes/translate_description.html' %}
 
     {% if revision_form %}
       <details id="trans-content" open="open">
@@ -125,11 +75,13 @@
         </ul>
         #}
         {% if document.current_revision and document.current_revision.based_on %}
-          {# Diff between the English version the current translation is based on and the current English version. #}
-          {% set revision_from = document.current_revision.based_on %}
-          {% set revision_to = parent.current_revision %}
-          {% include 'wiki/includes/revision_diff.html' %}
-          {# TODO: 'change revisions' link and modal selector #}
+          {% if parent.current_revision != document.current_revision.based_on %}
+            {# Diff between the English version the current translation is based on and the current English version. #}
+            {% set revision_from = document.current_revision.based_on %}
+            {% set revision_to = parent.current_revision %}
+            {% include 'wiki/includes/revision_diff.html' %}
+            {# TODO: 'change revisions' link and modal selector #}
+          {% endif %}
         {% else %}
           <p class="no-trans">{{ _('Note: There are no approved translations for this article.') }}</p>
         {% endif %}
@@ -152,9 +104,26 @@
           </article>
         </div>
         {{ revision_form.hidden_fields()|join|safe }}
+
+        
+        <div class="approved">&nbsp;</div>
+        <div class="localized">
+          <section class="page-meta">
+              <section id="page-tags">
+                <h2>{{ _('Tags') }}</h2>
+                {% if document.tags %}
+                  {% set tags = document.tags.all() %}
+                  <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
+                {% else %}
+                  <input id="tagit_tags" type="text" name="tags" value="" maxlength="255" />
+                {% endif %}
+              </section>
+          </section>
+        </div>
         
       </details>
     {% endif %}
+
     <div id="preview"></div>
   </div>
 </form>

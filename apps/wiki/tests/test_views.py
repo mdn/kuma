@@ -612,6 +612,16 @@ class DocumentEditingTests(TestCaseBase):
 
     fixtures = ['test_users.json']
 
+    def test_noindex_post(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Go to new document page to ensure no-index header works
+        response = client.get(reverse('wiki.new_document', args=[],
+                                               locale='en-US'))
+        eq_(response['X-Robots-Tag'], 'noindex')
+
+
     def test_seo_script(self):
 
         client = LocalizingClient()
@@ -667,6 +677,11 @@ class DocumentEditingTests(TestCaseBase):
                                   '<p class="seoSummary">a</p>'
                                   '<p class="seoSummary">b</p>',
                                   'a b')
+
+        # No brackets
+        make_page_and_compare_seo('nine',
+                                  u'<p>I <em>am</em> awesome. <a href="blah">A link</a> is also &lt;cool&gt;</p>',
+                                  'I am awesome. A link is also cool')
 
     def test_create_on_404(self):
         client = LocalizingClient()
@@ -1208,6 +1223,40 @@ class DocumentEditingTests(TestCaseBase):
         response = self.client.get(url)
         input = pq(response.content)('#id_based_on')[0]
         eq_(int(input.value), en_r.pk)
+
+    def test_restore_translation_source(self):
+        """Edit a localized article without an English parent allows user to
+        set translation parent."""
+        # Create english doc
+        self.client.login(username='admin', password='testpass')
+        data = new_document_data()
+        self.client.post(reverse('wiki.new_document'), data)
+        en_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
+
+        # Create french doc
+        data.update({'locale': 'fr',
+                     'full_path': 'fr/a-test-article',
+                     'title': 'A Tést Articlé',
+                     'content': "C'ést bon."})
+        self.client.post(reverse('wiki.new_document', locale='fr'), data)
+        fr_d = Document.objects.get(locale=data['locale'], slug=data['slug'])
+
+        # Check edit doc page for choose parent box
+        url = reverse('wiki.edit_document', args=[fr_d.slug], locale='fr')
+        response = self.client.get(url)
+        ok_(pq(response.content)('li.metadata-choose-parent'))
+
+        # Set the parent
+        data.update({'form': 'rev', 'parent_id': en_d.id})
+        resp = self.client.post(url, data)
+        eq_(302, resp.status_code)
+        ok_('fr/docs/a-test-article' in resp['Location'])
+
+        # Check the languages drop-down
+        resp = self.client.get(resp['Location'])
+        translations = pq(resp.content)('ul#translations li')
+        ok_('A Test Article' in translations.html())
+        ok_('English (US)' in translations.text())
 
     @attr('tags')
     @mock.patch_object(Site.objects, 'get_current')
@@ -2043,7 +2092,7 @@ class AutosuggestDocumentsTests(TestCaseBase):
         for d in data:
             found = False
             for v in validDocuments:
-                if v['title'] == d['title']:
+                if v['title'] in d['title']:
                     found = True
                     break
             eq_(True, found)
