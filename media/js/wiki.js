@@ -314,13 +314,13 @@
     // Make <summary> and <details> tags work even if the browser doesn't support them.
     // From http://mathiasbynens.be/notes/html5-details-jquery
     function initDetailsTags() {
-        // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
-        if (!('open' in document.createElement('details'))) {
-            document.documentElement.className += ' no-details';
-        }
+        var supportsDetails = ('open' in document.createElement('details'));
 
         // Execute the fallback only if there's no native `details` support
-        if (!('open' in document.createElement('details'))) {
+        if (!supportsDetails) {
+            // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
+            document.documentElement.className += ' no-details';
+
             // Loop through all `details` elements
             $('details').each(function() {
                 // Store a reference to the current `details` element in a variable
