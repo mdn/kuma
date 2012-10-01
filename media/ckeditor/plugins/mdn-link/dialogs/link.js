@@ -254,28 +254,24 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 		// Find out whether we have any anchors in the editor.
 		var anchors = retval.anchors = [],
+			anchorTags = ['a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 			item;
 
 		// For some browsers we set contenteditable="false" on anchors, making document.anchors not to include them, so we must traverse the links manually (#7893).
-		if ( CKEDITOR.plugins.link.emptyAnchorFix )
-		{
-			var links = editor.document.getElementsByTag( 'a' );
-			for ( i = 0, count = links.count(); i < count; i++ )
-			{
-				item = links.getItem( i );
-				if ( item.data( 'cke-saved-name' ) || item.hasAttribute( 'name' ) )
-					anchors.push( { name : item.data( 'cke-saved-name' ) || item.getAttribute( 'name' ), id : item.getAttribute( 'id' ) } );
-			}
-		}
-		else
-		{
-			var anchorList = new CKEDITOR.dom.nodeList( editor.document.$.anchors );
-			for ( var i = 0, count = anchorList.count(); i < count; i++ )
-			{
-				item = anchorList.getItem( i );
-				anchors[ i ] = { name : item.getAttribute( 'name' ), id : item.getAttribute( 'id' ) };
-			}
-		}
+		jQuery.each(anchorTags, function() {
+			var links = editor.document.getElementsByTag(this);
+			jQuery.each(links.$, function(index) {
+				var item = links.getItem(index);
+				if(!item) return;
+
+				if (item.data( 'cke-saved-name' ) || item.hasAttribute( 'name' ) || item.hasAttribute( 'id' )) {
+					anchors.push({ 
+						name: item.data( 'cke-saved-name' ) || item.getAttribute( 'name' ) || item.getAttribute( 'id' ), 
+						id : item.getAttribute( 'id' ) 
+					});
+				}
+			});
+		});
 
 		if ( CKEDITOR.plugins.link.fakeAnchor )
 		{
@@ -665,37 +661,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 														data.anchor = {};
 
 													data.anchor.name = this.getValue();
-												}
-											},
-											{
-												type : 'select',
-												id : 'anchorId',
-												'default' : '',
-												label : linkLang.anchorId,
-												style : 'width: 100%;',
-												items :
-												[
-													[ '' ]
-												],
-												setup : function( data )
-												{
-													this.clear();
-													this.add( '' );
-													for ( var i = 0 ; i < data.anchors.length ; i++ )
-													{
-														if ( data.anchors[i].id )
-															this.add( data.anchors[i].id );
-													}
-
-													if ( data.anchor )
-														this.setValue( data.anchor.id );
-												},
-												commit : function( data )
-												{
-													if ( !data.anchor )
-														data.anchor = {};
-
-													data.anchor.id = this.getValue();
 												}
 											}
 										],
