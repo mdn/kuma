@@ -849,6 +849,10 @@ class Document(NotificationsMixin, ModelBase):
         # we make here, so don't worry:
         self._clean_category()
 
+        if not self.parent_topic and self.parent:
+            # If this is a translation without a topic parent, try to get one.
+            self.acquire_translated_topic_parent()
+
         super(Document, self).save(*args, **kwargs)
 
         # Delete any cached last-modified timestamp.
@@ -882,6 +886,60 @@ class Document(NotificationsMixin, ModelBase):
                 del self.old_slug
             if title_changed:
                 del self.old_title
+
+    def acquire_translated_topic_parent(self):
+        """This normalizes topic breadcrumb paths between locales.
+        
+        Attempt to acquire a topic parent from a translation of our translation
+        parent's topic parent, auto-creating a stub document if necessary."""
+        if not self.parent:
+            # Bail, if this is not in fact a translation.
+            return
+        ppt = self.parent.parent_topic
+        if not ppt:
+            # Bail, if the translation parent has no topic parent
+            return
+        try:
+            # Look for an existing translation of the topic parent
+            new_pt = ppt.translations.get(locale=self.locale)
+        except Document.DoesNotExist:
+            try:
+                # No luck. As a longshot, let's try looking for the same slug.
+                new_pt = (Document.objects.get(locale=self.locale,
+                                               slug=ppt.slug))
+                if not new_pt.parent:
+                    # HACK: This same-slug/different-locale doc should probably
+                    # be considered a translation. Let's correct that on the
+                    # spot.
+                    new_pt.parent = ppt
+                    new_pt.save()
+            except Document.DoesNotExist:
+                # Finally, let's create a translated stub for a topic parent
+                new_pt = (Document.objects
+                          .get(pk=ppt.pk))
+                new_pt.pk = None
+                new_pt.current_revision = None
+                new_pt.parent_topic = None
+                new_pt.parent = ppt
+                new_pt.locale = self.locale
+                new_pt.save()
+
+                if ppt.current_revision:
+                    # Don't forget to clone a current revision
+                    new_rev = (Revision.objects
+                               .get(pk=ppt.current_revision.pk))
+                    new_rev.pk = None
+                    new_rev.document = new_pt
+                    # HACK: Let's auto-add tags that flag this as a topic stub
+                    addl_tags = '"TopicStub","NeedsTranslation"'
+                    if new_rev.tags:
+                        new_rev.tags = '%s,%s' % (new_rev.tags, addl_tags)
+                    else:
+                        new_rev.tags = addl_tags
+                    new_rev.save()
+
+        # Finally, assign the new default parent topic
+        self.parent_topic = new_pt
 
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""
