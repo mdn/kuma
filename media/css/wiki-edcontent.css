@@ -2,7 +2,7 @@
 html { background: #fff; }
 body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; padding: 0 20px; }
 
-/*** @Links *********/
+/* links */
 :link { color: #369; text-decoration: none; }
 :visited { color: #69c; text-decoration: none; }
 :link:hover, :link:focus, :link:active { color: #25a; text-decoration: underline; }
@@ -26,4 +26,54 @@ body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode
 	display: block;
 	opacity: 0.8;
 	cursor: default;
-};
+}
+
+/* syntax highlighter update */
+pre {
+	position: relative;
+}
+pre:before {
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	font-style: italic;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	z-index: 10;
+	color: #666;
+}
+
+pre[class^="brush:js"]:before, pre[class^="brush: js"]:before {
+	content: "JavaScript";
+}
+pre[class^="brush:css"]:before, pre[class^="brush: css"]:before {
+	content: "CSS";
+}
+pre[class^="brush:bash"]:before, pre[class^="brush: bash"]:before {
+	content: "Bash";
+}
+pre[class^="brush:cpp"]:before, pre[class^="brush: cpp"]:before {
+	content: "C++";
+}
+pre[class^="brush:java"]:before, pre[class^="brush: java"]:before {
+	content: "Java";
+}
+pre[class^="brush:html"]:before, pre[class^="brush: html"]:before {
+	content: "HTML";
+}
+pre[class^="brush:php"]:before, pre[class^="brush: php"]:before {
+	content: "PHP";
+}
+pre[class^="brush:python"]:before, pre[class^="brush: python"]:before {
+	content: "Python";
+}
+pre[class^="brush:sql"]:before, pre[class^="brush: sql"]:before {
+	content: "SQL";
+}
+pre[class^="brush:xml"]:before, pre[class^="brush: xml"]:before {
+	content: "XML";
+}
+
+
+
+
