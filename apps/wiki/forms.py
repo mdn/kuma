@@ -9,6 +9,8 @@ from django.forms.widgets import CheckboxSelectMultiple
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
+import constance.config
+
 from sumo.form_fields import StrippedCharField
 from tags import forms as tag_forms
 
@@ -58,6 +60,7 @@ OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
 MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
+MIME_TYPE_INVALID = _lazy(u'Files of this type are not permitted.')
 
 
 class DocumentForm(forms.ModelForm):
@@ -419,6 +422,15 @@ class AttachmentRevisionForm(forms.ModelForm):
     class Meta:
         model = AttachmentRevision
         fields = ('file', 'title', 'description', 'comment')
+
+    def clean_file(self):
+        uploaded_file = self.cleaned_data['file']
+        mime_type = mimetypes.guess_type(uploaded_file.name)[0]
+        if mime_type is None:
+            mime_type = 'application/octet-stream'
+        if mime_type not in \
+               constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
+            raise forms.ValidationError(MIME_TYPE_INVALID)
 
     def save(self, commit=True):
         if commit:

@@ -1008,6 +1008,10 @@ CONSTANCE_CONFIG = dict(
         3,
         'Number of lines of context to show in feed diff display.',
     ),
+    WIKI_ATTACHMENT_ALLOWED_TYPES = (
+        "image/png image/gif image/jpeg",
+        'File types allowed in wiki attachments',
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'
