@@ -483,6 +483,96 @@ class DocumentTestsWithFixture(TestCase):
                            is_approved=True,
                            save=True).document.redirect_document())
 
+    def test_default_topic_parents_for_translation(self):
+        """A translated document with no topic parent should by default use
+        the translation of its translation parent's topic parent."""
+        orig_pt = document(locale='en-US', title='test section',
+                           save=True)
+        orig = document(locale='en-US', title='test',
+                        parent_topic=orig_pt, save=True)
+
+        trans_pt = document(locale='fr', title='le test section',
+                            parent=orig_pt, save=True)
+        trans = document(locale='fr', title='le test',
+                         parent=orig, save=True)
+
+        ok_(trans.parent_topic)
+        eq_(trans.parent_topic.pk, trans_pt.pk)
+
+    def test_default_topic_with_stub_creation(self):
+        orig_pt = document(locale='en-US', title='test section',
+                           save=True)
+        orig = document(locale='en-US', title='test',
+                        parent_topic=orig_pt, save=True)
+
+        trans = document(locale='fr', title='le test',
+                         parent=orig, save=True)
+
+        # There should be a translation topic parent
+        trans_pt = trans.parent_topic
+        ok_(trans_pt)
+        # The locale of the topic parent should match the new translation
+        eq_(trans.locale, trans_pt.locale)
+        # But, the translation's topic parent must *not* be the translation
+        # parent's topic parent
+        ok_(trans_pt.pk != orig_pt.pk)
+        # Still, since the topic parent is an autocreated stub, it shares its
+        # title with the original.
+        eq_(trans_pt.title, orig_pt.title)
+        # Oh, and it should point to the original parent topic as its
+        # translation parent
+        eq_(trans_pt.parent, orig_pt)
+
+    def test_default_topic_with_path_gaps(self):
+        # Build a path of docs in en-US
+        orig_path = ('MDN', 'web', 'CSS', 'properties', 'banana', 'leaf')
+        docs, doc = [], None
+        for title in orig_path:
+            doc = document(locale='en-US', title=title,
+                           parent_topic=doc, save=True)
+            rev = revision(document=doc, title=title, save=True)
+            docs.append(doc)
+
+        # Translate, but leave gaps for stubs
+        trans_0 = document(locale='fr', title='le MDN',
+                           parent=docs[0], save=True)
+        trans_0_rev = revision(document=trans_0, title='le MDN',
+                               tags="LeTest!",
+                               save=True)
+        trans_2 = document(locale='fr', title='le CSS',
+                           parent=docs[2], save=True)
+        trans_2_rev = revision(document=trans_2, title='le CSS',
+                               tags="LeTest!",
+                               save=True)
+        trans_5 = document(locale='fr', title='le leaf',
+                           parent=docs[5], save=True)
+        trans_5_rev = revision(document=trans_5, title='le ;eaf',
+                               tags="LeTest!",
+                               save=True)
+
+        # Make sure trans_2 got the right parent
+        eq_(trans_2.parents[0].pk, trans_0.pk)
+
+        # Ensure the translated parents and stubs appear properly in the path
+        parents_5 = trans_5.parents
+        eq_(parents_5[0].pk, trans_0.pk)
+        eq_(parents_5[1].locale, trans_5.locale)
+        eq_(parents_5[1].title, docs[1].title)
+        ok_(parents_5[1].current_revision.pk != docs[1].current_revision.pk)
+        eq_(parents_5[2].pk, trans_2.pk)
+        eq_(parents_5[3].locale, trans_5.locale)
+        eq_(parents_5[3].title, docs[3].title)
+        ok_(parents_5[3].current_revision.pk != docs[3].current_revision.pk)
+        eq_(parents_5[4].locale, trans_5.locale)
+        eq_(parents_5[4].title, docs[4].title)
+        ok_(parents_5[4].current_revision.pk != docs[4].current_revision.pk)
+
+        for p in parents_5:
+            ok_(p.current_revision)
+            if not p.pk in (trans_0.pk, trans_2.pk, trans_5.pk):
+                ok_('NeedsTranslation' in p.current_revision.tags)
+                ok_('TopicStub' in p.current_revision.tags)
+
 
 class RedirectCreationTests(TestCase):
     """Tests for automatic creation of redirects when slug or title changes"""
