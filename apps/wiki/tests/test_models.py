@@ -1073,3 +1073,282 @@ class DeferredRenderingTests(TestCase):
 
         r_rendered, r_errors = self.d1.get_rendered(None, 'http://testserver/')
         ok_(errors, r_errors)
+
+
+class PageMoveTests(TestCase):
+    """Tests for page-moving and associated functionality."""
+
+    fixtures = ['test_users.json']
+
+    def test_children_simple(self):
+        """A basic tree with two direct children and no sub-trees on
+        either."""
+        d1 = document(title='Parent')
+        d2 = document(title='Child')
+        d2.parent_topic = d1
+        d2.save()
+        d3 = document(title='Another child')
+        d3.parent_topic = d1
+        d3.save()
+
+        eq_([d2, d3], d1.get_descendants())
+
+    def test_children_complex(self):
+        """A slightly more complex tree, with multiple children, some
+        of which do/don't have their own children."""
+        top = document(title='Parent', save=True)
+        
+        c1 = document(title='Child 1', save=True)
+        c1.parent_topic = top
+        c1.save()
+
+        gc1 = document(title='Child of child 1', save=True)
+        gc1.parent_topic = c1
+        gc1.save()
+
+        c2 = document(title='Child 2', save=True)
+        c2.parent_topic = top
+        c2.save()
+
+        gc2 = document(title='Child of child 2', save=True)
+        gc2.parent_topic = c2
+        gc2.save()
+
+        gc3 = document(title='Another child of child 2', save=True)
+        gc3.parent_topic = c2
+        gc3.save()
+
+        ggc1 = document(title='Child of the second child of child 2',
+                        save=True)
+        
+        ggc1.parent_topic = gc3
+        ggc1.save()
+
+        ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
+
+    def test_circular_dependency(self):
+        """Make sure we can detect potential circular dependencies in
+        parent/child relationships."""
+        # Test detection at one level removed.
+        parent = document(title='Parent of circular-dependency document',
+                          save=True)
+        child = document(title='Document with circular dependency',
+                         save=True)
+        child.parent_topic = parent
+        child.save()
+
+        ok_(child.is_child_of(parent))
+
+        # And at two levels removed.
+        grandparent = document(title='Grandparent of circular-dependency document',
+                               save=True)
+        parent.parent_topic = grandparent
+        child.save()
+
+        ok_(child.is_child_of(grandparent))
+
+    def test_has_children(self):
+        """has_children() properly detects presence of child documents"""
+        parent = document(title='Parent document for testing has_children()',
+                          save=True)
+        child = document(title='Child document for testing has_children()',
+                         save=True)
+        child.parent_topic = parent
+        child.save()
+
+        ok_(parent.has_children())
+
+    def test_move(self):
+        """Changing title/slug leaves behind a redirect document"""
+        rev = revision(title='Page that will be moved',
+                       slug='page-that-will-be-moved')
+        rev.is_approved = True
+        rev.save()
+
+        moved = revision(document=rev.document,
+                         title='Page that has been moved',
+                         slug='page-that-has-been-moved')
+        moved.is_approved = True
+        moved.save()
+
+        d = Document.objects.get(slug='page-that-will-be-moved')
+        ok_(d.id != rev.document.id)
+        ok_('page-that-has-been-moved' in d.redirect_url())
+
+    def test_move_tree(self):
+        """Moving a tree of documents does the correct thing"""
+
+        # Simple multi-level tree:
+        #
+        #  - top
+        #    - child1
+        #    - child2
+        #      - grandchild
+        top = revision(title='Top-level parent for tree moves',
+                       slug='first-level/parent',
+                       is_approved=True,
+                       save=True)
+        old_top_id = top.id
+        top_doc = top.document
+        
+        child1 = revision(title='First child of tree-move parent',
+                          slug='first-level/second-level/child1',
+                          is_approved=True,
+                          save=True)
+        old_child1_id = child1.id
+        child1_doc = child1.document
+        child1_doc.parent_topic = top_doc
+        child1_doc.save()
+
+        child2 = revision(title='Second child of tree-move parent',
+                          slug='first-level/second-level/child2',
+                          is_approved=True,
+                          save=True)
+        old_child2_id = child2.id
+        child2_doc = child2.document
+        child2_doc.parent_topic = top_doc
+        child2.save()
+
+        grandchild = revision(title='Child of second child of tree-move parent',
+                              slug='first-level/second-level/third-level/grandchild',
+                              is_approved=True,
+                              save=True)
+        old_grandchild_id = grandchild.id
+        grandchild_doc = grandchild.document
+        grandchild_doc.parent_topic = child2_doc
+        grandchild_doc.save()
+
+        # Now we do a simple move: inserting a prefix that needs to be
+        # inherited by the whole tree.
+        top_doc._move_tree('first-level/', 'new-prefix/first-level/')
+
+        # And for each document verify three things:
+        #
+        # 1. The new slug is correct.
+        # 2. A new revision was created when the page moved.
+        # 3. A redirect was created.
+        moved_top = Document.objects.get(pk=top_doc.id)
+        eq_('new-prefix/first-level/parent',
+            moved_top.current_revision.slug)
+        ok_(old_top_id != moved_top.current_revision.id)
+        ok_(moved_top.current_revision.slug in \
+            Document.objects.get(slug='first-level/parent').redirect_url())
+
+        moved_child1 = Document.objects.get(pk=child1_doc.id)
+        eq_('new-prefix/first-level/second-level/child1',
+            moved_child1.current_revision.slug)
+        ok_(old_child1_id != moved_child1.current_revision.id)
+        ok_(moved_child1.current_revision.slug in \
+            Document.objects.get(slug='first-level/second-level/child1').redirect_url())
+
+        moved_child2 = Document.objects.get(pk=child2_doc.id)
+        eq_('new-prefix/first-level/second-level/child2',
+            moved_child2.current_revision.slug)
+        ok_(old_child2_id != moved_child2.current_revision.id)
+        ok_(moved_child2.current_revision.slug in \
+            Document.objects.get(slug='first-level/second-level/child2').redirect_url())
+
+        moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
+        eq_('new-prefix/first-level/second-level/third-level/grandchild',
+            moved_grandchild.current_revision.slug)
+        ok_(old_grandchild_id != moved_grandchild.current_revision.id)
+        ok_(moved_grandchild.current_revision.slug in \
+            Document.objects.get(slug='first-level/second-level/third-level/grandchild').redirect_url())
+
+    def test_move_prepend(self):
+        """Test the special-case prepend logic."""
+        top = revision(title='Top-level parent for testing moves with prependings',
+                       slug='parent',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+        
+        child1 = revision(title='First child of tree-move-prepending parent',
+                          slug='first-level/child1',
+                          is_approved=True,
+                          save=True)
+        child1_doc = child1.document
+        child1_doc.parent_topic = top_doc
+        child1_doc.save()
+
+        top_doc._move_tree('', 'new-prefix', prepend=True)
+        moved_top = Document.objects.get(pk=top_doc.id)
+        eq_('new-prefix/parent',
+            moved_top.current_revision.slug)
+        
+        moved_child1 = Document.objects.get(pk=child1_doc.id)
+        eq_('new-prefix/first-level/child1',
+            moved_child1.current_revision.slug)
+
+    def test_tree_change(self):
+        d1 = document(title='Test tree change without prepend',
+                      slug='move-tests/test-tree-change')
+        eq_(('foo/move-tests', False),
+            d1._tree_change('foo/move-tests/test-tree-change'))
+        d2 = document(title='Test tree change with prepend',
+                      slug='test-tree-change-prepend')
+        eq_(('foo', True),
+            d2._tree_change('foo/test-tree-change-prepend'))
+
+    def test_conflicts(self):
+        top = revision(title='Test page-move conflict detection',
+                       slug='test-move-conflict-detection',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+        child = revision(title='Child of conflict detection test',
+                         slug='move-tests/conflict-child',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = top_doc
+        child_doc.save()
+
+        # We should find the conflict if it's at the slug the document
+        # will move to.
+        top_conflict = revision(title='Conflicting document for move conflict detection',
+                                slug='moved/test-move-conflict-detection',
+                                is_approved=True,
+                                save=True)
+
+        eq_([top_conflict.document],
+            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
+        # Or if it will involve a child document.
+        child_conflict = revision(title='Conflicting child for move conflict detection',
+                                  slug='moved/move-tests/conflict-child',
+                                  is_approved=True,
+                                  save=True)
+
+        eq_([top_conflict.document, child_conflict.document],
+            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
+        # But a redirect should not trigger a conflict.
+        conflict_redirect = revision(title='Conflicting document for move conflict detection',
+                                     slug='moved/test-move-conflict-detection',
+                                     content='REDIRECT <a class="redirect" href="/foo">Foo</a>',
+                                     document=top_conflict.document,
+                                     is_approved=True,
+                                     save=True)
+
+        eq_([child_conflict.document],
+            top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
+    def test_preserve_tags(self):
+        tags = "'moving', 'tests'"
+        rev = revision(title='Test page-move tag preservation',
+                       slug='page-move-tags',
+                       tags=tags,
+                       is_approved=True,
+                       save=True)
+        rev.review_tags.set('technical')
+        rev = Revision.objects.get(pk=rev.id)
+
+        doc = rev.document
+        doc._move_tree('', 'move', prepend=True)
+
+        moved_doc = Document.objects.get(pk=doc.id)
+        new_rev = moved_doc.current_revision
+        eq_(tags, new_rev.tags)
+        eq_(['technical'],
+            [str(tag) for tag in new_rev.review_tags.all()])
