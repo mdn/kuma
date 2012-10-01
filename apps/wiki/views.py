@@ -232,10 +232,14 @@ def _split_slug(slug):
     """Utility function to do basic slug splitting"""
     slug_split = slug.split('/')
     length = len(slug_split)
+    root = None
+    if length > 1:
+        root = slug_split[0]
     specific = slug_split.pop()
 
     return {'specific': specific, 'parent': '/'.join(slug_split),
-            'full': slug, 'parent_split': slug_split, 'length': length}
+            'full': slug, 'parent_split': slug_split, 'length': length,
+            'root': root}
 
 
 def _join_slug(parent_split, slug):
@@ -294,6 +298,7 @@ def document(request, document_slug, document_locale):
     """View a wiki document."""
     fallback_reason = None
     base_url = request.build_absolute_uri('/')
+    slug_dict = _split_slug(document_slug)
 
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
@@ -347,7 +352,6 @@ def document(request, document_slug, document_locale):
             # Otherwise, they could be trying to create a main level doc
             url = reverse('wiki.new_document', locale=document_locale)
 
-            slug_dict = _split_slug(document_slug)
             if slug_dict['length'] > 1:
                 try:
                     parent_doc = Document.objects.get(locale=document_locale,
@@ -501,6 +505,16 @@ def document(request, document_slug, document_locale):
     if not doc.is_template:
         seo_summary = get_seo_description(doc_html)
 
+    # Get the additional title information, if necessary
+    seo_parent_title = ''
+    if slug_dict['root']:
+        try:
+            root_doc = Document.objects.get(locale=document_locale,
+                                            slug=slug_dict['root'])
+            seo_parent_title = ' | ' + root_doc.title
+        except Document.DoesNotExist:
+            logging.debug('Root document could not be found')
+
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
     
@@ -511,6 +525,7 @@ def document(request, document_slug, document_locale):
             'kumascript_errors': ks_errors,
             'render_raw_fallback': render_raw_fallback,
             'seo_summary': seo_summary,
+            'seo_parent_title': seo_parent_title,
             'attachment_data': attachments,
             'attachment_data_json': json.dumps(attachments)}
     data.update(SHOWFOR_DATA)
