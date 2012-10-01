@@ -495,7 +495,7 @@ class DocumentTestsWithFixture(TestCase):
                             parent=orig_pt, save=True)
         trans = document(locale='fr', title='le test',
                          parent=orig, save=True)
-        
+
         ok_(trans.parent_topic)
         eq_(trans.parent_topic.pk, trans_pt.pk)
 
@@ -507,7 +507,7 @@ class DocumentTestsWithFixture(TestCase):
 
         trans = document(locale='fr', title='le test',
                          parent=orig, save=True)
-        
+
         # There should be a translation topic parent
         trans_pt = trans.parent_topic
         ok_(trans_pt)
