@@ -1166,6 +1166,55 @@ class DeferredRenderingTests(TestCase):
 
 class PageMoveTests(TestCase):
     """Tests for page-moving and associated functionality."""
+
+    fixtures = ['test_users.json']
+
+    def test_children_simple(self):
+        """A basic tree with two direct children and no sub-trees on
+        either."""
+        d1 = document(title='Parent')
+        d2 = document(title='Child')
+        d2.parent_topic = d1
+        d2.save()
+        d3 = document(title='Another child')
+        d3.parent_topic = d1
+        d3.save()
+
+        eq_([d2, d3], d1.get_descendants())
+
+    def test_children_complex(self):
+        """A slightly more complex tree, with multiple children, some
+        of which do/don't have their own children."""
+        top = document(title='Parent', save=True)
+
+        c1 = document(title='Child 1', save=True)
+        c1.parent_topic = top
+        c1.save()
+
+        gc1 = document(title='Child of child 1', save=True)
+        gc1.parent_topic = c1
+        gc1.save()
+
+        c2 = document(title='Child 2', save=True)
+        c2.parent_topic = top
+        c2.save()
+
+        gc2 = document(title='Child of child 2', save=True)
+        gc2.parent_topic = c2
+        gc2.save()
+
+        gc3 = document(title='Another child of child 2', save=True)
+        gc3.parent_topic = c2
+        gc3.save()
+
+        ggc1 = document(title='Child of the second child of child 2',
+                        save=True)
+
+        ggc1.parent_topic = gc3
+        ggc1.save()
+
+        ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
+
     def test_circular_dependency(self):
         """Make sure we can detect potential circular dependencies in
         parent/child relationships."""

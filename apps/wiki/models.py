@@ -1210,6 +1210,21 @@ class Document(NotificationsMixin, ModelBase):
         have a bad time."""
         return other.id in (d.id for d in self.parents)
             
+    # This is a method, not a property, because it can do a lot of DB
+    # queries and so should look scarier. It's not just named
+    # 'children' because that's taken already by the reverse relation
+    # on parent_topic.
+    def get_descendants(self):
+        """Return a list of all documents which are children
+        (grandchildren, great-grandchildren, etc.) of this one."""
+        results = []
+        if self.has_children():
+            for child in self.children.all():
+                results.append(child)
+                [results.append(grandchild) for \
+                 grandchild in child.get_descendants()]
+        return results
+
     def has_voted(self, request):
         """Did the user already vote for this document?"""
         if request.user.is_authenticated():
