@@ -1241,3 +1241,124 @@ class PageMoveTests(TestCase):
 
         ok_(parent.has_children())
     
+    def test_move(self):
+        """Changing title/slug leaves behind a redirect document"""
+        rev = revision(title='Page that will be moved',
+                       slug='page-that-will-be-moved')
+        rev.is_approved = True
+        rev.save()
+
+        moved = revision(document=rev.document,
+                         title='Page that has been moved',
+                         slug='page-that-has-been-moved')
+        moved.is_approved = True
+        moved.save()
+
+        d = Document.objects.get(slug='page-that-will-be-moved')
+        ok_(d.id != rev.document.id)
+        ok_('page-that-has-been-moved' in d.redirect_url())
+
+    def test_move_tree(self):
+        """Moving a tree of documents does the correct thing"""
+
+        # Simple multi-level tree:
+        #
+        #  - top
+        #    - child1
+        #    - child2
+        #      - grandchild
+        top = revision(title='Top-level parent for tree moves',
+                       slug='first-level/parent',
+                       is_approved=True,
+                       save=True)
+        old_top_id = top.id
+        top_doc = top.document
+
+        child1 = revision(title='First child of tree-move parent',
+                          slug='first-level/second-level/child1',
+                          is_approved=True,
+                          save=True)
+        old_child1_id = child1.id
+        child1_doc = child1.document
+        child1_doc.parent_topic = top_doc
+        child1_doc.save()
+
+        child2 = revision(title='Second child of tree-move parent',
+                          slug='first-level/second-level/child2',
+                          is_approved=True,
+                          save=True)
+        old_child2_id = child2.id
+        child2_doc = child2.document
+        child2_doc.parent_topic = top_doc
+        child2.save()
+
+        grandchild = revision(title='Child of second child of tree-move parent',
+                              slug='first-level/second-level/third-level/grandchild',
+                              is_approved=True,
+                              save=True)
+        old_grandchild_id = grandchild.id
+        grandchild_doc = grandchild.document
+        grandchild_doc.parent_topic = child2_doc
+        grandchild_doc.save()
+
+        # Now we do a simple move: inserting a prefix that needs to be
+        # inherited by the whole tree.
+        top_doc._move_tree('first-level/', 'new-prefix/first-level/')
+
+        # And for each document verify three things:
+        #
+        # 1. The new slug is correct.
+        # 2. A new revision was created when the page moved.
+        # 3. A redirect was created.
+        moved_top = Document.objects.get(pk=top_doc.id)
+        eq_('new-prefix/first-level/parent',
+            moved_top.current_revision.slug)
+        ok_(old_top_id != moved_top.current_revision.id)
+        ok_(moved_top.current_revision.slug in \
+            Document.objects.get(slug='first-level/parent').redirect_url())
+
+        moved_child1 = Document.objects.get(pk=child1_doc.id)
+        eq_('new-prefix/first-level/second-level/child1',
+            moved_child1.current_revision.slug)
+        ok_(old_child1_id != moved_child1.current_revision.id)
+        ok_(moved_child1.current_revision.slug in \
+            Document.objects.get(slug='first-level/second-level/child1').redirect_url())
+
+        moved_child2 = Document.objects.get(pk=child2_doc.id)
+        eq_('new-prefix/first-level/second-level/child2',
+            moved_child2.current_revision.slug)
+        ok_(old_child2_id != moved_child2.current_revision.id)
+        ok_(moved_child2.current_revision.slug in \
+            Document.objects.get(slug='first-level/second-level/child2').redirect_url())
+
+        moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
+        eq_('new-prefix/first-level/second-level/third-level/grandchild',
+            moved_grandchild.current_revision.slug)
+        ok_(old_grandchild_id != moved_grandchild.current_revision.id)
+        ok_(moved_grandchild.current_revision.slug in \
+            Document.objects.get(slug='first-level/second-level/third-level/grandchild').redirect_url())
+
+    def test_move_prepend(self):
+        """Test the special-case prepend logic."""
+        top = revision(title='Top-level parent for testing moves with prependings',
+                       slug='parent',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+
+        child1 = revision(title='First child of tree-move-prepending parent',
+                          slug='first-level/child1',
+                          is_approved=True,
+                          save=True)
+        child1_doc = child1.document
+        child1_doc.parent_topic = top_doc
+        child1_doc.save()
+
+        top_doc._move_tree('', 'new-prefix', prepend=True)
+        moved_top = Document.objects.get(pk=top_doc.id)
+        eq_('new-prefix/parent',
+            moved_top.current_revision.slug)
+
+        moved_child1 = Document.objects.get(pk=child1_doc.id)
+        eq_('new-prefix/first-level/child1',
+            moved_child1.current_revision.slug)
