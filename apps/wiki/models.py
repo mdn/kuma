@@ -866,26 +866,111 @@ class Document(NotificationsMixin, ModelBase):
         slug_changed = hasattr(self, 'old_slug')
         title_changed = hasattr(self, 'old_title')
         if self.current_revision and (slug_changed or title_changed):
-            doc = Document.objects.create(locale=self.locale,
-                                          title=self._attr_for_redirect(
-                                              'title', REDIRECT_TITLE),
-                                          slug=self._attr_for_redirect(
-                                              'slug', REDIRECT_SLUG),
-                                          category=self.category,
-                                          is_localizable=False)
-            Revision.objects.create(document=doc,
-                                    content=REDIRECT_CONTENT % dict(
-                                        href=self.get_absolute_url(),
-                                        title=self.title),
-                                    is_approved=True,
-                                    show_toc=self.current_revision.show_toc,
-                                    reviewer=self.current_revision.creator,
-                                    creator=self.current_revision.creator)
-
+            self.move()
             if slug_changed:
                 del self.old_slug
             if title_changed:
                 del self.old_title
+
+    def move(self, new_slug=None, user=None):
+        """
+        Complete the process of moving a page by leaving a redirect
+        behind.
+
+        """
+        if new_slug is None:
+            new_slug = self.slug
+        if user is None:
+            user = self.current_revision.creator
+        self.slug = new_slug
+        doc = Document.objects.create(locale=self.locale,
+                                      title=self._attr_for_redirect(
+                                          'title', REDIRECT_TITLE),
+                                      slug=self._attr_for_redirect(
+                                          'slug', REDIRECT_SLUG),
+                                      category=self.category,
+                                      is_localizable=False)
+        Revision.objects.create(document=doc,
+                                content=REDIRECT_CONTENT % dict(
+                                    href=self.get_absolute_url(),
+                                    title=self.title),
+                                is_approved=True,
+                                show_toc=self.current_revision.show_toc,
+                                reviewer=self.current_revision.creator,
+                                creator=user)
+                                            
+    def _tree_change(self, new_slug):
+        """
+        Given a new slug to be assigned to this document, return the
+        resulting hierarchy that will appear in the slug (i.e.,
+        everything before the final '/'), and a boolean indicating
+        whether this is a prepend operation.
+
+        """
+        old_hierarchy = '/'.join(self.slug.split('/')[:-1])
+        new_hierarchy = '/'.join(new_slug.split('/')[:-1])
+        if new_hierarchy and not old_hierarchy:
+            return new_hierarchy, True
+        return new_hierarchy, False
+
+    def _tree_conflicts(self, new_slug):
+        """
+        Given a new slug to be assigned to this document, return a
+        list of documents (if any) which would be overwritten by
+        moving this document or any of its children in that fashion.
+
+        """
+        conflicts = []
+        try:
+            existing = Document.objects.get(locale=self.locale, slug=new_slug)
+            if not existing.redirect_url():
+                conflicts.append(existing)
+        except Document.DoesNotExist:
+            pass
+        old_hierarchy = '/'.join(self.slug.split('/')[:-1])
+        new_hierarchy, prepend = self._tree_change(new_slug)
+        for child in self.get_descendants():
+            if prepend:
+                moved_slug = '/'.join([new_hierarchy, child.slug])
+            else:
+                moved_slug = child.slug.replace(old_hierarchy, new_hierarchy)
+            try:
+                existing = Document.objects.get(locale=self.locale, slug=moved_slug)
+                if not existing.redirect_url():
+                    conflicts.append(existing)
+            except Document.DoesNotExist:
+                pass
+        return conflicts
+        
+    def _move_tree(self, old_hierarchy, new_hierarchy, user=None, prepend=False):
+        """
+        Move this page and all its children, by replacing old_hierarchy
+        in the slug with new_hierarchy.
+
+        """
+        if user is None:
+            user = self.current_revision.creator
+
+        rev = self.current_revision
+        review_tags = [str(tag) for tag in rev.review_tags.all()]
+
+        # Shortcut trick for getting an object with all the same
+        # values, but making Django think it's new.
+        rev.id = None
+
+        rev.creator = user
+        rev.created = datetime.now()
+        if prepend:
+            rev.slug = '/'.join([new_hierarchy, rev.slug])
+        else:
+            rev.slug = rev.slug.replace(old_hierarchy, new_hierarchy)
+
+        rev.save(force_insert=True)
+
+        rev.review_tags.set(*review_tags)
+
+        for child in self.children.all():
+            child._move_tree(old_hierarchy, new_hierarchy, user, prepend)
 
     def acquire_translated_topic_parent(self):
         """This normalizes topic breadcrumb paths between locales.
@@ -1199,6 +1284,31 @@ class Document(NotificationsMixin, ModelBase):
             parents.insert(0, current_parent.parent_topic)
             current_parent = current_parent.parent_topic
         return parents
+
+    def has_children(self):
+        """Does this document have at least one child?"""
+        return self.children.count()
+
+    def is_child_of(self, other):
+        """Circular dependency detection -- if someone tries to set
+        this as a parent of a document it's a child of, they're gonna
+        have a bad time."""
+        return other.id in (d.id for d in self.parents)
+            
+    # This is a method, not a property, because it can do a lot of DB
+    # queries and so should look scarier. It's not just named
+    # 'children' because that's taken already by the reverse relation
+    # on parent_topic.
+    def get_descendants(self):
+        """Return a list of all documents which are children
+        (grandchildren, great-grandchildren, etc.) of this one."""
+        results = []
+        if self.has_children():
+            for child in self.children.all():
+                results.append(child)
+                [results.append(grandchild) for \
+                 grandchild in child.get_descendants()]
+        return results
 
     def has_voted(self, request):
         """Did the user already vote for this document?"""
