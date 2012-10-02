@@ -899,6 +899,49 @@ class Document(NotificationsMixin, ModelBase):
                                 reviewer=self.current_revision.creator,
                                 creator=user)
                                             
+    def _tree_change(self, new_slug):
+        """
+        Given a new slug to be assigned to this document, return the
+        resulting hierarchy that will appear in the slug (i.e.,
+        everything before the final '/'), and a boolean indicating
+        whether this is a prepend operation.
+
+        """
+        old_hierarchy = '/'.join(self.slug.split('/')[:-1])
+        new_hierarchy = '/'.join(new_slug.split('/')[:-1])
+        if new_hierarchy and not old_hierarchy:
+            return new_hierarchy, True
+        return new_hierarchy, False
+
+    def _tree_conflicts(self, new_slug):
+        """
+        Given a new slug to be assigned to this document, return a
+        list of documents (if any) which would be overwritten by
+        moving this document or any of its children in that fashion.
+
+        """
+        conflicts = []
+        try:
+            existing = Document.objects.get(locale=self.locale, slug=new_slug)
+            if not existing.redirect_url():
+                conflicts.append(existing)
+        except Document.DoesNotExist:
+            pass
+        old_hierarchy = '/'.join(self.slug.split('/')[:-1])
+        new_hierarchy, prepend = self._tree_change(new_slug)
+        for child in self.get_descendants():
+            if prepend:
+                moved_slug = '/'.join([new_hierarchy, child.slug])
+            else:
+                moved_slug = child.slug.replace(old_hierarchy, new_hierarchy)
+            try:
+                existing = Document.objects.get(locale=self.locale, slug=moved_slug)
+                if not existing.redirect_url():
+                    conflicts.append(existing)
+            except Document.DoesNotExist:
+                pass
+        return conflicts
+        
     def _move_tree(self, old_hierarchy, new_hierarchy, user=None, prepend=False):
         """
         Move this page and all its children, by replacing old_hierarchy
