@@ -637,9 +637,9 @@ class DocumentEditingTests(TestCaseBase):
 
         # Test nested document titles
         _make_doc('One', 'One | MDN', 'one')
-        _make_doc('Two', 'Two | One | MDN', 'one/two')
-        _make_doc('Three', 'Three | One | MDN', 'one/two/three')
-        _make_doc(u'Special Φ Char', u'Special Φ Char | One | MDN', 'one/two/special_char')
+        _make_doc('Two', 'Two - One | MDN', 'one/two')
+        _make_doc('Three', 'Three - One | MDN', 'one/two/three')
+        _make_doc(u'Special Φ Char', u'Special Φ Char - One | MDN', 'one/two/special_char')
 
 
     def test_seo_script(self):

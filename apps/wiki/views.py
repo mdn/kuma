@@ -511,7 +511,7 @@ def document(request, document_slug, document_locale):
         try:
             root_doc = Document.objects.get(locale=document_locale,
                                             slug=slug_dict['root'])
-            seo_parent_title = ' | ' + root_doc.title
+            seo_parent_title = ' - ' + root_doc.title
         except Document.DoesNotExist:
             logging.debug('Root document could not be found')
 
