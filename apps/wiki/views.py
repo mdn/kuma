@@ -1787,7 +1787,10 @@ def new_attachment(request):
             }
             response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
                     { 'result': json.dumps([error_obj]) })
-        
+        else:
+            response = jingo.render(request, 'wiki/edit_attachment.html',
+                                    {'form': form})
+
     response['x-frame-options'] = 'SAMEORIGIN'
     return response
 
@@ -1809,6 +1812,7 @@ def edit_attachment(request, attachment_id):
             rev.attachment = attachment
             rev.save()
             return HttpResponseRedirect(attachment.get_absolute_url())
-    form = AttachmentRevisionForm()
+    else:
+        form = AttachmentRevisionForm()
     return jingo.render(request, 'wiki/edit_attachment.html',
                         {'form': form})

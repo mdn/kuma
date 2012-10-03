@@ -2235,6 +2235,13 @@ class DeferredRenderingViewTests(TestCaseBase):
 class AttachmentTests(TestCaseBase):
     fixtures = ['test_users.json']
 
+    def setUp(self):
+        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
+        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
+
+    def tearDown(self):
+        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
+
     def test_legacy_redirect(self):
         self.client = Client()  # file views don't need LocalizingClient
         test_user = User.objects.get(username='testuser2')
@@ -2417,3 +2424,50 @@ class AttachmentTests(TestCaseBase):
         r2.make_current()
 
         eq_(r, r2.get_previous())
+
+    def test_mime_type_filtering(self):
+        """Don't allow uploads outside of the explicitly-permitted
+        mime-types."""
+        #SLIGHT HACK: this requires the default set of allowed
+        #mime-types specified in settings.py. Specifically, adding
+        #'text/html' to that set will make this test fail.
+        test_user = User.objects.get(username='testuser2')
+        a = Attachment(title='Test attachment for file type filter',
+                       slug='test-attachment-for-file-type-filter')
+        a.save()
+        r = AttachmentRevision(
+            attachment=a,
+            mime_type='text/plain',
+            title=a.title,
+            slug=a.slug,
+            description='',
+            comment='Initial revision.',
+            created=datetime.datetime.now() - datetime.timedelta(seconds=30),
+            creator=test_user,
+            is_approved=True)
+        r.file.save('mime_type_filter_test_file.txt',
+                    ContentFile('I am a test file for mime-type filtering'))
+
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='admin', password='testpass')
+
+        # Shamelessly stolen from Django's own file-upload tests.
+        tdir = tempfile.gettempdir()
+        file_for_upload = tempfile.NamedTemporaryFile(suffix=".html",
+                                                      dir=tdir)
+        file_for_upload.write('<html>I am a file that tests'
+                              'mime-type filtering.</html>.')
+        file_for_upload.seek(0)
+
+        post_data = {
+            'title': 'Test disallowed file type',
+            'description': 'A file kuma should disallow on type.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.edit_attachment',
+                                        kwargs={'attachment_id': a.id}),
+                                data=post_data)
+        eq_(200, resp.status_code)
+        ok_('Files of this type are not permitted.' in resp.content)
