@@ -71,10 +71,10 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 					break;
 
 				/* Save buttons */
-				case keys.controlS:
+				case keys.controlShiftS:
 					editor.execCommand('mdn-buttons-save-exit');
 					break;
-				case keys.controlShiftS:
+				case keys.controlS:
 					editor.execCommand('mdn-buttons-save');
 					break;
 
