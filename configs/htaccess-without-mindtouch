@@ -14,6 +14,11 @@ RewriteRule ^devnews(.*) data/www/devnews$1 [L]
 RewriteRule ^web-tech(.*) data/www/web-tech$1 [L]
 RewriteRule ^css(.*) data/www/css$1 [L]
 
+# Rewrites to robots & sitemaps
+RewriteRule ^robots.txt$ media/robots.txt [L]
+RewriteRule ^sitemap.xml$ media/sitemap.xml [L]
+RewriteRule ^sitemaps/([\w\-]*)/sitemap.xml$ media/sitemaps/$1/sitemap.xml [L]
+
 # Some blanket section moves / renames
 RewriteRule ^En/JavaScript/Reference/Objects/Array$ en-US/docs/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]
 RewriteRule ^En/JavaScript/Reference/Objects$ en-US/docs/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]

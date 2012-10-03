@@ -1,8 +1,18 @@
+import os
+import time
+from xml.dom.minidom import parseString
+
 from django.db import connection, transaction
+from django.conf import settings
+from django.contrib.sites.models import Site
+from django.contrib.sitemaps import GenericSitemap
+from django.template import loader
+from django.utils.encoding import smart_str
 
 import cronjobs
 
 from wiki import tasks
+from wiki.models import Document
 
 
 @cronjobs.register
@@ -60,3 +70,40 @@ def calculate_related_documents():
 @cronjobs.register
 def rebuild_kb():
     tasks.rebuild_kb()
+
+
+@cronjobs.register
+def build_sitemaps():
+    sitemap_element = "<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>"
+    sitemap_index = "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
+    for locale in settings.MDN_LANGUAGES:
+        queryset = (Document.objects
+                        .filter(is_template=False, locale=locale)
+                        .exclude(title__startswith='User:')
+                        .exclude(title__iregex=r'Redirect [0-9]+$')
+                        .exclude(html__iregex=r'^(<p>)?(#)?REDIRECT')
+                        .exclude(slug__icontains='Talk:')
+                   )
+        if len(queryset) > 0:
+            info = {'queryset': queryset, 'date_field': 'modified'}
+            sitemap = GenericSitemap(info, priority=0.5)
+            urls = sitemap.get_urls(page=1)
+            xml = smart_str(loader.render_to_string('sitemap.xml',
+                                                    {'urlset': urls}))
+            xml = xml.replace('http://', 'https://')
+            directory = '%s/sitemaps/%s' % (settings.MEDIA_ROOT, locale)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            f = open('%s/sitemap.xml' % directory, 'w')
+            f.write(xml)
+            f.close()
+
+            sitemap_url = ("https://%s/sitemaps/%s/sitemap.xml" % (
+                Site.objects.get_current().domain, locale))
+            sitemap_index = sitemap_index + sitemap_element % (sitemap_url,
+                time.strftime('%Y-%m-%dT%H:%M:%S', time.localtime()))
+
+    sitemap_index = sitemap_index + "</sitemapindex>"
+    index_file = open('%s/sitemap.xml' % settings.MEDIA_ROOT, 'w')
+    index_file.write(parseString(sitemap_index).toxml())
+    index_file.close()

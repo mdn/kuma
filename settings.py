@@ -267,7 +267,8 @@ SERVE_MEDIA = False
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', '1', 'files', '@api')
+SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services',
+                        '1', 'files', '@api', )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -367,6 +368,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.sitemaps',
 
     # BrowserID
     'django_browserid',
