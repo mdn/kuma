@@ -440,3 +440,12 @@ class AttachmentRevisionForm(forms.ModelForm):
         rev.mime_type = mime_type
 
         return rev
+
+class TreeMoveForm(forms.Form):
+    slug = StrippedCharField(min_length=1, max_length=255,
+                             widget=forms.TextInput(),
+                             label=_lazy(u'New slug:'),
+                             help_text=_lazy(u'New article URL'),
+                             error_messages={'required': SLUG_REQUIRED,
+                                             'min_length': SLUG_SHORT,
+                                             'max_length': SLUG_LONG})
