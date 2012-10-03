@@ -55,7 +55,8 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address', 'font',
-    'bdo', 'del', 'ins', 'kbd', 'samp', 'var',
+    'bdi', 'bdo', 'del', 'ins', 'kbd', 'samp', 'var',
+    'ruby', 'rp', 'rt',
     # MathML
     'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
     'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
@@ -151,7 +152,7 @@ ALLOWED_STYLES = [
     'padding-right', 'position', 'top', 'height', 'left', 'right', 
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
-    'font', 'font-size', 'font-weight', 'font-family', 
+    'font', 'font-size', 'font-weight', 'font-family', 'font-variant',
     'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
     'list-style-type', 'line-height',
