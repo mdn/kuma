@@ -18,6 +18,7 @@ build.py
 **-min.js
 media/uploads
 media/attachments
+media/sitemap*
 locale
 xfers/*
 puppet/cache/*
