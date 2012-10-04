@@ -2,10 +2,14 @@
 
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
+import time
 import datetime
 import json
+import logging
+import hashlib
 
 from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
@@ -113,6 +117,54 @@ class FeedTests(TestCaseBase):
                 ok_('<h3>Review changes:</h3>' in desc_text)
                 ok_('<span class="diff_add" style="background-color: #afa; '
                     'text-decoration: none;">editorial</span>' in desc_text)
+
+    def test_feed_unchanged_after_render(self):
+        """Rendering a document shouldn't affect feed contents, unless the
+        document content has actually been changed."""
+        d1 = document(title="FeedDoc1", locale='en-US', save=True)
+        r1 = revision(document=d1, save=True)
+
+        time.sleep(1) # Let timestamps tick over.
+        d2 = document(title="FeedDoc2", locale='en-US', save=True)
+        r2 = revision(document=d2, save=True)
+
+        time.sleep(1) # Let timestamps tick over.
+        d3 = document(title="FeedDoc3", locale='en-US', save=True)
+        r3 = revision(document=d3, save=True)
+
+        time.sleep(1) # Let timestamps tick over.
+        d4 = document(title="FeedDoc4", locale='en-US', save=True)
+        # No r4, so we can trigger the no-current-rev edge case
+
+        feed_url = reverse('wiki.feeds.recent_documents', locale='en-US',
+                           args=(), kwargs={'format': 'rss'})
+
+        # Force a render, hash the feed
+        for d in (d1, d2, d3, d4):
+            d.render(cache_control="no-cache")
+        resp = self.client.get(feed_url)
+        feed_hash_1 = hashlib.md5(resp.content).hexdigest()
+
+        # Force another render, hash the feed
+        time.sleep(1) # Let timestamps tick over.
+        for d in (d1, d2, d3, d4):
+            d.render(cache_control="no-cache")
+        resp = self.client.get(feed_url)
+        feed_hash_2 = hashlib.md5(resp.content).hexdigest()
+
+        # The hashes should match
+        eq_(feed_hash_1, feed_hash_2)
+
+        # Make a real edit.
+        time.sleep(1) # Let timestamps tick over.
+        r2a = revision(document=d2, content="Hah! An edit!", save=True)
+        for d in (d1, d2, d3, d4):
+            d.render(cache_control="no-cache")
+
+        # This time, the hashes should *not* match
+        resp = self.client.get(feed_url)
+        feed_hash_3 = hashlib.md5(resp.content).hexdigest()
+        ok_(feed_hash_2 != feed_hash_3)
 
     def test_feed_locale_filter(self):
         """Documents and Revisions in feeds should be filtered by locale"""
