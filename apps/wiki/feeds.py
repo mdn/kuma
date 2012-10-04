@@ -46,7 +46,7 @@ class DocumentsFeed(Feed):
             self.feed_type = Atom1Feed
 
     def item_pubdate(self, document):
-        return document.modified
+        return document.current_revision.created
 
     def item_title(self, document):
         return document.title
@@ -164,7 +164,7 @@ class DocumentsRecentFeed(DocumentsFeed):
                                          category=self.category,
                                          locale=locale)
                         .filter(current_revision__isnull=False)
-                        .order_by('-modified')
+                        .order_by('-current_revision__created')
                         [:MAX_FEED_ITEMS])
 
 
@@ -190,7 +190,8 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
                   and self.request.locale or None)
         return (Document.objects
                         .filter_for_review(tag_name=tag, locale=locale)
-                        .order_by('-modified')
+                        .filter(current_revision__isnull=False)
+                        .order_by('-current_revision__created')
                         [:MAX_FEED_ITEMS])
 
 
@@ -214,7 +215,7 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
                 .filter(locale=self.locale)
                 .filter(parent__isnull=False)
                 .filter(modified__lt=F('parent__modified'))
-                .order_by('-parent__modified')
+                .order_by('-parent__current_revision__created')
                 .all()[:MAX_FEED_ITEMS])
 
     def item_description(self, item):
