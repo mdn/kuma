@@ -1442,6 +1442,22 @@ def json_view(request, document_slug=None, document_locale=None):
 
 
 @waffle_flag('kumawiki')
+@require_GET
+@process_document_path
+@prevent_indexing
+def code_sample(request, document_slug, document_locale, sample_id):
+    """Extract a code sample from a document and render it as a standalone
+    HTML document"""
+    document = get_object_or_404(Document, slug=document_slug,
+                                 locale=document_locale)
+    data = document.extract_code_sample(sample_id)
+    data['document'] = document
+    response = jingo.render(request, 'wiki/code_sample.html', data)
+    response['x-frame-options'] = 'ALLOW'
+    return response
+
+
+@waffle_flag('kumawiki')
 @require_POST
 @process_document_path
 def helpful_vote(request, document_slug, document_locale):

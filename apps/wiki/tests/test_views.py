@@ -2118,6 +2118,44 @@ class AutosuggestDocumentsTests(TestCaseBase):
                     break
             eq_(True, found)
 
+
+class CodeSampleViewTests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def test_code_sample_1(self):
+        """The raw source for a document can be requested"""
+        client = LocalizingClient()
+        d, r = doc_rev("""
+            <p>This is a page. Deal with it.</p>
+            <div id="sample1" class="code-sample">
+                <pre class="brush: html">Some HTML</pre>
+                <pre class="brush: css">.some-css { color: red; }</pre>
+                <pre class="brush: js">window.alert("HI THERE")</pre>
+            </div>
+            <p>test</p>
+        """)
+        expected = """
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <style type="text/css">
+                        .some-css { color: red; }
+                    </style>
+                </head>
+                <body>
+                    Some HTML
+                    <script type="text/javascript">
+                        window.alert("HI THERE")
+                    </script>
+                </body>
+            </html>
+        """
+        response = client.get(reverse('wiki.code_sample',
+                              args=[d.full_path, 'sample1']))
+        eq_(normalize_html(expected), 
+            normalize_html(response.content))
+
+
 class DeferredRenderingViewTests(TestCaseBase):
     """Tests for the deferred rendering system and interaction with views"""
 
@@ -2231,6 +2269,7 @@ class DeferredRenderingViewTests(TestCaseBase):
         eq_(302, resp.status_code)
 
         ok_(mock_document_schedule_rendering.called)
+
 
 class AttachmentTests(TestCaseBase):
     fixtures = ['test_users.json']
