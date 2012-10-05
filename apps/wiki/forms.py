@@ -1,5 +1,4 @@
 import json
-import mimetypes
 import re
 
 from django import forms
@@ -8,6 +7,9 @@ from django.forms.widgets import CheckboxSelectMultiple
 
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
+
+import constance.config
+import magic
 
 from sumo.form_fields import StrippedCharField
 from tags import forms as tag_forms
@@ -58,6 +60,7 @@ OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
 MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
+MIME_TYPE_INVALID = _lazy(u'Files of this type are not permitted.')
 
 
 class DocumentForm(forms.ModelForm):
@@ -420,21 +423,29 @@ class AttachmentRevisionForm(forms.ModelForm):
         model = AttachmentRevision
         fields = ('file', 'title', 'description', 'comment')
 
+    def clean_file(self):
+        uploaded_file = self.cleaned_data['file']
+        m_mime = magic.Magic(mime=True)
+        mime_type = m_mime.from_buffer(uploaded_file.read(1024)).split(';')[0]
+        uploaded_file.seek(0)
+
+        if mime_type not in \
+               constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
+            raise forms.ValidationError(MIME_TYPE_INVALID)
+        return self.cleaned_data['file']
+
     def save(self, commit=True):
         if commit:
             raise NotImplementedError
         rev = super(AttachmentRevisionForm, self).save(commit=False)
 
         uploaded_file = self.cleaned_data['file']
+        m_mime = magic.Magic(mime=True)
+        mime_type = m_mime.from_buffer(uploaded_file.read(1024)).split(';')[0]
         rev.slug = uploaded_file.name
 
-        # guess_type() is usually pretty good at coming up with the
-        # right thing, but if it can't give us an answer, we fall back
-        # to a default of application/octet-stream.
-        #
         # TODO: we probably want a "manually fix the mime-type"
         # ability in the admin.
-        mime_type = mimetypes.guess_type(uploaded_file.name)[0]
         if mime_type is None:
             mime_type = 'application/octet-stream'
         rev.mime_type = mime_type
