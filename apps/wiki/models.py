@@ -717,6 +717,17 @@ class Document(NotificationsMixin, ModelBase):
 
         self.save()
 
+    def extract_code_sample(self, id):
+        """Given the id of a code sample, attempt to extract it from rendered
+        HTML with a fallback to non-rendered in case of errors."""
+        try:
+            src, errors = self.get_rendered()
+            if errors:
+                src = self.html
+        except:
+            src = self.html
+        return wiki.content.extract_code_sample(id, src)
+
     def natural_key(self):
         return (self.locale, self.slug,)
 

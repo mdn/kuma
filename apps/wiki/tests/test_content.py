@@ -2,7 +2,7 @@
 # see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 from urlparse import urljoin
-from xml.sax.saxutils import escape, unescape
+from xml.sax.saxutils import escape
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -495,7 +495,6 @@ class ContentSectionToolTests(TestCase):
         except e:
             ok_(False, "There should not have been an exception")
 
-    @attr('current')
     def test_sample_code_extraction(self):
         sample_html = u"""
             <div class="foo">
@@ -542,32 +541,28 @@ class ContentSectionToolTests(TestCase):
         """ % (escape(sample_html), escape(sample_css), escape(sample_js))
 
         # First, pull out a complete sample.
-        (result_html, result_css, result_js) = (wiki.content
-                .extract_code_sample('sample2', doc_src))
-        eq_(sample_html.strip(), result_html.strip())
-        eq_(sample_css.strip(), result_css.strip())
-        eq_(sample_js.strip(), result_js.strip())
+        result = wiki.content.extract_code_sample('sample2', doc_src)
+        eq_(sample_html.strip(), result['html'].strip())
+        eq_(sample_css.strip(), result['css'].strip())
+        eq_(sample_js.strip(), result['js'].strip())
 
         # Now, a sample missing one part.
-        (result_html, result_css, result_js) = (wiki.content
-                .extract_code_sample('sample3', doc_src))
-        eq_('Ignore me', result_html.strip())
-        eq_(None, result_css)
-        eq_('Ignore me', result_js.strip())
+        result = wiki.content.extract_code_sample('sample3', doc_src)
+        eq_('Ignore me', result['html'].strip())
+        eq_(None, result['css'])
+        eq_('Ignore me', result['js'].strip())
 
         # Now, a sample with only one part.
-        (result_html, result_css, result_js) = (wiki.content
-                .extract_code_sample('sample4', doc_src))
-        eq_(None, result_html)
-        eq_(None, result_css)
-        eq_('Ignore me', result_js.strip())
+        result = wiki.content.extract_code_sample('sample4', doc_src)
+        eq_(None, result['html'])
+        eq_(None, result['css'])
+        eq_('Ignore me', result['js'].strip())
 
         # Finally, a "sample" with no code listings.
-        (result_html, result_css, result_js) = (wiki.content
-                .extract_code_sample('not-a-sample', doc_src))
-        eq_(None, result_html)
-        eq_(None, result_css)
-        eq_(None, result_js)
+        result = wiki.content.extract_code_sample('not-a-sample', doc_src)
+        eq_(None, result['html'])
+        eq_(None, result['css'])
+        eq_(None, result['js'])
 
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")

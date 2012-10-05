@@ -49,24 +49,26 @@ def filter_out_noinclude(src):
 
 
 def extract_code_sample(id, src):
-    """Extract the html, css, and js listings for a given code sample,
-    identified by ID. 
+    """Extract a dict containing the html, css, and js listings for a given
+    code sample identified by ID.
     
     This should be pretty agnostic to markup patterns, since it just requires a
     parent container with an DID and 3 child elements somewhere within with
     class names "html", "css", and "js" - and our syntax highlighting already
     does that with <pre>'s
     """
+    parts = ('html', 'css', 'js')
+    data = dict((x, None) for x in parts)
     if not src:
-        return (None, None, None)
+        return data
     try:
         doc = pq(src)
         sample = doc.find('#%s' % id)
-        return (sample.find('.%s' % x).text()
-            for x in ('html', 'css', 'js'))
+        for x in parts:
+            data[x] = sample.find('.%s' % x).text()
     except:
-        return (None, None, None)
-
+        pass
+    return data
     
 class ContentSectionTool(object):
 
