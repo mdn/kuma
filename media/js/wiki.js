@@ -1217,13 +1217,8 @@
     function initLiveCodeSamples( canSandbox ) {
         // sanbox feature testing
         var tempIframe = document.createElement('iframe'),
-            canSandbox;
-        // in Firefox the iframe need to be added to the document before we can access the sandbox property
-        document.body.appendChild( tempIframe );
-        // feature testing
-        canSandbox = tempIframe.sandbox != undefined;
-        // cleanup after yourself
-        document.body.removeChild( tempIframe );
+            // feature testing
+            canSandbox = tempIframe.sandbox != undefined;
 
         $('.htab.code').each(function() {
             var $codeBodys = [],
@@ -1233,15 +1228,15 @@
                 style, script;
             // collect all code associated to the component
             $(this).find('a').each(function() {
-                // make sure parent is not selected
-                $( this.parentNode ).removeClass('selected');
-
                 // find associated code
                 var codeBody = $( $(this).attr('href') )[0];
                 if ( codeBody ) {
                     $codeBodys.push( codeBody );
+                }
 
-                    $( codeBody ).removeClass('selected');
+                // if the browser can sandbox we'll select the live code sample
+                if ( canSandbox ) {
+                    $( [ this.parentNode, codeBody ] ).removeClass('selected');
                 }
             });
 
@@ -1261,33 +1256,35 @@
             });
 
             // create a sandboxed iframe and fill it with our code
-            iframe = document.createElement('iframe');
-            iframe.frameBorder = 0;
-            iframe.width = '100%';
-            iframe.height = '300';
+            if ( canSandbox ) {
+                iframe = document.createElement('iframe');
+                iframe.frameBorder = 0;
+                iframe.width = '100%';
+                iframe.height = '300';
 
-            // add an extra tab to contain it
-            resultId = 'result' + ( Math.random() * 1E9 |0 );
-            $(this).find('ul').prepend('<li class="selected"><a href="#'+ resultId +'">result</a></li>');
-            $( '<div id="'+ resultId +'" class="btab selected"></div>' )
-                .insertBefore( $codeBodys[0] )
-                .append( iframe );
+                // add an extra tab to contain it
+                resultId = 'result' + ( Math.random() * 1E9 |0 );
+                $(this).find('ul').prepend('<li class="selected"><a href="#'+ resultId +'">result</a></li>');
+                $( '<div id="'+ resultId +'" class="btab selected"></div>' )
+                    .insertBefore( $codeBodys[0] )
+                    .append( iframe );
 
-            // and that should do the trick
-            iframe.setAttribute('sandbox', 'allow-scripts');
+                // and that should do the trick
+                iframe.setAttribute('sandbox', 'allow-scripts');
 
-            // we can't manipulate the iframe's DOM once it's sandboxed
-            // (we can actually in Firefox but that's because the iframe is not sandboxed before it's reloaded)
-            // so we'll set its content as a data-url (which trigers the reload required by Firefox)
-            source = '<!doctype html><html><head><style>'+ 
-                ( code.css || '' ) +
-                '</style></head><body>'+
-                ( code.html || '' ) +
-                '<script>' +
-                ( code.javascript || '' ) +
-                '</script></body></html>';
+                // we can't manipulate the iframe's DOM once it's sandboxed
+                // (we can actually in Firefox but that's because the iframe is not sandboxed before it's reloaded)
+                // so we'll set its content as a data-url (which trigers the reload required by Firefox)
+                source = '<!doctype html><html><head><style>'+ 
+                    ( code.css || '' ) +
+                    '</style></head><body>'+
+                    ( code.html || '' ) +
+                    '<script>' +
+                    ( code.javascript || '' ) +
+                    '</script></body></html>';
 
-            iframe.src = 'data:text/html;base64,' + btoa( source );
+                iframe.src = 'data:text/html;base64,' + btoa( source );
+            }
         });
 
         // if the syntax highlighter ever runs before our code, we would have to run a second pass here
