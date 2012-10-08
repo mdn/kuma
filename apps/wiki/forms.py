@@ -12,11 +12,6 @@ import constance.config
 import magic
 
 from sumo.form_fields import StrippedCharField
-from tags import forms as tag_forms
-
-#from sumo.urlresolvers import reverse
-
-from taggit.utils import parse_tags, edit_string_for_tags
 
 import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
@@ -213,7 +208,7 @@ class RevisionForm(forms.ModelForm):
                 min_length=5, max_length=300000,
                 label=_lazy(u'Content:'),
                 widget=forms.Textarea(attrs={'data-showfor':
-                                             json.dumps(showfor_data) }),
+                                             json.dumps(showfor_data)}),
                 error_messages={'required': CONTENT_REQUIRED,
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})
@@ -405,8 +400,11 @@ class RevisionValidationForm(RevisionForm):
             raise forms.ValidationError(SLUG_INVALID)
 
         # Append parent slug data, call super, ensure still valid
-        self.cleaned_data['slug'] = self.data['slug'] = self.parent_slug + '/' + original
-        is_valid = is_valid and super(RevisionValidationForm, self).clean_slug()
+        self.cleaned_data['slug'] = self.data['slug'] = (self.parent_slug +
+                                                         '/' +
+                                                         original)
+        is_valid = (is_valid and
+                    super(RevisionValidationForm, self).clean_slug())
 
         # Set the slug back to original
         #if not is_valid:

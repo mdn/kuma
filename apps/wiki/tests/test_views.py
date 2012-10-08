@@ -642,7 +642,6 @@ class DocumentEditingTests(TestCaseBase):
         _make_doc(u'Special Φ Char', u'Special \u03a6 Char - One | MDN',
                   'one/two/special_char')
 
-
     def test_seo_script(self):
 
         client = LocalizingClient()
@@ -653,13 +652,13 @@ class DocumentEditingTests(TestCaseBase):
             data = new_document_data()
             data.update({'title': 'blah', 'slug': slug, 'content': content})
             response = client.post(reverse('wiki.new_document',
-                                           locale=settings.WIKI_DEFAULT_LANGUAGE),
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE),
                                    data)
             eq_(302, response.status_code)
 
             # Connect to newly created page
             response = self.client.get(reverse('wiki.document', args=[slug],
-                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
             meta_content = page.find('meta[name=description]').attr('content')
             eq_(str(meta_content).decode('utf-8'),
@@ -701,8 +700,9 @@ class DocumentEditingTests(TestCaseBase):
 
         # No brackets
         make_page_and_compare_seo('nine',
-                                  u'<p>I <em>am</em> awesome. <a href="blah">A link</a> is also &lt;cool&gt;</p>',
-                                  'I am awesome. A link is also cool')
+          u'<p>I <em>am</em> awesome.'
+              ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
+          'I am awesome. A link is also cool')
 
     def test_create_on_404(self):
         client = LocalizingClient()
@@ -1061,27 +1061,37 @@ class DocumentEditingTests(TestCaseBase):
             """ EDIT DOCUMENT TESTING """
             def _run_edit_tests(edit_slug, edit_data, edit_doc,
                                 edit_parent_path):
-                # Load the "Edit" page for the root doc, ensure no "/" in the slug
+                # Load "Edit" page for the root doc, ensure no "/" in the slug
                 # Also ensure the 'parent' link is not present
-                response = client.get(reverse('wiki.edit_document', args=[edit_doc.slug], locale=locale))
+                response = client.get(reverse('wiki.edit_document',
+                                          args=[edit_doc.slug], locale=locale))
                 eq_(200, response.status_code)
                 page = pq(response.content)
                 eq_(edit_data['slug'], page.find('input[name=slug]')[0].value)
-                eq_(edit_parent_path, page.find('.metadataDisplay').attr('href'))
+                eq_(edit_parent_path,
+                    page.find('.metadataDisplay').attr('href'))
 
-                # Attempt an invalid edit of the root, ensure the slug stays the same (i.e. no parent prepending)
+                # Attempt an invalid edit of the root,
+                # ensure the slug stays the same (i.e. no parent prepending)
                 def test_invalid_slug_edit(inv_slug, url, data):
                     data['slug'] = inv_slug
                     data['form'] = 'rev'
                     response = client.post(url, data)
-                    eq_(200, response.status_code) # 200 = bad, invalid data
+                    eq_(200, response.status_code)  # 200 = bad, invalid data
                     page = pq(response.content)
-                    eq_(inv_slug, page.find('input[name=slug]')[0].value) # Slug doesn't add parent
-                    eq_(edit_parent_path, page.find('.metadataDisplay').attr('href'))
-                    self.assertContains(response, 'The slug provided is not valid.')
-                    eq_(0, len(Document.objects.filter(title=data['title'] + ' Redirect 1', locale=locale))) # Ensure no redirect
+                    # Slug doesn't add parent
+                    eq_(inv_slug, page.find('input[name=slug]')[0].value)
+                    eq_(edit_parent_path,
+                        page.find('.metadataDisplay').attr('href'))
+                    self.assertContains(response,
+                                        'The slug provided is not valid.')
+                    # Ensure no redirect
+                    eq_(0, len(Document.objects.filter(
+                                        title=data['title'] + ' Redirect 1',
+                                        locale=locale)))
 
-                edit_bad_url = reverse('wiki.edit_document', args=[edit_doc.slug], locale=locale)
+                edit_bad_url = reverse('wiki.edit_document',
+                                       args=[edit_doc.slug], locale=locale)
                 test_invalid_slug_edit(invalid_slug1, edit_bad_url, edit_data)
                 test_invalid_slug_edit(invalid_slug2, edit_bad_url, edit_data)
                 test_invalid_slug_edit(invalid_slug3, edit_bad_url, edit_data)
@@ -1089,57 +1099,90 @@ class DocumentEditingTests(TestCaseBase):
                 # Push a valid edit, without changing the slug
                 edit_data['slug'] = edit_slug
                 edit_data['form'] = 'rev'
-                response = client.post(reverse('wiki.edit_document', args=[edit_doc.slug], locale=locale), edit_data)
+                response = client.post(reverse('wiki.edit_document',
+                                               args=[edit_doc.slug],
+                                               locale=locale),
+                                       edit_data)
                 eq_(302, response.status_code)
-                eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=locale))) # Ensure no redirect
-                self.assertRedirects(response, reverse('wiki.document', locale=locale, args=[edit_doc.slug]))
+                # Ensure no redirect
+                eq_(0, len(Document.objects.filter(
+                                    title=edit_data['title'] + ' Redirect 1',
+                                    locale=locale)))
+                self.assertRedirects(response,
+                                     reverse('wiki.document',
+                                             locale=locale,
+                                             args=[edit_doc.slug]))
 
             _run_edit_tests(slug, doc_data, doc, None)
-            _run_edit_tests(child_slug, child_data, child_doc, doc.get_absolute_url())
-            _run_edit_tests(grandchild_slug, grandchild_data, grandchild_doc, child_doc.get_absolute_url())
-
+            _run_edit_tests(child_slug, child_data, child_doc,
+                            doc.get_absolute_url())
+            _run_edit_tests(grandchild_slug, grandchild_data, grandchild_doc,
+                            child_doc.get_absolute_url())
 
             """ TRANSLATION DOCUMENT TESTING """
-            def _run_translate_tests(translate_slug, translate_data, translate_doc):
+            def _run_translate_tests(translate_slug, translate_data,
+                                     translate_doc):
 
-                foreign_url = reverse('wiki.translate', args=[translate_doc.slug], locale=locale) + '?tolocale=' + foreign_locale
-                foreign_doc_url = reverse('wiki.document', args=[translate_doc.slug], locale=foreign_locale)
+                foreign_url = (reverse('wiki.translate',
+                                      args=[translate_doc.slug],
+                                      locale=locale)
+                               + '?tolocale='
+                               + foreign_locale)
+                foreign_doc_url = reverse('wiki.document',
+                                          args=[translate_doc.slug],
+                                          locale=foreign_locale)
 
-                # Load the translate page, ensure that the form is populated correctly
+                # Verify translate page form is populated correctly
                 response = client.get(foreign_url)
                 eq_(200, response.status_code)
                 page = pq(response.content)
-                eq_(translate_data['slug'], page.find('input[name=slug]')[0].value)
+                eq_(translate_data['slug'],
+                    page.find('input[name=slug]')[0].value)
 
-                # Attempt an invalid edit of the root, ensure the slug stays the same (i.e. no parent prepending)
+                # Attempt an invalid edit of the root
+                # ensure the slug stays the same (i.e. no parent prepending)
                 def test_invalid_slug_translate(inv_slug, url, data):
                     data['slug'] = inv_slug
                     data['form'] = 'both'
                     response = client.post(url, data)
-                    eq_(200, response.status_code) # 200 = bad, invalid data
+                    eq_(200, response.status_code)  # 200 = bad, invalid data
                     page = pq(response.content)
-                    eq_(inv_slug, page.find('input[name=slug]')[0].value) # Slug doesn't add parent
-                    self.assertContains(response, 'The slug provided is not valid.')
-                    eq_(0, len(Document.objects.filter(title=data['title'] + ' Redirect 1', locale=foreign_locale))) # Ensure no redirect
+                    # Slug doesn't add parent
+                    eq_(inv_slug, page.find('input[name=slug]')[0].value)
+                    self.assertContains(response,
+                                        'The slug provided is not valid.')
+                    # Ensure no redirect
+                    eq_(0, len(Document.objects.filter(title=data['title'] +
+                                                   ' Redirect 1',
+                                                   locale=foreign_locale)))
 
-                test_invalid_slug_translate(invalid_slug1, foreign_url, translate_data)
-                test_invalid_slug_translate(invalid_slug2, foreign_url, translate_data)
-                test_invalid_slug_translate(invalid_slug3, foreign_url, translate_data)
+                test_invalid_slug_translate(invalid_slug1, foreign_url,
+                                            translate_data)
+                test_invalid_slug_translate(invalid_slug2, foreign_url,
+                                            translate_data)
+                test_invalid_slug_translate(invalid_slug3, foreign_url,
+                                            translate_data)
 
                 # Push a valid translation
                 translate_data['slug'] = translate_slug
                 translate_data['form'] = 'both'
                 response = client.post(foreign_url, translate_data)
                 eq_(302, response.status_code)
-                eq_(0, len(Document.objects.filter(title=translate_data['title'] + ' Redirect 1', locale=foreign_locale))) # Ensure no redirect
+                # Ensure no redirect
+                eq_(0, len(Document.objects.filter(
+                                title=translate_data['title'] + ' Redirect 1',
+                                locale=foreign_locale)))
                 self.assertRedirects(response, foreign_doc_url)
 
-                return Document.objects.get(locale=foreign_locale, slug=translate_doc.slug)
+                return Document.objects.get(locale=foreign_locale,
+                                            slug=translate_doc.slug)
 
             foreign_doc = _run_translate_tests(slug, doc_data, doc)
-            foreign_child_doc = _run_translate_tests(child_slug, child_data, child_doc)
-            foreign_grandchild_doc = _run_translate_tests(grandchild_slug, grandchild_data, grandchild_doc)
-
+            foreign_child_doc = _run_translate_tests(child_slug, child_data,
+                                                     child_doc)
+            foreign_grandchild_doc = _run_translate_tests(grandchild_slug,
+                                                          grandchild_data,
+                                                          grandchild_doc)
 
             """ TEST BASIC EDIT OF TRANSLATION """
             def _run_translate_edit_tests(edit_slug, edit_data, edit_doc):
