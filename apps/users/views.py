@@ -36,7 +36,8 @@ from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
 from users.models import Profile, RegistrationProfile, EmailChange
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend, MindTouchAPIError
-from users.utils import handle_login, handle_register, send_reminder_email
+from users.utils import (handle_login, handle_register, send_reminder_email,
+                         statsd_waffle_incr)
 
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
@@ -163,6 +164,7 @@ def browserid_verify(request):
 @ssl_required
 def browserid_register(request):
     """Handle user creation when assertion is valid, but no existing user"""
+    statsd_waffle_incr('users.browserid_register', 'signin_metrics')
     redirect_to = request.session.get(SESSION_REDIRECT_TO,
         getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
     email = request.session.get(SESSION_VERIFIED_EMAIL, None)
@@ -176,6 +178,7 @@ def browserid_register(request):
     login_form = AuthenticationForm()
 
     if request.method == 'POST':
+        statsd_waffle_incr('users.browserid_register.POST', 'signin_metrics')
 
         # If the profile creation form was submitted...
         if 'register' == request.POST.get('action', None):
@@ -203,6 +206,8 @@ def browserid_register(request):
 
                     # Bounce to the newly created profile page, since the user
                     # might want to review & edit.
+                    statsd_waffle_incr('users.browserid_register.POST.SUCCESS',
+                                       'signin_metrics')
                     redirect_to = request.session.get(SESSION_REDIRECT_TO,
                                                     profile.get_absolute_url())
                     return set_browserid_explained(
@@ -321,7 +326,9 @@ def resend_confirmation(request):
 
 def send_email_reminder(request):
     """Send reminder email."""
+    statsd_waffle_incr('users.send_email_reminder', 'signin_metrics')
     if request.method == 'POST':
+        statsd_waffle_incr('users.send_email_reminder.POST', 'signin_metrics')
         form = EmailReminderForm(request.POST)
         if form.is_valid():
             error = None
@@ -330,12 +337,17 @@ def send_email_reminder(request):
                 user = User.objects.get(username=username, is_active=True)
                 if user.email:
                     # TODO: should this be on a model or manager instead?
+                    statsd_waffle_incr('users.send_email_reminder.SUCCESS',
+                                      'signin_metrics')
                     send_reminder_email(user)
                 else:
+                    statsd_waffle_incr('users.send_email_reminder.NOEMAIL',
+                                      'signin_metrics')
                     error = 'no_email'
             except User.DoesNotExist:
                 # Don't leak existence of email addresses.
-                pass
+                statsd_waffle_incr('users.send_email_reminder.NOUSER',
+                                  'signin_metrics')
             return jingo.render(request,
                                 'users/send_email_reminder_done.html',
                                 {'username': username, 'error': error})
