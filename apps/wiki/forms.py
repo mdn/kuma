@@ -397,7 +397,10 @@ class RevisionValidationForm(RevisionForm):
         original = self.cleaned_data['slug']
 
         # "/", "?", and " " disallowed in form input
-        if '/' in original or '?' in original or ' ' in original:
+        if (u'' is original or
+            '/' in original or
+            '?' in original or
+            ' ' in original):
             is_valid = False
             raise forms.ValidationError(SLUG_INVALID)
 

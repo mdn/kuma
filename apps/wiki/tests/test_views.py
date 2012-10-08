@@ -962,6 +962,7 @@ class DocumentEditingTests(TestCaseBase):
             # Create the document, validate it exists
             response = client.post(new_doc_url, doc_data)
             eq_(302, response.status_code)  # 302 = good, forward to new page
+            ok_(slug in response['Location'])
             self.assertRedirects(response, reverse('wiki.document',
                                                    locale=locale, args=[slug]))
             eq_(client.get(reverse('wiki.document',
@@ -1736,7 +1737,7 @@ class SectionEditingResourceTests(TestCaseBase):
         response = client.post('%s?section=s2&raw=true' %
                                reverse('wiki.edit_document', args=[d.full_path]),
                                {"form": "rev",
-                               'slug': '',
+                               'slug': d.slug,
                                 "content": replace},
                                follow=True)
         eq_(normalize_html(expected), 
@@ -1821,7 +1822,8 @@ class SectionEditingResourceTests(TestCaseBase):
         data.update({
             'form': 'rev',
             'content': replace_2,
-            'current_rev': rev_id2
+            'current_rev': rev_id2,
+            'slug': doc.slug
         })
         resp = client.post('%s?section=s2&raw=true' %
                             reverse('wiki.edit_document', args=[doc.full_path]),
@@ -1902,7 +1904,7 @@ class SectionEditingResourceTests(TestCaseBase):
         data.update({
             'form': 'rev',
             'content': replace_2,
-            'slug': '',
+            'slug': doc.slug,
             'current_rev': rev_id2
         })
         resp = client.post('%s?section=s2&raw=true' %

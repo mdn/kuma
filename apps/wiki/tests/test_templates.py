@@ -489,7 +489,7 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2', 'slug': '',
+             'keywords': 'keyword1 keyword2', 'slug': self.d.slug,
              'based_on': self.d.current_revision.id, 'form': 'rev'})
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
@@ -567,7 +567,7 @@ class NewRevisionTests(TestCaseBase):
         editing."""
         _test_form_maintains_based_on_rev(
             self.client, self.d, 'wiki.edit_document',
-            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev', 'slug': ''},
+            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev', 'slug': self.d.slug},
             locale='en-US')
 
 
@@ -1234,7 +1234,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     martha_rev.save()
 
     # Then Fred saves his edit:
-    post_data_copy = {'based_on': orig_rev.id}
+    post_data_copy = {'based_on': orig_rev.id, 'slug': orig_rev.slug}
     post_data_copy.update(post_data)  # Don't mutate arg.
     response = client.post(uri,
                            data=post_data_copy)
