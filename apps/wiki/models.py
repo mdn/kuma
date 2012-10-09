@@ -60,7 +60,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     # MathML
     'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
     'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
-    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 
+    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle',
     'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
     'munderover', 'none', 'mprescripts',
 ]
@@ -69,12 +69,14 @@ ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'title', 'style', 'lang']
-ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title', 'lang', 'name']
+ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title',
+                           'lang', 'name']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'lang']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'scope', 'lang']
-ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src', 'controls']
+ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src',
+                               'controls']
 ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size']
 ALLOWED_ATTRIBUTES['select'] = ['name']
 ALLOWED_ATTRIBUTES['option'] = ['value', 'selected']
@@ -94,17 +96,17 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['href', 'mathbackground', 'mathcolor',
     'id', 'class', 'style']) for x in (
     'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
     'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
-    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle', 
+    'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle',
     'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
     'munderover', 'none', 'mprescripts')))
-ALLOWED_ATTRIBUTES['math'] += ['display', 'dir', 'selection', 'notation', 
+ALLOWED_ATTRIBUTES['math'] += ['display', 'dir', 'selection', 'notation',
     'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
-    'numalign', 'largeop','maxsize', 'minsize', 'movablelimits', 'rspace',
-    'separator', 'stretchy','symmetric', 'depth', 'lquote', 'rquote', 'align',
+    'numalign', 'largeop', 'maxsize', 'minsize', 'movablelimits', 'rspace',
+    'separator', 'stretchy', 'symmetric', 'depth', 'lquote', 'rquote', 'align',
     'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
-    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant', 'subscriptshift',
-    'supscriptshift', 'scriptlevel', 'displaystyle', 'scriptsizemultiplier',
-    'scriptminsize']
+    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant',
+    'subscriptshift', 'supscriptshift', 'scriptlevel', 'displaystyle',
+    'scriptsizemultiplier', 'scriptminsize']
 ALLOWED_ATTRIBUTES['maction'] += ['actiontype', 'selection']
 ALLOWED_ATTRIBUTES['menclose'] += ['notation']
 ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
@@ -122,19 +124,20 @@ ALLOWED_ATTRIBUTES['mrow'] += ['dir']
 ALLOWED_ATTRIBUTES['ms'] += ['lquote', 'rquote', 'dir', 'mathsize',
     'mathvariant']
 ALLOWED_ATTRIBUTES['mspace'] += ['depth', 'height', 'width']
-ALLOWED_ATTRIBUTES['mstyle'] += ['display', 'dir', 'selection', 'notation', 
+ALLOWED_ATTRIBUTES['mstyle'] += ['display', 'dir', 'selection', 'notation',
     'close', 'open', 'separators', 'bevelled', 'denomalign', 'linethickness',
-    'numalign', 'largeop','maxsize', 'minsize', 'movablelimits', 'rspace',
-    'separator', 'stretchy','symmetric', 'depth', 'lquote', 'rquote', 'align',
+    'numalign', 'largeop', 'maxsize', 'minsize', 'movablelimits', 'rspace',
+    'separator', 'stretchy', 'symmetric', 'depth', 'lquote', 'rquote', 'align',
     'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
-    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant', 'subscriptshift',
-    'supscriptshift', 'scriptlevel', 'displaystyle', 'scriptsizemultiplier',
+    'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant',
+    'subscriptshift', 'supscriptshift', 'scriptlevel', 'displaystyle',
+    'scriptsizemultiplier',
     'scriptminsize']
 ALLOWED_ATTRIBUTES['msub'] += ['subscriptshift']
 ALLOWED_ATTRIBUTES['msubsup'] += ['subscriptshift', 'superscriptshift']
 ALLOWED_ATTRIBUTES['msup'] += ['superscriptshift']
-ALLOWED_ATTRIBUTES['mtable'] += ['align', 'columnalign', 'columnlines', 'frame',
-    'rowalign', 'rowspacing', 'rowlines']
+ALLOWED_ATTRIBUTES['mtable'] += ['align', 'columnalign', 'columnlines',
+    'frame', 'rowalign', 'rowspacing', 'rowlines']
 ALLOWED_ATTRIBUTES['mtd'] += ['columnalign', 'columnspan', 'rowalign',
     'rowspan']
 ALLOWED_ATTRIBUTES['mtext'] += ['dir', 'mathsize', 'mathvariant']
@@ -149,39 +152,44 @@ ALLOWED_STYLES = [
     '-moz-border-radius, -o-border-radius',
     'margin', 'margin-left', 'margin-top', 'margin-bottom', 'margin-right',
     'padding', 'padding-left', 'padding-top', 'padding-bottom',
-    'padding-right', 'position', 'top', 'height', 'left', 'right', 
+    'padding-right', 'position', 'top', 'height', 'left', 'right',
     'background',  # TODO: Maybe not this one, it can load URLs
     'background-color',
     'font', 'font-size', 'font-weight', 'font-family', 'font-variant',
     'text-align', 'text-transform',
     '-moz-column-width', '-webkit-columns', 'columns', 'width',
     'list-style-type', 'line-height',
-    # CSS properties needed for live examples (until we have a proper solution):
-    'backface-visibility', '-moz-backface-visibility', '-webkit-backface-visibility', '-o-backface-visibility',
-    'perspective', '-moz-perspective', '-webkit-perspective', '-o-perspective',
-    'perspective-origin', '-moz-perspective-origin', '-webkit-perspective-origin', '-o-perspective-origin',
-    'transform', '-moz-transform', '-webkit-transform', '-o-transform',
-    'transform-style', '-moz-transform-style', '-webkit-transform-style', '-o-transform-style',
-    'columns', '-moz-columns', '-webkit-columns',
-    'column-rule', '-moz-column-rule', '-webkit-column-rule',
-    'column-width', '-moz-column-width', '-webkit-column-width',
-    'image-rendering', '-ms-interpolation-mode',
-    'position', 'border-style', 'background-clip', 
-    'border-bottom-right-radius', 'border-bottom-left-radius', 'border-top-right-radius', 'border-top-left-radius', 
-    'border-bottom-style', 'border-left-style', 'border-right-style', 'border-top-style',
-    'border-bottom-width', 'border-left-width', 'border-right-width', 'border-top-width',
-    'vertical-align', 'border-collapse', 'border-width', 'border-color',
-    'border-left', 'border-right', 'border-bottom', 'border-top',
-    'clip', 'cursor', 'filter', 'float', 'max-width', 'font-style',
-    'letter-spacing', 'opacity', 'zoom', 'text-overflow', 'text-indent',
-    'text-rendering', 'text-shadow',
-    'transition', 'transition', 'transition', 'transition', 
-    'transition-delay', '-moz-transition-delay', '-webkit-transition-delay', '-o-transition-delay',
-    'transition-duration', '-moz-transition-duration', '-webkit-transition-duration', '-o-transition-duration',
-    'transition-property', '-moz-transition-property', '-webkit-transition-property', '-o-transition-property',
-    'transition-timing-function',  '-moz-transition-timing-function',  '-webkit-transition-timing-function',  '-o-transition-timing-function',
-    'color', 'display', 'position', 'outline-color', 'outline', 'outline-offset', 
-    'box-shadow', '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
+    # CSS properties needed for live examples (pending proper solution):
+    'backface-visibility', '-moz-backface-visibility',
+    '-webkit-backface-visibility', '-o-backface-visibility', 'perspective',
+    '-moz-perspective', '-webkit-perspective', '-o-perspective',
+    'perspective-origin', '-moz-perspective-origin',
+    '-webkit-perspective-origin', '-o-perspective-origin', 'transform',
+    '-moz-transform', '-webkit-transform', '-o-transform', 'transform-style',
+    '-moz-transform-style', '-webkit-transform-style', '-o-transform-style',
+    'columns', '-moz-columns', '-webkit-columns', 'column-rule',
+    '-moz-column-rule', '-webkit-column-rule', 'column-width',
+    '-moz-column-width', '-webkit-column-width', 'image-rendering',
+    '-ms-interpolation-mode', 'position', 'border-style', 'background-clip',
+    'border-bottom-right-radius', 'border-bottom-left-radius',
+    'border-top-right-radius', 'border-top-left-radius', 'border-bottom-style',
+    'border-left-style', 'border-right-style', 'border-top-style',
+    'border-bottom-width', 'border-left-width', 'border-right-width',
+    'border-top-width', 'vertical-align', 'border-collapse', 'border-width',
+    'border-color', 'border-left', 'border-right', 'border-bottom',
+    'border-top', 'clip', 'cursor', 'filter', 'float', 'max-width',
+    'font-style', 'letter-spacing', 'opacity', 'zoom', 'text-overflow',
+    'text-indent', 'text-rendering', 'text-shadow', 'transition', 'transition',
+    'transition', 'transition', 'transition-delay', '-moz-transition-delay',
+    '-webkit-transition-delay', '-o-transition-delay', 'transition-duration',
+    '-moz-transition-duration', '-webkit-transition-duration',
+    '-o-transition-duration', 'transition-property',
+    '-moz-transition-property', '-webkit-transition-property',
+    '-o-transition-property', 'transition-timing-function',
+    '-moz-transition-timing-function',  '-webkit-transition-timing-function',
+    '-o-transition-timing-function', 'color', 'display', 'position',
+    'outline-color', 'outline', 'outline-offset', 'box-shadow',
+    '-moz-box-shadow', '-webkit-box-shadow', '-o-box-shadow',
     'linear-gradient', '-moz-linear-gradient', '-webkit-linear-gradient',
     'radial-gradient', '-moz-radial-gradient', '-webkit-radial-gradient',
     'text-decoration-style', '-moz-text-decoration-style', 'text-decoration',
@@ -319,11 +327,11 @@ def _inherited(parent_attr, direct_attr):
 
     """
     getter = lambda self: (getattr(self.parent, parent_attr)
-                               if self.parent and 
+                               if self.parent and
                                   self.parent.id != self.id
                            else getattr(self, direct_attr))
     setter = lambda self, val: (setattr(self.parent, parent_attr,
-                                        val) if self.parent and 
+                                        val) if self.parent and
                                                 self.parent.id != self.id else
                                 setattr(self, direct_attr, val))
     return property(getter, setter)
@@ -407,7 +415,7 @@ class DocumentManager(ManagerBase):
             # fields from Document and Revision models and knocking out what we
             # don't want? Serializer doesn't support exclusion list directly.
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
-            'parent', 'parent_topic', 'category', 'document', 
+            'parent', 'parent_topic', 'category', 'document',
             'summary', 'content', 'comment',
             'keywords', 'tags', 'show_toc', 'significance', 'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
@@ -617,7 +625,7 @@ class Document(NotificationsMixin, ModelBase):
         duration = datetime.now() - self.render_started_at
         if (duration > max_duration):
             return False
-        
+ 
         if not self.last_rendered_at:
             # No rendering ever, so in progress.
             return True
@@ -635,7 +643,7 @@ class Document(NotificationsMixin, ModelBase):
             except DocumentRenderingInProgress:
                 # Unable to trigger a rendering right now, so we bail.
                 raise DocumentRenderedContentNotAvailable()
-        
+
         # If we have a cache_control directive, try scheduling a render.
         if cache_control:
             try:
@@ -673,7 +681,7 @@ class Document(NotificationsMixin, ModelBase):
         now = datetime.now()
         Document.objects.filter(pk=self.pk).update(render_scheduled_at=now)
         self.render_scheduled_at = now
-        
+
         if not self.defer_rendering:
             # Attempt an immediate rendering.
             self.render(cache_control, base_url)
@@ -702,7 +710,7 @@ class Document(NotificationsMixin, ModelBase):
 
         # Finally, note the end time of rendering and update the document.
         self.last_rendered_at = datetime.now()
-        
+
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
         timeout = constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
@@ -771,7 +779,7 @@ class Document(NotificationsMixin, ModelBase):
             self.is_localizable = False
 
         # Can't save this translation if parent not localizable
-        if (self.parent and self.parent.id != self.id and 
+        if (self.parent and self.parent.id != self.id and
                 not self.parent.is_localizable):
             raise ValidationError('"%s": parent "%s" is not localizable.' % (
                                   unicode(self), unicode(self.parent)))

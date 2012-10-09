@@ -33,6 +33,7 @@ HEAD_TAGS_TOC = ('h2', 'h3', 'h4')
 # Allowed tags in the table of contents list
 TAGS_IN_TOC = ('code')
 
+
 def parse(src):
     return ContentSectionTool(src)
 
@@ -42,7 +43,8 @@ def filter_out_noinclude(src):
     # NOTE: This started as an html5lib filter, but it started getting really
     # complex. Seems like pyquery works well enough without corrupting
     # character encoding.
-    if not src: return ''
+    if not src:
+        return ''
     doc = pq(src)
     doc.remove('*[class=noinclude]')
     return doc.html()
@@ -51,7 +53,7 @@ def filter_out_noinclude(src):
 def extract_code_sample(id, src):
     """Extract a dict containing the html, css, and js listings for a given
     code sample identified by ID.
-    
+
     This should be pretty agnostic to markup patterns, since it just requires a
     parent container with an DID and 3 child elements somewhere within with
     class names "html", "css", and "js" - and our syntax highlighting already
@@ -69,7 +71,8 @@ def extract_code_sample(id, src):
     except:
         pass
     return data
-    
+
+
 class ContentSectionTool(object):
 
     def __init__(self, src=None):
@@ -157,7 +160,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                 attrs = dict(token['data'])
                 if not 'href' in attrs:
                     continue
-                
+
                 href = attrs['href']
                 if href.startswith(self.base_url):
                     # Squash site-absolute URLs to site-relative paths.
@@ -205,7 +208,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                 locale, slug, needs_redirect = (Document
                         .locale_and_slug_from_path(href_path,
                                                    path_locale=href_locale))
-                
+
                 # Does this locale and slug correspond to an existing document?
                 # If not, mark it as a "new" link.
                 #
@@ -278,7 +281,7 @@ class SectionIDFilter(html5lib_Filter):
             for c in non_ascii:
                 text = text.replace(c, self.encode_non_ascii(c))
         text = text.replace(' ', '_')
-        return text        
+        return text
 
     def encode_non_ascii(self, c):
         # This is slightly gnarly.
@@ -294,7 +297,6 @@ class SectionIDFilter(html5lib_Filter):
         # we can just replace the escape sequence with the dot, uppercase
         # it, and we have the thing MindTouch would generate.
         return repr(c.encode('utf-8')).strip("'").replace(r'\x', '.').upper()
-
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
@@ -313,13 +315,13 @@ class SectionIDFilter(html5lib_Filter):
         # Pass 2: Sprinkle in IDs where they're needed
         while len(buffer):
             token = buffer.pop(0)
-            
+
             if not ('StartTag' == token['type'] and
                     token['name'] in SECTION_TAGS):
                 yield token
             else:
                 attrs = dict(token['data'])
-                
+
                 # Treat a name attribute as a human-specified ID override
                 name = attrs.get('name', None)
                 if name:
@@ -334,7 +336,7 @@ class SectionIDFilter(html5lib_Filter):
                     token['data'] = attrs.items()
                     yield token
                     continue
-                
+
                 # If this is a header, then scoop up the rest of the header and
                 # gather the text it contains.
                 start, text, tmp = token, [], []
@@ -359,7 +361,7 @@ class SectionIDFilter(html5lib_Filter):
                     slug = self.gen_id()
                 attrs['id'] = slug
                 start['data'] = attrs.items()
-                
+
                 # Finally, emit the tokens we scooped up for the header.
                 yield start
                 for t in tmp:
@@ -427,7 +429,8 @@ class SectionTOCFilter(html5lib_Filter):
         input = html5lib_Filter.__iter__(self)
 
         for token in input:
-            if ('StartTag' == token['type'] and token['name'] in HEAD_TAGS_TOC):
+            if ('StartTag' == token['type'] and
+                    token['name'] in HEAD_TAGS_TOC):
                 self.in_header = True
                 out = ()
                 level_match = re.compile(r'^h(\d)$').match(token['name'])
@@ -438,8 +441,9 @@ class SectionTOCFilter(html5lib_Filter):
                         if (not self.in_hierarchy and i % 2 == 0):
                             out += ({'type': 'StartTag', 'name': 'li',
                                      'data': {}},)
-                        out += ({'type': 'StartTag', 'name': 'ol', 'data': {}},)
-                        if (diff > 1 and i % 2 == 0 and i != diff-1):
+                        out += ({'type': 'StartTag', 'name': 'ol',
+                                 'data': {}},)
+                        if (diff > 1 and i % 2 == 0 and i != diff - 1):
                             out += ({'type': 'StartTag', 'name': 'li',
                                      'data': {}},)
                         self.open_level += 1
@@ -465,14 +469,17 @@ class SectionTOCFilter(html5lib_Filter):
                     self.in_hierarchy = True
                     for t in out:
                         yield t
-            elif ('StartTag' == token['type'] and token['name'] in TAGS_IN_TOC):
+            elif ('StartTag' == token['type'] and
+                    token['name'] in TAGS_IN_TOC):
                 yield token
             elif (token['type'] in ("Characters", "SpaceCharacters")
                   and self.in_header):
                 yield token
-            elif ('EndTag' == token['type'] and token['name'] in TAGS_IN_TOC):
+            elif ('EndTag' == token['type'] and
+                    token['name'] in TAGS_IN_TOC):
                 yield token
-            elif ('EndTag' == token['type'] and token['name'] in HEAD_TAGS_TOC):
+            elif ('EndTag' == token['type'] and
+                    token['name'] in HEAD_TAGS_TOC):
                 self.in_header = False
                 out = ({'type': 'EndTag', 'name': 'a'},)
                 for t in out:
@@ -482,7 +489,7 @@ class SectionTOCFilter(html5lib_Filter):
             out = ()
             for i in range(self.open_level):
                 out += ({'type': 'EndTag', 'name': 'ol'},
-                        {'type': 'EndTag', 'name': 'li'}) 
+                        {'type': 'EndTag', 'name': 'li'})
             for t in out:
                 yield t
 
@@ -655,7 +662,7 @@ class DekiscriptMacroFilter(html5lib_Filter):
                     attrs = token['data']
                     if attrs:
                         a_out = (u' %s' % u' '.join(
-                            (u'%s=%s' % 
+                            (u'%s=%s' %
                              (name, quoteattr(val))
                              for name, val in attrs)))
                     else:
