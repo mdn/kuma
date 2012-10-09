@@ -1442,6 +1442,29 @@ def json_view(request, document_slug=None, document_locale=None):
 
 
 @waffle_flag('kumawiki')
+@require_GET
+@process_document_path
+@prevent_indexing
+def code_sample(request, document_slug, document_locale, sample_id):
+    """Extract a code sample from a document and render it as a standalone
+    HTML document"""
+
+    # Restrict rendering of live code samples to specified hosts
+    host = request.META.get('HTTP_HOST', '')
+    allowed_hosts = constance.config.KUMA_CODE_SAMPLE_HOSTS.split(' ')
+    if host not in allowed_hosts:
+        raise PermissionDenied
+
+    document = get_object_or_404(Document, slug=document_slug,
+                                 locale=document_locale)
+    data = document.extract_code_sample(sample_id)
+    data['document'] = document
+    response = jingo.render(request, 'wiki/code_sample.html', data)
+    response['x-frame-options'] = 'ALLOW'
+    return response
+
+
+@waffle_flag('kumawiki')
 @require_POST
 @process_document_path
 def helpful_vote(request, document_slug, document_locale):
