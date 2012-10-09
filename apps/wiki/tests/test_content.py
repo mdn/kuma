@@ -2,7 +2,7 @@
 # see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 from urlparse import urljoin
-from xml.sax.saxutils import escape
+from jinja2 import escape
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
