@@ -392,7 +392,7 @@ class RevisionValidationForm(RevisionForm):
         original = self.cleaned_data['slug']
 
         # "/", "?", and " " disallowed in form input
-        if (u'' is original or
+        if (u'' == original or
             '/' in original or
             '?' in original or
             ' ' in original):
