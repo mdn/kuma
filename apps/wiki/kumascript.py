@@ -18,7 +18,6 @@ from django_statsd.clients import statsd
 
 from wiki import KUMASCRIPT_TIMEOUT_ERROR
 
-
 def should_use_rendered(doc, params, html=None):
     """
       * The service isn't disabled with a timeout of 0
@@ -210,13 +209,8 @@ def process_body(response):
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
-    from wiki.models import (ALLOWED_ATTRIBUTES, ALLOWED_TAGS, ALLOWED_STYLES)
-    resp_body = bleach.clean(
-        resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-        styles=ALLOWED_STYLES, strip_comments=False,
-        skip_gauntlet=True
-    )
-    return resp_body
+    from wiki.models import Document
+    return Document.objects.clean_content(resp_body)
 
 
 def process_errors(response):
