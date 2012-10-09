@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import time
 import logging
+from xml.sax.saxutils import escape
 
 from cStringIO import StringIO
 
@@ -572,6 +573,28 @@ class DocumentTestsWithFixture(TestCase):
             if not p.pk in (trans_0.pk, trans_2.pk, trans_5.pk):
                 ok_('NeedsTranslation' in p.current_revision.tags)
                 ok_('TopicStub' in p.current_revision.tags)
+
+    def test_code_sample_extraction(self):
+        """Make sure sample extraction works from the model.
+        This is a smaller version of the test from test_content.py"""
+        sample_html = u'<p class="foo">Hello world!</p>'
+        sample_css  = u'.foo p { color: red; }'
+        sample_js   = u'window.alert("Hi there!");'
+        doc_src = u"""
+            <p>This is a page. Deal with it.</p>
+            <ul id="s2" class="code-sample">
+                <li><pre class="brush: html">%s</pre></li>
+                <li><pre class="brush: css">%s</pre></li>
+                <li><pre class="brush: js">%s</pre></li>
+            </ul>
+            <p>More content shows up here.</p>
+        """ % (escape(sample_html), escape(sample_css), escape(sample_js))
+
+        d1, r1 = doc_rev(doc_src)
+        result = d1.extract_code_sample('s2')
+        eq_(sample_html.strip(), result['html'].strip())
+        eq_(sample_css.strip(), result['css'].strip())
+        eq_(sample_js.strip(), result['js'].strip())
 
 
 class RedirectCreationTests(TestCase):

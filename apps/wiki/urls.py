@@ -48,6 +48,7 @@ document_patterns = patterns('wiki.views',
     url(r'^\$translate$', 'translate', name='wiki.translate'),
     url(r'^\$locales$', 'select_locale', name='wiki.select_locale'),
     url(r'^\$json$', 'json_view', name='wiki.json_slug'),
+    url(r'^\$samples/(?P<sample_id>.+)$', 'code_sample', name='wiki.code_sample'),
     url(r'^\$revert/(?P<revision_id>\d+)$', 'revert_document',
         name='wiki.revert_document'),
 

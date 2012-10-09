@@ -2,6 +2,8 @@
 # see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 from urlparse import urljoin
+from jinja2 import escape
+
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
@@ -492,6 +494,75 @@ class ContentSectionToolTests(TestCase):
             eq_('', result)
         except e:
             ok_(False, "There should not have been an exception")
+
+    def test_sample_code_extraction(self):
+        sample_html = u"""
+            <div class="foo">
+                <p>Hello world!</p>
+                <p>Unicode fun: Przykłady 例 예제 示例</p>
+            </div>
+        """
+        sample_css = u"""
+            .foo p { color: red; }
+        """
+        sample_js = u"""
+            window.alert("Hi there!");
+        """
+        doc_src = u"""
+            <p>This is a page. Deal with it.</p>
+            <div id="sample1" class="code-sample">
+                <pre class="brush: html">Ignore me</pre>
+                <pre class="brush: css">Ignore me</pre>
+                <pre class="brush: js">Ignore me</pre>
+            </div>
+            <ul id="sample2" class="code-sample">
+                <li><span>HTML</span>
+                    <pre class="brush: html">%s</pre>
+                </li>
+                <li><span>CSS</span>
+                    <pre class="brush: css">%s</pre>
+                </li>
+                <li><span>JS</span>
+                    <pre class="brush: js">%s</pre>
+                </li>
+            </ul>
+            <p>More content shows up here.</p>
+            <p id="not-a-sample">This isn't a sample, but it shouldn't cause an
+                error</p>
+            <div id="sample3" class="code-sample">
+                <pre class="brush: html">Ignore me</pre>
+                <pre class="brush: js">Ignore me</pre>
+            </div>
+            <p>Yadda yadda</p>
+            <div id="sample4" class="code-sample">
+                <pre class="brush: js">Ignore me</pre>
+            </div>
+            <p>Yadda yadda</p>
+        """ % (escape(sample_html), escape(sample_css), escape(sample_js))
+
+        # First, pull out a complete sample.
+        result = wiki.content.extract_code_sample('sample2', doc_src)
+        eq_(sample_html.strip(), result['html'].strip())
+        eq_(sample_css.strip(), result['css'].strip())
+        eq_(sample_js.strip(), result['js'].strip())
+
+        # Now, a sample missing one part.
+        result = wiki.content.extract_code_sample('sample3', doc_src)
+        eq_('Ignore me', result['html'].strip())
+        eq_(None, result['css'])
+        eq_('Ignore me', result['js'].strip())
+
+        # Now, a sample with only one part.
+        result = wiki.content.extract_code_sample('sample4', doc_src)
+        eq_(None, result['html'])
+        eq_(None, result['css'])
+        eq_('Ignore me', result['js'].strip())
+
+        # Finally, a "sample" with no code listings.
+        result = wiki.content.extract_code_sample('not-a-sample', doc_src)
+        eq_(None, result['html'])
+        eq_(None, result['css'])
+        eq_(None, result['js'])
 
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
