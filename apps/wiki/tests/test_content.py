@@ -370,7 +370,6 @@ class ContentSectionToolTests(TestCase):
         for original, slugified in headers:
             ok_(slugified == section_filter.slugify(original))
 
-
     @attr('toc')
     def test_generate_toc(self):
         doc_src = """
@@ -512,20 +511,20 @@ class ContentSectionToolTests(TestCase):
         """
         doc_src = u"""
             <p>This is a page. Deal with it.</p>
-            
+
             <h3 id="sample0">This is a section</h3>
             <pre class="brush: html">section html</pre>
             <pre class="brush: css">section css</pre>
             <pre class="brush: js">section js</pre>
 
             <h3>The following is a new section</h3>
-            
+
             <div id="sample1" class="code-sample">
                 <pre class="brush: html">Ignore me</pre>
                 <pre class="brush: css">Ignore me</pre>
                 <pre class="brush: js">Ignore me</pre>
             </div>
-            
+
             <ul id="sample2" class="code-sample">
                 <li><span>HTML</span>
                     <pre class="brush: html">%s</pre>
@@ -537,18 +536,18 @@ class ContentSectionToolTests(TestCase):
                     <pre class="brush: js">%s</pre>
                 </li>
             </ul>
-            
+
             <p>More content shows up here.</p>
-            <p id="not-a-sample">This isn't a sample, but it shouldn't cause an
-                error</p>
-            
+            <p id="not-a-sample">This isn't a sample, but it
+                shouldn't cause an error</p>
+
             <h4 id="sample3">Another section</h4>
             <pre class="brush: html">Ignore me</pre>
             <pre class="brush: js">Ignore me</pre>
 
             <h4>Yay a header</h4>
             <p>Yadda yadda</p>
-            
+
             <div id="sample4" class="code-sample">
                 <pre class="brush: js">Ignore me</pre>
             </div>
@@ -733,11 +732,11 @@ class AllowedHTMLTests(TestCase):
                                        tags=ALLOWED_TAGS))
 
     def test_allowed_attributes(self):
-        for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code', 'dl', 'dt', 'dd',
-                    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
-                    'dialog', 'hgroup', 'mark', 'time', 'meter', 'output',
-                    'progress', 'audio', 'details', 'datagrid', 'datalist',
-                    'address'):
+        for tag in ('div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre', 'code',
+                    'dl', 'dt', 'dd', 'section', 'header', 'footer', 'nav',
+                    'article', 'aside', 'figure', 'dialog', 'hgroup', 'mark',
+                    'time', 'meter', 'output', 'progress', 'audio', 'details',
+                    'datagrid', 'datalist', 'address'):
             html_str = '<%(tag)s id="foo"></%(tag)s>' % {'tag': tag}
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
