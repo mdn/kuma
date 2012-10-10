@@ -357,7 +357,7 @@ class DocumentManager(ManagerBase):
             skip_gauntlet=True
         )
         return out
-        
+
     def get_by_natural_key(self, locale, slug):
         return self.get(locale=locale, slug=slug)
 
@@ -643,7 +643,7 @@ class Document(NotificationsMixin, ModelBase):
         duration = datetime.now() - self.render_started_at
         if (duration > max_duration):
             return False
- 
+
         if not self.last_rendered_at:
             # No rendering ever, so in progress.
             return True
@@ -857,8 +857,8 @@ class Document(NotificationsMixin, ModelBase):
 
     def revert(self, revision, user):
         revision.id = None
-        revision.comment = "Revert to revision of %s by %s" % (revision.created,
-                                                               revision.creator)
+        revision.comment = "Revert to revision of %s by %s" % (
+                revision.created, revision.creator)
         revision.created = datetime.now()
         revision.creator = user
         revision.save()
@@ -936,7 +936,7 @@ class Document(NotificationsMixin, ModelBase):
                                 show_toc=self.current_revision.show_toc,
                                 reviewer=self.current_revision.creator,
                                 creator=user)
-                                            
+
     def _tree_change(self, new_slug):
         """
         Given a new slug to be assigned to this document, return the
@@ -973,14 +973,16 @@ class Document(NotificationsMixin, ModelBase):
             else:
                 moved_slug = child.slug.replace(old_hierarchy, new_hierarchy)
             try:
-                existing = Document.objects.get(locale=self.locale, slug=moved_slug)
+                existing = Document.objects.get(locale=self.locale,
+                                                slug=moved_slug)
                 if not existing.redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
                 pass
         return conflicts
-        
-    def _move_tree(self, old_hierarchy, new_hierarchy, user=None, prepend=False):
+
+    def _move_tree(self, old_hierarchy, new_hierarchy, user=None,
+                   prepend=False):
         """
         Move this page and all its children, by replacing old_hierarchy
         in the slug with new_hierarchy.
@@ -1012,7 +1014,7 @@ class Document(NotificationsMixin, ModelBase):
 
     def acquire_translated_topic_parent(self):
         """This normalizes topic breadcrumb paths between locales.
-        
+
         Attempt to acquire a topic parent from a translation of our translation
         parent's topic parent, auto-creating a stub document if necessary."""
         if not self.parent:
@@ -1332,7 +1334,7 @@ class Document(NotificationsMixin, ModelBase):
         this as a parent of a document it's a child of, they're gonna
         have a bad time."""
         return other.id in (d.id for d in self.parents)
-            
+
     # This is a method, not a property, because it can do a lot of DB
     # queries and so should look scarier. It's not just named
     # 'children' because that's taken already by the reverse relation
@@ -1503,7 +1505,7 @@ class Revision(ModelBase):
                     self.based_on = self.document.parent.current_revision
                 else:
                     old = self.based_on
-                    self.based_on = based_on  # Be nice and guess a correct value.
+                    self.based_on = based_on  # Guess a correct value.
                     locale = LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
                     # TODO(erik): This error message ignores non-translations.
                     raise ValidationError(_('A revision must be based on a '
@@ -1659,10 +1661,7 @@ add_introspection_rules([], ["^utils\.OverwritingFileField"])
 
 
 def rev_upload_to(instance, filename):
-    """
-    Generate a path to store a file attachment.
-    
-    """
+    """Generate a path to store a file attachment."""
     # TODO: We could probably just get away with strftime formatting
     # in the 'upload_to' argument here, but this does a bit more to be
     # extra-safe with potential duplicate filenames.
@@ -1711,7 +1710,6 @@ class Attachment(models.Model):
     There is no direct database-level relationship between attachments
     and documents; insertion of an attachment is handled through
     markup in the document.
-    
     """
     class Meta(object):
         permissions = (
@@ -1742,8 +1740,9 @@ class Attachment(models.Model):
 
     @models.permalink
     def get_file_url(self):
-        return ('wiki.raw_file', (), {'attachment_id': self.id,
-                                      'filename': self.current_revision.filename()})
+        return ('wiki.raw_file', (),
+                {'attachment_id': self.id,
+                 'filename': self.current_revision.filename()})
 
     def get_embed_html(self):
         """
@@ -1760,7 +1759,6 @@ class Attachment(models.Model):
         * wiki/attachments/image.html
 
         * wiki/attachments/generic.html
-        
         """
         rev = self.current_revision
         env = jingo.get_env()
@@ -1769,12 +1767,11 @@ class Attachment(models.Model):
             'wiki/attachments/%s.html' % rev.mime_type.split('/')[0],
             'wiki/attachments/generic.html'])
         return t.render({'attachment': rev})
-        
+
 
 class AttachmentRevision(models.Model):
     """
     A revision of an attachment.
-    
     """
     attachment = models.ForeignKey(Attachment, related_name='revisions')
 
@@ -1782,7 +1779,7 @@ class AttachmentRevision(models.Model):
 
     title = models.CharField(max_length=255, null=True, db_index=True)
     slug = models.CharField(max_length=255, null=True, db_index=True)
-    
+
     # This either comes from the MindTouch import or, for new files,
     # from the (as-yet-unwritten) upload view using the Python
     # mimetypes library to figure it out.
@@ -1791,11 +1788,12 @@ class AttachmentRevision(models.Model):
     # rule out certain types of attachments, but might be a lot safer.
     mime_type = models.CharField(max_length=255, db_index=True)
 
-    description = models.TextField() # Does not allow wiki markup currently.
+    description = models.TextField()  # Does not allow wiki markup
 
     created = models.DateTimeField(default=datetime.now)
     comment = models.CharField(max_length=255)
-    creator = models.ForeignKey(User, related_name='created_attachment_revisions')
+    creator = models.ForeignKey(User,
+                                related_name='created_attachment_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
 
     # As with document revisions, bookkeeping for the MindTouch
@@ -1819,12 +1817,9 @@ class AttachmentRevision(models.Model):
                 not self.attachment.current_revision or
                 self.attachment.current_revision.id < self.id):
             self.make_current()
-    
+
     def make_current(self):
-        """
-        Make this revision the current one for the attachment.
-        
-        """
+        """Make this revision the current one for the attachment."""
         self.attachment.title = self.title
         self.attachment.slug = self.slug
         self.attachment.current_revision = self

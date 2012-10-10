@@ -18,6 +18,7 @@ from django_statsd.clients import statsd
 
 from wiki import KUMASCRIPT_TIMEOUT_ERROR
 
+
 def should_use_rendered(doc, params, html=None):
     """
       * The service isn't disabled with a timeout of 0
@@ -126,7 +127,7 @@ def get(document, cache_control, base_url, timeout=None):
             locale=document.locale,
             title=document.title,
             files=files,
-            attachments=files, # Just for sake of verbiage?
+            attachments=files,  # Just for sake of verbiage?
             slug=document.slug,
             tags=[x.name for x in document.tags.all()],
             modified=time.mktime(document.modified.timetuple()),

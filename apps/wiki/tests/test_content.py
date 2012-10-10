@@ -580,7 +580,7 @@ class ContentSectionToolTests(TestCase):
             <iframe id="if2" src="http://testserver"></iframe>
             <iframe id="if3" src="https://some.alien.site.com"></iframe>
             <p>test</p>
-        """ % dict(embed_url=embed_url) 
+        """ % dict(embed_url=embed_url)
 
         result_src = (wiki.content.parse(doc_src)
                       .filterIframeHosts(['sampleserver'])
