@@ -127,7 +127,7 @@ def get(document, cache_control, base_url, timeout=None):
             locale=document.locale,
             title=document.title,
             files=files,
-            attachments=files, # Just for sake of verbiage?
+            attachments=files,  # Just for sake of verbiage?
             slug=document.slug,
             tags=[x.name for x in document.tags.all()],
             modified=time.mktime(document.modified.timetuple()),
@@ -210,13 +210,8 @@ def process_body(response):
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
-    from wiki.models import (ALLOWED_ATTRIBUTES, ALLOWED_TAGS, ALLOWED_STYLES)
-    resp_body = bleach.clean(
-        resp_body, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-        styles=ALLOWED_STYLES, strip_comments=False,
-        skip_gauntlet=True
-    )
-    return resp_body
+    from wiki.models import Document
+    return Document.objects.clean_content(resp_body)
 
 
 def process_errors(response):

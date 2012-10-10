@@ -2,6 +2,7 @@ import logging
 import re
 import urllib
 from urllib import urlencode
+from urlparse import urlparse
 
 from xml.sax.saxutils import quoteattr
 
@@ -123,6 +124,10 @@ class ContentSectionTool(object):
 
     def annotateLinks(self, base_url):
         self.stream = LinkAnnotationFilter(self.stream, base_url)
+        return self
+
+    def filterIframeHosts(self, hosts):
+        self.stream = IframeHostFilter(self.stream, hosts)
         return self
 
     def extractSection(self, id):
@@ -629,6 +634,29 @@ class CodeSyntaxFilter(html5lib_Filter):
                             attrs['class'] = "brush: %s" % brush
                             del attrs['function']
                             token['data'] = attrs.items()
+            yield token
+
+
+class IframeHostFilter(html5lib_Filter):
+    """Filter which scans through <iframe> tags and strips the src attribute if
+    it doesn't contain a URL whose host matches a given list of allowed
+    hosts."""
+    def __init__(self, source, hosts):
+        html5lib_Filter.__init__(self, source)
+
+        self.hosts = hosts
+
+    def __iter__(self):
+        for token in html5lib_Filter.__iter__(self):
+            if ('StartTag' == token['type']):
+                if 'iframe' == token['name']:
+                    attrs = dict(token['data'])
+                    src = attrs.get('src', '')
+                    if src:
+                        parts = urlparse(src)
+                        if not parts.netloc or parts.netloc not in self.hosts:
+                            attrs['src'] = ''
+                    token['data'] = attrs.items()
             yield token
 
 

@@ -13,7 +13,8 @@ import bleach
 from sumo.tests import TestCase
 import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
-                          SectionTOCFilter, SectionIDFilter, SECTION_TAGS)
+                          SectionTOCFilter, SectionIDFilter, IframeHostFilter,
+                          SECTION_TAGS)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
 from wiki.tests import normalize_html, doc_rev, document, revision
 
@@ -563,6 +564,40 @@ class ContentSectionToolTests(TestCase):
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_(None, result['js'])
+
+    def test_iframe_host_filter(self):
+        slug = 'test-code-embed'
+        embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
+
+        doc_src = """
+            <p>This is a page. Deal with it.</p>
+            <div id="sample1" class="code-sample">
+                <pre class="brush: html">Some HTML</pre>
+                <pre class="brush: css">.some-css { color: red; }</pre>
+                <pre class="brush: js">window.alert("HI THERE")</pre>
+            </div>
+            <iframe id="if1" src="%(embed_url)s"></iframe>
+            <iframe id="if2" src="http://testserver"></iframe>
+            <iframe id="if3" src="https://some.alien.site.com"></iframe>
+            <p>test</p>
+        """ % dict(embed_url=embed_url)
+
+        result_src = (wiki.content.parse(doc_src)
+                      .filterIframeHosts(['sampleserver'])
+                      .serialize())
+        page = pq(result_src)
+
+        if1 = page.find('#if1')
+        eq_(if1.length, 1)
+        eq_(if1.attr('src'), embed_url)
+
+        if2 = page.find('#if2')
+        eq_(if2.length, 1)
+        eq_(if2.attr('src'), '')
+
+        if3 = page.find('#if3')
+        eq_(if3.length, 1)
+        eq_(if3.attr('src'), '')
 
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")

@@ -2230,6 +2230,52 @@ class CodeSampleViewTests(TestCaseBase):
 
         constance.config.KUMA_CODE_SAMPLE_HOSTS = orig
 
+    def test_code_sample_iframe_embed(self):
+        orig = constance.config.KUMA_CODE_SAMPLE_HOSTS
+        constance.config.KUMA_CODE_SAMPLE_HOSTS = 'sampleserver'
+
+        slug = 'test-code-embed'
+        embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
+
+        doc_src = """
+            <p>This is a page. Deal with it.</p>
+            <div id="sample1" class="code-sample">
+                <pre class="brush: html">Some HTML</pre>
+                <pre class="brush: css">.some-css { color: red; }</pre>
+                <pre class="brush: js">window.alert("HI THERE")</pre>
+            </div>
+            <iframe id="if1" src="%(embed_url)s"></iframe>
+            <iframe id="if2" src="http://testserver"></iframe>
+            <iframe id="if3" src="https://some.alien.site.com"></iframe>
+            <p>test</p>
+        """ % dict(embed_url=embed_url) 
+
+        slug = 'test-code-doc'
+        client = LocalizingClient()
+        d, r = doc_rev()
+        revision(save=True, document=d, title="Test code doc", slug=slug,
+            content=doc_src)
+
+        response = self.client.get(reverse('wiki.document', args=(d.slug,)))
+        eq_(200, response.status_code)
+
+        page = pq(response.content)
+
+        if1 = page.find('#if1')
+        eq_(if1.length, 1)
+        eq_(if1.attr('src'), embed_url)
+
+        if2 = page.find('#if2')
+        eq_(if2.length, 1)
+        eq_(if2.attr('src'), '')
+
+        if3 = page.find('#if3')
+        eq_(if3.length, 1)
+        eq_(if3.attr('src'), '')
+
+        constance.config.KUMA_CODE_SAMPLE_HOSTS = orig
+
+
 class DeferredRenderingViewTests(TestCaseBase):
     """Tests for the deferred rendering system and interaction with views"""
 
