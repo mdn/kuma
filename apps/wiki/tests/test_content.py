@@ -496,6 +496,7 @@ class ContentSectionToolTests(TestCase):
         except e:
             ok_(False, "There should not have been an exception")
 
+    @attr('current')
     def test_sample_code_extraction(self):
         sample_html = u"""
             <div class="foo">
@@ -511,11 +512,20 @@ class ContentSectionToolTests(TestCase):
         """
         doc_src = u"""
             <p>This is a page. Deal with it.</p>
+            
+            <h3 id="sample0">This is a section</h3>
+            <pre class="brush: html">section html</pre>
+            <pre class="brush: css">section css</pre>
+            <pre class="brush: js">section js</pre>
+
+            <h3>The following is a new section</h3>
+            
             <div id="sample1" class="code-sample">
                 <pre class="brush: html">Ignore me</pre>
                 <pre class="brush: css">Ignore me</pre>
                 <pre class="brush: js">Ignore me</pre>
             </div>
+            
             <ul id="sample2" class="code-sample">
                 <li><span>HTML</span>
                     <pre class="brush: html">%s</pre>
@@ -527,39 +537,50 @@ class ContentSectionToolTests(TestCase):
                     <pre class="brush: js">%s</pre>
                 </li>
             </ul>
+            
             <p>More content shows up here.</p>
             <p id="not-a-sample">This isn't a sample, but it shouldn't cause an
                 error</p>
-            <div id="sample3" class="code-sample">
-                <pre class="brush: html">Ignore me</pre>
-                <pre class="brush: js">Ignore me</pre>
-            </div>
+            
+            <h4 id="sample3">Another section</h4>
+            <pre class="brush: html">Ignore me</pre>
+            <pre class="brush: js">Ignore me</pre>
+
+            <h4>Yay a header</h4>
             <p>Yadda yadda</p>
+            
             <div id="sample4" class="code-sample">
                 <pre class="brush: js">Ignore me</pre>
             </div>
+
             <p>Yadda yadda</p>
         """ % (escape(sample_html), escape(sample_css), escape(sample_js))
 
-        # First, pull out a complete sample.
+        # live sample using the section logic
+        result = wiki.content.extract_code_sample('sample0', doc_src)
+        eq_('section html', result['html'].strip())
+        eq_('section css', result['css'].strip())
+        eq_('section js', result['js'].strip())
+
+        # pull out a complete sample.
         result = wiki.content.extract_code_sample('sample2', doc_src)
         eq_(sample_html.strip(), result['html'].strip())
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())
 
-        # Now, a sample missing one part.
+        # a sample missing one part.
         result = wiki.content.extract_code_sample('sample3', doc_src)
         eq_('Ignore me', result['html'].strip())
         eq_(None, result['css'])
         eq_('Ignore me', result['js'].strip())
 
-        # Now, a sample with only one part.
+        # a sample with only one part.
         result = wiki.content.extract_code_sample('sample4', doc_src)
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_('Ignore me', result['js'].strip())
 
-        # Finally, a "sample" with no code listings.
+        # a "sample" with no code listings.
         result = wiki.content.extract_code_sample('not-a-sample', doc_src)
         eq_(None, result['html'])
         eq_(None, result['css'])
