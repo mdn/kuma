@@ -65,8 +65,14 @@ def extract_code_sample(id, src):
     if not src:
         return data
     try:
-        doc = pq(src)
-        sample = doc.find('#%s' % id)
+        section = parse(src).extractSection(id).serialize()
+        if section:
+            # HACK: Ensure the extracted section has a container, in case it
+            # consists of a single element.
+            sample = pq('<section>%s</section>' % section)
+        else:
+            # If no section, fall back to plain old ID lookup
+            sample = pq(src).find('#%s' % id)
         for x in parts:
             data[x] = sample.find('.%s' % x).text()
     except:
