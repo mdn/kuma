@@ -1,5 +1,4 @@
 # This Python file uses the following encoding: utf-8
-import logging
 from datetime import datetime, timedelta
 import urllib
 
@@ -14,7 +13,6 @@ from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-from taggit.models import Tag
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -260,13 +258,17 @@ class RevisionTests(TestCaseBase):
         eq_(r.content,
             doc('#doc-source textarea').text())
         eq_('Created: Jan 1, 2011 12:00:00 AM',
-            doc('#wiki-doc div.revision-info li.revision-created').text().strip())
+            doc('#wiki-doc div.revision-info li.revision-created')
+                .text().strip())
         eq_('Reviewed: Jan 2, 2011 12:00:00 AM',
-            doc('#wiki-doc div.revision-info li.revision-reviewed').text().strip())
+            doc('#wiki-doc div.revision-info li.revision-reviewed')
+                .text().strip())
         # is reviewed?
-        eq_('Yes', doc('.revision-info li.revision-is-reviewed').find('span').text())
+        eq_('Yes', doc('.revision-info li.revision-is-reviewed').find('span')
+                    .text())
         # is current revision?
-        eq_('Yes', doc('.revision-info li.revision-is-current').find('span').text())
+        eq_('Yes', doc('.revision-info li.revision-is-current').find('span')
+                    .text())
 
 
 class NewDocumentTests(TestCaseBase):
@@ -477,7 +479,7 @@ class NewRevisionTests(TestCaseBase):
 
         """
         old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
-        
+
         get_current.return_value.domain = 'testserver'
 
         # Sign up for notifications:
@@ -489,7 +491,7 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2', 'slug': '',
+             'keywords': 'keyword1 keyword2', 'slug': self.d.slug,
              'based_on': self.d.current_revision.id, 'form': 'rev'})
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
@@ -567,7 +569,8 @@ class NewRevisionTests(TestCaseBase):
         editing."""
         _test_form_maintains_based_on_rev(
             self.client, self.d, 'wiki.edit_document',
-            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev', 'slug': ''},
+            {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev',
+             'slug': self.d.slug},
             locale='en-US')
 
 
@@ -1200,7 +1203,7 @@ class TranslateTests(TestCaseBase):
 
     def test_translate_rejected_parent(self):
         """Translate view of rejected English document shows warning."""
-        raise SkipTest("Review and approval don't work this way in Kuma, TODO: Fixme")
+        raise SkipTest("TODO: FIXME for Kuma")
         user = User.objects.get(pk=8)
         en_revision = revision(is_approved=False, save=True, reviewer=user,
                                reviewed=datetime.now())
@@ -1234,7 +1237,7 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     martha_rev.save()
 
     # Then Fred saves his edit:
-    post_data_copy = {'based_on': orig_rev.id}
+    post_data_copy = {'based_on': orig_rev.id, 'slug': orig_rev.slug}
     post_data_copy.update(post_data)  # Don't mutate arg.
     response = client.post(uri,
                            data=post_data_copy)
