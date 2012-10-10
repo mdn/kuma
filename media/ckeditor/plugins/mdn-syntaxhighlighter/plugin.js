@@ -47,7 +47,7 @@
 				},
 				onClick: function(value) {
 					// Set the selected class, focus on the editor
-					var klass = value && value != "none" ? "brush:" + value + ";" : "",
+					var klass = value && value != "none" ? "brush: " + value : "",
 						selection = editor.getSelection();
 
 					// If there's a selection, and it's not a PRE, attempt to force?
