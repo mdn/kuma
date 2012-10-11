@@ -1191,18 +1191,26 @@
 
 
     function initTabBox() {
-        var $htabs = $('.htab'),
-            $items = $htabs.find('>ul>li');
-        $htabs
-            .append($('#compat-desktop'))
-            .append($('#compat-mobile'));
+        var $htab = $('.htab');
 
-        $items.find('a').click(function() {
-            var $this = $(this)
-            $items.removeClass('selected');
-            $this.parent().addClass('selected');
-            $htabs.find('>div').hide().eq($items.index($this.parent())).show();
-        }).eq(0).click();
+        $htab.delegate('li', 'click', function() {
+            // hide the previously .selected tab and associated content
+            modifyTabClass( $(this.parentNode).find('.selected'), 'remove' );
+            // show the clicked tab and associated content
+            modifyTabClass( $(this), 'add' );
+
+            // prevent default
+            return false;
+        });
+
+        // preselect the first tab of each component
+        $htab.each(function() {
+            modifyTabClass( $(this).find('li:first'), 'add' );
+        });
+    }
+
+    function modifyTabClass( $li, verb ) {
+        $li.add( $( $li.children(':first').attr('href') ) )[ verb + 'Class' ]('selected');
     }
 
     function initAttachmentsActions() {
