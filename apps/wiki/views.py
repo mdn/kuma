@@ -1016,8 +1016,7 @@ def move(request, document_slug, document_locale):
                     'descendants_count': len(descendants),
                     'conflicts': conflicts,
                 })
-            old_hierarchy = '/'.join(doc.slug.split('/')[:-1])
-            new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
+            old_hierarchy, new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
             doc._move_tree(old_hierarchy, new_hierarchy, request.user, prepend)
 
             return redirect(reverse('wiki.document',
