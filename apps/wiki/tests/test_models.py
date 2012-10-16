@@ -1044,6 +1044,7 @@ class DeferredRenderingTests(TestCase):
     def test_get_rendered(self, mock_kumascript_get):
         """get_rendered() should return rendered content when available,
         attempt a render() when it's not"""
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
         # First, try getting the rendered version of a document. It should
@@ -1067,6 +1068,8 @@ class DeferredRenderingTests(TestCase):
         result_rendered, _ = d1_fresh.get_rendered(None, 'http://testserver/')
         ok_(not mock_kumascript_get.called)
         eq_(self.rendered_content, result_rendered)
+
+        constance.config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('wiki.kumascript.get')
     def test_one_render_at_a_time(self, mock_kumascript_get):
@@ -1100,6 +1103,7 @@ class DeferredRenderingTests(TestCase):
     def test_long_render_sets_deferred(self, mock_kumascript_get):
         """A rendering that takes more than a desired response time marks the
         document as in need of deferred rendering in the future."""
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
         rendered_content = self.rendered_content
         def my_kumascript_get(self, cache_control, base_url, timeout):
             time.sleep(1.0)
@@ -1113,6 +1117,7 @@ class DeferredRenderingTests(TestCase):
         constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 0.5
         self.d1.render('', 'http://testserver/')
         ok_(self.d1.defer_rendering)
+        constance.config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('wiki.kumascript.get')
     @mock.patch_object(tasks.render_document, 'delay')
