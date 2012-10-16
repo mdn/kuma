@@ -65,7 +65,8 @@ Getting up and running
 
        nfs: false
 
-   The system will be a lot slower.
+   Note: If you decide to run nfs:false, the system will be a lot slower.  There is also the potential of running into
+   weird issues with puppet, since the current puppet configurations do not currently support nfs: false.
 
 -  Add developer-dev.mozilla.org to /etc/hosts::
 
