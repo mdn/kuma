@@ -389,6 +389,16 @@ class KumascriptIntegrationTests(TestCaseBase):
             "kumascript not should have been used")
 
     @mock.patch('wiki.kumascript.get')
+    def test_disabled_rendering(self, mock_kumascript_get):
+        """When disabled, the kumascript service should not be used in rendering"""
+        mock_kumascript_get.return_value = (self.d.html, None)
+        constance.config.KUMASCRIPT_TIMEOUT = 0.0
+        settings.CELERY_ALWAYS_EAGER = True
+        self.d.schedule_rendering('max-age=0')
+        ok_(not mock_kumascript_get.called,
+            "kumascript not should have been used")
+
+    @mock.patch('wiki.kumascript.get')
     def test_nomacros(self, mock_kumascript_get):
         mock_kumascript_get.return_value = (self.d.html, None)
         constance.config.KUMASCRIPT_TIMEOUT = 1.0

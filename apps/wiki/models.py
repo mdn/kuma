@@ -722,9 +722,13 @@ class Document(NotificationsMixin, ModelBase):
         self.render_started_at = now
 
         # Perform rendering and update document
-        self.rendered_html, errors = kumascript.get(self, cache_control,
-                                                    base_url, timeout=timeout)
-        self.rendered_errors = errors and json.dumps(errors) or None
+        if not constance.config.KUMASCRIPT_TIMEOUT:
+            # A timeout of 0 should shortcircuit kumascript usage.
+            self.rendered_html, self.rendered_errors = self.html, []
+        else:
+            self.rendered_html, errors = kumascript.get(self, cache_control,
+                                                        base_url, timeout=timeout)
+            self.rendered_errors = errors and json.dumps(errors) or None
 
         # Finally, note the end time of rendering and update the document.
         self.last_rendered_at = datetime.now()
