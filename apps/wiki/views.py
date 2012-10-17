@@ -11,8 +11,15 @@ import logging
 from urllib import urlencode
 from string import ascii_letters
 
+try:
+    from cStringIO import cStringIO as StringIO
+except:
+    from StringIO import StringIO
+
 import requests
 import bleach
+
+from taggit.utils import parse_tags, edit_string_for_tags
 
 try:
     from functools import wraps
@@ -28,9 +35,11 @@ from django.contrib import messages
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
+from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
+from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
 
@@ -43,6 +52,8 @@ from tower import ugettext as _
 
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
+
+from authkeys.decorators import accepts_auth_key
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
@@ -290,12 +301,21 @@ def get_seo_description(content):
 
 
 @waffle_flag('kumawiki')
-@require_http_methods(['GET', 'HEAD'])
+@csrf_exempt
+@require_http_methods(['GET', 'PUT', 'HEAD'])
+@accepts_auth_key
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def document(request, document_slug, document_locale):
     """View a wiki document."""
+
+    # Check for auth'd PUT API request, branch off to handler if needed.
+    if 'PUT' == request.method:
+        if not request.authkey and not request.user.is_authenticated():
+            raise PermissionDenied
+        return _document_PUT(request, document_slug, document_locale)
+
     fallback_reason = None
     base_url = request.build_absolute_uri('/')
     slug_dict = _split_slug(document_slug)
@@ -395,19 +415,20 @@ def document(request, document_slug, document_locale):
     # Utility to set common headers used by all response exit points
     response_headers = dict()
 
+    # Grab some parameters that affect output
+    section_id = request.GET.get('section', None)
+    show_raw = request.GET.get('raw', False) is not False
+    is_include = request.GET.get('include', False) is not False
+    need_edit_links = request.GET.get('edit_links', False) is not False
+
     def set_common_headers(r):
+        r['ETag'] = doc.calculate_etag(section_id)
         if doc.current_revision:
             r['x-kuma-revision'] = doc.current_revision.id
         # Finally, set any extra headers. update() doesn't work here.
         for k, v in response_headers.items():
             r[k] = v
         return r
-
-    # Grab some parameters that affect output
-    section_id = request.GET.get('section', None)
-    show_raw = request.GET.get('raw', False) is not False
-    is_include = request.GET.get('include', False) is not False
-    need_edit_links = request.GET.get('edit_links', False) is not False
 
     render_raw_fallback = False
 
@@ -531,8 +552,120 @@ def document(request, document_slug, document_locale):
     data.update(SHOWFOR_DATA)
 
     response = jingo.render(request, 'wiki/document.html', data)
-    # FIXME: For some reason, the ETag isn't coming through here.
     return set_common_headers(response)
+
+
+def _document_PUT(request, document_slug, document_locale):
+    """Handle PUT requests as document write API"""
+
+    # Try parsing one of the supported content types from the request
+    try:
+        content_type = request.META.get('CONTENT_TYPE', '')
+
+        if content_type.startswith('application/json'):
+            data = json.loads(request.raw_post_data)
+
+        elif content_type.startswith('multipart/form-data'):
+            parser = MultiPartParser(request.META,
+                                     StringIO(request.raw_post_data),
+                                     request.upload_handlers,
+                                     request.encoding)
+            data, files = parser.parse()
+
+        elif content_type.startswith('text/html'):
+            # TODO: Refactor this into wiki.content ?
+            # First pass: Just assume the request body is an HTML fragment.
+            html = request.raw_post_data
+            data = dict(content=html)
+
+            # Second pass: Try parsing the body as a fuller HTML document,
+            # and scrape out some of the interesting parts.
+            try:
+                doc = pq(html)
+                head_title = doc.find('head title')
+                if head_title.length > 0:
+                    data['title'] = head_title.text()
+                body_content = doc.find('body')
+                if body_content.length > 0:
+                    data['content'] = body_content.html()
+            except:
+                pass
+
+        else:
+            resp = HttpResponse()
+            resp.status_code = 400
+            resp.content = _("Unsupported content-type: %s") % content_type
+            return resp
+
+    except Exception, e:
+        resp = HttpResponse()
+        resp.status_code = 400
+        resp.content = _("Request parsing error: %s") % e
+        return resp
+
+    try:
+        # Look for existing document to edit:
+        doc = Document.objects.get(locale=document_locale,
+                                   slug=document_slug)
+        if not doc.allows_revision_by(request.user):
+            raise PermissionDenied
+        section_id = request.GET.get('section', None)
+        is_new = False
+
+        # Use ETags to detect mid-air edit collision
+        # see: http://www.w3.org/1999/04/Editing/
+        expected_etag = request.META.get('HTTP_IF_MATCH', False)
+        if expected_etag:
+            curr_etag = doc.calculate_etag(section_id)
+            if curr_etag != expected_etag:
+                resp = HttpResponse()
+                resp.status_code = 412
+                resp.content = _('ETag precondition failed')
+                return resp
+
+    except Document.DoesNotExist:
+        # No existing document, so this is an attempt to create a new one...
+        if not Document.objects.allows_add_by(request.user, document_slug):
+            raise PermissionDenied
+
+        # TODO: There should be a model utility for creating a doc...
+
+        # Let's see if this slug path implies a parent...
+        slug_parts = _split_slug(document_slug)
+        if not slug_parts['parent']:
+            # Apparently, this is a root page!
+            parent_doc = None
+        else:
+            # There's a parent implied, so make sure we can find it.
+            parent_doc = get_object_or_404(Document, locale=document_locale,
+                                           slug=slug_parts['parent'])
+
+        # Create and save the new document; we'll revise it immediately.
+        doc = Document(slug=document_slug, locale=document_locale,
+                       title=data.get('title', document_slug),
+                       parent_topic=parent_doc,
+                       category=CATEGORIES[0][0])
+        doc.save()
+        section_id = None  # No section editing for new document!
+        is_new = True
+
+    new_rev = doc.revise(request.user, data, section_id)
+    doc.schedule_rendering('max-age=0')
+
+    request.authkey.log(is_new and 'created' or 'updated',
+                        new_rev, data.get('summary', None))
+
+    resp = HttpResponse()
+    if not is_new:
+        resp.content = 'RESET'
+        resp.status_code = 205
+    else:
+        resp.content = 'CREATED'
+        new_loc = request.build_absolute_uri(doc.get_absolute_url())
+        resp['Location'] = new_loc
+        resp.status_code = 201
+
+    return resp
 
 
 @waffle_flag('kumawiki')
