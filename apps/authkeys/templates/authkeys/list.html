@@ -1,0 +1,34 @@
+{% extends "authkeys/base.html" %}
+
+{% block intro %}{{ _("API Keys: <b>Your Keys</b>" | safe) }}{% endblock %}
+
+{% block subcontent %}
+<p>{% trans %}
+    These are your API keys. They're useful for building applications that
+    perform tasks on MDN on your behalf. If you have stopped using any of
+    them, or suspect one has been exposed to parties you don't trust with your
+    account, click the <span class="button">X</span> to delete the key.  It's
+    easy to create a replacement key at any time.
+{% endtrans %}</p>
+<p><a class="button positive" href="{{ url('authkeys.new') }}">{{ _('Create a new key') }}</a></p>
+{% if not keys %}
+    <p>{{ _("You have no API keys, yet.") }}</p>
+{% else %}
+    <table class="keys" cellpadding="4">
+        {% for key in keys %}
+        <tr class="key" id="key-{{ key.pk }}">
+            <td class="actions">
+                <a class="button negative"
+                   title="{{ _('Delete key') }}"
+                   href="{{ url('authkeys.delete', pk=key.pk) }}">{{ _('X') }}</a>
+                <a class="button positive"
+                   title="{{ _('View key usage history') }}"
+                   href="{{ url('authkeys.history', pk=key.pk) }}">{{ _('History ({count})') | f(count=key.history.count()) }}</a>
+            </td>
+            <td class="created">{{ key.created }}</td>
+            <td class="description">{{ key.description }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% endblock %}

@@ -398,6 +398,7 @@ INSTALLED_APPS = (
     'waffle',
     'soapbox',
     'django_statsd',
+    'authkeys',
 
     # SUMO
     'users',
