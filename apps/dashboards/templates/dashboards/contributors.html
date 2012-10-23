@@ -8,6 +8,9 @@
 {# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article id="localize" class="main dashboards">
     <h1>{{ title }}</h1>
 
@@ -29,6 +32,9 @@
       {{ print_readout(readout, 'dashboards.contributors_detail', locale=default_locale) }}
     {% endfor %}
   </article>
+    </div>
+  </div>
+</section>
 {% endblock %}
 
 {% block side %}

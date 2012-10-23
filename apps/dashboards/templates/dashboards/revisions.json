@@ -1,0 +1,18 @@
+{
+    "iTotalRecords": "{{ total_records }}",
+    "aaData" : [
+{% for rev in revisions %}
+        {
+        "id": "{{ rev.id }}",
+        "prev_id": "{{ rev.get_previous().id }}",
+        "compare_url": "{{ url('wiki.compare_revisions', rev.document.full_path) }}?from={{ rev.get_previous().id }}&to={{ rev.id }}&raw=1",
+        "title": "{{ rev.document.slug }}",
+        "date": "{{ datetimeformat(rev.created, format="date", output="json") }}",
+        "time": "{{ datetimeformat(rev.created, format="time", output="json") }}",
+        "creator": "{{ rev.creator }}",
+        "comment": "{{ rev.comment }}"
+        }{% if not loop.last%},{% endif %}
+
+{% endfor %}
+    ]
+}

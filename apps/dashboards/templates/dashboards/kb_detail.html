@@ -7,6 +7,9 @@
 {# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
 
 {% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
   <article class="main dashboards dashboards-detail">
     <h1>{{ readout.title }}</h1>
     <ul class="readout-modes" data-slug="{{ readout.slug }}">
@@ -21,4 +24,7 @@
       {{ readout.render()|safe }}
     </table>
   </article>
+    </div>
+  </div>
+</section>
 {% endblock %}

@@ -7,6 +7,7 @@ from django.views.decorators.http import require_GET
 
 import jingo
 from tower import ugettext_lazy as _lazy, ugettext as _
+from waffle.decorators import waffle_flag
 
 from dashboards.readouts import (overview_rows, READOUTS, L10N_READOUTS,
                                  CONTRIBUTOR_READOUTS)
@@ -16,13 +17,14 @@ from sumo.urlresolvers import reverse
 from sumo.utils import smart_int
 from wiki.events import (ApproveRevisionInLocaleEvent,
                          ReviewableRevisionInLocaleEvent)
-from wiki.models import Document
+from wiki.models import Document, Revision
 from wiki.views import SHOWFOR_DATA
 
 
 HOME_DOCS = {'quick': 'Home page - Quick', 'explore': 'Home page - Explore'}
 MOBILE_DOCS = {'quick': 'Mobile home - Quick',
                'explore': 'Mobile home - Explore'}
+PAGE_SIZE = 100
 
 
 def home(request):
@@ -124,6 +126,20 @@ def contributors(request):
     """Render aggregate data about the articles in the default locale."""
     return _kb_main(request, CONTRIBUTOR_READOUTS, 'contributors.html',
                     locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+
+@require_GET
+@waffle_flag('revisions_dashboard')
+def revisions(request):
+    """Dashboard for reviewing revisions"""
+    if request.is_ajax():
+        display_start = int(request.GET.get('iDisplayStart', 0))
+        revisions = Revision.objects.select_related('creator').all().order_by('-created')[display_start:display_start+PAGE_SIZE]
+        context = {'revisions': revisions,
+                   'total_records': Revision.objects.count()}
+        return jingo.render(request, 'dashboards/revisions.json',
+                            context, mimetype="json")
+    return jingo.render(request, 'dashboards/revisions.html')
 
 
 @require_GET

@@ -1,0 +1,83 @@
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "base.html" %}
+{% set title = _('Revision Dashboard') %}
+{% set scripts = ('dashboards',) %}
+{% set styles = ('dashboards', 'wiki') %}
+{% set crumbs = [(None, title)] %}
+{% set classes = 'compare' %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+  <article class="dashboard">
+    <h1>{{ title }}</h1>
+    <section>
+    <table id="revisions-table">
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th>Time</th>
+          <th>Date</th>
+          <th>By</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    </section>
+    <section id="revisions-compare">
+    </section>
+  </article>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+
+{% block js %}
+<script>
+  $(document).ready(function(){
+    var $revTable = $('#revisions-table'),
+        $revTableBody = $('tbody', $revTable);
+    $revTableBody.click(function(e){
+      var data = $revTable.fnGetData(e.target.parentNode),
+          $revCompare = $('#revisions-compare');
+      console.log(data);
+      $revCompare.html("Loading ...");
+      $revCompare.load(data.compare_url, function(resp, status, xhr){
+        if (status == "error") {
+          $revCompare.html("Error: " + xhr.status + " " + xhr.statusText);
+        }
+      });
+    });
+    $revTable.dataTable({
+      'bPaginate': false,
+      'bLengthChange': false,
+      'bFilter': false,
+      'bSort': false,
+      'bAutoWidth': false,
+      'aoColumns': [
+        {'mData': "id", 'bVisible': false},
+        {'mData': "prev_id", 'bVisible': false},
+        {'mData': "compare_url", 'bVisible': false},
+        {'mData': "title"},
+        {'mData': "time"},
+        {'mData': "date"},
+        {'mData': "creator"},
+        {'mData': "comment"},
+      ],
+      'sScrollY': '300px',
+      'sDom': 'frtiS',
+      'oScroller':{
+        'loadingIndicator': true,
+        'serverWait': 500
+      },
+      'bServerSide': true,
+      'bDeferRender': true,
+      'sAjaxSource': "/en-US/revisions",
+    });
+  });
+</script>
+{% endblock %}
