@@ -151,7 +151,7 @@ def _contextual_locale(context):
 
 @register.function
 @jinja2.contextfunction
-def datetimeformat(context, value, format='shortdatetime'):
+def datetimeformat(context, value, format='shortdatetime', output='html'):
     """
     Returns date/time formatted using babel's locale settings. Uses the
     timezone from settings.py
@@ -177,13 +177,15 @@ def datetimeformat(context, value, format='shortdatetime'):
     elif format == 'date':
         formatted = format_date(tzvalue, locale=locale)
     elif format == 'time':
-        formatted = format_time(tzvalue, locale=locale)
+        formatted = format_time(tzvalue, 'HH:mm', locale=locale)
     elif format == 'datetime':
         formatted = format_datetime(tzvalue, locale=locale)
     else:
         # Unknown format
         raise DateTimeFormatError
 
+    if output == 'json':
+        return formatted
     return jinja2.Markup('<time datetime="%s">%s</time>' % \
                          (tzvalue.isoformat(), formatted))
 

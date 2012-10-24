@@ -418,7 +418,7 @@ INSTALLED_APPS = (
     #'upload',
     'wiki',
     #'kbforums',
-    #'dashboards',
+    'dashboards',
     'gallery',
     #'customercare',
     #'twitter',
@@ -568,6 +568,11 @@ MINIFY_BUNDLES = {
         'wiki-print': (
             'css/wiki-print.css',
         ),
+        'dashboards': (
+            'css/dashboards.css',
+            'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
+            'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
+        ),
         'home': (
             'css/home.css',
         ),
@@ -681,6 +686,10 @@ MINIFY_BUNDLES = {
             'js/moz-jquery-plugins.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
+        ),
+        'dashboards': (
+            'js/libs/DataTables-1.9.4/media/js/jquery.dataTables.js',
+            'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
         ),
         'customercare': (
             'js/libs/jquery.NobleCount.js',

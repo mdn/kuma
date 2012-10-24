@@ -47,7 +47,7 @@ urlpatterns = patterns('',
         {'domain': 'javascript', 'packages': [settings.ROOT_PACKAGE]},
         name='jsi18n'),
 
-    #url(r'^', include('dashboards.urls')),
+    url(r'^', include('dashboards.urls')),
 
     # Files.
     url(r'^files/new/$',

@@ -1442,7 +1442,7 @@ class Revision(ModelBase):
 
     show_toc = models.BooleanField(default=True)
 
-    created = models.DateTimeField(default=datetime.now)
+    created = models.DateTimeField(default=datetime.now, db_index=True)
     reviewed = models.DateTimeField(null=True)
     significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
     comment = models.CharField(max_length=255)
