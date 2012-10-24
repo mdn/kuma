@@ -1158,9 +1158,16 @@ def compare_revisions(request, document_slug, document_locale):
     revision_from = get_object_or_404(Revision, document=doc, id=from_id)
     revision_to = get_object_or_404(Revision, document=doc, id=to_id)
 
-    return jingo.render(request, 'wiki/compare_revisions.html',
-                        {'document': doc, 'revision_from': revision_from,
-                         'revision_to': revision_to})
+    context = {'document': doc, 'revision_from': revision_from,
+                         'revision_to': revision_to}
+    if request.GET.get('raw', 0):
+        response = jingo.render(request, 'wiki/includes/revision_diff_table.html',
+                                context)
+    else:
+        response = jingo.render(request, 'wiki/compare_revisions.html',
+                                context)
+    response['x-frame-options'] = 'SAMEORIGIN'
+    return response
 
 
 @waffle_flag('kumawiki')

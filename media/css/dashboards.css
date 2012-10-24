@@ -1,3 +1,11 @@
+/* Revision dashboard  *********
+.dashboard tbody { display: block; height: 300px; overflow: auto; }
+
+#revisions-table th, #revisions-table td { width: 25%; }
+*/
+.dashboard tbody { white-space: no-wrap; overflow: hidden; }
+.dashboard #revisions-compare { display: block; width: 100%; }
+
 /* L10n and Contributor Dashboards */
 
 .dashboards table {
