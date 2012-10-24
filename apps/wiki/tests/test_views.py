@@ -8,6 +8,8 @@ import json
 import base64
 import time
 
+from urlparse import urlparse
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -15,8 +17,10 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
 from django.db.models import Q
-from django.test.client import Client
+from django.test.client import (Client, FakePayload, encode_multipart,
+                                BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT)
 from django.http import Http404
+from django.utils.encoding import smart_str
 
 import mock
 from nose import SkipTest
@@ -26,13 +30,17 @@ from pyquery import PyQuery as pq
 
 import constance.config
 
+from taggit.utils import parse_tags, edit_string_for_tags
+
 from waffle.models import Flag
 
 from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
 from . import TestCaseBase, FakeResponse
 
-from wiki.models import (VersionMetadata, Document, Attachment,
+from authkeys.models import Key
+
+from wiki.models import (VersionMetadata, Document, Revision, Attachment,
                          AttachmentRevision)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
@@ -2371,6 +2379,357 @@ class DeferredRenderingViewTests(TestCaseBase):
         eq_(302, resp.status_code)
 
         ok_(mock_document_schedule_rendering.called)
+
+
+class APITests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        super(APITests, self).setUp()
+
+        self.username = 'tester23'
+        self.password = 'trustno1'
+        self.email    = 'tester23@example.com'
+        
+        self.user = User(username=self.username,
+                         email=self.email)
+        self.user.set_password(self.password)
+        self.user.save()
+
+        self.key = Key(user=self.user, description='Test Key 1')
+        self.secret = self.key.generate_secret()
+        self.key_id = self.key.key
+        self.key.save()
+
+        auth = '%s:%s' % (self.key_id, self.secret)
+        self.basic_auth = 'Basic %s' % base64.encodestring(auth)
+
+        self.client = LocalizingClient()
+
+        self.d, self.r = doc_rev("""
+            <h3 id="S1">Section 1</h3>
+            <p>This is a page. Deal with it.</p>
+            <h3 id="S2">Section 2</h3>
+            <p>This is a page. Deal with it.</p>
+            <h3 id="S3">Section 3</h3>
+            <p>This is a page. Deal with it.</p>
+        """)
+        self.r.tags = "foo, bar, baz"
+        self.r.review_tags.set('technical', 'editorial')
+        self.url = self.d.get_absolute_url()
+
+    def tearDown(self):
+        super(APITests, self).tearDown()
+        Document.objects.filter(current_revision__creator=self.user).delete()
+        Revision.objects.filter(creator=self.user).delete()
+        Key.objects.filter(user=self.user).delete()
+        self.user.delete()
+
+    def test_put_existing(self):
+        """PUT API should allow overwrite of existing document content"""
+        data = dict(
+            summary="Look, I made an edit!",
+            content="""
+                <p>This is an edit to the page. We've dealt with it.</p>
+            """,
+        )
+
+        # No auth key leads to a 403 Forbidden
+        resp = self._put(self.url, data)
+        eq_(403, resp.status_code)
+        
+        # But, this should work, given a proper auth key
+        resp = self._put(self.url, data,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(205, resp.status_code)
+
+        # Verify the edit happened.
+        curr_d = Document.uncached.get(pk=self.d.pk)
+        eq_(normalize_html(data['content'].strip()), 
+            normalize_html(Document.uncached.get(pk=self.d.pk).html))
+
+        # Also, verify that this resulted in a new revision.
+        curr_r = curr_d.current_revision
+        ok_(self.r.pk != curr_r.pk)
+        eq_(data['summary'], curr_r.summary)
+        r_tags = ','.join(sorted(t.name for t in curr_r.review_tags.all()))
+        eq_('editorial,technical', r_tags)
+
+    def test_put_section_edit(self):
+        """PUT API should allow overwrite of a specific section of an existing
+        document"""
+        data = dict(
+            content="""
+                <h3 id="S2">Section 2</h3>
+                <p>This is an edit to the page. We've dealt with it.</p>
+            """,
+            # Along with the section, let's piggyback in some other metadata
+            # edits just for good measure. They're not tied to section edit
+            # though.
+            title="Hahah this is a new title!",
+            tags="hello,quux,xyzzy",
+            review_tags="technical",
+        )
+
+        resp = self._put('%s?section=S2' % self.url, data,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(205, resp.status_code)
+
+        expected = """
+            <h3 id="S1">Section 1</h3>
+            <p>This is a page. Deal with it.</p>
+            <h3 id="S2">Section 2</h3>
+            <p>This is an edit to the page. We've dealt with it.</p>
+            <h3 id="S3">Section 3</h3>
+            <p>This is a page. Deal with it.</p>
+        """
+
+        # Verify the section edit happened.
+        curr_d = Document.uncached.get(pk=self.d.pk)
+        eq_(normalize_html(expected.strip()), 
+            normalize_html(curr_d.html))
+        eq_(data['title'], curr_d.title)
+        d_tags = ','.join(sorted(t.name for t in curr_d.tags.all()))
+        eq_(data['tags'], d_tags)
+
+        # Also, verify that this resulted in a new revision.
+        curr_r = curr_d.current_revision
+        ok_(self.r.pk != curr_r.pk)
+        r_tags = ','.join(sorted(t.name for t in curr_r.review_tags.all()))
+        eq_(data['review_tags'], r_tags)
+
+    def test_put_new_root(self):
+        """PUT API should allow creation of a document whose path would place
+        it at the root of the topic hierarchy."""
+        slug = 'new-root-doc'
+        url = reverse('wiki.document', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        data = dict(
+            title="This is the title of a new page",
+            content="""
+                <p>This is a new page, hooray!</p>
+            """,
+            tags="hello,quux,xyzzy",
+            review_tags="technical",
+        )
+        resp = self._put(url, data,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(201, resp.status_code)
+
+    def test_put_new_child(self):
+        """PUT API should allow creation of a document whose path would make it
+        a child of an existing parent."""
+        data = dict(
+            title="This is the title of a new page",
+            content="""
+                <p>This is a new page, hooray!</p>
+            """,
+            tags="hello,quux,xyzzy",
+            review_tags="technical",
+        )
+
+        # This first attempt should fail; the proposed parent does not exist.
+        url = '%s/nonexistent/newchild' % self.url
+        resp = self._put(url, data,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(404, resp.status_code)
+
+        # TODO: I suppose we could rework this part to create the chain of
+        # missing parents with stub content, but currently this demands
+        # that API users do that themselves.
+
+        # Now, fill in the parent gap...
+        p_doc = document(slug='%s/nonexistent' % self.d.slug,
+                         locale='en-US',
+                         parent_topic=self.d)
+        p_doc.save()
+        p_rev = revision(document=p_doc,
+                         slug='%s/nonexistent' % self.d.slug,
+                         title='I EXIST NOW', save=True)
+        p_rev.save() 
+
+        # The creation should work, now.
+        resp = self._put(url, data,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(201, resp.status_code)
+
+        new_slug = '%s/nonexistent/newchild' % self.d.slug
+        new_doc = Document.uncached.get(locale='en-US', slug=new_slug)
+        eq_(p_doc.pk, new_doc.parent_topic.pk)
+
+    def test_put_unsupported_content_type(self):
+        """PUT API should complain with a 400 Bad Request on an unsupported
+        content type submission"""
+        slug = 'new-root-doc'
+        url = reverse('wiki.document', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        data = "I don't even know what this content is."
+        resp = self._put(url, json.dumps(data),
+                         content_type='x-super-happy-fun-text',
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(400, resp.status_code)
+
+    def test_put_json(self):
+        """PUT API should handle application/json requests"""
+        slug = 'new-root-json-doc'
+        url = reverse('wiki.document', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        data = dict(
+            title="This is the title of a new page",
+            content="""
+                <p>This is a new page, hooray!</p>
+            """,
+            tags="hello,quux,xyzzy",
+            review_tags="technical",
+        )
+        resp = self._put(url, json.dumps(data),
+                         content_type='application/json',
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(201, resp.status_code)
+
+        new_doc = Document.uncached.get(locale='en-US', slug=slug)
+        eq_(data['title'], new_doc.title)
+        eq_(normalize_html(data['content']), normalize_html(new_doc.html))
+
+    def test_put_simple_html(self):
+        """PUT API should handle text/html requests"""
+        slug = 'new-root-html-doc-1'
+        url = reverse('wiki.document', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        html = """
+            <p>This is a new page, hooray!</p>
+        """
+        resp = self._put(url, html, content_type='text/html',
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(201, resp.status_code)
+
+        new_doc = Document.uncached.get(locale='en-US', slug=slug)
+        eq_(normalize_html(html), normalize_html(new_doc.html))
+
+    def test_put_complex_html(self):
+        """PUT API should handle text/html requests with complex HTML documents
+        and extract document fields from the markup"""
+        slug = 'new-root-html-doc-2'
+        url = reverse('wiki.document', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        data = dict(
+            title='This is a complex document',
+            content="""
+                <p>This is a new page, hooray!</p>
+            """,
+        )
+        html = """
+            <html>
+                <head>
+                    <title>%(title)s</title>
+                </head>
+                <body>%(content)s</body>
+            </html>
+        """ % data
+        resp = self._put(url, html, content_type='text/html',
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(201, resp.status_code)
+
+        new_doc = Document.uncached.get(locale='en-US', slug=slug)
+        eq_(data['title'], new_doc.title)
+        eq_(normalize_html(data['content']), normalize_html(new_doc.html))
+
+        # TODO: Anything else useful to extract from HTML?
+        # Extract tags from head metadata?
+
+    def test_put_track_authkey(self):
+        """Revisions modified by PUT API should track the auth key used"""
+        slug = 'new-root-doc'
+        url = reverse('wiki.document', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        data = dict(
+            title="This is the title of a new page",
+            content="""
+                <p>This is a new page, hooray!</p>
+            """,
+            tags="hello,quux,xyzzy",
+            review_tags="technical",
+        )
+        resp = self._put(url, data, HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(201, resp.status_code)
+
+        last_log = self.key.history.order_by('-pk').all()[0]
+        eq_('created', last_log.action)
+
+        data['title'] = 'New title for old page'
+        resp = self._put(url, data, HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(205, resp.status_code)
+
+        last_log = self.key.history.order_by('-pk').all()[0]
+        eq_('updated', last_log.action)
+
+    def test_put_etag_conflict(self):
+        """A PUT request with an if-match header throws a 412 Precondition
+        Failed if the underlying document has been changed."""
+        resp = self.client.get(self.url)
+        orig_etag = resp['ETag']
+
+        content1 = """
+            <h2 id="s1">Section 1</h2>
+            <p>New section 1</p>
+            <h2 id="s2">Section 2</h2>
+            <p>New section 2</p>
+        """
+
+        # First update should work.
+        resp = self._put(self.url, dict(content=content1),
+                         HTTP_IF_MATCH=orig_etag,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(205, resp.status_code)
+
+        # Get the new etag, ensure it doesn't match the original.
+        resp = self.client.get(self.url)
+        new_etag = resp['ETag']
+        ok_(orig_etag != new_etag)
+
+        # But, the ETag should have changed, so this update shouldn't work.
+        # Using the old ETag suggests a mid-air edit collision happened.
+        resp = self._put(self.url, dict(content=content1),
+                         HTTP_IF_MATCH=orig_etag,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(412, resp.status_code)
+
+        # Just for good measure, switching to the new ETag should work
+        resp = self._put(self.url, dict(content=content1),
+                         HTTP_IF_MATCH=new_etag,
+                         HTTP_AUTHORIZATION=self.basic_auth)
+        eq_(205, resp.status_code)
+
+    def _put(self, path, data={}, content_type=MULTIPART_CONTENT,
+             follow=False, **extra):
+        """django.test.client.put() does the wrong thing, here. This does
+        better, based on post()."""
+        if content_type is MULTIPART_CONTENT:
+            post_data = encode_multipart(BOUNDARY, data)
+        else:
+            # Encode the content so that the byte representation is correct.
+            match = CONTENT_TYPE_RE.match(content_type)
+            if match:
+                charset = match.group(1)
+            else:
+                charset = settings.DEFAULT_CHARSET
+            post_data = smart_str(data, encoding=charset)
+
+        parsed = urlparse(path)
+        r = {
+            'CONTENT_LENGTH': len(post_data),
+            'CONTENT_TYPE':   content_type,
+            'PATH_INFO':      self.client._get_path(parsed),
+            'QUERY_STRING':   parsed[4],
+            'REQUEST_METHOD': 'PUT',
+            'wsgi.input':     FakePayload(post_data),
+        }
+        r.update(extra)
+
+        response = self.client.request(**r)
+        if follow:
+            response = self.client._handle_redirects(response, **extra)
+        return response
 
 
 class AttachmentTests(TestCaseBase):
