@@ -62,23 +62,6 @@
       </header>
       {% include "docs/glossary.html" %}
 
-      {% if waffle.flag('kumawiki') %}
-      <header id="kumawiki_preview" class="subhead">
-        <h2>New Wiki Feature Preview</h2>
-      </header>
-      <ul>
-        <li>
-            <ul class="cols-4">
-                <li><a href="{{ url('wiki.new_document') }}">New page</a></li>
-                <li><a href="{{ url('wiki.new_document') }}?slug=Template:">New template</a></li>
-                <li><a href="{{ url('wiki.all_documents') }}">List all pages</a></li>
-                <li><a href="{{ url('wiki.list_templates') }}">List all templates</a></li>
-                <li><a href="{{ url('wiki.list_review') }}">Pages for review</a></li>
-            </ul>
-        </li>
-      </ul>
-      {% endif %}
-
     </section>{# /.section-intro #}
 
     <section id="other-sections">
