@@ -2003,35 +2003,6 @@ class SectionEditingResourceTests(TestCaseBase):
         resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]))
         eq_(normalize_html(expected), normalize_html(resp.content.decode('utf-8')))
 
-    @attr('kumawiki')
-    def test_kumawiki_waffle_flag(self):
-
-        # Turn off the new wiki for everyone
-        self.kumawiki_flag.everyone = False
-        self.kumawiki_flag.save()
-
-        client = LocalizingClient()
-
-        resp = client.get(reverse('wiki.all_documents'))
-        eq_(404, resp.status_code)
-
-        resp = client.get(reverse('docs'))
-        page = pq(resp.content)
-        eq_(0, page.find('#kumawiki_preview').length)
-
-        client.login(username='admin', password='testpass')
-
-        # Turn on the wiki for just superusers, ignore everyone else
-        self.kumawiki_flag.superusers = True
-        self.kumawiki_flag.everyone = None
-        self.kumawiki_flag.save()
-
-        resp = client.get(reverse('wiki.all_documents'))
-        eq_(200, resp.status_code)
-
-        resp = client.get(reverse('docs'))
-        page = pq(resp.content)
-        eq_(1, page.find('#kumawiki_preview').length)
 
 class MindTouchRedirectTests(TestCaseBase):
     """
