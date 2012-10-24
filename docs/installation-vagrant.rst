@@ -138,4 +138,4 @@ What’s next?
 
        ./manage.py createsuperuser
 
--  To allow creation and editing of documents, go to /admin/, go to the waffle section and add flags called ``kumaediting`` and ``kumawiki``
+-  To allow creation and editing of documents, go to /admin/, go to the waffle section and add flags called ``kumaediting``
