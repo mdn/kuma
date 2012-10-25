@@ -20,7 +20,6 @@
           <th>Time</th>
           <th>Date</th>
           <th>By</th>
-          <th>Comment</th>
         </tr>
       </thead>
       <tbody>
@@ -38,46 +37,42 @@
 
 {% block js %}
 <script>
-  $(document).ready(function(){
-    var $revTable = $('#revisions-table'),
-        $revTableBody = $('tbody', $revTable);
-    $revTableBody.click(function(e){
-      var data = $revTable.fnGetData(e.target.parentNode),
-          $revCompare = $('#revisions-compare');
-      console.log(data);
-      $revCompare.html("Loading ...");
-      $revCompare.load(data.compare_url, function(resp, status, xhr){
-        if (status == "error") {
-          $revCompare.html("Error: " + xhr.status + " " + xhr.statusText);
-        }
-      });
-    });
-    $revTable.dataTable({
-      'bPaginate': false,
-      'bLengthChange': false,
-      'bFilter': false,
-      'bSort': false,
-      'bAutoWidth': false,
-      'aoColumns': [
-        {'mData': "id", 'bVisible': false},
-        {'mData': "prev_id", 'bVisible': false},
-        {'mData': "compare_url", 'bVisible': false},
-        {'mData': "title"},
-        {'mData': "time"},
-        {'mData': "date"},
-        {'mData': "creator"},
-        {'mData': "comment"},
-      ],
-      'sScrollY': '300px',
-      'sDom': 'frtiS',
-      'oScroller':{
-        'loadingIndicator': true,
-        'serverWait': 500
-      },
-      'bServerSide': true,
-      'bDeferRender': true,
-      'sAjaxSource': "/en-US/revisions",
+$(document).ready(function(){
+  var $revTable = $("#revisions-table"),
+      $revTableBody = $("tbody", $revTable);
+  $revTableBody.click(function(e){
+    var data = $revTable.fnGetData(e.target.parentNode),
+        $revCompare = $("#revisions-compare");
+    console.log(data);
+    $revCompare.html("Loading ...");
+    $revCompare.load(data.compare_url, function(resp, status, xhr){
+      if (status == "error") {
+        $revCompare.html("Error: " + xhr.status + " " + xhr.statusText);
+      }
     });
   });
+  $revTable.dataTable({
+    "bPaginate": false,
+    "bLengthChange": false,
+    "bFilter": false,
+    "bSort": false,
+    "bAutoWidth": false,
+    "aoColumns": [
+      {"mData": "title"},
+      {"mData": "time"},
+      {"mData": "date"},
+      {"mData": "creator"},
+    ],
+    "sScrollY": "300px",
+    "sDom": "frtiS",
+    "oScroller":{
+      "loadingIndicator": true,
+      "serverWait": 500
+    },
+    "bServerSide": true,
+    "bDeferRender": true,
+    "sAjaxSource": "/en-US/revisions",
+  });
+});
 </script>
 {% endblock %}

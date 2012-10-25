@@ -1,5 +1,6 @@
 {
     "iTotalRecords": "{{ total_records }}",
+    "iTotalDisplayRecords": "{{ total_records }}",
     "aaData" : [
 {% for rev in revisions %}
         {
@@ -9,8 +10,7 @@
         "title": "{{ rev.document.slug }}",
         "date": "{{ datetimeformat(rev.created, format="date", output="json") }}",
         "time": "{{ datetimeformat(rev.created, format="time", output="json") }}",
-        "creator": "{{ rev.creator }}",
-        "comment": "{{ rev.comment }}"
+        "creator": "{{ rev.creator }}"
         }{% if not loop.last%},{% endif %}
 
 {% endfor %}
