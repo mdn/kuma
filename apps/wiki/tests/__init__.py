@@ -20,13 +20,10 @@ class TestCaseBase(TestCase):
         super(TestCaseBase, self).setUp()
         self.client = LocalizingClient()
 
-        self.kumawiki_flag = Flag.objects.create(name='kumawiki',
-                                                 everyone=True)
         self.kumaediting_flag = Flag.objects.create(name='kumaediting',
                                                    everyone=True)
 
     def tearDown(self):
-        self.kumawiki_flag.delete()
         self.kumaediting_flag.delete()
 
 
