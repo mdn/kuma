@@ -122,10 +122,9 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments .attachment-name-cell { width: 40%; }
 #page-attachments .attachment-error { color: #900; font-size: .9em; }
 #page-attachments .new-row {
-  -moz-animation-name: newAttachment; -moz-animation-duration: 2s;
   -webkit-animation-name: newAttachment; -webkit-animation-duration: 2s;
-  animation-name: newAttachment; animation-duration: 2s;
-
+     -moz-animation-name: newAttachment;    -moz-animation-duration: 2s;
+          animation-name: newAttachment;         animation-duration: 2s;
   background: transparent;
 }
 #page-attachments-new-table input[type="text"] { width: 90%; }
@@ -515,8 +514,8 @@ div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10
 .twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
 .threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
 
-div.floatright, table.floatright { float: right; clear: right; margin: 0 0 .5em .5em; }
-div.floatleft, table.floatleft { float: left; margin: 0 .5em .5em 0; }
+.floatright { float: right; clear: right; margin: 0 0 .5em .5em; }
+.floatleft { float: left; margin: 0 .5em .5em 0; }
 div.thumb { margin-bottom: .5em; border: 1px solid #fff; }
 div.thumb div { border: 1px solid #ccc; padding: 3px; overflow: hidden; background-color: #f9f9f9; font-size: 94%; text-align: center; }
 div.thumb div a img { border: 1px solid #ccc; }
