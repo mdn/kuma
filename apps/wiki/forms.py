@@ -300,7 +300,17 @@ class RevisionForm(forms.ModelForm):
 
     def clean_slug(self):
         cleaned_slug = self._clean_collidable('slug')
-        if cleaned_slug != self.instance.slug and \
+
+        # If they're trying to change an existing slug, and the
+        # document has children, we need to use the page-move
+        # interface.
+        #
+        # Detecting this can be slightly cumbersome because there's no
+        # guarantee that we have a full Revision instance yet, that it
+        # has a Document yet, or that the Document has been saved yet.
+        if self.instance and \
+           self.instance.document_id and \
+           (cleaned_slug != self.instance.slug) and \
            self.instance.document.has_children():
             raise forms.ValidationError(MOVE_REQUIRED)
         return cleaned_slug
