@@ -72,7 +72,7 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 
 /* Increase line-height in wide windows */
 .page-content { line-height: inherit; -moz-transition: line-height .2s ease-in-out; -webkit-transition: line-height .2s ease-in-out; transition: line-height .2s ease-in-out; } 
-@media screen and (min-width: 890px) { 
+@media screen and (min-width: 890px) {
   .page-content { line-height: 1.572; -moz-transition: line-height .2s ease-in-out; -webkit-transition: line-height .2s ease-in-out; transition: line-height .2s ease-in-out; } 
 }
 
@@ -100,15 +100,15 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 
 /* page attachments */
-@-moz-keyframes newAttachment { 
+@-moz-keyframes newAttachment {
   0% { background-color: #90ee90; } 
   100% { background-color: transparent; } 
 }
-@-webkit-keyframes newAttachment { 
+@-webkit-keyframes newAttachment {
   0% { background-color: #90ee90; } 
   100% { background-color: transparent; } 
 }
-@keyframes newAttachment { 
+@keyframes newAttachment {
   0% { background-color: #90ee90; } 
   100% { background-color: transparent; } 
 }
@@ -120,7 +120,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments .attachment-description { font-size: .9em; font-style: italic; }
 #page-attachments .attachment-name-cell { width: 40%; }
 #page-attachments .attachment-error { color: #900; font-size: .9em; }
-#page-attachments .new-row { 
+#page-attachments .new-row {
   -moz-animation-name: newAttachment; -moz-animation-duration: 2s;
   -webkit-animation-name: newAttachment; -webkit-animation-duration: 2s;
   animation-name: newAttachment; animation-duration: 2s;
@@ -174,7 +174,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #doc-search #q-docs { width: 590px; margin-right: 8px; }
 #doc-search #doc-filter { width: 140px; margin-right: 8px; }
 
-@media screen and (max-width: 890px) { 
+@media screen and (max-width: 890px) {
   #site-search { width: 190px; -moz-transition: width .2s ease-in-out; -webkit-transition: width .2s ease-in-out; transition: width .2s ease-in-out; }
   #site-search #q { width: 90px; -moz-transition: width .2s ease-in-out; -webkit-transition: width .2s ease-in-out; transition: width .2s ease-in-out; }
 }
@@ -259,57 +259,63 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #page-buttons li { display: inline; margin: 0 0 2px 10px; padding: 0; background: none; }
 #page-buttons a, #page-buttons button { display: inline-block; padding: 6px 8px 3px; color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); background-color: #ddd; }
 #page-buttons a:hover, #page-buttons a:focus, #page-buttons a:active { text-decoration: none; }
-#page-buttons a { padding: 7px 8px 4px; }
-#page-buttons .page-edit a { padding-left: 32px; background: #a5d9f3 url("../img/wiki/button-edit.png") 0 50% repeat-x; }
-#page-buttons .page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
-#page-buttons .page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
-#page-buttons .page-watch a { padding-left: 35px; background: #f2d29e url("../img/wiki/button-watch.png") 0 50% repeat-x; }
-#page-buttons .page-watch a:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
-#page-buttons .page-watch a.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
+a { padding: 7px 8px 4px; }
+.page-edit a { padding-left: 32px; background: #a5d9f3 url("../img/wiki/button-edit.png") 0 50% repeat-x; }
+.page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
+.page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
+.page-watch a { padding-left: 35px; background: #f2d29e url("../img/wiki/button-watch.png") 0 50% repeat-x; }
+.page-watch a:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
+.page-watch a.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
 
-.btn-save { 
-  background-color: #d7eca1; 
-  background-image: -moz-linear-gradient(top, #d7eca1, #cce390); 
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d7eca1), color-stop(100%, #cce390));
-  background-image: linear-gradient(to bottom, #d7eca1, #cce390);
+#page-buttons .btn-save {
+  background-color: #d7eca1;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(0, #d7eca1), to(100%, #cce390));
+  background-image: -webkit-linear-gradient(top, #d7eca1, #cce390);
+  background-image:    -moz-linear-gradient(top, #d7eca1, #cce390);
+  background-image:   linear-gradient(to bottom, #d7eca1, #cce390);
 }
-.btn-save:hover, .btn-save:focus {
-  background-color: #c3e56d; 
-  background-image: -moz-linear-gradient(top, #c3e56d, #b3d55b); 
+#page-buttons .btn-save:hover,
+#page-buttons .btn-save:focus {
+  background-color: #c3e56d;
   background-image: -webkit-linear-gradient(top, #c3e56d, #b3d55b);
-  background-image: linear-gradient(to bottom, #c3e56d, #b3d55b);
+  background-image:    -moz-linear-gradient(top, #c3e56d, #b3d55b);
+  background-image:   linear-gradient(to bottom, #c3e56d, #b3d55b);
 }
 #btn-save-and-edit { display: none; }
 #btn-save-and-edit.loading span {
-  padding-left: 20px; 
+  padding-left: 20px;
   margin-left: -5px;
   background: url(../img/wiki/save-and-keep-editing-arrows.gif) no-repeat 0px 1px;
 }
 #page-buttons iframe#save-and-edit-target { visibility: hidden; height: 1px; width: 1px; }
-.btn-preview { 
+#page-buttons .btn-preview {
   background-color: #cce3f4;
-  background-image: -moz-linear-gradient(top, #cce3f4, #c0d7ea); 
   background-image: -webkit-linear-gradient(top, #cce3f4, #c0d7ea);
-  background-image: linear-gradient(to bottom, #cce3f4, #c0d7ea);
+  background-image:    -moz-linear-gradient(top, #cce3f4, #c0d7ea);
+  background-image:   linear-gradient(to bottom, #cce3f4, #c0d7ea);
 }
-.btn-preview:hover, .btn-preview:focus {
+#page-buttons .btn-preview:hover,
+#page-buttons .btn-preview:focus {
   background-color: #abd5f4;
-  background-image: -moz-linear-gradient(top, #abd5f4, #a7cee9); 
   background-image: -webkit-linear-gradient(top, #abd5f4, #a7cee9);
-  background-image: linear-gradient(to bottom, #abd5f4, #a7cee9);
+  background-image:    -moz-linear-gradient(top, #abd5f4, #a7cee9);
+  background-image:   linear-gradient(to bottom, #abd5f4, #a7cee9);
 }
-.btn-discard, .btn-cancel { 
-  background-color: #f2d2c6; 
-  background-image: -moz-linear-gradient(top, #f2d2c6, #efc6b7); 
+#page-buttons .btn-discard,
+#page-buttons .btn-cancel {
+  background-color: #f2d2c6;
   background-image: -webkit-linear-gradient(top, #f2d2c6, #efc6b7);
-  background-image: linear-gradient(to bottom, #f2d2c6, #efc6b7);
+  background-image:    -moz-linear-gradient(top, #f2d2c6, #efc6b7);
+  background-image:   linear-gradient(to bottom, #f2d2c6, #efc6b7);
 }
-.btn-discard:hover, .btn-discard:focus, 
-.btn-cancel:hover, .btn-cancel:focus {
+#page-buttons .btn-discard:hover,
+#page-buttons .btn-discard:focus, 
+#page-buttons .btn-cancel:hover,
+#page-buttons .btn-cancel:focus {
   background-color: #f8b8a0;
-  background-image: -moz-linear-gradient(top, #f8b8a0, #f8a688); 
   background-image: -webkit-linear-gradient(top, #f8b8a0, #f8a688);
-  background-image: linear-gradient(to bottom, #f8b8a0, #f8a688);
+  background-image:    -moz-linear-gradient(top, #f8b8a0, #f8a688);
+  background-image:   linear-gradient(to bottom, #f8b8a0, #f8a688);
 }
 
 .page-content .talkpage { font-size: .857em; padding: .25em 15px; }
@@ -323,7 +329,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #content #ace_content .ace_warning,
 #content #ace_content .ace_error { background-image: none; }
 
-@media screen and (max-width: 890px) { 
+@media screen and (max-width: 890px) {
   #page-buttons a, #page-buttons button { font-size: 14px; }
 }
 
@@ -395,10 +401,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #content-fields .localized { width: 49%; float: right; }
 
 #content-fields .approved .boxed { padding: 25px; }
-#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px; 
-  background: -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);  
+#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px;
+  background: -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
   background: -webkit-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background: linear-gradient(to top,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);  
+  background: linear-gradient(to top,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
 }
 
 #trans-description,
@@ -468,7 +474,7 @@ td.diff_header { text-align: right; }
 #delete-revision form { margin: 20px 0 0; }
 
 /* WYSIWYG-specific styles */
-.ui-autocomplete { 
+.ui-autocomplete {
   z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
   max-height: 200px;
   overflow: auto;
@@ -554,8 +560,8 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl #tool-menus, 
 .html-rtl #tool-menus ul li.menu,  
 .html-rtl #page-buttons li, 
-.html-rtl #article-nav { 
-  float: left; 
+.html-rtl #article-nav {
+  float: left;
 }
 
 /* then a step to the right... */
@@ -574,8 +580,8 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl .description .approved, 
 .html-rtl .editing .title, 
 .html-rtl .change-locale, 
-.html-rtl .editing .title h1 { 
-  float: right; 
+.html-rtl .editing .title h1 {
+  float: right;
 }
 
 .html-rtl #utility .user-state li { border-left: 0; margin-left: 0; padding-left: 0; border-right: 1px solid; margin-right: 5px; padding-right: 8px; }
