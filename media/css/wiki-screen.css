@@ -402,9 +402,9 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 #content-fields .approved .boxed { padding: 25px; }
 #content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px;
-  background: -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
   background: -webkit-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background: linear-gradient(to top,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
+  background:    -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
+  background:         linear-gradient(to top,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
 }
 
 #trans-description,
@@ -436,13 +436,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .no-details details summary { cursor: pointer; display: block; margin: 10px 0 30px; }
 
 /* Revision diffs */
-.revision-diff dt {
-  clear: both;
-  font-style: normal;
-  font-weight: 700;
-  padding-top: .5em;
-  border-top: 1px dotted #ccc;
-}
+.revision-diff dt { clear: both; font-style: normal; font-weight: 700; padding-top: .5em; border-top: 1px dotted #ccc; }
 .revision-diff dd { margin: 0 0 .5em; }
 .revision-diff .rev-from { width: 49%; float: left; }
 .revision-diff .rev-to { width: 49%; float: right; }
@@ -464,8 +458,7 @@ td.diff_header { text-align: right; }
 /* WYSIWYG-specific styles */
 .ui-autocomplete {
   z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
-  max-height: 200px;
-  overflow: auto;
+  max-height: 200px; overflow: auto;
 }
 .cke_skin_kuma .cke_rcombo .cke_text { width: 130px !important; }
 .cke_skin_kuma .cke_rcombopanel { height: 280px !important; }
@@ -501,7 +494,7 @@ table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
 
 .article .prewrong pre { border: 1px dashed #ac6262; background: #fbeded; color: #8a4e4e; }
 .wrong { margin: 0 0 1.5em; padding: 5px; background: #fbeded; border: solid 1px #ac6262; color: #6d675f; }
-.wrong-inline { border: 1px solid #ac6262; padding: 0 3px 0 3px; background: #fbeded; color: #6d675f; }
+.wrong-inline { border: 1px solid #ac6262; padding: 0 3px; background: #fbeded; color: #6d675f; }
 .article .wrong-source-code { color: #8a4e4e; }
 .article .right-source-code { color: #537d46; }
 div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
