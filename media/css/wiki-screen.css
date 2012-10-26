@@ -82,6 +82,7 @@ img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
 /* @Layout (wiki is liquid) *********/
 .wrap { position: relative; width: 95%; min-width: 760px; max-width: 1200px; padding: 0 10px; margin: 0 auto; }
 #content { border-top: 0; }
+
 .page-content { background: #fff; min-height: 300px; }
 
 textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
@@ -269,7 +270,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 #page-buttons .btn-save {
   background-color: #d7eca1;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(0, #d7eca1), to(100%, #cce390));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#d7eca1), to(#cce390));
   background-image: -webkit-linear-gradient(top, #d7eca1, #cce390);
   background-image:    -moz-linear-gradient(top, #d7eca1, #cce390);
   background-image:   linear-gradient(to bottom, #d7eca1, #cce390);
@@ -443,24 +444,12 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   padding-top: .5em;
   border-top: 1px dotted #ccc;
 }
-
 .revision-diff dd { margin: 0 0 .5em; }
-
 .revision-diff .rev-from { width: 49%; float: left; }
-
 .revision-diff .rev-to { width: 49%; float: right; }
-
 .revision-diff h3 { font-weight: 700; margin: 5px 0 0; }
 
-table.diff {
-  background: #fff;
-  border: 1px solid #ccc;
-  clear: both;
-  margin: 5px 0 15px;
-  width: 100%;
-  font-family: "Courier New", "Andale Mono", monospace;
-}
-
+table.diff { background: #fff; border: 1px solid #ccc; clear: both; margin: 5px 0 15px; width: 100%; font-family: "Courier New", "Andale Mono", monospace; }
 td.diff_header { text-align: right; }
 
 .diff_next { background-color: #c0c0c0; }
