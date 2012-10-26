@@ -6,6 +6,35 @@
 .dashboard tbody { white-space: no-wrap; overflow: hidden; }
 .dashboard #revisions-compare { display: block; width: 100%; }
 
+.dashboard #revisions-table tr {
+    transition-property: all;
+    transition-duration: .5s;
+}
+.dashboard #revisions-table tr:hover {
+    background-image: -moz-linear-gradient(top, #CAE1F4, #EEEEEE);
+    cursor: pointer;
+}
+
+.dashboard div.DTS div.dataTables_scrollHead {
+    background-image: -moz-linear-gradient(top, #424F5A, #6A7B86);
+    color: #fff;
+}
+
+.dashboard table.dataTable tr.odd {
+    background-image: -moz-linear-gradient(top, #D4DDE4, #EAEFF2);
+}
+
+.dashboard .dataTables_info {
+    float: none;
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 0.8em;
+}
+
+.dashboard table.dataTable thead th {
+    pointer-events: none;
+}
+
 /* L10n and Contributor Dashboards */
 
 .dashboards table {
