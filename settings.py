@@ -344,7 +344,7 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
 
 USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = SITE_URL + MEDIA_URL + 'img/avatar-default.png'
+DEFAULT_AVATAR = MEDIA_URL + 'img/avatar-default.png'
 AVATAR_SIZE = 48  # in pixels
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes

@@ -42,7 +42,7 @@ USER_DOCS_ACTIVITY_FEED_CACHE_TIMEOUT = getattr(settings,
 USER_DOCS_ACTIVITY_FEED_TIMEZONE = getattr(settings,
         'USER_DOCS_ACTIVITY_FEED_TIMEZONE', 'America/Phoenix')
 DEFAULT_AVATAR = getattr(settings,
-        'DEFAULT_AVATAR', 'http://developer.mozilla.org/media/img/avatar-default.png')
+        'DEFAULT_AVATAR', settings.MEDIA_URL + 'img/avatar-default.png')
 
 
 class ModelBase(caching.base.CachingMixin, models.Model):
