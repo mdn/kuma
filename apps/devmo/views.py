@@ -62,12 +62,7 @@ def profile_view(request, username):
     demos_page = demos_paginator.page(page_number)
 
     wiki_activity, docs_feed_items = None, None
-    if waffle.flag_is_active(request, 'kumawiki'):
-        wiki_activity = profile.wiki_activity()
-    else:
-        docs_feed_items = UserDocsActivityFeed(user.username).items
-        if docs_feed_items is not False:
-            docs_feed_items = docs_feed_items[:DOCS_ACTIVITY_MAX_ITEMS]
+    wiki_activity = profile.wiki_activity()
 
     return jingo.render(request, 'devmo/profile.html', dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,

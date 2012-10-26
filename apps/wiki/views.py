@@ -289,7 +289,6 @@ def get_seo_description(content):
     return seo_summary
 
 
-@waffle_flag('kumawiki')
 @require_http_methods(['GET', 'HEAD'])
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
@@ -535,7 +534,6 @@ def document(request, document_slug, document_locale):
     return set_common_headers(response)
 
 
-@waffle_flag('kumawiki')
 @prevent_indexing
 @process_document_path
 def revision(request, document_slug, document_locale, revision_id):
@@ -547,7 +545,6 @@ def revision(request, document_slug, document_locale, revision_id):
     return jingo.render(request, 'wiki/revision.html', data)
 
 
-@waffle_flag('kumawiki')
 @require_GET
 def list_documents(request, category=None, tag=None):
     """List wiki documents."""
@@ -574,7 +571,6 @@ def list_documents(request, category=None, tag=None):
                          'category': category,
                          'tag': tag})
 
-@waffle_flag('kumawiki')
 @require_GET
 def list_templates(request):
     """Returns listing of all templates"""
@@ -585,7 +581,6 @@ def list_templates(request):
                          'is_templates': True})
 
 
-@waffle_flag('kumawiki')
 @require_GET
 def list_documents_for_review(request, tag=None):
     """Lists wiki documents with revisions flagged for review"""
@@ -598,7 +593,6 @@ def list_documents_for_review(request, tag=None):
                          'tag_name': tag})
 
 
-@waffle_flag('kumawiki')
 @login_required
 @check_readonly
 @prevent_indexing
@@ -704,7 +698,6 @@ def new_document(request):
                          'parent_path': parent_path})
 
 
-@waffle_flag('kumawiki')
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in
                  # Document.allows_editing_by.
@@ -989,7 +982,6 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return response
 
 
-@waffle_flag('kumawiki')
 def ckeditor_config(request):
     """Return ckeditor config from database"""
     default_config = EditorToolbar.objects.filter(name='default').all()
@@ -1002,7 +994,6 @@ def ckeditor_config(request):
                        mimetype="application/x-javascript")
 
 
-@waffle_flag('kumawiki')
 @login_required
 @require_POST
 def preview_revision(request):
@@ -1024,7 +1015,6 @@ def preview_revision(request):
     return jingo.render(request, 'wiki/preview.html', data)
 
 
-@waffle_flag('kumawiki')
 @require_GET
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
@@ -1065,7 +1055,6 @@ def autosuggest_documents(request):
     return HttpResponse(data, mimetype='application/json')
 
 
-@waffle_flag('kumawiki')
 @require_GET
 @process_document_path
 @prevent_indexing
@@ -1089,7 +1078,6 @@ def document_revisions(request, document_slug, document_locale):
                         {'revisions': revs_out, 'document': doc})
 
 
-@waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.review_revision')
 @process_document_path
@@ -1138,7 +1126,6 @@ def review_revision(request, document_slug, document_locale, revision_id):
     return jingo.render(request, template, data)
 
 
-@waffle_flag('kumawiki')
 @require_GET
 @process_document_path
 @prevent_indexing
@@ -1170,7 +1157,6 @@ def compare_revisions(request, document_slug, document_locale):
     return response
 
 
-@waffle_flag('kumawiki')
 @login_required
 @process_document_path
 def select_locale(request, document_slug, document_locale):
@@ -1180,7 +1166,6 @@ def select_locale(request, document_slug, document_locale):
     return jingo.render(request, 'wiki/select_locale.html', {'document': doc})
 
 
-@waffle_flag('kumawiki')
 @require_http_methods(['GET', 'POST'])
 @login_required
 @process_document_path
@@ -1348,7 +1333,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
                          'specific_slug': slug_dict['specific'], 'parent_slug': slug_dict['parent']})
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @login_required
 @process_document_path
@@ -1360,7 +1344,6 @@ def watch_document(request, document_slug, document_locale):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @login_required
 @process_document_path
@@ -1372,7 +1355,6 @@ def unwatch_document(request, document_slug, document_locale):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def watch_locale(request):
@@ -1383,7 +1365,6 @@ def watch_locale(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def unwatch_locale(request):
@@ -1393,7 +1374,6 @@ def unwatch_locale(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def watch_approved(request):
@@ -1406,7 +1386,6 @@ def watch_approved(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @login_required
 def unwatch_approved(request):
@@ -1419,7 +1398,6 @@ def unwatch_approved(request):
     return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
-@waffle_flag('kumawiki')
 @require_GET
 @process_document_path
 @prevent_indexing
@@ -1448,7 +1426,6 @@ def json_view(request, document_slug=None, document_locale=None):
     return HttpResponse(data, mimetype='application/json')
 
 
-@waffle_flag('kumawiki')
 @require_GET
 @process_document_path
 @prevent_indexing
@@ -1471,7 +1448,6 @@ def code_sample(request, document_slug, document_locale, sample_id):
     return response
 
 
-@waffle_flag('kumawiki')
 @require_POST
 @process_document_path
 def helpful_vote(request, document_slug, document_locale):
@@ -1508,7 +1484,6 @@ def helpful_vote(request, document_slug, document_locale):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
-@waffle_flag('kumawiki')
 @login_required
 @check_readonly
 def revert_document(request, document_path, revision_id):
@@ -1530,7 +1505,6 @@ def revert_document(request, document_path, revision_id):
                                 args=[document.full_path]))
     
 
-@waffle_flag('kumawiki')
 @login_required
 @permission_required('wiki.delete_revision')
 @check_readonly

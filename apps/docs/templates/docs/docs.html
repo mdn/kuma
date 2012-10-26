@@ -123,7 +123,6 @@
     </div>
     {% endif %}
 
-    {% if waffle.flag('kumawiki') %}
     {% set review_flags = (
         ('technical', _('Needs Technical Review')),
         ('editorial', _('Needs Editorial Review')),
@@ -143,7 +142,6 @@
         </div>
         {% endif %}
     {% endfor %}
-    {% endif %}
 
     {% if dotd %}
     <div class="module hfeed" id="doc-of-the-day">
