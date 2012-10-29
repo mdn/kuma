@@ -36,17 +36,6 @@ Hacking on bleeding edge features
 =================================
 To hack on the features not yet ready for production you have to enable them first.
 
-Enable kumawiki in waffle
--------------------------
-
-The Kuma wiki is disabled by default using `django-waffle`_. To test out the wiki,
-open the django admin interface (``http://.../admin/``) and add a ``kumawiki`` flag
-in the Waffle section.
-
-Note that features disabled by a flag will show up as a 404 error.
-
-.. _django-waffle: https://github.com/jsocol/django-waffle
-
 Enable Kumascript
 -----------------
 
