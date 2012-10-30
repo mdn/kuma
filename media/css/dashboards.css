@@ -4,7 +4,10 @@
 #revisions-table th, #revisions-table td { width: 25%; }
 */
 .dashboard tbody { white-space: no-wrap; overflow: hidden; }
-.dashboard #revisions-compare { display: block; width: 100%; }
+
+.dashboard #action-bar { position: relative; }
+
+.dashboard #revisions-compare { width: 100%; }
 
 .dashboard #revisions-table tr {
     transition-property: all;
