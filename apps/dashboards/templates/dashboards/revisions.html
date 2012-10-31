@@ -27,6 +27,19 @@
     </table>
     </section>
     <section id="revisions-compare">
+      <section id="action-bar">
+      <ul id="page-buttons">
+        <li> <a id="revert" href="#">Revert</a> </li>
+        <li> <a id="view" href="#">View Page</a> </li>
+        <li class="page-edit"> <a id="edit" href="#">Edit Page</a> </li>
+        <li class="page-history"> <a id="history" href="#">History</a> </li>
+      </ul>
+      </section>
+
+      <h2>Revision Diff</h2>
+      <section id="diff-view">
+        <p>Click an item in the revision list above to see details.</p>
+      </section>
     </section>
   </article>
     </div>
@@ -38,40 +51,63 @@
 {% block js %}
 <script>
 $(document).ready(function(){
-  var $revTable = $("#revisions-table"),
-      $revTableBody = $("tbody", $revTable);
+  var $revTable       = $('#revisions-table'),
+      $revTableBody   = $('tbody', $revTable),
+      $actionBar      = $('#action-bar'),
+      lastSelected;
+  $actionBar.hide();
   $revTableBody.click(function(e){
-    var data = $revTable.fnGetData(e.target.parentNode),
-        $revCompare = $("#revisions-compare");
-    console.log(data);
-    $revCompare.html("Loading ...");
-    $revCompare.load(data.compare_url, function(resp, status, xhr){
-      if (status == "error") {
-        $revCompare.html("Error: " + xhr.status + " " + xhr.statusText);
+    var parent        =   e.target.parentNode,
+        data          =   $revTable.fnGetData(parent),
+        $diffView     =   $('#diff-view'),
+        $revertLink   =   $('a#revert'),
+        $viewLink     =   $('a#view'),
+        $editLink     =   $('a#edit'),
+        $historyLink  =   $('a#history');
+
+    // Manage selection colors
+    if(lastSelected) {
+      lastSelected.removeClass('selected')
+    }
+    $(parent).addClass('selected');
+    lastSelected = $(parent);
+
+    // Load diff content
+    $('a', $actionBar).attr('href', '');
+    $actionBar.show();
+    $diffView.html('Loading ...');
+    $diffView.load(data.compare_url, function(resp, status, xhr){
+      if (status == 'error') {
+        $diffView.html('Error: ' + xhr.status + ' ' + xhr.statusText);
+      } else {
+        $revertLink.attr('href', data.revert_url);
+        $viewLink.attr('href', data.doc_url);
+        $editLink.attr('href', data.edit_url);
+        $historyLink.attr('href', data.history_url);
       }
     });
   });
   $revTable.dataTable({
-    "bPaginate": false,
-    "bLengthChange": false,
-    "bFilter": false,
-    "bSort": false,
-    "bAutoWidth": false,
-    "aoColumns": [
-      {"mData": "title"},
-      {"mData": "time"},
-      {"mData": "date"},
-      {"mData": "creator"},
+    'bPaginate': false,
+    'bLengthChange': false,
+    'bFilter': false,
+    'bSort': false,
+    'bAutoWidth': false,
+    'aoColumns': [
+      {'mData': 'title'},
+      {'mData': 'time'},
+      {'mData': 'date'},
+      {'mData': 'creator'},
     ],
-    "sScrollY": "300px",
-    "sDom": "frtiS",
-    "oScroller":{
-      "loadingIndicator": true,
-      "serverWait": 500
+    'sScrollY': '300px',
+    'sDom': 'frtiS',
+    'oScroller':{
+      'loadingIndicator': true,
+      'serverWait': 500
     },
-    "bServerSide": true,
-    "bDeferRender": true,
-    "sAjaxSource": "/en-US/revisions",
+    'bServerSide': true,
+    'bDeferRender': true,
+    'sAjaxSource': '/en-US/revisions',
   });
 });
 </script>
