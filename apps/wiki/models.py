@@ -35,7 +35,7 @@ from sumo.urlresolvers import reverse, split_path
 
 from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
-from taggit.utils import parse_tags
+from taggit.utils import parse_tags, edit_string_for_tags
 
 from wiki import TEMPLATE_TITLE_PREFIX
 import wiki.content
@@ -611,6 +611,18 @@ class Document(NotificationsMixin, ModelBase):
     #    defined in the respective classes below. Use them as in
     #    test_firefox_versions.
 
+    def calculate_etag(self, section_id=None):
+        """Calculate an etag-suitable hash for document content or a section"""
+        if not section_id:
+            content = self.html
+        else:
+            content = (wiki.content
+                       .parse(self.html)
+                       .extractSection(section_id)
+                       .serialize())
+        return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
+
+
     @property
     def is_rendering_scheduled(self):
         """Does this have a rendering scheduled?"""
@@ -869,6 +881,51 @@ class Document(NotificationsMixin, ModelBase):
         revision.make_current()
         return revision
 
+    def revise(self, user, data, section_id=None):
+        """Given a dict of changes to make, build and save a new Revision to
+        revise this document"""
+        curr_rev = self.current_revision
+        new_rev = Revision(creator=user, document=self, content=self.html)
+        for n in ('title', 'slug', 'show_toc', 'category'):
+            setattr(new_rev, n, getattr(self, n))
+        if new_rev.show_toc is None:
+            # HACK: show_toc cannot be null, but there's no default.
+            new_rev.show_toc = True
+
+        # Accept optional field edits...
+
+        new_title = data.get('title', False)
+        new_rev.title = (new_title and new_title or self.title)
+
+        new_tags = data.get('tags', False)
+        new_rev.tags = (new_tags and new_tags or
+                        edit_string_for_tags(self.tags.all()))
+
+        new_review_tags = data.get('review_tags', False)
+        if new_review_tags:
+            review_tags = new_review_tags
+        elif curr_rev:
+            review_tags = edit_string_for_tags(curr_rev.review_tags.all())
+        else:
+            review_tags = ''
+
+        new_rev.summary = data.get('summary', '')
+
+        # Accept HTML edits, optionally by section
+        new_html = data.get('content', data.get('html', False))
+        if new_html:
+            if not section_id:
+                new_rev.content = new_html
+            else:
+                new_rev.content = (wiki.content.parse(self.html)
+                                   .replaceSection(section_id, new_html)
+                                   .serialize())
+
+        # Finally, commit the revision changes and return the new rev.
+        new_rev.save()
+        new_rev.review_tags.set(*parse_tags(review_tags))
+        return new_rev
+ 
     def save(self, *args, **kwargs):
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
 
@@ -1465,6 +1522,11 @@ class Revision(ModelBase):
             null=True, db_index=True, unique=True)
     is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
             help_text="Did this revision come from MindTouch?")
+
+    def get_absolute_url(self):
+        """Build the absolute URL to this revision"""
+        return reverse('wiki.revision', locale=self.document.locale,
+                       args=[self.document.full_path, self.pk])
 
     def _based_on_is_clean(self):
         """Return a tuple: (the correct value of based_on, whether the old
