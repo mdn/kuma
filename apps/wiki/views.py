@@ -784,7 +784,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
-                    doc.schedule_rendering('max-age=0')
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
@@ -1287,7 +1286,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
                 if rev_form.is_valid():
                     doc = doc_form.save(parent_doc)
-                    doc.schedule_rendering('max-age=0')
 
                     if which_form == 'doc':
                         url = urlparams(reverse('wiki.edit_document',
