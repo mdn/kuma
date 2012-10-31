@@ -1136,13 +1136,15 @@ def compare_revisions(request, document_slug, document_locale):
     """
     doc = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
+
     if 'from' not in request.GET or 'to' not in request.GET:
         raise Http404
 
     from_id = smart_int(request.GET.get('from'))
     to_id = smart_int(request.GET.get('to'))
-    revision_from = get_object_or_404(Revision, document=doc, id=from_id)
-    revision_to = get_object_or_404(Revision, document=doc, id=to_id)
+
+    revision_from = get_object_or_404(Revision, id=from_id)
+    revision_to = get_object_or_404(Revision, id=to_id)
 
     context = {'document': doc, 'revision_from': revision_from,
                          'revision_to': revision_to}
