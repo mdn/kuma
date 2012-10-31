@@ -1,10 +1,10 @@
 # block hotlinking to .woff and .eof files
 RewriteCond "%{HTTP_REFERER}" "!https?://.*mozilla\.(com|org)/.*$"
-RewriteRule \.(woff|eot)$ - [F,NC,L]
+RewriteRule \.(woff|eot)$ - [F,NC,L,E=!CORS]
 
 <FilesMatch "\.(ttf|woff|eot)$">
-    Header append vary "Referer"
+    Header append vary "Origin"
     ExpiresActive On
     ExpiresDefault "access plus 2 weeks"
-    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Origin "*" env=CORS
 </FilesMatch>
