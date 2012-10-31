@@ -27,6 +27,16 @@
     </table>
     </section>
     <section id="revisions-compare">
+      <section id="action-bar">
+      <ul id="page-buttons">
+        <li> <a id="revert" href="#">Revert</a> </li>
+        <li> <a id="view" href="#">View Page</a> </li>
+        <li class="page-edit"> <a id="edit" href="#">Edit Page</a> </li>
+        <li class="page-history"> <a id="history" href="#">History</a> </li>
+      </ul>
+      </section>
+      <section id="diff-view">
+      </section>
     </section>
   </article>
     </div>
@@ -38,16 +48,28 @@
 {% block js %}
 <script>
 $(document).ready(function(){
-  var $revTable = $("#revisions-table"),
-      $revTableBody = $("tbody", $revTable);
+  var $revTable       = $("#revisions-table"),
+      $revTableBody   = $("tbody", $revTable),
+      $actionBar      = $('#action-bar');
+  $actionBar.hide();
   $revTableBody.click(function(e){
-    var data = $revTable.fnGetData(e.target.parentNode),
-        $revCompare = $("#revisions-compare");
-    console.log(data);
-    $revCompare.html("Loading ...");
-    $revCompare.load(data.compare_url, function(resp, status, xhr){
+    var data          =   $revTable.fnGetData(e.target.parentNode),
+        $diffView     =   $("#diff-view"),
+        $revertLink   =   $('a#revert'),
+        $viewLink     =   $('a#view'),
+        $editLink     =   $('a#edit'),
+        $historyLink  =   $('a#history');
+    $('a', $actionBar).attr('href', '');
+    $actionBar.show();
+    $diffView.html("Loading ...");
+    $diffView.load(data.compare_url, function(resp, status, xhr){
       if (status == "error") {
-        $revCompare.html("Error: " + xhr.status + " " + xhr.statusText);
+        $diffView.html("Error: " + xhr.status + " " + xhr.statusText);
+      } else {
+        $revertLink.attr('href', data.revert_url);
+        $viewLink.attr('href', data.doc_url);
+        $editLink.attr('href', data.edit_url);
+        $historyLink.attr('href', data.history_url);
       }
     });
   });
