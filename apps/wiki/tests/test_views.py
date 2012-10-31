@@ -2355,21 +2355,35 @@ class DeferredRenderingViewTests(TestCaseBase):
         p = pq(resp.content)
         eq_(1, p.find('#doc-render-raw-fallback').length)
 
+    @attr('schedule_rendering')
     @mock.patch_object(Document, 'schedule_rendering')
     @mock.patch('wiki.kumascript.get')
-    def test_schedule_render_on_edit(self, mock_kumascript_get, mock_document_schedule_rendering):
+    def test_schedule_rendering(self, mock_kumascript_get, mock_document_schedule_rendering):
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
         self.client.login(username='testuser', password='testpass')
+
         data = new_document_data()
         data.update({
             'form': 'rev',
             'content': 'This is an update',
         })
-        resp = self.client.post(reverse('wiki.edit_document',
-                                args=[self.d.full_path]), data)
-        eq_(302, resp.status_code)
 
+        edit_url = reverse('wiki.edit_document', args=[self.d.full_path])
+        resp = self.client.post(edit_url, data)
+        eq_(302, resp.status_code)
+        ok_(mock_document_schedule_rendering.called)
+
+        mock_document_schedule_rendering.reset_mock()
+
+        data.update({
+            'form': 'both',
+            'content': 'This is a translation',
+        })
+        translate_url = (reverse('wiki.translate', args=[data['slug']],
+                                 locale='en-US') + '?tolocale=fr')
+        response = self.client.post(translate_url, data)
+        eq_(302, response.status_code)
         ok_(mock_document_schedule_rendering.called)
 
 
