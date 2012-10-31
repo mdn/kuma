@@ -92,7 +92,7 @@
       {% if profile.allows_editing_by(request.user) %}
           <p class="edit">
               <a href="{{ url('authkeys.list') }}" class="button">{{_("Manage API Keys")}}</a>
-              <a href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">{{_("Edit Profile")}}</a>
+              <a id="edit-profile" href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">{{_("Edit Profile")}}</a>
           </p>
       {% endif %}
     </section>

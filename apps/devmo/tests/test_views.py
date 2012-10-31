@@ -163,7 +163,7 @@ class ProfileViewsTest(TestCase):
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
-        edit_button = doc.find('#profile-head .edit .button')
+        edit_button = doc.find('#profile-head .edit #edit-profile')
         eq_(1, edit_button.length)
 
         url = edit_button.attr('href')
