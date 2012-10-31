@@ -1,10 +1,9 @@
-/* Revision dashboard  *********
-.dashboard tbody { display: block; height: 300px; overflow: auto; }
-
-#revisions-table th, #revisions-table td { width: 25%; }
-*/
+/* Revision dashboard  ********* */
 .dashboard tbody { white-space: no-wrap; overflow: hidden; }
-.dashboard #revisions-compare { display: block; width: 100%; }
+
+.dashboard #action-bar { position: relative; }
+
+.dashboard #revisions-compare { width: 100%; }
 
 .dashboard #revisions-table tr {
     transition-property: all;
@@ -13,6 +12,10 @@
 .dashboard #revisions-table tr:hover {
     background-image: -moz-linear-gradient(top, #CAE1F4, #EEEEEE);
     cursor: pointer;
+}
+.dashboard #revisions-table tr.selected {
+    font-weight: bold;
+    background-image: -moz-linear-gradient(top, #D7D3C8, #F6F4EC);
 }
 
 .dashboard div.DTS div.dataTables_scrollHead {
@@ -33,6 +36,12 @@
 
 .dashboard table.dataTable thead th {
     pointer-events: none;
+}
+
+.dashboard #page-buttons {
+    position: static;
+    margin: 20px 0;
+    width: 100%;
 }
 
 /* L10n and Contributor Dashboards */
