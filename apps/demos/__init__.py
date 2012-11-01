@@ -244,15 +244,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     },
     {
         "tag_name": "challenge:2012:november",
-        "title": _("November 2012 Dev Derby Challenge - Full Screen API"),
-        "short_title": _("Full Screen API"),
+        "title": _("November 2012 Dev Derby Challenge - Fullscreen API"),
+        "short_title": _("Fullscreen API"),
         "dateline": _("November 2012"),
         "short_dateline": _("November"),
         "tagline": _("Know no bounds"),
-        "summary": _("With the Full Screen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"),
-        "description": _("With the Full Screen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"),
+        "summary": _("With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"),
+        "description": _("With the Fullscreen API, you can escape the confines of the browser window. You can even detect full screen state changes and style full screen pages specially. Talk about immersive!"),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Fullscreen API lets you make your Web application&mdash;or just part of it&mdash;front and center, free from the toolbars and the menus that usually get in the way. But this is about more than just real estate. The Fullscreen API also also helps you detect when users toggle fullscreen mode and even style your content according to those changes. The possibilities really are endless.</p>
+<p>This important new technology has already been put to good use in desktop applications like <a href="https://developer.mozilla.org/en-US/demos/detail/bananabread">BananaBread</a>, but what about mobile? As our very own Rob Hawkes and Christian Heilmann explain in a recent talk, the Fullscreen API can be used to <a href="https://www.youtube.com/watch?v=seYKzIMRvns#t=28m40s">build mobile apps that feel truly native</a>. Your users may not even know the difference. And because Firefox OS and Firefox for Android already support the Fullscreen API, you can begin using it right now.</p>
+<p>New to all this? No problem. As always, we have you covered with some of the best documentation out there. Beginners might like the <a href="https://hacks.mozilla.org/2012/01/using-the-fullscreen-api-in-web-browsers/">introduction</a> we shared on the Mozilla Hacks blog earlier this year, and those looking for more information will probably appreciate the <a href="https://developer.mozilla.org/en-US/docs/DOM/Using_fullscreen_mode">additional depth</a> provided on Mozilla Developer Network.</p>
+<p>As web developers, we often talk about building engaging experiences for our users. Doing so has never been more possible. What can you do with the Fullscreen API?</p>"""),
     },
     {
         "tag_name": "challenge:2012:december",
@@ -263,6 +266,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Unplug"),
         "summary": _("With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."),
         "description": _("With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:january",
+        "title": _("January 2012 Dev Derby Challenge - Drag and Drop"),
+        "short_title": _("Drag and Drop"),
+        "dateline": _("January 2012"),
+        "short_dateline": _("January"),
+        "tagline": _("Drop demos here"),
+        "summary": _("The Drag and Drop API brings an age-old interaction to the web, making rich, natural, and familiar user experiences possible."),
+        "description": _("The Drag and Drop API brings an age-old interaction to the web, making rich, natural, and familiar user experiences possible."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
