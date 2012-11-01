@@ -64,7 +64,7 @@ from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import (DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm,
-                        AttachmentRevisionForm)
+                        AttachmentRevisionForm, TreeMoveForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
                          DocumentRenderingInProgress,
@@ -1120,6 +1120,47 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     response['x-frame-options'] = 'SAMEORIGIN'
     return response
 
+
+@require_http_methods(['GET', 'POST'])
+@permission_required('wiki.move_tree')
+@process_document_path
+@check_readonly
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+def move(request, document_slug, document_locale):
+    """Move a tree of pages"""
+    doc = get_object_or_404(
+        Document, locale=document_locale, slug=document_slug)
+
+    descendants = doc.get_descendants()
+
+    if request.method == 'POST':
+        form = TreeMoveForm(initial=request.GET, data=request.POST)
+        if form.is_valid():
+            conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
+            if conflicts:
+                return jingo.render(request, 'wiki/move_document.html', {
+                    'form': form,
+                    'document': doc,
+                    'descendants':  descendants,
+                    'descendants_count': len(descendants),
+                    'conflicts': conflicts,
+                })
+            old_hierarchy, new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
+            doc._move_tree(old_hierarchy, new_hierarchy, request.user, prepend)
+
+            return redirect(reverse('wiki.document',
+                                    args=(form.cleaned_data['slug'],),
+                                    locale=doc.locale))
+    else:
+        form = TreeMoveForm()
+
+    return jingo.render(request, 'wiki/move_document.html', {
+        'form': form,
+        'document': doc,
+        'descendants':  descendants,
+        'descendants_count': len(descendants),
+    })
+    
 
 def ckeditor_config(request):
     """Return ckeditor config from database"""
