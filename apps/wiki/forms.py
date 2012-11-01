@@ -56,6 +56,7 @@ OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
 MIME_TYPE_INVALID = _lazy(u'Files of this type are not permitted.')
+MOVE_REQUIRED = _lazy(u"Changing this document's slug requires moving it and its children.")
 
 
 class DocumentForm(forms.ModelForm):
@@ -298,7 +299,21 @@ class RevisionForm(forms.ModelForm):
         return value
 
     def clean_slug(self):
-        return self._clean_collidable('slug')
+        cleaned_slug = self._clean_collidable('slug')
+
+        # If they're trying to change an existing slug, and the
+        # document has children, we need to use the page-move
+        # interface.
+        #
+        # Detecting this can be slightly cumbersome because there's no
+        # guarantee that we have a full Revision instance yet, that it
+        # has a Document yet, or that the Document has been saved yet.
+        if self.instance and \
+           self.instance.document_id and \
+           (cleaned_slug != self.instance.slug) and \
+           self.instance.document.has_children():
+            raise forms.ValidationError(MOVE_REQUIRED)
+        return cleaned_slug
 
     def clean_content(self):
         """Validate the content, performing any section editing if necessary"""
@@ -452,3 +467,12 @@ class AttachmentRevisionForm(forms.ModelForm):
         rev.mime_type = mime_type
 
         return rev
+
+class TreeMoveForm(forms.Form):
+    slug = StrippedCharField(min_length=1, max_length=255,
+                             widget=forms.TextInput(),
+                             label=_lazy(u'New slug:'),
+                             help_text=_lazy(u'New article URL'),
+                             error_messages={'required': SLUG_REQUIRED,
+                                             'min_length': SLUG_SHORT,
+                                             'max_length': SLUG_LONG})

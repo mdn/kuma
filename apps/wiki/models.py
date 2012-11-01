@@ -1000,17 +1000,26 @@ class Document(NotificationsMixin, ModelBase):
 
     def _tree_change(self, new_slug):
         """
-        Given a new slug to be assigned to this document, return the
-        resulting hierarchy that will appear in the slug (i.e.,
-        everything before the final '/'), and a boolean indicating
-        whether this is a prepend operation.
+        Given a new slug to be assigned to this document, return a
+        3-tuple of ``(old_hierarchy, new_hierarchy, prepend)``,
+        representing the part of the URL which will be changing and
+        whether this involves prepending bits to the existing slug.
 
         """
-        old_hierarchy = '/'.join(self.slug.split('/')[:-1])
-        new_hierarchy = '/'.join(new_slug.split('/')[:-1])
-        if new_hierarchy and not old_hierarchy:
-            return new_hierarchy, True
-        return new_hierarchy, False
+        # We can't do this in one unpack operation because it can
+        # ValueError if new or old URL is only one segment.
+        old_bits = self.slug.split('/')
+        old_title = old_bits.pop(-1)
+
+        new_bits = new_slug.split('/')
+        new_title = new_bits.pop(-1)
+
+        old_hierarchy = '/'.join(old_bits)
+        new_hierarchy = '/'.join(new_bits)
+
+        prepend = not old_hierarchy
+
+        return old_hierarchy, new_hierarchy, prepend
 
     def _tree_conflicts(self, new_slug):
         """
@@ -1026,8 +1035,7 @@ class Document(NotificationsMixin, ModelBase):
                 conflicts.append(existing)
         except Document.DoesNotExist:
             pass
-        old_hierarchy = '/'.join(self.slug.split('/')[:-1])
-        new_hierarchy, prepend = self._tree_change(new_slug)
+        old_hierarchy, new_hierarchy, prepend = self._tree_change(new_slug)
         for child in self.get_descendants():
             if prepend:
                 moved_slug = '/'.join([new_hierarchy, child.slug])

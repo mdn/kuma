@@ -1394,11 +1394,11 @@ class PageMoveTests(TestCase):
     def test_tree_change(self):
         d1 = document(title='Test tree change without prepend',
                       slug='move-tests/test-tree-change')
-        eq_(('foo/move-tests', False),
+        eq_(('move-tests', 'foo/move-tests', False),
             d1._tree_change('foo/move-tests/test-tree-change'))
         d2 = document(title='Test tree change with prepend',
                       slug='test-tree-change-prepend')
-        eq_(('foo', True),
+        eq_(('', 'foo', True),
             d2._tree_change('foo/test-tree-change-prepend'))
 
     def test_conflicts(self):
@@ -1444,6 +1444,31 @@ class PageMoveTests(TestCase):
 
         eq_([child_conflict.document],
             top_doc._tree_conflicts('moved/test-move-conflict-detection'))
+
+    def test_additional_conflicts(self):
+        top = revision(title='WebRTC',
+                       slug='WebRTC',
+                       content='WebRTC',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+        child1 = revision(title='WebRTC Introduction',
+                          slug='WebRTC/WebRTC_Introduction',
+                          content='WebRTC Introduction',
+                          is_approved=True,
+                          save=True)
+        child1_doc = child1.document
+        child1_doc.parent_topic= top_doc
+        child1_doc.save()
+        child2 = revision(title='Taking webcam photos',
+                          slug='WebRTC/Taking_webcam_photos',
+                          is_approved=True,
+                          save=True)
+        child2_doc = child2.document
+        child2_doc.parent_topic = top_doc
+        child2_doc.save()
+        eq_([],
+            top_doc._tree_conflicts('NativeRTC'))
 
     def test_preserve_tags(self):
             tags = "'moving', 'tests'"
