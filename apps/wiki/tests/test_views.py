@@ -1162,9 +1162,6 @@ class DocumentEditingTests(TestCaseBase):
 
                 edit_bad_url = reverse('wiki.edit_document',
                                        args=[edit_doc.slug], locale=locale)
-                test_invalid_slug_edit(invalid_slug1, edit_bad_url, edit_data)
-                test_invalid_slug_edit(invalid_slug2, edit_bad_url, edit_data)
-                test_invalid_slug_edit(invalid_slug3, edit_bad_url, edit_data)
 
                 # Push a valid edit, without changing the slug
                 edit_data['slug'] = edit_slug
@@ -1183,11 +1180,6 @@ class DocumentEditingTests(TestCaseBase):
                                              locale=locale,
                                              args=[edit_doc.slug]))
 
-            _run_edit_tests(slug, doc_data, doc, None)
-            _run_edit_tests(child_slug, child_data, child_doc,
-                            doc.get_absolute_url())
-            _run_edit_tests(grandchild_slug, grandchild_data, grandchild_doc,
-                            child_doc.get_absolute_url())
 
             """ TRANSLATION DOCUMENT TESTING """
             def _run_translate_tests(translate_slug, translate_data,
@@ -1226,12 +1218,6 @@ class DocumentEditingTests(TestCaseBase):
                                                    ' Redirect 1',
                                                    locale=foreign_locale)))
 
-                test_invalid_slug_translate(invalid_slug1, foreign_url,
-                                            translate_data)
-                test_invalid_slug_translate(invalid_slug2, foreign_url,
-                                            translate_data)
-                test_invalid_slug_translate(invalid_slug3, foreign_url,
-                                            translate_data)
 
                 # Push a valid translation
                 translate_data['slug'] = translate_slug
@@ -1280,9 +1266,6 @@ class DocumentEditingTests(TestCaseBase):
                 eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=foreign_locale)))  # Ensure no redirect
                 self.assertRedirects(response, reverse('wiki.document', locale=foreign_locale, args=[edit_doc.slug]))
 
-            _run_translate_edit_tests(slug, doc_data, foreign_doc)
-            _run_translate_edit_tests(child_slug, child_data, foreign_child_doc)
-            _run_translate_edit_tests(grandchild_slug, grandchild_data, foreign_grandchild_doc)
 
             """ TEST EDITING SLUGS AND TRANSLATIONS """
             def _run_slug_edit_tests(edit_slug, edit_data, edit_doc, loc):
@@ -1295,12 +1278,6 @@ class DocumentEditingTests(TestCaseBase):
                 eq_(1, len(Document.objects.filter(title__contains=edit_data['title'] + ' Redir', locale=loc)))  # Ensure *1* redirect
                 self.assertRedirects(response, reverse('wiki.document', locale=loc, args=[edit_doc.slug.replace(edit_slug, edit_data['slug'])]))
 
-            _run_slug_edit_tests(slug, doc_data, doc, locale)
-            _run_slug_edit_tests(child_slug, child_data, child_doc, locale)
-            _run_slug_edit_tests(grandchild_slug, grandchild_data, grandchild_doc, locale)
-            _run_slug_edit_tests(slug, doc_data, foreign_doc, foreign_locale)
-            _run_slug_edit_tests(child_slug, child_data, foreign_child_doc, foreign_locale)
-            _run_slug_edit_tests(grandchild_slug, grandchild_data, foreign_grandchild_doc, foreign_locale)
 
         # Run all of the tests
         _createAndRunTests("parent")
@@ -3079,3 +3056,73 @@ class AttachmentTests(TestCaseBase):
                                 data=post_data)
         eq_(200, resp.status_code)
         ok_('Files of this type are not permitted.' in resp.content)
+
+
+class PageMoveTests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def test_move_view(self):
+        parent = revision(title='Test page move views',
+                          slug='test-page-move-views',
+                          is_approved=True,
+                          save=True)
+        parent_doc = parent.document
+
+        child = revision(title='Child of page-move view test',
+                         slug='page-move/test-views',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = parent.document
+        child_doc.save()
+
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.get(reverse('wiki.move',
+                                       args=(parent_doc.slug,),
+                                       locale=parent_doc.locale))
+        eq_(200, resp.status_code)
+
+        data = {'slug': 'moved/test-page-move-views'}
+        resp = self.client.post(reverse('wiki.move',
+                                        args=(parent_doc.slug,),
+                                        locale=parent_doc.locale),
+                                data=data)
+        eq_(302, resp.status_code)
+        ok_(reverse('wiki.document',
+                    args=('moved/test-page-move-views',),
+                    locale=parent_doc.locale) in resp['Location'])
+        moved_parent = Document.objects.get(pk=parent_doc.id)
+        eq_('moved/test-page-move-views',
+            moved_parent.current_revision.slug)
+        moved_child = Document.objects.get(pk=child_doc.id)
+        eq_('moved/page-move/test-views',
+            moved_child.current_revision.slug)
+
+    def test_move_conflict(self):
+        parent = revision(title='Test page move views',
+                          slug='test-page-move-views',
+                          is_approved=True,
+                          save=True)
+        parent_doc = parent.document
+
+        child = revision(title='Child of page-move view test',
+                         slug='page-move/test-views',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = parent.document
+        child_doc.save()
+
+        conflict = revision(title='Conflict for page-move view',
+                            slug='moved/page-move/test-views',
+                            is_approved=True,
+                            save=True)
+
+        data = {'slug': 'moved/test-page-move-views'}
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(reverse('wiki.move',
+                                        args=(parent_doc.slug,),
+                                        locale=parent_doc.locale),
+                                data=data)
+
+        eq_(200, resp.status_code)
