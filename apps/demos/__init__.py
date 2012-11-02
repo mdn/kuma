@@ -271,9 +271,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     },
     {
         "tag_name": "challenge:2013:january",
-        "title": _("January 2012 Dev Derby Challenge - Drag and Drop"),
+        "title": _("January 2013 Dev Derby Challenge - Drag and Drop"),
         "short_title": _("Drag and Drop"),
-        "dateline": _("January 2012"),
+        "dateline": _("January 2013"),
         "short_dateline": _("January"),
         "tagline": _("Drop demos here"),
         "summary": _("The Drag and Drop API brings an age-old interaction to the web, making rich, natural, and familiar user experiences possible."),
