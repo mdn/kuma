@@ -1437,6 +1437,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:
             post_data = request.POST.copy()
+            if not 'slug' in post_data:
+                post_data['slug'] = posted_slug
 
             rev_form = RevisionValidationForm(post_data)
             rev_form.parent_slug = slug_dict['parent']
