@@ -406,12 +406,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		// Set the link in the "link" pane, put value into place
 		//dialog.selectPage("info");
 		dialog.setValueOf('info', 'url', autoCompleteSelection.href);
-		
-		// Trigger "OK"
-		if(submit) {
-			dialog.definition.onOk.call(dialog);
-			dialog.hide();
-		}
 	}
 
 	// Returns the default slug for the give page ("/{lang}/docs/")
