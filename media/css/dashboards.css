@@ -27,6 +27,10 @@
     background-image: -moz-linear-gradient(top, #D4DDE4, #EAEFF2);
 }
 
+.dashboard table.dataTable td {
+    border-right: 1px solid #ccc;
+}
+
 .dashboard .dataTables_info {
     float: none;
     text-align: right;
