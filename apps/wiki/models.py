@@ -53,7 +53,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
     'iframe',
     'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'colgroup', 'col',
-    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure', 'figcaption',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address', 'font',
