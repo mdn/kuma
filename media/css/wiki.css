@@ -557,6 +557,8 @@ article.main div.tags input.adder {
     font-size: 14px;
     list-style: none;
     padding: 5px 0;
+    display: block;
+    overflow: hidden;
 }
 
 /* Revision history */
