@@ -1197,6 +1197,7 @@ class PageMoveTests(TestCase):
 
     fixtures = ['test_users.json']
 
+    @attr('move')
     def test_children_simple(self):
         """A basic tree with two direct children and no sub-trees on
         either."""
@@ -1233,6 +1234,7 @@ class PageMoveTests(TestCase):
         eq_(len(child2.get_descendants(10)), 0)
         eq_(len(grandchild.get_descendants(4)), 1)
 
+    @attr('move')
     def test_children_complex(self):
         """A slightly more complex tree, with multiple children, some
         of which do/don't have their own children."""
@@ -1266,6 +1268,7 @@ class PageMoveTests(TestCase):
 
         ok_([c1, gc1, c2, gc2, gc3, ggc1] == top.get_descendants())
 
+    @attr('move')
     def test_circular_dependency(self):
         """Make sure we can detect potential circular dependencies in
         parent/child relationships."""
@@ -1292,6 +1295,7 @@ class PageMoveTests(TestCase):
 
         ok_(parent.has_children())
     
+    @attr('move')
     def test_move(self):
         """Changing title/slug leaves behind a redirect document"""
         rev = revision(title='Page that will be moved',
@@ -1309,6 +1313,7 @@ class PageMoveTests(TestCase):
         ok_(d.id != rev.document.id)
         ok_('page-that-has-been-moved' in d.redirect_url())
 
+    @attr('move')
     def test_move_tree(self):
         """Moving a tree of documents does the correct thing"""
 
@@ -1389,6 +1394,51 @@ class PageMoveTests(TestCase):
         ok_(moved_grandchild.current_revision.slug in \
             Document.objects.get(slug='first-level/second-level/third-level/grandchild').redirect_url())
 
+    @attr('move')
+    def test_move_tree_breadcrumbs(self):
+        """Moving a tree of documents under an existing doc updates breadcrumbs"""
+
+        grandpa = revision(title='Top-level parent for breadcrumb move',
+                       slug='grandpa', is_approved=True, save=True)
+        grandpa_doc = grandpa.document
+
+        dad = revision(title='Mid-level parent for breadcrumb move',
+                       slug='dad', is_approved=True, save=True)
+        dad_doc = dad.document
+        dad_doc.parent_topic = grandpa_doc
+        dad_doc.save()
+
+        son = revision(title='Bottom-level child for breadcrumb move',
+                       slug='son', is_approved=True, save=True)
+        son_doc = son.document
+        son_doc.parent_topic = dad_doc
+        son_doc.save()
+
+        grandma = revision(title='Top-level parent for breadcrumb move',
+                       slug='grandma', is_approved=True, save=True)
+        grandma_doc = grandma.document
+
+        mom = revision(title='Mid-level parent for breadcrumb move',
+                       slug='mom', is_approved=True, save=True)
+        mom_doc = mom.document
+        mom_doc.parent_topic = grandma_doc
+        mom_doc.save()
+
+        daughter = revision(title='Bottom-level child for breadcrumb move',
+                       slug='daughter', is_approved=True, save=True)
+        daughter_doc = daughter.document
+        daughter_doc.parent_topic = mom_doc
+        daughter_doc.save()
+
+        # move grandma under grandpa
+        grandma_doc._move_tree('grandma/', 'grandpa/grandma/')
+
+        # assert the parent_topics are correctly rooted at grandpa
+        ok_(grandma_doc.parent_topic == grandpa_doc)
+        ok_(mom_doc.parent_topic.parent_topic == grandpa_doc)
+        ok_(daughter_doc.parent_topic.parent_topic.parent_topic == grandpa_doc)
+
+    @attr('move')
     def test_move_prepend(self):
         """Test the special-case prepend logic."""
         top = revision(title='Top-level parent for testing moves with prependings',
@@ -1414,6 +1464,7 @@ class PageMoveTests(TestCase):
         eq_('new-prefix/first-level/child1',
             moved_child1.current_revision.slug)
             
+    @attr('move')
     def test_tree_change(self):
         d1 = document(title='Test tree change without prepend',
                       slug='move-tests/test-tree-change')
@@ -1424,6 +1475,7 @@ class PageMoveTests(TestCase):
         eq_(('', 'foo', True),
             d2._tree_change('foo/test-tree-change-prepend'))
 
+    @attr('move')
     def test_conflicts(self):
         top = revision(title='Test page-move conflict detection',
                        slug='test-move-conflict-detection',
@@ -1468,6 +1520,7 @@ class PageMoveTests(TestCase):
         eq_([child_conflict.document],
             top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
+    @attr('move')
     def test_additional_conflicts(self):
         top = revision(title='WebRTC',
                        slug='WebRTC',
@@ -1493,6 +1546,7 @@ class PageMoveTests(TestCase):
         eq_([],
             top_doc._tree_conflicts('NativeRTC'))
 
+    @attr('move')
     def test_preserve_tags(self):
             tags = "'moving', 'tests'"
             rev = revision(title='Test page-move tag preservation',

@@ -1672,7 +1672,6 @@ def json_view(request, document_slug=None, document_locale=None):
 
 @require_GET
 @process_document_path
-@prevent_indexing
 def code_sample(request, document_slug, document_locale, sample_id):
     """Extract a code sample from a document and render it as a standalone
     HTML document"""
