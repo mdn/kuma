@@ -1258,7 +1258,8 @@ def autosuggest_documents(request):
             'title': d.title + ' [' + d.locale + ']',
             'label': d.title,
             'href':  d.get_absolute_url(),
-            'id': d.id 
+            'slug': d.slug,
+            'id': d.id
         }
         docs_list.append(doc_info)
 
