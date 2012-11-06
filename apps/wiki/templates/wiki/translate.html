@@ -7,7 +7,6 @@
 {% set crumbs = [(url('wiki.category', parent.category), parent.get_category_display()),
                  (parent.get_absolute_url(), parent.title),
                  (None, _('Translate Article'))] %}
-{% set DIR = ('rtl' if (locale.lower() in settings.RTL_LANGUAGES) else 'ltr') %}
 {% block bodyclass%}translate{% endblock %}
 
 {% block content %}
