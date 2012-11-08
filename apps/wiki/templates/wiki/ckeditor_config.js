@@ -80,8 +80,6 @@ CKEDITOR.mdn = {};
     block('controlS');
     block('controlShiftL');
     block('controlShiftO');
-    block('back');
-    block('forward');
 })();
 
 CKEDITOR.editorConfig = function(config) {
