@@ -82,10 +82,14 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 				case keys.controlShiftL:
 					toggleBlock(event);
 					break;
-				
-				/* ITEMS BELOW DO NOT FUNCTION YET */
-			    // SHIFT + ENTER:  Exits out of the current block.  For example, if you're currently editing a <pre> block, shift-Enter exits the block, putting you back in the body of the article.
-				
+
+				/* Don't allow back/foward in WYSIWYG mode */
+				case keys.back:
+				case keys.forward:
+					if(editor.mode != "source") {
+						event.stop();
+						event.cancel();
+					}
 			}
 		});
 
