@@ -1296,6 +1296,59 @@ class DocumentEditingTests(TestCaseBase):
         eq_(302, response.status_code)
         self.assertRedirects(response, reverse('wiki.document', args=['length/' + child_data['slug']], locale='es'))
 
+    def test_slug_translate(self):
+        """Editing a translated doc keeps the correct slug"""
+        client = self.client
+        client.login(username='admin', password='testpass')
+
+        # Settings
+        locale = settings.WIKI_DEFAULT_LANGUAGE
+        original_slug = 'eng-doc'
+        child_slug = 'child-eng-doc'
+        foreign_locale = 'es'
+        foreign_slug = 'es-doc'
+        foreign_child_slug = 'child-es-doc'
+
+        # Create the one-level English Doc
+        en_doc = document(title='Eng Doc', slug=original_slug, is_localizable=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        en_doc.save()
+        r = revision(document=en_doc)
+        r.save()
+
+        # Translate to ES
+        parent_data = new_document_data()
+        parent_data['title'] = 'ES Doc'
+        parent_data['slug'] = foreign_slug
+        parent_data['content'] = 'This is the content'
+        parent_data['is_localizable'] = True
+        parent_data['form'] = 'both'
+        translate_url = reverse('wiki.document', args=[original_slug], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=' + foreign_locale
+        response = client.post(translate_url, parent_data)
+        self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug], locale=foreign_locale))
+
+        # Go to edit the translation, ensure the the slug is correct
+        response = client.get(reverse('wiki.edit_document', args=[foreign_slug], locale=foreign_locale))
+        page = pq(response.content)
+        eq_(page.find('input[name=slug]')[0].value, foreign_slug)
+
+        # Create an English child now
+        en_doc = document(title='Child Eng Doc', slug=original_slug + '/' + child_slug, is_localizable=True, locale=settings.WIKI_DEFAULT_LANGUAGE, parent_topic=en_doc)
+        en_doc.save()
+        r = revision(document=en_doc)
+        r.save()
+
+        # Translate to ES
+        child_data = new_document_data()
+        child_data['title'] = 'ES Child Doc'
+        child_data['slug'] = foreign_child_slug
+        child_data['content'] = 'This is the content'
+        child_data['is_localizable'] = True
+        child_data['form'] = 'both'
+
+        translate_url = reverse('wiki.document', args=[original_slug + '/' + child_slug], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=' + foreign_locale
+        response = client.post(translate_url, child_data)
+        self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug + '/' + child_data['slug']], locale=foreign_locale))
+
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
         localization is OK."""

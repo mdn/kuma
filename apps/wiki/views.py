@@ -1326,9 +1326,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
         document_locale = request.REQUEST.get('tolocale',
                                               document_locale)
 
-    # Parese the parent slug
-    slug_dict = _split_slug(document_slug)
-
     # Set a "Discard Changes" page
     discard_href = ''
 
@@ -1353,9 +1350,18 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     try:
         doc = parent_doc.translations.get(locale=document_locale)
+        slug_dict = _split_slug(doc.slug)
     except Document.DoesNotExist:
         doc = None
         disclose_description = True
+        slug_dict = _split_slug(document_slug)
+
+        # Find the "real" parent topic, which is its translation
+        try:
+            parent_topic_translated_doc = parent_doc.parent_topic.translations.get(locale=document_locale)
+            slug_dict = _split_slug(parent_topic_translated_doc.slug + '/' + slug_dict['specific'])
+        except:
+            logging.debug('no translated parent topic')
 
     user_has_doc_perm = ((not doc) or (doc and doc.allows_editing_by(user)))
     user_has_rev_perm = ((not doc) or (doc and doc.allows_revision_by(user)))
@@ -1459,13 +1465,15 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                   locale=doc.locale)
                     return HttpResponseRedirect(url)
 
+    parent_split = _split_slug(parent_doc.slug)
+
     return jingo.render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
                          'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description,
                          'discard_href': discard_href,
-                         'specific_slug': slug_dict['specific'], 'parent_slug': slug_dict['parent']})
+                         'specific_slug': parent_split['specific'], 'parent_slug': parent_split['parent']})
 
 
 @require_POST
