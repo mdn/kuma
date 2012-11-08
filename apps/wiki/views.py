@@ -225,7 +225,7 @@ def _format_attachment_obj(attachments):
             'date': str(attachment.current_revision.created),
             'description': attachment.current_revision.description,
             'url': attachment.get_file_url(),
-            'size': attachment.current_revision.file.size,
+            'size': 0,
             'creator': attachment.current_revision.creator.username,
             'creatorUrl': reverse('devmo.views.profile_view', 
                             args=[attachment.current_revision.creator]),
@@ -233,6 +233,13 @@ def _format_attachment_obj(attachments):
             'id': attachment.id,
             'mime': attachment.current_revision.mime_type
         }
+
+        # Adding this to prevent "UnicodeEncodeError" for certain media
+        try:
+            obj['size'] = attachment.current_revision.file.size
+        except:
+            logging.debug('Cannot attain file size')
+
         obj['html'] = mark_safe(html.render({ 'attachment': obj }))
         attachments_list.append(obj)
     return attachments_list
