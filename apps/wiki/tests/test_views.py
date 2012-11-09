@@ -3126,3 +3126,47 @@ class PageMoveTests(TestCaseBase):
                                 data=data)
 
         eq_(200, resp.status_code)
+
+    @attr('move')
+    def test_move_tree_breadcrumbs(self):
+        """Moving a tree of documents under an existing doc updates breadcrumbs"""
+
+        grandpa = revision(title='Top-level parent for breadcrumb move',
+                       slug='grandpa', is_approved=True, save=True)
+        grandpa_doc = grandpa.document
+
+        dad = revision(title='Mid-level parent for breadcrumb move',
+                       slug='dad', is_approved=True, save=True)
+        dad_doc = dad.document
+        dad_doc.parent_topic = grandpa_doc
+        dad_doc.save()
+
+        son = revision(title='Bottom-level child for breadcrumb move',
+                       slug='son', is_approved=True, save=True)
+        son_doc = son.document
+        son_doc.parent_topic = dad_doc
+        son_doc.save()
+
+        grandma = revision(title='Top-level parent for breadcrumb move',
+                       slug='grandma', is_approved=True, save=True)
+        grandma_doc = grandma.document
+
+        mom = revision(title='Mid-level parent for breadcrumb move',
+                       slug='mom', is_approved=True, save=True)
+        mom_doc = mom.document
+        mom_doc.parent_topic = grandma_doc
+        mom_doc.save()
+
+        daughter = revision(title='Bottom-level child for breadcrumb move',
+                       slug='daughter', is_approved=True, save=True)
+        daughter_doc = daughter.document
+        daughter_doc.parent_topic = mom_doc
+        daughter_doc.save()
+
+        # move grandma under grandpa
+        grandma_doc._move_tree('grandma/', 'grandpa/grandma/')
+
+        # assert the parent_topics are correctly rooted at grandpa
+        ok_(grandma_doc.parent_topic == grandpa_doc)
+        ok_(mom_doc.parent_topic.parent_topic == grandpa_doc)
+        ok_(daughter_doc.parent_topic.parent_topic.parent_topic == grandpa_doc)
