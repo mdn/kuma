@@ -13,13 +13,32 @@
   <article class="dashboard">
     <h1>{{ title }}</h1>
     <section>
+
+    <h3>{{ _('Revision Filter') }}</h3>
+    <form method="get" id="revision-filter">
+      <label for="dash-locale">{{ _('Locale') }}:</label>
+      <select name="locale" id="dash-locale">
+        <option value>{{ _('Select a locale') }}</option>
+        {% for code, name in settings.LANGUAGE_CHOICES -%}
+          <option value="{{ code }}" {{ code|ifeq(request.GET.locale, "selected") }}>
+            {{ name }}
+          </option>
+        {%- endfor %}
+      </select>
+
+      <label for="revision-dashboard-user">{{ _('User') }}:</label>
+      <input name="user" id="revision-dashboard-user" value="{{ request.GET.user }}" />
+
+      <input type="submit" value="{{ _('Filter') }}" />
+    </form>
+
     <table id="revisions-table">
       <thead>
         <tr>
-          <th>Article</th>
-          <th>Time</th>
-          <th>Date</th>
-          <th>By</th>
+          <th>{{ _('Article') }}</th>
+          <th>{{ _('Time') }}</th>
+          <th>{{ _('Date') }}</th>
+          <th>{{ _('By') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -29,16 +48,16 @@
     <section id="revisions-compare">
       <section id="action-bar">
       <ul id="page-buttons">
-        <li> <a id="revert" href="#">Revert</a> </li>
-        <li> <a id="view" href="#">View Page</a> </li>
-        <li class="page-edit"> <a id="edit" href="#">Edit Page</a> </li>
-        <li class="page-history"> <a id="history" href="#">History</a> </li>
+        <li> <a id="revert" href="#">{{ _('Revert') }}</a> </li>
+        <li> <a id="view" href="#">{{ _('View Page') }}</a> </li>
+        <li class="page-edit"> <a id="edit" href="#">{{ _('Edit Page') }}</a> </li>
+        <li class="page-history"> <a id="history" href="#">{{ _('History') }}</a> </li>
       </ul>
       </section>
 
-      <h2>Revision Diff</h2>
+      <h2>{{ _('Revision Diff') }}</h2>
       <section id="diff-view">
-        <p>Click an item in the revision list above to see details.</p>
+        <p>{{ _('Click an item in the revision list above to see details.') }}</p>
       </section>
     </section>
   </article>
@@ -53,10 +72,56 @@
 $(document).ready(function(){
   var $revTable       = $('#revisions-table'),
       $revTableBody   = $('tbody', $revTable),
+      $revisionForm   = $('#revision-filter'),
       $actionBar      = $('#action-bar'),
+      $localeInput    = $('#dash-locale'),
+      currentLocale   = '{{ request.locale }}',
+      localeKey       = '{LOCALE}',
+      baseURL         = '/' + localeKey + '/dashboards/revisions',
       lastSelected;
   $actionBar.hide();
-  $revTableBody.click(function(e){
+  $revTableBody.click(getRecordDetail);
+
+  // Create the autocomplete for user
+  $('#revision-dashboard-user').mozillaAutocomplete({
+    minLength: 3,
+    autocompleteUrl: '', // UPDATE WHEN THE SERVER SIDE IS COMPLETE
+    onSelect: function(item, isSilent) {
+      // Do something upon selection
+      if(!isSilent) loadRecords();
+    },
+    buildRequestData: function(req) {
+      // Should add locale value here
+      req.locale = getLocale();
+      req.user = req.term;
+      return req;
+    }
+  });
+
+  function getLocale() {
+    console.log($localeInput.get(0), $localeInput.get(0).value);
+    return $localeInput.get(0).value || currentLocale;
+  }
+
+  function getSourceURL() {
+    return baseURL.replace(localeKey, getLocale()) + '?' + $revisionForm.serialize();
+  }
+
+  // Upon form submission, get records
+  $revisionForm.submit(function(e) {
+    e.preventDefault();
+    loadRecords();
+  }); 
+
+  // Triggers a change in record source
+  function loadRecords() {
+    var settings = $revTable.dataTable.settings[0];
+    settings.sAjaxSource = getSourceURL();
+    $revTable.dataTable.ext.oApi._fnAjaxUpdate(settings);
+  }
+
+  // Fires off an AJAX request to get the necessary data
+  function getRecordDetail(e){
     var parent        =   e.target.parentNode,
         data          =   $revTable.fnGetData(parent),
         $diffView     =   $('#diff-view'),
@@ -69,13 +134,12 @@ $(document).ready(function(){
     if(lastSelected) {
       lastSelected.removeClass('selected')
     }
-    $(parent).addClass('selected');
-    lastSelected = $(parent);
+    lastSelected = $(parent).addClass('selected');
 
     // Load diff content
     $('a', $actionBar).attr('href', '');
     $actionBar.show();
-    $diffView.html('Loading ...');
+    $diffView.html(gettext('Loading ...'));
     $diffView.load(data.compare_url, function(resp, status, xhr){
       if (status == 'error') {
         $diffView.html('Error: ' + xhr.status + ' ' + xhr.statusText);
@@ -86,7 +150,9 @@ $(document).ready(function(){
         $historyLink.attr('href', data.history_url);
       }
     });
-  });
+  }
+
+  // Create the feature-rich table
   $revTable.dataTable({
     'bPaginate': false,
     'bLengthChange': false,
@@ -107,7 +173,7 @@ $(document).ready(function(){
     },
     'bServerSide': true,
     'bDeferRender': true,
-    'sAjaxSource': '/en-US/dashboards/revisions',
+    'sAjaxSource': getSourceURL()
   });
 });
 </script>
