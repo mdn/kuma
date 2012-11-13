@@ -20,19 +20,19 @@ CKEDITOR.plugins.add('mdn-sampler', {
 				// Inject Pre[html]
 				var htmlPre = new CKEDITOR.dom.element('pre', editor.document);
 				htmlPre.setText(gettext('Sample HTML Content'));
-				htmlPre.setAttribute('class', 'brush:html;');
+				htmlPre.setAttribute('class', 'brush: html');
 				editor.insertElement(htmlPre);
 
 				// Inject Pre[css]
 				var cssPre = new CKEDITOR.dom.element('pre', editor.document);
 				cssPre.setText(gettext('Sample CSS Content'));
-				cssPre.setAttribute('class', 'brush:css;');
+				cssPre.setAttribute('class', 'brush: css');
 				editor.insertElement(cssPre);
 
 				// Inject Pre[js]
 				var jsPre = new CKEDITOR.dom.element('pre', editor.document);
 				jsPre.setText(gettext('Sample JS Content'));
-				jsPre.setAttribute('class', 'brush:js;');
+				jsPre.setAttribute('class', 'brush: js');
 				editor.insertElement(jsPre);
 			}
 		});
