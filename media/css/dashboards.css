@@ -48,6 +48,23 @@
     width: 100%;
 }
 
+/* Dashboard Filters */
+.dashboard #revision-filter {
+    display: block;
+    margin: 0 0 20px 0;
+}
+
+.dashboard #revision-filter select,
+.dashboard #revision-filter input {
+    margin-right: 30px;
+    display: inline-block;
+}
+
+.dashboard #revision-filter label {
+    font-weight: bold;
+}
+
+
 /* L10n and Contributor Dashboards */
 
 .dashboards table {

@@ -154,7 +154,7 @@ def lazy_langs():
                 for lang in langs])
 
 LANGUAGES = lazy(lazy_langs, dict)()
-LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES])
+LANGUAGE_CHOICES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]), key=lambda lang:lang[0])
 
 # DEKI uses different locale keys
 def lazy_language_deki_map():
@@ -689,6 +689,8 @@ MINIFY_BUNDLES = {
             'js/wiki-tags-edit.js',
         ),
         'dashboards': (
+            'js/libs/jqueryui.min.js',
+            'js/moz-jquery-plugins.js',
             'js/libs/DataTables-1.9.4/media/js/jquery.dataTables.js',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
         ),
