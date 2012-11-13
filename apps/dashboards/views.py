@@ -1,6 +1,7 @@
 from functools import partial
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.utils.datastructures import SortedDict
 from django.views.decorators.http import require_GET
@@ -133,8 +134,17 @@ def contributors(request):
 def revisions(request):
     """Dashboard for reviewing revisions"""
     if request.is_ajax():
+        username = request.GET.get('user', None)
         display_start = int(request.GET.get('iDisplayStart', 0))
-        revisions = Revision.objects.select_related('creator').all().order_by('-created')[display_start:display_start+PAGE_SIZE]
+
+        revisions = Revision.objects.select_related('creator').all().order_by('-created')
+        # apply filters, limits, and pages
+        if username:
+            creator = User.objects.get(username=username)
+            revisions = revisions.filter(creator=creator)
+        revisions = revisions.filter(document__locale=request.locale)
+        revisions = revisions[display_start:display_start+PAGE_SIZE]
+
         context = {'revisions': revisions,
                    'total_records': Revision.objects.count()}
         return jingo.render(request, 'dashboards/revisions.json',
