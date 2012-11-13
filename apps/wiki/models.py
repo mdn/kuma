@@ -1400,15 +1400,16 @@ class Document(NotificationsMixin, ModelBase):
     # queries and so should look scarier. It's not just named
     # 'children' because that's taken already by the reverse relation
     # on parent_topic.
-    def get_descendants(self):
+    def get_descendants(self, limit=None, levels=0):
         """Return a list of all documents which are children
         (grandchildren, great-grandchildren, etc.) of this one."""
         results = []
-        if self.has_children():
+
+        if (limit is None or levels < limit) and self.has_children():
             for child in self.children.all():
                 results.append(child)
                 [results.append(grandchild) for \
-                 grandchild in child.get_descendants()]
+                 grandchild in child.get_descendants(limit, levels + 1)]
         return results
 
     def has_voted(self, request):
