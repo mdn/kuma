@@ -6,13 +6,13 @@ from nose.tools import raises, eq_
 
 from dashboards.models import (WikiDocumentVisits, StatsException, THIS_WEEK,
                                StatsIOError)
-from sumo.tests import TestCase
+from devmo.tests import SkippedTestCase
 from wiki.tests import document, revision
 
 
-class DocumentVisitsTests(TestCase):
+class DocumentVisitsTests(SkippedTestCase):
     """Tests for the WebTrends statistics gathering"""
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     @raises(StatsException)
     def test_bad_json(self):
