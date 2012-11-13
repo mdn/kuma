@@ -513,15 +513,15 @@ class ContentSectionToolTests(TestCase):
             <p>This is a page. Deal with it.</p>
 
             <h3 id="sample0">This is a section</h3>
-            <pre class="brush: html">section html</pre>
-            <pre class="brush: css">section css</pre>
+            <pre class="brush:html; highlight: [5, 15]; html-script: true">section html</pre>
+            <pre class="brush:css;">section css</pre>
             <pre class="brush: js">section js</pre>
 
             <h3>The following is a new section</h3>
 
             <div id="sample1" class="code-sample">
-                <pre class="brush: html">Ignore me</pre>
-                <pre class="brush: css">Ignore me</pre>
+                <pre class="brush: html;">Ignore me</pre>
+                <pre class="brush:css;">Ignore me</pre>
                 <pre class="brush: js">Ignore me</pre>
             </div>
 
@@ -530,7 +530,7 @@ class ContentSectionToolTests(TestCase):
                     <pre class="brush: html">%s</pre>
                 </li>
                 <li><span>CSS</span>
-                    <pre class="brush: css">%s</pre>
+                    <pre class="brush:css;random:crap;in:the;classname">%s</pre>
                 </li>
                 <li><span>JS</span>
                     <pre class="brush: js">%s</pre>

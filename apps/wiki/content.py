@@ -73,8 +73,15 @@ def extract_code_sample(id, src):
         else:
             # If no section, fall back to plain old ID lookup
             sample = pq(src).find('#%s' % id)
-        for x in parts:
-            data[x] = sample.find('.%s' % x).text()
+        for part in parts:
+            selector = ','.join(x % (part,) for x in (
+                '.%s',
+                # HACK: syntaxhighlighter (ab)uses the className as a
+                # semicolon-separated options list...
+                'pre[class*="brush:%s"]',
+                'pre[class*="%s;"]'
+            ))
+            data[part] = sample.find(selector).text()
     except:
         pass
     return data
