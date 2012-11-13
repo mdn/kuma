@@ -1210,6 +1210,29 @@ class PageMoveTests(TestCase):
 
         eq_([d2, d3], d1.get_descendants())
 
+    def test_get_descendants_limited(self):
+        """Tests limiting of descendant levels"""
+        def _make_doc(title, parent=None):
+            doc = document(title=title, save=True)
+            if parent:
+                doc.parent_topic = parent
+                doc.save()
+            return doc
+
+        parent = _make_doc('Parent')
+        child1 = _make_doc('Child 1', parent)
+        child2 = _make_doc('Child 2', parent)
+        grandchild = _make_doc('GrandChild 1', child1)
+        greatgrandchild = _make_doc('Great GrandChild 1', grandchild)
+
+        # Test descendant counts
+        eq_(len(parent.get_descendants()), 4)  #All
+        eq_(len(parent.get_descendants(1)), 2)
+        eq_(len(parent.get_descendants(2)), 3)
+        eq_(len(parent.get_descendants(0)), 0)
+        eq_(len(child2.get_descendants(10)), 0)
+        eq_(len(grandchild.get_descendants(4)), 1)
+
     def test_children_complex(self):
         """A slightly more complex tree, with multiple children, some
         of which do/don't have their own children."""
