@@ -23,6 +23,7 @@
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="{{ request.build_absolute_uri('/media/img/mdn-logo-sm.png') }}"/>    
   <meta property="og:site_name" content="Mozilla Developer Network"/>
+  <meta property="og:url" content="{{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}" />
 
   {% if seo_summary %}
   <meta property="og:description" content="{{ seo_summary }}"/>
