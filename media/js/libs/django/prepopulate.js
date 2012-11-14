@@ -36,14 +36,7 @@
 
                 s = values.join(" ");
                 
-                // Remove anything from the slug that could cause big problems
-                s = s.replace(/[\?\&\"\'\#\*\$\/ +?]/g, "_");
-
-                // "$" is used for verb delimiter in URLs
-                s = s.replace(/\$/g, ""); 
-
-                // Don't allow "_____" mess
-                s = s.replace(/\_+/g, "_");
+                s = $.slugifyString(s);
 
                 // trim to first num_chars chars
                 s = s.substring(0, maxLength);
