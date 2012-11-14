@@ -12,28 +12,40 @@ CKEDITOR.plugins.add('mdn-sampler', {
 		editor.addCommand('mdnSampler', {
 			exec: function (editor, data) {
 
+				var text = prompt(gettext('What should the sample title be?'));
+				if(!text) return;
+
+				var doc = editor.document,
+					sampleSlug = $.slugifyString(text);
+
 				// Inject heading
-				var heading = new CKEDITOR.dom.element('h2', editor.document);
-				heading.setText(gettext('Sample Title'));
+				var heading = new CKEDITOR.dom.element('h2', doc);
+				heading.setText(text);
+				heading.setAttribute('name', sampleSlug);
 				editor.insertElement(heading);
 
 				// Inject Pre[html]
-				var htmlPre = new CKEDITOR.dom.element('pre', editor.document);
+				var htmlPre = new CKEDITOR.dom.element('pre', doc);
 				htmlPre.setText(gettext('Sample HTML Content'));
 				htmlPre.setAttribute('class', 'brush: html');
 				editor.insertElement(htmlPre);
 
 				// Inject Pre[css]
-				var cssPre = new CKEDITOR.dom.element('pre', editor.document);
+				var cssPre = new CKEDITOR.dom.element('pre', doc);
 				cssPre.setText(gettext('Sample CSS Content'));
 				cssPre.setAttribute('class', 'brush: css');
 				editor.insertElement(cssPre);
 
 				// Inject Pre[js]
-				var jsPre = new CKEDITOR.dom.element('pre', editor.document);
+				var jsPre = new CKEDITOR.dom.element('pre', doc);
 				jsPre.setText(gettext('Sample JS Content'));
 				jsPre.setAttribute('class', 'brush: js');
 				editor.insertElement(jsPre);
+
+				// Inject the IFrame?
+				var templateP = new CKEDITOR.dom.element('p', doc);
+				templateP.setText('{{ EmbedLiveSample(\'' + sampleSlug + '\') }}');
+				editor.insertElement(templateP);
 			}
 		});
 
