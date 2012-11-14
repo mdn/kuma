@@ -73,7 +73,3 @@ pre[class^="brush:sql"]:before, pre[class^="brush: sql"]:before {
 pre[class^="brush:xml"]:before, pre[class^="brush: xml"]:before {
 	content: "XML";
 }
-
-
-
-

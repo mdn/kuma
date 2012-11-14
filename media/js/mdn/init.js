@@ -54,7 +54,16 @@ jQuery.extend({
 		});
 		
 		return nvpair;
-	}
+	},
+  slugifyString: function(str) {
+    // Remove anything from the slug that could cause big problems
+    str = str.replace(/[\?\&\"\'\#\*\$\/ +?]/g, "_");
+    // "$" is used for verb delimiter in URLs
+    str = str.replace(/\$/g, ""); 
+    // Don't allow "_____" mess
+    str = str.replace(/\_+/g, "_");
+    return str;
+  }
 });
 
 // HACK: This ready() call is commented out, because all of our JS is at the
