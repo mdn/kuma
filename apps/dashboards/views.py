@@ -1,4 +1,5 @@
 import json
+import logging
 
 from functools import partial
 
@@ -137,6 +138,8 @@ def revisions(request):
     """Dashboard for reviewing revisions"""
     if request.is_ajax():
         username = request.GET.get('user', None)
+        locale = request.GET.get('locale', None)
+
         display_start = int(request.GET.get('iDisplayStart', 0))
 
         revisions = (Revision.objects.select_related('creator').all()
@@ -145,14 +148,18 @@ def revisions(request):
         if username:
             revisions = (revisions
                          .filter(creator__username__startswith=username))
-        revisions = revisions.filter(document__locale=request.locale)
+        if locale:
+            revisions = revisions.filter(document__locale=locale)
+
+        total = revisions.count()
         revisions = revisions[display_start:display_start + PAGE_SIZE]
 
         context = {'revisions': revisions,
-                   'total_records': Revision.objects.count()}
+                   'total_records': total}
         return jingo.render(request, 'dashboards/revisions.json',
                             context, mimetype="json")
     return jingo.render(request, 'dashboards/revisions.html')
+
 
 @require_GET
 @waffle_flag('revisions_dashboard')
@@ -168,6 +175,7 @@ def user_lookup(request):
 
         data = json.dumps(userlist)
         return HttpResponse(data, mimetype='application/json')
+
 
 @require_GET
 def wiki_rows(request, readout_slug):
