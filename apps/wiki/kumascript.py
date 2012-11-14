@@ -124,6 +124,7 @@ def get(document, cache_control, base_url, timeout=None):
             path=path,
             url=urljoin(base_url, path),
             id=document.pk,
+            revision_id=document.current_revision.pk,
             locale=document.locale,
             title=document.title,
             files=files,
