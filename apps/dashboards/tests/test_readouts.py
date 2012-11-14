@@ -2,7 +2,7 @@ from datetime import datetime
 from functools import partial
 
 from dashboards.readouts import UnreviewedReadout
-from sumo.tests import TestCase
+from devmo.tests import SkippedTestCase
 from wiki.tests import revision, translated_revision
 
 
@@ -14,7 +14,7 @@ class MockRequest(object):
     locale = NON_DEFAULT_LOCALE
 
 
-class UnreviewedChangesTests(TestCase):
+class UnreviewedChangesTests(SkippedTestCase):
     """Tests for the Unreviewed Changes readout
 
     I'm not trying to cover every slice of the Venn diagram--just the tricky
@@ -22,7 +22,7 @@ class UnreviewedChangesTests(TestCase):
 
     """
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     @staticmethod
     def titles():

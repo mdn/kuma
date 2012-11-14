@@ -1,3 +1,5 @@
+import json
+
 from functools import partial
 
 from django.conf import settings
@@ -137,13 +139,14 @@ def revisions(request):
         username = request.GET.get('user', None)
         display_start = int(request.GET.get('iDisplayStart', 0))
 
-        revisions = Revision.objects.select_related('creator').all().order_by('-created')
+        revisions = (Revision.objects.select_related('creator').all()
+                     .order_by('-created'))
         # apply filters, limits, and pages
         if username:
-            creator = User.objects.get(username=username)
-            revisions = revisions.filter(creator=creator)
+            revisions = (revisions
+                         .filter(creator__username__startswith=username))
         revisions = revisions.filter(document__locale=request.locale)
-        revisions = revisions[display_start:display_start+PAGE_SIZE]
+        revisions = revisions[display_start:display_start + PAGE_SIZE]
 
         context = {'revisions': revisions,
                    'total_records': Revision.objects.count()}
@@ -151,6 +154,20 @@ def revisions(request):
                             context, mimetype="json")
     return jingo.render(request, 'dashboards/revisions.html')
 
+@require_GET
+@waffle_flag('revisions_dashboard')
+def user_lookup(request):
+    """Returns partial username matches"""
+    if request.is_ajax():
+        user = request.GET.get('user', '')
+        matches = User.objects.filter(username__startswith=user)
+
+        userlist = []
+        for u in matches:
+            userlist.append({'label': u.username})
+
+        data = json.dumps(userlist)
+        return HttpResponse(data, mimetype='application/json')
 
 @require_GET
 def wiki_rows(request, readout_slug):
