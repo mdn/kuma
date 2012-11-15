@@ -131,6 +131,8 @@ $(document).ready(function(){
         $editLink     =   $('a#edit'),
         $historyLink  =   $('a#history');
 
+    if(e.target.tagName == 'A') return;
+
     // Manage selection colors
     if(lastSelected) {
       lastSelected.removeClass('selected')

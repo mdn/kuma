@@ -4,15 +4,16 @@
     "aaData" : [
 {% for rev in revisions %}
         {% set from = (rev.get_previous().id or rev.id) %}
+        {% set doc_url = url('wiki.document', rev.document.full_path, locale=rev.document.locale) %}
         {
         "id": "{{ rev.id }}",
         "prev_id": "{{ from }}",
-        "doc_url": "{{ url('wiki.document', rev.document.full_path, locale=rev.document.locale) }}",
+        "doc_url": "{{ doc_url }}",
         "edit_url": "{{ url('wiki.edit_document', rev.document.full_path, locale=rev.document.locale) }}",
         "compare_url": "{{ url('wiki.compare_revisions', rev.document.full_path) }}?from={{ from }}&to={{ rev.id }}&raw=1",
         "revert_url": "{{ url('wiki.revert_document', rev.document.full_path, rev.id) }}",
         "history_url": "{{ url('wiki.document_revisions', rev.document.full_path, locale=rev.document.locale) }}",
-        "title": "{{ rev.document.slug }}",
+        "title": "<a href='{{ doc_url }}' target='_blank'>{{ rev.document.slug }}</a>",
         "date": "{{ datetimeformat(rev.created, format="date", output="json") }}",
         "time": "{{ datetimeformat(rev.created, format="time", output="json") }}",
         "creator": "{{ rev.creator }}"
