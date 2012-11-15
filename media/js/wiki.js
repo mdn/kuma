@@ -1197,18 +1197,20 @@
 
 
     function initTabBox() {
-        var $htabs = $('.htab'),
-            $items = $htabs.find('>ul>li');
-        $htabs
-            .append($('#compat-desktop'))
-            .append($('#compat-mobile'));
+        $('.htab').each(function(index) {
+            var $htab = $(this),
+                $items = $htab.find('>ul>li');
 
-        $items.find('a').click(function() {
-            var $this = $(this)
-            $items.removeClass('selected');
-            $this.parent().addClass('selected');
-            $htabs.find('>div').hide().eq($items.index($this.parent())).show();
-        }).eq(0).click();
+            $htab.append($('div[id=compat-desktop]')[index]);
+            $htab.append($('div[id=compat-mobile]')[index]);
+
+            $items.find('a').click(function() {
+                var $this = $(this)
+                $items.removeClass('selected');
+                $this.parent().addClass('selected');
+                $htab.find('>div').hide().eq($items.index($this.parent())).show();
+            }).eq(0).click();
+        });
     }
 
     function initAttachmentsActions() {
