@@ -16,7 +16,8 @@
         "title": "<a href='{{ doc_url }}' target='_blank'>{{ rev.document.slug }}</a>",
         "date": "{{ datetimeformat(rev.created, format="date", output="json") }}",
         "time": "{{ datetimeformat(rev.created, format="time", output="json") }}",
-        "creator": "{{ rev.creator }}"
+        "creator": "{{ rev.creator }}",
+        "comment": "{{ rev.comment }}"
         }{% if not loop.last%},{% endif %}
 
 {% endfor %}
