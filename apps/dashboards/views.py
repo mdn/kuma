@@ -157,7 +157,7 @@ def revisions(request):
         context = {'revisions': revisions,
                    'total_records': total}
         return jingo.render(request, 'dashboards/revisions.json',
-                            context, mimetype="json")
+                    context, content_type="application/json; charset=utf-8")
     return jingo.render(request, 'dashboards/revisions.html')
 
 
@@ -174,7 +174,8 @@ def user_lookup(request):
             userlist.append({'label': u.username})
 
         data = json.dumps(userlist)
-        return HttpResponse(data, mimetype='application/json')
+        return HttpResponse(data,
+                            content_type="application/json; charset=utf-8")
 
 
 @require_GET
