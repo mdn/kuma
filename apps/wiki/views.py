@@ -1145,19 +1145,19 @@ def move(request, document_slug, document_locale):
                     'descendants_count': len(descendants),
                     'conflicts': conflicts,
                 })
-            old_hierarchy, new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
-            doc._move_tree(old_hierarchy, new_hierarchy, request.user, prepend)
-
             # Set new parent, if any
             new_slug_bits = form.cleaned_data['slug'].split('/')
             new_slug_bits.pop()
             try:
-                new_parent = Document.objects.get(local=document_locale,
+                new_parent = Document.objects.get(locale=document_locale,
                                                   slug='/'.join(new_slug_bits))
                 doc.parent_topic = new_parent
                 doc.save()
             except Document.DoesNotExist:
                 pass
+
+            old_hierarchy, new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
+            doc._move_tree(old_hierarchy, new_hierarchy, request.user, prepend)
 
             return redirect(reverse('wiki.document',
                                     args=(form.cleaned_data['slug'],),
