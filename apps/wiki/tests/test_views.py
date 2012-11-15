@@ -3164,9 +3164,16 @@ class PageMoveTests(TestCaseBase):
         daughter_doc.save()
 
         # move grandma under grandpa
-        grandma_doc._move_tree('grandma/', 'grandpa/grandma/')
+
+        data = {'slug': 'grandpa/grandma'}
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(reverse('wiki.move',
+                                        args=(grandma_doc.slug,),
+                                        locale=grandma_doc.locale),
+                                data=data)
 
         # assert the parent_topics are correctly rooted at grandpa
-        ok_(grandma_doc.parent_topic == grandpa_doc)
-        ok_(mom_doc.parent_topic.parent_topic == grandpa_doc)
-        ok_(daughter_doc.parent_topic.parent_topic.parent_topic == grandpa_doc)
+        # note we have to refetch these to see any DB changes.
+        grandma_moved = Document.objects.get(locale=grandma_doc.locale,
+                                           slug='grandpa/grandma')
+        ok_(grandma_moved.parent_topic == grandpa_doc)
