@@ -100,6 +100,7 @@ CKEDITOR.editorConfig = function(config) {
     config.skin = 'kuma';
     config.startupFocus = true;
     config.toolbar = 'MDN';
+    config.tabSpaces = 2;
 
     config.autoGrow_minHeight = 600;
     config.contentsCss = ['/media/css/wiki-screen.css', '/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS?raw=1'];
@@ -111,13 +112,13 @@ CKEDITOR.editorConfig = function(config) {
     config.bodyClass = 'page-content';
     
     CKEDITOR.stylesSet.add('default',[
-        { name: "None", element: 'p' },
-        { name: "Note box", element: 'div', attributes: { 'class': 'note' }, wrap: true },
-        { name: "Warning box", element: 'div', attributes: { 'class': 'warning' }, wrap: true },
-        { name: "Callout box", element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
-        { name: "Two columns", element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
-        { name: "Three columns", element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true },
-        { name: "SEO Summary", element: "span", attributes: { 'class': 'seoSummary' }, wrap: false }
+        { name: 'None', element: 'p' },
+        { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, wrap: true },
+        { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, wrap: true },
+        { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
+        { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
+        { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true },
+        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' }, wrap: false }
     ]);
 
     {{ editor_config|safe }}    
