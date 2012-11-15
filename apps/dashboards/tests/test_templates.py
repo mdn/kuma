@@ -1,13 +1,13 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.tests import TestCase
+from devmo.tests import SkippedTestCase
 from sumo.urlresolvers import reverse
 from wiki.models import MAJOR_SIGNIFICANCE, MEDIUM_SIGNIFICANCE
 from wiki.tests import revision, translated_revision
 
 
-class LocalizationDashTests(TestCase):
+class LocalizationDashTests(SkippedTestCase):
     """Tests for the Localization Dashboard.
 
     The L10n Dash shares a lot of code with the Contributor Dash, so this also
@@ -16,7 +16,7 @@ class LocalizationDashTests(TestCase):
 
     """
 
-    fixtures = ['users.json']
+    fixtures = ['test_users.json']
 
     @staticmethod
     def _assert_readout_contains(doc, slug, contents):
@@ -82,7 +82,7 @@ class LocalizationDashTests(TestCase):
         self.assertContains(response, untranslated.document.title)
 
 
-class MobileHomeTestCase(TestCase):
+class MobileHomeTestCase(SkippedTestCase):
     def test_top_text(self):
         response = self.client.get(reverse('home.mobile'), follow=True)
         self.assertContains(response, 'Firefox Help for Mobile')
