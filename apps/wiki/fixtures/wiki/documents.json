@@ -77,9 +77,9 @@
             "content": "ceci n'est pas une pipe\r\n\r\nmon dieu!",
             "significance": 30,
             "keywords": "boulot",
-            "reviewer": 118533,
+            "reviewer": 10,
             "document": 4,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -94,9 +94,9 @@
             "content": "the keyword video only appears in the body of this article",
             "significance": 10,
             "keywords": "barfoo",
-            "reviewer": 118533,
+            "reviewer": 10,
             "document": 1,
-            "creator": 118533
+            "creator": 8
         }
     },
     {
@@ -111,9 +111,9 @@
             "content": "audio is in this <strong>but the word for tough things</strong> will be ignored",
             "significance": 30,
             "keywords": "ghosts",
-            "reviewer": 118533,
+            "reviewer": 10,
             "document": 5,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -128,9 +128,9 @@
             "content": "audio is in this <strong>but the word for tough things</strong> will be ignored",
             "significance": 30,
             "keywords": "ghosts",
-            "reviewer": 118533,
+            "reviewer": 10,
             "document": 2,
-            "creator": 118533
+            "creator": 7
         }
     },
     {

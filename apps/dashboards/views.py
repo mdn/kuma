@@ -1,6 +1,10 @@
+import json
+import logging
+
 from functools import partial
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.utils.datastructures import SortedDict
 from django.views.decorators.http import require_GET
@@ -133,13 +137,45 @@ def contributors(request):
 def revisions(request):
     """Dashboard for reviewing revisions"""
     if request.is_ajax():
+        username = request.GET.get('user', None)
+        locale = request.GET.get('locale', None)
+
         display_start = int(request.GET.get('iDisplayStart', 0))
-        revisions = Revision.objects.select_related('creator').all().order_by('-created')[display_start:display_start+PAGE_SIZE]
+
+        revisions = (Revision.objects.select_related('creator').all()
+                     .order_by('-created'))
+        # apply filters, limits, and pages
+        if username:
+            revisions = (revisions
+                         .filter(creator__username__startswith=username))
+        if locale:
+            revisions = revisions.filter(document__locale=locale)
+
+        total = revisions.count()
+        revisions = revisions[display_start:display_start + PAGE_SIZE]
+
         context = {'revisions': revisions,
-                   'total_records': Revision.objects.count()}
+                   'total_records': total}
         return jingo.render(request, 'dashboards/revisions.json',
-                            context, mimetype="json")
+                    context, content_type="application/json; charset=utf-8")
     return jingo.render(request, 'dashboards/revisions.html')
+
+
+@require_GET
+@waffle_flag('revisions_dashboard')
+def user_lookup(request):
+    """Returns partial username matches"""
+    if request.is_ajax():
+        user = request.GET.get('user', '')
+        matches = User.objects.filter(username__startswith=user)
+
+        userlist = []
+        for u in matches:
+            userlist.append({'label': u.username})
+
+        data = json.dumps(userlist)
+        return HttpResponse(data,
+                            content_type="application/json; charset=utf-8")
 
 
 @require_GET

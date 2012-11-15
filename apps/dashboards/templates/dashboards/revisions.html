@@ -85,7 +85,8 @@ $(document).ready(function(){
   // Create the autocomplete for user
   $('#revision-dashboard-user').mozillaAutocomplete({
     minLength: 3,
-    autocompleteUrl: '', // UPDATE WHEN THE SERVER SIDE IS COMPLETE
+    labelField: 'label',
+    autocompleteUrl: '{{ url('dashboards.user_lookup') }}',
     onSelect: function(item, isSilent) {
       // Do something upon selection
       if(!isSilent) loadRecords();
