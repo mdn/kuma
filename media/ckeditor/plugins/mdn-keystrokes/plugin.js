@@ -170,7 +170,7 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 			element = range.startContainer;
 
 			while(tabSpaces--) {
-				tabText += '\xa0';
+				tabText += ' ';
 			}
 
 			while(element) {
@@ -184,9 +184,8 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 						selection.selectBookmarks(mark);
 						return true;
 					}
-					else if(!hasShift && element.is('pre') && tabText.length) {
+					else if(!hasShift && element.is('pre')) {
 						editor.fire('saveSnapshot');
-
 						var tabNode = new CKEDITOR.dom.text(tabText, editor.document);
 						range.deleteContents();
 						range.insertNode(tabNode);
