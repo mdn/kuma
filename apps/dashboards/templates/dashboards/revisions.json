@@ -15,7 +15,8 @@
         "title": "{{ rev.document.slug }}",
         "date": "{{ datetimeformat(rev.created, format="date", output="json") }}",
         "time": "{{ datetimeformat(rev.created, format="time", output="json") }}",
-        "creator": "{{ rev.creator }}"
+        "creator": "{{ rev.creator }}",
+        "comment": "{{ rev.comment }}"
         }{% if not loop.last%},{% endif %}
 
 {% endfor %}
