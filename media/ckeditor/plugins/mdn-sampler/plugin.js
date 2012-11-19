@@ -18,34 +18,31 @@ CKEDITOR.plugins.add('mdn-sampler', {
 				var doc = editor.document,
 					sampleSlug = $.slugifyString(text);
 
-				// Inject heading
-				var heading = new CKEDITOR.dom.element('h2', doc);
-				heading.setText(text);
-				heading.setAttribute('name', sampleSlug);
-				editor.insertElement(heading);
+				// Inject main heading
+				makeElement('h2', text, { name: sampleSlug });
 
 				// Inject Pre[html]
-				var htmlPre = new CKEDITOR.dom.element('pre', doc);
-				htmlPre.setText(gettext('Sample HTML Content'));
-				htmlPre.setAttribute('class', 'brush: html');
-				editor.insertElement(htmlPre);
+				makeElement('h3', gettext('HTML Content'));
+				makeElement('pre', gettext('Sample HTML Content'), { 'class': 'brush: html' });
 
 				// Inject Pre[css]
-				var cssPre = new CKEDITOR.dom.element('pre', doc);
-				cssPre.setText(gettext('Sample CSS Content'));
-				cssPre.setAttribute('class', 'brush: css');
-				editor.insertElement(cssPre);
+				makeElement('h3', gettext('CSS Content'));
+				makeElement('pre', gettext('Sample CSS Content'), { 'class': 'brush: css' });
 
 				// Inject Pre[js]
-				var jsPre = new CKEDITOR.dom.element('pre', doc);
-				jsPre.setText(gettext('Sample JS Content'));
-				jsPre.setAttribute('class', 'brush: js');
-				editor.insertElement(jsPre);
+				makeElement('h3', gettext('JavaScript Content'));
+				makeElement('pre', gettext('Sample JavaScript Content'), { 'class': 'brush: js' });
 
 				// Inject the IFrame?
-				var templateP = new CKEDITOR.dom.element('p', doc);
-				templateP.setText('{{ EmbedLiveSample(\'' + sampleSlug + '\') }}');
-				editor.insertElement(templateP);
+				makeElement('p', '{{ EmbedLiveSample(\'' + sampleSlug + '\') }}');
+
+
+				function makeElement(type, text, attrs) {
+					var element = new CKEDITOR.dom.element(type, doc);
+					if(text) element.setText(gettext(text));
+					if(attrs) element.setAttributes(attrs);
+					editor.insertElement(element);
+				}
 			}
 		});
 
