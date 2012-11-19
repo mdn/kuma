@@ -18,7 +18,7 @@
     <form method="get" id="revision-filter">
       <label for="dash-locale">{{ _('Locale') }}:</label>
       <select name="locale" id="dash-locale">
-        <option value>{{ _('Select a locale') }}</option>
+        <option value="">{{ _('All Locales') }}</option>
         {% for code, name in settings.LANGUAGE_CHOICES -%}
           <option value="{{ code }}" {{ code|ifeq(request.GET.locale, "selected") }}>
             {{ name }}
@@ -38,6 +38,7 @@
           <th>{{ _('Article') }}</th>
           <th>{{ _('Date') }}</th>
           <th>{{ _('By') }}</th>
+          <th>{{ _('Comment') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -130,6 +131,8 @@ $(document).ready(function(){
         $editLink     =   $('a#edit'),
         $historyLink  =   $('a#history');
 
+    if(e.target.tagName == 'A') return;
+
     // Manage selection colors
     if(lastSelected) {
       lastSelected.removeClass('selected')
@@ -163,6 +166,7 @@ $(document).ready(function(){
       {'mData': 'title'},
       {'mData': 'date'},
       {'mData': 'creator'},
+      {'mData': 'comment'}
     ],
     'sScrollY': '300px',
     'sDom': 'frtiS',

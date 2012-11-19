@@ -61,7 +61,7 @@ class RevisionsDashTest(TestCase):
         ok_('revisions' in response.context)
         ok_('total_records' in response.context)
         eq_('dashboards/revisions.json', response.template.name)
-        eq_('json', response['Content-Type'])
+        eq_('application/json; charset=utf-8', response['Content-Type'])
 
     @attr('dashboards')
     def test_locale_filter(self):

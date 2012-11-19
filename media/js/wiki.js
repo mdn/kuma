@@ -616,13 +616,13 @@
     }
 
     function initSyntaxHighlighter() {
-        SyntaxHighlighter.defaults.toolbar = false;
         $('pre').each(function() {
             var $this = $(this),
                 newText = $this.text().replace(/<span class="nowiki">(.*)<\/span>/g, '$1');
-            this.className += " auto-links: false;";
             $this.text(newText);
         });
+        SyntaxHighlighter.defaults.toolbar = false;
+        SyntaxHighlighter.defaults['auto-links'] = false;
         SyntaxHighlighter.all();
     }
 
