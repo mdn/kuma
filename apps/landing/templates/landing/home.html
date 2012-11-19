@@ -118,24 +118,19 @@
         <div></div>
       </div>
 
-    {% if waffle.switch('home_mwc_promo') %}
-      <div class="promo" id="promo-apps">
-        <a href="{{ url('apps') }}">
-          <h2>{{_("Apps at MWC 2012")}}</h2>
-          {% trans %}
-          <p>27 February &ndash; 1 March<br> Barcelona</p>
-          <p class="more">Learn more about<br> the Mozilla Marketplace</p>
-          {% endtrans %}
+    {% if waffle.switch('social_promo') %}
+      <div class="promo" id="promo-social">
+        <a href="{{_("docs/Social_API")}}">
+          <h2>{{_("Make Firefox more social")}}</h2>
+          <p>{{_("Learn about the social API")}} &raquo;</p>
         </a>
-        <div></div>
       </div>
     {% else %}
       <div class="promo" id="promo-aurora">
         <a href="{{_("http://www.mozilla.com/en-US/firefox/channel/")}}">
           <h2>{{_("Firefox Aurora")}}</h2>
-          <p>{{_("Experience the latest desktop and mobile features in Aurora and help shape the future of Firefox.")}}</p>
+          <p>{{_("Experience the latest desktop and mobile features in Aurora and help shape the future of Firefox.")}}</p> 
         </a>
-        <div></div>
       </div>
     {% endif %}
     
