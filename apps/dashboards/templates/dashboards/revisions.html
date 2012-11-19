@@ -18,7 +18,7 @@
     <form method="get" id="revision-filter">
       <label for="dash-locale">{{ _('Locale') }}:</label>
       <select name="locale" id="dash-locale">
-        <option>{{ _('All Locales') }}</option>
+        <option value="">{{ _('All Locales') }}</option>
         {% for code, name in settings.LANGUAGE_CHOICES -%}
           <option value="{{ code }}" {{ code|ifeq(request.GET.locale, "selected") }}>
             {{ name }}
@@ -36,7 +36,6 @@
       <thead>
         <tr>
           <th>{{ _('Article') }}</th>
-          <th>{{ _('Time') }}</th>
           <th>{{ _('Date') }}</th>
           <th>{{ _('By') }}</th>
           <th>{{ _('Comment') }}</th>
@@ -165,7 +164,6 @@ $(document).ready(function(){
     'bAutoWidth': false,
     'aoColumns': [
       {'mData': 'title'},
-      {'mData': 'time'},
       {'mData': 'date'},
       {'mData': 'creator'},
       {'mData': 'comment'}
