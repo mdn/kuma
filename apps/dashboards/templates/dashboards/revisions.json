@@ -13,9 +13,10 @@
         "compare_url": "{{ url('wiki.compare_revisions', rev.document.full_path) }}?from={{ from }}&to={{ rev.id }}&raw=1",
         "revert_url": "{{ url('wiki.revert_document', rev.document.full_path, rev.id) }}",
         "history_url": "{{ url('wiki.document_revisions', rev.document.full_path, locale=rev.document.locale) }}",
+        "title": "{{ rev.document.slug }}",
+        "creator": "{{ rev.creator }}",
         "title": "<a href='{{ doc_url }}' target='_blank'>{{ rev.document.slug }}</a>",
-        "date": "{{ datetimeformat(rev.created, format="date", output="json") }}",
-        "time": "{{ datetimeformat(rev.created, format="time", output="json") }}",
+        "date": "{{ datetimeformat(rev.created, format="date", output="json") }}<br />{{ datetimeformat(rev.created, format="time", output="json") }}",
         "creator": "{{ rev.creator }}",
         "comment": "{{ rev.comment }}"
         }{% if not loop.last%},{% endif %}
