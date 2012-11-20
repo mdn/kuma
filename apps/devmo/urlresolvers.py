@@ -1,6 +1,7 @@
+from threading import currentThread
+
 from django.conf import settings
 from django.core.urlresolvers import reverse as django_reverse
-from django.utils.thread_support import currentThread
 from django.utils.translation.trans_real import parse_accept_lang_header
 
 
