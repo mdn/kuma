@@ -60,3 +60,17 @@ INTEREST_SUGGESTIONS = [
     "technical review",
     "editorial review",
 ]
+
+
+# Django compatibility shim; remove once we're on Django 1.4,
+# and replace calls to this with:
+# from django.db.utils import DatabaseError
+def get_mysql_error():
+    import django
+    if django.VERSION[:2] in ((1, 2), (1, 3)):
+        import MySQLdb
+        return MySQLdb.OperationalError
+    else:
+        from django.db.utils import DatabaseError
+        return DatabaseError
+
