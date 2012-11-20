@@ -1,6 +1,7 @@
 """Feeds for submissions"""
 import datetime
 import hashlib
+import json
 import urllib
 import logging
 import validate_jsonp
@@ -9,7 +10,6 @@ import jingo
 
 from django.contrib.syndication.views import Feed, FeedDoesNotExist
 from django.utils.feedgenerator import SyndicationFeed, Rss201rev2Feed, Atom1Feed, get_tag_uri
-import django.utils.simplejson as json
 from django.shortcuts import get_object_or_404
 
 from django.utils.translation import ugettext as _
