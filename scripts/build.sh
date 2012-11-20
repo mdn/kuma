@@ -77,7 +77,7 @@ SETTINGS
 echo "Starting tests..." `date`
 export FORCE_DB='yes sir'
 
-if [[ $1 = 'with-coverage' ]]; then
+if [[ $1 = '--with-coverage' ]]; then
     coverage run manage.py test actioncounters contentflagging dashboards demos devmo landing users wiki -v 2 --noinput
     coverage xml $(find apps lib -name '*.py')
 else
