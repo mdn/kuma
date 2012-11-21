@@ -14,10 +14,9 @@
         "revert_url": "{{ url('wiki.revert_document', rev.document.full_path, rev.id) }}",
         "history_url": "{{ url('wiki.document_revisions', rev.document.full_path, locale=rev.document.locale) }}",
         "title": "{{ rev.document.slug }}",
-        "creator": "{{ rev.creator }}",
+        "creator": "<a href='' class='creator'>{{ rev.creator }}</a>",
         "title": "<a href='{{ doc_url }}' target='_blank'>{{ rev.document.slug }}</a>",
         "date": "{{ datetimeformat(rev.created, format="date", output="json") }}<br />{{ datetimeformat(rev.created, format="time", output="json") }}",
-        "creator": "{{ rev.creator }}",
         "comment": "{{ rev.comment }}"
         }{% if not loop.last%},{% endif %}
 

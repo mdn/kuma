@@ -78,12 +78,13 @@ $(document).ready(function(){
       currentLocale   = '{{ request.locale }}',
       localeKey       = '{LOCALE}',
       baseURL         = '/' + localeKey + '/dashboards/revisions',
+      $revisionDashboardUser = $('#revision-dashboard-user'),
       lastSelected;
   $actionBar.hide();
   $revTableBody.click(getRecordDetail);
 
   // Create the autocomplete for user
-  $('#revision-dashboard-user').mozillaAutocomplete({
+  $revisionDashboardUser.mozillaAutocomplete({
     minLength: 3,
     labelField: 'label',
     autocompleteUrl: '{{ url('dashboards.user_lookup') }}',
@@ -100,7 +101,6 @@ $(document).ready(function(){
   });
 
   function getLocale() {
-    console.log($localeInput.get(0), $localeInput.get(0).value);
     return $localeInput.get(0).value || currentLocale;
   }
 
@@ -112,7 +112,14 @@ $(document).ready(function(){
   $revisionForm.submit(function(e) {
     e.preventDefault();
     loadRecords();
-  }); 
+  });
+
+  // When the username is clicked, filter
+  $revTable.delegate('a.creator', 'click', function(ev) {
+    ev.preventDefault();
+    $revisionDashboardUser.val($(ev.target).text())
+    loadRecords();
+  });
 
   // Triggers a change in record source
   function loadRecords() {
