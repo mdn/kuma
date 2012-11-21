@@ -706,7 +706,7 @@ class AllowedHTMLTests(TestCase):
 
     special_attributes = (
         '<command id="foo">',
-        '<img align="left" alt="picture of foo" class="foo" id="foo" src="foo" title="foo">',
+        '<img align="left" alt="picture of foo" class="foo" dir="rtl" id="foo" src="foo" title="foo">',
         '<a class="foo" href="foo" id="foo" title="foo">foo</a>',
         '<div class="foo">foo</div>',
         '<video class="movie" controls id="some-movie" lang="en-US" src="some-movie.mpg">Fallback</video>'
