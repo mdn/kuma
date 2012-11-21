@@ -79,7 +79,7 @@ export FORCE_DB='yes sir'
 
 if [[ $1 = '--with-coverage' ]]; then
     coverage run manage.py test actioncounters contentflagging dashboards demos devmo landing users wiki -v 2 --noinput
-    coverage xml $(find apps lib -name '*.py')
+    coverage xml $(find apps/actioncounters apps/contentflagging apps/dashboards apps/demos apps/devmo apps/landing apps/users apps/wiki lib -name '*.py')
 else
     python manage.py test actioncounters contentflagging dashboards demos devmo landing users wiki -v 2 --noinput
 fi
