@@ -70,26 +70,26 @@ ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
 ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
                                 'frameborder', 'width', 'height']
-ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang']
-ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang']
+ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
+ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
-                             'title', 'style', 'lang']
+                             'title', 'style', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title',
-                           'lang', 'name']
+                           'lang', 'name', 'dir']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
-                            'lang']
+                            'lang', 'dir']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
-                            'scope', 'lang']
+                            'scope', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['video'] = ['style', 'id', 'class', 'lang', 'src',
-                               'controls']
-ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size']
-ALLOWED_ATTRIBUTES['select'] = ['name']
-ALLOWED_ATTRIBUTES['option'] = ['value', 'selected']
-ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start']
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang'])
+                               'controls', 'dir']
+ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size', 'dir']
+ALLOWED_ATTRIBUTES['select'] = ['name', 'dir']
+ALLOWED_ATTRIBUTES['option'] = ['value', 'selected', 'dir']
+ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start', 'dir']
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang', 'dir'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang']) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang', 'dir']) for x in (
     'div', 'pre', 'ul', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
