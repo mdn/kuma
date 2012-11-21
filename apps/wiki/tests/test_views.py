@@ -3120,13 +3120,13 @@ class PageMoveTests(TestCaseBase):
         grandpa_doc = grandpa.document
 
         dad = revision(title='Mid-level parent for breadcrumb move',
-                       slug='dad', is_approved=True, save=True)
+                       slug='grandpa/dad', is_approved=True, save=True)
         dad_doc = dad.document
         dad_doc.parent_topic = grandpa_doc
         dad_doc.save()
 
         son = revision(title='Bottom-level child for breadcrumb move',
-                       slug='son', is_approved=True, save=True)
+                       slug='grandpa/dad/son', is_approved=True, save=True)
         son_doc = son.document
         son_doc.parent_topic = dad_doc
         son_doc.save()
@@ -3136,13 +3136,13 @@ class PageMoveTests(TestCaseBase):
         grandma_doc = grandma.document
 
         mom = revision(title='Mid-level parent for breadcrumb move',
-                       slug='mom', is_approved=True, save=True)
+                       slug='grandma/mom', is_approved=True, save=True)
         mom_doc = mom.document
         mom_doc.parent_topic = grandma_doc
         mom_doc.save()
 
         daughter = revision(title='Bottom-level child for breadcrumb move',
-                       slug='daughter', is_approved=True, save=True)
+                       slug='grandma/mom/daughter', is_approved=True, save=True)
         daughter_doc = daughter.document
         daughter_doc.parent_topic = mom_doc
         daughter_doc.save()
@@ -3161,3 +3161,56 @@ class PageMoveTests(TestCaseBase):
         grandma_moved = Document.objects.get(locale=grandma_doc.locale,
                                            slug='grandpa/grandma')
         ok_(grandma_moved.parent_topic == grandpa_doc)
+        mom_moved = Document.objects.get(locale=mom_doc.locale,
+                                         slug='grandpa/grandma/mom')
+        ok_(mom_moved.parent_topic == grandma_moved)
+
+    @attr('move')
+    @attr('top')
+    def test_move_top_level_docs(self):
+        """Moving a top document to a new slug location"""
+        page_to_move_title = 'Page Move Root'
+        page_to_move_slug = 'Page_Move_Root'
+        page_child_slug = 'Page_Move_Root/Page_Move_Child'
+        page_moved_slug = 'Page_Move_Root_Moved'
+
+        page_to_move_doc = document(title=page_to_move_title,
+                                    slug=page_to_move_slug,
+                                    save=True)
+        rev = revision(document=page_to_move_doc,
+                       title=page_to_move_title,
+                       slug=page_to_move_slug,
+                       save=True)
+        page_to_move_doc.current_revision = rev
+        page_to_move_doc.save()
+
+        page_child = revision(title='child', slug=page_child_slug,
+                         is_approved=True, save=True)
+        page_child_doc = page_child.document
+        page_child_doc.parent_topic = page_to_move_doc
+        page_child_doc.save()
+
+
+        # move page to new slug
+        data = {'slug': page_moved_slug}
+        self.client.login(username='admin', password='testpass')
+        self.client.post(reverse('wiki.move',
+                                        args=(page_to_move_doc.slug,),
+                                        locale=page_to_move_doc.locale),
+                                data=data)
+
+        page_to_move_doc = Document.objects.get(slug=page_to_move_slug)
+        page_moved_doc = Document.objects.get(slug=page_moved_slug)
+        page_child_doc = Document.objects.get(slug=page_child_slug)
+        page_child_moved_doc = Document.objects.get(
+            slug='%s/%s' % (page_moved_slug, page_child_slug)
+        )
+
+        ok_('REDIRECT' in page_to_move_doc.html)
+        ok_(page_moved_slug in page_to_move_doc.html)
+        ok_(page_moved_doc)
+        ok_('REDIRECT' in page_child_doc.html)
+        ok_(page_moved_slug in page_child_doc.html)
+        ok_(page_child_moved_doc)
+        # TODO: Fix this assertion?
+        # eq_('admin', page_moved_doc.current_revision.creator.username)
