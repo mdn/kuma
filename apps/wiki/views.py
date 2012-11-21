@@ -1153,6 +1153,37 @@ def preview_revision(request):
     #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
+@require_GET
+@process_document_path
+def get_children(request, document_slug, document_locale):
+    """Retrieves a document and returns its children in a JSON structure"""
+    
+    result = []
+    try:
+        def _make_doc_structure(d):
+            res = {
+                'title': d.title,
+                'slug': d.slug,
+                'locale': d.locale,
+                'url':  d.get_absolute_url(),
+                'subpages': []
+            }
+            descendants = d.get_descendants(1)
+            for descendant in descendants:
+                res['subpages'].append(_make_doc_structure(descendant))
+            return res
+
+        result = _make_doc_structure(Document.objects.
+                        get(locale=document_locale, slug=document_slug))
+        
+    except Document.DoesNotExist: 
+        result = { 'error': 'Document does not exist.' }
+
+    result = json.dumps(result)
+    return HttpResponse(result, mimetype='application/json')
+    
+
+
 
 @require_GET
 def autosuggest_documents(request):
