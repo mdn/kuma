@@ -60,12 +60,14 @@ Getting up and running
    ordering problems. However, In some rare occasions you might need
    to run this multiple times
 
--  On Ubuntu, "vagrant up" will likely fail after being unable to mount NFS shared folders.
-   The solution is to disable nfs by setting the nfs flag in the vagrantconfig_local.yaml file you just created.
+-  On Ubuntu, "vagrant up" might fail after being unable to mount NFS shared folders.
+   First, make sure you have the nfs-common and nfs-server packages installed and also note that
+   you can't export anything via NFS inside an encrypted volume or home dir.
+   If that doesn't help you can disable nfs by setting the nfs flag in the vagrantconfig_local.yaml file you just created.
 
        nfs: false
 
-   Note: If you decide to run nfs:false, the system will be a lot slower.  There is also the potential of running into
+   Note: If you decide to run nfs: false, the system will be a lot slower. There is also the potential of running into
    weird issues with puppet, since the current puppet configurations do not currently support nfs: false.
 
 -  Add developer-dev.mozilla.org to /etc/hosts::
