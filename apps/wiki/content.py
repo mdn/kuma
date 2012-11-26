@@ -34,6 +34,11 @@ HEAD_TAGS_TOC = ('h2', 'h3', 'h4')
 # Allowed tags in the table of contents list
 TAGS_IN_TOC = ('code')
 
+# Special paths within /docs/ URL-space that do not represent documents for the
+# purposes of link annotation. Doesn't include everything from urls.py, but
+# just the likely candidates for links.
+DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
+
 
 def parse(src):
     return ContentSectionTool(src)
@@ -208,6 +213,15 @@ class LinkAnnotationFilter(html5lib_Filter):
 
             # Is this a kuma doc URL?
             if '/docs/' in href:
+
+                # Check if this is a special docs path that's exempt from "new"
+                skip = False
+                for path in DOC_SPECIAL_PATHS:
+                    if '/docs/%s' % path in href:
+                        skip = True
+                if skip:
+                    continue
+
                 href_locale, href_path = href.split(u'/docs/', 1)
                 if href_locale.startswith(u'/'):
                     href_locale = href_locale[1:]
