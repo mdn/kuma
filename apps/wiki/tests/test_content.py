@@ -637,6 +637,9 @@ class ContentSectionToolTests(TestCase):
             noexist_url_with_base=urljoin(base_url, u'/en-US/docs/no-such-doc'),
             noexist_uilocale_url=u'/en-US/docs/en-US/blah-blah-blah',
             nonen_slug='/fr/docs/CSS/H%c3%a9ritage',
+            tag_url='/en-US/docs/tag/foo',
+            feed_url='/en-US/docs/feeds/atom/all',
+            templates_url='/en-US/docs/templates',
         )
         doc_src = u"""
                 <li><a href="%(nonen_slug)s">Héritée</a></li>
@@ -655,6 +658,9 @@ class ContentSectionToolTests(TestCase):
                 <li><a href="http://mozilla.org/">This is an external link</a></li>
                 <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
                 <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
+                <a href="%(tag_url)s">Tag link</a>
+                <a href="%(feed_url)s">Feed link</a>
+                <a href="%(templates_url)s">Templates link</a>
         """ % vars
         expected = u"""
                 <li><a href="%(nonen_slug)s">Héritée</a></li>
@@ -673,6 +679,9 @@ class ContentSectionToolTests(TestCase):
                 <li><a class="external" href="http://mozilla.org/">This is an external link</a></li>
                 <li><a class="foobar" name="quux">A lack of href should not cause a problem.</a></li>
                 <li><a>In fact, a "link" with no attributes should be no problem as well.</a></li>
+                <a href="%(tag_url)s">Tag link</a>
+                <a href="%(feed_url)s">Feed link</a>
+                <a href="%(templates_url)s">Templates link</a>
         """ % vars
 
         # Split the markup into lines, to better see failures
