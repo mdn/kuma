@@ -67,8 +67,8 @@ def urlencode(txt):
 
 @register.filter
 def jsonencode(data):
-    from django.utils import simplejson
-    return jinja2.Markup(simplejson.dumps(data))
+    import json
+    return jinja2.Markup(json.dumps(data))
 
 
 # TODO: move this to wiki/helpers.py
