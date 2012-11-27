@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import json
 import time
 import logging
 from xml.sax.saxutils import escape
@@ -12,7 +13,6 @@ from nose.plugins.attrib import attr
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
-import django.utils.simplejson as json
 
 import constance.config
 

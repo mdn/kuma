@@ -4,14 +4,19 @@ from django.conf import settings
 from django.db import models
 from django.utils import importlib
 
-import MySQLdb as mysql
 import test_utils
 from nose import SkipTest
 from nose.tools import assert_raises, eq_
 from pyquery import PyQuery as pq
 
+from devmo import get_mysql_error
 from questions.models import Question
 from sumo.urlresolvers import reverse
+
+
+# Django compatibility shim. Once we're on Django 1.4, do:
+# from django.db.utils import DatabaseError
+DatabaseError = get_mysql_error()
 
 
 class ReadOnlyModeTest(test_utils.TestCase):
@@ -35,7 +40,7 @@ class ReadOnlyModeTest(test_utils.TestCase):
         raise mysql.OperationalError("You can't do this in read-only mode.")
 
     def test_db_error(self):
-        assert_raises(mysql.OperationalError, Question.objects.create, id=12)
+        assert_raises(DatabaseError, Question.objects.create, id=12)
 
     def test_login_error(self):
         # TODO(james): Once we're authenticating in Django we can test this.

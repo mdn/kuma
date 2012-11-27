@@ -20,10 +20,7 @@ from devmo.models import UserProfile
 
 # HACK: Using thread local to retain the authtoken used for Deki API requests
 # on login
-try:
-    from threading import local
-except ImportError:
-    from django.utils._threading_local import local
+from threading import local
 _thread_locals = local()
 
 log = commonware.log.getLogger('kuma.dekicompat')

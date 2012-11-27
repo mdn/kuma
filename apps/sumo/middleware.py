@@ -7,12 +7,18 @@ from django.middleware import common
 from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 import jingo
-import MySQLdb as mysql
 import tower
 
+
+from devmo import get_mysql_error
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
 from sumo.views import handle403
+
+
+# Django compatibility shim. Once we're on Django 1.4, do:
+# from django.db.utils import DatabaseError
+DatabaseError = get_mysql_error()
 
 
 class LocaleURLMiddleware(object):
@@ -118,7 +124,7 @@ class ReadOnlyMiddleware(object):
             return jingo.render(request, 'sumo/read-only.html', status=503)
 
     def process_exception(self, request, exception):
-        if isinstance(exception, mysql.OperationalError):
+        if isinstance(exception, DatabaseError):
             return jingo.render(request, 'sumo/read-only.html', status=503)
 
 

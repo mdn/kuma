@@ -1,6 +1,7 @@
 """Feeds for documents"""
 import cgi
 import datetime
+import json
 import urllib
 import validate_jsonp
 
@@ -9,7 +10,6 @@ from django.db.models import F
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
                                         Atom1Feed)
-import django.utils.simplejson as json
 from django.utils.translation import ugettext as _
 
 from sumo.urlresolvers import reverse
