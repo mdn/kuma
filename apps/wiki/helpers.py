@@ -10,7 +10,6 @@ from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
 from wiki import DIFF_WRAP_COLUMN
-from wiki import parser
 
 
 def compare_url(doc, from_id, to_id):
@@ -136,9 +135,3 @@ def colorize_diff(diff):
     diff = diff.replace('<span class="diff_chg"', '<span class="diff_chg" '
                 'style="background-color: #fe0; text-decoration: none;"')
     return diff
-
-
-
-@register.function
-def generate_video(v):
-    return jinja2.Markup(parser.generate_video(v))
