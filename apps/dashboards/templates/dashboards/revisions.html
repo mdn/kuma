@@ -31,6 +31,9 @@
       <label for="revision-dashboard-user">{{ _('User') }}:</label>
       <input name="user" id="revision-dashboard-user" value="{{ request.GET.user }}" />
 
+      <label for="revision-dashboard-topic">{{ _('Topic') }}:</label>
+      <input name="topic" id="revision-dashboard-topic" value="{{ request.GET.topic }}" />
+
       <input type="submit" value="{{ _('Filter') }}" />
     </form>
 
@@ -81,6 +84,7 @@ $(document).ready(function(){
       localeKey       = '{LOCALE}',
       baseURL         = '/' + localeKey + '/dashboards/revisions',
       $revisionDashboardUser = $('#revision-dashboard-user'),
+      $revisionDashboardTopic = $('#revision-dashboard-topic'),
       lastSelected;
   $actionBar.hide();
   $revTableBody.click(getRecordDetail);
@@ -98,6 +102,23 @@ $(document).ready(function(){
       // Should add locale value here
       req.locale = getLocale();
       req.user = req.term;
+      return req;
+    }
+  });
+
+  // Create the autocomplete for topic
+  $revisionDashboardTopic.mozillaAutocomplete({
+    minLength: 3,
+    labelField: 'topic',
+    autocompleteUrl: '{{ url('dashboards.topic_lookup') }}',
+    onSelect: function(item, isSilent) {
+      // Do something upon selection
+      if(!isSilent) loadRecords();
+    },
+    buildRequestData: function(req) {
+      // Should add locale value here
+      req.locale = getLocale();
+      req.topic = req.term;
       return req;
     }
   });
