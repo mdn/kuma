@@ -1157,10 +1157,14 @@ def preview_revision(request):
 @process_document_path
 def get_children(request, document_slug, document_locale):
     """Retrieves a document and returns its children in a JSON structure"""
-    
+    maxDepth = 5
+    depth = int(request.GET.get('depth', maxDepth))
+    if(depth > maxDepth):
+        depth = maxDepth
+
     result = []
     try:
-        def _make_doc_structure(d):
+        def _make_doc_structure(d, level):
             res = {
                 'title': d.title,
                 'slug': d.slug,
@@ -1168,22 +1172,21 @@ def get_children(request, document_slug, document_locale):
                 'url':  d.get_absolute_url(),
                 'subpages': []
             }
-            descendants = d.get_descendants(1)
-            for descendant in descendants:
-                res['subpages'].append(_make_doc_structure(descendant))
+            
+            if level < depth:
+                descendants = d.get_descendants(1)
+                for descendant in descendants:
+                    res['subpages'].append(_make_doc_structure(descendant, level + 1))
             return res
 
         result = _make_doc_structure(Document.objects.
-                        get(locale=document_locale, slug=document_slug))
-        
-    except Document.DoesNotExist: 
+                        get(locale=document_locale, slug=document_slug), 0)
+
+    except Document.DoesNotExist:
         result = { 'error': 'Document does not exist.' }
 
     result = json.dumps(result)
     return HttpResponse(result, mimetype='application/json')
-    
-
-
 
 @require_GET
 def autosuggest_documents(request):
