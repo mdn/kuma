@@ -21,6 +21,9 @@
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie6.css"><![endif]-->
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/mdn-print.css">
   <link rel="stylesheet" href="//www.mozilla.org/tabzilla/media/css/tabzilla.css">
+
+  <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}" />
+
   {% endblock %}
 
   <!--[if IE]>
