@@ -155,16 +155,32 @@ class ViewTests(TestCaseBase):
             'Root/Child_1/Grandchild_1', child_doc_1)
         grandchild_doc_2 = _make_doc('Grandchild 2',
             'Root/Child_1/Grandchild_2', child_doc_1)
+        great_grandchild_doc_1 = _make_doc('Great Grandchild 1',
+            'Root/Child_1/Grandchild_2/Great_Grand_Child_1', grandchild_doc_2)
         child_doc_2 = _make_doc('Child 2', 'Root/Child_2', root_doc)
 
         resp = self.client.get(reverse('wiki.get_children', args=['Root'],
             locale=settings.WIKI_DEFAULT_LANGUAGE))
         json_obj = json.loads(resp.content)
 
+        # Basic structure creation testing
         eq_(json_obj['slug'], 'Root')
         eq_(len(json_obj['subpages']), 2)
         eq_(len(json_obj['subpages'][0]['subpages']), 2)
         eq_(json_obj['subpages'][0]['subpages'][1]['title'], 'Grandchild 2')
+
+        #Depth parameter testing
+        def _depth_test(depth, aught):
+            url = reverse('wiki.get_children', args=['Root'], 
+                    locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
+            resp = self.client.get(url)
+            json_obj = json.loads(resp.content)
+            eq_(len(json_obj['subpages'][0]['subpages'][1]['subpages']), aught)
+
+        _depth_test(2, 0)
+        _depth_test(3, 1)
+        _depth_test(6, 1)
+
 
 
 class PermissionTests(TestCaseBase):
