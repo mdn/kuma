@@ -267,7 +267,11 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."),
         "description": _("With the maturing offline capabilities of the open Web, you can build apps that work with or without an Internet connection. With offline technologies, you can better support travelers and mobile users, improve performance, and more."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>Want to learn how to build apps? You've come to the right place. The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. No experience necessary! The Dev Derby provides a different challenge every month. This month, we want to see if you can create apps that work without an internet connection.</p>
+<p>Building apps that work offline has never been easier. With modern Web technologies, you can build amazing offline apps without writing a single line of native code. Support travelers without learning how to build Android apps, improve performance for mobile users without diving deep into iPhone development&mdash;thanks to the Web, you can do all of this and more using only JavaScript, HTML, CSS and other technologies that are easy to learn and use.</p>
+<p>Need help getting started? No problem. The Mozilla Developer Network (MDN) has you covered with <a href="https://developer.mozilla.org/en-US/">some of the best documentation out there</a>. Beginners should appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive documentation on the basics</a> and experts will love the thousands of other articles we provide. When you're ready to learn about offline apps in particular, take a look at Chris Heilmann's <a href="https://hacks.mozilla.org/2012/03/there-is-no-simple-solution-for-local-storage/">excellent article on where things stand</a>. The options can seem overwhelming&mdash;localStorage, IndexedDB, WebSQL, everCookie and more. Which tool is best for the job? Naturally, that depends on what the job is. The Web development community needs examples and patterns for which storage solutions to apply in which kinds of situations.</p>
+<p>That's where you come in. Can you build great apps that are also snappy? Is code simplicity or the size of your audience more important? We often describe the Dev Derby as a platform for pushing the Web forward. Never has this goal been so within reach.</p>
+<p>Predict the future by inventing it. Show the world what you think offline apps should look like by submitting one of your own to the December Dev Derby.</p>"""),
     },
     {
         "tag_name": "challenge:2013:january",
@@ -276,8 +280,20 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "dateline": _("January 2013"),
         "short_dateline": _("January"),
         "tagline": _("Drop demos here"),
-        "summary": _("The Drag and Drop API brings an age-old interaction to the web, making rich, natural, and familiar user experiences possible."),
-        "description": _("The Drag and Drop API brings an age-old interaction to the web, making rich, natural, and familiar user experiences possible."),
+        "summary": _("The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."),
+        "description": _("The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:february",
+        "title": _("February 2013 Dev Derby Challenge - Multi-touch"),
+        "short_title": _("Multi-touch"),
+        "dateline": _("February 2013"),
+        "short_dateline": _("February"),
+        "tagline": _("Do more with less"),
+        "summary": _("The Touch Events API lets you track multiple touches at the same time on mobile devices. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
+        "description": _("The Touch Events API lets you track multiple touches at the same time on mobile devices. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
