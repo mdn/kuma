@@ -1183,13 +1183,10 @@ def move(request, document_slug, document_locale):
                 pass
 
             old_hierarchy, new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
-            if not old_hierarchy and not new_hierarchy:
-                # just do a plain non-tree move
-                doc.slug = form.cleaned_data['slug']
-                doc.save()
-            else:
-                doc._move_tree(old_hierarchy, new_hierarchy, request.user,
-                               prepend)
+            doc._move_tree(old_hierarchy, new_hierarchy,
+                           form.cleaned_data['slug'],
+                           user=request.user,
+                           prepend=True)
 
             return redirect(reverse('wiki.document',
                                     args=(form.cleaned_data['slug'],),

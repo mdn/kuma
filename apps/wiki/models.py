@@ -1051,8 +1051,8 @@ class Document(NotificationsMixin, ModelBase):
                 pass
         return conflicts
 
-    def _move_tree(self, old_hierarchy, new_hierarchy, user=None,
-                   prepend=False):
+    def _move_tree(self, old_hierarchy, new_hierarchy, slug=None,
+                   user=None, prepend=False):
         """
         Move this page and all its children, by replacing old_hierarchy
         in the slug with new_hierarchy.
@@ -1071,7 +1071,13 @@ class Document(NotificationsMixin, ModelBase):
         rev.creator = user
         rev.created = datetime.now()
         if prepend:
-            rev.slug = '/'.join([new_hierarchy, rev.slug])
+            if new_hierarchy:
+                rev.slug = '/'.join([new_hierarchy, rev.slug])
+            else:
+                new_hierarchy = slug
+                if not old_hierarchy:
+                    old_hierarchy = self.slug
+                rev.slug = slug
         else:
             rev.slug = rev.slug.replace(old_hierarchy, new_hierarchy)
 
@@ -1080,7 +1086,8 @@ class Document(NotificationsMixin, ModelBase):
         rev.review_tags.set(*review_tags)
 
         for child in self.children.all():
-            child._move_tree(old_hierarchy, new_hierarchy, user, prepend)
+            child._move_tree(old_hierarchy, new_hierarchy,
+                             slug=None, user=user, prepend=prepend)
 
     def acquire_translated_topic_parent(self):
         """This normalizes topic breadcrumb paths between locales.
