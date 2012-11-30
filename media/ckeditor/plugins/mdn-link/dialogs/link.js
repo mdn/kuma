@@ -405,7 +405,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	function autoCompleteSelect(dialog, submit) {
 		// Set the link in the "link" pane, put value into place
 		//dialog.selectPage("info");
-		dialog.setValueOf('info', 'url', autoCompleteSelection.href);
+		dialog.setValueOf('info', 'url', autoCompleteSelection.url);
 	}
 
 	// Returns the default slug for the give page ("/{lang}/docs/")

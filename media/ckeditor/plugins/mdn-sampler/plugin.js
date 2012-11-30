@@ -46,7 +46,7 @@ CKEDITOR.plugins.add('mdn-sampler', {
 			}
 		});
 
-		var label = 'Insert Code Sample Template';
+		var label = gettext('Insert Code Sample Template');
 		editor.ui.addButton('mdn-sampler', {
 			label: label,
 			title: label,
