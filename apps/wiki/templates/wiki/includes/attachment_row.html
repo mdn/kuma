@@ -1,6 +1,6 @@
 <tr data-revision-id="{{ attachment.revision }}" data-attachment-id="{{ attachment.id }}">
   <td class="attachment-name-cell">
-    <a href="{{ attachment.url }}" target="_blank">{{ attachment.title | safe }}</a>
+    <a href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a>
       <div class="attachment-description">{{ attachment.description }}</div>
   </td>
   <td>{{ _('%s bytes') % attachment.size }}</td>
