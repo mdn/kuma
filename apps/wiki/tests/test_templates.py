@@ -7,12 +7,15 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.utils.http import urlquote
+from django.test.client import Client
 
 import mock
 from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
+
+import constance.config
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
@@ -21,10 +24,10 @@ from wiki.cron import calculate_related_documents
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
-                         DocumentTag)
+                         DocumentTag, Attachment)
 from wiki.tasks import send_reviewed_notification
 from wiki.tests import (TestCaseBase, document, revision, new_document_data,
-                        create_topical_parents_docs)
+                        create_topical_parents_docs, make_test_file)
 from devmo.tests import SkippedTestCase
 
 
@@ -235,6 +238,47 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
+
+
+class AttachmentTests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
+        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
+
+    def tearDown(self):
+        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
+
+    @attr('security')
+    def test_xss_file_attachment_title(self):
+        title = '"><img src=x onerror=prompt(navigator.userAgent);>'
+        # use view to create new attachment
+        file_for_upload = make_test_file()
+        post_data = {
+            'title': title,
+            'description': 'xss',
+            'comment': 'xss',
+            'file': file_for_upload,
+        }
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='admin', password='testpass')
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        eq_(302, resp.status_code)
+
+        # now stick it in/on a document
+        attachment = Attachment.objects.get(title=title)
+        rev = revision(content='<img src="%s" />' % attachment.get_file_url(),
+                      save=True)
+
+        # view it and verify markup is escaped
+        response = self.client.get(rev.document.get_absolute_url())
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_('%s xss' % title,
+            doc('#page-attachments-table .attachment-name-cell').text())
+        ok_('&gt;&lt;img src=x onerror=prompt(navigator.userAgent);&gt;' in
+            doc('#page-attachments-table .attachment-name-cell').html())
 
 
 class RevisionTests(TestCaseBase):
@@ -1205,7 +1249,7 @@ class TranslateTests(TestCaseBase):
         """Translate view of rejected English document shows warning."""
         raise SkipTest("TODO: FIXME for Kuma")
         user = User.objects.get(pk=8)
-        en_revision = revision(is_approved=False, save=True, reviewer=user,
+        revision(is_approved=False, save=True, reviewer=user,
                                reviewed=datetime.now())
         response = self.client.get(self._translate_uri())
         doc = pq(response.content)
