@@ -36,7 +36,7 @@ from waffle.models import Flag
 
 from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
-from . import TestCaseBase, FakeResponse
+from . import TestCaseBase, FakeResponse, make_test_file
 
 from authkeys.models import Key
 
@@ -2892,12 +2892,8 @@ class AttachmentTests(TestCaseBase):
         self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='admin', password='testpass')
 
-        # Shamelessly stolen from Django's own file-upload tests.
-        tdir = tempfile.gettempdir()
-        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
-        file_for_upload.write('I am a test file for upload.')
-        file_for_upload.seek(0)
-
+        file_for_upload = make_test_file(
+            content='A test file uploaded into kuma.')
         post_data = {
             'title': 'Test uploaded file',
             'description': 'A test file uploaded into kuma.',
@@ -2921,10 +2917,8 @@ class AttachmentTests(TestCaseBase):
         self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='admin', password='testpass')
 
-        tdir = tempfile.gettempdir()
-        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
-        file_for_upload.write('I am a test file for editing.')
-        file_for_upload.seek(0)
+        file_for_upload = make_test_file(
+            content='I am a test file for editing.')
 
         post_data = {
             'title': 'Test editing file',
@@ -2974,10 +2968,8 @@ class AttachmentTests(TestCaseBase):
         self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='admin', password='testpass')
 
-        tdir = tempfile.gettempdir()
-        file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
-        file_for_upload.write('I am a test file for attachment detail view.')
-        file_for_upload.seek(0)
+        file_for_upload = make_test_file(
+            content='I am a test file for attachment detail view.')
 
         post_data = {
             'title': 'Test file for viewing',
