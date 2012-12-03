@@ -169,7 +169,7 @@ class ViewTests(TestCaseBase):
         eq_(len(json_obj['subpages'][0]['subpages']), 2)
         eq_(json_obj['subpages'][0]['subpages'][1]['title'], 'Grandchild 2')
 
-        #Depth parameter testing
+        # Depth parameter testing
         def _depth_test(depth, aught):
             url = reverse('wiki.get_children', args=['Root'], 
                     locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
@@ -181,6 +181,14 @@ class ViewTests(TestCaseBase):
         _depth_test(3, 1)
         _depth_test(6, 1)
 
+        # Sorting test
+        sort_root_doc = _make_doc('Sort Root', 'Sort_Root')
+        sort_child_doc_1 = _make_doc('B Child', 'Sort_Root/B_Child', sort_root_doc)
+        sort_child_doc_2 = _make_doc('A Child', 'Sort_Root/A_Child', sort_root_doc)
+        resp = self.client.get(reverse('wiki.get_children', args=['Sort_Root'],
+            locale=settings.WIKI_DEFAULT_LANGUAGE))
+        json_obj = json.loads(resp.content)
+        eq_(json_obj['subpages'][0]['title'], 'A Child')
 
 
 class PermissionTests(TestCaseBase):
