@@ -29,6 +29,7 @@
 
 .dashboard table.dataTable td {
     border-right: 1px solid #ccc;
+    white-space: normal;
 }
 
 .dashboard .dataTables_info {

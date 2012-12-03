@@ -6,6 +6,8 @@
 {% set crumbs = [(None, title)] %}
 {% set classes = 'compare' %}
 
+{% block title %}{{ page_title(title) }}{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
@@ -37,7 +39,7 @@
         <tr>
           <th>{{ _('Article') }}</th>
           <th>{{ _('Date') }}</th>
-          <th>{{ _('By') }}</th>
+          <th>{{ _('Author') }}</th>
           <th>{{ _('Comment') }}</th>
         </tr>
       </thead>
