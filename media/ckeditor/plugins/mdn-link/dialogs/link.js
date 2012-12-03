@@ -1270,7 +1270,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		onFocus : function()
 		{
 			var selection = editor.getSelection(),
-				selectedText = selection.getSelectedText(),
+				selectedText = selection.getSelectedText().replace('()', ''),
 				selectedElement = selection.getSelectedElement(),
 				$autoComplete = jQuery(autoCompleteTextbox);
 				
