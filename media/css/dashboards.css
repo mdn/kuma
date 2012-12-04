@@ -34,15 +34,15 @@
 }
 
 .dashboard #revisions-table .revision-head-date {
-    width: 15%;
+    width: 15% !important;
 }
 
 .dashboard #revisions-table .revision-head-author {
-    width: 15%;
+    width: 15% !important;
 }
 
 .dashboard #revisions-table .revision-head-comment {
-    width: 30%;  
+    width: 30% !important; 
 }
 
 .dashboard .dataTables_info {
