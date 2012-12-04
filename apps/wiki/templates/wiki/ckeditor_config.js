@@ -42,6 +42,10 @@ CKEDITOR.mdn = {};
         originalOn.apply(this, arguments);
     };
 
+    // <time> elements should be inline
+    delete CKEDITOR.dtd.$block['time'];
+    CKEDITOR.dtd.$inline['time'] = 1;
+
     // Manage key presses
     var keys = CKEDITOR.mdn.keys = {
             control2: CKEDITOR.CTRL + 50,
