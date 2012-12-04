@@ -255,7 +255,7 @@
 				self._renderItem = function(list, item) {
 					return $("<li></li>")
 					        .data("item.autocomplete", item)
-					        .attr("title", item.href)
+					        .attr("title", item.url)
 					        .append($("<a></a>").text(item.label))
 					        .appendTo(list);
 				}

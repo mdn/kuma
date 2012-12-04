@@ -245,7 +245,6 @@ def _format_attachment_obj(attachments):
     return attachments_list
 
 
-
 def _split_slug(slug):
     """Utility function to do basic slug splitting"""
     slug_split = slug.split('/')
@@ -263,6 +262,30 @@ def _split_slug(slug):
 def _join_slug(parent_split, slug):
     parent_split.append(slug)
     return '/'.join(parent_split)
+
+def _get_document_for_json(doc, addLocaleToTitle = False):
+    """Returns a document in object format for output as JSON"""
+    content = (wiki.content.parse(doc.html)
+                                .injectSectionIDs()
+                                .serialize())
+    title = doc.title
+    if(addLocaleToTitle):
+        title += ' [' + doc.locale + ']'
+
+    summary = ''
+    if doc.current_revision:
+        summary = doc.current_revision.summary
+
+    return {
+        'title': title,
+        'label': doc.title,
+        'url': doc.get_absolute_url(),
+        'id': doc.id,
+        'slug': doc.slug,
+        'sections': wiki.content.get_content_sections(content),
+        'locale': doc.locale,
+        'summary': summary
+    }
 
 
 def get_seo_description(content):
@@ -1055,6 +1078,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
 
     attachments = _format_attachment_obj(doc.attachments)
     allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
+    docInfo = json.dumps(_get_document_for_json(doc))
+
     return jingo.render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
@@ -1066,6 +1091,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                          'parent_path': parent_path,
                          'revision': rev,
                          'document': doc,
+                         'docInfo': docInfo,
                          'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'attachment_data': attachments,
@@ -1153,6 +1179,7 @@ def preview_revision(request):
     #data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/preview.html', data)
 
+
 @require_GET
 @process_document_path
 def get_children(request, document_slug, document_locale):
@@ -1188,6 +1215,7 @@ def get_children(request, document_slug, document_locale):
 
     result = json.dumps(result)
     return HttpResponse(result, mimetype='application/json')
+    
 
 @require_GET
 def autosuggest_documents(request):
@@ -1197,7 +1225,7 @@ def autosuggest_documents(request):
     current_locale = request.GET.get('current_locale', False)
     exclude_current_locale = request.GET.get('exclude_current_locale', False)
 
-    # TODO: isolate to just approved docs?
+    # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.
         extra(select={'length':'Length(slug)'}).
         filter(title__icontains=partial_title, is_template=0).
@@ -1206,24 +1234,18 @@ def autosuggest_documents(request):
         exclude(slug__icontains='Talk:').  # Remove old talk pages
         order_by('title', 'length'))
 
+    # All locales are assumed, unless a specific locale is requested or banned
     if locale:
         docs = docs.filter(locale=locale)
-
     if current_locale:
         docs = docs.filter(locale=request.locale)
-
     if exclude_current_locale:
         docs = docs.exclude(locale=request.locale)
 
+    # Generates a list of acceptable docs
     docs_list = []
     for d in docs:
-        doc_info = {
-            'title': d.title + ' [' + d.locale + ']',
-            'label': d.title,
-            'href':  d.get_absolute_url(),
-            'id': d.id 
-        }
-        docs_list.append(doc_info)
+        docs_list.append(_get_document_for_json(d, True))
 
     data = json.dumps(docs_list)
     return HttpResponse(data, mimetype='application/json')
@@ -1600,14 +1622,10 @@ def json_view(request, document_slug=None, document_locale=None):
         return HttpResponseBadRequest()
 
     document = get_object_or_404(Document, **kwargs)
-    data = json.dumps({
-        'id': document.id,
-        'locale': document.locale,
-        'slug': document.slug,
-        'title': document.title,
-        'summary': document.current_revision.summary,
-        'url': document.get_absolute_url(),
-    })
+    content = (wiki.content.parse(document.html)
+                                .injectSectionIDs()
+                                .serialize())
+    data = json.dumps(_get_document_for_json(document))
     return HttpResponse(data, mimetype='application/json')
 
 
