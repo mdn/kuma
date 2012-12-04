@@ -1,4 +1,5 @@
 import json
+import logging
 import os.path
 import re
 import urllib
@@ -8,13 +9,12 @@ from django.conf import settings
 from django.template.defaultfilters import truncatewords
 from django.utils.html import strip_tags
 
-import commonware
 import cronjobs
 from dateutil.parser import parse as parse_date
 
 from devmo.helpers import get_localized_devmo_path, check_devmo_local_page
 
-log = commonware.log.getLogger('kuma.cron')
+log = logging.getLogger('mdn.cron')
 
 @cronjobs.register
 def mdc_pages():

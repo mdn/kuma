@@ -12,7 +12,7 @@ from sumo.urlresolvers import reverse
 from wiki.models import Document
 
 
-log = logging.getLogger('k.wiki.events')
+log = logging.getLogger('mdn.events')
 
 
 def notification_mails(revision, subject, template, url, users_and_watches):

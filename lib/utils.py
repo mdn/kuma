@@ -1,16 +1,16 @@
 import functools
 import HTMLParser
+import logging
 import os
 import re
 import tempfile
 
-import commonware.log
 import lockfile
 
 from django.db import models
 from django.db.models.fields.files import FieldFile
 
-log = commonware.log.getLogger('mdn.basket')
+log = logging.getLogger('mdn.basket')
 htmlparser = HTMLParser.HTMLParser()
 
 

@@ -85,7 +85,7 @@ from django.utils.safestring import mark_safe
 
 import logging
 
-log = logging.getLogger('k.wiki')
+log = logging.getLogger('mdn.views')
 
 
 OS_ABBR_JSON = json.dumps(dict([(o.slug, True)

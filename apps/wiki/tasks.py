@@ -19,7 +19,7 @@ from sumo.utils import chunked
 from wiki.models import Document, SlugCollision
 
 
-log = logging.getLogger('k.task')
+log = logging.getLogger('mdn.tasks')
 
 
 @task
