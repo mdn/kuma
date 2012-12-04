@@ -1175,6 +1175,7 @@ def get_children(request, document_slug, document_locale):
             
             if level < depth:
                 descendants = d.get_descendants(1)
+                descendants.sort(key=lambda item: item.title)
                 for descendant in descendants:
                     res['subpages'].append(_make_doc_structure(descendant, level + 1))
             return res
