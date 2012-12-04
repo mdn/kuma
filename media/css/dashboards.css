@@ -30,6 +30,19 @@
 .dashboard table.dataTable td {
     border-right: 1px solid #ccc;
     white-space: normal;
+    vertical-align: top;
+}
+
+.dashboard #revisions-table .revision-head-date {
+    width: 15%;
+}
+
+.dashboard #revisions-table .revision-head-author {
+    width: 15%;
+}
+
+.dashboard #revisions-table .revision-head-comment {
+    width: 30%;  
 }
 
 .dashboard .dataTables_info {
