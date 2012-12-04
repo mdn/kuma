@@ -135,7 +135,7 @@ jQuery.extend({
   function bindBrowserIDSignin() {
     $('.browserid-signin').click(function (e) {
       if ( !$(this).hasClass('toggle') ) {
-        navigator.id.getVerifiedEmail(function(assertion) {
+        navigator.id.get(function(assertion) {
           if (!assertion) { return; }
           $('input[name="assertion"]').val(assertion.toString());
           $('form.browserid').first().submit();
