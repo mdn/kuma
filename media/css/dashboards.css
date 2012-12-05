@@ -23,6 +23,10 @@
     color: #fff;
 }
 
+#revisions-table_wrapper .DTS_Loading {
+    display: none;
+}
+
 .dashboard table.dataTable tr.odd {
     background-image: -moz-linear-gradient(top, #D4DDE4, #EAEFF2);
 }

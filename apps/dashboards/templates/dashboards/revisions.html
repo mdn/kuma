@@ -109,7 +109,7 @@ $(document).ready(function(){
   // Create the autocomplete for topic
   $revisionDashboardTopic.mozillaAutocomplete({
     minLength: 3,
-    labelField: 'topic',
+    labelField: 'label',
     autocompleteUrl: '{{ url('dashboards.topic_lookup') }}',
     onSelect: function(item, isSilent) {
       // Do something upon selection
