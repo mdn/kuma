@@ -62,6 +62,12 @@
     width: 100%;
 }
 
+.dashboard #revision-address {
+    color: #666666;
+    font-size: 0.9em;
+    margin: -10px 0 20px;
+}
+
 /* Dashboard Filters */
 .dashboard #revision-filter {
     display: block;
