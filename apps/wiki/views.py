@@ -1152,6 +1152,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 @process_document_path
 @check_readonly
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+@waffle_flag('page_move')
 def move(request, document_slug, document_locale):
     """Move a tree of pages"""
     doc = get_object_or_404(

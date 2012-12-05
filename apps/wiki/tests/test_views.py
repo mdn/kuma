@@ -3061,6 +3061,12 @@ class AttachmentTests(TestCaseBase):
 class PageMoveTests(TestCaseBase):
     fixtures = ['test_users.json']
 
+    def setUp(self):
+        page_move_flag = Flag.objects.create(name='page_move')
+        page_move_flag.users = User.objects.filter(is_superuser=True)
+        page_move_flag.save()
+        super(PageMoveTests, self).setUp()
+
     def test_move_view(self):
         parent = revision(title='Test page move views',
                           slug='test-page-move-views',
