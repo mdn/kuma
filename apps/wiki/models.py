@@ -999,29 +999,6 @@ class Document(NotificationsMixin, ModelBase):
                                 reviewer=self.current_revision.creator,
                                 creator=user)
 
-    def _tree_change(self, new_slug):
-        """
-        Given a new slug to be assigned to this document, return a
-        3-tuple of ``(old_hierarchy, new_hierarchy, prepend)``,
-        representing the part of the URL which will be changing and
-        whether this involves prepending bits to the existing slug.
-
-        """
-        # We can't do this in one unpack operation because it can
-        # ValueError if new or old URL is only one segment.
-        old_bits = self.slug.split('/')
-        old_title = old_bits.pop(-1)
-
-        new_bits = new_slug.split('/')
-        new_title = new_bits.pop(-1)
-
-        old_hierarchy = '/'.join(old_bits)
-        new_hierarchy = '/'.join(new_bits)
-
-        prepend = not old_hierarchy
-
-        return old_hierarchy, new_hierarchy, prepend
-
     def _tree_conflicts(self, new_slug):
         """
         Given a new slug to be assigned to this document, return a
@@ -1036,28 +1013,24 @@ class Document(NotificationsMixin, ModelBase):
                 conflicts.append(existing)
         except Document.DoesNotExist:
             pass
-        old_hierarchy, new_hierarchy, prepend = self._tree_change(new_slug)
         for child in self.get_descendants():
-            if prepend:
-                moved_slug = '/'.join([new_hierarchy, child.slug])
-            else:
-                moved_slug = child.slug.replace(old_hierarchy, new_hierarchy)
+            child_title = child.slug.split('/')[-1]
             try:
                 existing = Document.objects.get(locale=self.locale,
-                                                slug=moved_slug)
+                                                slug='/'.join([new_slug, child_title]))
                 if not existing.redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
                 pass
         return conflicts
 
-    def _move_tree(self, old_hierarchy, new_hierarchy, slug=None,
-                   user=None, prepend=False):
+    def _move_tree(self, new_slug, user=None):
         """
-        Move this page and all its children, by replacing old_hierarchy
-        in the slug with new_hierarchy.
+        Move this page and all its children.
 
         """
+        old_slug = self.slug
+
         if user is None:
             user = self.current_revision.creator
 
@@ -1070,24 +1043,15 @@ class Document(NotificationsMixin, ModelBase):
 
         rev.creator = user
         rev.created = datetime.now()
-        if prepend:
-            if new_hierarchy:
-                rev.slug = '/'.join([new_hierarchy, rev.slug])
-            else:
-                new_hierarchy = slug
-                if not old_hierarchy:
-                    old_hierarchy = self.slug
-                rev.slug = slug
-        else:
-            rev.slug = rev.slug.replace(old_hierarchy, new_hierarchy)
+        rev.slug = new_slug
 
         rev.save(force_insert=True)
 
         rev.review_tags.set(*review_tags)
 
         for child in self.children.all():
-            child._move_tree(old_hierarchy, new_hierarchy,
-                             slug=None, user=user, prepend=prepend)
+            child_title = child.slug.split('/')[-1]
+            child._move_tree('/'.join([new_slug, child_title]), user)
 
     def acquire_translated_topic_parent(self):
         """This normalizes topic breadcrumb paths between locales.

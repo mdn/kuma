@@ -3095,7 +3095,7 @@ class PageMoveTests(TestCaseBase):
         eq_('moved/test-page-move-views',
             moved_parent.current_revision.slug)
         moved_child = Document.objects.get(pk=child_doc.id)
-        eq_('moved/page-move/test-views',
+        eq_('moved/test-page-move-views/test-views',
             moved_child.current_revision.slug)
 
     def test_move_conflict(self):
@@ -3114,7 +3114,7 @@ class PageMoveTests(TestCaseBase):
         child_doc.save()
 
         conflict = revision(title='Conflict for page-move view',
-                            slug='moved/page-move/test-views',
+                            slug='moved/test-page-move-views/test-views',
                             is_approved=True,
                             save=True)
 
@@ -3189,6 +3189,7 @@ class PageMoveTests(TestCaseBase):
         page_to_move_slug = 'Page_Move_Root'
         page_child_slug = 'Page_Move_Root/Page_Move_Child'
         page_moved_slug = 'Page_Move_Root_Moved'
+        page_child_moved_slug = 'Page_Move_Root_Moved/Page_Move_Child'
 
         page_to_move_doc = document(title=page_to_move_title,
                                     slug=page_to_move_slug,
@@ -3211,16 +3212,14 @@ class PageMoveTests(TestCaseBase):
         data = {'slug': page_moved_slug}
         self.client.login(username='admin', password='testpass')
         self.client.post(reverse('wiki.move',
-                                        args=(page_to_move_doc.slug,),
-                                        locale=page_to_move_doc.locale),
+                                 args=(page_to_move_doc.slug,),
+                                 locale=page_to_move_doc.locale),
                                 data=data)
 
         page_to_move_doc = Document.objects.get(slug=page_to_move_slug)
         page_moved_doc = Document.objects.get(slug=page_moved_slug)
         page_child_doc = Document.objects.get(slug=page_child_slug)
-        page_child_moved_doc = Document.objects.get(
-            slug='%s/%s' % (page_moved_slug, page_child_slug)
-        )
+        page_child_moved_doc = Document.objects.get(slug=page_child_moved_slug)
 
         ok_('REDIRECT' in page_to_move_doc.html)
         ok_(page_moved_slug in page_to_move_doc.html)
@@ -3230,3 +3229,54 @@ class PageMoveTests(TestCaseBase):
         ok_(page_child_moved_doc)
         # TODO: Fix this assertion?
         # eq_('admin', page_moved_doc.current_revision.creator.username)
+
+    @attr('move')
+    def test_mid_move(self):
+        root_title = 'Root'
+        root_slug = 'Root'
+        child_title = 'Child'
+        child_slug = 'Root/Child'
+        moved_child_slug = 'DiffChild'
+        grandchild_title = 'Grandchild'
+        grandchild_slug = 'Root/Child/Grandchild'
+        moved_grandchild_slug = 'DiffChild/Grandchild'
+
+        root_doc = document(title=root_title,
+                            slug=root_slug,
+                            save=True)
+        rev = revision(document=root_doc,
+                       title=root_title,
+                       slug=root_slug,
+                       save=True)
+        root_doc.current_revision = rev
+        root_doc.save()
+
+        child = revision(title=child_title, slug=child_slug,
+                         is_approved=True, save=True)
+        child_doc = child.document
+        child_doc.parent_topic = root_doc
+        child_doc.save()
+
+        grandchild = revision(title=grandchild_title,
+                              slug=grandchild_slug,
+                              is_approved=True, save=True)
+        grandchild_doc = grandchild.document
+        grandchild_doc.parent_topic = child_doc
+        grandchild_doc.save()
+
+        data = {'slug': moved_child_slug}
+        self.client.login(username='admin', password='testpass')
+        self.client.post(reverse('wiki.move',
+                                 args=(child_doc.slug,),
+                                 locale=child_doc.locale),
+                         data=data)
+
+        redirected_child = Document.objects.get(slug=child_doc.slug)
+        moved_child = Document.objects.get(slug=moved_child_slug)
+        ok_('REDIRECT' in redirected_child.html)
+        ok_(moved_child_slug in redirected_child.html)
+
+        redirected_grandchild = Document.objects.get(slug=grandchild_doc.slug)
+        moved_grandchild = Document.objects.get(slug=moved_grandchild_slug)
+        ok_('REDIRECT' in redirected_grandchild.html)
+        ok_(moved_grandchild_slug in redirected_grandchild.html)

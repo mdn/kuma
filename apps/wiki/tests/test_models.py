@@ -1359,7 +1359,7 @@ class PageMoveTests(TestCase):
 
         # Now we do a simple move: inserting a prefix that needs to be
         # inherited by the whole tree.
-        top_doc._move_tree('first-level/', 'new-prefix/first-level/')
+        top_doc._move_tree('new-prefix/first-level/parent')
 
         # And for each document verify three things:
         #
@@ -1374,21 +1374,21 @@ class PageMoveTests(TestCase):
             Document.objects.get(slug='first-level/parent').redirect_url())
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
-        eq_('new-prefix/first-level/second-level/child1',
+        eq_('new-prefix/first-level/parent/child1',
             moved_child1.current_revision.slug)
         ok_(old_child1_id != moved_child1.current_revision.id)
         ok_(moved_child1.current_revision.slug in \
             Document.objects.get(slug='first-level/second-level/child1').redirect_url())
 
         moved_child2 = Document.objects.get(pk=child2_doc.id)
-        eq_('new-prefix/first-level/second-level/child2',
+        eq_('new-prefix/first-level/parent/child2',
             moved_child2.current_revision.slug)
         ok_(old_child2_id != moved_child2.current_revision.id)
         ok_(moved_child2.current_revision.slug in \
             Document.objects.get(slug='first-level/second-level/child2').redirect_url())
 
         moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
-        eq_('new-prefix/first-level/second-level/third-level/grandchild',
+        eq_('new-prefix/first-level/parent/child2/grandchild',
             moved_grandchild.current_revision.slug)
         ok_(old_grandchild_id != moved_grandchild.current_revision.id)
         ok_(moved_grandchild.current_revision.slug in \
@@ -1411,26 +1411,15 @@ class PageMoveTests(TestCase):
         child1_doc.parent_topic = top_doc
         child1_doc.save()
 
-        top_doc._move_tree('', 'new-prefix', prepend=True)
+        top_doc._move_tree('new-prefix/parent')
         moved_top = Document.objects.get(pk=top_doc.id)
         eq_('new-prefix/parent',
             moved_top.current_revision.slug)
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
-        eq_('new-prefix/first-level/child1',
+        eq_('new-prefix/parent/child1',
             moved_child1.current_revision.slug)
             
-    @attr('move')
-    def test_tree_change(self):
-        d1 = document(title='Test tree change without prepend',
-                      slug='move-tests/test-tree-change')
-        eq_(('move-tests', 'foo/move-tests', False),
-            d1._tree_change('foo/move-tests/test-tree-change'))
-        d2 = document(title='Test tree change with prepend',
-                      slug='test-tree-change-prepend')
-        eq_(('', 'foo', True),
-            d2._tree_change('foo/test-tree-change-prepend'))
-
     @attr('move')
     def test_conflicts(self):
         top = revision(title='Test page-move conflict detection',
@@ -1458,7 +1447,7 @@ class PageMoveTests(TestCase):
 
         # Or if it will involve a child document.
         child_conflict = revision(title='Conflicting child for move conflict detection',
-                                  slug='moved/move-tests/conflict-child',
+                                  slug='moved/test-move-conflict-detection/conflict-child',
                                   is_approved=True,
                                   save=True)
 
@@ -1514,7 +1503,7 @@ class PageMoveTests(TestCase):
             rev = Revision.objects.get(pk=rev.id)
 
             doc = rev.document
-            doc._move_tree('', 'move', prepend=True)
+            doc._move_tree('move/page-move-tags')
 
             moved_doc = Document.objects.get(pk=doc.id)
             new_rev = moved_doc.current_revision

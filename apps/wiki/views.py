@@ -1182,11 +1182,8 @@ def move(request, document_slug, document_locale):
             except Document.DoesNotExist:
                 pass
 
-            old_hierarchy, new_hierarchy, prepend = doc._tree_change(form.cleaned_data['slug'])
-            doc._move_tree(old_hierarchy, new_hierarchy,
-                           form.cleaned_data['slug'],
-                           user=request.user,
-                           prepend=True)
+            doc._move_tree(form.cleaned_data['slug'],
+                           user=request.user)
 
             return redirect(reverse('wiki.document',
                                     args=(form.cleaned_data['slug'],),
