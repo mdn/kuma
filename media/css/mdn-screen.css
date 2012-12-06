@@ -881,7 +881,7 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #learn-p2pu p { font-size: .857em; color: #666; }
 #learn-p2pu strong { color: #333; }
 #learn-p2pu a { font-weight: bold; }
-#learn-p2pu a span { content: ""; position: absolute; left: 20px; top: 20px; width: 83px; height: 80px; background: url("../img/p2pu.png") no-repeat 0 0; }
+#learn-p2pu span { content: ""; position: absolute; left: 20px; top: 20px; width: 83px; height: 80px; background: url("../img/p2pu.png") no-repeat 0 0; }
 
 #learn-fineprint { clear: both; margin: 20px 20px 40px; font-size: .786em; }
 
