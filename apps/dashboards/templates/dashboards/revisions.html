@@ -40,7 +40,6 @@
           <th class="revision-head-article">{{ _('Article') }}</th>
           <th class="revision-head-date">{{ _('Date') }}</th>
           <th class="revision-head-author">{{ _('Author') }}</th>
-          <th class="revision-head-comment">{{ _('Comment') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -133,7 +132,7 @@ $(document).ready(function(){
 
   // Fires off an AJAX request to get the necessary data
   function getRecordDetail(e){
-    var parent        =   e.target.parentNode,
+    var parent        =   $(e.target).parents('tr').get(0),
         data          =   $revTable.fnGetData(parent),
         $diffView     =   $('#diff-view'),
         $revertLink   =   $('a#revert'),
@@ -150,7 +149,7 @@ $(document).ready(function(){
     lastSelected = $(parent).addClass('selected');
 
     // Update the revision address block
-    $('#revision-address').text(data.plainTitle + " - " + data.doc_url);
+    $('#revision-address').text(data.title + " - " + data.doc_url);
 
     // Load diff content
     $('a', $actionBar).attr('href', '');
@@ -176,10 +175,9 @@ $(document).ready(function(){
     'bSort': false,
     'bAutoWidth': false,
     'aoColumns': [
-      {'mData': 'title'},
+      {'mData': 'richTitle'},
       {'mData': 'date'},
-      {'mData': 'creator'},
-      {'mData': 'comment'}
+      {'mData': 'creator'}
     ],
     'sScrollY': '300px',
     'sDom': 'frtiS',
