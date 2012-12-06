@@ -57,6 +57,7 @@
       </section>
 
       <h2>{{ _('Revision Diff') }}</h2>
+      <div id="revision-address"></div>
       <section id="diff-view">
         <p>{{ _('Click an item in the revision list above to see details.') }}</p>
       </section>
@@ -131,7 +132,7 @@ $(document).ready(function(){
 
   // Fires off an AJAX request to get the necessary data
   function getRecordDetail(e){
-    var parent        =   e.target.parentNode,
+    var parent        =   $(e.target).parents('tr').get(0),
         data          =   $revTable.fnGetData(parent),
         $diffView     =   $('#diff-view'),
         $revertLink   =   $('a#revert'),
@@ -146,6 +147,9 @@ $(document).ready(function(){
       lastSelected.removeClass('selected')
     }
     lastSelected = $(parent).addClass('selected');
+
+    // Update the revision address block
+    $('#revision-address').text(data.title + " - " + data.doc_url);
 
     // Load diff content
     $('a', $actionBar).attr('href', '');
@@ -171,7 +175,7 @@ $(document).ready(function(){
     'bSort': false,
     'bAutoWidth': false,
     'aoColumns': [
-      {'mData': 'title'},
+      {'mData': 'richTitle'},
       {'mData': 'date'},
       {'mData': 'creator'}
     ],

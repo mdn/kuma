@@ -50,6 +50,10 @@
     padding-top: 3px;
 }
 
+.dashboard #revisions-table .selected .dashboard-comment {
+    font-weight: normal;
+}
+
 .dashboard #revisions-table .dash-locale {
     float: right;
     font-size: 0.8em;
@@ -70,6 +74,12 @@
     position: static;
     margin: 20px 0;
     width: 100%;
+}
+
+.dashboard #revision-address {
+    color: #666666;
+    font-size: 0.9em;
+    margin: -10px 0 20px;
 }
 
 /* Dashboard Filters */
