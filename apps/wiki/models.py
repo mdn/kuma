@@ -96,6 +96,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang', 'dir']) for 
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
     'tr', 'address', 'col', 's', 'strong'
 )))
+ALLOWED_ATTRIBUTES['time'] += ['datetime']
 # MathML
 ALLOWED_ATTRIBUTES.update(dict((x, ['href', 'mathbackground', 'mathcolor',
     'id', 'class', 'style']) for x in (
