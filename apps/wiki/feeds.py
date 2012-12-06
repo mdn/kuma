@@ -19,7 +19,8 @@ from wiki.helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from wiki.models import Document, Revision, AttachmentRevision
 
 
-MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 100)
+MAX_FEED_ITEMS = getattr(settings, 'MAX_FEED_ITEMS', 500)
+DEFAULT_FEED_ITEMS = 50
 
 
 class DocumentsFeed(Feed):
@@ -267,9 +268,13 @@ class RevisionsFeed(DocumentsFeed):
 
     def items(self):
         items = Revision.objects
+        limit = int(self.request.GET.get('limit', DEFAULT_FEED_ITEMS))
+        if not limit or limit > MAX_FEED_ITEMS:
+            limit = MAX_FEED_ITEMS
+
         if self.request.GET.get('all_locales', False) is False:
             items = items.filter(document__locale=self.request.locale)
-        return items.order_by('-created')[:MAX_FEED_ITEMS]
+        return items.order_by('-created')[:limit]
 
     def item_title(self, item):
         return "%s (%s)" % (item.document.full_path, item.document.locale)
