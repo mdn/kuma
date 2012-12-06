@@ -86,6 +86,12 @@ class FeedTests(TestCaseBase):
             ok_('$edit' in desc_text)
             ok_('$history' in desc_text)
 
+        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
+                                       args=(), kwargs={'format': 'rss'}) + 
+                                       '?limit=2')
+        feed = pq(resp.content)
+        eq_(2, len(feed.find('item')))
+
     def test_revisions_feed_diffs(self):
         d = document(title='HTML9')
         d.save()
