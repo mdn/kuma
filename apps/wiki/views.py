@@ -64,7 +64,7 @@ from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import (DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm,
-                        AttachmentRevisionForm)
+                        AttachmentRevisionForm, TreeMoveForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
                          DocumentRenderingInProgress,
@@ -1147,6 +1147,59 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     return response
 
 
+@require_http_methods(['GET', 'POST'])
+@permission_required('wiki.move_tree')
+@process_document_path
+@check_readonly
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+@waffle_flag('page_move')
+def move(request, document_slug, document_locale):
+    """Move a tree of pages"""
+    doc = get_object_or_404(
+        Document, locale=document_locale, slug=document_slug)
+
+    descendants = doc.get_descendants()
+
+    if request.method == 'POST':
+        form = TreeMoveForm(initial=request.GET, data=request.POST)
+        if form.is_valid():
+            conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
+            if conflicts:
+                return jingo.render(request, 'wiki/move_document.html', {
+                    'form': form,
+                    'document': doc,
+                    'descendants':  descendants,
+                    'descendants_count': len(descendants),
+                    'conflicts': conflicts,
+                })
+            # Set new parent, if any
+            new_slug_bits = form.cleaned_data['slug'].split('/')
+            new_slug_bits.pop()
+            try:
+                new_parent = Document.objects.get(locale=document_locale,
+                                                  slug='/'.join(new_slug_bits))
+                doc.parent_topic = new_parent
+                doc.save()
+            except Document.DoesNotExist:
+                pass
+
+            doc._move_tree(form.cleaned_data['slug'],
+                           user=request.user)
+
+            return redirect(reverse('wiki.document',
+                                    args=(form.cleaned_data['slug'],),
+                                    locale=doc.locale))
+    else:
+        form = TreeMoveForm()
+
+    return jingo.render(request, 'wiki/move_document.html', {
+        'form': form,
+        'document': doc,
+        'descendants':  descendants,
+        'descendants_count': len(descendants),
+    })
+    
+
 def ckeditor_config(request):
     """Return ckeditor config from database"""
     default_config = EditorToolbar.objects.filter(name='default').all()
@@ -1631,7 +1684,6 @@ def json_view(request, document_slug=None, document_locale=None):
 
 @require_GET
 @process_document_path
-@prevent_indexing
 def code_sample(request, document_slug, document_locale, sample_id):
     """Extract a code sample from a document and render it as a standalone
     HTML document"""
