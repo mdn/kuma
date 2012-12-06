@@ -1,5 +1,6 @@
 # CORS only for mozilla domains
 SetEnvIf Origin "https?://(.*\.mozilla\.(com|org|net))" CORS=$0
+SetEnvIf Origin "https?://(mdn\.mozillademos\.org)" CORS=$0
 Header set Access-Control-Allow-Origin %{CORS}e env=CORS
 
 # block hotlinking by referer to .woff, .eof, .ttf files except mozilla domains
