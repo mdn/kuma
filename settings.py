@@ -1040,6 +1040,11 @@ CONSTANCE_CONFIG = dict(
         'List of domains from which live code samples may be served '
         '(space-separated)'
     ),
+
+    GOOGLE_ANALYTICS_ACCOUNT = (
+        '',
+        'Google Analytics Tracking Account Number',
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'
