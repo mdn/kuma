@@ -299,6 +299,11 @@ class RevisionForm(forms.ModelForm):
         return value
 
     def clean_slug(self):
+        # TODO: move this check somewhere else?
+        # edits can come in without a slug, so default to the current doc slug
+        if not self.cleaned_data['slug']:
+            existing_slug = self.instance.document.slug
+            self.cleaned_data['slug'] = self.instance.slug = existing_slug
         cleaned_slug = self._clean_collidable('slug')
 
         # If they're trying to change an existing slug, and the

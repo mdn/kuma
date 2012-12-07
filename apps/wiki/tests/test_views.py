@@ -811,24 +811,70 @@ class DocumentEditingTests(TestCaseBase):
                                       locale=locale))
         eq_(302, response.status_code)
 
-    def test_retitling(self):
-        """When the title of an article is edited, a redirect is made."""
+    @attr('retitle')
+    def test_retitling_solo_doc(self):
+        """ Editing just title of non-parent doc:
+            * Changes title
+            * Doesn't cause errors
+            * Doesn't create redirect
+        """
         # Not testing slug changes separately; the model tests cover those plus
         # slug+title changes. If title changes work in the view, the rest
         # should also.
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
+
         new_title = 'Some New Title'
         d, r = doc_rev()
         old_title = d.title
         data = new_document_data()
         data.update({'title': new_title,
-                     'slug': d.slug,
                      'form': 'rev'})
-        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
-        eq_(new_title, Document.uncached.get(slug=d.slug,
-                                             locale=d.locale).title)
-        assert "REDIRECT" in Document.uncached.get(title=old_title).html
+        data['slug'] = ''
+        url = reverse('wiki.edit_document', args=[d.full_path])
+        client.post(url, data)
+        eq_(new_title,
+            Document.uncached.get(slug=d.slug, locale=d.locale).title)
+        try:
+            Document.uncached.get(title=old_title)
+            self.fail("Should not find doc by old title after retitling.")
+        except Document.DoesNotExist:
+            pass
+
+    @attr('retitle')
+    def test_retitling_parent_doc(self):
+        """ Editing just title of parent doc:
+            * Changes title
+            * Doesn't cause errors
+            * Doesn't create redirect
+        """
+        # Not testing slug changes separately; the model tests cover those plus
+        # slug+title changes. If title changes work in the view, the rest
+        # should also.
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # create parent doc & rev along with child doc & rev
+        d = document(title='parent', save=True)
+        revision(document=d, content='parent', save=True)
+        d2 = document(title='child', parent_topic=d, save=True)
+        revision(document=d2, content='child', save=True)
+
+        old_title = d.title
+        new_title = 'Some New Title'
+        data = new_document_data()
+        data.update({'title': new_title,
+                     'form': 'rev'})
+        data['slug'] = ''
+        url = reverse('wiki.edit_document', args=[d.full_path])
+        client.post(url, data)
+        eq_(new_title,
+            Document.uncached.get(slug=d.slug, locale=d.locale).title)
+        try:
+            Document.uncached.get(title=old_title)
+            self.fail("Should not find doc by old title after retitling.")
+        except Document.DoesNotExist:
+            pass
 
     def test_slug_change_ignored_for_iframe(self):
         """When the title of an article is edited in an iframe, the change is
@@ -1304,6 +1350,7 @@ class DocumentEditingTests(TestCaseBase):
 
         # Editing "length/length" document doesn't cause errors
         child_data['form'] = 'rev'
+        child_data['slug'] = ''
         edit_url = reverse('wiki.edit_document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE)
         response = client.post(edit_url, child_data)
         eq_(302, response.status_code)
@@ -1311,6 +1358,7 @@ class DocumentEditingTests(TestCaseBase):
 
         # Creating a new translation of "length" and "length/length" doesn't cause errors
         child_data['form'] = 'both'
+        child_data['slug'] = 'length'
         translate_url = reverse('wiki.document', args=[child_data['slug']], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=es'
         response = client.post(translate_url, child_data)
         eq_(302, response.status_code)
