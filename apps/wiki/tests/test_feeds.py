@@ -5,8 +5,8 @@
 import time
 import datetime
 import json
-import logging
 import hashlib
+import logging
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -91,6 +91,19 @@ class FeedTests(TestCaseBase):
                                        '?limit=2')
         feed = pq(resp.content)
         eq_(2, len(feed.find('item')))
+
+        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
+                                       args=(), kwargs={'format': 'rss'}) + 
+                                       '?limit=2&page=1')
+        ok_('Revision 5' in resp.content)
+        ok_('Revision 4' in resp.content)
+
+        resp = self.client.get(reverse('wiki.feeds.recent_revisions',
+                                       args=(), kwargs={'format': 'rss'}) + 
+                                       '?limit=2&page=2')
+        ok_('Revision 3' in resp.content)
+        ok_('Revision 2' in resp.content)
+
 
     def test_revisions_feed_diffs(self):
         d = document(title='HTML9')
