@@ -102,7 +102,11 @@ def extract_code_sample(id, src):
                 'pre[class*="brush:%s"]',
                 'pre[class*="%s;"]'
             ))
-            data[part] = sample.find(selector).text()
+            src = sample.find(selector).text()
+            if src is not None:
+                # Bug 819999: &nbsp; gets decoded to \xa0, which trips up CSS
+                src = src.replace(u'\xa0', u' ')
+            data[part] = src
     except:
         pass
     return data
