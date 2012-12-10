@@ -495,7 +495,6 @@ class ContentSectionToolTests(TestCase):
         except e:
             ok_(False, "There should not have been an exception")
 
-    @attr('current')
     def test_sample_code_extraction(self):
         sample_html = u"""
             <div class="foo">
@@ -584,6 +583,24 @@ class ContentSectionToolTests(TestCase):
         eq_(None, result['html'])
         eq_(None, result['css'])
         eq_(None, result['js'])
+
+    def test_bug819999(self):
+        """Non-breaking spaces are turned to normal spaces in code sample
+        extraction."""
+        doc_src = """
+            <h2 id="bug819999">Bug 819999</h2>
+            <pre class="brush: css">
+            .widget select,
+            .no-widget .select {
+            &nbsp; position : absolute;
+            &nbsp; left&nbsp;&nbsp;&nbsp;&nbsp; : -5000em;
+            &nbsp; height&nbsp;&nbsp; : 0;
+            &nbsp; overflow : hidden;
+            }
+            </pre>
+        """
+        result = wiki.content.extract_code_sample('bug819999', doc_src)
+        ok_(result['css'].find(u'\xa0') == -1)
 
     def test_iframe_host_filter(self):
         slug = 'test-code-embed'
