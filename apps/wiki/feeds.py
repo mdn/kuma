@@ -269,12 +269,18 @@ class RevisionsFeed(DocumentsFeed):
     def items(self):
         items = Revision.objects
         limit = int(self.request.GET.get('limit', DEFAULT_FEED_ITEMS))
+        page = int(self.request.GET.get('page', 1))
+
+        start = ((page-1) * limit)
+        finish = start + limit
+
         if not limit or limit > MAX_FEED_ITEMS:
             limit = MAX_FEED_ITEMS
 
         if self.request.GET.get('all_locales', False) is False:
             items = items.filter(document__locale=self.request.locale)
-        return items.order_by('-created')[:limit]
+
+        return items.order_by('-created')[start:finish]
 
     def item_title(self, item):
         return "%s (%s)" % (item.document.full_path, item.document.locale)
