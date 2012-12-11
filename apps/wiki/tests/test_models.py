@@ -617,15 +617,6 @@ class RedirectCreationTests(TestCase):
         eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
         eq_(REDIRECT_TITLE % dict(old=self.d.title, number=1), redirect.title)
 
-    def test_change_title(self):
-        """Test proper redirect creation on title change."""
-        self.d.title = 'New Title'
-        self.d.save()
-        redirect = Document.uncached.get(title=self.old_title)
-        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
-        eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
-        eq_(REDIRECT_SLUG % dict(old=self.d.slug, number=1), redirect.slug)
-
     def test_change_slug_and_title(self):
         """Assert only one redirect is made when both slug and title change."""
         self.d.title = 'New Title'
@@ -666,10 +657,6 @@ class RedirectCreationTests(TestCase):
     def test_slug_collision_avoidance(self):
         """Dodge existing slugs when making redirects due to title changes."""
         self._test_collision_avoidance('slug', 'title', REDIRECT_TITLE)
-
-    def test_title_collision_avoidance(self):
-        """Dodge existing titles when making redirects due to slug changes."""
-        self._test_collision_avoidance('title', 'slug', REDIRECT_SLUG)
 
     def test_redirects_unlocalizable(self):
         """Auto-created redirects should be marked unlocalizable."""

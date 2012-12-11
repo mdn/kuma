@@ -971,13 +971,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             if not doc.allows_revision_by(user):
                 raise PermissionDenied
             else:
-
                 post_data = request.POST.copy()
 
-                rev_form = RevisionValidationForm(post_data,
+                rev_form = RevisionForm(post_data,
                                         is_iframe_target=is_iframe_target,
                                         section_id=section_id)
-                rev_form.parent_slug = slug_dict['parent']
                 rev_form.instance.document = doc  # for rev_form.clean()
 
                 # Come up with the original revision to which these changes
@@ -987,12 +985,10 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                     orig_rev = None
                 else:
                     orig_rev = Revision.objects.get(pk=orig_rev_id)
-
                 # Get the document's actual current revision.
                 curr_rev = doc.current_revision
 
                 if not rev_form.is_valid():
-
                     # Was there a mid-air collision?
                     if 'current_rev' in rev_form._errors:
                         # Jump out to a function to escape indentation hell
@@ -1001,70 +997,58 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                 is_raw, rev_form, doc_form, section_id,
                                 rev, doc)
 
-                else:
+                if rev_form.is_valid():
+                    _save_rev_and_notify(rev_form, user, doc)
 
-                    if 'slug' in post_data:
-                        post_data['slug'] = _join_slug(slug_dict['parent_split'], post_data['slug'])
+                    if is_iframe_target:
+                        # TODO: Does this really need to be a template? Just
+                        # shoehorning data into a single HTML element.
+                        response = HttpResponse("""
+                            <span id="iframe-response"
+                                  data-status="OK"
+                                  data-current-revision="%s">OK</span>
+                        """ % doc.current_revision.id)
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
 
-                    # We know now that the form is valid (i.e. slug doesn't have a "/")
-                    # Now we can make it a true revision form
-                    rev_form = RevisionForm(post_data,
-                                            is_iframe_target=is_iframe_target,
-                                            section_id=section_id)
-                    rev_form.instance.document = doc  # for rev_form.clean()
+                    if (is_raw and orig_rev is not None and
+                            curr_rev.id != orig_rev.id):
+                        # If this is the raw view, and there was an original
+                        # revision, but the original revision differed from the
+                        # current revision at start of editing, we should tell
+                        # the client to refresh the page.
+                        response = HttpResponse('RESET')
+                        response.status_code = 205
+                        response['x-frame-options'] = 'SAMEORIGIN'
+                        return response
 
-                    if rev_form.is_valid():
-                        _save_rev_and_notify(rev_form, user, doc)
+                    if rev_form.instance.is_approved:
+                        view = 'wiki.document'
+                    else:
+                        view = 'wiki.document_revisions'
 
-                        if is_iframe_target:
-                            # TODO: Does this really need to be a template? Just
-                            # shoehorning data into a single HTML element.
-                            response = HttpResponse("""
-                                <span id="iframe-response"
-                                      data-status="OK"
-                                      data-current-revision="%s">OK</span>
-                            """ % doc.current_revision.id)
-                            response['x-frame-options'] = 'SAMEORIGIN'
-                            return response
+                    # Construct the redirect URL, adding any needed parameters
+                    url = reverse(view, args=[doc.full_path],
+                                  locale=doc.locale)
+                    params = {}
+                    if is_raw:
+                        params['raw'] = 'true'
+                        if need_edit_links:
+                            # Only need to carry over ?edit_links with ?raw,
+                            # because they're on by default in the normal UI
+                            params['edit_links'] = 'true'
+                        if section_id:
+                            # If a section was edited, and we're using the raw
+                            # content API, constrain to that section.
+                            params['section'] = section_id
+                    if params:
+                        url = '%s?%s' % (url, urlencode(params))
+                    if not is_raw and section_id:
+                        # If a section was edited, jump to the section anchor
+                        # if we're not getting raw content.
+                        url = '%s#%s' % (url, section_id)
 
-                        if (is_raw and orig_rev is not None and
-                                curr_rev.id != orig_rev.id):
-                            # If this is the raw view, and there was an original
-                            # revision, but the original revision differed from the
-                            # current revision at start of editing, we should tell
-                            # the client to refresh the page.
-                            response = HttpResponse('RESET')
-                            response.status_code = 205
-                            response['x-frame-options'] = 'SAMEORIGIN'
-                            return response
-
-                        if rev_form.instance.is_approved:
-                            view = 'wiki.document'
-                        else:
-                            view = 'wiki.document_revisions'
-
-                        # Construct the redirect URL, adding any needed parameters
-                        url = reverse(view, args=[doc.full_path],
-                                      locale=doc.locale)
-                        params = {}
-                        if is_raw:
-                            params['raw'] = 'true'
-                            if need_edit_links:
-                                # Only need to carry over ?edit_links with ?raw,
-                                # because they're on by default in the normal UI
-                                params['edit_links'] = 'true'
-                            if section_id:
-                                # If a section was edited, and we're using the raw
-                                # content API, constrain to that section.
-                                params['section'] = section_id
-                        if params:
-                            url = '%s?%s' % (url, urlencode(params))
-                        if not is_raw and section_id:
-                            # If a section was edited, jump to the section anchor
-                            # if we're not getting raw content.
-                            url = '%s#%s' % (url, section_id)
-
-                        return HttpResponseRedirect(url)
+                    return HttpResponseRedirect(url)
 
     parent_path = parent_slug = ''
     if slug_dict['parent']:

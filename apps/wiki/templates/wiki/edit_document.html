@@ -57,12 +57,6 @@
                 <div><p>{{ current_revision.title }}</p></div>
             {% endif %}
 
-            {% if slug and current_revision.slug and slug != current_revision.slug %}
-                <h4>{{ _('Slug:') }}</h4>
-                <div><p>{{ slug }}</p></div>
-                <div><p>{{ current_revision.slug }}</p></div>
-            {% endif %}
-
             {% if tags and current_revision.tags and tags != current_revision.tags %}
                 <h4>{{ _('Tags:') }}</h4>
                 <div><p>{{ tags }}</p></div>
@@ -105,11 +99,6 @@
           {% if revision_form and not section_id %}
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
-                <li><label><dfn title="{{_('URL segment that identifies the page')}}">{{_('Slug:')}}</dfn></label> {{ revision_form.slug | safe }}</li>
-                {% if parent_slug %}
-                  <li><label>{{_('Parent:')}}</label> 
-                    <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
-                {% endif %}
                 {% if not document.is_template %}
                   <li><label><dfn title="{{_('Generate table of contents')}}">{{_('TOC:')}}</dfn></label>
                     {{ revision_form.show_toc | safe }}
