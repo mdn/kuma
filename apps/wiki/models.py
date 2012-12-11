@@ -965,12 +965,12 @@ class Document(NotificationsMixin, ModelBase):
         # limited use and (2) require making Revision.creator nullable.
         slug_changed = hasattr(self, 'old_slug')
         title_changed = hasattr(self, 'old_title')
-        if self.current_revision and (slug_changed or title_changed):
+        if self.current_revision and slug_changed:
             self.move()
             if slug_changed:
                 del self.old_slug
-            if title_changed:
-                del self.old_title
+        if title_changed:
+            del self.old_title
 
     def move(self, new_slug=None, user=None):
         """
