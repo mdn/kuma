@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import patterns, url
-from django.views.generic.simple import redirect_to
 
 
 urlpatterns = patterns('dashboards.views',
@@ -7,7 +6,10 @@ urlpatterns = patterns('dashboards.views',
     # url(r'^home$', 'home', name='home'),
     url(r'^mobile$', 'mobile', name='home.mobile'),
     url(r'^dashboards/revisions$', 'revisions', name='dashboards.revisions'),
-    url(r'^dashboards/user_lookup$', 'user_lookup', name='dashboards.user_lookup'),
+    url(r'^dashboards/user_lookup$', 'user_lookup',
+        name='dashboards.user_lookup'),
+    url(r'^dashboards/topic_lookup$', 'topic_lookup',
+        name='dashboards.topic_lookup'),
     url(r'^localization$', 'localization', name='dashboards.localization'),
     url(r'^contributors$', 'contributors', name='dashboards.contributors'),
     url(r'^wiki-rows/(?P<readout_slug>[^/]+)', 'wiki_rows',

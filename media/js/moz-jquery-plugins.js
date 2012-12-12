@@ -164,8 +164,6 @@
 					
 					// Trigger a new AJAX request to find the results
 					self.lastXHR = $.getJSON(self.options.autocompleteUrl, request, function(data, status, xhr) {
-						var labelField = self.options.labelField;
-						
 						// Message the data
 						assignLabel(data);
 						
