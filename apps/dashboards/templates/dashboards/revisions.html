@@ -114,6 +114,10 @@ $(document).ready(function(){
   $revisionForm.submit(function(e) {
     e.preventDefault();
     loadRecords();
+
+    if('pushState' in history) {
+      history.pushState(null, '', location.pathname + '?' + $revisionForm.serialize());
+    }
   });
 
   // When the username is clicked, filter
