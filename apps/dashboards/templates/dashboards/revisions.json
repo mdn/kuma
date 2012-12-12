@@ -17,7 +17,8 @@
         "creator": "<a href='' class='creator'>{{ rev.creator }}</a>",
         "title": "{{ rev.title }}",
         "richTitle": "<a href='{{ doc_url }}' target='_blank'>{{ rev.document.slug }}</a><span class='dash-locale'>{{ rev.document.locale }}</span><span class='dashboard-comment'>{{ comment }}</span>",
-        "date": "{{ datetimeformat(rev.created, format="date", output="json") }} - {{ datetimeformat(rev.created, format="time", output="json") }}"
+        "date": "{{ datetimeformat(rev.created, format="date", output="json") }} - {{ datetimeformat(rev.created, format="time", output="json") }}",
+        "slug": "{{ rev.document.slug }}"
         }{% if not loop.last%},{% endif %}
 
 {% endfor %}

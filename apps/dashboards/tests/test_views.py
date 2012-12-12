@@ -9,7 +9,6 @@ from dashboards.readouts import CONTRIBUTOR_READOUTS
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
-
 class LocalizationDashTests(TestCase):
     def test_redirect_to_contributor_dash(self):
         """Should redirect to Contributor Dash if the locale is the default"""
@@ -73,6 +72,16 @@ class RevisionsDashTest(TestCase):
         ok_(['en-US' not in rev['doc_url'] for rev in revisions['aaData']])
 
     @attr('dashboards')
+    def test_user_lookup(self):
+        url = reverse('dashboards.user_lookup',
+                      locale='en-US') + '?user=test'
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, response.status_code)
+        users = json.loads(response.content)
+        ok_(['test' in user['label'] for user in users])
+        ok_(['admin' not in user['label'] for user in users])
+
+    @attr('dashboards')
     def test_creator_filter(self):
         url = reverse('dashboards.revisions',
                       locale='en-US') + '?user=testuser'
@@ -81,3 +90,22 @@ class RevisionsDashTest(TestCase):
         revisions = json.loads(response.content)
         ok_(['testuser' == rev['creator'] for rev in revisions['aaData']])
         ok_(['testuser2' != rev['creator'] for rev in revisions['aaData']])
+
+    @attr('dashboards')
+    def test_topic_lookup(self):
+        url = reverse('dashboards.topic_lookup',
+                      locale='en-US') + '?topic=lorem'
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, response.status_code)
+        slugs = json.loads(response.content)
+        ok_(['lorem' in slug['label'] for slug in slugs])
+        ok_(['article' not in slug['label'] for slug in slugs])
+
+    @attr('dashboards')
+    def test_topic_filter(self):
+        url = reverse('dashboards.revisions',
+                      locale='en-US') + '?topic=article'
+        response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, response.status_code)
+        revisions = json.loads(response.content)
+        ok_(['lorem' not in rev['slug'] for rev in revisions['aaData']])

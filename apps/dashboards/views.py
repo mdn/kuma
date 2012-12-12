@@ -1,10 +1,10 @@
 import json
-import logging
 
 from functools import partial
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.utils.datastructures import SortedDict
 from django.views.decorators.http import require_GET
@@ -139,17 +139,22 @@ def revisions(request):
     if request.is_ajax():
         username = request.GET.get('user', None)
         locale = request.GET.get('locale', None)
+        topic = request.GET.get('topic', None)
 
         display_start = int(request.GET.get('iDisplayStart', 0))
 
         revisions = (Revision.objects.select_related('creator').all()
                      .order_by('-created'))
+
         # apply filters, limits, and pages
         if username:
             revisions = (revisions
-                         .filter(creator__username__startswith=username))
+                         .filter(creator__username__istartswith=username))
         if locale:
             revisions = revisions.filter(document__locale=locale)
+
+        if topic:
+            revisions = revisions.filter(slug__icontains=topic)
 
         total = revisions.count()
         revisions = revisions[display_start:display_start + PAGE_SIZE]
@@ -167,7 +172,7 @@ def user_lookup(request):
     """Returns partial username matches"""
     if request.is_ajax():
         user = request.GET.get('user', '')
-        matches = User.objects.filter(username__startswith=user)
+        matches = User.objects.filter(username__istartswith=user)
 
         userlist = []
         for u in matches:
@@ -175,7 +180,24 @@ def user_lookup(request):
 
         data = json.dumps(userlist)
         return HttpResponse(data,
-                            content_type="application/json; charset=utf-8")
+                            content_type='application/json; charset=utf-8')
+
+
+@require_GET
+@waffle_flag('revisions_dashboard')
+def topic_lookup(request):
+    """Returns partial topic matches"""
+    if request.is_ajax():
+        topic = request.GET.get('topic', '')
+        matches = Document.objects.filter(slug__icontains=topic)
+
+        topiclist = []
+        for d in matches:
+            topiclist.append({'label': d.slug})
+
+        data = json.dumps(topiclist)
+        return HttpResponse(data,
+                            content_type='application/json; charset=utf-8')
 
 
 @require_GET
