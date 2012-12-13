@@ -61,6 +61,7 @@
 .dashboard #revisions-table .dash-locale {
     float: right;
     font-size: 0.8em;
+    padding-top: 3px;
 }
 
 .dashboard .dataTables_info {
