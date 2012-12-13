@@ -73,7 +73,7 @@ ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
-                             'title', 'style', 'lang', 'dir']
+                             'title', 'style', 'lang', 'dir', 'width', 'height']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title',
                            'lang', 'name', 'dir']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
