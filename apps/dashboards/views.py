@@ -170,34 +170,36 @@ def revisions(request):
 @waffle_flag('revisions_dashboard')
 def user_lookup(request):
     """Returns partial username matches"""
+    userlist = []
+
     if request.is_ajax():
         user = request.GET.get('user', '')
-        matches = User.objects.filter(username__istartswith=user)
+        if user:
+            matches = User.objects.filter(username__istartswith=user)
+            for u in matches:
+                userlist.append({'label': u.username})
 
-        userlist = []
-        for u in matches:
-            userlist.append({'label': u.username})
-
-        data = json.dumps(userlist)
-        return HttpResponse(data,
-                            content_type='application/json; charset=utf-8')
+    data = json.dumps(userlist)
+    return HttpResponse(data,
+                        content_type='application/json; charset=utf-8')
 
 
 @require_GET
 @waffle_flag('revisions_dashboard')
 def topic_lookup(request):
     """Returns partial topic matches"""
+    topiclist = []
+
     if request.is_ajax():
         topic = request.GET.get('topic', '')
-        matches = Document.objects.filter(slug__icontains=topic)
+        if topic:
+            matches = Document.objects.filter(slug__icontains=topic)
+            for d in matches:
+                topiclist.append({'label': d.slug})
 
-        topiclist = []
-        for d in matches:
-            topiclist.append({'label': d.slug})
-
-        data = json.dumps(topiclist)
-        return HttpResponse(data,
-                            content_type='application/json; charset=utf-8')
+    data = json.dumps(topiclist)
+    return HttpResponse(data,
+                        content_type='application/json; charset=utf-8')
 
 
 @require_GET
