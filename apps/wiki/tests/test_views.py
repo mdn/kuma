@@ -35,13 +35,14 @@ from taggit.utils import parse_tags, edit_string_for_tags
 from waffle.models import Flag
 
 from sumo.tests import LocalizingClient
+from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from . import TestCaseBase, FakeResponse, make_test_file
 
 from authkeys.models import Key
 
 from wiki.models import (VersionMetadata, Document, Revision, Attachment,
-                         AttachmentRevision)
+                         AttachmentRevision, DocumentAttachment)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
@@ -3102,6 +3103,41 @@ class AttachmentTests(TestCaseBase):
         eq_(200, resp.status_code)
         ok_('Files of this type are not permitted.' in resp.content)
 
+    def test_intermediate(self):
+        """
+        Test that the intermediate DocumentAttachment gets created
+        correctly when adding an Attachment with a document_id.
+        
+        """
+        doc = document(locale='en', slug='attachment-test-intermediate')
+        doc.save()
+        rev = revision(document=doc, is_approved=True)
+        rev.save()
+
+        file_for_upload = make_test_file(
+            content='A file for testing intermediate attachment model.')
+
+        post_data = {
+            'title': 'Intermediate test file',
+            'description': 'Intermediate test file',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        self.client = Client()
+        self.client.login(username='admin', password='testpass')
+
+        add_url = urlparams(reverse('wiki.new_attachment'),
+                            document_id=doc.id)
+        resp = self.client.post(add_url, data=post_data)
+        eq_(302, resp.status_code)
+
+        eq_(1, doc.files.count())
+
+        intermediate = DocumentAttachment.objects.filter(file__pk=doc.id)[0]
+        eq_('admin', intermediate.attached_by.username)
+        eq_(file_for_upload.name.split('/')[-1], intermediate.name)
+        
 
 class PageMoveTests(TestCaseBase):
     fixtures = ['test_users.json']
