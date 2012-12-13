@@ -3151,7 +3151,10 @@ class AttachmentTests(TestCaseBase):
 
         eq_(1, doc.files.count())
 
-        intermediate = DocumentAttachment.objects.filter(file__pk=doc.id)[0]
+        intermediates = DocumentAttachment.objects.filter(file__pk=doc.id)
+        eq_(1, intermediates.count())
+
+        intermediate = intermediates[0]
         eq_('admin', intermediate.attached_by.username)
         eq_(file_for_upload.name.split('/')[-1], intermediate.name)
         
