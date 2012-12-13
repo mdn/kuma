@@ -1819,7 +1819,7 @@ class Attachment(models.Model):
         if self.id not in document.attachments.values_list('id', flat=True):
             intermediate = DocumentAttachment(file=self,
                                               document=document,
-                                              user=user,
+                                              attached_by=user,
                                               name=name)
             intermediate.save()
 
