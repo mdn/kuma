@@ -2240,12 +2240,7 @@ class AutosuggestDocumentsTests(TestCaseBase):
 
         # All contain "e", so that will be the search term
         invalidDocuments = (
-            {'title': 'Redirect 1'},  # Should *not* be returned (first rule)
-            {'title': 'e 1', 'html': 'Redirect http//'},  # Should *not* be returned (second rule)
-            {'title': 'e 2', 'html': '#Redirect http//'},  # Should *not* be returned (second rule)
-            {'title': 'e 3', 'html': '<p>#Redirect http//'},  # Should *not* be returned (second rule)
-            {'title': 'e 4', 'html': '<p>Redirect http//'},  # Should *not* be returned (second rule)
-            {'title': 'e 5', 'slug': 'Talk:Something'},  # Should *not* be returned (third rule)
+            {'title': 'Something Redirect 8', 'html': 'REDIRECT <a class="redirect" href="/blah">Something Redirect</a>', 'is_redirect': 1},
         )
 
         validDocuments = (
@@ -2263,6 +2258,8 @@ class AutosuggestDocumentsTests(TestCaseBase):
                 d.html = doc['html']
             if 'slug' in doc:
                 d.slug = doc['slug']
+            if 'is_redirect' in doc:
+                d.is_redirect = 1
             d.save()
 
         url = reverse('wiki.autosuggest_documents', locale='en-US') + '?term=e'
@@ -3151,6 +3148,8 @@ class PageMoveTests(TestCaseBase):
         moved_child = Document.objects.get(pk=child_doc.id)
         eq_('moved/test-page-move-views/test-views',
             moved_child.current_revision.slug)
+        original_parent = Document.objects.get(slug='test-page-move-views')
+        eq_(original_parent.is_redirect, 1)
 
     def test_move_conflict(self):
         parent = revision(title='Test page move views',
