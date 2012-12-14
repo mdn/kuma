@@ -1229,6 +1229,9 @@ def get_children(request, document_slug, document_locale):
     result = []
     try:
         def _make_doc_structure(d, level):
+            if d.is_redirect:
+                return
+
             res = {
                 'title': d.title,
                 'slug': d.slug,
@@ -1265,9 +1268,7 @@ def autosuggest_documents(request):
     # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.
         extra(select={'length':'Length(slug)'}).
-        filter(title__icontains=partial_title, is_template=0).
-        exclude(title__iregex=r'Redirect [0-9]+$').  # New redirect pattern
-        exclude(html__iregex=r'^(<p>)?(#)?REDIRECT').  #Legacy redirect
+        filter(title__icontains=partial_title, is_template=0, is_redirect=0).
         exclude(slug__icontains='Talk:').  # Remove old talk pages
         order_by('title', 'length'))
 
