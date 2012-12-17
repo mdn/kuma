@@ -3151,7 +3151,7 @@ class AttachmentTests(TestCaseBase):
 
         eq_(1, doc.files.count())
 
-        intermediates = DocumentAttachment.objects.filter(file__pk=doc.id)
+        intermediates = DocumentAttachment.objects.filter(document__pk=doc.id)
         eq_(1, intermediates.count())
 
         intermediate = intermediates[0]
