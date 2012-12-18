@@ -96,6 +96,9 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang', 'dir']) for 
     'progress', 'audio', 'details', 'datagrid', 'datalist', 'table',
     'tr', 'address', 'col', 's', 'strong'
 )))
+ALLOWED_ATTRIBUTES.update(dict((x, ['cite']) for x in (
+    'blockquote', 'del', 'ins', 'q'
+)))
 ALLOWED_ATTRIBUTES['time'] += ['datetime']
 ALLOWED_ATTRIBUTES['ins'] = ['datetime']
 ALLOWED_ATTRIBUTES['del'] = ['datetime']
