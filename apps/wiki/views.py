@@ -393,7 +393,8 @@ def document(request, document_slug, document_locale):
             # If any of these parameters are present, throw a real 404.
             if (request.GET.get('raw', False) is not False or
                 request.GET.get('include', False) is not False or
-                request.GET.get('nocreate', False) is not False):
+                request.GET.get('nocreate', False) is not False or
+                not request.user.is_authenticated()):
                 raise Http404
 
             # The user may be trying to create a child page; if a parent exists
