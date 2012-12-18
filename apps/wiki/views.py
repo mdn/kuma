@@ -765,6 +765,7 @@ def new_document(request):
     initial_parent_id = request.GET.get('parent', '')
     initial_slug = request.GET.get('slug', '')
     initial_title = initial_slug.replace('_', ' ')
+    clone_id = ''.join(n for n in request.GET.get('clone', '') if n.isdigit())
 
     if not Document.objects.allows_add_by(request.user, initial_slug):
         # Try to head off disallowed Template:* creation, right off the bat
@@ -786,6 +787,21 @@ def new_document(request):
     if request.method == 'GET':
 
         initial_data = {}
+        initial_html = ''
+        initial_tags = ''
+        initial_toc = True
+
+        if clone_id:
+            try:
+                clone_doc = Document.objects.get(pk=clone_id)
+                initial_title = clone_doc.title
+                initial_html = clone_doc.html
+                initial_tags = clone_doc.tags.all()
+                initial_slug = clone_doc.slug + '_clone'
+                initial_toc = clone_doc.show_toc
+
+            except Document.DoesNotExist:
+                logging.debug('Cannot find clone document')
 
         if parent_slug:
             initial_data['parent_topic'] = initial_parent_id
@@ -804,8 +820,10 @@ def new_document(request):
         rev_form = RevisionForm(initial={
             'slug': initial_slug,
             'title': initial_title,
+            'content': initial_html,
             'review_tags': review_tags,
-            'show_toc': True
+            'tags': initial_tags,
+            'show_toc': initial_toc
         })
 
         allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
@@ -815,6 +833,7 @@ def new_document(request):
                              'parent_id': initial_parent_id,
                              'document_form': doc_form,
                              'revision_form': rev_form,
+                             'initial_tags': initial_tags,
                              'allow_add_attachment': allow_add_attachment,
                              'attachment_form': AttachmentRevisionForm(),
                              'parent_path': parent_path})
