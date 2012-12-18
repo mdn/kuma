@@ -1422,6 +1422,23 @@ class DocumentEditingTests(TestCaseBase):
         response = client.post(translate_url, child_data)
         self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug + '/' + child_data['slug']], locale=foreign_locale))
 
+    def test_clone(self):
+        self.client.login(username='admin', password='testpass')
+
+        slug = 'my_doc'
+        title = 'My Doc'
+        content = '<p>Hello!</p>'
+
+        document = revision(save=True, title=title, slug=slug, content=content).document
+        
+        response = self.client.get(reverse('wiki.new_document', args=[], locale=settings.WIKI_DEFAULT_LANGUAGE) + '?clone=' + str(document.id))
+        page = pq(response.content)
+
+        eq_(page.find('input[name=title]')[0].value, title)
+        eq_(page.find('input[name=slug]')[0].value, slug + '_clone')
+        eq_(page.find('textarea[name=content]')[0].value, content)
+
+
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
         localization is OK."""
