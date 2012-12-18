@@ -746,6 +746,16 @@ def list_templates(request):
 
 
 @require_GET
+def list_files(request):
+    """Returns listing of all files"""
+    files = paginate(request,
+                     Attachment.objects.all(),
+                     per_page=DOCUMENTS_PER_PAGE)
+    return jingo.render(request, 'wiki/list_files.html',
+                        {'files': files}),
+
+
+@require_GET
 def list_documents_for_review(request, tag=None):
     """Lists wiki documents with revisions flagged for review"""
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
