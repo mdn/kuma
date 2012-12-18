@@ -1143,6 +1143,20 @@ class Document(NotificationsMixin, ModelBase):
 
         return self.current_revision.content_parsed
 
+    def files_dict(self):
+        intermediates = DocumentAttachment.objects.filter(document__pk=self.id)
+        files = {}
+        for f in intermediates:
+            attachment = f.file
+            rev = attachment.current_revision
+            files[f.name] = {'attached_by': f.attached_by.username,
+                             'creator': rev.creator.username,
+                             'description': rev.description,
+                             'mime_type': rev.mime_type,
+                             'html': attachment.get_embed_html(),
+                             'url': attachment.get_file_url(),}
+        return files
+
     @property
     def attachments(self):
         # Is there a more elegant way to do this?
