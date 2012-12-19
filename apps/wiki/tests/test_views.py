@@ -35,13 +35,14 @@ from taggit.utils import parse_tags, edit_string_for_tags
 from waffle.models import Flag
 
 from sumo.tests import LocalizingClient
+from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from . import TestCaseBase, FakeResponse, make_test_file
 
 from authkeys.models import Key
 
 from wiki.models import (VersionMetadata, Document, Revision, Attachment,
-                         AttachmentRevision)
+                         AttachmentRevision, DocumentAttachment)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
@@ -3118,6 +3119,95 @@ class AttachmentTests(TestCaseBase):
                                 data=post_data)
         eq_(200, resp.status_code)
         ok_('Files of this type are not permitted.' in resp.content)
+
+    def test_intermediate(self):
+        """
+        Test that the intermediate DocumentAttachment gets created
+        correctly when adding an Attachment with a document_id.
+        
+        """
+        doc = document(locale='en', slug='attachment-test-intermediate')
+        doc.save()
+        rev = revision(document=doc, is_approved=True)
+        rev.save()
+
+        file_for_upload = make_test_file(
+            content='A file for testing intermediate attachment model.')
+
+        post_data = {
+            'title': 'Intermediate test file',
+            'description': 'Intermediate test file',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        self.client = Client()
+        self.client.login(username='admin', password='testpass')
+
+        add_url = urlparams(reverse('wiki.new_attachment'),
+                            document_id=doc.id)
+        resp = self.client.post(add_url, data=post_data)
+        eq_(302, resp.status_code)
+
+        eq_(1, doc.files.count())
+
+        intermediates = DocumentAttachment.objects.filter(document__pk=doc.id)
+        eq_(1, intermediates.count())
+
+        intermediate = intermediates[0]
+        eq_('admin', intermediate.attached_by.username)
+        eq_(file_for_upload.name.split('/')[-1], intermediate.name)
+
+    def test_files_dict(self):
+        doc = document(locale='en', slug='attachment-test-files-dict')
+        doc.save()
+        rev = revision(document=doc, is_approved=True)
+        rev.save()
+
+        test_file_1 = make_test_file(
+            content='A file for testing the files dict')
+
+        post_data = {
+            'title': 'Files dict test file',
+            'description': 'Files dict test file',
+            'comment': 'Initial upload',
+            'file': test_file_1,
+        }
+
+        add_url = urlparams(reverse('wiki.new_attachment'),
+                            document_id=doc.id)
+        self.client = Client()
+        self.client.login(username='admin', password='testpass')
+
+        resp = self.client.post(add_url, data=post_data)
+        
+        test_file_2 = make_test_file(
+            content='Another file for testing the files dict')
+
+        post_data = {
+            'title': 'Files dict test file 2',
+            'description': 'Files dict test file 2',
+            'comment': 'Initial upload',
+            'file': test_file_2,
+        }
+        
+        resp = self.client.post(add_url, data=post_data)
+
+        doc = Document.objects.get(pk=doc.id)
+
+        files_dict = doc.files_dict()
+
+        file1 = files_dict[test_file_1.name.split('/')[-1]]
+        eq_('admin', file1['attached_by'])
+        eq_('Files dict test file', file1['description'])
+        eq_('text/plain', file1['mime_type'])
+        ok_(test_file_1.name.split('/')[-1] in file1['url'])
+
+        file2 = files_dict[test_file_2.name.split('/')[-1]]
+        eq_('admin', file2['attached_by'])
+        eq_('Files dict test file 2', file2['description'])
+        eq_('text/plain', file2['mime_type'])
+        ok_(test_file_2.name.split('/')[-1] in file2['url'])
 
 
 class PageMoveTests(TestCaseBase):

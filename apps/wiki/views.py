@@ -2028,6 +2028,14 @@ def new_attachment(request):
     # No access if no permissions to upload
     if not Attachment.objects.allow_add_attachment_by(request.user):
         raise PermissionDenied
+
+    document = None
+    document_id = request.GET.get('document_id', None)
+    if document_id:
+        try:
+            document = Document.objects.get(id=int(document_id))
+        except (Document.DoesNotExist, ValueError):
+            pass
     
     form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
     if form.is_valid():
@@ -2037,6 +2045,10 @@ def new_attachment(request):
                                                slug=rev.slug)
         rev.attachment = attachment
         rev.save()
+
+        if document is not None:
+            attachment.attach(document, request.user,
+                              rev.filename())
 
         if request.POST.get('is_ajax', ''):
             response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',

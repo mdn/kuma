@@ -581,6 +581,9 @@ class Document(NotificationsMixin, ModelBase):
                                                through='RelatedDocument',
                                                symmetrical=False)
 
+    files = models.ManyToManyField('Attachment',
+                                   through='DocumentAttachment')
+
     # Raw HTML of approved revision's wiki markup
     html = models.TextField(editable=False)
 
@@ -1142,6 +1145,20 @@ class Document(NotificationsMixin, ModelBase):
             return None
 
         return self.current_revision.content_parsed
+
+    def files_dict(self):
+        intermediates = DocumentAttachment.objects.filter(document__pk=self.id)
+        files = {}
+        for f in intermediates:
+            attachment = f.file
+            rev = attachment.current_revision
+            files[f.name] = {'attached_by': f.attached_by.username,
+                             'creator': rev.creator.username,
+                             'description': rev.description,
+                             'mime_type': rev.mime_type,
+                             'html': attachment.get_embed_html(),
+                             'url': attachment.get_file_url(),}
+        return files
 
     @property
     def attachments(self):
@@ -1761,6 +1778,19 @@ class AttachmentManager(models.Manager):
         return True
 
 
+class DocumentAttachment(models.Model):
+    """
+    Intermediary between Documents and Attachments. Allows storing the
+    user who attached a file to a document, and a (unique for that
+    document) name for referring to the file from the document.
+    
+    """
+    file = models.ForeignKey('Attachment')
+    document = models.ForeignKey(Document)
+    attached_by = models.ForeignKey(User, null=True)
+    name = models.TextField()
+
+
 class Attachment(models.Model):
     """
     An attachment which can be inserted into one or more wiki documents.
@@ -1802,6 +1832,14 @@ class Attachment(models.Model):
                 {'attachment_id': self.id,
                  'filename': self.current_revision.filename()})
 
+    def attach(self, document, user, name):
+        if self.id not in document.attachments.values_list('id', flat=True):
+            intermediate = DocumentAttachment(file=self,
+                                              document=document,
+                                              attached_by=user,
+                                              name=name)
+            intermediate.save()
+
     def get_embed_html(self):
         """
         Return suitable initial HTML for embedding this file in an
@@ -1825,7 +1863,7 @@ class Attachment(models.Model):
             'wiki/attachments/%s.html' % rev.mime_type.split('/')[0],
             'wiki/attachments/generic.html'])
         return t.render({'attachment': rev})
-
+    
 
 class AttachmentRevision(models.Model):
     """
