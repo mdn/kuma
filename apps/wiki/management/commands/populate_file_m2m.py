@@ -5,7 +5,7 @@ from django.core.management.base import NoArgsCommand
 from wiki.models import Document
 
 
-class Command(NoArgsComment):
+class Command(NoArgsCommand):
     help = "Populate m2m relations for documents and their attachments"
 
     def handle(self, *args, **options):
