@@ -238,7 +238,7 @@ def _format_attachment_obj(attachments):
         try:
             obj['size'] = attachment.current_revision.file.size
         except:
-            logging.debug('Cannot attain file size')
+            pass
 
         obj['html'] = mark_safe(html.render({ 'attachment': obj }))
         attachments_list.append(obj)
@@ -322,7 +322,7 @@ def get_seo_description(content):
                             seo_summary = text.strip()
                             break
     except:
-        logging.debug('Could not create SEO summary');
+        pass
 
     # Post-found cleanup
     seo_summary = seo_summary.replace('<', '').replace('>', '')
@@ -564,7 +564,7 @@ def document(request, document_slug, document_locale):
                                             slug=slug_dict['root'])
             seo_parent_title = ' - ' + root_doc.title
         except Document.DoesNotExist:
-            logging.debug('Root document could not be found')
+            pass
 
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
@@ -783,7 +783,7 @@ def new_document(request):
             parent_slug = parent_doc.slug
             parent_path = parent_doc.get_absolute_url()
         except Document.DoesNotExist:
-            logging.debug('Cannot find parent')
+            pass
 
     if request.method == 'GET':
 
@@ -802,7 +802,7 @@ def new_document(request):
                 initial_toc = clone_doc.show_toc
 
             except Document.DoesNotExist:
-                logging.debug('Cannot find clone document')
+                pass
 
         if parent_slug:
             initial_data['parent_topic'] = initial_parent_id
@@ -947,7 +947,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 parent_doc = get_object_or_404(Document, id=parent_id)
                 doc.parent = parent_doc
             except Document.DoesNotExist:
-                logging.debug('Could not find posted parent')
+                pass
 
 
         # Comparing against localized names for the Save button bothers me, so
@@ -1483,7 +1483,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             parent_topic_translated_doc = parent_doc.parent_topic.translations.get(locale=document_locale)
             slug_dict = _split_slug(parent_topic_translated_doc.slug + '/' + slug_dict['specific'])
         except:
-            logging.debug('no translated parent topic')
+            pass
 
     user_has_doc_perm = ((not doc) or (doc and doc.allows_editing_by(user)))
     user_has_rev_perm = ((not doc) or (doc and doc.allows_revision_by(user)))
