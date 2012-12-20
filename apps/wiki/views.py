@@ -752,7 +752,7 @@ def list_files(request):
                      Attachment.objects.all(),
                      per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_files.html',
-                        {'files': files}),
+                        {'files': files})
 
 
 @require_GET
