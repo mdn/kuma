@@ -763,10 +763,21 @@ def list_documents_for_review(request, tag=None):
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def new_document(request):
     """Create a new wiki document."""
-    initial_parent_id = request.GET.get('parent', '')
+
     initial_slug = request.GET.get('slug', '')
     initial_title = initial_slug.replace('_', ' ')
-    clone_id = ''.join(n for n in request.GET.get('clone', '') if n.isdigit())
+
+    initial_parent_id = None
+    try:
+        initial_parent_id = int(request.GET.get('parent', ''))
+    except ValueError:
+        pass
+
+    clone_id = None
+    try:
+        clone_id = int(request.GET.get('clone', ''))
+    except ValueError:
+        pass
 
     if not Document.objects.allows_add_by(request.user, initial_slug):
         # Try to head off disallowed Template:* creation, right off the bat
