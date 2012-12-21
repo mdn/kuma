@@ -24,6 +24,8 @@ from wiki.events import (ApproveRevisionInLocaleEvent,
 from wiki.models import Document, Revision
 from wiki.views import SHOWFOR_DATA
 
+from datetime import datetime
+
 
 HOME_DOCS = {'quick': 'Home page - Quick', 'explore': 'Home page - Explore'}
 MOBILE_DOCS = {'quick': 'Mobile home - Quick',
@@ -159,10 +161,36 @@ def revisions(request):
         total = revisions.count()
         revisions = revisions[display_start:display_start + PAGE_SIZE]
 
-        context = {'revisions': revisions,
-                   'total_records': total}
-        return jingo.render(request, 'dashboards/revisions.json',
-                    context, content_type="application/json; charset=utf-8")
+        # build the master JSON
+        revision_json = {
+            'iTotalRecords': total,
+            'iTotalDisplayRecords': total,
+            'aaData': []
+        }
+        for rev in revisions:
+            prev = rev.get_previous()
+            fromRev = str(prev.id if prev else rev.id)
+            doc_url = reverse('wiki.document', args=[rev.document.full_path], locale=rev.document.locale)
+            comment = rev.comment if rev.comment else ""
+
+            revision_json['aaData'].append({
+                'id': rev.id,
+                'prev_id': fromRev,
+                'doc_url': doc_url,
+                'edit_url': reverse('wiki.edit_document', args=[rev.document.full_path], locale=rev.document.locale),
+                'compare_url': reverse('wiki.compare_revisions', args=[rev.document.full_path]) + '?from=' + fromRev + '&to=' + str(rev.id) + '&raw=1',
+                'revert_url': reverse('wiki.revert_document', args=[rev.document.full_path, rev.id]),
+                'history_url': reverse('wiki.document_revisions', args=[rev.document.full_path], locale=rev.document.locale),
+                'creator': '<a href="" class="creator">' + rev.creator.username + '</a>',
+                'title': rev.title,
+                'richTitle': '<a href="' + doc_url + '" target="_blank">' + rev.document.slug + '</a><span class="dash-locale">' + rev.document.locale + '</span><span class="dashboard-comment">' + comment + '</span>',
+                'date': rev.created.strftime('%b %d, %y - %H:%M'),
+                'slug': rev.document.slug
+            })
+
+        result = json.dumps(revision_json)
+        return HttpResponse(result, mimetype='application/json')
+
     return jingo.render(request, 'dashboards/revisions.html')
 
 

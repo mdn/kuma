@@ -52,17 +52,6 @@ class RevisionsDashTest(TestCase):
             [template.name for template in response.template])
 
     @attr('dashboards')
-    def test_ajax_context_and_template(self):
-        response = self.client.get(reverse('dashboards.revisions',
-                                           locale='en-US'),
-                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(200, response.status_code)
-        ok_('revisions' in response.context)
-        ok_('total_records' in response.context)
-        eq_('dashboards/revisions.json', response.template.name)
-        eq_('application/json; charset=utf-8', response['Content-Type'])
-
-    @attr('dashboards')
     def test_locale_filter(self):
         url = reverse('dashboards.revisions', locale='fr')
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
