@@ -11,10 +11,15 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         # Update document field where there is a redirect
+        # HACK: no-op this to preserve migration number but prevent running
+        # during next prod push
+        """
         docs = Document.objects.all()
         for doc in docs:
           if doc.redirect_url():
                 Document.objects.filter(pk=doc.pk).update(is_redirect=1)
+        """
+        pass
 
 
     def backwards(self, orm):
