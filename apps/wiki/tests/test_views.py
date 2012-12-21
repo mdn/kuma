@@ -2260,13 +2260,11 @@ class AutosuggestDocumentsTests(TestCaseBase):
         invalidDocuments = (
             {'title': 'Something Redirect 8', 'html': 'REDIRECT <a class="redirect" href="/blah">Something Redirect</a>', 'is_redirect': 1},
         )
-
         validDocuments = (
             {'title': 'e 6', 'html': '<p>Blah text Redirect'},
             {'title': 'e 7', 'html': 'AppleTalk'},
             {'title': 'Response.Redirect'},
         )
-
         allDocuments = invalidDocuments + validDocuments
 
         for doc in allDocuments:
@@ -2295,6 +2293,21 @@ class AutosuggestDocumentsTests(TestCaseBase):
                     found = True
                     break
             eq_(True, found)
+
+    def test_list_no_redirects(self):
+        invalidDocuments = (
+            {'title': 'Something Redirect 8', 'slug': 'xx', 
+                'html': 'REDIRECT <a class="redirect" href="http://davidwalsh.name">yo</a>'},
+            {'title': 'My Template', 'slug': 'Template:Something', 'html': 'blah'},
+        )
+        validDocuments = ({ 'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'},)
+        allDocuments = invalidDocuments + validDocuments
+
+        for doc in allDocuments:
+            d = document(save=True, slug=doc['slug'], title=doc['title'], html=doc['html'])
+
+        resp = self.client.get(reverse('wiki.all_documents', locale='en-US'))
+        eq_(len(validDocuments), len(pq(resp.content).find('.documents li')))
 
 
 class CodeSampleViewTests(TestCaseBase):

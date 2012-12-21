@@ -379,7 +379,9 @@ class DocumentManager(ManagerBase):
 
     def filter_for_list(self, locale=None, category=None, tag=None,
                         tag_name=None):
-        docs = self.order_by('title')
+        docs = (self.filter(is_template=False, is_redirect=False).
+                    exclude(slug__startswith='User:').
+                    exclude(slug__startswith='Talk:').order_by('title'))
         if locale:
             docs = docs.filter(locale=locale)
         if category:
