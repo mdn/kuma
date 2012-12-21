@@ -78,10 +78,8 @@ def build_sitemaps():
     sitemap_index = "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
     for locale in settings.MDN_LANGUAGES:
         queryset = (Document.objects
-                        .filter(is_template=False, locale=locale)
+                        .filter(is_template=False, locale=locale, is_redirect=False)
                         .exclude(title__startswith='User:')
-                        .exclude(title__iregex=r'Redirect [0-9]+$')
-                        .exclude(html__iregex=r'^(<p>)?(#)?REDIRECT')
                         .exclude(slug__icontains='Talk:')
                    )
         if len(queryset) > 0:
@@ -90,7 +88,7 @@ def build_sitemaps():
             urls = sitemap.get_urls(page=1)
             xml = smart_str(loader.render_to_string('sitemap.xml',
                                                     {'urlset': urls}))
-            xml = xml.replace('http://', 'https://')
+            xml = xml.replace('http://developer.mozilla.org', 'https://developer.mozilla.org')
             directory = '%s/sitemaps/%s' % (settings.MEDIA_ROOT, locale)
             if not os.path.exists(directory):
                 os.makedirs(directory)
