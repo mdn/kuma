@@ -131,11 +131,10 @@
     
       {% include "includes/login.html" %}
       
-      <form id="site-search" method="get" action="http://www.google.com/search"
-              data-url="{{ url('search') }}">
+      <form id="site-search" method="get" action="http://www.google.com/search" data-url="{{ url('search') }}">
         <p>
           <input type="text" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}">
-          <noscript><button type="submit">{{ _('Search') }}</button></noscript>
+          <button type="submit">{{ _('Search') }}</button>
         </p>
         <input type="hidden" name="sitesearch" value="developer.mozilla.org">
         <div id="site-search-gg"></div>
