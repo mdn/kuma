@@ -749,7 +749,7 @@ def list_templates(request):
 def list_files(request):
     """Returns listing of all files"""
     files = paginate(request,
-                     Attachment.objects.all(),
+                     Attachment.objects.order_by('title'),
                      per_page=DOCUMENTS_PER_PAGE)
     return jingo.render(request, 'wiki/list_files.html',
                         {'files': files})
