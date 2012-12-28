@@ -62,7 +62,7 @@
             </li>
             <li>
               <mark>{{ _('Comment') }}</mark>
-              <span>{{ ("None" if not revision.comment else revision.comment) }}</span>
+              <span>{{ ("None" if not revision.comment else revision.comment)|bugize_text }}</span>
             </li>
           {% endif %}
           {#
