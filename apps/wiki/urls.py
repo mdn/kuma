@@ -88,6 +88,7 @@ urlpatterns += patterns('wiki.views',
 
     url(r'^/templates$', 'list_templates', name='wiki.list_templates'),
     url(r'^/files$', 'list_files', name='wiki.list_files'),
+    url(r'^/tags$', 'list_tags', name='wiki.list_tags'),
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
     url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
