@@ -105,7 +105,8 @@ class LocaleRedirectTests(TestCaseBase):
 
     def test_redirect_with_no_slug(self):
         """Bug 775241: Fix exception in redirect for URL with ui-locale"""
-        url = '/en-US/docs/en-US/'
+        loc = settings.WIKI_DEFAULT_LANGUAGE
+        url = '/%s/docs/%s/' % (loc, loc)
         try:
             self.client.get(url, follow=True)
         except Http404, e:
@@ -128,7 +129,7 @@ class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_json_view(self):
-        url = reverse('wiki.json', locale='en-US')
+        url = reverse('wiki.json', locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         resp = self.client.get(url, {'title': 'an article title'})
         eq_(200, resp.status_code)
@@ -136,7 +137,7 @@ class ViewTests(TestCaseBase):
         eq_('article-title', data['slug'])
 
         url = reverse('wiki.json_slug', args=('article-title',),
-                      locale='en-US')
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(url)
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
@@ -688,7 +689,7 @@ class DocumentEditingTests(TestCaseBase):
 
         # Go to new document page to ensure no-index header works
         response = client.get(reverse('wiki.new_document', args=[],
-                                               locale='en-US'))
+                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(response['X-Robots-Tag'], 'noindex')
 
     def test_seo_title(self):
@@ -998,7 +999,7 @@ class DocumentEditingTests(TestCaseBase):
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response,
                 reverse('wiki.document', args=[data['slug']],
-                                         locale='en-US'))
+                                         locale=settings.WIKI_DEFAULT_LANGUAGE))
 
         # Slashes should not be acceptable via form input
         data['title'] = 'valid with slash'
@@ -1577,7 +1578,7 @@ class DocumentEditingTests(TestCaseBase):
         response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
 
         # Ensure the doc's newest revision has both tags.
-        doc = Document.objects.get(locale='en-US', slug="a-test-article")
+        doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug="a-test-article")
         rev = doc.revisions.order_by('-id').all()[0]
         review_tags = [x.name for x in rev.review_tags.all()]
         review_tags.sort()
@@ -1739,7 +1740,7 @@ class DocumentEditingTests(TestCaseBase):
         ok_(d.children.all()[0].title == 'Replicated local storage')
 
     def test_translate_on_edit(self):
-        d1 = document(title="Doc1", locale='en-US', save=True)
+        d1 = document(title="Doc1", locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
         revision(document=d1, save=True)
 
         d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
@@ -1797,7 +1798,7 @@ class DocumentEditingTests(TestCaseBase):
         data['slug'] = 'test-article-for-reverting'
         response = client.post(reverse('wiki.new_document'), data)
 
-        doc = Document.objects.get(locale='en-US',
+        doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug='test-article-for-reverting')
         rev = doc.revisions.order_by('-id').all()[0]
 
@@ -2173,24 +2174,25 @@ class MindTouchRedirectTests(TestCaseBase):
 
     fixtures = ['test_users.json']
 
+    server_prefix = 'http://testserver/%s/docs' % settings.WIKI_DEFAULT_LANGUAGE
     namespace_urls = (
         # One for each namespace.
         {'mindtouch': '/Help:Foo',
-         'kuma': 'http://testserver/en-US/docs/Help:Foo'},
+         'kuma': '%s/Help:Foo' % server_prefix},
         {'mindtouch': '/Help_talk:Foo',
-         'kuma': 'http://testserver/en-US/docs/Help_talk:Foo'},
+         'kuma': '%s/Help_talk:Foo' % server_prefix},
         {'mindtouch': '/Project:En/MDC_editor_guide',
-         'kuma': 'http://testserver/en-US/docs/Project:MDC_editor_guide'},
+         'kuma': '%s/Project:MDC_editor_guide' % server_prefix},
         {'mindtouch': '/Project_talk:En/MDC_style_guide',
-         'kuma': 'http://testserver/en-US/docs/Project_talk:MDC_style_guide'},
+         'kuma': '%s/Project_talk:MDC_style_guide' % server_prefix},
         {'mindtouch': '/Special:Foo',
-         'kuma': 'http://testserver/en-US/docs/Special:Foo'},
+         'kuma': '%s/Special:Foo' % server_prefix},
         {'mindtouch': '/Talk:en/Foo',
-         'kuma': 'http://testserver/en-US/docs/Talk:Foo'},
+         'kuma': '%s/Talk:Foo' % server_prefix},
         {'mindtouch': '/Template:Foo',
-         'kuma': 'http://testserver/en-US/docs/Template:Foo'},
+         'kuma': '%s/Template:Foo' % server_prefix},
         {'mindtouch': '/User:Foo',
-         'kuma': 'http://testserver/en-US/docs/User:Foo'},
+         'kuma': '%s/User:Foo' % server_prefix},
     )
 
     documents = (
@@ -2240,7 +2242,7 @@ class MindTouchRedirectTests(TestCaseBase):
     def test_view_param(self):
         raise SkipTest("WTF does the spot check work but test doesn't?")
         d = document()
-        d.locale = 'en-US'
+        d.locale = settings.WIKI_DEFAULT_LANGUAGE
         d.slug = 'HTML/HTML5'
         d.title = 'HTML 5'
         d.save()
@@ -2278,7 +2280,7 @@ class AutosuggestDocumentsTests(TestCaseBase):
                 d.is_redirect = 1
             d.save()
 
-        url = reverse('wiki.autosuggest_documents', locale='en-US') + '?term=e'
+        url = reverse('wiki.autosuggest_documents', locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
         resp = self.client.get(url)
 
         eq_(200, resp.status_code)
@@ -2306,7 +2308,7 @@ class AutosuggestDocumentsTests(TestCaseBase):
         for doc in allDocuments:
             d = document(save=True, slug=doc['slug'], title=doc['title'], html=doc['html'])
 
-        resp = self.client.get(reverse('wiki.all_documents', locale='en-US'))
+        resp = self.client.get(reverse('wiki.all_documents', locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(len(validDocuments), len(pq(resp.content).find('.documents li')))
 
 
@@ -2380,7 +2382,7 @@ class CodeSampleViewTests(TestCaseBase):
         constance.config.KUMA_CODE_SAMPLE_HOSTS = 'sampleserver'
 
         slug = 'test-code-embed'
-        embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
+        embed_url = 'https://sampleserver/%s/docs/%s$samples/sample1' % (settings.WIKI_DEFAULT_LANGUAGE, slug)
 
         doc_src = """
             <p>This is a page. Deal with it.</p>
@@ -2544,7 +2546,7 @@ class DeferredRenderingViewTests(TestCaseBase):
             'content': 'This is a translation',
         })
         translate_url = (reverse('wiki.translate', args=[data['slug']],
-                                 locale='en-US') + '?tolocale=fr')
+                                 locale=settings.WIKI_DEFAULT_LANGUAGE) + '?tolocale=fr')
         response = self.client.post(translate_url, data)
         eq_(302, response.status_code)
         ok_(mock_document_schedule_rendering.called)
@@ -2709,7 +2711,7 @@ class APITests(TestCaseBase):
 
         # Now, fill in the parent gap...
         p_doc = document(slug='%s/nonexistent' % self.d.slug,
-                         locale='en-US',
+                         locale=settings.WIKI_DEFAULT_LANGUAGE,
                          parent_topic=self.d)
         p_doc.save()
         p_rev = revision(document=p_doc,
@@ -2723,7 +2725,7 @@ class APITests(TestCaseBase):
         eq_(201, resp.status_code)
 
         new_slug = '%s/nonexistent/newchild' % self.d.slug
-        new_doc = Document.uncached.get(locale='en-US', slug=new_slug)
+        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=new_slug)
         eq_(p_doc.pk, new_doc.parent_topic.pk)
 
     def test_put_unsupported_content_type(self):
@@ -2756,7 +2758,7 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.uncached.get(locale='en-US', slug=slug)
+        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
         eq_(data['title'], new_doc.title)
         eq_(normalize_html(data['content']), normalize_html(new_doc.html))
 
@@ -2772,7 +2774,7 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.uncached.get(locale='en-US', slug=slug)
+        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
         eq_(normalize_html(html), normalize_html(new_doc.html))
 
     def test_put_complex_html(self):
@@ -2799,7 +2801,7 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.uncached.get(locale='en-US', slug=slug)
+        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
         eq_(data['title'], new_doc.title)
         eq_(normalize_html(data['content']), normalize_html(new_doc.html))
 

@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 import json
 import time
-import logging
 from xml.sax.saxutils import escape
+from django.conf import settings
 
 from cStringIO import StringIO
 
@@ -330,7 +330,7 @@ class DocumentTests(TestCase):
         A child doc should list all its parent's docs, excluding itself, and
         including its parent
         """
-        parent = document(locale='en-US', title='test', save=True)
+        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test', save=True)
         enfant = document(locale='fr', title='le test', parent=parent,
                          save=True)
         bambino = document(locale='es', title='el test', parent=parent,
@@ -487,9 +487,9 @@ class DocumentTestsWithFixture(TestCase):
     def test_default_topic_parents_for_translation(self):
         """A translated document with no topic parent should by default use
         the translation of its translation parent's topic parent."""
-        orig_pt = document(locale='en-US', title='test section',
+        orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test section',
                            save=True)
-        orig = document(locale='en-US', title='test',
+        orig = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
                         parent_topic=orig_pt, save=True)
 
         trans_pt = document(locale='fr', title='le test section',
@@ -501,9 +501,9 @@ class DocumentTestsWithFixture(TestCase):
         eq_(trans.parent_topic.pk, trans_pt.pk)
 
     def test_default_topic_with_stub_creation(self):
-        orig_pt = document(locale='en-US', title='test section',
+        orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test section',
                            save=True)
-        orig = document(locale='en-US', title='test',
+        orig = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
                         parent_topic=orig_pt, save=True)
 
         trans = document(locale='fr', title='le test',
@@ -529,7 +529,7 @@ class DocumentTestsWithFixture(TestCase):
         orig_path = ('MDN', 'web', 'CSS', 'properties', 'banana', 'leaf')
         docs, doc = [], None
         for title in orig_path:
-            doc = document(locale='en-US', title=title,
+            doc = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title=title,
                            parent_topic=doc, save=True)
             rev = revision(document=doc, title=title, save=True)
             docs.append(doc)
@@ -833,7 +833,7 @@ class RelatedDocumentTests(TestCase):
         calculate_related_documents()
         d = Document.uncached.get(pk=1)
         for rd in d.related_documents.all():
-            eq_('en-US', rd.locale)
+            eq_(settings.WIKI_DEFAULT_LANGUAGE, rd.locale)
 
     def test_only_approved_revisions(self):
         calculate_related_documents()
