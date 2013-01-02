@@ -378,36 +378,16 @@ def search(request):
 
 @cache_page(60 * 15)  # 15 minutes.
 def suggestions(request):
-    """A simple search view that returns OpenSearch suggestions."""
+    """Return empty array until we restore internal search system."""
 
     mimetype = 'application/x-suggestions+json'
 
     term = request.GET.get('q')
-
     if not term:
         return HttpResponseBadRequest(mimetype=mimetype)
 
-    wc = WikiClient()
-    qc = QuestionsClient()
-    site = Site.objects.get_current()
-    locale = sphinx_locale(locale_or_default(request.locale))
-
     results = []
-    filters_w = [{'filter': 'locale', 'value': (locale,)}]
-    filters_q = [{'filter': 'has_helpful', 'value': (True,)}]
-
-    for client, filter, cls in [(wc, filters_w, Document),
-                                (qc, filters_q, Question)]:
-        for result in client.query(term, filter, limit=5):
-            try:
-                result = cls.objects.get(pk=result['id'])
-            except cls.DoesNotExist:
-                continue
-            results.append(result)
-
-    urlize = lambda obj: u'https://%s%s' % (site, obj.get_absolute_url())
-    data = [term, [r.title for r in results], [], [urlize(r) for r in results]]
-    return HttpResponse(json.dumps(data), mimetype=mimetype)
+    return HttpResponse(json.dumps(results), mimetype=mimetype)
 
 
 @cache_page(60 * 60 * 168)  # 1 week.
