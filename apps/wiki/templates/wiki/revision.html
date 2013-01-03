@@ -82,7 +82,7 @@
     <details class="h2">
       <summary>{{ _('Revision Content') }}</summary>
       <div id="doc-content">
-        <div class="page-content boxed">{{ revision.content|safe }}</div>
+        <div class="page-content boxed">{{ revision.content|wiki_bleach }}</div>
       </div>
     </details>
   </article>
