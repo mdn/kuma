@@ -4,7 +4,7 @@ class node_repos {
     exec {
         "node_repo_download":
             cwd => "$PROJ_DIR/puppet/cache",
-            command => "/usr/bin/wget http://nodejs.tchol.org/repocfg/el/nodejs-stable-release.noarch.rpm",
+            command => "/usr/bin/wget http://people.mozilla.com/~lorchard/nodejs-stable-release.noarch.rpm",
             creates => "$PROJ_DIR/puppet/cache/nodejs-stable-release.noarch.rpm";
         "node_repo_install":
             cwd => "$PROJ_DIR/puppet/cache",
