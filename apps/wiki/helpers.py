@@ -135,3 +135,9 @@ def colorize_diff(diff):
     diff = diff.replace('<span class="diff_chg"', '<span class="diff_chg" '
                 'style="background-color: #fe0; text-decoration: none;"')
     return diff
+
+
+@register.filter
+def wiki_bleach(val):
+    from wiki.models import Document
+    return jinja2.Markup(Document.objects.clean_content(val))
