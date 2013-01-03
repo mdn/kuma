@@ -192,6 +192,18 @@ class ViewTests(TestCaseBase):
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
 
+    def test_revision_view_bleached_content(self):
+        """Bug 821988: Revision content should be cleaned with bleach"""
+        d, r = doc_rev("""
+            <a href="#" onload=alert(3)>Hahaha</a>
+            <svg><svg onload=alert(3);>
+        """)
+        resp = self.client.get(r.get_absolute_url())
+        page = pq(resp.content)
+        ct = page.find('#doc-content .page-content').html()
+        ok_('<svg>' not in ct)
+        ok_('<a href="#">Hahaha</a>' in ct)
+
 
 class PermissionTests(TestCaseBase):
 
