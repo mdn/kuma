@@ -283,7 +283,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."),
         "description": _("The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. No experience necessary! This month, we want to see if you can build Web apps that support drag and drop interaction. Simple games, intuitive shopping carts, easier file uploads&mdash;the possibilities are endless.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network</a> (MDN) has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/learn">comprehensive documentation on the basics</a>, and more seasoned web developers should love the thousands of other articles provided. When you're ready to get started on your contest entry, take a look at the <a href="https://developer.mozilla.org/docs/DragDrop/Drag_and_Drop">drag and drop documentation</a> in particular. Need some examples? Check out this <a href="http://html5demos.com/drag">simple demo</a> and the <a href="https://developer.mozilla.org/demos/tag/tech:dragndrop">many more demos</a> available on the Mozilla Demo Studio.</p>
+<p>There is a lot to learn, but you don't need to be an expert to create something great. What can you do with drag and drop?</p>"""),
     },
     {
         "tag_name": "challenge:2013:february",
@@ -294,6 +296,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Do more with less"),
         "summary": _("The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
         "description": _("The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:march",
+        "title": _("March 2013 Dev Derby Challenge - Mobile"),
+        "short_title": _("Mobile"),
+        "dateline": _("March 2013"),
+        "short_dateline": _("March"),
+        "tagline": _("On the go"),
+        "summary": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
+        "description": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
         "learn_more": [],
         "tab_copy": _("??"),
     },
