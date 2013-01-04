@@ -2,7 +2,7 @@
 # see also: http://www.python.org/dev/peps/pep-0263/
 import logging
 from urlparse import urljoin
-from jinja2 import escape
+from jinja2 import escape, Markup
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -17,6 +17,7 @@ from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           SECTION_TAGS)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
 from wiki.tests import normalize_html, doc_rev, document, revision
+from wiki.helpers import bugize_text
 
 
 class ContentSectionToolTests(TestCase):
@@ -601,6 +602,11 @@ class ContentSectionToolTests(TestCase):
         """
         result = wiki.content.extract_code_sample('bug819999', doc_src)
         ok_(result['css'].find(u'\xa0') == -1)
+
+    def test_bugize_text(self):
+        bad = 'Fixing bug #12345 again. <img src="http://davidwalsh.name" /> <a href="">javascript></a>'
+        good = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">bug 12345</a> again. &lt;img src=&#34;http://davidwalsh.name&#34; /&gt; &lt;a href=&#34;&#34;&gt;javascript&gt;&lt;/a&gt;'
+        eq_(bugize_text(bad), Markup(good))
 
     def test_iframe_host_filter(self):
         slug = 'test-code-embed'

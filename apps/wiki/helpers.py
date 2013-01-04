@@ -7,6 +7,7 @@ from jingo import register
 import jinja2
 from tidylib import tidy_document
 from tower import ugettext as _
+import logging
 
 from sumo.urlresolvers import reverse
 from wiki import DIFF_WRAP_COLUMN
@@ -76,6 +77,15 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
 def _massage_diff_content(content):
     tidy_options = {'output-xhtml': 0, 'force-output': 1}
     content = tidy_document(content, options=tidy_options)
+    return content
+
+
+@register.filter
+def bugize_text(content):
+    content = jinja2.escape(content)
+    content = re.sub(r'bug\s+#?(\d+)',
+                  jinja2.Markup('<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=\\1" target="_blank">bug \\1</a>'),
+                  content)
     return content
 
 
