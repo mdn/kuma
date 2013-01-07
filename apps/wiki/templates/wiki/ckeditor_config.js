@@ -95,7 +95,7 @@ CKEDITOR.editorConfig = function(config) {
     config.toolbar_MDN = [
         ['Source', 'mdnSave', 'mdnSaveExit', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
         ['BulletedList', 'NumberedList', 'DefinitionList', 'DefinitionTerm', 'DefinitionDescription', '-', 'Outdent', 'Indent', 'Blockquote', '-', 'Image', 'MDNTable', '-', 'TextColor', 'BGColor', '-', 'BidiLtr', 'BidiRtl'],
-        ['Maximize'],
+        CKEDITOR.isSectionEdit ? null : ['Maximize'],
         '/',
         ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', 'Styles'],
         ['preButton', 'mdn-syntaxhighlighter', 'mdn-sampler', 'mdn-sample-finder'],
