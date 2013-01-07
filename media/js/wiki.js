@@ -190,6 +190,7 @@
             .before(ui)
             .removeClass('edited-section-loading');
         // Fire up the CKEditor, stash it in the UI's data store
+        CKEDITOR.isSectionEdit = 1;
         $('.edited-section-ui.current')
             .data('edit_url', section_edit_url)
             .data('editor',
