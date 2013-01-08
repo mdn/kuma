@@ -77,6 +77,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
+from wiki.helpers import format_comment
 import wiki.content
 from wiki import kumascript
 
@@ -704,7 +705,10 @@ def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
-    data = {'document': rev.document, 'revision': rev}
+    prev = rev.get_previous()
+
+    data = {'document': rev.document, 'revision': rev, 
+            'comment': format_comment(prev, rev, rev.comment)}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/revision.html', data)
 
