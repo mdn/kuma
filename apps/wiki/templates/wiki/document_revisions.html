@@ -78,7 +78,7 @@
                 <a href="{{ url('devmo.views.profile_view', username=rev.creator) }}">{{ rev.creator }}</a>
               </div>
               <div class="comment">
-                {{ rev.comment }}
+                {{ rev.comment | bugize_text }}
               </div>
               {% if document.current_revision.id != rev.id and user.has_perm('wiki.delete_revision') %}
               <div class="creator">
