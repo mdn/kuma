@@ -8,8 +8,12 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Removing unique constraint on 'Document', fields ['locale', 'title']
-        db.delete_unique('wiki_document', ['locale', 'title'])
+        try:
+            # Removing unique constraint on 'Document', fields ['locale', 'title']
+            db.delete_unique('wiki_document', ['locale', 'title'])
+        except:
+            # Ignore any errors, since this constraint may not exist on a fresh install
+            pass
 
 
     def backwards(self, orm):

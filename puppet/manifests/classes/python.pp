@@ -1,61 +1,36 @@
 # Install python and compiled modules for project
 class python_prereqs {
     package {
-        [ "python26-devel", "python26-libs", "python26-distribute",
-            "python26-mod_wsgi", "libxml2", "libxml2-devel", "libxslt",
-            "libxslt-devel", "libjpeg", "libjpeg-devel", 
-            "libmemcached", "libmemcached-devel",
-            "libpng", "libpng-devel" ]:
+        [ "python2.7", "python2.7-dev", "python-setuptools",
+            "python-virtualenv", "python-pip", "python-imaging",
+            "python-mysqldb", "python-pylibmc", "python-jinja2",
+            "python-coverage", "ipython", "python-sqlparse",
+            "python-pyquery", "python-pygments", "pylint", "pyflakes",
+            "libapache2-mod-wsgi",
+            "libxml2-dev", "libxslt1.1", "libxslt1-dev", "libjpeg62",
+            "libjpeg62-dev", "libfreetype6", "libfreetype6-dev", "libpng12-0",
+            "libpng12-dev", "libtidy-0.99-0", "libtidy-dev" ]:
             ensure => installed;
-    }
-    exec { "pip-install": 
-        command => "/usr/bin/easy_install-2.6 -U pip", 
-        creates => "/usr/bin/pip",
-        timeout => 600,
-        require => Package['python26-distribute']
     }
     file { "/vagrant/puppet/cache/pip":
         ensure => directory
-    }
-    exec { "virtualenv-install": 
-        command => "/usr/bin/pip install --download-cache=/vagrant/puppet/cache/pip -U virtualenv", 
-        creates => "/usr/bin/virtualenv",
-        timeout => 600,
-        require => [ Exec['pip-install'], File["/vagrant/puppet/cache/pip"] ]
-    }
-}
-
-class python_virtualenv {
-    exec {
-        "virtualenv-create":
-            cwd => "/home/vagrant",
-            user => "vagrant",
-            command => "/usr/bin/virtualenv --no-site-packages /home/vagrant/kuma-venv",
-            creates => "/home/vagrant/kuma-venv"
     }
 }
 
 class python_modules {
     exec { 
-         "pip-cache-ownership":
-             command => "/bin/chown -R vagrant:vagrant /vagrant/puppet/cache/pip && /bin/chmod ug+rw -R /vagrant/puppet/cache/pip",
-             unless => '/bin/su vagrant -c "/usr/bin/test -w /vagrant/puppet/cache/pip"';
          "pip-install-compiled":
-             require => Exec['pip-cache-ownership'],
-             user => "vagrant",
              cwd => '/tmp', 
-             timeout => 600, # Too long, but this can take awhile
-             command => "/home/vagrant/kuma-venv/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r $PROJ_DIR/requirements/compiled.txt";
+             timeout => 1200, # Too long, but this can take awhile
+             command => "/usr/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r /vagrant/requirements/compiled.txt";
          "pip-install-dev":
-             require => Exec['pip-cache-ownership'],
-             user => "vagrant",
              cwd => '/tmp', 
-             timeout => 600, # Too long, but this can take awhile
-             command => "/home/vagrant/kuma-venv/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r $PROJ_DIR/requirements/dev.txt";
+             timeout => 1200, # Too long, but this can take awhile
+             command => "/usr/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r /vagrant/requirements/dev.txt";
      }
 }
 
 class python {
-    include python_prereqs, python_virtualenv, python_modules
-    Class['python_prereqs'] -> Class['python_virtualenv'] -> Class['python_modules']
+    include python_prereqs, python_modules
+    Class['python_prereqs'] -> Class['python_modules']
 }

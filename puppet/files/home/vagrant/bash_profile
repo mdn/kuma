@@ -9,8 +9,5 @@ fi
 PATH=$HOME/bin:/vagrant/kumascript/node_modules/.bin:$PATH
 export PATH
 
-# Ensure the virtualenv is in effect
-. $HOME/kuma-venv/bin/activate
-
 # More useful to start in the project directory than in user home
 cd /vagrant
