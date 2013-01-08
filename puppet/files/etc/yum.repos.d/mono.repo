@@ -1,5 +1,0 @@
-[mono]
-name = novell-mono
-baseurl=http://ftp.novell.com/pub/mono/download-stable/RHEL_5/
-enabled=1
-gpgcheck=0

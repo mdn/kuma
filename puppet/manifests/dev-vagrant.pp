@@ -4,8 +4,6 @@
 
 import "classes/*.pp"
 
-$PROJ_DIR = "/vagrant"
-
 $DB_NAME = "kuma"
 $DB_USER = "kuma"
 $DB_PASS = "kuma"
@@ -13,6 +11,7 @@ $DB_PASS = "kuma"
 class dev {
 
     stage {
+        
         hacks:  before => Stage[pre];
         pre:    before => Stage[tools];
         tools:  before => Stage[basics];
@@ -20,14 +19,14 @@ class dev {
         langs:  before => Stage[vendors];
         vendors:   before => Stage[main];
         vendors_post:  require => Stage[main];
+        # Stage[main]
         hacks_post: require => Stage[vendors_post];
     }
 
     class {
-
         dev_hacks: stage => hacks;
 
-        repos: stage => pre;
+        update_repos: stage => pre;
 
         dev_tools: stage => tools;
 
@@ -36,16 +35,11 @@ class dev {
         memcache:  stage => basics;
         rabbitmq:  stage => basics;
 
-        python: stage => langs;
-        php:    stage => langs;
         nodejs: stage => langs;
-
-        dekiwiki: stage => vendors;
+        python: stage => langs;
 
         site_config: stage => main;
-        dekiwiki_config: stage => vendors_post;
         dev_hacks_post: stage => hacks_post;
-
     }
 
 }
