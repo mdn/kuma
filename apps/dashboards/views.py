@@ -25,7 +25,7 @@ from wiki.events import (ApproveRevisionInLocaleEvent,
                          ReviewableRevisionInLocaleEvent)
 from wiki.models import Document, Revision
 from wiki.views import SHOWFOR_DATA
-from wiki.helpers import bugize_text
+from wiki.helpers import format_comment
 
 from datetime import datetime
 
@@ -172,17 +172,17 @@ def revisions(request):
         }
         for rev in revisions:
             prev = rev.get_previous()
-            fromRev = str(prev.id if prev else rev.id)
+            from_rev = str(prev.id if prev else rev.id)
             doc_url = reverse('wiki.document', args=[rev.document.full_path], locale=rev.document.locale)
-            comment = bugize_text(rev.comment if rev.comment else "")
+            comment = format_comment(prev, rev, rev.comment)
             richTitle = '<a href="%s" target="_blank">%s</a><span class="dash-locale">%s</span><span class="dashboard-comment">%s</span>' % (doc_url, jinja2.escape(rev.document.slug), rev.document.locale, comment)
 
             revision_json['aaData'].append({
                 'id': rev.id,
-                'prev_id': fromRev,
+                'prev_id': from_rev,
                 'doc_url': doc_url,
                 'edit_url': reverse('wiki.edit_document', args=[rev.document.full_path], locale=rev.document.locale),
-                'compare_url': reverse('wiki.compare_revisions', args=[rev.document.full_path]) + '?from=%s&to=%s&raw=1' % (fromRev, str(rev.id)),
+                'compare_url': reverse('wiki.compare_revisions', args=[rev.document.full_path]) + '?from=%s&to=%s&raw=1' % (from_rev, str(rev.id)),
                 'revert_url': reverse('wiki.revert_document', args=[rev.document.full_path, rev.id]),
                 'history_url': reverse('wiki.document_revisions', args=[rev.document.full_path], locale=rev.document.locale),
                 'creator': '<a href="" class="creator">%s</a>' % jinja2.escape(rev.creator.username),

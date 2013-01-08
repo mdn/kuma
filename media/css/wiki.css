@@ -854,3 +854,19 @@ div.video .kbox-container {
     height: 550px;
     text-align: left;
 }
+
+
+/* Slug change for revision dashboard and wiki */
+.slug-change {
+    background: #D4DDE4;
+    border: 1px solid #CAE1F4;
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 4px 0;
+    clear: both;
+}
+
+.slug-change strong {
+    color: #444;
+}

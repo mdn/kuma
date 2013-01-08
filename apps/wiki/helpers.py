@@ -88,6 +88,18 @@ def bugize_text(content):
                   content)
     return content
 
+@register.function
+def format_comment(prev_rev, current_rev, comment):
+    """ Massages revision comment content after the fact """
+
+    comment = bugize_text(current_rev.comment if current_rev.comment else "")
+
+    #  If a page move, say so
+    if prev_rev and prev_rev.slug != current_rev.slug:
+        comment += jinja2.Markup('<span class="slug-change">Moved From <strong>%s</strong> to <strong>%s</strong></span>') % (prev_rev.slug, current_rev.slug)
+
+    return comment
+
 
 @register.function
 def diff_table(content_from, content_to, prev_id, curr_id):
