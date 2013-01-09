@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import re
 
@@ -375,6 +376,23 @@ class RevisionForm(forms.ModelForm):
             # If there's no document yet, just bail.
             return current_rev
 
+    def save_section(self, creator, document, **kwargs):
+        """Save a section edit."""
+        # This is separate because the logic is slightly different and
+        # may need to evolve over time; a section edit doesn't submit
+        # all the fields, and we need to account for that when we
+        # construct the new Revision.
+
+        old_rev = Document.objects.get(pk=self.instance.document.id).current_revision
+        new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
+        new_rev.document = document
+        new_rev.creator = creator
+        new_rev.show_toc = old_rev.show_toc
+        new_rev.save()
+        new_rev.review_tags.set(*[t.name for t in
+                                  old_rev.review_tags.all()])
+        return new_rev
+
     def save(self, creator, document, **kwargs):
         """Persist me, and return the saved Revision.
 
@@ -382,6 +400,9 @@ class RevisionForm(forms.ModelForm):
         form.
 
         """
+        if self.section_id and self.instance and \
+           self.instance.document:
+            return self.save_section(creator, document, **kwargs)
         # Throws a TypeError if somebody passes in a commit kwarg:
         new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
 

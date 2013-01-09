@@ -2168,6 +2168,78 @@ class SectionEditingResourceTests(TestCaseBase):
         resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]))
         eq_(normalize_html(expected), normalize_html(resp.content.decode('utf-8')))
 
+    def test_section_edit_toc(self):
+        """show_toc is preserved in section editing."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        doc, rev = doc_rev("""
+            <h1 id="s1">s1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">s2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">s3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        rev.show_toc = True
+        rev.save()
+
+        replace = """
+        <h1 id="s2">s2</h1>
+        <p>replace</p>
+        """
+        response = client.post('%s?section=s2&raw=true' %
+                               reverse('wiki.edit_document', args=[doc.full_path]),
+                               {"form": "rev",
+                               'slug': doc.slug,
+                                "content": replace},
+                               follow=True)
+        changed = Document.objects.get(pk=doc.id).current_revision
+        ok_(rev.id != changed.id)
+        ok_(changed.show_toc)
+
+    def test_section_edit_review_tags(self):
+        """review tags are preserved in section editing."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        doc, rev = doc_rev("""
+            <h1 id="s1">s1</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s2">s2</h1>
+            <p>test</p>
+            <p>test</p>
+
+            <h1 id="s3">s3</h1>
+            <p>test</p>
+            <p>test</p>
+        """)
+        tags_to_save = ['foo', 'bar']
+        rev.save()
+        rev.review_tags.set(*tags_to_save)
+
+        replace = """
+        <h1 id="s2">s2</h1>
+        <p>replace</p>
+        """
+        response = client.post('%s?section=s2&raw=true' %
+                               reverse('wiki.edit_document', args=[doc.full_path]),
+                               {"form": "rev",
+                               'slug': doc.slug,
+                                "content": replace},
+                               follow=True)
+        changed = Document.objects.get(pk=doc.id).current_revision
+        ok_(rev.id != changed.id)
+        eq_(tags_to_save,
+            [t.name for t in changed.review_tags.all()])
+
 
 class MindTouchRedirectTests(TestCaseBase):
     """
