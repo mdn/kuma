@@ -1156,3 +1156,5 @@ li.tag-expert label:hover { border-color: #bbb; }
 
 .html-rtl #welcome-close { right: auto; left: 15px; }
 .html-rtl #welcome-open { right: auto; left: 10px; }
+
+.html-rtl.hasJS #nav-main #nav-sub-docs, .html-rtl #nav-main .menu:hover #nav-sub-docs { right: -50px; }
