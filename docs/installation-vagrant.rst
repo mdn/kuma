@@ -118,10 +118,6 @@ What’s next?
 
           sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
 
--  The VM comes with MindTouch wiki (the one that powers the production
-   developer.mozilla.org site) installed. Visit http://developer-dev.mozilla.org/en/Test
-   after you log in to create a page in it.
-
 -  **Experimental and Optional**: Download and import data extracted and
    sanitized from the production site. This can take a long while, since
    there’s over 500MB of data to download. ::
