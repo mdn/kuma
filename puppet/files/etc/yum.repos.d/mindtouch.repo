@@ -1,7 +1,0 @@
-[home_mindtouch]
-name=mindtouch's Home Project (CentOS_5)
-type=rpm-md
-baseurl=http://repo.mindtouch.com/CentOS_5/
-gpgcheck=1
-gpgkey=http://repo.mindtouch.com/CentOS_5/repodata/repomd.xml.key
-enabled=1

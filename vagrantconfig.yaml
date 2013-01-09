@@ -3,10 +3,12 @@
 # Don't change this; use vagrantconfig_local.yaml to override these settings
 # instead.
 
-nfs: false
+nfs: true
 gui: false
 ip_address: 192.168.10.55
 memory_size: 768
-box: "kuma"
-box_url: "http://people.mozilla.com/~lorchard/vm/kuma.box"
-package_name: "kuma.box"
+#box: "precise64"
+#box_url: "http://files.vagrantup.com/precise64.box"
+box: "kuma-ubuntu"
+box_url: "http://people.mozilla.com/~lorchard/vm/kuma-ubuntu.box"
+package_name: "kuma-ubuntu.box"
