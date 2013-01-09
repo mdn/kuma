@@ -1042,8 +1042,8 @@ CONSTANCE_CONFIG = dict(
     ),
 
     GOOGLE_ANALYTICS_ACCOUNT = (
-        '',
-        'Google Analytics Tracking Account Number',
+        '0',
+        'Google Analytics Tracking Account Number (0 to disable)',
     ),
 )
 
