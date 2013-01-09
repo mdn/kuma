@@ -495,6 +495,15 @@ class AttachmentRevisionForm(forms.ModelForm):
         return rev
 
 class TreeMoveForm(forms.Form):
+    title = StrippedCharField(min_length=1, max_length=255,
+                                required=False,
+                                widget=forms.TextInput(
+                                    attrs={'placeholder': TITLE_PLACEHOLDER}),
+                                label=_lazy(u'Title:'),
+                                help_text=_lazy(u'Title of article'),
+                                error_messages={'required': TITLE_REQUIRED,
+                                                'min_length': TITLE_SHORT,
+                                                'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=1, max_length=255,
                              widget=forms.TextInput(),
                              label=_lazy(u'New slug:'),
