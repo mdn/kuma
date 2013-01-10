@@ -1040,7 +1040,7 @@ class Document(NotificationsMixin, ModelBase):
                 pass
         return conflicts
 
-    def _move_tree(self, new_slug, user=None):
+    def _move_tree(self, new_slug, user=None, title=None):
         """
         Move this page and all its children.
 
@@ -1060,6 +1060,8 @@ class Document(NotificationsMixin, ModelBase):
         rev.creator = user
         rev.created = datetime.now()
         rev.slug = new_slug
+        if title:
+            rev.title = title
 
         rev.save(force_insert=True)
 
