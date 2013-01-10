@@ -693,6 +693,7 @@ article.main div.tags input.adder {
 
 #revision-list ul {
     margin: 5px 0;
+    min-width: 1200px;
 }
 
 #revision-list li {
