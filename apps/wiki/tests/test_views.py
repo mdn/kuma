@@ -3468,7 +3468,8 @@ class PageMoveTests(TestCaseBase):
 
 
         # move page to new slug
-        data = {'slug': page_moved_slug}
+        new_title = page_to_move_title + ' Moved'
+        data = {'slug': page_moved_slug, 'title': new_title}
         self.client.login(username='admin', password='testpass')
         self.client.post(reverse('wiki.move',
                                  args=(page_to_move_doc.slug,),
@@ -3482,6 +3483,7 @@ class PageMoveTests(TestCaseBase):
 
         ok_('REDIRECT' in page_to_move_doc.html)
         ok_(page_moved_slug in page_to_move_doc.html)
+        ok_(new_title in page_to_move_doc.html)
         ok_(page_moved_doc)
         ok_('REDIRECT' in page_child_doc.html)
         ok_(page_moved_slug in page_child_doc.html)

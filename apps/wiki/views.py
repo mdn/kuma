@@ -1222,7 +1222,8 @@ def move(request, document_slug, document_locale):
                 pass
 
             doc._move_tree(form.cleaned_data['slug'],
-                           user=request.user)
+                           user=request.user,
+                           title=form.cleaned_data['title'])
 
             return redirect(reverse('wiki.document',
                                     args=(form.cleaned_data['slug'],),

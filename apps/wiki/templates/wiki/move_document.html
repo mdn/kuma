@@ -17,7 +17,7 @@
     <div id="content-main" class="full">
         
         <h1>{{ title }}</h1>
-        <p>Please provide a new slug for this page using the field below.</p>
+        <p>{{ _('Please provide a new slug for this page using the field below.') }}</p>
 
         {% if conflicts: %}
         <div class="warning">
@@ -39,19 +39,19 @@
           <ul class="description">
             <li>
               <dl>
-                <dt>Current Slug: </dt>
+                <dt>{{ _('Current Slug:') }} </dt>
                 <dd>{{ document.slug }}</dd>
               </dl>
             </li>
             <li>
               <dl>
-                <dt>Current Title: </dt>
-                <dd><input type="text" name="title" value="{{ document.title }}" autofocus /></dd>
+                <dt><label for="title">{{ _('Title:') }}</label> </dt>
+                <dd><input id="title" type="text" name="title" value="{{ document.title }}" autofocus /></dd>
               </dl>
             </li>
             <li>
               <dl>
-                <dt>New Slug: </dt>
+                <dt><label for="moveSlug">{{ _('New Slug:') }}</label> </dt>
                 <dd>
                   <input type="text" name="slug" id="moveSlug" value="" />
                   <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
