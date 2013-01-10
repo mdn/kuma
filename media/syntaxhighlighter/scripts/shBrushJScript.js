@@ -25,8 +25,8 @@
 						'default delete do else false  ' +
 						'for function if in instanceof ' +
 						'new null return super switch ' +
-						'this throw true try typeof var while with'
-						;
+						'this throw true try typeof var while with ' + 
+						'class enum export extends interface let package private protected static yield'; // Added by Moz MDN
 
 		var r = SyntaxHighlighter.regexLib;
 		
