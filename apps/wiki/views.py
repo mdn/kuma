@@ -264,7 +264,7 @@ def _join_slug(parent_split, slug):
     parent_split.append(slug)
     return '/'.join(parent_split)
 
-def _get_document_for_json(doc, addLocaleToTitle = False):
+def _get_document_for_json(doc, addLocaleToTitle=False):
     """Returns a document in object format for output as JSON"""
     content = (wiki.content.parse(doc.html)
                                 .injectSectionIDs()
@@ -277,6 +277,15 @@ def _get_document_for_json(doc, addLocaleToTitle = False):
     if doc.current_revision:
         summary = doc.current_revision.summary
 
+    # Map out translations
+    translations = []
+    for translation in doc.other_translations:
+        translations.append({
+            'locale': translation.locale,
+            'title': translation.title,
+            'url': reverse('wiki.document', args=[translation.full_path], locale=translation.locale)
+        })
+
     return {
         'title': title,
         'label': doc.title,
@@ -285,7 +294,8 @@ def _get_document_for_json(doc, addLocaleToTitle = False):
         'slug': doc.slug,
         'sections': wiki.content.get_content_sections(content),
         'locale': doc.locale,
-        'summary': summary
+        'summary': summary,
+        'translations': translations
     }
 
 
@@ -1718,7 +1728,10 @@ def json_view(request, document_slug=None, document_locale=None):
     content = (wiki.content.parse(document.html)
                                 .injectSectionIDs()
                                 .serialize())
-    data = json.dumps(_get_document_for_json(document))
+
+    json_obj = _get_document_for_json(document)
+
+    data = json.dumps(json_obj)
     return HttpResponse(data, mimetype='application/json')
 
 
