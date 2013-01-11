@@ -21,7 +21,6 @@ $(document).ready(function () {
 
     // Ensure gallery works as needed
     var $gallery = $(".gallery");
-
     $gallery.addClass("js");
 
     $gallery.find(".demo").hoverIntent({
@@ -30,19 +29,28 @@ $(document).ready(function () {
         var $demo = $(this),
             content = $demo.html(), 
             offs = $demo.offset(),
-            $contentContainer = $("#content");
+            $contentContainer = $("#content"),
+            fadeDuration = 200,
+            $demoHover;
+
+        // Prevent incorrect tooltip content (force removal)
+        $contentContainer.find("div.demohover").remove();
 
         $contentContainer.prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
+
+        $demoHover = $contentContainer.find("div.demohover");
+
         if ($demo.parents("#featured-demos").length) {
-          $contentContainer.find("div.demohover").addClass("featured");
+          $demoHover.addClass("featured");
         };
-        $("div.demohover")
+
+        $demoHover
             .addClass( $(this).attr("class") )
             .css({ left: offs.left, top: offs.top })
-            .fadeIn(200)
+            .fadeIn(fadeDuration)
             .mouseleave(function() {
-                $(this).fadeOut(200, function(){ 
-                    $(this).remove(); 
+                $(this).fadeOut(fadeDuration, function(){
+                    $(this).remove();
                 });
             });
       }, 
