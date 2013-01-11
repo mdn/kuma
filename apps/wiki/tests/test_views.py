@@ -143,6 +143,21 @@ class ViewTests(TestCaseBase):
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
 
+    def test_toc_view(self):
+        slug = 'toc_test_doc'
+        html = '<h2>Head 2</h2><h3>Head 3</h3>'
+
+        doc = document(title='blah', slug=slug, html=html, save=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        doc.save()
+        rev = revision(document=doc, content=html, is_approved=True, save=True)
+        rev.save()
+
+        url = reverse('wiki.toc', args=[slug],
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        resp = self.client.get(url)
+        eq(res.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a><ol><li><a href="#Head_3" rel="internal">Head 3</a></ol></li></ol>')
+
     def test_children_view(self):
         def _make_doc(title, slug, parent=None):
             doc = document(title=title, slug=slug, save=True)
