@@ -156,7 +156,7 @@ class ViewTests(TestCaseBase):
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         resp = self.client.get(url)
-        eq(res.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a><ol><li><a href="#Head_3" rel="internal">Head 3</a></ol></li></ol>')
+        eq_(resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a><ol><li><a href="#Head_3" rel="internal">Head 3</a></ol></li></ol>')
 
     def test_children_view(self):
         def _make_doc(title, slug, parent=None):
