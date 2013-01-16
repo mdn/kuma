@@ -502,7 +502,6 @@ DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
         ('apps/access/**', 'ignore'),
-        ('apps/chat/**', 'ignore'),
         ('apps/customercare/**', 'ignore'),
         ('apps/dashboards/**', 'ignore'),
         ('apps/flagit/**', 'ignore'),
@@ -858,11 +857,6 @@ TWITTER_CONSUMER_SECRET = ''
 NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
 # Anonymous watches must be confirmed.
 CONFIRM_ANONYMOUS_WATCHES = True
-
-
-# URL of the chat server.
-CHAT_SERVER = 'https://chat-support.mozilla.com:9091'
-CHAT_CACHE_KEY = 'sumo-chat-queue-status'
 
 # recaptcha
 RECAPTCHA_USE_SSL = False
