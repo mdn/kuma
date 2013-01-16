@@ -76,12 +76,6 @@ urlpatterns = patterns('',
     #(r'', include('sumo.urls')),
     (r'^humans.txt$', 'django.views.static.serve',
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
-
-    # Legacy MindTouch redirects.
-    url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
-        'wiki.views.mindtouch_file_redirect',
-        name='wiki.mindtouch_file_redirect'),
-    (r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
 )
 
 
@@ -98,3 +92,12 @@ if settings.SERVE_MEDIA:
         (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
           {'document_root': settings.MEDIA_ROOT}),
     )
+
+# Legacy MindTouch redirects. These go last so that they don't mess
+# with local instances' ability to serve media.
+urlpatterns += patterns('',
+                        url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
+                            'wiki.views.mindtouch_file_redirect',
+                            name='wiki.mindtouch_file_redirect'),
+                        (r'^(?P<path>.*)$', 'wiki.views.mindtouch_to_kuma_redirect'),
+)
