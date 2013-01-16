@@ -1724,6 +1724,35 @@ def json_view(request, document_slug=None, document_locale=None):
 
 @require_GET
 @process_document_path
+@prevent_indexing
+def toc_view(request, document_slug=None, document_locale=None):
+    """Return some basic document info in a JSON blob."""
+    kwargs = {'locale': request.locale, 'current_revision__isnull': False}
+    if document_slug is not None:
+        kwargs['slug'] = document_slug
+        kwargs['locale'] = document_locale
+    elif 'title' in request.GET:
+        kwargs['title'] = request.GET['title']
+    elif 'slug' in request.GET:
+        kwargs['slug'] = request.GET['slug']
+    else:
+        return HttpResponseBadRequest()
+
+    document = get_object_or_404(Document, **kwargs)
+    tool = wiki.content.parse(wiki.content.parse(document.html)
+                                .injectSectionIDs()
+                                .serialize())
+    toc_html = (wiki.content.parse(tool.serialize())
+                            .filter(wiki.content.SectionTOCFilter)
+                            .serialize())
+    if toc_html:
+        toc_html = '<ol>' + toc_html + '</ol>'
+
+    return HttpResponse(toc_html) 
+
+
+@require_GET
+@process_document_path
 def code_sample(request, document_slug, document_locale, sample_id):
     """Extract a code sample from a document and render it as a standalone
     HTML document"""
