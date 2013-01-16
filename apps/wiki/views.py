@@ -947,6 +947,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     rev.slug = slug_dict['specific']
 
     section_id = request.GET.get('section', None)
+    if section_id and not request.is_ajax():
+        return HttpResponse(_("Sections may only be edited inline."))
     disclose_description = bool(request.GET.get('opendescription'))
 
     doc_form = rev_form = None
