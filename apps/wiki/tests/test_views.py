@@ -1878,7 +1878,8 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """
         response = client.get('%s?raw=true' %
-                              reverse('wiki.document', args=[d.full_path]))
+                              reverse('wiki.document', args=[d.full_path]),
+                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -1912,7 +1913,8 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """ % {'full_path': d.full_path}
         response = client.get('%s?raw=true&edit_links=true' %
-                              reverse('wiki.document', args=[d.full_path]))
+                              reverse('wiki.document', args=[d.full_path]),
+                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -1939,7 +1941,8 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """
         response = client.get('%s?section=s2&raw=true' %
-                              reverse('wiki.document', args=[d.full_path]))
+                              reverse('wiki.document', args=[d.full_path]),
+                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -1974,7 +1977,8 @@ class SectionEditingResourceTests(TestCaseBase):
                                {"form": "rev",
                                'slug': d.slug,
                                 "content": replace},
-                               follow=True)
+                               follow=True,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -1991,7 +1995,8 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """
         response = client.get('%s?raw=true' %
-                               reverse('wiki.document', args=[d.full_path]))
+                               reverse('wiki.document', args=[d.full_path]),
+                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -2043,13 +2048,15 @@ class SectionEditingResourceTests(TestCaseBase):
 
         # Edit #1 starts...
         resp = client.get('%s?section=s1' %
-                          reverse('wiki.edit_document', args=[doc.full_path]))
+                          reverse('wiki.edit_document', args=[doc.full_path]),
+                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
         resp = client.get('%s?section=s2' %
-                          reverse('wiki.edit_document', args=[doc.full_path]))
+                          reverse('wiki.edit_document', args=[doc.full_path]),
+                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2062,7 +2069,8 @@ class SectionEditingResourceTests(TestCaseBase):
         })
         resp = client.post('%s?section=s2&raw=true' %
                             reverse('wiki.edit_document', args=[doc.full_path]),
-                            data)
+                            data,
+                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(302, resp.status_code)
 
         # Edit #1 submits, but since it's a different section, there's no
@@ -2074,14 +2082,16 @@ class SectionEditingResourceTests(TestCaseBase):
         })
         resp = client.post('%s?section=s1&raw=true' %
                            reverse('wiki.edit_document', args=[doc.full_path]),
-                           data)
+                           data,
+                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         # No conflict, but we should get a 205 Reset as an indication that the
         # page needs a refresh.
         eq_(205, resp.status_code)
 
         # Finally, make sure that all the edits landed
         response = client.get('%s?raw=true' %
-                               reverse('wiki.document', args=[doc.full_path]))
+                               reverse('wiki.document', args=[doc.full_path]),
+                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -2125,13 +2135,15 @@ class SectionEditingResourceTests(TestCaseBase):
 
         # Edit #1 starts...
         resp = client.get('%s?section=s2' %
-                          reverse('wiki.edit_document', args=[doc.full_path]))
+                          reverse('wiki.edit_document', args=[doc.full_path]),
+                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
         resp = client.get('%s?section=s2' %
-                          reverse('wiki.edit_document', args=[doc.full_path]))
+                          reverse('wiki.edit_document', args=[doc.full_path]),
+                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2144,7 +2156,8 @@ class SectionEditingResourceTests(TestCaseBase):
         })
         resp = client.post('%s?section=s2&raw=true' %
                             reverse('wiki.edit_document', args=[doc.full_path]),
-                            data)
+                            data,
+                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(302, resp.status_code)
 
         # Edit #1 submits, but since it's the same section, there's a collision
@@ -2155,7 +2168,8 @@ class SectionEditingResourceTests(TestCaseBase):
         })
         resp = client.post('%s?section=s2&raw=true' %
                            reverse('wiki.edit_document', args=[doc.full_path]),
-                           data)
+                           data,
+                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)
 
@@ -2180,7 +2194,8 @@ class SectionEditingResourceTests(TestCaseBase):
             </dl>
         """
         client = LocalizingClient()
-        resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]))
+        resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]),
+                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected), normalize_html(resp.content.decode('utf-8')))
 
     def test_section_edit_toc(self):
@@ -2213,7 +2228,8 @@ class SectionEditingResourceTests(TestCaseBase):
                                {"form": "rev",
                                'slug': doc.slug,
                                 "content": replace},
-                               follow=True)
+                               follow=True,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
         ok_(changed.show_toc)
@@ -2249,7 +2265,8 @@ class SectionEditingResourceTests(TestCaseBase):
                                {"form": "rev",
                                'slug': doc.slug,
                                 "content": replace},
-                               follow=True)
+                               follow=True,
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
         eq_(tags_to_save,
