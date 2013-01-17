@@ -63,7 +63,7 @@
           <li id="nav-main-topics" class="menu" role="menuitem"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="{{ _('Explore other parts of MDN') }}">{{ _('Topics') }}</a>
             <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
               <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
-              <li id="nav-sub-apps"><a href="{{ url('apps') }}">{{ _('Apps') }}</a></li>
+              <li id="nav-sub-apps"><a href="{{ devmo_url('apps') }}">{{ _('Apps') }}</a></li>
               <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
               <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
               <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
@@ -124,6 +124,7 @@
               <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
               <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
               <li><a href="{{ devmo_url('Project:How_to_Help') }}">{{ _('Contribute') }}</a></li>
+              <li><a href="{{ url('apps_newsletter') }}">{{ _('Newsletter') }}</a></li>
             </ul>
           </li>
         </ul>

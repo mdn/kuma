@@ -1,9 +1,6 @@
 from django.conf import settings
-from django.contrib import messages
-from django.http import HttpResponseRedirect
 
 import jingo
-from tower import ugettext as _
 from waffle.decorators import waffle_switch
 import basket
 
@@ -12,7 +9,6 @@ from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
 from feeder.models import Bundle, Feed
 from demos.models import Submission
 from landing.forms import SubscriptionForm
-from sumo.urlresolvers import reverse
 
 
 def home(request):
@@ -73,27 +69,24 @@ def apps(request):
                           extra={'form': SubscriptionForm()})
 
 
-def apps_subscription(request):
-    form = SubscriptionForm(data=request.POST)
-    context = {'form': form}
-    if form.is_valid():
-        optin = 'N'
-        if request.locale == 'en-US':
-            optin = 'Y'
-        basket.subscribe(email=form.cleaned_data['email'],
-                         newsletters=settings.BASKET_APPS_NEWSLETTER,
-                         format=form.cleaned_data['format'],
-                         lang=request.locale,
-                         optin=optin)
-        messages.success(request,
-            _('Thank you for subscribing to the Apps Developer newsletter.'))
-        if not request.is_ajax():
-            return HttpResponseRedirect(reverse('apps'))
-        del context['form']
+def apps_newsletter(request):
+    if request.method == 'POST':
+        form = SubscriptionForm(data=request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            optin = 'N'
+            if request.locale == 'en-US':
+                optin = 'Y'
+            basket.subscribe(email=form.cleaned_data['email'],
+                             newsletters=settings.BASKET_APPS_NEWSLETTER,
+                             format=form.cleaned_data['format'],
+                             lang=request.locale,
+                             optin=optin)
+            del context['form']
+    else:
+        context = {'form': SubscriptionForm()}
 
-    return (jingo.render(request, 'landing/apps_subscribe.html', context)
-            if request.is_ajax() else
-            common_landing(request, section=SECTION_APPS, extra=context))
+    return jingo.render(request, 'landing/apps_newsletter.html', context)
 
 
 def learn(request):
@@ -105,12 +98,14 @@ def learn_html(request):
     """HTML landing page."""
     return jingo.render(request, 'landing/learn_html.html')
 
+
 @waffle_switch('html5_landing')
 def learn_html5(request):
     """HTML5 landing page."""
     demos = (Submission.objects.all_sorted()
              .filter(featured=True, taggit_tags__name__in=['tech:html5']))[:6]
     return jingo.render(request, 'landing/learn_html5.html', {'demos': demos})
+
 
 def learn_css(request):
     """CSS landing page."""
