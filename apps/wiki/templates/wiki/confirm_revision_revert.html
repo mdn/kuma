@@ -23,6 +23,8 @@
         <div>{{ datetimeformat(revision.created, format='longdatetime') }}</div>
         <label><strong>{{ _('Content') }}</strong></label>
         <pre class="brush: html">{{ revision.content }}</pre>
+        <label><strong>{{ _('Tags') }}</strong></label>
+        <div>{{ revision.tags }}</div>
         <form action="" method="post">
           {{ csrf() }}
           <p>
