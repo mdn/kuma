@@ -142,6 +142,7 @@ class ViewTests(TestCaseBase):
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
+        ok_('translations' in data)
 
     def test_toc_view(self):
         slug = 'toc_test_doc'
