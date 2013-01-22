@@ -24,11 +24,14 @@ RewriteRule ^En/JavaScript/Reference/Objects/Array$ en-US/docs/JavaScript/Refere
 RewriteRule ^En/JavaScript/Reference/Objects$ en-US/docs/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]
 RewriteRule ^En/Core_JavaScript_1\.5_Reference/Objects/(.*) en-US/docs/JavaScript/Reference/Global_Objects/$1 [R=301,L,NC]
 RewriteRule ^En/Core_JavaScript_1\.5_Reference/(.*) en-US/docs/JavaScript/Reference/$1 [R=301,L,NC]
+RewriteRule ^([\w\-]*)/HTML5 $1/docs/HTML/HTML5 [R=301,L,NC]
+RewriteRule ^([\w\-]*)/apps $1/docs/apps [R=301,L,NC]
 
 # Off-site redirects
 RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
 RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
 RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
+RewriteRule devnews/index.php/feed/atom/ https://blog.mozilla.org/feed/ [R=301,L]
 
 # HACK: Django will eventually redirect the user to the right spot, but skip a
 # couple of redirects for these known legacy locales
