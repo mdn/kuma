@@ -718,7 +718,7 @@ def revision(request, document_slug, document_locale, revision_id):
     prev = rev.get_previous()
 
     data = {'document': rev.document, 'revision': rev, 
-            'comment': format_comment(prev, rev, rev.comment)}
+            'comment': format_comment(rev)}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/revision.html', data)
 

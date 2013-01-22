@@ -140,7 +140,7 @@
                   <td>{{ rev.created.strftime('%B %d, %Y') }}<br>
                       {{ rev.created.strftime('%I:%M %p') }}</td>
                   {# TODO: auto-generate smart comment like "N words changed." #}
-                  <td>{{ rev.comment }}</td>
+                  <td>{{ format_comment(rev) }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
