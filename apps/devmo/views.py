@@ -19,6 +19,8 @@ from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile, UserDocsActivityFeed
 from .forms import UserProfileEditForm
 
+from wiki.helpers import format_comment
+
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
         'DOCS_ACTIVITY_MAX_ITEMS', 15)
