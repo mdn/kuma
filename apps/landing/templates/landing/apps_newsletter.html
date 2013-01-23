@@ -1,5 +1,22 @@
-<form id="newsletter-sub" class="fm-subscribe module modal" action="{{ url('apps_subscription') }}" method="POST">
-  <h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
+{% extends "base.html" %}
+
+{% block pageid %}apps{% endblock %}
+
+{% block bodyclass %}section-apps landing{% endblock %}
+
+{% block title %}{{ page_title(_('Apps Developer Newsletter')) }}{% endblock %}
+
+{% block content %}
+
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" class="full" role="main">
+
+<div class="apps-newsletter-subscribe module">
+<h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
+{% if form %}
+<form id="newsletter-sub" class="fm-subscribe" action="{{ url('apps_newsletter') }}" method="POST">
   <p class="mod-intro">{% trans %}
     Sign up now for the Apps Developer newsletter for access to resources, tools, and exclusive info. <strong>Join us!</strong>
   {% endtrans %}</p>
@@ -12,17 +29,6 @@
     </ul>
   {% endif %}
 
-  <div id="wait-modal">
-    <img src="{{ MEDIA_URL }}img/wait-trans.gif" alt="{{ _('Please wait') }}">
-  </div>
-
-  <div id="error-modal">
-    <ul class="messages">
-      <li class="notice error">{{ _('An unknown error has occurred. Please try again later.') }}</li>
-    </ul>
-  </div>
-
-  {% if form %}
     <fieldset>
       <ol>
         <li>
@@ -51,9 +57,14 @@
         <li class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></li>
       </ol>
     </fieldset>
-  {% else %}
-    <script type="text/javascript">
-      window.setTimeout($.modal.close, 5000);
-    </script>
-  {% endif %}
-</form>
+    </form>
+{% else %}
+  <p>{{ _('Thank you for signing up for the apps newsletter!') }}</p>
+{% endif %}
+</div>
+
+</section>
+</div>
+</section>
+
+{% endblock %}
