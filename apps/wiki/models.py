@@ -1378,10 +1378,11 @@ class Document(NotificationsMixin, ModelBase):
         """Return a list of Documents - other translations of this Document"""
         translations = []
         if self.parent == None:
-            translations = list(self.translations.all())
+            translations = list(self.translations.all().order_by('locale'))
         else:
             translations = list(self.parent.translations.all().exclude(
-                                                                id=self.id))
+                                                                id=self.id).
+                                                                order_by('locale'))
             translations.insert(0, self.parent)
         return translations
 
