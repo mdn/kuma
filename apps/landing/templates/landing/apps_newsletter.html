@@ -4,7 +4,7 @@
 
 {% block bodyclass %}section-apps landing{% endblock %}
 
-{% block title %}{{ page_title(_('Apps Developer Newsletter')) }}{% endblock %}
+{% block title %}{{ page_title(_('Firefox Apps & Hacks Newsletter')) }}{% endblock %}
 
 {% block content %}
 
@@ -14,11 +14,11 @@
   <section id="content-main" class="full" role="main">
 
 <div class="apps-newsletter-subscribe module">
-<h3 class="mod-title">{{ _('Apps Developer Newsletter') }}</h3>
+<h3 class="mod-title">{{ _('Firefox Apps & Hacks Newsletter') }}</h3>
 {% if form %}
 <form id="newsletter-sub" class="fm-subscribe" action="{{ url('apps_newsletter') }}" method="POST">
   <p class="mod-intro">{% trans %}
-    Sign up now for the Apps Developer newsletter for access to resources, tools, and exclusive info. <strong>Join us!</strong>
+    Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem.  <strong>Join us!</strong>
   {% endtrans %}</p>
 
   {% if messages %}
@@ -59,7 +59,7 @@
     </fieldset>
     </form>
 {% else %}
-  <p>{{ _('Thank you for signing up for the apps newsletter!') }}</p>
+  <p>{{ _('Thank you for signing up for the Apps & Hacks newsletter!') }}</p>
 {% endif %}
 </div>
 
