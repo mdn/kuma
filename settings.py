@@ -420,6 +420,7 @@ INSTALLED_APPS = (
     'wiki',
     #'kbforums',
     'dashboards',
+    'kpi',
     'gallery',
     #'customercare',
     #'twitter',
