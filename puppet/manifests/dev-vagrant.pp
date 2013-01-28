@@ -30,10 +30,11 @@ class dev {
 
         dev_tools: stage => tools;
 
-        apache:    stage => basics;
-        mysql:     stage => basics;
-        memcache:  stage => basics;
-        rabbitmq:  stage => basics;
+        apache:         stage => basics;
+        mysql:          stage => basics;
+        memcache:       stage => basics;
+        rabbitmq:       stage => basics;
+        elasticsearch:  stage => basics;
 
         nodejs: stage => langs;
         python: stage => langs;
