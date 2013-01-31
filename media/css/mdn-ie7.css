@@ -30,9 +30,6 @@ ul.sortable .remove { font-family: sans-serif; margin-top: -1.25em; }
 
 #promote-buttons #button-preview.fixed { margin-left: 31px; }
 
-#welcome-bar { zoom: 1; margin-bottom: 20px; }
-#welcome-open { width: 80px; }
-
 .home-promos { zoom: 1; margin-bottom: 40px; }
 .home-promos .promo div { position: absolute; left: 0; }
 .home-promos .promo a { position: absolute; left: 0; width: 80%; padding: 20px 10%; }

@@ -13,21 +13,6 @@
 
 {% block content %}
 
-<header id="welcome-bar">
-<div class="wrap">
-
-  <h1>{% trans %}It's the Web. <b>You drive.</b>{% endtrans %}</h1>
-  <h2>{{_("Welcome to the Mozilla Developer Network.")}}</h2>
-  <p>{% trans %}We are an open community of developers building resources for a better web, 
-  regardless of brand, browser or platform. Anyone can contribute and each person 
-  who does makes us stronger. Together we can continue to drive innovation on the 
-  Web to serve the greater good. It starts here, with you.{% endtrans %}</p>
-  
-  <button type="button" id="welcome-close">{{_("Close")}}</button>
-
-</div>
-</header>
-
 <section id="content">
 <div class="wrap">
 
@@ -195,20 +180,6 @@
 
 {% block js %}
 {{ super() }}
-    
-<script type="text/javascript">
-// <![CDATA[
-	$("#welcome-bar").ready(function(){
-		$("#welcome-close").click(function(){
-		  $("#welcome-bar").slideUp("fast").after('<div class="wrap"><button type="button" id="welcome-open">About MDN</button></div>');
-		  $("#welcome-open").click(function(){ 
-		    $("#welcome-bar").slideDown();
-		    $(this).parents("div.wrap").fadeOut("fast").remove(); 
-		  });
-		});
-	});
-// ]]>
-</script>
   
 <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript">

@@ -157,7 +157,6 @@ body.section-labs #masthead { border-bottom-color: #f8d575; }
 #nav-section .current a { color: #000; font-weight: bold; background-position: 50% -460px; }
 
 #section-head { padding: 15px 0; background: #eae7dc; border-top: 1px solid #000; }
-#welcome-bar { padding: 15px 0; background: #6e0000; border-top: 3px solid #c02700; color: #fff; }
 
 /*** @Slides *********/
 #slideshow.js { position: relative; width: 660px; margin: 0 0 2em; }
