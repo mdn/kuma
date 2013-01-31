@@ -285,14 +285,4 @@ Now commit the POT file to svn::
     $ svn up
     $ svn ci -m "MDN string update YYYY-MM-DD"
 
-After committing, update the `templates in Verbatim
-<https://localize.mozilla.org/templates/mdn/>`_ from SVN.
-
-![Updating verbatim templates from
-SVN](https://dl.dropbox.com/u/21969365/images/templates_mdn.png)
-
-After updating the templates in Verbatim, `update each language
-<https://localize.mozilla.org/projects/mdn/admin.html>`_ from the templates.
-
-![Updating messages from
-templates](https://dl.dropbox.com/u/21969365/images/mdn_admin_update.png)
+After committing, send an email to Milos Dinic to update verbatim.
