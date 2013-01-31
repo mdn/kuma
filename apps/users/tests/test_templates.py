@@ -100,7 +100,6 @@ class LoginTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(next, doc('#masthead input[name="next"]')[0].attrib['value'])
-        eq_(next, doc('#site-info input[name="next"]')[0].attrib['value'])
 
         # user login page - someone logged-out clicks edit
         next = '/en-US/docs/Testing$edit'
