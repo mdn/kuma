@@ -3,6 +3,7 @@ from datetime import date
 import logging
 import os
 import platform
+import json
 
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
@@ -1044,6 +1045,27 @@ CONSTANCE_CONFIG = dict(
     GOOGLE_ANALYTICS_ACCOUNT = (
         '0',
         'Google Analytics Tracking Account Number (0 to disable)',
+    ),
+
+    BLEACH_ALLOWED_TAGS = (
+        json.dumps([
+            'a', 'p', 'div',
+        ]),
+        "JSON array of tags allowed through Bleach",
+    ),
+
+    BLEACH_ALLOWED_ATTRIBUTES = (
+        json.dumps({
+            '*': ['id', 'class', 'style'],
+        }),
+        "JSON object associating tags with lists of allowed attributes",
+    ),
+
+    BLEACH_ALLOWED_STYLES = (
+        json.dumps([
+            'font-size', 'text-align',
+        ]),
+        "JSON array listing CSS styles allowed on tags",
     ),
 )
 

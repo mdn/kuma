@@ -2629,7 +2629,7 @@ class DeferredRenderingViewTests(TestCaseBase):
         ok_(self.rendered_content not in txt)
         ok_(self.raw_content in txt)
         eq_(0, p.find('#doc-render-raw-fallback').length)
-
+        
         # Only for logged-in users, ensure that a warning is displayed about
         # the fallback
         self.client.login(username='testuser', password='testpass')
@@ -2667,6 +2667,85 @@ class DeferredRenderingViewTests(TestCaseBase):
         response = self.client.post(translate_url, data)
         eq_(302, response.status_code)
         ok_(mock_document_schedule_rendering.called)
+
+    @mock.patch('wiki.kumascript.get')
+    @mock.patch('requests.post')
+    def test_alternate_bleach_whitelist(self, mock_requests_post, mock_kumascript_get):
+        # Some test content with contentious tags.
+        test_content = """
+            <p id="foo">
+                <a style="position: absolute; border: 1px;" href="http://example.com">This is a test</a>
+                <textarea name="foo"></textarea>
+            </p>
+        """
+
+        # Expected result filtered through old/current Bleach rules
+        expected_content_old = """
+            <p id="foo">
+                <a style="position: absolute; border: 1px;" href="http://example.com">This is a test</a>
+                <textarea name="foo"></textarea>
+            </p>
+        """
+        
+        # Expected result filtered through alternate whitelist
+        expected_content_new = """
+            <p id="foo">
+                <a style="border: 1px;" href="http://example.com">This is a test</a>
+                &lt;textarea name="foo"&gt;&lt;/textarea&gt;
+            </p>
+        """
+
+        # Set up an alternate set of whitelists...
+        constance.config.BLEACH_ALLOWED_TAGS = json.dumps([
+            "a","p"
+        ])
+        constance.config.BLEACH_ALLOWED_ATTRIBUTES = json.dumps({
+            "a": ['href', 'style'],
+            "p": ['id']
+        })
+        constance.config.BLEACH_ALLOWED_STYLES = json.dumps([
+            "border"
+        ])
+        constance.config.KUMASCRIPT_TIMEOUT = 100
+
+        # Rig up a mocked response from KumaScript GET method
+        mock_kumascript_get.return_value = (test_content, None)
+
+        # Rig up a mocked response from KumaScript POST service
+        # Digging a little deeper into the stack, so that the rest of
+        # kumascript.post processing happens.
+        from requests.models import Response
+        from StringIO import StringIO
+        m_resp = Response()
+        m_resp.status_code = 200
+        m_resp.content = test_content
+        m_resp.read = StringIO(test_content).read
+        mock_requests_post.return_value = m_resp
+
+        d, r = doc_rev(test_content)
+
+        trials = (
+            (False, '', expected_content_old),
+            (False, '&bleach_new', expected_content_old),
+            (True, '', expected_content_old),
+            (True, '&bleach_new', expected_content_new),
+        )
+        for trial in trials:
+            do_login, param, expected = trial
+
+            if do_login:
+                self.client.login(username='testuser', password='testpass')
+            else:
+                self.client.logout()
+
+            url = ('%s?raw&macros%s' % (
+                   reverse('wiki.document', args=(d.slug,), locale=d.locale),
+                   param))
+            resp = self.client.get(url, follow=True)
+            eq_(normalize_html(expected),
+                normalize_html(resp.content),
+                "Should match? %s %s %s %s" % 
+                    (do_login, param, expected, resp.content))
 
 
 class APITests(TestCaseBase):

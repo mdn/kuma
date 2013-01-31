@@ -351,17 +351,25 @@ def _inherited(parent_attr, direct_attr):
 class DocumentManager(ManagerBase):
     """Manager for Documents, assists for queries"""
 
-    def clean_content(self, content_in):
+    def clean_content(self, content_in, use_constance_bleach_whitelists=False):
         allowed_hosts = constance.config.KUMA_CODE_SAMPLE_HOSTS.split(' ')
         out = (wiki.content
                .parse(content_in)
                .filterIframeHosts(allowed_hosts)
                .serialize())
-        out = bleach.clean(
-            out, attributes=ALLOWED_ATTRIBUTES, tags=ALLOWED_TAGS,
-            styles=ALLOWED_STYLES, strip_comments=False,
-            skip_gauntlet=True
-        )
+        
+        if use_constance_bleach_whitelists:
+            tags = constance.config.BLEACH_ALLOWED_TAGS
+            attributes = constance.config.BLEACH_ALLOWED_ATTRIBUTES
+            styles = constance.config.BLEACH_ALLOWED_STYLES
+        else:
+            tags = ALLOWED_TAGS
+            attributes = ALLOWED_ATTRIBUTES
+            styles = ALLOWED_STYLES
+
+        out = bleach.clean(out, attributes=attributes, tags=tags,
+                           styles=styles, strip_comments=False,
+                           skip_gauntlet=True)
         return out
 
     def get_by_natural_key(self, locale, slug):
