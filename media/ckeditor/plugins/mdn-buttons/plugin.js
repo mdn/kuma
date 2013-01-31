@@ -76,6 +76,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
             
             // Configure "Save and Exit"
             editor.addCommand(pluginName + '-save-exit', {
+                modes : { wysiwyg : 1, source : 1 },
                 exec: function (editor, data) {
                     if(!$saveButton.length) {
                         $saveButton = $('.edited-section-ui.current .btn-save');
@@ -94,6 +95,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
             // Add "Save and Continue", if that button is present
             if($saveContinueButton.length) {
                 editor.addCommand(pluginName + '-save', {
+                    modes : { wysiwyg : 1, source : 1 },
                     exec: function (editor, data) {
                         var saveCallback = $saveContinueButton.data('save_cb') || function () { 
                             $saveContinueButton.click(); 
