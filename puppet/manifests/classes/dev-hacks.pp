@@ -2,7 +2,7 @@
 class dev_tools {
     package { 
         [ "build-essential", "git", "subversion", "mercurial", "vim",
-            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit" ]:
+            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit", "gettext", ]:
             ensure => installed;
     }
 }
