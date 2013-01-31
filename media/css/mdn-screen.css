@@ -401,18 +401,6 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 #section-head .util-discuss a { background-position: 0 -400px; }
 
 /* @Home *********/
-/*** @Welcome *********/
-#welcome-bar { background: #000 url("../img/bg-check-lt.png"); border-bottom: 4px solid #f8d575; border-top: 4px solid #333; margin-top: -4px; color: #ccc; text-shadow: 1px 1px 0 rgba(0,0,0,.75); -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-#welcome-bar .wrap { padding: 25px 160px; width: 620px; }
-#welcome-bar h1 { font: normal 42px/1 "Museo Sans", sans-serif; text-align: center; color: #f8d475; margin: 0 0 .3em; }
-#welcome-bar h1 b { font-weight: normal; color: #cc3435; }
-#welcome-bar h2 { font-size: 1em; text-align: center; color: #fff; }
-#welcome-bar p { font-size: .857em; line-height: 1.6; margin: 0; text-align: justify; }
-#welcome-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: 15px; top: 15px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
-#welcome-close:hover, #welcome-close:focus { background-position: 0 -600px; }
-
-#welcome-open { position: absolute; right: 10px; top: -2px; z-index: 20; cursor: pointer; padding: 3px 8px; font: .785em/1 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; color: #444; background: #f8d575 none; -moz-border-radius: 0 0 3px 3px; -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px; }
-#welcome-open:hover, #welcome-open:focus { color: #000; cursor: pointer; }
 
 /*** @Top @Docs *********/
 #top-docs { background: #fff; margin: 20px 0 40px; padding: 19px; border: 1px solid #e8e8e8; overflow: hidden; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
