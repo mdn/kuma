@@ -105,10 +105,10 @@ SUMO_LANGUAGES = (
 #LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
 
 # Accepted locales
-MDN_LANGUAGES = ('en-US', 'ar', 'bn-BD', 'de', 'el', 'es', 'fa', 'fi', 'fr', 'cs',
-                 'ca', 'fy-NL', 'ga-IE', 'he', 'hr', 'hu', 'id', 'it', 'ja',
-                 'ka', 'ko', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sq',
-                 'th', 'tr', 'vi', 'zh-CN', 'zh-TW')
+MDN_LANGUAGES = ('en-US', 'ar', 'bn-BD', 'de', 'el', 'es', 'fa', 'fi', 'fr',
+                 'cs', 'ca', 'fy-NL', 'ga-IE', 'he', 'hr', 'hu', 'id', 'it',
+                 'ja', 'ka', 'ko', 'ms', 'nl', 'pl', 'pt-BR', 'pt-PT', 'ro',
+                 'ru', 'sq', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW')
 RTL_LANGUAGES = ('ar', 'fa', 'fa-IR', 'he')
 
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
