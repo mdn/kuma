@@ -13,11 +13,6 @@ from sumo_locales import LOCALES
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_kuma'
-LOGGING = {
-           'loggers': {},
-}
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
@@ -70,6 +65,14 @@ DEKIWIKI_MOCK = True
 CACHE_BACKEND = 'locmem://?timeout=86400'
 CACHE_PREFIX = 'kuma:'
 CACHE_COUNT_TIMEOUT = 60  # seconds
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 60,
+        'KEY_PREFIX': 'kuma',
+    }
+}
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
@@ -311,7 +314,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
@@ -352,12 +355,12 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
+    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
@@ -366,10 +369,17 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
-    'users.backends.Sha256Backend',
+    'django.contrib.auth.backends.ModelBackend',
     'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+
+PASSWORD_HASHERS = (
+    'users.backends.Sha256Hasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
+)
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar-default.png'
@@ -1073,3 +1083,37 @@ GRAPHITE_TIMEOUT = 1
 
 ES_DISABLED = True
 ES_LIVE_INDEX = False
+
+LOG_LEVEL = logging.WARN
+SYSLOG_TAG = 'http_app_kuma'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'mdn_default': {
+            'format': ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
+                       ':%%(pathname)s:%%(lineno)s' % SYSLOG_TAG),
+        },
+    },
+    'handlers': {
+        'mdn_debug': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'mdn_default',
+            'level': LOG_LEVEL,
+        },
+        'mdn_prod': {
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'mdn_default',
+            'level': LOG_LEVEL,
+        },
+    },
+    'loggers': {
+        'mdn': {
+            'handlers': ['mdn_prod' if not DEBUG else 'mdn_debug'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        
+    },
+}

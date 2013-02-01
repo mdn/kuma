@@ -379,7 +379,7 @@ class Submission(models.Model):
             _("Hide this demo from others?"), default=False)
     censored = models.BooleanField()
     censored_url = models.URLField(
-            _("Redirect URL for censorship"),
+            _("Redirect URL for censorship."),
             verify_exists=False, blank=True, null=True)
 
     navbar_optout = models.BooleanField(
@@ -430,7 +430,7 @@ class Submission(models.Model):
 
     video_url = VideoEmbedURLField(
             _("have a video of your demo in action? (optional)"),
-            verify_exists=False, blank=True, null=True)
+            blank=True, null=True)
 
     demo_package = ReplacingZipFileField(
             _('select a ZIP file containing your demo'),
@@ -442,7 +442,7 @@ class Submission(models.Model):
 
     source_code_url = models.URLField(
             _("Is your source code also available somewhere else on the web (e.g., github)? Please share the link."),
-            verify_exists=False, blank=True, null=True)
+            blank=True, null=True)
     license_name = models.CharField(
             _("Select the license that applies to your source code."),
             max_length=64, blank=False, 

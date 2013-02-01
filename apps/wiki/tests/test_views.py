@@ -2373,7 +2373,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
             <p>test</p>
         """)
-        tags_to_save = ['foo', 'bar']
+        tags_to_save = ['bar', 'foo']
         rev.save()
         rev.review_tags.set(*tags_to_save)
 
