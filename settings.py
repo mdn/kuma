@@ -13,11 +13,6 @@ from sumo_locales import LOCALES
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_kuma'
-LOGGING = {
-           'loggers': {},
-}
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
@@ -1091,3 +1086,35 @@ GRAPHITE_HOST = 'localhost'
 GRAPHITE_PORT = 2003
 GRAPHITE_PREFIX = 'devmo'
 GRAPHITE_TIMEOUT = 1
+
+LOG_LEVEL = logging.WARN
+SYSLOG_TAG = 'http_app_kuma'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'mdn_default': ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
+                        ':%%(pathname)s:%%(lineno)s' % SYSLOG_TAG),
+    },
+    'handlers': {
+        'mdn_debug': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'mdn_default',
+            'level': LOG_LEVEL,
+        },
+        'mdn_prod': {
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'mdn_default',
+            'level': LOG_LEVEL,
+        },
+    },
+    'loggers': {
+        'mdn': {
+            'handlers': ['mdn_prod' if not DEBUG else 'mdn_debug'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        
+    },
+}
