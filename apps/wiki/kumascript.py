@@ -43,7 +43,8 @@ def should_use_rendered(doc, params, html=None):
             (force_macros or (not no_macros and not show_raw)))
 
 
-def post(request, content, locale=settings.LANGUAGE_CODE):
+def post(request, content, locale=settings.LANGUAGE_CODE,
+         use_constance_bleach_whitelists=False):
     ks_url = settings.KUMASCRIPT_URL_TEMPLATE.format(path='')
     headers = {
         'X-FireLogger': '1.2',
@@ -61,7 +62,7 @@ def post(request, content, locale=settings.LANGUAGE_CODE):
                              data=data,
                              headers=headers)
     if resp:
-        resp_body = process_body(resp)
+        resp_body = process_body(resp, use_constance_bleach_whitelists)
         resp_errors = process_errors(resp)
         return resp_body, resp_errors
     else:
@@ -203,7 +204,7 @@ def add_env_headers(headers, env_vars):
     return headers
 
 
-def process_body(response):
+def process_body(response, use_constance_bleach_whitelists=False):
     # HACK: Assume we're getting UTF-8, which we should be.
     # TODO: Better solution would be to upgrade the requests module
     # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
@@ -214,7 +215,8 @@ def process_body(response):
     # through editing, source display, and raw output. But, we still
     # want sanitation, so it finally gets picked up here.
     from wiki.models import Document
-    return Document.objects.clean_content(resp_body)
+    return Document.objects.clean_content(resp_body,
+                                          use_constance_bleach_whitelists)
 
 
 def process_errors(response):
