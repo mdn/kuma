@@ -297,7 +297,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
         "description": _("The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with multi-touch interaction. Games, photo galleries, drawing tools and more. With multi-touch, you can build amazing Web experiences that respond to all of the gestures users have come to expect on mobile. Best of all, the experiences you build will work right out of the box on <a href="https://market.android.com/details?id=org.mozilla.firefox">Firefox for Android</a>, <a href="http://www.mozilla.org/en-US/firefoxos/">Firefox OS</a> and many other mobile platforms. No native code needed!</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn/">comprehensive guide on the basics</a> and more experienced web developers should love the thousands of other articles provided. When you're ready to learn about multi-touch in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/DOM/Touch_events">very thorough Touch Events documentation</a>. Need some examples? Check out <a href="https://developer.mozilla.org/en-US/demos/detail/the-face-builder">The Face Builder</a> and the <a href="https://developer.mozilla.org/en-US/demos/tag/tech:multitouch">many other multi-touch demos</a> hosted on the Mozilla Demo Studio.</p>
+<p>There is a lot to learn, but you don't need to be an expert to create something great. What can you do with multi-touch?</p>"""),
     },
     {
         "tag_name": "challenge:2013:march",
@@ -308,6 +310,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("On the go"),
         "summary": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
         "description": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:april",
+        "title": _("April 2013 Dev Derby Challenge - Web Workers"),
+        "short_title": _("Web Workers"),
+        "dateline": _("April 2013"),
+        "short_dateline": _("April"),
+        "tagline": _("Work smart"),
+        "summary": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
+        "description": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
