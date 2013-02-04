@@ -123,6 +123,25 @@
     </div>
     {% endif %}
 
+    <div class="module hot" id="most-active">
+      <h3 class="mod-title">{{ _('Content Management') }}</h3>
+      <ul class="hfeed">
+        <li class="hentry">
+          <h4 class="entry-title"><a href="docs/new">{{ _('Create a New Document') }}</a></h4>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="docs/new?slug=Template:">{{ _('Create a New Template') }}</a></h4>
+        </li>
+
+        <li class="hentry">
+          <h4 class="entry-title"><a href="docs/all">{{ _('List Documents') }}</a></h4>
+        </li>
+        <li class="hentry">
+          <h4 class="entry-title"><a href="docs/templates">{{ _('List Templates') }}</a></h4>
+        </li>
+      </ul>
+    </div>
+
     {% set review_flags = (
         ('technical', _('Needs Technical Review')),
         ('editorial', _('Needs Editorial Review')),
