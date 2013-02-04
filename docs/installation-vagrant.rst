@@ -136,4 +136,4 @@ What’s next?
 
        ./manage.py createsuperuser
 
--  To allow creation and editing of documents, go to /admin/, go to the waffle section and add flags called ``kumaediting``
+-  To allow creation and editing of documents, go to /admin/, go to the waffle section and add a flag called ``kumaediting``.  You may also want to add the ``page_move`` flag to allow page moves by slug.
