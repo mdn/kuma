@@ -12,7 +12,7 @@ def i18n(request):
 
 def next_url(request):
     if 'login' not in request.path and 'register' not in request.path:
-        return {'next_url': request.path }
+        return {'next_url': request.get_full_path()}
     return {}
 
 
