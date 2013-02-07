@@ -53,7 +53,8 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
     'iframe',
     'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'colgroup', 'col',
-    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure', 'figcaption',
+    'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
+    'figcaption',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
     'progress', 'audio', 'video', 'details', 'datagrid', 'datalist', 'table',
     'address', 'font',
@@ -73,7 +74,8 @@ ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
-                             'title', 'style', 'lang', 'dir', 'width', 'height']
+                             'title', 'style', 'lang', 'dir', 'width',
+                             'height']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title',
                            'lang', 'name', 'dir', 'hreflang', 'rel']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
@@ -86,10 +88,12 @@ ALLOWED_ATTRIBUTES['font'] = ['color', 'face', 'size', 'dir']
 ALLOWED_ATTRIBUTES['select'] = ['name', 'dir']
 ALLOWED_ATTRIBUTES['option'] = ['value', 'selected', 'dir']
 ALLOWED_ATTRIBUTES['ol'] = ['style', 'class', 'id', 'lang', 'start', 'dir']
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang', 'dir'])
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'name', 'lang',
+                                    'dir'])
                           for x in
                           ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')))
-ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang', 'dir']) for x in (
+ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang', 'dir'])
+                               for x in (
     'div', 'pre', 'ul', 'li', 'code', 'dl', 'dt', 'dd',
     'section', 'header', 'footer', 'nav', 'article', 'aside', 'figure',
     'dialog', 'hgroup', 'mark', 'time', 'meter', 'command', 'output',
@@ -357,7 +361,7 @@ class DocumentManager(ManagerBase):
                .parse(content_in)
                .filterIframeHosts(allowed_hosts)
                .serialize())
-        
+
         if use_constance_bleach_whitelists:
             tags = constance.config.BLEACH_ALLOWED_TAGS
             attributes = constance.config.BLEACH_ALLOWED_ATTRIBUTES
@@ -646,7 +650,6 @@ class Document(NotificationsMixin, ModelBase):
                        .serialize())
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
 
-
     @property
     def is_rendering_scheduled(self):
         """Does this have a rendering scheduled?"""
@@ -763,7 +766,8 @@ class Document(NotificationsMixin, ModelBase):
             self.rendered_html, self.rendered_errors = self.html, []
         else:
             self.rendered_html, errors = kumascript.get(self, cache_control,
-                                                        base_url, timeout=timeout)
+                                                        base_url,
+                                                        timeout=timeout)
             self.rendered_errors = errors and json.dumps(errors) or None
 
         # Finally, note the end time of rendering and update the document.
@@ -949,7 +953,7 @@ class Document(NotificationsMixin, ModelBase):
         new_rev.save()
         new_rev.review_tags.set(*parse_tags(review_tags))
         return new_rev
- 
+
     def save(self, *args, **kwargs):
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
         self.is_redirect = 1 if self.redirect_url() else 0
@@ -1041,7 +1045,7 @@ class Document(NotificationsMixin, ModelBase):
             child_title = child.slug.split('/')[-1]
             try:
                 existing = Document.objects.get(locale=self.locale,
-                                                slug='/'.join([new_slug, child_title]))
+                                        slug='/'.join([new_slug, child_title]))
                 if not existing.redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
@@ -1169,7 +1173,7 @@ class Document(NotificationsMixin, ModelBase):
                              'description': rev.description,
                              'mime_type': rev.mime_type,
                              'html': attachment.get_embed_html(),
-                             'url': attachment.get_file_url(),}
+                             'url': attachment.get_file_url()}
         return files
 
     @property
@@ -1388,9 +1392,8 @@ class Document(NotificationsMixin, ModelBase):
         if self.parent == None:
             translations = list(self.translations.all().order_by('locale'))
         else:
-            translations = list(self.parent.translations.all().exclude(
-                                                                id=self.id).
-                                                                order_by('locale'))
+            translations = list(self.parent.translations.all().
+                                exclude(id=self.id).order_by('locale'))
             translations.insert(0, self.parent)
         return translations
 
@@ -1796,7 +1799,7 @@ class DocumentAttachment(models.Model):
     Intermediary between Documents and Attachments. Allows storing the
     user who attached a file to a document, and a (unique for that
     document) name for referring to the file from the document.
-    
+
     """
     file = models.ForeignKey('Attachment')
     document = models.ForeignKey(Document)
@@ -1878,7 +1881,7 @@ class Attachment(models.Model):
             'wiki/attachments/%s.html' % rev.mime_type.split('/')[0],
             'wiki/attachments/generic.html'])
         return t.render({'attachment': rev})
-    
+
 
 class AttachmentRevision(models.Model):
     """

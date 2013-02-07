@@ -148,7 +148,8 @@ class ViewTests(TestCaseBase):
         slug = 'toc_test_doc'
         html = '<h2>Head 2</h2><h3>Head 3</h3>'
 
-        doc = document(title='blah', slug=slug, html=html, save=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        doc = document(title='blah', slug=slug, html=html, save=True,
+                       locale=settings.WIKI_DEFAULT_LANGUAGE)
         doc.save()
         rev = revision(document=doc, content=html, is_approved=True, save=True)
         rev.save()
@@ -157,7 +158,9 @@ class ViewTests(TestCaseBase):
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         resp = self.client.get(url)
-        eq_(resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a><ol><li><a href="#Head_3" rel="internal">Head 3</a></ol></li></ol>')
+        eq_(resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
+                          '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
+                          '</ol></li></ol>')
 
     def test_children_view(self):
         def _make_doc(title, slug, parent=None):
@@ -189,8 +192,8 @@ class ViewTests(TestCaseBase):
 
         # Depth parameter testing
         def _depth_test(depth, aught):
-            url = reverse('wiki.get_children', args=['Root'], 
-                    locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
+            url = reverse('wiki.get_children', args=['Root'],
+                locale=settings.WIKI_DEFAULT_LANGUAGE) + '?depth=' + str(depth)
             resp = self.client.get(url)
             json_obj = json.loads(resp.content)
             eq_(len(json_obj['subpages'][0]['subpages'][1]['subpages']), aught)
@@ -201,8 +204,10 @@ class ViewTests(TestCaseBase):
 
         # Sorting test
         sort_root_doc = _make_doc('Sort Root', 'Sort_Root')
-        sort_child_doc_1 = _make_doc('B Child', 'Sort_Root/B_Child', sort_root_doc)
-        sort_child_doc_2 = _make_doc('A Child', 'Sort_Root/A_Child', sort_root_doc)
+        sort_child_doc_1 = _make_doc('B Child', 'Sort_Root/B_Child',
+                                     sort_root_doc)
+        sort_child_doc_2 = _make_doc('A Child', 'Sort_Root/A_Child',
+                                     sort_root_doc)
         resp = self.client.get(reverse('wiki.get_children', args=['Sort_Root'],
             locale=settings.WIKI_DEFAULT_LANGUAGE))
         json_obj = json.loads(resp.content)
@@ -717,7 +722,7 @@ class DocumentEditingTests(TestCaseBase):
 
         # Go to new document page to ensure no-index header works
         response = client.get(reverse('wiki.new_document', args=[],
-                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(response['X-Robots-Tag'], 'noindex')
 
     def test_seo_title(self):
@@ -1027,7 +1032,7 @@ class DocumentEditingTests(TestCaseBase):
         response = client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response,
                 reverse('wiki.document', args=[data['slug']],
-                                         locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                     locale=settings.WIKI_DEFAULT_LANGUAGE))
 
         # Slashes should not be acceptable via form input
         data['title'] = 'valid with slash'
@@ -1256,7 +1261,6 @@ class DocumentEditingTests(TestCaseBase):
                                              locale=locale,
                                              args=[edit_doc.slug]))
 
-
             """ TRANSLATION DOCUMENT TESTING """
             def _run_translate_tests(translate_slug, translate_data,
                                      translate_doc):
@@ -1293,7 +1297,6 @@ class DocumentEditingTests(TestCaseBase):
                     eq_(0, len(Document.objects.filter(title=data['title'] +
                                                    ' Redirect 1',
                                                    locale=foreign_locale)))
-
 
                 # Push a valid translation
                 translate_data['slug'] = translate_slug
@@ -1342,7 +1345,6 @@ class DocumentEditingTests(TestCaseBase):
                 eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=foreign_locale)))  # Ensure no redirect
                 self.assertRedirects(response, reverse('wiki.document', locale=foreign_locale, args=[edit_doc.slug]))
 
-
             """ TEST EDITING SLUGS AND TRANSLATIONS """
             def _run_slug_edit_tests(edit_slug, edit_data, edit_doc, loc):
 
@@ -1353,7 +1355,6 @@ class DocumentEditingTests(TestCaseBase):
                 # HACK: the es doc gets a 'Redirigen 1' if locale/ is updated
                 eq_(1, len(Document.objects.filter(title__contains=edit_data['title'] + ' Redir', locale=loc)))  # Ensure *1* redirect
                 self.assertRedirects(response, reverse('wiki.document', locale=loc, args=[edit_doc.slug.replace(edit_slug, edit_data['slug'])]))
-
 
         # Run all of the tests
         _createAndRunTests("parent")
@@ -1460,14 +1461,13 @@ class DocumentEditingTests(TestCaseBase):
         content = '<p>Hello!</p>'
 
         document = revision(save=True, title=title, slug=slug, content=content).document
-        
+
         response = self.client.get(reverse('wiki.new_document', args=[], locale=settings.WIKI_DEFAULT_LANGUAGE) + '?clone=' + str(document.id))
         page = pq(response.content)
 
         eq_(page.find('input[name=title]')[0].value, title)
         eq_(page.find('input[name=slug]')[0].value, slug + '_clone')
         eq_(page.find('textarea[name=content]')[0].value, content)
-
 
     def test_localized_based_on(self):
         """Editing a localized article 'based on' an older revision of the
@@ -1646,7 +1646,7 @@ class DocumentEditingTests(TestCaseBase):
         # Post an edit that removes one of the tags.
         data.update({
             'form': 'rev',
-            'review_tags': ['editorial',],
+            'review_tags': ['editorial',]
         })
         response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
 
@@ -2415,11 +2415,11 @@ class AutosuggestDocumentsTests(TestCaseBase):
 
     def test_list_no_redirects(self):
         invalidDocuments = (
-            {'title': 'Something Redirect 8', 'slug': 'xx', 
+            {'title': 'Something Redirect 8', 'slug': 'xx',
                 'html': 'REDIRECT <a class="redirect" href="http://davidwalsh.name">yo</a>'},
             {'title': 'My Template', 'slug': 'Template:Something', 'html': 'blah'},
         )
-        validDocuments = ({ 'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'},)
+        validDocuments = ({'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'},)
         allDocuments = invalidDocuments + validDocuments
 
         for doc in allDocuments:
@@ -2629,7 +2629,7 @@ class DeferredRenderingViewTests(TestCaseBase):
         ok_(self.rendered_content not in txt)
         ok_(self.raw_content in txt)
         eq_(0, p.find('#doc-render-raw-fallback').length)
-        
+
         # Only for logged-in users, ensure that a warning is displayed about
         # the fallback
         self.client.login(username='testuser', password='testpass')
@@ -2686,7 +2686,7 @@ class DeferredRenderingViewTests(TestCaseBase):
                 <textarea name="foo"></textarea>
             </p>
         """
-        
+
         # Expected result filtered through alternate whitelist
         expected_content_new = """
             <p id="foo">
@@ -2697,7 +2697,7 @@ class DeferredRenderingViewTests(TestCaseBase):
 
         # Set up an alternate set of whitelists...
         constance.config.BLEACH_ALLOWED_TAGS = json.dumps([
-            "a","p"
+            "a", "p"
         ])
         constance.config.BLEACH_ALLOWED_ATTRIBUTES = json.dumps({
             "a": ['href', 'style'],
@@ -2744,7 +2744,7 @@ class DeferredRenderingViewTests(TestCaseBase):
             resp = self.client.get(url, follow=True)
             eq_(normalize_html(expected),
                 normalize_html(resp.content),
-                "Should match? %s %s %s %s" % 
+                "Should match? %s %s %s %s" %
                     (do_login, param, expected, resp.content))
 
 
@@ -3125,7 +3125,6 @@ class AttachmentTests(TestCaseBase):
         resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
         return resp
 
-
     def test_legacy_redirect(self):
         self.client = Client()  # file views don't need LocalizingClient
         test_user = User.objects.get(username='testuser2')
@@ -3354,7 +3353,7 @@ class AttachmentTests(TestCaseBase):
         """
         Test that the intermediate DocumentAttachment gets created
         correctly when adding an Attachment with a document_id.
-        
+
         """
         doc = document(locale='en', slug='attachment-test-intermediate')
         doc.save()
@@ -3410,7 +3409,7 @@ class AttachmentTests(TestCaseBase):
         self.client.login(username='admin', password='testpass')
 
         resp = self.client.post(add_url, data=post_data)
-        
+
         test_file_2 = make_test_file(
             content='Another file for testing the files dict')
 
@@ -3420,7 +3419,7 @@ class AttachmentTests(TestCaseBase):
             'comment': 'Initial upload',
             'file': test_file_2,
         }
-        
+
         resp = self.client.post(add_url, data=post_data)
 
         doc = Document.objects.get(pk=doc.id)
@@ -3596,7 +3595,6 @@ class PageMoveTests(TestCaseBase):
         page_child_doc = page_child.document
         page_child_doc.parent_topic = page_to_move_doc
         page_child_doc.save()
-
 
         # move page to new slug
         new_title = page_to_move_title + ' Moved'

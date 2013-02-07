@@ -63,8 +63,9 @@ from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, ReadOnlyException)
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
-from wiki.forms import (DocumentForm, RevisionForm, ReviewForm, RevisionValidationForm,
-                        AttachmentRevisionForm, TreeMoveForm)
+from wiki.forms import (DocumentForm, RevisionForm, ReviewForm,
+                        RevisionValidationForm, AttachmentRevisionForm,
+                        TreeMoveForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
                          DocumentRenderingInProgress,
@@ -220,7 +221,8 @@ def prevent_indexing(func):
 def _format_attachment_obj(attachments):
     attachments_list = []
     for attachment in attachments:
-        html = jingo.get_env().select_template(['wiki/includes/attachment_row.html'])
+        html = jingo.get_env().select_template(
+                                        ['wiki/includes/attachment_row.html'])
         obj = {
             'title': attachment.title,
             'date': str(attachment.current_revision.created),
@@ -228,7 +230,7 @@ def _format_attachment_obj(attachments):
             'url': attachment.get_file_url(),
             'size': 0,
             'creator': attachment.current_revision.creator.username,
-            'creatorUrl': reverse('devmo.views.profile_view', 
+            'creatorUrl': reverse('devmo.views.profile_view',
                             args=[attachment.current_revision.creator]),
             'revision': attachment.current_revision.id,
             'id': attachment.id,
@@ -241,7 +243,7 @@ def _format_attachment_obj(attachments):
         except:
             pass
 
-        obj['html'] = mark_safe(html.render({ 'attachment': obj }))
+        obj['html'] = mark_safe(html.render({'attachment': obj}))
         attachments_list.append(obj)
     return attachments_list
 
@@ -264,6 +266,7 @@ def _join_slug(parent_split, slug):
     parent_split.append(slug)
     return '/'.join(parent_split)
 
+
 def _get_document_for_json(doc, addLocaleToTitle=False):
     """Returns a document in object format for output as JSON"""
     content = (wiki.content.parse(doc.html)
@@ -283,7 +286,8 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
         translations.append({
             'locale': translation.locale,
             'title': translation.title,
-            'url': reverse('wiki.document', args=[translation.full_path], locale=translation.locale)
+            'url': reverse('wiki.document', args=[translation.full_path],
+                           locale=translation.locale)
         })
 
     return {
@@ -301,13 +305,13 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
 
 def get_seo_description(content):
     # Create an SEO summary
-    # TODO:  Google only takes the first 180 characters, so maybe we find a logical
-    #        way to find the end of sentence before 180?
+    # TODO:  Google only takes the first 180 characters, so maybe we find a
+    #        logical way to find the end of sentence before 180?
     seo_summary = ''
     try:
         if content:
-            # Need to add a BR to the page content otherwise pyQuery wont find a 
-            # <p></p> element if it's the only element in the doc_html
+            # Need to add a BR to the page content otherwise pyQuery wont find
+            # a <p></p> element if it's the only element in the doc_html
             seo_analyze_doc_html = content + '<br />'
             page = pq(seo_analyze_doc_html)
 
@@ -321,12 +325,12 @@ def get_seo_description(content):
                     for p in range(len(paragraphs)):
                         item = paragraphs.eq(p)
                         text = item.text()
-                        # Checking for a parent length of 2 
+                        # Checking for a parent length of 2
                         # because we don't want p's wrapped
-                        # in DIVs ("<div class='warning'>") and pyQuery adds 
+                        # in DIVs ("<div class='warning'>") and pyQuery adds
                         # "<html><div>" wrapping to entire document
-                        if (len(text) and 
-                            not 'Redirect' in text and 
+                        if (len(text) and
+                            not 'Redirect' in text and
                             text.find(u'«') == -1 and
                             text.find('&laquo') == -1 and
                             item.parents().length == 2):
@@ -500,8 +504,9 @@ def document(request, document_slug, document_locale):
                 if r_errors:
                     ks_errors = r_errors
             except DocumentRenderedContentNotAvailable:
-                # There was no rendered content available, and we were unable to
-                # render it on the spot. So, fall back to presenting raw content
+                # There was no rendered content available, and we were unable
+                # to render it on the spot. So, fall back to presenting raw
+                # content
                 render_raw_fallback = True
 
     toc_html = None
@@ -587,7 +592,7 @@ def document(request, document_slug, document_locale):
 
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
-    
+
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
@@ -725,7 +730,7 @@ def revision(request, document_slug, document_locale, revision_id):
                             document__slug=document_slug)
     prev = rev.get_previous()
 
-    data = {'document': rev.document, 'revision': rev, 
+    data = {'document': rev.document, 'revision': rev,
             'comment': format_comment(rev)}
     data.update(SHOWFOR_DATA)
     return jingo.render(request, 'wiki/revision.html', data)
@@ -756,6 +761,7 @@ def list_documents(request, category=None, tag=None):
                         {'documents': docs,
                          'category': category,
                          'tag': tag})
+
 
 @require_GET
 def list_templates(request):
@@ -879,7 +885,8 @@ def new_document(request):
             'show_toc': initial_toc
         })
 
-        allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
+        allow_add_attachment = (
+            Attachment.objects.allow_add_attachment_by(request.user))
         return jingo.render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
                              'parent_slug': parent_slug,
@@ -922,7 +929,8 @@ def new_document(request):
     else:
         doc_form.data['slug'] = posted_slug
 
-    allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
+    allow_add_attachment = (
+        Attachment.objects.allow_add_attachment_by(request.user))
     return jingo.render(request, 'wiki/new_document.html',
                         {'is_template': is_template,
                          'document_form': doc_form,
@@ -1003,7 +1011,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
             except Document.DoesNotExist:
                 pass
 
-
         # Comparing against localized names for the Save button bothers me, so
         # I embedded a hidden input:
         which_form = request.POST.get('form')
@@ -1015,9 +1022,10 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                 post_data.update({'locale': document_locale})
                 doc_form = DocumentForm(post_data, instance=doc)
                 if doc_form.is_valid():
-
-                    if 'slug' in post_data:  # if must be here for section edits
-                        post_data['slug'] = _join_slug(slug_dict['parent_split'], post_data['slug'])
+                    # if must be here for section edits
+                    if 'slug' in post_data:
+                        post_data['slug'] = _join_slug(
+                            slug_dict['parent_split'], post_data['slug'])
 
                     # Get the possibly new slug for the imminent redirection:
                     doc = doc_form.save(None)
@@ -1133,9 +1141,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         parent_path = parent_doc.get_absolute_url()
         parent_slug = parent_doc.slug
 
-
     attachments = _format_attachment_obj(doc.attachments)
-    allow_add_attachment = Attachment.objects.allow_add_attachment_by(request.user)
+    allow_add_attachment = (
+        Attachment.objects.allow_add_attachment_by(request.user))
     docInfo = json.dumps(_get_document_for_json(doc))
 
     return jingo.render(request, 'wiki/edit_document.html',
@@ -1257,7 +1265,7 @@ def move(request, document_slug, document_locale):
         'descendants':  descendants,
         'descendants_count': len(descendants),
     })
-    
+
 
 def ckeditor_config(request):
     """Return ckeditor config from database"""
@@ -1314,23 +1322,24 @@ def get_children(request, document_slug, document_locale):
                 'url':  d.get_absolute_url(),
                 'subpages': []
             }
-            
+
             if level < depth:
                 descendants = d.get_descendants(1)
                 descendants.sort(key=lambda item: item.title)
                 for descendant in descendants:
-                    res['subpages'].append(_make_doc_structure(descendant, level + 1))
+                    res['subpages'].append(_make_doc_structure(descendant,
+                                                               level + 1))
             return res
 
         result = _make_doc_structure(Document.objects.
                         get(locale=document_locale, slug=document_slug), 0)
 
     except Document.DoesNotExist:
-        result = { 'error': 'Document does not exist.' }
+        result = {'error': 'Document does not exist.'}
 
     result = json.dumps(result)
     return HttpResponse(result, mimetype='application/json')
-    
+
 
 @require_GET
 def autosuggest_documents(request):
@@ -1342,7 +1351,7 @@ def autosuggest_documents(request):
 
     # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.
-        extra(select={'length':'Length(slug)'}).
+        extra(select={'length': 'Length(slug)'}).
         filter(title__icontains=partial_title, is_template=0, is_redirect=0).
         exclude(slug__icontains='Talk:').  # Remove old talk pages
         order_by('title', 'length'))
@@ -1459,7 +1468,8 @@ def compare_revisions(request, document_slug, document_locale):
     context = {'document': doc, 'revision_from': revision_from,
                          'revision_to': revision_to}
     if request.GET.get('raw', 0):
-        response = jingo.render(request, 'wiki/includes/revision_diff_table.html',
+        response = jingo.render(request,
+                                'wiki/includes/revision_diff_table.html',
                                 context)
     else:
         response = jingo.render(request, 'wiki/compare_revisions.html',
@@ -1535,8 +1545,11 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
         # Find the "real" parent topic, which is its translation
         try:
-            parent_topic_translated_doc = parent_doc.parent_topic.translations.get(locale=document_locale)
-            slug_dict = _split_slug(parent_topic_translated_doc.slug + '/' + slug_dict['specific'])
+            parent_topic_translated_doc = (
+                parent_doc.parent_topic.translations.get(
+                    locale=document_locale))
+            slug_dict = _split_slug(
+                parent_topic_translated_doc.slug + '/' + slug_dict['specific'])
         except:
             pass
 
@@ -1650,7 +1663,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                          'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description,
                          'discard_href': discard_href,
-                         'specific_slug': parent_split['specific'], 'parent_slug': parent_split['parent']})
+                         'specific_slug': parent_split['specific'],
+                         'parent_slug': parent_split['parent']})
 
 
 @require_POST
@@ -1771,7 +1785,7 @@ def toc_view(request, document_slug=None, document_locale=None):
     if toc_html:
         toc_html = '<ol>' + toc_html + '</ol>'
 
-    return HttpResponse(toc_html) 
+    return HttpResponse(toc_html)
 
 
 @require_GET
@@ -1841,7 +1855,7 @@ def revert_document(request, document_path, revision_id):
     revision = get_object_or_404(Revision, pk=revision_id,
                                  document__slug=document_slug)
     document = revision.document
-    
+
     if request.method == 'GET':
         # Render the confirmation page
         return jingo.render(request, 'wiki/confirm_revision_revert.html',
@@ -1850,7 +1864,7 @@ def revert_document(request, document_path, revision_id):
     document.revert(revision, request.user)
     return HttpResponseRedirect(reverse('wiki.document_revisions',
                                 args=[document.full_path]))
-    
+
 
 @login_required
 @permission_required('wiki.delete_revision')
@@ -2109,6 +2123,7 @@ def attachment_history(request, attachment_id):
                         {'attachment': attachment,
                          'revision': attachment.current_revision})
 
+
 @require_POST
 @login_required
 def new_attachment(request):
@@ -2126,7 +2141,7 @@ def new_attachment(request):
             document = Document.objects.get(id=int(document_id))
         except (Document.DoesNotExist, ValueError):
             pass
-    
+
     form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
     if form.is_valid():
         rev = form.save(commit=False)
@@ -2141,8 +2156,10 @@ def new_attachment(request):
                               rev.filename())
 
         if request.POST.get('is_ajax', ''):
-            response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
-                    { 'result': json.dumps(_format_attachment_obj([attachment])) })
+            response = jingo.render(
+                request,
+                'wiki/includes/attachment_upload_results.html',
+                {'result': json.dumps(_format_attachment_obj([attachment]))})
         else:
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
@@ -2151,8 +2168,10 @@ def new_attachment(request):
                 'title': request.POST.get('is_ajax', ''),
                 'error': _(u'The file provided is not valid')
             }
-            response = jingo.render(request, 'wiki/includes/attachment_upload_results.html',
-                    { 'result': json.dumps([error_obj]) })
+            response = jingo.render(
+                request,
+                'wiki/includes/attachment_upload_results.html',
+                {'result': json.dumps([error_obj])})
         else:
             response = jingo.render(request, 'wiki/edit_attachment.html',
                                     {'form': form})
