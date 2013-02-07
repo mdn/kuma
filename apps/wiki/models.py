@@ -1839,11 +1839,13 @@ class Attachment(models.Model):
     def get_absolute_url(self):
         return ('wiki.attachment_detail', (), {'attachment_id': self.id})
 
-    @models.permalink
     def get_file_url(self):
-        return ('wiki.raw_file', (),
-                {'attachment_id': self.id,
-                 'filename': self.current_revision.filename()})
+        uri = reverse('wiki.raw_file', kwargs={'attachment_id': self.id,
+                               'filename':  self.current_revision.filename()})
+        url = '%s%s%s' % (settings.PROTOCOL,
+                             constance.config.ATTACHMENT_HOST,
+                             uri)
+        return url
 
     def attach(self, document, user, name):
         if self.id not in document.attachments.values_list('id', flat=True):

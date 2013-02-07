@@ -1042,6 +1042,11 @@ CONSTANCE_CONFIG = dict(
         '(space-separated)'
     ),
 
+    ATTACHMENT_HOST = (
+        'mdn.mozillademos.org',
+        'Host from which attachments should be served',
+    ),
+
     GOOGLE_ANALYTICS_ACCOUNT = (
         '0',
         'Google Analytics Tracking Account Number (0 to disable)',

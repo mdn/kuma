@@ -2074,11 +2074,14 @@ def raw_file(request, attachment_id, filename):
     attachment = get_object_or_404(Attachment, pk=attachment_id)
     if attachment.current_revision is None:
         raise Http404
-    rev = attachment.current_revision
-    resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
-    resp["Last-Modified"] = rev.created
-    resp["Content-Length"] = rev.file.size
-    return resp
+    if request.get_host() == constance.config.ATTACHMENT_HOST:
+        rev = attachment.current_revision
+        resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
+        resp["Last-Modified"] = rev.created
+        resp["Content-Length"] = rev.file.size
+        return resp
+    else:
+        return HttpResponsePermanentRedirect(attachment.get_file_url())
 
 
 def mindtouch_file_redirect(request, file_id, filename):

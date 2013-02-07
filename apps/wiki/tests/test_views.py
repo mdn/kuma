@@ -3109,6 +3109,23 @@ class AttachmentTests(TestCaseBase):
     def tearDown(self):
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
+    def _post_new_attachment(self):
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='admin', password='testpass')
+
+        file_for_upload = make_test_file(
+            content='A test file uploaded into kuma.')
+        post_data = {
+            'title': 'Test uploaded file',
+            'description': 'A test file uploaded into kuma.',
+            'comment': 'Initial upload',
+            'file': file_for_upload,
+        }
+
+        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        return resp
+
+
     def test_legacy_redirect(self):
         self.client = Client()  # file views don't need LocalizingClient
         test_user = User.objects.get(username='testuser2')
@@ -3148,19 +3165,7 @@ class AttachmentTests(TestCaseBase):
             ok_(a.get_file_url() in resp['Location'])
 
     def test_new_attachment(self):
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-
-        file_for_upload = make_test_file(
-            content='A test file uploaded into kuma.')
-        post_data = {
-            'title': 'Test uploaded file',
-            'description': 'A test file uploaded into kuma.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
+        resp = self._post_new_attachment()
         eq_(302, resp.status_code)
 
         attachment = Attachment.objects.get(title='Test uploaded file')
@@ -3219,9 +3224,23 @@ class AttachmentTests(TestCaseBase):
         eq_('Second revision.', rev.comment)
         ok_(rev.is_approved)
 
-        resp = self.client.get(attachment.get_file_url())
+        url = attachment.get_file_url()
+        resp = self.client.get(url, HTTP_HOST=constance.config.ATTACHMENT_HOST)
         eq_('text/plain', rev.mime_type)
         ok_('I am a new version of the test file for editing.' in resp.content)
+
+    def test_attachment_raw_requires_attachment_host(self):
+        resp = self._post_new_attachment()
+        attachment = Attachment.objects.get(title='Test uploaded file')
+
+        url = attachment.get_file_url()
+        resp = self.client.get(url)
+        eq_(301, resp.status_code)
+        eq_(attachment.get_file_url(), resp['Location'])
+
+        url = attachment.get_file_url()
+        resp = self.client.get(url, HTTP_HOST=constance.config.ATTACHMENT_HOST)
+        eq_(200, resp.status_code)
 
     def test_attachment_detail(self):
         self.client = Client()  # file views don't need LocalizingClient
