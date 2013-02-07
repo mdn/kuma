@@ -1897,10 +1897,10 @@ class AttachmentRevision(models.Model):
     # rule out certain types of attachments, but might be a lot safer.
     mime_type = models.CharField(max_length=255, db_index=True)
 
-    description = models.TextField()  # Does not allow wiki markup
+    description = models.TextField(blank=True)  # Does not allow wiki markup
 
     created = models.DateTimeField(default=datetime.now)
-    comment = models.CharField(max_length=255)
+    comment = models.CharField(max_length=255, blank=True)
     creator = models.ForeignKey(User,
                                 related_name='created_attachment_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
