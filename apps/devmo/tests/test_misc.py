@@ -11,6 +11,11 @@ from django.conf import settings
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
 
+from devmo.context_processors import next_url
+from django.core.handlers.wsgi import WSGIRequest
+from django.contrib.auth.models import AnonymousUser
+from StringIO import StringIO
+
 
 def parse_robots(base_url):
     """ Given a base url, retrieves the robot.txt file and
@@ -35,6 +40,15 @@ def parse_robots(base_url):
             rules.append(rule)
         token = robots.get_token()
     return rules
+
+
+def _make_request(path):
+        req = WSGIRequest({
+            'REQUEST_METHOD': 'GET',
+            'PATH_INFO': path,
+            'wsgi.input': StringIO()})
+        req.user = AnonymousUser()
+        return req
 
 
 class TestDevMoRobots(test_utils.TestCase):
@@ -141,3 +155,16 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
         req.META['HTTP_ACCEPT_LANGUAGE'] = 'fr'
         prefixer = urlresolvers.Prefixer(req)
         eq_(prefixer.get_language(), 'fr')
+
+
+class TestDevMoNextUrl(test_utils.TestCase):
+    """ Tests that the next_url value is properly set, 
+    including query string """
+    def test_basic(self):
+        path = '/one/two'
+        eq_(next_url(_make_request(path))['next_url'], path)
+
+    def test_querystring(self):
+        path = '/one/two?something'
+        req = _make_request(path)
+        eq_(next_url(_make_request(path))['next_url'], path)
