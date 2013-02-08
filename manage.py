@@ -41,9 +41,6 @@ except ImportError:
 # needs to access settings, so we'll setup the environ early.
 setup_environ(settings)
 
-# Import for side-effect: configures our logging handlers.
-import log_settings
-
 import safe_django_forms
 safe_django_forms.monkeypatch()
 
