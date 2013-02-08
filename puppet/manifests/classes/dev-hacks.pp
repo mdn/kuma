@@ -10,6 +10,15 @@ class dev_tools {
 # Do some dirty, dirty things to make development nicer.
 class dev_hacks {
 
+    exec { 'locale-gen':
+        command => "/usr/sbin/locale-gen en_US.utf8"
+    }
+
+    exec { 'update-locale':
+        command => "/usr/sbin/update-locale LC_ALL='en_US.utf8'",
+        require => Exec['locale-gen']
+    }
+
     file { "/home/vagrant":
         owner => "vagrant", group => "vagrant", mode => 0755;
     }

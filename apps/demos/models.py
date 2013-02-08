@@ -2,8 +2,9 @@ from hashlib import md5
 from datetime import datetime
 from time import time, gmtime, strftime
 from os import unlink, makedirs
+import os.path
 from os.path import basename, dirname, isfile, isdir
-from shutil import rmtree
+from shutil import rmtree, copyfileobj
 import re
 
 import logging
@@ -696,22 +697,27 @@ class Submission(models.Model):
         valid_entries = Submission.get_valid_demo_zipfile_entries(zf) 
 
         for zi in valid_entries:
+            if type(zi.filename) is unicode:
+                zi_filename = zi.filename
+            else:
+                zi_filename = zi.filename.decode('utf-8', 'ignore')
 
             # HACK: Normalize demo.html to index.html
-            if zi.filename == 'demo.html':
-                zi.filename = 'index.html'
+            if zi_filename == u'demo.html':
+                zi_filename = u'index.html'
 
             # Relocate all files from detected root dir to a directory named
             # for the zip file in storage
-            out_fn = '%s/%s' % ( new_root_dir, zi.filename )
+            out_fn = u'%s/%s' % (new_root_dir, zi_filename)
             out_dir = dirname(out_fn)
 
             # Create parent directories where necessary.
             if not isdir(out_dir):
-                makedirs(out_dir, 0775)
+                makedirs(out_dir.encode('utf-8'), 0775)
 
             # Extract the file from the zip into the desired location.
-            open(out_fn, 'w').write(zf.read(zi))
+            fout = open(out_fn.encode('utf-8'), 'wb')
+            copyfileobj(zf.open(zi), fout)
 
 def update_submission_comment_count(sender, instance, **kwargs):
     """Update the denormalized count of comments for a submission on comment save/delete"""
