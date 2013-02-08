@@ -1846,8 +1846,8 @@ class Attachment(models.Model):
         uri = reverse('wiki.raw_file', kwargs={'attachment_id': self.id,
                                'filename':  self.current_revision.filename()})
         url = '%s%s%s' % (settings.PROTOCOL,
-                             constance.config.ATTACHMENT_HOST,
-                             uri)
+                         settings.ATTACHMENT_HOST,
+                         uri)
         return url
 
     def attach(self, document, user, name):

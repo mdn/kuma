@@ -72,7 +72,8 @@ Getting up and running
 
 -  Add developer-dev.mozilla.org to /etc/hosts::
 
-       echo '192.168.10.55 developer-local.allizom.org' >> /etc/hosts
+       echo '192.168.10.55 developer-local.allizom.org
+       mdn-local.mozillademos.org' >> /etc/hosts
 
 -  Everything should be working now, from the host side::
 

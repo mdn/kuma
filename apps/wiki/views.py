@@ -2088,7 +2088,7 @@ def raw_file(request, attachment_id, filename):
     attachment = get_object_or_404(Attachment, pk=attachment_id)
     if attachment.current_revision is None:
         raise Http404
-    if request.get_host() == constance.config.ATTACHMENT_HOST:
+    if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
         resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
         resp["Last-Modified"] = rev.created

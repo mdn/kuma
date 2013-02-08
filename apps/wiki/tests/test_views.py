@@ -3224,7 +3224,7 @@ class AttachmentTests(TestCaseBase):
         ok_(rev.is_approved)
 
         url = attachment.get_file_url()
-        resp = self.client.get(url, HTTP_HOST=constance.config.ATTACHMENT_HOST)
+        resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
         eq_('text/plain', rev.mime_type)
         ok_('I am a new version of the test file for editing.' in resp.content)
 
@@ -3238,7 +3238,7 @@ class AttachmentTests(TestCaseBase):
         eq_(attachment.get_file_url(), resp['Location'])
 
         url = attachment.get_file_url()
-        resp = self.client.get(url, HTTP_HOST=constance.config.ATTACHMENT_HOST)
+        resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
         eq_(200, resp.status_code)
 
     def test_attachment_detail(self):

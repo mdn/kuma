@@ -762,6 +762,8 @@ MAX_FILEPATH_LENGTH = 250
 # Default storage engine - ours does not preserve filenames
 #DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
 
+ATTACHMENT_HOST = 'mdn.mozillademos.org'
+
 # Auth and permissions related constants
 LOGIN_URL = '/users/login'
 LOGOUT_URL = '/users/logout'
@@ -1040,11 +1042,6 @@ CONSTANCE_CONFIG = dict(
         ]),
         'List of domains from which live code samples may be served '
         '(space-separated)'
-    ),
-
-    ATTACHMENT_HOST = (
-        'mdn.mozillademos.org',
-        'Host from which attachments should be served',
     ),
 
     GOOGLE_ANALYTICS_ACCOUNT = (
