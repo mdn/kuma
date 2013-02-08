@@ -1094,8 +1094,10 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'mdn_default': ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
-                        ':%%(pathname)s:%%(lineno)s' % SYSLOG_TAG),
+        'mdn_default': {
+            'format': ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
+                       ':%%(pathname)s:%%(lineno)s' % SYSLOG_TAG),
+        },
     },
     'handlers': {
         'mdn_debug': {
