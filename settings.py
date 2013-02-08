@@ -763,6 +763,8 @@ MAX_FILEPATH_LENGTH = 250
 # Default storage engine - ours does not preserve filenames
 #DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
 
+ATTACHMENT_HOST = 'mdn.mozillademos.org'
+
 # Auth and permissions related constants
 LOGIN_URL = '/users/login'
 LOGOUT_URL = '/users/logout'
