@@ -129,3 +129,5 @@ LOGIN_REDIRECT_URL_FAILURE = '/'
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 STATSD_CLIENT = 'django_statsd.clients.toolbar'
+
+ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
