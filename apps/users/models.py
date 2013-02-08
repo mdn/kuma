@@ -39,13 +39,10 @@ class Profile(ModelBase):
     bio = models.TextField(null=True, blank=True,
                            verbose_name=_lazy(u'Biography'))
     website = models.URLField(max_length=255, null=True, blank=True,
-                              verify_exists=False,
                               verbose_name=_lazy(u'Website'))
     twitter = models.URLField(max_length=255, null=True, blank=True,
-                              verify_exists=False,
                               verbose_name=_lazy(u'Twitter URL'))
     facebook = models.URLField(max_length=255, null=True, blank=True,
-                               verify_exists=False,
                                verbose_name=_lazy(u'Facebook URL'))
     irc_handle = models.CharField(max_length=255, null=True, blank=True,
                                   verbose_name=_lazy(u'IRC nickname'))
