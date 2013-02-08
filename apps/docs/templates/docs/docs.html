@@ -139,6 +139,11 @@
         <li class="hentry">
           <h4 class="entry-title"><a href="{{ url('wiki.list_templates') }}">{{ _('List Templates') }}</a></h4>
         </li>
+        {% if waffle.flag('revisions_dashboard') %}
+        <li class="hentry">
+          <h4 class="entry-title"><a href="{{ url('dashboards.revisions') }}">{{ _('Revisions Dashboard') }}</a></h4>
+        </li>
+        {% endif %}
       </ul>
     </div>
 
