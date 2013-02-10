@@ -79,47 +79,38 @@
     
     <section id="home-promos" class="home-promos">
     
-      <div class="promo" id="promo-learn">
+      <div class="promo" id="promo-webapps">
           <a href="{{ url('learn') }}">
-          <h2>{{_("Learn")}}</h2>
-          <p>{{_("Our collection of resources shows you how to use the technologies that power the Web.")}}</p>
+          <h2>{{_("Create")}}<br />{{_("Web Apps")}}</h2>
+          <p>{{_("Develop apps using Web standards and open technologies")}}</p>
         </a>
         <div></div>
       </div>
       
-      <div class="promo" id="promo-demos">
+      <div class="promo" id="promo-fosdev">
           <a href="{{ url('demos') }}">
-          <h2>{{_("Demos")}}</h2>
-          <p>{{_("Check out what developers are doing with the latest Web standards and open technologies.")}}</p>
+          <h2>{{_("Firefox OS")}}<br />{{_("for developers")}}</h2>
+          <p>{{_("Open source mobile OS built with HTML, JavaScript, & WebAPIs")}}</p>
         </a>
         <div></div>
       </div>
       
-      <div class="promo" id="promo-foxdev">
+      <div class="promo" id="promo-fosmob">
         <a href="{{ devmo_url('Firefox_for_developers') }}">
-          <h2>{{_("Firefox for Devs")}}</h2>
-          <p>{{_("See what's new for Web developers in the latest version of Firefox.")}}</p>
+          <h2>{{_("Firefox MOBILE")}}<br />{{_("for developers")}}</h2>
+          <p>{{_("How to use device APIs, test sites, & build mobile add-ons")}}</p>
         </a>
         <div></div>
       </div>
 
-    {% if waffle.switch('social_promo') %}
-      <div class="promo" id="promo-social">
-        <a href="{{_("docs/Social_API")}}">
-          <h2>{{_("Make Firefox more social")}}</h2>
-          <p>{{_("Learn about the social API")}} &raquo;</p>
-        </a>
-        <div></div>
-      </div>
-    {% else %}
-      <div class="promo" id="promo-aurora">
+      <div class="promo" id="promo-fxdev">
         <a href="{{_("http://www.mozilla.com/en-US/firefox/channel/")}}">
-          <h2>{{_("Firefox Aurora")}}</h2>
-          <p>{{_("Experience the latest desktop and mobile features in Aurora and help shape the future of Firefox.")}}</p> 
+          <h2>{{_("Firefox")}}<br />{{_("for developers")}}</h2>
+          <p>{{_("See what’s new for web developers in the latest version of Firefox")}}</p>
         </a>
         <div></div>
       </div>
-    {% endif %}
+ 
     
     </section><!-- /#home-promos -->
 

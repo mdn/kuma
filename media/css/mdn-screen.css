@@ -416,11 +416,12 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 
 /*** @Promos *********/
 #home-promos { clear: both; overflow: hidden; }
-.home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 40px 0; border: 1px solid rgba(0,0,0,.1); color: #fff; font-size: .714em; text-align: center; background: #666 url("../img/bg-check-dk.png"); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
+.home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 40px 0; border: 1px solid #333; color: #fff; font-size: .714em; background: #666 url("../img/bg-check-dk.png"); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
 .home-promos .promo:last-child { margin-right: 0; }
 .home-promos .promo a { position: absolute; left: 0; top: 0; z-index: 10; display: block; height: 133px; width: 188px; padding: 15px; color: #fff; text-decoration: none;  }
 .home-promos .promo h2 { margin: 0 0 .1em; font: 2.4em/1 "Bebas Neue"; text-transform: uppercase; letter-spacing: .5px; }
 .home-promos .promo .more { font-size: 1.3em; }
+.home-promos .promo p { width: 125px; }
 .home-promos .promo div { position: absolute; z-index: 5; height: 163px; width: 218px; background: url("../img/bg-homepromos.png") no-repeat; 
   opacity: .6; 
   -moz-transition-property: opacity, background-position; 
@@ -468,6 +469,22 @@ html[lang="en-US"] #promo-social div { background: url("../img/bg-social-promo-n
 #promo-apps .more { -moz-transition: all .2s ease-out; }
 #promo-apps:hover .more { margin-top: -.1em; font-size: 1.4em; text-shadow: 2px 3px 5px rgba(0,0,0,.25); -moz-transition: all .2s ease-in; -webkit-transition: all .2s ease-in; -o-transition: all .2s ease-in; transition: all .2s ease-in; }
 #promo-apps:hover div { box-shadow: inset 0 0 30px rgba(150,30,0,.25); -moz-transition: box-shadow .2s ease-in; -webkit-transition: box-shadow .2s ease-in; -o-transition: box-shadow .2s ease-in; transition: box-shadow .2s ease-in; }
+
+.home-promos .promo { background-image: url("../img/bg-promos-homepage.jpg"); }
+.home-promos .promo div { background-image: url("../img/bg-promos-top-homepage.jpg"); }
+.home-promos .promo#promo-webapps { background-color: #667680; background-position: 0 0; }
+.home-promos .promo#promo-webapps div { background-position: 10px 0; }
+.home-promos .promo#promo-webapps:hover div { background-position: -12px 0; }
+.home-promos .promo#promo-fosdev { background-color: #088dd2; background-position: 0 489px; }
+.home-promos .promo#promo-fosdev div { background-position: 10px -163px; }
+.home-promos .promo#promo-fosdev:hover div { background-position: -12px -163px; }
+.home-promos .promo#promo-fosmob { background-color: #de5d0a; background-position: 0 326px; }
+.home-promos .promo#promo-fosmob div { background-position: 10px -326px; }
+.home-promos .promo#promo-fosmob:hover div { background-position: -12px -326px; }
+.home-promos .promo#promo-fxdev { background-color: #022856; background-position: 0 163px; }
+.home-promos .promo#promo-fxdev div { background-position: 10px -489px; }
+.home-promos .promo#promo-fxdev:hover div { background-position: -12px -489px; }
+
 
 .home-extra #webfwd-promo { margin: -15px 0 1.5em; }
 .home-extra #snippet-promo a { background: url("../img/features/labs_snippets_landing.png"); width:456px; height:150px; position:relative; display: block; font-family: "Open Sans", sans-serif; text-shadow: 1px 1px 0 #fff; }
