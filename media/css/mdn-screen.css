@@ -474,16 +474,16 @@ html[lang="en-US"] #promo-social div { background: url("../img/bg-social-promo-n
 .home-promos .promo div { background-image: url("../img/bg-promos-top-homepage.jpg"); }
 .home-promos .promo#promo-webapps { background-color: #667680; background-position: 0 0; }
 .home-promos .promo#promo-webapps div { background-position: 10px 0; }
-.home-promos .promo#promo-webapps:hover div { background-position: -12px 0; }
+.home-promos .promo#promo-webapps:hover div, .home-promos .promo#promo-webapps:active div, .home-promos .promo#promo-webapps:focus div { background-position: -12px 0; }
 .home-promos .promo#promo-fosdev { background-color: #088dd2; background-position: 0 489px; }
 .home-promos .promo#promo-fosdev div { background-position: 10px -163px; }
-.home-promos .promo#promo-fosdev:hover div { background-position: -12px -163px; }
+.home-promos .promo#promo-fosdev:hover div, .home-promos .promo#promo-fosdev:active div, .home-promos .promo#promo-fosdev:focus div { background-position: -12px -163px; }
 .home-promos .promo#promo-fosmob { background-color: #de5d0a; background-position: 0 326px; }
 .home-promos .promo#promo-fosmob div { background-position: 10px -326px; }
-.home-promos .promo#promo-fosmob:hover div { background-position: -12px -326px; }
+.home-promos .promo#promo-fosmob:hover div, .home-promos .promo#promo-fosmob:active div, .home-promos .promo#promo-fosmob:focus div { background-position: -12px -326px; }
 .home-promos .promo#promo-fxdev { background-color: #022856; background-position: 0 163px; }
 .home-promos .promo#promo-fxdev div { background-position: 10px -489px; }
-.home-promos .promo#promo-fxdev:hover div { background-position: -12px -489px; }
+.home-promos .promo#promo-fxdev:hover div, .home-promos .promo#promo-fxdev:active div, .home-promos .promo#promo-fxdev:focus div { background-position: -12px -489px; }
 
 
 .home-extra #webfwd-promo { margin: -15px 0 1.5em; }
