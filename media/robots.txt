@@ -1,6 +1,6 @@
 User-Agent: *
 Crawl-delay: 5
-Sitemap: sitemap.xml
+Sitemap: https://developer.mozilla.org/sitemap.xml
 Request-rate: 1/5
 
 Disallow: /*feed=rss
