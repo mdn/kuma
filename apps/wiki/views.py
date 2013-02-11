@@ -2093,6 +2093,7 @@ def raw_file(request, attachment_id, filename):
         resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
         resp["Last-Modified"] = rev.created
         resp["Content-Length"] = rev.file.size
+        resp['x-frame-options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
         return resp
     else:
         return HttpResponsePermanentRedirect(attachment.get_file_url())
