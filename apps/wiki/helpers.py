@@ -134,9 +134,12 @@ def _massage_diff_content(content):
 def bugize_text(content):
     content = jinja2.escape(content)
     content = re.sub(r'bug\s+#?(\d+)',
-                  jinja2.Markup('<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=\\1" target="_blank">bug \\1</a>'),
+                  jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
+                                'show_bug.cgi?id=\\1" '
+                                'target="_blank">bug \\1</a>'),
                   content)
     return content
+
 
 @register.function
 def format_comment(rev):
@@ -147,7 +150,10 @@ def format_comment(rev):
 
     #  If a page move, say so
     if prev_rev and prev_rev.slug != rev.slug:
-        comment += jinja2.Markup('<span class="slug-change">Moved From <strong>%s</strong> to <strong>%s</strong></span>') % (prev_rev.slug, rev.slug)
+        comment += jinja2.Markup('<span class="slug-change">'
+                                 'Moved From <strong>%s</strong> '
+                                 'to <strong>%s</strong></span>') % (
+                                     prev_rev.slug, rev.slug)
 
     return comment
 
@@ -162,11 +168,11 @@ def diff_table(content_from, content_to, prev_id, curr_id):
     to_lines = tidy_to.splitlines()
     try:
         diff = html_diff.make_table(from_lines, to_lines,
-                                    _("Revision %s") % prev_id,
-                                    _("Revision %s") % curr_id,
-                                    context=True,
-                                    numlines=constance.config.DIFF_CONTEXT_LINES
-                                   )
+                                _("Revision %s") % prev_id,
+                                _("Revision %s") % curr_id,
+                                context=True,
+                                numlines=constance.config.DIFF_CONTEXT_LINES
+                               )
     except RuntimeError:
         # some diffs hit a max recursion error
         message = _(u'There was an error generating the content.')

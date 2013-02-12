@@ -1,11 +1,7 @@
 # coding=utf-8
 
 from datetime import datetime
-import time
 import json
-from collections import defaultdict
-import base64
-import httplib
 import hashlib
 import logging
 from urllib import urlencode
@@ -15,11 +11,6 @@ try:
     from cStringIO import cStringIO as StringIO
 except:
     from StringIO import StringIO
-
-import requests
-import bleach
-
-from taggit.utils import parse_tags, edit_string_for_tags
 
 try:
     from functools import wraps
@@ -44,7 +35,6 @@ from django.views.decorators.csrf import csrf_exempt
 import constance.config
 
 from waffle.decorators import waffle_flag
-from waffle import flag_is_active
 
 import jingo
 from tower import ugettext_lazy as _lazy
@@ -57,9 +47,9 @@ from authkeys.decorators import accepts_auth_key
 
 from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
-from sumo.urlresolvers import Prefixer, reverse
+from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, ReadOnlyException)
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX)
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
@@ -68,16 +58,14 @@ from wiki.forms import (DocumentForm, RevisionForm, ReviewForm,
                         TreeMoveForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentTag, ReviewTag, Attachment,
-                         DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
-                         REVIEW_FLAG_TAGS_DEFAULT, ALLOWED_ATTRIBUTES,
-                         ALLOWED_TAGS, ALLOWED_STYLES,
+                         REVIEW_FLAG_TAGS_DEFAULT,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision)
-from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
+from wiki.tasks import send_reviewed_notification
 from wiki.helpers import format_comment, get_seo_description
 import wiki.content
 from wiki import kumascript
@@ -85,7 +73,6 @@ from wiki import kumascript
 from pyquery import PyQuery as pq
 from django.utils.safestring import mark_safe
 
-import logging
 
 log = logging.getLogger('k.wiki')
 
