@@ -3239,6 +3239,7 @@ class AttachmentTests(TestCaseBase):
 
         url = attachment.get_file_url()
         resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
+        eq_('ALLOW-FROM: %s' % settings.DOMAIN, resp['x-frame-options'])
         eq_(200, resp.status_code)
 
     def test_attachment_detail(self):
