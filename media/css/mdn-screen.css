@@ -423,7 +423,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 .home-promos .promo .more { font-size: 1.3em; }
 .home-promos .promo p { width: 125px; }
 .home-promos .promo div { position: absolute; z-index: 5; height: 163px; width: 218px; background: url("../img/bg-homepromos.png") no-repeat; 
-  opacity: .6; 
+  opacity: 1; 
   -moz-transition-property: opacity, background-position; 
   -moz-transition-duration: 0.5s; 
   -webkit-transition-property: opacity, background-position;
