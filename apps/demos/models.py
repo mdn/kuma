@@ -2,6 +2,7 @@ from hashlib import md5
 from datetime import datetime
 from time import time, gmtime, strftime
 from os import unlink, makedirs
+import os.path
 from os.path import basename, dirname, isfile, isdir
 from shutil import rmtree
 import re
@@ -696,14 +697,15 @@ class Submission(models.Model):
         valid_entries = Submission.get_valid_demo_zipfile_entries(zf) 
 
         for zi in valid_entries:
+            zi_filename = zi.filename.decode('utf-8')
 
             # HACK: Normalize demo.html to index.html
-            if zi.filename == 'demo.html':
-                zi.filename = 'index.html'
+            if zi_filename == u'demo.html':
+                zi_filename = u'index.html'
 
             # Relocate all files from detected root dir to a directory named
             # for the zip file in storage
-            out_fn = '%s/%s' % ( new_root_dir, zi.filename )
+            out_fn = (u'%s/%s' % (new_root_dir, zi_filename)).encode('utf-8')
             out_dir = dirname(out_fn)
 
             # Create parent directories where necessary.
