@@ -78,7 +78,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification, schedule_rebuild_kb
-from wiki.helpers import format_comment
+from wiki.helpers import format_comment, get_seo_description
 import wiki.content
 from wiki import kumascript
 
@@ -301,48 +301,6 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
         'summary': summary,
         'translations': translations
     }
-
-
-def get_seo_description(content):
-    # Create an SEO summary
-    # TODO:  Google only takes the first 180 characters, so maybe we find a
-    #        logical way to find the end of sentence before 180?
-    seo_summary = ''
-    try:
-        if content:
-            # Need to add a BR to the page content otherwise pyQuery wont find
-            # a <p></p> element if it's the only element in the doc_html
-            seo_analyze_doc_html = content + '<br />'
-            page = pq(seo_analyze_doc_html)
-
-            # Look for the SEO summary class first
-            summaryClasses = page.find('.seoSummary')
-            if len(summaryClasses):
-                seo_summary = summaryClasses.text()
-            else:
-                paragraphs = page.find('p')
-                if paragraphs.length:
-                    for p in range(len(paragraphs)):
-                        item = paragraphs.eq(p)
-                        text = item.text()
-                        # Checking for a parent length of 2
-                        # because we don't want p's wrapped
-                        # in DIVs ("<div class='warning'>") and pyQuery adds
-                        # "<html><div>" wrapping to entire document
-                        if (len(text) and
-                            not 'Redirect' in text and
-                            text.find(u'«') == -1 and
-                            text.find('&laquo') == -1 and
-                            item.parents().length == 2):
-                            seo_summary = text.strip()
-                            break
-    except:
-        pass
-
-    # Post-found cleanup
-    seo_summary = seo_summary.replace('<', '').replace('>', '')
-
-    return seo_summary
 
 
 @csrf_exempt
@@ -578,7 +536,7 @@ def document(request, document_slug, document_locale):
     # Get the SEO summary
     seo_summary = ''
     if not doc.is_template:
-        seo_summary = get_seo_description(doc_html)
+        seo_summary = get_seo_description(doc_html, doc.locale)
 
     # Get the additional title information, if necessary
     seo_parent_title = ''

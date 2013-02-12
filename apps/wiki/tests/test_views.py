@@ -711,19 +711,10 @@ class KumascriptIntegrationTests(TestCaseBase):
             ok_(False, "Data wasn't posted as utf8")
 
 
-class DocumentEditingTests(TestCaseBase):
-    """Tests for the document-editing view"""
+class DocumentSEOTests(TestCaseBase):
+    """Tests for the document seo logic"""
 
     fixtures = ['test_users.json']
-
-    def test_noindex_post(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
-
-        # Go to new document page to ensure no-index header works
-        response = client.get(reverse('wiki.new_document', args=[],
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(response['X-Robots-Tag'], 'noindex')
 
     def test_seo_title(self):
         client = LocalizingClient()
@@ -808,6 +799,21 @@ class DocumentEditingTests(TestCaseBase):
           u'<p>I <em>am</em> awesome.'
               ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
           'I am awesome. A link is also cool')
+
+
+class DocumentEditingTests(TestCaseBase):
+    """Tests for the document-editing view"""
+
+    fixtures = ['test_users.json']
+
+    def test_noindex_post(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Go to new document page to ensure no-index header works
+        response = client.get(reverse('wiki.new_document', args=[],
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
+        eq_(response['X-Robots-Tag'], 'noindex')
 
     def test_create_on_404(self):
         client = LocalizingClient()
