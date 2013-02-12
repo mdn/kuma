@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import difflib
 import re
 import urllib
@@ -5,12 +7,60 @@ import urllib
 import constance.config
 from jingo import register
 import jinja2
+from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
 import logging
 
 from sumo.urlresolvers import reverse
 from wiki import DIFF_WRAP_COLUMN
+
+
+def get_seo_description(content, locale=None):
+    # Create an SEO summary
+    # TODO:  Google only takes the first 180 characters, so maybe we find a
+    #        logical way to find the end of sentence before 180?
+    seo_summary = ''
+    try:
+        if content:
+            # Need to add a BR to the page content otherwise pyQuery wont find
+            # a <p></p> element if it's the only element in the doc_html
+            seo_analyze_doc_html = content + '<br />'
+            page = pq(seo_analyze_doc_html)
+
+            # Look for the SEO summary class first
+            summaryClasses = page.find('.seoSummary')
+            if len(summaryClasses):
+                seo_summary = summaryClasses.text()
+            else:
+                paragraphs = page.find('p')
+                if paragraphs.length:
+                    for p in range(len(paragraphs)):
+                        item = paragraphs.eq(p)
+                        text = item.text()
+                        # Checking for a parent length of 2
+                        # because we don't want p's wrapped
+                        # in DIVs ("<div class='warning'>") and pyQuery adds
+                        # "<html><div>" wrapping to entire document
+                        if (len(text) and
+                            not 'Redirect' in text and
+                            text.find(u'«') == -1 and
+                            text.find('&laquo') == -1 and
+                            item.parents().length == 2):
+                            seo_summary = text.strip()
+                            break
+    except:
+        pass
+
+    # Post-found cleanup
+    # remove markup chars
+    seo_summary = seo_summary.replace('<', '').replace('>', '')
+    # remove spaces around some punctuation added by PyQuery
+    if locale == 'en-US':
+        seo_summary = re.sub(r' ([,\)\.])', r'\1', seo_summary)
+        seo_summary = re.sub(r'(\() ', r'\1', seo_summary)
+
+    return seo_summary
 
 
 def compare_url(doc, from_id, to_id):
@@ -84,9 +134,12 @@ def _massage_diff_content(content):
 def bugize_text(content):
     content = jinja2.escape(content)
     content = re.sub(r'bug\s+#?(\d+)',
-                  jinja2.Markup('<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=\\1" target="_blank">bug \\1</a>'),
+                  jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
+                                'show_bug.cgi?id=\\1" '
+                                'target="_blank">bug \\1</a>'),
                   content)
     return content
+
 
 @register.function
 def format_comment(rev):
@@ -97,7 +150,10 @@ def format_comment(rev):
 
     #  If a page move, say so
     if prev_rev and prev_rev.slug != rev.slug:
-        comment += jinja2.Markup('<span class="slug-change">Moved From <strong>%s</strong> to <strong>%s</strong></span>') % (prev_rev.slug, rev.slug)
+        comment += jinja2.Markup('<span class="slug-change">'
+                                 'Moved From <strong>%s</strong> '
+                                 'to <strong>%s</strong></span>') % (
+                                     prev_rev.slug, rev.slug)
 
     return comment
 
@@ -112,11 +168,11 @@ def diff_table(content_from, content_to, prev_id, curr_id):
     to_lines = tidy_to.splitlines()
     try:
         diff = html_diff.make_table(from_lines, to_lines,
-                                    _("Revision %s") % prev_id,
-                                    _("Revision %s") % curr_id,
-                                    context=True,
-                                    numlines=constance.config.DIFF_CONTEXT_LINES
-                                   )
+                                _("Revision %s") % prev_id,
+                                _("Revision %s") % curr_id,
+                                context=True,
+                                numlines=constance.config.DIFF_CONTEXT_LINES
+                               )
     except RuntimeError:
         # some diffs hit a max recursion error
         message = _(u'There was an error generating the content.')

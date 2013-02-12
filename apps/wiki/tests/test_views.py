@@ -711,19 +711,10 @@ class KumascriptIntegrationTests(TestCaseBase):
             ok_(False, "Data wasn't posted as utf8")
 
 
-class DocumentEditingTests(TestCaseBase):
-    """Tests for the document-editing view"""
+class DocumentSEOTests(TestCaseBase):
+    """Tests for the document seo logic"""
 
     fixtures = ['test_users.json']
-
-    def test_noindex_post(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
-
-        # Go to new document page to ensure no-index header works
-        response = client.get(reverse('wiki.new_document', args=[],
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(response['X-Robots-Tag'], 'noindex')
 
     def test_seo_title(self):
         client = LocalizingClient()
@@ -808,6 +799,21 @@ class DocumentEditingTests(TestCaseBase):
           u'<p>I <em>am</em> awesome.'
               ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
           'I am awesome. A link is also cool')
+
+
+class DocumentEditingTests(TestCaseBase):
+    """Tests for the document-editing view"""
+
+    fixtures = ['test_users.json']
+
+    def test_noindex_post(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        # Go to new document page to ensure no-index header works
+        response = client.get(reverse('wiki.new_document', args=[],
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
+        eq_(response['X-Robots-Tag'], 'noindex')
 
     def test_create_on_404(self):
         client = LocalizingClient()
@@ -1323,19 +1329,28 @@ class DocumentEditingTests(TestCaseBase):
             def _run_translate_edit_tests(edit_slug, edit_data, edit_doc):
 
                 # Hit the initial URL
-                response = client.get(reverse('wiki.edit_document', args=[edit_doc.slug], locale=foreign_locale))
+                response = client.get(reverse('wiki.edit_document',
+                                              args=[edit_doc.slug],
+                                              locale=foreign_locale))
                 eq_(200, response.status_code)
                 page = pq(response.content)
                 eq_(edit_data['slug'], page.find('input[name=slug]')[0].value)
 
-                # Attempt an invalid edit of the root, ensure the slug stays the same (i.e. no parent prepending)
+                # Attempt an invalid edit of the root, ensure the slug stays
+                # the same (i.e. no parent prepending)
                 edit_data['slug'] = invalid_slug
                 edit_data['form'] = 'both'
-                response = client.post(reverse('wiki.edit_document', args=[edit_doc.slug], locale=foreign_locale), edit_data)
+                response = client.post(reverse('wiki.edit_document',
+                                               args=[edit_doc.slug],
+                                               locale=foreign_locale),
+                                       edit_data)
                 eq_(200, response.status_code)  # 200 = bad, invalid data
                 page = pq(response.content)
-                eq_(invalid_slug, page.find('input[name=slug]')[0].value)  # Slug doesn't add parent
-                self.assertContains(response, page.find('ul.errorlist li a[href="#id_slug"]').text())
+                # Slug doesn't add parent
+                eq_(invalid_slug, page.find('input[name=slug]')[0].value)
+                self.assertContains(response, page.find('ul.errorlist li'
+                                                        ' a[href="#id_slug"]').
+                                    text())
                 eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=foreign_locale)))  # Ensure no redirect
 
                 # Push a valid edit, without changing the slug
