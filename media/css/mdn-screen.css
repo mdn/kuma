@@ -429,19 +429,22 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
   -webkit-transition-property: opacity, background-position;
   -webkit-transition-duration: 0.5s; 
   -o-transition-property: opacity, background-position; 
-  -o-transition-duration: 0.5s; 
+  -o-transition-duration: 0.5s;
+  -ms-transition-property: opacity, background-position; 
+  -ms-transition-duration: 0.5s;
   transition-property: opacity, background-position;
   transition-duration: 0.5s;
 }
 .home-promos a:hover h2, .home-promos a:focus h2, .home-promos a:active h2 { text-decoration: underline; }
 .home-promos .promo:hover div { 
-  opacity: 1; 
   -moz-transition-property: opacity, background-position; 
   -moz-transition-duration: 0.25s; 
   -webkit-transition-property: opacity, background-position;
   -webkit-transition-duration: 0.25s; 
   -o-transition-property: opacity, background-position; 
   -o-transition-duration: 0.25s; 
+  -ms-transition-property: opacity, background-position; 
+  -ms-transition-duration: 0.25s; 
   transition-property: opacity, background-position;
   transition-duration: 0.25s;  
 }
@@ -481,7 +484,7 @@ html[lang="en-US"] #promo-social div { background: url("../img/bg-social-promo-n
 .home-promos .promo#promo-fosmob { background-color: #de5d0a; background-position: 0 326px; }
 .home-promos .promo#promo-fosmob div { background-position: 10px -326px; }
 .home-promos .promo#promo-fosmob:hover div, .home-promos .promo#promo-fosmob:active div, .home-promos .promo#promo-fosmob:focus div { background-position: -12px -326px; }
-.home-promos .promo#promo-fxdev { background-color: #022856; background-position: 0 163px; }
+.home-promos .promo#promo-fxdev { background-color: #022856; background-position: 0 163px; margin-right: 0; }
 .home-promos .promo#promo-fxdev div { background-position: 10px -489px; }
 .home-promos .promo#promo-fxdev:hover div, .home-promos .promo#promo-fxdev:active div, .home-promos .promo#promo-fxdev:focus div { background-position: -12px -489px; }
 
