@@ -29,7 +29,6 @@ RewriteRule ^En/JavaScript/Reference/Objects$ en-US/docs/JavaScript/Reference/Gl
 RewriteRule ^En/Core_JavaScript_1\.5_Reference/Objects/(.*) en-US/docs/JavaScript/Reference/Global_Objects/$1 [R=301,L,NC]
 RewriteRule ^En/Core_JavaScript_1\.5_Reference/(.*) en-US/docs/JavaScript/Reference/$1 [R=301,L,NC]
 RewriteRule ^([\w\-]*)/HTML5$ $1/docs/HTML/HTML5 [R=301,L,NC]
-RewriteRule ^([\w\-]*)/apps$ $1/docs/apps [R=301,L,NC]
 RewriteRule web-tech/2008/09/12/css-transforms /docs/CSS/Using_CSS_transforms [R=301,L]
 
 # Off-site redirects
