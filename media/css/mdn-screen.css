@@ -416,6 +416,7 @@ footer .languages { float: right; text-align: right; margin: 0 0 .5em; }
 
 /*** @Promos *********/
 #home-promos { clear: both; overflow: hidden; }
+.home-promos-wrap { width: 2000px; }
 .home-promos .promo { float: left; position: relative; width: 218px; min-height: 163px; margin: 0 20px 40px 0; border: 1px solid #333; color: #fff; font-size: .714em; background: #666 url("../img/bg-check-dk.png"); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15); box-shadow: 0 2px 2px rgba(0,0,0,.15); }
 .home-promos .promo:last-child { margin-right: 0; }
 .home-promos .promo a { position: absolute; left: 0; top: 0; z-index: 10; display: block; height: 133px; width: 188px; padding: 15px; color: #fff; text-decoration: none;  }
