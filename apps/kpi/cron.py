@@ -16,7 +16,8 @@ def update_l10n_metric():
     up_to_date_translations = 0
     translations = Document.objects.exclude(locale='en-US')
     for translation in translations:
-        if translation.modified > translation.parent.modified:
+        if (hasattr(translation, 'modified') and
+            translation.modified > translation.parent.modified):
             up_to_date_translations += 1
 
     coverage = up_to_date_translations / float(translations.count())
@@ -28,5 +29,5 @@ def update_l10n_metric():
     metric, created = Metric.objects.get_or_create(kind=metric_kind,
                                                    start=start,
                                                    end=end)
-    metric.value = int(coverage*100) # store as a % int
+    metric.value = int(coverage * 100)  # store as a % int
     metric.save()
