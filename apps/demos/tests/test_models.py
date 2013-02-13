@@ -1,3 +1,8 @@
+# coding=utf-8
+
+# This Python file uses the following encoding: utf-8
+# see also: http://www.python.org/dev/peps/pep-0263/
+import sys
 import logging
 import re
 import urlparse
@@ -269,6 +274,61 @@ class DemoPackageTest(TestCase):
         ok_(isfile('%s/index.html' % path))
         ok_(isfile('%s/css/main.css' % path))
         ok_(isfile('%s/js/main.js' % path))
+
+        rmtree(path)
+
+    def test_demo_unicode_filenames(self):
+        """Bug 741660: Demo package containing filenames with non-ASCII
+        characters works"""
+
+        fout = StringIO()
+        zf = zipfile.ZipFile(fout, 'w')
+        zf.writestr('demo.html', """<html></html""")
+        zf.writestr('css/예제.css', 'h1 { color: red }')
+        zf.writestr('js/示例.js', 'alert("HELLO WORLD");')
+        zf.close()
+
+        s = Submission(title='Hello world', slug='hello-world',
+            description='This is a hello world demo',
+            creator=self.user)
+
+        s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+        s.demo_package.close()
+        s.clean()
+        s.save()
+
+        s.process_demo_package()
+
+        path = s.demo_package.path.replace('.zip', '')
+
+        ok_(isdir(path))
+        ok_(isfile((u'%s/index.html' % path).encode('utf-8')))
+        ok_(isfile((u'%s/css/예제.css' % path).encode('utf-8')))
+        ok_(isfile((u'%s/js/示例.js' % path).encode('utf-8')))
+
+        rmtree(path)
+
+    def test_demo_unicode_filenames_2(self):
+        """Bug 741660: Try testing a real .zip with non-ASCII filenames"""
+        zip_fn = '%s/fixtures/css3_clock.zip' % dirname(dirname(__file__))
+
+        zf = zipfile.ZipFile(zip_fn)
+
+        s = Submission(title='Hello world', slug='hello-world',
+            description='This is a hello world demo',
+            creator=self.user)
+
+        s.demo_package.save('play_demo.zip', ContentFile(open(zip_fn).read()))
+        s.demo_package.close()
+        s.clean()
+        s.save()
+
+        s.process_demo_package()
+
+        path = s.demo_package.path.replace('.zip', '')
+
+        ok_(isdir(path))
+        ok_(isfile((u'%s/stylé.css' % path).encode('utf-8')))
 
         rmtree(path)
 
