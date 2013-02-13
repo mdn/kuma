@@ -801,6 +801,64 @@ class DocumentSEOTests(TestCaseBase):
           'I am awesome. A link is also cool')
 
 
+class DocumentTranslatingTests(TestCaseBase):
+    """Tests for the document-editing view"""
+
+    fixtures = ['test_users.json']
+
+    def test_translate_en_subpage(self):
+        client = LocalizingClient()
+        client.login(username='testuser', password='testpass')
+
+        en_doc = document(locale='en-US', slug='en', title='MDN', save=True)
+        en_rev = revision(document=en_doc, save=True)
+
+        xul_doc = document(locale='en-US', slug='XUL', title='XUL', save=True)
+        xul_doc.parent_topic = en_doc
+        xul_doc.save()
+        xul_rev = revision(document=xul_doc, save=True)
+
+        nl_doc = document(locale='nl', slug='en', title='MDN', save=True)
+        nl_doc.parent = en_doc
+        nl_doc.save()
+        nl_rev = revision(document=nl_doc, save=True)
+
+        trans_url = (reverse('wiki.translate', args=[xul_doc.slug],
+                             locale=xul_doc.locale)
+                     + '?tolocale=nl')
+        trans_data = {'title': 'XUL', 'locale': 'nl', 'slug': 'XUL',
+                      'content': 'Bepaalde inhoud'}
+        client.post(trans_url, trans_data)
+
+        try:
+            Document.objects.get(locale='nl', slug='en/XUL')
+            self.fail("Should not create translation with en/ slug prefix")
+        except Document.DoesNotExist:
+            pass
+        nl_xul_doc = Document.objects.get(locale='nl', slug='XUL')
+        eq_('XUL', nl_xul_doc.slug)
+
+        xul_sub_doc = document(locale='en-US', slug='XUL/Guide',
+                               title='XUL Guide', save=True)
+        xul_sub_doc.parent_topic = xul_doc
+        xul_sub_doc.save()
+        xul_sub_rev = revision(document=xul_sub_doc, save=True)
+
+        trans_url = (reverse('wiki.translate', args=[xul_sub_doc.slug],
+                             locale=xul_sub_doc.locale)
+                     + '?tolocale=nl')
+        trans_data = {'title': 'XUL Guide', 'locale': 'nl',
+                      'slug': 'Guide', 'content': 'Bepaalde inhoud'}
+        resp = client.post(trans_url, trans_data)
+
+        try:
+            Document.objects.get(locale='nl', slug='en/XUL/Guide')
+            self.fail("Should not create sub-translation with en/ slug prefix")
+        except Document.DoesNotExist:
+            pass
+        nl_xul_sub_doc = Document.objects.get(locale='nl', slug='XUL/Guide')
+        eq_('XUL/Guide', nl_xul_sub_doc.slug)
+
 class DocumentEditingTests(TestCaseBase):
     """Tests for the document-editing view"""
 
@@ -2285,8 +2343,8 @@ class SectionEditingResourceTests(TestCaseBase):
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
-        eq_(tags_to_save,
-            [t.name for t in changed.review_tags.all()])
+        eq_(set(tags_to_save),
+            set([t.name for t in changed.review_tags.all()]))
 
 
 class MindTouchRedirectTests(TestCaseBase):

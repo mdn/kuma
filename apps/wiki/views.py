@@ -116,6 +116,12 @@ SHOWFOR_DATA = {
 }
 
 
+def _remove_en_slug_prefix(slug):
+    if slug.startswith('en/'):
+        slug = slug.replace('en/', '')
+    return slug
+
+
 def process_document_path(func, reverse_name='wiki.document'):
     """Decorator to process document_path into locale and slug, with
     auto-redirect if necessary."""
@@ -1537,6 +1543,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
         # Grab the posted slug value in case it's invalid
         posted_slug = request.POST.get('slug', slug_dict['specific'])
         destination_slug = _join_slug(slug_dict['parent_split'], posted_slug)
+        # http://bugzil.la/840092
+        destination_slug = _remove_en_slug_prefix(destination_slug)
 
         if user_has_doc_perm and which_form in ['doc', 'both']:
             disclose_description = True
