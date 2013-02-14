@@ -532,6 +532,18 @@ td.diff_header {
   height: 280px !important;
 }
 
+/* Fixes autogrow + maximize issues */
+.cke_maximized_editor #content-fields header {
+  position: fixed !important;
+  top: -200px !important;
+}
+.cke_maximized_editor div.cke_toolbox {
+  position: relative !important;
+  top: auto !important;
+  width: auto !important;
+}
+
+
 /* HTabs - Compatibility Tables */
 .htab { margin: auto; display: inline-block; width: auto; }
 .htab > ul > li { background-image: none; width:150px; height:30px; list-style-type:none; display:inline; padding-bottom:3px; border: 1px solid #ddd; padding-top:5px; text-align:left; font-size:13px; font-weight:bold; margin:auto; position:relative; padding-left:6px; padding-right:6px; border-bottom:none; opacity:.5; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); cursor:pointer; }
