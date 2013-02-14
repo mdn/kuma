@@ -205,6 +205,17 @@ def prevent_indexing(func):
     return _added_header
 
 
+def allow_CORS_GET(func):
+    """Decorator to allow CORS for GET requests"""
+    @wraps(func)
+    def _added_header(request, *args, **kwargs):
+        response = func(request, *args, **kwargs)
+        if 'GET' == request.method:
+            response['Access-Control-Allow-Origin'] = "*"
+        return response
+    return _added_header
+
+
 def _format_attachment_obj(attachments):
     attachments_list = []
     for attachment in attachments:
@@ -292,6 +303,7 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
 
 @csrf_exempt
 @require_http_methods(['GET', 'PUT', 'HEAD'])
+@allow_CORS_GET
 @accepts_auth_key
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
@@ -1246,6 +1258,7 @@ def preview_revision(request):
 
 
 @require_GET
+@allow_CORS_GET
 @process_document_path
 def get_children(request, document_slug, document_locale):
     """Retrieves a document and returns its children in a JSON structure"""
@@ -1287,6 +1300,7 @@ def get_children(request, document_slug, document_locale):
 
 
 @require_GET
+@allow_CORS_GET
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
     partial_title = request.GET.get('term', '')
@@ -1678,6 +1692,7 @@ def unwatch_approved(request):
 
 
 @require_GET
+@allow_CORS_GET
 @process_document_path
 @prevent_indexing
 def json_view(request, document_slug=None, document_locale=None):
@@ -1705,6 +1720,7 @@ def json_view(request, document_slug=None, document_locale=None):
 
 
 @require_GET
+@allow_CORS_GET
 @process_document_path
 @prevent_indexing
 def toc_view(request, document_slug=None, document_locale=None):
@@ -1734,6 +1750,7 @@ def toc_view(request, document_slug=None, document_locale=None):
 
 
 @require_GET
+@allow_CORS_GET
 @process_document_path
 def code_sample(request, document_slug, document_locale, sample_id):
     """Extract a code sample from a document and render it as a standalone

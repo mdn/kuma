@@ -139,6 +139,8 @@ class ViewTests(TestCaseBase):
         url = reverse('wiki.json_slug', args=('article-title',),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(url)
+        ok_('Access-Control-Allow-Origin' in resp)
+        eq_('*', resp['Access-Control-Allow-Origin'])
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
@@ -158,6 +160,8 @@ class ViewTests(TestCaseBase):
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         resp = self.client.get(url)
+        ok_('Access-Control-Allow-Origin' in resp)
+        eq_('*', resp['Access-Control-Allow-Origin'])
         eq_(resp.content, '<ol><li><a href="#Head_2" rel="internal">Head 2</a>'
                           '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
                           '</ol></li></ol>')
@@ -182,6 +186,8 @@ class ViewTests(TestCaseBase):
 
         resp = self.client.get(reverse('wiki.get_children', args=['Root'],
             locale=settings.WIKI_DEFAULT_LANGUAGE))
+        ok_('Access-Control-Allow-Origin' in resp)
+        eq_('*', resp['Access-Control-Allow-Origin'])
         json_obj = json.loads(resp.content)
 
         # Basic structure creation testing
@@ -1896,6 +1902,8 @@ class SectionEditingResourceTests(TestCaseBase):
         response = client.get('%s?raw=true' %
                               reverse('wiki.document', args=[d.full_path]),
                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        ok_('Access-Control-Allow-Origin' in response)
+        eq_('*', response['Access-Control-Allow-Origin'])
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -2285,8 +2293,8 @@ class SectionEditingResourceTests(TestCaseBase):
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
-        eq_(tags_to_save,
-            [t.name for t in changed.review_tags.all()])
+        eq_(set(tags_to_save),
+            set([t.name for t in changed.review_tags.all()]))
 
 
 class MindTouchRedirectTests(TestCaseBase):
@@ -2415,6 +2423,9 @@ class AutosuggestDocumentsTests(TestCaseBase):
         url = reverse('wiki.autosuggest_documents', locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
         resp = self.client.get(url)
 
+        ok_('Access-Control-Allow-Origin' in resp)
+        eq_('*', resp['Access-Control-Allow-Origin'])
+
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_(len(data), len(validDocuments))
@@ -2478,6 +2489,8 @@ class CodeSampleViewTests(TestCaseBase):
         response = client.get(reverse('wiki.code_sample',
                               args=[d.full_path, 'sample1']),
                               HTTP_HOST='testserver')
+        ok_('Access-Control-Allow-Origin' in response)
+        eq_('*', response['Access-Control-Allow-Origin'])
         eq_(200, response.status_code)
         eq_(normalize_html(expected),
             normalize_html(response.content))
