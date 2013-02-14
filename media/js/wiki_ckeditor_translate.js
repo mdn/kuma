@@ -1,6 +1,7 @@
 (function ($) {
 
-  var $body = $("body");
+  var $body = $("body"),
+      $window = $(window);
 
   // Callback functions after CKE is ready
   var setup_ckeditor = function () {
@@ -11,7 +12,6 @@
         $transcont = $("#content-fields"),
         $tools     = $("div.cke_toolbox"),
         $wikiArt   = $("#cke_wikiArticle"),
-        $window    = $(window),
         contentTop = $("#content").offset(),
         transTop   = $transcont.offset(),
         headHeight = $head.height(),
@@ -23,8 +23,8 @@
     // Switch header and toolbar styles on scroll to keep them on screen
     $window.scroll(function() {
 
-      var scrollTop = $window.scrollTop();
-      transTop   = $transcont.offset();
+      var scrollTop = $window.scrollTop(),
+          transTop  = $transcont.offset();
           
     	if( scrollTop >= contentTop.top ) {
         if( !fixed ) {
