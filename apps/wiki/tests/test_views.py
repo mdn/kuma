@@ -2285,8 +2285,8 @@ class SectionEditingResourceTests(TestCaseBase):
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
-        eq_(tags_to_save,
-            [t.name for t in changed.review_tags.all()])
+        eq_(set(tags_to_save),
+            set([t.name for t in changed.review_tags.all()]))
 
 
 class MindTouchRedirectTests(TestCaseBase):
