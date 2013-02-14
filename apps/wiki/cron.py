@@ -99,7 +99,7 @@ def build_sitemaps():
             sitemap_url = ("https://%s/sitemaps/%s/sitemap.xml" % (
                 Site.objects.get_current().domain, locale))
             sitemap_index = sitemap_index + sitemap_element % (sitemap_url,
-                time.strftime('%Y-%m-%dT%H:%M:%S', time.localtime()))
+                time.strftime('%Y-%m-%dT%H:%M:%S+00:00', time.gmtime()))
 
     sitemap_index = sitemap_index + "</sitemapindex>"
     index_file = open('%s/sitemap.xml' % settings.MEDIA_ROOT, 'w')
