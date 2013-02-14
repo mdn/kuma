@@ -17,6 +17,7 @@ def update_l10n_metric():
     translations = Document.objects.exclude(locale='en-US')
     for translation in translations:
         if (hasattr(translation, 'modified') and
+            hasattr(translation.parent, 'modified') and
             translation.modified > translation.parent.modified):
             up_to_date_translations += 1
 
