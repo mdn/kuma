@@ -275,8 +275,10 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
         title += ' [' + doc.locale + ']'
 
     summary = ''
-    if doc.current_revision:
+    if doc.current_revision and doc.current_revision.summary:
         summary = doc.current_revision.summary
+    else:
+        summary = get_seo_description(doc.html, doc.locale, False)
 
     # Map out translations
     translations = []
@@ -420,6 +422,7 @@ def document(request, document_slug, document_locale):
     # Grab some parameters that affect output
     section_id = request.GET.get('section', None)
     show_raw = request.GET.get('raw', False) is not False
+    show_summary = request.GET.get('summary', False) is not False
     is_include = request.GET.get('include', False) is not False
     need_edit_links = request.GET.get('edit_links', False) is not False
 
@@ -503,6 +506,10 @@ def document(request, document_slug, document_locale):
         # If this is an include, filter out the class="noinclude" blocks.
         if is_include:
             doc_html = (wiki.content.filter_out_noinclude(doc_html))
+    
+    # If ?summary is on, just serve up the summary as doc HTML
+    if show_summary:
+        doc_html = get_seo_description(doc_html, doc.locale, False)
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
@@ -1278,6 +1285,7 @@ def get_children(request, document_slug, document_locale):
                 'slug': d.slug,
                 'locale': d.locale,
                 'url':  d.get_absolute_url(),
+                'summary': get_seo_description(d.html, d.locale, False),
                 'subpages': []
             }
 

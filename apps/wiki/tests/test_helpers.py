@@ -1,10 +1,57 @@
 from nose.tools import eq_
 from test_utils import TestCase
 
+from wiki.tests import normalize_html
 from wiki.helpers import get_seo_description
 
 
 class GetSEODescriptionTests(TestCase):
+
+    def test_summary_section(self):
+        content = (u'<h2 id="Summary">Summary</h2><p>The <strong>Document Object '
+             'Model'
+             '</strong> (<strong>DOM</strong>) is an API for '
+             '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
+             '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
+             'documents. It provides a structural representation of the '
+             'document, enabling you to modify its content and visual '
+             'presentation by using a scripting language such as '
+             '<a href="/en-US/docs/JavaScript" '
+             'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
+             'JavaScript</a>.</span></p>')
+        expected = ('The Document Object Model (DOM) is an API for HTML and '
+            'XML documents. It provides a structural representation of the'
+            ' document, enabling you to modify its content and visual'
+            ' presentation by using a scripting language such as'
+            ' JavaScript.')
+        eq_(expected, get_seo_description(content, 'en-US'))
+
+    def test_keep_markup(self):
+        content = """
+            <h2 id="Summary">Summary</h2>
+            <p>The <strong>Document Object Model </strong>
+            (<strong>DOM</strong>) is an API for <a href="/en-US/docs/HTML"
+            title="en-US/docs/HTML">HTML</a> and <a href="/en-US/docs/XML"
+            title="en-US/docs/XML">XML</a> documents. It provides a structural
+            representation of the document, enabling you to modify its content
+            and visual presentation by using a scripting language such as <a
+            href="/en-US/docs/JavaScript"
+            title="https://developer.mozilla.org/en-US/docs/JavaScript">
+            JavaScript</a>.</span></p>
+         """
+        expected = """
+            The <strong>Document Object Model </strong>
+            (<strong>DOM</strong>) is an API for <a href="/en-US/docs/HTML"
+            title="en-US/docs/HTML">HTML</a> and <a href="/en-US/docs/XML"
+            title="en-US/docs/XML">XML</a> documents. It provides a structural
+            representation of the document, enabling you to modify its content
+            and visual presentation by using a scripting language such as <a
+            href="/en-US/docs/JavaScript"
+            title="https://developer.mozilla.org/en-US/docs/JavaScript">
+            JavaScript</a>.</span>
+        """
+        eq_(normalize_html(expected),
+            normalize_html(get_seo_description(content, 'en-US', False)))
 
     def test_html_elements_spaces(self):
         # No spaces with html tags
