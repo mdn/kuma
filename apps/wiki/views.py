@@ -1418,8 +1418,12 @@ def compare_revisions(request, document_slug, document_locale):
     if 'from' not in request.GET or 'to' not in request.GET:
         raise Http404
 
-    from_id = smart_int(request.GET.get('from'))
-    to_id = smart_int(request.GET.get('to'))
+    try:
+        from_id = smart_int(request.GET.get('from'))
+        to_id = smart_int(request.GET.get('to'))
+    except:
+        # Punt any errors in parameter handling to a 404
+        raise Http404
 
     revision_from = get_object_or_404(Revision, id=from_id)
     revision_to = get_object_or_404(Revision, id=to_id)

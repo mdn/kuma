@@ -968,7 +968,7 @@ class ReviewRevisionTests(SkippedTestCase):
             doc('details .warning-box').text())
 
 
-class CompareRevisionTests(SkippedTestCase):
+class CompareRevisionTests(TestCaseBase):
     """Tests for Review Revisions"""
     fixtures = ['test_users.json']
 
@@ -976,7 +976,7 @@ class CompareRevisionTests(SkippedTestCase):
         super(CompareRevisionTests, self).setUp()
         self.document = _create_document()
         self.revision1 = self.document.current_revision
-        user = User.objects.get(pk=118533)
+        user = User.objects.get(username='testuser')
         self.revision2 = Revision(summary="lipsum",
                                  content='<div>Lorem Ipsum Dolor</div>',
                                  keywords='kw1 kw2',
@@ -984,6 +984,14 @@ class CompareRevisionTests(SkippedTestCase):
         self.revision2.save()
 
         self.client.login(username='admin', password='testpass')
+
+    def test_bad_parameters(self):
+        """Ensure badly-formed revision parameters do not cause errors"""
+        url = reverse('wiki.compare_revisions', args=[self.document.slug])
+        query = {'from': '1e309', 'to': u'1e309'}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(404, response.status_code)
 
     def test_compare_revisions(self):
         """Compare two revisions"""
@@ -993,7 +1001,7 @@ class CompareRevisionTests(SkippedTestCase):
         response = self.client.get(url)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_('Dolor',  doc('div.revision-diff span.diff_add').text())
+        eq_('Dolor',  doc('span.diff_add').text())
 
     def test_compare_revisions_invalid_to_int(self):
         """Provide invalid 'to' int for revision ids."""
