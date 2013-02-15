@@ -167,11 +167,13 @@ class ViewTests(TestCaseBase):
                           '</ol></li></ol>')
 
     def test_children_view(self):
+        test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
         def _make_doc(title, slug, parent=None):
             doc = document(title=title, slug=slug, save=True)
+            doc.html = test_content
             if parent:
                 doc.parent_topic = parent
-                doc.save()
+            doc.save()
             return doc
 
         root_doc = _make_doc('Root', 'Root')
@@ -192,6 +194,8 @@ class ViewTests(TestCaseBase):
 
         # Basic structure creation testing
         eq_(json_obj['slug'], 'Root')
+        eq_(json_obj['summary'],
+            'Test <a href="http://example.com">Summary</a>')
         eq_(len(json_obj['subpages']), 2)
         eq_(len(json_obj['subpages'][0]['subpages']), 2)
         eq_(json_obj['subpages'][0]['subpages'][1]['title'], 'Grandchild 2')
@@ -218,6 +222,15 @@ class ViewTests(TestCaseBase):
             locale=settings.WIKI_DEFAULT_LANGUAGE))
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
+
+    def test_summary_view(self):
+        """The ?summary option should restrict document view to summary"""
+        d, r = doc_rev("""
+            <p>Foo bar <a href="http://example.com">baz</a></p>
+            <p>Quux xyzzy</p>
+        """)
+        resp = self.client.get('%s?raw&summary' % d.get_absolute_url())
+        eq_(resp.content, 'Foo bar <a href="http://example.com">baz</a>')
 
     def test_revision_view_bleached_content(self):
         """Bug 821988: Revision content should be cleaned with bleach"""
