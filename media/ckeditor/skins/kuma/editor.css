@@ -250,7 +250,7 @@ html.cke_skin_kuma_container{visibility:visible;}
 .mdn-buttons-button.h6 {background-position:-225px -6px;}
 .mdn-buttons-button.pre {background: url(/media/ckeditor/plugins/mdn-buttons/button-pre.png) no-repeat center center;} 
 .mdn-buttons-button.code {background: url(/media/ckeditor/plugins/mdn-buttons/button-code.png) no-repeat center center;} 
-
+.cke_skin_kuma  .cke_button_launch .cke_icon {background-position:0 -224px;}
 .cke_skin_kuma .cke_path { display: block; float: none; margin-top: -31px; background: url("images/sprites.png") 0 -500px repeat-x; padding: 2px; font-size: 0.8em; clear:both; border-radius: 6px; }
 .cke_skin_kuma .cke_path a, .cke_skin_kuma .cke_path .cke_empty { float:none; color: #333; text-decoration:none; border-radius: 6px; opacity:0.7; }
 .cke_skin_kuma .cke_path a:hover { opacity: 1; }
