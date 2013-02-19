@@ -47,12 +47,12 @@
         </li>
         <li class="agree">
           {{ form.agree.errors }}
-          <label for="sub-agree">
-            {{ form.agree }} {{form.agree.label }}
+          <label for="id_agree">
+            {{ form.agree }} {{form.agree.label}}
+            {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
+              to the <a href="{{ privacy_url }}">Privacy Policy</a>
+            {% endtrans %}
           </label>
-          {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
-            to the <a href="{{ privacy_url }}">Privacy Policy</a>
-          {% endtrans %}
         </li>
         <li class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></li>
       </ol>
