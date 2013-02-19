@@ -332,6 +332,41 @@ class DemoPackageTest(TestCase):
 
         rmtree(path)
 
+    def test_demo_deletion(self):
+        """Ensure that demo files are deleted along with submission record"""
+
+        fout = StringIO()
+        zf = zipfile.ZipFile(fout, 'w')
+        zf.writestr('demo.html', """<html></html""")
+        zf.writestr('css/main.css', 'h1 { color: red }')
+        zf.writestr('js/main.js', 'alert("HELLO WORLD");')
+        zf.close()
+
+        s = Submission(title='Hello world', slug='hello-world',
+            description='This is a hello world demo',
+            creator=self.user)
+
+        s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+        s.demo_package.close()
+        s.clean()
+        s.save()
+
+        s.process_demo_package()
+
+        path = s.demo_package.path.replace('.zip', '')
+
+        ok_(isdir(path))
+        ok_(isfile('%s/index.html' % path))
+        ok_(isfile('%s/css/main.css' % path))
+        ok_(isfile('%s/js/main.js' % path))
+
+        s.delete()
+
+        ok_(not isfile('%s/index.html' % path))
+        ok_(not isfile('%s/css/main.css' % path))
+        ok_(not isfile('%s/js/main.js' % path))
+        ok_(not isdir(path))
+
     def test_demo_file_size_limit(self):
         """Demo package with any individual file >1MB in size is invalid"""
         s = self.submission

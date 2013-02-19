@@ -525,7 +525,7 @@ class Submission(models.Model):
         super(Submission,self).save(**kwargs)
 
     def delete(self,using=None):
-        root = '%s/%s' % (settings.MEDIA_ROOT, get_root_for_submission(self))
+        root = '%s/%s' % (DEMO_UPLOADS_ROOT, get_root_for_submission(self))
         if isdir(root): rmtree(root)
         super(Submission,self).delete(using)
 
