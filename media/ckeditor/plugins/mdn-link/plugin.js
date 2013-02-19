@@ -25,6 +25,7 @@ CKEDITOR.plugins.add( 'mdn-link',
 		editor.addCommand( 'anchor', new CKEDITOR.dialogCommand( 'anchor' ) );
 		editor.addCommand( 'unlink', new CKEDITOR.unlinkCommand() );
 		editor.addCommand( 'removeAnchor', new CKEDITOR.removeAnchorCommand() );
+		editor.addCommand( 'launch', new CKEDITOR.launchCommand() );
 		editor.ui.addButton( 'Link',
 			{
 				label : editor.lang.link.toolbar,
@@ -147,6 +148,14 @@ CKEDITOR.plugins.add( 'mdn-link',
 						command : 'unlink',
 						group : 'link',
 						order : 5
+					},
+
+					launch :
+					{
+						label: gettext('Launch'),
+						command: 'launch',
+						group: 'link',
+						order: 6
 					}
 				});
 		}
@@ -160,17 +169,21 @@ CKEDITOR.plugins.add( 'mdn-link',
 						return null;
 
 					var anchor = CKEDITOR.plugins.link.tryRestoreFakeAnchor( editor, element );
-
 					if ( !anchor && !( anchor = CKEDITOR.plugins.link.getSelectedLink( editor ) ) )
 							return null;
 
 					var menu = {};
 
 					if ( anchor.getAttribute( 'href' ) && anchor.getChildCount() )
-						menu = { link : CKEDITOR.TRISTATE_OFF, unlink : CKEDITOR.TRISTATE_OFF };
+						menu = { 
+							link : CKEDITOR.TRISTATE_OFF, 
+							unlink : CKEDITOR.TRISTATE_OFF 
+						};
 
 					if ( anchor && anchor.hasAttribute( 'name' ) )
 						menu.anchor = menu.removeAnchor = CKEDITOR.TRISTATE_OFF;
+
+					menu.launch = CKEDITOR.TRISTATE_ON;
 
 					return menu;
 				});
@@ -311,6 +324,16 @@ CKEDITOR.plugins.link =
 			var link  = editor.restoreRealElement( element );
 			if ( link.data( 'cke-saved-name' ) )
 				return link;
+		}
+	}
+};
+
+CKEDITOR.launchCommand = function() {};
+CKEDITOR.launchCommand.prototype = {
+	exec: function(editor) {
+		var link = CKEDITOR.plugins.link.getSelectedLink(editor)
+		if(link && link.$) {
+			window.open(link.$.href);
 		}
 	}
 };
