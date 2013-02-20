@@ -13,6 +13,7 @@ import cronjobs
 
 from wiki import tasks
 from wiki.models import Document
+from wiki.search import DocumentType
 
 
 @cronjobs.register
@@ -105,3 +106,9 @@ def build_sitemaps():
     index_file = open('%s/sitemap.xml' % settings.MEDIA_ROOT, 'w')
     index_file.write(parseString(sitemap_index).toxml())
     index_file.close()
+
+
+@cronjobs.register
+def reindex_documents():
+    for id in DocumentType.get_indexable():
+        DocumentType.index(DocumentType.extract_document(id), id)
