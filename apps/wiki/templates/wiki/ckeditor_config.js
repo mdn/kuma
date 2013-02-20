@@ -25,7 +25,10 @@ CKEDITOR.on('instanceReady', function (ev) {
     var tbody = ev.editor._.cke_contents.$.parentNode.parentNode,
         pathP = tbody.lastChild.childNodes[0].childNodes[1],
         toolbox = tbody.childNodes[0].childNodes[0].childNodes[0];
-    toolbox.appendChild(pathP);
+
+    if(toolbox && pathP) {
+        toolbox.appendChild(pathP);
+    }
 });
 
 // Any utilities we need to be globably available will go here
@@ -86,6 +89,7 @@ CKEDITOR.mdn = {};
     block('controlShiftO');
 })();
 
+CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
 CKEDITOR.editorConfig = function(config) {
 
     config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize';
