@@ -168,9 +168,13 @@ class ViewTests(TestCaseBase):
 
     def test_children_view(self):
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
-        def _make_doc(title, slug, parent=None):
-            doc = document(title=title, slug=slug, save=True)
-            doc.html = test_content
+        def _make_doc(title, slug, parent=None, is_redir=False):
+            doc = document(title=title, slug=slug, save=True, is_redirect=is_redir)
+            if is_redir:
+                content = 'REDIRECT <a class="redirect" href="x">Blah</a>'
+            else:
+                content = test_content
+            doc.html = content
             if parent:
                 doc.parent_topic = parent
             doc.save()
@@ -185,6 +189,7 @@ class ViewTests(TestCaseBase):
         great_grandchild_doc_1 = _make_doc('Great Grandchild 1',
             'Root/Child_1/Grandchild_2/Great_Grand_Child_1', grandchild_doc_2)
         child_doc_2 = _make_doc('Child 2', 'Root/Child_2', root_doc)
+        child_doc_3 = _make_doc('Child 3', 'Root/Child_3', root_doc, True)
 
         resp = self.client.get(reverse('wiki.get_children', args=['Root'],
             locale=settings.WIKI_DEFAULT_LANGUAGE))

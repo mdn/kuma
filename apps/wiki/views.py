@@ -1278,7 +1278,7 @@ def get_children(request, document_slug, document_locale):
     try:
         def _make_doc_structure(d, level):
             if d.is_redirect:
-                return
+                return None
 
             res = {
                 'title': d.title,
@@ -1293,8 +1293,9 @@ def get_children(request, document_slug, document_locale):
                 descendants = d.get_descendants(1)
                 descendants.sort(key=lambda item: item.title)
                 for descendant in descendants:
-                    res['subpages'].append(_make_doc_structure(descendant,
-                                                               level + 1))
+                    sp = _make_doc_structure(descendant, level + 1)
+                    if sp is not None:
+                        res['subpages'].append(sp)
             return res
 
         result = _make_doc_structure(Document.objects.
