@@ -972,13 +972,13 @@ CONSTANCE_CONFIG = dict(
         "Dev derby tags for previous challenges (space-separated tags)"
     ),
 
-    DEKIWIKI_POST_RETRIES = (
-        6,
-        'Number of time to retry dekiwiki/MindTouch post before giving up.'
+    BASKET_RETRIES = (
+        5,
+        'Number of time to retry basket post before giving up.'
     ),
-    DEKIWIKI_API_RETRY_WAIT = (
+    BASKET_RETRY_WAIT = (
         .5,
-        'How long to wait between dekiwiki/Mindtouch api request retries. '
+        'How long to wait between basket api request retries. '
         'We typically multiply this value by the retry number so, e.g., '
         'the 4th retry waits 4*.5 = 2 seconds.'
     ),
