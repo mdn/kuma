@@ -1,8 +1,14 @@
-from django.conf import settings
+import time
 
+import basket
+from basket.base import BasketException
+
+from django.conf import settings
+from django.http import HttpResponseServerError
+
+import constance.config
 import jingo
 from waffle.decorators import waffle_switch
-import basket
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB, SECTION_MOZILLA)
@@ -77,12 +83,22 @@ def apps_newsletter(request):
             optin = 'N'
             if request.locale == 'en-US':
                 optin = 'Y'
-            basket.subscribe(email=form.cleaned_data['email'],
-                             newsletters=settings.BASKET_APPS_NEWSLETTER,
-                             format=form.cleaned_data['format'],
-                             lang=request.locale,
-                             optin=optin)
+            for i in range(constance.config.BASKET_RETRIES):
+                try:
+                    result = basket.subscribe(email=form.cleaned_data['email'],
+                                 newsletters=settings.BASKET_APPS_NEWSLETTER,
+                                 format=form.cleaned_data['format'],
+                                 lang=request.locale,
+                                 optin=optin)
+                    if result.get('status') != 'error':
+                        break
+                except BasketException:
+                    if i == constance.config.BASKET_RETRIES:
+                        return HttpResponseServerError()
+                    else:
+                        time.sleep(constance.config.BASKET_RETRY_WAIT * i)
             del context['form']
+
     else:
         context = {'form': SubscriptionForm()}
 

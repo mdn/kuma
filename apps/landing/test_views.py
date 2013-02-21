@@ -3,6 +3,10 @@ from nose.plugins.skip import SkipTest
 from mock import patch
 from pyquery import PyQuery as pq
 import test_utils
+
+import basket
+
+import constance.config
 from waffle.models import Switch
 
 from sumo.tests import LocalizingClient
@@ -97,9 +101,7 @@ class AppsViewsTest(test_utils.TestCase):
     def setUp(self):
         self.client = LocalizingClient()
 
-    @patch('landing.views.basket.subscribe')
-    def test_apps_subscription(self, subscribe):
-        subscribe.return_value = True
+    def _good_newsletter_post(self):
         url = reverse('landing.views.apps_newsletter')
 
         r = self.client.post(url,
@@ -108,6 +110,13 @@ class AppsViewsTest(test_utils.TestCase):
                  'agree': 'checked'},
             follow=True)
         eq_(200, r.status_code)
+
+        return r
+
+    @patch('landing.views.basket.subscribe')
+    def test_apps_subscription(self, subscribe):
+        subscribe.return_value = {'status': 'success'}
+        r = self._good_newsletter_post()
         # assert thank you message
         self.assertContains(r, 'Thank you')
         eq_(1, subscribe.call_count)
@@ -122,3 +131,10 @@ class AppsViewsTest(test_utils.TestCase):
         self.assertContains(r, 'Enter a valid e-mail address.')
         self.assertContains(r, 'Select a valid choice.')
         self.assertContains(r, 'You must agree to the privacy policy.')
+
+    @patch('landing.views.basket.subscribe')
+    def test_apps_subscription_exception_retry(self, subscribe):
+        subscribe.side_effect = basket.base.BasketException("500!")
+        subscribe.return_value = True
+        self._good_newsletter_post()
+        eq_(constance.config.BASKET_RETRIES, subscribe.call_count)
