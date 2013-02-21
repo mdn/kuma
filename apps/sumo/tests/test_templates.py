@@ -41,13 +41,13 @@ class BaseTemplateTests(MockRequestTests):
     @raises(KeyError)
     def test_no_dir_attribute(self):
         """Make sure dir attr isn't rendered when no dir is specified."""
-        html = jingo.render_to_string(self.request, self.template)
+        html = jingo.render_to_string(self.request.get('/'), self.template)
         doc = pq(html)
         doc('html')[0].attrib['dir']
 
     def test_rtl_dir_attribute(self):
         """Make sure dir attr is set to 'rtl' when specified as so."""
-        html = jingo.render_to_string(self.request, self.template,
+        html = jingo.render_to_string(self.request.get('/'), self.template,
                                       {'dir': 'rtl'})
         doc = pq(html)
         dir_attr = doc('html').attr['dir']
@@ -59,7 +59,7 @@ class BaseTemplateTests(MockRequestTests):
         feed_urls = (('/feed_one', 'First Feed'),
                      ('/feed_two', 'Second Feed'),)
 
-        doc = pq(jingo.render_to_string(self.request, self.template,
+        doc = pq(jingo.render_to_string(self.request.get('/'), self.template,
                                         {'feeds': feed_urls}))
         feeds = doc('link[type="application/atom+xml"]')
         eq_(2, len(feeds))
@@ -67,7 +67,7 @@ class BaseTemplateTests(MockRequestTests):
         eq_('Second Feed', feeds[1].attrib['title'])
 
     def test_readonly_attr(self):
-        html = jingo.render_to_string(self.request, self.template)
+        html = jingo.render_to_string(self.request.get('/'), self.template)
         doc = pq(html)
         eq_('false', doc('body')[0].attrib['data-readonly'])
 
@@ -89,7 +89,7 @@ class ErrorListTests(MockRequestTests):
 
         source = ("""{% from "layout/errorlist.html" import errorlist %}"""
                   """{{ errorlist(form) }}""")
-        html = jingo.render_to_string(self.request,
+        html = jingo.render_to_string(self.request.get('/'),
                                       jingo.env.from_string(source),
                                       {'form': MockForm()})
         assert '<"evil&ness' not in html
