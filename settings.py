@@ -66,6 +66,14 @@ CACHE_BACKEND = 'locmem://?timeout=86400'
 CACHE_PREFIX = 'kuma:'
 CACHE_COUNT_TIMEOUT = 60  # seconds
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 60,
+        'KEY_PREFIX': 'kuma',
+    }
+}
+
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
 SERVER_EMAIL = 'server-error@developer.mozilla.org'
@@ -277,7 +285,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
@@ -318,13 +326,11 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
-    'commonware.middleware.HidePasswordOnException',
     #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
@@ -334,10 +340,17 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
-    'users.backends.Sha256Backend',
+    'django.contrib.auth.backends.ModelBackend',
     'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+
+PASSWORD_HASHERS = (
+    'users.backends.Sha256Hasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
+)
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar-default.png'

@@ -1,7 +1,7 @@
 import threading
 
 from django.conf import settings
-from django.core.handlers.wsgi import WSGIRequest
+from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse as django_reverse
 from django.utils.translation.trans_real import parse_accept_lang_header
 
@@ -86,7 +86,7 @@ def split_path(path):
 class Prefixer(object):
     def __init__(self, request=None, locale=None):
         """If request is omitted, fall back to a default locale."""
-        self.request = request or WSGIRequest({'REQUEST_METHOD': 'bogus'})
+        self.request = request or RequestFactory(REQUEST_METHOD='bogus').request()
         self.locale, self.shortened_path = split_path(self.request.path_info)
         if locale:
             self.locale = locale

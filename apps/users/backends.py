@@ -1,41 +1,36 @@
 import hashlib
-import os
 
-from django.contrib.auth import models as auth_models
-from django.contrib.auth.backends import ModelBackend
-
-
-# http://fredericiana.com/2010/10/12/adding-support-for-stronger-password-hashes-to-django/
-"""
-from future import django_sha256_support
-
-Monkey-patch SHA-256 support into Django's auth system. If Django ticket #5600
-ever gets fixed, this can be removed.
-"""
+from django.contrib.auth.hashers import BasePasswordHasher
+from django.contrib.auth.hashers import mask_hash
+from django.utils.crypto import constant_time_compare
+from django.utils.datastructures import SortedDict
 
 
-def get_hexdigest(algorithm, salt, raw_password):
-    """Generate SHA-256 hash."""
-    if algorithm == 'sha256':
-        return hashlib.sha256((salt + raw_password).encode('utf8')).hexdigest()
-    else:
-        return get_hexdigest_old(algorithm, salt, raw_password)
-get_hexdigest_old = auth_models.get_hexdigest
-auth_models.get_hexdigest = get_hexdigest
-
-
-def set_password(self, raw_password):
-    """Set SHA-256 password."""
-    algo = 'sha256'
-    salt = os.urandom(5).encode('hex')  # Random, 10-digit (hex) salt.
-    hsh = get_hexdigest(algo, salt, raw_password)
-    self.password = '$'.join((algo, salt, hsh))
-auth_models.User.set_password = set_password
-
-
-class Sha256Backend(ModelBackend):
+class Sha256Hasher(BasePasswordHasher):
     """
-    Overriding the Django model backend without changes ensures our
-    monkeypatching happens by the time we import auth.
+    SHA-256 password hasher.
+    
     """
-    pass
+    algorithm = 'sha256'
+    digest = hashlib.sha256
+
+    def encode(self, password, salt):
+        assert password
+        assert salt and '$' not in salt
+        hash = self.digest(salt + password).hexdigest()
+        return "%s$%s$%s" % (self.algorithm, salt, hash)
+
+    def verify(self, password, encoded):
+        algorithm, salt, hash = encoded.split('$', 2)
+        assert algorithm == self.algorithm
+        encoded_2 = self.encode(password, salt)
+        return constant_time_compare(encoded, encoded_2)
+
+    def safe_summary(self, encoded):
+        algorithm, salt, hash = encoded.split('$', 2)
+        assert algorithm == self.algorithm
+        return SortedDict([
+            (_('algorithm'), algorithm),
+            (_('salt'), mask_hash(salt, show=2)),
+            (_('hash'), mask_hash(hash)),
+        ])

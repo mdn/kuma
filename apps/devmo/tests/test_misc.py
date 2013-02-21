@@ -111,29 +111,6 @@ class TestDevMoHelpers(test_utils.TestCase):
         req.locale = 'zh-TW'
         eq_(devmo_url(context, localized_page), '/zh_tw/HTML')
 
-    def test_devmo_url_mindtouch_disabled(self):
-        _old = settings.DEKIWIKI_ENDPOINT
-        settings.DEKIWIKI_ENDPOINT = False
-
-        localized_page = 'article-title'
-        req = test_utils.RequestFactory().get('/')
-        context = {'request': req}
-
-        req.locale = 'fr'
-        eq_(devmo_url(context, localized_page), '/fr/docs/le-title')
-
-        settings.DEKIWIKI_ENDPOINT = _old
-
-    def test_devmo_url_mindtouch_disabled_redirect(self):
-        # Skipping this test for now, redirect model logic is coupled to view
-        raise SkipTest()
-        _old = settings.DEKIWIKI_ENDPOINT
-        settings.DEKIWIKI_ENDPOINT = False
-
-        # TODO: add redirect localized pages to fixture and test
-
-        settings.DEKIWIKI_ENDPOINT = _old
-
 
 class TestDevMoUrlResolvers(test_utils.TestCase):
     def test_prefixer_get_language(self):

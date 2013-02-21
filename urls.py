@@ -83,6 +83,7 @@ urlpatterns = patterns('',
 def _error_page(request, status):
     """Render error pages with jinja2."""
     return jingo.render(request, '%d.html' % status, status=status)
+handler403 = lambda r: _error_page(r, 403)
 handler404 = lambda r: _error_page(r, 404)
 handler500 = lambda r: _error_page(r, 500)
 
