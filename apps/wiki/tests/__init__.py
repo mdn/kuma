@@ -36,7 +36,8 @@ class TestCaseBase(TestCase):
 def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    defaults = {'category': CATEGORIES[0][0], 'title': str(datetime.now())}
+    defaults = {'category': CATEGORIES[0][0], 'title': str(datetime.now()),
+                'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
         defaults['slug'] = slugify(defaults['title'])
