@@ -28,7 +28,6 @@ from notifications.tasks import claim_watches
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
 from upload.tasks import _create_image_thumbnail
-from users.backends import Sha256Backend  # Monkey patch User.set_password.
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
                          PasswordResetForm, BrowserIDRegisterForm,
