@@ -1,0 +1,309 @@
+/* ----------------------------------
+* Input areas
+* ---------------------------------- */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+input[type="number"],
+textarea {
+  -moz-box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 4rem;
+  resize: none;
+  padding: 0 0.8rem;
+  font: 1.8rem/4rem "MozTT", Sans-serif;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.3rem;
+  box-shadow: none; /* override the box-shadow from the system (performance issue) */
+  background: #fff url(input_areas/images/ui/shadow.png) repeat-x;
+}
+
+textarea {
+  height: 10rem;
+  max-height: 10rem;
+  line-height: 2rem;
+  margin: 0;
+}
+
+/* fix for required inputs with wrong or empty value e.g. [type=email] */
+input:invalid,
+textarea:invalid {
+  border: 0.1rem solid #820000;
+  color: #b90000;
+}
+
+input[type="text"]::-moz-placeholder,
+input[type="password"]::-moz-placeholder,
+input[type="email"]::-moz-placeholder,
+input[type="tel"]::-moz-placeholder,
+input[type="search"]::-moz-placeholder,
+input[type="url"]::-moz-placeholder,
+input[type="number"]::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #666;
+}
+
+form p {
+  position: relative;
+  margin: 0;
+}
+
+form p + p {
+  margin-top: 1rem;
+}
+
+form p input + button[type="reset"],
+form p textarea + button[type="reset"] {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 3.5rem;
+  height: 4rem;
+  margin: -2rem 0 0;
+  padding: 0;
+  border: none;
+  font-size: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: url(input_areas/images/icons/clear.png) no-repeat 50% 50%;
+}
+
+form p input + button[type="reset"],
+form p textarea + button[type="reset"] {
+  top: 0;
+  margin: 0;
+}
+
+textarea {
+  padding: 0.8rem;
+}
+
+form p input:focus {
+  padding-right: 3.5rem;
+}
+
+form p textarea:focus {
+  padding-right: 3rem;
+}
+
+form p input:focus + button[type="reset"],
+form p textarea:focus + button[type="reset"] {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Fieldset */
+fieldset {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border-radius: 0.3rem;
+  border: 0.1rem solid rgba(0,0,0,.2);
+  font: 1.8rem/1em "MozTT", Sans-serif;
+  background: #fff url(input_areas/images/ui/shadow.png) repeat-x left top;
+}
+
+fieldset  + fieldset {
+  margin-top: 1.5rem;
+}
+
+fieldset legend {
+  -moz-box-sizing: border-box;
+  position: absolute;
+  width: 9.5rem;
+  height: 100%;
+  padding: 0 0.5rem 0 1.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #333;
+  line-height: 4rem;
+  text-transform: uppercase;
+}
+
+fieldset legend.action {
+  background: url(input_areas/images/icons/arrow.png) no-repeat 100% 100%;
+}
+
+fieldset legend:active {
+  background-color: #008caa;
+  text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,.3);
+}
+
+fieldset section input[type="text"],
+fieldset section input[type="password"],
+fieldset section input[type="email"],
+fieldset section input[type="tel"],
+fieldset section input[type="search"],
+fieldset section input[type="number"],
+fieldset section textarea {
+  height: 4rem;
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+
+fieldset section {
+  display: block;
+  border-left: 0.1rem solid #ddd;
+  border-radius: 0 0.3rem 0.3rem 0;
+  overflow: hidden;
+  margin-left: 9.5rem;
+}
+
+fieldset section p {
+  margin: 0;
+  border-bottom: 0.1rem solid #ddd;
+}
+
+fieldset section p:last-child {
+  border-bottom: none;
+}
+
+/* Tidy (search/submit) */
+form[role="search"] {
+  position: relative;
+  height: 3.7rem;
+  background: #e8e8e8 url(input_areas/images/ui/background.png) repeat-x;
+}
+
+section[role="region"] > header:first-child + form[role="search"] {
+  /* increase height when underneath a header because of header's shadow */
+  padding-top: 0.3rem;
+  border-bottom: 0.1rem solid #c8c8c8;
+}
+
+form[role="search"]:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 0.3rem;
+  background: url(input_areas/images/ui/shadow-search.png) repeat-x left top;
+}
+
+form[role="search"].bottom:after {
+  content: "";
+  position: absolute;
+  top: -0.3rem;
+  right: 0;
+  left: 0;
+  height: 0.3rem;
+  background: url(input_areas/images/ui/shadow-invert.png) repeat-x 0 100%;
+}
+
+section[role="region"] > header:first-child + form[role="search"]:after{
+  background: none;
+}
+
+form[role="search"] p {
+  -moz-box-sizing: border-box;
+  padding: 0.3rem 1.2rem;
+  overflow: hidden;
+}
+
+form[role="search"].full p {
+  padding: 0.3rem 2.5rem;
+}
+
+form[role="search"] p input {
+  height: 3rem;
+  border: 0.1rem solid #ababab;
+  background: #fff url(input_areas/images/ui/shadow-search.png) repeat-x left top;
+  font-size: 1.8rem;
+}
+
+form[role="search"] p button[type="reset"] {
+  right: 1rem;
+}
+
+form[role="search"].full p button[type="reset"] {
+  right: 2.3rem;
+}
+
+form[role="search"] button[type="submit"] {
+  float: right;
+  min-width: 6rem;
+  height: 3.7rem;
+  padding: 0 1rem;
+  border: none;
+  color: #333;
+  font: 500 1.8rem/3.2rem "MozTT", Sans-serif;
+  background: url(input_areas/images/ui/separator.png) no-repeat 0 50%,
+              url(input_areas/images/ui/active.png) repeat-x 0 100%;
+  border-radius: 0;
+}
+
+form[role="search"] button[type="submit"] + p > textarea {
+  height: 3rem;
+  padding: 0.4rem 0.2rem 0.2rem 0.6rem;
+  line-height: 2rem;
+  font-size: 1.8rem;
+}
+
+form[role="search"] button[type="submit"] + p button {
+  height: 3.7rem;
+}
+
+form[role="search"].full button[type="submit"] {
+  display: none;
+}
+
+form[role="search"] button[type="submit"]:active {
+  background: #008caa;
+  text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,.3);
+}
+
+form[role="search"] button[type="submit"][disabled] {
+  color: #adadad;
+  background: url(input_areas/images/ui/separator.png) no-repeat 0 50%;
+}
+
+form p button[type="reset"]:focus,
+form p button[type="reset"]::-moz-focus-inner {
+  border: none;
+  outline: none;
+}
+
+/******************************************************************************
+ * Right-to-Left layout
+ */
+
+html[dir="rtl"] form p input:valid,
+html[dir="rtl"] form p input:valid:focus {
+  padding: 0 0.8rem 0 3.5rem;
+}
+
+html[dir="rtl"] form p textarea:valid,
+html[dir="rtl"] form p textarea:valid:focus {
+  padding: 0.8rem 0.8rem 0.8rem 3.5rem;
+}
+
+html[dir="rtl"] form p input + button[type="reset"],
+html[dir="rtl"] form p textarea + button[type="reset"] {
+  right: auto;
+  left: 0;
+}
+
+html[dir="rtl"] fieldset legend.action:after {
+  margin: 0 0.5rem 0 0;
+}
+
+html[dir="rtl"] fieldset legend {
+  padding: 0 1.5rem 0 0.5rem;
+}
+
+html[dir="rtl"] form[role="search"] button[type="submit"] + p > textarea {
+  padding: 0.5rem 0.8rem 0.5rem 3rem;
+}
+
+html[dir="rtl"] form[role="search"] button[type="submit"] + p > button {
+  left: 1rem;
+}
