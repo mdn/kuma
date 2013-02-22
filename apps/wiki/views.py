@@ -1353,7 +1353,16 @@ def document_revisions(request, document_slug, document_locale):
     revs = (Revision.objects.filter(document=doc)
                 .defer('summary', 'content')
                 .order_by('-created', '-id'))
-
+    page = None
+    per_page = request.GET.get('limit', DOCUMENTS_PER_PAGE)
+    if per_page != 'all':
+        try:
+            per_page = int(per_page)
+        except ValueError:
+            per_page = DOCUMENTS_PER_PAGE
+        page = paginate(request, revs, per_page)
+        revs = [r for r in page.object_list]
+        
     # Ensure the current revision appears at the top, no matter where it
     # appears in the order.
     curr_id = doc.current_revision.id
@@ -1361,7 +1370,8 @@ def document_revisions(request, document_slug, document_locale):
     revs_out.extend([r for r in revs if r.id != curr_id])
 
     return jingo.render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs_out, 'document': doc})
+                        {'revisions': revs_out, 'document': doc,
+                         'page': page})
 
 
 @login_required
