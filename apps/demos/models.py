@@ -536,7 +536,7 @@ class Submission(models.Model):
     def next(self):
         """Find the next submission by created time, return None if not found."""
         try:
-            obj = self.get_next_by_created()
+            obj = self.get_next_by_created(hidden=False)
             return obj
         except Submission.DoesNotExist:
             return None
@@ -544,7 +544,7 @@ class Submission(models.Model):
     def previous(self):
         """Find the previous submission by created time, return None if not found."""
         try:
-            obj = self.get_previous_by_created()
+            obj = self.get_previous_by_created(hidden=False)
             return obj
         except Submission.DoesNotExist:
             return None
