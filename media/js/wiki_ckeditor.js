@@ -12,16 +12,17 @@
 
     // Switch header and toolbar styles on scroll to keep them on screen
     $(document).scroll(function() {
-        if( $(this).scrollTop() >= contentTop.top ) {
+        var contentBottom = $(".page-meta").first().offset().top - 300; //Position of the first metadata at 300px of the top
+        if( $(this).scrollTop() >= contentTop.top  &&  $(this).scrollTop() < contentBottom )  { // If top of the window is betwen top of #content and top of metadata (first .page-meta) blocks, the header is fixed
             if( !fixed ) {
                 fixed = true;
                 $head.css({position:'fixed', top:19, width:"95%"});
-                $tools.css({position:'fixed', top:headHeight+28, width:$("#cke_id_content").width()-10});
+                $tools.css({position:'fixed', top:headHeight+28, width:$("#cke_id_content").width()-11});
                 $("td.cke_top").css({ height: toolHeight+28 });
                 $("#cke_id_content").css({ marginTop: headHeight });
             }
-        } else {
-            if( fixed ) {
+        } else { // If not, header is relative
+            if( fixed ) { 
                 fixed = false;
                 $head.css({position:'relative', top:"auto", width:"auto"});
                 $tools.css({position:'relative', top:"auto", width:"auto"});

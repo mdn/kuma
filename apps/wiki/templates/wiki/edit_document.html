@@ -33,7 +33,6 @@
             <header>
               <div>
                   <h3>{{ _('Your Changes') }}</h3>
-                </h3>
                 <p>{{ _('Revision {id} by {user} on {date}')|fe(id=original_revision.id, user=original_revision.creator, date=datetimeformat(original_revision.created, format='longdatetime')) }}</p>
               </div>
               <div>
@@ -148,10 +147,12 @@
               </section>
             </section>
 
-          <section>
-          <h4>{{_('Review needed?')}}</h4>
-            {{ revision_form.review_tags|safe }}
-          </section>
+            <section class="page-meta">
+              <section>
+                <h4>{{_('Review needed?')}}</h4>
+                {{ revision_form.review_tags|safe }}
+              </section>
+            </section>
         {% endif %}
       </fieldset>
     </form>
