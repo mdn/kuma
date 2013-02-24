@@ -1028,7 +1028,7 @@ CONSTANCE_CONFIG = dict(
     ),
 
     WIKI_ATTACHMENT_ALLOWED_TYPES = (
-        'image/gif image/jpeg image/png image/svg+xml text/html',
+        'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
     ),
 
