@@ -139,7 +139,11 @@ def lazy_lang_url_map():
     # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
     langs = PROD_LANGUAGES
     lang_url_map = dict([(i.lower(), i) for i in langs])
+    lang_url_map['en'] = 'en-US'
     lang_url_map['pt'] = 'pt-PT'
+    lang_url_map['bn'] = 'bn-BD'
+    lang_url_map['fy'] = 'fy-NL'
+    lang_url_map['ga'] = 'ga-IE'
     return lang_url_map
 
 LANGUAGE_URL_MAP = lazy(lazy_lang_url_map, dict)()
