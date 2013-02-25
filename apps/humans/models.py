@@ -19,8 +19,10 @@ class HumansTXT:
 
         target = open("%s/humans.txt" % settings.HUMANSTXT_ROOT, 'w')
 
-        self.write_to_file(githubbers, target, "Contributors on Github", "Developer")
-        self.write_to_file(localizers, target, "Localization Contributors", "Localizer")
+        self.write_to_file(githubbers, target, "Contributors on Github",
+            "Developer")
+        self.write_to_file(localizers, target, "Localization Contributors",
+            "Localizer")
 
         target.close()
 
@@ -57,7 +59,9 @@ class HumansTXT:
         return humans
 
     def get_mdn(self):
-        p = subprocess.Popen("svn log --quiet http://svn.mozilla.org/projects/mdn/trunk/locale/ | grep '^r' | awk '{print $3}' | sort | uniq",shell=True,stdout=subprocess.PIPE)
+        p = subprocess.Popen("svn log --quiet http://svn.mozilla.org/projects/\
+            mdn/trunk/locale/ | grep '^r' | awk '{print $3}' | sort | uniq",
+            shell=True, stdout=subprocess.PIPE)
         localizers_list = p.communicate()[0].rstrip().split('\n', -1)
 
         humans = []
