@@ -1354,7 +1354,8 @@ def document_revisions(request, document_slug, document_locale):
                 .defer('summary', 'content')
                 .order_by('-created', '-id'))
     page = None
-    per_page = request.GET.get('limit', DOCUMENTS_PER_PAGE)
+    per_page = request.GET.get('limit', 10)
+
     if per_page != 'all':
         try:
             per_page = int(per_page)
@@ -1371,7 +1372,7 @@ def document_revisions(request, document_slug, document_locale):
 
     return jingo.render(request, 'wiki/document_revisions.html',
                         {'revisions': revs_out, 'document': doc,
-                         'page': page})
+                         'page': page, 'revs': revs, 'curr_id': curr_id})
 
 
 @login_required
