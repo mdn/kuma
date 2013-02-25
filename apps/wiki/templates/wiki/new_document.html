@@ -48,9 +48,11 @@
       
       {% include 'wiki/includes/title_autosuggest_url.html' %}
 
-      <section>
-        <h4>Review needed?</h4>
-        {{ revision_form.review_tags|safe }}
+      <section class="page-meta">
+        <section>
+          <h4>{{_('Review needed?')}}</h4>
+          {{ revision_form.review_tags|safe }}
+        </section>
       </section>
 
       <section class="page-meta">
