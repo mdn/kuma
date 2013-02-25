@@ -59,7 +59,7 @@ class HumansTest(TestCase):
         humans.append(human2)
 
         ht = HumansTXT()
-        ht.write_to_file(humans, target, "Banner Message")
+        ht.write_to_file(humans, target, "Banner Message", "Developer")
 
         ok_(True, exists("%s/tmp/humans.txt" % APP_DIR))
 
