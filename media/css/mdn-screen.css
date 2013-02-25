@@ -32,56 +32,7 @@ Font sizes -
 14px *  .642 = 9px
 -----------------------------------------------------------------------------*/
 
-/* @Fonts *********/
-@font-face {
-	font-family: "League Gothic";
-  src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
-  src: url('../fonts/League_Gothic-webfont.eot?') format('eot'), /* IE6-8 */
-       url('../fonts/League_Gothic-webfont.woff') format('woff'), /* Modern browsers */
-  	   url('../fonts/League_Gothic-webfont.ttf') format('truetype'); /* Older Webkits */
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "Bebas Neue";
-	src: url('../fonts/BebasNeue-webfont.eot'); /* IE9 */
- 	src: url('../fonts/BebasNeue-webfont.eot?') format('eot'), /* IE6-8 */
- 	     url('../fonts/BebasNeue-webfont.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/BebasNeue-webfont.ttf') format('truetype'); /* Older Webkits */
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "Carto Bold";
-	src: url('../fonts/CartoGothicStd-Bold-webfont.eot'); /* IE9 */
- 	src: url('../fonts/CartoGothicStd-Bold-webfont.eot?') format('eot'), /* IE6-8 */
- 		   url('../fonts/CartoGothicStd-Bold-webfont.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/CartoGothicStd-Bold-webfont.ttf') format('truetype'); /* Older Webkits */
-	font-weight: bold;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "Milk";
-	src: url('../fonts/ABTSmilk.eot'); /* IE9 */
- 	src: url('../fonts/ABTSmilk.eot?') format('eot'), /* IE6-8 */
- 	     url('../fonts/ABTSmilk.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/ABTSmilk.ttf') format('truetype'); /* Older Webkits */
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: "Museo Sans";
-	src: url('../fonts/MuseoSans_500-webfont.eot'); /* IE9 */
- 	src: url('../fonts/MuseoSans_500-webfont.eot?') format('eot'), /* IE6-8 */
- 	     url('../fonts/MuseoSans_500-webfont.woff') format('woff'), /* Modern browsers */
-	     url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'); /* Older Webkits */
-	font-weight: normal;
-	font-style: normal;
-}
+@import "fonts.css";
 
 /* @Reset *********/
 header, hgroup, nav, section, article, aside, footer, figure, details, summary { display: block; }

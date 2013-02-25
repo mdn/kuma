@@ -12,6 +12,7 @@ import os
 from os import unlink
 from os.path import basename, dirname, isfile, isdir
 from shutil import rmtree
+import datetime
 
 try:
     from cStringIO import StringIO
@@ -77,17 +78,35 @@ class DemoPackageTest(TestCase):
             'visitor', 'visitor@visitor.com', 'visitor')
         self.other_user.save()
 
+        hidden_prev_demo = self._build_hidden_submission('hidden-submission-1')
+
         self.submission = self._build_submission()
         self.old_blacklist = demos.models.DEMO_MIMETYPE_BLACKLIST
+
+        hidden_next_demo = self._build_hidden_submission('hidden-submission-2')
 
     def tearDown(self):
         demos.models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist
         self.user.delete()
 
     def _build_submission(self):
-        s = Submission(title='Hello world', slug='hello-world',
-            description='This is a hello world demo',
+        now = str(datetime.datetime.now())
+
+        s = Submission(title='Hello world' + now, slug='hello-world' + now,
+            description='This is a hello world demo', hidden=False,
             creator=self.user)
+        s.save()
+
+        return s
+
+    def _build_hidden_submission(self, slug):
+        now = str(datetime.datetime.now())
+
+        s = Submission(title='Hidden submission 1' + now, slug=slug + now,
+            description='This is a hidden demo', hidden=True,
+            creator=self.other_user)
+        s.save()
+
         return s
 
     def test_demo_package_no_files(self):
@@ -424,6 +443,13 @@ class DemoPackageTest(TestCase):
                 ok_(False, "There should be a validation exception")
             except ValidationError, e:
                 ok_('ZIP file contains an unacceptable file: badfile' in e.messages)
+
+    def test_hidden_demo_next_prev(self):
+        """Ensure hidden demos do not display when next() or previous() are called"""
+        s = self.submission
+
+        eq_(s.previous(), None)
+        eq_(s.next(), None)
 
     def test_hidden_demo_shows_to_creator_and_admin(self):
         """Demo package with at least index.html in root is valid"""
