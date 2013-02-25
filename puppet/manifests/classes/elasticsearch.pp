@@ -17,6 +17,7 @@ class elasticsearch(
   $tmpdir = "/tmp/elasticsearch-${version}"
   $sharedirv = "/usr/share/elasticsearch-${version}"
   $sharedir = "/usr/share/elasticsearch"
+  $pluginexec = "${sharedirv}/bin/plugin"
   $etcdir = "/etc/elasticsearch"
   $upstartfile = "/etc/init/elasticsearch.conf"
   $defaultsfile = "/etc/default/elasticsearch"
@@ -89,6 +90,18 @@ class elasticsearch(
     ensure  => link,
     target  => $sharedirv,
     require => Exec[$sharedirv],
+  }
+
+  exec { "install_head_plugin":
+    command => "${pluginexec} -install mobz/elasticsearch-head",
+    cwd     => $sharedirv,
+    creates => "${sharedirv}/plugins/head",
+    require => Exec[$sharedirv],
+  }
+
+  file { "${sharedirv}/plugins/head":
+    ensure  => directory,
+    require => Exec["install_head_plugin"],
   }
 
   file { "$sharedir/elasticsearch.in.sh":
