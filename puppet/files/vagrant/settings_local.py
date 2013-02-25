@@ -135,3 +135,4 @@ ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 ES_DISABLED = False
 ES_HOSTS = ['127.0.0.1:9200']
 ES_INDEXES = {'default': 'main_index'}
+ES_LIVE_INDEX = True
