@@ -836,12 +836,12 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #sub-css h2 { background-image: url("../img/chalk-css.png"); }
 #sub-js h2 { background-image: url("../img/chalk-js.png"); }
 
-#learn-p2pu { clear: both; position: relative; margin: 40px 0; padding: 20px 20px 5px 120px; min-height: 80px; background: #deded4; background: rgba(209, 209, 193, .5); }
+#learn-p2pu { clear: both; position: relative; margin: 40px 0; padding: 20px 20px 5px 140px; min-height: 80px; background: #deded4; background: rgba(209, 209, 193, .5); }
 #learn-p2pu h2 { font-size: 1em; line-height: 1.22; }
 #learn-p2pu p { font-size: .857em; color: #666; }
 #learn-p2pu strong { color: #333; }
 #learn-p2pu a { font-weight: bold; }
-#learn-p2pu span { content: ""; position: absolute; left: 20px; top: 20px; width: 83px; height: 80px; background: url("../img/p2pu.png") no-repeat 0 0; }
+#learn-p2pu span { content: ""; position: absolute; left: 20px; top: 20px; width: 101px; height: 80px; background: url("../img/p2pu-webcraft.png") no-repeat 0 0; }
 
 #learn-fineprint { clear: both; margin: 20px 20px 40px; font-size: .786em; }
 
