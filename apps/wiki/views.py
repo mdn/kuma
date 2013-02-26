@@ -66,8 +66,9 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification
-from wiki.helpers import format_comment, get_seo_description
+from wiki.helpers import format_comment
 import wiki.content
+from wiki.content import get_seo_description
 from wiki import kumascript
 
 from pyquery import PyQuery as pq
