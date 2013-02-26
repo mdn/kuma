@@ -787,16 +787,17 @@ class Document(NotificationsMixin, ModelBase):
 
         self.save()
 
-    def get_summary(self, strip_markup=True):
+    def get_summary(self, strip_markup=True, use_rendered=True):
         """Attempt to get the document summary from rendered content, with
         fallback to raw HTML"""        
         src = self.html
-        try:
-            r_src, errors = self.get_rendered()
-            if not errors:
-                src = r_src
-        except:
-            pass
+        if use_rendered:
+            try:
+                r_src, errors = self.get_rendered()
+                if not errors:
+                    src = r_src
+            except:
+                pass
         summary = wiki.content.get_seo_description(src, self.locale,
                                                    strip_markup)
         return summary
