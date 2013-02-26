@@ -15,6 +15,7 @@
             dependencies - selected jQuery object of dependent fields
             maxLength - maximum length of the URLify'd string
         */
+
         return this.each(function() {
             var $field = $(this);
 
@@ -27,7 +28,7 @@
                 // Bail if the fields value has changed
                 if ($field.data("_changed") == true) return;
 
-                var values = [], field_val, field_val_raw;
+                var values = [], field_val, field_val_raw, split;
                 dependencies.each(function() {
                     if ($(this).val().length > 0) {
                         values.push($(this).val());
@@ -38,10 +39,13 @@
                 
                 s = $.slugifyString(s);
 
-                // trim to first num_chars chars
+                // Trim to first num_chars chars
                 s = s.substring(0, maxLength);
 
-                $field.val(s);
+                // Only replace the last piece (don't replace slug heirarchy)
+                split = $field.val().split("/");
+                split[split.length - 1] = s;
+                $field.val(split.join("/"));
             };
             
             dependencies.keyup(populate).change(populate).focus(populate);
