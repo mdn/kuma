@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import logging
 import re
 import urllib
@@ -58,6 +60,69 @@ def get_content_sections(src = ''):
         elements.each(lambda e: objectify_pyquery_item(e))
 
     return sections
+
+
+def get_seo_description(content, locale=None, strip_markup=True):
+    # Create an SEO summary
+    # TODO:  Google only takes the first 180 characters, so maybe we find a
+    #        logical way to find the end of sentence before 180?
+    seo_summary = ''
+    try:
+        if content:
+            # Try constraining the search for summary to an explicit "Summary"
+            # section, if any.
+            summary_section = (parse(content)
+                               .extractSection('Summary')
+                               .serialize())
+            if summary_section:
+                content = summary_section
+
+            # Need to add a BR to the page content otherwise pyQuery wont find
+            # a <p></p> element if it's the only element in the doc_html
+            seo_analyze_doc_html = content + '<br />'
+            page = pq(seo_analyze_doc_html)
+
+            # Look for the SEO summary class first
+            summaryClasses = page.find('.seoSummary')
+            if len(summaryClasses):
+                if strip_markup:
+                    seo_summary = summaryClasses.text()
+                else:
+                    seo_summary = summaryClasses.html()
+            else:
+                paragraphs = page.find('p')
+                if paragraphs.length:
+                    for p in range(len(paragraphs)):
+                        item = paragraphs.eq(p)
+                        if strip_markup:
+                            text = item.text()
+                        else:
+                            text = item.html()
+                        # Checking for a parent length of 2
+                        # because we don't want p's wrapped
+                        # in DIVs ("<div class='warning'>") and pyQuery adds
+                        # "<html><div>" wrapping to entire document
+                        if (len(text) and
+                            not 'Redirect' in text and
+                            text.find(u'«') == -1 and
+                            text.find('&laquo') == -1 and
+                            item.parents().length == 2):
+                            seo_summary = text.strip()
+                            break
+    except:
+        raise
+        pass
+
+    if strip_markup:
+        # Post-found cleanup
+        # remove markup chars
+        seo_summary = seo_summary.replace('<', '').replace('>', '')
+        # remove spaces around some punctuation added by PyQuery
+        if locale == 'en-US':
+            seo_summary = re.sub(r' ([,\)\.])', r'\1', seo_summary)
+            seo_summary = re.sub(r'(\() ', r'\1', seo_summary)
+
+    return seo_summary
 
 
 def filter_out_noinclude(src):

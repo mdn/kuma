@@ -66,7 +66,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision)
 from wiki.tasks import send_reviewed_notification
-from wiki.helpers import format_comment, get_seo_description
+from wiki.helpers import format_comment
 import wiki.content
 from wiki import kumascript
 
@@ -278,7 +278,7 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
     if doc.current_revision and doc.current_revision.summary:
         summary = doc.current_revision.summary
     else:
-        summary = get_seo_description(doc.html, doc.locale, False)
+        summary = doc.get_summary(strip_markup=False)
 
     # Map out translations
     translations = []
@@ -439,7 +439,8 @@ def document(request, document_slug, document_locale):
 
     # Grab the document HTML as a fallback, then attempt to use kumascript:
     doc_html, ks_errors = doc.html, None
-    if kumascript.should_use_rendered(doc, request.GET):
+    use_rendered = kumascript.should_use_rendered(doc, request.GET)
+    if use_rendered:
 
         if (request.GET.get('bleach_new', False) is not False and
                 request.user.is_authenticated()):
@@ -509,7 +510,8 @@ def document(request, document_slug, document_locale):
     
     # If ?summary is on, just serve up the summary as doc HTML
     if show_summary:
-        doc_html = get_seo_description(doc_html, doc.locale, False)
+        doc_html = doc.get_summary(strip_markup=False,
+                                   use_rendered=use_rendered)
 
     # if ?raw parameter is supplied, then we respond with raw page source
     # without template wrapping or edit links. This is also permissive for
@@ -542,7 +544,8 @@ def document(request, document_slug, document_locale):
     # Get the SEO summary
     seo_summary = ''
     if not doc.is_template:
-        seo_summary = get_seo_description(doc_html, doc.locale)
+        seo_summary = doc.get_summary(strip_markup=True,
+                                      use_rendered=use_rendered)
 
     # Get the additional title information, if necessary
     seo_parent_title = ''
@@ -1285,7 +1288,7 @@ def get_children(request, document_slug, document_locale):
                 'slug': d.slug,
                 'locale': d.locale,
                 'url':  d.get_absolute_url(),
-                'summary': get_seo_description(d.html, d.locale, False),
+                'summary': d.get_summary(strip_markup=False),
                 'subpages': []
             }
 
