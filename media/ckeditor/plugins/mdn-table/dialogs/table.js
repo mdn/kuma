@@ -67,8 +67,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			minWidth : 310,
 			minHeight : CKEDITOR.env.ie ? 310 : 280,
 
-			onLoad : function() {
-			},
+			onLoad : function() {},
 
 			onShow : function()
 			{
@@ -97,6 +96,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 					// Save a reference to the selected table, and push a new set of default values.
 					this._.selectedElement = selectedTable;
+				}
+
+				if(!selectedTable) { // New table, add appropriate class
+					this.setValueOf('advanced', 'advCSSClasses', 'standard-table');
 				}
 
 				// Enable or disable the row, cols, width fields.
