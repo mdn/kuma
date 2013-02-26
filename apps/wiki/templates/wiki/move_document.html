@@ -70,14 +70,14 @@
           </ul>
 
           {% if descendants_count: %}
-            <p><strong>{{ _('The following {d} subpages will be effected by this move:')|f(d=descendants_count) }}</strong></p>
+            <p><strong>{{ _('The following {d} subpages will be affected by this move:')|f(d=descendants_count) }}</strong></p>
             <div class="moveDescendants"><ul>
               {% for doc in descendants %}
                 <li>{{ doc }}</li>
               {% endfor %}
             </ul></div>
           {% else %}
-            <p><strong>{{ _('No other documents will be effected by this change.') }}</strong></p>
+            <p><strong>{{ _('No other documents will be affected by this change.') }}</strong></p>
           {% endif %}
 
           <ul id="page-buttons">
