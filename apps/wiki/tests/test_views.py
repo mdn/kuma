@@ -2760,9 +2760,8 @@ class DeferredRenderingViewTests(TestCaseBase):
         # Rig up a mocked response from KumaScript POST service
         # Digging a little deeper into the stack, so that the rest of
         # kumascript.post processing happens.
-        from requests.models import Response
         from StringIO import StringIO
-        m_resp = Response()
+        m_resp = mock.Mock()
         m_resp.status_code = 200
         m_resp.content = test_content
         m_resp.read = StringIO(test_content).read
