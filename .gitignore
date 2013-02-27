@@ -5,7 +5,6 @@
 vagrantconfig_local.yaml
 kuma.box
 settings_local.py
-settings_test.py
 pip-log.txt
 .coverage
 coverage.xml

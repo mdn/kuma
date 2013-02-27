@@ -37,11 +37,6 @@ class dev_hacks {
         source => "/vagrant/puppet/files/vagrant/settings_local.py";
     }
         
-    file { "/vagrant/settings_test.py":
-        ensure => file,
-        source => "/vagrant/puppet/files/vagrant/settings_test.py";
-    }
-
     file { "/vagrant/kumascript_settings_local.json":
         ensure => file,
         source => "/vagrant/puppet/files/vagrant/kumascript_settings_local.json";
