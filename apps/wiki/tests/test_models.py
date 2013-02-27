@@ -1059,6 +1059,19 @@ class DeferredRenderingTests(TestCase):
         constance.config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('wiki.kumascript.get')
+    def test_get_summary(self, mock_kumascript_get):
+        """get_summary() should attempt to use rendered"""
+        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        mock_kumascript_get.return_value = ('<p>summary!</p>', None)
+
+        ok_(not self.d1.rendered_html)
+        result_summary = self.d1.get_summary()
+        ok_(mock_kumascript_get.called)
+        eq_("summary!", result_summary)
+
+        constance.config.KUMASCRIPT_TIMEOUT = 0.0
+
+    @mock.patch('wiki.kumascript.get')
     def test_one_render_at_a_time(self, mock_kumascript_get):
         """Only one in-progress rendering should be allowed for a Document"""
         mock_kumascript_get.return_value = (self.rendered_content, None)
