@@ -12,8 +12,7 @@ from django.utils.encoding import smart_str
 import cronjobs
 
 from wiki import tasks
-from wiki.models import Document
-from wiki.search import DocumentType
+from wiki.models import Document, DocumentType
 
 
 @cronjobs.register

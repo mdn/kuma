@@ -1,6 +1,6 @@
 from nose.tools import eq_
 
-from elasticutils.tests import ElasticTestCase
+from search.tests import ElasticTestCase
 
 from wiki.models import DocumentType
 from wiki.tests import document

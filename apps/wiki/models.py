@@ -25,9 +25,10 @@ from django.utils.http import http_date
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
-from elasticutils.contrib.django.models import DjangoMappingType, Indexable
+from elasticutils.contrib.django.models import Indexable
 
 from notifications.models import NotificationsMixin
+from search.index import SearchMappingType
 from search.tasks import register_live_index
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
@@ -1477,7 +1478,7 @@ class Document(NotificationsMixin, ModelBase):
         return DocumentType
 
 
-class DocumentType(DjangoMappingType, Indexable):
+class DocumentType(SearchMappingType, Indexable):
     @classmethod
     def get_model(cls):
         return Document
