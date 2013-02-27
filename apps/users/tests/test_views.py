@@ -18,8 +18,7 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_get_deki_user_by_email,
                               mock_missing_get_deki_user_by_email,
                               mock_put_mindtouch_user,
-                              mock_post_mindtouch_user,
-                              mock_perform_post_mindtouch_user)
+                              mock_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from notifications.tests import watch
@@ -228,7 +227,6 @@ class RegisterTestCase(TestCase):
                                      'password': 'foo'}, follow=True)
         eq_(200, response.status_code)
         eq_('http://testserver/en-US/', response.redirect_chain[0][0])
-
 
     @mock_missing_get_deki_user
     @mock_post_mindtouch_user
@@ -748,7 +746,6 @@ class BrowserIDTestCase(TestCase):
             eq_(new_email, user.email)
         except User.DoesNotExist:
             ok_(False, "New user should have been created")
-
 
     @mock_missing_get_deki_user_by_email
     @mock_post_mindtouch_user

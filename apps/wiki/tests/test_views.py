@@ -168,8 +168,12 @@ class ViewTests(TestCaseBase):
 
     def test_children_view(self):
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
+
         def _make_doc(title, slug, parent=None, is_redir=False):
-            doc = document(title=title, slug=slug, save=True, is_redirect=is_redir)
+            doc = document(title=title,
+                           slug=slug,
+                           save=True,
+                           is_redirect=is_redir)
             if is_redir:
                 content = 'REDIRECT <a class="redirect" href="x">Blah</a>'
             else:
@@ -1375,34 +1379,62 @@ class DocumentEditingTests(TestCaseBase):
                 self.assertContains(response, page.find('ul.errorlist li'
                                                         ' a[href="#id_slug"]').
                                     text())
-                eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=foreign_locale)))  # Ensure no redirect
+                # Ensure no redirect
+                eq_(0, len(Document.objects.filter(title=edit_data['title'] +
+                                                   ' Redirect 1',
+                                                   locale=foreign_locale)))
 
                 # Push a valid edit, without changing the slug
                 edit_data['slug'] = edit_slug
-                response = client.post(reverse('wiki.edit_document', args=[edit_doc.slug], locale=foreign_locale), edit_data)
+                response = client.post(reverse('wiki.edit_document',
+                                               args=[edit_doc.slug],
+                                               locale=foreign_locale),
+                                       edit_data)
                 eq_(302, response.status_code)
-                eq_(0, len(Document.objects.filter(title=edit_data['title'] + ' Redirect 1', locale=foreign_locale)))  # Ensure no redirect
-                self.assertRedirects(response, reverse('wiki.document', locale=foreign_locale, args=[edit_doc.slug]))
+                # Ensure no redirect
+                eq_(0, len(Document.objects.filter(title=edit_data['title'] +
+                                                   ' Redirect 1',
+                                                   locale=foreign_locale)))
+                self.assertRedirects(response, reverse('wiki.document',
+                                                       locale=foreign_locale,
+                                                       args=[edit_doc.slug]))
 
             """ TEST EDITING SLUGS AND TRANSLATIONS """
             def _run_slug_edit_tests(edit_slug, edit_data, edit_doc, loc):
 
                 edit_data['slug'] = edit_data['slug'] + '_Updated'
                 edit_data['form'] = 'rev'
-                response = client.post(reverse('wiki.edit_document', args=[edit_doc.slug], locale=loc), edit_data)
+                response = client.post(reverse('wiki.edit_document',
+                                               args=[edit_doc.slug],
+                                               locale=loc),
+                                       edit_data)
                 eq_(302, response.status_code)
                 # HACK: the es doc gets a 'Redirigen 1' if locale/ is updated
-                eq_(1, len(Document.objects.filter(title__contains=edit_data['title'] + ' Redir', locale=loc)))  # Ensure *1* redirect
-                self.assertRedirects(response, reverse('wiki.document', locale=loc, args=[edit_doc.slug.replace(edit_slug, edit_data['slug'])]))
+                # Ensure *1* redirect
+                eq_(1,
+                    len(Document.objects.filter(
+                        title__contains=edit_data['title'] + ' Redir',
+                        locale=loc)))
+                self.assertRedirects(response,
+                                     reverse('wiki.document',
+                                             locale=loc,
+                                             args=[edit_doc.slug.replace(
+                                                 edit_slug,
+                                                 edit_data['slug'])]
+                                            )
+                                    )
 
         # Run all of the tests
         _createAndRunTests("parent")
 
-        # Test that slugs with the same "specific" slug but in different levels in the heiharachy
-        # are validate properly upon submission
+        # Test that slugs with the same "specific" slug but in different levels
+        # in the heiharachy are validate properly upon submission
 
         # Create base doc
-        parent_doc = document(title='Length', slug='length', is_localizable=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        parent_doc = document(title='Length',
+                              slug='length',
+                              is_localizable=True,
+                              locale=settings.WIKI_DEFAULT_LANGUAGE)
         parent_doc.save()
         r = revision(document=parent_doc)
         r.save()
@@ -1413,10 +1445,16 @@ class DocumentEditingTests(TestCaseBase):
         child_data['slug'] = 'length'
         child_data['content'] = 'This is the content'
         child_data['is_localizable'] = True
-        child_url = reverse('wiki.new_document') + '?parent=' + str(parent_doc.id)
+        child_url = (reverse('wiki.new_document') +
+                     '?parent=' +
+                     str(parent_doc.id))
         response = client.post(child_url, child_data)
         eq_(302, response.status_code)
-        self.assertRedirects(response, reverse('wiki.document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE))
+        self.assertRedirects(response,
+                             reverse('wiki.document',
+                                     args=['length/length'],
+                                    locale=settings.WIKI_DEFAULT_LANGUAGE)
+                            )
 
         # Editing "length/length" document doesn't cause errors
         child_data['form'] = 'rev'
@@ -1685,7 +1723,7 @@ class DocumentEditingTests(TestCaseBase):
         # Post an edit that removes one of the tags.
         data.update({
             'form': 'rev',
-            'review_tags': ['editorial',]
+            'review_tags': ['editorial', ]
         })
         response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
 
