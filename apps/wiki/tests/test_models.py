@@ -18,6 +18,9 @@ import constance.config
 
 from sumo import ProgrammingError
 from sumo.tests import TestCase
+
+from devmo.tests import override_constance_settings
+
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
                          Attachment,
@@ -1027,11 +1030,11 @@ class DeferredRenderingTests(TestCase):
         ok_(not self.d1.is_rendering_scheduled)
         ok_(not self.d1.is_rendering_in_progress)
 
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('wiki.kumascript.get')
     def test_get_rendered(self, mock_kumascript_get):
         """get_rendered() should return rendered content when available,
         attempt a render() when it's not"""
-        constance.config.KUMASCRIPT_TIMEOUT = 1.0
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
         # First, try getting the rendered version of a document. It should
@@ -1055,8 +1058,6 @@ class DeferredRenderingTests(TestCase):
         result_rendered, _ = d1_fresh.get_rendered(None, 'http://testserver/')
         ok_(not mock_kumascript_get.called)
         eq_(self.rendered_content, result_rendered)
-
-        constance.config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('wiki.kumascript.get')
     def test_get_summary(self, mock_kumascript_get):
