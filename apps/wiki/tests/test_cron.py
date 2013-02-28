@@ -14,7 +14,7 @@ class SitemapsTestCase(TestCase):
         """ Comprehensive test of sitemap logic and file writing """
         build_sitemaps()
 
-        locale_rows = Document.objects.distinct('locale').values('locale')
+        locale_rows = Document.objects.distinct().values('locale')
         expected_sitemap_locs = []
         for row in locale_rows:
             locale = row['locale']

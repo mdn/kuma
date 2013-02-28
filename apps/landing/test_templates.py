@@ -6,6 +6,7 @@ import constance.config
 from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
 
+from devmo.tests import override_constance_settings
 
 def get_promos(client, url, selector):
     r = client.get(url, follow=True)
@@ -27,12 +28,12 @@ class HomeTests(test_utils.TestCase):
     def test_google_analytics(self):
         url = reverse('landing.views.home')
 
-        constance.config.GOOGLE_ANALYTICS_ACCOUNT = ''
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-        ok_('var _gaq' not in r.content)
+        with override_constance_settings(GOOGLE_ANALYTICS_ACCOUNT=''):
+            r = self.client.get(url, follow=True)
+            eq_(200, r.status_code)
+            ok_('var _gaq' not in r.content)
 
-        constance.config.GOOGLE_ANALYTICS_ACCOUNT = 'UA-99999999-9'
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-        ok_('var _gaq' in r.content)
+        with override_constance_settings(GOOGLE_ANALYTICS_ACCOUNT='UA-99999999-9'):
+            r = self.client.get(url, follow=True)
+            eq_(200, r.status_code)
+            ok_('var _gaq' in r.content)
