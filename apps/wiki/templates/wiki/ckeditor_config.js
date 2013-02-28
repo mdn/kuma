@@ -1,4 +1,4 @@
-CKEDITOR.on('instanceReady', function (ev) {
+CKEDITOR.on('instanceReady', function(ev) {
 
     var writer = ev.editor.dataProcessor.writer;
 
@@ -10,8 +10,8 @@ CKEDITOR.on('instanceReady', function (ev) {
     var oneliner_tags = [
         'hgroup', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
         'p', 'th', 'td', 'li'
-    ]
-    for (var i=0,tag; tag=oneliner_tags[i]; i++) {
+    ];
+    for(var i = 0, tag; tag = oneliner_tags[i]; i++) {
         writer.setRules(tag, {
             indent: true,
             breakBeforeOpen: true,
@@ -21,7 +21,7 @@ CKEDITOR.on('instanceReady', function (ev) {
         });
     }
     
-    //  Retrieve nodes important to moving the path bar to the top
+    // Retrieve nodes important to moving the path bar to the top
     var tbody = ev.editor._.cke_contents.$.parentNode.parentNode,
         pathP = tbody.lastChild.childNodes[0].childNodes[1],
         toolbox = tbody.childNodes[0].childNodes[0].childNodes[0];
@@ -120,7 +120,7 @@ CKEDITOR.editorConfig = function(config) {
     config.docType = '<!DOCTYPE html>';
     config.bodyClass = 'page-content';
     
-    CKEDITOR.stylesSet.add('default',[
+    CKEDITOR.stylesSet.add('default', [
         { name: 'None', element: 'p' },
         { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, wrap: true },
         { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, wrap: true },
