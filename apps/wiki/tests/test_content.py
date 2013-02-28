@@ -868,3 +868,15 @@ class GetSEODescriptionTests(TestCase):
                     'describes how the structured element must be rendered on '
                     'screen, on paper, in speech, or on other media.')
         eq_(expected, get_seo_description(content, 'en-US'))
+
+    def test_empty_paragraph_content(self):
+        content = u'''<p></p><div class="overheadIndicator draft draftHeader">
+            <strong>DRAFT</strong>
+                <div>This page is not complete.</div>
+                </div><p></p>
+                <p></p><div class="note"><strong>Note:</strong> Please do not
+                translate this page until it is done; it will be much easier at
+                that point. The French translation is a test to be sure that it
+                works well.</div><p></p>'''
+        expected = ('')
+        eq_(expected, get_seo_description(content, 'en-US', False))
