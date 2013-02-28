@@ -32,6 +32,7 @@ from test_models import save_valid_submission
 from demos import challenge_utils
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
+from demos.tests import make_users, build_submission, build_hidden_submission
 
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
@@ -66,6 +67,29 @@ def make_challenge_tag():
     
     """
     return datetime.date.today().strftime('%Y:%B').lower()
+
+
+class DemoListViewsTest(test_utils.TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.user, self.admin_user, self.other_user = make_users()
+        self.client = LocalizingClient()
+
+    def test_all_demos_includes_hidden_for_staff(self):
+        build_submission(self.user)
+        build_hidden_submission(self.user)
+
+        r = self.client.get(reverse('demos_all'))
+        count = pq(r.content)('h2.count').text()
+        eq_(count, "1 Demo")
+
+        self.client.login(username=self.admin_user.username,
+                          password='admint_tester')
+        r = self.client.get(reverse('demos_all'))
+        count = pq(r.content)('h2.count').text()
+        eq_(count, "2 Demos")
+
 
 class DemoViewsTest(test_utils.TestCase):
     fixtures = ['test_users.json']
@@ -365,7 +389,7 @@ class DemoViewsTest(test_utils.TestCase):
         eq_(r.status_code, 200)
 
     @attr('bug702156')
-    def test_bug_702156(self):
+    def test_missing_screenshots_no_exceptions(self):
         """Demo with missing screenshots should not cause exceptions in
         views"""
         # Create the submission...
