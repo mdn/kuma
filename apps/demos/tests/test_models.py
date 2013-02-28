@@ -2,17 +2,11 @@
 
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
-import sys
 import logging
-import re
-import urlparse
-import time
 import zipfile
-import os
 from os import unlink
-from os.path import basename, dirname, isfile, isdir
+from os.path import dirname, isfile, isdir
 from shutil import rmtree
-import datetime
 
 try:
     from cStringIO import StringIO
@@ -25,9 +19,7 @@ settings.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 settings.DEMO_MAX_ZIP_FILESIZE = 1 * 1024 * 1024
 
 
-from django.http import HttpRequest
 from django.test import TestCase
-from django.test.client import Client
 
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -36,17 +28,17 @@ from django.core.files.base import ContentFile
 
 from django.template.defaultfilters import slugify
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
-from nose.plugins.attrib import attr
+from nose.tools import assert_false, eq_, ok_
 
 from demos.models import Submission
 import demos.models
 demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 
-from demos.forms import SubmissionEditForm, SubmissionNewForm
+from demos.tests import make_users, build_submission, build_hidden_submission
 
 
-def save_valid_submission(title='hello world', desc = 'This is a hello world demo'):
+def save_valid_submission(title='hello world',
+                          desc='This is a hello world demo'):
     testuser = User.objects.get(username='testuser')
     s = Submission(title=title, slug=slugify(title),
         description=desc,
@@ -57,8 +49,12 @@ def save_valid_submission(title='hello world', desc = 'This is a hello world dem
     zf.writestr('index.html', """<html> </html>""")
     zf.close()
     s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
-    s.screenshot_1.save('screenshot_1.jpg', ContentFile(open(
-        '%s/fixtures/screenshot_1.png' % ( dirname(dirname(__file__)), ) ).read()))
+    s.screenshot_1.save('screenshot_1.jpg',
+        ContentFile(
+            open('%s/fixtures/screenshot_1.png' % (dirname(dirname(__file__))))
+            .read()
+        )
+    )
     s.save()
     return s
 
@@ -66,48 +62,20 @@ def save_valid_submission(title='hello world', desc = 'This is a hello world dem
 class DemoPackageTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(
-            'tester', 'tester@tester.com', 'tester')
-        self.user.save()
+        self.user, self.admin_user, self.other_user = make_users()
 
-        self.admin_user = User.objects.create_superuser(
-            'admin_tester', 'admin_tester@tester.com', 'admint_tester')
-        self.admin_user.save()
+        hidden_prev_demo = build_hidden_submission(self.other_user,
+                                                   'hidden-submission-1')
 
-        self.other_user = User.objects.create_user(
-            'visitor', 'visitor@visitor.com', 'visitor')
-        self.other_user.save()
-
-        hidden_prev_demo = self._build_hidden_submission('hidden-submission-1')
-
-        self.submission = self._build_submission()
+        self.submission = build_submission(self.user)
         self.old_blacklist = demos.models.DEMO_MIMETYPE_BLACKLIST
 
-        hidden_next_demo = self._build_hidden_submission('hidden-submission-2')
+        hidden_next_demo = build_hidden_submission(self.other_user,
+                                                   'hidden-submission-2')
 
     def tearDown(self):
         demos.models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist
         self.user.delete()
-
-    def _build_submission(self):
-        now = str(datetime.datetime.now())
-
-        s = Submission(title='Hello world' + now, slug='hello-world' + now,
-            description='This is a hello world demo', hidden=False,
-            creator=self.user)
-        s.save()
-
-        return s
-
-    def _build_hidden_submission(self, slug):
-        now = str(datetime.datetime.now())
-
-        s = Submission(title='Hidden submission 1' + now, slug=slug + now,
-            description='This is a hidden demo', hidden=True,
-            creator=self.other_user)
-        s.save()
-
-        return s
 
     def test_demo_package_no_files(self):
         """Demo package with no files is invalid"""
@@ -222,7 +190,10 @@ class DemoPackageTest(TestCase):
         unlink(s.demo_package.path)
 
     def test_process_demo_package(self):
-        """Calling process_demo_package() should result in a directory of demo files"""
+        """
+        Calling process_demo_package() should result in a directory of demo
+        files
+        """
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
@@ -230,7 +201,7 @@ class DemoPackageTest(TestCase):
         zf.writestr('index.html',
             """<html>
                 <head>
-                    <link rel="stylesheet" href="css/main.css" type="text/css" />
+                  <link rel="stylesheet" href="css/main.css" type="text/css" />
                 </head>
                 <body>
                     <h1>Hello world</h1>
@@ -267,7 +238,10 @@ class DemoPackageTest(TestCase):
         rmtree(path)
 
     def test_demo_html_normalized(self):
-        """Ensure a demo.html in zip file is normalized to index.html when unpacked"""
+        """
+        Ensure a demo.html in zip file is normalized to index.html when
+        unpacked
+        """
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
@@ -390,14 +364,19 @@ class DemoPackageTest(TestCase):
         """Demo package with any individual file >1MB in size is invalid"""
         s = self.submission
 
-        # HACK: Since the field's already defined, it won't pick up the settings change,
+        # HACK: Since the field's already defined, it won't pick up the
+        # settings change,
         # so force it directly in the field
-        s.demo_package.field.max_upload_size = settings.DEMO_MAX_FILESIZE_IN_ZIP
+        s.demo_package.field.max_upload_size = (
+            settings.DEMO_MAX_FILESIZE_IN_ZIP
+        )
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
         zf.writestr('index.html', """<html> </html>""")
-        zf.writestr('bigfile.txt', ''.join('x' for x in range(0, settings.DEMO_MAX_FILESIZE_IN_ZIP + 1)))
+        zf.writestr('bigfile.txt', ''.join(
+            'x' for x in range(0, settings.DEMO_MAX_FILESIZE_IN_ZIP + 1)
+        ))
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
@@ -405,12 +384,16 @@ class DemoPackageTest(TestCase):
             s.clean()
             ok_(False, "There should be a validation exception")
         except ValidationError, e:
-            ok_('ZIP file contains a file that is too large: bigfile.txt' in e.messages)
+            ok_('ZIP file contains a file that is too large: bigfile.txt'
+                in e.messages)
 
         unlink(s.demo_package.path)
 
     def test_demo_file_type_blacklist(self):
-        """Demo package cannot contain files whose detected types are blacklisted"""
+        """
+        Demo package cannot contain files whose detected types are
+        blacklisted
+        """
 
         sub_fout = StringIO()
         sub_zf = zipfile.ZipFile(sub_fout, 'w')
