@@ -102,7 +102,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
                         # because we don't want p's wrapped
                         # in DIVs ("<div class='warning'>") and pyQuery adds
                         # "<html><div>" wrapping to entire document
-                        if (len(text) and
+                        if (text and len(text) and
                             not 'Redirect' in text and
                             text.find(u'«') == -1 and
                             text.find('&laquo') == -1 and
