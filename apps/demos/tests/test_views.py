@@ -4,19 +4,15 @@ from django.conf import settings
 
 import datetime
 import zipfile
-import os
-from os.path import basename, dirname, isfile, isdir
+from os.path import dirname
 import logging
 
-from django import http, test
 from django.contrib.auth.models import User
-from django.template.defaultfilters import slugify
 
 from sumo.urlresolvers import reverse
 from sumo.tests import LocalizingClient
 
-from mock import patch
-from nose.tools import eq_, assert_equal, with_setup, assert_false, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
@@ -31,7 +27,8 @@ from test_models import save_valid_submission
 
 from demos import challenge_utils
 from demos.models import Submission
-from demos.forms import SubmissionNewForm, SubmissionEditForm
+from demos.forms import SubmissionEditForm
+from demos.tests import make_users, build_submission, build_hidden_submission
 
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
@@ -41,7 +38,7 @@ TESTUSER_PASSWORD = 'trustno1'
 
 def logged_in(test, *args, **kwargs):
     def test_new(self):
-        self.client.login(username=self.testuser.username, 
+        self.client.login(username=self.testuser.username,
                 password=TESTUSER_PASSWORD)
         test(self, *args, **kwargs)
     return test_new
@@ -63,9 +60,31 @@ def make_challenge_tag():
     Create a dev derby challenge tag corresponding to the current
     month. Does not include the 'challenge:' namespace, so this tag is
     safe to feed to set_ns().
-    
     """
     return datetime.date.today().strftime('%Y:%B').lower()
+
+
+class DemoListViewsTest(test_utils.TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.user, self.admin_user, self.other_user = make_users()
+        self.client = LocalizingClient()
+
+    def test_all_demos_includes_hidden_for_staff(self):
+        build_submission(self.user)
+        build_hidden_submission(self.user)
+
+        r = self.client.get(reverse('demos_all'))
+        count = pq(r.content)('h2.count').text()
+        eq_(count, "1 Demo")
+
+        self.client.login(username=self.admin_user.username,
+                          password='admint_tester')
+        r = self.client.get(reverse('demos_all'))
+        count = pq(r.content)('h2.count').text()
+        eq_(count, "2 Demos")
+
 
 class DemoViewsTest(test_utils.TestCase):
     fixtures = ['test_users.json']
@@ -137,7 +156,6 @@ class DemoViewsTest(test_utils.TestCase):
         result_tags = [t.name for t in obj.taggit_tags.all_ns('tech:')]
         result_tags.sort()
         eq_(['tech:audio', 'tech:video', 'tech:websockets'], result_tags)
-
 
     @logged_in
     def test_edit_invalid(self):
@@ -220,7 +238,6 @@ class DemoViewsTest(test_utils.TestCase):
         assert pq(r.content)('form#demo-submit')
         eq_('Save changes',
             pq(r.content)('p.fm-submit button[type="submit"]').text())
-        
 
     @logged_in
     def test_hidden_field(self):
@@ -262,7 +279,8 @@ class DemoViewsTest(test_utils.TestCase):
             summary='This is a test edit',
             description='Some description goes here',
             tech_tags=('tech:audio',),
-            challenge_tags=parse_tags(constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
+            challenge_tags=parse_tags(
+                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
             license_name='gpl',
             accept_terms='1',
         ))
@@ -323,7 +341,7 @@ class DemoViewsTest(test_utils.TestCase):
         challenge tags; this test just exercises a cycle of edit/save
         a couple times in a row to make sure we don't go foul in
         there.
-        
+
         """
         s = save_valid_submission('hello world')
         closed_dt = datetime.date.today() - datetime.timedelta(days=32)
@@ -331,7 +349,7 @@ class DemoViewsTest(test_utils.TestCase):
         edit_url = reverse('demos_edit', args=[s.slug])
         r = self.client.get(edit_url)
         eq_(r.status_code, 200)
-        
+
         r = self.client.post(edit_url, data=dict(
             title=s.title,
             summary='This is a test demo submission',
@@ -365,7 +383,7 @@ class DemoViewsTest(test_utils.TestCase):
         eq_(r.status_code, 200)
 
     @attr('bug702156')
-    def test_bug_702156(self):
+    def test_missing_screenshots_no_exceptions(self):
         """Demo with missing screenshots should not cause exceptions in
         views"""
         # Create the submission...
@@ -409,9 +427,10 @@ class DemoViewsTest(test_utils.TestCase):
         50-character slug during (python-level) save, not on DB
         insertion, so that anything that wants the slug to build a URL
         has the value that actually ends up in the DB.
-        
+
         """
-        s = save_valid_submission("AudioVisualizer for Alternative Music Notation Systems")
+        s = save_valid_submission(
+            "AudioVisualizer for Alternative Music Notation Systems")
         s.taggit_tags.set_ns('tech:', 'javascript')
         s.save()
         ok_(len(s.slug) == 50)
@@ -421,8 +440,7 @@ class DemoViewsTest(test_utils.TestCase):
     @attr('bug781823')
     def test_unicode(self):
         """
-        Unicode characters in the summary or description doesn't brick the feed.
-        
+        Unicode characters in the summary or description doesn't brick the feed
         """
         s = save_valid_submission('ΦOTOS ftw', 'ΦOTOS ΦOTOS ΦOTOS')
         s.featured = 1
@@ -434,9 +452,15 @@ class DemoViewsTest(test_utils.TestCase):
         """
         Ensure that unique slugs are generated even from titles whose
         first 50 characters are identical.
-        
         """
-        s = save_valid_submission("This is a really long title whose only purpose in life is to be longer than fifty characters")
-        s2 = save_valid_submission("This is a really long title whose only purpose in life is to be longer than fifty characters and not the same as the first title")
-        s3 = save_valid_submission("This is a really long title whose only purpose in life is to be longer than fifty characters and not the same as the first or second title")
+        s = save_valid_submission(
+            "This is a really long title whose only purpose in life is to be "
+            "longer than fifty characters")
+        s2 = save_valid_submission(
+            "This is a really long title whose only purpose in life is to be "
+            "longer than fifty characters and not the same as the first title")
+        s3 = save_valid_submission(
+            "This is a really long title whose only purpose in life is to be "
+            "longer than fifty characters and not the same as the first or "
+            "second title")
         ok_(s.slug != s2.slug and s.slug != s3.slug and s2.slug != s3.slug)
