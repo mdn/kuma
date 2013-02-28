@@ -113,8 +113,9 @@ def detail(request, slug):
 def all(request):
     """Browse all demo submissions"""
     sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.all_sorted(sort_order)\
-            .exclude(hidden=True)
+    queryset = Submission.objects.all_sorted(sort_order)
+    if not Submission.allows_listing_hidden_by(request.user):
+        queryset = queryset.exclude(hidden=True)
     return object_list(request, queryset,
         paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
         template_loader=template_loader,
