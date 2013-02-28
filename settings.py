@@ -411,7 +411,6 @@ INSTALLED_APPS = (
 
     # SUMO
     'users',
-    ROOT_PACKAGE,
     #'authority',
     #'timezones',
     #'access',
@@ -456,11 +455,12 @@ FEEDER_TIMEOUT = 6 # in seconds
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
+    from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
     from caching.base import cache
     config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols'],
               'finalize': lambda x: x if x is not None else ''}
-    if 'memcached' in cache.scheme and not settings.DEBUG:
+    if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
         # Django can't store binary directly; it enforces unicode on it.
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
