@@ -34,12 +34,14 @@ CELERY_ALWAYS_EAGER = False
 
 INSTALLED_APPS = INSTALLED_APPS + (
     "django_extensions",
-    "debug_toolbar",
+    # TODO: re-enable after django 1.4
+    # "debug_toolbar",
     "devserver",
 )
 
 MIDDLEWARE_CLASSES = (
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # TODO: re-enable after django 1.4
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ) + MIDDLEWARE_CLASSES
 
 DEBUG_TOOLBAR_CONFIG = {
