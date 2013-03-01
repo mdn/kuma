@@ -379,7 +379,7 @@ class Submission(models.Model):
             _("Hide this demo from others?"), default=False)
     censored = models.BooleanField()
     censored_url = models.URLField(
-            _("Redirect URL for censorship."),
+            _("Redirect URL for censorship"),
             verify_exists=False, blank=True, null=True)
 
     navbar_optout = models.BooleanField(
@@ -482,6 +482,15 @@ class Submission(models.Model):
         if signal:
             models.signals.post_save.send(sender=cls, instance=self,
                                           created=False)
+
+    def censor(self, url=None):
+        """Censor a demo, with optional link to explanation"""
+        self.censored = True
+        self.censored_url = url
+        self.save()
+        
+        root = '%s/%s' % (DEMO_UPLOADS_ROOT, get_root_for_submission(self))
+        if isdir(root): rmtree(root)
 
     def __unicode__(self):
         return 'Submission "%(title)s"' % dict(

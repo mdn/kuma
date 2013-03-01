@@ -447,8 +447,7 @@ class DemoPackageTest(TestCase):
     def test_censored_demo_shows_only_in_admin_interface(self):
         """Demo package with at least index.html in root is valid"""
         s = self.submission
-        s.censored = True
-        s.save()
+        s.censor()
 
         assert_false(s.allows_viewing_by(self.other_user))
         assert_false(s.allows_viewing_by(self.user))
@@ -458,3 +457,39 @@ class DemoPackageTest(TestCase):
         except Submission.DoesNotExist:
             ok_(True, 'Submission matching query does not exist')
         ok_(Submission.admin_manager.get(id=s.id))
+
+    def test_censored_demo_files_are_deleted(self):
+        """Demo files should be deleted when the demo is censored."""
+        fout = StringIO()
+        zf = zipfile.ZipFile(fout, 'w')
+        zf.writestr('demo.html', """<html></html""")
+        zf.writestr('css/main.css', 'h1 { color: red }')
+        zf.writestr('js/main.js', 'alert("HELLO WORLD");')
+        zf.close()
+
+        s = Submission(title='Hello world', slug='hello-world',
+            description='This is a hello world demo',
+            creator=self.user)
+
+        s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+        s.demo_package.close()
+        s.clean()
+        s.save()
+
+        s.process_demo_package()
+
+        path = s.demo_package.path.replace('.zip', '')
+
+        ok_(isdir(path))
+        ok_(isfile(s.demo_package.path))
+        ok_(isfile('%s/index.html' % path))
+        ok_(isfile('%s/css/main.css' % path))
+        ok_(isfile('%s/js/main.js' % path))
+
+        s.censor(url="http://example.com/censored-explanation")
+
+        ok_(not isfile(s.demo_package.path))
+        ok_(not isfile('%s/index.html' % path))
+        ok_(not isfile('%s/css/main.css' % path))
+        ok_(not isfile('%s/js/main.js' % path))
+        ok_(not isdir(path))
