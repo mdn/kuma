@@ -15,7 +15,7 @@ from taggit.forms import TagWidget, TagField
 def censor_selected(self, request, queryset):
     """
     Censor the selected submissions, with confirmation interstitial.
-    
+
     Largely stolen from django.contrib.admin.actions.delete_selected
     """
     opts = self.model._meta
@@ -37,9 +37,10 @@ def censor_selected(self, request, queryset):
                 self.message_user(request, _("Censored %(item)s") % {
                     "item": obj_display
                 })
-            self.message_user(request, _("Successfully censored %(count)d %(items)s.") % {
-                "count": n, "items": model_ngettext(self.opts, n)
-            })
+            self.message_user(request,
+                _("Successfully censored %(count)d %(items)s.") % {
+                    "count": n, "items": model_ngettext(self.opts, n)
+                })
         # Return None to display the change list page again.
         return None
 
@@ -78,7 +79,8 @@ def delete_selected(modeladmin, request, queryset):
 
     # Populate deletable_objects, a data structure of all related objects that
     # will also be deleted.
-    deletable_objects, perms_needed = get_deleted_objects(queryset, opts, request.user, modeladmin.admin_site, levels_to_root=2)
+    deletable_objects, perms_needed = get_deleted_objects(queryset, opts,
+            request.user, modeladmin.admin_site, levels_to_root=2)
 
     # The user has already confirmed the deletion.
     # Do the deletion and return a None to display the change list view again.
@@ -91,12 +93,14 @@ def delete_selected(modeladmin, request, queryset):
                 obj_display = force_unicode(obj)
                 modeladmin.log_deletion(request, obj, obj_display)
                 obj.delete()
-                modeladmin.message_user(request, _("Deleted and uploaded files for %(item)s") % {
-                    "item": obj_display
+                modeladmin.message_user(request,
+                    _("Deleted and uploaded files for %(item)s") % {
+                        "item": obj_display
+                    })
+            modeladmin.message_user(request,
+                _("Successfully deleted %(count)d %(items)s.") % {
+                    "count": n, "items": model_ngettext(modeladmin.opts, n)
                 })
-            modeladmin.message_user(request, _("Successfully deleted %(count)d %(items)s.") % {
-                "count": n, "items": model_ngettext(modeladmin.opts, n)
-            })
         # Return None to display the change list page again.
         return None
 
@@ -113,20 +117,23 @@ def delete_selected(modeladmin, request, queryset):
     }
 
     # Display the confirmation page
-    return render_to_response(modeladmin.delete_selected_confirmation_template or [
-        "admin/%s/%s/delete_selected_confirmation.html" % (app_label, opts.object_name.lower()),
-        "admin/%s/delete_selected_confirmation.html" % app_label,
-        "admin/delete_selected_confirmation.html"
-    ], context, context_instance=template.RequestContext(request))
+    return render_to_response(
+        modeladmin.delete_selected_confirmation_template or [
+            "admin/%s/%s/delete_selected_confirmation.html" %
+                (app_label, opts.object_name.lower()),
+            "admin/%s/delete_selected_confirmation.html" % app_label,
+            "admin/delete_selected_confirmation.html"
+        ], context, context_instance=template.RequestContext(request))
 
-delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_name_plural)s")
+delete_selected.short_description = ugettext_lazy(
+    "Delete selected %(verbose_name_plural)s")
 
 
 class SubmissionAdmin(admin.ModelAdmin):
     change_list_template = 'smuggler/change_list.html'
 
     actions = (delete_selected, censor_selected,)
-    
+
     list_display = ('title', 'creator', 'featured', 'censored', 'hidden',
                     'taggit_tags', 'modified', )
 
