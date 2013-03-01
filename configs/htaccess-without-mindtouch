@@ -6,7 +6,10 @@ ReWriteEngine On
 RewriteBase /
 
 # Old index.php redirects
-RewriteCond %{QUERY_STRING} ^title=(.*)$
+RewriteCond %{QUERY_STRING} ^title=http [NC]
+RewriteRule ^index\.php$ / [L,NC]
+
+RewriteCond %{QUERY_STRING} ^title=(.*)$ [NC]
 RewriteRule ^index\.php$ %1 [R=301,L,NC]
 
 # Links to FTP'ed code samples and examples
