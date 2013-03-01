@@ -113,10 +113,11 @@ class override_settings(overrider):
     """Decorator / context manager to override Django settings"""
 
     def enable(self):
+        self.old_settings = settings._wrapped
         override = UserSettingsHolder(settings._wrapped)
         for key, new_value in self.options.items():
             setattr(override, key, new_value)
         settings._wrapped = override
 
     def disable(self):
-        settings._wrapped = self.wrapped
+        settings._wrapped = self.old_settings
