@@ -343,10 +343,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #article-nav .page-toc { background: #e4edf7; padding: 16px 18px; margin: 0 0 5px; border: 1px solid #dfe8f2; font-size: .857em; }
 #article-nav .page-toc h2 { margin: 0 0 .75em; border: 0; padding: 0; font: 200 20px/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #article-nav .page-toc ol { margin: 0; padding: 0; list-style: none; }
-#article-nav .page-toc ol li { margin-bottom: .25em; }
+#article-nav .page-toc > ol { padding-left: -.2em; }
+#article-nav .page-toc ol li { margin-bottom: .25em; margin-left: .7em; text-indent: -.5em }
 #article-nav .page-toc ol li span { display: none; } /* hide numbers */
 #article-nav .page-toc ol li ol { margin-top: .5em; padding-left: 15px; }
-#article-nav .page-toc ol li ol li { margin-left: 0; }
 
 #article-nav .page-anchors { background: #f1f6fb; margin: 0 0 5px; padding: 6px 18px; border: 1px solid #edf2f7; font-size: .785em; font-style: italic; text-transform: uppercase; }
 #article-nav .page-anchors li { display: inline; padding: 0; margin-right: 12px; background: none; }
