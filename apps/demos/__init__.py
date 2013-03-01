@@ -311,7 +311,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
         "description": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what amazing experiences you can create for mobile users. The only limit is your creativity.</p>
+<p>Need help getting started? No problem. The Mozilla Developer Network (MDN) has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle mobile in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Mobile/Mobile_Web_Development">detailed Mobile Web Development guide</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:mobile">mobile-optimized demos</a> already available on the Demo Studio.</p>
+<p>It may seem like there's a lot to learn, but you don't need to be an expert to create something great. What can you do with the mobile Web?</p>"""),
     },
     {
         "tag_name": "challenge:2013:april",
@@ -322,6 +324,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Work smart"),
         "summary": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
         "description": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:may",
+        "title": _("May 2013 Dev Derby Challenge - getUserMedia"),
+        "short_title": _("getUserMedia"),
+        "dateline": _("May 2013"),
+        "short_dateline": _("May"),
+        "tagline": _("Action!"),
+        "summary": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
+        "description": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
